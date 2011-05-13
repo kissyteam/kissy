@@ -4,16 +4,16 @@
  */
 KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
-    var KEY_PAGEUP = 33;
-    var KEY_PAGEDOWN = 34;
-    var KEY_END = 35;
-    var KEY_HOME = 36;
+//    var KEY_PAGEUP = 33;
+//    var KEY_PAGEDOWN = 34;
+//    var KEY_END = 35;
+//    var KEY_HOME = 36;
 
     var KEY_LEFT = 37;
     var KEY_UP = 38;
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
-    var KEY_TAB = 9;
+    //var KEY_TAB = 9;
 
     var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;

@@ -50,12 +50,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 toEl = toEls[0];
 
             if (self.anim) {
-                var el = self.anim.domEl;
-                S.log("stop:");
-
                 self.anim.stop();
-//                S.log("stop : ");
-              S.log( (S.indexOf(el, DOM.children(el.parentNode))));
             }
 
             // 首先显示下一张
@@ -74,10 +69,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     // 切换 z-index
                     DOM.css(toEl, Z_INDEX, 9);
                     DOM.css(fromEl, Z_INDEX, 1);
-
                     callback && callback();
-                    S.log("anim callback : " +
-                        (S.indexOf(toEl, DOM.children(toEl.parentNode))));
                 }, cfg.nativeAnim).run();
             } else {
                 DOM.css(toEl, Z_INDEX, 9);

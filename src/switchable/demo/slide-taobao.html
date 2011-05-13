@@ -125,7 +125,7 @@
         visibility: visible
     }
 
-     .list li {
+    .list li {
         margin-left: 10px;
         margin-top: 5px;
         margin-bottom: 5px;
@@ -177,6 +177,8 @@
                 countdown: true,
                 countdownFromStyle: 'width:18px'
             });
+
+            window.slide = s;
 
             Event.on('#demo2-btn', 'click', function() {
                 s.stop();

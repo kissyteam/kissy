@@ -414,17 +414,17 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         /**
          * 切换到上一视图
          */
-        prev: function() {
+        prev: function(ev) {
             var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD);
+            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD, ev);
         },
 
         /**
          * 切换到下一视图
          */
-        next: function() {
+        next: function(ev) {
             var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD);
+            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD, ev);
         }
     });
 
@@ -460,9 +460,38 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
  *
  */
 /**
- * common aria for switchable
+ * common aria for switchable and stop autoplay if necessary
+ * @author:yiminghe@gmail.com
  */
-KISSY.add("switchable/aria", function(S, DOM) {
+KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
+
+
+    Switchable.Plugins.push({
+        name:'aria',
+        init:function(self) {
+            if (!self.config.aria) return;
+
+            var container = self.container;
+
+            Event.on(container, "focusin", _contentFocusin, self);
+
+            Event.on(container, "focusout", _contentFocusout, self);
+        }
+    });
+
+
+    function _contentFocusin() {
+        this.stop && this.stop();
+        /**
+         * !TODO
+         * tab 到时滚动到当前
+         */
+    }
+
+    function _contentFocusout() {
+        this.start && this.start();
+    }
+
     var default_focus = ["a","input","button","object"];
     var oriTabIndex = "oriTabIndex";
     return {
@@ -488,7 +517,7 @@ KISSY.add("switchable/aria", function(S, DOM) {
     };
 
 }, {
-    requires:['dom']
+    requires:['dom','event','./base']
 });/**
  * Accordion Widget
  * @creator  沉鱼<fool2fish@gmail.com>,yiminghe@gmail.com
@@ -782,7 +811,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
         }
     }
 
-    function focusTo(pre, nextIndex) {
+    function focusTo(pre, nextIndex, focusNext) {
         var self = this,triggers = self.triggers;
         if (S.isNumber(pre)) {
             var cur = triggers[pre];
@@ -792,6 +821,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             setTabIndex(cur, "-1");
             DOM.removeClass(cur, SELECT);
             cur.setAttribute("aria-selected", "false");
+        }
+        if (focusNext) {
             next.focus();
         }
         setTabIndex(next, "0");
@@ -806,14 +837,14 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             focusIndex = self.focusIndex,
             nFocusIndex = self.focusIndex = focusIndex == 0
                 ? triggers.length - 1 : focusIndex - 1;
-        focusTo.call(self, focusIndex, nFocusIndex);
+        focusTo.call(self, focusIndex, nFocusIndex, true);
     }
 
     function switchTo(index) {
         var self = this,
             focusIndex = self.focusIndex;
         self.focusIndex = index;
-        focusTo.call(self, focusIndex, index)
+        focusTo.call(self, focusIndex, index, true)
     }
 
 
@@ -824,7 +855,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             focusIndex = self.focusIndex,
             nFocusIndex = self.focusIndex = (focusIndex == triggers.length - 1
                 ? 0 : focusIndex + 1);
-        focusTo.call(self, focusIndex, nFocusIndex);
+        focusTo.call(self, focusIndex, nFocusIndex, true);
     }
 
     function enter() {
@@ -834,6 +865,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
     // 显示 tabpanel
     function _tabSwitch(ev) {
+
+        var domEvent = !!ev.originalEvent.target;
 
         var self = this,
             multiple = self.config.multiple,
@@ -846,8 +879,10 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             var lastTrigger = self.triggers[lastActiveIndex],
                 lastPanel = self.panels[lastActiveIndex];
             setTabIndex(lastTrigger, "-1");
-            //初次不聚焦
-            trigger.focus();
+            // dom 引起的才聚焦
+            if (domEvent) {
+                trigger.focus();
+            }
             if (!multiple) {
                 lastPanel.setAttribute("aria-hidden", "true");
                 lastTrigger.setAttribute("aria-expanded", "false");
@@ -940,7 +975,7 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                     timer = undefined;
                 }
                 host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
-                S.log("stop");
+
             };
 
             host.start = function() {
@@ -949,7 +984,7 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                     timer = undefined;
                 }
                 host.paused = false;
-                S.log("start");
+
                 startAutoplay();
 
             };
@@ -1099,16 +1134,16 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
  */
 KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
-    var KEY_PAGEUP = 33;
-    var KEY_PAGEDOWN = 34;
-    var KEY_END = 35;
-    var KEY_HOME = 36;
+//    var KEY_PAGEUP = 33;
+//    var KEY_PAGEDOWN = 34;
+//    var KEY_END = 35;
+//    var KEY_HOME = 36;
 
     var KEY_LEFT = 37;
     var KEY_UP = 38;
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
-    var KEY_TAB = 9;
+    //var KEY_TAB = 9;
 
     var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
@@ -1487,12 +1522,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 toEl = toEls[0];
 
             if (self.anim) {
-                var el = self.anim.domEl;
-                S.log("stop:");
-
                 self.anim.stop();
-//                S.log("stop : ");
-              S.log( (S.indexOf(el, DOM.children(el.parentNode))));
             }
 
             // 首先显示下一张
@@ -1511,10 +1541,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     // 切换 z-index
                     DOM.css(toEl, Z_INDEX, 9);
                     DOM.css(fromEl, Z_INDEX, 1);
-
                     callback && callback();
-                    S.log("anim callback : " +
-                        (S.indexOf(toEl, DOM.children(toEl.parentNode))));
                 }, cfg.nativeAnim).run();
             } else {
                 DOM.css(toEl, Z_INDEX, 9);
@@ -1977,13 +2004,7 @@ KISSY.add('switchable/lazyload', function(S,DOM,Switchable) {
  */
 KISSY.add('switchable/slide/base', function(S, Switchable) {
 
-    /**
-     * 默认配置，和 Switchable 相同的部分此处未列出
-     */
-    var defaultConfig = {
-        autoplay: true,
-        circular: true
-    };
+
 
     /**
      * Slide Class
@@ -2020,21 +2041,21 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
  */
 KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
-    var KEY_PAGEUP = 33;
-    var KEY_PAGEDOWN = 34;
-    var KEY_END = 35;
-    var KEY_HOME = 36;
+//    var KEY_PAGEUP = 33;
+//    var KEY_PAGEDOWN = 34;
+//    var KEY_END = 35;
+//    var KEY_HOME = 36;
 
     var KEY_LEFT = 37;
     var KEY_UP = 38;
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
-    var KEY_TAB = 9;
+   // var KEY_TAB = 9;
 
-    var KEY_SPACE = 32;
+   // var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
 //    var KEY_DELETE = 46;
-    var KEY_ENTER = 13;
+   // var KEY_ENTER = 13;
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
@@ -2065,10 +2086,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
             Event.on(content, "keydown", _contentKeydown, self);
 
-            Event.on(content, "focusin", _contentFocusin, self);
-
-            Event.on(content, "focusout", _contentFocusout, self);
-
             setTabIndex(panels[0], 0);
 
             self.on("switch", function(ev) {
@@ -2086,19 +2103,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
         }
     });
 
-    function _contentFocusin() {
-        this.stop && this.stop();
-        /**
-         * !TODO
-         * tab 到时滚动到当前
-         */
-    }
-
-    function _contentFocusout() {
-        this.start && this.start();
-    }
-
-
     function _contentKeydownProcess(e) {
         var self = this,
             key = e.keyCode,
@@ -2110,16 +2114,12 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
             case KEY_DOWN:
             case KEY_RIGHT:
 
-                if (self.stop) {
-                    self.stop();
-                }
-
                 dest++;
                 if (dest == panels.length) {
                     dest = 0;
                 }
                 self.__slideIndex = dest;
-                S.log("keydown switchTo : " + dest);
+
                 self.switchTo(dest, FORWARD, undefined, function() {
                     panels[dest].focus();
                 });
@@ -2128,10 +2128,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
             case KEY_UP:
             case KEY_LEFT:
-
-                if (self.stop) {
-                    self.stop();
-                }
 
                 dest--;
                 if (dest == -1) {
@@ -2158,7 +2154,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
         if (keyDownTimer) {
             clearTimeout(keyDownTimer);
             keyDownTimer = undefined;
-            S.log("cancel keydown");
         }
         switch (e.keyCode) {
             case KEY_DOWN:
@@ -2333,7 +2328,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.prev();
+                    self.prev(e);
                     e.halt();
                 } // endif
                 break;
@@ -2343,7 +2338,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (_currentTabFromEvent.call(self, t)
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.next();
+                    self.next(e);
                     e.halt();
                 } // endif
                 break;
@@ -2352,8 +2347,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    e.preventDefault();
-                    self.next();
+                    self.next(e);
 
                 }
                 break;
@@ -2361,20 +2355,20 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.prev();
+                    self.prev(e);
 
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(0);
+                    self.switchTo(0, undefined, e);
                     e.halt();
                 }
                 break;
             case KEY_END:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1);
+                    self.switchTo(triggers.length - 1, undefined, e);
                     e.halt();
                 }
 
@@ -2383,9 +2377,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
                     if (e.shiftKey)
-                        self.prev();
+                        self.prev(e);
                     else
-                        self.next();
+                        self.next(e);
 
                 }
                 break;
@@ -2393,6 +2387,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     }
 
     function _tabSwitch(ev) {
+        var domEvent = !!ev.originalEvent.target;
+
         var self = this;
         // 上一个激活 tab
         var lastActiveIndex = self.activeIndex;
@@ -2410,8 +2406,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             setTabIndex(lastTrigger, "-1");
         }
         setTabIndex(trigger, "0");
-        //初次不聚焦
-        if (lastActiveIndex != -1) {
+
+        if (domEvent) {
             trigger.focus();
         }
         if (lastPanel) {

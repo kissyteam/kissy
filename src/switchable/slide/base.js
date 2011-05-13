@@ -4,13 +4,7 @@
  */
 KISSY.add('switchable/slide/base', function(S, Switchable) {
 
-    /**
-     * 默认配置，和 Switchable 相同的部分此处未列出
-     */
-    var defaultConfig = {
-        autoplay: true,
-        circular: true
-    };
+
 
     /**
      * Slide Class

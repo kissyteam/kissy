@@ -4,21 +4,21 @@
  */
 KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
-    var KEY_PAGEUP = 33;
-    var KEY_PAGEDOWN = 34;
-    var KEY_END = 35;
-    var KEY_HOME = 36;
+//    var KEY_PAGEUP = 33;
+//    var KEY_PAGEDOWN = 34;
+//    var KEY_END = 35;
+//    var KEY_HOME = 36;
 
     var KEY_LEFT = 37;
     var KEY_UP = 38;
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
-    var KEY_TAB = 9;
+   // var KEY_TAB = 9;
 
-    var KEY_SPACE = 32;
+   // var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
 //    var KEY_DELETE = 46;
-    var KEY_ENTER = 13;
+   // var KEY_ENTER = 13;
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
@@ -49,10 +49,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
             Event.on(content, "keydown", _contentKeydown, self);
 
-            Event.on(content, "focusin", _contentFocusin, self);
-
-            Event.on(content, "focusout", _contentFocusout, self);
-
             setTabIndex(panels[0], 0);
 
             self.on("switch", function(ev) {
@@ -70,19 +66,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
         }
     });
 
-    function _contentFocusin() {
-        this.stop && this.stop();
-        /**
-         * !TODO
-         * tab 到时滚动到当前
-         */
-    }
-
-    function _contentFocusout() {
-        this.start && this.start();
-    }
-
-
     function _contentKeydownProcess(e) {
         var self = this,
             key = e.keyCode,
@@ -94,16 +77,12 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
             case KEY_DOWN:
             case KEY_RIGHT:
 
-                if (self.stop) {
-                    self.stop();
-                }
-
                 dest++;
                 if (dest == panels.length) {
                     dest = 0;
                 }
                 self.__slideIndex = dest;
-                S.log("keydown switchTo : " + dest);
+
                 self.switchTo(dest, FORWARD, undefined, function() {
                     panels[dest].focus();
                 });
@@ -112,10 +91,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
             case KEY_UP:
             case KEY_LEFT:
-
-                if (self.stop) {
-                    self.stop();
-                }
 
                 dest--;
                 if (dest == -1) {
@@ -142,7 +117,6 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
         if (keyDownTimer) {
             clearTimeout(keyDownTimer);
             keyDownTimer = undefined;
-            S.log("cancel keydown");
         }
         switch (e.keyCode) {
             case KEY_DOWN:

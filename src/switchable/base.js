@@ -409,17 +409,17 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         /**
          * 切换到上一视图
          */
-        prev: function() {
+        prev: function(ev) {
             var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD);
+            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD, ev);
         },
 
         /**
          * 切换到下一视图
          */
-        next: function() {
+        next: function(ev) {
             var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD);
+            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD, ev);
         }
     });
 

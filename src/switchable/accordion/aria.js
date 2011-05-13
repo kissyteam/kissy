@@ -212,7 +212,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
         }
     }
 
-    function focusTo(pre, nextIndex) {
+    function focusTo(pre, nextIndex, focusNext) {
         var self = this,triggers = self.triggers;
         if (S.isNumber(pre)) {
             var cur = triggers[pre];
@@ -222,6 +222,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             setTabIndex(cur, "-1");
             DOM.removeClass(cur, SELECT);
             cur.setAttribute("aria-selected", "false");
+        }
+        if (focusNext) {
             next.focus();
         }
         setTabIndex(next, "0");
@@ -236,14 +238,14 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             focusIndex = self.focusIndex,
             nFocusIndex = self.focusIndex = focusIndex == 0
                 ? triggers.length - 1 : focusIndex - 1;
-        focusTo.call(self, focusIndex, nFocusIndex);
+        focusTo.call(self, focusIndex, nFocusIndex, true);
     }
 
     function switchTo(index) {
         var self = this,
             focusIndex = self.focusIndex;
         self.focusIndex = index;
-        focusTo.call(self, focusIndex, index)
+        focusTo.call(self, focusIndex, index, true)
     }
 
 
@@ -254,7 +256,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             focusIndex = self.focusIndex,
             nFocusIndex = self.focusIndex = (focusIndex == triggers.length - 1
                 ? 0 : focusIndex + 1);
-        focusTo.call(self, focusIndex, nFocusIndex);
+        focusTo.call(self, focusIndex, nFocusIndex, true);
     }
 
     function enter() {
@@ -264,6 +266,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
     // 显示 tabpanel
     function _tabSwitch(ev) {
+
+        var domEvent = !!ev.originalEvent.target;
 
         var self = this,
             multiple = self.config.multiple,
@@ -276,8 +280,10 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             var lastTrigger = self.triggers[lastActiveIndex],
                 lastPanel = self.panels[lastActiveIndex];
             setTabIndex(lastTrigger, "-1");
-            //初次不聚焦
-            trigger.focus();
+            // dom 引起的才聚焦
+            if (domEvent) {
+                trigger.focus();
+            }
             if (!multiple) {
                 lastPanel.setAttribute("aria-hidden", "true");
                 lastTrigger.setAttribute("aria-expanded", "false");

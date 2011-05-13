@@ -57,7 +57,7 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                     timer = undefined;
                 }
                 host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
-                S.log("stop");
+
             };
 
             host.start = function() {
@@ -66,7 +66,7 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                     timer = undefined;
                 }
                 host.paused = false;
-                S.log("start");
+
                 startAutoplay();
 
             };

@@ -1,7 +1,36 @@
 /**
- * common aria for switchable
+ * common aria for switchable and stop autoplay if necessary
+ * @author:yiminghe@gmail.com
  */
-KISSY.add("switchable/aria", function(S, DOM) {
+KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
+
+
+    Switchable.Plugins.push({
+        name:'aria',
+        init:function(self) {
+            if (!self.config.aria) return;
+
+            var container = self.container;
+
+            Event.on(container, "focusin", _contentFocusin, self);
+
+            Event.on(container, "focusout", _contentFocusout, self);
+        }
+    });
+
+
+    function _contentFocusin() {
+        this.stop && this.stop();
+        /**
+         * !TODO
+         * tab 到时滚动到当前
+         */
+    }
+
+    function _contentFocusout() {
+        this.start && this.start();
+    }
+
     var default_focus = ["a","input","button","object"];
     var oriTabIndex = "oriTabIndex";
     return {
@@ -27,5 +56,5 @@ KISSY.add("switchable/aria", function(S, DOM) {
     };
 
 }, {
-    requires:['dom']
+    requires:['dom','event','./base']
 });
