@@ -14,10 +14,13 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] KISSY.Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
+ - [x] KISSY.Suggest fix: IE9 下无法更新数据
+ - [x] KISSY.Suggest fix: chrome 下光标鼠标移动问题
  - [*] KISSY.Accordion 增加 aria 配置
  - [*] KISSY.Carousel 增加 aria 配置
  - [*] KISSY.Tabs 增加 aria 配置
- - [*] KISSY.Overlay 增加 aria 配置，trap focus and keydown
+ - [*] KISSY.Overlay 增加 aria 配置, trap focus and keydown
  - [*] KISSY.param/unparam 增加数组处理选项
  - [+] KISSY.getScript 支持 css 载入后调用回调
  - [+] KISSY.getScript 支持除了ie<9外的 error 立即回调
