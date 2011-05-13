@@ -257,6 +257,190 @@
             });
         </script>
     </div>
+
+    <div class="section">
+        <h2>搜索提示源是来自静态数据, 测试, 输入 a 或 b：</h2>
+        <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+            <input type="hidden" value="" name="sort"/>
+            <input type="hidden" value="D9_5_1" name="f"/>
+            <input type="hidden" value="" name="promote"/>
+            <input type="hidden" value="2" name="isnew"/>
+            <input type="hidden" value="b" name="atype"/>
+            <input type="hidden" value="all" name="commend"/>
+            <input type="hidden" value="auction" name="search_type"/>
+            <input type="hidden" value="initiative" name="user_action"/>
+            <input type="hidden" value="s1-e" name="ssid"/>
+
+            <input name="q" id="qs" class="search-input"/>
+
+            <button type="submit" class="search-submit">淘我喜欢</button>
+        </form>
+        <script>
+            KISSY.use("suggest", function(S, Suggest) {
+                // 淘宝搜索
+                var data = {
+                    'a': {"result": [
+                        ["阿迪达斯a", "2968141"],
+                        ["阿依莲 正品 2011夏", "23551"],
+                        ["阿依莲", "85840"],
+                        ["艾格 专柜 正品2011", "32536"],
+                        ["阿迪达斯 正品", "1203473"],
+                        ["安踏", "721207"],
+                        ["艾格", "266858"],
+                        ["安全裤", "59616"],
+                        ["af", "614065"],
+                        ["艾格周末2011夏款", "7773"]
+                    ]},
+                    'b': {"result": [
+                        ["阿迪达斯b", "2968141"],
+                        ["阿依莲 正品 2011夏b", "23551"],
+                        ["阿依莲b", "85840"],
+                        ["艾格 专柜 正品2011b", "32536"],
+                        ["阿迪达斯 正品b", "1203473"],
+                        ["安踏b", "721207"],
+                        ["艾格b", "266858"],
+                        ["安全裤b", "59616"],
+                        ["afb", "614065"],
+                        ["艾格周末2011夏款b", "7773"]
+                    ]}
+                };
+
+                var _suggest = new Suggest('#qs', data, {
+                    autoFocus: true,
+                    resultFormat: ''
+                });
+            });
+        </script>
+    </div>
+
+
+    <div class="section">
+        <h2>多 Tab 输入框切换时, 数据不缓存 ：</h2>
+        <style>
+.tb-srch-may .rc-lt,
+.tb-srch-may .rc-lb,
+.tb-srch-may .rc-rb,
+.tb-srch-may .rc-rt {
+    font-size: 0;
+    font-family: serif;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    background-color: #fff;
+}
+.tb-srch-may .rc-lt {
+    left: 0;
+    top: 0;
+}
+
+.tb-srch-may .rc-lb {
+    left: 0;
+    bottom: 0;
+}
+
+.tb-srch-may .rc-rb {
+    right: 0;
+    bottom: 0;
+}
+
+.tb-srch-may .rc-rt {
+    right: 0;
+    top: 0;
+}
+.tb-srch-may .tb-srch-may-tab {
+    float:left;
+    height: 23px;
+}
+
+.tb-srch-may .tb-srch-may-tab li {
+    float: left;
+    position: relative;
+}
+.tb-srch-may .tb-srch-may-tab li .rc-lt,
+.tb-srch-may .tb-srch-may-tab li .rc-rt {
+    display: none;
+}
+
+.tb-srch-may .tb-srch-may-tab .current .rc-lt,
+.tb-srch-may .tb-srch-may-tab .current .rc-rt {
+    display: block;
+    background-color: #ffdebb;
+}
+
+.tb-srch-may .tb-srch-may-tab li a {
+    display: block;
+    float: left;
+    height: 23px;
+    line-height: 23px;
+    padding: 0 15px;
+}
+
+.tb-srch-may .tb-srch-may-tab li.current a {
+    font-weight: bold;
+    color: #fff;
+    background-color: #f27b04;
+}
+.tb-srch-may .tb-srch-may-panel {
+    clear: left;
+}
+        </style>
+        <div class="tb-srch-may" id="J_TBSearch">
+            <ul class="tb-srch-may-tab ks-clear">
+                <li class="current"><a href="http://list.taobao.com/browse/cat-0.htm">宝贝</a><b class="rc-lt"></b><b class="rc-rt"></b></li>
+                <li><a href="http://shopsearch.taobao.com/browse/shop_search.htm">商城</a><b class="rc-lt"></b><b class="rc-rt"></b></li>
+            </ul>
+            <div class="tb-srch-may-panel ks-clear">
+                <form name="search" method="get" action="http://search1.taobao.com/browse/search_auction.htm">
+                    <input type="hidden" value="" name="sort"/>
+                    <input type="hidden" value="D9_5_1" name="f"/>
+                    <input type="hidden" value="" name="promote"/>
+                    <input type="hidden" value="2" name="isnew"/>
+                    <input type="hidden" value="b" name="atype"/>
+                    <input type="hidden" value="all" name="commend"/>
+                    <input type="hidden" value="auction" name="search_type"/>
+                    <input type="hidden" value="initiative" name="user_action"/>
+                    <input type="hidden" value="s1-e" name="ssid"/>
+
+                    <input name="q" id="qstab" class="search-input"/>
+
+                    <button type="submit" class="search-submit">淘我喜欢</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            KISSY.use("node,suggest", function(S, Node, Suggest) {
+                var _suggest = new Suggest('#qstab', 'http://suggest.taobao.com/sug?code=utf-8&extras=1', {
+                            resultFormat: '约%result%个宝贝',
+                            dataType: 1
+                        }),
+                        tab = Node.one('.tb-srch-may-tab'),
+                        tabList = tab.all('li'),
+                        switchToTab = function(n) {
+                            _suggest.config.resultFormat = '约%result%个宝贝';
+                            if (n == 1) {
+                                _suggest.dataSource = 'http://suggest.taobao.com/sug?area=b2c&code=utf-8&extras=1&callback=KISSY.Suggest.callback';
+                                _suggest.config.resultFormat = '约%result%个商品';
+                            } else {
+                                _suggest.dataSource = 'http://suggest.taobao.com/sug?code=utf-8&extras=1&callback=KISSY.Suggest.callback';
+                            }
+                            S.each(tabList, function(tab, i) {
+                                tab = new Node(tab);
+
+                                tab[(i == n) ? "addClass" : "removeClass"]('current');
+                            });
+                        };
+
+                // on tabs switch
+                S.each(tabList, function(tab, i) {
+                    tab = new Node(tab);
+                    tab.on("click", function(ev) {
+                        ev.halt();
+                        switchToTab(i);
+                    });
+                });
+            });
+        </script>
+    </div>
 </div>
 </body>
 </html>

@@ -135,7 +135,15 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             /**
              * 查询的参数名
              */
-            queryName: 'q'
+            queryName: 'q',
+
+            /**
+             * @type Number 数据源标志, 默认为 0 , 可取 0, 1, 2
+             * - 0: 数据来自远程, 且请求回来后存入 _dataCache
+             * - 1: 数据来自远程, 且不存入 _dataCache, 每次请求的数据是否需要缓存, 防止在公用同一个 suggest , 但数据源不一样时, 出现相同内容
+             * - 2: 数据来自静态, 不存在时, 不显示提示浮层
+             */
+            dataType: 0
         };
 
     /**
@@ -167,14 +175,24 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
         self.config = config = S.merge(defaultConfig, config);
 
         /**
-         * 获取数据的 URL
+         * 获取数据的 URL, 或是静态数据
          * @type {String|Object}
          */
-        // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
-        dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
-        self.dataSource = dataSource + config.callbackName + '=' + (cbFn = config.callbackFn);
-        // 回调函数名不是默认值时，需要指向默认回调函数
-        if (cbFn !== CALLBACK_FN) initCallback(cbFn);
+        if (S.isString(dataSource)) {
+            // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
+            dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
+            self.dataSource = dataSource + config.callbackName + '=' + (cbFn = config.callbackFn);
+            if (config.dataType === 2) self.config.dataType = 0;
+
+            // 回调函数名不是默认值时，需要指向默认回调函数
+            if (cbFn !== CALLBACK_FN) initCallback(cbFn);
+        }
+        // 如果就是一个数据源对象, 强制使用 dataSource
+        else {
+            self.dataSource = dataSource;
+            self.config.dataType = 2;
+        }
+
 
         /**
          * 通过 jsonp 返回的数据
@@ -344,6 +362,17 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                     }
                     isDowningOrUping = false;
                 }
+
+                /*
+                 * fix 防止 chrome 下 键盘按键移动选中项后, 仍然触发 mousemove 事件
+                 */
+                if (UA['chrome']) {
+                    // 标志按键状态, 延迟后, 恢复没有按键
+                    if (self._keyTimer) self._keyTimer.cancel();
+                    self._keyTimer = S.later(function() {
+                        self._keyTimer = undefined;
+                    }, 500);
+                }
             });
 
             // reset pressingCount
@@ -423,6 +452,8 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                 mouseDownItem, mouseLeaveFooter;
 
             Event.on(content, 'mousemove', function(ev) {
+                if (self._keyTimer) return;
+
                 var target = ev.target;
 
                 if (target.nodeName !== LI) {
@@ -704,13 +735,25 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                 return;
             }
 
-            if (self._dataCache[q] !== undefined) { // 1. 使用缓存数据
-                //S.log('use cache');
-                self._fillContainer(self._dataCache[q]);
-                self._displayContainer();
-
-            } else { // 2. 请求服务器数据
-                self._requestData();
+            switch(self.config.dataType) {
+                case 0:
+                    if (self._dataCache[q] !== undefined) { // 1. 如果设置需要缓存标志 且已经有缓存数据时, 使用缓存中的
+                        S.log('use cache');
+                        self._fillContainer(self._dataCache[q]);
+                        self._displayContainer();
+                    } else { // 2. 请求服务器数据
+                        S.log('no cache, data from server');
+                        self._requestData();
+                    }
+                    break;
+                case 1:
+                    S.log('no cache, data always from server');
+                    self._requestData();
+                    break;
+                case 2:
+                    S.log('use static datasource');
+                    self._handleResponse(self.dataSource[q]);
+                    break;
             }
         },
 
@@ -791,7 +834,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             if (self.fire(EVENT_BEFORE_SHOW) === false) return;
 
             // cache
-            self._dataCache[self.query] = DOM.html(self.content);
+            if (!self.config.dataType) self._dataCache[self.query] = DOM.html(self.content);
 
             // 显示容器
             self._displayContainer();
@@ -1049,7 +1092,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
  *
  * 一、数据处理很 core，但相对来说是简单的，由 requestData + handleResponse + formatData 等辅助方法组成
  * 需要注意两点：
- *  a. IE 中，改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
+ *  a. IE 中, 改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
  *     requestData 方法中存在两种处理方式的原因。
  *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加 data-time
  *     的解决方案。更好的解决方案是，调整 API，使得返回的数据中，带有 query 值。
