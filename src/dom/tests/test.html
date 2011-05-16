@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>DOM Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+
+<script src="../../../build/seed.js" charset="utf-8"></script>
+<script src="../../../build/ua.js" charset="utf-8"></script>
+<script src="../../../build/dom.js" charset="utf-8"></script>
+<script>
+    KISSY.__combines = {};
+</script>
+</head>
+<body>
+<h1>KISSY DOM Test Cases</h1>
+
+
+<!-- attr-spec start-->
+<div id="test-data">
+    <input id='hidepass'/>
+    <p id="foo">
+        <a href="../kissy/"
+           style="color:red; border-top:1px solid #333;"
+           class="link"
+           title="test" data-test="test">test link</a>
+        <input type="text" id="test-input" readonly='' maxlength="20" value="hello"/>
+        <input type="radio" id="test-radio"/>
+        <input type="radio" id="test-radio2" checked/>
+        <label class="test" for="test-input">label</label>
+        <button type="button" tabindex="3">Submit</button>
+        <textarea rows="2" cols="2">
+            test
+        </textarea>
+    </p>
+    <div id="test-div"></div>
+    <img id="test-img" src="../../../docs/assets/logo.png" alt="kissy"/>
+    <table id="test-table" cellspacing="10">
+        <tbody>
+        <tr>
+            <td rowspan="2" colspan="3">td</td>
+        </tr>
+        </tbody>
+    </table>
+    <select id="test-select">
+        <option id="test-opt" value="1">0</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <select id="test-select2">
+        <option>2</option>
+    </select>
+    <select id="test-select3" multiple autocomplete="off">
+        <option selected>1</option>
+        <option selected>2</option>
+        <option>3</option>
+    </select>
+    <br/>
+    <br/>
+    <input type="checkbox" id="test-20100728-checkbox"/>test checked
+
+    <br/>
+
+    <input type="button" id="test-20100728-disabled"/>test disabled
+</div>
+<!-- attr-spec end-->
+<script src="attr-spec.js"></script>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function() {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
+</script>
+</body>
+</html>
