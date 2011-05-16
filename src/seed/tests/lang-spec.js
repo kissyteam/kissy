@@ -470,7 +470,6 @@ describe('lang.js', function() {
 
 
     it('S.reduce', function() {
-        debugger
         var r = S.reduce([0,1,2,3,4], function(previousValue, currentValue, index, array) {
             return previousValue + currentValue;
         });
