@@ -15,7 +15,9 @@ KISSY.add("overlay", function(S) {
         //ie6 支持,select bug
         UA.ie == 6 ? S.UIBase.Shim : null,
         S.UIBase.Align,
-        S.UIBase.Mask], {
+        S.UIBase.Mask,
+        S.__OverlayEffect
+    ], {
 
         initializer:function() {
             //S.log("Overlay init");

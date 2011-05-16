@@ -13,6 +13,7 @@
 <script src="../uibase/uibase-mask.js"></script>
 <script src="../uibase/uibase-align.js"></script>
 <script src="../uibase/uibase-loading.js"></script>
+<!--<script src="overlay-effect.js"></script>-->
 <script src="overlay.js"></script>
 <script src="../dd/ddm.js"></script>
 <script src="../dd/draggable.js"></script>
@@ -21,6 +22,7 @@
 <script src="../uibase/uibase-drag.js"></script>
 <script src="../uibase/uibase-constrain.js"></script>
 <script src="dialog.js"></script>
+<script src="popup.js"></script>
 
 <link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
 <link rel="stylesheet" href="assets/cool.css"/>
@@ -30,11 +32,8 @@
     }
 
     h2 {
-        margin: 10px 0 10px -20px;
-        padding: 5px 10px;
-        font-size: 14px;
-        font-weight: normal;
-        background: #F2F2F2;
+        margin: 30px 0 10px;
+        font-size: 17px;
     }
 
     p.code-switch {
@@ -51,337 +50,607 @@
         padding: 0 10px 20px 10px;
         font-size: 14px;
     }
+
 </style>
 </head>
 
 <body>
+<div class="section">
+    <style>
+        .popup {
+            position: absolute;
+            z-index: 50;
+            border-collapse: collapse;
+            visibility: hidden;
+        }
 
-<h2>overlay - 从 Markup 中构建</h2>
+        .popup td.corner {
+            height: 15px;
+            width: 19px;
+            }
 
-<button id="btn1">Show</button>
-<button id="btn2">Hide</button>
+        .popup td#topleft { background-image: url(./assets/bubble-1.png); }
+        .popup td.top { background-image: url(./assets/bubble-2.png); }
+        .popup td#topright { background-image: url(./assets/bubble-3.png); }
+        .popup td.left { background-image: url(./assets/bubble-4.png); }
+        .popup td.right { background-image: url(./assets/bubble-5.png); }
+        .popup td#bottomleft { background-image: url(./assets/bubble-6.png); }
+        .popup td.bottom { background-image: url(./assets/bubble-7.png); text-align: center;}
+        .popup td.bottom img { display: block; margin: 0 auto; }
+        .popup td#bottomright { background-image: url(./assets/bubble-8.png); }
 
-<div id="popup1" class="ks-overlay" style="border:1px solid #ccc;background:#F6F9FD">
-    <div class="ks-contentbox-content">
-        Popup content
-    </div>
+        .popup table.popup-contents {
+            font-size: 12px;
+            line-height: 1.2em;
+            background-color: #fff;
+            color: #666;
+            font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif;
+            }
+
+        table.popup-contents th {
+            text-align: right;
+            text-transform: lowercase;
+            }
+
+        table.popup-contents td {
+            text-align: left;
+            }
+
+        tr#release-notes th {
+            text-align: left;
+            text-indent: -9999px;
+            background: url(./assets/starburst.gif) no-repeat top right;
+            height: 17px;
+            }
+
+        tr#release-notes td a {
+            color: #333;
+        }
+
+    </style>
+    <h2>Popup - 从 Markup 中构建</h2>
+    <a href="#"><img id="img-download" src="assets/nav-download.png" /></a>
+    					<!-- Download Popup -->
+					<table class="popup" id="dpop">
+						<tr>
+							<td class="corner" id="topleft"></td>
+
+							<td class="top"></td>
+							<td class="corner" id="topright"></td>
+						</tr>
+
+						<tr>
+							<td class="left"></td>
+							<td>
+
+							<table class="popup-contents">
+								<tr>
+									<th>File:</th>
+
+									<td>coda 1.7.zip</td>
+								</tr>
+								<tr>
+									<th>Date:</th>
+									<td>11/5/10</td>
+								</tr>
+								<tr>
+
+									<th>Size:</th>
+									<td>20 MB</td>
+								</tr>
+								<tr>
+									<th>Req:</th>
+									<td>Mac OS X 10.4+</td>
+								</tr>
+
+								<tr id="release-notes">
+									<th>Read the release notes:</th>
+									<td><a href="#" title="Read the release notes">release notes</a></td>
+								</tr>
+							</table>
+
+							</td>
+							<td class="right"></td>
+						</tr>
+
+
+						<tr>
+							<td id="bottomleft" class="corner"></td>
+							<td class="bottom"><img src="assets/bubble-tail2.png" width="30" height="29" alt="popup tail" /></td>
+							<td class="corner" id="bottomright"></td>
+						</tr>
+					</table>
+					<!-- end download popup -->
+    <script>
+        KISSY.ready(function(S) {
+
+            var popup = new S.Popup(S.one("#dpop"), {
+                trigger: '#img-download',
+                triggerType: 'mouse',
+                align: {
+                    node: '#img-download',
+                    points: ['tc', 'bc'],
+                    offset: [0, 50]
+                }
+            });
+        });
+    </script>
+    <p class="code-switch">显示源码</p>
 </div>
 
 
-<script>
-    KISSY.ready(function(S) {
+<div class="section">
+    <style>
+        #link2, #link2 img {
+            display: inline-block;
+            line-height: 0;
+        }
 
-        var popup = new S.Overlay({
-            srcNode:S.one("#popup1"),
-            width: 300,
-            height: 200,
-            align: {
-                node: '#btn1',
-                points: ['tr', 'tl'],
-                offset: [50, 0]
-            }
+        .popup2 {
+            background: #444;
+            opacity: 0.7;
+            filter: alpha(opacity=70);
+            text-align: center;
+        }
+    </style>
+    <h2>Popup - 新建 Markup </h2>
+    <a id="link2" href="#"><img  src="http://img02.taobaocdn.com/bao/uploaded/i2/T1HTSaXiFsXXaMnuYb_093636.jpg_160x160.jpg" /></a>
+    <script>
+        KISSY.ready(function(S) {
+
+            var popup = new S.Popup({
+                trigger: '#link2',
+                triggerType: 'mouse',
+                elCls: 'popup2',
+                align: {
+                    node: '#link2',
+                    points: ['tl', 'tl']
+                },
+                width: S.one('#link2').width(),
+                height: S.one('#link2').height()
+            });
         });
-        S.one('#btn1').on('click', function() {
-            popup.show();
-        });
-        S.one('#btn2').on('click', function() {
-            popup.hide();
-        });
-
-    });
-</script>
-<p class="code-switch">显示源码</p>
-
-<h2>Popup - 从 Markup 中构建</h2>
-
-<a id="link1">hover me</a>
-<select>
-    <option>aaaa</option>
-    <option>bbb</option>
-</select>
-<div id="popup2" class="ks-overlay" style="border:1px solid #ccc;background:#F6F9FD">
-    <div class="ks-contentbox-content">
-        Popup content
-    </div>
+    </script>
+    <p class="code-switch">显示源码</p>
 </div>
-<script>
-    KISSY.ready(function(S) {
+<div class="section">
+    <h2>多个触发元素公用一个 Popup</h2>
+    <style>
+        .shop-rank {
+            width: 300px;
+        }
 
-        var popup = new S.Overlay({
-            srcNode:"#popup2",
-            width: 300,
-            height: 200,
-            align: {
-                node: S.one('#link1'),
-                points: ['tr', 'tl']
-            }
-        });
+        .shop-rank  li {
+            border-bottom: 1px dashed #EEEEEE;
+            height: 42px;
+            overflow: hidden;
+            padding: 9px 0;
+        }
 
-        S.one('#link1').on('mouseenter', function() {
+        .shop-rank .pic {
+            border: 1px solid #CCCCCC;
+            float: left;
+            height: 40px;
+            margin-right: 10px;
+            text-align: center;
+            width: 40px;
+        }
 
-            popup.show();
-        });
-        S.one('#link1').on('mouseleave', function() {
-            popup.hide();
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
+        .shop-rank .pic a {
+            display: table-cell;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            width: 40px;
+        }
+
+        .shop-rank .pic img {
+            vertical-align: middle;
+        }
+
+        .shop-rank .desc, .shop-rank .price {
+            float: left;
+            height: 14px;
+            line-height: 1.2;
+            overflow: hidden;
+            text-align: left;
+            width: 120px;
+        }
+
+        .shop-rank .collecter, .shop-rank .sale {
+            float: left;
+            line-height: 1.4;
+            overflow: hidden;
+            width: 120px;
+        }
+
+        #popup3 {
+            display: none;
+            background: white;
+            border: 1px solid orange;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <div class="shop-rank" id="multi">
+        <ul>
+            <li>
+                <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=3231736190"><img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_40x40.jpg" bigpicurl="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_120x120.jpg"></a></div>
+                <div class="desc"><a target="_blank" title="他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款" href="http://item.taobao.com/item.htm?id=3231736190">他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款</a></div>
+                <div class="price"><i></i>298.00元 i7/T1ftRxXnRvXXalxZ.T_010955.jpg</div>
+                <div class="sale"><i></i>已售出 <strong>3799</strong> 笔</div>
+            </li>
+            <li>
+                <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=9543317408"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_40x40.jpg" bigpicurl="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_120x120.jpg"></a></div>
+                <div class="desc"><a target="_blank" title="百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D" href="http://item.taobao.com/item.htm?id=9543317408">百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D</a></div>
+                <div class="price"><i></i>458.00元 i1/T1n_p9Xm4jXXcYEmEY_030526.jpg</div>
+                <div class="sale"><i></i>已售出 <strong>1815</strong> 笔</div>
+            </li>
+            <li>
+                <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=9138154640"><img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_40x40.jpg" bigpicurl="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_120x120.jpg"></a></div>
+                <div class="desc"><a target="_blank" title="商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15" href="http://item.taobao.com/item.htm?id=9138154640">商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15</a></div>
+                <div class="price"><i></i>358.00元 i7/T1aJXZXfFsXXbGzYHb_092930.jpg</div>
+                <div class="sale"><i></i>已售出 <strong>1587</strong> 笔</div>
+            </li>
+            <li>
+                <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=9172959292"><img src="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_40x40.jpg" bigpicurl="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_120x120.jpg"></a></div>
+                <div class="desc"><a target="_blank" title="他她tata 2011春季超高跟防水台女单鞋 J53-8D" href="http://item.taobao.com/item.htm?id=9172959292">他她tata 2011春季超高跟防水台女单鞋 J53-8D</a></div>
+                <div class="price"><i></i>398.00元 i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg</div>
+                <div class="sale"><i></i>已售出 <strong>1583</strong> 笔</div>
+            </li>
+            <li>
+                <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=5057404618"><img src="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_40x40.jpg" bigpicurl="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_120x120.jpg"></a></div>
+                <div class="desc"><a target="_blank" title="百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D" href="http://item.taobao.com/item.htm?id=5057404618">百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D</a></div>
+                <div class="price"><i></i>298.00元 i8/T1wSFAXoxdXXbtWvsU_014508.jpg</div>
+                <div class="sale"><i></i>已售出 <strong>1547</strong> 笔</div>
+            </li>
+        </ul>
+    </div>
+    <script>
+        KISSY.ready(function(S) {
+
+            var popup = new S.Overlay({
+                elStyle:{
+                    border:"2px solid grey",
+                    lineHeight: 0
+                }
+            });
 
 
-<style>
-    .popup2 {
-        border: 1px solid green;
-        background: none repeat scroll 0 0 rgb(246, 249, 253);
-    }
-</style>
-<h2>Popup - 新建Popup</h2>
-<a id="link2">hover me</a>
-<script>
-    KISSY.ready(function(S) {
-        var popup = new S.Overlay({
-            width: 300,
-            height: 200,
-            elCls: 'popup2',
-            content: 'test popup',
-            align: {
-                node: '#link2',
-                points: ['tr', 'tl']
-            }
-        });
-        S.one('#link2').on('mouseenter', function() {
-            
-            popup.show();
-        });
-        S.one('#link2').on('mouseleave', function() {
-            popup.hide();
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
-
-
-<h2>多个触发元素公用一个 Popup</h2>
-<style>
-    #multi {
-        width: 60px;
-    }
-
-    #multi li {
-        background: orange;
-        margin: 6px;
-        width: 80px;
-        text-align: center;
-    }
-
-    #popup3 {
-        display: none;
-        background: white;
-        border: 1px solid orange;
-        width: 100px;
-        height: 100px;
-    }
-</style>
-<ul id="multi">
-    <li>test1</li>
-    <li>test2</li>
-    <li>test3</li>
-</ul>
-
-<script>
-    KISSY.ready(function(S) {
-
-        var lis = S.query('#multi li'),
-                popup = new S.Overlay({
-                    elStyle:{
-                        border:"1px solid red"
-                    }
+            // 注意：使用定制的显示/隐藏方式
+            S.each(S.all('#multi img'), function(t) {
+                t = new S.Node(t);
+                t.on("mouseenter", function() {
+                    popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
+                    popup.set('align', {
+                        node: t,
+                        points: ["tr","tl"]
+                    });
+                    popup.show();
                 });
-
-
-        // 注意：这里的用法已改变
-        S.each(S.query('#multi li'), function(t) {
-            t = new S.Node(t);
-            t.on("mouseenter", function() {
-                popup.set("content", t.html());
-                popup.render();
-                popup.align(t, ["tr","tl"]);
-                popup.show();
-            });
-            t.on("mouseleave", function() {
-                popup.hide();
+                t.on("mouseleave", function() {
+                    popup.hide();
+                });
             });
         });
-    });
-</script>
-<p class="code-switch">显示源码</p>
+    </script>
+    <p class="code-switch">显示源码</p>
+</div>
 
-<style>
-    .dialog1 {
-        display: none;
-        background: #ffffff;
-        border: 2px solid green;
-        text-align: center;
-        padding: 6px;
-    }
-</style>
-<h2>Dialog - auto render</h2>
-<button id="btn3">Show</button>
-<div id="markupDialog" class="ks-dialog">
-    <div class="ks-contentbox">
-        <div class="ks-stdmod-header">
-            i am header
-        </div>
-        <div class="ks-stdmod-body">
-            <div style="padding:50px;">
-                从 markup 生成 dialog
+<div class="section" id="detail">
+    <style>
+        #detail .tb-attention {
+            position: absolute;
+            left: -9999px;
+            top: -99999px;
+            border-bottom: 2px solid #D9D9D9;
+            border-right: 2px solid #D9D9D9;
+            margin-left: 5px;
+            width: 480px;
+        }
+
+        #detail .tb-attention .tb-skin {
+            background-color: #FFFFFF;
+            border: 1px solid #C30009;
+            position: relative;
+        }
+
+        #detail .tb-attention .tb-note-title {
+            background: none repeat scroll 0 0 #FFF8F7;
+            border-bottom: 1px solid #F3E9E7;
+            display: block;
+            height: 24px;
+            line-height: 24px;
+            padding-left: 8px;
+            position: relative;
+        }
+
+        #detail .tb-key dl {
+            padding: 6px;
+        }
+
+        #detail .tb-key dt {
+            float: left;
+            margin-top: 4px;
+            text-align: right;
+            width: 62px;
+        }
+
+        #detail .tb-key dd {
+            float: left;
+            width: 338px;
+        }
+
+        #detail .tb-key li {
+            background-color: #FFFFFF;
+            float: left;
+            line-height: 20px;
+            margin: 0 4px 4px 0;
+            padding: 1px;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        #detail .tb-key li a {
+            background-color: #FFFFFF;
+            border: 1px solid #C8C9CD;
+            color: #000000;
+            display: block;
+            min-width: 10px;
+            padding: 0 6px;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            width: auto !important;
+        }
+
+        #detail .tb-key li span {
+            padding-left: 1px;
+        }
+
+        #detail .tb-key .tb-img li span {
+            display: block;
+            text-indent: -9999em;
+        }
+
+        .ks-clear:after {
+            content: '\20';
+            display: block;
+            height: 0;
+            clear: both;
+        }
+
+        .ks-clear {
+            *zoom: 1;
+        }
+
+        #detail .tb-attention .tb-note-title b {
+            background: transparent url("http://img01.taobaocdn.com/tps/i1/T1krl0Xk8zXXXXXXXX-194-382.png") -75px -99px no-repeat;
+            cursor: pointer;
+            height: 8px;
+            margin: 8px 10px 8px 0;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            text-indent: 90px;
+            top: 0;
+            width: 8px;
+            z-index: 10;
+        }
+    </style>
+    <h2>Dialog - 从 Markup 中构建</h2>
+    <button id="btn3">选择</button>
+
+    <div class="tb-key tb-attention" id="choose">
+        <div class="tb-skin tb-naked">
+            <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息 <b class="J_PanelCloser"></b></p>
+            <div class="ks-stdmod-body">
+                <dl class="tb-prop ks-clear">
+                    <dt>尺　　码：</dt>
+                    <dd>
+                        <ul data-property="尺码" class="ks-clear J_TSaleProp  ">
+                            <li data-value="20503:3271530"><a href="#"><span>M</span></a></li>
+
+                            <li data-value="20503:3271531"><a href="#"><span>L</span></a></li>
+                            <li data-value="20503:3267945"><a href="#"><span>XL</span></a></li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl class="tb-prop ks-clear">
+                    <dt>颜　　色：</dt>
+                    <dd>
+
+                        <ul data-property="颜色" class="ks-clear J_TSaleProp tb-img  ">
+                            <li data-value="1627207:3232483" title="TX043 白色">
+                                <a href="#" style="background:url(http://img01.taobaocdn.com/bao/uploaded/i1/290649218/T2DaRjXllMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
+                                    <span>TX043 白色</span>
+                                </a>
+                            </li>
+                            <li data-value="1627207:3232484" title="TX043 蓝色">
+                                <a href="#" style="background:url(http://img04.taobaocdn.com/bao/uploaded/i4/290649218/T2OqJjXlpMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
+                                    <span>TX043 蓝色</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
             </div>
         </div>
-        <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
+
     </div>
+    <script>
+        KISSY.ready(function(S) {
+            var d = new S.Dialog({
+                srcNode: "#choose",
+                width: 480,
+                closable: false,
+                align: {
+                    node: "#btn3",
+                    points: ['tr', 'cl']
+                }
+            });
+            S.one('#btn3').on('click', function() {
+                d.show();
+            });
+            S.one('#detail .J_PanelCloser').on('click', function() {
+                d.hide();
+            });
+        });
+
+    </script>
+    <p class="code-switch">显示源码</p>
 </div>
-<script>
-    KISSY.ready(function(S) {
-        var d = new S.Dialog({
-            srcNode: "#markupDialog",
-            width:400
-        });
 
-        S.one("#btn3").on("click", function() {
-            d.render();
-            d.center();
-            d.show();
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
+<div class="section">
 
-
-<h2>Dialog - 新建 + Mask</h2>
-<button id="btn4">Show</button>
-<script>
-    KISSY.ready(function(S) {
-        var dialog = new S.Dialog({
-            width: 400,
-            bodyStyle:{
-                height: 300
-            },
-            headerContent: 'this is title',
-            footerContent: 'footer',
-            bodyContent: 'content',
-            mask: true
+    <h2>Dialog - 新建 + Mask</h2>
+    <button id="btn4">收藏</button>
+    <script>
+        KISSY.ready(function(S) {
+            var dialog = new S.Dialog({
+                width: 400,
+                headerContent: '收藏',
+                bodyContent: '<iframe scrolling="no" height="200" width="398" frameborder="0" name="popupIframe" src="http://favorite.taobao.com/popup/add_collection.htm?id=10166801469&amp;itemtype=1&amp;scjjc=1&amp;_tb_token_=3b38ed73a7775&amp;t=1305543755536"></iframe>',
+                mask: true,
+                align: {
+                    points: ['cc', 'cc']
+                },
+                draggable: false
+            });
+            S.one('#btn4').on('click', function() {
+                dialog.show();
+            });
         });
-        S.one("#btn4").on("click", function() {
-            dialog.render();
-            dialog.center();
-            dialog.show();
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
-
-<style>
-    .constrain {
-        border: 4px solid gray;
-        width: 600px;
-        height: 400px;
-    }
-</style>
-<h2>Dialog Constrain</h2>
-<div class="constrain" id="c1">
-    constrain area
-    <select>
-        <option> hello world </option>
-    </select>
+    </script>
+    <p class="code-switch">显示源码</p>
 </div>
-<button id="btn6">show</button>
-<button id="btn7">release</button>
-<button id="btn8">constrain</button>
-<script>
-    KISSY.ready(function(S) {
-        var dialog = new S.Dialog({
-            width: 400,
-            bodyStyle:{
-                height: 100
-            },
-            headerContent: 'this is title',
-            footerContent: 'footer',
-            bodyContent: 'content',
-            mask: false,
-            align: {
-                node: '#c1',
-                points: ['cc', 'cc']
-            },
-            constrain: '#c1',
-            draggable: true
-        });
-
-        var stat = ['release', 'constrain'],
-                sh = ['show', 'hide'];
-        S.Event.on('#btn6', 'click', function() {
-            dialog.show();
-            dialog.set("align", {
-                node: '#c1',
-                points: ['cc', 'cc']
-            });
-        });
-
-
-        S.Event.on('#btn7', 'click', function() {
-            var b = this,
-                    s = S.DOM.html(b);
-            dialog.set('constrain', false);
-        });
-
-        S.Event.on('#btn8', 'click', function() {
-            var b = this,
-                    s = S.DOM.html(b);
-            dialog.set('constrain', "#c1");
-            dialog.set("align", {
-                node: '#c1',
-                points: ['cc', 'cc']
-            });
-        });
-
-    });
-</script>
-<p class="code-switch">显示源码</p>
-
-
-
-<h2>Dialog fixed 居中</h2>
-<button id="btn5">Show</button>
-<script>
-    KISSY.ready(function(S) {
-        var dialog = new S.Dialog({
-            width: 400,
-            bodyStyle:{
-                height: 300
-            },
-            elStyle:{
-              position:S.UA.ie==6?"absolute":"fixed"
-            },
-            headerContent: 'this is title',
-            footerContent: 'footer',
-            bodyContent: 'content',
-            mask: true,
-            draggable:false
-        });
-        S.one("#btn5").on("click", function() {
-            dialog.render();
-            dialog.center();
-            dialog.show();
-        });
-        if(S.UA.ie==6){
-            S.Event.on(window,"scroll",function(){
-                if(dialog.get("visible"))
-                dialog.center();
-            });
+<div class="section">
+    <style>
+        .constrain {
+            border: 4px solid gray;
+            width: 600px;
+            height: 400px;
         }
-    });
-</script>
-<p class="code-switch">显示源码</p>
+    </style>
+    <h2>Dialog + 限制</h2>
+    <div class="constrain" id="c1">
+        <select>
+            <option> hello world</option>
+        </select>
+    </div>
+    <button id="btn6">显示</button>
+    <button id="btn7">释放</button>
+    <button id="btn8">限制</button>
+    <!--<button id="btnHA">隐藏页面上所有的对话框</button>-->
+    <script>
+        KISSY.ready(function(S) {
+            var stat = true,
+                sh = false;
 
+            var dialog = new S.Dialog({
+                width: 400,
+                bodyStyle:{
+                    height: 100
+                },
+                mask: false,
+                align: {
+                    node: '#c1',
+                    points: ['cc', 'cc']
+                },
+                constrain: '#c1',
+                draggable: true
+            });
+            dialog.on('show', function() {
+                if (stat) {
+                    this.set('bodyContent', '我的位置只能在容器中');
+                } else {
+                    this.set('bodyContent', '我自由啦');
+                }
+            });
+
+            S.one('#btn6').on('click', function() {
+                if (!sh) {
+                    dialog.show();
+                    dialog.set("align", {
+                        node: '#c1',
+                        points: ['cc', 'cc']
+                    });
+                    this.html('隐藏');
+                } else {
+                    dialog.hide();
+                    this.html('显示');
+                }
+                sh = !sh;
+            });
+
+
+            S.one('#btn7').on('click', function() {
+                var b = this,
+                        s = S.DOM.html(b);
+                dialog.set('constrain', false);
+                stat = false;
+                dialog.set('bodyContent', '我自由啦');
+            });
+
+            S.one('#btn8').on('click', function() {
+                var b = this,
+                        s = S.DOM.html(b);
+                dialog.set('constrain', "#c1");
+                dialog.set("align", {
+                    node: '#c1',
+                    points: ['cc', 'cc']
+                });
+                stat = true;
+                dialog.set('bodyContent', '我的位置只能在容器中');
+            });
+
+            /*S.one('#btnHA').on('click', function() {
+                S.DialogManager.hideAll();
+            });*/
+        });
+    </script>
+    <p class="code-switch">显示源码</p>
+</div>
+<div class="section">
+    <style>
+        .my .ks-stdmod-header, .my .ks-stdmod-footer {
+            display: none;
+        }
+
+        .my .ks-stdmod-body {
+            line-height: 0;
+        }
+    </style>
+    <h2>Dialog + fixed 居中</h2>
+    <button id="btn5">我在可视区域的正中间</button>
+    <script>
+        KISSY.ready(function(S) {
+            var dialog = new S.Dialog({
+                elCls: 'my',
+                elStyle:{
+                    position:S.UA.ie == 6 ? "absolute" : "fixed"
+                },
+                bodyContent: '<img src="http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" />',
+                mask: true,
+                draggable: true,
+                align: {
+                    points: ['cc', 'cc']
+                }
+            });
+
+            S.one('#btn5').on('click', function() {
+                dialog.show();
+            });
+            if (S.UA.ie == 6) {
+                S.Event.on(window, "scroll", function() {
+                    if (dialog.get("visible"))
+                        dialog.center();
+                });
+            }
+        });
+    </script>
+    <p class="code-switch">显示源码</p>
+</div>
 <script>
     (function() {
         var S = KISSY, DOM = S.DOM,
@@ -393,7 +662,7 @@
                         next = p.next(),
                         pre = next;
 
-                if (next[0].nodeName !== 'PRE') {
+                if (!next || next[0].nodeName !== 'PRE') {
                     pre = S.Node('<pre>');
 
                     pre.attr('class', 'code')
