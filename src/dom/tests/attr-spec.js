@@ -1,3 +1,7 @@
+/**
+ * test cases for attribute sub module of dom module
+ * @author:yiminghe@gmail.com
+ */
 KISSY.use("dom", function(S, DOM) {
 
     S.get = DOM.get;
