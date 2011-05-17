@@ -1,0 +1,417 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Popup</title>
+<link rel="shortcut icon" href="../../../../kissy-dpl/base/assets/favicon.ico"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/reset.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/kissy-docs.css"/>
+
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/loading.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
+
+<script src="../../../build/kissy-min.js"></script>
+<script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
+</head>
+<body>
+<div id="header">
+    <h1 class="logo"><a alt="KISSY" href="http://kissyui.com/"><img src="../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
+    <div class="sub-title">Overlay</div>
+    <ul class="navigation">
+        <li><a href="http://blog.kissyui.com/">博客</a></li>
+        <li><a href="http://github.com/kissyteam">源码</a></li>
+    </ul>
+
+</div>
+<div id="content" class="form">
+<div class="s-crumbs">
+    <span>当前位置：</span>
+    <a href="http://kissyui.com/">KISSY</a>
+    <a href="http://docs.kissyui.com/docs/html/api/component/overlay/#">Overlay</a>
+    <span>Popup</span>
+</div>
+        <pre class="s-section">
+作者：乔花(qiaohua@taobao.com)
+功能：弹出层
+源码：<a href="../popup.js">popup.js</a></pre>
+
+<link rel="stylesheet" href="../assets/cool.css"/>
+
+<h3 class="s-title">Popup - 从 Markup 中构建</h3>
+<div class="s-section">
+    <div class="s-demo">
+        <style>
+            .popup {
+                position: absolute;
+                z-index: 50;
+                border-collapse: collapse;
+                visibility: hidden;
+            }
+
+            .popup td.corner {
+                height: 15px;
+                width: 19px;
+            }
+
+            .popup td#topleft {
+                background-image: url(../assets/bubble-1.png);
+            }
+
+            .popup td.top {
+                background-image: url(../assets/bubble-2.png);
+            }
+
+            .popup td#topright {
+                background-image: url(../assets/bubble-3.png);
+            }
+
+            .popup td.left {
+                background-image: url(../assets/bubble-4.png);
+            }
+
+            .popup td.right {
+                background-image: url(../assets/bubble-5.png);
+            }
+
+            .popup td#bottomleft {
+                background-image: url(../assets/bubble-6.png);
+            }
+
+            .popup td.bottom {
+                background-image: url(../assets/bubble-7.png);
+                text-align: center;
+            }
+
+            .popup td.bottom img {
+                display: block;
+                margin: 0 auto;
+            }
+
+            .popup td#bottomright {
+                background-image: url(../assets/bubble-8.png);
+            }
+
+            .popup table.popup-contents {
+                font-size: 12px;
+                line-height: 1.2em;
+                background-color: #fff;
+                color: #666;
+                font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif;
+            }
+
+            table.popup-contents th {
+                text-align: right;
+                text-transform: lowercase;
+            }
+
+            table.popup-contents td {
+                text-align: left;
+            }
+
+            tr#release-notes th {
+                text-align: left;
+                text-indent: -9999px;
+                background: url(../assets/starburst.gif) no-repeat top right;
+                height: 17px;
+            }
+
+            tr#release-notes td a {
+                color: #333;
+            }
+
+        </style>
+        <a href="#"><img id="img-download" src="../assets/nav-download.png"/></a>
+        <table class="popup" id="dpop">
+            <tr>
+                <td class="corner" id="topleft"></td>
+
+                <td class="top"></td>
+                <td class="corner" id="topright"></td>
+            </tr>
+
+            <tr>
+                <td class="left"></td>
+                <td>
+
+                    <table class="popup-contents">
+                        <tr>
+                            <th>File:</th>
+
+                            <td>coda 1.7.zip</td>
+                        </tr>
+                        <tr>
+                            <th>Date:</th>
+                            <td>11/5/10</td>
+                        </tr>
+                        <tr>
+
+                            <th>Size:</th>
+                            <td>20 MB</td>
+                        </tr>
+                        <tr>
+                            <th>Req:</th>
+                            <td>Mac OS X 10.4+</td>
+                        </tr>
+
+                        <tr id="release-notes">
+                            <th>Read the release notes:</th>
+                            <td><a href="#" title="Read the release notes">release notes</a></td>
+                        </tr>
+                    </table>
+
+                </td>
+                <td class="right"></td>
+            </tr>
+
+
+            <tr>
+                <td id="bottomleft" class="corner"></td>
+                <td class="bottom"><img src="../assets/bubble-tail2.png" width="30" height="29" alt="popup tail"/></td>
+                <td class="corner" id="bottomright"></td>
+            </tr>
+        </table>
+        <script>
+            KISSY.use('node,overlay', function(S, Node, O) {
+
+                var popup = new O.Popup(Node.one("#dpop"), {
+                    trigger: '#img-download',
+                    triggerType: 'mouse',
+                    align: {
+                        node: '#img-download',
+                        points: ['tc', 'bc'],
+                        offset: [0, 50]
+                    }
+                });
+            });
+        </script>
+    </div>
+    <a class="s-view-code" href="#">显示源码</a>
+</div>
+
+<h3 class="s-title">Popup - 新建 Markup </h3>
+<div class="s-section">
+    <div class="s-demo">
+        <style>
+            #link2, #link2 img {
+                display: inline-block;
+                line-height: 0;
+            }
+
+            .popup2 {
+                background: #444;
+                opacity: 0.7;
+                filter: alpha(opacity = 70);
+                text-align: center;
+            }
+        </style>
+        <a id="link2" href="#"><img src="http://img02.taobaocdn.com/bao/uploaded/i2/T1HTSaXiFsXXaMnuYb_093636.jpg_160x160.jpg"/></a>
+        <script>
+            KISSY.use('node,overlay', function(S, Node, O) {
+
+                var popup = new O.Popup({
+                    trigger: '#link2',
+                    triggerType: 'mouse',
+                    elCls: 'popup2',
+                    align: {
+                        node: '#link2',
+                        points: ['tl', 'tl']
+                    },
+                    width: Node.one('#link2').width(),
+                    height: Node.one('#link2').height()
+                });
+            });
+        </script>
+    </div>
+    <a class="s-view-code" href="#">显示源码</a>
+</div>
+
+<h3 class="s-title">多个触发元素公用一个 Popup</h3>
+<div class="s-section">
+    <div class="s-demo">
+        <style>
+            .shop-rank {
+                width: 300px;
+                font-size: 12px;
+            }
+
+            .shop-rank  li {
+                border-bottom: 1px dashed #EEEEEE;
+                height: 42px;
+                overflow: hidden;
+                padding: 9px 0;
+            }
+
+            .shop-rank .pic {
+                border: 1px solid #CCCCCC;
+                float: left;
+                height: 40px;
+                margin-right: 10px;
+                text-align: center;
+                width: 40px;
+            }
+
+            .shop-rank .pic a {
+                display: table-cell;
+                height: 40px;
+                text-align: center;
+                vertical-align: middle;
+                width: 40px;
+            }
+
+            .shop-rank .pic img {
+                vertical-align: middle;
+            }
+
+            .shop-rank .desc, .shop-rank .price {
+                float: left;
+                height: 14px;
+                line-height: 1.2;
+                overflow: hidden;
+                text-align: left;
+                width: 120px;
+            }
+
+            .shop-rank .collecter, .shop-rank .sale {
+                float: left;
+                line-height: 1.4;
+                overflow: hidden;
+                width: 120px;
+            }
+
+            #popup3 {
+                display: none;
+                background: white;
+                border: 1px solid orange;
+                width: 100px;
+                height: 100px;
+            }
+        </style>
+        <div class="shop-rank" id="multi">
+            <ul>
+                <li>
+                    <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=3231736190"><img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_40x40.jpg" bigpicurl="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_120x120.jpg"></a></div>
+                    <div class="desc"><a target="_blank" title="他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款" href="http://item.taobao.com/item.htm?id=3231736190">他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款</a></div>
+                    <div class="price"><i></i>298.00元 i7/T1ftRxXnRvXXalxZ.T_010955.jpg</div>
+                    <div class="sale"><i></i>已售出 <strong>3799</strong> 笔</div>
+                </li>
+                <li>
+                    <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=9543317408"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_40x40.jpg" bigpicurl="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_120x120.jpg"></a></div>
+                    <div class="desc"><a target="_blank" title="百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D" href="http://item.taobao.com/item.htm?id=9543317408">百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D</a></div>
+                    <div class="price"><i></i>458.00元 i1/T1n_p9Xm4jXXcYEmEY_030526.jpg</div>
+                    <div class="sale"><i></i>已售出 <strong>1815</strong> 笔</div>
+                </li>
+                <li>
+                    <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=9138154640"><img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_40x40.jpg" bigpicurl="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_120x120.jpg"></a></div>
+                    <div class="desc"><a target="_blank" title="商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15" href="http://item.taobao.com/item.htm?id=9138154640">商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15</a></div>
+                    <div class="price"><i></i>358.00元 i7/T1aJXZXfFsXXbGzYHb_092930.jpg</div>
+                    <div class="sale"><i></i>已售出 <strong>1587</strong> 笔</div>
+                </li>
+                <li>
+                    <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=9172959292"><img src="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_40x40.jpg" bigpicurl="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_120x120.jpg"></a></div>
+                    <div class="desc"><a target="_blank" title="他她tata 2011春季超高跟防水台女单鞋 J53-8D" href="http://item.taobao.com/item.htm?id=9172959292">他她tata 2011春季超高跟防水台女单鞋 J53-8D</a></div>
+                    <div class="price"><i></i>398.00元 i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg</div>
+                    <div class="sale"><i></i>已售出 <strong>1583</strong> 笔</div>
+                </li>
+                <li>
+                    <div class="pic"><a target="_blank" href="http://item.taobao.com/item.htm?id=5057404618"><img src="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_40x40.jpg" bigpicurl="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_120x120.jpg"></a></div>
+                    <div class="desc"><a target="_blank" title="百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D" href="http://item.taobao.com/item.htm?id=5057404618">百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D</a></div>
+                    <div class="price"><i></i>298.00元 i8/T1wSFAXoxdXXbtWvsU_014508.jpg</div>
+                    <div class="sale"><i></i>已售出 <strong>1547</strong> 笔</div>
+                </li>
+            </ul>
+        </div>
+        <script>
+            KISSY.use("node, overlay",  function(S, Node, Overlay) {
+                var popup = new Overlay({
+                    elStyle:{
+                        border:"2px solid gray",
+                        lineHeight: 0
+                    },
+                    width: 120,
+                    height: 120,
+                    effect: {
+                            effect:"slide",//"fade",
+                            duration:0.5
+                        }
+                });
+                // 注意：使用定制的显示/隐藏方式
+                Node.List.all('#multi img').each(function(t) {
+                    t = new Node(t);
+                    t.on("mouseenter", function() {
+                        popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
+                        popup.set('align', {
+                            node: t,
+                            points: ["tr","tl"]
+                        });
+                        popup.show();
+                    });
+                    t.on("mouseleave", function() {
+                        popup.hide();
+                    });
+                });
+            });
+        </script>
+
+    </div>
+    <a class="s-view-code" href="#">显示源码</a>
+</div>
+
+<h3 class="s-title">Popup - 异步加载 Popup</h3>
+<div class="s-section">
+    <div class="s-demo">
+        <button id="btn1" class="button">Show</button>
+        <button id="btn2" class="button">Hide</button>
+
+        <script>
+            //最简单好用的！
+            var node = document.createElement("div");
+            node.innerHTML = '<div class="loading" style="width:600px;height:200px;"> '
+                    + '<div class="mask"></div> '
+                    + '<i class="icon">加载中，请稍候…</i> '
+                    + '</div>';
+            KISSY.use('ua,event,node,overlay', function(S, UA, Event, Node, O) {
+                var popup = new O.Popup({
+                    content: node,
+                    width: 600,
+                    height: 200,
+                    elStyle:{
+                        position:UA.ie == 6 ? "absolute" : "fixed"
+                    },
+                    align: {
+                        points: ['cc', 'cc']
+                    },
+                    effect: {
+                            effect:"fade",
+                            duration:0.5
+                        }
+                });
+                Node.one('#btn1').on('click', function() {
+                    popup.show();
+                });
+                Node.one('#btn2').on('click', function() {
+                    popup.hide();
+                });
+                if (UA.ie == 6) {
+                    Event.on(window, "scroll", function() {
+                        if (popup.get("visible"))
+                            popup.center();
+                    });
+                }
+            });
+        </script>
+    </div>
+    <a class="s-view-code" href="#">显示源码</a>
+</div>
+
+
+<h3 class="s-title">API</h3>
+<div class="s-section">
+    <h4 class="s-api-title"><a href="http://docs.kissyui.com/docs/html/api/component/overlay/">详细见这</a></h4>
+</div>
+
+</div>
+<div id="footer">
+    &copy; Copyright 2010~2011, KISSY Team.
+</div>
+</body>
+</html>

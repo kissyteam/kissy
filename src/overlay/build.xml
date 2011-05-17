@@ -15,6 +15,7 @@
             <path path="overlay.js"/>
             <path path="dialogrender.js"/>
             <path path="dialog.js"/>
+            <path path="popup.js"/>
             <path path="../overlay.js"/>
         </concat>
     </target>
