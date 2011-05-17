@@ -84,8 +84,9 @@ KISSY.add("uibase/position", function(S) {
          * 显示 Overlay
          */
         show: function() {
-            this.render();
-            this.set("visible", true);
+            var self = this;
+            self.render();
+            self.set("visible", true);
         },
 
         /**

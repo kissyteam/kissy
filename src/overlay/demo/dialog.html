@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="../../../../kissy-dpl/base/assets/reset.css"/>
 <link rel="stylesheet" href="../../../../kissy-dpl/base/assets/kissy-docs.css"/>
 
-    <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
-<script src="../../../build/kissy-min.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
 <body>
@@ -30,7 +30,7 @@
     <span>Dialog</span>
 </div>
         <pre class="s-section">
-作者：乔花(qiaohua@taobao.com)
+作者：乔花(qiaohua@taobao.com),承玉(yiminghe@gmail.com)
 功能：对话框
 源码：<a href="../dialog.js">dialog.js</a></pre>
 
@@ -40,6 +40,7 @@
 <div class="s-section">
     <div class="s-demo">
         <button id="btn4" class="button">收藏</button>
+        <button id="btn41" class="button">destroy</button>
         <script>
             KISSY.use("node,overlay", function(S, Node, O) {
                 var dialog = new O.Dialog({
@@ -54,6 +55,11 @@
                 });
                 Node.one('#btn4').on('click', function() {
                     dialog.show();
+                });
+
+                Node.one('#btn41').on('click', function() {
+                    dialog.destroy();
+                    Node.one('#btn4').detach();
                 });
             });
         </script>
@@ -145,24 +151,21 @@
                 *zoom: 1;
             }
 
-            #detail .tb-attention .tb-note-title b {
+            #detail .tb-attention .ks-ext-close .ks-ext-close-x {
                 background: transparent url("http://img01.taobaocdn.com/tps/i1/T1krl0Xk8zXXXXXXXX-194-382.png") -75px -99px no-repeat;
-                cursor: pointer;
                 height: 8px;
-                margin: 8px 10px 8px 0;
-                overflow: hidden;
-                position: absolute;
-                right: 0;
-                text-indent: 90px;
-                top: 0;
-                width: 8px;
-                z-index: 10;
+            }
+
+            #detail .tb-attention .ks-ext-close, #detail .tb-attention .ks-ext-close:hover {
+                background: none;
+                border: none;
             }
         </style>
         <button id="btn3" class="button">选择</button>
 
         <div class="tb-key tb-attention" id="choose">
-            <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息 <b class="J_PanelCloser"></b></p>
+            <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息
+            </p>
             <div class="ks-stdmod-body tb-skin">
                 <dl class="tb-prop ks-clear">
                     <dt>尺　　码：</dt>
@@ -200,22 +203,20 @@
                 var d = new O.Dialog({
                     srcNode: "#choose",
                     width: 480,
-                    closable: false,
+                    closable: true,
                     align: {
                         node: "#btn3",
                         points: ['tr', 'cl']
                     },
                     effect: {
-                            effect:"slide",//"fade",
-                            duration:0.5
-                        }
+                        effect:"slide",//"fade",
+                        duration:0.5
+                    }
                 });
                 Node.one('#btn3').on('click', function() {
                     d.show();
                 });
-                Node.one('#detail .J_PanelCloser').on('click', function() {
-                    d.hide();
-                });
+
             });
 
         </script>
@@ -244,7 +245,7 @@
         <script>
             KISSY.use("node,overlay,dd,resizable", function(S, Node, O, DD, R) {
                 var stat = true,
-                    sh = false;
+                        sh = false;
 
                 var dialog = new O.Dialog({
                     width: 400,
@@ -331,11 +332,16 @@
         <script>
             KISSY.use("ua,event,node,overlay", function(S, UA, Event, Node, O) {
                 var dialog = new O.Dialog({
+                    width:424,
                     elCls: 'my',
                     elStyle:{
                         position: UA.ie == 6 ? "absolute" : "fixed"
                     },
-                    bodyContent: '<img src="http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" />',
+                    <!-- width height 一定要设-->
+                    bodyContent: '<img '
+                            + 'width="424" '
+                            + 'height="282" '
+                            + 'src="http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" />',
                     mask: true,
                     draggable: true,
                     align: {
@@ -372,22 +378,25 @@
                 overflow: hidden;
             }
         </style>
-        <div id="btn18" tabindex="0"><img width="50" height="50" src="http://img04.taobaocdn.com/tps/i4/T1QaObXfRoXXXXXXXX-130-130.jpg" /></div>
+        <div id="btn18" tabindex="0"><img width="50" height="50"
+                                          src="http://img04.taobaocdn.com/tps/i4/T1QaObXfRoXXXXXXXX-130-130.jpg"/></div>
         <script>
-            KISSY.use("ua,event,overlay", function(S, UA, Event) {
-                var Node = S.require("node/node"),
-                        DOM = S.require("dom"),
-                        Overlay = S.require("overlay/overlay"),
-                        Dialog = S.require("overlay/dialog");
+            KISSY.use("dom,node,ua,event,overlay", function(S, DOM, Node, UA, Event, Overlay) {
+                var Dialog = Overlay.Dialog;
 
                 S.ready(function(S) {
 
                     var dialog = new Dialog({
+                          width:424,
                         elCls: 'my',
                         elStyle:{
                             overflow:'hidden'
                         },
-                        bodyContent:'<img src="http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" />'
+                        <!-- width height 一定要设-->
+                        bodyContent:'<img '
+                                + 'width="424" '
+                                + 'height="282" '
+                                + 'src = "http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" / > '
                     });
 
                     var b = Node.one("#btn18");
@@ -403,51 +412,54 @@
                             bt = bo.top,
                             bw = b.width(),
                             bh = b.height();
+
                     dialog.on("afterVisibleChange", function(ev) {
                         var v = ev.newVal,el = dialog.get("el");
+
+                        //setTimeout(function() {
                         if (v && !ow) {
                             ow = el.width();
                             oh = el.height();
                         }
 
-                        setTimeout(function() {
-                            el.stopAnimate();
-                            running = true;
-                            if (v) {
-                                el.width(bw);
-                                el.height(bh);
-                                el.offset(b.offset());
+                        el.stopAnimate();
+                        running = true;
+                        if (v) {
+                            el.width(bw);
+                            el.height(bh);
+                            el.offset(b.offset());
 
-                                var d = {
-                                    left:(DOM.viewportWidth() - ow) / 2 + DOM.scrollLeft() + "px",
-                                    top:(DOM.viewportHeight() - oh) / 2 + DOM.scrollTop() + "px",
-                                    width:ow + "px",
-                                    height:oh + "px"
-                                };
+                            var d = {
+                                left:(DOM.viewportWidth() - ow) / 2 + DOM.scrollLeft() + "px",
+                                top:(DOM.viewportHeight() - oh) / 2 + DOM.scrollTop() + "px",
+                                width:ow + "px",
+                                height:oh + "px"
+                            };
 
-                                el.animate(d, 0.3, undefined, function() {
-                                    running = false;
-                                });
-                            } else {
-                                el.css("visibility", "visible");
+                            el.animate(d, 0.3, undefined, function() {
+                                running = false;
+                            });
+                        } else {
+                            el.css("visibility", "visible");
 
-                                el.animate({
-                                    left:bl + "px",
-                                    top:bt + "px",
-                                    width:bw + "px",
-                                    height:bh + "px"
-                                }, 0.3, undefined, function() {
-                                    el.css("visibility", "hidden");
-                                    running = false;
-                                });
-                            }
+                            el.animate({
+                                left:bl + "px",
+                                top:bt + "px",
+                                width:bw + "px",
+                                height:bh + "px"
+                            }, 0.3, undefined, function() {
+                                el.css("visibility", "hidden");
+                                running = false;
+                            });
+                        }
 
-                        }, 10);
+                        // }, 100);
 
 
                     });
                 });
-            });
+            })
+                    ;
         </script>
 
     </div>

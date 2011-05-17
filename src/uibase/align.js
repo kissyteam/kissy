@@ -22,12 +22,11 @@ KISSY.add('uibase/align', function(S, DOM) {
 
     Align.ATTRS = {
         align: {
-            /*
-             value:{
-             node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-             points: [AlignExt.CC, AlignExt.CC], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-             offset: [0, 0]      // 有效值为 [n, m]
-             }*/
+            value:{
+                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                offset: [0, 0]      // 有效值为 [n, m]
+            }
         }
     };
 
