@@ -198,6 +198,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
         }
         setTabIndex(trigger, "0");
 
+        // move focus to current trigger if invoked by dom event
         if (domEvent) {
             trigger.focus();
         }
