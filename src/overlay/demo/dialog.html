@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8"/>
 <title>KISSY Dailog</title>
-<link rel="shortcut icon" href="../../../kissy-dpl/base/assets/favicon.ico"/>
-<link rel="stylesheet" href="../../../kissy-dpl/base/assets/reset.css"/>
-<link rel="stylesheet" href="../../../kissy-dpl/base/assets/kissy-docs.css"/>
+<link rel="shortcut icon" href="../../../../kissy-dpl/base/assets/favicon.ico"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/reset.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/kissy-docs.css"/>
 
-    <link rel="stylesheet" href="../../../kissy-dpl/base/build/css/form.css"/>
+    <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
-<script src="../../build/kissy-min.js"></script>
-<script src="../../../kissy-dpl/base/assets/kissy-docs.js"></script>
+<script src="../../../build/kissy-min.js"></script>
+<script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
 <body>
 <div id="header">
-    <h1 class="logo"><a alt="KISSY" href="http://kissyui.com/"><img src="../../../kissy-dpl/base/assets/logo.png"/></a></h1>
+    <h1 class="logo"><a alt="KISSY" href="http://kissyui.com/"><img src="../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
     <div class="sub-title">Overlay</div>
     <ul class="navigation">
         <li><a href="http://blog.kissyui.com/">博客</a></li>
@@ -26,44 +26,43 @@
 <div class="s-crumbs">
     <span>当前位置：</span>
     <a href="http://kissyui.com/">KISSY</a>
-    <a href="#">Overlay</a>
+    <a href="http://docs.kissyui.com/docs/html/api/component/overlay/">Overlay</a>
     <span>Dialog</span>
 </div>
         <pre class="s-section">
 作者：乔花(qiaohua@taobao.com)
 功能：对话框
-源码：<a href="dialog.js">dialog.js</a></pre>
+源码：<a href="../dialog.js">dialog.js</a></pre>
 
-<script src="../uibase/uibase.js"></script>
-<script src="../uibase/uibase-box.js"></script>
-<script src="../uibase/uibase-contentbox.js"></script>
-<script src="../uibase/uibase-position.js"></script>
+<script src="../../uibase/uibase.js"></script>
+<script src="../../uibase/uibase-box.js"></script>
+<script src="../../uibase/uibase-contentbox.js"></script>
+<script src="../../uibase/uibase-position.js"></script>
 
-<script src="../uibase/uibase-shim.js"></script>
-<script src="../uibase/uibase-mask.js"></script>
-<script src="../uibase/uibase-align.js"></script>
-<script src="../uibase/uibase-loading.js"></script>
-<!--<script src="overlay-effect.js"></script>-->
-<script src="overlay.js"></script>
-<script src="../dd/ddm.js"></script>
-<script src="../dd/draggable.js"></script>
-<script src="../uibase/uibase-stdmod.js"></script>
+<script src="../../uibase/uibase-shim.js"></script>
+<script src="../../uibase/uibase-mask.js"></script>
+<script src="../../uibase/uibase-align.js"></script>
+<script src="../../uibase/uibase-loading.js"></script>
+<!--<script src="../overlay-effect.js"></script>-->
+<script src="../overlay.js"></script>
+<script src="../../dd/ddm.js"></script>
+<script src="../../dd/draggable.js"></script>
+<script src="../../uibase/uibase-stdmod.js"></script>
 
-<script src="../uibase/uibase-close.js"></script>
-<script src="../uibase/uibase-drag.js"></script>
-<script src="../uibase/uibase-constrain.js"></script>
-<script src="dialog.js"></script>
-<script src="popup.js"></script>
+<script src="../../uibase/uibase-close.js"></script>
+<script src="../../uibase/uibase-drag.js"></script>
+<script src="../../uibase/uibase-constrain.js"></script>
+<script src="../dialog.js"></script>
+<script src="../popup.js"></script>
 
-<link rel="stylesheet" href="assets/cool.css"/>
+<link rel="stylesheet" href="../assets/cool.css"/>
 <!--
-<script src="../../build/uibase/uibase-pkg-min.js"></script>
-<script src="../../build/overlay/overlay-pkg-min.js"></script>-->
+<script src="../../../build/uibase/uibase-pkg-min.js"></script>
+<script src="../../../build/overlay/overlay-pkg-min.js"></script>-->
 
-<h3 class="s-title">使用实例</h3>
+<h3 class="s-title">Dialog - 新建 + Mask</h3>
 <div class="s-section">
     <div class="s-demo">
-        <h4>Dialog - 新建 + Mask</h4>
         <button id="btn4" class="button">收藏</button>
         <script>
             KISSY.ready(function(S) {
@@ -86,6 +85,7 @@
     <a class="s-view-code" href="#">显示源码</a>
 </div>
 
+<h3 class="s-title">Dialog - 从 Markup 中构建</h3>
 <div class="s-section" id="detail">
     <div class="s-demo">
         <style>
@@ -123,7 +123,7 @@
                 float: left;
                 margin-top: 4px;
                 text-align: right;
-                width: 62px;
+                width: 82px;
             }
 
             #detail .tb-key dd {
@@ -188,7 +188,6 @@
                 z-index: 10;
             }
         </style>
-        <h4>Dialog - 从 Markup 中构建</h4>
         <button id="btn3" class="button">选择</button>
 
         <div class="tb-key tb-attention" id="choose">
@@ -253,6 +252,7 @@
     <a class="s-view-code" href="#">显示源码</a>
 </div>
 
+<h3 class="s-title">Dialog + 限制</h3>
 <div class="s-section">
     <div class="s-demo">
         <style>
@@ -263,7 +263,6 @@
                 margin-bottom: 10px;
             }
         </style>
-        <h4>Dialog + 限制</h4>
         <div class="constrain" id="c1">
         </div>
         <button id="btn6" class="button">显示</button>
@@ -342,6 +341,7 @@
     <a class="s-view-code" href="#">显示源码</a>
 </div>
 
+<h3 class="s-title">Dialog + fixed 居中</h3>
 <div class="s-section">
     <div class="s-demo">
         <style>
@@ -353,7 +353,6 @@
                 line-height: 0;
             }
         </style>
-        <h4>Dialog + fixed 居中</h4>
         <button id="btn5" class="button">我在可视区域的正中间</button>
         <script>
             KISSY.ready(function(S) {
@@ -387,7 +386,7 @@
 
 <h3 class="s-title">API</h3>
 <div class="s-section">
-    <h4 class="s-api-title"><a href="http://docs.kissyui.com/docs/html/api/component/overlay/overlay.html">详细见这</a></h4>
+    <h4 class="s-api-title"><a href="http://docs.kissyui.com/docs/html/api/component/overlay/">详细见这</a></h4>
 </div>
 
 </div>
