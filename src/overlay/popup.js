@@ -37,8 +37,6 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
     }
 
     S.extend(Popup, Overlay);
-    S.Popup = Popup;
-
 
     S.augment(Popup, S.EventTarget, {
         _init: function() {
@@ -114,6 +112,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
         }
     });
 
+    return Popup;
 }, {
     requires:[ "overlay/overlay"]
 });

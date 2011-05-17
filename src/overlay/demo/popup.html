@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="../../../../kissy-dpl/base/assets/reset.css"/>
 <link rel="stylesheet" href="../../../../kissy-dpl/base/assets/kissy-docs.css"/>
 
-    <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/loading.css"/>
-    <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/loading.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
 <script src="../../../build/kissy-min.js"></script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
@@ -35,31 +35,7 @@
 功能：弹出层
 源码：<a href="../popup.js">popup.js</a></pre>
 
-<script src="../../uibase/uibase.js"></script>
-<script src="../../uibase/uibase-box.js"></script>
-<script src="../../uibase/uibase-contentbox.js"></script>
-<script src="../../uibase/uibase-position.js"></script>
-
-<script src="../../uibase/uibase-shim.js"></script>
-<script src="../../uibase/uibase-mask.js"></script>
-<script src="../../uibase/uibase-align.js"></script>
-<script src="../../uibase/uibase-loading.js"></script>
-<!--<script src="../overlay-effect.js"></script>-->
-<script src="../overlay.js"></script>
-<script src="../../dd/ddm.js"></script>
-<script src="../../dd/draggable.js"></script>
-<script src="../../uibase/uibase-stdmod.js"></script>
-
-<script src="../../uibase/uibase-close.js"></script>
-<script src="../../uibase/uibase-drag.js"></script>
-<script src="../../uibase/uibase-constrain.js"></script>
-<script src="../dialog.js"></script>
-<script src="../popup.js"></script>
 <link rel="stylesheet" href="../assets/cool.css"/>
-<!--
-<script src="../../../build/uibase/uibase-pkg-min.js"></script>
-<script src="../../../build/overlay/overlay-pkg-min.js"></script>-->
-
 
 <h3 class="s-title">Popup - 从 Markup 中构建</h3>
 <div class="s-section">
@@ -195,9 +171,9 @@
             </tr>
         </table>
         <script>
-            KISSY.ready(function(S) {
+            KISSY.use('node,overlay', function(S, Node, O) {
 
-                var popup = new S.Popup(S.one("#dpop"), {
+                var popup = new O.Popup(Node.one("#dpop"), {
                     trigger: '#img-download',
                     triggerType: 'mouse',
                     align: {
@@ -230,9 +206,9 @@
         </style>
         <a id="link2" href="#"><img src="http://img02.taobaocdn.com/bao/uploaded/i2/T1HTSaXiFsXXaMnuYb_093636.jpg_160x160.jpg"/></a>
         <script>
-            KISSY.ready(function(S) {
+            KISSY.use('node,overlay', function(S, Node, O) {
 
-                var popup = new S.Popup({
+                var popup = new O.Popup({
                     trigger: '#link2',
                     triggerType: 'mouse',
                     elCls: 'popup2',
@@ -240,8 +216,8 @@
                         node: '#link2',
                         points: ['tl', 'tl']
                     },
-                    width: S.one('#link2').width(),
-                    height: S.one('#link2').height()
+                    width: Node.one('#link2').width(),
+                    height: Node.one('#link2').height()
                 });
             });
         </script>
@@ -345,21 +321,22 @@
             </ul>
         </div>
         <script>
-            KISSY.ready(function(S) {
-
-                var popup = new S.Overlay({
+            KISSY.use("node, overlay",  function(S, Node, Overlay) {
+                var popup = new Overlay({
                     elStyle:{
-                        border:"2px solid grey",
+                        border:"2px solid gray",
                         lineHeight: 0
                     },
                     width: 120,
-                    height: 120
+                    height: 120,
+                    effect: {
+                            effect:"slide",//"fade",
+                            duration:0.5
+                        }
                 });
-
-
                 // 注意：使用定制的显示/隐藏方式
-                S.each(S.all('#multi img'), function(t) {
-                    t = new S.Node(t);
+                Node.List.all('#multi img').each(function(t) {
+                    t = new Node(t);
                     t.on("mouseenter", function() {
                         popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
                         popup.set('align', {
@@ -392,26 +369,30 @@
                     + '<div class="mask"></div> '
                     + '<i class="icon">加载中，请稍候…</i> '
                     + '</div>';
-            KISSY.use("overlay/popup", function(S) {
-                var popup = new S.Popup({
+            KISSY.use('ua,event,node,overlay', function(S, UA, Event, Node, O) {
+                var popup = new O.Popup({
                     content: node,
                     width: 600,
                     height: 200,
                     elStyle:{
-                        position:S.UA.ie == 6 ? "absolute" : "fixed"
+                        position:UA.ie == 6 ? "absolute" : "fixed"
                     },
                     align: {
                         points: ['cc', 'cc']
-                    }
+                    },
+                    effect: {
+                            effect:"fade",
+                            duration:0.5
+                        }
                 });
-                S.one('#btn1').on('click', function() {
+                Node.one('#btn1').on('click', function() {
                     popup.show();
                 });
-                S.one('#btn2').on('click', function() {
+                Node.one('#btn2').on('click', function() {
                     popup.hide();
                 });
-                if (S.UA.ie == 6) {
-                    S.Event.on(window, "scroll", function() {
+                if (UA.ie == 6) {
+                    Event.on(window, "scroll", function() {
                         if (popup.get("visible"))
                             popup.center();
                     });
