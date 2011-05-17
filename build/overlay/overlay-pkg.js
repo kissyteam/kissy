@@ -74,7 +74,8 @@ KISSY.add("overlay/ariarender", function(S) {
             }
             if (name(n) == "a") {
                 reserved = true;
-            } else if (name(n) == 'input' && ! n[0].disabled) {
+            } else if ((name(n) == 'input' || name(n) == 'button')
+                && ! n[0].disabled) {
                 reserved = true;
             } else
             // 其他元素必须设 0
@@ -170,13 +171,16 @@ KISSY.add("overlay/ariarender", function(S) {
 
             var self = this;
             if (self.get("aria")) {
-                var el = self.get("el"),lastActive;
+                var el = self.get("el"),
+                    lastActive;
                 self.on("afterVisibleChange", function(ev) {
                     if (ev.newVal) {
                         lastActive = document.activeElement;
                         el[0].focus();
+                        el.attr("aria-hidden","false");
                         el.on("keydown", _onKey, self);
                     } else {
+                        el.attr("aria-hidden","true");
                         el.detach("keydown", _onKey, self);
                         lastActive && lastActive.focus();
                     }
@@ -199,12 +203,77 @@ KISSY.add("overlay/aria", function() {
             view:true
         }
     };
+
+    Aria.prototype = {
+
+        __bindUI:function() {
+            var self = this,el = self.get("view").get("el");
+            if (self.get("aria")) {
+                el.on("keydown", function(e) {
+                    if (e.keyCode === 27) {
+                        self.hide();
+                        e.halt();
+                    }
+                });
+            }
+        }
+    };
     return Aria;
+});KISSY.add("overlay/effect", function(S) {
+    var NONE = 'none';
+    var effects = {fade:["Out","In"],slide:["Up","Down"]};
+
+    function Effect() {
+    }
+
+    Effect.ATTRS = {
+        effect:{
+            value:{
+                effect:NONE,
+                duration:0.5,
+                easing:'easeOut'
+            },
+            setter:function(v) {
+                var effect = v.effect;
+                if (S.isString(effect) && !effects[effect]) {
+                    v.effect = NONE;
+                }
+            }
+
+        }
+    };
+
+    Effect.prototype = {
+
+        __bindUI:function() {
+            var self = this;
+            self.on("afterVisibleChange", function(ev) {
+                var effect = self.get("effect").effect;
+                if (effect == NONE) {
+                    return;
+                }
+                var v = ev.newVal,
+                    el = self.get("view").get("el");
+                el.stopAnimate(true);
+                el.css("visibility", "visible");
+                var m = effect + effects[effect][Number(v)];
+                el[m](self.get("effect").duration, function() {
+                    el.css("display", "block");
+                    el.css("visibility", v ? "visible" : "hidden");
+                }, self.get("effect").easing, false);
+
+            });
+        }
+    };
+
+    return Effect;
+}, {
+    requires:['anim']
 });/**
  * model and control for overlay
  * @author:yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Aria) {
+KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effect) {
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -215,13 +284,15 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Aria)
         require("loading"),
         require("align"),
         require("resize"),
-        require("mask")]);
+        require("mask"),
+        Effect
+    ]);
 
     Overlay.DefaultRender = OverlayRender;
 
     return Overlay;
 }, {
-    requires:['uibase','component','./overlayrender']
+    requires:['uibase','component','./overlayrender','./effect']
 });KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
     function require(s) {
         return S.require("uibase/" + s);

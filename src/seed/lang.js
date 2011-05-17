@@ -13,6 +13,7 @@
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
+        //reduce = AP.reduce,
         trim = String.prototype.trim,
         map = AP.map,
         EMPTY = '',
@@ -345,6 +346,51 @@
             },
 
         /**
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         */
+        reduce:/*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
+         return arr.reduce(callback, initialValue);
+         } : */function(arr, callback, initialValue) {
+            var len = arr.length;
+            if (typeof callback !== "function")
+                throw new TypeError();
+
+            // no value to return if no initial value and an empty array
+            if (len == 0 && arguments.length == 2)
+                throw new TypeError();
+
+            var k = 0;
+            var accumulator;
+            if (arguments.length >= 3) {
+                accumulator = arguments[2];
+            }
+            else {
+                do {
+                    if (k in arr) {
+                        accumulator = arr[k++];
+                        break;
+                    }
+
+                    // if array contains no values, no initial value to return
+                    if (++k >= len)
+                        throw new TypeError();
+                }
+                while (true);
+            }
+
+            while (k < len) {
+                if (k in arr) {
+                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                }
+                k++;
+            }
+
+            return accumulator;
+        },
+
+        /**
          * Gets current date in milliseconds.
          */
         now: function() {
@@ -461,7 +507,12 @@
             for (; i < len; ++i) {
                 pair = pairs[i].split(eq);
                 key = decode(pair[0]);
-                val = decode(pair[1] || EMPTY);
+                try {
+                    val = decode(pair[1] || EMPTY);
+                } catch(e) {
+                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    val = pair[1] || EMPTY;
+                }
                 if (S.endsWith(key, "[]")) {
                     key = key.substring(0, key.length - 2);
                 }

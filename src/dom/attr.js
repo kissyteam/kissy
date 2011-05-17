@@ -7,7 +7,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     var doc = document,
         docElement = doc.documentElement,
         oldIE = !docElement.hasAttribute,
-        TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
+        TEXT = docElement.textContent !== undefined ?
+            'textContent' : 'innerText',
         SELECT = 'select',
         EMPTY = '',
         isElementNode = DOM._isElementNode,
@@ -152,22 +153,23 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                 // 对于不存在的属性，统一返回 undefined
                 return ret === null ? undefined : ret;
+            } else {
+
+                // setter
+                S.each(DOM.query(selector), function(el) {
+                    // only set attributes on element nodes
+                    if (!isElementNode(el)) {
+                        return;
+                    }
+
+                    if (attrNormalizer && attrNormalizer.setter) {
+                        attrNormalizer.setter(el, val);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
+                    }
+                });
             }
-
-            // setter
-            S.each(DOM.query(selector), function(el) {
-                // only set attributes on element nodes
-                if (!isElementNode(el)) {
-                    return;
-                }
-
-                if (attrNormalizer && attrNormalizer.setter) {
-                    attrNormalizer.setter(el, val);
-                } else {
-                    // convert the value to a string (all browsers do this but IE)
-                    el.setAttribute(name, EMPTY + val);
-                }
-            });
         },
 
         /**
@@ -260,10 +262,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             S.each(DOM.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
-                    if (S.isNumber(value)) {
-                        value += EMPTY;
-                    }
-
+                    value += EMPTY;
+                    
                     var vals = S.makeArray(value),
                         opts = el.options, opt;
 

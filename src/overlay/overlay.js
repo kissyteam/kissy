@@ -2,7 +2,7 @@
  * model and control for overlay
  * @author:yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Aria) {
+KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effect) {
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -13,11 +13,13 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Aria)
         require("loading"),
         require("align"),
         require("resize"),
-        require("mask")]);
+        require("mask"),
+        Effect
+    ]);
 
     Overlay.DefaultRender = OverlayRender;
 
     return Overlay;
 }, {
-    requires:['uibase','component','./overlayrender']
+    requires:['uibase','component','./overlayrender','./effect']
 });

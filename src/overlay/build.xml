@@ -11,6 +11,7 @@
             <path path="overlayrender.js"/>
             <path path="ariarender.js"/>
             <path path="aria.js"/>
+            <path path="effect.js"/>
             <path path="overlay.js"/>
             <path path="dialogrender.js"/>
             <path path="dialog.js"/>

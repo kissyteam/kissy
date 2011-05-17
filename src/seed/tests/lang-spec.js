@@ -64,7 +64,7 @@ describe('lang.js', function() {
 
     it('S.param', function() {
         expect(S.param({foo:1, bar:2})).toBe('foo=1&bar=2');
-        expect(S.param({foo:1, bar:[2,3]}, '&', '=',false)).toBe('foo=1&bar=2&bar=3');
+        expect(S.param({foo:1, bar:[2,3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
 
         expect(S.param({'&#': '!#='})).toBe('%26%23=!%23%3D');
 
@@ -466,6 +466,20 @@ describe('lang.js', function() {
             });
         expect(a).toBeArrayEq([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]);
 
+    });
+
+
+    it('S.reduce', function() {
+        var r = S.reduce([0,1,2,3,4], function(previousValue, currentValue, index, array) {
+            return previousValue + currentValue;
+        });
+        expect(r).toBe(10);
+
+
+        r = S.reduce([0,1,2,3,4], function(previousValue, currentValue, index, array) {
+            return previousValue + currentValue;
+        }, 10);
+        expect(r).toBe(20);
     });
 
     it('S.now', function() {
