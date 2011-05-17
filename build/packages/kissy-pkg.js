@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110511123249',
+        buildTime:'20110517182539',
 
         /**
          * Returns a new object containing all of the properties of
@@ -300,6 +300,7 @@ build time: ${build.time}
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
+        //reduce = AP.reduce,
         trim = String.prototype.trim,
         map = AP.map,
         EMPTY = '',
@@ -632,6 +633,51 @@ build time: ${build.time}
             },
 
         /**
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         */
+        reduce:/*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
+         return arr.reduce(callback, initialValue);
+         } : */function(arr, callback, initialValue) {
+            var len = arr.length;
+            if (typeof callback !== "function")
+                throw new TypeError();
+
+            // no value to return if no initial value and an empty array
+            if (len == 0 && arguments.length == 2)
+                throw new TypeError();
+
+            var k = 0;
+            var accumulator;
+            if (arguments.length >= 3) {
+                accumulator = arguments[2];
+            }
+            else {
+                do {
+                    if (k in arr) {
+                        accumulator = arr[k++];
+                        break;
+                    }
+
+                    // if array contains no values, no initial value to return
+                    if (++k >= len)
+                        throw new TypeError();
+                }
+                while (true);
+            }
+
+            while (k < len) {
+                if (k in arr) {
+                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                }
+                k++;
+            }
+
+            return accumulator;
+        },
+
+        /**
          * Gets current date in milliseconds.
          */
         now: function() {
@@ -748,7 +794,12 @@ build time: ${build.time}
             for (; i < len; ++i) {
                 pair = pairs[i].split(eq);
                 key = decode(pair[0]);
-                val = decode(pair[1] || EMPTY);
+                try {
+                    val = decode(pair[1] || EMPTY);
+                } catch(e) {
+                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    val = pair[1] || EMPTY;
+                }
                 if (S.endsWith(key, "[]")) {
                     key = key.substring(0, key.length - 2);
                 }
@@ -2651,7 +2702,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     var doc = document,
         docElement = doc.documentElement,
         oldIE = !docElement.hasAttribute,
-        TEXT = docElement.textContent !== undefined ? 'textContent' : 'innerText',
+        TEXT = docElement.textContent !== undefined ?
+            'textContent' : 'innerText',
         SELECT = 'select',
         EMPTY = '',
         isElementNode = DOM._isElementNode,
@@ -2796,22 +2848,23 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                 // 对于不存在的属性，统一返回 undefined
                 return ret === null ? undefined : ret;
+            } else {
+
+                // setter
+                S.each(DOM.query(selector), function(el) {
+                    // only set attributes on element nodes
+                    if (!isElementNode(el)) {
+                        return;
+                    }
+
+                    if (attrNormalizer && attrNormalizer.setter) {
+                        attrNormalizer.setter(el, val);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
+                    }
+                });
             }
-
-            // setter
-            S.each(DOM.query(selector), function(el) {
-                // only set attributes on element nodes
-                if (!isElementNode(el)) {
-                    return;
-                }
-
-                if (attrNormalizer && attrNormalizer.setter) {
-                    attrNormalizer.setter(el, val);
-                } else {
-                    // convert the value to a string (all browsers do this but IE)
-                    el.setAttribute(name, EMPTY + val);
-                }
-            });
         },
 
         /**
@@ -2904,10 +2957,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             S.each(DOM.query(selector), function(el) {
                 if (nodeNameIs(SELECT, el)) {
                     // 强制转换数值为字符串，以保证下面的 inArray 正常工作
-                    if (S.isNumber(value)) {
-                        value += EMPTY;
-                    }
-
+                    value += EMPTY;
+                    
                     var vals = S.makeArray(value),
                         opts = el.options, opt;
 
@@ -7231,6 +7282,10 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 source = {},
                 prop;
 
+            // already running,please stop first
+            if (self.isRunning) {
+                return;
+            }
             if (self.fire(EVENT_START) === false) return;
 
             self.stop(); // 先停止掉正在运行的动画
@@ -7356,6 +7411,10 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
         stop: function(finish) {
             var self = this;
+            // already stopped
+            if (!self.isRunning) {
+                return;
+            }
 
             if (self.transitionName) {
                 self._nativeStop(finish);
@@ -7539,12 +7598,19 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
     S.each([NP, NLP], function(P) {
         P.animate = function() {
-            var args = S.makeArray(arguments);
-
+            var self = this,args = S.makeArray(arguments);
+            self.__anims = self.__anims || [];
             S.each(this, function(elem) {
-                Anim.apply(undefined, [elem].concat(args)).run();
+                self.__anims.push(Anim.apply(undefined, [elem].concat(args)).run());
             });
             return this;
+        };
+
+        P.stopAnimate = function(finish) {
+            S.each(this.__anims, function(anim) {
+                anim.stop(finish);
+            });
+            this.__anims = [];
         };
 
         S.each({
@@ -7558,14 +7624,17 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
         },
             function(v, k) {
 
-                P[k] = function(speed, callback) {
+                P[k] = function(speed, callback, easing, nativeSupport) {
+                    var self = this;
+                    self.__anims = self.__anims || [];
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && arguments.length === 0) {
                         DOM[k](this);
                     }
                     else {
                         S.each(this, function(elem) {
-                            fx(elem, v[0], speed, callback, v[1]);
+                            self.__anims.push(fx(elem, v[0], speed, callback,
+                                v[1], easing, nativeSupport));
                         });
                     }
                     return this;
@@ -7573,13 +7642,15 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             });
     });
 
-    function fx(elem, which, speed, callback, visible) {
+    function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
         if (which === 'toggle') {
             visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
             which = 'show';
         }
 
-        if (visible) DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+        if (visible) {
+            DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+        }
 
         // 根据不同类型设置初始 css 属性, 并设置动画参数
         var originalStyle = {}, style = {};
@@ -7591,23 +7662,30 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             else if (prop === OPCACITY) {
                 originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
                 style.opacity = visible ? 1 : 0;
-                if (visible) DOM.css(elem, OPCACITY, 0);
+                if (visible) {
+                    DOM.css(elem, OPCACITY, 0);
+                }
             }
             else if (prop === HEIGHT) {
                 originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
                 //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
                 style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
-                if (visible) DOM.css(elem, HEIGHT, 0);
+
+                if (visible) {
+                    DOM.css(elem, HEIGHT, 0);
+                }
             }
             else if (prop === WIDTH) {
                 originalStyle[WIDTH] = DOM.css(elem, WIDTH);
                 style.width = (visible ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
-                if (visible) DOM.css(elem, WIDTH, 0);
+                if (visible) {
+                    DOM.css(elem, WIDTH, 0);
+                }
             }
         });
 
         // 开始动画
-        new Anim(elem, style, speed, 'easeOut', function() {
+        return new Anim(elem, style, speed, easing || 'easeOut', function() {
             // 如果是隐藏, 需要还原一些 css 属性
             if (!visible) {
                 // 保留原有值
@@ -7620,21 +7698,37 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                 }
 
                 // 还原样式
-                if (originalStyle[HEIGHT]) DOM.css(elem, { height: originalStyle[HEIGHT] });
-                if (originalStyle[WIDTH]) DOM.css(elem, { width: originalStyle[WIDTH] });
-                if (originalStyle[OPCACITY]) DOM.css(elem, { opacity: originalStyle[OPCACITY] });
-                if (originalStyle[OVERFLOW]) DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
+                if (originalStyle[HEIGHT]) {
+                    DOM.css(elem, { height: originalStyle[HEIGHT] });
+                }
+                if (originalStyle[WIDTH]) {
+                    DOM.css(elem, { width: originalStyle[WIDTH] });
+                }
+                if (originalStyle[OPCACITY]) {
+                    DOM.css(elem, { opacity: originalStyle[OPCACITY] });
+                }
+                if (originalStyle[OVERFLOW]) {
+                    DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
+                }
 
             }
 
-            if (callback && S.isFunction(callback)) callback();
+            if (callback && S.isFunction(callback)) {
+                callback();
+            }
 
-        }).run();
+        }, nativeSupport).run();
     }
 
 }, {
     requires:["dom","anim/base","node"]
 });
+/**
+ * 2011-05-17
+ *
+ *  - 承玉：添加 stopAnimate ，随时停止动画
+ *
+ */
 
 /**
  * special patch for making color gradual change

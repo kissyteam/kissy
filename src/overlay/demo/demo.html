@@ -10,6 +10,7 @@
 <script src="../overlayrender.js"></script>
 <script src="../ariarender.js"></script>
 <script src="../aria.js"></script>
+<script src="../effect.js"></script>
 <script src="../overlay.js"></script>
 
 <script src="../dialogrender.js"></script>
@@ -54,7 +55,7 @@
 
 <body>
 
-<h2>overlay - 从 Markup 中构建</h2>
+<h2>overlay - 从 Markup 中构建 with fade effect</h2>
 
 <button id="btn1">Show</button>
 <button id="btn2">Hide</button>
@@ -81,6 +82,11 @@
                     node: '#btn1',
                     points: ['tr', 'tl'],
                     offset: [50, 0]
+                },
+                effect:{
+                    effect:"fade",
+                    duration:0.5,
+                    easing:"easeIn"
                 }
             });
             Node.one('#btn1').on('click', function() {
@@ -175,7 +181,7 @@
 <p class="code-switch">显示源码</p>
 
 
-<h2>多个触发元素公用一个 Popup</h2>
+<h2>多个触发元素公用一个 Popup with slide effect</h2>
 <style>
     #multi {
         width: 60px;
@@ -214,6 +220,10 @@
                     popup = new Overlay({
                         elStyle:{
                             border:"1px solid red"
+                        },
+                        effect:{
+                            effect:"slide",//"fade",
+                            duration:0.5
                         }
                     });
 
@@ -505,6 +515,101 @@
         });
     });
 </script>
+
+
+<h2>Dialog zoom effect</h2>
+<div id="btn18"
+     style="width:50px;height:50px;text-align:center;line-height:50px;
+    cursor:pointer;border:1px solid red;"
+
+     tabindex="0">click
+</div>
+<script>
+    KISSY.use("ua,event,overlay", function(S, UA, Event) {
+        var Node = S.require("node/node"),
+                DOM = S.require("dom"),
+                Overlay = S.require("overlay/overlay"),
+                Dialog = S.require("overlay/dialog");
+
+        S.ready(function(S) {
+
+            var dialog = new Dialog({
+                width: 400,
+                elStyle:{
+                    overflow:'hidden'
+                },
+                bodyContent:"can zoom in/out",
+                headerContent: 'this is title',
+                footerContent: 'footer',
+                footerStyle:{
+                    position:"absolute",
+                    bottom:0
+                },
+                bodyStyle:{
+                    marginBottom:"20px"
+                }
+            });
+
+            var b = Node.one("#btn18");
+            var running;
+            b.on("click", function() {
+                if (running) return;
+                dialog.show();
+            });
+            var ow,
+                    oh,
+                    bo = b.offset(),
+                    bl = bo.left,
+                    bt = bo.top,
+                    bw = b.width(),
+                    bh = b.height();
+            dialog.on("afterVisibleChange", function(ev) {
+                var v = ev.newVal,el = dialog.get("el");
+                if (v && !ow) {
+                    ow = el.width();
+                    oh = el.height();
+                }
+
+                setTimeout(function() {
+                    el.stopAnimate();
+                    running = true;
+                    if (v) {
+                        el.width(bw);
+                        el.height(bh);
+                        el.offset(b.offset());
+
+                        var d = {
+                            left:(DOM.viewportWidth() - ow) / 2 + DOM.scrollLeft() + "px",
+                            top:(DOM.viewportHeight() - oh) / 2 + DOM.scrollTop() + "px",
+                            width:ow + "px",
+                            height:oh + "px"
+                        };
+
+                        el.animate(d, 0.3, undefined, function() {
+                            running = false;
+                        });
+                    } else {
+                        el.css("visibility", "visible");
+
+                        el.animate({
+                            left:bl + "px",
+                            top:bt + "px",
+                            width:bw + "px",
+                            height:bh + "px"
+                        }, 0.3, undefined, function() {
+                            el.css("visibility", "hidden");
+                            running = false;
+                        });
+                    }
+
+                }, 10);
+
+
+            });
+        });
+    });
+</script>
+
 <p class="code-switch">显示源码</p>
 
 <script>

@@ -300,7 +300,7 @@ build time: ${build.time}
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
-        reduce = AP.reduce,
+        //reduce = AP.reduce,
         trim = String.prototype.trim,
         map = AP.map,
         EMPTY = '',
@@ -635,7 +635,9 @@ build time: ${build.time}
         /**
          * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          */
-        reduce:/*reduce ? function(arr, callback, initialValue) {
+        reduce:/*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
          return arr.reduce(callback, initialValue);
          } : */function(arr, callback, initialValue) {
             var len = arr.length;
@@ -792,7 +794,12 @@ build time: ${build.time}
             for (; i < len; ++i) {
                 pair = pairs[i].split(eq);
                 key = decode(pair[0]);
-                val = decode(pair[1] || EMPTY);
+                try {
+                    val = decode(pair[1] || EMPTY);
+                } catch(e) {
+                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    val = pair[1] || EMPTY;
+                }
                 if (S.endsWith(key, "[]")) {
                     key = key.substring(0, key.length - 2);
                 }

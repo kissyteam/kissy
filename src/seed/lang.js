@@ -507,7 +507,12 @@
             for (; i < len; ++i) {
                 pair = pairs[i].split(eq);
                 key = decode(pair[0]);
-                val = decode(pair[1] || EMPTY);
+                try {
+                    val = decode(pair[1] || EMPTY);
+                } catch(e) {
+                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    val = pair[1] || EMPTY;
+                }
                 if (S.endsWith(key, "[]")) {
                     key = key.substring(0, key.length - 2);
                 }
