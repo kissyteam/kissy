@@ -196,7 +196,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             this._handleClickInternal(ev);
         },
 
-        _handleClickInternal:function(ev) {
+        _handleClickInternal:function() {
             this.fire("click");
         },
 
@@ -211,49 +211,64 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 child.destroy();
             });
             var view = this.get("view");
-            var el = view.get("el");
-            el.detach();
-            view.destroy();
+            if (view) {
+                var el = view.get("el");
+                el.detach();
+                view.destroy();
+            }
         }
-
-    }, {
+    },
+    {
         ATTRS:{
             //子组件
             children:{
                 value:[],
-                setter:function(v) {
-                    var self = this;
-                    //自动给儿子组件加入父亲链
-                    S.each(v, function(c) {
-                        c.set("parent", self);
-                    });
-                }
-            },
+                setter
+                    :
+                    function(v) {
+                        var self = this;
+                        //自动给儿子组件加入父亲链
+                        S.each(v, function(c) {
+                            c.set("parent", self);
+                        });
+                    }
+            }
+            ,
 
             //转交给渲染层
             //note1 : 兼容性考虑
             //note2 : 调用者可以完全不需要接触渲染层
             srcNode:{
                 view:true
-            },
+            }
+            ,
 
             render:{
                 view:true
-            },
+            }
+            ,
 
             //父组件
-            parent:{},
+            parent:{
+            }
+            ,
 
             //渲染层
-            view:{},
+            view:{
+            }
+            ,
 
             //是否禁用
             disabled:{
                 value:false,
-                view:true
+                view
+                    :
+                    true
             }
         }
-    });
+    }
+        )
+        ;
 
     function capitalFirst(s) {
         s = s + '';

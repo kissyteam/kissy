@@ -1,22 +1,11 @@
 /**
  * KISSY.Popup
- * @author: 乔花<qiaohua@taobao.com>
+ * @author: 乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('overlay/popup', function(S, Overlay, undefined) {
-    /**
-     * 默认设置
-     */
-    var defaultConfig = {
-        trigger: null,          // 触发器
-        triggerType: 'click'    // 触发类型
-    };
 
     function Popup(container, config) {
         var self = this;
-
-        if (!(self instanceof Popup)) {
-            return new Popup(container, config);
-        }
 
         // 支持 Popup(config)
         if (S.isUndefined(config)) {
@@ -24,25 +13,22 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
         } else {
             config.srcNode = container;
         }
-        config = config || { };
-
-        self.config = config = S.merge(defaultConfig, config);
-
-        // 获取相关联的 DOM 节点
-        self.trigger = S.one(config.trigger);
 
         Popup.superclass.constructor.call(self, config);
-
-        self._init();
     }
 
-    S.extend(Popup, Overlay);
+    Popup.ATTRS = {
+        trigger: null,          // 触发器
+        triggerType: {value:'click'}    // 触发类型
+    };
 
-    S.augment(Popup, S.EventTarget, {
-        _init: function() {
+    S.extend(Popup, Overlay, {
+        initializer: function() {
             var self = this;
+            // 获取相关联的 DOM 节点
+            self.trigger = S.one(self.get("trigger"));
             if (self.trigger) {
-                if (self.config.triggerType === 'mouse') {
+                if (self.get("triggerType") === 'mouse') {
                     self._bindTriggerMouse();
 
                     self.on('bindUI', function() {
@@ -58,33 +44,35 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
             var self = this,
                 trigger = self.trigger, timer;
 
-            trigger.on('mouseenter', function() {
+            self.__mouseEnterPopup = function() {
                 self._clearHiddenTimer();
 
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
                 }, 100);
-            });
+            };
 
-            trigger.on('mouseleave', function() {
+            trigger.on('mouseenter', self.__mouseEnterPopup);
+
+
+            self._mouseLeavePopup = function() {
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
                 }
 
                 self._setHiddenTimer();
-            });
+            };
+
+            trigger.on('mouseleave', self._mouseLeavePopup);
         },
 
         _bindContainerMouse: function() {
             var self = this;
 
-            self.get('el').on('mouseleave', function() {
-                self._setHiddenTimer();
-            }).on('mouseenter', function() {
-                self._clearHiddenTimer();
-            });
+            self.get('el').on('mouseleave', self._setHiddenTimer, self)
+                .on('mouseenter', self._clearHiddenTimer, self);
         },
 
         _setHiddenTimer: function() {
@@ -104,15 +92,42 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 
         _bindTriggerClick: function() {
             var self = this;
-
-            self.trigger.on('click', function(e) {
+            self.__clickPopup = function(e) {
                 e.halt();
                 self.show();
-            });
+            };
+            self.trigger.on('click', self.__clickPopup);
+        },
+
+        destructor:function() {
+            var self = this;
+            if (self.trigger) {
+                var t = self.trigger;
+                if (self.__clickPopup) {
+                    t.detach('click', self.__clickPopup);
+                }
+                if (self.__mouseEnterPopup) {
+                    t.detach('mouseenter', self.__mouseEnterPopup);
+                }
+
+                if (self._mouseLeavePopup) {
+                    t.detach('mouseleave', self._mouseLeavePopup);
+                }
+            }
+            if (self.get('el')) {
+                self.get('el').detach('mouseleave', self._setHiddenTimer, self)
+                    .detach('mouseenter', self._clearHiddenTimer, self);
+            }
         }
     });
+
 
     return Popup;
 }, {
     requires:[ "overlay/overlay"]
 });
+
+/**
+ * 2011-05-17
+ *  - 承玉：利用 initializer , destructor ,ATTRS
+ **/

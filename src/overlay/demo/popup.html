@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/loading.css"/>
 <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
-<script src="../../../build/kissy-min.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
 <body>
@@ -121,59 +121,64 @@
 
         </style>
         <a href="#"><img id="img-download" src="../assets/nav-download.png"/></a>
-        <table class="popup" id="dpop">
-            <tr>
-                <td class="corner" id="topleft"></td>
+        <div class="popup" id="dpop">
+            <table>
+                <tr>
+                    <td class="corner" id="topleft"></td>
 
-                <td class="top"></td>
-                <td class="corner" id="topright"></td>
-            </tr>
+                    <td class="top"></td>
+                    <td class="corner" id="topright"></td>
+                </tr>
 
-            <tr>
-                <td class="left"></td>
-                <td>
+                <tr>
+                    <td class="left"></td>
+                    <td>
 
-                    <table class="popup-contents">
-                        <tr>
-                            <th>File:</th>
+                        <table class="popup-contents">
+                            <tr>
+                                <th>File:</th>
 
-                            <td>coda 1.7.zip</td>
-                        </tr>
-                        <tr>
-                            <th>Date:</th>
-                            <td>11/5/10</td>
-                        </tr>
-                        <tr>
+                                <td>coda 1.7.zip</td>
+                            </tr>
+                            <tr>
+                                <th>Date:</th>
+                                <td>11/5/10</td>
+                            </tr>
+                            <tr>
 
-                            <th>Size:</th>
-                            <td>20 MB</td>
-                        </tr>
-                        <tr>
-                            <th>Req:</th>
-                            <td>Mac OS X 10.4+</td>
-                        </tr>
+                                <th>Size:</th>
+                                <td>20 MB</td>
+                            </tr>
+                            <tr>
+                                <th>Req:</th>
+                                <td>Mac OS X 10.4+</td>
+                            </tr>
 
-                        <tr id="release-notes">
-                            <th>Read the release notes:</th>
-                            <td><a href="#" title="Read the release notes">release notes</a></td>
-                        </tr>
-                    </table>
+                            <tr id="release-notes">
+                                <th>Read the release notes:</th>
+                                <td><a href="#" title="Read the release notes">release notes</a></td>
+                            </tr>
+                        </table>
 
-                </td>
-                <td class="right"></td>
-            </tr>
+                    </td>
+                    <td class="right"></td>
+                </tr>
 
 
-            <tr>
-                <td id="bottomleft" class="corner"></td>
-                <td class="bottom"><img src="../assets/bubble-tail2.png" width="30" height="29" alt="popup tail"/></td>
-                <td class="corner" id="bottomright"></td>
-            </tr>
-        </table>
+                <tr>
+                    <td id="bottomleft" class="corner"></td>
+                    <td class="bottom"><img src="../assets/bubble-tail2.png" width="30" height="29" alt="popup tail"/></td>
+                    <td class="corner" id="bottomright"></td>
+                </tr>
+            </table>
+        </div>
+        <DIV>
+            <button id="d1" class="button">destroy</button>
+        </DIV>
         <script>
             KISSY.use('node,overlay', function(S, Node, O) {
 
-                var popup = new O.Popup(Node.one("#dpop"), {
+                window.popup = new O.Popup(Node.one("#dpop"), {
                     trigger: '#img-download',
                     triggerType: 'mouse',
                     align: {
@@ -182,6 +187,11 @@
                         offset: [0, 50]
                     }
                 });
+
+                S.one("#d1").on("click", function() {
+                    window.popup.destroy();
+                });
+
             });
         </script>
     </div>
@@ -321,7 +331,7 @@
             </ul>
         </div>
         <script>
-            KISSY.use("node, overlay",  function(S, Node, Overlay) {
+            KISSY.use("node, overlay", function(S, Node, Overlay) {
                 var popup = new Overlay({
                     elStyle:{
                         border:"2px solid gray",
@@ -330,9 +340,9 @@
                     width: 120,
                     height: 120,
                     effect: {
-                            effect:"slide",//"fade",
-                            duration:0.5
-                        }
+                        effect:"slide",//"fade",
+                        duration:0.5
+                    }
                 });
                 // 注意：使用定制的显示/隐藏方式
                 Node.List.all('#multi img').each(function(t) {
@@ -381,9 +391,9 @@
                         points: ['cc', 'cc']
                     },
                     effect: {
-                            effect:"fade",
-                            duration:0.5
-                        }
+                        effect:"fade",
+                        duration:0.5
+                    }
                 });
                 Node.one('#btn1').on('click', function() {
                     popup.show();
