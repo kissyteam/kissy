@@ -2,16 +2,16 @@
  * Created by IntelliJ IDEA.
  * User: qiaohua
  * Date: 11-5-16
- * Time: ÏÂÎç1:44
+ * Time: ä¸‹åˆ1:44
  * To change this template use File | Settings | File Templates.
  */
 KISSY.add('overlay/popup', function(S, undefined) {
     /**
-     * Ä¬ÈÏÉèÖÃ
+     * é»˜è®¤è®¾ç½®
      */
     var defaultConfig = {
-        trigger: null,          // ´¥·¢Æ÷
-        triggerType: 'click'    // ´¥·¢ÀàĞÍ
+        trigger: null,          // è§¦å‘å™¨
+        triggerType: 'click'    // è§¦å‘ç±»å‹
     };
 
     function Popup(container, config) {
@@ -21,7 +21,7 @@ KISSY.add('overlay/popup', function(S, undefined) {
             return new Popup(container, config);
         }
 
-        // Ö§³Ö Popup(config)
+        // æ”¯æŒ Popup(config)
         if (S.isUndefined(config)) {
             config = container;
         } else {
@@ -31,7 +31,7 @@ KISSY.add('overlay/popup', function(S, undefined) {
 
         self.config = config = S.merge(defaultConfig, config);
 
-        // »ñÈ¡Ïà¹ØÁªµÄ DOM ½Úµã
+        // è·å–ç›¸å…³è”çš„ DOM èŠ‚ç‚¹
         self.trigger = S.one(config.trigger);
 
         Popup.superclass.constructor.call(self, config);

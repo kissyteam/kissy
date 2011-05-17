@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>测试Overlay和Dialog</title>
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<link rel="stylesheet" href="assets/cool.css"/>
+<style>
+
+    #constrainRegion-dialog-1 {
+        width: 800px;
+        height: 500px;
+        border: 1px solid green;
+        left: 200px;
+        top: 300px;
+        position: absolute;
+    }
+    .ks-ext-position {
+        position: absolute;
+    }
+
+    .ks-ext-mask {
+        background-color: #000;
+        opacity: 0.3;
+        filter: alpha(opacity = 15);
+    }
+    .section {
+        margin: 20px;
+    }
+</style>
+
+<script src="../../build/kissy.js"></script>
+<script src="../uibase/uibase.js"></script>
+<script src="../uibase/uibase-box.js"></script>
+<script src="../uibase/uibase-contentbox.js"></script>
+<script src="../uibase/uibase-position.js"></script>
+<script src="../uibase/uibase-shim.js"></script>
+<script src="../uibase/uibase-mask.js"></script>
+<script src="../uibase/uibase-align.js"></script>
+<script src="../uibase/uibase-loading.js"></script>
+<script src="overlay.js"></script>
+<script src="../dd/ddm.js"></script>
+<script src="../dd/draggable.js"></script>
+<script src="../uibase/uibase-stdmod.js"></script>
+<script src="../uibase/uibase-close.js"></script>
+<script src="../uibase/uibase-drag.js"></script>
+<script src="../uibase/uibase-constrain.js"></script>
+<script src="dialog.js"></script>
+</head>
+<body>
+
+<div class="section">
+    <button id="show-overlay-1">
+        点击出现弹窗1
+    </button>
+
+    <button id="destroy-overlay-1">
+        点击摧毁弹窗1
+    </button>
+
+    <div id="show-overlay-3" style="margin:10px;border:1px solid red;width:100px;padding:50px;">
+        鼠标掠过出现
+    </div>
+
+    <div id="markup-overlay-1" style="visibility:hidden;">
+        从 markup 生成 overlay
+    </div>
+
+    <select>
+        <option>测试 ie6</option>
+    </select>
+
+
+    <button id="show-overlay-2">
+        show from markup
+    </button>
+
+    <button id="hide-overlay-2">
+        hide from markup
+    </button>
+
+    <script>
+        KISSY.ready(function(S) {
+            var Overlay = S.Overlay,show1 = S.one("#show-overlay-1");
+            var show3 = S.one("#show-overlay-3"),
+                    Align = S.UIBase.Align;
+
+            var o = new Overlay({
+                content:"i am overly 动态生成,esc 隐藏",
+                width:200,
+                //x:100,
+                //y:100,
+                align:{
+                    // 参考元素, falsy 值为可视区域
+                    node: null,
+                    // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                    points: [Align.CC, Align.CC],
+                    // 有效值为 [n, m]
+                    offset: [0, 0]
+                },
+                mask:true,
+                elStyle:{
+                    //position:"absolute",
+                    border:"1px solid red"
+                }
+            });
+
+            show1.on("click", function() {
+                o.show();
+            });
+            S.one("#destroy-overlay-1").on("click", function() {
+                o.destroy();
+            });
+
+
+            var o3 = new Overlay({
+                content:"i am overly 动态生成 2",
+                width:"200px",
+                elStyle:{
+                    //position:"absolute",
+                    border:"1px solid green"
+                }
+            });
+
+
+            show3.on("mouseenter", function() {
+                S.log("mouseenter");
+                o3.show();
+                //o3.align(show3, [Align.TR,Align.TL], [0,0]);'
+                //overlay的左上角与参考点的右上角对齐
+                o3.set("align", {node:show3, points:[Align.TR,Align.TL],offset:[0,0]});
+            });
+            show3.on("mouseleave", function() {
+                S.log("mouseleave");
+                o3.hide();
+            });
+
+            var o2 = new Overlay({
+                srcNode:S.one("#markup-overlay-1"),
+                autoRender:true,
+                x:100,
+                y:100,
+                elStyle:{
+                    //position:"absolute",
+                    border:"1px solid black"
+                }
+            });
+
+
+            S.one("#show-overlay-2").on("click", function() {
+                o2.show();
+            });
+
+            S.one("#hide-overlay-2").on("click", function() {
+                o2.hide();
+            });
+
+        });
+    </script>
+
+</div>
+
+<div class="section">
+    <button id="show-dialog-1">
+        show 窗口1
+    </button>
+    <button id="destroy-dialog-1">
+        destroy 窗口1
+    </button>
+
+    <button id="loading-dialog-1">
+        loading 窗口1
+    </button>
+
+    <button id="unloading-dialog-1">
+        unloading 窗口1
+    </button>
+
+    <div id="constrainRegion-dialog-1">
+
+        <select>
+            <option>测试 ie6</option>
+        </select>
+
+    </div>
+
+
+    <div id="markup-dialog-1" class="ks-dialog">
+        <div class="ks-contentbox">
+            <a class="ks-ext-close"><span class="ks-ext-close-x">X</span></a>
+            <div class="ks-stdmod-header">
+                i am header
+            </div>
+            <div class="ks-stdmod-body">
+                <div style="padding:50px;">
+                    从 markup 生成 dialog
+                </div>
+            </div>
+            <div class="ks-stdmod-footer"></div>
+        </div>
+    </div>
+
+
+    <button id="show-dialog-2">
+        show from markup
+    </button>
+
+    <button id="hide-dialog-2">
+        hide from markup
+    </button>
+
+
+    <script>
+        KISSY.ready(function(S) {
+            var Dialog = S.Dialog,Align = S.UIBase.Align;
+
+            window.o = new Dialog({
+                headerContent:"i am header",
+                bodyContent:"<div style='padding:50px;'>i am dialog 动态生成</div>",
+                x:400,
+                y:400,
+                //mask:true,
+                /*
+                 align:{
+                 // 参考元素, falsy 值为可视区域
+                 node: null,
+                 // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+                 points: [Align.CC, Align.CC],
+                 // 有效值为 [n, m]
+                 offset: [0, 0]
+                 },*/
+                width:300,
+                //true 限制在可视区域
+                //S.one("#xx")
+                constrain:S.one("#constrainRegion-dialog-1")
+            });
+            var loading1 = S.one("#loading-dialog-1"),
+                    unloading1 = S.one("#unloading-dialog-1");
+            o.on("show", function() {
+                loading1.show();
+                unloading1.show();
+            });
+            o.on("hide", function() {
+                loading1.hide();
+                unloading1.hide();
+            });
+            loading1.hide();
+            unloading1.hide();
+            loading1.on("click", function() {
+                o.loading();
+            });
+            unloading1.on("click", function() {
+                o.unloading();
+            });
+
+
+            S.one("#show-dialog-1").on("click", function() {
+                o.show();
+            });
+
+            S.one("#destroy-dialog-1").on("click", function() {
+                o.destroy();
+            });
+
+            var o2 = new Dialog({
+                srcNode:S.one("#markup-dialog-1"),
+                width:200,
+                autoRender:true
+            });
+
+
+            S.one("#show-dialog-2").on("click", function() {
+                o2.center();
+                o2.show();
+            });
+
+
+            S.one("#hide-dialog-2").on("click", function() {
+                o2.hide();
+            });
+
+        });
+    </script>
+</div>
+</body>
+</html>

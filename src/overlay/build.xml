@@ -10,6 +10,7 @@
         <concat destfile="overlay-pkg.js" encoding="${charset}" outputencoding="${charset}">            
             <path path="overlay.js"/>
             <path path="dialog.js"/>
+            <path path="popup.js"/>
         </concat>
     </target>
 
