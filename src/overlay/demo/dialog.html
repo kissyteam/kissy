@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
-<script src="../../../build/kissy-min.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
 <body>
@@ -174,25 +174,21 @@
                 *zoom: 1;
             }
 
-            #detail .tb-attention .tb-note-title b {
-                background: transparent url("http://img01.taobaocdn.com/tps/i1/T1krl0Xk8zXXXXXXXX-194-382.png") -75px -99px no-repeat;
-                cursor: pointer;
-                height: 8px;
-                margin: 8px 10px 8px 0;
-                overflow: hidden;
-                position: absolute;
-                right: 0;
-                text-indent: 90px;
-                top: 0;
-                width: 8px;
-                z-index: 10;
+            #detail  .ks-ext-close {
+                border: none;
+            }
+            #detail  .ks-ext-close:hover {
+                border: none;
+            }
+            #detail  .ks-ext-close-x {
+                background: transparent url("http://img01.taobaocdn.com/tps/i1/T1krl0Xk8zXXXXXXXX-194-382.png") -75px -96px no-repeat;
             }
         </style>
         <button id="btn3" class="button">选择</button>
 
         <div class="tb-key tb-attention" id="choose">
             <div class="tb-skin tb-naked">
-                <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息 <b class="J_PanelCloser"></b></p>
+                <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息 </p>
                 <div class="ks-stdmod-body">
                     <dl class="tb-prop ks-clear">
                         <dt>尺　　码：</dt>
@@ -232,7 +228,6 @@
                 var d = new S.Dialog({
                     srcNode: "#choose",
                     width: 480,
-                    closable: false,
                     align: {
                         node: "#btn3",
                         points: ['tr', 'cl']
@@ -240,9 +235,6 @@
                 });
                 S.one('#btn3').on('click', function() {
                     d.show();
-                });
-                S.one('#detail .J_PanelCloser').on('click', function() {
-                    d.hide();
                 });
             });
 
