@@ -59,6 +59,8 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
             S.each(['prev', 'next'], function(d) {
                 var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
 
+                if (!btn) return;
+                
                 Event.on(btn, 'click', function(ev) {
                     ev.preventDefault();
                     if (switching) return;
