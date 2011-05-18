@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110518121635',
+        buildTime:'20110518184948',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5480,6 +5480,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     // shorthand
     Event.on = Event.add;
+    Event.detach = Event.remove;
 
     function batch(methodName, targets, types, fn, scope) {
         // on('#id tag.className', type, fn)
@@ -5527,8 +5528,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     return Event;
 }, {
-    requires:["dom","event/object"]
-});
+        requires:["dom","event/object"]
+    });
 
 /**
  * TODO:

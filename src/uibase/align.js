@@ -9,24 +9,25 @@ KISSY.add('uibase/align', function(S, DOM) {
     }
 
     S.mix(Align, {
-        TL: 'tl',
-        TC: 'tc',
-        TR: 'tr',
-        CL: 'cl',
-        CC: 'cc',
-        CR: 'cr',
-        BL: 'bl',
-        BC: 'bc',
-        BR: 'br'
-    });
+            TL: 'tl',
+            TC: 'tc',
+            TR: 'tr',
+            CL: 'cl',
+            CC: 'cc',
+            CR: 'cr',
+            BL: 'bl',
+            BC: 'bc',
+            BR: 'br'
+        });
 
     Align.ATTRS = {
         align: {
-            value:{
-                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-                offset: [0, 0]      // 有效值为 [n, m]
-            }
+            // 默认不是正中，可以实现自由动画 zoom
+//            value:{
+//                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+//                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+//                offset: [0, 0]      // 有效值为 [n, m]
+//            }
         }
     };
 
@@ -117,14 +118,14 @@ KISSY.add('uibase/align', function(S, DOM) {
          */
         center: function(node) {
             this.set('align', {
-                node: node,
-                points: [Align.CC, Align.CC],
-                offset: [0, 0]
-            });
+                    node: node,
+                    points: [Align.CC, Align.CC],
+                    offset: [0, 0]
+                });
         }
     };
 
     return Align;
 }, {
-    requires:["dom"]
-});
+        requires:["dom"]
+    });

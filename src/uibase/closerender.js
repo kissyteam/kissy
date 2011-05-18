@@ -13,7 +13,8 @@ KISSY.add("uibase/closerender", function(S) {
         closable: {             // 是否需要关闭按钮
             value: true
         },
-        closeBtn:{}
+        closeBtn:{
+        }
     };
 
     Close.HTML_PARSER = {
@@ -45,9 +46,9 @@ KISSY.add("uibase/closerender", function(S) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
                     "role='button' " +
-                    "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
+                    "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    this.get("prefixCls") +CLS_PREFIX + "close-x" +
+                    this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭</span>" +
                     "</a>")
                     .appendTo(el);

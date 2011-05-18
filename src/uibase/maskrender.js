@@ -19,12 +19,12 @@ KISSY.add("uibase/maskrender", function(S) {
             "class='" +
             this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
         mask.css({
-            "position":"absolute",
-            left:0,
-            top:0,
-            width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
-            "height": DOM['docHeight']()
-        });
+                "position":"absolute",
+                left:0,
+                top:0,
+                width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
+                "height": DOM['docHeight']()
+            });
         if (UA['ie'] == 6) {
             //ie6 下最好和 mask 平行
             iframe = new Node("<" + "iframe " +
@@ -67,15 +67,13 @@ KISSY.add("uibase/maskrender", function(S) {
     Mask.prototype = {
 
         _maskExtShow:function() {
+            var self = this;
             if (!mask) {
-                initMask.call(this);
+                initMask.call(self);
             }
-            mask.css({
-                "z-index":this.get("zIndex") - 1
-            });
-            iframe && iframe.css({
-                "z-index":this.get("zIndex") - 1
-            });
+            var zIndex = self.get("zIndex") - 1;
+            mask.css("z-index", zIndex);
+            iframe && iframe.css("z-index", zIndex);
             num++;
             mask.css("display", "");
             iframe && iframe.css("display", "");
@@ -88,6 +86,10 @@ KISSY.add("uibase/maskrender", function(S) {
                 mask && mask.css("display", "none");
                 iframe && iframe.css("display", "none");
             }
+        },
+
+        __destructor:function() {
+            this._maskExtHide();
         }
 
     };

@@ -6,11 +6,20 @@ KISSY.add("uibase/close", function(S) {
     function Close() {
     }
 
+    var HIDE = "hide";
     Close.ATTRS = {
         closable: {             // 是否需要关闭按钮
             value: true,
             view:true
+        },
+        closeAction:{
+            value:HIDE
         }
+    };
+
+    var actions = {
+        hide:HIDE,
+        destroy:"destroy"
     };
 
     Close.prototype = {
@@ -20,7 +29,7 @@ KISSY.add("uibase/close", function(S) {
             var self = this,
                 closeBtn = self.get("view").get("closeBtn");
             closeBtn && closeBtn.on("click", function(ev) {
-                self.hide();
+                self[actions[self.get("closeAction")] || HIDE]();
                 ev.halt();
             });
         }

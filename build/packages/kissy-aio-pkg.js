@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110518121635',
+        buildTime:'20110518184948',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5293,6 +5293,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     // shorthand
     Event.on = Event.add;
+    Event.detach = Event.remove;
 
     function batch(methodName, targets, types, fn, scope) {
         // on('#id tag.className', type, fn)
@@ -5340,8 +5341,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     return Event;
 }, {
-    requires:["dom","event/object"]
-});
+        requires:["dom","event/object"]
+    });
 
 /**
  * TODO:
@@ -12612,11 +12613,20 @@ KISSY.add("uibase/close", function(S) {
     function Close() {
     }
 
+    var HIDE = "hide";
     Close.ATTRS = {
         closable: {             // 是否需要关闭按钮
             value: true,
             view:true
+        },
+        closeAction:{
+            value:HIDE
         }
+    };
+
+    var actions = {
+        hide:HIDE,
+        destroy:"destroy"
     };
 
     Close.prototype = {
@@ -12626,7 +12636,7 @@ KISSY.add("uibase/close", function(S) {
             var self = this,
                 closeBtn = self.get("view").get("closeBtn");
             closeBtn && closeBtn.on("click", function(ev) {
-                self.hide();
+                self[actions[self.get("closeAction")] || HIDE]();
                 ev.halt();
             });
         }
@@ -12648,7 +12658,8 @@ KISSY.add("uibase/closerender", function(S) {
         closable: {             // 是否需要关闭按钮
             value: true
         },
-        closeBtn:{}
+        closeBtn:{
+        }
     };
 
     Close.HTML_PARSER = {
@@ -12680,9 +12691,9 @@ KISSY.add("uibase/closerender", function(S) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
                     "role='button' " +
-                    "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
+                    "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    this.get("prefixCls") +CLS_PREFIX + "close-x" +
+                    this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭</span>" +
                     "</a>")
                     .appendTo(el);
@@ -13077,12 +13088,12 @@ KISSY.add("uibase/maskrender", function(S) {
             "class='" +
             this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
         mask.css({
-            "position":"absolute",
-            left:0,
-            top:0,
-            width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
-            "height": DOM['docHeight']()
-        });
+                "position":"absolute",
+                left:0,
+                top:0,
+                width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
+                "height": DOM['docHeight']()
+            });
         if (UA['ie'] == 6) {
             //ie6 下最好和 mask 平行
             iframe = new Node("<" + "iframe " +
@@ -13125,15 +13136,13 @@ KISSY.add("uibase/maskrender", function(S) {
     Mask.prototype = {
 
         _maskExtShow:function() {
+            var self = this;
             if (!mask) {
-                initMask.call(this);
+                initMask.call(self);
             }
-            mask.css({
-                "z-index":this.get("zIndex") - 1
-            });
-            iframe && iframe.css({
-                "z-index":this.get("zIndex") - 1
-            });
+            var zIndex = self.get("zIndex") - 1;
+            mask.css("z-index", zIndex);
+            iframe && iframe.css("z-index", zIndex);
             num++;
             mask.css("display", "");
             iframe && iframe.css("display", "");
@@ -13146,6 +13155,10 @@ KISSY.add("uibase/maskrender", function(S) {
                 mask && mask.css("display", "none");
                 iframe && iframe.css("display", "none");
             }
+        },
+
+        __destructor:function() {
+            this._maskExtHide();
         }
 
     };
@@ -13924,7 +13937,8 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
         EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
-        CLS_PREFIX = 'ks-switchable-';
+        CLS_PREFIX = 'ks-switchable-',
+        DOM_EVENT = {originalEvent:{target:1}};
 
     /**
      * Switchable Widget
@@ -14058,286 +14072,286 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     S.augment(Switchable, EventTarget, {
 
-        _initPlugins:function() {
-            // init plugins by Hierarchy
-            var self = this,
-                pluginHost = self.constructor;
-            while (pluginHost) {
-                S.each(pluginHost.Plugins, function(plugin) {
-                    if (plugin.init) {
-                        plugin.init(self);
-                    }
-                });
-                pluginHost = pluginHost.superclass ?
-                    pluginHost.superclass.constructor :
-                    null;
-            }
-        },
-
-        /**
-         * init switchable
-         */
-        _init: function() {
-            var self = this,
-                cfg = self.config;
-
-            // parse markup
-            self._parseMarkup();
-
-            // bind triggers
-            if (cfg.hasTriggers) {
-                self._bindTriggers();
-            }
-        },
-
-        /**
-         * 解析 markup, 获取 triggers, panels, content
-         */
-        _parseMarkup: function() {
-            var self = this, container = self.container,
-                cfg = self.config,
-                nav, content, triggers = [], panels = [],
-                //i,
-                n
-                //m
-                ;
-
-            switch (cfg.markupType) {
-                case 0: // 默认结构
-                    nav = DOM.get(DOT + cfg.navCls, container);
-                    if (nav) triggers = DOM.children(nav);
-                    content = DOM.get(DOT + cfg.contentCls, container);
-                    panels = DOM.children(content);
-                    break;
-                case 1: // 适度灵活
-                    triggers = DOM.query(DOT + cfg.triggerCls, container);
-                    panels = DOM.query(DOT + cfg.panelCls, container);
-                    break;
-                case 2: // 完全自由
-                    triggers = cfg.triggers;
-                    panels = cfg.panels;
-                    break;
-            }
-
-
-            // get length
-            n = panels.length;
-            self.length = n / cfg.steps;
-
-            // 自动生成 triggers
-            if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
-                triggers = self._generateTriggersMarkup(self.length);
-            }
-
-            // 将 triggers 和 panels 转换为普通数组
-            self.triggers = S.makeArray(triggers);
-            self.panels = S.makeArray(panels);
-
-            // get content
-            self.content = content || panels[0].parentNode;
-            self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
-        },
-
-        /**
-         * 自动生成 triggers 的 markup
-         */
-        _generateTriggersMarkup: function(len) {
-            var self = this, cfg = self.config,
-                ul = DOM.create('<ul>'), li, i;
-
-            ul.className = cfg.navCls;
-            for (i = 0; i < len; i++) {
-                li = DOM.create('<li>');
-                if (i === self.activeIndex) {
-                    li.className = cfg.activeTriggerCls;
+            _initPlugins:function() {
+                // init plugins by Hierarchy
+                var self = this,
+                    pluginHost = self.constructor;
+                while (pluginHost) {
+                    S.each(pluginHost.Plugins, function(plugin) {
+                        if (plugin.init) {
+                            plugin.init(self);
+                        }
+                    });
+                    pluginHost = pluginHost.superclass ?
+                        pluginHost.superclass.constructor :
+                        null;
                 }
-                li.innerHTML = i + 1;
-                ul.appendChild(li);
-            }
+            },
 
-            self.container.appendChild(ul);
-            return DOM.children(ul);
-        },
+            /**
+             * init switchable
+             */
+            _init: function() {
+                var self = this,
+                    cfg = self.config;
 
-        /**
-         * 给 triggers 添加事件
-         */
-        _bindTriggers: function() {
-            var self = this, cfg = self.config,
-                triggers = self.triggers, trigger,
-                i, len = triggers.length;
+                // parse markup
+                self._parseMarkup();
 
-            for (i = 0; i < len; i++) {
-                (function(index) {
-                    trigger = triggers[index];
+                // bind triggers
+                if (cfg.hasTriggers) {
+                    self._bindTriggers();
+                }
+            },
 
-                    Event.on(trigger, 'click', function(ev) {
-                        self._onFocusTrigger(index, ev);
+            /**
+             * 解析 markup, 获取 triggers, panels, content
+             */
+            _parseMarkup: function() {
+                var self = this, container = self.container,
+                    cfg = self.config,
+                    nav, content, triggers = [], panels = [],
+                    //i,
+                    n
+                    //m
+                    ;
+
+                switch (cfg.markupType) {
+                    case 0: // 默认结构
+                        nav = DOM.get(DOT + cfg.navCls, container);
+                        if (nav) triggers = DOM.children(nav);
+                        content = DOM.get(DOT + cfg.contentCls, container);
+                        panels = DOM.children(content);
+                        break;
+                    case 1: // 适度灵活
+                        triggers = DOM.query(DOT + cfg.triggerCls, container);
+                        panels = DOM.query(DOT + cfg.panelCls, container);
+                        break;
+                    case 2: // 完全自由
+                        triggers = cfg.triggers;
+                        panels = cfg.panels;
+                        break;
+                }
+
+
+                // get length
+                n = panels.length;
+                self.length = n / cfg.steps;
+
+                // 自动生成 triggers
+                if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
+                    triggers = self._generateTriggersMarkup(self.length);
+                }
+
+                // 将 triggers 和 panels 转换为普通数组
+                self.triggers = S.makeArray(triggers);
+                self.panels = S.makeArray(panels);
+
+                // get content
+                self.content = content || panels[0].parentNode;
+                self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
+            },
+
+            /**
+             * 自动生成 triggers 的 markup
+             */
+            _generateTriggersMarkup: function(len) {
+                var self = this, cfg = self.config,
+                    ul = DOM.create('<ul>'), li, i;
+
+                ul.className = cfg.navCls;
+                for (i = 0; i < len; i++) {
+                    li = DOM.create('<li>');
+                    if (i === self.activeIndex) {
+                        li.className = cfg.activeTriggerCls;
+                    }
+                    li.innerHTML = i + 1;
+                    ul.appendChild(li);
+                }
+
+                self.container.appendChild(ul);
+                return DOM.children(ul);
+            },
+
+            /**
+             * 给 triggers 添加事件
+             */
+            _bindTriggers: function() {
+                var self = this, cfg = self.config,
+                    triggers = self.triggers, trigger,
+                    i, len = triggers.length;
+
+                for (i = 0; i < len; i++) {
+                    (function(index) {
+                        trigger = triggers[index];
+
+                        Event.on(trigger, 'click', function() {
+                            self._onFocusTrigger(index);
+                        });
+
+                        if (cfg.triggerType === 'mouse') {
+                            Event.on(trigger, 'mouseenter', function() {
+                                self._onMouseEnterTrigger(index, DOM_EVENT);
+                            });
+                            Event.on(trigger, 'mouseleave', function() {
+                                self._onMouseLeaveTrigger(index, DOM_EVENT);
+                            });
+                        }
+                    })(i);
+                }
+            },
+
+            /**
+             * click or tab 键激活 trigger 时触发的事件
+             */
+            _onFocusTrigger: function(index) {
+                var self = this;
+                if (!self._triggerIsValid(index)) return; // 重复点击
+
+                this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
+                self.switchTo(index, undefined, DOM_EVENT);
+            },
+
+            /**
+             * 鼠标悬浮在 trigger 上时触发的事件
+             */
+            _onMouseEnterTrigger: function(index) {
+                var self = this;
+                if (!self._triggerIsValid(index)) {
+                    return;
+                } // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+
+                self.switchTimer = S.later(function() {
+                    self.switchTo(index, undefined, DOM_EVENT);
+                }, self.config.delay * 1000);
+            },
+
+            /**
+             * 鼠标移出 trigger 时触发的事件
+             */
+            _onMouseLeaveTrigger: function() {
+                this._cancelSwitchTimer();
+            },
+
+            /**
+             * 重复触发时的有效判断
+             */
+            _triggerIsValid: function(index) {
+                return this.ingIndex !== index;
+            },
+
+            /**
+             * 取消切换定时器
+             */
+            _cancelSwitchTimer: function() {
+                var self = this;
+                if (self.switchTimer) {
+                    self.switchTimer.cancel();
+                    self.switchTimer = undefined;
+                }
+            },
+
+            /**
+             * 切换操作，对外 api
+             * @param index 要切换的项
+             * @param direction 方向，用于 effect
+             * @param ev 引起该操作的事件
+             * @param callback 运行完回调，和绑定 switch 事件作用一样
+             */
+            switchTo: function(index, direction, ev, callback) {
+                var self = this,
+                    cfg = self.config,
+                    triggers = self.triggers,
+                    panels = self.panels,
+                    ingIndex = self.ingIndex,
+                    steps = cfg.steps,
+                    fromIndex = ingIndex * steps,
+                    toIndex = index * steps;
+
+                // 再次避免重复触发
+                if (!self._triggerIsValid(index)) {
+                    return self;
+                }
+                if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) {
+                    return self;
+                }
+
+
+                // switch active trigger
+                if (cfg.hasTriggers) {
+                    self._switchTrigger(ingIndex > -1 ?
+                        triggers[ingIndex] : null,
+                        triggers[index]);
+                }
+
+                // switch active panels
+                if (direction === undefined) {
+                    direction = index > ingIndex ? FORWARD : BACKWARD;
+                }
+                self.ingIndex = index;
+                // switch view
+                self._switchView(
+                    ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
+                    panels.slice(toIndex, toIndex + steps),
+                    index,
+                    direction, ev, function() {
+                        callback && callback.call(self, index);
+                        // update activeIndex
+                        self.activeIndex = index
                     });
 
-                    if (cfg.triggerType === 'mouse') {
-                        Event.on(trigger, 'mouseenter', function(ev) {
-                            self._onMouseEnterTrigger(index, ev);
-                        });
-                        Event.on(trigger, 'mouseleave', function(ev) {
-                            self._onMouseLeaveTrigger(index, ev);
-                        });
-                    }
-                })(i);
+                return self; // chain
+            },
+
+            /**
+             * 切换当前触点
+             */
+            _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+                var activeTriggerCls = this.config.activeTriggerCls;
+
+                if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
+                DOM.addClass(toTrigger, activeTriggerCls);
+            },
+
+            /**
+             * 切换视图
+             */
+            _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
+                // 最简单的切换效果：直接隐藏/显示
+                if (fromPanels) {
+                    DOM.css(fromPanels, DISPLAY, NONE);
+                }
+                DOM.css(toPanels, DISPLAY, BLOCK);
+
+                // fire onSwitch events
+                this._fireOnSwitch(index, ev);
+                callback && callback.call(this);
+            },
+
+            /**
+             * 触发 switch 相关事件
+             */
+            _fireOnSwitch: function(index, ev) {
+
+                this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
+            },
+
+            /**
+             * 切换到上一视图
+             */
+            prev: function(ev) {
+                var self = this, activeIndex = self.activeIndex;
+                self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD, ev);
+            },
+
+            /**
+             * 切换到下一视图
+             */
+            next: function(ev) {
+                var self = this, activeIndex = self.activeIndex;
+                self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD, ev);
             }
-        },
-
-        /**
-         * click or tab 键激活 trigger 时触发的事件
-         */
-        _onFocusTrigger: function(index, ev) {
-            var self = this;
-            if (!self._triggerIsValid(index)) return; // 重复点击
-
-            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-            self.switchTo(index, undefined, ev);
-        },
-
-        /**
-         * 鼠标悬浮在 trigger 上时触发的事件
-         */
-        _onMouseEnterTrigger: function(index, ev) {
-            var self = this;
-            if (!self._triggerIsValid(index)) {
-                return;
-            } // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
-
-            self.switchTimer = S.later(function() {
-                self.switchTo(index, undefined, ev);
-            }, self.config.delay * 1000);
-        },
-
-        /**
-         * 鼠标移出 trigger 时触发的事件
-         */
-        _onMouseLeaveTrigger: function() {
-            this._cancelSwitchTimer();
-        },
-
-        /**
-         * 重复触发时的有效判断
-         */
-        _triggerIsValid: function(index) {
-            return this.ingIndex !== index;
-        },
-
-        /**
-         * 取消切换定时器
-         */
-        _cancelSwitchTimer: function() {
-            var self = this;
-            if (self.switchTimer) {
-                self.switchTimer.cancel();
-                self.switchTimer = undefined;
-            }
-        },
-
-        /**
-         * 切换操作，对外 api
-         * @param index 要切换的项
-         * @param direction 方向，用于 effect
-         * @param ev 引起该操作的事件
-         * @param callback 运行完回调，和绑定 switch 事件作用一样
-         */
-        switchTo: function(index, direction, ev, callback) {
-            var self = this,
-                cfg = self.config,
-                triggers = self.triggers,
-                panels = self.panels,
-                ingIndex = self.ingIndex,
-                steps = cfg.steps,
-                fromIndex = ingIndex * steps,
-                toIndex = index * steps;
-
-            // 再次避免重复触发
-            if (!self._triggerIsValid(index)) {
-                return self;
-            }
-            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) {
-                return self;
-            }
-
-
-            // switch active trigger
-            if (cfg.hasTriggers) {
-                self._switchTrigger(ingIndex > -1 ?
-                    triggers[ingIndex] : null,
-                    triggers[index]);
-            }
-
-            // switch active panels
-            if (direction === undefined) {
-                direction = index > ingIndex ? FORWARD : BACKWARD;
-            }
-            self.ingIndex = index;
-            // switch view
-            self._switchView(
-                ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
-                panels.slice(toIndex, toIndex + steps),
-                index,
-                direction, ev, function() {
-                    callback && callback.call(self, index);
-                    // update activeIndex
-                    self.activeIndex = index
-                });
-
-            return self; // chain
-        },
-
-        /**
-         * 切换当前触点
-         */
-        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-            var activeTriggerCls = this.config.activeTriggerCls;
-
-            if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
-            DOM.addClass(toTrigger, activeTriggerCls);
-        },
-
-        /**
-         * 切换视图
-         */
-        _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
-            // 最简单的切换效果：直接隐藏/显示
-            if (fromPanels) {
-                DOM.css(fromPanels, DISPLAY, NONE);
-            }
-            DOM.css(toPanels, DISPLAY, BLOCK);
-
-            // fire onSwitch events
-            this._fireOnSwitch(index, ev);
-            callback && callback.call(this);
-        },
-
-        /**
-         * 触发 switch 相关事件
-         */
-        _fireOnSwitch: function(index, ev) {
-
-            this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
-        },
-
-        /**
-         * 切换到上一视图
-         */
-        prev: function(ev) {
-            var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD, ev);
-        },
-
-        /**
-         * 切换到下一视图
-         */
-        next: function(ev) {
-            var self = this, activeIndex = self.activeIndex;
-            self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD, ev);
-        }
-    });
+        });
 
     return Switchable;
 
@@ -14526,6 +14540,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     var KEY_DOWN = 40;
     var KEY_TAB = 9;
 
+//    var DOM_EVENT = {originalEvent:{target:1}};
+
     var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
 //    var KEY_DELETE = 46;
@@ -14534,60 +14550,63 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Accordion.Config, {
-        aria:true
-    });
+            aria:true
+        });
 
     Accordion.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
-            var container = self.container;
-            DOM.attr(container, "aria-multiselectable",
-                self.config.multiple ? "true" : "false");
-            DOM.attr(container, "role", "tablist");
-            var triggers = self.triggers,
-                panels = self.panels;
-            var i = 0;
-            S.each(panels, function(panel) {
-                if (!panel.id) {
-                    panel.id = S.guid("ks-switchable-tab-panel");
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var container = self.container;
+                var activeIndex = self.activeIndex;
+                DOM.attr(container, "aria-multiselectable",
+                    self.config.multiple ? "true" : "false");
+                DOM.attr(container, "role", "tablist");
+                var triggers = self.triggers,
+                    panels = self.panels;
+                var i = 0;
+                S.each(panels, function(panel) {
+                    if (!panel.id) {
+                        panel.id = S.guid("ks-switchable-tab-panel");
+                    }
+                });
+                S.each(triggers, function(trigger) {
+                    if (!trigger.id) {
+                        trigger.id = S.guid("ks-switchable-tab");
+                    }
+                });
+
+                S.each(triggers, function(trigger) {
+                    trigger.setAttribute("role", "tab");
+                    trigger.setAttribute("aria-expanded", activeIndex == i ? "true" : "false");
+                    trigger.setAttribute("aria-selected", activeIndex == i ? "true" : "false");
+                    trigger.setAttribute("aria-controls", panels[i].id);
+                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(panel) {
+                    var t = triggers[i];
+                    panel.setAttribute("role", "tabpanel");
+                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+                    panel.setAttribute("aria-labelledby", t.id);
+                    i++;
+                });
+
+                self.on("switch", _tabSwitch, self);
+
+                if (activeIndex > -1) {
+                    self.focusIndex = activeIndex;
                 }
-            });
-            S.each(triggers, function(trigger) {
-                if (!trigger.id) {
-                    trigger.id = S.guid("ks-switchable-tab");
-                }
-            });
 
-            S.each(triggers, function(trigger) {
-                trigger.setAttribute("role", "tab");
-                trigger.setAttribute("aria-expanded", "false");
-                trigger.setAttribute("aria-selected", "false");
-                trigger.setAttribute("aria-controls", panels[i].id);
-                setTabIndex(trigger, "-1");
+                Event.on(container, "keydown", _tabKeydown, self);
+                /**
+                 * prevent firefox native tab switch
+                 */
+                Event.on(container, "keypress", _tabKeypress, self);
 
-                i++;
-            });
-            i = 0;
-            S.each(panels, function(panel) {
-                var t = triggers[i];
-                panel.setAttribute("role", "tabpanel");
-                panel.setAttribute("aria-hidden", "true");
-                panel.setAttribute("aria-labelledby", t.id);
-                i++;
-            });
-
-            self.on("switch", _tabSwitch, self);
-
-
-            Event.on(container, "keydown", _tabKeydown, self);
-            /**
-             * prevent firefox native tab switch
-             */
-            Event.on(container, "keypress", _tabKeypress, self);
-
-        }
-    });
+            }
+        });
 
     var setTabIndex = Aria.setTabIndex;
 
@@ -14810,9 +14829,9 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
 
 },
-{
-    requires:["../aria","./base"]
-});
+    {
+        requires:["../aria","./base"]
+    });
 
 /**
  2011-05-08 承玉：add support for aria & keydown
@@ -15063,7 +15082,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
     var setTabIndex = Aria.setTabIndex;
-
+    var DOM_EVENT = {originalEvent:{target:1}};
 
     function _switch(ev) {
         var self = this;
@@ -15165,7 +15184,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
                 c = findTrigger.call(this, t);
                 if (c) {
-                    this.switchTo(S.indexOf(c, this.triggers), undefined, e);
+                    this.switchTo(S.indexOf(c, this.triggers), undefined, DOM_EVENT);
                     e.halt();
                 }
                 break;
@@ -15271,71 +15290,77 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     S.mix(Carousel.Config, {
-        aria:true
-    });
+            aria:true
+        });
 
     Carousel.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
 
-            var triggers = self.triggers;
-            var panels = self.panels;
-            var content = self.content;
-            if (!content.id) {
-                content.id = S.guid("ks-switchbale-content");
-            }
-            content.setAttribute("role", "listbox");
-            S.each(triggers, function(t) {
-                setTabIndex(t, -1);
-                t.setAttribute("role", "button");
-                t.setAttribute("aria-controls", content.id);
-            });
+                var triggers = self.triggers;
+                var panels = self.panels;
+                var content = self.content;
 
-            S.each(panels, function(t) {
-                setTabIndex(t, -1);
-                t.setAttribute("role", "option");
-            });
+                var activeIndex = self.activeIndex;
 
-            self.on("switch", _switch, self);
-            var nav = self.nav;
-            if (nav) {
-                Event.on(nav, "keydown", _navKeydown, self);
-            }
-
-            Event.on(content, "keydown", _contentKeydown, self);
-
-            var prevBtn = self['prevBtn'],
-                nextBtn = self['nextBtn'];
-
-            if (prevBtn) {
-                setTabIndex(prevBtn, 0);
-                prevBtn.setAttribute("role", "button");
-                Event.on(prevBtn, "keydown", function(e) {
-                    if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                        self.switchTo(self.activeIndex > 0 ? self.activeIndex - 1 : triggers.length - 1,
-                            undefined, e);
-                    }
+                if (!content.id) {
+                    content.id = S.guid("ks-switchbale-content");
+                }
+                content.setAttribute("role", "listbox");
+                var i = 0;
+                S.each(triggers, function(t) {
+                    setTabIndex(t, activeIndex == i ? "0" : "-1");
+                    t.setAttribute("role", "button");
+                    t.setAttribute("aria-controls", content.id);
+                    i++;
                 });
-            }
-
-            if (nextBtn) {
-                setTabIndex(nextBtn, 0);
-                nextBtn.setAttribute("role", "button");
-                Event.on(nextBtn, "keydown", function(e) {
-                    if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                        self.switchTo(self.activeIndex == triggers - 1 ? self.activeIndex + 1 : 0,
-                            undefined, e);
-                    }
+                i = 0;
+                S.each(panels, function(t) {
+                    setTabIndex(t, "-1");
+                    t.setAttribute("role", "option");
+                    i++;
                 });
-            }
 
-        }
-    });
+                self.on("switch", _switch, self);
+                var nav = self.nav;
+                if (nav) {
+                    Event.on(nav, "keydown", _navKeydown, self);
+                }
+
+                Event.on(content, "keydown", _contentKeydown, self);
+
+                var prevBtn = self['prevBtn'],
+                    nextBtn = self['nextBtn'];
+
+                if (prevBtn) {
+                    setTabIndex(prevBtn, 0);
+                    prevBtn.setAttribute("role", "button");
+                    Event.on(prevBtn, "keydown", function(e) {
+                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                            self.switchTo(self.activeIndex > 0 ? self.activeIndex - 1 : triggers.length - 1,
+                                undefined, DOM_EVENT);
+                        }
+                    });
+                }
+
+                if (nextBtn) {
+                    setTabIndex(nextBtn, 0);
+                    nextBtn.setAttribute("role", "button");
+                    Event.on(nextBtn, "keydown", function(e) {
+                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                            self.switchTo(self.activeIndex == triggers - 1 ? self.activeIndex + 1 : 0,
+                                undefined, DOM_EVENT);
+                        }
+                    });
+                }
+
+            }
+        });
 
 }, {
-    requires:["dom","event","../aria","./base"]
-});
+        requires:["dom","event","../aria","./base"]
+    });
 
 /**
  承玉:2011.05.12
@@ -15961,58 +15986,67 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
     var KEY_UP = 38;
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
-   // var KEY_TAB = 9;
+    // var KEY_TAB = 9;
 
-   // var KEY_SPACE = 32;
+    // var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
 //    var KEY_DELETE = 46;
-   // var KEY_ENTER = 13;
+    // var KEY_ENTER = 13;
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
 
     var FORWARD = 'forward', BACKWARD = 'backward';
     S.mix(Slide.Config, {
-        aria:true
-    });
+            aria:true
+        });
 
     var setTabIndex = Aria.setTabIndex;
     Slide.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
-            var triggers = self.triggers;
-            var panels = self.panels;
-            S.each(triggers, function(t) {
-                setTabIndex(t, -1);
-            });
-            S.each(panels, function(p) {
-                setTabIndex(p, -1);
-                DOM.attr(p, "role", "option");
-            });
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var triggers = self.triggers;
+                var panels = self.panels;
+                var i = 0;
+                var activeIndex = self.activeIndex;
+                S.each(triggers, function(t) {
+                    setTabIndex(t, "-1");
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(p) {
+                    setTabIndex(p, activeIndex == i ? "0" : "-1");
+                    DOM.attr(p, "role", "option");
+                    i++;
+                });
 
-            var content = self.content;
+                var content = self.content;
 
-            DOM.attr(content, "role", "listbox");
+                DOM.attr(content, "role", "listbox");
 
-            Event.on(content, "keydown", _contentKeydown, self);
+                Event.on(content, "keydown", _contentKeydown, self);
 
-            setTabIndex(panels[0], 0);
+                setTabIndex(panels[0], 0);
 
-            self.on("switch", function(ev) {
-                var index = ev.currentIndex,
-                    last = self.activeIndex;
-
-                // 其实只有第一次有用
-                self.__slideIndex = index;
-
-                if (last != -1) {
-                    setTabIndex(panels[last], -1);
+                if (activeIndex > -1) {
+                    self.__slideIndex = activeIndex;
                 }
-                setTabIndex(panels[index], 0);
-            });
-        }
-    });
+
+                self.on("switch", function(ev) {
+                    var index = ev.currentIndex,
+                        last = self.activeIndex;
+
+                    // 其实只有第一次有用
+                    self.__slideIndex = index;
+
+                    if (last != -1) {
+                        setTabIndex(panels[last], -1);
+                    }
+                    setTabIndex(panels[index], 0);
+                });
+            }
+        });
 
     function _contentKeydownProcess(e) {
         var self = this,
@@ -16082,8 +16116,8 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
     }
 
 }, {
-    requires:["dom","event","../aria",'./base']
-});
+        requires:["dom","event","../aria",'./base']
+    });
 /**
  2011-05-12 承玉：add support for aria & keydown
 
@@ -16136,6 +16170,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     var KEY_DOWN = 40;
     var KEY_TAB = 9;
 
+    var DOM_EVENT = {originalEvent:{target:1}};
+
 //    var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
 //    var KEY_DELETE = 46;
@@ -16144,46 +16180,47 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Tabs.Config, {
-        aria:true
-    });
+            aria:true
+        });
 
     Tabs.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
-            var triggers = self.triggers,
-                panels = self.panels;
-            var container = self.container;
-            DOM.attr(container, "role", "tablist");
-            var i = 0;
-            S.each(triggers, function(trigger) {
-                trigger.setAttribute("role", "tab");
-                setTabIndex(trigger, "-1");
-                if (!trigger.id) {
-                    trigger.id = S.guid("ks-switchable");
-                }
-                i++;
-            });
-            i = 0;
-            S.each(panels, function(panel) {
-                var t = triggers[i];
-                panel.setAttribute("role", "tabpanel");
-                panel.setAttribute("aria-hidden", "true");
-                panel.setAttribute("aria-labelledby", t.id);
-                i++;
-            });
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var triggers = self.triggers,
+                    activeIndex = self.activeIndex,
+                    panels = self.panels;
+                var container = self.container;
+                DOM.attr(container, "role", "tablist");
+                var i = 0;
+                S.each(triggers, function(trigger) {
+                    trigger.setAttribute("role", "tab");
+                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                    if (!trigger.id) {
+                        trigger.id = S.guid("ks-switchable");
+                    }
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(panel) {
+                    var t = triggers[i];
+                    panel.setAttribute("role", "tabpanel");
+                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+                    panel.setAttribute("aria-labelledby", t.id);
+                    i++;
+                });
 
-            self.on("switch", _tabSwitch, self);
+                self.on("switch", _tabSwitch, self);
 
 
-            Event.on(container, "keydown", _tabKeydown, self);
-            /**
-             * prevent firefox native tab switch
-             */
-            Event.on(container, "keypress", _tabKeypress, self);
+                Event.on(container, "keydown", _tabKeydown, self);
+                /**
+                 * prevent firefox native tab switch
+                 */
+                Event.on(container, "keypress", _tabKeypress, self);
 
-        }
-    });
+            }
+        });
 
     var setTabIndex = Aria.setTabIndex;
 
@@ -16239,7 +16276,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.prev(e);
+                    self.prev(DOM_EVENT);
                     e.halt();
                 } // endif
                 break;
@@ -16249,7 +16286,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (_currentTabFromEvent.call(self, t)
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.next(e);
+                    self.next(DOM_EVENT);
                     e.halt();
                 } // endif
                 break;
@@ -16258,7 +16295,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.next(e);
+                    self.next(DOM_EVENT);
 
                 }
                 break;
@@ -16266,20 +16303,20 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.prev(e);
+                    self.prev(DOM_EVENT);
 
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, e);
+                    self.switchTo(0, undefined, DOM_EVENT);
                     e.halt();
                 }
                 break;
             case KEY_END:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, e);
+                    self.switchTo(triggers.length - 1, undefined, DOM_EVENT);
                     e.halt();
                 }
 
@@ -16288,9 +16325,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
                     if (e.shiftKey)
-                        self.prev(e);
+                        self.prev(DOM_EVENT);
                     else
-                        self.next(e);
+                        self.next(DOM_EVENT);
 
                 }
                 break;
@@ -16318,6 +16355,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
         }
         setTabIndex(trigger, "0");
 
+        // move focus to current trigger if invoked by dom event
         if (domEvent) {
             trigger.focus();
         }
@@ -16329,9 +16367,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
 
 },
-{
-    requires:["../aria","./base"]
-});
+    {
+        requires:["../aria","./base"]
+    });
 
 /**
  * 2011-05-08 承玉：add support for aria & keydown

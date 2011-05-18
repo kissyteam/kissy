@@ -14,24 +14,25 @@ KISSY.add('uibase/align', function(S, DOM) {
     }
 
     S.mix(Align, {
-        TL: 'tl',
-        TC: 'tc',
-        TR: 'tr',
-        CL: 'cl',
-        CC: 'cc',
-        CR: 'cr',
-        BL: 'bl',
-        BC: 'bc',
-        BR: 'br'
-    });
+            TL: 'tl',
+            TC: 'tc',
+            TR: 'tr',
+            CL: 'cl',
+            CC: 'cc',
+            CR: 'cr',
+            BL: 'bl',
+            BC: 'bc',
+            BR: 'br'
+        });
 
     Align.ATTRS = {
         align: {
-            value:{
-                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-                offset: [0, 0]      // 有效值为 [n, m]
-            }
+            // 默认不是正中，可以实现自由动画 zoom
+//            value:{
+//                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+//                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+//                offset: [0, 0]      // 有效值为 [n, m]
+//            }
         }
     };
 
@@ -122,17 +123,17 @@ KISSY.add('uibase/align', function(S, DOM) {
          */
         center: function(node) {
             this.set('align', {
-                node: node,
-                points: [Align.CC, Align.CC],
-                offset: [0, 0]
-            });
+                    node: node,
+                    points: [Align.CC, Align.CC],
+                    offset: [0, 0]
+                });
         }
     };
 
     return Align;
 }, {
-    requires:["dom"]
-});
+        requires:["dom"]
+    });
 /**
  * @module  UIBase
  * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
@@ -644,11 +645,20 @@ KISSY.add("uibase/close", function(S) {
     function Close() {
     }
 
+    var HIDE = "hide";
     Close.ATTRS = {
         closable: {             // 是否需要关闭按钮
             value: true,
             view:true
+        },
+        closeAction:{
+            value:HIDE
         }
+    };
+
+    var actions = {
+        hide:HIDE,
+        destroy:"destroy"
     };
 
     Close.prototype = {
@@ -658,7 +668,7 @@ KISSY.add("uibase/close", function(S) {
             var self = this,
                 closeBtn = self.get("view").get("closeBtn");
             closeBtn && closeBtn.on("click", function(ev) {
-                self.hide();
+                self[actions[self.get("closeAction")] || HIDE]();
                 ev.halt();
             });
         }
@@ -680,7 +690,8 @@ KISSY.add("uibase/closerender", function(S) {
         closable: {             // 是否需要关闭按钮
             value: true
         },
-        closeBtn:{}
+        closeBtn:{
+        }
     };
 
     Close.HTML_PARSER = {
@@ -712,9 +723,9 @@ KISSY.add("uibase/closerender", function(S) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
                     "role='button' " +
-                    "class='" + this.get("prefixCls") +CLS_PREFIX + "close" + "'>" +
+                    "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    this.get("prefixCls") +CLS_PREFIX + "close-x" +
+                    this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭</span>" +
                     "</a>")
                     .appendTo(el);
@@ -1109,12 +1120,12 @@ KISSY.add("uibase/maskrender", function(S) {
             "class='" +
             this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
         mask.css({
-            "position":"absolute",
-            left:0,
-            top:0,
-            width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
-            "height": DOM['docHeight']()
-        });
+                "position":"absolute",
+                left:0,
+                top:0,
+                width:UA['ie'] == 6 ? DOM['docWidth']() : "100%",
+                "height": DOM['docHeight']()
+            });
         if (UA['ie'] == 6) {
             //ie6 下最好和 mask 平行
             iframe = new Node("<" + "iframe " +
@@ -1157,15 +1168,13 @@ KISSY.add("uibase/maskrender", function(S) {
     Mask.prototype = {
 
         _maskExtShow:function() {
+            var self = this;
             if (!mask) {
-                initMask.call(this);
+                initMask.call(self);
             }
-            mask.css({
-                "z-index":this.get("zIndex") - 1
-            });
-            iframe && iframe.css({
-                "z-index":this.get("zIndex") - 1
-            });
+            var zIndex = self.get("zIndex") - 1;
+            mask.css("z-index", zIndex);
+            iframe && iframe.css("z-index", zIndex);
             num++;
             mask.css("display", "");
             iframe && iframe.css("display", "");
@@ -1178,6 +1187,10 @@ KISSY.add("uibase/maskrender", function(S) {
                 mask && mask.css("display", "none");
                 iframe && iframe.css("display", "none");
             }
+        },
+
+        __destructor:function() {
+            this._maskExtHide();
         }
 
     };
