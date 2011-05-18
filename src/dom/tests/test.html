@@ -66,6 +66,47 @@
     <input type="button" id="test-20100728-disabled"/>test disabled
 </div>
 <!-- attr-spec end-->
+
+
+
+<!-- class-spec start -->
+<div id="test-data-class">
+    <p id="foo-class">
+        <a href="../kissy/" style="color:red" class="link" title="test"
+           data-test="test">test link</a>
+        <input type="text" id="test-input-class" readonly maxlength="20" value="hello"/>
+        <input type="radio" id="test-radio-class"/>
+        <input type="radio" id="test-radio2-class" checked/>
+        <label class="test" for="test-input">label</label>
+        <button type="button" tabindex="3">Submit</button>
+        <textarea rows="2" cols="2">
+            test
+        </textarea>
+    </p>
+    <div id="test-div-class"></div>
+    <table id="test-table-class" cellspacing="10">
+        <tbody>
+        <tr>
+            <td rowspan="2" colspan="3">td</td>
+        </tr>
+        </tbody>
+    </table>
+    <select id="test-select-class">
+        <option id="test-opt-class" value="1">0</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <select id="test-select2-class">
+        <option>2</option>
+    </select>
+    <select id="test-select3-class" multiple autocomplete="off">
+        <option selected>1</option>
+        <option selected>2</option>
+        <option>3</option>
+    </select>
+</div>
+<!-- class-spec end -->
+
 <script src="attr-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

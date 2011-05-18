@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110517182539',
+        buildTime:'20110518121635',
 
         /**
          * Returns a new object containing all of the properties of
@@ -8225,6 +8225,7 @@ KISSY.add("cookie", function(S,C) {
 });
 
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
+    Ajax.getScript=S.getScript;
     var re = {
         UA:UA,
         DOM:DOM,

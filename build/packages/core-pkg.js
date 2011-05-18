@@ -5827,6 +5827,7 @@ KISSY.add("cookie", function(S,C) {
 });
 
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
+    Ajax.getScript=S.getScript;
     var re = {
         UA:UA,
         DOM:DOM,
