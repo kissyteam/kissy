@@ -8,7 +8,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
     DOM = S.DOM;
     Event = S.Event;
     Aria = Switchable.Aria;
-    Slide=S.Slide;
+    Slide = S.Slide;
 //    var KEY_PAGEUP = 33;
 //    var KEY_PAGEDOWN = 34;
 //    var KEY_END = 35;
@@ -30,46 +30,51 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
     var FORWARD = 'forward', BACKWARD = 'backward';
     S.mix(Slide.Config, {
-        aria:true
-    });
+            aria:true
+        });
 
     var setTabIndex = Aria.setTabIndex;
     Slide.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
-            var triggers = self.triggers;
-            var panels = self.panels;
-            S.each(triggers, function(t) {
-                setTabIndex(t, -1);
-            });
-            S.each(panels, function(p) {
-                setTabIndex(p, -1);
-                DOM.attr(p, "role", "option");
-            });
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var triggers = self.triggers;
+                var panels = self.panels;
+                var i = 0;
+                var activeIndex = self.activeIndex;
+                S.each(triggers, function(t) {
+                    setTabIndex(t, -1);
+                });
+                S.each(panels, function(p) {
+                    setTabIndex(p, activeIndex == i ? "0" : "-1");
+                    DOM.attr(p, "role", "option");
+                });
 
-            var content = self.content;
+                var content = self.content;
 
-            DOM.attr(content, "role", "listbox");
+                DOM.attr(content, "role", "listbox");
 
-            Event.on(content, "keydown", _contentKeydown, self);
+                Event.on(content, "keydown", _contentKeydown, self);
 
-            setTabIndex(panels[0], 0);
-
-            self.on("switch", function(ev) {
-                var index = ev.currentIndex,
-                    last = self.activeIndex;
-
-                // 其实只有第一次有用
-                self.__slideIndex = index;
-
-                if (last != -1) {
-                    setTabIndex(panels[last], -1);
+                setTabIndex(panels[0], 0);
+                if (activeIndex > -1) {
+                    self.__slideIndex = activeIndex;
                 }
-                setTabIndex(panels[index], 0);
-            });
-        }
-    });
+
+                self.on("switch", function(ev) {
+                    var index = ev.currentIndex,
+                        last = self.activeIndex;
+
+                    // 其实只有第一次有用
+                    self.__slideIndex = index;
+
+                    if (last != -1) {
+                        setTabIndex(panels[last], -1);
+                    }
+                    setTabIndex(panels[index], 0);
+                });
+            }
+        });
 
     function _contentKeydownProcess(e) {
         var self = this,

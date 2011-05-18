@@ -4,11 +4,11 @@
  */
 KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
-    DOM=S.DOM;
-    Event=S.Event;
-    var Switchable=S.Switchable;
-    Aria=Switchable.Aria;
-    Carousel=S.Carousel;
+    DOM = S.DOM;
+    Event = S.Event;
+    var Switchable = S.Switchable;
+    Aria = Switchable.Aria;
+    Carousel = S.Carousel;
 //    var KEY_PAGEUP = 33;
 //    var KEY_PAGEDOWN = 34;
 //    var KEY_END = 35;
@@ -235,67 +235,69 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     S.mix(Carousel.Config, {
-        aria:true
-    });
+            aria:true
+        });
 
     Carousel.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
 
-            var triggers = self.triggers;
-            var panels = self.panels;
-            var content = self.content;
-            if (!content.id) {
-                content.id = S.guid("ks-switchbale-content");
-            }
-            content.setAttribute("role", "listbox");
-            S.each(triggers, function(t) {
-                setTabIndex(t, -1);
-                t.setAttribute("role", "button");
-                t.setAttribute("aria-controls", content.id);
-            });
-
-            S.each(panels, function(t) {
-                setTabIndex(t, -1);
-                t.setAttribute("role", "option");
-            });
-
-            self.on("switch", _switch, self);
-            var nav = self.nav;
-            if (nav) {
-                Event.on(nav, "keydown", _navKeydown, self);
-            }
-
-            Event.on(content, "keydown", _contentKeydown, self);
-
-            var prevBtn = self['prevBtn'],
-                nextBtn = self['nextBtn'];
-
-            if (prevBtn) {
-                setTabIndex(prevBtn, 0);
-                prevBtn.setAttribute("role", "button");
-                Event.on(prevBtn, "keydown", function(e) {
-                    if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                        self.switchTo(self.activeIndex > 0 ? self.activeIndex - 1 : triggers.length - 1,
-                            undefined, e);
-                    }
+                var triggers = self.triggers;
+                var panels = self.panels;
+                var content = self.content;
+                var activeIndex = self.activeIndex;
+                var i = 0;
+                if (!content.id) {
+                    content.id = S.guid("ks-switchbale-content");
+                }
+                content.setAttribute("role", "listbox");
+                S.each(triggers, function(t) {
+                    setTabIndex(t, activeIndex == i ? "0" : "-1");
+                    t.setAttribute("role", "button");
+                    t.setAttribute("aria-controls", content.id);
                 });
-            }
 
-            if (nextBtn) {
-                setTabIndex(nextBtn, 0);
-                nextBtn.setAttribute("role", "button");
-                Event.on(nextBtn, "keydown", function(e) {
-                    if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                        self.switchTo(self.activeIndex == triggers - 1 ? self.activeIndex + 1 : 0,
-                            undefined, e);
-                    }
+                S.each(panels, function(t) {
+                    setTabIndex(t, -1);
+                    t.setAttribute("role", "option");
                 });
-            }
 
-        }
-    });
+                self.on("switch", _switch, self);
+                var nav = self.nav;
+                if (nav) {
+                    Event.on(nav, "keydown", _navKeydown, self);
+                }
+
+                Event.on(content, "keydown", _contentKeydown, self);
+
+                var prevBtn = self['prevBtn'],
+                    nextBtn = self['nextBtn'];
+
+                if (prevBtn) {
+                    setTabIndex(prevBtn, 0);
+                    prevBtn.setAttribute("role", "button");
+                    Event.on(prevBtn, "keydown", function(e) {
+                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                            self.switchTo(self.activeIndex > 0 ? self.activeIndex - 1 : triggers.length - 1,
+                                undefined, e);
+                        }
+                    });
+                }
+
+                if (nextBtn) {
+                    setTabIndex(nextBtn, 0);
+                    nextBtn.setAttribute("role", "button");
+                    Event.on(nextBtn, "keydown", function(e) {
+                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                            self.switchTo(self.activeIndex == triggers - 1 ? self.activeIndex + 1 : 0,
+                                undefined, e);
+                        }
+                    });
+                }
+
+            }
+        });
 
 });
 

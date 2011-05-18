@@ -34,13 +34,14 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
         init:function(self) {
             if (!self.config.aria) return;
             var triggers = self.triggers,
+             activeIndex = self.activeIndex,
                 panels = self.panels;
             var container = self.container;
             DOM.attr(container, "role", "tablist");
             var i = 0;
             S.each(triggers, function(trigger) {
                 trigger.setAttribute("role", "tab");
-                setTabIndex(trigger, "-1");
+                setTabIndex(trigger, activeIndex == i ? "0" : "-1");
                 if (!trigger.id) {
                     trigger.id = S.guid("ks-switchable");
                 }
@@ -50,7 +51,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             S.each(panels, function(panel) {
                 var t = triggers[i];
                 panel.setAttribute("role", "tabpanel");
-                panel.setAttribute("aria-hidden", "true");
+                panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+
                 panel.setAttribute("aria-labelledby", t.id);
                 i++;
             });

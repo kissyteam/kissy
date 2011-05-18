@@ -4,9 +4,9 @@
  */
 KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
-    var Switchable=S.Switchable;
-    Aria=Switchable.Aria;
-    Accordion=S.Accordion;
+    var Switchable = S.Switchable;
+    Aria = Switchable.Aria;
+    Accordion = S.Accordion;
 
     var SELECT = "ks-switchable-select";
     var Event = S.Event,DOM = S.DOM;
@@ -29,60 +29,63 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Accordion.Config, {
-        aria:true
-    });
+            aria:true
+        });
 
     Accordion.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
-            var container = self.container;
-            DOM.attr(container, "aria-multiselectable",
-                self.config.multiple ? "true" : "false");
-            DOM.attr(container, "role", "tablist");
-            var triggers = self.triggers,
-                panels = self.panels;
-            var i = 0;
-            S.each(panels, function(panel) {
-                if (!panel.id) {
-                    panel.id = S.guid("ks-switchable-tab-panel");
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var container = self.container;
+                var activeIndex = self.activeIndex;
+                DOM.attr(container, "aria-multiselectable",
+                    self.config.multiple ? "true" : "false");
+                DOM.attr(container, "role", "tablist");
+                var triggers = self.triggers,
+                    panels = self.panels;
+                var i = 0;
+                S.each(panels, function(panel) {
+                    if (!panel.id) {
+                        panel.id = S.guid("ks-switchable-tab-panel");
+                    }
+                });
+                S.each(triggers, function(trigger) {
+                    if (!trigger.id) {
+                        trigger.id = S.guid("ks-switchable-tab");
+                    }
+                });
+
+                S.each(triggers, function(trigger) {
+                    trigger.setAttribute("role", "tab");
+                    trigger.setAttribute("aria-expanded", activeIndex == i ? "true" : "false");
+                    trigger.setAttribute("aria-selected", activeIndex == i ? "true" : "false");
+                    trigger.setAttribute("aria-controls", panels[i].id);
+                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(panel) {
+                    var t = triggers[i];
+                    panel.setAttribute("role", "tabpanel");
+                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+
+                    panel.setAttribute("aria-labelledby", t.id);
+                    i++;
+                });
+
+                self.on("switch", _tabSwitch, self);
+                if (activeIndex > -1) {
+                    self.focusIndex = activeIndex;
                 }
-            });
-            S.each(triggers, function(trigger) {
-                if (!trigger.id) {
-                    trigger.id = S.guid("ks-switchable-tab");
-                }
-            });
 
-            S.each(triggers, function(trigger) {
-                trigger.setAttribute("role", "tab");
-                trigger.setAttribute("aria-expanded", "false");
-                trigger.setAttribute("aria-selected", "false");
-                trigger.setAttribute("aria-controls", panels[i].id);
-                setTabIndex(trigger, "-1");
+                Event.on(container, "keydown", _tabKeydown, self);
+                /**
+                 * prevent firefox native tab switch
+                 */
+                Event.on(container, "keypress", _tabKeypress, self);
 
-                i++;
-            });
-            i = 0;
-            S.each(panels, function(panel) {
-                var t = triggers[i];
-                panel.setAttribute("role", "tabpanel");
-                panel.setAttribute("aria-hidden", "true");
-                panel.setAttribute("aria-labelledby", t.id);
-                i++;
-            });
-
-            self.on("switch", _tabSwitch, self);
-
-
-            Event.on(container, "keydown", _tabKeydown, self);
-            /**
-             * prevent firefox native tab switch
-             */
-            Event.on(container, "keypress", _tabKeypress, self);
-
-        }
-    });
+            }
+        });
 
     var setTabIndex = Aria.setTabIndex;
 

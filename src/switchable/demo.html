@@ -483,13 +483,13 @@
     #accordion1 .last-panel { border-bottom: none }
 </style>
 <div id="accordion1" class="section">
-    <div class="ks-switchable-trigger ks-active"><i class="ks-icon"></i><h3>标题A</h3></div>
-    <div class="ks-switchable-panel">
+    <div class="ks-switchable-trigger"><i class="ks-icon"></i><h3>标题A</h3></div>
+    <div class="ks-switchable-panel" style="display:none;">
         1、支持鼠标滑过和点击触点两种方式<br/>
         2、支持同时展开多个面板
     </div>
-    <div class="ks-switchable-trigger"><i class="ks-icon"></i><h3>标题B</h3></div>
-    <div class="ks-switchable-panel" style="display:none;">内容B<br/>内容B<br/>内容B</div>
+    <div class="ks-switchable-trigger ks-active"><i class="ks-icon"></i><h3>标题B</h3></div>
+    <div class="ks-switchable-panel">内容B<br/>内容B<br/>内容B</div>
     <div class="ks-switchable-trigger"><i class="ks-icon"></i><h3>标题C</h3></div>
     <div class="ks-switchable-panel" style="display:none;">内容C<br/>内容C<br/>内容C<br/>内容C<br/>内容C</div>
     <div class="ks-switchable-trigger last-trigger"><i class="ks-icon"></i><h3>标题D</h3></div>
@@ -497,7 +497,7 @@
 </div>
 <script>
     KISSY.ready(function(S) {
-        S.Accordion('#accordion1', { multiple: true,activeIndex:0 } );
+        S.Accordion('#accordion1', { multiple: true,activeIndex:1 } );
     });
 </script>
 <p class="code-switch">显示源码</p>
