@@ -44,15 +44,15 @@
         <script>
             KISSY.use("node,overlay", function(S, Node, O) {
                 var dialog = new O.Dialog({
-                    width: 400,
-                    headerContent: '收藏',
-                    bodyContent: '<iframe scrolling="no" height="200" width="398" frameborder="0" name="popupIframe" src="http://favorite.taobao.com/popup/add_collection.htm?id=10166801469&amp;itemtype=1&amp;scjjc=1&amp;_tb_token_=3b38ed73a7775&amp;t=1305543755536"></iframe>',
-                    mask: true,
-                    align: {
-                        points: ['cc', 'cc']
-                    },
-                    draggable: false
-                });
+                            width: 400,
+                            headerContent: '收藏',
+                            bodyContent: '<iframe scrolling="no" height="200" width="398" frameborder="0" name="popupIframe" src="http://favorite.taobao.com/popup/add_collection.htm?id=10166801469&amp;itemtype=1&amp;scjjc=1&amp;_tb_token_=3b38ed73a7775&amp;t=1305543755536"></iframe>',
+                            mask: true,
+                            align: {
+                                points: ['cc', 'cc']
+                            },
+                            draggable: false
+                        });
                 Node.one('#btn4').on('click', function() {
                     dialog.show();
                 });
@@ -201,18 +201,18 @@
         <script>
             KISSY.use("node,overlay", function(S, Node, O) {
                 var d = new O.Dialog({
-                    srcNode: "#choose",
-                    width: 480,
-                    closable: true,
-                    align: {
-                        node: "#btn3",
-                        points: ['tr', 'cl']
-                    },
-                    effect: {
-                        effect:"slide",//"fade",
-                        duration:0.5
-                    }
-                });
+                            srcNode: "#choose",
+                            width: 480,
+                            closable: true,
+                            align: {
+                                node: "#btn3",
+                                points: ['tr', 'cl']
+                            },
+                            effect: {
+                                effect:"slide",//"fade",
+                                duration:0.5
+                            }
+                        });
                 Node.one('#btn3').on('click', function() {
                     d.show();
                 });
@@ -248,24 +248,24 @@
                         sh = false;
 
                 var dialog = new O.Dialog({
-                    width: 400,
-                    bodyStyle:{
-                        height: 100
-                    },
-                    mask: false,
-                    align: {
-                        node: '#c1',
-                        points: ['cc', 'cc']
-                    },
-                    constrain: '#c1',
-                    draggable: true,
+                            width: 400,
+                            bodyStyle:{
+                                height: 100
+                            },
+                            mask: false,
+                            align: {
+                                node: '#c1',
+                                points: ['cc', 'cc']
+                            },
+                            constrain: '#c1',
+                            draggable: true,
 
-                    resize:{
-                        minWidth:150,
-                        minHeight:70,
-                        handlers:["b","t","r","l","tr","tl","br","bl"]
-                    }
-                });
+                            resize:{
+                                minWidth:150,
+                                minHeight:70,
+                                handlers:["b","t","r","l","tr","tl","br","bl"]
+                            }
+                        });
                 dialog.on('show', function() {
                     if (stat) {
                         this.set('bodyContent', '我的位置只能在容器中');
@@ -278,9 +278,9 @@
                     if (!sh) {
                         dialog.show();
                         dialog.set("align", {
-                            node: '#c1',
-                            points: ['cc', 'cc']
-                        });
+                                    node: '#c1',
+                                    points: ['cc', 'cc']
+                                });
                         this.html('隐藏');
                     } else {
                         dialog.hide();
@@ -299,9 +299,9 @@
                 Node.one('#btn8').on('click', function() {
                     dialog.set('constrain', "#c1");
                     dialog.set("align", {
-                        node: '#c1',
-                        points: ['cc', 'cc']
-                    });
+                                node: '#c1',
+                                points: ['cc', 'cc']
+                            });
                     stat = true;
                     dialog.set('bodyContent', '我的位置只能在容器中');
                 });
@@ -328,35 +328,50 @@
                 line-height: 0;
             }
         </style>
-        <button id="btn5" class="button">我在可视区域的正中间</button>
+        <button id="btn5" class="button">我在可视区域的正中间，点击关闭销毁</button>
         <script>
             KISSY.use("ua,event,node,overlay", function(S, UA, Event, Node, O) {
                 var dialog = new O.Dialog({
-                    width:424,
-                    elCls: 'my',
-                    elStyle:{
-                        position: UA.ie == 6 ? "absolute" : "fixed"
-                    },
-                    <!-- width height 一定要设-->
-                    bodyContent: '<img '
-                            + 'width="424" '
-                            + 'height="282" '
-                            + 'src="http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" />',
-                    mask: true,
-                    draggable: true,
-                    align: {
-                        points: ['cc', 'cc']
-                    }
+                            width:424,
+                            elCls: 'my',
+                            elStyle:{
+                                position: UA.ie == 6 ? "absolute" : "fixed"
+                            },
+                            <!-- width height 一定要设-->
+                            bodyContent: '<img '
+                                    + 'width="424" '
+                                    + 'height="282" '
+                                    + 'src="http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" />',
+                            mask: true,
+                            draggable: true,
+                            align: {
+                                points: ['cc', 'cc']
+                            },
+                            closeAction:"destroy"
+                        });
+
+                var btn5 = Node.one('#btn5');
+
+                dialog.on("destroy", function() {
+                    btn5.detach("click", show);
+                    Event.detach(window, "scroll", center);
                 });
 
-                Node.one('#btn5').on('click', function() {
+                btn5.on('click', show);
+
+                function show() {
                     dialog.show();
-                });
+                }
+
+                function center() {
+                    S.log("ie center");
+                    if (dialog.get("visible")) {
+                        dialog.center();
+                    }
+                }
+
                 if (UA.ie == 6) {
-                    Event.on(window, "scroll", function() {
-                        if (dialog.get("visible"))
-                            dialog.center();
-                    });
+                    Event.on(window, "scroll", center);
                 }
             });
         </script>
@@ -387,17 +402,17 @@
                 S.ready(function(S) {
 
                     var dialog = new Dialog({
-                          width:424,
-                        elCls: 'my',
-                        elStyle:{
-                            overflow:'hidden'
-                        },
-                        <!-- width height 一定要设-->
-                        bodyContent:'<img '
-                                + 'width="424" '
-                                + 'height="282" '
-                                + 'src = "http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" / > '
-                    });
+                                width:424,
+                                elCls: 'my',
+                                elStyle:{
+                                    overflow:'hidden'
+                                },
+                                <!-- width height 一定要设-->
+                                bodyContent:'<img '
+                                        + 'width="424" '
+                                        + 'height="282" '
+                                        + 'src = "http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" / > '
+                            });
 
                     var b = Node.one("#btn18");
                     var running;
@@ -413,53 +428,49 @@
                             bw = b.width(),
                             bh = b.height();
 
-                    dialog.on("afterVisibleChange", function(ev) {
-                        var v = ev.newVal,el = dialog.get("el");
+                    dialog.on("afterSyncUI", function() {
+                        var el = dialog.get("el")
+                        ow = el.width();
+                        oh = el.height();
 
-                        //setTimeout(function() {
-                        if (v && !ow) {
-                            ow = el.width();
-                            oh = el.height();
-                        }
+                        dialog.on("afterVisibleChange", function(ev) {
+                            
+                            var v = ev.newVal,el = dialog.get("el");
 
-                        el.stopAnimate();
-                        running = true;
-                        if (v) {
-                            el.width(bw);
-                            el.height(bh);
-                            el.offset(b.offset());
+                            el.stopAnimate();
+                            running = true;
+                            if (v) {
+                                el.width(bw);
+                                el.height(bh);
+                                el.offset(b.offset());
 
-                            var d = {
-                                left:(DOM.viewportWidth() - ow) / 2 + DOM.scrollLeft() + "px",
-                                top:(DOM.viewportHeight() - oh) / 2 + DOM.scrollTop() + "px",
-                                width:ow + "px",
-                                height:oh + "px"
-                            };
+                                var d = {
+                                    left:(DOM.viewportWidth() - ow) / 2 + DOM.scrollLeft() + "px",
+                                    top:(DOM.viewportHeight() - oh) / 2 + DOM.scrollTop() + "px",
+                                    width:ow + "px",
+                                    height:oh + "px"
+                                };
 
-                            el.animate(d, 0.3, undefined, function() {
-                                running = false;
-                            });
-                        } else {
-                            el.css("visibility", "visible");
+                                el.animate(d, 0.3, undefined, function() {
+                                    running = false;
+                                });
+                            } else {
+                                el.css("visibility", "visible");
 
-                            el.animate({
-                                left:bl + "px",
-                                top:bt + "px",
-                                width:bw + "px",
-                                height:bh + "px"
-                            }, 0.3, undefined, function() {
-                                el.css("visibility", "hidden");
-                                running = false;
-                            });
-                        }
-
-                        // }, 100);
-
-
+                                el.animate({
+                                            left:bl + "px",
+                                            top:bt + "px",
+                                            width:bw + "px",
+                                            height:bh + "px"
+                                        }, 0.3, undefined, function() {
+                                    el.css("visibility", "hidden");
+                                    running = false;
+                                });
+                            }
+                        });
                     });
                 });
-            })
-                    ;
+            });
         </script>
 
     </div>

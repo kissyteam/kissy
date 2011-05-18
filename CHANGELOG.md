@@ -14,6 +14,8 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] Event.detach = Event.remove
+ - [*] KISSY.Overlay 增加 closeAction 配置, destroy or hide
  - [*] KISSY.Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
  - [x] KISSY.Suggest fix: IE9 下无法更新数据
  - [x] KISSY.Suggest fix: chrome 下光标鼠标移动问题
