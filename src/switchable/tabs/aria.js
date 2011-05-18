@@ -16,6 +16,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     var KEY_DOWN = 40;
     var KEY_TAB = 9;
 
+    var DOM_EVENT = {originalEvent:{target:1}};
+
 //    var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
 //    var KEY_DELETE = 46;
@@ -120,7 +122,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.prev(e);
+                    self.prev(DOM_EVENT);
                     e.halt();
                 } // endif
                 break;
@@ -130,7 +132,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (_currentTabFromEvent.call(self, t)
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.next(e);
+                    self.next(DOM_EVENT);
                     e.halt();
                 } // endif
                 break;
@@ -139,7 +141,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.next(e);
+                    self.next(DOM_EVENT);
 
                 }
                 break;
@@ -147,20 +149,20 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.prev(e);
+                    self.prev(DOM_EVENT);
 
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, e);
+                    self.switchTo(0, undefined, DOM_EVENT);
                     e.halt();
                 }
                 break;
             case KEY_END:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, e);
+                    self.switchTo(triggers.length - 1, undefined, DOM_EVENT);
                     e.halt();
                 }
 
@@ -169,9 +171,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
                     if (e.shiftKey)
-                        self.prev(e);
+                        self.prev(DOM_EVENT);
                     else
-                        self.next(e);
+                        self.next(DOM_EVENT);
 
                 }
                 break;

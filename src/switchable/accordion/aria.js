@@ -16,6 +16,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     var KEY_DOWN = 40;
     var KEY_TAB = 9;
 
+//    var DOM_EVENT = {originalEvent:{target:1}};
+
     var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
 //    var KEY_DELETE = 46;

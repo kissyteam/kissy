@@ -22,7 +22,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
     var setTabIndex = Aria.setTabIndex;
-
+    var DOM_EVENT = {originalEvent:{target:1}};
 
     function _switch(ev) {
         var self = this;
@@ -124,7 +124,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
                 c = findTrigger.call(this, t);
                 if (c) {
-                    this.switchTo(S.indexOf(c, this.triggers), undefined, e);
+                    this.switchTo(S.indexOf(c, this.triggers), undefined, DOM_EVENT);
                     e.halt();
                 }
                 break;
@@ -279,7 +279,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
                     Event.on(prevBtn, "keydown", function(e) {
                         if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
                             self.switchTo(self.activeIndex > 0 ? self.activeIndex - 1 : triggers.length - 1,
-                                undefined, e);
+                                undefined, DOM_EVENT);
                         }
                     });
                 }
@@ -290,7 +290,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
                     Event.on(nextBtn, "keydown", function(e) {
                         if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
                             self.switchTo(self.activeIndex == triggers - 1 ? self.activeIndex + 1 : 0,
-                                undefined, e);
+                                undefined, DOM_EVENT);
                         }
                     });
                 }
