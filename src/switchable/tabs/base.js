@@ -2,12 +2,8 @@
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('tabs', function(S) {
-
-    /**
-     * Tabs Class
-     * @constructor
-     */
+KISSY.add('switchable/tabs/base', function(S, Switchable) {
+    Switchable=S.Switchable;
     function Tabs(container, config) {
         var self = this;
 
@@ -17,9 +13,13 @@ KISSY.add('tabs', function(S) {
         }
 
         Tabs.superclass.constructor.call(self, container, config);
+        return 0;
     }
 
-    S.extend(Tabs, S.Switchable);
-    S.Tabs = Tabs;
+    S.extend(Tabs, Switchable);
 
-}, { host: 'switchable' } );
+    Tabs.Config = {};
+    Tabs.Plugins = [];
+    S.Tabs=Tabs;
+    return Tabs;
+});

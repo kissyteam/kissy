@@ -2,10 +2,9 @@
  * Switchable Autoplay Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('autoplay', function(S, undefined) {
-
-    var Event = S.Event,
-        Switchable = S.Switchable;
+KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
+Event=S.Event;
+    Switchable=S.Switchable;
 
     /**
      * 添加默认配置
@@ -26,6 +25,7 @@ KISSY.add('autoplay', function(S, undefined) {
         name: 'autoplay',
 
         init: function(host) {
+
             var cfg = host.config, interval = cfg.interval * 1000, timer;
             if (!cfg.autoplay) return;
 
@@ -33,11 +33,9 @@ KISSY.add('autoplay', function(S, undefined) {
             if (cfg.pauseOnHover) {
                 Event.on(host.container, 'mouseenter', function() {
                     host.stop();
-                    host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
                 });
                 Event.on(host.container, 'mouseleave', function() {
-                    host.paused = false;
-                    startAutoplay();
+                    host.start();
                 });
             }
 
@@ -45,7 +43,6 @@ KISSY.add('autoplay', function(S, undefined) {
                 // 设置自动播放
                 timer = S.later(function() {
                     if (host.paused) return;
-
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
                     host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
                 }, interval, true);
@@ -60,8 +57,21 @@ KISSY.add('autoplay', function(S, undefined) {
                     timer.cancel();
                     timer = undefined;
                 }
-            }
+                host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
+
+            };
+
+            host.start = function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+                host.paused = false;
+
+                startAutoplay();
+
+            };
         }
     });
-
-}, { host: 'switchable' } );
+    return Switchable;
+});

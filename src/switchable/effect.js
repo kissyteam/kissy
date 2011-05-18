@@ -2,15 +2,18 @@
  * Switchable Effect Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('effect', function(S, undefined) {
-
-    var DOM = S.DOM, Anim = S.Anim,
+KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefined) {
+    DOM = S.DOM;
+    Event = S.Event;
+    Anim = S.Anim;
+    Switchable = S.Switchable;
+    var
         DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
         OPACITY = 'opacity', Z_INDEX = 'z-index',
         POSITION = 'position', RELATIVE = 'relative', ABSOLUTE = 'absolute',
         SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
         LEFT = 'left', TOP = 'top', FLOAT = 'float', PX = 'px',
-        Switchable = S.Switchable, Effects;
+        Effects;
 
     /**
      * 添加默认配置
@@ -29,34 +32,52 @@ KISSY.add('effect', function(S, undefined) {
 
         // 最朴素的显示/隐藏效果
         none: function(fromEls, toEls, callback) {
-            DOM.css(fromEls, DISPLAY, NONE);
+            if (fromEls) {
+                DOM.css(fromEls, DISPLAY, NONE);
+            }
             DOM.css(toEls, DISPLAY, BLOCK);
             callback();
         },
 
         // 淡隐淡现效果
         fade: function(fromEls, toEls, callback) {
-            if (fromEls.length !== 1) {
-                S.error('fade effect only supports steps == 1.');
+            if (fromEls) {
+                if (fromEls.length !== 1) {
+                    S.error('fade effect only supports steps == 1.');
+                }
             }
-            var self = this, cfg = self.config,
-                fromEl = fromEls[0], toEl = toEls[0];
 
-            if (self.anim) self.anim.stop(true);
+            var self = this,
+                cfg = self.config,
+                fromEl = fromEls ? fromEls[0] : null,
+                toEl = toEls[0];
+
+            if (self.anim) {
+                self.anim.stop();
+            }
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
 
-            // 动画切换
-            self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
-                self.anim = undefined; // free
+//            S.log("from:");
+//            S.log(fromEl);
+//            S.log("to:");
+//            S.log(toEl);
 
-                // 切换 z-index
+            if (fromEl) {
+                // 动画切换
+                self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
+                    self.anim = undefined; // free
+
+                    // 切换 z-index
+                    DOM.css(toEl, Z_INDEX, 9);
+                    DOM.css(fromEl, Z_INDEX, 1);
+                    callback && callback();
+                }, cfg.nativeAnim).run();
+            } else {
                 DOM.css(toEl, Z_INDEX, 9);
-                DOM.css(fromEl, Z_INDEX, 1);
-
-                callback();
-            }, cfg.nativeAnim).run();
+                callback && callback();
+            }
         },
 
         // 水平/垂直滚动效果
@@ -67,12 +88,16 @@ KISSY.add('effect', function(S, undefined) {
                 props = { };
 
             props[isX ? LEFT : TOP] = -diff + PX;
-            if (self.anim) self.anim.stop();
+
+            if (self.anim) {
+                self.anim.stop();
+            }
 
             self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
                 self.anim = undefined; // free
                 callback();
             }, cfg.nativeAnim).run();
+
         }
     };
     Effects = Switchable.Effects;
@@ -117,8 +142,10 @@ KISSY.add('effect', function(S, undefined) {
                     // 如果是滚动效果
                     case SCROLLX:
                     case SCROLLY:
+
                         // 设置定位信息，为滚动效果做铺垫
                         DOM.css(content, POSITION, ABSOLUTE);
+
                         DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
 
                         // 水平排列
@@ -157,16 +184,20 @@ KISSY.add('effect', function(S, undefined) {
      */
     S.augment(Switchable, {
 
-        _switchView: function(fromEls, toEls, index, direction) {
+        _switchView: function(fromEls, toEls, index, direction, ev, callback) {
+
             var self = this, cfg = self.config,
                 effect = cfg.effect,
                 fn = S.isFunction(effect) ? effect : Effects[effect];
 
             fn.call(self, fromEls, toEls, function() {
-                self._fireOnSwitch(index);
+                self._fireOnSwitch(index, ev);
+                callback && callback.call(self);
             }, index, direction);
         }
 
     });
 
-}, { host: 'switchable' } );
+    return Switchable;
+
+});
