@@ -2,7 +2,7 @@
  * @module  dom-offset
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom/offset', function(S, DOM, UA,undefined) {
+KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     var win = window,
         doc = document,
@@ -31,134 +31,135 @@ KISSY.add('dom/offset', function(S, DOM, UA,undefined) {
     S.mix(DOM, {
 
 
-        /**
-         * Gets the current coordinates of the element, relative to the document.
-         */
-        offset: function(elem, val) {
-            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+            /**
+             * Gets the current coordinates of the element, relative to the document.
+             */
+            offset: function(elem, val) {
+                // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
 
-            // getter
-            if (val === undefined) {
-                return getOffset(elem);
-            }
-
-            // setter
-            setOffset(elem, val);
-        },
-
-        /**
-         * Makes elem visible in the container
-         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
-         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
-         *        http://yiminghe.javaeye.com/blog/390732
-         */
-        scrollIntoView: function(elem, container, top, hscroll) {
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
-
-            hscroll = hscroll === undefined ? true : !!hscroll;
-            top = top === undefined ? true : !!top;
-
-            // default current window, use native for scrollIntoView(elem, top)
-            if (!container || container === win) {
-                // 注意：
-                // 1. Opera 不支持 top 参数
-                // 2. 当 container 已经在视窗中时，也会重新定位
-                return elem.scrollIntoView(top);
-            }
-            container = DOM.get(container);
-
-            // document 归一化到 window
-            if (nodeTypeIs(container, 9)) {
-                container = getWin(container);
-            }
-
-            var isWin = container && (SCROLL_TO in container) && container[DOCUMENT],
-                elemOffset = DOM.offset(elem),
-                containerOffset = isWin ? {
-                    left: DOM.scrollLeft(container),
-                    top: DOM.scrollTop(container) }
-                    : DOM.offset(container),
-
-                // elem 相对 container 视窗的坐标
-                diff = {
-                    left: elemOffset[LEFT] - containerOffset[LEFT],
-                    top: elemOffset[TOP] - containerOffset[TOP]
-                },
-
-                // container 视窗的高宽
-                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
-
-                // container 视窗相对 container 元素的坐标
-                cl = DOM[SCROLL_LEFT](container),
-                ct = DOM[SCROLL_TOP](container),
-                cr = cl + cw,
-                cb = ct + ch,
-
-                // elem 的高宽
-                eh = elem.offsetHeight,
-                ew = elem.offsetWidth,
-
-                // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
-                r = l + ew,
-                b = t + eh,
-
-                t2, l2;
-
-            // 根据情况将 elem 定位到 container 视窗中
-            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-            if (eh > ch || t < ct || top) {
-                t2 = t;
-            } else if (b > cb) {
-                t2 = b - ch;
-            }
-
-            // 水平方向与上面同理
-            if (hscroll) {
-                if (ew > cw || l < cl || top) {
-                    l2 = l;
-                } else if (r > cr) {
-                    l2 = r - cw;
+                // getter
+                if (val === undefined) {
+                    return getOffset(elem);
                 }
-            }
 
-            // go
-            if (isWin) {
-                if (t2 !== undefined || l2 !== undefined) {
-                    container[SCROLL_TO](l2, t2);
-                }
-            } else {
-                if (t2 !== undefined) {
-                    container[SCROLL_TOP] = t2;
-                }
-                if (l2 !== undefined) {
-                    container[SCROLL_LEFT] = l2;
-                }
-            }
-        }
-    });
+                // setter
+                setOffset(elem, val);
+            },
 
-    // add ScrollLeft/ScrollTop getter methods
+            /**
+             * Makes elem visible in the container
+             * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+             *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+             *        http://yiminghe.javaeye.com/blog/390732
+             */
+            scrollIntoView: function(elem, container, top, hscroll) {
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
+
+                hscroll = hscroll === undefined ? true : !!hscroll;
+                top = top === undefined ? true : !!top;
+
+                // default current window, use native for scrollIntoView(elem, top)
+                if (!container || container === win) {
+                    // 注意：
+                    // 1. Opera 不支持 top 参数
+                    // 2. 当 container 已经在视窗中时，也会重新定位
+                    return elem.scrollIntoView(top);
+                }
+                container = DOM.get(container);
+
+                // document 归一化到 window
+                if (nodeTypeIs(container, 9)) {
+                    container = getWin(container);
+                }
+
+                var isWin = !!getWin(container),
+                    elemOffset = DOM.offset(elem),
+                    containerOffset = isWin ? {
+                        left: DOM.scrollLeft(container),
+                        top: DOM.scrollTop(container) }
+                        : DOM.offset(container),
+
+                    // elem 相对 container 视窗的坐标
+                    diff = {
+                        left: elemOffset[LEFT] - containerOffset[LEFT],
+                        top: elemOffset[TOP] - containerOffset[TOP]
+                    },
+
+                    // container 视窗的高宽
+                    ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                    cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+
+                    // container 视窗相对 container 元素的坐标
+                    cl = DOM[SCROLL_LEFT](container),
+                    ct = DOM[SCROLL_TOP](container),
+                    cr = cl + cw,
+                    cb = ct + ch,
+
+                    // elem 的高宽
+                    eh = elem.offsetHeight,
+                    ew = elem.offsetWidth,
+
+                    // elem 相对 container 元素的坐标
+                    // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                    l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                    t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                    r = l + ew,
+                    b = t + eh,
+
+                    t2, l2;
+
+                // 根据情况将 elem 定位到 container 视窗中
+                // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
+                // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
+                // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
+                // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+                if (eh > ch || t < ct || top) {
+                    t2 = t;
+                } else if (b > cb) {
+                    t2 = b - ch;
+                }
+
+                // 水平方向与上面同理
+                if (hscroll) {
+                    if (ew > cw || l < cl || top) {
+                        l2 = l;
+                    } else if (r > cr) {
+                        l2 = r - cw;
+                    }
+                }
+
+                // go
+                DOM[SCROLL_TOP](container, t2);
+                DOM[SCROLL_LEFT](container, l2);
+            }
+        });
+
+    // add ScrollLeft/ScrollTop getter/setter methods
     S.each(['Left', 'Top'], function(name, i) {
         var method = SCROLL + name;
 
-        DOM[method] = function(elem) {
+        DOM[method] = function(elem, v) {
+            if (S.isNumber(elem)) {
+                arguments.callee(win, elem);
+                return;
+            }
             var ret = 0, w = getWin(elem), d;
 
-            if (w && (d = w[DOCUMENT])) {
+            if (w) {
+                if (v !== undefined) {
+                    // 注意多 windw 情况，不能简单取 win
+                    var left = name == "Left" ? v : DOM.scrollLeft(w);
+                    var top = name == "Top" ? v : DOM.scrollTop(w);
+                    w['scrollTo'](left, top);
+                }
+                d = w[DOCUMENT];
                 ret = w[i ? 'pageYOffset' : 'pageXOffset']
                     || d[DOC_ELEMENT][method]
                     || d[BODY][method]
-            }
-            else if (isElementNode((elem = DOM.get(elem)))) {
-                ret = elem[method];
+
+            } else if (isElementNode((elem = DOM.get(elem)))) {
+                ret = v !== undefined ? elem[method] = v : elem[method];
             }
             return ret;
         }
@@ -224,8 +225,8 @@ KISSY.add('dom/offset', function(S, DOM, UA,undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base","ua"]
-});
+        requires:["dom/base","ua"]
+    });
 
 /**
  * TODO:

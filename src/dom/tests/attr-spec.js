@@ -14,24 +14,24 @@ KISSY.use("dom", function(S, DOM) {
     describe("attr", function() {
         beforeEach(function() {
             this.addMatchers({
-                toBeAlmostEqual: function(expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-                },
+                    toBeAlmostEqual: function(expected) {
+                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                    },
 
 
-                toBeEqual: function(expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-                },
+                    toBeEqual: function(expected) {
+                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                    },
 
-                toBeArrayEq:function(expected) {
-                    var actual = this.actual;
-                    if (expected.length != actual.length) return false;
-                    for (var i = 0; i < expected.length; i++) {
-                        if (expected[i] != actual[i]) return false;
+                    toBeArrayEq:function(expected) {
+                        var actual = this.actual;
+                        if (expected.length != actual.length) return false;
+                        for (var i = 0; i < expected.length; i++) {
+                            if (expected[i] != actual[i]) return false;
+                        }
+                        return true;
                     }
-                    return true;
-                }
-            });
+                });
         });
 
         S.get = DOM.get;
@@ -222,11 +222,12 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.val(select)).toBe('3');
                 // restore
                 DOM.val(select, 0);
-
                 DOM.val(select3, ['2','3']);
-
                 expect(DOM.val(select3)).toBeArrayEq(['2','3']);
 
+                //restore
+                DOM.val(select3, ['1','2']);
+                DOM.val(select, '1');
             });
 
         });
@@ -254,7 +255,7 @@ KISSY.use("dom", function(S, DOM) {
         });
 
         runs(function() {
-            S.get('#test-data').innerHTML = '';
+            //S.get('#test-data').innerHTML = '';
         });
     });
 

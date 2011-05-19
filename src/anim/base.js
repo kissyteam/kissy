@@ -567,8 +567,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 /**
  * TODO:
- *  - 实现 jQuery Effects 的 queue / specialEasing / += / toogle,show,hide 等特性
- *  - 还有些情况就是动画不一定改变 CSS, 有可能是 scroll-left 等
+ *  - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
  *
  * NOTES:
  *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示

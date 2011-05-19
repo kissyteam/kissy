@@ -22,87 +22,99 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-        /**
-         * Creates a new HTMLElement using the provided html string.
-         */
-        create: function(html, props, ownerDoc) {
-            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) return cloneNode(html);
-            if (isKSNode(html)) return cloneNode(html[0]);
-            if (!(html = S.trim(html))) return null;
-
-            var ret = null, creators = DOM._creators,
-                m, tag = DIV, k, nodes;
-
-            // 简单 tag, 比如 DOM.create('<p>')
-            if ((m = RE_SIMPLE_TAG.exec(html))) {
-                ret = (ownerDoc || doc).createElement(m[1]);
-            }
-            // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
-            else {
-                if ((m = RE_TAG.exec(html)) && (k = m[1]) && S.isFunction(creators[(k = k.toLowerCase())])) {
-                    tag = k;
+            /**
+             * Creates a new HTMLElement using the provided html string.
+             */
+            create: function(html, props, ownerDoc) {
+                if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+                    return cloneNode(html);
+                }
+                if (isKSNode(html)) {
+                    return cloneNode(html[0]);
+                }
+                if (!(html = S.trim(html))) {
+                    return null;
                 }
 
-                nodes = creators[tag](html, ownerDoc).childNodes;
+                var ret = null,
+                    creators = DOM._creators,
+                    m,
+                    tag = DIV,
+                    k,
+                    nodes;
 
-                if (nodes.length === 1) {
-                    // return single node, breaking parentNode ref from "fragment"
-                    ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
+                // 简单 tag, 比如 DOM.create('<p>')
+                if ((m = RE_SIMPLE_TAG.exec(html))) {
+                    ret = (ownerDoc || doc).createElement(m[1]);
                 }
+                // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
-                    // return multiple nodes as a fragment
-                    ret = nl2frag(nodes, ownerDoc || doc);
+                    if ((m = RE_TAG.exec(html))
+                        && (k = m[1])
+                        && S.isFunction(creators[(k = k.toLowerCase())])) {
+                        tag = k;
+                    }
+
+                    nodes = creators[tag](html, ownerDoc).childNodes;
+
+                    if (nodes.length === 1) {
+                        // return single node, breaking parentNode ref from "fragment"
+                        ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
+                    }
+                    else {
+                        // return multiple nodes as a fragment
+                        ret = nl2frag(nodes, ownerDoc || doc);
+                    }
                 }
-            }
 
-            return attachProps(ret, props);
-        },
+                return attachProps(ret, props);
+            },
 
-        _creators: {
-            div: function(html, ownerDoc) {
-                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                frag.innerHTML = html;
-                return frag;
-            }
-        },
-
-        /**
-         * Gets/Sets the HTML contents of the HTMLElement.
-         * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
-         * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
-         */
-        html: function(selector, val, loadScripts, callback) {
-            // getter
-            if (val === undefined) {
-                // supports css selector/Node/NodeList
-                var el = DOM.get(selector);
-
-                // only gets value on element nodes
-                if (isElementNode(el)) {
-                    return el.innerHTML;
+            _creators: {
+                div: function(html, ownerDoc) {
+                    var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                    frag.innerHTML = html;
+                    return frag;
                 }
-            }
-            // setter
-            else {
-                S.each(DOM.query(selector), function(elem) {
-                    if (isElementNode(elem)) {
-                        setHTML(elem, val, loadScripts, callback);
+            },
+
+            /**
+             * Gets/Sets the HTML contents of the HTMLElement.
+             * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
+             * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
+             */
+            html: function(selector, val, loadScripts, callback) {
+                // getter
+                if (val === undefined) {
+                    // supports css selector/Node/NodeList
+                    var el = DOM.get(selector);
+
+                    // only gets value on element nodes
+                    if (isElementNode(el)) {
+                        return el.innerHTML;
+                    }
+                }
+                // setter
+                else {
+                    S.each(DOM.query(selector), function(elem) {
+                        if (isElementNode(elem)) {
+                            setHTML(elem, val, loadScripts, callback);
+                        }
+                    });
+                }
+            },
+
+            /**
+             * Remove the set of matched elements from the DOM.
+             */
+            remove: function(selector) {
+                S.each(DOM.query(selector), function(el) {
+                    if (el.parentNode) {
+                        el.parentNode.removeChild(el);
                     }
                 });
             }
-        },
-
-        /**
-         * Remove the set of matched elements from the DOM.
-         */
-        remove: function(selector) {
-            S.each(DOM.query(selector), function(el) {
-                if (isElementNode(el) && el.parentNode) {
-                    el.parentNode.removeChild(el);
-                }
-            });
-        }
-    });
+        });
 
     // 添加成员到元素中
     function attachProps(elem, props) {
@@ -116,7 +128,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
 
-        if (nodes && (nodes.push || nodes.item) && nodes[0]) {
+        if (nodes
+            && (nodes.push || nodes.item)
+            && nodes[0]) {
             ownerDoc = ownerDoc || nodes[0].ownerDocument;
             ret = ownerDoc.createDocumentFragment();
 
@@ -141,7 +155,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
          * if this is MSIE 6/7, then we need to copy the innerHTML to
          * fix a bug related to some form field elements
          */
-        if (UA['ie'] < 8) ret.innerHTML = elem.innerHTML;
+        if (UA['ie'] < 8) {
+            ret.innerHTML = elem.innerHTML;
+        }
         return ret;
     }
 
@@ -163,12 +179,18 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         html += '<span id="' + id + '"></span>';
 
         // 确保脚本执行时，相关联的 DOM 元素已经准备好
+        // 不依赖于浏览器特性，正则表达式自己分析
         S.available(id, function() {
             var hd = DOM.get('head'),
-                match, attrs, srcMatch, charsetMatch,
-                t, s, text;
+                match,
+                attrs,
+                srcMatch,
+                charsetMatch,
+                t,
+                s,
+                text;
 
-            re_script.lastIndex = 0;
+            re_script['lastIndex'] = 0;
             while ((match = re_script.exec(html))) {
                 attrs = match[1];
                 srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
@@ -185,6 +207,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 }
                 // inline script
                 else if ((text = match[2]) && text.length > 0) {
+                    // sync , 同步
                     S.globalEval(text);
                 }
             }
@@ -222,7 +245,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 elem.removeChild(elem.firstChild);
             }
             // html == '' 时，无需再 appendChild
-            if (html) elem.appendChild(DOM.create(html));
+            if (html) {
+                elem.appendChild(DOM.create(html));
+            }
         }
     }
 
@@ -276,18 +301,18 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         }
 
         S.mix(creators, {
-            optgroup: creators.option, // gecko 支持，但 ie 不支持
-            th: creators.td,
-            thead: creators.tbody,
-            tfoot: creators.tbody,
-            caption: creators.tbody,
-            colgroup: creators.tbody
-        });
+                optgroup: creators.option, // gecko 支持，但 ie 不支持
+                th: creators.td,
+                thead: creators.tbody,
+                tfoot: creators.tbody,
+                caption: creators.tbody,
+                colgroup: creators.tbody
+            });
     }
     return DOM;
 }, {
-    requires:["dom/base","ua"]
-});
+        requires:["./base","ua"]
+    });
 
 /**
  * TODO:

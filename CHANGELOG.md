@@ -14,6 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] ie: dom opacity bug fix , border-width 数值归一化
  - [*] anim 提高性能，不重复 touch dom / css
  - [*] Event.detach = Event.remove
  - [*] KISSY.Overlay 增加 closeAction 配置, destroy or hide
@@ -31,7 +32,7 @@ History:
  - [x] bugfix anim 内存泄露
  - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
  - [+] 增加 anim 单元测试
- - [+] loader 支持包配置，各个模块无需配置路径 (http://docs.kissyui.com/docs/html/seed/loader/index.html)
+ - [+] loader 支持包配置，各个模块无需配置路径 (http://docs.kissyui.com/docs/html/api/seed/loader/index.html)
  - [+] loader 增加单元测试
  - [+] overlay 增加 resize 配置
  - [+] overlay 增加单元测试
@@ -44,6 +45,10 @@ History:
  - [+] dd 增加单元测试
  - [*] 所有模块结构根据 loader 重新组织
  - [*] kissyteam 文档利用 sphinx 重新编写整理
+ - [!] 再次强调：KISSY.Event.on 第一个参数只支持单个原生 dom 节点或原生 dom 节点数组以及选择器字符串
+ - [!] calendar 模块 use("calendar") 将不再动态加载其css，方便自由定制样式，若需要默认样式需静态引入或S.getScript加载
+ - [*] 当使用 Event.on 时，回调 event.target 以及 event.relatedTarget 为原生节点。
+       使用 S.one("#xx").on 时，回调 event.target 以及 event.relatedTarget 为 KISSY.Node
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
 

@@ -17,7 +17,7 @@
 <body>
 <h1>KISSY DOM Test Cases</h1>
 
-
+<div id="test_cases">
 <!-- attr-spec start-->
 <div id="test-data">
     <input id='hidepass'/>
@@ -68,7 +68,6 @@
 <!-- attr-spec end-->
 
 
-
 <!-- class-spec start -->
 <div id="test-data-class">
     <p id="foo-class">
@@ -107,14 +106,156 @@
 </div>
 <!-- class-spec end -->
 
+<!--
+offset-spec start
+-->
+<div id='test-offset' style="width:100px;height:100px;border: 1px solid red;">
+    offset
+</div>
+<!--
+offset-spec end
+-->
+
+
+<!--scroll-spec start-->
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+
+<div style="width:200px;height:200px;overflow:auto;border: 5px solid #ccc;" id="scroll-container">
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <div id="scroll-el" style="border:5px solid #9f9;">
+        test
+    </div>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+    <p>x</p>
+</div>
+
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<iframe src="test-dom-offset-iframe.html"
+        id="test-iframe"
+        style="border:1px solid black; "
+        width="200"
+        height="200"
+        frameborder="0"
+        scrolling="no"
+        ></iframe>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<p>x</p>
+<!--scroll-spec end-->
+</div>
 <script src="attr-spec.js"></script>
+<script src="class-spec.js"></script>
+<script src="create-spec.js"></script>
+<script src="data-spec.js"></script>
+<script src="insertion-spec.js"></script>
+<script src="offset-spec.js"></script>
+<script src="scroll-spec.js"></script>
+<script src="style-spec.js"></script>
 <script>
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute(function() {
-        if (parent && parent.jasmine.kissyNext) {
-            parent.jasmine.kissyNext(this.results().failedCount);
-        }
-    });
+
+    window.onload = function() {
+
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function() {
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(this.results().failedCount);
+            }
+            document.getElementById("test_cases").style.display = "none";
+        });
+
+    };
 </script>
 </body>
 </html>

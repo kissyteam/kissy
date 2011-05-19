@@ -40,6 +40,14 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                             val = elem[FILTERS]('alpha')[OPACITY];
                         } catch(ex) {
                             // 没有设置过 opacity 时会报错，这时返回 1 即可
+                            //如果该节点没有添加到 dom ，取不到 filters 结构
+
+                            var currentFilter = (elem.currentStyle || 0).filter || '';
+                            var m;
+                            if (m = currentFilter.match(/alpha\(opacity[=:]([^)]+)\)/)) {
+                                val = parseInt(S.trim(m[1]));
+                            }
+
                         }
                     }
 
@@ -75,6 +83,37 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
     catch(ex) {
         S.log('IE filters ActiveX is disabled. ex = ' + ex);
     }
+
+    /**
+     * border fix
+     * ie 不返回数值，只返回 thick? medium ...
+     */
+    var IE8 = UA['ie'] == 8,
+        BORDER_MAP = {
+            thin: IE8 ? '1px' : '2px',
+            medium: IE8 ? '3px' : '4px',
+            thick:IE8 ? '5px' : '6px'
+        },
+        BORDERS = ["","Top","Left","Right","Bottom"],
+        BORDER_FIX = {
+            get: function(elem, property) {
+                var currentStyle = elem.currentStyle,
+                    current = currentStyle[property] + "";
+                // look up keywords if a border exists
+                if (current.indexOf("px") < 0) {
+                    if (BORDER_MAP[current]) {
+                        current = BORDER_MAP[current];
+                    } else {
+                        // otherwise no border (default is "medium")
+                        current = 0;
+                    }
+                }
+                return current;
+            }
+        };
+    S.each(BORDERS, function(b) {
+        CUSTOM_STYLES["border" + b + "Width"] = BORDER_FIX;
+    });
 
     // getComputedStyle for IE
     if (!(doc.defaultView || { }).getComputedStyle && docElem[CURRENT_STYLE]) {
@@ -112,12 +151,16 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
     }
     return DOM;
 }, {
-    requires:["./base","ua","./style"]
-});
+        requires:["./base","ua","./style"]
+    });
 /**
  * NOTES:
+ * 承玉： 2011.05.19 opacity in ie
+ *  - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
+ *  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
  *
  *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但考虑
  *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
  *    依旧采用 Alpha 来实现。
+ *
  */

@@ -48,6 +48,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
                     parent.appendChild(node);
                 }
             }
+            return node;
         },
 
         /**
@@ -62,6 +63,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
                     parent.appendChild(node);
                 }
             }
+            return node;
         }
     });
     return DOM;
