@@ -96,7 +96,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 
         // ignore non-exist element
-        if (!(elem = DOM.get(elem))) return undefined;
+        if (!(elem = DOM.get(elem))) return;
 
         // factory or constructor
         if (!(this instanceof Anim)) {
@@ -181,7 +181,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
             //self.on(EVENT_COMPLETE, callback);
         }
-        return undefined;
     }
 
     Anim.PROPS = PROPS;
@@ -189,7 +188,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     // 不能插值的直接返回终值，没有动画插值过程
     function mirror(source, target) {
-        source += '';
+        source = null;
         return target;
     }
 
@@ -219,6 +218,10 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
              */
             interpolate:function(source, target, pos) {
                 return (source + (target - source) * pos).toFixed(3);
+            },
+
+            eq:function(tp, sp) {
+                return tp.v == sp.v && tp.u == sp.u;
             }
         }
     };
@@ -227,213 +230,228 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 
     S.augment(Anim, EventTarget, {
-        /**
-         * @type {boolean} 是否在运行
-         */
-        isRunning:false,
-        /**
-         * 动画开始到现在逝去的时间
-         */
-        elapsedTime:0,
-        /**
-         * 动画开始的时间
-         */
-        start:0,
-        /**
-         * 动画结束的时间
-         */
-        finish:0,
-        /**
-         * 动画持续时间，不间断的话 = finish-start
-         */
-        duration:0,
+            /**
+             * @type {boolean} 是否在运行
+             */
+            isRunning:false,
+            /**
+             * 动画开始到现在逝去的时间
+             */
+            elapsedTime:0,
+            /**
+             * 动画开始的时间
+             */
+            start:0,
+            /**
+             * 动画结束的时间
+             */
+            finish:0,
+            /**
+             * 动画持续时间，不间断的话 = finish-start
+             */
+            duration:0,
 
-        run: function() {
+            run: function() {
 
-            var self = this,
-                config = self.config,
-                elem = self.domEl,
-                duration, easing,
-                start,
-                finish,
-                target = self.props,
-                source = {},
-                prop;
+                var self = this,
+                    config = self.config,
+                    elem = self.domEl,
+                    duration, easing,
+                    start,
+                    finish,
+                    target = self.props,
+                    source = {},
+                    prop;
 
-            // already running,please stop first
-            if (self.isRunning) {
-                return;
-            }
-            if (self.fire(EVENT_START) === false) return;
+                // already running,please stop first
+                if (self.isRunning) {
+                    return;
+                }
+                if (self.fire(EVENT_START) === false) return;
 
-            self.stop(); // 先停止掉正在运行的动画
-            duration = config.duration * 1000;
-            self.duration = duration;
-            if (self.transitionName) {
-                self._nativeRun();
-            } else {
+                self.stop(); // 先停止掉正在运行的动画
+                duration = config.duration * 1000;
+                self.duration = duration;
+                if (self.transitionName) {
+                    self._nativeRun();
+                } else {
+                    for (prop in target) {
+                        source[prop] = getAnimValue(elem, prop);
+                    }
+
+                    self.source = source;
+
+                    start = S.now();
+                    finish = start + duration;
+                    easing = config.easing;
+
+                    if (S.isString(easing)) {
+                        easing = Easing[easing] || Easing.easeNone;
+                    }
+
+
+                    self.start = start;
+                    self.finish = finish;
+                    self.easing = easing;
+
+                    AM.start(self);
+                }
+
+                self.isRunning = true;
+
+                return self;
+            },
+
+            _complete:function() {
+                var self = this;
+                self.fire(EVENT_COMPLETE);
+                self.callback && self.callback();
+            },
+
+            _runFrame:function() {
+
+                var self = this,
+                    elem = self.domEl,
+                    finish = self.finish,
+                    start = self.start,
+                    duration = self.duration,
+                    time = S.now(),
+                    source = self.source,
+                    easing = self.easing,
+                    target = self.props,
+                    prop,
+                    elapsedTime;
+                elapsedTime = time - start;
+                var t = time > finish ? 1 : elapsedTime / duration,
+                    sp, tp, b;
+
+                self.elapsedTime = elapsedTime;
+
+                //S.log("********************************  _runFrame");
+
                 for (prop in target) {
-                    source[prop] = getAnimValue(elem, prop);
+
+                    sp = source[prop];
+                    tp = target[prop];
+
+                    // 没有发生变化的，直接略过
+                    if (eqAnimValue(prop, tp, sp)) continue;
+
+                    //S.log(prop);
+                    //S.log(tp.v + " : " + sp.v + " : " + sp.u + " : " + tp.u);
+
+                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                    // 这时要把 sp 的单位调整为和 tp 的一致
+                    if (tp.v == 0) {
+                        tp.u = sp.u;
+                    }
+
+                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                    // 比如：ie 下 border-width 默认为 medium
+                    if (sp.u !== tp.u) {
+                        //S.log(prop + " : " + sp.v + " : " + sp.u);
+                        //S.log(prop + " : " + tp.v + " : " + tp.u);
+                        //S.log(tp.f);
+                        sp.v = 0;
+                        sp.u = tp.u;
+                    }
+
+                    setAnimValue(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                    /**
+                     * 不能动画的量，直接设成最终值，下次不用动画，设置 dom 了
+                     */
+                    if (tp.f == mirror) {
+                        sp.v = tp.v;
+                        sp.u = tp.u;
+                    }
                 }
 
-                self.source = source;
-
-                start = S.now();
-                finish = start + duration;
-                easing = config.easing;
-
-                if (S.isString(easing)) {
-                    easing = Easing[easing] || Easing.easeNone;
+                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                    self.stop();
+                    // complete 事件只在动画到达最后一帧时才触发
+                    if (b) {
+                        self._complete();
+                    }
                 }
+            },
 
+            _nativeRun: function() {
+                var self = this,
+                    config = self.config,
+                    elem = self.domEl,
+                    duration = self.duration,
+                    easing = config.easing,
+                    prefix = self.transitionName,
+                    transition = {};
 
-                self.start = start;
-                self.finish = finish;
-                self.easing = easing;
+                // using CSS transition process
+                transition[prefix + 'Property'] = 'all';
+                transition[prefix + 'Duration'] = duration + 'ms';
+                transition[prefix + 'TimingFunction'] = easing;
 
-                AM.start(self);
-            }
+                // set the CSS transition style
+                DOM.css(elem, transition);
 
-            self.isRunning = true;
-
-            return self;
-        },
-
-        _complete:function() {
-            var self = this;
-            self.fire(EVENT_COMPLETE);
-            self.callback && self.callback();
-        },
-
-        _runFrame:function() {
-
-            var self = this,
-                elem = self.domEl,
-                finish = self.finish,
-                start = self.start,
-                duration = self.duration,
-                time = S.now(),
-                source = self.source,
-                easing = self.easing,
-                target = self.props,
-                prop,
-                elapsedTime;
-            elapsedTime = time - start;
-            var t = time > finish ? 1 : elapsedTime / duration,
-                sp, tp, b;
-
-            self.elapsedTime = elapsedTime;
-
-
-            for (prop in target) {
-                sp = source[prop];
-                tp = target[prop];
-
-                // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                // 这时要把 sp 的单位调整为和 tp 的一致
-                if (tp.v == 0) {
-                    tp.u = sp.u;
-                }
-
-                // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                // 比如：ie 下 border-width 默认为 medium
-                if (sp.u !== tp.u) {
-                    //S.log(prop + " : " + sp.v + " : " + sp.u);
-                    //S.log(prop + " : " + tp.v + " : " + tp.u);
-                    //S.log(tp.f);
-                    sp.v = 0;
-                    sp.u = tp.u;
-                }
-
-                setAnimValue(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
-            }
-
-            if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                self.stop();
-                // complete 事件只在动画到达最后一帧时才触发
-                if (b) {
-                    self._complete();
-                }
-            }
-        },
-
-        _nativeRun: function() {
-            var self = this,
-                config = self.config,
-                elem = self.domEl,
-                duration = self.duration,
-                easing = config.easing,
-                prefix = self.transitionName,
-                transition = {};
-
-            // using CSS transition process
-            transition[prefix + 'Property'] = 'all';
-            transition[prefix + 'Duration'] = duration + 'ms';
-            transition[prefix + 'TimingFunction'] = easing;
-
-            // set the CSS transition style
-            DOM.css(elem, transition);
-
-            // set the final style value (need some hack for opera)
-            S.later(function() {
-                setToFinal(elem,
-                    // target,
-                    self.targetStyle);
-            }, 0);
-
-            // after duration time, fire the stop function
-            S.later(function() {
-                self.stop(true);
-            }, duration);
-        },
-
-        stop: function(finish) {
-            var self = this;
-            // already stopped
-            if (!self.isRunning) {
-                return;
-            }
-
-            if (self.transitionName) {
-                self._nativeStop(finish);
-            } else {
-                // 直接设置到最终样式
-                if (finish) {
-                    setToFinal(self.domEl,
-                        //self.props,
+                // set the final style value (need some hack for opera)
+                S.later(function() {
+                    setToFinal(elem,
+                        // target,
                         self.targetStyle);
+                }, 0);
+
+                // after duration time, fire the stop function
+                S.later(function() {
+                    self.stop(true);
+                }, duration);
+            },
+
+            stop: function(finish) {
+                var self = this;
+                // already stopped
+                if (!self.isRunning) {
+                    return;
+                }
+
+                if (self.transitionName) {
+                    self._nativeStop(finish);
+                } else {
+                    // 直接设置到最终样式
+                    if (finish) {
+                        setToFinal(self.domEl,
+                            //self.props,
+                            self.targetStyle);
+                        self._complete();
+                    }
+                    AM.stop(self);
+                }
+
+                self.isRunning = false;
+
+                return self;
+            },
+
+            _nativeStop: function(finish) {
+                var self = this,
+                    elem = self.domEl,
+                    prefix = self.transitionName,
+                    props = self.props,
+                    prop;
+
+                // handle for the CSS transition
+                if (finish) {
+                    // CSS transition value remove should come first
+                    DOM.css(elem, prefix + PROPERTY, NONE);
                     self._complete();
+                } else {
+                    // if want to stop the CSS transition, should set the current computed style value to the final CSS value
+                    for (prop in props) {
+                        DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
+                    }
+                    // CSS transition value remove should come last
+                    DOM.css(elem, prefix + PROPERTY, NONE);
                 }
-                AM.stop(self);
             }
-
-            self.isRunning = false;
-
-            return self;
-        },
-
-        _nativeStop: function(finish) {
-            var self = this,
-                elem = self.domEl,
-                prefix = self.transitionName,
-                props = self.props,
-                prop;
-
-            // handle for the CSS transition
-            if (finish) {
-                // CSS transition value remove should come first
-                DOM.css(elem, prefix + PROPERTY, NONE);
-                self._complete();
-            } else {
-                // if want to stop the CSS transition, should set the current computed style value to the final CSS value
-                for (prop in props) {
-                    DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
-                }
-                // CSS transition value remove should come last
-                DOM.css(elem, prefix + PROPERTY, NONE);
-            }
-        }
-    });
+        });
 
     Anim.supportTransition = function() {
         if (TRANSITION_NAME) return TRANSITION_NAME;
@@ -467,6 +485,14 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     function setAnimValue(el, prop, v) {
         return (PROP_OPS[prop] || PROP_OPS["*"]).setter(el, prop, v);
+    }
+
+    function eqAnimValue(prop, tp, sp) {
+        var propSpecial = PROP_OPS[prop];
+        if (propSpecial && propSpecial.eq) {
+            return propSpecial.eq(tp, sp);
+        }
+        return PROP_OPS["*"].eq(tp, sp);
     }
 
     /**
@@ -541,8 +567,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     return Anim;
 }, {
-    requires:["dom","event","./easing","ua","./manager"]
-});
+        requires:["dom","event","./easing","ua","./manager"]
+    });
 
 /**
  * TODO:
@@ -646,14 +672,14 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
          */
         interpolate:function(source, target, pos) {
             var interpolate = OPS["*"].interpolate;
-//            var ret=
             return 'rgb(' + [
                 Math.floor(interpolate(source[0], target[0], pos)),
                 Math.floor(interpolate(source[1], target[1], pos)),
                 Math.floor(interpolate(source[2], target[2], pos))
             ].join(', ') + ')';
-//            S.log(ret);
-//            return  ret;
+        },
+        eq:function(tp, sp) {
+            return (tp.v + "") == (sp.v + "");
         }
     };
 
@@ -661,8 +687,8 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         OPS[prop] = OPS['color'];
     });
 }, {
-    requires:["dom","./base"]
-});/**
+        requires:["dom","./base"]
+    });/**
  * @module anim-easing
  */
 KISSY.add('anim/easing', function(S) {
@@ -985,7 +1011,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
         },
             function(v, k) {
 
-                P[k] = function(speed, callback) {
+                P[k] = function(speed, callback, easing, nativeSupport) {
                     var self = this;
                     self.__anims = self.__anims || [];
                     // 没有参数时，调用 DOM 中的对应方法
@@ -994,7 +1020,8 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                     }
                     else {
                         S.each(this, function(elem) {
-                            self.__anims.push(fx(elem, v[0], speed, callback, v[1]));
+                            self.__anims.push(fx(elem, v[0], speed, callback,
+                                v[1], easing, nativeSupport));
                         });
                     }
                     return this;
@@ -1002,7 +1029,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             });
     });
 
-    function fx(elem, which, speed, callback, visible) {
+    function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
         if (which === 'toggle') {
             visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
             which = 'show';
@@ -1030,6 +1057,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                 originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
                 //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
                 style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
+
                 if (visible) {
                     DOM.css(elem, HEIGHT, 0);
                 }
@@ -1044,7 +1072,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
         });
 
         // 开始动画
-        return new Anim(elem, style, speed, 'easeOut', function() {
+        return new Anim(elem, style, speed, easing || 'easeOut', function() {
             // 如果是隐藏, 需要还原一些 css 属性
             if (!visible) {
                 // 保留原有值
@@ -1076,7 +1104,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                 callback();
             }
 
-        }).run();
+        }, nativeSupport).run();
     }
 
 }, {

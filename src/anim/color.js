@@ -89,14 +89,14 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
          */
         interpolate:function(source, target, pos) {
             var interpolate = OPS["*"].interpolate;
-//            var ret=
             return 'rgb(' + [
                 Math.floor(interpolate(source[0], target[0], pos)),
                 Math.floor(interpolate(source[1], target[1], pos)),
                 Math.floor(interpolate(source[2], target[2], pos))
             ].join(', ') + ')';
-//            S.log(ret);
-//            return  ret;
+        },
+        eq:function(tp, sp) {
+            return (tp.v + "") == (sp.v + "");
         }
     };
 
@@ -104,5 +104,5 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         OPS[prop] = OPS['color'];
     });
 }, {
-    requires:["dom","./base"]
-});
+        requires:["dom","./base"]
+    });

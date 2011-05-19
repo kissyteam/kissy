@@ -14,6 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] anim 提高性能，不重复 touch dom / css
  - [*] Event.detach = Event.remove
  - [*] KISSY.Overlay 增加 closeAction 配置, destroy or hide
  - [*] KISSY.Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
