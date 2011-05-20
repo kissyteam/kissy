@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110519211404',
+        buildTime:'20110520132944',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4840,83 +4840,94 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-        /**
-         * Gets the parent node of the first matched element.
-         */
-        parent: function(selector, filter) {
-            return nth(selector, filter, 'parentNode', function(elem) {
-                return elem.nodeType != 11;
-            });
-        },
+            /**
+             * Gets the parent node of the first matched element.
+             */
+            parent: function(selector, filter) {
+                return nth(selector, filter, 'parentNode', function(elem) {
+                    return elem.nodeType != 11;
+                });
+            },
 
-        /**
-         * Gets the following sibling of the first matched element.
-         */
-        next: function(selector, filter) {
-            return nth(selector, filter, 'nextSibling', undefined);
-        },
+            /**
+             * Gets the following sibling of the first matched element.
+             */
+            next: function(selector, filter) {
+                return nth(selector, filter, 'nextSibling', undefined);
+            },
 
-        /**
-         * Gets the preceding sibling of the first matched element.
-         */
-        prev: function(selector, filter) {
-            return nth(selector, filter, 'previousSibling', undefined);
-        },
+            /**
+             * Gets the preceding sibling of the first matched element.
+             */
+            prev: function(selector, filter) {
+                return nth(selector, filter, 'previousSibling', undefined);
+            },
 
-        /**
-         * Gets the siblings of the first matched element.
-         */
-        siblings: function(selector, filter) {
-            return getSiblings(selector, filter, true);
-        },
+            /**
+             * Gets the siblings of the first matched element.
+             */
+            siblings: function(selector, filter) {
+                return getSiblings(selector, filter, true);
+            },
 
-        /**
-         * Gets the children of the first matched element.
-         */
-        children: function(selector, filter) {
-            return getSiblings(selector, filter, undefined);
-        },
+            /**
+             * Gets the children of the first matched element.
+             */
+            children: function(selector, filter) {
+                return getSiblings(selector, filter, undefined);
+            },
 
-        /**
-         * Check to see if a DOM node is within another DOM node.
-         */
-        contains: function(container, contained) {
-            var ret = false;
+            /**
+             * Check to see if a DOM node is within another DOM node.
+             */
+            contains: function(container, contained) {
+                var ret = false;
 
-            if ((container = DOM.get(container)) && (contained = DOM.get(contained))) {
-                if (container.contains) {
-                    if (contained.nodeType === 3) {
-                        contained = contained.parentNode;
-                        if (contained === container) return true;
+                if ((container = DOM.get(container))
+                    && (contained = DOM.get(contained))) {
+                    if (container.contains) {
+                        if (contained.nodeType === 3) {
+                            contained = contained.parentNode;
+                            if (contained === container) return true;
+                        }
+                        if (contained) {
+                            return container.contains(contained);
+                        }
                     }
-                    if (contained) {
-                        return container.contains(contained);
+                    else if (container.compareDocumentPosition) {
+                        return !!(container.compareDocumentPosition(contained) & 16);
+                    }
+                    else {
+                        while (!ret && (contained = contained.parentNode)) {
+                            ret = contained == container;
+                        }
                     }
                 }
-                else if (container.compareDocumentPosition) {
-                    return !!(container.compareDocumentPosition(contained) & 16);
-                }
-                else {
-                    while (!ret && (contained = contained.parentNode)) {
-                        ret = contained == container;
-                    }
-                }
+
+                return ret;
             }
-
-            return ret;
-        }
-    });
+        });
 
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn
     // direction 可为 parentNode, nextSibling, previousSibling
     function nth(elem, filter, direction, extraFilter) {
-        if (!(elem = DOM.get(elem))) return null;
-        if (filter === undefined) filter = 1; // 默认取 1
-        var ret = null, fi, flen;
+        if (!(elem = DOM.get(elem))) {
+            return null;
+        }
+        if (filter === undefined) {
+            // 默认取 1
+            filter = 1;
+        }
+        var ret = null,
+            fi,
+            flen;
 
-        if (S.isNumber(filter) && filter >= 0) {
-            if (filter === 0) return elem;
+        if (S.isNumber(filter)
+            && filter >= 0) {
+            if (filter === 0) {
+                return elem;
+            }
             fi = 0;
             flen = filter;
             filter = function() {
@@ -4925,7 +4936,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         }
 
         while ((elem = elem[direction])) {
-            if (isElementNode(elem) && (!filter || DOM.test(elem, filter)) && (!extraFilter || extraFilter(elem))) {
+            if (isElementNode(elem)
+                && (!filter || DOM.test(elem, filter))
+                && (!extraFilter || extraFilter(elem))) {
                 ret = elem;
                 break;
             }
@@ -4936,12 +4949,22 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     // 获取元素 elem 的 siblings, 不包括自身
     function getSiblings(selector, filter, parent) {
-        var ret = [], elem = DOM.get(selector), j, parentNode = elem, next;
-        if (elem && parent) parentNode = elem.parentNode;
+        var ret = [],
+            elem = DOM.get(selector),
+            j,
+            parentNode = elem,
+            next;
+        if (elem && parent) {
+            parentNode = elem.parentNode;
+        }
 
         if (parentNode) {
-            for (j = 0,next = parentNode.firstChild; next; next = next.nextSibling) {
-                if (isElementNode(next) && next !== elem && (!filter || DOM.test(next, filter))) {
+            for (j = 0,next = parentNode.firstChild;
+                 next;
+                 next = next.nextSibling) {
+                if (isElementNode(next)
+                    && next !== elem
+                    && (!filter || DOM.test(next, filter))) {
                     ret[j++] = next;
                 }
             }
@@ -4952,8 +4975,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base"]
-});
+        requires:["./base"]
+    });
 
 /**
  * NOTES:
@@ -7394,6 +7417,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 duration = config.duration * 1000;
                 self.duration = duration;
                 if (self.transitionName) {
+                    // !important firefox 如果结束样式对应的初始样式没有，则不会产生动画
+                    // <div> -> <div 'left=100px'>
+                    // 则初始 div 要设置行内 left=getComputed("left")
+//                    for (prop in target) {
+//                        var av = getAnimValue(elem, prop);// :)
+//                        setAnimValue(elem, prop, av.v + av.u);
+//                    }
                     self._nativeRun();
                 } else {
                     for (prop in target) {
@@ -7630,6 +7660,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         setAnimStyleText(el, style);
         while (i--) {
             var prop = PROPS[i];
+            // !important 只对行内样式得到计算当前真实值
             if (v = css[prop]) {
                 rules[prop] = getAnimValue(el, prop);
             }

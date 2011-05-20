@@ -1,3 +1,7 @@
+/**
+ * test cases for style sub module of dom module
+ * @author:yiminghe@gmail.com
+ */
 KISSY.use("dom,ua", function(S, DOM, UA) {
     describe("style", function() {
         beforeEach(function() {

@@ -58,8 +58,13 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
                 Event.on(btn, 'click', function(ev) {
                     ev.preventDefault();
-                    if (switching) return;
-                    if (!DOM.hasClass(btn, disableCls)) self[d]();
+                    if (switching) {
+                        return;
+                    }
+
+                    if (!DOM.hasClass(btn, disableCls)){
+                        self[d]();
+                    }
                 });
             });
 

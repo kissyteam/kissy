@@ -18,6 +18,26 @@
 <h1>KISSY DOM Test Cases</h1>
 
 <div id="test_cases">
+
+<!--selector-spec start-->
+
+<div id="test-selector">
+    <div class="test-selector">
+        <div class="test-selector">
+            <s id="test-selector-tag"></s>
+        </div>
+    </div>
+
+    <div class="test-selector">
+        <p class="test-selector">
+            <s></s>
+        </p>
+    </div>
+</div>
+<!--selector-spec end-->
+
+
+
 <!-- attr-spec start-->
 <div id="test-data">
     <input id='hidepass'/>
@@ -234,6 +254,18 @@ offset-spec end
 <p>x</p>
 <p>x</p>
 <!--scroll-spec end-->
+
+<!--traversal-spec start-->
+<div id="test-children" class="test-parent">
+    <p id="test-next"><a>1</a></p>
+    <p class="test-next-p"><a class="test-a">2</a></p>
+    <p class="test-next"><a id="test-parent3">3</a></p>
+    <p class="test-p" id="test-prev"><em class="test-em"><span><a id="test-parent4">4</a></span></em></p>
+</div>
+<div id="test-contains">text node</div>
+<!--traversal-spec end-->
+
+
 </div>
 <script src="attr-spec.js"></script>
 <script src="class-spec.js"></script>
@@ -243,6 +275,8 @@ offset-spec end
 <script src="offset-spec.js"></script>
 <script src="scroll-spec.js"></script>
 <script src="style-spec.js"></script>
+<script src="traversal-spec.js"></script>
+<script src="selector-spec.js"></script>
 <script>
 
     window.onload = function() {

@@ -2,20 +2,25 @@
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable/circular', function(S,DOM, Anim,Switchable) {
+KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
 
-    var POSITION = 'position', RELATIVE = 'relative',
-        LEFT = 'left', TOP = 'top',
-        EMPTY = '', PX = 'px',
-        FORWARD = 'forward', BACKWARD = 'backward',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly';
+    var POSITION = 'position',
+        RELATIVE = 'relative',
+        LEFT = 'left',
+        TOP = 'top',
+        EMPTY = '',
+        PX = 'px',
+        FORWARD = 'forward',
+        BACKWARD = 'backward',
+        SCROLLX = 'scrollx',
+        SCROLLY = 'scrolly';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        circular: false
-    });
+            circular: false
+        });
 
     /**
      * 循环滚动效果函数
@@ -44,8 +49,10 @@ KISSY.add('switchable/circular', function(S,DOM, Anim,Switchable) {
 
         // 开始动画
 
-        if (self.anim) self.anim.stop();
-
+        if (self.anim) {
+            self.anim.stop();
+        }
+       
         self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
             if (isCritical) {
                 // 复原位置
@@ -55,6 +62,7 @@ KISSY.add('switchable/circular', function(S,DOM, Anim,Switchable) {
             self.anim = undefined;
             callback();
         }, cfg.nativeAnim).run();
+
 
     }
 
@@ -107,22 +115,22 @@ KISSY.add('switchable/circular', function(S,DOM, Anim,Switchable) {
      */
     Switchable.Plugins.push({
 
-        name: 'circular',
+            name: 'circular',
 
-        /**
-         * 根据 effect, 调整初始状态
-         */
-        init: function(host) {
-            var cfg = host.config;
+            /**
+             * 根据 effect, 调整初始状态
+             */
+            init: function(host) {
+                var cfg = host.config;
 
-            // 仅有滚动效果需要下面的调整
-            if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
-                // 覆盖滚动效果函数
-                cfg.scrollType = cfg.effect; // 保存到 scrollType 中
-                cfg.effect = circularScroll;
+                // 仅有滚动效果需要下面的调整
+                if (cfg.circular && (cfg.effect === SCROLLX || cfg.effect === SCROLLY)) {
+                    // 覆盖滚动效果函数
+                    cfg.scrollType = cfg.effect; // 保存到 scrollType 中
+                    cfg.effect = circularScroll;
+                }
             }
-        }
-    });
+        });
 
 }, { requires:["dom","anim","switchable/base","switchable/effect"]});
 

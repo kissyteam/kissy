@@ -268,6 +268,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 duration = config.duration * 1000;
                 self.duration = duration;
                 if (self.transitionName) {
+                    // !important firefox 如果结束样式对应的初始样式没有，则不会产生动画
+                    // <div> -> <div 'left=100px'>
+                    // 则初始 div 要设置行内 left=getComputed("left")
+//                    for (prop in target) {
+//                        var av = getAnimValue(elem, prop);// :)
+//                        setAnimValue(elem, prop, av.v + av.u);
+//                    }
                     self._nativeRun();
                 } else {
                     for (prop in target) {
@@ -504,6 +511,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         setAnimStyleText(el, style);
         while (i--) {
             var prop = PROPS[i];
+            // !important 只对行内样式得到计算当前真实值
             if (v = css[prop]) {
                 rules[prop] = getAnimValue(el, prop);
             }

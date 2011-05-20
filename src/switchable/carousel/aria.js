@@ -49,7 +49,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
                 setTabIndex(t, -1);
             });
 
-            setTabIndex(trigger, 0);
+            trigger && setTabIndex(trigger, 0);
             setTabIndex(panel, 0);
 
             //dom 事件触发时，才会进行聚焦，否则会干扰用户
@@ -78,8 +78,10 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
             n = triggers[0];
         }
         setTabIndex(c, -1);
-        setTabIndex(n, 0);
-        n.focus();
+        if (n) {
+            setTabIndex(n, 0);
+            n.focus();
+        }
     }
 
 
@@ -90,8 +92,10 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
             n = triggers[triggers.length - 1];
         }
         setTabIndex(c, -1);
-        setTabIndex(n, 0);
-        n.focus();
+        if (n) {
+            setTabIndex(n, 0);
+            n.focus();
+        }
     }
 
     function _navKeydown(e) {
@@ -237,7 +241,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
             name:"aria",
             init:function(self) {
                 if (!self.config.aria) return;
-
+                // triggers 不可靠，panels 可靠
                 var triggers = self.triggers;
                 var panels = self.panels;
                 var content = self.content;
@@ -278,8 +282,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
                     prevBtn.setAttribute("role", "button");
                     Event.on(prevBtn, "keydown", function(e) {
                         if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                            self.switchTo(self.activeIndex > 0 ? self.activeIndex - 1 : triggers.length - 1,
-                                undefined, DOM_EVENT);
+                            self.prev(DOM_EVENT);
+                            e.preventDefault();
                         }
                     });
                 }
@@ -289,8 +293,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
                     nextBtn.setAttribute("role", "button");
                     Event.on(nextBtn, "keydown", function(e) {
                         if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                            self.switchTo(self.activeIndex == triggers - 1 ? self.activeIndex + 1 : 0,
-                                undefined, DOM_EVENT);
+                            self.next(DOM_EVENT);
+                            e.preventDefault();
                         }
                     });
                 }

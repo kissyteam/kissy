@@ -14,6 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
  - [*] ie: dom opacity bug fix , border-width 数值归一化
  - [*] anim 提高性能，不重复 touch dom / css
  - [*] Event.detach = Event.remove
