@@ -27,7 +27,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
     var setTabIndex = Aria.setTabIndex;
-var DOM_EVENT = {originalEvent:{target:1}};
+    var DOM_EVENT = {originalEvent:{target:1}};
 
     function _switch(ev) {
         var self = this;
@@ -54,7 +54,7 @@ var DOM_EVENT = {originalEvent:{target:1}};
                 setTabIndex(t, -1);
             });
 
-            setTabIndex(trigger, 0);
+            trigger && setTabIndex(trigger, 0);
             setTabIndex(panel, 0);
 
             //dom 事件触发时，才会进行聚焦，否则会干扰用户
@@ -83,8 +83,10 @@ var DOM_EVENT = {originalEvent:{target:1}};
             n = triggers[0];
         }
         setTabIndex(c, -1);
-        setTabIndex(n, 0);
-        n.focus();
+        if (n) {
+            setTabIndex(n, 0);
+            n.focus();
+        }
     }
 
 
@@ -95,8 +97,10 @@ var DOM_EVENT = {originalEvent:{target:1}};
             n = triggers[triggers.length - 1];
         }
         setTabIndex(c, -1);
-        setTabIndex(n, 0);
-        n.focus();
+        if (n) {
+            setTabIndex(n, 0);
+            n.focus();
+        }
     }
 
     function _navKeydown(e) {
@@ -279,8 +283,8 @@ var DOM_EVENT = {originalEvent:{target:1}};
                     prevBtn.setAttribute("role", "button");
                     Event.on(prevBtn, "keydown", function(e) {
                         if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                            self.switchTo(self.activeIndex > 0 ? self.activeIndex - 1 : triggers.length - 1,
-                                undefined, DOM_EVENT);
+                            self.prev(DOM_EVENT);
+                            e.preventDefault();
                         }
                     });
                 }
@@ -290,8 +294,8 @@ var DOM_EVENT = {originalEvent:{target:1}};
                     nextBtn.setAttribute("role", "button");
                     Event.on(nextBtn, "keydown", function(e) {
                         if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                            self.switchTo(self.activeIndex == triggers - 1 ? self.activeIndex + 1 : 0,
-                                undefined, DOM_EVENT);
+                            self.next(DOM_EVENT);
+                            e.preventDefault();
                         }
                     });
                 }
