@@ -55,7 +55,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
              * KISSY Node need
              */
             appendTo:function(node, parent) {
-                return this.append(node, parent);
+                return DOM.append(node, parent);
             },
 
             /**
@@ -77,16 +77,13 @@ KISSY.add('dom/insertion', function(S, DOM) {
              * KISSY Node need
              */
             prependTo:function(node, parent) {
-                return this.prepend(node, parent);
+                return DOM.prepend(node, parent);
             }
         });
     return DOM;
-},
-    {
+}, {
         requires:["dom/base"]
-    }
-)
-    ;
+    });
 
 /**
  * NOTES:
