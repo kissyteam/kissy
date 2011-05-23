@@ -206,16 +206,28 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
              * @param {String} cssText The text containing the css rules
              * @param {String} id An id to add to the stylesheet for later removal
              */
-            addStyleSheet: function(cssText, id) {
+            addStyleSheet: function(refWin, cssText, id) {
+                if (S.isString(refWin)) {
+                    id = cssText;
+                    cssText = refWin;
+                    refWin = window;
+                }
+                var win = DOM._getWin(refWin),doc = win.document;
                 var elem;
 
-                if (id && (id = id.replace('#', EMPTY))) elem = DOM.get('#' + id);
-                if (elem) return; // 仅添加一次，不重复添加
+                if (id && (id = id.replace('#', EMPTY))) {
+                    elem = DOM.get('#' + id, doc);
+                }
 
-                elem = DOM.create('<style>', { id: id });
+                // 仅添加一次，不重复添加
+                if (elem) {
+                    return;
+                }
+
+                elem = DOM.create('<style>', { id: id }, doc);
 
                 // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
-                DOM.get('head').appendChild(elem);
+                DOM.get('head', doc).appendChild(elem);
 
                 if (elem.styleSheet) { // IE
                     elem.styleSheet.cssText = cssText;

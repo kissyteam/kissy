@@ -1,6 +1,5 @@
-KISSY.add("node", function(S, Node, NodeList) {
-    Node.List = NodeList;
+KISSY.add("node", function(S, Node) {
     return Node;
 }, {
-    requires:["node/node","node/nodelist","node/attach"]
-});
+        requires:["node/base","node/attach","node/override"]
+    });

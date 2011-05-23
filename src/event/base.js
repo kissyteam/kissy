@@ -69,8 +69,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             events = cache[id].events;
             if (!events[type]) {
                 isNativeEventTarget = !target.isCustomEventTarget;
-                special = ((isNativeEventTarget || target._supportSpecialEvent)
-                    && Event.special[type]) || { };
+                special = (isNativeEventTarget && Event.special[type]) || { };
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
@@ -142,8 +141,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 j,
                 t,
                 isNativeEventTarget = !target.isCustomEventTarget,
-                special = ((isNativeEventTarget || target._supportSpecialEvent)
-                    && Event.special[type]) || { };
+                special = (isNativeEventTarget && Event.special[type]) || { };
 
 
             if (events === undefined) return;

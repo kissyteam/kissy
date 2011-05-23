@@ -7,8 +7,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     var doc = document,
         SPACE = ' ',
         ANY = '*',
-        GET_DOM_NODE = 'getDOMNode',
-        GET_DOM_NODES = GET_DOM_NODE + 's',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -16,7 +14,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {string} selector
      * @param {string|HTMLElement} context An #id string or a HTMLElement used as context
-     * @return  The array of found HTMLElement
+     * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
         var match, t,
@@ -50,7 +48,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             if (selector.indexOf(",") != -1) {
                 var selectors = selector.split(",");
                 S.each(selectors, function(s) {
-                    ret.push.apply(ret, query(s, context));
+                    ret.push.apply(ret, S.makeArray(query(s, context)));
                 });
             } else {
 
@@ -73,7 +71,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                         // #id .cls | #id tag.cls | .cls | tag.cls
                         if (cls) {
                             if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
-                                ret = getElementsByClassName(cls, tag, context);
+                                ret = S.makeArray(getElementsByClassName(cls, tag, context));
                             }
                             // 处理 #id.cls
                             else {
@@ -99,13 +97,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 }
             }
         }
-        // 传入的 selector 是 KISSY.Node/NodeList. 始终返回原生 DOM Node
-        else if (selector && (selector[GET_DOM_NODE] || selector[GET_DOM_NODES])) {
-            ret = selector[GET_DOM_NODE] ? [selector[GET_DOM_NODE]()] : selector[GET_DOM_NODES]();
-        }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (S.isArray(selector) || isNodeList(selector))) {
-            ret = selector;
+            ret = S.makeArray(selector);
         }
         // 传入的 selector 是 Node 等非字符串对象，原样返回
         else if (selector) {
@@ -179,7 +173,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
             getElementsByTagName = function(tag, context) {
-                var ret = context.getElementsByTagName(tag);
+                var ret = S.makeArray(context.getElementsByTagName(tag));
 
                 if (tag === ANY) {
                     var t = [], i = 0, j = 0, node;
@@ -197,8 +191,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     })();
 
     // query .cls
-    function getElementsByClassName(cls, tag, context) {
-        var els = context.getElementsByClassName(cls),
+    var getElementsByClassName = doc.getElementsByClassName ? function(cls, tag, context) {
+        var els = S.makeArray(context.getElementsByClassName(cls)),
             ret = els, i = 0, j = 0, len = els.length, el;
 
         if (tag && tag !== ANY) {
@@ -212,33 +206,23 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
         }
         return ret;
-    }
+    } : ( doc.querySelectorAll ? function(cls, tag, context) {
+        return context.querySelectorAll((tag ? tag : '') + '.' + cls);
+    } : function(cls, tag, context) {
+        var els = context.getElementsByTagName(tag || ANY),
+            ret = [], i = 0, j = 0, len = els.length, el, t;
 
-    if (!doc.getElementsByClassName) {
-        // 降级使用 querySelectorAll
-        if (doc.querySelectorAll) {
-            getElementsByClassName = function(cls, tag, context) {
-                return context.querySelectorAll((tag ? tag : '') + '.' + cls);
+        cls = SPACE + cls + SPACE;
+        for (; i < len; ++i) {
+            el = els[i];
+            t = el.className;
+            if (t && (SPACE + t + SPACE).indexOf(cls) > -1) {
+                ret[j++] = el;
             }
         }
-        // 降级到普通方法
-        else {
-            getElementsByClassName = function(cls, tag, context) {
-                var els = context.getElementsByTagName(tag || ANY),
-                    ret = [], i = 0, j = 0, len = els.length, el, t;
+        return ret;
+    });
 
-                cls = SPACE + cls + SPACE;
-                for (; i < len; ++i) {
-                    el = els[i];
-                    t = el.className;
-                    if (t && (SPACE + t + SPACE).indexOf(cls) > -1) {
-                        ret[j++] = el;
-                    }
-                }
-                return ret;
-            }
-        }
-    }
 
     // throw exception
     function error(msg) {
@@ -247,57 +231,57 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-        query: query,
+            query: query,
 
-        get: function(selector, context) {
-            return query(selector, context)[0] || null;
-        },
+            get: function(selector, context) {
+                return query(selector, context)[0] || null;
+            },
 
-        /**
-         * Filters an array of elements to only include matches of a filter.
-         * @param filter selector or fn
-         */
-        filter: function(selector, filter, context) {
-            var elems = query(selector, context),
-                sizzle = S.require("sizzle"),
-                match, tag, cls, ret = [];
+            /**
+             * Filters an array of elements to only include matches of a filter.
+             * @param filter selector or fn
+             */
+            filter: function(selector, filter, context) {
+                var elems = query(selector, context),
+                    sizzle = S.require("sizzle"),
+                    match, tag, cls, ret = [];
 
-            // 默认仅支持最简单的 tag.cls 形式
-            if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
-                tag = match[2];
-                cls = match[3];
-                filter = function(elem) {
-                    return !((tag && elem.tagName !== tag.toUpperCase()) || (cls && !DOM.hasClass(elem, cls)));
+                // 默认仅支持最简单的 tag.cls 形式
+                if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
+                    tag = match[2];
+                    cls = match[3];
+                    filter = function(elem) {
+                        return !((tag && elem.tagName !== tag.toUpperCase()) || (cls && !DOM.hasClass(elem, cls)));
+                    }
                 }
-            }
 
-            if (S.isFunction(filter)) {
-                ret = S.filter(elems, filter);
-            }
-            // 其它复杂 filter, 采用外部选择器
-            else if (filter && sizzle) {
-                ret = sizzle._filter(selector, filter, context);
-            }
-            // filter 为空或不支持的 selector
-            else {
-                error(filter);
-            }
+                if (S.isFunction(filter)) {
+                    ret = S.filter(elems, filter);
+                }
+                // 其它复杂 filter, 采用外部选择器
+                else if (filter && sizzle) {
+                    ret = sizzle._filter(selector, filter, context);
+                }
+                // filter 为空或不支持的 selector
+                else {
+                    error(filter);
+                }
 
-            return ret;
-        },
+                return ret;
+            },
 
-        /**
-         * Returns true if the passed element(s) match the passed filter
-         */
-        test: function(selector, filter, context) {
-            var elems = query(selector, context);
-            return elems.length && (DOM.filter(elems, filter, context).length === elems.length);
-        }
-    });
+            /**
+             * Returns true if the passed element(s) match the passed filter
+             */
+            test: function(selector, filter, context) {
+                var elems = query(selector, context);
+                return elems.length && (DOM.filter(elems, filter, context).length === elems.length);
+            }
+        });
     return DOM;
 }, {
-    requires:["dom/base"]
-});
+        requires:["dom/base"]
+    });
 
 /**
  * NOTES:
@@ -338,6 +322,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *
  * 2010.08
  *  - 给 S.query 的结果 attach each 方法
+ *
+ * 2011.05
+ *  - 恢复对简单分组支持
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。

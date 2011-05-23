@@ -167,8 +167,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     // add docWidth/Height, viewportWidth/Height getter methods
     S.each(['Width', 'Height'], function(name) {
-        DOM['doc' + name] = function(refDoc) {
-            var d = refDoc || doc;
+        DOM['doc' + name] = function(refWin) {
+            var w = getWin(refWin),
+                d = w[DOCUMENT];
             return MAX(isStrict ? d[DOC_ELEMENT][SCROLL + name] : d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };

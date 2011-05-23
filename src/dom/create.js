@@ -8,7 +8,6 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         ie = UA['ie'],
         nodeTypeIs = DOM._nodeTypeIs,
         isElementNode = DOM._isElementNode,
-        isKSNode = DOM._isKSNode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
@@ -29,9 +28,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
                     return cloneNode(html);
                 }
-                if (isKSNode(html)) {
-                    return cloneNode(html[0]);
-                }
+
                 if (!(html = S.trim(html))) {
                     return null;
                 }

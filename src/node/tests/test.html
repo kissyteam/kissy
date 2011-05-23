@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Seed Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../tools/jasmine/jasmine-html.js"></script>
+
+<script src="../../../build/seed.js" charset="utf-8"></script>
+<script>
+    KISSY.__combines = {};
+</script>
+<script src="../base.js"></script>
+<script src="../attach.js"></script>
+<script src="../override.js"></script>
+<script src="node-spec.js"></script>
+</head>
+<body>
+<h1>KISSY Node Test Cases</h1>
+<script>
+    KISSY.use("dom,node", function(S, DOm, Node) {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute(function() {
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(this.results().failedCount);
+            }
+        });
+    });
+</script>
+</body>
+</html>

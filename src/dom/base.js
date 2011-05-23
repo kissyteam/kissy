@@ -18,14 +18,6 @@ KISSY.add('dom/base', function(S, undefined) {
         },
 
         /**
-         * 是不是 KISSY.Node
-         */
-        _isKSNode: function(elem) {
-            var Node = S.require("node/node");
-            return Node && nodeTypeIs(elem, Node.TYPE);
-        },
-
-        /**
          * elem 为 window 时，直接返回
          * elem 为 document 时，返回关联的 window
          * elem 为 undefined 时，返回当前 window

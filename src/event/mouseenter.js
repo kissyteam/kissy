@@ -19,10 +19,6 @@ KISSY.add('event/mouseenter', function(S, Event,DOM, UA) {
                 },
 
                 handle: function(el, event) {
-                    // 保证 el 为原生 DOMNode
-                    if (DOM._isKSNode(el)) {
-                        el = el[0];
-                    }
 
                     // Check if mouse(over|out) are still within the same parent element
                     var parent = event.relatedTarget;
