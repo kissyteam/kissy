@@ -259,7 +259,7 @@
                             },
                             constrain: '#c1',
                             draggable: true,
-
+                            closable:false,
                             resize:{
                                 minWidth:150,
                                 minHeight:70,
@@ -281,10 +281,10 @@
                                     node: '#c1',
                                     points: ['cc', 'cc']
                                 });
-                        this.html('隐藏');
+                        new Node(this).html('隐藏');
                     } else {
                         dialog.hide();
-                        this.html('显示');
+                        new Node(this).html('显示');
                     }
                     sh = !sh;
                 });

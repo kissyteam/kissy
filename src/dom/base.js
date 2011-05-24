@@ -28,11 +28,21 @@ KISSY.add('dom/base', function(S, undefined) {
                 elem :
                 nodeTypeIs(elem, 9) ?
                     elem.defaultView || elem.parentWindow :
-                    elem === undefined ?
+                    elem == undefined ?
                         window : false;
         },
 
-        _nodeTypeIs: nodeTypeIs
+        _nodeTypeIs: nodeTypeIs,
+
+        // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+        _isNodeList:function(o) {
+            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+            // 注3：通过 namedItem 来判断不可靠
+            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+            // 注5: 考虑 iframe.contentWindow
+            return o && !o.nodeType && o.item && !o.setTimeout;
+        }
     };
 
 });

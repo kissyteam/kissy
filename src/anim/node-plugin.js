@@ -4,8 +4,7 @@
  */
 KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
-    var NP = N.prototype,
-        NLP = N.List.prototype,
+    var NLP = N.List.prototype,
         DISPLAY = 'display', NONE = 'none',
         OVERFLOW = 'overflow', HIDDEN = 'hidden',
         OPCACITY = 'opacity',
@@ -16,7 +15,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             slide: [OVERFLOW, HEIGHT]
         };
 
-    S.each([NP, NLP], function(P) {
+    (function(P) {
         P.animate = function() {
             var self = this,args = S.makeArray(arguments);
             self.__anims = self.__anims || [];
@@ -49,7 +48,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                     self.__anims = self.__anims || [];
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && arguments.length === 0) {
-                        DOM[k](this.getDOMNode ? this.getDOMNode() : this);
+                        DOM[k](this);
                     }
                     else {
                         S.each(this, function(elem) {
@@ -60,7 +59,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                     return this;
                 };
             });
-    });
+    })(NLP);
 
     function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
         if (which === 'toggle') {

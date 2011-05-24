@@ -278,11 +278,21 @@ KISSY.add('dom/base', function(S, undefined) {
                 elem :
                 nodeTypeIs(elem, 9) ?
                     elem.defaultView || elem.parentWindow :
-                    elem === undefined ?
+                    elem == undefined ?
                         window : false;
         },
 
-        _nodeTypeIs: nodeTypeIs
+        _nodeTypeIs: nodeTypeIs,
+
+        // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+        _isNodeList:function(o) {
+            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+            // 注3：通过 namedItem 来判断不可靠
+            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+            // 注5: 考虑 iframe.contentWindow
+            return o && !o.nodeType && o.item && !o.setTimeout;
+        }
     };
 
 });
@@ -1318,73 +1328,56 @@ KISSY.add('dom/insertion', function(S, DOM) {
              * Inserts the new node as the previous sibling of the reference node.
              * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertBefore: function(newNode, refNode) {
-                if ((newNode = DOM.get(newNode))
-                    && (refNode = DOM.get(refNode))
-                    && refNode[PARENT_NODE]) {
-                    refNode[PARENT_NODE].insertBefore(newNode, refNode);
+            insertBefore: function(newNodes, refNode) {
+                newNodes = DOM.query(newNodes);
+                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
+                    newNodes.each(function(newNode) {
+                        refNode[PARENT_NODE].insertBefore(newNode, refNode);
+                    });
                 }
-                return newNode;
             },
 
             /**
              * Inserts the new node as the next sibling of the reference node.
              * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertAfter: function(newNode, refNode) {
-                if ((newNode = DOM.get(newNode))
-                    && (refNode = DOM.get(refNode))
-                    && refNode[PARENT_NODE]) {
-                    if (refNode[NEXT_SIBLING]) {
+            insertAfter: function(newNodes, refNode) {
+                newNodes = DOM.query(newNodes);
+                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
+                    newNodes.each(function(newNode) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
-                    } else {
-                        refNode[PARENT_NODE].appendChild(newNode);
-                    }
+                    });
                 }
-                return newNode;
             },
 
             /**
              * Inserts the new node as the last child.
              */
-            append: function(node, parent) {
-                if ((node = DOM.get(node)) && (parent = DOM.get(parent))) {
+            append: function(nodes, parent) {
+                nodes = DOM.query(nodes);
+                if (parent = DOM.get(parent)) {
                     if (parent.appendChild) {
-                        parent.appendChild(node);
+                        nodes.each(function(node) {
+                            parent.appendChild(node);
+                        });
                     }
                 }
-                return node;
-            },
-
-            /**
-             * KISSY Node need
-             */
-            appendTo:function(node, parent) {
-                return DOM.append(node, parent);
             },
 
             /**
              * Inserts the new node as the first child.
              */
-            prepend:function(node, parent) {
-                if ((node = DOM.get(node))
-                    && (parent = DOM.get(parent))) {
-                    if (parent.firstChild) {
-                        DOM.insertBefore(node, parent.firstChild);
-                    } else {
-                        parent.appendChild(node);
-                    }
+            prepend:function(nodes, parent) {
+                nodes = DOM.query(nodes);
+                if (parent = DOM.get(parent)) {
+                    nodes.each(function(node) {
+                        parent.insertBefore(node, parent.firstChild);
+                    });
                 }
-                return node;
-            },
-
-            /**
-             * KISSY Node need
-             */
-            prependTo:function(node, parent) {
-                return DOM.prepend(node, parent);
             }
         });
+    DOM.prependTo = DOM.prepend;
+    DOM.appendTo = DOM.append;
     return DOM;
 }, {
         requires:["dom/base"]
@@ -1452,7 +1445,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
              *        http://yiminghe.javaeye.com/blog/390732
              */
             scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]){
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
                     return;
                 }
 
@@ -1552,7 +1545,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 arguments.callee(win, elem);
                 return;
             }
-            var ret = 0, w = getWin(elem), d;
+            elem = DOM.get(elem);
+            var ret = 0,
+                w = getWin(elem),
+                d;
 
             if (w) {
                 if (v !== undefined) {
@@ -1576,17 +1572,22 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     // add docWidth/Height, viewportWidth/Height getter methods
     S.each(['Width', 'Height'], function(name) {
         DOM['doc' + name] = function(refWin) {
+            refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
-            return MAX(isStrict ? d[DOC_ELEMENT][SCROLL + name] : d[BODY][SCROLL + name],
+            return MAX(isStrict ?
+                d[DOC_ELEMENT][SCROLL + name] :
+                d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };
 
         DOM[VIEWPORT + name] = function(refWin) {
+            refWin = DOM.get(refWin);
             var prop = 'inner' + name,
                 w = getWin(refWin),
                 d = w[DOCUMENT];
-            return (prop in w) ? w[prop] :
+            return (prop in w) ?
+                w[prop] :
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
@@ -1998,6 +1999,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     var doc = document,
+        isNodeList = DOM._isNodeList,
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
@@ -2113,15 +2115,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         return ret;
     }
 
-    // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
-    function isNodeList(o) {
-        // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
-        // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
-        // 注3：通过 namedItem 来判断不可靠
-        // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
-        // 注5: 考虑 iframe.contentWindow
-        return o && !o.nodeType && o.item && !o.setTimeout;
-    }
 
     // 调整 context 为合理值
     function tuneContext(context) {
@@ -2865,6 +2858,7 @@ KISSY.add('event/object', function(S, undefined) {
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        isNodeList = DOM._isNodeList,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -3106,7 +3100,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         }
 
         // on([targetA, targetB], type, fn)
-        if (S.isArray(targets)) {
+        if (S.isArray(targets) || isNodeList(targets)) {
             S.each(targets, function(target) {
                 Event[methodName](target, types, fn, scope);
             });
@@ -3314,83 +3308,65 @@ KISSY.add("event", function(S, Event, Target) {
  * definition for node and nodelist
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add("node/base", function(S, DOM) {
+KISSY.add("node/base", function(S, DOM, Event, undefined) {
+
+    var AP = Array.prototype;
+
+    var isNodeList = DOM._isNodeList;
 
     /**
-     * The Node class provides a wrapper for manipulating DOM Node.
+     * The NodeList class provides a wrapper for manipulating DOM Node.
      */
-    function Node(html, props, ownerDocument) {
-        var self = this, domNode;
+    function NodeList(html, props, ownerDocument) {
+        var self = this,domNode;
 
-        // handle Node(''), Node(null), or Node(undefined)
+        // handle NodeList(''), NodeList(null), or NodeList(undefined)
         if (!html) {
-            self.length = 0;
             return undefined;
         }
 
-        // create from html
-        if (S.isString(html)) {
+
+        else if (S.isString(html)) {
+            // create from html
             domNode = DOM.create(html, props, ownerDocument);
-            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
+            // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment
-                return new NodeList(domNode.childNodes);
+                AP.push.apply(this, S.makeArray(domNode.childNodes));
+                return undefined;
             }
         }
-        // handle Node
-        else if (html instanceof Node) {
+
+
+        else if (html instanceof NodeList) {
+            // handle NodeList
             return html;
         }
-        // node, document, window 等等，由使用者保证正确性
+
+
+        else if (S.isArray(html) || isNodeList(html)) {
+            AP.push.apply(this, S.makeArray(html));
+            return undefined;
+        }
+
+
         else {
+            // node, document, window
             domNode = html;
         }
 
+
         self[0] = domNode;
+        self.length = 1;
         return undefined;
     }
 
-    Node.TYPE = '-ks-Node';
+    S.augment(NodeList, Event.Target, {
 
-    S.augment(Node, {
-
+            isCustomEventTarget:false,
             /**
-             * 长度为 1
+             * 模拟事件触发，暂不实现
              */
-            length: 1,
-
-            /**
-             * Retrieves the DOMNode.
-             */
-            getDOMNode: function() {
-                return this[0];
-            },
-
-            nodeType: Node.TYPE
-        });
-
-    // query api
-    Node.one = function(selector, context) {
-        // return if node
-        if (selector.getDOMNode) {
-            return selector;
-        }
-        var elem = DOM.get(selector, context);
-        return elem ? new Node(elem, undefined, undefined) : null;
-    };
-
-    var AP = Array.prototype,
-        isElementNode = DOM._isElementNode;
-
-    /**
-     * The NodeList class provides a wrapper for manipulating DOM NodeList.
-     */
-    function NodeList(domNodes) {
-        // push nodes
-        AP.push.apply(this, S.makeArray(domNodes));
-    }
-
-    S.mix(NodeList.prototype, {
-
+            fire:null,
             /**
              * 默认长度为 0
              */
@@ -3400,24 +3376,11 @@ KISSY.add("node/base", function(S, DOM) {
              * 根据 index 或 DOMElement 获取对应的 KSNode
              */
             item: function(index) {
-                var self = this, ret = null, i, len;
-
-                // 找到 DOMElement 对应的 index
-                if (isElementNode(index)) {
-                    for (i = 0,len = self.length; i < len; i++) {
-                        if (index === self[i]) {
-                            index = i;
-                            break;
-                        }
-                    }
-                }
-
-                // 转换为 KSNode
-                if (isElementNode(self[index])) {
-                    ret = new Node(self[index], undefined, undefined);
-                }
-
-                return ret;
+                if (S.isNumber(index)) {
+                    if (index >= this.length) return null;
+                    return new NodeList(this[index], undefined, undefined);
+                } else
+                    return new NodeList(index, undefined, undefined);
             },
 
 
@@ -3431,41 +3394,58 @@ KISSY.add("node/base", function(S, DOM) {
             /**
              * Applies the given function to each Node in the NodeList.
              * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-             * @param context An optional context to apply the function with Default context is the current Node instance
+             * @param context An optional context to apply the function with Default context is the current NodeList instance
              */
             each: function(fn, context) {
                 var self = this,len = self.length, i = 0, node;
 
-                for (node = new Node(self[0], undefined, undefined);
+                for (node = new NodeList(self[0], undefined, undefined);
                      i < len && fn.call(context || node, node, i, this) !== false;
-                     node = new Node(self[++i], undefined, undefined)) {
+                     node = new NodeList(self[++i], undefined, undefined)) {
                 }
 
                 return this;
+            },
+            /**
+             * Retrieves the DOMNode.
+             */
+            getDOMNode: function() {
+                return this[0];
+            },
+
+            one:function(selector) {
+                if (this.length > 0) {
+                    return NodeList.one(selector, this[0]);
+                }
+                return null;
             }
         });
 
+    NodeList.prototype.all = NodeList.prototype.one;
+
     // query api
-    NodeList.all = function(selector, context) {
-        // return if node or nodelist
-        if (selector.getDOMNode) {
-            return new NodeList(selector);
-        } else if (selector.getDOMNodes) {
+    NodeList.one = NodeList.all = function(selector, context) {
+        if (selector.getDOMNodes) {
             return selector;
         }
-        return new NodeList(DOM.query(selector, context, true));
+        var domNodes = DOM.query(selector, context);
+        return domNodes.length > 0 ?
+            new NodeList(domNodes, undefined, undefined) :
+            null;
     };
 
-    Node.List = NodeList;
+    NodeList.List = NodeList;
 
-    return Node;
+    return NodeList;
 }, {
-        requires:["dom"]
+        requires:["dom","event"]
     });
 
 
 /**
  * Notes:
+ * 2011-05-25
+ *  - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
  *
  *  2010.04
  *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
@@ -3478,70 +3458,57 @@ KISSY.add("node/base", function(S, DOM) {
  */
 
 /**
- * import methods from DOM to Node.prototype
+ * import methods from DOM to NodeList.prototype
  * @author  yiminghe@gmail.com
  */
-KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
+KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
-    var NodeList = Node.List,
-        NP = Node.prototype,
-        NLP = NodeList.prototype;
+    var NLP = NodeList.prototype,
+        isNodeList = DOM._isNodeList;
 
-    function normalize(val, node) {
-
+    function normalize(val, node, nodeList) {
         // 链式操作
         if (val === undefined) {
             val = node;
         } else if (val === null) {
             val = null;
-        } else if (val.nodeType
-            && !val.getDOMNode) {
-            // 包装为 KISSY Node
-            val = new Node(val);
-        } else if (!val.getDOMNodes
-            && val[0]
-            && val[0].nodeType
-            && !val[0].getDOMNode) {
+        } else if (nodeList
+            && (val.nodeType || isNodeList(val) || S.isArray(val))) {
+
+//            if (val.nodeType) {
+//                val = [val];
+//            }
+//            //返回结果和自己相同，不用新建
+//            if (DOM.equals(val, node)) {
+//                val = node;
+//            } else {
+//                val = new NodeList(val);
+//            }
+
             // 包装为 KISSY NodeList
             val = new NodeList(val);
         }
         return val;
     }
 
-    function scrubNodes(args) {
-        for (var i = 0; i < args.length; i++) {
-            if (args[i].getDOMNode) {
-                args[i] = args[i].getDOMNode();
-            }
-        }
-        return args;
-    }
-
-    Node.addMethod = function(name, fn, context) {
-        NP[name] = function() {
-            //里面不要修改 context ,fn,name 会影响所有 ....
-            var el = this[0],args = S.makeArray(arguments);
-            args = scrubNodes(args);
-            args.unshift(el);
-            var ctx = context || this;
-            var ret = fn.apply(ctx, args);
-            return normalize(ret, this);
-        }
-    };
-
-    NodeList.addMethod = function(name, fn, context) {
+    /**
+     *
+     * @param {string} name 方法名
+     * @param {string} fn 实际方法
+     * @param {object} context 方法执行上下文，不指定为 this
+     * @param {boolean} nodeList 是否对返回对象 NodeList
+     */
+    NodeList.addMethod = function(name, fn, context, nodeList) {
         NLP[name] = function() {
-            var ret = [],args = S.makeArray(arguments);
-            args = scrubNodes(args);
-            this.each(function(n) {
-                var ctx = context || n;
-                var r = fn.apply(ctx, args);
-                if (r !== n) {
-                    ret.push(r);
-                }
-            });
-            return ret.length ? ret : this;
-        };
+            //里面不要修改 context ,fn,name 会影响所有 ....
+            // NLP && NP
+            var self = this,
+                args = S.makeArray(arguments);
+            args.unshift(self);
+            var ctx = context || self;
+            var ret = fn.apply(ctx, args);
+            return  normalize(ret, self, nodeList);
+        }
     };
 
     //不能添加到 NP 的方法
@@ -3549,11 +3516,12 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
         "_isElementNode",
         "_getWin",
         "_getComputedStyle",
-        "_getComputedStyle",
+        "_isNodeList",
         "_nodeTypeIs",
         "create",
         "get",
-        "query"
+        "query",
+        "data"
     ];
 
     S.each(DOM, function(v, k) {
@@ -3561,9 +3529,11 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
             && S.isFunction(v)
             && !S.inArray(k, excludes)
             ) {
-            Node.addMethod(k, v, DOM);
+            NodeList.addMethod(k, v, DOM, true);
         }
     });
+
+    NodeList.addMethod("data", DOM.data, DOM);
 
 }, {
         requires:["dom","event","./base"]
@@ -3572,90 +3542,18 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
 /**
  * 2011-05-24
  *  - 承玉：
- *  - 将 DOM 中的方法包装成 Node 方法
- *  - Node 方法调用参数中的 KISSY Node 要转换成 HTML Node
- *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 Node 对应方法返回 this
- *  - 实际上可以完全使用 Node 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
- *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new Node(document) 获得
+ *  - 将 DOM 中的方法包装成 NodeList 方法
+ *  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
+ *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
+ *  - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
 
 /**
- * overrides methods in Node.prototype and build NodeList.prototype
+ * overrides methods in NodeList.prototype
  * @author : yiminghe@gmail.com
  */
-KISSY.add("node/override", function(S, DOM, Event, Node) {
-
-    var NodeList = Node.List,
-        NP = Node.prototype;
-    /**
-     * Retrieves a node based on the given CSS selector.
-     */
-    Node.addMethod("one", function(domNode, selector) {
-        return DOM.get(selector, domNode);
-    });
-    /**
-     * Retrieves a nodeList based on the given CSS selector.
-     */
-    Node.addMethod("all", function(domNode, selector) {
-        return DOM.query(selector, domNode);
-    });
-
-
-    // 一个函数被多个节点注册
-    function tagFn(fn, wrap, target) {
-        fn.__wrap = fn.__wrap || [];
-        fn.__wrap.push({
-                // 函数
-                fn:wrap,
-                // 关联节点
-                target:target
-            });
-    }
-
-
-    Node.addMethod("on", function(domNode, type, fn, scope) {
-        var self = this;
-
-        function wrap(ev) {
-            var args = S.makeArray(arguments);
-            // 防止 args 和 ev 不同步
-            args.shift();
-            ev.target = new Node(ev.target);
-            if (ev.relatedTarget) {
-                ev.relatedTarget = new Node(ev.relatedTarget);
-            }
-            args.unshift(ev);
-            return fn.apply(scope || self, args);
-        }
-
-        Event.add(domNode, type, wrap, scope);
-        tagFn(fn, wrap, domNode);
-    });
-
-
-    Node.addMethod("detach", function(domNode, type, fn, scope) {
-        if (S.isFunction(fn)) {
-            var wraps = fn.__wrap || [];
-            for (var i = wraps.length - 1; i >= 0; i--) {
-                var w = wraps[i];
-                if (w.target == domNode) {
-                    Event.remove(domNode, type, w.fn, scope);
-                    wraps.splice(i, 1);
-                }
-            }
-        } else {
-            Event.remove(domNode, type, fn, scope);
-        }
-    });
-
-
-    for (var k in NP) {
-        var v = NP[k];
-        if (NP.hasOwnProperty(k) && S.isFunction(v)) {
-            NodeList.addMethod(k, v);
-        }
-    }
-
+KISSY.add("node/override", function(S, DOM, Event, NodeList) {
 
     /**
      * append(node ,parent) : 参数顺序反过来了
@@ -3665,22 +3563,20 @@ KISSY.add("node/override", function(S, DOM, Event, Node) {
     S.each(['append', 'prepend'], function(insertType) {
         // append 和 prepend
 
-        Node.addMethod(insertType, function(domNode, html) {
+        NodeList.addMethod(insertType, function(domNodes, html) {
+
             var newNode = html;
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
+            } else if (newNode.getDOMNode) {
+                newNode = newNode.getDOMNode();
             }
-            DOM[insertType](newNode, domNode);
-        });
-
-        NodeList.addMethod(insertType, function(html) {
-            // 每次调用 Node 单一方法前都 clone
-            // html 创建 or Html Node clone
-            var newNode = DOM.create(html);
-            //再次调用 KISSY Node 的单一方法
-            this[insertType](newNode);
-        });
+            for (var i = 0; i < domNodes.length; i++) {
+                var domNode = domNodes[i];
+                DOM[insertType](i > 0 ? newNode.cloneNode(true) : newNode, domNode);
+            }
+        }, undefined, true);
     });
 
 }, {
@@ -3690,12 +3586,10 @@ KISSY.add("node/override", function(S, DOM, Event, Node) {
 /**
  * 2011-05-24
  * - 承玉：
- * - 重写 Node 的某些方法
- * - 添加 one ,all ，从当前 Node 往下开始选择节点
+ * - 重写 NodeList 的某些方法
+ * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
  * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
- * - 添加事件处理，注意 target 与 relatedTarget 现在都是 KISSY Node 类型
- * -将 Node 上的方法经过循环包装放在 NodeList 上
- * - append/prepend 参数是节点时，需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
+ * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
 
 KISSY.add("node", function(S, Node) {
@@ -5325,7 +5219,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             rules = {},
             i = PROPS.length,
             v;
-        var el = DOM.insertAfter(elem.cloneNode(true), elem);
+        var el = elem.cloneNode(true);
+
+        DOM.insertAfter(el, elem);
 
         css = el.style;
         setAnimStyleText(el, style);
@@ -5410,8 +5306,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  */
 KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
-    var NP = N.prototype,
-        NLP = N.List.prototype,
+    var NLP = N.List.prototype,
         DISPLAY = 'display', NONE = 'none',
         OVERFLOW = 'overflow', HIDDEN = 'hidden',
         OPCACITY = 'opacity',
@@ -5422,7 +5317,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             slide: [OVERFLOW, HEIGHT]
         };
 
-    S.each([NP, NLP], function(P) {
+    (function(P) {
         P.animate = function() {
             var self = this,args = S.makeArray(arguments);
             self.__anims = self.__anims || [];
@@ -5455,7 +5350,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                     self.__anims = self.__anims || [];
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && arguments.length === 0) {
-                        DOM[k](this.getDOMNode ? this.getDOMNode() : this);
+                        DOM[k](this);
                     }
                     else {
                         S.each(this, function(elem) {
@@ -5466,7 +5361,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                     return this;
                 };
             });
-    });
+    })(NLP);
 
     function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
         if (which === 'toggle') {

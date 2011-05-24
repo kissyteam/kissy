@@ -53,7 +53,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
              *        http://yiminghe.javaeye.com/blog/390732
              */
             scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]){
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
                     return;
                 }
 
@@ -153,7 +153,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 arguments.callee(win, elem);
                 return;
             }
-            var ret = 0, w = getWin(elem), d;
+            elem = DOM.get(elem);
+            var ret = 0,
+                w = getWin(elem),
+                d;
 
             if (w) {
                 if (v !== undefined) {
@@ -177,17 +180,22 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     // add docWidth/Height, viewportWidth/Height getter methods
     S.each(['Width', 'Height'], function(name) {
         DOM['doc' + name] = function(refWin) {
+            refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
-            return MAX(isStrict ? d[DOC_ELEMENT][SCROLL + name] : d[BODY][SCROLL + name],
+            return MAX(isStrict ?
+                d[DOC_ELEMENT][SCROLL + name] :
+                d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };
 
         DOM[VIEWPORT + name] = function(refWin) {
+            refWin = DOM.get(refWin);
             var prop = 'inner' + name,
                 w = getWin(refWin),
                 d = w[DOCUMENT];
-            return (prop in w) ? w[prop] :
+            return (prop in w) ?
+                w[prop] :
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });

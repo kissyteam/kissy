@@ -7,14 +7,16 @@ KISSY.use("dom", function(S, DOM) {
         var body = document.body;
         it("insertBefore should works", function() {
             var foo = body.appendChild(DOM.create("div"));
-            var t = DOM.insertBefore(DOM.create('<p>insertBefore node</p>'), foo);
+            var t = DOM.create('<p>insertBefore node</p>');
+            DOM.insertBefore(t, foo);
             expect(foo.previousSibling).toBe(t);
             DOM.remove([foo,t]);
         });
 
         it("insertAfter should works", function() {
             var foo = body.appendChild(DOM.create("<div></div>"));
-            var t = DOM.insertAfter(DOM.create('<p>insertAfter node</p>'), foo);
+            var t = DOM.create('<p>insertAfter node</p>');
+            DOM.insertAfter(t, foo);
             expect(foo.nextSibling).toBe(t);
             DOM.remove([foo,t]);
         });
@@ -22,7 +24,8 @@ KISSY.use("dom", function(S, DOM) {
 
         it("append should works", function() {
             var foo = body.appendChild(DOM.create("<div><div></div></div>"));
-            var t = DOM.append(DOM.create('<p>append node</p>'), foo);
+            var t = DOM.create('<p>append node</p>');
+            DOM.append(t, foo);
             expect(foo.lastChild).toBe(t);
             DOM.remove([foo,t]);
         });

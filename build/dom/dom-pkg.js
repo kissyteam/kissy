@@ -394,11 +394,21 @@ KISSY.add('dom/base', function(S, undefined) {
                 elem :
                 nodeTypeIs(elem, 9) ?
                     elem.defaultView || elem.parentWindow :
-                    elem === undefined ?
+                    elem == undefined ?
                         window : false;
         },
 
-        _nodeTypeIs: nodeTypeIs
+        _nodeTypeIs: nodeTypeIs,
+
+        // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+        _isNodeList:function(o) {
+            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+            // 注3：通过 namedItem 来判断不可靠
+            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+            // 注5: 考虑 iframe.contentWindow
+            return o && !o.nodeType && o.item && !o.setTimeout;
+        }
     };
 
 });
@@ -1068,73 +1078,56 @@ KISSY.add('dom/insertion', function(S, DOM) {
              * Inserts the new node as the previous sibling of the reference node.
              * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertBefore: function(newNode, refNode) {
-                if ((newNode = DOM.get(newNode))
-                    && (refNode = DOM.get(refNode))
-                    && refNode[PARENT_NODE]) {
-                    refNode[PARENT_NODE].insertBefore(newNode, refNode);
+            insertBefore: function(newNodes, refNode) {
+                newNodes = DOM.query(newNodes);
+                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
+                    newNodes.each(function(newNode) {
+                        refNode[PARENT_NODE].insertBefore(newNode, refNode);
+                    });
                 }
-                return newNode;
             },
 
             /**
              * Inserts the new node as the next sibling of the reference node.
              * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertAfter: function(newNode, refNode) {
-                if ((newNode = DOM.get(newNode))
-                    && (refNode = DOM.get(refNode))
-                    && refNode[PARENT_NODE]) {
-                    if (refNode[NEXT_SIBLING]) {
+            insertAfter: function(newNodes, refNode) {
+                newNodes = DOM.query(newNodes);
+                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
+                    newNodes.each(function(newNode) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
-                    } else {
-                        refNode[PARENT_NODE].appendChild(newNode);
-                    }
+                    });
                 }
-                return newNode;
             },
 
             /**
              * Inserts the new node as the last child.
              */
-            append: function(node, parent) {
-                if ((node = DOM.get(node)) && (parent = DOM.get(parent))) {
+            append: function(nodes, parent) {
+                nodes = DOM.query(nodes);
+                if (parent = DOM.get(parent)) {
                     if (parent.appendChild) {
-                        parent.appendChild(node);
+                        nodes.each(function(node) {
+                            parent.appendChild(node);
+                        });
                     }
                 }
-                return node;
-            },
-
-            /**
-             * KISSY Node need
-             */
-            appendTo:function(node, parent) {
-                return DOM.append(node, parent);
             },
 
             /**
              * Inserts the new node as the first child.
              */
-            prepend:function(node, parent) {
-                if ((node = DOM.get(node))
-                    && (parent = DOM.get(parent))) {
-                    if (parent.firstChild) {
-                        DOM.insertBefore(node, parent.firstChild);
-                    } else {
-                        parent.appendChild(node);
-                    }
+            prepend:function(nodes, parent) {
+                nodes = DOM.query(nodes);
+                if (parent = DOM.get(parent)) {
+                    nodes.each(function(node) {
+                        parent.insertBefore(node, parent.firstChild);
+                    });
                 }
-                return node;
-            },
-
-            /**
-             * KISSY Node need
-             */
-            prependTo:function(node, parent) {
-                return DOM.prepend(node, parent);
             }
         });
+    DOM.prependTo = DOM.prepend;
+    DOM.appendTo = DOM.append;
     return DOM;
 }, {
         requires:["dom/base"]
@@ -1201,7 +1194,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
              *        http://yiminghe.javaeye.com/blog/390732
              */
             scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]){
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
                     return;
                 }
 
@@ -1301,7 +1294,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 arguments.callee(win, elem);
                 return;
             }
-            var ret = 0, w = getWin(elem), d;
+            elem = DOM.get(elem);
+            var ret = 0,
+                w = getWin(elem),
+                d;
 
             if (w) {
                 if (v !== undefined) {
@@ -1325,17 +1321,22 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     // add docWidth/Height, viewportWidth/Height getter methods
     S.each(['Width', 'Height'], function(name) {
         DOM['doc' + name] = function(refWin) {
+            refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
-            return MAX(isStrict ? d[DOC_ELEMENT][SCROLL + name] : d[BODY][SCROLL + name],
+            return MAX(isStrict ?
+                d[DOC_ELEMENT][SCROLL + name] :
+                d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };
 
         DOM[VIEWPORT + name] = function(refWin) {
+            refWin = DOM.get(refWin);
             var prop = 'inner' + name,
                 w = getWin(refWin),
                 d = w[DOCUMENT];
-            return (prop in w) ? w[prop] :
+            return (prop in w) ?
+                w[prop] :
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
@@ -1406,6 +1407,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     var doc = document,
+        isNodeList = DOM._isNodeList,
         SPACE = ' ',
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
@@ -1521,15 +1523,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         return ret;
     }
 
-    // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
-    function isNodeList(o) {
-        // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
-        // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
-        // 注3：通过 namedItem 来判断不可靠
-        // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
-        // 注5: 考虑 iframe.contentWindow
-        return o && !o.nodeType && o.item && !o.setTimeout;
-    }
 
     // 调整 context 为合理值
     function tuneContext(context) {

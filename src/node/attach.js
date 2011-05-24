@@ -1,68 +1,55 @@
 /**
- * import methods from DOM to Node.prototype
+ * import methods from DOM to NodeList.prototype
  * @author  yiminghe@gmail.com
  */
-KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
+KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
-    var NodeList = Node.List,
-        NP = Node.prototype,
-        NLP = NodeList.prototype;
+    var NLP = NodeList.prototype,
+        isNodeList = DOM._isNodeList;
 
-    function normalize(val, node) {
-
+    function normalize(val, node, nodeList) {
         // 链式操作
         if (val === undefined) {
             val = node;
         } else if (val === null) {
             val = null;
-        } else if (val.nodeType
-            && !val.getDOMNode) {
-            // 包装为 KISSY Node
-            val = new Node(val);
-        } else if (!val.getDOMNodes
-            && val[0]
-            && val[0].nodeType
-            && !val[0].getDOMNode) {
+        } else if (nodeList
+            && (val.nodeType || isNodeList(val) || S.isArray(val))) {
+
+//            if (val.nodeType) {
+//                val = [val];
+//            }
+//            //返回结果和自己相同，不用新建
+//            if (DOM.equals(val, node)) {
+//                val = node;
+//            } else {
+//                val = new NodeList(val);
+//            }
+
             // 包装为 KISSY NodeList
             val = new NodeList(val);
         }
         return val;
     }
 
-    function scrubNodes(args) {
-        for (var i = 0; i < args.length; i++) {
-            if (args[i].getDOMNode) {
-                args[i] = args[i].getDOMNode();
-            }
-        }
-        return args;
-    }
-
-    Node.addMethod = function(name, fn, context) {
-        NP[name] = function() {
-            //里面不要修改 context ,fn,name 会影响所有 ....
-            var el = this[0],args = S.makeArray(arguments);
-            args = scrubNodes(args);
-            args.unshift(el);
-            var ctx = context || this;
-            var ret = fn.apply(ctx, args);
-            return normalize(ret, this);
-        }
-    };
-
-    NodeList.addMethod = function(name, fn, context) {
+    /**
+     *
+     * @param {string} name 方法名
+     * @param {string} fn 实际方法
+     * @param {object} context 方法执行上下文，不指定为 this
+     * @param {boolean} nodeList 是否对返回对象 NodeList
+     */
+    NodeList.addMethod = function(name, fn, context, nodeList) {
         NLP[name] = function() {
-            var ret = [],args = S.makeArray(arguments);
-            args = scrubNodes(args);
-            this.each(function(n) {
-                var ctx = context || n;
-                var r = fn.apply(ctx, args);
-                if (r !== n) {
-                    ret.push(r);
-                }
-            });
-            return ret.length ? ret : this;
-        };
+            //里面不要修改 context ,fn,name 会影响所有 ....
+            // NLP && NP
+            var self = this,
+                args = S.makeArray(arguments);
+            args.unshift(self);
+            var ctx = context || self;
+            var ret = fn.apply(ctx, args);
+            return  normalize(ret, self, nodeList);
+        }
     };
 
     //不能添加到 NP 的方法
@@ -70,11 +57,12 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
         "_isElementNode",
         "_getWin",
         "_getComputedStyle",
-        "_getComputedStyle",
+        "_isNodeList",
         "_nodeTypeIs",
         "create",
         "get",
-        "query"
+        "query",
+        "data"
     ];
 
     S.each(DOM, function(v, k) {
@@ -82,9 +70,11 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
             && S.isFunction(v)
             && !S.inArray(k, excludes)
             ) {
-            Node.addMethod(k, v, DOM);
+            NodeList.addMethod(k, v, DOM, true);
         }
     });
+
+    NodeList.addMethod("data", DOM.data, DOM);
 
 }, {
         requires:["dom","event","./base"]
@@ -93,9 +83,9 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
 /**
  * 2011-05-24
  *  - 承玉：
- *  - 将 DOM 中的方法包装成 Node 方法
- *  - Node 方法调用参数中的 KISSY Node 要转换成 HTML Node
- *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 Node 对应方法返回 this
- *  - 实际上可以完全使用 Node 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
- *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new Node(document) 获得
+ *  - 将 DOM 中的方法包装成 NodeList 方法
+ *  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
+ *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
+ *  - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */

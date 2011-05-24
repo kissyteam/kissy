@@ -505,7 +505,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             rules = {},
             i = PROPS.length,
             v;
-        var el = DOM.insertAfter(elem.cloneNode(true), elem);
+        var el = elem.cloneNode(true);
+
+        DOM.insertAfter(el, elem);
 
         css = el.style;
         setAnimStyleText(el, style);

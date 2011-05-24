@@ -1,3 +1,7 @@
+/**
+ * test cases for node about chained call and return value
+ * @author:yiminghe@gmail.com
+ */
 KISSY.use("dom,node", function(S, DOM, Node) {
     S.get = DOM.get;
     S.query = DOM.query;
@@ -8,7 +12,6 @@ KISSY.use("dom,node", function(S, DOM, Node) {
     describe("node", function() {
 
         it("should invoke dom method correctly on node", function() {
-
             var n = new Node("<div id='testDiv' class='test-div'>ok</div>").appendTo(document.body);
             expect(S.get("#testDiv")).not.toBe(null);
             expect(S.get("#testDiv2")).toBe(null);
@@ -37,7 +40,10 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
         it("should invoke method on window or document correctly", function() {
             var win = S.one(window),doc = S.one(document);
+
+            var e = DOM.viewportHeight();
             expect(win.viewportHeight()).toBe(DOM.viewportHeight());
+
             expect(win.viewportWidth()).toBe(DOM.viewportWidth());
 
             expect(doc.viewportHeight()).toBe(DOM.viewportHeight());
@@ -54,10 +60,12 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
         it("should append/prepend correctly on node", function() {
             var body = S.one(document.body);
-            var n = body.append("<div class='test-div' id='testDiv4'>ok4</div>");
-            expect(n).toBe(body);
-            expect(S.get("#testDiv4")).not.toBe(null);
 
+            var n = body.append("<div class='test-div' id='testDiv4'>ok4</div>");
+
+            expect(n).toBe(body);
+
+            expect(S.get("#testDiv4")).not.toBe(null);
 
             var n2 = body.prepend("<div class='test-div' id='testDiv5'>ok5</div>");
 
@@ -74,7 +82,8 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
             var newNode = new Node("<div class='test-nodelist'>test-nodelist</div>");
             var testDivs = S.all(".test-div");
-            testDivs.append(newNode);
+
+            testDivs = testDivs.append(newNode);
             expect(testDivs.length).toBe(S.query(".test-nodelist").length)
 
         });
@@ -104,7 +113,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         it("should on/detach event properly", function() {
             var cb = S.one("#cb");
             var handler = function() {
-                expect(this).toBe(cb);
+                expect(this).toBe(cb.getDOMNode());
             };
             cb.on("click", handler);
 
@@ -113,45 +122,56 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             waits(10);
 
             runs(function() {
-                expect(handler.__wrap.length).toBe(1);
-            });
-
-            runs(function() {
                 cb.detach("click", handler);
-                expect(handler.__wrap.length).toBe(0);
             });
 
             var h2 = function() {
-                expect(this[0].className).toBe("test-div");
+                expect(this.className).toBe("test-div");
             };
 
             var body = S.one(document.body);
 
             var ps = body.all(".test-div");
 
-
             runs(function() {
-
-
                 ps.on("click", h2);
                 ps.each(function(n) {
                     jasmine.simulate(n.getDOMNode(), "click");
                 });
             });
 
-
             waits(10);
 
             runs(function() {
-                expect(h2.__wrap.length).toBe(ps.length);
-            });
-
-
-            runs(function() {
                 ps.detach("click", h2);
-                expect(h2.__wrap.length).toBe(0);
             });
 
+        });
+
+
+        it("should return value or chains correctly", function() {
+            var n = new Node("<div>test return</div>").appendTo(document.body);
+
+            var ret = n.attr("test", "5");
+
+            // chained
+            expect(ret).toBe(n);
+
+            // not chained , get value
+            expect(n.attr("test")).toBe('5');
+
+            // no-exist attribute return null
+            expect(n.attr("test2")).toBe(null);
+
+
+            var ret2 = n.css("font-size", "13px");
+
+            expect(ret2).toBe(n);
+
+            expect(n.css("font-size")).toBe("13px");
+
+            // no-exit css value return ''
+            expect(n.css("xx")).toBe('');
 
         });
 

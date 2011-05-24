@@ -2,7 +2,7 @@
  * close extension for kissy dialog
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/closerender", function(S,Node) {
+KISSY.add("uibase/closerender", function(S, Node) {
 
     var CLS_PREFIX = 'ext-';
 
@@ -40,8 +40,7 @@ KISSY.add("uibase/closerender", function(S,Node) {
                 closeBtn = self.get("closeBtn"),
                 el = self.get("contentEl");
 
-            if (!closeBtn &&
-                el) {
+            if (!closeBtn && el) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
                     "role='button' " +
@@ -49,8 +48,7 @@ KISSY.add("uibase/closerender", function(S,Node) {
                     "<span class='" +
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭</span>" +
-                    "</a>")
-                    .appendTo(el);
+                    "</a>").appendTo(el);
                 self.set("closeBtn", closeBtn);
             }
         },
@@ -64,6 +62,6 @@ KISSY.add("uibase/closerender", function(S,Node) {
     };
     return Close;
 
-},{
+}, {
         requires:["node"]
     });

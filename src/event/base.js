@@ -5,6 +5,7 @@
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        isNodeList = DOM._isNodeList,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -246,7 +247,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         }
 
         // on([targetA, targetB], type, fn)
-        if (S.isArray(targets)) {
+        if (S.isArray(targets) || isNodeList(targets)) {
             S.each(targets, function(target) {
                 Event[methodName](target, types, fn, scope);
             });

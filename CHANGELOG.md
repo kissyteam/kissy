@@ -14,6 +14,8 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
+ - [*] Node 与 NodeList 合一
  - [!] DOM 参数中不可以传入 KISSY Node 或 KISSY NodeList 类型
  - [!] DOM 所有读操作如果返回 undefined 现在返回 null
  - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
@@ -50,8 +52,8 @@ History:
  - [*] kissyteam 文档利用 sphinx 重新编写整理
  - [!] 再次强调：KISSY.Event.on 第一个参数只支持单个原生 dom 节点或原生 dom 节点数组以及选择器字符串
  - [!] calendar 模块 use("calendar") 将不再动态加载其css，方便自由定制样式，若需要默认样式需静态引入或S.getScript加载
- - [*] 当使用 Event.on 时，回调 event.target 以及 event.relatedTarget 为原生节点。
-       使用 S.one("#xx").on 时，回调 event.target 以及 event.relatedTarget 为 KISSY.Node
+ - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
+ - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
 

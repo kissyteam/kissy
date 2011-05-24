@@ -215,9 +215,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                     simulate('#link-test-this', 'click');
                 });
                 waits(0);
-                runs(function() {
-                    expect(ret.nodeType).toBe(Node.TYPE);
-                });
+
 
                 // NodeList
                 runs(function() {

@@ -2,83 +2,65 @@
  * definition for node and nodelist
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add("node/base", function(S, DOM) {
+KISSY.add("node/base", function(S, DOM, Event, undefined) {
+
+    var AP = Array.prototype;
+
+    var isNodeList = DOM._isNodeList;
 
     /**
-     * The Node class provides a wrapper for manipulating DOM Node.
+     * The NodeList class provides a wrapper for manipulating DOM Node.
      */
-    function Node(html, props, ownerDocument) {
-        var self = this, domNode;
+    function NodeList(html, props, ownerDocument) {
+        var self = this,domNode;
 
-        // handle Node(''), Node(null), or Node(undefined)
+        // handle NodeList(''), NodeList(null), or NodeList(undefined)
         if (!html) {
-            self.length = 0;
             return undefined;
         }
 
-        // create from html
-        if (S.isString(html)) {
+
+        else if (S.isString(html)) {
+            // create from html
             domNode = DOM.create(html, props, ownerDocument);
-            // 将 S.Node('<p>1</p><p>2</p>') 转换为 NodeList
+            // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment
-                return new NodeList(domNode.childNodes);
+                AP.push.apply(this, S.makeArray(domNode.childNodes));
+                return undefined;
             }
         }
-        // handle Node
-        else if (html instanceof Node) {
+
+
+        else if (html instanceof NodeList) {
+            // handle NodeList
             return html;
         }
-        // node, document, window 等等，由使用者保证正确性
+
+
+        else if (S.isArray(html) || isNodeList(html)) {
+            AP.push.apply(this, S.makeArray(html));
+            return undefined;
+        }
+
+
         else {
+            // node, document, window
             domNode = html;
         }
 
+
         self[0] = domNode;
+        self.length = 1;
         return undefined;
     }
 
-    Node.TYPE = '-ks-Node';
+    S.augment(NodeList, Event.Target, {
 
-    S.augment(Node, {
-
+            isCustomEventTarget:false,
             /**
-             * 长度为 1
+             * 模拟事件触发，暂不实现
              */
-            length: 1,
-
-            /**
-             * Retrieves the DOMNode.
-             */
-            getDOMNode: function() {
-                return this[0];
-            },
-
-            nodeType: Node.TYPE
-        });
-
-    // query api
-    Node.one = function(selector, context) {
-        // return if node
-        if (selector.getDOMNode) {
-            return selector;
-        }
-        var elem = DOM.get(selector, context);
-        return elem ? new Node(elem, undefined, undefined) : null;
-    };
-
-    var AP = Array.prototype,
-        isElementNode = DOM._isElementNode;
-
-    /**
-     * The NodeList class provides a wrapper for manipulating DOM NodeList.
-     */
-    function NodeList(domNodes) {
-        // push nodes
-        AP.push.apply(this, S.makeArray(domNodes));
-    }
-
-    S.mix(NodeList.prototype, {
-
+            fire:null,
             /**
              * 默认长度为 0
              */
@@ -88,24 +70,11 @@ KISSY.add("node/base", function(S, DOM) {
              * 根据 index 或 DOMElement 获取对应的 KSNode
              */
             item: function(index) {
-                var self = this, ret = null, i, len;
-
-                // 找到 DOMElement 对应的 index
-                if (isElementNode(index)) {
-                    for (i = 0,len = self.length; i < len; i++) {
-                        if (index === self[i]) {
-                            index = i;
-                            break;
-                        }
-                    }
-                }
-
-                // 转换为 KSNode
-                if (isElementNode(self[index])) {
-                    ret = new Node(self[index], undefined, undefined);
-                }
-
-                return ret;
+                if (S.isNumber(index)) {
+                    if (index >= this.length) return null;
+                    return new NodeList(this[index], undefined, undefined);
+                } else
+                    return new NodeList(index, undefined, undefined);
             },
 
 
@@ -119,41 +88,58 @@ KISSY.add("node/base", function(S, DOM) {
             /**
              * Applies the given function to each Node in the NodeList.
              * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-             * @param context An optional context to apply the function with Default context is the current Node instance
+             * @param context An optional context to apply the function with Default context is the current NodeList instance
              */
             each: function(fn, context) {
                 var self = this,len = self.length, i = 0, node;
 
-                for (node = new Node(self[0], undefined, undefined);
+                for (node = new NodeList(self[0], undefined, undefined);
                      i < len && fn.call(context || node, node, i, this) !== false;
-                     node = new Node(self[++i], undefined, undefined)) {
+                     node = new NodeList(self[++i], undefined, undefined)) {
                 }
 
                 return this;
+            },
+            /**
+             * Retrieves the DOMNode.
+             */
+            getDOMNode: function() {
+                return this[0];
+            },
+
+            one:function(selector) {
+                if (this.length > 0) {
+                    return NodeList.one(selector, this[0]);
+                }
+                return null;
             }
         });
 
+    NodeList.prototype.all = NodeList.prototype.one;
+
     // query api
-    NodeList.all = function(selector, context) {
-        // return if node or nodelist
-        if (selector.getDOMNode) {
-            return new NodeList(selector);
-        } else if (selector.getDOMNodes) {
+    NodeList.one = NodeList.all = function(selector, context) {
+        if (selector.getDOMNodes) {
             return selector;
         }
-        return new NodeList(DOM.query(selector, context, true));
+        var domNodes = DOM.query(selector, context);
+        return domNodes.length > 0 ?
+            new NodeList(domNodes, undefined, undefined) :
+            null;
     };
 
-    Node.List = NodeList;
+    NodeList.List = NodeList;
 
-    return Node;
+    return NodeList;
 }, {
-        requires:["dom"]
+        requires:["dom","event"]
     });
 
 
 /**
  * Notes:
+ * 2011-05-25
+ *  - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
  *
  *  2010.04
  *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。

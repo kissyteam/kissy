@@ -33,6 +33,7 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
             var self = this,
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
+
             if (!contentEl) {
                 var elChildren = S.makeArray(el[0].childNodes);
                 contentEl = new Node(constructEl(this.get("prefixCls") + "contentbox",
