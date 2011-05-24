@@ -4,6 +4,7 @@ MIT Licensed
 build time: ${build.time}
 */
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
+    Ajax.getScript=S.getScript;
     var re = {
         UA:UA,
         DOM:DOM,

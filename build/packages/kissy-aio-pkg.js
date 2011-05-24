@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110523195247',
+        buildTime:'20110524163911',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2808,7 +2808,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                     // only get attributes on element nodes
                     if (!isElementNode(el)) {
-                        return undefined;
+                        return null;
                     }
                     if (attrNormalizer && attrNormalizer.getter) {
                         return attrNormalizer.getter(el);
@@ -2838,8 +2838,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         }
                     }
 
-                    // 对于不存在的属性，统一返回 undefined
-                    return ret === null ? undefined : ret;
+                    /**
+                     * undefined 会形成链状，so 不能
+                     */
+                    return ret === undefined ? null : ret;
                 } else {
 
                     // setter
@@ -2904,7 +2906,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                     // only gets value on element nodes
                     if (!isElementNode(el)) {
-                        return undefined;
+                        return null;
                     }
 
                     // 当没有设定 value 时，标准浏览器 option.value === option.text
@@ -2986,6 +2988,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     else if (isTextNode(el)) {
                         return el.nodeValue;
                     }
+                    //prevent chain in Node
+                    return null;
                 }
                 // setter
                 else {
@@ -3281,6 +3285,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     if (isElementNode(el)) {
                         return el.innerHTML;
                     }
+                    return null;
                 }
                 // setter
                 else {
@@ -3514,7 +3519,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
  * @module  dom-data
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom/data', function(S, DOM,undefined) {
+KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var win = window,
         expando = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
@@ -3524,129 +3529,177 @@ KISSY.add('dom/data', function(S, DOM,undefined) {
         // The following elements throw uncatchable exceptions if you
         // attempt to add expando properties to them.
         noData = {
-            EMBED: 1,
-            OBJECT: 1,
-            APPLET: 1
         };
+
+    noData['applet'] = 1;
+    noData['object'] = 1;
+    noData['embed'] = 1;
+
 
     S.mix(DOM, {
 
-        /**
-         * Store arbitrary data associated with the matched elements.
-         */
-        data: function(selector, name, data) {
-            // suports hash
-            if (S.isPlainObject(name)) {
-                for (var k in name) {
-                    DOM.data(selector, k, name[k]);
+
+            hasData:function(selector, name) {
+                var elem = DOM.get(selector),
+                    isNode,
+                    cache,
+                    key,
+                    thisCache;
+                if (!elem ||
+                    (elem.nodeName && noData[elem.nodeName.toLowerCase()])
+                    ) {
+                    return false;
                 }
-                return;
-            }
-
-            // getter
-            if (data === undefined) {
-                var elem = DOM.get(selector), isNode,
-                    cache, key, thisCache;
-
-                if (!elem || noData[elem.nodeName]) return;
-
-                if (elem == win) elem = winDataCache;
+                if (elem == win) {
+                    elem = winDataCache;
+                }
                 isNode = checkIsNode(elem);
-
                 cache = isNode ? dataCache : elem;
                 key = isNode ? elem[expando] : expando;
                 thisCache = cache[key];
-
-                if(S.isString(name) && thisCache) {
-                    return thisCache[name];
+                if (thisCache) {
+                    if (name !== undefined) {
+                        if (name in thisCache) {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
                 }
-                return thisCache;
-            }
-            // setter
-            else {
+                return false;
+            },
+
+            /**
+             * Store arbitrary data associated with the matched elements.
+             */
+            data: function(selector, name, data) {
+                // suports hash
+                if (S.isPlainObject(name)) {
+                    for (var k in name) {
+                        DOM.data(selector, k, name[k]);
+                    }
+                    return;
+                }
+
+                // getter
+                if (data === undefined) {
+                    var elem = DOM.get(selector),
+                        isNode,
+                        cache,
+                        key,
+                        thisCache;
+
+                    if (
+                        !elem ||
+                            (elem.nodeName && noData[elem.nodeName.toLowerCase()])
+                        ) {
+                        return null;
+                    }
+
+                    if (elem == win) elem = winDataCache;
+                    isNode = checkIsNode(elem);
+
+                    cache = isNode ? dataCache : elem;
+                    key = isNode ? elem[expando] : expando;
+                    thisCache = cache[key];
+                    var ret = thisCache;
+                    if (S.isString(name) && thisCache) {
+                        ret = thisCache[name];
+                    }
+                    return ret === undefined ? null : ret;
+                }
+                // setter
+                else {
+                    DOM.query(selector).each(function(elem) {
+                        if (!elem ||
+                            (elem.nodeName && noData[elem.nodeName.toLowerCase()])
+                            ) {
+                            return;
+                        }
+                        if (elem == win) elem = winDataCache;
+
+                        var cache = dataCache, key;
+
+                        if (!checkIsNode(elem)) {
+                            key = expando;
+                            cache = elem;
+                        }
+                        else if (!(key = elem[expando])) {
+                            key = elem[expando] = S.guid();
+                        }
+
+                        if (name && data !== undefined) {
+                            if (!cache[key]) cache[key] = { };
+                            cache[key][name] = data;
+                        }
+                    });
+                }
+            },
+
+            /**
+             * Remove a previously-stored piece of data.
+             */
+            removeData: function(selector, name) {
                 DOM.query(selector).each(function(elem) {
-                    if (!elem || noData[elem.nodeName]) return;
+                    if (!elem) return;
                     if (elem == win) elem = winDataCache;
 
-                    var cache = dataCache, key;
+                    var key, cache = dataCache, thisCache,
+                        isNode = checkIsNode(elem);
 
-                    if (!checkIsNode(elem)) {
-                        key = expando;
+                    if (!isNode) {
                         cache = elem;
-                    }
-                    else if (!(key = elem[expando])) {
-                        key = elem[expando] = S.guid();
+                        key = expando;
+                    } else {
+                        key = elem[expando];
                     }
 
-                    if (name && data !== undefined) {
-                        if (!cache[key]) cache[key] = { };
-                        cache[key][name] = data;
+                    if (!key) return;
+                    thisCache = cache[key];
+
+                    // If we want to remove a specific section of the element's data
+                    if (name) {
+                        if (thisCache) {
+                            delete thisCache[name];
+
+                            // If we've removed all the data, remove the element's cache
+                            if (S.isEmptyObject(thisCache)) {
+                                DOM.removeData(elem);
+                            }
+                        }
+                    }
+                    // Otherwise, we want to remove all of the element's data
+                    else {
+                        if (!isNode) {
+                            try {
+                                delete elem[expando];
+                            } catch(ex) {
+                            }
+                        } else if (elem.removeAttribute) {
+                            elem.removeAttribute(expando);
+                        }
+
+                        // Completely remove the data cache
+                        if (isNode) {
+                            delete cache[key];
+                        }
                     }
                 });
             }
-        },
-
-        /**
-         * Remove a previously-stored piece of data.
-         */
-        removeData: function(selector, name) {
-            DOM.query(selector).each(function(elem) {
-                if (!elem) return;
-                if (elem == win) elem = winDataCache;
-
-                var key, cache = dataCache, thisCache,
-                    isNode = checkIsNode(elem);
-
-                if (!isNode) {
-                    cache = elem;
-                    key = expando;
-                } else {
-                    key = elem[expando];
-                }
-
-                if (!key) return;
-                thisCache = cache[key];
-
-                // If we want to remove a specific section of the element's data
-                if (name) {
-                    if (thisCache) {
-                        delete thisCache[name];
-
-                        // If we've removed all the data, remove the element's cache
-                        if (S.isEmptyObject(thisCache)) {
-                            DOM.removeData(elem);
-                        }
-                    }
-                }
-                // Otherwise, we want to remove all of the element's data
-                else {
-                    if (!isNode) {
-                        try {
-                            delete elem[expando];
-                        } catch(ex) {
-                        }
-                    } else if (elem.removeAttribute) {
-                        elem.removeAttribute(expando);
-                    }
-
-                    // Completely remove the data cache
-                    if (isNode) {
-                        delete cache[key];
-                    }
-                }
-            });
-        }
-    });
+        });
 
     function checkIsNode(elem) {
         return elem && elem.nodeType;
     }
 
+    if (1 > 2) {
+        DOM.hasData();
+    }
     return DOM;
 
-},{
-    requires:["dom/base"]
-});
+}, {
+        requires:["dom/base"]
+    });
 
 /**
  * @module  dom-insertion
@@ -3767,7 +3820,6 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         CLIENT = 'client',
         LEFT = 'left',
         TOP = 'top',
-        SCROLL_TO = 'scrollTo',
         SCROLL_LEFT = SCROLL + 'Left',
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
@@ -3798,7 +3850,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
              *        http://yiminghe.javaeye.com/blog/390732
              */
             scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]){
+                    return;
+                }
 
                 hscroll = hscroll === undefined ? true : !!hscroll;
                 top = top === undefined ? true : !!top;
@@ -3808,7 +3862,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                     // 注意：
                     // 1. Opera 不支持 top 参数
                     // 2. 当 container 已经在视窗中时，也会重新定位
-                    return elem.scrollIntoView(top);
+                    elem.scrollIntoView(top);
+                    return;
                 }
                 container = DOM.get(container);
 
@@ -3876,7 +3931,14 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 // go
                 DOM[SCROLL_TOP](container, t2);
                 DOM[SCROLL_LEFT](container, l2);
-            }
+            },
+            /**
+             * for idea autocomplete
+             */
+            docWidth:0,
+            docHeight:0,
+            viewportHeight:0,
+            viewportWidth:0
         });
 
     // add ScrollLeft/ScrollTop getter/setter methods
@@ -3905,7 +3967,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             } else if (isElementNode((elem = DOM.get(elem)))) {
                 ret = v !== undefined ? elem[method] = v : elem[method];
             }
-            return ret;
+            return v === undefined ? ret : undefined;
         }
     });
 
@@ -3970,10 +4032,18 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-        requires:["dom/base","ua"]
+        requires:["./base","ua"]
     });
 
 /**
+ * 2011-05-24
+ *  - 承玉：
+ *  - 调整 docWidth , docHeight ,
+ *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+ *      便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+ *
+ *
+ *
  * TODO:
  *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
@@ -4758,9 +4828,6 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
      */
     var IE8 = UA['ie'] == 8,
         BORDER_MAP = {
-            thin: IE8 ? '1px' : '2px',
-            medium: IE8 ? '3px' : '4px',
-            thick:IE8 ? '5px' : '6px'
         },
         BORDERS = ["","Top","Left","Right","Bottom"],
         BORDER_FIX = {
@@ -4779,6 +4846,9 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                 return current;
             }
         };
+    BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
+    BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
+    BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
     S.each(BORDERS, function(b) {
         CUSTOM_STYLES["border" + b + "Width"] = BORDER_FIX;
     });
@@ -4908,6 +4978,16 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
                 }
 
                 return ret;
+            },
+
+            equals:function(n1, n2) {
+                n1 = S.query(n1);
+                n2 = S.query(n2);
+                if (n1.length != n2.length) return false;
+                for (var i = n1.length; i >= 0; i--) {
+                    if (n1[i] != n2[i]) return false;
+                }
+                return true;
             }
         });
 
@@ -5688,6 +5768,10 @@ KISSY.add("node/base", function(S, DOM) {
 
     // query api
     Node.one = function(selector, context) {
+        // return if node
+        if (selector.getDOMNode) {
+            return selector;
+        }
         var elem = DOM.get(selector, context);
         return elem ? new Node(elem, undefined, undefined) : null;
     };
@@ -5761,6 +5845,12 @@ KISSY.add("node/base", function(S, DOM) {
 
     // query api
     NodeList.all = function(selector, context) {
+        // return if node or nodelist
+        if (selector.getDOMNode) {
+            return new NodeList(selector);
+        } else if (selector.getDOMNodes) {
+            return selector;
+        }
         return new NodeList(DOM.query(selector, context, true));
     };
 
@@ -5800,13 +5890,13 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
         // 链式操作
         if (val === undefined) {
             val = node;
+        } else if (val === null) {
+            val = null;
         } else if (val.nodeType
             && !val.getDOMNode) {
             // 包装为 KISSY Node
             val = new Node(val);
-        } else if (val === null) {
-            val = null;
-        } else if (val.item
+        } else if (!val.getDOMNodes
             && val[0]
             && val[0].nodeType
             && !val[0].getDOMNode) {
@@ -5827,17 +5917,20 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
 
     Node.addMethod = function(name, fn, context) {
         NP[name] = function() {
+            //里面不要修改 context ,fn,name 会影响所有 ....
             var el = this[0],args = S.makeArray(arguments);
             args = scrubNodes(args);
             args.unshift(el);
-            var ret = fn.apply(context, args);
-            return normalize(ret,this);
+            var ctx = context || this;
+            var ret = fn.apply(ctx, args);
+            return normalize(ret, this);
         }
     };
 
     NodeList.addMethod = function(name, fn, context) {
         NLP[name] = function() {
             var ret = [],args = S.makeArray(arguments);
+            args = scrubNodes(args);
             this.each(function(n) {
                 var ctx = context || n;
                 var r = fn.apply(ctx, args);
@@ -5850,14 +5943,16 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
     };
 
     //不能添加到 NP 的方法
-    var excludes = ["_isElementNode",
+    var excludes = [
+        "_isElementNode",
         "_getWin",
         "_getComputedStyle",
         "_getComputedStyle",
         "_nodeTypeIs",
         "create",
         "get",
-        "query"];
+        "query"
+    ];
 
     S.each(DOM, function(v, k) {
         if (DOM.hasOwnProperty(k)
@@ -5873,31 +5968,36 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
     });
 
 /**
+ * 2011-05-24
+ *  - 承玉：
+ *  - 将 DOM 中的方法包装成 Node 方法
+ *  - Node 方法调用参数中的 KISSY Node 要转换成 HTML Node
+ *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 Node 对应方法返回 this
+ *  - 实际上可以完全使用 Node 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new Node(document) 获得
+ */
+
+/**
  * overrides methods in Node.prototype and build NodeList.prototype
  * @author : yiminghe@gmail.com
  */
-KISSY.add("node/override", function(S, DOM, Node) {
+KISSY.add("node/override", function(S, DOM, Event, Node) {
 
     var NodeList = Node.List,
-        NLP = NodeList.prototype,
         NP = Node.prototype;
+    /**
+     * Retrieves a node based on the given CSS selector.
+     */
+    Node.addMethod("one", function(domNode, selector) {
+        return DOM.get(selector, domNode);
+    });
+    /**
+     * Retrieves a nodeList based on the given CSS selector.
+     */
+    Node.addMethod("all", function(domNode, selector) {
+        return DOM.query(selector, domNode);
+    });
 
-    // selector
-    S.mix(NP, {
-            /**
-             * Retrieves a node based on the given CSS selector.
-             */
-            one: function(selector) {
-                return Node.one(selector, this[0]);
-            },
-
-            /**
-             * Retrieves a nodeList based on the given CSS selector.
-             */
-            all: function(selector) {
-                return NodeList.all(selector, this[0]);
-            }
-        });
 
     // 一个函数被多个节点注册
     function tagFn(fn, wrap, target) {
@@ -5910,84 +6010,91 @@ KISSY.add("node/override", function(S, DOM, Node) {
             });
     }
 
-    S.mix(NP, {
-            fire:null,
-            on:function(type, fn, scope) {
-                var self = this,el = self[0];
 
-                function wrap(ev) {
-                    var args = S.makeArray(arguments);
-                    args.shift();
-                    ev.target = new Node(ev.target);
-                    if (ev.relatedTarget) {
-                        ev.relatedTarget = new Node(ev.relatedTarget);
-                    }
-                    args.unshift(ev);
-                    return fn.apply(scope || self, args);
-                }
+    Node.addMethod("on", function(domNode, type, fn, scope) {
+        var self = this;
 
-                Event.add(el, type, wrap, scope);
-                tagFn(fn, wrap, el);
-                return self;
-            },
-            detach:function(type, fn, scope) {
-                var self = this,el = self[0];
-                if (S.isFunction(fn)) {
-                    var wraps = fn.__wrap || [];
-                    for (var i = wraps.length - 1; i >= 0; i--) {
-                        var w = wraps[i];
-                        if (w.target == el) {
-                            Event.remove(el, type, w.fn, scope);
-                            wraps.splice(i, 1);
-                        }
-                    }
-                } else {
-                    Event.remove(this[0], type, fn, scope);
-                }
-                return self; // chain
+        function wrap(ev) {
+            var args = S.makeArray(arguments);
+            // 防止 args 和 ev 不同步
+            args.shift();
+            ev.target = new Node(ev.target);
+            if (ev.relatedTarget) {
+                ev.relatedTarget = new Node(ev.relatedTarget);
             }
-        });
+            args.unshift(ev);
+            return fn.apply(scope || self, args);
+        }
 
-
-    S.each(NP, function(v, k) {
-        NodeList.addMethod(k, v);
+        Event.add(domNode, type, wrap, scope);
+        tagFn(fn, wrap, domNode);
     });
 
-    S.each([NP,NLP], function(P, isNodeList) {
-        /**
-         * append(node ,parent) : 参数顺序反过来了
-         * appendTo(parent,node) : 才是正常
-         *
-         */
-        S.each(['append', 'prepend'], function(insertType) {
-            // append 和 prepend
-            P[insertType] = function(html) {
-                S.each(this, function(self) {
-                    var domNode;
-                    /**
-                     * 如果是nodelist 并且新加项是已构建的节点，则需要 clone
-                     */
-                    if (isNodeList || S.isString(html)) {
-                        domNode = DOM.create(html);
-                    } else {
-                        var nt = html.nodeType;
-                        if (nt == 1 || nt == 3) {
-                            domNode = html;
-                        }
-                        else if (html.getDOMNode) {
-                            domNode = html[0];
-                        }
-                    }
-                    DOM[insertType](domNode, self[0]);
-                });
 
-            };
+    Node.addMethod("detach", function(domNode, type, fn, scope) {
+        if (S.isFunction(fn)) {
+            var wraps = fn.__wrap || [];
+            for (var i = wraps.length - 1; i >= 0; i--) {
+                var w = wraps[i];
+                if (w.target == domNode) {
+                    Event.remove(domNode, type, w.fn, scope);
+                    wraps.splice(i, 1);
+                }
+            }
+        } else {
+            Event.remove(domNode, type, fn, scope);
+        }
+    });
+
+
+    for (var k in NP) {
+        var v = NP[k];
+        if (NP.hasOwnProperty(k) && S.isFunction(v)) {
+            NodeList.addMethod(k, v);
+        }
+    }
+
+
+    /**
+     * append(node ,parent) : 参数顺序反过来了
+     * appendTo(parent,node) : 才是正常
+     *
+     */
+    S.each(['append', 'prepend'], function(insertType) {
+        // append 和 prepend
+
+        Node.addMethod(insertType, function(domNode, html) {
+            var newNode = html;
+            // 创建
+            if (S.isString(newNode)) {
+                newNode = DOM.create(newNode);
+            }
+            DOM[insertType](newNode, domNode);
+        });
+
+        NodeList.addMethod(insertType, function(html) {
+            // 每次调用 Node 单一方法前都 clone
+            // html 创建 or Html Node clone
+            var newNode = DOM.create(html);
+            //再次调用 KISSY Node 的单一方法
+            this[insertType](newNode);
         });
     });
 
 }, {
-        requires:["dom","./base","./attach"]
+        requires:["dom","event","./base","./attach"]
     });
+
+/**
+ * 2011-05-24
+ * - 承玉：
+ * - 重写 Node 的某些方法
+ * - 添加 one ,all ，从当前 Node 往下开始选择节点
+ * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
+ * - 添加事件处理，注意 target 与 relatedTarget 现在都是 KISSY Node 类型
+ * -将 Node 上的方法经过循环包装放在 NodeList 上
+ * - append/prepend 参数是节点时，需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
+ */
 
 KISSY.add("node", function(S, Node) {
     return Node;
@@ -7701,8 +7808,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  */
 KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
-    var NP = S.require("node/node").prototype,
-        NLP = S.require("node/nodelist").prototype,
+    var NP = N.prototype,
+        NLP = N.List.prototype,
         DISPLAY = 'display', NONE = 'none',
         OVERFLOW = 'overflow', HIDDEN = 'hidden',
         OPCACITY = 'opacity',
@@ -7731,14 +7838,14 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
         };
 
         S.each({
-            show: ['show', 1],
-            hide: ['show', 0],
-            toggle: ['toggle'],
-            fadeIn: ['fade', 1],
-            fadeOut: ['fade', 0],
-            slideDown: ['slide', 1],
-            slideUp: ['slide', 0]
-        },
+                show: ['show', 1],
+                hide: ['show', 0],
+                toggle: ['toggle'],
+                fadeIn: ['fade', 1],
+                fadeOut: ['fade', 0],
+                slideDown: ['slide', 1],
+                slideUp: ['slide', 0]
+            },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -7746,7 +7853,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                     self.__anims = self.__anims || [];
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && arguments.length === 0) {
-                        DOM[k](this);
+                        DOM[k](this.getDOMNode ? this.getDOMNode() : this);
                     }
                     else {
                         S.each(this, function(elem) {
@@ -7838,8 +7945,8 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-    requires:["dom","anim/base","node"]
-});
+        requires:["dom","anim/base","node"]
+    });
 /**
  * 2011-05-17
  *
@@ -8195,7 +8302,7 @@ KISSY.add('base/attribute', function(S, undef) {
  * @module  Base
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute) {
+KISSY.add('base/base', function (S, Attribute,Event) {
 
     /*
      * Base for class-based component
@@ -8238,10 +8345,10 @@ KISSY.add('base/base', function (S, Attribute) {
         }
     }
 
-    S.augment(Base, S.require("event/target"), Attribute);
+    S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-    requires:["base/attribute","event"]
+    requires:["./attribute","event"]
 });
 
 KISSY.add("base", function(S, Base) {
@@ -9453,8 +9560,8 @@ KISSY.add('sizzle/impl', function(S) {
 
         return Sizzle.filter(later, tmpSet);
     };
-    Sizzle._filter = function(selector, filter) {
-        return Sizzle.matches(filter, S.require("dom/selector").query(selector));
+    Sizzle._filter = function(selector, filter,context) {
+        return Sizzle.matches(filter, S.require("dom/selector").query(selector,context));
     };
     return Sizzle;
 });
@@ -10184,7 +10291,7 @@ KISSY.add('template/template', function(S) {
          * @param {String} o extent tag object.
          */
         addStatement: function(statement, o) {
-            if (S['isString'](statement) && S['isObject'](o)) {
+            if (S.isString(statement) && S.isObject(o)) {
                 Statements[statement] = o;
             }
         }
@@ -10287,7 +10394,7 @@ KISSY.add('flash/ua', function(S, UA) {
      * numerify(12.2) => 12.2
      */
     function numerify(ver) {
-        var arr = S['isString'](ver) ? arrify(ver) : ver, ret = ver;
+        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
         if (S.isArray(arr)) {
             ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
         }
@@ -10468,7 +10575,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
                 Flash._callback(callback, FP_LOW, id, target,isDynamic);
 
                 // 有 xi 时，将 src 替换为快速安装
-                if (!((xi = config.xi) && S['isString'](xi))) return;
+                if (!((xi = config.xi) && S.isString(xi))) return;
                 config.src = xi;
             }
 
@@ -10534,7 +10641,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             var swfs = Flash.swfs,
                 id, ret = false;
 
-            if (S['isString'](target)) {
+            if (S.isString(target)) {
                 ret = (target in swfs);
             } else {
                 for (id in swfs)
@@ -10685,7 +10792,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
                 data = obj[prop];
 
                 // 字符串，用双引号括起来 		 [bug]不需要	longzang
-                if (S['isString'](data)) {
+                if (S.isString(data)) {
                    //data = '"' + encode(data) + '"';
 				   data = encode(data);  	//bugfix:	有些值事实上不需要双引号   longzang 2010/8/4
                 }
@@ -10734,10 +10841,9 @@ build time: ${build.time}
  * dd support for kissy , dd objects central management module
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('dd/ddm', function(S, DOM, Event, N, Base) {
+KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
     var doc = document,
-        Node = S.require("node/node"),
         SHIM_ZINDEX = 999999;
 
     function DDM() {
@@ -11927,10 +12033,9 @@ build time: ${build.time}
  * @author: 承玉<yiminghe@gmail.com>
  * @requires: dd
  */
-KISSY.add("resizable/base", function(S, N, D, UIBase) {
+KISSY.add("resizable/base", function(S, Node, D, UIBase) {
 
-    var Draggable = S.require("dd/draggable"),
-        Node = S.require("node/node"),
+    var Draggable = D.Draggable,
         CLS_PREFIX = "ke-resizehandler";
 
     var hcNormal = {
@@ -12092,7 +12197,7 @@ build time: ${build.time}
  * UIBase.Align
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('uibase/align', function(S, DOM) {
+KISSY.add('uibase/align', function(S, DOM,Node) {
 
 
     function Align() {
@@ -12127,7 +12232,6 @@ KISSY.add('uibase/align', function(S, DOM) {
      * @param align
      */
     function getAlignOffset(node, align) {
-        var Node = S.require("node/node");
         var V = align.charAt(0),
             H = align.charAt(1),
             offset, w, h, x, y;
@@ -12217,23 +12321,25 @@ KISSY.add('uibase/align', function(S, DOM) {
 
     return Align;
 }, {
-        requires:["dom"]
+        requires:["dom","node"]
     });
 /**
  * @module  UIBase
  * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
  */
-KISSY.add('uibase/base', function (S, Base) {
+KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        Node = S.require("node/node"),
-        Attribute = S.require("base/attribute"),
-        capitalFirst = Attribute.__capitalFirst,
         noop = function() {
         };
+
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
 
     /*
      * UIBase for class-based component
@@ -12387,79 +12493,79 @@ KISSY.add('uibase/base', function (S, Base) {
 
     S.extend(UIBase, Base, {
 
-        render: function() {
-            var self = this;
-            if (!self.get("rendered")) {
-                self._renderUI();
-                self.fire('renderUI');
-                callMethodByHierarchy(self, "renderUI", "__renderUI");
-                self.fire('afterRenderUI');
-                self._bindUI();
-                self.fire('bindUI');
-                callMethodByHierarchy(self, "bindUI", "__bindUI");
-                self.fire('afterBindUI');
-                self._syncUI();
-                self.fire('syncUI');
-                callMethodByHierarchy(self, "syncUI", "__syncUI");
-                self.fire('afterSyncUI');
-                self.set("rendered", true);
-            }
-        },
+            render: function() {
+                var self = this;
+                if (!self.get("rendered")) {
+                    self._renderUI();
+                    self.fire('renderUI');
+                    callMethodByHierarchy(self, "renderUI", "__renderUI");
+                    self.fire('afterRenderUI');
+                    self._bindUI();
+                    self.fire('bindUI');
+                    callMethodByHierarchy(self, "bindUI", "__bindUI");
+                    self.fire('afterBindUI');
+                    self._syncUI();
+                    self.fire('syncUI');
+                    callMethodByHierarchy(self, "syncUI", "__syncUI");
+                    self.fire('afterSyncUI');
+                    self.set("rendered", true);
+                }
+            },
 
-        /**
-         * 根据属性添加 DOM 节点
-         */
-        _renderUI: noop,
-        renderUI: noop,
+            /**
+             * 根据属性添加 DOM 节点
+             */
+            _renderUI: noop,
+            renderUI: noop,
 
-        /**
-         * 根据属性变化设置 UI
-         */
-        _bindUI: function() {
-            var self = this,
-                attrs = self.__attrs,
-                attr, m;
+            /**
+             * 根据属性变化设置 UI
+             */
+            _bindUI: function() {
+                var self = this,
+                    attrs = self.__attrs,
+                    attr, m;
 
-            for (attr in attrs) {
-                if (attrs.hasOwnProperty(attr)) {
-                    m = UI_SET + capitalFirst(attr);
-                    if (self[m]) {
-                        // 自动绑定事件到对应函数
-                        (function(attr, m) {
-                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
-                                self[m](ev.newVal, ev);
-                            });
-                        })(attr, m);
+                for (attr in attrs) {
+                    if (attrs.hasOwnProperty(attr)) {
+                        m = UI_SET + capitalFirst(attr);
+                        if (self[m]) {
+                            // 自动绑定事件到对应函数
+                            (function(attr, m) {
+                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                    self[m](ev.newVal, ev);
+                                });
+                            })(attr, m);
+                        }
                     }
                 }
-            }
-        },
-        bindUI: noop,
+            },
+            bindUI: noop,
 
-        /**
-         * 根据当前（初始化）状态来设置 UI
-         */
-        _syncUI: function() {
-            var self = this,
-                attrs = self.__getDefAttrs();
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m] && self.get(a) !== undefined) {
-                        self[m](self.get(a));
+            /**
+             * 根据当前（初始化）状态来设置 UI
+             */
+            _syncUI: function() {
+                var self = this,
+                    attrs = self.__getDefAttrs();
+                for (var a in attrs) {
+                    if (attrs.hasOwnProperty(a)) {
+                        var m = UI_SET + capitalFirst(a);
+                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if (self[m] && self.get(a) !== undefined) {
+                            self[m](self.get(a));
+                        }
                     }
                 }
-            }
-        },
-        syncUI: noop,
+            },
+            syncUI: noop,
 
-        destroy: function() {
-            destroyHierarchy(this);
-            this.fire('destroy');
-            this.detach();
-        }
-    });
+            destroy: function() {
+                destroyHierarchy(this);
+                this.fire('destroy');
+                this.detach();
+            }
+        });
 
     /**
      * 根据基类以及扩展类得到新类
@@ -12524,8 +12630,8 @@ KISSY.add('uibase/base', function (S, Base) {
 
     return UIBase;
 }, {
-    requires:["base","dom","node"]
-});
+        requires:["base","dom","node"]
+    });
 /**
  * UIBase.Box
  * @author: 承玉<yiminghe@gmail.com>
@@ -12586,8 +12692,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     Box.ATTRS = {
         el: {
             //容器元素
-            setter:function(v) {
-                var Node = S.require("node/node");
+            setter:function(v) {               
                 if (S.isString(v))
                     return Node.one(v);
             }
@@ -12764,7 +12869,7 @@ KISSY.add("uibase/close", function(S) {
  * close extension for kissy dialog
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/closerender", function(S) {
+KISSY.add("uibase/closerender", function(S,Node) {
 
     var CLS_PREFIX = 'ext-';
 
@@ -12798,7 +12903,6 @@ KISSY.add("uibase/closerender", function(S) {
             }
         },
         __renderUI:function() {
-            var Node = S.require("node/node");
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("contentEl");
@@ -12827,12 +12931,13 @@ KISSY.add("uibase/closerender", function(S) {
     };
     return Close;
 
-});/**
+},{
+        requires:["node"]
+    });/**
  * constrain extension for kissy
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("uibase/constrain", function(S, DOM) {
-    var Node = S.require("node/node");
+KISSY.add("uibase/constrain", function(S, DOM,Node) {
 
     function Constrain() {
 
@@ -13188,7 +13293,7 @@ KISSY.add("uibase/mask", function(S) {
  * mask extension for kissy
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/maskrender", function(S) {
+KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -13199,7 +13304,6 @@ KISSY.add("uibase/maskrender", function(S) {
 
 
     function initMask() {
-        var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
         mask = new Node("<div " +
             //"tabindex='-1' " +
             "class='" +
@@ -13281,7 +13385,7 @@ KISSY.add("uibase/maskrender", function(S) {
     };
 
     return Mask;
-}, {requires:["ua"]});/**
+}, {requires:["ua","dom","node"]});/**
  * position and visible extension，可定位的隐藏层
  * @author: 承玉<yiminghe@gmail.com>
  */
@@ -13487,7 +13591,7 @@ KISSY.add("uibase/positionrender", function() {
  * shim for ie6 ,require box-ext
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/shimrender", function(S) {
+KISSY.add("uibase/shimrender", function(S, Node) {
 
     function Shim() {
         //S.log("shim init");
@@ -13502,7 +13606,6 @@ KISSY.add("uibase/shimrender", function(S) {
     Shim.prototype = {
 
         _uiSetShim:function(v) {
-            var Node = S.require("node/node");
             var self = this,el = self.get("el");
             if (v && !self.__shimEl) {
                 self.__shimEl = new Node("<" + "iframe style='position: absolute;" +
@@ -13522,7 +13625,9 @@ KISSY.add("uibase/shimrender", function(S) {
         }
     };
     return Shim;
-});/**
+}, {
+        requires:['node']
+    });/**
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
  */
@@ -14048,7 +14153,7 @@ build time: ${build.time}
 KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     var DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        EventTarget = S.require("event/target"),
+        EventTarget = Event.Target,
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
 
@@ -16920,109 +17025,111 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
     };
 
     S.extend(Popup, Overlay, {
-        initializer: function() {
-            var self = this;
-            // 获取相关联的 DOM 节点
-            self.trigger = S.one(self.get("trigger"));
-            if (self.trigger) {
-                if (self.get("triggerType") === 'mouse') {
-                    self._bindTriggerMouse();
-
-                    self.on('bindUI', function() {
-                        self._bindContainerMouse();
-                    });
-                } else {
-                    self._bindTriggerClick();
+            initializer: function() {
+                var self = this;
+                // 获取相关联的 DOM 节点
+                if (self.get("trigger")) {
+                    self.trigger = S.one(self.get("trigger"));
                 }
-            }
-        },
+                if (self.trigger) {
+                    if (self.get("triggerType") === 'mouse') {
+                        self._bindTriggerMouse();
 
-        _bindTriggerMouse: function() {
-            var self = this,
-                trigger = self.trigger, timer;
+                        self.on('bindUI', function() {
+                            self._bindContainerMouse();
+                        });
+                    } else {
+                        self._bindTriggerClick();
+                    }
+                }
+            },
 
-            self.__mouseEnterPopup = function() {
-                self._clearHiddenTimer();
+            _bindTriggerMouse: function() {
+                var self = this,
+                    trigger = self.trigger, timer;
 
-                timer = S.later(function() {
+                self.__mouseEnterPopup = function() {
+                    self._clearHiddenTimer();
+
+                    timer = S.later(function() {
+                        self.show();
+                        timer = undefined;
+                    }, 100);
+                };
+
+                trigger.on('mouseenter', self.__mouseEnterPopup);
+
+
+                self._mouseLeavePopup = function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+
+                    self._setHiddenTimer();
+                };
+
+                trigger.on('mouseleave', self._mouseLeavePopup);
+            },
+
+            _bindContainerMouse: function() {
+                var self = this;
+
+                self.get('el').on('mouseleave', self._setHiddenTimer, self)
+                    .on('mouseenter', self._clearHiddenTimer, self);
+            },
+
+            _setHiddenTimer: function() {
+                var self = this;
+                self._hiddenTimer = S.later(function() {
+                    self.hide();
+                }, 120);
+            },
+
+            _clearHiddenTimer: function() {
+                var self = this;
+                if (self._hiddenTimer) {
+                    self._hiddenTimer.cancel();
+                    self._hiddenTimer = undefined;
+                }
+            },
+
+            _bindTriggerClick: function() {
+                var self = this;
+                self.__clickPopup = function(e) {
+                    e.halt();
                     self.show();
-                    timer = undefined;
-                }, 100);
-            };
+                };
+                self.trigger.on('click', self.__clickPopup);
+            },
 
-            trigger.on('mouseenter', self.__mouseEnterPopup);
+            destructor:function() {
+                var self = this;
+                if (self.trigger) {
+                    var t = self.trigger;
+                    if (self.__clickPopup) {
+                        t.detach('click', self.__clickPopup);
+                    }
+                    if (self.__mouseEnterPopup) {
+                        t.detach('mouseenter', self.__mouseEnterPopup);
+                    }
 
-
-            self._mouseLeavePopup = function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+                    if (self._mouseLeavePopup) {
+                        t.detach('mouseleave', self._mouseLeavePopup);
+                    }
                 }
-
-                self._setHiddenTimer();
-            };
-
-            trigger.on('mouseleave', self._mouseLeavePopup);
-        },
-
-        _bindContainerMouse: function() {
-            var self = this;
-
-            self.get('el').on('mouseleave', self._setHiddenTimer, self)
-                .on('mouseenter', self._clearHiddenTimer, self);
-        },
-
-        _setHiddenTimer: function() {
-            var self = this;
-            self._hiddenTimer = S.later(function() {
-                self.hide();
-            }, 120);
-        },
-
-        _clearHiddenTimer: function() {
-            var self = this;
-            if (self._hiddenTimer) {
-                self._hiddenTimer.cancel();
-                self._hiddenTimer = undefined;
-            }
-        },
-
-        _bindTriggerClick: function() {
-            var self = this;
-            self.__clickPopup = function(e) {
-                e.halt();
-                self.show();
-            };
-            self.trigger.on('click', self.__clickPopup);
-        },
-
-        destructor:function() {
-            var self = this;
-            if (self.trigger) {
-                var t = self.trigger;
-                if (self.__clickPopup) {
-                    t.detach('click', self.__clickPopup);
-                }
-                if (self.__mouseEnterPopup) {
-                    t.detach('mouseenter', self.__mouseEnterPopup);
-                }
-
-                if (self._mouseLeavePopup) {
-                    t.detach('mouseleave', self._mouseLeavePopup);
+                if (self.get('el')) {
+                    self.get('el').detach('mouseleave', self._setHiddenTimer, self)
+                        .detach('mouseenter', self._clearHiddenTimer, self);
                 }
             }
-            if (self.get('el')) {
-                self.get('el').detach('mouseleave', self._setHiddenTimer, self)
-                    .detach('mouseenter', self._clearHiddenTimer, self);
-            }
-        }
-    });
+        });
 
 
     return Popup;
 }, {
-    requires:[ "overlay/overlay"]
-});
+        requires:[ "overlay/overlay"]
+    });
 
 /**
  * 2011-05-17
@@ -17057,7 +17164,7 @@ KISSY.add("suggest", function(S, Sug) {
 KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 
     var win = window,
-        EventTarget = S.require("event/target"),
+        EventTarget = Event.Target,
         doc = document, bd, head = DOM.get('head'),
         ie = UA['ie'],
         ie6 = (ie === 6),
@@ -17186,7 +17293,15 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             /**
              * 查询的参数名
              */
-            queryName: 'q'
+            queryName: 'q',
+
+            /**
+             * @type Number 数据源标志, 默认为 0 , 可取 0, 1, 2
+             * - 0: 数据来自远程, 且请求回来后存入 _dataCache
+             * - 1: 数据来自远程, 且不存入 _dataCache, 每次请求的数据是否需要缓存, 防止在公用同一个 suggest , 但数据源不一样时, 出现相同内容
+             * - 2: 数据来自静态, 不存在时, 不显示提示浮层
+             */
+            dataType: 0
         };
 
     /**
@@ -17218,14 +17333,24 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
         self.config = config = S.merge(defaultConfig, config);
 
         /**
-         * 获取数据的 URL
+         * 获取数据的 URL, 或是静态数据
          * @type {String|Object}
          */
-        // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
-        dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
-        self.dataSource = dataSource + config.callbackName + '=' + (cbFn = config.callbackFn);
-        // 回调函数名不是默认值时，需要指向默认回调函数
-        if (cbFn !== CALLBACK_FN) initCallback(cbFn);
+        if (S.isString(dataSource)) {
+            // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
+            dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
+            self.dataSource = dataSource + config.callbackName + '=' + (cbFn = config.callbackFn);
+            if (config.dataType === 2) self.config.dataType = 0;
+
+            // 回调函数名不是默认值时，需要指向默认回调函数
+            if (cbFn !== CALLBACK_FN) initCallback(cbFn);
+        }
+        // 如果就是一个数据源对象, 强制使用 dataSource
+        else {
+            self.dataSource = dataSource;
+            self.config.dataType = 2;
+        }
+
 
         /**
          * 通过 jsonp 返回的数据
@@ -17395,6 +17520,17 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                     }
                     isDowningOrUping = false;
                 }
+
+                /*
+                 * fix 防止 chrome 下 键盘按键移动选中项后, 仍然触发 mousemove 事件
+                 */
+                if (UA['chrome']) {
+                    // 标志按键状态, 延迟后, 恢复没有按键
+                    if (self._keyTimer) self._keyTimer.cancel();
+                    self._keyTimer = S.later(function() {
+                        self._keyTimer = undefined;
+                    }, 500);
+                }
             });
 
             // reset pressingCount
@@ -17474,6 +17610,8 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                 mouseDownItem, mouseLeaveFooter;
 
             Event.on(content, 'mousemove', function(ev) {
+                if (self._keyTimer) return;
+
                 var target = ev.target;
 
                 if (target.nodeName !== LI) {
@@ -17755,13 +17893,25 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                 return;
             }
 
-            if (self._dataCache[q] !== undefined) { // 1. 使用缓存数据
-                //S.log('use cache');
-                self._fillContainer(self._dataCache[q]);
-                self._displayContainer();
-
-            } else { // 2. 请求服务器数据
-                self._requestData();
+            switch(self.config.dataType) {
+                case 0:
+                    if (self._dataCache[q] !== undefined) { // 1. 如果设置需要缓存标志 且已经有缓存数据时, 使用缓存中的
+                        S.log('use cache');
+                        self._fillContainer(self._dataCache[q]);
+                        self._displayContainer();
+                    } else { // 2. 请求服务器数据
+                        S.log('no cache, data from server');
+                        self._requestData();
+                    }
+                    break;
+                case 1:
+                    S.log('no cache, data always from server');
+                    self._requestData();
+                    break;
+                case 2:
+                    S.log('use static datasource');
+                    self._handleResponse(self.dataSource[q]);
+                    break;
             }
         },
 
@@ -17842,7 +17992,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             if (self.fire(EVENT_BEFORE_SHOW) === false) return;
 
             // cache
-            self._dataCache[self.query] = DOM.html(self.content);
+            if (!self.config.dataType) self._dataCache[self.query] = DOM.html(self.content);
 
             // 显示容器
             self._displayContainer();
@@ -17868,7 +18018,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             for (i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (S['isString'](item)) { // 只有 key 值时
+                if (S.isString(item)) { // 只有 key 值时
                     arr[j++] = { 'key' : item };
                 } else if (S.isArray(item) && item.length > 1) { // ['key', 'result'] 取数组前2个
                     arr[j++] = {'key' : item[0], 'result' : item[1]};
@@ -18100,7 +18250,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
  *
  * 一、数据处理很 core，但相对来说是简单的，由 requestData + handleResponse + formatData 等辅助方法组成
  * 需要注意两点：
- *  a. IE 中，改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
+ *  a. IE 中, 改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
  *     requestData 方法中存在两种处理方式的原因。
  *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加 data-time
  *     的解决方案。更好的解决方案是，调整 API，使得返回的数据中，带有 query 值。
@@ -18776,9 +18926,8 @@ build time: ${build.time}
  * KISSY Calendar
  * @creator  拔赤<lijing00333@163.com>
  */
-KISSY.add('calendar/base', function(S, N, Event, undefined) {
-    var Node = S.require("node/node"),
-        EventTarget = S.require("event/target");
+KISSY.add('calendar/base', function(S, Node, Event, undefined) {
+    var EventTarget = Event.Target;
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
@@ -18786,439 +18935,439 @@ KISSY.add('calendar/base', function(S, N, Event, undefined) {
 
     S.augment(Calendar, {
 
-        /**
-         * 日历构造函数
-         * @method     _init
-         * @param { string }    selector
-         * @param { string }    config
-         * @private
-         */
-        _init: function(selector, config) {
-            var self = this,con = Node.one(selector);
-            self.id = self.C_Id = self._stamp(con);
-            self._buildParam(config);
-
-            /*
-             self.con  日历的容器
-             self.id   传进来的id
-             self.C_Id 永远代表日历容器的ID
+            /**
+             * 日历构造函数
+             * @method     _init
+             * @param { string }    selector
+             * @param { string }    config
+             * @private
              */
-            if (!self.popup) {
-                self.con = con;
-            } else {
-                self.trigger = con;
-                self.con = new Node('<div>');
-                Node.one('body').append(self.con);
-                self.C_Id = self._stamp(self.con);
-                self.con.css({
-                    'top':'0px',
-                    'position':'absolute',
-                    'background':'white',
-                    'visibility':'hidden'
-                });
-            }
-
-            //创建事件中心
-            //事件中心已经和Calendar合并
-            var EventFactory = function() {
-            };
-            S.augment(EventFactory, EventTarget);
-            var eventCenter = new EventFactory();
-            S.mix(self, eventCenter);
-
-            self.render();
-            self._buildEvent();
-            return this;
-        },
-
-        render: function(o) {
-            var self = this,
-                i = 0,
-                _prev,_next,_oym;
-
-            o = o || {};
-            self._parseParam(o);
-            self.ca = [];
-
-            self.con.addClass('ks-cal-call ks-clearfix multi-' + self.pages);
-            self.con.html('');
-
-            for (i = 0,_oym = [self.year,self.month]; i < self.pages; i++) {
-                if (i === 0) {
-                    _prev = true;
-                } else {
-                    _prev = false;
-                    _oym = self._computeNextMonth(_oym);
-                }
-                _next = i == (self.pages - 1);
-                self.ca.push(new self.Page({
-                    year:_oym[0],
-                    month:_oym[1],
-                    prevArrow:_prev,
-                    nextArrow:_next,
-                    showTime:self.showTime
-                }, self));
-
-
-                self.ca[i].render();
-            }
-            return this;
-
-        },
-
-        /**
-         * 用以给容器打上id的标记,容器有id则返回
-         * @method _stamp
-         * @param el
-         * @return {string}
-         * @private
-         */
-        _stamp: function(el) {
-            if (el.attr('id') === undefined || el.attr('id') === '') {
-                el.attr('id', 'K_' + S.now());
-            }
-            return el.attr('id');
-        },
-
-        /**
-         * 计算d天的前几天或者后几天，返回date
-         * @method _showdate
-         * @private
-         */
-        _showdate: function(n, d) {
-            var uom = new Date(d - 0 + n * 86400000);
-            uom = uom.getFullYear() + "/" + (uom.getMonth() + 1) + "/" + uom.getDate();
-            return new Date(uom);
-        },
-
-        /**
-         * 创建日历外框的事件
-         * @method _buildEvent
-         * @private
-         */
-        _buildEvent: function() {
-            var self = this;
-            if (!self.popup) {
-                return this;
-            }
-            //点击空白
-            //flush event
-            for (var i = 0; i < self.EV.length; i++) {
-                if (self.EV[i] !== undefined) {
-                    self.EV[i].detach();
-                }
-            }
-            self.EV[0] = Node.one('body').on('click', function(e) {
-
-                //点击到日历上
-                if (e.target.attr('id') === self.C_Id) {
-                    return;
-                }
-                if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev')) &&
-                    e.target[0].tagName === 'A') {
-                    return;
-                }
-                //点击在trigger上
-                if (e.target.attr('id') == self.id) {
-                    return;
-                }
-
-                if (self.con.css('visibility') == 'hidden') return;
-                var inRegion = function(dot, r) {
-                    return dot[0] > r[0].x
-                        && dot[0] < r[1].x
-                        && dot[1] > r[0].y
-                        && dot[1] < r[1].y;
-                };
+            _init: function(selector, config) {
+                var self = this,con = Node.one(selector);
+                self.id = self.C_Id = self._stamp(con);
+                self._buildParam(config);
 
                 /*
-                 if (!S.DOM.contains(Node.one('#' + self.C_Id), e.target)) {
+                 self.con  日历的容器
+                 self.id   传进来的id
+                 self.C_Id 永远代表日历容器的ID
                  */
-                if (!inRegion([e.pageX,e.pageY], [
-                    {
-                        x:self.con.offset().left,
-                        y:self.con.offset().top
-                    },
-                    {
-                        x:self.con.offset().left + self.con.width(),
-                        y:self.con.offset().top + self.con.height()
+                if (!self.popup) {
+                    self.con = con;
+                } else {
+                    self.trigger = con;
+                    self.con = new Node('<div>');
+                    Node.one('body').append(self.con);
+                    self.C_Id = self._stamp(self.con);
+                    self.con.css({
+                            'top':'0px',
+                            'position':'absolute',
+                            'background':'white',
+                            'visibility':'hidden'
+                        });
+                }
+
+                //创建事件中心
+                //事件中心已经和Calendar合并
+                var EventFactory = function() {
+                };
+                S.augment(EventFactory, EventTarget);
+                var eventCenter = new EventFactory();
+                S.mix(self, eventCenter);
+
+                self.render();
+                self._buildEvent();
+                return this;
+            },
+
+            render: function(o) {
+                var self = this,
+                    i = 0,
+                    _prev,_next,_oym;
+
+                o = o || {};
+                self._parseParam(o);
+                self.ca = [];
+
+                self.con.addClass('ks-cal-call ks-clearfix multi-' + self.pages);
+                self.con.html('');
+
+                for (i = 0,_oym = [self.year,self.month]; i < self.pages; i++) {
+                    if (i === 0) {
+                        _prev = true;
+                    } else {
+                        _prev = false;
+                        _oym = self._computeNextMonth(_oym);
                     }
-                ])) {
+                    _next = i == (self.pages - 1);
+                    self.ca.push(new self.Page({
+                            year:_oym[0],
+                            month:_oym[1],
+                            prevArrow:_prev,
+                            nextArrow:_next,
+                            showTime:self.showTime
+                        }, self));
+
+
+                    self.ca[i].render();
+                }
+                return this;
+
+            },
+
+            /**
+             * 用以给容器打上id的标记,容器有id则返回
+             * @method _stamp
+             * @param el
+             * @return {string}
+             * @private
+             */
+            _stamp: function(el) {
+                if (el.attr('id') === undefined || el.attr('id') === '') {
+                    el.attr('id', 'K_' + S.now());
+                }
+                return el.attr('id');
+            },
+
+            /**
+             * 计算d天的前几天或者后几天，返回date
+             * @method _showdate
+             * @private
+             */
+            _showdate: function(n, d) {
+                var uom = new Date(d - 0 + n * 86400000);
+                uom = uom.getFullYear() + "/" + (uom.getMonth() + 1) + "/" + uom.getDate();
+                return new Date(uom);
+            },
+
+            /**
+             * 创建日历外框的事件
+             * @method _buildEvent
+             * @private
+             */
+            _buildEvent: function() {
+                var self = this;
+                if (!self.popup) {
+                    return this;
+                }
+                //点击空白
+                //flush event
+                for (var i = 0; i < self.EV.length; i++) {
+                    if (self.EV[i] !== undefined) {
+                        self.EV[i].detach();
+                    }
+                }
+                self.EV[0] = Node.one('body').on('click', function(e) {
+
+                    //点击到日历上
+                    if (e.target.attr('id') === self.C_Id) {
+                        return;
+                    }
+                    if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev')) &&
+                        e.target[0].tagName === 'A') {
+                        return;
+                    }
+                    //点击在trigger上
+                    if (e.target.attr('id') == self.id) {
+                        return;
+                    }
+
+                    if (self.con.css('visibility') == 'hidden') return;
+                    var inRegion = function(dot, r) {
+                        return dot[0] > r[0].x
+                            && dot[0] < r[1].x
+                            && dot[1] > r[0].y
+                            && dot[1] < r[1].y;
+                    };
+
+                    /*
+                     if (!S.DOM.contains(Node.one('#' + self.C_Id), e.target)) {
+                     */
+                    if (!inRegion([e.pageX,e.pageY], [
+                        {
+                            x:self.con.offset().left,
+                            y:self.con.offset().top
+                        },
+                        {
+                            x:self.con.offset().left + self.con.width(),
+                            y:self.con.offset().top + self.con.height()
+                        }
+                    ])) {
+                        self.hide();
+                    }
+                });
+                //点击触点
+                for (i = 0; i < self.triggerType.length; i++) {
+
+                    self.EV[1] = Node.one('#' + self.id).on(self.triggerType[i], function(e) {
+                        e.target = Node(e.target);
+                        e.preventDefault();
+                        //如果focus和click同时存在的hack
+                        S.log(e.type);
+                        var a = self.triggerType;
+                        if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
+                            if (e.type == 'focus') {
+                                self.toggle();
+                            }
+                        } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
+                            if (e.type == 'click') {
+                                self.toggle();
+                            }
+                        } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
+                            setTimeout(function() {//为了跳过document.onclick事件
+                                self.toggle();
+                            }, 170);
+                        } else {
+                            self.toggle();
+                        }
+
+                    });
+
+                }
+                return this;
+            },
+
+            /**
+             * 改变日历是否显示的状态
+             * @mathod toggle
+             */
+            toggle: function() {
+                var self = this;
+                if (self.con.css('visibility') == 'hidden') {
+                    self.show();
+                } else {
                     self.hide();
                 }
-            });
-            //点击触点
-            for (i = 0; i < self.triggerType.length; i++) {
+            },
 
-                self.EV[1] = Node.one('#' + self.id).on(self.triggerType[i], function(e) {
-                    e.target = Node(e.target);
-                    e.preventDefault();
-                    //如果focus和click同时存在的hack
-                    S.log(e.type);
-                    var a = self.triggerType;
-                    if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
-                        if (e.type == 'focus') {
-                            self.toggle();
-                        }
-                    } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
-                        if (e.type == 'click') {
-                            self.toggle();
-                        }
-                    } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
-                        setTimeout(function() {//为了跳过document.onclick事件
-                            self.toggle();
-                        }, 170);
-                    } else {
-                        self.toggle();
-                    }
+            /**
+             * 显示日历
+             * @method show
+             */
+            show: function() {
+                var self = this;
+                self.con.css('visibility', '');
+                var _x = self.trigger.offset().left,
+                    //KISSY得到DOM的width是innerWidth，这里期望得到outterWidth
+                    height = self.trigger[0].offsetHeight || self.trigger.height(),
+                    _y = self.trigger.offset().top + height;
+                self.con.css('left', _x.toString() + 'px');
+                self.con.css('top', _y.toString() + 'px');
+                return this;
+            },
 
-                });
+            /**
+             * 隐藏日历
+             * @method hide
+             */
+            hide: function() {
+                var self = this;
+                self.con.css('visibility', 'hidden');
+                return this;
+            },
 
-            }
-            return this;
-        },
-
-        /**
-         * 改变日历是否显示的状态
-         * @mathod toggle
-         */
-        toggle: function() {
-            var self = this;
-            if (self.con.css('visibility') == 'hidden') {
-                self.show();
-            } else {
-                self.hide();
-            }
-        },
-
-        /**
-         * 显示日历
-         * @method show
-         */
-        show: function() {
-            var self = this;
-            self.con.css('visibility', '');
-            var _x = self.trigger.offset().left,
-                //KISSY得到DOM的width是innerWidth，这里期望得到outterWidth
-                height = self.trigger[0].offsetHeight || self.trigger.height(),
-                _y = self.trigger.offset().top + height;
-            self.con.css('left', _x.toString() + 'px');
-            self.con.css('top', _y.toString() + 'px');
-            return this;
-        },
-
-        /**
-         * 隐藏日历
-         * @method hide
-         */
-        hide: function() {
-            var self = this;
-            self.con.css('visibility', 'hidden');
-            return this;
-        },
-
-        /**
-         * 创建参数列表
-         * @method _buildParam
-         * @private
-         */
-        _buildParam: function(o) {
-            var self = this;
-            if (o === undefined || o === null) {
-                o = { };
-            }
-
-            function setParam(def, key) {
-                var v = o[key];
-                // null在这里是“占位符”，用来清除参数的一个道具
-                self[key] = (v === undefined || v === null) ? def : v;
-            }
-
-            //这种处理方式不错
-            S.each({
-                date:        new Date(),
-                startDay:    0,
-                pages:       1,
-                closable:    false,
-                rangeSelect: false,
-                minDate:     false,
-                maxDate:     false,
-                multiSelect: false,
-                navigator:   true,
-                popup:       false,
-                showTime:    false,
-                triggerType: ['click']
-            }, setParam);
-
-            // 支持用户传进来一个string
-            if (typeof o.triggerType === 'string') {
-                o.triggerType = [o.triggerType];
-            }
-
-            setParam(self.date, 'selected');
-            if (o.startDay) {
-                self.startDay = (7 - o.startDay) % 7;
-            }
-
-            if (o.range !== undefined && o.range !== null) {
-                var s = self._showdate(1, new Date(o.range.start.getFullYear() + '/' + (o.range.start.getMonth() + 1) + '/' + (o.range.start.getDate())));
-                var e = self._showdate(1, new Date(o.range.end.getFullYear() + '/' + (o.range.end.getMonth() + 1) + '/' + (o.range.end.getDate())));
-                self.range = {
-                    start:s,
-                    end:e
-                };
-            } else {
-                self.range = {
-                    start:null,
-                    end:null
-                };
-            }
-            self.EV = [];
-            return this;
-        },
-
-        /**
-         * 过滤参数列表
-         * @method _parseParam
-         * @private
-         */
-        _parseParam: function(o) {
-            var self = this,i;
-            if (o === undefined || o === null) {
-                o = {};
-            }
-            for (i in o) {
-                self[i] = o[i];
-            }
-            self._handleDate();
-            return this;
-        },
-
-        /**
-         * 模板函数
-         * @method _templetShow
-         * @private
-         */
-        _templetShow: function(templet, data) {
-            var str_in,value_s,i,m,value,par;
-            if (data instanceof Array) {
-                str_in = '';
-                for (i = 0; i < data.length; i++) {
-                    str_in += arguments.callee(templet, data[i]);
+            /**
+             * 创建参数列表
+             * @method _buildParam
+             * @private
+             */
+            _buildParam: function(o) {
+                var self = this;
+                if (o === undefined || o === null) {
+                    o = { };
                 }
-                templet = str_in;
-            } else {
-                value_s = templet.match(/{\$(.*?)}/g);
-                if (data !== undefined && value_s !== null) {
-                    for (i = 0,m = value_s.length; i < m; i++) {
-                        par = value_s[i].replace(/({\$)|}/g, '');
-                        value = (data[par] !== undefined) ? data[par] : '';
-                        templet = templet.replace(value_s[i], value);
+
+                function setParam(def, key) {
+                    var v = o[key];
+                    // null在这里是“占位符”，用来清除参数的一个道具
+                    self[key] = (v === undefined || v === null) ? def : v;
+                }
+
+                //这种处理方式不错
+                S.each({
+                        date:        new Date(),
+                        startDay:    0,
+                        pages:       1,
+                        closable:    false,
+                        rangeSelect: false,
+                        minDate:     false,
+                        maxDate:     false,
+                        multiSelect: false,
+                        navigator:   true,
+                        popup:       false,
+                        showTime:    false,
+                        triggerType: ['click']
+                    }, setParam);
+
+                // 支持用户传进来一个string
+                if (typeof o.triggerType === 'string') {
+                    o.triggerType = [o.triggerType];
+                }
+
+                setParam(self.date, 'selected');
+                if (o.startDay) {
+                    self.startDay = (7 - o.startDay) % 7;
+                }
+
+                if (o.range !== undefined && o.range !== null) {
+                    var s = self._showdate(1, new Date(o.range.start.getFullYear() + '/' + (o.range.start.getMonth() + 1) + '/' + (o.range.start.getDate())));
+                    var e = self._showdate(1, new Date(o.range.end.getFullYear() + '/' + (o.range.end.getMonth() + 1) + '/' + (o.range.end.getDate())));
+                    self.range = {
+                        start:s,
+                        end:e
+                    };
+                } else {
+                    self.range = {
+                        start:null,
+                        end:null
+                    };
+                }
+                self.EV = [];
+                return this;
+            },
+
+            /**
+             * 过滤参数列表
+             * @method _parseParam
+             * @private
+             */
+            _parseParam: function(o) {
+                var self = this,i;
+                if (o === undefined || o === null) {
+                    o = {};
+                }
+                for (i in o) {
+                    self[i] = o[i];
+                }
+                self._handleDate();
+                return this;
+            },
+
+            /**
+             * 模板函数
+             * @method _templetShow
+             * @private
+             */
+            _templetShow: function(templet, data) {
+                var str_in,value_s,i,m,value,par;
+                if (data instanceof Array) {
+                    str_in = '';
+                    for (i = 0; i < data.length; i++) {
+                        str_in += arguments.callee(templet, data[i]);
+                    }
+                    templet = str_in;
+                } else {
+                    value_s = templet.match(/{\$(.*?)}/g);
+                    if (data !== undefined && value_s !== null) {
+                        for (i = 0,m = value_s.length; i < m; i++) {
+                            par = value_s[i].replace(/({\$)|}/g, '');
+                            value = (data[par] !== undefined) ? data[par] : '';
+                            templet = templet.replace(value_s[i], value);
+                        }
                     }
                 }
-            }
-            return templet;
-        },
+                return templet;
+            },
 
-        /**
-         * 处理日期
-         * @method _handleDate
-         * @private
-         */
-        _handleDate: function() {
-            var self = this,
-                date = self.date;
-            self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
-            self.day = date.getDate();//几号
-            self.month = date.getMonth();//月份
-            self.year = date.getFullYear();//年份
-            return this;
-        },
+            /**
+             * 处理日期
+             * @method _handleDate
+             * @private
+             */
+            _handleDate: function() {
+                var self = this,
+                    date = self.date;
+                self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
+                self.day = date.getDate();//几号
+                self.month = date.getMonth();//月份
+                self.year = date.getFullYear();//年份
+                return this;
+            },
 
-        //get标题
-        _getHeadStr: function(year, month) {
-            return year.toString() + '年' + (Number(month) + 1).toString() + '月';
-        },
+            //get标题
+            _getHeadStr: function(year, month) {
+                return year.toString() + '年' + (Number(month) + 1).toString() + '月';
+            },
 
-        //月加
-        _monthAdd: function() {
-            var self = this;
-            if (self.month == 11) {
-                self.year++;
-                self.month = 0;
-            } else {
-                self.month++;
-            }
-            self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
-            return this;
-        },
-
-        //月减
-        _monthMinus: function() {
-            var self = this;
-            if (self.month === 0) {
-                self.year--;
-                self.month = 11;
-            } else {
-                self.month--;
-            }
-            self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
-            return this;
-        },
-
-        //裸算下一个月的年月,[2009,11],年:fullYear，月:从0开始计数
-        _computeNextMonth: function(a) {
-            var _year = a[0],
-                _month = a[1];
-            if (_month == 11) {
-                _year++;
-                _month = 0;
-            } else {
-                _month++;
-            }
-            return [_year,_month];
-        },
-
-        //处理日期的偏移量
-        _handleOffset: function() {
-            var self = this,
-                data = ['日','一','二','三','四','五','六'],
-                temp = '<span>{$day}</span>',
-                offset = self.startDay,
-                day_html = '',
-                a = [];
-            for (var i = 0; i < 7; i++) {
-                a[i] = {
-                    day:data[(i - offset + 7) % 7]
-                };
-            }
-            day_html = self._templetShow(temp, a);
-
-            return {
-                day_html:day_html
-            };
-        },
-
-        //处理起始日期,d:Date类型
-        _handleRange: function(d) {
-            var self = this,t;
-            if ((self.range.start === null && self.range.end === null ) || (self.range.start !== null && self.range.end !== null)) {
-                self.range.start = d;
-                self.range.end = null;
-                self.render();
-            } else if (self.range.start !== null && self.range.end === null) {
-                self.range.end = d;
-                if (self.range.start.getTime() > self.range.end.getTime()) {
-                    t = self.range.start;
-                    self.range.start = self.range.end;
-                    self.range.end = t;
+            //月加
+            _monthAdd: function() {
+                var self = this;
+                if (self.month == 11) {
+                    self.year++;
+                    self.month = 0;
+                } else {
+                    self.month++;
                 }
-                self.fire('rangeSelect', self.range);
-                self.render();
+                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+                return this;
+            },
+
+            //月减
+            _monthMinus: function() {
+                var self = this;
+                if (self.month === 0) {
+                    self.year--;
+                    self.month = 11;
+                } else {
+                    self.month--;
+                }
+                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+                return this;
+            },
+
+            //裸算下一个月的年月,[2009,11],年:fullYear，月:从0开始计数
+            _computeNextMonth: function(a) {
+                var _year = a[0],
+                    _month = a[1];
+                if (_month == 11) {
+                    _year++;
+                    _month = 0;
+                } else {
+                    _month++;
+                }
+                return [_year,_month];
+            },
+
+            //处理日期的偏移量
+            _handleOffset: function() {
+                var self = this,
+                    data = ['日','一','二','三','四','五','六'],
+                    temp = '<span>{$day}</span>',
+                    offset = self.startDay,
+                    day_html = '',
+                    a = [];
+                for (var i = 0; i < 7; i++) {
+                    a[i] = {
+                        day:data[(i - offset + 7) % 7]
+                    };
+                }
+                day_html = self._templetShow(temp, a);
+
+                return {
+                    day_html:day_html
+                };
+            },
+
+            //处理起始日期,d:Date类型
+            _handleRange: function(d) {
+                var self = this,t;
+                if ((self.range.start === null && self.range.end === null ) || (self.range.start !== null && self.range.end !== null)) {
+                    self.range.start = d;
+                    self.range.end = null;
+                    self.render();
+                } else if (self.range.start !== null && self.range.end === null) {
+                    self.range.end = d;
+                    if (self.range.start.getTime() > self.range.end.getTime()) {
+                        t = self.range.start;
+                        self.range.start = self.range.end;
+                        self.range.end = t;
+                    }
+                    self.fire('rangeSelect', self.range);
+                    self.render();
+                }
+                return this;
             }
-            return this;
-        }
-    });
+        });
 
     return Calendar;
 }, { requires: ['node',"event"] });
@@ -19416,8 +19565,8 @@ KISSY.add('calendar/date', function(S) {
  * @module     日历
  * @creator  拔赤<lijing00333@163.com>
  */
-KISSY.add('calendar/page', function(S, UA, N, Calendar) {
-    var Node = S.require("node/node");
+KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
+
     S.augment(Calendar, {
 
         Page: function(config, father) {
@@ -19807,8 +19956,8 @@ KISSY.add('calendar/page', function(S, UA, N, Calendar) {
  * @module     日历
  * @creator  拔赤<lijing00333@163.com>
  */
-KISSY.add('calendar/time', function(S, N,Calendar) {
-    var Node=S.require("node/node");
+KISSY.add('calendar/time', function(S, Node,Calendar) {
+
     S.augment(Calendar, {
 
         /**
@@ -20343,6 +20492,9 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
             var el = this.get("el");
             el.attr("role", "menu");
             el.attr("aria-haspopup", true);
+            if (!el.attr("id")) {
+                el.attr("id", S.guid("ks-menu"));
+            }
         },
 
 
@@ -20428,10 +20580,10 @@ KISSY.add(
                         || menu.get("view").get("el")[0] == ev.relatedTarget[0]
                         )
                     ) {
-                    S.log("submenuitem highlighted unchanged");
+                    //S.log("submenuitem highlighted unchanged");
                     return;
                 }
-                S.log("submenuitem highlighted changed !!!!!!!!!!");
+                //S.log("submenuitem highlighted changed !!!!!!!!!!");
                 this.set("highlighted", false);
             },
 
@@ -20493,6 +20645,14 @@ KISSY.add(
                 var menu = this.get("menu");
                 menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
                 menu.render();
+                /**
+                 * If activation of your menuitem produces a popup menu,
+                 then the menuitem should have aria-haspopup set to the ID of the corresponding menu
+                 to allow the assistive technology to follow the menu hierarchy
+                 and assist the user in determining context during menu navigation.
+                 */
+                this.get("view").get("el").attr("aria-haspopup",
+                    menu.get("view").get("el").attr("id"));
                 menu.show();
             },
 
@@ -20566,7 +20726,11 @@ KISSY.add(
         return SubMenu;
     }, {
     requires:['uibase','component','./menuitem','./submenurender']
-});/**
+});
+
+/**
+
+ **//**
  * submenu render for kissy ,extend menuitem render with arrow
  * @author:yiminghe@gmail.com
  */
@@ -20901,6 +21065,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender)
                     points:["bl","tl"]
                 });
                 menu.render();
+                el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 menu.show();
                 view.set("collapsed", false);
             }

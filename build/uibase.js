@@ -7,7 +7,7 @@ build time: ${build.time}
  * UIBase.Align
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('uibase/align', function(S, DOM) {
+KISSY.add('uibase/align', function(S, DOM,Node) {
 
 
     function Align() {
@@ -42,7 +42,6 @@ KISSY.add('uibase/align', function(S, DOM) {
      * @param align
      */
     function getAlignOffset(node, align) {
-        var Node = S.require("node/node");
         var V = align.charAt(0),
             H = align.charAt(1),
             offset, w, h, x, y;
@@ -132,23 +131,25 @@ KISSY.add('uibase/align', function(S, DOM) {
 
     return Align;
 }, {
-        requires:["dom"]
+        requires:["dom","node"]
     });
 /**
  * @module  UIBase
  * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
  */
-KISSY.add('uibase/base', function (S, Base) {
+KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        Node = S.require("node/node"),
-        Attribute = S.require("base/attribute"),
-        capitalFirst = Attribute.__capitalFirst,
         noop = function() {
         };
+
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
 
     /*
      * UIBase for class-based component
@@ -302,79 +303,79 @@ KISSY.add('uibase/base', function (S, Base) {
 
     S.extend(UIBase, Base, {
 
-        render: function() {
-            var self = this;
-            if (!self.get("rendered")) {
-                self._renderUI();
-                self.fire('renderUI');
-                callMethodByHierarchy(self, "renderUI", "__renderUI");
-                self.fire('afterRenderUI');
-                self._bindUI();
-                self.fire('bindUI');
-                callMethodByHierarchy(self, "bindUI", "__bindUI");
-                self.fire('afterBindUI');
-                self._syncUI();
-                self.fire('syncUI');
-                callMethodByHierarchy(self, "syncUI", "__syncUI");
-                self.fire('afterSyncUI');
-                self.set("rendered", true);
-            }
-        },
+            render: function() {
+                var self = this;
+                if (!self.get("rendered")) {
+                    self._renderUI();
+                    self.fire('renderUI');
+                    callMethodByHierarchy(self, "renderUI", "__renderUI");
+                    self.fire('afterRenderUI');
+                    self._bindUI();
+                    self.fire('bindUI');
+                    callMethodByHierarchy(self, "bindUI", "__bindUI");
+                    self.fire('afterBindUI');
+                    self._syncUI();
+                    self.fire('syncUI');
+                    callMethodByHierarchy(self, "syncUI", "__syncUI");
+                    self.fire('afterSyncUI');
+                    self.set("rendered", true);
+                }
+            },
 
-        /**
-         * 根据属性添加 DOM 节点
-         */
-        _renderUI: noop,
-        renderUI: noop,
+            /**
+             * 根据属性添加 DOM 节点
+             */
+            _renderUI: noop,
+            renderUI: noop,
 
-        /**
-         * 根据属性变化设置 UI
-         */
-        _bindUI: function() {
-            var self = this,
-                attrs = self.__attrs,
-                attr, m;
+            /**
+             * 根据属性变化设置 UI
+             */
+            _bindUI: function() {
+                var self = this,
+                    attrs = self.__attrs,
+                    attr, m;
 
-            for (attr in attrs) {
-                if (attrs.hasOwnProperty(attr)) {
-                    m = UI_SET + capitalFirst(attr);
-                    if (self[m]) {
-                        // 自动绑定事件到对应函数
-                        (function(attr, m) {
-                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
-                                self[m](ev.newVal, ev);
-                            });
-                        })(attr, m);
+                for (attr in attrs) {
+                    if (attrs.hasOwnProperty(attr)) {
+                        m = UI_SET + capitalFirst(attr);
+                        if (self[m]) {
+                            // 自动绑定事件到对应函数
+                            (function(attr, m) {
+                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                    self[m](ev.newVal, ev);
+                                });
+                            })(attr, m);
+                        }
                     }
                 }
-            }
-        },
-        bindUI: noop,
+            },
+            bindUI: noop,
 
-        /**
-         * 根据当前（初始化）状态来设置 UI
-         */
-        _syncUI: function() {
-            var self = this,
-                attrs = self.__getDefAttrs();
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m] && self.get(a) !== undefined) {
-                        self[m](self.get(a));
+            /**
+             * 根据当前（初始化）状态来设置 UI
+             */
+            _syncUI: function() {
+                var self = this,
+                    attrs = self.__getDefAttrs();
+                for (var a in attrs) {
+                    if (attrs.hasOwnProperty(a)) {
+                        var m = UI_SET + capitalFirst(a);
+                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if (self[m] && self.get(a) !== undefined) {
+                            self[m](self.get(a));
+                        }
                     }
                 }
-            }
-        },
-        syncUI: noop,
+            },
+            syncUI: noop,
 
-        destroy: function() {
-            destroyHierarchy(this);
-            this.fire('destroy');
-            this.detach();
-        }
-    });
+            destroy: function() {
+                destroyHierarchy(this);
+                this.fire('destroy');
+                this.detach();
+            }
+        });
 
     /**
      * 根据基类以及扩展类得到新类
@@ -439,8 +440,8 @@ KISSY.add('uibase/base', function (S, Base) {
 
     return UIBase;
 }, {
-    requires:["base","dom","node"]
-});
+        requires:["base","dom","node"]
+    });
 /**
  * UIBase.Box
  * @author: 承玉<yiminghe@gmail.com>
@@ -501,8 +502,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     Box.ATTRS = {
         el: {
             //容器元素
-            setter:function(v) {
-                var Node = S.require("node/node");
+            setter:function(v) {               
                 if (S.isString(v))
                     return Node.one(v);
             }
@@ -679,7 +679,7 @@ KISSY.add("uibase/close", function(S) {
  * close extension for kissy dialog
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/closerender", function(S) {
+KISSY.add("uibase/closerender", function(S,Node) {
 
     var CLS_PREFIX = 'ext-';
 
@@ -713,7 +713,6 @@ KISSY.add("uibase/closerender", function(S) {
             }
         },
         __renderUI:function() {
-            var Node = S.require("node/node");
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("contentEl");
@@ -742,12 +741,13 @@ KISSY.add("uibase/closerender", function(S) {
     };
     return Close;
 
-});/**
+},{
+        requires:["node"]
+    });/**
  * constrain extension for kissy
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("uibase/constrain", function(S, DOM) {
-    var Node = S.require("node/node");
+KISSY.add("uibase/constrain", function(S, DOM,Node) {
 
     function Constrain() {
 
@@ -1103,7 +1103,7 @@ KISSY.add("uibase/mask", function(S) {
  * mask extension for kissy
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/maskrender", function(S) {
+KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -1114,7 +1114,6 @@ KISSY.add("uibase/maskrender", function(S) {
 
 
     function initMask() {
-        var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
         mask = new Node("<div " +
             //"tabindex='-1' " +
             "class='" +
@@ -1196,7 +1195,7 @@ KISSY.add("uibase/maskrender", function(S) {
     };
 
     return Mask;
-}, {requires:["ua"]});/**
+}, {requires:["ua","dom","node"]});/**
  * position and visible extension，可定位的隐藏层
  * @author: 承玉<yiminghe@gmail.com>
  */
@@ -1402,7 +1401,7 @@ KISSY.add("uibase/positionrender", function() {
  * shim for ie6 ,require box-ext
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/shimrender", function(S) {
+KISSY.add("uibase/shimrender", function(S, Node) {
 
     function Shim() {
         //S.log("shim init");
@@ -1417,7 +1416,6 @@ KISSY.add("uibase/shimrender", function(S) {
     Shim.prototype = {
 
         _uiSetShim:function(v) {
-            var Node = S.require("node/node");
             var self = this,el = self.get("el");
             if (v && !self.__shimEl) {
                 self.__shimEl = new Node("<" + "iframe style='position: absolute;" +
@@ -1437,7 +1435,9 @@ KISSY.add("uibase/shimrender", function(S) {
         }
     };
     return Shim;
-});/**
+}, {
+        requires:['node']
+    });/**
  * support standard mod for component
  * @author: 承玉<yiminghe@gmail.com>
  */

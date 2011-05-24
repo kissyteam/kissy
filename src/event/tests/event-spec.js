@@ -3,7 +3,7 @@
  * @author  gonghao<gonghao@ghsky.com>
  */
 KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
-    var EventTarget = S.require("event/target"),
+    var EventTarget =Event.Target,
         Node = N,NodeList = N.List;
     describe('event', function() {
 

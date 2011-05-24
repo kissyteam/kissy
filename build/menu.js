@@ -294,6 +294,9 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
             var el = this.get("el");
             el.attr("role", "menu");
             el.attr("aria-haspopup", true);
+            if (!el.attr("id")) {
+                el.attr("id", S.guid("ks-menu"));
+            }
         },
 
 
@@ -379,10 +382,10 @@ KISSY.add(
                         || menu.get("view").get("el")[0] == ev.relatedTarget[0]
                         )
                     ) {
-                    S.log("submenuitem highlighted unchanged");
+                    //S.log("submenuitem highlighted unchanged");
                     return;
                 }
-                S.log("submenuitem highlighted changed !!!!!!!!!!");
+                //S.log("submenuitem highlighted changed !!!!!!!!!!");
                 this.set("highlighted", false);
             },
 
@@ -444,6 +447,14 @@ KISSY.add(
                 var menu = this.get("menu");
                 menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
                 menu.render();
+                /**
+                 * If activation of your menuitem produces a popup menu,
+                 then the menuitem should have aria-haspopup set to the ID of the corresponding menu
+                 to allow the assistive technology to follow the menu hierarchy
+                 and assist the user in determining context during menu navigation.
+                 */
+                this.get("view").get("el").attr("aria-haspopup",
+                    menu.get("view").get("el").attr("id"));
                 menu.show();
             },
 
@@ -517,7 +528,11 @@ KISSY.add(
         return SubMenu;
     }, {
     requires:['uibase','component','./menuitem','./submenurender']
-});/**
+});
+
+/**
+
+ **//**
  * submenu render for kissy ,extend menuitem render with arrow
  * @author:yiminghe@gmail.com
  */

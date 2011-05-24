@@ -58,9 +58,9 @@ KISSY.use("dom", function(S, DOM) {
 
         describe("getter/setter", function() {
 
-            // kissy 里，对不存在的属性，统一返回 undefined
-            it("should return undefined when get no-exist attribute", function() {
-                expect(DOM.attr("a", "no-exist")).toBeUndefined();
+            // kissy 里，对不存在的属性，统一返回 null
+            it("should return null when get no-exist attribute", function() {
+                expect(DOM.attr("a", "no-exist")).toBe(null)
             });
 
             it("should return correctly for readonly, checked, selected", function() {
@@ -168,7 +168,7 @@ KISSY.use("dom", function(S, DOM) {
                 DOM.attr(label, 'test-remove', 'xx');
                 expect(DOM.attr(label, 'test-remove')).toBe('xx');
                 DOM.removeAttr(label, 'test-remove');
-                expect(DOM.attr(label, 'test-remove')).toBe(undefined);
+                expect(DOM.attr(label, 'test-remove')).toBe(null);
 
                 // style
                 DOM.removeAttr(a, 'style');

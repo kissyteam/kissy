@@ -31,6 +31,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender)
                     points:["bl","tl"]
                 });
                 menu.render();
+                el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 menu.show();
                 view.set("collapsed", false);
             }

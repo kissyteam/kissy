@@ -121,7 +121,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                     // only get attributes on element nodes
                     if (!isElementNode(el)) {
-                        return undefined;
+                        return null;
                     }
                     if (attrNormalizer && attrNormalizer.getter) {
                         return attrNormalizer.getter(el);
@@ -151,8 +151,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         }
                     }
 
-                    // 对于不存在的属性，统一返回 undefined
-                    return ret === null ? undefined : ret;
+                    /**
+                     * undefined 会形成链状，so 不能
+                     */
+                    return ret === undefined ? null : ret;
                 } else {
 
                     // setter
@@ -217,7 +219,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                     // only gets value on element nodes
                     if (!isElementNode(el)) {
-                        return undefined;
+                        return null;
                     }
 
                     // 当没有设定 value 时，标准浏览器 option.value === option.text
@@ -299,6 +301,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     else if (isTextNode(el)) {
                         return el.nodeValue;
                     }
+                    //prevent chain in Node
+                    return null;
                 }
                 // setter
                 else {

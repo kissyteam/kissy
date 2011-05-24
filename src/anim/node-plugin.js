@@ -4,8 +4,8 @@
  */
 KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
-    var NP = S.require("node/node").prototype,
-        NLP = S.require("node/nodelist").prototype,
+    var NP = N.prototype,
+        NLP = N.List.prototype,
         DISPLAY = 'display', NONE = 'none',
         OVERFLOW = 'overflow', HIDDEN = 'hidden',
         OPCACITY = 'opacity',
@@ -34,14 +34,14 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
         };
 
         S.each({
-            show: ['show', 1],
-            hide: ['show', 0],
-            toggle: ['toggle'],
-            fadeIn: ['fade', 1],
-            fadeOut: ['fade', 0],
-            slideDown: ['slide', 1],
-            slideUp: ['slide', 0]
-        },
+                show: ['show', 1],
+                hide: ['show', 0],
+                toggle: ['toggle'],
+                fadeIn: ['fade', 1],
+                fadeOut: ['fade', 0],
+                slideDown: ['slide', 1],
+                slideUp: ['slide', 0]
+            },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -49,7 +49,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
                     self.__anims = self.__anims || [];
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && arguments.length === 0) {
-                        DOM[k](this);
+                        DOM[k](this.getDOMNode ? this.getDOMNode() : this);
                     }
                     else {
                         S.each(this, function(elem) {
@@ -141,8 +141,8 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-    requires:["dom","anim/base","node"]
-});
+        requires:["dom","anim/base","node"]
+    });
 /**
  * 2011-05-17
  *

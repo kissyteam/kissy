@@ -5,7 +5,7 @@
 KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     var DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        EventTarget = S.require("event/target"),
+        EventTarget = Event.Target,
         FORWARD = 'forward', BACKWARD = 'backward',
         DOT = '.',
 

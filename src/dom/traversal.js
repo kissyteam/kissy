@@ -73,6 +73,16 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
                 }
 
                 return ret;
+            },
+
+            equals:function(n1, n2) {
+                n1 = S.query(n1);
+                n2 = S.query(n2);
+                if (n1.length != n2.length) return false;
+                for (var i = n1.length; i >= 0; i--) {
+                    if (n1[i] != n2[i]) return false;
+                }
+                return true;
             }
         });
 

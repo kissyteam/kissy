@@ -2,7 +2,7 @@
  * UIBase.Align
  * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('uibase/align', function(S, DOM) {
+KISSY.add('uibase/align', function(S, DOM,Node) {
 
 
     function Align() {
@@ -37,7 +37,6 @@ KISSY.add('uibase/align', function(S, DOM) {
      * @param align
      */
     function getAlignOffset(node, align) {
-        var Node = S.require("node/node");
         var V = align.charAt(0),
             H = align.charAt(1),
             offset, w, h, x, y;
@@ -127,5 +126,5 @@ KISSY.add('uibase/align', function(S, DOM) {
 
     return Align;
 }, {
-        requires:["dom"]
+        requires:["dom","node"]
     });

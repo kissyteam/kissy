@@ -37,13 +37,13 @@ KISSY.use("dom", function(S, DOM) {
             var foo = document.body.appendChild(DOM.create("<div>"))
             DOM.data(foo, 'data', 'val');
             DOM.removeData(foo, 'data');
-            expect(DOM.data(foo, 'data')).toBeUndefined();
-            expect(DOM.data('#foo2')).toBeUndefined();
+            expect(DOM.data(foo, 'data')).toBe(null);
+            expect(DOM.data('#foo2')).toBe(null);
 
             DOM.data(window, 'data', 'val');
             DOM.removeData(window, 'data');
-            expect(DOM.data(window, 'data')).toBeUndefined();
-            expect(DOM.data(window)).toBeUndefined();
+            expect(DOM.data(window, 'data')).toBe(null);
+            expect(DOM.data(window)).toBe(null);
             DOM.remove(foo);
         });
     });

@@ -227,7 +227,7 @@ KISSY.add('template/template', function(S) {
          * @param {String} o extent tag object.
          */
         addStatement: function(statement, o) {
-            if (S['isString'](statement) && S['isObject'](o)) {
+            if (S.isString(statement) && S.isObject(o)) {
                 Statements[statement] = o;
             }
         }

@@ -2,7 +2,7 @@
  * @module  Base
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute) {
+KISSY.add('base/base', function (S, Attribute,Event) {
 
     /*
      * Base for class-based component
@@ -45,8 +45,8 @@ KISSY.add('base/base', function (S, Attribute) {
         }
     }
 
-    S.augment(Base, S.require("event/target"), Attribute);
+    S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-    requires:["base/attribute","event"]
+    requires:["./attribute","event"]
 });

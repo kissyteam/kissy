@@ -2,17 +2,19 @@
  * @module  UIBase
  * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
  */
-KISSY.add('uibase/base', function (S, Base) {
+KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        Node = S.require("node/node"),
-        Attribute = S.require("base/attribute"),
-        capitalFirst = Attribute.__capitalFirst,
         noop = function() {
         };
+
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
 
     /*
      * UIBase for class-based component
@@ -166,79 +168,79 @@ KISSY.add('uibase/base', function (S, Base) {
 
     S.extend(UIBase, Base, {
 
-        render: function() {
-            var self = this;
-            if (!self.get("rendered")) {
-                self._renderUI();
-                self.fire('renderUI');
-                callMethodByHierarchy(self, "renderUI", "__renderUI");
-                self.fire('afterRenderUI');
-                self._bindUI();
-                self.fire('bindUI');
-                callMethodByHierarchy(self, "bindUI", "__bindUI");
-                self.fire('afterBindUI');
-                self._syncUI();
-                self.fire('syncUI');
-                callMethodByHierarchy(self, "syncUI", "__syncUI");
-                self.fire('afterSyncUI');
-                self.set("rendered", true);
-            }
-        },
+            render: function() {
+                var self = this;
+                if (!self.get("rendered")) {
+                    self._renderUI();
+                    self.fire('renderUI');
+                    callMethodByHierarchy(self, "renderUI", "__renderUI");
+                    self.fire('afterRenderUI');
+                    self._bindUI();
+                    self.fire('bindUI');
+                    callMethodByHierarchy(self, "bindUI", "__bindUI");
+                    self.fire('afterBindUI');
+                    self._syncUI();
+                    self.fire('syncUI');
+                    callMethodByHierarchy(self, "syncUI", "__syncUI");
+                    self.fire('afterSyncUI');
+                    self.set("rendered", true);
+                }
+            },
 
-        /**
-         * 根据属性添加 DOM 节点
-         */
-        _renderUI: noop,
-        renderUI: noop,
+            /**
+             * 根据属性添加 DOM 节点
+             */
+            _renderUI: noop,
+            renderUI: noop,
 
-        /**
-         * 根据属性变化设置 UI
-         */
-        _bindUI: function() {
-            var self = this,
-                attrs = self.__attrs,
-                attr, m;
+            /**
+             * 根据属性变化设置 UI
+             */
+            _bindUI: function() {
+                var self = this,
+                    attrs = self.__attrs,
+                    attr, m;
 
-            for (attr in attrs) {
-                if (attrs.hasOwnProperty(attr)) {
-                    m = UI_SET + capitalFirst(attr);
-                    if (self[m]) {
-                        // 自动绑定事件到对应函数
-                        (function(attr, m) {
-                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
-                                self[m](ev.newVal, ev);
-                            });
-                        })(attr, m);
+                for (attr in attrs) {
+                    if (attrs.hasOwnProperty(attr)) {
+                        m = UI_SET + capitalFirst(attr);
+                        if (self[m]) {
+                            // 自动绑定事件到对应函数
+                            (function(attr, m) {
+                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                    self[m](ev.newVal, ev);
+                                });
+                            })(attr, m);
+                        }
                     }
                 }
-            }
-        },
-        bindUI: noop,
+            },
+            bindUI: noop,
 
-        /**
-         * 根据当前（初始化）状态来设置 UI
-         */
-        _syncUI: function() {
-            var self = this,
-                attrs = self.__getDefAttrs();
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m] && self.get(a) !== undefined) {
-                        self[m](self.get(a));
+            /**
+             * 根据当前（初始化）状态来设置 UI
+             */
+            _syncUI: function() {
+                var self = this,
+                    attrs = self.__getDefAttrs();
+                for (var a in attrs) {
+                    if (attrs.hasOwnProperty(a)) {
+                        var m = UI_SET + capitalFirst(a);
+                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if (self[m] && self.get(a) !== undefined) {
+                            self[m](self.get(a));
+                        }
                     }
                 }
-            }
-        },
-        syncUI: noop,
+            },
+            syncUI: noop,
 
-        destroy: function() {
-            destroyHierarchy(this);
-            this.fire('destroy');
-            this.detach();
-        }
-    });
+            destroy: function() {
+                destroyHierarchy(this);
+                this.fire('destroy');
+                this.detach();
+            }
+        });
 
     /**
      * 根据基类以及扩展类得到新类
@@ -303,5 +305,5 @@ KISSY.add('uibase/base', function (S, Base) {
 
     return UIBase;
 }, {
-    requires:["base","dom","node"]
-});
+        requires:["base","dom","node"]
+    });

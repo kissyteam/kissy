@@ -111,8 +111,7 @@
 <script src="base.js"></script>
 <script src="../resizable.js"></script>
 <script>
-    KISSY.use("node,resizable", function(S, N, Resizable) {
-        var Node = S.require("node/node");
+    KISSY.use("node,resizable", function(S, Node, Resizable) {
 
         S.ready(function(S) {
             var r = new Resizable({

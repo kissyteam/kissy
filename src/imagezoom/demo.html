@@ -44,7 +44,7 @@
         position: relative;
         width: 310px;
         height: 310px;
-        border: 1px solid grey;
+        border: 1px solid gray;
     }
 
     .ks-imagezoom-icon {
@@ -83,7 +83,7 @@
 <style>
     #imgList img {
         cursor: pointer;
-        border: 1px solid grey;
+        border: 1px solid gray;
         padding: 4px;
     }
 </style>
@@ -140,9 +140,8 @@
 
 
 <script>
-    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event) {
-        var NodeList = S.require("node/nodelist"),
-                Node = S.require("node/node"),
+    KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event,Node) {
+        var NodeList =Node.List,
                 SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
 
         NodeList.all('p.code-switch').each(function(p) {

@@ -74,8 +74,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             events = cache[id].events;
             if (!events[type]) {
                 isNativeEventTarget = !target.isCustomEventTarget;
-                special = ((isNativeEventTarget || target._supportSpecialEvent)
-                    && Event.special[type]) || { };
+                special = (isNativeEventTarget && Event.special[type]) || { };
 
                 eventHandle = function(event, eventData) {
                     if (!event || !event.fixed) {
@@ -147,8 +146,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 j,
                 t,
                 isNativeEventTarget = !target.isCustomEventTarget,
-                special = ((isNativeEventTarget || target._supportSpecialEvent)
-                    && Event.special[type]) || { };
+                special = (isNativeEventTarget && Event.special[type]) || { };
 
 
             if (events === undefined) return;
@@ -357,10 +355,6 @@ KISSY.add('event/mouseenter', function(S, Event,DOM, UA) {
                 },
 
                 handle: function(el, event) {
-                    // 保证 el 为原生 DOMNode
-                    if (DOM._isKSNode(el)) {
-                        el = el[0];
-                    }
 
                     // Check if mouse(over|out) are still within the same parent element
                     var parent = event.relatedTarget;

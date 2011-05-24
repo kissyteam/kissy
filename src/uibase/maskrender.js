@@ -2,7 +2,7 @@
  * mask extension for kissy
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/maskrender", function(S) {
+KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -13,7 +13,6 @@ KISSY.add("uibase/maskrender", function(S) {
 
 
     function initMask() {
-        var UA = S.require("ua"),Node = S.require("node/node"),DOM = S.require("dom");
         mask = new Node("<div " +
             //"tabindex='-1' " +
             "class='" +
@@ -95,4 +94,4 @@ KISSY.add("uibase/maskrender", function(S) {
     };
 
     return Mask;
-}, {requires:["ua"]});
+}, {requires:["ua","dom","node"]});

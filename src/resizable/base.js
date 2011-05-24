@@ -3,10 +3,9 @@
  * @author: 承玉<yiminghe@gmail.com>
  * @requires: dd
  */
-KISSY.add("resizable/base", function(S, N, D, UIBase) {
+KISSY.add("resizable/base", function(S, Node, D, UIBase) {
 
-    var Draggable = S.require("dd/draggable"),
-        Node = S.require("node/node"),
+    var Draggable = D.Draggable,
         CLS_PREFIX = "ke-resizehandler";
 
     var hcNormal = {

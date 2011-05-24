@@ -2,8 +2,8 @@
  * @module     日历
  * @creator  拔赤<lijing00333@163.com>
  */
-KISSY.add('calendar/page', function(S, UA, N, Calendar) {
-    var Node = S.require("node/node");
+KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
+
     S.augment(Calendar, {
 
         Page: function(config, father) {

@@ -23,7 +23,6 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         CLIENT = 'client',
         LEFT = 'left',
         TOP = 'top',
-        SCROLL_TO = 'scrollTo',
         SCROLL_LEFT = SCROLL + 'Left',
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
@@ -54,7 +53,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
              *        http://yiminghe.javaeye.com/blog/390732
              */
             scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]){
+                    return;
+                }
 
                 hscroll = hscroll === undefined ? true : !!hscroll;
                 top = top === undefined ? true : !!top;
@@ -64,7 +65,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                     // 注意：
                     // 1. Opera 不支持 top 参数
                     // 2. 当 container 已经在视窗中时，也会重新定位
-                    return elem.scrollIntoView(top);
+                    elem.scrollIntoView(top);
+                    return;
                 }
                 container = DOM.get(container);
 
@@ -132,7 +134,14 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 // go
                 DOM[SCROLL_TOP](container, t2);
                 DOM[SCROLL_LEFT](container, l2);
-            }
+            },
+            /**
+             * for idea autocomplete
+             */
+            docWidth:0,
+            docHeight:0,
+            viewportHeight:0,
+            viewportWidth:0
         });
 
     // add ScrollLeft/ScrollTop getter/setter methods
@@ -161,7 +170,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             } else if (isElementNode((elem = DOM.get(elem)))) {
                 ret = v !== undefined ? elem[method] = v : elem[method];
             }
-            return ret;
+            return v === undefined ? ret : undefined;
         }
     });
 
@@ -226,10 +235,18 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-        requires:["dom/base","ua"]
+        requires:["./base","ua"]
     });
 
 /**
+ * 2011-05-24
+ *  - 承玉：
+ *  - 调整 docWidth , docHeight ,
+ *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+ *      便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+ *
+ *
+ *
  * TODO:
  *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
  *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）

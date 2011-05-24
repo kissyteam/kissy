@@ -90,9 +90,6 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
      */
     var IE8 = UA['ie'] == 8,
         BORDER_MAP = {
-            thin: IE8 ? '1px' : '2px',
-            medium: IE8 ? '3px' : '4px',
-            thick:IE8 ? '5px' : '6px'
         },
         BORDERS = ["","Top","Left","Right","Bottom"],
         BORDER_FIX = {
@@ -111,6 +108,9 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                 return current;
             }
         };
+    BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
+    BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
+    BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
     S.each(BORDERS, function(b) {
         CUSTOM_STYLES["border" + b + "Width"] = BORDER_FIX;
     });

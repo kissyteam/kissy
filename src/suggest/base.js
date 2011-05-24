@@ -6,7 +6,7 @@
 KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 
     var win = window,
-        EventTarget = S.require("event/target"),
+        EventTarget = Event.Target,
         doc = document, bd, head = DOM.get('head'),
         ie = UA['ie'],
         ie6 = (ie === 6),

@@ -14,6 +14,8 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [!] DOM 参数中不可以传入 KISSY Node 或 KISSY NodeList 类型
+ - [!] DOM 所有读操作如果返回 undefined 现在返回 null
  - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
  - [*] ie: dom opacity bug fix , border-width 数值归一化
  - [*] anim 提高性能，不重复 touch dom / css

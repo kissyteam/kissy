@@ -58,6 +58,10 @@ KISSY.add("node/base", function(S, DOM) {
 
     // query api
     Node.one = function(selector, context) {
+        // return if node
+        if (selector.getDOMNode) {
+            return selector;
+        }
         var elem = DOM.get(selector, context);
         return elem ? new Node(elem, undefined, undefined) : null;
     };
@@ -131,6 +135,12 @@ KISSY.add("node/base", function(S, DOM) {
 
     // query api
     NodeList.all = function(selector, context) {
+        // return if node or nodelist
+        if (selector.getDOMNode) {
+            return new NodeList(selector);
+        } else if (selector.getDOMNodes) {
+            return selector;
+        }
         return new NodeList(DOM.query(selector, context, true));
     };
 

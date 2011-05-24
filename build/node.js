@@ -18,13 +18,13 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
         // 链式操作
         if (val === undefined) {
             val = node;
+        } else if (val === null) {
+            val = null;
         } else if (val.nodeType
             && !val.getDOMNode) {
             // 包装为 KISSY Node
             val = new Node(val);
-        } else if (val === null) {
-            val = null;
-        } else if (val.item
+        } else if (!val.getDOMNodes
             && val[0]
             && val[0].nodeType
             && !val[0].getDOMNode) {
@@ -45,17 +45,20 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
 
     Node.addMethod = function(name, fn, context) {
         NP[name] = function() {
+            //里面不要修改 context ,fn,name 会影响所有 ....
             var el = this[0],args = S.makeArray(arguments);
             args = scrubNodes(args);
             args.unshift(el);
-            var ret = fn.apply(context, args);
-            return normalize(ret,this);
+            var ctx = context || this;
+            var ret = fn.apply(ctx, args);
+            return normalize(ret, this);
         }
     };
 
     NodeList.addMethod = function(name, fn, context) {
         NLP[name] = function() {
             var ret = [],args = S.makeArray(arguments);
+            args = scrubNodes(args);
             this.each(function(n) {
                 var ctx = context || n;
                 var r = fn.apply(ctx, args);
@@ -68,14 +71,16 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
     };
 
     //不能添加到 NP 的方法
-    var excludes = ["_isElementNode",
+    var excludes = [
+        "_isElementNode",
         "_getWin",
         "_getComputedStyle",
         "_getComputedStyle",
         "_nodeTypeIs",
         "create",
         "get",
-        "query"];
+        "query"
+    ];
 
     S.each(DOM, function(v, k) {
         if (DOM.hasOwnProperty(k)
@@ -89,6 +94,16 @@ KISSY.add('node/attach', function(S, DOM, Event, Node, undefined) {
 }, {
         requires:["dom","event","./base"]
     });
+
+/**
+ * 2011-05-24
+ *  - 承玉：
+ *  - 将 DOM 中的方法包装成 Node 方法
+ *  - Node 方法调用参数中的 KISSY Node 要转换成 HTML Node
+ *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 Node 对应方法返回 this
+ *  - 实际上可以完全使用 Node 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new Node(document) 获得
+ */
 /**
  * definition for node and nodelist
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
@@ -149,6 +164,10 @@ KISSY.add("node/base", function(S, DOM) {
 
     // query api
     Node.one = function(selector, context) {
+        // return if node
+        if (selector.getDOMNode) {
+            return selector;
+        }
         var elem = DOM.get(selector, context);
         return elem ? new Node(elem, undefined, undefined) : null;
     };
@@ -195,6 +214,7 @@ KISSY.add("node/base", function(S, DOM) {
                 return ret;
             },
 
+
             /**
              * Retrieves the DOMNodes.
              */
@@ -221,6 +241,12 @@ KISSY.add("node/base", function(S, DOM) {
 
     // query api
     NodeList.all = function(selector, context) {
+        // return if node or nodelist
+        if (selector.getDOMNode) {
+            return new NodeList(selector);
+        } else if (selector.getDOMNodes) {
+            return selector;
+        }
         return new NodeList(DOM.query(selector, context, true));
     };
 
@@ -248,51 +274,21 @@ KISSY.add("node/base", function(S, DOM) {
  * overrides methods in Node.prototype and build NodeList.prototype
  * @author : yiminghe@gmail.com
  */
-KISSY.add("node/override", function(S, DOM, Node) {
+KISSY.add("node/override", function(S, DOM, Event, Node) {
 
     var NodeList = Node.List,
         NP = Node.prototype;
-
-    // selector
-    S.mix(NP, {
-            /**
-             * Retrieves a node based on the given CSS selector.
-             */
-            one: function(selector) {
-                return Node.one(selector, this[0]);
-            },
-
-            /**
-             * Retrieves a nodeList based on the given CSS selector.
-             */
-            all: function(selector) {
-                return NodeList.all(selector, this[0]);
-            }
-        });
-
-
     /**
-     * append(node ,parent) : 参数顺序反过来了
-     * appendTo(parent,node) : 才是正常
-     *
+     * Retrieves a node based on the given CSS selector.
      */
-    S.each(['append', 'prepend'], function(insertType) {
-        // append 和 prepend
-        NP[insertType] = function(html) {
-            var domNode;
-            if (S.isString(html)) {
-                domNode = DOM.create(html);
-            } else {
-                var nt = html.nodeType;
-                if (nt == 1 || nt == 3) {
-                    domNode = html;
-                }
-                else if (html.getDOMNode) {
-                    domNode = html[0];
-                }
-            }
-            DOM[insertType](domNode, this[0]);
-        };
+    Node.addMethod("one", function(domNode, selector) {
+        return DOM.get(selector, domNode);
+    });
+    /**
+     * Retrieves a nodeList based on the given CSS selector.
+     */
+    Node.addMethod("all", function(domNode, selector) {
+        return DOM.query(selector, domNode);
     });
 
 
@@ -307,51 +303,91 @@ KISSY.add("node/override", function(S, DOM, Node) {
             });
     }
 
-    S.mix(NP, {
-            fire:null,
-            on:function(type, fn, scope) {
-                var self = this,el = self[0];
 
-                function wrap(ev) {
-                    var args = S.makeArray(arguments);
-                    args.shift();
-                    ev.target = new Node(ev.target);
-                    if (ev.relatedTarget) {
-                        ev.relatedTarget = new Node(ev.relatedTarget);
-                    }
-                    args.unshift(ev);
-                    return fn.apply(scope || self, args);
-                }
+    Node.addMethod("on", function(domNode, type, fn, scope) {
+        var self = this;
 
-                Event.add(el, type, wrap, scope);
-                tagFn(fn, wrap, el);
-                return self;
-            },
-            detach:function(type, fn, scope) {
-                var self = this,el = self[0];
-                if (S.isFunction(fn)) {
-                    var wraps = fn.__wrap || [];
-                    for (var i = wraps.length - 1; i >= 0; i--) {
-                        var w = wraps[i];
-                        if (w.target == el) {
-                            Event.remove(el, type, w.fn, scope);
-                            wraps.splice(i, 1);
-                        }
-                    }
-                } else {
-                    Event.remove(this[0], type, fn, scope);
-                }
-                return self; // chain
+        function wrap(ev) {
+            var args = S.makeArray(arguments);
+            // 防止 args 和 ev 不同步
+            args.shift();
+            ev.target = new Node(ev.target);
+            if (ev.relatedTarget) {
+                ev.relatedTarget = new Node(ev.relatedTarget);
             }
+            args.unshift(ev);
+            return fn.apply(scope || self, args);
+        }
+
+        Event.add(domNode, type, wrap, scope);
+        tagFn(fn, wrap, domNode);
+    });
+
+
+    Node.addMethod("detach", function(domNode, type, fn, scope) {
+        if (S.isFunction(fn)) {
+            var wraps = fn.__wrap || [];
+            for (var i = wraps.length - 1; i >= 0; i--) {
+                var w = wraps[i];
+                if (w.target == domNode) {
+                    Event.remove(domNode, type, w.fn, scope);
+                    wraps.splice(i, 1);
+                }
+            }
+        } else {
+            Event.remove(domNode, type, fn, scope);
+        }
+    });
+
+
+    for (var k in NP) {
+        var v = NP[k];
+        if (NP.hasOwnProperty(k) && S.isFunction(v)) {
+            NodeList.addMethod(k, v);
+        }
+    }
+
+
+    /**
+     * append(node ,parent) : 参数顺序反过来了
+     * appendTo(parent,node) : 才是正常
+     *
+     */
+    S.each(['append', 'prepend'], function(insertType) {
+        // append 和 prepend
+
+        Node.addMethod(insertType, function(domNode, html) {
+            var newNode = html;
+            // 创建
+            if (S.isString(newNode)) {
+                newNode = DOM.create(newNode);
+            }
+            DOM[insertType](newNode, domNode);
         });
 
-
-    S.each(NP, function(v, k) {
-        NodeList.addMethod(k, v);
+        NodeList.addMethod(insertType, function(html) {
+            // 每次调用 Node 单一方法前都 clone
+            // html 创建 or Html Node clone
+            var newNode = DOM.create(html);
+            //再次调用 KISSY Node 的单一方法
+            this[insertType](newNode);
+        });
     });
+
 }, {
-        requires:["dom","./base","./attach"]
-    });KISSY.add("node", function(S, Node) {
+        requires:["dom","event","./base","./attach"]
+    });
+
+/**
+ * 2011-05-24
+ * - 承玉：
+ * - 重写 Node 的某些方法
+ * - 添加 one ,all ，从当前 Node 往下开始选择节点
+ * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
+ * - 添加事件处理，注意 target 与 relatedTarget 现在都是 KISSY Node 类型
+ * -将 Node 上的方法经过循环包装放在 NodeList 上
+ * - append/prepend 参数是节点时，需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
+ */KISSY.add("node", function(S, Node) {
     return Node;
 }, {
         requires:["node/base","node/attach","node/override"]
