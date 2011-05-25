@@ -25,7 +25,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             return this;
         };
 
-        P.stopAnimate = function(finish) {
+        P.stop = function(finish) {
             S.each(this.__anims, function(anim) {
                 anim.stop(finish);
             });
@@ -145,6 +145,6 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 /**
  * 2011-05-17
  *
- *  - 承玉：添加 stopAnimate ，随时停止动画
+ *  - 承玉：添加 stop ，随时停止动画
  *
  */

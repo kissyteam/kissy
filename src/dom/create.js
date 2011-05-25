@@ -117,8 +117,16 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (isElementNode(elem) && S.isPlainObject(props)) {
-            DOM.attr(elem, props, true);
+        if (S.isPlainObject(props)) {
+            if (isElementNode(elem)) {
+                DOM.attr(elem, props, true);
+            }
+            // document fragment
+            else if (elem.nodeType == 11) {
+                S.each(elem.childNodes, function(child) {
+                    DOM.attr(child, props, true);
+                });
+            }
         }
         return elem;
     }

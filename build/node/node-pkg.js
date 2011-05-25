@@ -131,13 +131,6 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
             }
         }
 
-
-        else if (html instanceof NodeList) {
-            // handle NodeList
-            return html;
-        }
-
-
         else if (S.isArray(html) || isNodeList(html)) {
             AP.push.apply(this, S.makeArray(html));
             return undefined;

@@ -212,6 +212,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     cssText = refWin;
                     refWin = window;
                 }
+                refWin = DOM.get(refWin);
                 var win = DOM._getWin(refWin),doc = win.document;
                 var elem;
 
@@ -277,8 +278,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
     function getWH(selector, name) {
-        var elem = DOM.get(selector),
-            which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
+        var elem = DOM.get(selector);
+        if (S.isWindow(elem)) {
+            return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
+        } else if (elem.nodeType == 9) {
+            return name == WIDTH ? DOM.docWidth(elem) : DOM.docHeight(elem);
+        }
+        var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
         S.each(which, function(direction) {

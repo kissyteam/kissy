@@ -924,8 +924,16 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     // 添加成员到元素中
     function attachProps(elem, props) {
-        if (isElementNode(elem) && S.isPlainObject(props)) {
-            DOM.attr(elem, props, true);
+        if (S.isPlainObject(props)) {
+            if (isElementNode(elem)) {
+                DOM.attr(elem, props, true);
+            }
+            // document fragment
+            else if (elem.nodeType == 11) {
+                S.each(elem.childNodes, function(child) {
+                    DOM.attr(child, props, true);
+                });
+            }
         }
         return elem;
     }
@@ -1877,6 +1885,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     cssText = refWin;
                     refWin = window;
                 }
+                refWin = DOM.get(refWin);
                 var win = DOM._getWin(refWin),doc = win.document;
                 var elem;
 
@@ -1942,8 +1951,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
     function getWH(selector, name) {
-        var elem = DOM.get(selector),
-            which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
+        var elem = DOM.get(selector);
+        if (S.isWindow(elem)) {
+            return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
+        } else if (elem.nodeType == 9) {
+            return name == WIDTH ? DOM.docWidth(elem) : DOM.docHeight(elem);
+        }
+        var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
         S.each(which, function(direction) {
@@ -3359,13 +3373,6 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                 return undefined;
             }
         }
-
-
-        else if (html instanceof NodeList) {
-            // handle NodeList
-            return html;
-        }
-
 
         else if (S.isArray(html) || isNodeList(html)) {
             AP.push.apply(this, S.makeArray(html));
@@ -5369,7 +5376,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
             return this;
         };
 
-        P.stopAnimate = function(finish) {
+        P.stop = function(finish) {
             S.each(this.__anims, function(anim) {
                 anim.stop(finish);
             });
@@ -5489,7 +5496,7 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 /**
  * 2011-05-17
  *
- *  - 承玉：添加 stopAnimate ，随时停止动画
+ *  - 承玉：添加 stop ，随时停止动画
  *
  */
 
