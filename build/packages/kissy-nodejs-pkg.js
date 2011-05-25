@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110525140115',
+        buildTime:'20110525144734',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5924,6 +5924,10 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,domNode;
+
+        if (!(self instanceof NodeList)) {
+            return new NodeList(html, props, ownerDocument);
+        }
 
         // handle NodeList(''), NodeList(null), or NodeList(undefined)
         if (!html) {

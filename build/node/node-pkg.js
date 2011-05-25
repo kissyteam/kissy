@@ -111,6 +111,10 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
     function NodeList(html, props, ownerDocument) {
         var self = this,domNode;
 
+        if (!(self instanceof NodeList)) {
+            return new NodeList(html, props, ownerDocument);
+        }
+
         // handle NodeList(''), NodeList(null), or NodeList(undefined)
         if (!html) {
             return undefined;
