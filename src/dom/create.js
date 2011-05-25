@@ -111,7 +111,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                         el.parentNode.removeChild(el);
                     }
                 });
-            }
+            },
+            _nl2frag:nl2frag
         });
 
     // 添加成员到元素中

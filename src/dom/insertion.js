@@ -1,64 +1,74 @@
 /**
  * @module  dom-insertion
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/insertion', function(S, DOM) {
 
     var PARENT_NODE = 'parentNode',
         NEXT_SIBLING = 'nextSibling';
 
+    var nl2frag = DOM._nl2frag;
+
+
+    // fragment is easier than nodelist
+    function insertion(newNodes, refNodes, fn) {
+        newNodes = DOM.query(newNodes);
+        refNodes = DOM.query(refNodes);
+        var newNode = nl2frag(newNodes);
+        if (!newNode) return;
+        var cloneNode;
+        //fragment 一旦插入里面就空了，先复制下
+        if (refNodes.length > 1) {
+            cloneNode = newNode.cloneNode(true);
+        }
+        for (var i = 0; i < refNodes.length; i++) {
+            var refNode = refNodes[i];
+            //refNodes 超过一个，clone
+            var node = i > 0 ? cloneNode.cloneNode(true) : newNode;
+            fn(node, refNode);
+        }
+    }
+
     S.mix(DOM, {
 
             /**
              * Inserts the new node as the previous sibling of the reference node.
-             * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertBefore: function(newNodes, refNode) {
-                newNodes = DOM.query(newNodes);
-                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
-                    newNodes.each(function(newNode) {
+            insertBefore: function(newNodes, refNodes) {
+                insertion(newNodes, refNodes, function(newNode, refNode) {
+                    if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode);
-                    });
-                }
+                    }
+                });
             },
 
             /**
              * Inserts the new node as the next sibling of the reference node.
-             * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertAfter: function(newNodes, refNode) {
-                newNodes = DOM.query(newNodes);
-                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
-                    newNodes.each(function(newNode) {
+            insertAfter: function(newNodes, refNodes) {
+                insertion(newNodes, refNodes, function(newNode, refNode) {
+                    if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
-                    });
-                }
+                    }
+                });
             },
 
             /**
              * Inserts the new node as the last child.
              */
-            append: function(nodes, parent) {
-                nodes = DOM.query(nodes);
-                if (parent = DOM.get(parent)) {
-                    if (parent.appendChild) {
-                        nodes.each(function(node) {
-                            parent.appendChild(node);
-                        });
-                    }
-                }
+            append: function(newNodes, parents) {
+                insertion(newNodes, parents, function(newNode, parent) {
+                    parent.appendChild(newNode);
+                });
             },
 
             /**
              * Inserts the new node as the first child.
              */
-            prepend:function(nodes, parent) {
-                nodes = DOM.query(nodes);
-                if (parent = DOM.get(parent)) {
-                    nodes.each(function(node) {
-                        parent.insertBefore(node, parent.firstChild);
-                    });
-                }
+            prepend:function(newNodes, parents) {
+                insertion(newNodes, parents, function(newNode, parent) {
+                    parent.insertBefore(newNode, parent.firstChild);
+                });
             }
         });
     DOM.prependTo = DOM.prepend;
@@ -69,8 +79,8 @@ KISSY.add('dom/insertion', function(S, DOM) {
     });
 
 /**
- * NOTES:
- *  - appendChild/removeChild/replaceChild 直接用原生的
- *  - append/appendTo, prepend/prependTo, wrap/unwrap 放在 Node 里
+ * 2011-05-25
+ *  - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ *      DOM.append(".multi1",".multi2");
  *
  */

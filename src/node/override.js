@@ -18,13 +18,9 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
-            } else if (newNode.getDOMNode) {
-                newNode = newNode.getDOMNode();
             }
-            for (var i = 0; i < domNodes.length; i++) {
-                var domNode = domNodes[i];
-                DOM[insertType](i > 0 ? newNode.cloneNode(true) : newNode, domNode);
-            }
+            DOM[insertType](newNode, domNodes);
+            
         }, undefined, true);
     });
 

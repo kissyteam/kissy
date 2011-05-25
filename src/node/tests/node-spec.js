@@ -80,16 +80,78 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(S.get("#testDiv7")).not.toBe(null);
             expect(S.get("#testDiv8")).not.toBe(null);
 
-            var newNode = new Node("<div class='test-nodelist'>test-nodelist</div>");
+            var newNode = new Node("<div class='test-nodelist'>test-nodelist</div>" +
+                "<div class='test-nodelist'>test-nodelist2</div>");
             var testDivs = S.all(".test-div");
 
             testDivs = testDivs.append(newNode);
-            expect(testDivs.length).toBe(S.query(".test-nodelist").length)
+            expect(testDivs.length * 2).toBe(S.query(".test-nodelist").length);
 
+
+            testDivs.append("<div class='test-nodelist2'>test-nodelist3</div>" +
+                "<div class='test-nodelist2'>test-nodelist4</div>");
+            expect(testDivs.length * 2).toBe(S.query(".test-nodelist2").length);
+
+
+            S.all("#testDiv7").append(S.all("#testDiv8"));
+            expect(S.all("#testDiv8").parent().equals(S.all('#testDiv7'))).toBe(true);
+
+
+            testDivs.prepend("<div class='test-nodelist3-pre'>test-nodelist5-pre</div>" +
+                "<div class='test-nodelist3-last'>test-nodelist6-last</div>");
+
+            expect(testDivs.length).toBe(S.query(".test-nodelist3-pre").length);
+            expect(testDivs.length).toBe(S.query(".test-nodelist3-last").length);
+
+
+            var pres = S.all(".test-nodelist3-pre"),
+                lasts = S.all(".test-nodelist3-last");
+            expect(pres.length).toBe(lasts.length);
+
+            for (var i = 0; i < pres.length; i++) {
+                expect(pres.item(i).parent().attr("class")).toBe("test-div");
+                expect(pres.item(i).prev()).toBe(null);
+                expect(lasts.item(i).prev().equals(pres.item(i))).toBe(true);
+            }
         });
 
 
-        it("one/all should works", function() {
+        it("should insertBefore/insertAfter correctly", function() {
+            var testDivs = S.all(".test-div");
+
+            (function() {
+                S.all("<div class='test-insertafter'>insertafter1</div>" +
+                    "<div class='test-insertafter2'>insertafter2</div>")
+                    .insertAfter(testDivs);
+
+                var pres = S.all(".test-insertafter"),
+                    lasts = S.all(".test-insertafter2");
+                expect(pres.length).toBe(lasts.length);
+
+                for (var i = 0; i < pres.length; i++) {
+                    expect(pres.item(i).next().equals(lasts.item(i))).toBe(true);
+                    expect(pres.item(i).prev().attr("class")).toBe("test-div");
+                }
+            })();
+
+            (function() {
+                S.all("<div class='test-insertbefore'>insertbefore1</div>" +
+                    "<div class='test-insertbefore2'>insertbefore2</div>")
+                    .insertBefore(testDivs);
+
+                var pres = S.all(".test-insertbefore"),
+                    lasts = S.all(".test-insertbefore2");
+                expect(pres.length).toBe(lasts.length);
+
+                for (var i = 0; i < pres.length; i++) {
+                    expect(pres.item(i).next().equals(lasts.item(i))).toBe(true);
+                    expect(lasts.item(i).next().attr("class")).toBe("test-div");
+                }
+            })();
+        });
+
+
+        it("one/all should select nodes ", function() {
             var body = S.one(document.body);
             var doms = S.query(".test-div");
 
@@ -109,6 +171,27 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             }
         });
 
+        it("one/all should create nodes", function() {
+
+            S.all("<div id='one-all-create'>one-all-create</div><div id='one-all-create2'>one-all-create2</div>")
+                .appendTo(S.one(document.body));
+
+            expect(S.one("#one-all-create")).not.toBe(null);
+            expect(S.one("#one-all-create2")).not.toBe(null);
+            expect(S.one("#one-all-create3")).toBe(null);
+        });
+
+
+        it("context support Node or htmlelement", function() {
+
+            S.all("<div id='context-wrapper'>" +
+                "<div class='test-div'>context-wrapper : test-div</div>" +
+                "</div>").appendTo(document.body);
+
+            expect(S.all(".test-div", S.all("#context-wrapper")).length).toBe(1);
+
+            expect(S.all(".test-div", S.get("#context-wrapper")).length).toBe(1);
+        });
 
         it("should on/detach event properly", function() {
             var cb = S.one("#cb");

@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110524225133',
+        buildTime:'20110525140115',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3503,7 +3503,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                         el.parentNode.removeChild(el);
                     }
                 });
-            }
+            },
+            _nl2frag:nl2frag
         });
 
     // 添加成员到元素中
@@ -3900,65 +3901,75 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
 /**
  * @module  dom-insertion
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/insertion', function(S, DOM) {
 
     var PARENT_NODE = 'parentNode',
         NEXT_SIBLING = 'nextSibling';
 
+    var nl2frag = DOM._nl2frag;
+
+
+    // fragment is easier than nodelist
+    function insertion(newNodes, refNodes, fn) {
+        newNodes = DOM.query(newNodes);
+        refNodes = DOM.query(refNodes);
+        var newNode = nl2frag(newNodes);
+        if (!newNode) return;
+        var cloneNode;
+        //fragment 一旦插入里面就空了，先复制下
+        if (refNodes.length > 1) {
+            cloneNode = newNode.cloneNode(true);
+        }
+        for (var i = 0; i < refNodes.length; i++) {
+            var refNode = refNodes[i];
+            //refNodes 超过一个，clone
+            var node = i > 0 ? cloneNode.cloneNode(true) : newNode;
+            fn(node, refNode);
+        }
+    }
+
     S.mix(DOM, {
 
             /**
              * Inserts the new node as the previous sibling of the reference node.
-             * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertBefore: function(newNodes, refNode) {
-                newNodes = DOM.query(newNodes);
-                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
-                    newNodes.each(function(newNode) {
+            insertBefore: function(newNodes, refNodes) {
+                insertion(newNodes, refNodes, function(newNode, refNode) {
+                    if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode);
-                    });
-                }
+                    }
+                });
             },
 
             /**
              * Inserts the new node as the next sibling of the reference node.
-             * @return {HTMLElement} The node that was inserted (or null if insert fails)
              */
-            insertAfter: function(newNodes, refNode) {
-                newNodes = DOM.query(newNodes);
-                if (refNode = DOM.get(refNode) && refNode[PARENT_NODE]) {
-                    newNodes.each(function(newNode) {
+            insertAfter: function(newNodes, refNodes) {
+                insertion(newNodes, refNodes, function(newNode, refNode) {
+                    if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
-                    });
-                }
+                    }
+                });
             },
 
             /**
              * Inserts the new node as the last child.
              */
-            append: function(nodes, parent) {
-                nodes = DOM.query(nodes);
-                if (parent = DOM.get(parent)) {
-                    if (parent.appendChild) {
-                        nodes.each(function(node) {
-                            parent.appendChild(node);
-                        });
-                    }
-                }
+            append: function(newNodes, parents) {
+                insertion(newNodes, parents, function(newNode, parent) {
+                    parent.appendChild(newNode);
+                });
             },
 
             /**
              * Inserts the new node as the first child.
              */
-            prepend:function(nodes, parent) {
-                nodes = DOM.query(nodes);
-                if (parent = DOM.get(parent)) {
-                    nodes.each(function(node) {
-                        parent.insertBefore(node, parent.firstChild);
-                    });
-                }
+            prepend:function(newNodes, parents) {
+                insertion(newNodes, parents, function(newNode, parent) {
+                    parent.insertBefore(newNode, parent.firstChild);
+                });
             }
         });
     DOM.prependTo = DOM.prepend;
@@ -3969,9 +3980,9 @@ KISSY.add('dom/insertion', function(S, DOM) {
     });
 
 /**
- * NOTES:
- *  - appendChild/removeChild/replaceChild 直接用原生的
- *  - append/appendTo, prepend/prependTo, wrap/unwrap 放在 Node 里
+ * 2011-05-25
+ *  - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ *      DOM.append(".multi1",".multi2");
  *
  */
 
@@ -4592,8 +4603,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
-     * @param {string} selector
-     * @param {string|HTMLElement} context An #id string or a HTMLElement used as context
+     * @param {String|Array} selector
+     * @param {String|HTMLElement} context An #id string or a HTMLElement used as context
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
@@ -4604,7 +4615,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             sizzle = S.require("sizzle"),
             cls;
         context = tuneContext(context);
-
 
         // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
         // 考虑 2/8 原则，仅支持以下选择器：
@@ -4641,13 +4651,13 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                     if (t) ret = [t]; // #id 无效时，返回空数组
                 }
                 // selector 为支持列表中的其它 6 种
-                else if ((match = REG_QUERY.exec(selector))) {
+                else if ((match = REG_QUERY.exec(String(selector)))) {
                     // 获取匹配出的信息
                     id = match[1];
                     tag = match[2];
                     cls = match[3];
 
-                    if ((context = id ? getElementById(id, context) : context)) {
+                    if (context = (id ? getElementById(id, context) : context)) {
                         // #id .cls | #id tag.cls | .cls | tag.cls
                         if (cls) {
                             if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
@@ -4679,7 +4689,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (S.isArray(selector) || isNodeList(selector))) {
-            ret = S.makeArray(selector);
+            ret = selector;
         }
         // 传入的 selector 是 Node 等非字符串对象，原样返回
         else if (selector) {
@@ -4712,8 +4722,12 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             context = getElementById(context.slice(1), doc);
             // 注：#id 可能无效，这时获取的 context 为 null
         }
-        // 3). context 还可以传入 HTMLElement, 此时无需处理
-        // 4). 经历 1 - 3, 如果 context 还不是 HTMLElement, 赋值为 null
+        // 3). nodelist 取第一个元素
+        else if (S.isArray(context) || isNodeList(context)) {
+            context = context[0] || null;
+        }
+        // 4). context 还可以传入 HTMLElement, 此时无需处理
+        // 5). 经历 1 - 4, 如果 context 还不是 HTMLElement, 赋值为 null
         else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
             context = null;
         }
@@ -4722,6 +4736,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     // query #id
     function getElementById(id, context) {
+        if (!context) {
+            return null;
+        }
         if (context.nodeType !== 9) {
             context = context.ownerDocument;
         }
@@ -4822,7 +4839,10 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                     tag = match[2];
                     cls = match[3];
                     filter = function(elem) {
-                        return !((tag && elem.tagName !== tag.toUpperCase()) || (cls && !DOM.hasClass(elem, cls)));
+                        return !(
+                            (tag && elem.tagName.toLowerCase() !== tag.toLowerCase())
+                                || (cls && !DOM.hasClass(elem, cls))
+                            );
                     }
                 }
 
@@ -4895,7 +4915,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *  - 给 S.query 的结果 attach each 方法
  *
  * 2011.05
- *  - 恢复对简单分组支持
+ *  - 承玉：恢复对简单分组支持
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
@@ -5998,25 +6018,46 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                 return this[0];
             },
 
-            one:function(selector) {
+            all:function(selector) {
                 if (this.length > 0) {
-                    return NodeList.one(selector, this[0]);
+                    return NodeList.all(selector, this[0]);
                 }
-                return null;
+                return new NodeList(undefined, undefined, undefined);
             }
         });
 
-    NodeList.prototype.all = NodeList.prototype.one;
+    NodeList.prototype.one = function(selector) {
+        var all = this.all(selector);
+        return all.length ? all : null;
+    };
 
     // query api
-    NodeList.one = NodeList.all = function(selector, context) {
-        if (selector.getDOMNodes) {
-            return selector;
+    NodeList.all = function(selector, context) {
+        // are we dealing with html string ?
+        // TextNode 仍需要自己 new Node
+
+        if (S.isString(selector)
+            && (selector = S.trim(selector))
+            && selector.length >= 3
+            && S.startsWith(selector, "<")
+            && S.endsWith(selector, ">")
+            ) {
+            if (context) {
+                if (context.getDOMNode) {
+                    context = context.getDOMNode();
+                }
+                if (context.ownerDocument) {
+                    context = context.ownerDocument;
+                }
+            }
+            return new NodeList(selector, undefined, context);
         }
-        var domNodes = DOM.query(selector, context);
-        return domNodes.length > 0 ?
-            new NodeList(domNodes, undefined, undefined) :
-            null;
+        return new NodeList(DOM.query(selector, context), undefined, undefined);
+    };
+
+    NodeList.one = function(selector, context) {
+        var all = NodeList.all(selector, context);
+        return all.length ? all : null;
     };
 
     NodeList.List = NodeList;
@@ -6103,6 +6144,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         "_getComputedStyle",
         "_isNodeList",
         "_nodeTypeIs",
+        "_nl2frag",
         "create",
         "get",
         "query",
@@ -6154,13 +6196,9 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
-            } else if (newNode.getDOMNode) {
-                newNode = newNode.getDOMNode();
             }
-            for (var i = 0; i < domNodes.length; i++) {
-                var domNode = domNodes[i];
-                DOM[insertType](i > 0 ? newNode.cloneNode(true) : newNode, domNode);
-            }
+            DOM[insertType](newNode, domNodes);
+            
         }, undefined, true);
     });
 

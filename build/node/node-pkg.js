@@ -64,6 +64,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         "_getComputedStyle",
         "_isNodeList",
         "_nodeTypeIs",
+        "_nl2frag",
         "create",
         "get",
         "query",
@@ -203,25 +204,46 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                 return this[0];
             },
 
-            one:function(selector) {
+            all:function(selector) {
                 if (this.length > 0) {
-                    return NodeList.one(selector, this[0]);
+                    return NodeList.all(selector, this[0]);
                 }
-                return null;
+                return new NodeList(undefined, undefined, undefined);
             }
         });
 
-    NodeList.prototype.all = NodeList.prototype.one;
+    NodeList.prototype.one = function(selector) {
+        var all = this.all(selector);
+        return all.length ? all : null;
+    };
 
     // query api
-    NodeList.one = NodeList.all = function(selector, context) {
-        if (selector.getDOMNodes) {
-            return selector;
+    NodeList.all = function(selector, context) {
+        // are we dealing with html string ?
+        // TextNode 仍需要自己 new Node
+
+        if (S.isString(selector)
+            && (selector = S.trim(selector))
+            && selector.length >= 3
+            && S.startsWith(selector, "<")
+            && S.endsWith(selector, ">")
+            ) {
+            if (context) {
+                if (context.getDOMNode) {
+                    context = context.getDOMNode();
+                }
+                if (context.ownerDocument) {
+                    context = context.ownerDocument;
+                }
+            }
+            return new NodeList(selector, undefined, context);
         }
-        var domNodes = DOM.query(selector, context);
-        return domNodes.length > 0 ?
-            new NodeList(domNodes, undefined, undefined) :
-            null;
+        return new NodeList(DOM.query(selector, context), undefined, undefined);
+    };
+
+    NodeList.one = function(selector, context) {
+        var all = NodeList.all(selector, context);
+        return all.length ? all : null;
     };
 
     NodeList.List = NodeList;
@@ -266,13 +288,9 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
-            } else if (newNode.getDOMNode) {
-                newNode = newNode.getDOMNode();
             }
-            for (var i = 0; i < domNodes.length; i++) {
-                var domNode = domNodes[i];
-                DOM[insertType](i > 0 ? newNode.cloneNode(true) : newNode, domNode);
-            }
+            DOM[insertType](newNode, domNodes);
+            
         }, undefined, true);
     });
 

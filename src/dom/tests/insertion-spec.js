@@ -32,7 +32,8 @@ KISSY.use("dom", function(S, DOM) {
 
         it("prepend should works", function() {
             var foo = body.appendChild(DOM.create("<div><div></div></div>"));
-            var t = DOM.prepend(DOM.create('<p>prepend node</p>'), foo);
+            var t = DOM.create('<p>prepend node</p>');
+            DOM.prepend(t, foo);
             expect(foo.firstChild).toBe(t);
             DOM.remove([foo,t]);
         });

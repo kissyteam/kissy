@@ -59,6 +59,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         "_getComputedStyle",
         "_isNodeList",
         "_nodeTypeIs",
+        "_nl2frag",
         "create",
         "get",
         "query",
