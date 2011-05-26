@@ -733,7 +733,7 @@ KISSY.add("dd/proxy", function(S, Node) {
  * delegate all draggable nodes to one draggable object
  * @author:yiminghe@gmail.com
  */
-KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
+KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
     function Delegate() {
         Delegate.superclass.constructor.apply(this, arguments);
     }
@@ -790,7 +790,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
          */
         _handleMouseDown:function(ev) {
             var self = this;
-            var target = ev.target;
+            var target = new Node(ev.target);
             var handler = target && this._getHandler(target);
             if (!handler) return;
             var node = this._getNode(handler);
@@ -839,7 +839,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
 
     return Delegate;
 }, {
-    requires:['./ddm','./draggable','dom']
+    requires:['./ddm','./draggable','dom','node']
 });/**
  * only one droppable instance for multiple droppable nodes
  * @author:yiminghe@gmail.com

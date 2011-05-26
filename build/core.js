@@ -3574,7 +3574,15 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         "create",
         "get",
         "query",
-        "data"
+        "data",
+        // allow
+        // $=Node.all
+        // $(window).height()/width()
+        // $(document).height()/width()
+        "viewportHeight",
+        "viewportWidth",
+        "docHeight",
+        "docWidth"
     ];
 
     S.each(DOM, function(v, k) {

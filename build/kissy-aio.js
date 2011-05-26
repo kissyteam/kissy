@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110525193730',
+        buildTime:'20110526132528',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5972,7 +5972,15 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         "create",
         "get",
         "query",
-        "data"
+        "data",
+        // allow
+        // $=Node.all
+        // $(window).height()/width()
+        // $(document).height()/width()
+        "viewportHeight",
+        "viewportWidth",
+        "docHeight",
+        "docWidth"
     ];
 
     S.each(DOM, function(v, k) {
@@ -11511,7 +11519,7 @@ KISSY.add("dd/proxy", function(S, Node) {
  * delegate all draggable nodes to one draggable object
  * @author:yiminghe@gmail.com
  */
-KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
+KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
     function Delegate() {
         Delegate.superclass.constructor.apply(this, arguments);
     }
@@ -11568,7 +11576,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
          */
         _handleMouseDown:function(ev) {
             var self = this;
-            var target = ev.target;
+            var target = new Node(ev.target);
             var handler = target && this._getHandler(target);
             if (!handler) return;
             var node = this._getNode(handler);
@@ -11617,7 +11625,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM) {
 
     return Delegate;
 }, {
-    requires:['./ddm','./draggable','dom']
+    requires:['./ddm','./draggable','dom','node']
 });/**
  * only one droppable instance for multiple droppable nodes
  * @author:yiminghe@gmail.com

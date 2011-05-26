@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110525193730',
+        buildTime:'20110526132528',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5972,7 +5972,15 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         "create",
         "get",
         "query",
-        "data"
+        "data",
+        // allow
+        // $=Node.all
+        // $(window).height()/width()
+        // $(document).height()/width()
+        "viewportHeight",
+        "viewportWidth",
+        "docHeight",
+        "docWidth"
     ];
 
     S.each(DOM, function(v, k) {
