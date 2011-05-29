@@ -143,49 +143,7 @@
     <li>下/右键：当焦点位于卡盘时，切换到下一个 slide 面板</li>
     <li>tab 离开卡盘时，开始自动播放</li>
 </ul>
-<div id="demo2" class="section loading">
-    <ol class="ks-switchable-content">
-        <li><a href="slide-taobao.html#" target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
-        <li class="hidden"><a target="_blank" href="slide-taobao.html#"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
-        <li class="hidden"><a target="_blank" href="slide-taobao.html#"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
-        <li class="hidden"><a href="slide-taobao.html#" target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
-        <li class="hidden">
-            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="470" height="150" class="holiday-logo">
-                <param name="movie" value="http://img04.taobaocdn.com/tps/i4/T1bblrXfBrXXXXXXXX.swf"/>
-                <param name="quality" value="high"/>
-                <param name="swfversion" value="8.0.0"/>
-                <param name="wmode" value="opaque"/>
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="http://img04.taobaocdn.com/tps/i4/T1bblrXfBrXXXXXXXX.swf" width="470" height="150" name="holiday-logo" class="holiday-logo">
-                    <param name="wmode" value="opaque"/>
-                </object>
-                <!--<![endif]-->
-            </object>
-        </li>
-    </ol>
-</div>
-<button id="demo2-btn">stop autoplay</button>
-<script>
-    KISSY.use("event,switchable", function(S, Event, Switchable) {
-        var Slide = S.Slide;
 
-        S.ready(function(S) {
-
-            var s = Slide('#demo2', {
-                        effect: 'scrolly',
-                        easing: 'easeOutStrong',
-                        countdown: true,
-                        countdownFromStyle: 'width:18px'
-                    });
-
-            window.slide = s;
-
-            Event.on('#demo2-btn', 'click', function() {
-                s.stop();
-            })
-        });
-    });
-</script>
 <p class="code-switch">显示源码</p>
 <script>
     KISSY.use("ua,dom,event,node", function(S, UA, DOM, Event, Node) {
