@@ -36,7 +36,6 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             props = {},
             isCritical,
             isBackward = direction === BACKWARD;
-
         // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
             || (direction === FORWARD && activeIndex === len - 1 && index === 0);
@@ -52,7 +51,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
         if (self.anim) {
             self.anim.stop();
         }
-       
+
         self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
             if (isCritical) {
                 // 复原位置

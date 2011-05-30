@@ -56,7 +56,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
             /**
              * Inserts the new node as the last child.
              */
-            append: function(newNodes, parents) {
+            appendTo: function(newNodes, parents) {
                 insertion(newNodes, parents, function(newNode, parent) {
                     parent.appendChild(newNode);
                 });
@@ -65,17 +65,24 @@ KISSY.add('dom/insertion', function(S, DOM) {
             /**
              * Inserts the new node as the first child.
              */
-            prepend:function(newNodes, parents) {
+            prependTo:function(newNodes, parents) {
                 insertion(newNodes, parents, function(newNode, parent) {
                     parent.insertBefore(newNode, parent.firstChild);
                 });
             }
         });
-    DOM.prependTo = DOM.prepend;
-    DOM.appendTo = DOM.append;
+    var alias = {
+        "prepend":"prependTo",
+        "append":"appendTo",
+        "before":"insertBefore",
+        "after":"insertAfter"
+    };
+    for (var a in alias) {
+        DOM[a] = DOM[alias[a]];
+    }
     return DOM;
 }, {
-        requires:["dom/base"]
+        requires:["./base"]
     });
 
 /**

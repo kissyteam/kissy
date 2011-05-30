@@ -62,7 +62,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
                 self.on("switch", function(ev) {
                     var index = ev.currentIndex,
-                        last = self.activeIndex;
+                        last = self.completedIndex;
 
                     // 其实只有第一次有用
                     self.__slideIndex = index;

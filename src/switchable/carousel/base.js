@@ -8,7 +8,7 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
         DOT = '.',
         PREV_BTN = 'prevBtn',
         NEXT_BTN = 'nextBtn';
-
+    var DOM_EVENT = {originalEvent:{target:1}};
 
     /**
      * Carousel Class
@@ -25,7 +25,6 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
         // call super
         Carousel.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     Carousel.Config = {
@@ -38,61 +37,61 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     Carousel.Plugins = [];
 
     S.extend(Carousel, Switchable, {
-        /**
-         * 插入 carousel 的初始化逻辑
-         *
-         * Carousel 的初始化逻辑
-         * 增加了:
-         *   self.prevBtn
-         *   self.nextBtn
-         */
-        _init:function() {
-            var self = this;
-            Carousel.superclass._init.call(self);
-            var cfg = self.config, disableCls = cfg.disableBtnCls,
-                switching = false;
-
-            // 获取 prev/next 按钮，并添加事件
-            S.each(['prev', 'next'], function(d) {
-                var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
-
-                Event.on(btn, 'click', function(ev) {
-                    ev.preventDefault();
-                    if (switching) {
-                        return;
-                    }
-
-                    if (!DOM.hasClass(btn, disableCls)){
-                        self[d]();
-                    }
-                });
-            });
-
-            // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
-            // circular = true 时，无需处理
-            if (!cfg.circular) {
-                self.on('beforeSwitch', function() {
-                    switching = true;
-                });
-                self.on('switch', function(ev) {
-                    var i = ev.currentIndex,
-                        disableBtn = (i === 0) ? self[PREV_BTN]
-                            : (i === self.length - 1) ? self[NEXT_BTN]
-                            : undefined;
-
-                    DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
-                    if (disableBtn) DOM.addClass(disableBtn, disableCls);
-
+            /**
+             * 插入 carousel 的初始化逻辑
+             *
+             * Carousel 的初始化逻辑
+             * 增加了:
+             *   self.prevBtn
+             *   self.nextBtn
+             */
+            _init:function() {
+                var self = this;
+                Carousel.superclass._init.call(self);
+                var cfg = self.config, disableCls = cfg.disableBtnCls,
                     switching = false;
+
+                // 获取 prev/next 按钮，并添加事件
+                S.each(['prev', 'next'], function(d) {
+                    var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
+
+                    Event.on(btn, 'click', function(ev) {
+                        ev.preventDefault();
+                        if (switching) {
+                            return;
+                        }
+
+                        if (!DOM.hasClass(btn, disableCls)) {
+                            self[d](DOM_EVENT);
+                        }
+                    });
+                });
+
+                // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
+                // circular = true 时，无需处理
+                if (!cfg.circular) {
+                    self.on('beforeSwitch', function() {
+                        switching = true;
+                    });
+                    self.on('switch', function(ev) {
+                        var i = ev.currentIndex,
+                            disableBtn = (i === 0) ? self[PREV_BTN]
+                                : (i === self.length - 1) ? self[NEXT_BTN]
+                                : undefined;
+
+                        DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
+                        if (disableBtn) DOM.addClass(disableBtn, disableCls);
+
+                        switching = false;
+                    });
+                }
+
+                // 触发 itemSelected 事件
+                Event.on(self.panels, 'click', function() {
+                    self.fire('itemSelected', { item: this });
                 });
             }
-
-            // 触发 itemSelected 事件
-            Event.on(self.panels, 'click', function() {
-                self.fire('itemSelected', { item: this });
-            });
-        }
-    });
+        });
 
 
     return Carousel;

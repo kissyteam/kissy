@@ -9,11 +9,13 @@ build time: ${build.time}
  */
 KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
-    var DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+    var DISPLAY = 'display',
+        BLOCK = 'block',
+        NONE = 'none',
         EventTarget = Event.Target,
-        FORWARD = 'forward', BACKWARD = 'backward',
+        FORWARD = 'forward',
+        BACKWARD = 'backward',
         DOT = '.',
-
         EVENT_INIT = 'init',
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-',
@@ -87,28 +89,32 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         //self.content
 
         /**
-         * 当前激活的 index，内部使用，外部设置需要修改对应 html markup
-         * 不可和 switchTo 并列设置
+         * 当前状态，动画完毕，动画中比 activeIndex 落后 1
          * @type Number
          */
-        self.activeIndex = config.activeIndex;
+        self.activeIndex = self.completedIndex = config.activeIndex;
 
-        /**
-         * 正打算激活的 index，内部使用，不可外部设置
-         * 一般和 activeIndex 相同，有动画时，则有落差
-         */
-        self.ingIndex = self.activeIndex;
+        //设置了 activeIndex
+        if (self.activeIndex > -1) {
+        }
+        //设置了 switchTo , activeIndex == -1
+        else if (typeof config.switchTo == "number") {
+        }
+        //否则，默认都为 0
+        else {
+            self.completedIndex = self.activeIndex = 0;
+        }
+
 
         self._init();
         self._initPlugins();
         self.fire(EVENT_INIT);
 
-        if (self.activeIndex > -1) {
 
-        } else if (S.isNumber(config.switchTo)) {
+        if (self.activeIndex > -1) {
+        } else if (typeof config.switchTo == "number") {
             self.switchTo(config.switchTo);
         }
-
     }
 
     // 默认配置
@@ -135,9 +141,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: -1, // markup 的默认激活项应与 activeIndex 保持一致
+        activeIndex: -1, // markup 的默认激活项应与 activeIndex 保持一致，激活并不代表动画完成
         activeTriggerCls: 'ks-active',
-        switchTo: 0,  // 初始切换到面板，默认第一个
+        //switchTo: 0,  // 初始切换到面板，默认第一个
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -316,7 +322,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
              * 重复触发时的有效判断
              */
             _triggerIsValid: function(index) {
-                return this.ingIndex !== index;
+                return this.activeIndex !== index;
             },
 
             /**
@@ -342,7 +348,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                     cfg = self.config,
                     triggers = self.triggers,
                     panels = self.panels,
-                    ingIndex = self.ingIndex,
+                    ingIndex = self.activeIndex,
                     steps = cfg.steps,
                     fromIndex = ingIndex * steps,
                     toIndex = index * steps;
@@ -367,7 +373,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                 if (direction === undefined) {
                     direction = index > ingIndex ? FORWARD : BACKWARD;
                 }
-                self.ingIndex = index;
+
                 // switch view
                 self._switchView(
                     ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
@@ -376,8 +382,10 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                     direction, ev, function() {
                         callback && callback.call(self, index);
                         // update activeIndex
-                        self.activeIndex = index
+                        self.completedIndex = index
                     });
+
+                self.activeIndex = index;
 
                 return self; // chain
             },
@@ -879,7 +887,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
         var self = this,
             multiple = self.config.multiple,
-            lastActiveIndex = self.activeIndex,
+            lastActiveIndex = self.completedIndex,
             activeIndex = ev.currentIndex,
             trigger = self.triggers[activeIndex],
             panel = self.panels[activeIndex];
@@ -970,7 +978,8 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                 timer = S.later(function() {
                     if (host.paused) return;
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
+                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0,
+                        'forward');
                 }, interval, true);
             }
 
@@ -1038,7 +1047,7 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
         DOT = '.',
         PREV_BTN = 'prevBtn',
         NEXT_BTN = 'nextBtn';
-
+    var DOM_EVENT = {originalEvent:{target:1}};
 
     /**
      * Carousel Class
@@ -1055,7 +1064,6 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
         // call super
         Carousel.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     Carousel.Config = {
@@ -1068,61 +1076,61 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     Carousel.Plugins = [];
 
     S.extend(Carousel, Switchable, {
-        /**
-         * 插入 carousel 的初始化逻辑
-         *
-         * Carousel 的初始化逻辑
-         * 增加了:
-         *   self.prevBtn
-         *   self.nextBtn
-         */
-        _init:function() {
-            var self = this;
-            Carousel.superclass._init.call(self);
-            var cfg = self.config, disableCls = cfg.disableBtnCls,
-                switching = false;
-
-            // 获取 prev/next 按钮，并添加事件
-            S.each(['prev', 'next'], function(d) {
-                var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
-
-                Event.on(btn, 'click', function(ev) {
-                    ev.preventDefault();
-                    if (switching) {
-                        return;
-                    }
-
-                    if (!DOM.hasClass(btn, disableCls)){
-                        self[d]();
-                    }
-                });
-            });
-
-            // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
-            // circular = true 时，无需处理
-            if (!cfg.circular) {
-                self.on('beforeSwitch', function() {
-                    switching = true;
-                });
-                self.on('switch', function(ev) {
-                    var i = ev.currentIndex,
-                        disableBtn = (i === 0) ? self[PREV_BTN]
-                            : (i === self.length - 1) ? self[NEXT_BTN]
-                            : undefined;
-
-                    DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
-                    if (disableBtn) DOM.addClass(disableBtn, disableCls);
-
+            /**
+             * 插入 carousel 的初始化逻辑
+             *
+             * Carousel 的初始化逻辑
+             * 增加了:
+             *   self.prevBtn
+             *   self.nextBtn
+             */
+            _init:function() {
+                var self = this;
+                Carousel.superclass._init.call(self);
+                var cfg = self.config, disableCls = cfg.disableBtnCls,
                     switching = false;
+
+                // 获取 prev/next 按钮，并添加事件
+                S.each(['prev', 'next'], function(d) {
+                    var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
+
+                    Event.on(btn, 'click', function(ev) {
+                        ev.preventDefault();
+                        if (switching) {
+                            return;
+                        }
+
+                        if (!DOM.hasClass(btn, disableCls)) {
+                            self[d](DOM_EVENT);
+                        }
+                    });
+                });
+
+                // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
+                // circular = true 时，无需处理
+                if (!cfg.circular) {
+                    self.on('beforeSwitch', function() {
+                        switching = true;
+                    });
+                    self.on('switch', function(ev) {
+                        var i = ev.currentIndex,
+                            disableBtn = (i === 0) ? self[PREV_BTN]
+                                : (i === self.length - 1) ? self[NEXT_BTN]
+                                : undefined;
+
+                        DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
+                        if (disableBtn) DOM.addClass(disableBtn, disableCls);
+
+                        switching = false;
+                    });
+                }
+
+                // 触发 itemSelected 事件
+                Event.on(self.panels, 'click', function() {
+                    self.fire('itemSelected', { item: this });
                 });
             }
-
-            // 触发 itemSelected 事件
-            Event.on(self.panels, 'click', function() {
-                self.fire('itemSelected', { item: this });
-            });
-        }
-    });
+        });
 
 
     return Carousel;
@@ -1529,7 +1537,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 DOM.css(fromEls, DISPLAY, NONE);
             }
             DOM.css(toEls, DISPLAY, BLOCK);
-            callback();
+            callback && callback();
         },
 
         // 淡隐淡现效果
@@ -1546,28 +1554,38 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 toEl = toEls[0];
 
             if (self.anim) {
+                // 不执行回调
                 self.anim.stop();
+                // 防止上个未完，放在最下层
+                DOM.css(self.anim.fromEl, {
+                        zIndex: 1,
+                        opacity:0
+                    });
+                // 把上个的 toEl 放在最上面，防止 self.anim.toEl == fromEL
+                // 压不住后面了
+                DOM.css(self.anim.toEl, {
+                        zIndex: 9
+                    });
             }
+
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
 
-//            S.log("from:");
-//            S.log(fromEl);
-//            S.log("to:");
-//            S.log(toEl);
-
-
             if (fromEl) {
                 // 动画切换
-                self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
-                    self.anim = undefined; // free
-
-                    // 切换 z-index
-                    DOM.css(toEl, Z_INDEX, 9);
-                    DOM.css(fromEl, Z_INDEX, 1);
-                    callback && callback();
-                }, cfg.nativeAnim).run();
+                self.anim = new Anim(fromEl, { opacity: 0 },
+                    cfg.duration,
+                    cfg.easing,
+                    function() {
+                        self.anim = undefined; // free
+                        // 切换 z-index
+                        DOM.css(toEl, Z_INDEX, 9);
+                        DOM.css(fromEl, Z_INDEX, 1);
+                        callback && callback();
+                    }, cfg.nativeAnim).run();
+                self.anim.toEl = toEl;
+                self.anim.fromEl = fromEl;
             } else {
                 DOM.css(toEl, Z_INDEX, 9);
                 callback && callback();
@@ -1586,10 +1604,13 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
             if (self.anim) {
                 self.anim.stop();
             }
-            self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
-                self.anim = undefined; // free
-                callback();
-            }, cfg.nativeAnim).run();
+            self.anim = new Anim(self.content, props,
+                cfg.duration,
+                cfg.easing,
+                function() {
+                    self.anim = undefined; // free
+                    callback();
+                }, cfg.nativeAnim).run();
 
         }
     };
@@ -1732,7 +1753,6 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             props = {},
             isCritical,
             isBackward = direction === BACKWARD;
-
         // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
             || (direction === FORWARD && activeIndex === len - 1 && index === 0);
@@ -1748,7 +1768,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
         if (self.anim) {
             self.anim.stop();
         }
-       
+
         self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
             if (isCritical) {
                 // 复原位置
@@ -1850,104 +1870,104 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        countdown: false,
-        countdownFromStyle: '',      // 倒计时的初始样式
-        countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
-    });
+            countdown: false,
+            countdownFromStyle: '',      // 倒计时的初始样式
+            countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+        });
 
     /**
      * 添加插件
      */
     Switchable.Plugins.push({
 
-        name: 'countdown',
+            name: 'countdown',
 
-        init: function(host) {
-            var cfg = host.config,
-                animTimer,
-                interval = cfg.interval,
-                triggers = host.triggers,
-                masks = [],
-                fromStyle = cfg.countdownFromStyle,
-                toStyle = cfg.countdownToStyle,
-                anim;
+            init: function(host) {
+                var cfg = host.config,
+                    animTimer,
+                    interval = cfg.interval,
+                    triggers = host.triggers,
+                    masks = [],
+                    fromStyle = cfg.countdownFromStyle,
+                    toStyle = cfg.countdownToStyle,
+                    anim;
 
-            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
-            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
+                // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
+                if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
 
-            // 为每个 trigger 增加倒计时动画覆盖层
-            S.each(triggers, function(trigger, i) {
-                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
-                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
-                masks[i] = trigger.firstChild;
-            });
+                // 为每个 trigger 增加倒计时动画覆盖层
+                S.each(triggers, function(trigger, i) {
+                    trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
+                        '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
+                    masks[i] = trigger.firstChild;
+                });
 
-            // 鼠标悬停，停止自动播放
-            if (cfg.pauseOnHover) {
-                Event.on(host.container, 'mouseenter', function() {
-                    // 先停止未完成动画
+                // 鼠标悬停，停止自动播放
+                if (cfg.pauseOnHover) {
+                    Event.on(host.container, 'mouseenter', function() {
+                        // 先停止未完成动画
+                        stopAnim();
+
+                        // 快速平滑回退到初始状态
+                        var mask = masks[host.activeIndex];
+                        if (fromStyle) {
+                            anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
+                        } else {
+                            DOM.removeAttr(mask, STYLE);
+                        }
+                    });
+
+                    Event.on(host.container, 'mouseleave', function() {
+                        // 鼠标离开时立即停止未完成动画
+                        stopAnim();
+                        var index = host.activeIndex;
+                        // 初始化动画参数，准备开始新一轮动画
+                        DOM.removeAttr(masks[index], STYLE);
+
+                        // 重新开始倒计时动画，缓冲下，避免快速滑动
+                        animTimer = setTimeout(function() {
+                            startAnim(index);
+                        }, 200);
+                    });
+                }
+
+                // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
+                host.on('beforeSwitch', function() {
+                    // 恢复前，先结束未完成动画效果
                     stopAnim();
 
-                    // 快速平滑回退到初始状态
-                    var mask = masks[host.ingIndex];
-                    if (fromStyle) {
-                        anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
-                    } else {
-                        DOM.removeAttr(mask, STYLE);
+                    // 将当前 mask 恢复动画前状态
+                    DOM.attr(masks[host.activeIndex], STYLE, fromStyle || "");
+                });
+
+                // panel 切换完成时，开始 trigger 的倒计时动画
+                host.on('switch', function(ev) {
+                    // 悬停状态，当用户主动触发切换时，不需要倒计时动画
+                    if (!host.paused) {
+                        startAnim(ev.currentIndex);
                     }
                 });
 
-                Event.on(host.container, 'mouseleave', function() {
-                    // 鼠标离开时立即停止未完成动画
-                    stopAnim();
-                    var index = host.ingIndex;
-                    // 初始化动画参数，准备开始新一轮动画
-                    DOM.removeAttr(masks[index], STYLE);
-
-                    // 重新开始倒计时动画，缓冲下，避免快速滑动
-                    animTimer = setTimeout(function() {
-                        startAnim(index);
-                    }, 200);
-                });
-            }
-
-            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function() {
-                // 恢复前，先结束未完成动画效果
-                stopAnim();
-
-                // 将当前 mask 恢复动画前状态
-                DOM.attr(masks[host.activeIndex], STYLE, fromStyle || "");
-            });
-
-            // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function(ev) {
-                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
-                if (!host.paused) {
-                    startAnim(ev.currentIndex);
+                // 开始倒计时动画
+                function startAnim(index) {
+                    stopAnim(); // 开始之前，先确保停止掉之前的
+                    anim = new Anim(masks[index],
+                        toStyle, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
                 }
-            });
 
-            // 开始倒计时动画
-            function startAnim(index) {
-                stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[index],
-                    toStyle, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
-            }
-
-            // 停止所有动画
-            function stopAnim() {
-                if (animTimer) {
-                    clearTimeout(animTimer);
-                    animTimer = null;
-                }
-                if (anim) {
-                    anim.stop();
-                    anim = undefined;
+                // 停止所有动画
+                function stopAnim() {
+                    if (animTimer) {
+                        clearTimeout(animTimer);
+                        animTimer = null;
+                    }
+                    if (anim) {
+                        anim.stop();
+                        anim = undefined;
+                    }
                 }
             }
-        }
-    });
+        });
 
     return Switchable;
 
@@ -2131,7 +2151,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
                 self.on("switch", function(ev) {
                     var index = ev.currentIndex,
-                        last = self.activeIndex;
+                        last = self.completedIndex;
 
                     // 其实只有第一次有用
                     self.__slideIndex = index;
@@ -2435,7 +2455,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
         var self = this;
         // 上一个激活 tab
-        var lastActiveIndex = self.activeIndex;
+        var lastActiveIndex = self.completedIndex;
 
         // 当前激活 tab
         var activeIndex = ev.currentIndex;

@@ -276,7 +276,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
         var self = this,
             multiple = self.config.multiple,
-            lastActiveIndex = self.activeIndex,
+            lastActiveIndex = self.completedIndex,
             activeIndex = ev.currentIndex,
             trigger = self.triggers[activeIndex],
             panel = self.panels[activeIndex];

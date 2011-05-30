@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110526132528',
+        buildTime:'20110530160609',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3802,7 +3802,9 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                         return null;
                     }
 
-                    if (elem == win) elem = winDataCache;
+                    if (elem == win) {
+                        elem = winDataCache;
+                    }
                     isNode = checkIsNode(elem);
 
                     cache = isNode ? dataCache : elem;
@@ -3965,7 +3967,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
             /**
              * Inserts the new node as the last child.
              */
-            append: function(newNodes, parents) {
+            appendTo: function(newNodes, parents) {
                 insertion(newNodes, parents, function(newNode, parent) {
                     parent.appendChild(newNode);
                 });
@@ -3974,17 +3976,24 @@ KISSY.add('dom/insertion', function(S, DOM) {
             /**
              * Inserts the new node as the first child.
              */
-            prepend:function(newNodes, parents) {
+            prependTo:function(newNodes, parents) {
                 insertion(newNodes, parents, function(newNode, parent) {
                     parent.insertBefore(newNode, parent.firstChild);
                 });
             }
         });
-    DOM.prependTo = DOM.prepend;
-    DOM.appendTo = DOM.append;
+    var alias = {
+        "prepend":"prependTo",
+        "append":"appendTo",
+        "before":"insertBefore",
+        "after":"insertAfter"
+    };
+    for (var a in alias) {
+        DOM[a] = DOM[alias[a]];
+    }
     return DOM;
 }, {
-        requires:["dom/base"]
+        requires:["./base"]
     });
 
 /**
@@ -6206,7 +6215,7 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      * appendTo(parent,node) : 才是正常
      *
      */
-    S.each(['append', 'prepend'], function(insertType) {
+    S.each(['append', 'prepend','before','after'], function(insertType) {
         // append 和 prepend
 
         NodeList.addMethod(insertType, function(domNodes, html) {

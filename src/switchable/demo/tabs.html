@@ -77,7 +77,7 @@
             }
         </style>
 
-        <div  id="demo1" class="s-demo">
+        <div id="demo1" class="s-demo">
             <ul class="ks-switchable-nav">
                 <!-- title 争渡读屏器不读-->
                 <li aria-labelledby='a_tip' title="读屏器读不出来">
@@ -118,8 +118,9 @@
                     S.ready(function(S) {
 
                         window.tabs = new Tabs('#demo1', {
-                            // aria:false 默认 true，支持 aria
-                        });
+                                    // aria:false 默认 true，支持 aria
+                                    switchTo:0
+                                });
 
                         tabs.on('beforeSwitch', function(ev) {
                             var index = ev.toIndex;

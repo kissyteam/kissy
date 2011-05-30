@@ -46,6 +46,27 @@ KISSY.use("dom", function(S, DOM) {
             expect(DOM.data(window)).toBe(null);
             DOM.remove(foo);
         });
+
+
+        it("hasData should works", function() {
+
+            var p = DOM.create("<p>");
+            // 给所有的段落节点设置扩展属性 ``x`` ，值为 ``y``
+            DOM.data(p, "x", "y");
+
+            expect(DOM.hasData(p)).toBe(true); // => true , 设置过扩展属性
+
+            expect(DOM.hasData(p, "x")).toBe(true); // => true , 设置过扩展属性 ``x`` 的值
+
+            expect(DOM.hasData(p, "z")).toBe(false); // => false , 没有设置过扩展属性 ``z`` 的值
+
+            DOM.removeData(p, "x"); // => 删除扩展属性 ``x`` 的值
+
+            expect(DOM.hasData(p, "x")).toBe(false); //=> false
+
+            expect(DOM.hasData(p)).toBe(false); //=> false
+
+        });
     });
 
 

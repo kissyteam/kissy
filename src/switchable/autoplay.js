@@ -43,7 +43,8 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                 timer = S.later(function() {
                     if (host.paused) return;
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
+                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0,
+                        'forward');
                 }, interval, true);
             }
 

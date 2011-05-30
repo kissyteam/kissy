@@ -5,10 +5,9 @@
 KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var win = window,
-        expando = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
+        EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { },       // 存储 node 节点的 data
         winDataCache = { },    // 避免污染全局
-
         // The following elements throw uncatchable exceptions if you
         // attempt to add expando properties to them.
         noData = {
@@ -17,6 +16,50 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
     noData['applet'] = 1;
     noData['object'] = 1;
     noData['embed'] = 1;
+
+    var commonOps = {
+
+        hasData:function(thisCache, name) {
+            if (thisCache) {
+                if (name !== undefined) {
+                    if (name in thisCache) {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+
+    var objectOps = {
+        hasData:function(ob, name) {
+            // 直接建立在对象内
+            var thisCache = ob[EXPANDO];
+            return commonOps.hasData(thisCache, name);
+        }
+    };
+
+    var domOps = {
+        hasData:function(elem, name) {
+            if (elem == win) {
+                return objectOps.hasData(winDataCache, name);
+            }
+            var key = elem[EXPANDO];
+            if (!key) {
+                return false;
+            }
+            var thisCache = dataCache[key];
+            return commonOps.hasData(thisCache, name);
+        },
+        data:function(elem, name) {
+            var key = elem[EXPANDO];
+            if (!key) {
+                key = elem[EXPANDO] = S.guid();
+            }
+        }
+    };
 
 
     S.mix(DOM, {
@@ -79,7 +122,9 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                         return null;
                     }
 
-                    if (elem == win) elem = winDataCache;
+                    if (elem == win) {
+                        elem = winDataCache;
+                    }
                     isNode = checkIsNode(elem);
 
                     cache = isNode ? dataCache : elem;

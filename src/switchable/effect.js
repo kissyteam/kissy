@@ -33,7 +33,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 DOM.css(fromEls, DISPLAY, NONE);
             }
             DOM.css(toEls, DISPLAY, BLOCK);
-            callback();
+            callback && callback();
         },
 
         // 淡隐淡现效果
@@ -50,28 +50,38 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 toEl = toEls[0];
 
             if (self.anim) {
+                // 不执行回调
                 self.anim.stop();
+                // 防止上个未完，放在最下层
+                DOM.css(self.anim.fromEl, {
+                        zIndex: 1,
+                        opacity:0
+                    });
+                // 把上个的 toEl 放在最上面，防止 self.anim.toEl == fromEL
+                // 压不住后面了
+                DOM.css(self.anim.toEl, {
+                        zIndex: 9
+                    });
             }
+
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
 
-//            S.log("from:");
-//            S.log(fromEl);
-//            S.log("to:");
-//            S.log(toEl);
-
-
             if (fromEl) {
                 // 动画切换
-                self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
-                    self.anim = undefined; // free
-
-                    // 切换 z-index
-                    DOM.css(toEl, Z_INDEX, 9);
-                    DOM.css(fromEl, Z_INDEX, 1);
-                    callback && callback();
-                }, cfg.nativeAnim).run();
+                self.anim = new Anim(fromEl, { opacity: 0 },
+                    cfg.duration,
+                    cfg.easing,
+                    function() {
+                        self.anim = undefined; // free
+                        // 切换 z-index
+                        DOM.css(toEl, Z_INDEX, 9);
+                        DOM.css(fromEl, Z_INDEX, 1);
+                        callback && callback();
+                    }, cfg.nativeAnim).run();
+                self.anim.toEl = toEl;
+                self.anim.fromEl = fromEl;
             } else {
                 DOM.css(toEl, Z_INDEX, 9);
                 callback && callback();
@@ -90,10 +100,13 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
             if (self.anim) {
                 self.anim.stop();
             }
-            self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
-                self.anim = undefined; // free
-                callback();
-            }, cfg.nativeAnim).run();
+            self.anim = new Anim(self.content, props,
+                cfg.duration,
+                cfg.easing,
+                function() {
+                    self.anim = undefined; // free
+                    callback();
+                }, cfg.nativeAnim).run();
 
         }
     };
