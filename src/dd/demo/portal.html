@@ -87,7 +87,8 @@
 <script src="../../dd.js"></script>
 <script>
 
-    KISSY.use("dd", function(S, DD) {
+    KISSY.use("dd,node", function(S, DD, Node) {
+        Node.one("#cols").unselectable();
         var DDM = DD.DDM,
                 DraggableDelegate = DD.DraggableDelegate,
                 DroppableDelegate = DD.DroppableDelegate,
