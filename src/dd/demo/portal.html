@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>portal</title>
+<style>
+    #cols {
+        width: 1000px;
+    }
+
+    #leftCol, #rightCol {
+        width: 350px;
+        margin: 0 50px;
+        float: left;
+        height: 500px;
+        border: 1px solid red;
+    }
+
+    #rightCol {
+        border: 1px solid green;
+    }
+
+    .component {
+        width: 100px;
+        height: 100px;
+        margin: 50px;
+        border: 1px solid purple;
+    }
+
+    .header {
+        border-bottom: 1px solid purple;
+        cursor: move;
+    }
+
+    .ks-dd-dragging * {
+        visibility: hidden;
+    }
+
+    .ks-dd-dragging {
+        border: 2px blue dashed;
+    }
+
+    .ks-dd-drop-over {
+        background: #ffff00;
+    }
+</style>
+</head>
+<body>
+<h1> portal demo</h1>
+<p>
+    方框通过拖动 header 可以在两列内互相交换位置
+</p>
+
+<div id="cols">
+
+    <div id="leftCol" class="col">
+
+        <div class="component">
+            <div class="header">
+                header 1
+            </div>
+        </div>
+
+    </div>
+
+    <div id="rightCol" class="col">
+
+        <div class="component">
+            <div class="header">
+                header 2
+            </div>
+        </div>
+
+    </div>
+    <div style="clear:both;"></div>
+</div>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../ddm.js"></script>
+<script src="../draggable.js"></script>
+<script src="../droppable.js"></script>
+<script src="../proxy.js"></script>
+<script src="../draggable-delegate.js"></script>
+<script src="../droppable-delegate.js"></script>
+<script src="../scroll.js"></script>
+<script src="../../dd.js"></script>
+<script>
+
+    KISSY.use("dd", function(S, DD) {
+        var DDM = DD.DDM,
+                DraggableDelegate = DD.DraggableDelegate,
+                DroppableDelegate = DD.DroppableDelegate,
+                Draggable = DD.Draggable,
+                Droppable = DD.Droppable,
+                Scroll = DD.Scroll,
+                Proxy = DD.Proxy;
+
+        var proxy = new Proxy({
+                    /**
+                     * 如何产生替代节点
+                     * @param drag 当前拖对象
+                     */
+                    node:function(drag) {
+                        var n = S.one(drag.get("dragNode")[0].cloneNode(true));
+                        n.attr("id", S.guid("ks-dd-proxy"));
+                        n.css("opacity", 0.2);
+                        return n;
+                    },
+                    destroyOnEnd:true
+                });
+
+        var dragDelegate = new DraggableDelegate({
+                    container:"#cols",
+                    handlers:['.header'],
+                    selector:'.component'
+                });
+
+        proxy.attach(dragDelegate);
+
+
+        /**
+         * 一列也为可拖放节点，防止空列无法拖入
+         */
+        new DroppableDelegate({
+                    container:"#cols",
+                    selector:'.col'
+                });
+
+        /**
+         * 单个 component 为可拖放节点
+         */
+        new DroppableDelegate({
+                    container:"#cols",
+                    selector:'.component'
+                });
+
+        var p;
+        /**
+         * 集中监听所有
+         */
+        dragDelegate.on("dragstart", function(ev) {
+            var c = this;
+            p = c.get("dragNode").css("position");
+        });
+        dragDelegate.on("drag", function(ev) {
+
+            var c = this;
+            /**
+             * node 和 dragNode 区别：
+             * node : 可能是 proxy node，指实际拖放节点
+             */
+            c.get("node").offset(ev);
+        });
+        dragDelegate.on("dragend", function(ev) {
+            var c = this;
+            c.get("dragNode").css("position", p);
+        });
+
+        dragDelegate.on("dragover", function(ev) {
+            var drag = ev.drag;
+            var drop = ev.drop;
+            var dragNode = drag.get("dragNode"),
+                    dropNode = drop.get("node");
+            //S.log("current drop node :"+dropNode.attr("class"));
+            if (dropNode.hasClass("col")) {
+                var nodes = dropNode.all(".component");
+                // 只有一个并且是 proxy 或自身
+                if (nodes.length == 1 && nodes[0] == drag.get("node")[0]) {
+                    // 只有一个并且是自身，不处理
+                    if (nodes[0] == drag.get("dragNode")[0]) {
+                        return;
+                    } else {
+                        // 是 proxy ，可以添加到该列
+                    }
+                }
+                // 还有其他
+                else if (nodes.length) {
+                    return;
+                }
+
+                // S.log("添加到列");
+
+                //空列
+                dropNode.append(dragNode);
+            } else {
+
+                // 纵轴中线位置
+                var middleDropY = (dropNode.offset().top * 2 + dropNode.height()) / 2;
+
+                //当前鼠标位置
+                if (ev.pageY > middleDropY) {
+                    var next = dropNode.next();
+                    if (next && next[0] == dragNode) {
+                    } else {
+                        dragNode.insertAfter(dropNode);
+                    }
+                } else {
+                    var prev = dropNode.prev();
+                    if (prev && prev[0] == dragNode) {
+                    } else {
+                        dragNode.insertBefore(dropNode);
+                    }
+                }
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>
