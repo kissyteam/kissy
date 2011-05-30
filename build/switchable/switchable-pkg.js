@@ -1526,7 +1526,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
  </ul>
  **//**
  * Switchable Effect Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  玉伯<lifesinger@gmail.com>,yiminghe@gmail.com
  */
 KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefined) {
     DOM = S.DOM;
@@ -1582,9 +1582,14 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 // 不执行回调
                 self.anim.stop();
                 // 防止上个未完，放在最下层
-                DOM.css(self.anim.domEl, {
+                DOM.css(self.anim.fromEl, {
                         zIndex: 1,
                         opacity:0
+                    });
+                // 把上个的 toEl 放在最上面，防止 self.anim.toEl == fromEL
+                // 压不住后面了
+                DOM.css(self.anim.toEl, {
+                        zIndex: 9
                     });
             }
 
@@ -1602,6 +1607,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     DOM.css(fromEl, Z_INDEX, 1);
                     callback && callback();
                 }, cfg.nativeAnim).run();
+                self.anim.toEl = toEl;
+                self.anim.fromEl = fromEl;
             } else {
                 DOM.css(toEl, Z_INDEX, 9);
                 callback && callback();
