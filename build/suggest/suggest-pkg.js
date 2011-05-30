@@ -61,7 +61,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
              * 用户附加给悬浮提示层的 class
              *
              * 提示层的默认结构如下：
-             * <div class='kssuggest-container {containerCls}'>
+             * <div class='ks-suggest-container {containerCls}'>
              *     <ol class="ks-suggest-content">
              *         <li>
              *             <span class='ks-suggest-key'>...</span>
@@ -154,6 +154,12 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
              * - 2: 数据来自静态, 不存在时, 不显示提示浮层
              */
             dataType: 0
+            /**
+             * 提示层内容渲染器
+             * @param {Object} data 请求返回的数据
+             * @return {HTMLElement | String} 渲染的内容,可选项要求由"li"标签包裹，并将用于表单提交的值存储在"li"元素的key属性上
+             */
+			//contentRender:null
         };
 
     /**
@@ -816,6 +822,34 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 
             self.returnedData = data;
             if (self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
+            
+            //渲染内容
+			if(!self.config.contentRenderer){
+				content = self._renderContent(data);
+			}else{
+				content = self.config.contentRenderer(data);
+			}
+			
+            self._fillContainer(content);
+
+            // fire event
+            // 实际上是 beforeCache，但从用户的角度看，是 beforeShow
+            // 这样可以保证重复内容不用重新生成，直接用缓存
+            if (self.fire(EVENT_BEFORE_SHOW) === false) return;
+
+            // cache
+            if (!self.config.dataType) self._dataCache[self.query] = DOM.html(self.content);
+
+            // 显示容器
+            self._displayContainer();
+        },
+        /**
+         * 渲染内容
+         */		
+        _renderContent:function(data){           
+            var self = this, formattedData,
+                content = EMPTY, i, len, list, li, key, itemData;
+                
 
             // 格式化数据
             formattedData = self._formatData(self.returnedData);
@@ -836,18 +870,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                 }
                 content = list;
             }
-            self._fillContainer(content);
-
-            // fire event
-            // 实际上是 beforeCache，但从用户的角度看，是 beforeShow
-            // 这样可以保证重复内容不用重新生成，直接用缓存
-            if (self.fire(EVENT_BEFORE_SHOW) === false) return;
-
-            // cache
-            if (!self.config.dataType) self._dataCache[self.query] = DOM.html(self.content);
-
-            // 显示容器
-            self._displayContainer();
+            return content;
         },
 
         /**
@@ -989,7 +1012,9 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                 newSelectedItem = items[down ? 0 : items.length - 1];
             } else {
                 // 选中下/上一项
-                newSelectedItem = DOM[down ? 'next' : 'prev'](self.selectedItem);
+                //newSelectedItem = DOM[down ? 'next' : 'prev'](self.selectedItem);
+				//如果选项被分散在多个ol中，不能直接next或prev获取 
+                newSelectedItem = items[S.indexOf(self.selectedItem,items)+(down ? 1 : -1)];
                 // 已经到了最后/前一项时，归位到输入框，并还原输入值
                 if (!newSelectedItem) {
                     self.textInput.value = self.query;
@@ -1146,4 +1171,8 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
  * 2010-03-10 更新： 去除共享模式，适应 kissy 新的代码组织方式。
  *
  * 2010-08-04 更新： 去掉对 yahoo-dom-event 的依赖，仅依赖 ks-core. 调整了部分 public api, 扩展更容易了。
+ *
+ * 2011-05-22 更新： fool2fish<fool2fish@gmail.com>新增部分完全向后兼容的功能
+ *                   1. 对于开放配置config.contentRenderer，接收content的渲染函数，返回渲染后的dom节点，规定item必须为li
+ *                   2. 改进上下方向键选择item的代码逻辑
  */
