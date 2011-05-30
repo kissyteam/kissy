@@ -53,23 +53,18 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 toEl = toEls[0];
 
             if (self.anim) {
+                // 不执行回调
                 self.anim.stop();
-            }
-
-             // 防止上个未完，放在最下层
-            if (fromEl) {
-                DOM.css(fromEl, {
+                // 防止上个未完，放在最下层
+                DOM.css(self.anim.domEl, {
                         zIndex: 1,
                         opacity:0
                     });
             }
+
+
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
-
-//            S.log("from:");
-//            S.log(fromEl);
-//            S.log("to:");
-//            S.log(toEl);
 
             if (fromEl) {
                 // 动画切换
