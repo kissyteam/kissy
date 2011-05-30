@@ -112,7 +112,9 @@
 </div>
 <script>
     KISSY.ready(function(S) {
-        var tabs = new S.Tabs('#demo1');
+        var tabs = new S.Tabs('#demo1',{
+                    aria:true
+                });
 
         tabs.on('beforeSwitch', function(ev) {
             var index = ev.toIndex;
@@ -217,7 +219,8 @@
                     effect: 'scrolly',
                     easing: 'easeOutStrong',
                     countdown: true,
-                    countdownFromStyle: 'width:18px'
+                    countdownFromStyle: 'width:18px',
+                     aria:true
                 });
 
         S.Event.on('#demo2-btn', 'click', function() {
@@ -302,7 +305,8 @@
                     effect: 'fade',
                     easing: 'easeBoth',
                     duration: .8,
-                    autoplay: false
+                    autoplay: false,
+                     aria:true
                 });
     });
 </script>
@@ -416,7 +420,8 @@
                     prevBtnCls: 'prev',
                     nextBtnCls: 'next',
                     disableBtnCls: 'disable',
-                    lazyDataType: 'img-src'
+                    lazyDataType: 'img-src',
+                     aria:true
                 });
 
         carousel.on('itemSelected', function(ev) {
@@ -640,6 +645,7 @@
                     prevBtnCls: 'tiny-prev',
                     nextBtnCls: 'tiny-next',
                     interval: 6,
+                     aria:true,
                     lazyDataType: 'img-src' //延迟加载图片？
                 });
     });
@@ -675,7 +681,8 @@
                     effect: 'scrolly',
                     easing: 'easeOutStrong',
                     interval: 3,
-                    duration: .2
+                    duration: .2,
+                     aria:true
                 });
     });
 </script>
@@ -801,6 +808,7 @@
                     navCls: 'thumbs-list',
                     activeTriggerCls: 'current',
                     effect: 'scrollx',
+                     aria:true,
                     easing: S.Easing.easeOutStrong
                 });
 
@@ -883,7 +891,7 @@
 </div>
 <script>
     KISSY.ready(function(S) {
-        S.Accordion('#accordion1', { multiple: true,activeIndex:1 });
+        S.Accordion('#accordion1', { multiple: true,activeIndex:1,aria:true });
     });
 </script>
 <p class="code-switch">显示源码</p>

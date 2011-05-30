@@ -30,7 +30,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
     var FORWARD = 'forward', BACKWARD = 'backward';
     S.mix(Slide.Config, {
-            aria:true
+            aria:false
         });
 
     var setTabIndex = Aria.setTabIndex;
@@ -42,12 +42,14 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
                 var panels = self.panels;
                 var i = 0;
                 var activeIndex = self.activeIndex;
+
                 S.each(triggers, function(t) {
                     setTabIndex(t, -1);
                 });
                 S.each(panels, function(p) {
                     setTabIndex(p, activeIndex == i ? "0" : "-1");
                     DOM.attr(p, "role", "option");
+                    i++;
                 });
 
                 var content = self.content;
@@ -63,7 +65,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
                 self.on("switch", function(ev) {
                     var index = ev.currentIndex,
-                        last = self.activeIndex;
+                        last = self.completedIndex;
 
                     // 其实只有第一次有用
                     self.__slideIndex = index;

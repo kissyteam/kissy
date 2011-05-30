@@ -33,7 +33,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         var self = this;
         var steps = self.config.steps;
         var index = ev.currentIndex;
-        var activeIndex = self.activeIndex;
+        var activeIndex = self.completedIndex;
         var panels = self.panels;
         var panel = panels[index * steps];
         var triggers = self.triggers;
@@ -239,7 +239,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     S.mix(Carousel.Config, {
-            aria:true
+            aria:false
         });
 
     Carousel.Plugins.push({

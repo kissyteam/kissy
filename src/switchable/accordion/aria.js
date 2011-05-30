@@ -29,7 +29,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Accordion.Config, {
-            aria:true
+            aria:false
         });
 
     Accordion.Plugins.push({
@@ -279,7 +279,7 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
         var self = this,
             multiple = self.config.multiple,
-            lastActiveIndex = self.activeIndex,
+            lastActiveIndex = self.completedIndex,
             activeIndex = ev.currentIndex,
             trigger = self.triggers[activeIndex],
             panel = self.panels[activeIndex];

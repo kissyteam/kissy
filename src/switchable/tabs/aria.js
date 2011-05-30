@@ -3,9 +3,9 @@
  * @creator yiminghe@gmail.com
  */
 KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
-    var Switchable=S.Switchable;
-    Aria=Switchable.Aria;
-    Tabs=S.Tabs;
+    var Switchable = S.Switchable;
+    Aria = Switchable.Aria;
+    Tabs = S.Tabs;
     var Event = S.Event,DOM = S.DOM;
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
@@ -28,48 +28,48 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Tabs.Config, {
-        aria:true
-    });
+            aria:false
+        });
 
     Tabs.Plugins.push({
-        name:"aria",
-        init:function(self) {
-            if (!self.config.aria) return;
-            var triggers = self.triggers,
-             activeIndex = self.activeIndex,
-                panels = self.panels;
-            var container = self.container;
-            DOM.attr(container, "role", "tablist");
-            var i = 0;
-            S.each(triggers, function(trigger) {
-                trigger.setAttribute("role", "tab");
-                setTabIndex(trigger, activeIndex == i ? "0" : "-1");
-                if (!trigger.id) {
-                    trigger.id = S.guid("ks-switchable");
-                }
-                i++;
-            });
-            i = 0;
-            S.each(panels, function(panel) {
-                var t = triggers[i];
-                panel.setAttribute("role", "tabpanel");
-                panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var triggers = self.triggers,
+                    activeIndex = self.activeIndex,
+                    panels = self.panels;
+                var container = self.container;
+                DOM.attr(container, "role", "tablist");
+                var i = 0;
+                S.each(triggers, function(trigger) {
+                    trigger.setAttribute("role", "tab");
+                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                    if (!trigger.id) {
+                        trigger.id = S.guid("ks-switchable");
+                    }
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(panel) {
+                    var t = triggers[i];
+                    panel.setAttribute("role", "tabpanel");
+                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
 
-                panel.setAttribute("aria-labelledby", t.id);
-                i++;
-            });
+                    panel.setAttribute("aria-labelledby", t.id);
+                    i++;
+                });
 
-            self.on("switch", _tabSwitch, self);
+                self.on("switch", _tabSwitch, self);
 
 
-            Event.on(container, "keydown", _tabKeydown, self);
-            /**
-             * prevent firefox native tab switch
-             */
-            Event.on(container, "keypress", _tabKeypress, self);
+                Event.on(container, "keydown", _tabKeydown, self);
+                /**
+                 * prevent firefox native tab switch
+                 */
+                Event.on(container, "keypress", _tabKeypress, self);
 
-        }
-    });
+            }
+        });
 
     var setTabIndex = Aria.setTabIndex;
 
@@ -188,7 +188,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
         var self = this;
         // 上一个激活 tab
-        var lastActiveIndex = self.activeIndex;
+        var lastActiveIndex = self.completedIndex;
 
         // 当前激活 tab
         var activeIndex = ev.currentIndex;

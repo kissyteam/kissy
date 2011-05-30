@@ -85,24 +85,29 @@ KISSY.add('switchable', function(S) {
         //self.content
 
         /**
-         * 当前激活的 index，内部使用，外部设置需要修改对应 html markup
-         * 不可和 switchTo 并列设置
+         * 当前状态，动画完毕，动画中比 activeIndex 落后 1
          * @type Number
          */
-        self.activeIndex = config.activeIndex;
+        self.activeIndex = self.completedIndex = config.activeIndex;
 
-        /**
-         * 正打算激活的 index，内部使用，不可外部设置
-         * 一般和 activeIndex 相同，有动画时，则有落差
-         */
-        self.ingIndex = self.activeIndex;
+        //设置了 activeIndex
+        if (self.activeIndex > -1) {
+        }
+        //设置了 switchTo , activeIndex == -1
+        else if (typeof config.switchTo == "number") {
+        }
+        //否则，默认都为 0
+        else {
+            self.completedIndex = self.activeIndex = 0;
+        }
+
 
         self._init();
         self._initPlugins();
         self.fire(EVENT_INIT);
 
-        if (self.activeIndex > -1) {
 
+        if (self.activeIndex > -1) {
         } else if (typeof config.switchTo == "number") {
             self.switchTo(config.switchTo);
         }
@@ -135,7 +140,7 @@ KISSY.add('switchable', function(S) {
 
         activeIndex: -1, // markup 的默认激活项应与 activeIndex 保持一致
         activeTriggerCls: 'ks-active',
-        switchTo: 0,  // 初始切换到面板，默认第一个
+        // switchTo: 0,  // 初始切换到面板，默认第一个
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -314,7 +319,7 @@ KISSY.add('switchable', function(S) {
              * 重复触发时的有效判断
              */
             _triggerIsValid: function(index) {
-                return this.ingIndex !== index;
+                return this.activeIndex !== index;
             },
 
             /**
@@ -340,7 +345,7 @@ KISSY.add('switchable', function(S) {
                     cfg = self.config,
                     triggers = self.triggers,
                     panels = self.panels,
-                    ingIndex = self.ingIndex,
+                    ingIndex = self.activeIndex,
                     steps = cfg.steps,
                     fromIndex = ingIndex * steps,
                     toIndex = index * steps;
@@ -365,7 +370,7 @@ KISSY.add('switchable', function(S) {
                 if (direction === undefined) {
                     direction = index > ingIndex ? FORWARD : BACKWARD;
                 }
-                self.ingIndex = index;
+
                 // switch view
                 self._switchView(
                     ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
@@ -374,9 +379,9 @@ KISSY.add('switchable', function(S) {
                     direction, ev, function() {
                         callback && callback.call(self, index);
                         // update activeIndex
-                        self.activeIndex = index
+                        self.completedIndex = index
                     });
-
+                self.activeIndex = index;
                 return self; // chain
             },
 
@@ -386,7 +391,9 @@ KISSY.add('switchable', function(S) {
             _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
                 var activeTriggerCls = this.config.activeTriggerCls;
 
-                if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
+                if (fromTrigger) {
+                    DOM.removeClass(fromTrigger, activeTriggerCls);
+                }
                 DOM.addClass(toTrigger, activeTriggerCls);
             },
 

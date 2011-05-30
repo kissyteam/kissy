@@ -11,7 +11,7 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
         DOT = '.',
         PREV_BTN = 'prevBtn',
         NEXT_BTN = 'nextBtn';
-
+ var DOM_EVENT = {originalEvent:{target:1}};
 
     /**
      * Carousel Class
@@ -28,7 +28,6 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
         // call super
         Carousel.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     Carousel.Config = {
@@ -64,7 +63,9 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
                 Event.on(btn, 'click', function(ev) {
                     ev.preventDefault();
                     if (switching) return;
-                    if (!DOM.hasClass(btn, disableCls)) self[d]();
+                    if (!DOM.hasClass(btn, disableCls)) {
+                        self[d](DOM_EVENT);
+                    }
                 });
             });
 
