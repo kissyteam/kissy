@@ -1,18 +1,19 @@
 /**
  * @module  dom-data
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var win = window,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { },       // 存储 node 节点的 data
-        winDataCache = { },    // 避免污染全局
-        // The following elements throw uncatchable exceptions if you
-        // attempt to add expando properties to them.
-        noData = {
-        };
+        winDataCache = { };    // 避免污染全局
 
+
+    // The following elements throw uncatchable exceptions if you
+    // attempt to add expando properties to them.
+    var noData = {
+    };
     noData['applet'] = 1;
     noData['object'] = 1;
     noData['embed'] = 1;
@@ -38,6 +39,32 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             // 直接建立在对象内
             var thisCache = ob[EXPANDO];
             return commonOps.hasData(thisCache, name);
+        },
+
+        data:function(ob, name, value) {
+            var cache = ob[EXPANDO];
+            if (value !== undefined) {
+                cache = ob[EXPANDO] = cache || {};
+                cache[name] = value;
+            } else {
+                if (name !== undefined) {
+                    return cache && cache[name];
+                } else {
+                    return cache;
+                }
+            }
+        },
+        removeData:function(ob, name) {
+            var cache = ob[EXPANDO];
+            if (!cache) return;
+            if (name !== undefined) {
+                delete cache[name];
+                if (S.isEmptyObject(cache)) {
+                    objectOps.removeData(ob, undefined);
+                }
+            } else {
+                delete ob[EXPANDO];
+            }
         }
     };
 
@@ -53,10 +80,53 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             var thisCache = dataCache[key];
             return commonOps.hasData(thisCache, name);
         },
-        data:function(elem, name) {
+        data:function(elem, name, value) {
+            if (elem == win) {
+                return objectOps.data(winDataCache, name, value);
+            }
+            if (noData[elem.nodeName.toLowerCase()]) {
+                return;
+            }
             var key = elem[EXPANDO];
             if (!key) {
                 key = elem[EXPANDO] = S.guid();
+            }
+            var cache = dataCache[key];
+            if (value !== undefined) {
+                cache = dataCache[key] = cache || {};
+                cache[name] = value;
+            } else {
+                if (name !== undefined) {
+                    return cache && cache[name];
+                } else {
+                    return cache;
+                }
+            }
+        },
+        removeData:function(elem, name) {
+            if (elem == win) {
+                return objectOps.removeData(winDataCache, name);
+            }
+            var key = elem[EXPANDO];
+            if (!key) {
+                return;
+            }
+            var cache = dataCache[key];
+            if (!cache) {
+                return;
+            }
+            if (name !== undefined) {
+                delete cache[name];
+                if (S.isEmptyObject(cache)) {
+                    domOps.removeData(elem, undefined);
+                }
+            } else {
+                delete dataCache[key];
+                try {
+                    delete elem[EXPANDO];
+                } catch(e) {
+                }
+                elem.removeAttribute(EXPANDO);
             }
         }
     };
@@ -64,35 +134,16 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-
             hasData:function(selector, name) {
-                var elem = DOM.get(selector),
-                    isNode,
-                    cache,
-                    key,
-                    thisCache;
-                if (!elem ||
-                    (elem.nodeName && noData[elem.nodeName.toLowerCase()])
-                    ) {
-                    return false;
-                }
-                if (elem == win) {
-                    elem = winDataCache;
-                }
-                isNode = checkIsNode(elem);
-                cache = isNode ? dataCache : elem;
-                key = isNode ? elem[expando] : expando;
-                thisCache = cache[key];
-                if (thisCache) {
-                    if (name !== undefined) {
-                        if (name in thisCache) {
-                            return true;
-                        }
+                var ret = false;
+                DOM.query(selector).each(function(elem) {
+                    if (checkIsNode(elem)) {
+                        ret = ret || domOps.hasData(elem, name);
                     } else {
-                        return true;
+                        ret = ret || objectOps.hasData(elem, name);
                     }
-                }
-                return false;
+                });
+                return ret;
             },
 
             /**
@@ -109,56 +160,20 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
                 // getter
                 if (data === undefined) {
-                    var elem = DOM.get(selector),
-                        isNode,
-                        cache,
-                        key,
-                        thisCache;
-
-                    if (
-                        !elem ||
-                            (elem.nodeName && noData[elem.nodeName.toLowerCase()])
-                        ) {
-                        return null;
+                    var elem = DOM.get(selector);
+                    if (checkIsNode(elem)) {
+                        return domOps.data(elem, name, data);
+                    } else {
+                        return objectOps.data(elem, name, data);
                     }
-
-                    if (elem == win) {
-                        elem = winDataCache;
-                    }
-                    isNode = checkIsNode(elem);
-
-                    cache = isNode ? dataCache : elem;
-                    key = isNode ? elem[expando] : expando;
-                    thisCache = cache[key];
-                    var ret = thisCache;
-                    if (S.isString(name) && thisCache) {
-                        ret = thisCache[name];
-                    }
-                    return ret === undefined ? null : ret;
                 }
                 // setter
                 else {
                     DOM.query(selector).each(function(elem) {
-                        if (!elem ||
-                            (elem.nodeName && noData[elem.nodeName.toLowerCase()])
-                            ) {
-                            return;
-                        }
-                        if (elem == win) elem = winDataCache;
-
-                        var cache = dataCache, key;
-
-                        if (!checkIsNode(elem)) {
-                            key = expando;
-                            cache = elem;
-                        }
-                        else if (!(key = elem[expando])) {
-                            key = elem[expando] = S.guid();
-                        }
-
-                        if (name && data !== undefined) {
-                            if (!cache[key]) cache[key] = { };
-                            cache[key][name] = data;
+                        if (checkIsNode(elem)) {
+                            domOps.data(elem, name, data);
+                        } else {
+                            objectOps.data(elem, name, data);
                         }
                     });
                 }
@@ -169,48 +184,10 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
              */
             removeData: function(selector, name) {
                 DOM.query(selector).each(function(elem) {
-                    if (!elem) return;
-                    if (elem == win) elem = winDataCache;
-
-                    var key, cache = dataCache, thisCache,
-                        isNode = checkIsNode(elem);
-
-                    if (!isNode) {
-                        cache = elem;
-                        key = expando;
+                    if (checkIsNode(elem)) {
+                        domOps.removeData(elem, name);
                     } else {
-                        key = elem[expando];
-                    }
-
-                    if (!key) return;
-                    thisCache = cache[key];
-
-                    // If we want to remove a specific section of the element's data
-                    if (name) {
-                        if (thisCache) {
-                            delete thisCache[name];
-
-                            // If we've removed all the data, remove the element's cache
-                            if (S.isEmptyObject(thisCache)) {
-                                DOM.removeData(elem);
-                            }
-                        }
-                    }
-                    // Otherwise, we want to remove all of the element's data
-                    else {
-                        if (!isNode) {
-                            try {
-                                delete elem[expando];
-                            } catch(ex) {
-                            }
-                        } else if (elem.removeAttribute) {
-                            elem.removeAttribute(expando);
-                        }
-
-                        // Completely remove the data cache
-                        if (isNode) {
-                            delete cache[key];
-                        }
+                        objectOps.removeData(elem, name);
                     }
                 });
             }
@@ -220,11 +197,12 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
         return elem && elem.nodeType;
     }
 
-    if (1 > 2) {
-        DOM.hasData();
-    }
     return DOM;
 
 }, {
-        requires:["dom/base"]
+        requires:["./base"]
     });
+/**
+ * 承玉：2011-05-31
+ *  - 分层 ，节点和普通对象分开粗合理
+ **/

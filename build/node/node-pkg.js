@@ -88,6 +88,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         }
     });
 
+    // data 不需要对返回结果转换 nodelist
     NodeList.addMethod("data", DOM.data, DOM);
 
 }, {
