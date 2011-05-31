@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110531143125',
+        buildTime:'20110531150320',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3660,7 +3660,9 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                     delete elem[EXPANDO];
                 } catch(e) {
                 }
-                elem.removeAttribute(EXPANDO);
+                if (elem.removeAttribute) {
+                    elem.removeAttribute(EXPANDO);
+                }
             }
         }
     };

@@ -124,7 +124,9 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                     delete elem[EXPANDO];
                 } catch(e) {
                 }
-                elem.removeAttribute(EXPANDO);
+                if (elem.removeAttribute) {
+                    elem.removeAttribute(EXPANDO);
+                }
             }
         }
     };
