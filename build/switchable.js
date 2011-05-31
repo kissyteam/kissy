@@ -450,7 +450,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
  *   - 抽象 init plugins by Hierarchy
  *   - 抽象 init config by hierarchy
  *   - switchTo 处理，外部设置，初始展开面板
- *   - activeIndex 不可外部设置，内部使用
+ *   - 增加状态 completedIndex
  *
  * 2010.07
  *  - 重构，去掉对 YUI2-Animation 的依赖
@@ -2307,7 +2307,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                     activeIndex = self.activeIndex,
                     panels = self.panels;
                 var container = self.container;
-                DOM.attr(container, "role", "tablist");
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
                 var i = 0;
                 S.each(triggers, function(trigger) {
                     trigger.setAttribute("role", "tab");

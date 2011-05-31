@@ -37,7 +37,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                     activeIndex = self.activeIndex,
                     panels = self.panels;
                 var container = self.container;
-                DOM.attr(container, "role", "tablist");
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
                 var i = 0;
                 S.each(triggers, function(trigger) {
                     trigger.setAttribute("role", "tab");
