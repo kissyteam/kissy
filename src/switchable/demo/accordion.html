@@ -36,7 +36,7 @@
 功能：手风琴
 源码：<a href="../accordion/base.js">../accordion/base.js</a></pre>
 
-    <h3 class="s-title" id="tabs_aria">Tabs - 普通标签页</h3>
+    <h3 class="s-title">Accordion - 手风琴</h3>
     <div class="s-section">
         <style>
             #accordion1 {
@@ -116,9 +116,108 @@
                             Easing = S.Easing;
 
                     S.ready(function(S) {
-                        window.accordion = Accordion('#accordion1', { multiple: true ,
+                        window.accordion = Accordion('#accordion1', {
+                            multiple: true //,
                             //autoplay:true,
-                            switchTo:0});
+                            //switchTo:0
+                            //'activeTriggerCls': 'collapse'
+                        });
+                    });
+                });
+            </script>
+        </div>
+        <a class="s-view-code" href="#">显示源码</a>
+    </div>
+
+
+    <h3 class="s-title"></h3>
+    <div class="s-section">
+        <style>
+            .shop-hesper {
+                margin-bottom: 10px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .shop-hesper .hesper-cats {
+                background-color: #FCFCFC;
+                border: 1px solid #E5E5E5;
+                padding-bottom: 45px;
+            }
+
+            .shop-hesper .hesper-cats ol {
+                border-bottom: 1px solid #F0F0F0;
+                height: 25px;
+                padding-left: 12px;
+            }
+
+            .shop-hesper .hesper-cats ol li {
+                color: #666666;
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 25px;
+            }
+
+            .shop-hesper .hesper-cats li {
+                float: left;
+            }
+
+            .shop-hesper .hesper-cats ol a {
+                float: left;
+                margin-right: 0.5em;
+            }
+
+            .shop-hesper .hesper-cats ul {
+                padding: 10px 10px 0 20px;
+            }
+            .shop-hesper .hesper-cats i {
+                background: url("http://img05.taobaocdn.com/tps/i5/T1JLtRXhlAXXXXXXXX-128-83.png") no-repeat scroll 0 0 transparent;
+                background-position: -54px -56px;
+                height: 25px;
+                width: 21px;
+
+                display: inline-block;
+                overflow: hidden;
+                vertical-align: top;
+            }
+
+
+            .shop-hesper .hesper-cats .trigger {
+                background: url("http://img05.taobaocdn.com/tps/i5/T1JLtRXhlAXXXXXXXX-128-83.png") no-repeat scroll 0 0 transparent;
+                background-position: -27px -56px;
+                cursor: pointer;
+                height: 27px;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 27px;
+                z-index: 1;
+            }
+
+
+            .shop-hesper .hesper-cats .collapse {
+                background-position: 0 -56px;
+            }
+
+        </style>
+        <div class="shop-hesper  s-demo" id="accordion2">
+            <div class="hesper-cats">
+                <ol>
+                    <li><a href="http://shop62814299.taobao.com?browseType=&search=y">所有宝贝</a><i></i></li>
+                </ol>
+                <ul class="hesper-cats-list" style="display:none">
+                    <li>内容内容内容</li>
+                </ul>
+                <i class="trigger collapse" title="展开或者收缩"></i>
+            </div>
+
+            <script>
+                KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
+                    S.Accordion('#accordion2', {
+                        'triggerCls': 'trigger',
+                        'panelCls': 'hesper-cats-list',
+                        'multiple': 'true',
+                        'activeTriggerCls': 'collapse'
                     });
                 });
             </script>
