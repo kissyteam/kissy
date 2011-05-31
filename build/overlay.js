@@ -254,7 +254,7 @@ KISSY.add("overlay/aria", function() {
                 }
                 var v = ev.newVal,
                     el = self.get("view").get("el");
-                el.stopAnimate(true);
+                el.stop(true);
                 el.css("visibility", "visible");
                 var m = effect + effects[effect][Number(v)];
                 el[m](self.get("effect").duration, function() {
