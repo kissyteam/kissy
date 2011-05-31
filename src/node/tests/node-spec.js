@@ -42,19 +42,13 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             var win = S.one(window),doc = S.one(document);
 
             var e = DOM.viewportHeight();
-            expect(win.viewportHeight()).toBe(DOM.viewportHeight());
 
-            expect(win.viewportWidth()).toBe(DOM.viewportWidth());
-
-            expect(doc.viewportHeight()).toBe(DOM.viewportHeight());
-            expect(doc.viewportWidth()).toBe(DOM.viewportWidth());
-
-            expect(win.docHeight()).toBe(DOM.docHeight());
-            expect(win.docWidth()).toBe(DOM.docWidth());
+            expect(win.height()).toBe(DOM.viewportHeight());
+            expect(win.width()).toBe(DOM.viewportWidth());
 
 
-            expect(doc.docHeight()).toBe(DOM.docHeight());
-            expect(doc.docWidth()).toBe(DOM.docWidth());
+            expect(doc.height()).toBe(DOM.docHeight());
+            expect(doc.width()).toBe(DOM.docWidth());
 
         });
 

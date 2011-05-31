@@ -43,7 +43,10 @@ KISSY.use("dom", function(S, DOM) {
             DOM.data(window, 'data', 'val');
             DOM.removeData(window, 'data');
             expect(DOM.data(window, 'data')).toBe(undefined);
-            expect(DOM.data(window)).toBe(undefined);
+            expect(DOM.hasData(window)).toBe(false);
+
+            // 返回空对象
+            expect(S.isEmptyObject(DOM.data(window))).toBe(true);
             DOM.remove(foo);
         });
 
@@ -65,6 +68,9 @@ KISSY.use("dom", function(S, DOM) {
             expect(DOM.hasData(p, "x")).toBe(false); //=> false
 
             expect(DOM.hasData(p)).toBe(false); //=> false
+
+            //空对象
+            expect(S.isEmptyObject(DOM.data(p))).toBe(true);
 
         });
     });
