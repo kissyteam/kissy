@@ -909,13 +909,13 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var commonOps = {
 
-        hasData:function(thisCache, name) {
-            if (thisCache) {
+        hasData:function(cache, name) {
+            if (cache) {
                 if (name !== undefined) {
-                    if (name in thisCache) {
+                    if (name in cache) {
                         return true;
                     }
-                } else {
+                } else if (!S.isEmptyObject(cache)) {
                     return true;
                 }
             }
@@ -931,13 +931,12 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
         },
 
         data:function(ob, name, value) {
-            var cache = ob[EXPANDO];
+            var cache = ob[EXPANDO] = ob[EXPANDO] || {};
             if (value !== undefined) {
-                cache = ob[EXPANDO] = cache || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache && cache[name];
+                    return cache[name];
                 } else {
                     return cache;
                 }
@@ -980,13 +979,12 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             if (!key) {
                 key = elem[EXPANDO] = S.guid();
             }
-            var cache = dataCache[key];
+            var cache = dataCache[key] = dataCache[key] || {};
             if (value !== undefined) {
-                cache = dataCache[key] = cache || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache && cache[name];
+                    return cache[name];
                 } else {
                     return cache;
                 }

@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110531104345',
+        buildTime:'20110531143125',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3556,13 +3556,13 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var commonOps = {
 
-        hasData:function(thisCache, name) {
-            if (thisCache) {
+        hasData:function(cache, name) {
+            if (cache) {
                 if (name !== undefined) {
-                    if (name in thisCache) {
+                    if (name in cache) {
                         return true;
                     }
-                } else {
+                } else if (!S.isEmptyObject(cache)) {
                     return true;
                 }
             }
@@ -3578,13 +3578,12 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
         },
 
         data:function(ob, name, value) {
-            var cache = ob[EXPANDO];
+            var cache = ob[EXPANDO] = ob[EXPANDO] || {};
             if (value !== undefined) {
-                cache = ob[EXPANDO] = cache || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache && cache[name];
+                    return cache[name];
                 } else {
                     return cache;
                 }
@@ -3627,13 +3626,12 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             if (!key) {
                 key = elem[EXPANDO] = S.guid();
             }
-            var cache = dataCache[key];
+            var cache = dataCache[key] = dataCache[key] || {};
             if (value !== undefined) {
-                cache = dataCache[key] = cache || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache && cache[name];
+                    return cache[name];
                 } else {
                     return cache;
                 }
@@ -5831,9 +5829,7 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
              */
             length: 0,
 
-            /**
-             * 根据 index 或 DOMElement 获取对应的 KSNode
-             */
+
             item: function(index) {
                 if (S.isNumber(index)) {
                     if (index >= this.length) return null;
@@ -5842,6 +5838,15 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                     return new NodeList(index, undefined, undefined);
             },
 
+            add:function(selector, context) {
+                var list = NodeList.all(selector, context);
+                AP.push.apply(list, this);
+                return list;
+            },
+
+            slice:function(start, end) {
+                return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            },
 
             /**
              * Retrieves the DOMNodes.

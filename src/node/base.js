@@ -63,9 +63,7 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
              */
             length: 0,
 
-            /**
-             * 根据 index 或 DOMElement 获取对应的 KSNode
-             */
+
             item: function(index) {
                 if (S.isNumber(index)) {
                     if (index >= this.length) return null;
@@ -74,6 +72,15 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                     return new NodeList(index, undefined, undefined);
             },
 
+            add:function(selector, context) {
+                var list = NodeList.all(selector, context);
+                AP.push.apply(list, this);
+                return list;
+            },
+
+            slice:function(start, end) {
+                return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            },
 
             /**
              * Retrieves the DOMNodes.
