@@ -374,7 +374,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 } else {
                     self.month++;
                 }
-                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/1');
                 return this;
             },
 
@@ -387,7 +387,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 } else {
                     self.month--;
                 }
-                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/1');
                 return this;
             },
 
