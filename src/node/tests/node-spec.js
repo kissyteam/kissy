@@ -7,9 +7,23 @@ KISSY.use("dom,node", function(S, DOM, Node) {
     S.query = DOM.query;
     S.one = Node.one;
     S.all = Node.List.all;
+    var $ = S.all;
     var NodeList = Node.List;
     //DOM 已经测试通过，通过 DOM 测 Node
     describe("node", function() {
+
+        it("add works", function() {
+            var x = $();
+            var y = x.add("<div></div><p></p>");
+            expect(x).not.toBe(y);
+            expect(y.length).toBe(2);
+            var z = y.add("<s></s>");
+            expect(z.length).toBe(3);
+            expect(z.item(2).getDOMNode().nodeName.toLowerCase()).toBe("s");
+            var q = z.add("<b></b>", 0);
+            expect(q.length).toBe(4);
+            expect(q.item(0).getDOMNode().nodeName.toLowerCase()).toBe("b");
+        });
 
         it("should invoke dom method correctly on node", function() {
             var n = new Node("<div id='testDiv' class='test-div'>ok</div>").appendTo(document.body);

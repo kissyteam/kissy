@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110531150320',
+        buildTime:'20110601202959',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5840,10 +5840,21 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                     return new NodeList(index, undefined, undefined);
             },
 
-            add:function(selector, context) {
-                var list = NodeList.all(selector, context);
-                AP.push.apply(list, this);
-                return list;
+            add:function(selector, context, index) {
+                if (S.isNumber(context)) {
+                    index = context;
+                    context = undefined;
+                }
+                var list = NodeList.all(selector, context),
+                    ret = new NodeList(this, undefined, undefined);
+                if (index === undefined) {
+                    AP.push.apply(ret, list);
+                } else {
+                    var args = [index,0];
+                    args.push.apply(args, list);
+                    AP.splice.apply(ret, args);
+                }
+                return ret;
             },
 
             slice:function(start, end) {
@@ -14605,7 +14616,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
  *   - 抽象 init plugins by Hierarchy
  *   - 抽象 init config by hierarchy
  *   - switchTo 处理，外部设置，初始展开面板
- *   - activeIndex 不可外部设置，内部使用
+ *   - 增加状态 completedIndex
  *
  * 2010.07
  *  - 重构，去掉对 YUI2-Animation 的依赖
@@ -16462,7 +16473,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                     activeIndex = self.activeIndex,
                     panels = self.panels;
                 var container = self.container;
-                DOM.attr(container, "role", "tablist");
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
                 var i = 0;
                 S.each(triggers, function(trigger) {
                     trigger.setAttribute("role", "tab");
@@ -16942,7 +16955,7 @@ KISSY.add("overlay/aria", function() {
                 }
                 var v = ev.newVal,
                     el = self.get("view").get("el");
-                el.stopAnimate(true);
+                el.stop(true);
                 el.css("visibility", "visible");
                 var m = effect + effects[effect][Number(v)];
                 el[m](self.get("effect").duration, function() {
@@ -19359,7 +19372,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 } else {
                     self.month++;
                 }
-                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/1');
                 return this;
             },
 
@@ -19372,7 +19385,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 } else {
                     self.month--;
                 }
-                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/' + self.day.toString());
+                self.date = new Date(self.year.toString() + '/' + (self.month + 1).toString() + '/1');
                 return this;
             },
 

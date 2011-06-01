@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110531150320',
+        buildTime:'20110601202959',
 
         /**
          * Returns a new object containing all of the properties of
@@ -6027,10 +6027,21 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                     return new NodeList(index, undefined, undefined);
             },
 
-            add:function(selector, context) {
-                var list = NodeList.all(selector, context);
-                AP.push.apply(list, this);
-                return list;
+            add:function(selector, context, index) {
+                if (S.isNumber(context)) {
+                    index = context;
+                    context = undefined;
+                }
+                var list = NodeList.all(selector, context),
+                    ret = new NodeList(this, undefined, undefined);
+                if (index === undefined) {
+                    AP.push.apply(ret, list);
+                } else {
+                    var args = [index,0];
+                    args.push.apply(args, list);
+                    AP.splice.apply(ret, args);
+                }
+                return ret;
             },
 
             slice:function(start, end) {

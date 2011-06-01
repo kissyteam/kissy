@@ -1,7 +1,7 @@
 /*
  * @module kissy
- * @author lifesinger@gmail.com
- * @descript a seed where kissy grow up from , kiss yeah !
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @descript a seed where kissy grows up from , kiss yeah !
  */
 (function(S, undefined) {
 
