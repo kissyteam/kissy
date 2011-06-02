@@ -1502,14 +1502,14 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 top = top === undefined ? true : !!top;
 
                 // default current window, use native for scrollIntoView(elem, top)
-                if (!container || container === win) {
+                if (!container ||
+                    (container = DOM.get(container)) === win) {
                     // 注意：
                     // 1. Opera 不支持 top 参数
                     // 2. 当 container 已经在视窗中时，也会重新定位
                     elem.scrollIntoView(top);
                     return;
                 }
-                container = DOM.get(container);
 
                 // document 归一化到 window
                 if (nodeTypeIs(container, 9)) {

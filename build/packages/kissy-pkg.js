@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110601202959',
+        buildTime:'20110602222137',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3900,14 +3900,14 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 top = top === undefined ? true : !!top;
 
                 // default current window, use native for scrollIntoView(elem, top)
-                if (!container || container === win) {
+                if (!container ||
+                    (container = DOM.get(container)) === win) {
                     // 注意：
                     // 1. Opera 不支持 top 参数
                     // 2. 当 container 已经在视窗中时，也会重新定位
                     elem.scrollIntoView(top);
                     return;
                 }
-                container = DOM.get(container);
 
                 // document 归一化到 window
                 if (nodeTypeIs(container, 9)) {
