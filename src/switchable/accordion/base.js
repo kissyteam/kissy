@@ -18,45 +18,46 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
         }
 
         Accordion.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     S.extend(Accordion, Switchable, {
 
-        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-            var self = this, cfg = self.config;
-            if (cfg.multiple) {
-                DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
-            } else {
-                Accordion.superclass._switchTrigger.apply(self, arguments);
+            _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+                var self = this,
+                    cfg = self.config;
+                if (cfg.multiple) {
+                    DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
+                } else {
+                    Accordion.superclass._switchTrigger.apply(self, arguments);
+                }
+            },
+
+            /**
+             * 重复触发时的有效判断
+             */
+            _triggerIsValid: function(index) {
+                // multiple 模式下，再次触发意味着切换展开/收缩状态
+                return this.config.multiple ||
+                    Accordion.superclass._triggerIsValid.call(this, index);
+            },
+
+            /**
+             * 切换视图
+             */
+            _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
+                var self = this,
+                    cfg = self.config,
+                    panel = toPanels[0];
+
+                if (cfg.multiple) {
+                    DOM.toggle(panel);
+                    this._fireOnSwitch(index, ev);
+                    callback && callback.call(this);
+                } else {
+                    Accordion.superclass._switchView.apply(self, arguments);
+                }
             }
-        },
-
-        /**
-         * 重复触发时的有效判断
-         */
-        _triggerIsValid: function(index) {
-            // multiple 模式下，再次触发意味着切换展开/收缩状态
-            return Accordion.superclass._triggerIsValid.call(this, index)
-                || this.config.multiple;
-        },
-
-        /**
-         * 切换视图
-         */
-        _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
-            var self = this, cfg = self.config,
-                panel = toPanels[0];
-
-            if (cfg.multiple) {
-                DOM.toggle(panel);
-                this._fireOnSwitch(index, ev);
-                callback.call(this);
-            } else {
-                Accordion.superclass._switchView.apply(self, arguments);
-            }
-        }
-    });
+        });
 
     Accordion.Plugins = [];
     Accordion.Config = {
@@ -70,10 +71,12 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
 
 /**
  * TODO:
- *
  *  - 支持动画
+ *
+ *  承玉：2011.06.02 review switchable
  *
  *  承玉：2011.05.10
  *   - review ,prepare for aria
+ *
  *
  */

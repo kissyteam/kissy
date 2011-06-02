@@ -2,9 +2,8 @@
  * accordion aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
-    var SELECT = "ks-switchable-select";
-    var Event = S.Event,DOM = S.DOM;
+KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) {
+
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
     var KEY_END = 35;
@@ -33,22 +32,24 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             name:"aria",
             init:function(self) {
                 if (!self.config.aria) return;
-                var container = self.container;
-                var activeIndex = self.activeIndex;
+                var container = self.container,
+                    activeIndex = self.activeIndex;
                 DOM.attr(container, "aria-multiselectable",
                     self.config.multiple ? "true" : "false");
-                DOM.attr(container, "role", "tablist");
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
                 var triggers = self.triggers,
                     panels = self.panels;
                 var i = 0;
                 S.each(panels, function(panel) {
                     if (!panel.id) {
-                        panel.id = S.guid("ks-switchable-tab-panel");
+                        panel.id = S.guid("ks-accordion-tab-panel");
                     }
                 });
                 S.each(triggers, function(trigger) {
                     if (!trigger.id) {
-                        trigger.id = S.guid("ks-switchable-tab");
+                        trigger.id = S.guid("ks-accordion-tab");
                     }
                 });
 
@@ -71,10 +72,6 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
                 self.on("switch", _tabSwitch, self);
 
-                if (activeIndex > -1) {
-                    self.focusIndex = activeIndex;
-                }
-
                 Event.on(container, "keydown", _tabKeydown, self);
                 /**
                  * prevent firefox native tab switch
@@ -87,7 +84,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     var setTabIndex = Aria.setTabIndex;
 
     function _currentTabFromEvent(t) {
-        var triggers = this.triggers,trigger;
+        var triggers = this.triggers,
+            trigger;
         S.each(triggers, function(ct) {
             if (ct == t || DOM.contains(ct, t)) {
                 trigger = ct;
@@ -96,16 +94,33 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
         return trigger;
     }
 
-//
-//    function _currentPanelFromEvent(t) {
-//        var panels = this.panels,panel;
-//        S.each(panels, function(ct) {
-//            if (ct == t || DOM.contains(ct, t)) {
-//                panel = ct;
-//            }
-//        });
-//        return panel;
-//    }
+
+    function _currentPanelFromEvent(t) {
+        var panels = this.panels,
+            panel;
+        S.each(panels, function(ct) {
+            if (ct == t || DOM.contains(ct, t)) {
+                panel = ct;
+            }
+        });
+        return panel;
+    }
+
+    function getTabFromPanel(panel) {
+        var triggers = this.triggers,
+            panels = this.panels;
+        return triggers[S.indexOf(panel, panels)];
+    }
+
+    function _currentTabByTarget(t) {
+        var self = this,
+            currentTarget = _currentTabFromEvent.call(self, t);
+        if (!currentTarget) {
+            currentTarget = getTabFromPanel.call(self,
+                _currentPanelFromEvent.call(self, t))
+        }
+        return currentTarget;
+    }
 
     function _tabKeypress(e) {
 
@@ -132,8 +147,10 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
      * @param e
      */
     function _tabKeydown(e) {
-        var t = e.target,self = this;
-        var triggers = self.triggers;
+        var t = e.target,
+            self = this,
+            currentTarget,
+            triggers = self.triggers;
 
         // Save information about a modifier key being pressed
         // May want to ignore keyboard events that include modifier keys
@@ -144,172 +161,168 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
             case KEY_ENTER:
             case KEY_SPACE:
-                if (_currentTabFromEvent.call(self, t)
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
                     && no_modifier_pressed_flag
                     ) {
-                    enter.call(self);
+
+                    enter.call(self, currentTarget);
                     e.halt();
                 }
                 break;
 
             case KEY_LEFT:
             case KEY_UP:
-                if (_currentTabFromEvent.call(self, t)
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    prev.call(self);
+                    prev.call(self, currentTarget);
                     e.halt();
                 } // endif
                 break;
 
             case KEY_RIGHT:
             case KEY_DOWN:
-                if (_currentTabFromEvent.call(self, t)
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
                 //&& no_modifier_pressed_flag
                     ) {
-                    next.call(self);
+                    next.call(self, currentTarget);
                     e.halt();
                 } // endif
                 break;
 
             case KEY_PAGEDOWN:
-
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    next.call(self);
-
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    next.call(self, currentTarget);
                 }
                 break;
 
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    prev.call(self);
-
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    prev.call(self, currentTarget);
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
+                    currentTarget = _currentTabByTarget.call(self, t);
                     switchTo.call(self, 0);
                     e.halt();
                 }
-
                 break;
+
             case KEY_END:
                 if (no_modifier_pressed_flag) {
+                    currentTarget = _currentTabByTarget.call(self, t);
                     switchTo.call(self, triggers.length - 1);
                     e.halt();
                 }
-
                 break;
+
             case KEY_TAB:
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
+                    currentTarget = _currentTabByTarget.call(self, t);
                     if (e.shiftKey)
-                        prev.call(self);
+                        prev.call(self, currentTarget);
                     else
-                        next.call(self);
-
+                        next.call(self, currentTarget);
                 }
                 break;
         }
     }
 
-    function focusTo(pre, nextIndex, focusNext) {
-        var self = this,triggers = self.triggers;
-        if (S.isNumber(pre)) {
-            var cur = triggers[pre];
-        }
-        var next = triggers[nextIndex];
-        if (cur) {
+    function focusTo(nextIndex, focusNext) {
+        var self = this,
+            triggers = self.triggers,
+            next = triggers[nextIndex];
+        S.each(triggers, function(cur) {
+            if (cur === next) return;
             setTabIndex(cur, "-1");
-            DOM.removeClass(cur, SELECT);
+            DOM.removeClass(cur, "ks-switchable-select");
             cur.setAttribute("aria-selected", "false");
-        }
+        });
         if (focusNext) {
             next.focus();
         }
         setTabIndex(next, "0");
-        DOM.addClass(next, SELECT);
+        DOM.addClass(next, "ks-switchable-select");
         next.setAttribute("aria-selected", "true");
     }
 
     // trigger 焦点转移
-    function prev() {
+    function prev(trigger) {
         var self = this,
             triggers = self.triggers,
-            focusIndex = self.focusIndex,
-            nFocusIndex = self.focusIndex = focusIndex == 0
+            focusIndex = S.indexOf(trigger, triggers),
+            nFocusIndex = focusIndex == 0
                 ? triggers.length - 1 : focusIndex - 1;
-        focusTo.call(self, focusIndex, nFocusIndex, true);
+        focusTo.call(self, nFocusIndex, true);
     }
 
     function switchTo(index) {
-        var self = this,
-            focusIndex = self.focusIndex;
-        self.focusIndex = index;
-        focusTo.call(self, focusIndex, index, true)
+        focusTo.call(this, index, true)
     }
 
 
     // trigger 焦点转移
-    function next() {
+    function next(trigger) {
         var self = this,
             triggers = self.triggers,
-            focusIndex = self.focusIndex,
-            nFocusIndex = self.focusIndex = (focusIndex == triggers.length - 1
+            focusIndex = S.indexOf(trigger, triggers),
+            nFocusIndex = (focusIndex == triggers.length - 1
                 ? 0 : focusIndex + 1);
-        focusTo.call(self, focusIndex, nFocusIndex, true);
+        focusTo.call(self, nFocusIndex, true);
     }
 
-    function enter() {
-        this.switchTo(this.focusIndex);
+    function enter(trigger) {
+        this.switchTo(S.indexOf(trigger, this.triggers));
     }
 
 
     // 显示 tabpanel
     function _tabSwitch(ev) {
 
-        var domEvent = !!ev.originalEvent.target;
-
-        var self = this,
+        var domEvent = !!ev.originalEvent.target,
+            self = this,
             multiple = self.config.multiple,
-            lastActiveIndex = self.completedIndex,
             activeIndex = ev.currentIndex,
-            trigger = self.triggers[activeIndex],
-            panel = self.panels[activeIndex];
+            panels = self.panels,
+            triggers = self.triggers,
+            trigger = triggers[activeIndex],
+            panel = panels[activeIndex];
 
-        if (lastActiveIndex > -1) {
-            var lastTrigger = self.triggers[lastActiveIndex],
-                lastPanel = self.panels[lastActiveIndex];
-            setTabIndex(lastTrigger, "-1");
-            // dom 引起的才聚焦
-            if (domEvent) {
-                trigger.focus();
-            }
-            if (!multiple) {
-                lastPanel.setAttribute("aria-hidden", "true");
-                lastTrigger.setAttribute("aria-expanded", "false");
-            }
+        if (!multiple) {
+            S.each(panels, function(p) {
+                if (p !== panel) {
+                    p.setAttribute("aria-hidden", "true");
+                }
+            });
+            S.each(triggers, function(t) {
+                if (t !== trigger) {
+                    t.setAttribute("aria-hidden", "true");
+                }
+            });
         }
 
-        setTabIndex(trigger, "0");
         var o = panel.getAttribute("aria-hidden");
         panel.setAttribute("aria-hidden", o == "false" ? "true" : "false");
         trigger.setAttribute("aria-expanded", o == "false" ? "false" : "true");
-        focusTo.call(self, self.focusIndex, activeIndex);
-        self.focusIndex = activeIndex;
+        focusTo.call(self, activeIndex, domEvent);
     }
-
-
 },
     {
-        requires:["../aria","./base"]
+        requires:["dom","event","../aria","./base"]
     });
 
 /**
+
+ 承玉：2011.06.02 review switchable
+
  2011-05-08 承玉：add support for aria & keydown
 
  <h2>键盘快捷键</h2>

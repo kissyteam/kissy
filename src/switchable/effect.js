@@ -4,12 +4,21 @@
  */
 KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefined) {
 
-    var
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        OPACITY = 'opacity', Z_INDEX = 'z-index',
-        POSITION = 'position', RELATIVE = 'relative', ABSOLUTE = 'absolute',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
-        LEFT = 'left', TOP = 'top', FLOAT = 'float', PX = 'px',
+    var DISPLAY = 'display',
+        BLOCK = 'block',
+        NONE = 'none',
+        OPACITY = 'opacity',
+        Z_INDEX = 'z-index',
+        POSITION = 'position',
+        RELATIVE = 'relative',
+        ABSOLUTE = 'absolute',
+        SCROLLX = 'scrollx',
+        SCROLLY = 'scrolly',
+        FADE = 'fade',
+        LEFT = 'left',
+        TOP = 'top',
+        FLOAT = 'float',
+        PX = 'px',
         Effects;
 
     /**
@@ -59,9 +68,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     });
                 // 把上个的 toEl 放在最上面，防止 self.anim.toEl == fromEL
                 // 压不住后面了
-                DOM.css(self.anim.toEl, {
-                        zIndex: 9
-                    });
+                DOM.css(self.anim.toEl, "zIndex", 9);
             }
 
 
@@ -70,7 +77,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
             if (fromEl) {
                 // 动画切换
-                self.anim = new Anim(fromEl, { opacity: 0 },
+                self.anim = new Anim(fromEl,
+                    { opacity: 0 },
                     cfg.duration,
                     cfg.easing,
                     function() {
@@ -83,6 +91,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 self.anim.toEl = toEl;
                 self.anim.fromEl = fromEl;
             } else {
+                //初始情况下没有必要动画切换
                 DOM.css(toEl, Z_INDEX, 9);
                 callback && callback();
             }
@@ -90,7 +99,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
         // 水平/垂直滚动效果
         scroll: function(fromEls, toEls, callback, index) {
-            var self = this, cfg = self.config,
+            var self = this,
+                cfg = self.config,
                 isX = cfg.effect === SCROLLX,
                 diff = self.viewSize[isX ? 0 : 1] * index,
                 props = { };
@@ -100,14 +110,18 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
             if (self.anim) {
                 self.anim.stop();
             }
-            self.anim = new Anim(self.content, props,
-                cfg.duration,
-                cfg.easing,
-                function() {
-                    self.anim = undefined; // free
-                    callback();
-                }, cfg.nativeAnim).run();
-
+            if (fromEls) {
+                self.anim = new Anim(self.content, props,
+                    cfg.duration,
+                    cfg.easing,
+                    function() {
+                        self.anim = undefined; // free
+                        callback && callback();
+                    }, cfg.nativeAnim).run();
+            } else {
+                DOM.css(self.content, props);
+                callback && callback();
+            }
         }
     };
     Effects = Switchable.Effects;
@@ -126,8 +140,10 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
              * 根据 effect, 调整初始状态
              */
             init: function(host) {
-                var cfg = host.config, effect = cfg.effect,
-                    panels = host.panels, content = host.content,
+                var cfg = host.config,
+                    effect = cfg.effect,
+                    panels = host.panels,
+                    content = host.content,
                     steps = cfg.steps,
                     activeIndex = host.activeIndex,
                     len = panels.length;
@@ -138,15 +154,13 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     cfg.viewSize[1] || panels[0].offsetHeight * steps
                 ];
                 // 注：所有 panel 的尺寸应该相同
-                //    最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
+                // 最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
                 // 2. 初始化 panels 样式
                 if (effect !== NONE) { // effect = scrollx, scrolly, fade
 
                     // 这些特效需要将 panels 都显示出来
-                    S.each(panels, function(panel) {
-                        DOM.css(panel, DISPLAY, BLOCK);
-                    });
+                    DOM.css(panels, DISPLAY, BLOCK);
 
                     switch (effect) {
                         // 如果是滚动效果
@@ -156,12 +170,14 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                             // 设置定位信息，为滚动效果做铺垫
                             DOM.css(content, POSITION, ABSOLUTE);
 
-                            DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
+                            // 注：content 的父级不一定是 container
+                            if (DOM.css(content.parentNode, POSITION) == "static") {
+                                DOM.css(content.parentNode, POSITION, RELATIVE);
+                            }
 
                             // 水平排列
                             if (effect === SCROLLX) {
                                 DOM.css(panels, FLOAT, LEFT);
-
                                 // 设置最大宽度，以保证有空间让 panels 水平排布
                                 DOM.width(content, host.viewSize[0] * (len / steps));
                             }
@@ -196,7 +212,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
             _switchView: function(fromEls, toEls, index, direction, ev, callback) {
 
-                var self = this, cfg = self.config,
+                var self = this,
+                    cfg = self.config,
                     effect = cfg.effect,
                     fn = S.isFunction(effect) ? effect : Effects[effect];
 
@@ -211,3 +228,6 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
     return Switchable;
 
 }, { requires:["dom","event","anim","switchable/base"]});
+/**
+ * 承玉：2011.06.02 review switchable
+ */

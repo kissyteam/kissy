@@ -4,8 +4,7 @@
  */
 KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, undefined) {
 
-    var
-        CLS_PREFIX = 'ks-switchable-trigger-',
+    var CLS_PREFIX = 'ks-switchable-trigger-',
         TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
         TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
         STYLE = 'style';
@@ -42,7 +41,8 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
                 // 为每个 trigger 增加倒计时动画覆盖层
                 S.each(triggers, function(trigger, i) {
                     trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
-                        '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
+                        '<div class="' + TRIGGER_CONTENT_CLS + '">' +
+                        trigger.innerHTML + '</div>';
                     masks[i] = trigger.firstChild;
                 });
 
@@ -57,7 +57,7 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
                         if (fromStyle) {
                             anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
                         } else {
-                            DOM.removeAttr(mask, STYLE);
+                            DOM.attr(mask, STYLE, "");
                         }
                     });
 
@@ -65,8 +65,10 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
                         // 鼠标离开时立即停止未完成动画
                         stopAnim();
                         var index = host.activeIndex;
+
                         // 初始化动画参数，准备开始新一轮动画
-                        DOM.removeAttr(masks[index], STYLE);
+                        // 设置初始样式
+                        DOM.attr(masks[index], STYLE, fromStyle);
 
                         // 重新开始倒计时动画，缓冲下，避免快速滑动
                         animTimer = setTimeout(function() {
@@ -81,7 +83,9 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
                     stopAnim();
 
                     // 将当前 mask 恢复动画前状态
-                    DOM.attr(masks[host.activeIndex], STYLE, fromStyle || "");
+                    if (masks[host.activeIndex]) {
+                        DOM.attr(masks[host.activeIndex], STYLE, fromStyle || "");
+                    }
                 });
 
                 // panel 切换完成时，开始 trigger 的倒计时动画
@@ -110,15 +114,21 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
                         anim = undefined;
                     }
                 }
+
+                /**
+                 * 开始第一个倒计时
+                 */
+                if (host.activeIndex > -1) {
+                    startAnim(host.activeIndex);
+                }
+
+
             }
         });
 
     return Switchable;
 
-}, { requires:["dom","event","anim","switchable/base"]});
-
+}, { requires:["dom","event","anim","./base"]});
 /**
- * NOTES:
- *
- *  - 2010/08/09: [yubo] 在 firefox 下 cpu 占用较高，暂不考虑。等 CSS3 普及了，再用 CSS3 来改造。
+ * 承玉：2011.06.02 review switchable
  */

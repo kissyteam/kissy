@@ -7,8 +7,8 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     var CLS_PREFIX = 'ks-switchable-',
         DOT = '.',
         PREV_BTN = 'prevBtn',
-        NEXT_BTN = 'nextBtn';
-    var DOM_EVENT = {originalEvent:{target:1}};
+        NEXT_BTN = 'nextBtn',
+        DOM_EVENT = {originalEvent:{target:1}};
 
     /**
      * Carousel Class
@@ -48,19 +48,15 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
             _init:function() {
                 var self = this;
                 Carousel.superclass._init.call(self);
-                var cfg = self.config, disableCls = cfg.disableBtnCls,
-                    switching = false;
+                var cfg = self.config,
+                    disableCls = cfg.disableBtnCls;
 
                 // 获取 prev/next 按钮，并添加事件
                 S.each(['prev', 'next'], function(d) {
                     var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
 
-                    Event.on(btn, 'click', function(ev) {
+                    Event.on(btn, 'mousedown', function(ev) {
                         ev.preventDefault();
-                        if (switching) {
-                            return;
-                        }
-
                         if (!DOM.hasClass(btn, disableCls)) {
                             self[d](DOM_EVENT);
                         }
@@ -70,19 +66,18 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
                 // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
                 // circular = true 时，无需处理
                 if (!cfg.circular) {
-                    self.on('beforeSwitch', function() {
-                        switching = true;
-                    });
                     self.on('switch', function(ev) {
                         var i = ev.currentIndex,
-                            disableBtn = (i === 0) ? self[PREV_BTN]
-                                : (i === self.length - 1) ? self[NEXT_BTN]
-                                : undefined;
+                            disableBtn = (i === 0) ?
+                                self[PREV_BTN] :
+                                (i === self.length - 1) ? self[NEXT_BTN] :
+                                    undefined;
 
                         DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
-                        if (disableBtn) DOM.addClass(disableBtn, disableCls);
 
-                        switching = false;
+                        if (disableBtn) {
+                            DOM.addClass(disableBtn, disableCls);
+                        }
                     });
                 }
 
@@ -101,6 +96,9 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
 /**
  * NOTES:
+ *
+ * 承玉：2011.06.02 review switchable
+ *
  * 承玉：2011.05
  *  - 内部组件 init 覆盖父类而不是监听事件
  *

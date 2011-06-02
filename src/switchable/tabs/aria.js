@@ -2,9 +2,8 @@
  * Tabs aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
+KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
 
-    var Event = S.Event,DOM = S.DOM;
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
     var KEY_END = 35;
@@ -74,7 +73,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
 
     function _currentTabFromEvent(t) {
-        var triggers = this.triggers,trigger;
+        var triggers = this.triggers,
+            trigger;
         S.each(triggers, function(ct) {
             if (ct == t || DOM.contains(ct, t)) {
                 trigger = ct;
@@ -144,7 +144,6 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (control_modifier_pressed_flag) {
                     e.halt();
                     self.next(DOM_EVENT);
-
                 }
                 break;
 
@@ -152,7 +151,6 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (control_modifier_pressed_flag) {
                     e.halt();
                     self.prev(DOM_EVENT);
-
                 }
                 break;
 
@@ -176,7 +174,6 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                         self.prev(DOM_EVENT);
                     else
                         self.next(DOM_EVENT);
-
                 }
                 break;
         }
@@ -216,7 +213,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
 },
     {
-        requires:["../aria","./base"]
+        requires:["dom","event","../aria","./base"]
     });
 
 /**

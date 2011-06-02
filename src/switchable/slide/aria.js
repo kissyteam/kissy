@@ -22,11 +22,11 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
-
-    var FORWARD = 'forward', BACKWARD = 'backward';
     S.mix(Slide.Config, {
             aria:true
         });
+
+    var DOM_EVENT = {originalEvent:{target:1}};
 
     var setTabIndex = Aria.setTabIndex;
     Slide.Plugins.push({
@@ -52,94 +52,44 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
                 DOM.attr(content, "role", "listbox");
 
-                Event.on(content, "keydown", _contentKeydown, self);
+                Event.on(content, "keydown", _contentKeydownProcess, self);
 
                 setTabIndex(panels[0], 0);
-
-                if (activeIndex > -1) {
-                    self.__slideIndex = activeIndex;
-                }
 
                 self.on("switch", function(ev) {
                     var index = ev.currentIndex,
                         last = self.completedIndex;
 
-                    // 其实只有第一次有用
-                    self.__slideIndex = index;
-
-                    if (last != -1) {
+                    if (last > -1) {
                         setTabIndex(panels[last], -1);
                     }
                     setTabIndex(panels[index], 0);
+
+                    //dom 触发的事件，自动聚焦
+                    if (ev.originalEvent.target) {
+                        panels[index].focus();
+                    }
                 });
             }
         });
 
     function _contentKeydownProcess(e) {
         var self = this,
-            key = e.keyCode,
-            panels = self.panels,
-            __slideIndex = self.__slideIndex,
-            dest = __slideIndex;
+            key = e.keyCode;
         switch (key) {
 
             case KEY_DOWN:
             case KEY_RIGHT:
-
-                dest++;
-                if (dest == panels.length) {
-                    dest = 0;
-                }
-                self.__slideIndex = dest;
-
-                self.switchTo(dest, FORWARD, undefined, function() {
-                    panels[dest].focus();
-                });
+                self.next(DOM_EVENT);
                 e.halt();
                 break;
 
             case KEY_UP:
             case KEY_LEFT:
-
-                dest--;
-                if (dest == -1) {
-                    dest = panels.length - 1;
-                }
-                self.__slideIndex = dest;
-
-                self.switchTo(dest, BACKWARD, undefined, function() {
-                    panels[dest].focus();
-                });
+                self.prev(DOM_EVENT);
                 e.halt();
                 break;
         }
-    }
-
-    var keyDownTimer;
-
-    function _contentKeydown(e) {
-        var self = this,
-            t = e.target,
-            panels = self.panels;
-        if (!S.inArray(t, panels)) return;
-
-        if (keyDownTimer) {
-            clearTimeout(keyDownTimer);
-            keyDownTimer = undefined;
-        }
-        switch (e.keyCode) {
-            case KEY_DOWN:
-            case KEY_UP:
-            case KEY_LEFT:
-            case KEY_RIGHT:
-                e.halt();
-                break;
-        }
-
-        keyDownTimer = setTimeout(function() {
-            _contentKeydownProcess.call(self, e);
-            keyDownTimer = undefined;
-        }, 200);
     }
 
 }, {

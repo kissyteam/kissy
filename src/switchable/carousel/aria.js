@@ -23,6 +23,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 //    var KEY_ESCAPE = 27;
     var setTabIndex = Aria.setTabIndex;
     var DOM_EVENT = {originalEvent:{target:1}};
+    var FORWARD = 'forward',
+        BACKWARD = 'backward';
 
     function _switch(ev) {
         var self = this;
@@ -49,7 +51,9 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
                 setTabIndex(t, -1);
             });
 
-            trigger && setTabIndex(trigger, 0);
+            if (trigger) {
+                setTabIndex(trigger, 0);
+            }
             setTabIndex(panel, 0);
 
             //dom 事件触发时，才会进行聚焦，否则会干扰用户
@@ -125,7 +129,6 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
             case KEY_ENTER:
             case KEY_SPACE:
-
                 c = findTrigger.call(this, t);
                 if (c) {
                     this.switchTo(S.indexOf(c, this.triggers), undefined, DOM_EVENT);
@@ -156,7 +159,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         setTabIndex(c, -1);
         setTabIndex(n, 0);
 
-        if (checkPanel.call(this, n)) {
+        if (checkPanel.call(this, n, FORWARD)) {
             n.focus();
         }
     }
@@ -170,14 +173,15 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         }
         setTabIndex(c, -1);
         setTabIndex(n, 0);
-        if (checkPanel.call(this, n)) {
+        if (checkPanel.call(this, n, BACKWARD)) {
             n.focus();
         }
     }
 
-    function checkPanel(p) {
-        var index = S.indexOf(p, this.panels),steps = this.config.steps;
-        var dest = Math.floor(index / steps);
+    function checkPanel(p, direction) {
+        var index = S.indexOf(p, this.panels),
+            steps = this.config.steps,
+            dest = Math.floor(index / steps);
         // 在同一个 panel 组，立即返回
         if (dest == this.activeIndex) {
             return 1;
@@ -185,9 +189,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         if (index % steps == 0 || index % steps == steps - 1) {
             //向前动画滚动中，focus，会不正常 ...
             //传递事件，动画后异步 focus
-            this.switchTo(dest, undefined, undefined, function() {
-                p.focus();
-            });
+            this.switchTo(dest, direction, DOM_EVENT);
             return 0;
         }
         return 1;
@@ -196,7 +198,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
     function _contentKeydown(e) {
 
-        var key = e.keyCode,t = e.target,
+        var key = e.keyCode,
+            t = e.target,
             c;
 
         switch (key) {
@@ -240,12 +243,12 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     Carousel.Plugins.push({
             name:"aria",
             init:function(self) {
-                if (!self.config.aria) return;
-                // triggers 不可靠，panels 可靠
+                if (!self.config.aria) {
+                    return;
+                }
                 var triggers = self.triggers;
                 var panels = self.panels;
                 var content = self.content;
-
                 var activeIndex = self.activeIndex;
 
                 if (!content.id) {
@@ -268,6 +271,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
                 self.on("switch", _switch, self);
                 var nav = self.nav;
+
                 if (nav) {
                     Event.on(nav, "keydown", _navKeydown, self);
                 }
@@ -307,6 +311,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     });
 
 /**
+ 承玉：2011.06.02 review switchable
+
  承玉:2011.05.12
 
  <h2>键盘快捷键</h2>
