@@ -249,8 +249,21 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(select, "tabindex")).toBe(1);
                 expect(DOM.hasAttr(select, "tabindex")).toBe(true);
                 DOM.removeAttr(select, "tabindex");
-                //debugger
                 expect(DOM.hasAttr(select, "tabindex")).toBe(false);
+
+                var a = DOM.create("<a></a>");
+                expect(DOM.hasAttr(a, "tabindex")).toBe(false);
+
+                expect(DOM.attr(a, "tabindex")).toBe(null);
+
+                a = DOM.create("<a href='#'></a>");
+                expect(DOM.hasAttr(a, "tabindex")).toBe(false);
+                expect(DOM.attr(a, "tabindex")).toBe(0);
+
+                a = DOM.create("<a href='#' tabindex='2'></a>");
+                expect(DOM.hasAttr(a, "tabindex")).toBe(true);
+                expect(DOM.attr(a, "tabindex")).toBe(2);
+
             });
         });
 

@@ -34,7 +34,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             width: 1,
             height: 1,
             offset: 1
-        };
+        },
+        rfocusable = /^(?:button|input|object|select|textarea)$/i,
+        rclickable = /^a(?:rea)?$/i;
 
     if (oldIE) {
         S.mix(CUSTOM_ATTRS, {
@@ -43,10 +45,16 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             });
     }
 
-    var attrNormalizers = {
+    var attrHooks = {
         tabindex:{
             getter:function(el) {
-                return el.tabIndex;
+                // elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+                var attributeNode = el.getAttributeNode("tabindex");
+                return attributeNode && attributeNode.specified ?
+                    parseInt(attributeNode.value, 10) :
+                    rfocusable.test(el.nodeName) || rclickable.test(el.nodeName) && el.href ?
+                        0 :
+                        null;
             },
             setter:function(el, val) {
                 // http://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute
@@ -102,7 +110,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
 
                 if (!(name = S.trim(name))) return;
-                name = name.toLowerCase();
+
+                var originalName = name;
+
+                name = originalName.toLowerCase();
 
                 // attr functions
                 if (pass && attrFn[name]) {
@@ -112,13 +123,12 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 // custom attrs
                 name = CUSTOM_ATTRS[name] || name;
 
-                var attrNormalizer = attrNormalizers[name];
+                var attrNormalizer = attrHooks[name];
 
                 // getter
                 if (val === undefined) {
                     // supports css selector/Node/NodeList
                     var el = DOM.get(selector);
-
                     // only get attributes on element nodes
                     if (!isElementNode(el)) {
                         return null;
@@ -136,6 +146,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     // - style 需要用 getAttribute 来获取字符串值，也排除掉
                     if (!RE_SPECIAL_ATTRS.test(name)) {
                         ret = el[name];
+                        // nodeName ，虽然这样是不好的，还是弄下吧
+                        if (ret === undefined) {
+                            ret = el[originalName];
+                        }
                     }
 
                     // 用 getAttribute 获取非 mapping 属性和 href/src/style 的值：

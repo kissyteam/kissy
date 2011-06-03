@@ -41,7 +41,9 @@ KISSY.use("dom", function(S, DOM) {
             //expect(DOM.data('#foo2')).toBe(null);
 
             DOM.data(window, 'data', 'val');
+
             DOM.removeData(window, 'data');
+
             expect(DOM.data(window, 'data')).toBe(undefined);
             expect(DOM.hasData(window)).toBe(false);
 

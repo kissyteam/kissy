@@ -36,12 +36,18 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var objectOps = {
         hasData:function(ob, name) {
+            if (ob == win) {
+                return objectOps.hasData(winDataCache, name);
+            }
             // 直接建立在对象内
             var thisCache = ob[EXPANDO];
             return commonOps.hasData(thisCache, name);
         },
 
         data:function(ob, name, value) {
+            if (ob == win) {
+                return objectOps.data(winDataCache, name, value);
+            }
             var cache = ob[EXPANDO] = ob[EXPANDO] || {};
             if (value !== undefined) {
                 cache[name] = value;
@@ -54,6 +60,9 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             }
         },
         removeData:function(ob, name) {
+            if (ob == win) {
+                return objectOps.removeData(winDataCache, name);
+            }
             var cache = ob[EXPANDO];
             if (!cache) return;
             if (name !== undefined) {
@@ -69,9 +78,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var domOps = {
         hasData:function(elem, name) {
-            if (elem == win) {
-                return objectOps.hasData(winDataCache, name);
-            }
+
             var key = elem[EXPANDO];
             if (!key) {
                 return false;
@@ -80,9 +87,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             return commonOps.hasData(thisCache, name);
         },
         data:function(elem, name, value) {
-            if (elem == win) {
-                return objectOps.data(winDataCache, name, value);
-            }
+
             if (noData[elem.nodeName.toLowerCase()]) {
                 return;
             }
@@ -102,9 +107,6 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             }
         },
         removeData:function(elem, name) {
-            if (elem == win) {
-                return objectOps.removeData(winDataCache, name);
-            }
             var key = elem[EXPANDO];
             if (!key) {
                 return;
