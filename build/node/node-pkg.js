@@ -183,7 +183,7 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                     index = context;
                     context = undefined;
                 }
-                var list = NodeList.all(selector, context),
+                var list = S.makeArray(NodeList.all(selector, context)),
                     ret = new NodeList(this, undefined, undefined);
                 if (index === undefined) {
                     AP.push.apply(ret, list);
@@ -271,7 +271,9 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
     };
 
     NodeList.List = NodeList;
-
+    if (1 > 2) {
+        NodeList.getDOMNodes();
+    }
     return NodeList;
 }, {
         requires:["dom","event"]

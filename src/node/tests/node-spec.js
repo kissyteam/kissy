@@ -14,7 +14,9 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
         it("add works", function() {
             var x = $();
+           debugger
             var y = x.add("<div></div><p></p>");
+
             expect(x).not.toBe(y);
             expect(y.length).toBe(2);
             var z = y.add("<s></s>");
