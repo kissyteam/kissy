@@ -205,7 +205,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     function getProp(elem, name) {
         name = propFix[ name ] || name;
         var hook = propHooks[ name ];
-        if (!elem) return null;
+        if (!elem) return;
         if (hook && hook.get) {
             return hook.get(elem, name);
 

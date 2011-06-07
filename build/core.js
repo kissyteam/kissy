@@ -504,7 +504,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     function getProp(elem, name) {
         name = propFix[ name ] || name;
         var hook = propHooks[ name ];
-        if (!elem) return null;
+        if (!elem) return;
         if (hook && hook.get) {
             return hook.get(elem, name);
 
@@ -813,6 +813,10 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
         REG_SPLIT = /[\.\s]\s*\.?/,
         REG_CLASS = /[\n\t]/g;
 
+    function norm(elemClass) {
+        return (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE);
+    }
+
     S.mix(DOM, {
 
             /**
@@ -822,7 +826,9 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
                 return batch(selector, value, function(elem, classNames, cl) {
                     var elemClass = elem.className;
                     if (elemClass) {
-                        var className = SPACE + elemClass + SPACE, j = 0, ret = true;
+                        var className = norm(elemClass),
+                            j = 0,
+                            ret = true;
                         for (; j < cl; j++) {
                             if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
                                 ret = false;
@@ -842,9 +848,10 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
                     var elemClass = elem.className;
                     if (!elemClass) {
                         elem.className = value;
-                    }
-                    else {
-                        var className = SPACE + elemClass + SPACE, setClass = elemClass, j = 0;
+                    } else {
+                        var className = norm(elemClass),
+                            setClass = elemClass,
+                            j = 0;
                         for (; j < cl; j++) {
                             if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
                                 setClass += SPACE + classNames[j];
@@ -864,9 +871,10 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
                     if (elemClass) {
                         if (!cl) {
                             elem.className = '';
-                        }
-                        else {
-                            var className = (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE), j = 0, needle;
+                        } else {
+                            var className = norm(elemClass),
+                                j = 0,
+                                needle;
                             for (; j < cl; j++) {
                                 needle = SPACE + classNames[j] + SPACE;
                                 // 一个 cls 有可能多次出现：'link link2 link link3 link'
@@ -911,12 +919,16 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
         });
 
     function batch(selector, value, fn, resultIsBool) {
-        if (!(value = S.trim(value))) return resultIsBool ? false : undefined;
+        if (!(value = S.trim(value))) {
+            return resultIsBool ? false : undefined;
+        }
 
         var elems = DOM.query(selector),
-            i = 0, len = elems.length,
+            i = 0,
+            len = elems.length,
             tmp = value.split(REG_SPLIT),
-            elem, ret;
+            elem,
+            ret;
 
         var classNames = [];
         for (; i < tmp.length; i++) {
