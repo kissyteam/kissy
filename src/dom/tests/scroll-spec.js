@@ -78,7 +78,7 @@ KISSY.use("dom", function(S, DOM) {
                 DOM.scrollIntoView(node, container, false);
                 var nt = Math.round(DOM.offset(node).top);
                 var ct = Math.round(DOM.offset(container).top);
-                S.log(nt + " , " + ct + " , " + container_height + " , " + node_height + " , " + container_border_width);
+                //S.log(nt + " , " + ct + " , " + container_height + " , " + node_height + " , " + container_border_width);
                 expect(nt).toBe(ct + container_height - node_height + container_border_width);
             });
         });

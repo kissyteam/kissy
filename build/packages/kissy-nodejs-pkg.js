@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110603172211',
+        buildTime:'20110607103542',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3067,21 +3067,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         // button 元素的 value 属性和其内容冲突
         // <button value='xx'>zzz</button>
         valHooks.button = attrHooks.value = attrNodeHook;
-    } else if (UA.safari) {
-        //safari option selected not work ?
-        propHooks.selected = {
-            get: function(elem) {
-                var ret,parent = elem.parentNode;
-                if (parent) {
-                    ret = parent.selectedIndex;
-                    // optgroups works too
-                    if (ret === undefined && parent.parentNode) {
-                        ret = parent.parentNode.selectedIndex;
-                    }
-                    return ret === undefined ? null : ret;
-                }
-            }
-        }
     }
 
     // Radios and checkboxes getter/setter
@@ -3100,6 +3085,18 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
         };
     });
+
+    function getProp(elem, name) {
+        name = propFix[ name ] || name;
+        var hook = propHooks[ name ];
+        if (!elem) return null;
+        if (hook && hook.get) {
+            return hook.get(elem, name);
+
+        } else {
+            return elem[ name ];
+        }
+    }
 
     S.mix(DOM, {
 
@@ -3120,9 +3117,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 var elems = DOM.query(selector);
                 // Try to normalize/fix the name
                 name = propFix[ name ] || name;
-
                 var hook = propHooks[ name ];
-
                 if (value !== undefined) {
                     S.each(elems, function(elem) {
                         if (hook && hook.set) {
@@ -3131,17 +3126,16 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                             elem[ name ] = value;
                         }
                     });
-                }
-                else {
-                    var elem = elems[0];
+                } else {
+                    var elem = elems[0],ret;
                     if (!elem) return null;
-                    if (hook && hook.get) {
-                        return  hook.get(elem, name);
-
-                    } else {
-                        return elem[ name ];
-                    }
+                    ret = getProp(elem, name);
+                    return ret === undefined ? null : ret;
                 }
+            },
+            hasProp:function(selector, name) {
+                var elem = DOM.get(selector);
+                return getProp(elem, name) !== undefined;
             },
 
             /**
@@ -3366,7 +3360,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             }
         });
     if (1 > 2) {
-        DOM.removeProp();
+        DOM.removeProp().hasProp();
     }
     return DOM;
 }, {
@@ -3926,7 +3920,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name];
+                    return cache[name] === undefined ? null : cache[name];
                 } else {
                     return cache;
                 }
@@ -3973,7 +3967,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name];
+                    return cache[name] === undefined ? null : cache[name];
                 } else {
                     return cache;
                 }

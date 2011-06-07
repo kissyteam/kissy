@@ -14,7 +14,6 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
         it("add works", function() {
             var x = $();
-           debugger
             var y = x.add("<div></div><p></p>");
 
             expect(x).not.toBe(y);
@@ -38,6 +37,20 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
 
             new Node("<div id='testDiv6' class='test-div'>ok5</div>").appendTo(document.body);
+
+
+            //data chained
+            expect(n.data("x")).toBe(null);
+            expect(n.data("x", "y")).toBe(n);
+            expect(n.data("x")).toBe("y");
+
+            //attr chained
+            expect(n.attr("test")).toBe(null);
+            expect(n.attr("test", "xx")).toBe(n);
+            expect(n.attr("test")).toBe("xx");
+            expect(n.hasAttr("test")).toBe(true);
+
+
         });
 
 

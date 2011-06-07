@@ -53,7 +53,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name];
+                    return cache[name] === undefined ? null : cache[name];
                 } else {
                     return cache;
                 }
@@ -100,7 +100,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name];
+                    return cache[name] === undefined ? null : cache[name];
                 } else {
                     return cache;
                 }

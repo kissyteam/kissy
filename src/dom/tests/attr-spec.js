@@ -76,6 +76,7 @@ KISSY.use("dom", function(S, DOM) {
 
             it("should return selected correctly", function() {
                 expect(DOM.attr(opt, "selected")).toBe("selected");
+                expect(DOM.prop(opt, "selected")).toBe(true);
             });
 
 
@@ -291,6 +292,16 @@ KISSY.use("dom", function(S, DOM) {
             });
         });
 
+
+        describe("prop", function() {
+            it("should works", function() {
+                var d = DOM.create("<input type='checkbox' checked='checked'>");
+                expect(DOM.prop(d, 'checked')).toBe(true);
+                expect(DOM.prop(d, 'checked2')).toBe(null);
+                expect(DOM.hasProp(d, 'checked')).toBe(true);
+                expect(DOM.hasProp(d, 'checked2')).toBe(false);
+            });
+        });
         runs(function() {
             //S.get('#test-data').innerHTML = '';
         });

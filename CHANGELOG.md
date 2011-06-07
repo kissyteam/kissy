@@ -14,7 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
- - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked 等属性返回 "checked"
+ - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked"，增加 prop 方法 ，返回 prop('checked')==true
  - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
  - [*] Node 与 NodeList 合一
  - [!] DOM 参数中不可以传入 KISSY Node 或 KISSY NodeList 类型

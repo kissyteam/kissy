@@ -34,17 +34,17 @@ KISSY.use("dom", function(S, DOM) {
 
 
         it("removeData should works", function() {
-            var foo = document.body.appendChild(DOM.create("<div>"))
+            var foo = document.body.appendChild(DOM.create("<div>"));
             DOM.data(foo, 'data', 'val');
             DOM.removeData(foo, 'data');
-            expect(DOM.data(foo, 'data')).toBe(undefined);
+            expect(DOM.data(foo, 'data')).toBe(null);
             //expect(DOM.data('#foo2')).toBe(null);
 
             DOM.data(window, 'data', 'val');
 
             DOM.removeData(window, 'data');
 
-            expect(DOM.data(window, 'data')).toBe(undefined);
+            expect(DOM.data(window, 'data')).toBe(null);
             expect(DOM.hasData(window)).toBe(false);
 
             // 返回空对象
