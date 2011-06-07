@@ -13,6 +13,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
+            // no chain ,need data returned
             return Event.fire(this, type, eventData);
         },
 

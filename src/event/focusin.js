@@ -18,7 +18,7 @@ KISSY.add('event/focusin', function(S, Event, EventObject) {
                     }
                 },
 
-                teardown:function() {
+                tearDown:function() {
                     if (--attaches === 0) {
                         document.removeEventListener(o.fix, handler, true);
                     }
@@ -38,6 +38,9 @@ KISSY.add('event/focusin', function(S, Event, EventObject) {
     });
 
 /**
+ * 承玉:2011-06-07
+ * - refactor to jquery , 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+ *
  * NOTES:
  *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */

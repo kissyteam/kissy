@@ -5,7 +5,6 @@
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
-        isNodeList = DOM._isNodeList,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -38,79 +37,86 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
         EVENT_GUID: EVENT_GUID,
 
-        // such as: { 'mouseenter' : { fix: 'mouseover', handle: fn } }
+        // such as: { 'mouseenter' : { setup:fn ,tearDown:fn} }
         special: { },
 
         /**
          * Adds an event listener.
-         * @param target {Element} An element or custom EventTarget to assign the listener to.
+         * @param targets KISSY selector
          * @param type {String} The type of event to append.
          * @param fn {Function} The event handler.
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
-        add: function(target, type, fn, scope /* optional */) {
-            if (batch('add', target, type, fn, scope)) {
+        add: function(targets, type, fn, scope /* optional */) {
+            if (batchForType('add', targets, type, fn, scope)) {
                 return;
             }
 
+            DOM.query(targets).each(function(target) {
+                var isNativeEventTarget = !target.isCustomEventTarget,
+                    special,
+                    events,
+                    eventHandle,
+                    eventDesc;
 
-            var isNativeEventTarget = !target.isCustomEventTarget,
-                special,
-                events,
-                eventHandle,
-                eventDesc;
-
-            // 不是有效的 target 或 参数不对
-            if (!target ||
-                !type ||
-                !S.isFunction(fn) ||
-                (!isNativeEventTarget && !isValidTarget(target))) {
-                return;
-            }
+                // 不是有效的 target 或 参数不对
+                if (!target ||
+                    !type ||
+                    !S.isFunction(fn) ||
+                    (!isNativeEventTarget && !isValidTarget(target))) {
+                    return;
+                }
 
 
-            // 获取事件描述
-            eventDesc = DOM.data(target, EVENT_GUID);
-            if (!eventDesc) {
-                DOM.data(target, EVENT_GUID, eventDesc = {});
-            }
-            //事件 listeners 
-            events = eventDesc.events = eventDesc.events || {};
-            events[type] = events[type] || [];
-            eventHandle = eventDesc.handler;
+                // 获取事件描述
+                eventDesc = DOM.data(target, EVENT_GUID);
+                if (!eventDesc) {
+                    DOM.data(target, EVENT_GUID, eventDesc = {});
+                }
+                //事件 listeners
+                events = eventDesc.events = eventDesc.events || {};
+                eventHandle = eventDesc.handler;
 
-            // 该元素没有 handler
-            if (!eventHandle) {
-                eventHandle = eventDesc.handler = function(event, data) {
-                    var target = eventHandle.target;
-                    if (!event || !event.fixed) {
-                        event = new EventObject(target, event);
+                // 该元素没有 handler
+                if (!eventHandle) {
+                    eventHandle = eventDesc.handler = function(event, data) {
+                        var target = eventHandle.target;
+                        if (!event || !event.fixed) {
+                            event = new EventObject(target, event);
+                        }
+                        if (S.isPlainObject(data)) {
+                            S.mix(event, data);
+                        }
+                        return Event._handle(target, event);
+                    };
+                    eventHandle.target = target;
+                }
+
+                var handlers = events[type];
+                special = Event.special[type] || {};
+
+                if (!handlers) {
+                    handlers = events[type] = [];
+                    if ((!special.setup || special.setup.call(target) === false) && isNativeEventTarget) {
+                        simpleAdd(target, type, eventHandle)
                     }
-                    if (S.isPlainObject(data)) {
-                        S.mix(event, data);
-                    }
-                    return Event._handle(target, event);
-                };
-                eventHandle.target = target;
-            }
+                }
+                // 增加 listener
+                handlers.push({fn: fn, scope: scope || target});
 
-            special = Event.special[type] || {};
-
-
-            if ((!special.setup || special.setup(eventHandle) === false) && isNativeEventTarget) {
-                simpleAdd(target, type, eventHandle)
-            }
-            // 增加 listener
-            events[type].push({fn: fn, scope: scope || target});
-
-            //nullify to prevent memory leak in ie ?
-            target = null;
+                //nullify to prevent memory leak in ie ?
+                target = null;
+            });
+            targets = null;
+            scope = null;
+            fn = null;
         },
 
         __getListeners:function(target, type) {
             var events = Event.__getEvents(target) || {};
             return events[type] || [];
         },
+
         __getEvents:function(target) {
             // 获取事件描述
             var eventDesc = DOM.data(target, EVENT_GUID);
@@ -120,74 +126,73 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         /**
          * Detach an event or set of events from an element.
          */
-        remove: function(target, type /* optional */, fn /* optional */, scope /* optional */) {
-            if (batch('remove', target, type, fn, scope)) {
+        remove: function(targets, type /* optional */, fn /* optional */, scope /* optional */) {
+            if (batchForType('remove', targets, type, fn, scope)) {
                 return;
             }
 
-            var events = Event.__getEvents(target),
-                eventsType,
-                listeners,
-                len,
-                i,
-                j,
-                t,
-                isNativeEventTarget = !target.isCustomEventTarget,
-                special = (isNativeEventTarget && Event.special[type]) || { };
-            if (!target ||
-                (!isNativeEventTarget && !isValidTarget(target)) ||
-                events === undefined) {
-                return;
-            }
-            // remove all types of event
-            if (type === undefined) {
-                for (type in events) {
-                    Event.remove(target, type, undefined, undefined);
+            DOM.query(targets).each(function(target) {
+                var eventDesc = DOM.data(target, EVENT_GUID),
+                    events = eventDesc && eventDesc.events,
+                    listeners,
+                    len,
+                    i,
+                    j,
+                    t,
+                    isNativeEventTarget = !target.isCustomEventTarget,
+                    special = (isNativeEventTarget && Event.special[type]) || { };
+                if (!target ||
+                    (!isNativeEventTarget && !isValidTarget(target)) ||
+                    events === undefined) {
+                    return;
                 }
-                return;
-            }
-
-            scope = scope || target;
-
-            if ((listeners = events[type])) {
-
-                len = listeners.length;
-                // 移除 fn
-                if (S.isFunction(fn) && len) {
-                    for (i = 0,j = 0,t = []; i < len; ++i) {
-                        if (fn !== listeners[i].fn
-                            || scope !== listeners[i].scope) {
-                            t[j++] = listeners[i];
-                        }
+                // remove all types of event
+                if (type === undefined) {
+                    for (type in events) {
+                        Event.remove(target, type, undefined, undefined);
                     }
-                    events[type] = t;
-                    len = t.length;
+                    return;
                 }
 
-                // remove(el, type) or fn 已移除光
-                if (fn === undefined || len === 0) {
-                    if (!target.isCustomEventTarget) {
-                        special = Event.special[type] || { };
-                        if (!special.teardown || special.teardown(target) === false) {
-                            simpleRemove(target, special.fix || type, eventsType.handle);
+                scope = scope || target;
+
+                if ((listeners = events[type])) {
+
+                    len = listeners.length;
+                    // 移除 fn
+                    if (S.isFunction(fn) && len) {
+                        for (i = 0,j = 0,t = []; i < len; ++i) {
+                            if (fn !== listeners[i].fn
+                                || scope !== listeners[i].scope) {
+                                t[j++] = listeners[i];
+                            }
                         }
+                        events[type] = t;
+                        len = t.length;
                     }
-                    delete events[type];
+
+                    // remove(el, type) or fn 已移除光
+                    if (fn === undefined || len === 0) {
+                        if (isNativeEventTarget) {
+                            if (!special['tearDown'] || special['tearDown'].call(target) === false) {
+                                simpleRemove(target, type, eventDesc.handler);
+                            }
+                        }
+                        delete events[type];
+                    }
                 }
-            }
 
-            // remove expando
-            if (S.isEmptyObject(events)) {
-                var eventDesc = DOM.data(target, EVENT_GUID);
-                if (eventDesc) {
-                    eventDesc.handler.target = null;
-                    delete eventDesc.handler;
-                    delete eventDesc.events;
-                    DOM.removeData(target, EVENT_GUID);
+                // remove expando
+                if (S.isEmptyObject(events)) {
+
+                    if (eventDesc) {
+                        eventDesc.handler.target = null;
+                        delete eventDesc.handler;
+                        delete eventDesc.events;
+                        DOM.removeData(target, EVENT_GUID);
+                    }
                 }
-            }
-
-
+            });
         },
 
         _handle: function(target, event) {
@@ -239,8 +244,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 eventData.type = eventType;
                 if (!isNativeEventTarget) {
                     var eventDesc = DOM.data(this, Event.EVENT_GUID);
-                    if (eventDesc && S.isFunction(eventDesc.handle)) {
-                        ret = eventDesc.handle(undefined, eventData);
+                    if (eventDesc && S.isFunction(eventDesc.handler)) {
+                        ret = eventDesc.handler(undefined, eventData);
                     }
                 } else {
                     if (!isValidTarget(target)) {
@@ -301,20 +306,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     Event.on = Event.add;
     Event.detach = Event.remove;
 
-    function batch(methodName, targets, types, fn, scope) {
-        // on('#id tag.className', type, fn)
-        if (S.isString(targets)) {
-            targets = DOM.query(targets);
-        }
-
-        // on([targetA, targetB], type, fn)
-        if (S.isArray(targets) || isNodeList(targets)) {
-            S.each(targets, function(target) {
-                Event[methodName](target, types, fn, scope);
-            });
-            return true;
-        }
-
+    function batchForType(methodName, targets, types, fn, scope) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             S.each(types.split(SPACE), function(type) {
@@ -352,5 +344,4 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
  *   - target 为 window, iframe 等特殊对象时的 test case
- *   - special events 的 teardown 方法缺失，需要做特殊处理
  */

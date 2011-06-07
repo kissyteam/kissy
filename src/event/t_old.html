@@ -1,0 +1,27 @@
+<div id="div2">
+    <div id="div1">
+        <input id="input1"/>
+    </div>
+</div>
+<script src="http://a.tbcdn.cn/s/kissy/1.1.6/kissy.js"></script>
+
+<script type="text/javascript">
+    KISSY.use("event", function(S, Event) {
+        Event = S.Event;
+        Event.on("#div1", "focusin", function() {
+            console.log(1);
+        });
+
+        Event.on("#div1", "focusout", function() {
+            console.log(2);
+        });
+
+        Event.on("#div2", "focusin", function() {
+            console.log(11);
+        });
+
+        Event.on("#div2", "focusout", function() {
+            console.log(22);
+        });
+    });
+</script>

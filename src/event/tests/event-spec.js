@@ -3,7 +3,7 @@
  * @author  gonghao<gonghao@ghsky.com>
  */
 KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
-    var EventTarget =Event.Target,
+    var EventTarget = Event.Target,
         Node = N,NodeList = N.List;
     describe('event', function() {
 
@@ -368,7 +368,8 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
 
         describe('focusin and focusout', function() {
 
-            it('should trigger the focusin/focusout event on the proper element, and support bubbling.', function() {
+            it('should trigger the focusin/focusout event on the proper element, ' +
+                'and support bubbling with correct order.', function() {
                 var container = DOM.get('#test-focusin'), input = DOM.get('input', container);
 
                 // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
@@ -377,7 +378,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                     result.push(HAPPENED);
                 });
                 Event.on(input, 'focusin focusout', function() {
-                    result.push(HAPPENED);
+                    result.push(HAPPENED + "_inner");
                 });
 
                 // focus the input element
@@ -387,7 +388,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
                 waits(0);
                 runs(function() {
-                    expect(result.join(SEP)).toEqual([HAPPENED, HAPPENED].join(SEP));
+                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
                 });
 
                 // blur the input element
@@ -397,7 +398,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
                 waits(0);
                 runs(function() {
-                    expect(result.join(SEP)).toEqual([HAPPENED, HAPPENED].join(SEP));
+                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
                 });
             });
 
@@ -486,10 +487,10 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 }
 
                 S.augment(Dog, EventTarget, {
-                    run: function() {
-                        this.fire('running', {speed: SPEED});
-                    }
-                });
+                        run: function() {
+                            this.fire('running', {speed: SPEED});
+                        }
+                    });
 
                 dog = new Dog(NAME);
                 dog.on('running', function(ev) {

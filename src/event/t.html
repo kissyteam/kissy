@@ -1,6 +1,10 @@
-<div id="div1">
-    <input id="input1"/>
+<div id="div2">
+    <div id="div1">
+        <input id="input1"/>
+    </div>
 </div>
+
+<button id="x">stop monitor</button>
 <script src="../../build/seed.js"></script>
 <script src="../../build/ua.js"></script>
 <script src="../../build/dom.js"></script>
@@ -8,8 +12,10 @@
 <script src="object.js"></script>
 <script src="target.js"></script>
 <script src="focusin.js"></script>
+<script src="mouseenter.js"></script>
+<script src="valuechange.js"></script>
 <script type="text/javascript">
-    KISSY.use("event/focusin", function(S, Event) {
+    KISSY.use("event/focusin,event/mouseenter,event/valuechange", function(S, Event) {
         Event.on("#div1", "focusin", function() {
             console.log(1);
         });
@@ -17,5 +23,29 @@
         Event.on("#div1", "focusout", function() {
             console.log(2);
         });
+
+        Event.on("#div2", "focusin", function() {
+            console.log(11);
+        });
+
+        Event.on("#div2", "focusout", function() {
+            console.log(22);
+        });
+
+
+        Event.on("#div2", "mouseenter", function() {
+            console.log("mouseenter");
+        });
+
+        Event.on("#div2", "mouseleave", function() {
+            console.log("mouseleave");
+        });
+
+
+        Event.on("#input1", "valueChange", function(e) {
+            console.log(e.prevVal + ":" + e.newVal + ":" + this.value);
+        });
+
+
     });
 </script>

@@ -14,6 +14,8 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [+] event 增加 valuechange ,hashchange 事件兼容处理
+ - [x] 修正 focusin/out 事件触发顺序,子元素先，父元素后
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked"，增加 prop 方法 ，返回 prop('checked')==true
  - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
  - [*] Node 与 NodeList 合一

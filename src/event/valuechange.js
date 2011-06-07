@@ -13,13 +13,11 @@
  * @author:yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
-    var VALUE_CHANGE = "valueChange";
-
-
-    var KEY = "event/valuechange";
-    var history = {};
-    var poll = {};
-    var interval = 50;
+    var VALUE_CHANGE = "valueChange",
+        KEY = "event/valuechange",
+        history = {},
+        poll = {},
+        interval = 50;
 
     function timestamp(node) {
         var r = DOM.data(node, KEY);
@@ -59,10 +57,10 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
             var v = target.value;
             if (v !== history[t]) {
                 Event._handle(target, {
-                    type:VALUE_CHANGE,
-                    preVal:history[t],
-                    newVal:v
-                });
+                        type:VALUE_CHANGE,
+                        prevVal:history[t],
+                        newVal:v
+                    });
                 history[t] = v;
             }
             poll[t] = setTimeout(arguments.callee, interval);
@@ -95,20 +93,21 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
     Event.special[VALUE_CHANGE] = {
         //no corresponding dom event needed
         fix: false,
-        init: function(target) {
-            var nodeName = target.nodeName.toLowerCase();
+        setup: function() {
+            var target = this,
+                nodeName = target.nodeName.toLowerCase();
             if ("input" == nodeName
-                || "textarea" == nodeName)
+                || "textarea" == nodeName) {
                 monitor(target);
-        },
-        destroy: function(target, type) {
-            var events = Event.__getEvents(target);
-            //this target's all handlers for valueChange are gone
-            if (!events[type]) {
-                unmonitored(target);
             }
+        },
+        tearDown: function(target) {
+            target = this;
+            unmonitored(target);
         }
     };
+
+    return Event;
 }, {
-    requires:["event/base","dom"]
-});
+        requires:["./base","dom"]
+    });
