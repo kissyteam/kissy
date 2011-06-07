@@ -1,0 +1,21 @@
+<div id="div1">
+    <input id="input1"/>
+</div>
+<script src="../../build/seed.js"></script>
+<script src="../../build/ua.js"></script>
+<script src="../../build/dom.js"></script>
+<script src="base.js"></script>
+<script src="object.js"></script>
+<script src="target.js"></script>
+<script src="focusin.js"></script>
+<script type="text/javascript">
+    KISSY.use("event/focusin", function(S, Event) {
+        Event.on("#div1", "focusin", function() {
+            console.log(1);
+        });
+
+        Event.on("#div1", "focusout", function() {
+            console.log(2);
+        });
+    });
+</script>

@@ -210,7 +210,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 runs(function() {
 
                     Node.one('#link-test-this').on('click', function() {
-                        ret = this;
+                        ret = Node.one(this);
                     });
                     simulate('#link-test-this', 'click');
                 });
@@ -220,7 +220,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 // NodeList
                 runs(function() {
                     NodeList.all('#link-test-this-all span').on('click', function() {
-                        ret = this;
+                        ret = Node.one(this);
                     });
                     simulate('#link-test-this-all-span', 'click');
                 });
