@@ -192,8 +192,8 @@ build time: ${build.time}
 */
 /*
  * @module kissy
- * @author lifesinger@gmail.com
- * @descript a seed where kissy grow up from , kiss yeah !
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @descript a seed where kissy grows up from , kiss yeah !
  */
 (function(S, undefined) {
 
@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110608145107',
+        buildTime:'20110608212512',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3626,8 +3626,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             _creators: {
                 div: function(html, ownerDoc) {
                     var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                    frag.innerHTML = html;
-                    return frag;
+                    // html 为 <style></style> 时不行，必须有其他元素？
+                    frag.innerHTML = "w<div>" + html + "</div>";
+                    return frag.lastChild;
                 }
             },
 

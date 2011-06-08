@@ -1041,8 +1041,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             _creators: {
                 div: function(html, ownerDoc) {
                     var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                    frag.innerHTML = html;
-                    return frag;
+                    // html 为 <style></style> 时不行，必须有其他元素？
+                    frag.innerHTML = "w<div>" + html + "</div>";
+                    return frag.lastChild;
                 }
             },
 
