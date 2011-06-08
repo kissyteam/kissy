@@ -102,24 +102,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             }
         },
         propHooks = {},
-        // get attribute value from attribute node
+        // get attribute value from attribute node , only for ie
         attrNodeHook = {
-            get: function(elem, name) {
-                var ret;
-                ret = elem.getAttributeNode(name);
-                // Return undefined if nodeValue is empty string
-                return ret && ret.nodeValue !== "" ?
-                    ret.nodeValue :
-                    null;
-            },
-            set: function(elem, value, name) {
-                // Check form objects in IE (multiple bugs related)
-                // Only use nodeValue if the attribute node exists on the form
-                var ret = elem.getAttributeNode(name);
-                if (ret) {
-                    ret.nodeValue = value;
-                }
-            }
         },
         valHooks = {
             option: {
@@ -170,8 +154,30 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             }};
 
     if (oldIE) {
-        // ie6,7 不区分 attribute 与 property
-        attrFix = propFix;
+
+        // get attribute value from attribute node for ie
+        attrNodeHook = {
+            get: function(elem, name) {
+                var ret;
+                ret = elem.getAttributeNode(name);
+                // Return undefined if nodeValue is empty string
+                return ret && ret.nodeValue !== "" ?
+                    ret.nodeValue :
+                    null;
+            },
+            set: function(elem, value, name) {
+                // Check form objects in IE (multiple bugs related)
+                // Only use nodeValue if the attribute node exists on the form
+                var ret = elem.getAttributeNode(name);
+                if (ret) {
+                    ret.nodeValue = value;
+                }
+            }
+        },
+
+
+            // ie6,7 不区分 attribute 与 property
+            attrFix = propFix;
         // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
         attrHooks.tabIndex = attrHooks.tabindex;
         // fix ie bugs
@@ -210,7 +216,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     function getProp(elem, name) {
         name = propFix[ name ] || name;
         var hook = propHooks[ name ];
-        if (!elem) return;
+        if (!elem) return undefined;
         if (hook && hook.get) {
             return hook.get(elem, name);
 
@@ -305,7 +311,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                 if (rboolean.test(name)) {
                     attrNormalizer = boolHook;
-                } else if (rinvalidChar.test(name)) {
+                }
+                // only old ie?
+                else if (rinvalidChar.test(name)) {
                     attrNormalizer = attrNodeHook;
                 } else {
                     attrNormalizer = attrHooks[name];
@@ -1336,7 +1344,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
     }
     return DOM;
 }, {
-        requires:["./base"]
+        requires:["./create"]
     });
 
 /**

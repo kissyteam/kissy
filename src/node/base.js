@@ -2,7 +2,7 @@
  * definition for node and nodelist
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add("node/base", function(S, DOM, Event, undefined) {
+KISSY.add("node/base", function(S, DOM, undefined) {
 
     var AP = Array.prototype;
 
@@ -51,13 +51,8 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
         return undefined;
     }
 
-    S.augment(NodeList, Event.Target, {
+    S.augment(NodeList, {
 
-            isCustomEventTarget:false,
-            /**
-             * 模拟事件触发，暂不实现
-             */
-            fire:null,
             /**
              * 默认长度为 0
              */
@@ -170,7 +165,7 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
     }
     return NodeList;
 }, {
-        requires:["dom","event"]
+        requires:["dom"]
     });
 
 

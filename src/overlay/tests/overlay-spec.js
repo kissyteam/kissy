@@ -2,24 +2,24 @@
  * testcases for overlay
  * @author:yiminghe@gmail.com
  */
-KISSY.use("overlay,dd,resizable", function(S, Overlay) {
+KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
     var DOM = S.DOM;
 
     beforeEach(function() {
         this.addMatchers({
-            toBeAlmostEqual: function(expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-            },
+                toBeEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                },
 
 
-            toBeEqual: function(expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-            },
+                toBeEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                },
 
-            toBeArrayEq:function(expected) {
-                var actual = this.actual;
-            }
-        });
+                toBeArrayEq:function(expected) {
+                    var actual = this.actual;
+                }
+            });
     });
 
     describe("overlay", function() {
@@ -29,9 +29,9 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
 
 
             var o = new Overlay({
-                srcNode:"#render",
-                width:400
-            });
+                    srcNode:"#render",
+                    width:400
+                });
 
 
             it("渲染前取不到 el 元素", function() {
@@ -53,13 +53,19 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
             });
 
             it("对齐居中有效", function() {
-
                 o.set("align", {
-                    points:['cc','cc']
-                });
+                        points:['cc','cc']
+                    });
+
                 o.show();
+
                 expect(parseInt(o.get("el").css("left")))
-                    .toBeAlmostEqual(Math.ceil((DOM.viewportHeight() - o.get("el")[0].offsetHeight) / 2));
+                    .toBeEqual(Math.ceil((DOM.viewportWidth()
+                    - o.get("el")[0].offsetWidth) / 2));
+
+                expect(parseInt(o.get("el").css("top")))
+                    .toBeEqual(Math.ceil((DOM.viewportHeight()
+                    - o.get("el")[0].offsetHeight) / 2));
 
             });
 
@@ -91,8 +97,8 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
 
                 //o.move(100, 150);
 
-                expect(o.get("el").css("left")).toBeAlmostEqual("100px");
-                expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeAlmostEqual(150);
+                expect(o.get("el").css("left")).toBeEqual("100px");
+                expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeEqual(150);
 
             });
 
@@ -103,13 +109,13 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
 
 
             var o = new Overlay({
-                width:400,
-                elCls:"popup",
-                resize:{
-                    handlers:["t"]
-                },
-                content:"render by javascript"
-            });
+                    width:400,
+                    elCls:"popup",
+                    resize:{
+                        handlers:["t"]
+                    },
+                    content:"render by javascript"
+                });
 
 
             it("渲染前取不到 el 元素", function() {
@@ -133,11 +139,18 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
             it("对齐居中有效", function() {
 
                 o.set("align", {
-                    points:['cc','cc']
-                });
+                        points:['cc','cc']
+                    });
                 o.show();
+
                 expect(parseInt(o.get("el").css("left")))
-                    .toBeAlmostEqual(Math.ceil((DOM.viewportHeight() - o.get("el")[0].offsetHeight) / 2));
+                    .toBeEqual(Math.ceil((DOM.viewportWidth()
+                    - o.get("el")[0].offsetWidth) / 2));
+
+
+                expect(parseInt(o.get("el").css("top")))
+                    .toBeEqual(Math.ceil((DOM.viewportHeight()
+                    - o.get("el")[0].offsetHeight) / 2));
 
             });
 
@@ -169,22 +182,24 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
 
                 //o.move(100, 150);
 
-                expect(o.get("el").css("left")).toBeAlmostEqual("300px");
-                expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeAlmostEqual(350);
+                expect(o.get("el").css("left")).toBeEqual("300px");
+                expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeEqual(350);
 
             });
 
 
             it("应该能够调节大小", function() {
+                // ie9 测试不了
+                if (UA.ie == 9) return;
                 var h = o.get("el").one(".ke-resizehandler-t"),
                     height = o.get("el")[0].offsetHeight;
                 var hxy = h.offset();
                 S.log(hxy);
 
                 jasmine.simulate(h[0], "mousedown", {
-                    clientX:hxy.left + 2 ,
-                    clientY:hxy.top + 2
-                });
+                        clientX:hxy.left + 2 ,
+                        clientY:hxy.top + 2
+                    });
 
                 waits(300);
 
@@ -192,9 +207,9 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX: hxy.left - 100,
-                        clientY:hxy.top - 100
-                    });
+                            clientX: hxy.left - 100,
+                            clientY:hxy.top - 100
+                        });
 
                 });
 
@@ -225,11 +240,11 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
         describe("从页面中取得已渲染元素", function() {
 
             var d = new Dialog({
-                srcNode:"#drender",
-                width:200,
-                drag:true,
-                constrain:true
-            });
+                    srcNode:"#drender",
+                    width:200,
+                    drag:true,
+                    constrain:true
+                });
 
             d.render();
             d.center();
@@ -250,13 +265,13 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
         describe("完全由 javascript 创建", function() {
 
             var d = new Dialog({
-                headerContent:"头",
-                bodyContent:"体",
-                footerContent:"尾",
-                width:200,
-                drag:true,
-                constrain:true
-            });
+                    headerContent:"头",
+                    bodyContent:"体",
+                    footerContent:"尾",
+                    width:200,
+                    drag:true,
+                    constrain:true
+                });
 
             d.render();
             d.center();
@@ -272,14 +287,15 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
             });
 
             it("应该可以拖动", function() {
+                if (UA.ie == 9) return;
 
                 var xy = d.get("xy");
 
 
                 jasmine.simulate(d.get("header")[0], "mousedown", {
-                    clientX: xy[0] + 10,
-                    clientY:xy[1] + 10
-                });
+                        clientX: xy[0] + 10,
+                        clientY:xy[1] + 10
+                    });
 
                 waits(300);
 
@@ -287,9 +303,9 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX: xy[0] + 100,
-                        clientY:xy[1] + 100
-                    });
+                            clientX: xy[0] + 100,
+                            clientY:xy[1] + 100
+                        });
 
                 });
 
@@ -310,13 +326,15 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
 
 
             it("只能在当前视窗范围拖动", function() {
+                if (UA.ie == 9) return;
+
                 var xy = d.get("xy");
 
 
                 jasmine.simulate(d.get("header")[0], "mousedown", {
-                    clientX: xy[0] + 10,
-                    clientY:xy[1] + 10
-                });
+                        clientX: xy[0] + 10,
+                        clientY:xy[1] + 10
+                    });
 
                 waits(300);
 
@@ -324,9 +342,9 @@ KISSY.use("overlay,dd,resizable", function(S, Overlay) {
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX: xy[0] + DOM.viewportWidth(),
-                        clientY:xy[1] + DOM.viewportHeight()
-                    });
+                            clientX: xy[0] + DOM.viewportWidth(),
+                            clientY:xy[1] + DOM.viewportHeight()
+                        });
 
                 });
 

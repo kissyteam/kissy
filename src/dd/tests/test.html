@@ -238,6 +238,16 @@ for delegate-spec.js
 
 <script>
     KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
+        if (UA.ie == 9) {
+
+            if (parent && parent.jasmine.kissyNext) {
+                parent.jasmine.kissyNext(0);
+            }
+
+            // ie9 模拟鼠标拖放有问题
+            return;
+        }
+
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute(function() {
             if (parent && parent.jasmine.kissyNext) {

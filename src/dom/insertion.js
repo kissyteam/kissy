@@ -82,7 +82,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
     }
     return DOM;
 }, {
-        requires:["./base"]
+        requires:["./create"]
     });
 
 /**

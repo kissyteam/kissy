@@ -5,7 +5,60 @@
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
-        isNodeList = DOM._isNodeList;
+        isNodeList = DOM._isNodeList,
+        // DOM 添加到 NP 上的方法
+        DOM_INCLUDES = [
+            "equals",
+            "contains",
+            "scrollTop",
+            "scrollLeft",
+            "height",
+            "width",
+            "addStyleSheet",
+            "append",
+            "appendTo",
+            "prepend",
+            "prependTo",
+            "insertBefore",
+            "before",
+            "after",
+            "insertAfter",
+            "filter",
+            "test",
+            "hasClass",
+            "addClass",
+            "removeClass",
+            "replaceClass",
+            "toggleClass",
+            "removeAttr",
+            "attr",
+            "hasAttr",
+            "prop",
+            "hasProp",
+            "val",
+            "text",
+            "css",
+            "show",
+            "hide",
+            "toggle",
+            "offset",
+            "scrollIntoView",
+            "parent",
+            "next",
+            "prev",
+            "siblings",
+            "children",
+            "html",
+            "remove",
+            "removeData",
+            "hasData",
+            // 返回值不一定是 nodelist ，特殊处理
+            // "data",
+            "unselectable"
+        ],
+        // Event 添加到 NP 上的方法
+        EVENT_INCLUDES = ["on","detach","fire"];
+
 
     function normalize(val, node, nodeList) {
         // 链式操作
@@ -15,17 +68,6 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             val = null;
         } else if (nodeList
             && (val.nodeType || isNodeList(val) || S.isArray(val))) {
-
-//            if (val.nodeType) {
-//                val = [val];
-//            }
-//            //返回结果和自己相同，不用新建
-//            if (DOM.equals(val, node)) {
-//                val = node;
-//            } else {
-//                val = new NodeList(val);
-//            }
-
             // 包装为 KISSY NodeList
             val = new NodeList(val);
         }
@@ -52,39 +94,21 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         }
     };
 
-    //不能添加到 NP 的方法
-    var excludes = [
-        "_isElementNode",
-        "_getWin",
-        "_getComputedStyle",
-        "_isNodeList",
-        "_nodeTypeIs",
-        "_nl2frag",
-        "create",
-        "get",
-        "query",
-        "data",
-        // allow
-        // $=Node.all
-        // $(window).height()/width()
-        // $(document).height()/width()
-        "viewportHeight",
-        "viewportWidth",
-        "docHeight",
-        "docWidth"
-    ];
-
-    S.each(DOM, function(v, k) {
-        if (DOM.hasOwnProperty(k)
-            && S.isFunction(v)
-            && !S.inArray(k, excludes)
-            ) {
-            NodeList.addMethod(k, v, DOM, true);
-        }
+    S.each(DOM_INCLUDES, function(k) {
+        var v = DOM[k];
+        NodeList.addMethod(k, v, DOM, true);
     });
 
     // data 不需要对返回结果转换 nodelist
     NodeList.addMethod("data", DOM.data, DOM);
+
+    S.each(EVENT_INCLUDES, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            args.unshift(this);
+            return Event[k].apply(Event, args);
+        }
+    });
 
 }, {
         requires:["dom","event","./base"]

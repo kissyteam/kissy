@@ -2,10 +2,10 @@
  * @module  event-focusin
  * @author  lifesinger@gmail.com
  */
-KISSY.add('event/focusin', function(S, Event, EventObject) {
+KISSY.add('event/focusin', function(S, UA, Event) {
 
     // 让非 IE 浏览器支持 focusin/focusout
-    if (document.addEventListener) {
+    if (!UA.ie) {
         S.each([
             { name: 'focusin', fix: 'focus' },
             { name: 'focusout', fix: 'blur' }
@@ -34,7 +34,7 @@ KISSY.add('event/focusin', function(S, Event, EventObject) {
     }
     return Event;
 }, {
-        requires:["./base","./object"]
+        requires:["ua","./base"]
     });
 
 /**

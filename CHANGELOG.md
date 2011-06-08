@@ -14,6 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/4/14)
+ - [*] 自定义事件 listeners 放入对象自身保存，避免内存泄露
  - [+] event 增加 valuechange ,hashchange 事件兼容处理
  - [x] 修正 focusin/out 事件触发顺序,子元素先，父元素后
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked"，增加 prop 方法 ，返回 prop('checked')==true
@@ -25,18 +26,18 @@ History:
  - [*] ie: dom opacity bug fix , border-width 数值归一化
  - [*] anim 提高性能，不重复 touch dom / css
  - [*] Event.detach = Event.remove
- - [*] KISSY.Overlay 增加 closeAction 配置, destroy or hide
- - [*] KISSY.Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
- - [x] KISSY.Suggest fix: IE9 下无法更新数据
- - [x] KISSY.Suggest fix: chrome 下光标鼠标移动问题
- - [*] KISSY.Accordion 增加 aria 配置
- - [*] KISSY.Carousel 增加 aria 配置
- - [*] KISSY.Tabs 增加 aria 配置
- - [*] KISSY.Overlay 增加 aria 配置, trap focus and keydown
+ - [*] Overlay 增加 closeAction 配置, destroy or hide
+ - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
+ - [x] Suggest fix: IE9 下无法更新数据
+ - [x] Suggest fix: chrome 下光标鼠标移动问题
+ - [*] Accordion 增加 aria 配置
+ - [*] Carousel 增加 aria 配置
+ - [*] Tabs 增加 aria 配置
+ - [*] Overlay 增加 aria 配置, trap focus and keydown
  - [*] KISSY.param/unparam 增加数组处理选项
  - [+] KISSY.getScript 支持 css 载入后调用回调
  - [+] KISSY.getScript 支持除了ie<9外的 error 立即回调
- - [x] KISSY Loader 初步重构，拆分文件
+ - [x] Loader 初步重构，拆分文件
  - [x] bugfix anim 内存泄露
  - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
  - [+] 增加 anim 单元测试

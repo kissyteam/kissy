@@ -51,7 +51,6 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
         _uiSetFocusable:function(v) {
             if (!this.get("disabled")) {
-
                 if (v) {
                 } else {
                     this.get("el").unselectable();

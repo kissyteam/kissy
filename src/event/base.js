@@ -49,21 +49,21 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
          */
         add: function(targets, type, fn, scope /* optional */) {
             if (batchForType('add', targets, type, fn, scope)) {
-                return;
+                return targets;
             }
 
             DOM.query(targets).each(function(target) {
                 var isNativeEventTarget = !target.isCustomEventTarget,
                     special,
                     events,
-                    eventHandle,
+                    eventHandler,
                     eventDesc;
 
                 // 不是有效的 target 或 参数不对
                 if (!target ||
                     !type ||
                     !S.isFunction(fn) ||
-                    (!isNativeEventTarget && !isValidTarget(target))) {
+                    (isNativeEventTarget && !isValidTarget(target))) {
                     return;
                 }
 
@@ -75,12 +75,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 }
                 //事件 listeners
                 events = eventDesc.events = eventDesc.events || {};
-                eventHandle = eventDesc.handler;
+                eventHandler = eventDesc.handler;
 
                 // 该元素没有 handler
-                if (!eventHandle) {
-                    eventHandle = eventDesc.handler = function(event, data) {
-                        var target = eventHandle.target;
+                if (!eventHandler) {
+                    eventHandler = eventDesc.handler = function(event, data) {
+                        var target = eventHandler.target;
                         if (!event || !event.fixed) {
                             event = new EventObject(target, event);
                         }
@@ -89,7 +89,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         }
                         return Event._handle(target, event);
                     };
-                    eventHandle.target = target;
+                    eventHandler.target = target;
                 }
 
                 var handlers = events[type];
@@ -98,7 +98,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 if (!handlers) {
                     handlers = events[type] = [];
                     if ((!special.setup || special.setup.call(target) === false) && isNativeEventTarget) {
-                        simpleAdd(target, type, eventHandle)
+                        simpleAdd(target, type, eventHandler)
                     }
                 }
                 // 增加 listener
@@ -107,9 +107,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 //nullify to prevent memory leak in ie ?
                 target = null;
             });
-            targets = null;
-            scope = null;
-            fn = null;
+            return targets;
         },
 
         __getListeners:function(target, type) {
@@ -128,7 +126,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
          */
         remove: function(targets, type /* optional */, fn /* optional */, scope /* optional */) {
             if (batchForType('remove', targets, type, fn, scope)) {
-                return;
+                return targets;
             }
 
             DOM.query(targets).each(function(target) {
@@ -143,7 +141,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     special = (isNativeEventTarget && Event.special[type]) || { };
                 if (!target ||
                     (!isNativeEventTarget && !isValidTarget(target)) ||
-                    events === undefined) {
+                    !events) {
                     return;
                 }
                 // remove all types of event
@@ -157,7 +155,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 scope = scope || target;
 
                 if ((listeners = events[type])) {
-
                     len = listeners.length;
                     // 移除 fn
                     if (S.isFunction(fn) && len) {
@@ -184,15 +181,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
                 // remove expando
                 if (S.isEmptyObject(events)) {
-
-                    if (eventDesc) {
-                        eventDesc.handler.target = null;
-                        delete eventDesc.handler;
-                        delete eventDesc.events;
-                        DOM.removeData(target, EVENT_GUID);
-                    }
+                    eventDesc.handler.target = null;
+                    delete eventDesc.handler;
+                    delete eventDesc.events;
+                    DOM.removeData(target, EVENT_GUID);
                 }
             });
+            return targets;
         },
 
         _handle: function(target, event) {
@@ -243,7 +238,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 eventData = eventData || {};
                 eventData.type = eventType;
                 if (!isNativeEventTarget) {
-                    var eventDesc = DOM.data(this, Event.EVENT_GUID);
+                    var eventDesc = DOM.data(target, EVENT_GUID);
                     if (eventDesc && S.isFunction(eventDesc.handler)) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
@@ -324,7 +319,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     }
 
     if (1 > 2) {
-        Event._simpleAdd()._simpleRemove();
+        Event._simpleAdd()._simpleRemove(Event.EVENT_GUID);
     }
 
     return Event;
