@@ -15,8 +15,6 @@ KISSY.add('switchable', function(S) {
         EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
         CLS_PREFIX = 'ks-switchable-';
 
-    var DOM_EVENT = {originalEvent:{target:1}};
-
     /**
      * Switchable Widget
      * attached members：
@@ -267,13 +265,13 @@ KISSY.add('switchable', function(S) {
                     (function(index) {
                         trigger = triggers[index];
 
-                        Event.on(trigger, 'click', function() {
-                            self._onFocusTrigger(index);
+                        Event.on(trigger, 'click', function(e) {
+                            self._onFocusTrigger(index,e);
                         });
 
                         if (cfg.triggerType === 'mouse') {
-                            Event.on(trigger, 'mouseenter', function() {
-                                self._onMouseEnterTrigger(index);
+                            Event.on(trigger, 'mouseenter', function(e) {
+                                self._onMouseEnterTrigger(index,e);
                             });
                             Event.on(trigger, 'mouseleave', function() {
                                 self._onMouseLeaveTrigger(index);
@@ -286,25 +284,25 @@ KISSY.add('switchable', function(S) {
             /**
              * click or tab 键激活 trigger 时触发的事件
              */
-            _onFocusTrigger: function(index) {
+            _onFocusTrigger: function(index,e) {
                 var self = this;
                 if (!self._triggerIsValid(index)) return; // 重复点击
 
                 this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-                self.switchTo(index, undefined, DOM_EVENT);
+                self.switchTo(index, undefined, {originalEvent:e.originalEvent});
             },
 
             /**
              * 鼠标悬浮在 trigger 上时触发的事件
              */
-            _onMouseEnterTrigger: function(index) {
+            _onMouseEnterTrigger: function(index,e) {
                 var self = this;
                 if (!self._triggerIsValid(index)) {
                     return;
                 } // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
 
                 self.switchTimer = S.later(function() {
-                    self.switchTo(index, undefined, DOM_EVENT);
+                    self.switchTo(index, undefined, {originalEvent:e.originalEvent});
                 }, self.config.delay * 1000);
             },
 

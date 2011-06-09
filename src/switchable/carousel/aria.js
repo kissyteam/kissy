@@ -39,7 +39,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         var triggers = self.triggers;
         var trigger = triggers[index];
 
-        var domEvent = !!ev.originalEvent.target;
+        var domEvent = !!(ev.originalEvent.target||ev.originalEvent.srcElement);
 
         // dom 事件触发
         if (domEvent

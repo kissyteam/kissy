@@ -56,6 +56,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
                 setTabIndex(panels[0], 0);
 
                 self.on("switch", function(ev) {
+                    var domEvent = !!(ev.originalEvent.target||ev.originalEvent.srcElement);
                     var index = ev.currentIndex,
                         last = self.completedIndex;
 
@@ -65,7 +66,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
                     setTabIndex(panels[index], 0);
 
                     //dom 触发的事件，自动聚焦
-                    if (ev.originalEvent.target) {
+                    if (domEvent) {
                         panels[index].focus();
                     }
                 });
