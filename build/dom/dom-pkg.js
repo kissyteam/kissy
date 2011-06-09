@@ -734,7 +734,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
-
+        rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
         RE_TAG = /<(\w+)/,
         // Ref: http://jmrware.com/articles/2010/jqueryregex/jQueryRegexes.html#note_05
         RE_SCRIPT = /<script([^>]*)>([^<]*(?:(?!<\/script>)<[^<]*)*)<\/script>/ig,
@@ -769,6 +769,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 }
                 // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
+                    // Fix "XHTML"-style tags in all browsers
+                    html = html.replace(rxhtmlTag, "<$1></$2>");
+                    
                     if ((m = RE_TAG.exec(html))
                         && (k = m[1])
                         && S.isFunction(creators[(k = k.toLowerCase())])) {
@@ -2483,13 +2486,19 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
+            closest:function(selector, filter, context) {
+                return nth(selector, filter, 'parentNode', function(elem) {
+                    return elem.nodeType != 11;
+                }, context, true);
+            },
+
             /**
              * Gets the parent node of the first matched element.
              */
-            parent: function(selector, filter) {
+            parent: function(selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function(elem) {
                     return elem.nodeType != 11;
-                });
+                }, context);
             },
 
             /**
@@ -2551,8 +2560,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             },
 
             equals:function(n1, n2) {
-                n1 = S.query(n1);
-                n2 = S.query(n2);
+                n1 = DOM.query(n1);
+                n2 = DOM.query(n2);
                 if (n1.length != n2.length) return false;
                 for (var i = n1.length; i >= 0; i--) {
                     if (n1[i] != n2[i]) return false;
@@ -2564,10 +2573,22 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn
     // direction 可为 parentNode, nextSibling, previousSibling
-    function nth(elem, filter, direction, extraFilter) {
+    // util : 到某个阶段不再查找直接返回
+    function nth(elem, filter, direction, extraFilter, until, includeSef) {
         if (!(elem = DOM.get(elem))) {
             return null;
         }
+        if (filter === 0) {
+            return elem;
+        }
+        if (!includeSef) {
+            elem = elem[direction];
+        }
+        if (!elem) {
+            return null;
+        }
+        until = (until && DOM.get(until)) || null;
+
         if (filter === undefined) {
             // 默认取 1
             filter = 1;
@@ -2576,11 +2597,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             fi,
             flen;
 
-        if (S.isNumber(filter)
-            && filter >= 0) {
-            if (filter === 0) {
-                return elem;
-            }
+        if (S.isNumber(filter)) {
             fi = 0;
             flen = filter;
             filter = function() {
@@ -2588,14 +2605,15 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             };
         }
 
-        while ((elem = elem[direction])) {
+
+        do {
             if (isElementNode(elem)
                 && (!filter || DOM.test(elem, filter))
                 && (!extraFilter || extraFilter(elem))) {
                 ret = elem;
                 break;
             }
-        }
+        } while (elem != until && (elem = elem[direction]));
 
         return ret;
     }

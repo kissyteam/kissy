@@ -22,15 +22,33 @@ KISSY.use("dom", function(S, DOM) {
                 }).className).toBe('test-p');
 
             expect(DOM.parent(document.body)).toBe(document.documentElement);
+
             expect(DOM.parent('#test_cases')).toBe(document.body);
+
             expect(DOM.parent(t, 0)).toBe(t);
 
             expect(DOM.parent()).toBe(null);
 
             expect(DOM.parent('#test-data', 'p')).toBe(null);
 
-
             expect(DOM.parent('#test-parent4', '.text-next')).toBe(null);
+        });
+
+
+        it("closest works", function() {
+            var t = DOM.get('#test-parent4');
+            // return itself
+            expect(DOM.closest(t, "a")).toBe(t);
+
+            // parent works
+            expect(DOM.closest(t, ".test-p")).toBe(DOM.get("#test-prev"));
+
+            // context works
+            expect(DOM.closest(t, ".test-parent", "#test-prev")).toBe(null);
+
+            expect(DOM.closest(t, ".test-parent")).toBe(DOM.get("#test-children"));
+
+            expect(DOM.closest(t, ".test-parent","#test-children")).toBe(DOM.get("#test-children"));
         });
 
 

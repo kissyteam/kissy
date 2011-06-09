@@ -11,7 +11,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc.createElement(DIV),
-
+        rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
         RE_TAG = /<(\w+)/,
         // Ref: http://jmrware.com/articles/2010/jqueryregex/jQueryRegexes.html#note_05
         RE_SCRIPT = /<script([^>]*)>([^<]*(?:(?!<\/script>)<[^<]*)*)<\/script>/ig,
@@ -46,6 +46,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 }
                 // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
+                    // Fix "XHTML"-style tags in all browsers
+                    html = html.replace(rxhtmlTag, "<$1></$2>");
+                    
                     if ((m = RE_TAG.exec(html))
                         && (k = m[1])
                         && S.isFunction(creators[(k = k.toLowerCase())])) {

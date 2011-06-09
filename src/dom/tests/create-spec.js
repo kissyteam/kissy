@@ -50,6 +50,10 @@ KISSY.use("dom", function(S, DOM) {
             // 属性支持
             expect(DOM.create('<p>', { rel: '-1', 'class': 'test-p', data: 'test'}).className).toBe('test-p');
 
+            expect(DOM.create("<a hideFocus=\'true\'  " +
+                "tabIndex=\'0\'  " +
+                "class=\'ke-triplebutton ke-triplebutton-off\' />")
+                .className).toBe("ke-triplebutton ke-triplebutton-off");
         });
 
         it("create should works for style with content in ie<8", function() {
@@ -57,8 +61,8 @@ KISSY.use("dom", function(S, DOM) {
             expect((style = DOM.create("<style>.styleie67 {width:99px;}</style>"))
                 .nodeName.toLowerCase()).toBe("style");
             DOM.append(d = DOM.create("<div class='styleie67'></style>"), document.body);
-            DOM.append(style,document.getElementsByTagName("head")[0]);
-            expect(DOM.css(d,"width")).toBe("99px");
+            DOM.append(style, document.getElementsByTagName("head")[0]);
+            expect(DOM.css(d, "width")).toBe("99px");
         });
 
 
