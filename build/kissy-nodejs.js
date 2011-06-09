@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110609135704',
+        buildTime:'20110609135928',
 
         /**
          * Returns a new object containing all of the properties of
@@ -6447,6 +6447,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "offset",
             "scrollIntoView",
             "parent",
+            "closest",
             "next",
             "prev",
             "siblings",

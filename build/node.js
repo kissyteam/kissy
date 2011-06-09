@@ -49,6 +49,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "offset",
             "scrollIntoView",
             "parent",
+            "closest",
             "next",
             "prev",
             "siblings",
