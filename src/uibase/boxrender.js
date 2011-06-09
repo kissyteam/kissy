@@ -9,14 +9,14 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     }
 
     S.mix(Box, {
-        APPEND:1,
-        INSERT:0
-    });
+            APPEND:1,
+            INSERT:0
+        });
 
     Box.ATTRS = {
         el: {
             //容器元素
-            setter:function(v) {               
+            setter:function(v) {
                 if (S.isString(v))
                     return Node.one(v);
             }
@@ -80,7 +80,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
         return "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
             + attrStr + (cls ? (" class='" + cls + "' ") : "")
-            + ">";
+            + "><" + "/" + tag + ">";
         //return ret;
     }
 
@@ -149,5 +149,5 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     return Box;
 }, {
-    requires:['node']
-});
+        requires:['node']
+    });

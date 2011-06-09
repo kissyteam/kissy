@@ -407,7 +407,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
             // 元素内触发的 mouseover/out 不能算 mouseenter/leave
             function withinElement(event) {
 
-                var parent = event.relatedTarget;
+                var self = this,
+                    parent = event.relatedTarget;
 
                 // 设置用户实际注册的事件名，触发该事件所对应的 listener 数组
                 event.type = o.name;
@@ -423,17 +424,18 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
                     }
 
                     // Traverse up the tree
-                    while (parent && parent !== this) {
-                        parent = parent.parentNode;
-                    }
+                    parent = DOM.closest(parent, function(item) {
+                        return item == self;
+                    });
 
-                    if (parent !== this) {
+                    if (parent !== self) {
                         // handle event if we actually just moused on to a non sub-element
-                        Event._handle(this, event);
+                        Event._handle(self, event);
                     }
 
                     // assuming we've left the element since we most likely mousedover a xul element
                 } catch(e) {
+                    S.log("withinElement :" + e);
                 }
             }
 

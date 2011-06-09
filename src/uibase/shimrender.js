@@ -27,7 +27,7 @@ KISSY.add("uibase/shimrender", function(S, Node) {
                     "filter: alpha(opacity=0);" +
                     "left: 0;" +
                     "z-index: -1;" +
-                    "height: expression(this.parentNode.offsetHeight);" + "'>");
+                    "height: expression(this.parentNode.offsetHeight);" + "'/>");
                 el.prepend(self.__shimEl);
             } else if (!v && self.__shimEl) {
                 self.__shimEl.remove();

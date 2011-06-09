@@ -26,6 +26,7 @@ History:
  - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
  - [!] DOM 所有读操作如果返回 undefined 现在返回 null
  - [*] ie: dom opacity bug fix , border-width 数值归一化
+ - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
  - [*] Node 与 NodeList 合一

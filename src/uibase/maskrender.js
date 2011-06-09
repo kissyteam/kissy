@@ -16,7 +16,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
         mask = new Node("<div " +
             //"tabindex='-1' " +
             "class='" +
-            this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
+            this.get("prefixCls") + "ext-mask'/>").prependTo(document.body);
         mask.css({
                 "position":"absolute",
                 left:0,
@@ -35,7 +35,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
                 "width:" + DOM['docWidth']() + "px;" +
                 "height:" + DOM['docHeight']() + "px;" +
                 "filter:alpha(opacity=0);" +
-                "z-index:-1;'>").insertBefore(mask)
+                "z-index:-1;'/>").insertBefore(mask)
         }
 
         S.Event.on(window, "resize", function() {

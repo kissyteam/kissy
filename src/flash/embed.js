@@ -86,7 +86,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
 
             // 1. target 元素未找到 则自行创建一个容器
             if (!(target = DOM.get(target))) {
-				target = DOM.create('<div id='+ id +'>');
+				target = DOM.create('<div id='+ id +'/>');
 				document.body.appendChild(target);
             }
 
