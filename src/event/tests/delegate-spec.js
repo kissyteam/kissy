@@ -57,7 +57,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             waits(100);
             runs(function() {
                 expect(ret + "").toBe([] + "");
-                var eventDesc = DOM.data(S.get('#test-delegate'), Event.EVENT_GUID);
+                var eventDesc = Event._data(S.get('#test-delegate'));
                 expect(eventDesc).toBe(null);
             });
 
@@ -108,7 +108,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             waits(100);
             runs(function() {
                 expect(ret + "").toBe([] + "");
-                var eventDesc = DOM.data(S.get('#test-delegate'), Event.EVENT_GUID);
+                var eventDesc = Event._data(S.get('#test-delegate'));
                 expect(eventDesc).toBe(null);
             });
 

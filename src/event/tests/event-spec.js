@@ -515,7 +515,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.on(domNode, "click", noop3);
             Event.on(domNode, "keydown", noop);
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -543,7 +543,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.remove(domNode, "click", noop);
 
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -571,7 +571,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.remove(domNode, "click");
 
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -599,7 +599,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.remove(domNode);
 
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 expect(eventDesc).toBe(null);
             })();
 
@@ -621,7 +621,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.on(domNode, "click", noop3);
             Event.on(domNode, "keydown", noop);
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -649,7 +649,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.remove(domNode, "click", noop);
 
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -677,7 +677,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.remove(domNode, "click");
 
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -705,7 +705,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             Event.remove(domNode);
 
             (function() {
-                var eventDesc = DOM.data(domNode, Event.EVENT_GUID);
+                var eventDesc = Event._data(domNode);
                 expect(eventDesc).toBe(null);
             })();
         });

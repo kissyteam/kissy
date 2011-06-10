@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110610185733',
+        buildTime:'20110610200929',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5560,8 +5560,16 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 
     var Event = {
-
-        EVENT_GUID: EVENT_GUID,
+        _data:function(elem) {
+            var args = S.makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.data.apply(DOM, args);
+        },
+        _removeData:function(elem) {
+            var args = S.makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.removeData.apply(DOM, args);
+        },
 
         // such as: { 'mouseenter' : { setup:fn ,tearDown:fn} }
         special: { },
@@ -5597,9 +5605,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 
                 // 获取事件描述
-                eventDesc = DOM.data(target, EVENT_GUID);
+                eventDesc = Event._data(target);
                 if (!eventDesc) {
-                    DOM.data(target, EVENT_GUID, eventDesc = {});
+                    Event._data(target, eventDesc = {});
                 }
                 //事件 listeners
                 events = eventDesc.events = eventDesc.events || {};
@@ -5654,7 +5662,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
         __getEvents:function(target) {
             // 获取事件描述
-            var eventDesc = DOM.data(target, EVENT_GUID);
+            var eventDesc = Event._data(target);
             return eventDesc && eventDesc.events;
         },
 
@@ -5667,7 +5675,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
 
             DOM.query(targets).each(function(target) {
-                var eventDesc = DOM.data(target, EVENT_GUID),
+                var eventDesc = Event._data(target),
                     events = eventDesc && eventDesc.events,
                     listeners,
                     len,
@@ -5741,7 +5749,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     eventDesc.handler.target = null;
                     delete eventDesc.handler;
                     delete eventDesc.events;
-                    DOM.removeData(target, EVENT_GUID);
+                    Event._removeData(target);
                 }
             });
             return targets;
@@ -5797,7 +5805,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 eventData = eventData || {};
                 eventData.type = eventType;
                 if (!isNativeEventTarget) {
-                    var eventDesc = DOM.data(target, EVENT_GUID);
+                    var eventDesc = Event._data(target);
                     if (eventDesc && S.isFunction(eventDesc.handler)) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
@@ -5811,7 +5819,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         ontype = "on" + eventType;
                     //bubble up dom tree
                     do{
-                        var handler = (DOM.data(cur, EVENT_GUID) || {}).handler;
+                        var handler = (Event._data(cur) || {}).handler;
                         event.currentTarget = cur;
                         if (handler) {
                             handler.call(cur, event);
@@ -5886,7 +5894,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     }
 
     if (1 > 2) {
-        Event._simpleAdd()._simpleRemove(Event.EVENT_GUID);
+        Event._simpleAdd()._simpleRemove();
     }
 
     return Event;
@@ -12054,7 +12062,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
             for (var i = 0; i < handlers.length; i++) {
                 var hl = handlers[i];
-                hl = S.one(hl);
+                hl = Node.one(hl);
                 //ie 不能在其内开始选择区域
                 hl.unselectable();
                 if (self.get("cursor")) {
@@ -12452,7 +12460,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
              */
             container:{
                 setter:function(v) {
-                    return S.one(v);
+                    return Node.one(v);
                 }
             },
 
@@ -12589,7 +12597,7 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
                  */
                 container:{
                     setter:function(v) {
-                        return S.one(v);
+                        return Node.one(v);
                     }
                 }
             }
@@ -19842,7 +19850,7 @@ build time: ${build.time}
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function(S, Node, Event, undefined) {
-    var EventTarget = Event.Target;
+    var EventTarget = Event.Target,$=Node.all;
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
@@ -19973,17 +19981,17 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     }
                 }
                 self.EV[0] = Node.one('body').on('click', function(e) {
-
+                    var target=$(e.target);
                     //点击到日历上
-                    if (e.target.attr('id') === self.C_Id) {
+                    if (target.attr('id') === self.C_Id) {
                         return;
                     }
-                    if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev')) &&
-                        e.target[0].tagName === 'A') {
+                    if ((target.hasClass('ks-next') || target.hasClass('ks-prev')) &&
+                        target[0].tagName === 'A') {
                         return;
                     }
                     //点击在trigger上
-                    if (e.target.attr('id') == self.id) {
+                    if (target.attr('id') == self.id) {
                         return;
                     }
 
@@ -20015,10 +20023,10 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 for (i = 0; i < self.triggerType.length; i++) {
 
                     self.EV[1] = Node.one('#' + self.id).on(self.triggerType[i], function(e) {
-                        e.target = Node(e.target);
+                        e.target = $(e.target);
                         e.preventDefault();
                         //如果focus和click同时存在的hack
-                        S.log(e.type);
+
                         var a = self.triggerType;
                         if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
                             if (e.type == 'focus') {

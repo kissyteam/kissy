@@ -111,7 +111,7 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
                  */
                 container:{
                     setter:function(v) {
-                        return S.one(v);
+                        return Node.one(v);
                     }
                 }
             }

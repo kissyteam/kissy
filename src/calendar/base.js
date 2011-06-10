@@ -3,7 +3,7 @@
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function(S, Node, Event, undefined) {
-    var EventTarget = Event.Target;
+    var EventTarget = Event.Target,$=Node.all;
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
@@ -134,17 +134,17 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     }
                 }
                 self.EV[0] = Node.one('body').on('click', function(e) {
-
+                    var target=$(e.target);
                     //点击到日历上
-                    if (e.target.attr('id') === self.C_Id) {
+                    if (target.attr('id') === self.C_Id) {
                         return;
                     }
-                    if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev')) &&
-                        e.target[0].tagName === 'A') {
+                    if ((target.hasClass('ks-next') || target.hasClass('ks-prev')) &&
+                        target[0].tagName === 'A') {
                         return;
                     }
                     //点击在trigger上
-                    if (e.target.attr('id') == self.id) {
+                    if (target.attr('id') == self.id) {
                         return;
                     }
 
@@ -176,10 +176,10 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 for (i = 0; i < self.triggerType.length; i++) {
 
                     self.EV[1] = Node.one('#' + self.id).on(self.triggerType[i], function(e) {
-                        e.target = Node(e.target);
+                        e.target = $(e.target);
                         e.preventDefault();
                         //如果focus和click同时存在的hack
-                        S.log(e.type);
+
                         var a = self.triggerType;
                         if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
                             if (e.type == 'focus') {

@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110610185733',
+        buildTime:'20110610200929',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5747,8 +5747,16 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 
     var Event = {
-
-        EVENT_GUID: EVENT_GUID,
+        _data:function(elem) {
+            var args = S.makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.data.apply(DOM, args);
+        },
+        _removeData:function(elem) {
+            var args = S.makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.removeData.apply(DOM, args);
+        },
 
         // such as: { 'mouseenter' : { setup:fn ,tearDown:fn} }
         special: { },
@@ -5784,9 +5792,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 
                 // 获取事件描述
-                eventDesc = DOM.data(target, EVENT_GUID);
+                eventDesc = Event._data(target);
                 if (!eventDesc) {
-                    DOM.data(target, EVENT_GUID, eventDesc = {});
+                    Event._data(target, eventDesc = {});
                 }
                 //事件 listeners
                 events = eventDesc.events = eventDesc.events || {};
@@ -5841,7 +5849,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
         __getEvents:function(target) {
             // 获取事件描述
-            var eventDesc = DOM.data(target, EVENT_GUID);
+            var eventDesc = Event._data(target);
             return eventDesc && eventDesc.events;
         },
 
@@ -5854,7 +5862,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
 
             DOM.query(targets).each(function(target) {
-                var eventDesc = DOM.data(target, EVENT_GUID),
+                var eventDesc = Event._data(target),
                     events = eventDesc && eventDesc.events,
                     listeners,
                     len,
@@ -5928,7 +5936,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     eventDesc.handler.target = null;
                     delete eventDesc.handler;
                     delete eventDesc.events;
-                    DOM.removeData(target, EVENT_GUID);
+                    Event._removeData(target);
                 }
             });
             return targets;
@@ -5984,7 +5992,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 eventData = eventData || {};
                 eventData.type = eventType;
                 if (!isNativeEventTarget) {
-                    var eventDesc = DOM.data(target, EVENT_GUID);
+                    var eventDesc = Event._data(target);
                     if (eventDesc && S.isFunction(eventDesc.handler)) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
@@ -5998,7 +6006,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         ontype = "on" + eventType;
                     //bubble up dom tree
                     do{
-                        var handler = (DOM.data(cur, EVENT_GUID) || {}).handler;
+                        var handler = (Event._data(cur) || {}).handler;
                         event.currentTarget = cur;
                         if (handler) {
                             handler.call(cur, event);
@@ -6073,7 +6081,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     }
 
     if (1 > 2) {
-        Event._simpleAdd()._simpleRemove(Event.EVENT_GUID);
+        Event._simpleAdd()._simpleRemove();
     }
 
     return Event;
