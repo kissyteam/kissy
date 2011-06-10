@@ -132,16 +132,14 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             if (isElementNode(elem)
                 && testFilter(elem, filter)
                 && (!extraFilter || extraFilter(elem))) {
-                if (isArray) {
-                    ret.push(elem);
-                } else {
-                    ret = elem;
+                ret.push(elem);
+                if (!isArray) {
                     break;
                 }
             }
         } while (elem != until && (elem = elem[direction]));
 
-        return ret;
+        return ret[0] || null;
     }
 
     function testFilter(elem, filter) {

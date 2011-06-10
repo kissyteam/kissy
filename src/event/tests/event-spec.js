@@ -2,9 +2,9 @@
  * @module  event-spec
  * @author  gonghao@ghsky.com,yiminghe@gmail.com
  */
-KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
-    var EventTarget = Event.Target,
-        Node = N,NodeList = N.List;
+KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
+    var EventTarget = Event.Target;
+
     describe('event', function() {
 
         var doc = document,
@@ -203,45 +203,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
             });
 
-            it('should set this properly', function() {
-                var ret;
 
-                // Node
-                runs(function() {
-
-                    Node.one('#link-test-this').on('click', function() {
-                        ret = Node.one(this);
-                    });
-                    simulate('#link-test-this', 'click');
-                });
-                waits(0);
-
-
-                // NodeList
-                runs(function() {
-                    NodeList.all('#link-test-this-all span').on('click', function() {
-
-                        ret = Node.one(this);
-                    });
-                    simulate('#link-test-this-all-span', 'click');
-                });
-                waits(0);
-                runs(function() {
-                    expect(ret.text()).toBe('link for test this');
-                });
-
-                // DOM Element
-                runs(function() {
-                    Event.on('#link-test-this-dom', 'click', function() {
-                        ret = this;
-                    });
-                    simulate('#link-test-this-dom', 'click');
-                });
-                waits(0);
-                runs(function() {
-                    expect(ret.nodeType).toBe(1);
-                });
-            });
         });
 
         describe('remove event', function() {
@@ -541,29 +503,6 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
             });
         });
 
-
-        it('should detach properly', function() {
-            var ret;
-
-            // Node
-            runs(function() {
-                var node = Node.one('#link-detach');
-
-                function t() {
-                    ret = 1;
-                }
-
-                node.on('click', t);
-                //debugger
-                Node.one('#link-detach').detach('click', t);
-
-                simulate('#link-detach', 'click');
-            });
-            waits(10);
-            runs(function() {
-                expect(ret).toBeUndefined();
-            });
-        });
 
         it('should no memory leak for dom node', function() {
 

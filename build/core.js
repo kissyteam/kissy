@@ -2869,16 +2869,14 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             if (isElementNode(elem)
                 && testFilter(elem, filter)
                 && (!extraFilter || extraFilter(elem))) {
-                if (isArray) {
-                    ret.push(elem);
-                } else {
-                    ret = elem;
+                ret.push(elem);
+                if (!isArray) {
                     break;
                 }
             }
         } while (elem != until && (elem = elem[direction]));
 
-        return ret;
+        return ret[0] || null;
     }
 
     function testFilter(elem, filter) {
@@ -4346,7 +4344,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "unselectable"
         ],
         // Event 添加到 NP 上的方法
-        EVENT_INCLUDES = ["on","detach","fire","delegate"];
+        EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
 
 
     function normalize(val, node, nodeList) {

@@ -20,11 +20,33 @@
 <script src="../override.js"></script>
 <script src="../../node.js"></script>
 <script src="node-spec.js"></script>
+<script src="event-spec.js"></script>
 </head>
 <body>
 <h1>KISSY Node Test Cases</h1>
+<div id="foo">
+    <ul id="bar">
+        <li><a id="link-a" href="#">link a</a></li>
+        <li><input type="checkbox" id="checkbox-1"/><input type="checkbox" id="checkbox-2"/></li>
+        <li id="li-c"><a id="link-c1" href="#">link c1</a> | <a id="link-c2" href="#">link c2</a></li>
+        <li id="li-d"><a id="link-d1" href="#">link d1</a> | <a id="link-d2" href="#">link d2</a></li>
+        <li id="li-e"><a id="link-e1" href="#">link e1</a> | <a id="link-e2" href="#">link e2</a></li>
+        <li><a id="link-f" href="#">link f</a></li>
+        <li><a id="link-g" href="#">link g</a></li>
+        <li><a id="link-h" href="#">link h</a></li>
+        <li><a id="link-s" href="#">link s</a></li>
+        <li><a id="link-test-this" href="#">link for test this</a></li>
+        <li><a id="link-test-this-dom" href="#">link for test this</a></li>
+        <li id="link-test-this-all"><span id="link-test-this-all-span">link for test this</span><span></span></li>
+    </ul>
 
+     <div id="link-detach">
+        <div>1</div>
+        <div>2</div>
+    </div>
+</div>
 <button id="cb">click</button>
+
 <script>
     KISSY.use("dom,node", function(S, DOm, Node) {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
