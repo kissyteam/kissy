@@ -17,6 +17,9 @@
 <script src="../target.js"></script>
 <script src="../focusin.js"></script>
 <script src="../mouseenter.js"></script>
+<script src="../delegate.js"></script>
+<script src="../hashchange.js"></script>
+<script src="../valuechange.js"></script>
 <script src="../../event.js"></script>
 
 <script src="../../../build/node.js"></script>
@@ -54,10 +57,21 @@
         <div>1</div>
         <div>2</div>
     </div>
+
+    <div id='test-delegate'>
+        <div id='test-delegate-outer' class='xx'>
+            <div style='padding:50px;border:1px solid red;width:100px;height:100px;'
+                 class='xx' id='test-delegate-inner'>
+                <a href='#xx' id='test-delegate-a'>click</a>
+                <button id='test-delegate-b'>click</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <h1>KISSY.Event Test Cases</h1>
 <script src="event-spec.js"></script>
+<script src="delegate-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
     jasmine.getEnv().execute(function() {

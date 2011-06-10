@@ -375,6 +375,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
 
                 // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
                 // so we should ignore the orders of the event
+
                 Event.on(container, 'focusin focusout', function() {
                     result.push(HAPPENED);
                 });

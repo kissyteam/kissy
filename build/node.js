@@ -63,7 +63,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "unselectable"
         ],
         // Event 添加到 NP 上的方法
-        EVENT_INCLUDES = ["on","detach","fire"];
+        EVENT_INCLUDES = ["on","detach","fire","delegate"];
 
 
     function normalize(val, node, nodeList) {

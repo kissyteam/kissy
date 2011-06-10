@@ -27,7 +27,7 @@ KISSY.add('event/focusin', function(S, UA, Event) {
 
             function handler(event) {
                 var target = event.target;
-                Event.fire(target, o.name);
+                return Event.fire(target, o.name);
             }
 
         });

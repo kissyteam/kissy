@@ -101,8 +101,8 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
                 monitor(target);
             }
         },
-        tearDown: function(target) {
-            target = this;
+        tearDown: function() {
+            var target = this;
             unmonitored(target);
         }
     };

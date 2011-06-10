@@ -7,5 +7,8 @@ KISSY.add("event", function(S, Event, Target) {
         "event/target",
         "event/object",
         "event/focusin",
+        "event/hashchange",
+        "event/valuechange",
+        "event/delegate",
         "event/mouseenter"]
 });

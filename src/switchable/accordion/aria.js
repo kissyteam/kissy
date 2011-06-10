@@ -287,7 +287,7 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
     // 显示 tabpanel
     function _tabSwitch(ev) {
 
-        var domEvent = !!ev.originalEvent.target,
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
             self = this,
             multiple = self.config.multiple,
             activeIndex = ev.currentIndex,

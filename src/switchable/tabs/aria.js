@@ -2,7 +2,7 @@
  * Tabs aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
+KISSY.add('switchable/tabs/aria', function(S, DOM, Event,Switchable, Aria, Tabs) {
 
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
@@ -14,8 +14,6 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
     var KEY_TAB = 9;
-
-    var DOM_EVENT = {originalEvent:{target:1}};
 
 //    var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
@@ -103,6 +101,8 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
         }
     }
 
+    var getDomEvent=Switchable.getDomEvent;
+
     /**
      * Keyboard commands for the Tab Panel
      * @param e
@@ -124,7 +124,7 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.prev(DOM_EVENT);
+                    self.prev(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -134,7 +134,7 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
                 if (_currentTabFromEvent.call(self, t)
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.next(DOM_EVENT);
+                    self.next(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -143,26 +143,26 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
 
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.next(DOM_EVENT);
+                    self.next(getDomEvent(e));
                 }
                 break;
 
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.prev(DOM_EVENT);
+                    self.prev(getDomEvent(e));
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, DOM_EVENT);
+                    self.switchTo(0, undefined, getDomEvent(e));
                     e.halt();
                 }
                 break;
             case KEY_END:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, DOM_EVENT);
+                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
                     e.halt();
                 }
 
@@ -171,16 +171,16 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
                     if (e.shiftKey)
-                        self.prev(DOM_EVENT);
+                        self.prev(getDomEvent(e));
                     else
-                        self.next(DOM_EVENT);
+                        self.next(getDomEvent(e));
                 }
                 break;
         }
     }
 
     function _tabSwitch(ev) {
-        var domEvent = !!ev.originalEvent.target;
+        var domEvent = !!(ev.originalEvent.target||ev.originalEvent.srcElement);
 
         var self = this;
         // 上一个激活 tab
@@ -213,7 +213,7 @@ KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Aria, Tabs) {
 
 },
     {
-        requires:["dom","event","../aria","./base"]
+        requires:["dom","event","../base","../aria","./base"]
     });
 
 /**
