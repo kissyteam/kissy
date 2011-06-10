@@ -30,6 +30,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             aria:false
         });
 
+    var getDomEvent = Switchable.getDomEvent;
+
     Tabs.Plugins.push({
             name:"aria",
             init:function(self) {
@@ -126,7 +128,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.prev({originalEvent:e.originalEvent});
+                    self.prev(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -136,7 +138,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (_currentTabFromEvent.call(self, t)
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.next({originalEvent:e.originalEvent});
+                    self.next(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -145,7 +147,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.next({originalEvent:e.originalEvent});
+                    self.next(getDomEvent(e));
 
                 }
                 break;
@@ -153,20 +155,20 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.prev({originalEvent:e.originalEvent});
+                    self.prev(getDomEvent(e));
 
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, {originalEvent:e.originalEvent});
+                    self.switchTo(0, undefined, getDomEvent(e));
                     e.halt();
                 }
                 break;
             case KEY_END:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, {originalEvent:e.originalEvent});
+                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
                     e.halt();
                 }
 
@@ -175,9 +177,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
                     if (e.shiftKey)
-                        self.prev({originalEvent:e.originalEvent});
+                        self.prev(getDomEvent(e));
                     else
-                        self.next({originalEvent:e.originalEvent});
+                        self.next(getDomEvent(e));
 
                 }
                 break;
@@ -185,7 +187,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     }
 
     function _tabSwitch(ev) {
-       var domEvent = !!(ev.originalEvent.target||ev.originalEvent.srcElement);
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         var self = this;
         // 上一个激活 tab

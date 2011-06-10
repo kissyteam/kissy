@@ -152,6 +152,15 @@ KISSY.add('switchable', function(S) {
         viewSize: []
     };
 
+    function getDomEvent(e) {
+        var originalEvent = {};
+        originalEvent.type = e.originalEvent.type;
+        originalEvent.target = e.originalEvent.target || e.originalEvent.srcElement;
+        return {originalEvent:originalEvent};
+    }
+
+    Switchable.getDomEvent = getDomEvent;
+
     // 插件
     Switchable.Plugins = [];
 
@@ -271,12 +280,12 @@ KISSY.add('switchable', function(S) {
                         trigger = triggers[index];
 
                         Event.on(trigger, 'click', function(e) {
-                            self._onFocusTrigger(index,e);
+                            self._onFocusTrigger(index, e);
                         });
 
                         if (cfg.triggerType === 'mouse') {
                             Event.on(trigger, 'mouseenter', function(e) {
-                                self._onMouseEnterTrigger(index,e);
+                                self._onMouseEnterTrigger(index, e);
                             });
                             Event.on(trigger, 'mouseleave', function() {
                                 self._onMouseLeaveTrigger(index);
@@ -289,25 +298,25 @@ KISSY.add('switchable', function(S) {
             /**
              * click or tab 键激活 trigger 时触发的事件
              */
-            _onFocusTrigger: function(index,e) {
+            _onFocusTrigger: function(index, e) {
                 var self = this;
                 if (!self._triggerIsValid(index)) return; // 重复点击
 
                 this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-                self.switchTo(index, undefined, {originalEvent:e.originalEvent});
+                self.switchTo(index, undefined, getDomEvent(e));
             },
 
             /**
              * 鼠标悬浮在 trigger 上时触发的事件
              */
-            _onMouseEnterTrigger: function(index,e) {
+            _onMouseEnterTrigger: function(index, e) {
                 var self = this;
                 if (!self._triggerIsValid(index)) {
                     return;
                 } // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
-
+                var ev = getDomEvent(e);
                 self.switchTimer = S.later(function() {
-                    self.switchTo(index, undefined, {originalEvent:e.originalEvent});
+                    self.switchTo(index, undefined, ev);
                 }, self.config.delay * 1000);
             },
 
@@ -2278,6 +2287,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             aria:false
         });
 
+    var getDomEvent = Switchable.getDomEvent;
+
     Tabs.Plugins.push({
             name:"aria",
             init:function(self) {
@@ -2374,7 +2385,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.prev({originalEvent:e.originalEvent});
+                    self.prev(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -2384,7 +2395,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (_currentTabFromEvent.call(self, t)
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.next({originalEvent:e.originalEvent});
+                    self.next(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -2393,7 +2404,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.next({originalEvent:e.originalEvent});
+                    self.next(getDomEvent(e));
 
                 }
                 break;
@@ -2401,20 +2412,20 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.prev({originalEvent:e.originalEvent});
+                    self.prev(getDomEvent(e));
 
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, {originalEvent:e.originalEvent});
+                    self.switchTo(0, undefined, getDomEvent(e));
                     e.halt();
                 }
                 break;
             case KEY_END:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, {originalEvent:e.originalEvent});
+                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
                     e.halt();
                 }
 
@@ -2423,9 +2434,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
                     if (e.shiftKey)
-                        self.prev({originalEvent:e.originalEvent});
+                        self.prev(getDomEvent(e));
                     else
-                        self.next({originalEvent:e.originalEvent});
+                        self.next(getDomEvent(e));
 
                 }
                 break;
@@ -2433,7 +2444,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     }
 
     function _tabSwitch(ev) {
-       var domEvent = !!(ev.originalEvent.target||ev.originalEvent.srcElement);
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         var self = this;
         // 上一个激活 tab
