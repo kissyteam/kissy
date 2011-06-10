@@ -139,7 +139,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             }
         } while (elem != until && (elem = elem[direction]));
 
-        return ret[0] || null;
+        return isArray ? ret : ret[0] || null;
     }
 
     function testFilter(elem, filter) {

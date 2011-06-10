@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110610184327',
+        buildTime:'20110610185733',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5461,7 +5461,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             }
         } while (elem != until && (elem = elem[direction]));
 
-        return ret[0] || null;
+        return isArray ? ret : ret[0] || null;
     }
 
     function testFilter(elem, filter) {

@@ -30,7 +30,8 @@ KISSY.use("dom", function(S, DOM) {
             expect(DOM.parent()).toBe(null);
 
             expect(DOM.parent('#test-data', 'p')).toBe(null);
-
+            expect(DOM.parent('#test-data', ['p']) + "").toBe([] + "");
+            expect(DOM.parent('#test-selector-tag', ['div']).length).toBe(4);
             expect(DOM.parent('#test-parent4', '.text-next')).toBe(null);
         });
 
@@ -39,7 +40,8 @@ KISSY.use("dom", function(S, DOM) {
             var t = DOM.get('#test-parent4');
             // return itself
             expect(DOM.closest(t, "a")).toBe(t);
-
+            
+            expect(DOM.closest('#test-selector-1', ['div']).length).toBe(3);
             // parent works
             expect(DOM.closest(t, ".test-p")).toBe(DOM.get("#test-prev"));
 
@@ -48,7 +50,7 @@ KISSY.use("dom", function(S, DOM) {
 
             expect(DOM.closest(t, ".test-parent")).toBe(DOM.get("#test-children"));
 
-            expect(DOM.closest(t, ".test-parent","#test-children")).toBe(DOM.get("#test-children"));
+            expect(DOM.closest(t, ".test-parent", "#test-children")).toBe(DOM.get("#test-children"));
         });
 
 
