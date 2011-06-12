@@ -71,6 +71,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 /**
  * 承玉：2011-06-07
  * - 根据新结构，调整 mouseenter 兼容处理
+ * - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
+ *
  *
  * TODO:
  *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>

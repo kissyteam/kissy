@@ -4,9 +4,9 @@
  */
 KISSY.use("dom,node", function(S, DOM, Node) {
     S.one = Node.one;
-    S.all = Node.List.all;
+    S.all = Node.all;
     var $ = S.all;
-    var NodeList = Node.List;
+    var NodeList = Node;
     //DOM 已经测试通过，通过 DOM 测 Node
     describe("node", function() {
 

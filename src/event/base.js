@@ -190,6 +190,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 reserve = true;
                             } else if (data !== data2) {
                                 var data2 = listener.data;
+                                // undelgate 不能 remove 普通 on 的 handler
+                                // remove 不能 remove delegate 的 handler
                                 if (!data && data2
                                     || data2 && !data
                                     ) {
@@ -198,7 +200,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 } else if (data && data2) {
                                     if (!data.equals || !data2.equals) {
                                         S.error("no equals in data");
-                                    } else if (!data.equals(data2)) {
+                                    } else if (!data2.equals(data)) {
                                         t[j++] = listener;
                                         reserve = true;
                                     }

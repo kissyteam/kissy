@@ -54,10 +54,17 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     // 比较函数，两个 delegate 描述对象比较
     function equals(d) {
-        return this.fn == d.fn
-            && this.selector == d.selector
-            //&& this.type == d.type
-            && this.scope == d.scope;
+        if (d.fn === undefined && d.selector === undefined) {
+            return true;
+        } else if (d.fn === undefined) {
+            return this.selector == d.selector;
+        } else {
+            return this.fn == d.fn && this.selector == d.selector && this.scope == d.scope;
+        }
+    }
+
+    function eq(d1, d2) {
+        return (d1 == d2 || (!d1 && d2) || (!d1 && d2));
     }
 
     // 根据 selector ，从事件源得到对应节点

@@ -3,7 +3,7 @@
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader,data) {
-    if (S.use) return;
+    if ("require" in this) return;
     var win = S.__HOST,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,

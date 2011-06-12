@@ -3313,6 +3313,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 reserve = true;
                             } else if (data !== data2) {
                                 var data2 = listener.data;
+                                // undelgate 不能 remove 普通 on 的 handler
+                                // remove 不能 remove delegate 的 handler
                                 if (!data && data2
                                     || data2 && !data
                                     ) {
@@ -3321,7 +3323,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 } else if (data && data2) {
                                     if (!data.equals || !data2.equals) {
                                         S.error("no equals in data");
-                                    } else if (!data.equals(data2)) {
+                                    } else if (!data2.equals(data)) {
                                         t[j++] = listener;
                                         reserve = true;
                                     }
@@ -3552,7 +3554,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
          实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
          否则会导致build打包文件 dom 和 dom-data 重复载入
          */
-        requires:["event/base","dom"]
+        requires:["./base","dom"]
     });
 
 /**
@@ -3958,10 +3960,17 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     // 比较函数，两个 delegate 描述对象比较
     function equals(d) {
-        return this.fn == d.fn
-            && this.selector == d.selector
-            //&& this.type == d.type
-            && this.scope == d.scope;
+        if (d.fn === undefined && d.selector === undefined) {
+            return true;
+        } else if (d.fn === undefined) {
+            return this.selector == d.selector;
+        } else {
+            return this.fn == d.fn && this.selector == d.selector && this.scope == d.scope;
+        }
+    }
+
+    function eq(d1, d2) {
+        return (d1 == d2 || (!d1 && d2) || (!d1 && d2));
     }
 
     // 根据 selector ，从事件源得到对应节点
@@ -4085,14 +4094,17 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 /**
  * 承玉：2011-06-07
  * - 根据新结构，调整 mouseenter 兼容处理
+ * - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
+ *
  *
  * TODO:
  *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
  *    jQuery 也异常，需要进一步研究
  */
 
-KISSY.add("event", function(S, Event, Target) {
+KISSY.add("event", function(S, Event, Target,Object) {
     Event.Target = Target;
+    Event.Object=Object;
     return Event;
 }, {
     requires:[
@@ -4266,8 +4278,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         var all = NodeList.all(selector, context);
         return all.length ? all : null;
     };
-
-    NodeList.List = NodeList;
     if (1 > 2) {
         NodeList.getDOMNodes();
     }
@@ -6172,7 +6182,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  */
 KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
-    var NLP = N.List.prototype,
+    var NLP = N.prototype,
         ANIM_KEY = "ksAnims" + S.now(),
         DISPLAY = 'display',
         NONE = 'none',
@@ -6851,8 +6861,9 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         DOM:DOM,
         Event:Event,
         EventTarget:Event.Target,
+        EventObject:Event.Object,
         Node:Node,
-        NodeList:Node.List,
+        NodeList:Node,
         JSON:JSON,
         Ajax:Ajax,
         IO:Ajax,
@@ -6864,7 +6875,7 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Base:Base,
         Cookie:Cookie,
         one:Node.one,
-        all:Node.List.all,
+        all:Node.all,
         get:DOM.get,
         query:DOM.query
     };

@@ -1,6 +1,6 @@
 /**
- * @module  event-spec
- * @author  gonghao@ghsky.com,yiminghe@gmail.com
+ * @module  delegation-spec
+ * @author  yiminghe@gmail.com
  */
 KISSY.use("dom,event", function(S, DOM, Event) {
 
@@ -145,6 +145,67 @@ KISSY.use("dom,event", function(S, DOM, Event) {
                 ] + "");
             });
 
+
+        });
+
+
+        it("should undelegate properly", function() {
+            var d = DOM.create("<div><button>xxxx</button></div>");
+            document.body.appendChild(d);
+            var s = DOM.get('button', d);
+            var ret = [];
+            Event.on(d, 'click', function() {
+                ret.push(9);
+            });
+            function t() {
+                ret.push(1);
+            }
+
+            Event.delegate(d, "click", "button", t);
+
+            jasmine.simulate(s, "click");
+
+            waits(100);
+
+            runs(function() {
+                expect(ret + "").toBe([9,1] + "");
+                ret = [];
+            });
+
+            runs(function() {
+                Event.undelegate(d, "click", "button", t);
+                jasmine.simulate(s, 'click');
+            });
+
+
+            waits(100);
+
+            runs(function() {
+                expect(ret + "").toBe([9] + "");
+            });
+
+            runs(function() {
+                ret = [];
+                Event.delegate(d, "click", "button", t);
+                Event.undelegate(d, "click", "button");
+                jasmine.simulate(s, 'click');
+            });
+            runs(function() {
+                expect(ret + "").toBe([9] + "");
+            });
+
+            runs(function() {
+                ret = [];
+                Event.delegate(d, "click", "button", t);
+                Event.undelegate(d, "click");
+                jasmine.simulate(s, 'click');
+            });
+            waits(100);
+            runs(function() {
+                expect(ret + "").toBe([9] + "");
+
+                DOM.remove(d);
+            });
 
         });
 

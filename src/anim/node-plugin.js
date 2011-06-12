@@ -4,7 +4,7 @@
  */
 KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
-    var NLP = N.List.prototype,
+    var NLP = N.prototype,
         ANIM_KEY = "ksAnims" + S.now(),
         DISPLAY = 'display',
         NONE = 'none',

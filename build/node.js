@@ -289,8 +289,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         var all = NodeList.all(selector, context);
         return all.length ? all : null;
     };
-
-    NodeList.List = NodeList;
     if (1 > 2) {
         NodeList.getDOMNodes();
     }

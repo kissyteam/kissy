@@ -345,7 +345,7 @@
                     }
                 });
                 // 注意：使用定制的显示/隐藏方式
-                Node.List.all('#multi img').each(function(t) {
+                Node.all('#multi img').each(function(t) {
                     t = new Node(t);
                     t.on("mouseenter", function() {
                         popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
