@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110612194829',
+        buildTime:'20110613212152',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3188,7 +3188,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     }
     return DOM;
 }, {
-        requires:["dom/base","ua"]
+        requires:["./base","ua"]
     }
 );
 
@@ -4178,9 +4178,15 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                     w['scrollTo'](left, top);
                 }
                 d = w[DOCUMENT];
-                ret = w[i ? 'pageYOffset' : 'pageXOffset']
-                    || d[DOC_ELEMENT][method]
-                    || d[BODY][method]
+                ret =
+                    //标准
+                    //chrome == body.scrollTop
+                    //firefox/ie9 == documentElement.scrollTop
+                    w[i ? 'pageYOffset' : 'pageXOffset']
+                        //ie6,7,8 standard mode
+                        || d[DOC_ELEMENT][method]
+                        //quirks mode
+                        || d[BODY][method]
 
             } else if (isElementNode((elem = DOM.get(elem)))) {
                 ret = v !== undefined ? elem[method] = v : elem[method];
@@ -4195,8 +4201,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
-            return MAX(isStrict ?
-                d[DOC_ELEMENT][SCROLL + name] :
+            return MAX(
+                //firefox chrome documentElement.scrollHeight< body.scrollHeight
+                //ie standard mode : documentElement.scrollHeight> body.scrollHeight
+                d[DOC_ELEMENT][SCROLL + name],
+                //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
                 d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };
@@ -4207,7 +4216,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 w = getWin(refWin),
                 d = w[DOCUMENT];
             return (prop in w) ?
+                // 标准 = documentElement.clientHeight
                 w[prop] :
+                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
+                // ie quirks body.clientHeight: 在 body 上？
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
@@ -5189,32 +5201,39 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             /**
              * Check to see if a DOM node is within another DOM node.
              */
-            contains: function(container, contained) {
-                var ret = false;
-
-                if ((container = DOM.get(container))
-                    && (contained = DOM.get(contained))) {
-                    if (container.contains) {
-                        if (contained.nodeType === 3) {
-                            contained = contained.parentNode;
-                            if (contained === container) return true;
-                        }
-                        if (contained) {
-                            return container.contains(contained);
-                        }
+            contains: document.documentElement.contains ?
+                function(a, b) {
+                    a = DOM.get(a);
+                    b = DOM.get(b);
+                    if (a.nodeType == 3) {
+                        return false;
                     }
-                    else if (container.compareDocumentPosition) {
-                        return !!(container.compareDocumentPosition(contained) & 16);
+                    var precondition;
+                    if (b.nodeType == 3) {
+                        b = b.parentNode;
+                        // a 和 b父亲相等也就是返回 true
+                        precondition = true;
+                    } else if (b.nodeType == 9) {
+                        // b === document
+                        // 没有任何元素能包含 document
+                        return false;
+                    } else {
+                        // a 和 b 相等返回 false
+                        precondition = a !== b;
                     }
-                    else {
-                        while (!ret && (contained = contained.parentNode)) {
-                            ret = contained == container;
-                        }
-                    }
-                }
-
-                return ret;
-            },
+                    // !a.contains => a===document
+                    // 注意原生 contains 判断时 a===b 也返回 true
+                    return precondition && (a.contains ? a.contains(b) : true);
+                } : (
+                document.documentElement.compareDocumentPosition ?
+                    function(a, b) {
+                        a = DOM.get(a);
+                        b = DOM.get(b);
+                        return !!(a.compareDocumentPosition(b) & 16);
+                    } :
+                    // it can not be true , pathetic browser
+                    0
+                ),
 
             equals:function(n1, n2) {
                 n1 = DOM.query(n1);

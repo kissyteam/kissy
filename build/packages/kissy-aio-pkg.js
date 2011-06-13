@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110612194829',
+        buildTime:'20110613212152',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3188,7 +3188,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     }
     return DOM;
 }, {
-        requires:["dom/base","ua"]
+        requires:["./base","ua"]
     }
 );
 
@@ -4178,9 +4178,15 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                     w['scrollTo'](left, top);
                 }
                 d = w[DOCUMENT];
-                ret = w[i ? 'pageYOffset' : 'pageXOffset']
-                    || d[DOC_ELEMENT][method]
-                    || d[BODY][method]
+                ret =
+                    //标准
+                    //chrome == body.scrollTop
+                    //firefox/ie9 == documentElement.scrollTop
+                    w[i ? 'pageYOffset' : 'pageXOffset']
+                        //ie6,7,8 standard mode
+                        || d[DOC_ELEMENT][method]
+                        //quirks mode
+                        || d[BODY][method]
 
             } else if (isElementNode((elem = DOM.get(elem)))) {
                 ret = v !== undefined ? elem[method] = v : elem[method];
@@ -4195,8 +4201,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
-            return MAX(isStrict ?
-                d[DOC_ELEMENT][SCROLL + name] :
+            return MAX(
+                //firefox chrome documentElement.scrollHeight< body.scrollHeight
+                //ie standard mode : documentElement.scrollHeight> body.scrollHeight
+                d[DOC_ELEMENT][SCROLL + name],
+                //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
                 d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };
@@ -4207,7 +4216,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 w = getWin(refWin),
                 d = w[DOCUMENT];
             return (prop in w) ?
+                // 标准 = documentElement.clientHeight
                 w[prop] :
+                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
+                // ie quirks body.clientHeight: 在 body 上？
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
@@ -5189,32 +5201,39 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             /**
              * Check to see if a DOM node is within another DOM node.
              */
-            contains: function(container, contained) {
-                var ret = false;
-
-                if ((container = DOM.get(container))
-                    && (contained = DOM.get(contained))) {
-                    if (container.contains) {
-                        if (contained.nodeType === 3) {
-                            contained = contained.parentNode;
-                            if (contained === container) return true;
-                        }
-                        if (contained) {
-                            return container.contains(contained);
-                        }
+            contains: document.documentElement.contains ?
+                function(a, b) {
+                    a = DOM.get(a);
+                    b = DOM.get(b);
+                    if (a.nodeType == 3) {
+                        return false;
                     }
-                    else if (container.compareDocumentPosition) {
-                        return !!(container.compareDocumentPosition(contained) & 16);
+                    var precondition;
+                    if (b.nodeType == 3) {
+                        b = b.parentNode;
+                        // a 和 b父亲相等也就是返回 true
+                        precondition = true;
+                    } else if (b.nodeType == 9) {
+                        // b === document
+                        // 没有任何元素能包含 document
+                        return false;
+                    } else {
+                        // a 和 b 相等返回 false
+                        precondition = a !== b;
                     }
-                    else {
-                        while (!ret && (contained = contained.parentNode)) {
-                            ret = contained == container;
-                        }
-                    }
-                }
-
-                return ret;
-            },
+                    // !a.contains => a===document
+                    // 注意原生 contains 判断时 a===b 也返回 true
+                    return precondition && (a.contains ? a.contains(b) : true);
+                } : (
+                document.documentElement.compareDocumentPosition ?
+                    function(a, b) {
+                        a = DOM.get(a);
+                        b = DOM.get(b);
+                        return !!(a.compareDocumentPosition(b) & 16);
+                    } :
+                    // it can not be true , pathetic browser
+                    0
+                ),
 
             equals:function(n1, n2) {
                 n1 = DOM.query(n1);
@@ -17605,8 +17624,9 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author:yiminghe@gmail.com
  */
-KISSY.add("overlay/ariarender", function(S) {
+KISSY.add("overlay/ariarender", function(S, Node) {
 
+    var $ = Node.all;
 
     function Aria() {
 
@@ -17619,92 +17639,40 @@ KISSY.add("overlay/ariarender", function(S) {
 //    };
 
 
-    function name(n) {
-        return n[0].nodeName.toLowerCase();
-    }
-
-    function getFocusItems(el) {
-        var els = el.all("*");
-        var re = [];
-
-        for (var ei = 0; ei < els.length; ei++) {
-            var n = S.one(els[ei]);
-            var reserved = false;
-            if (-1 == n[0].tabIndex) {
-                continue;
-            }
-            if (name(n) == "a") {
-                reserved = true;
-            } else if ((name(n) == 'input' || name(n) == 'button')
-                && ! n[0].disabled) {
-                reserved = true;
-            } else
-            // 其他元素必须设 0
-            if (n.hasAttr("tabindex") && n[0].tabIndex == 0) {
-                reserved = true;
-            }
-            if (reserved) {
-                var nIndex = n[0].tabIndex || 0;
-
-                for (var i = 0; i < re.length; i++) {
-                    var r = re[i],rIndex = r[0].tabIndex || 0;
-                    if (rIndex > nIndex) {
-                        //大的在后面
-                        re.splice(i, 0, n);
-                        break;
-                    }
-                }
-
-                if (i == re.length) {
-                    re.push(n);
-                }
-            }
-        }
-
-        return re;
-    }
-
     var KEY_TAB = 9;
 
     function _onKey(/*Normalized Event*/ evt) {
 
-
         var self = this,
             keyCode = evt.keyCode,
-            dialogContainerNode = self.get("el");
+            firstFocusItem = self.get("el");
         if (keyCode != KEY_TAB) return;
         // summary:
         // Handles the keyboard events for accessibility reasons
 
-        var node = evt.target; // get the target node of the keypress event
+        var node = $(evt.target); // get the target node of the keypress event
 
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
-        var focusItemsArray = getFocusItems(dialogContainerNode);
-        var firstFocusItem = focusItemsArray[0];
-        var lastFocusItem = focusItemsArray[focusItemsArray.length - 1];
+
+        var lastFocusItem = self.__ariaArchor;
 
         // assumes firstFocusItem and lastFocusItem maintained by dialog object
-        var singleFocusItem = (firstFocusItem == lastFocusItem);
 
         // see if we are shift-tabbing from first focusable item on dialog
-        if (node[0] == firstFocusItem[0] && evt.shiftKey) {
-            if (!singleFocusItem) {
-                lastFocusItem[0].focus(); // send focus to last item in dialog
-            }
+        if (node.equals(firstFocusItem) && evt.shiftKey) {
+            lastFocusItem[0].focus(); // send focus to last item in dialog
             evt.halt(); //stop the tab keypress event
         }
         // see if we are tabbing from the last focusable item
-        else if (node[0] == lastFocusItem[0] && !evt.shiftKey) {
-            if (!singleFocusItem) {
-                firstFocusItem[0].focus(); // send focus to first item in dialog
-            }
+        else if (node.equals(lastFocusItem) && !evt.shiftKey) {
+            firstFocusItem[0].focus(); // send focus to first item in dialog
             evt.halt(); //stop the tab keypress event
         }
         else {
             // see if the key is for the dialog
-            if (node[0] == dialogContainerNode[0] ||
-                dialogContainerNode.contains(node)) {
+            if (node.equals(firstFocusItem) ||
+                firstFocusItem.contains(node)) {
                 return;
             }
         }
@@ -17717,7 +17685,9 @@ KISSY.add("overlay/ariarender", function(S) {
     Aria.prototype = {
 
         __renderUI:function() {
-            var self = this,el = self.get("el"),header = self.get("header");
+            var self = this,
+                el = self.get("el"),
+                header = self.get("header");
             if (self.get("aria")) {
                 el.attr("role", "dialog");
                 el.attr("tabindex", 0);
@@ -17725,6 +17695,9 @@ KISSY.add("overlay/ariarender", function(S) {
                     header.attr("id", S.guid("ks-dialog-header"));
                 }
                 el.attr("aria-labelledby", header.attr("id"));
+                // 哨兵元素，从这里 tab 出去到弹窗根节点
+                // 从根节点 shift tab 出去到这里
+                self.__ariaArchor = $("<div tabindex='0'></div>").appendTo(el);
             }
         },
 
@@ -17738,10 +17711,10 @@ KISSY.add("overlay/ariarender", function(S) {
                     if (ev.newVal) {
                         lastActive = document.activeElement;
                         el[0].focus();
-                        el.attr("aria-hidden","false");
+                        el.attr("aria-hidden", "false");
                         el.on("keydown", _onKey, self);
                     } else {
-                        el.attr("aria-hidden","true");
+                        el.attr("aria-hidden", "true");
                         el.detach("keydown", _onKey, self);
                         lastActive && lastActive.focus();
                     }
@@ -17751,7 +17724,9 @@ KISSY.add("overlay/ariarender", function(S) {
     };
 
     return Aria;
-});/**
+}, {
+        requires:["node"]
+    });/**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author:yiminghe@gmail.com
  */
