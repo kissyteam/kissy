@@ -488,7 +488,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     }
     return DOM;
 }, {
-        requires:["dom/base","ua"]
+        requires:["./base","ua"]
     }
 );
 
