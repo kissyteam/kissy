@@ -4,8 +4,7 @@
 <meta charset="utf-8"/>
 <title>DOM Test Runner</title>
 <link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
-<script src="../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../tools/jasmine/jasmine-html.js"></script>
+<script src="http://a.tbcdn.cn/p/cloudyrun/1.0/cloudyrun-jasmine-pkg.js"></script>
 
 <script src="../../../build/seed.js" charset="utf-8"></script>
 <script src="../../../build/ua.js" charset="utf-8"></script>
@@ -291,13 +290,7 @@ offset-spec end
 
     window.onload = function() {
 
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function() {
-            if (parent && parent.jasmine.kissyNext) {
-                parent.jasmine.kissyNext(this.results().failedCount);
-            }
-            document.getElementById("test_cases").style.display = "none";
-        });
+        CloudyRun.runJasmine();
 
     };
 </script>
