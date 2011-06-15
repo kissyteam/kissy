@@ -2,7 +2,7 @@
  * @module  anim-node-plugin
  * @author  lifesinger@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
+KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
     var NLP = N.prototype,
         ANIM_KEY = "ksAnims" + S.now(),
@@ -173,11 +173,9 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-        requires:["dom","anim/base","node"]
+        requires:["dom","anim","./base"]
     });
 /**
  * 2011-05-17
- *
  *  - 承玉：添加 stop ，随时停止动画
- *
  */

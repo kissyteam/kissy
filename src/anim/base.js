@@ -458,7 +458,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     Anim.supportTransition = function() {
         if (TRANSITION_NAME) return TRANSITION_NAME;
         var name = 'transition', transitionName;
-        var el = document.body;
+        var el = document.documentElement;
         if (el.style[name] !== undefined) {
             transitionName = name;
         } else {

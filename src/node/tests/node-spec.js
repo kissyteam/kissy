@@ -9,6 +9,12 @@ KISSY.use("dom,node", function(S, DOM, Node) {
     var NodeList = Node;
     //DOM 已经测试通过，通过 DOM 测 Node
     describe("node", function() {
+        
+        it("setup",function() {
+            var textarea = $("textarea");
+            $("body").append(textarea.val());
+            textarea.hide();
+        });
 
         it("add works", function() {
             var x = $();
@@ -88,7 +94,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
             expect(DOM.get("#testDiv4")).not.toBe(null);
 
-            var n2 = body.prepend("<div class='test-div' id='testDiv5'>ok5</div>");
+            var n2 = $("#foo").prepend("<div class='test-div' id='testDiv5'>ok5</div>");
 
             expect(DOM.get("#testDiv5")).not.toBe(null);
         });
