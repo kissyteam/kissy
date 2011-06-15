@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf8"/>
 <title>KISSY.Template Test</title>
-<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
-<script src="../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../tools/jasmine/jasmine-html.js"></script>
+
+<script src="http://a.tbcdn.cn/p/cloudyrun/1.0/cloudyrun-jasmine-pkg.js"></script>
 
 <script src="../../../build/kissy.js"></script>
 
@@ -17,13 +16,9 @@
 </head>
 
 <body>
+<h1>KISSY.Template Test Cases</h1>
 <script>
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute(function() {
-        if (parent && parent.jasmine.kissyNext) {
-            parent.jasmine.kissyNext(this.results().failedCount);
-        }
-    });
+    CloudyRun.runJasmine();
 </script>
 </body>
 </html>

@@ -55,7 +55,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             });
 
             if (UA['webkit']) {
-                alert("click ok");
+                // alert("click ok");
             }
 
 
