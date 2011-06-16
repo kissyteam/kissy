@@ -2,7 +2,7 @@
  * test cases for data sub module of dom module
  * @author:yiminghe@gmail.com
  */
-KISSY.use("dom", function(S, DOM) {
+KISSY.use("ua,dom", function(S, UA,DOM) {
 
     describe("DOM.data", function() {
         it("data should works", function() {
@@ -20,10 +20,18 @@ KISSY.use("dom", function(S, DOM) {
             expect(DOM.data(window, 'data')).toBe('val');
 
             expect(window.data).toBeUndefined(); // 不污染全局
-
-            DOM.data(top, 'data', 'val');
-            expect(DOM.data(top, 'data')).toBe('val');
-
+            var topOK = true;
+            try {
+                DOM.data(top, 'data', 'val');
+            } catch(e) {
+                //不同域
+                topOK = false;
+            }
+            // cloudy run 不同域跑不抛异常
+            if (topOK && !UA.webkit) {
+                DOM.data(top, 'data', 'val');
+                expect(DOM.data(top, 'data')).toBe('val');
+            }
             var o = {};
             DOM.data(o, 'data', 'val');
             expect(DOM.data(o, 'data')).toBe('val');
