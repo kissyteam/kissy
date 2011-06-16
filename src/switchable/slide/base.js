@@ -20,7 +20,6 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
         }
 
         Slide.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     Slide.Config={
@@ -35,3 +34,7 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
     return Slide;
 
 }, { requires:["../base"]});
+
+/**
+ * 承玉：2011.06.02 review switchable
+ */

@@ -47,8 +47,8 @@
             S.use("node", function(S, Node) {
 
                 ok = true;
-                new Node(document.body).append("<div id='k11x'>");
-                new Node(document.body).append("<div id='k12'>");
+                new Node(document.body).append("<div id='k11x'/>");
+                new Node(document.body).append("<div id='k12'/>");
             });
 
             waitsFor(function() {

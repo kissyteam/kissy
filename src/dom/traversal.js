@@ -8,13 +8,19 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
+            closest:function(selector, filter, context) {
+                return nth(selector, filter, 'parentNode', function(elem) {
+                    return elem.nodeType != 11;
+                }, context, true);
+            },
+
             /**
              * Gets the parent node of the first matched element.
              */
-            parent: function(selector, filter) {
+            parent: function(selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function(elem) {
                     return elem.nodeType != 11;
-                });
+                }, context);
             },
 
             /**
@@ -48,36 +54,43 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             /**
              * Check to see if a DOM node is within another DOM node.
              */
-            contains: function(container, contained) {
-                var ret = false;
-
-                if ((container = DOM.get(container))
-                    && (contained = DOM.get(contained))) {
-                    if (container.contains) {
-                        if (contained.nodeType === 3) {
-                            contained = contained.parentNode;
-                            if (contained === container) return true;
-                        }
-                        if (contained) {
-                            return container.contains(contained);
-                        }
+            contains: document.documentElement.contains ?
+                function(a, b) {
+                    a = DOM.get(a);
+                    b = DOM.get(b);
+                    if (a.nodeType == 3) {
+                        return false;
                     }
-                    else if (container.compareDocumentPosition) {
-                        return !!(container.compareDocumentPosition(contained) & 16);
+                    var precondition;
+                    if (b.nodeType == 3) {
+                        b = b.parentNode;
+                        // a 和 b父亲相等也就是返回 true
+                        precondition = true;
+                    } else if (b.nodeType == 9) {
+                        // b === document
+                        // 没有任何元素能包含 document
+                        return false;
+                    } else {
+                        // a 和 b 相等返回 false
+                        precondition = a !== b;
                     }
-                    else {
-                        while (!ret && (contained = contained.parentNode)) {
-                            ret = contained == container;
-                        }
-                    }
-                }
-
-                return ret;
-            },
+                    // !a.contains => a===document
+                    // 注意原生 contains 判断时 a===b 也返回 true
+                    return precondition && (a.contains ? a.contains(b) : true);
+                } : (
+                document.documentElement.compareDocumentPosition ?
+                    function(a, b) {
+                        a = DOM.get(a);
+                        b = DOM.get(b);
+                        return !!(a.compareDocumentPosition(b) & 16);
+                    } :
+                    // it can not be true , pathetic browser
+                    0
+                ),
 
             equals:function(n1, n2) {
-                n1 = S.query(n1);
-                n2 = S.query(n2);
+                n1 = DOM.query(n1);
+                n2 = DOM.query(n2);
                 if (n1.length != n2.length) return false;
                 for (var i = n1.length; i >= 0; i--) {
                     if (n1[i] != n2[i]) return false;
@@ -87,25 +100,34 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         });
 
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
-    // filter 可为 number, selector, fn
+    // filter 可为 number, selector, fn array ，为数组时返回多个
     // direction 可为 parentNode, nextSibling, previousSibling
-    function nth(elem, filter, direction, extraFilter) {
+    // util : 到某个阶段不再查找直接返回
+    function nth(elem, filter, direction, extraFilter, until, includeSef) {
         if (!(elem = DOM.get(elem))) {
             return null;
         }
+        if (filter === 0) {
+            return elem;
+        }
+        if (!includeSef) {
+            elem = elem[direction];
+        }
+        if (!elem) {
+            return null;
+        }
+        until = (until && DOM.get(until)) || null;
+
         if (filter === undefined) {
             // 默认取 1
             filter = 1;
         }
-        var ret = null,
+        var ret = [],
+            isArray = S.isArray(filter),
             fi,
             flen;
 
-        if (S.isNumber(filter)
-            && filter >= 0) {
-            if (filter === 0) {
-                return elem;
-            }
+        if (S.isNumber(filter)) {
             fi = 0;
             flen = filter;
             filter = function() {
@@ -113,16 +135,32 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             };
         }
 
-        while ((elem = elem[direction])) {
+        do {
             if (isElementNode(elem)
-                && (!filter || DOM.test(elem, filter))
+                && testFilter(elem, filter)
                 && (!extraFilter || extraFilter(elem))) {
-                ret = elem;
-                break;
+                ret.push(elem);
+                if (!isArray) {
+                    break;
+                }
             }
-        }
+        } while (elem != until && (elem = elem[direction]));
 
-        return ret;
+        return isArray ? ret : ret[0] || null;
+    }
+
+    function testFilter(elem, filter) {
+        if (!filter) return true;
+        if (S.isArray(filter)) {
+            for (var i = 0; i < filter.length; i++) {
+                if (DOM.test(elem, filter[i])) {
+                    return true;
+                }
+            }
+        } else if (DOM.test(elem, filter)) {
+            return true;
+        }
+        return false;
     }
 
     // 获取元素 elem 的 siblings, 不包括自身

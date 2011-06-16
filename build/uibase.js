@@ -495,14 +495,14 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     }
 
     S.mix(Box, {
-        APPEND:1,
-        INSERT:0
-    });
+            APPEND:1,
+            INSERT:0
+        });
 
     Box.ATTRS = {
         el: {
             //容器元素
-            setter:function(v) {               
+            setter:function(v) {
                 if (S.isString(v))
                     return Node.one(v);
             }
@@ -566,7 +566,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
         return "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
             + attrStr + (cls ? (" class='" + cls + "' ") : "")
-            + ">";
+            + "><" + "/" + tag + ">";
         //return ret;
     }
 
@@ -635,8 +635,8 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     return Box;
 }, {
-    requires:['node']
-});
+        requires:['node']
+    });
 /**
  * close extension for kissy dialog
  * @author: 承玉<yiminghe@gmail.com>
@@ -1051,7 +1051,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
                     "left: 0;" +
                     "z-index: 99999;" +
                     "height:100%;" +
-                    "*height: expression(this.parentNode.offsetHeight);" + "'>")
+                    "*height: expression(this.parentNode.offsetHeight);" + "'/>")
                     .appendTo(self.get("el"));
             }
             self._loadingExtEl.show();
@@ -1116,7 +1116,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
         mask = new Node("<div " +
             //"tabindex='-1' " +
             "class='" +
-            this.get("prefixCls") + "ext-mask'>").prependTo(document.body);
+            this.get("prefixCls") + "ext-mask'/>").prependTo(document.body);
         mask.css({
                 "position":"absolute",
                 left:0,
@@ -1135,7 +1135,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
                 "width:" + DOM['docWidth']() + "px;" +
                 "height:" + DOM['docHeight']() + "px;" +
                 "filter:alpha(opacity=0);" +
-                "z-index:-1;'>").insertBefore(mask)
+                "z-index:-1;'/>").insertBefore(mask)
         }
 
         S.Event.on(window, "resize", function() {
@@ -1425,7 +1425,7 @@ KISSY.add("uibase/shimrender", function(S, Node) {
                     "filter: alpha(opacity=0);" +
                     "left: 0;" +
                     "z-index: -1;" +
-                    "height: expression(this.parentNode.offsetHeight);" + "'>");
+                    "height: expression(this.parentNode.offsetHeight);" + "'/>");
                 el.prepend(self.__shimEl);
             } else if (!v && self.__shimEl) {
                 self.__shimEl.remove();
@@ -1535,7 +1535,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
-            partEl = new Node("<div class='" + self.get("prefixCls") +CLS_PREFIX + part + "'>")
+            partEl = new Node("<div class='" + self.get("prefixCls") +CLS_PREFIX + part + "'/>")
                 .appendTo(el);
             self.set(part, partEl);
         }

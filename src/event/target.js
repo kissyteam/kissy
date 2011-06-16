@@ -13,14 +13,8 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
         isCustomEventTarget: true,
 
         fire: function(type, eventData) {
-            var id = DOM.data(this, Event.EVENT_GUID) || -1,
-                cache = Event._getCache(id) || { },
-                events = cache.events || { },
-                t = events[type];
-
-            if (t && S.isFunction(t.handle)) {
-                return t.handle(undefined, eventData);
-            }
+            // no chain ,need data returned
+            return Event.fire(this, type, eventData);
         },
 
         on: function(type, fn, scope) {
@@ -34,12 +28,12 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
         }
     };
 }, {
-    /*
-     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-     否则会导致build打包文件 dom 和 dom-data 重复载入
-     */
-    requires:["event/base","dom"]
-});
+        /*
+         实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
+         否则会导致build打包文件 dom 和 dom-data 重复载入
+         */
+        requires:["./base","dom"]
+    });
 
 /**
  * NOTES:

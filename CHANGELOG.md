@@ -13,47 +13,71 @@ Legend of version history:
 
 History:
 --------
-### v1.1.6 -> v1.2.0 (2011/4/14)
- - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
- - [*] Node 与 NodeList 合一
- - [!] DOM 参数中不可以传入 KISSY Node 或 KISSY NodeList 类型
- - [!] DOM 所有读操作如果返回 undefined 现在返回 null
- - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
- - [*] ie: dom opacity bug fix , border-width 数值归一化
- - [*] anim 提高性能，不重复 touch dom / css
+### v1.1.6 -> v1.2.0 (2011/06/08)
+ - [+] event 增加作用于 dom 节点的 delegate 方法
+ - [+] event 增加作用于 dom 节点的 fire 方法
+ - [*] 自定义事件 listeners 放入对象自身保存，避免内存泄露
+ - [+] event 增加 valuechange ,hashchange 事件兼容处理
  - [*] Event.detach = Event.remove
- - [*] KISSY.Overlay 增加 closeAction 配置, destroy or hide
- - [*] KISSY.Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
- - [x] KISSY.Suggest fix: IE9 下无法更新数据
- - [x] KISSY.Suggest fix: chrome 下光标鼠标移动问题
- - [*] KISSY.Accordion 增加 aria 配置
- - [*] KISSY.Carousel 增加 aria 配置
- - [*] KISSY.Tabs 增加 aria 配置
- - [*] KISSY.Overlay 增加 aria 配置, trap focus and keydown
- - [*] KISSY.param/unparam 增加数组处理选项
- - [+] KISSY.getScript 支持 css 载入后调用回调
- - [+] KISSY.getScript 支持除了ie<9外的 error 立即回调
- - [x] KISSY Loader 初步重构，拆分文件
- - [x] bugfix anim 内存泄露
- - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
- - [+] 增加 anim 单元测试
- - [+] loader 支持包配置，各个模块无需配置路径 (http://docs.kissyui.com/docs/html/api/seed/loader/index.html)
- - [+] loader 增加单元测试
- - [+] overlay 增加 resize 配置
- - [+] overlay 增加单元测试
- - [+] 增加 button 组件
- - [+] 增加 menubutton 组件
- - [+] 增加 menu 组件
- - [+] 增加 component 组件基类
- - [+] kissy-tools 增加 module-compiler 工具
- - [+] dd 支持 drop 以及基于委托的 drag&drop
- - [+] dd 增加单元测试
- - [*] 所有模块结构根据 loader 重新组织
- - [*] kissyteam 文档利用 sphinx 重新编写整理
- - [!] 再次强调：KISSY.Event.on 第一个参数只支持单个原生 dom 节点或原生 dom 节点数组以及选择器字符串
- - [!] calendar 模块 use("calendar") 将不再动态加载其css，方便自由定制样式，若需要默认样式需静态引入或S.getScript加载
+ - [x] 修正 focusin/out 事件触发顺序,子元素先，父元素后
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
+
+
+ - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked"，增加 prop 方法 ，返回 prop('checked')==true
+ - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
+ - [!] DOM 所有读操作如果返回 undefined 现在返回 null
+ - [*] ie: dom opacity bug fix , border-width 数值归一化
+ - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
+
+ - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
+ - [*] Node 与 NodeList 合一
+
+ - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
+ - [*] anim 提高性能，不重复 touch dom / css
+ - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
+ - [+] 增加 anim 单元测试
+ - [x] bugfix anim 内存泄露
+
+ - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
+ - [x] Suggest fix: IE9 下无法更新数据
+ - [x] Suggest fix: chrome 下光标鼠标移动问题
+
+ - [*] Accordion 增加 aria 配置
+ - [*] Carousel 增加 aria 配置
+ - [*] Tabs 增加 aria 配置
+
+ - [*] Overlay 增加 closeAction 配置, destroy or hide
+ - [*] Overlay 增加 aria 配置, trap focus and keydown
+ - [+] overlay 增加 resize 配置
+ - [+] overlay 增加单元测试
+
+ - [*] KISSY.param/unparam 增加数组处理选项
+ - [+] KISSY.getScript 支持 css 载入后调用回调
+ - [+] KISSY.getScript 支持除了 ie < 9外的 error 立即回调
+
+ - [x] Loader 初步重构，拆分文件
+ - [+] loader 支持包配置，各个模块无需配置路径 (http://docs.kissyui.com/docs/html/api/seed/loader/index.html)
+ - [+] loader 增加单元测试
+ - [*] 所有模块结构根据 loader 重新组织
+
+ - [+] 增加 button 组件
+
+ - [+] 增加 menubutton 组件
+
+ - [+] 增加 menu 组件
+
+ - [+] 增加 component 组件基类
+
+ - [+] kissy-tools 增加 module-compiler 工具
+
+ - [+] dd 支持 drop 以及基于委托的 drag&drop
+ - [+] dd 增加单元测试
+ - [+] dd 增加 portal 示例
+
+ - [*] kissyteam 文档利用 sphinx 重新编写整理
+
+ - [!] calendar 模块 use("calendar") 将不再动态加载其css，方便自由定制样式，若需要默认样式需静态引入或S.getScript加载
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
 

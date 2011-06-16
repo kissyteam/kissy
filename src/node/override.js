@@ -9,7 +9,7 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      * appendTo(parent,node) : 才是正常
      *
      */
-    S.each(['append', 'prepend'], function(insertType) {
+    S.each(['append', 'prepend','before','after'], function(insertType) {
         // append 和 prepend
 
         NodeList.addMethod(insertType, function(domNodes, html) {

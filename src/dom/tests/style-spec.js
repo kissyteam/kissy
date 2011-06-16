@@ -60,7 +60,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             // 不加入 dom 节点，ie9,firefox 返回 auto by computedStyle
             // ie7,8 返回负数，offsetHeight 返回0
             //alert(elem.currentStyle.height);== auto
-            expect(parseInt(DOM.css(elem, 'height'))).toBe(19);
+            expect(parseInt(DOM.css(elem, 'height'))).toBeEqual(19);
 
             DOM.css(elem, 'float', 'right');
 

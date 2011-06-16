@@ -2,7 +2,7 @@
  * definition for node and nodelist
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add("node/base", function(S, DOM, Event, undefined) {
+KISSY.add("node/base", function(S, DOM, undefined) {
 
     var AP = Array.prototype;
 
@@ -51,21 +51,14 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
         return undefined;
     }
 
-    S.augment(NodeList, Event.Target, {
+    S.augment(NodeList, {
 
-            isCustomEventTarget:false,
-            /**
-             * 模拟事件触发，暂不实现
-             */
-            fire:null,
             /**
              * 默认长度为 0
              */
             length: 0,
 
-            /**
-             * 根据 index 或 DOMElement 获取对应的 KSNode
-             */
+
             item: function(index) {
                 if (S.isNumber(index)) {
                     if (index >= this.length) return null;
@@ -74,6 +67,26 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                     return new NodeList(index, undefined, undefined);
             },
 
+            add:function(selector, context, index) {
+                if (S.isNumber(context)) {
+                    index = context;
+                    context = undefined;
+                }
+                var list = S.makeArray(NodeList.all(selector, context)),
+                    ret = new NodeList(this, undefined, undefined);
+                if (index === undefined) {
+                    AP.push.apply(ret, list);
+                } else {
+                    var args = [index,0];
+                    args.push.apply(args, list);
+                    AP.splice.apply(ret, args);
+                }
+                return ret;
+            },
+
+            slice:function(start, end) {
+                return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            },
 
             /**
              * Retrieves the DOMNodes.
@@ -145,12 +158,12 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
         var all = NodeList.all(selector, context);
         return all.length ? all : null;
     };
-
-    NodeList.List = NodeList;
-
+    if (1 > 2) {
+        NodeList.getDOMNodes();
+    }
     return NodeList;
 }, {
-        requires:["dom","event"]
+        requires:["dom"]
     });
 
 

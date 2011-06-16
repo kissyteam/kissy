@@ -9,15 +9,18 @@ build time: ${build.time}
  */
 KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
-    var DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
+    var DISPLAY = 'display',
+        BLOCK = 'block',
+        NONE = 'none',
         EventTarget = Event.Target,
-        FORWARD = 'forward', BACKWARD = 'backward',
+        FORWARD = 'forward',
+        BACKWARD = 'backward',
         DOT = '.',
-
         EVENT_INIT = 'init',
-        EVENT_BEFORE_SWITCH = 'beforeSwitch', EVENT_SWITCH = 'switch',
-        CLS_PREFIX = 'ks-switchable-',
-        DOM_EVENT = {originalEvent:{target:1}};
+        EVENT_BEFORE_SWITCH = 'beforeSwitch',
+        EVENT_SWITCH = 'switch',
+        CLS_PREFIX = 'ks-switchable-';
+
 
     /**
      * Switchable Widget
@@ -87,29 +90,50 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         //self.content
 
         /**
-         * 当前激活的 index，内部使用，外部设置需要修改对应 html markup
-         * 不可和 switchTo 并列设置
+         * 上一个完成动画/切换的位置
          * @type Number
          */
-        self.activeIndex = config.activeIndex;
+        //self.completedIndex
 
         /**
-         * 正打算激活的 index，内部使用，不可外部设置
-         * 一般和 activeIndex 相同，有动画时，则有落差
+         * 当前正在动画/切换的位置,没有动画则和 completedIndex 一致
+         * @type Number
          */
-        self.ingIndex = self.activeIndex;
+        self.activeIndex = self.completedIndex = config.activeIndex;
+
+        // 设置了 activeIndex
+        // 要配合设置 markup
+        if (self.activeIndex > -1) {
+        }
+        //设置了 switchTo , activeIndex == -1
+        else if (typeof config.switchTo == "number") {
+        }
+        // 否则，默认都为 0
+        // 要配合设置位置 0 的 markup
+        else {
+            self.completedIndex = self.activeIndex = 0;
+        }
+
 
         self._init();
         self._initPlugins();
         self.fire(EVENT_INIT);
 
-        if (self.activeIndex > -1) {
 
-        } else if (S.isNumber(config.switchTo)) {
+        if (self.activeIndex > -1) {
+        } else if (typeof config.switchTo == "number") {
             self.switchTo(config.switchTo);
         }
-
     }
+
+    function getDomEvent(e) {
+        var originalEvent = {};
+        originalEvent.type = e.originalEvent.type;
+        originalEvent.target = e.originalEvent.target || e.originalEvent.srcElement;
+        return {originalEvent:originalEvent};
+    }
+
+    Switchable.getDomEvent = getDomEvent;
 
     // 默认配置
     Switchable.Config = {
@@ -135,9 +159,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         // 触发延迟
         delay: .1, // 100ms
 
-        activeIndex: -1, // markup 的默认激活项应与 activeIndex 保持一致
+        activeIndex: -1, // markup 的默认激活项应与 activeIndex 保持一致，激活并不代表动画完成
         activeTriggerCls: 'ks-active',
-        switchTo: 0,  // 初始切换到面板，默认第一个
+        //switchTo: undefined,  // 初始切换到面板
 
         // 可见视图内有多少个 panels
         steps: 1,
@@ -187,18 +211,21 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
              * 解析 markup, 获取 triggers, panels, content
              */
             _parseMarkup: function() {
-                var self = this, container = self.container,
+                var self = this,
+                    container = self.container,
                     cfg = self.config,
-                    nav, content, triggers = [], panels = [],
-                    //i,
-                    n
-                    //m
-                    ;
+                    nav,
+                    content,
+                    triggers = [],
+                    panels = [],
+                    n;
 
                 switch (cfg.markupType) {
                     case 0: // 默认结构
                         nav = DOM.get(DOT + cfg.navCls, container);
-                        if (nav) triggers = DOM.children(nav);
+                        if (nav) {
+                            triggers = DOM.children(nav);
+                        }
                         content = DOM.get(DOT + cfg.contentCls, container);
                         panels = DOM.children(content);
                         break;
@@ -235,8 +262,11 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
              * 自动生成 triggers 的 markup
              */
             _generateTriggersMarkup: function(len) {
-                var self = this, cfg = self.config,
-                    ul = DOM.create('<ul>'), li, i;
+                var self = this,
+                    cfg = self.config,
+                    ul = DOM.create('<ul>'),
+                    li,
+                    i;
 
                 ul.className = cfg.navCls;
                 for (i = 0; i < len; i++) {
@@ -264,16 +294,16 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                     (function(index) {
                         trigger = triggers[index];
 
-                        Event.on(trigger, 'click', function() {
-                            self._onFocusTrigger(index);
+                        Event.on(trigger, 'click', function(e) {
+                            self._onFocusTrigger(index, e);
                         });
 
                         if (cfg.triggerType === 'mouse') {
-                            Event.on(trigger, 'mouseenter', function() {
-                                self._onMouseEnterTrigger(index, DOM_EVENT);
+                            Event.on(trigger, 'mouseenter', function(e) {
+                                self._onMouseEnterTrigger(index, e);
                             });
                             Event.on(trigger, 'mouseleave', function() {
-                                self._onMouseLeaveTrigger(index, DOM_EVENT);
+                                self._onMouseLeaveTrigger(index);
                             });
                         }
                     })(i);
@@ -283,25 +313,28 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
             /**
              * click or tab 键激活 trigger 时触发的事件
              */
-            _onFocusTrigger: function(index) {
+            _onFocusTrigger: function(index, e) {
                 var self = this;
-                if (!self._triggerIsValid(index)) return; // 重复点击
-
+                // 重复点击
+                if (!self._triggerIsValid(index)) {
+                    return;
+                }
                 this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-                self.switchTo(index, undefined, DOM_EVENT);
+                self.switchTo(index, undefined, getDomEvent(e));
             },
 
             /**
              * 鼠标悬浮在 trigger 上时触发的事件
              */
-            _onMouseEnterTrigger: function(index) {
+            _onMouseEnterTrigger: function(index, e) {
                 var self = this;
                 if (!self._triggerIsValid(index)) {
                     return;
-                } // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
-
+                }
+                var ev=getDomEvent(e);
+                // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
                 self.switchTimer = S.later(function() {
-                    self.switchTo(index, undefined, DOM_EVENT);
+                    self.switchTo(index, undefined, ev);
                 }, self.config.delay * 1000);
             },
 
@@ -316,7 +349,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
              * 重复触发时的有效判断
              */
             _triggerIsValid: function(index) {
-                return this.ingIndex !== index;
+                return this.activeIndex !== index;
             },
 
             /**
@@ -342,7 +375,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                     cfg = self.config,
                     triggers = self.triggers,
                     panels = self.panels,
-                    ingIndex = self.ingIndex,
+                    ingIndex = self.activeIndex,
                     steps = cfg.steps,
                     fromIndex = ingIndex * steps,
                     toIndex = index * steps;
@@ -367,7 +400,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                 if (direction === undefined) {
                     direction = index > ingIndex ? FORWARD : BACKWARD;
                 }
-                self.ingIndex = index;
+
                 // switch view
                 self._switchView(
                     ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
@@ -376,8 +409,10 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
                     direction, ev, function() {
                         callback && callback.call(self, index);
                         // update activeIndex
-                        self.activeIndex = index
+                        self.completedIndex = index
                     });
+
+                self.activeIndex = index;
 
                 return self; // chain
             },
@@ -388,7 +423,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
             _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
                 var activeTriggerCls = this.config.activeTriggerCls;
 
-                if (fromTrigger) DOM.removeClass(fromTrigger, activeTriggerCls);
+                if (fromTrigger) {
+                    DOM.removeClass(fromTrigger, activeTriggerCls);
+                }
                 DOM.addClass(toTrigger, activeTriggerCls);
             },
 
@@ -411,7 +448,6 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
              * 触发 switch 相关事件
              */
             _fireOnSwitch: function(index, ev) {
-
                 this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
             },
 
@@ -419,16 +455,22 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
              * 切换到上一视图
              */
             prev: function(ev) {
-                var self = this, activeIndex = self.activeIndex;
-                self.switchTo(activeIndex > 0 ? activeIndex - 1 : self.length - 1, BACKWARD, ev);
+                var self = this,
+                    activeIndex = self.activeIndex;
+                self.switchTo(activeIndex > 0 ?
+                    activeIndex - 1 :
+                    self.length - 1, BACKWARD, ev);
             },
 
             /**
              * 切换到下一视图
              */
             next: function(ev) {
-                var self = this, activeIndex = self.activeIndex;
-                self.switchTo(activeIndex < self.length - 1 ? activeIndex + 1 : 0, FORWARD, ev);
+                var self = this,
+                    activeIndex = self.activeIndex;
+                self.switchTo(activeIndex < self.length - 1 ?
+                    activeIndex + 1 :
+                    0, FORWARD, ev);
             }
         });
 
@@ -438,11 +480,14 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
 /**
  * NOTES:
+ *
+ * 承玉：2011.06.02 review switchable
+ *
  * 承玉：2011.05.10
  *   - 抽象 init plugins by Hierarchy
  *   - 抽象 init config by hierarchy
  *   - switchTo 处理，外部设置，初始展开面板
- *   - activeIndex 不可外部设置，内部使用
+ *   - 增加状态 completedIndex
  *
  * 2010.07
  *  - 重构，去掉对 YUI2-Animation 的依赖
@@ -542,45 +587,46 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
         }
 
         Accordion.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     S.extend(Accordion, Switchable, {
 
-        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-            var self = this, cfg = self.config;
-            if (cfg.multiple) {
-                DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
-            } else {
-                Accordion.superclass._switchTrigger.apply(self, arguments);
+            _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+                var self = this,
+                    cfg = self.config;
+                if (cfg.multiple) {
+                    DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
+                } else {
+                    Accordion.superclass._switchTrigger.apply(self, arguments);
+                }
+            },
+
+            /**
+             * 重复触发时的有效判断
+             */
+            _triggerIsValid: function(index) {
+                // multiple 模式下，再次触发意味着切换展开/收缩状态
+                return this.config.multiple ||
+                    Accordion.superclass._triggerIsValid.call(this, index);
+            },
+
+            /**
+             * 切换视图
+             */
+            _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
+                var self = this,
+                    cfg = self.config,
+                    panel = toPanels[0];
+
+                if (cfg.multiple) {
+                    DOM.toggle(panel);
+                    this._fireOnSwitch(index, ev);
+                    callback && callback.call(this);
+                } else {
+                    Accordion.superclass._switchView.apply(self, arguments);
+                }
             }
-        },
-
-        /**
-         * 重复触发时的有效判断
-         */
-        _triggerIsValid: function(index) {
-            // multiple 模式下，再次触发意味着切换展开/收缩状态
-            return Accordion.superclass._triggerIsValid.call(this, index)
-                || this.config.multiple;
-        },
-
-        /**
-         * 切换视图
-         */
-        _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
-            var self = this, cfg = self.config,
-                panel = toPanels[0];
-
-            if (cfg.multiple) {
-                DOM.toggle(panel);
-                this._fireOnSwitch(index, ev);
-                callback.call(this);
-            } else {
-                Accordion.superclass._switchView.apply(self, arguments);
-            }
-        }
-    });
+        });
 
     Accordion.Plugins = [];
     Accordion.Config = {
@@ -594,20 +640,21 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
 
 /**
  * TODO:
- *
  *  - 支持动画
+ *
+ *  承玉：2011.06.02 review switchable
  *
  *  承玉：2011.05.10
  *   - review ,prepare for aria
+ *
  *
  */
 /**
  * accordion aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
-    var SELECT = "ks-switchable-select";
-    var Event = S.Event,DOM = S.DOM;
+KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) {
+
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
     var KEY_END = 35;
@@ -636,22 +683,24 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
             name:"aria",
             init:function(self) {
                 if (!self.config.aria) return;
-                var container = self.container;
-                var activeIndex = self.activeIndex;
+                var container = self.container,
+                    activeIndex = self.activeIndex;
                 DOM.attr(container, "aria-multiselectable",
                     self.config.multiple ? "true" : "false");
-                DOM.attr(container, "role", "tablist");
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
                 var triggers = self.triggers,
                     panels = self.panels;
                 var i = 0;
                 S.each(panels, function(panel) {
                     if (!panel.id) {
-                        panel.id = S.guid("ks-switchable-tab-panel");
+                        panel.id = S.guid("ks-accordion-tab-panel");
                     }
                 });
                 S.each(triggers, function(trigger) {
                     if (!trigger.id) {
-                        trigger.id = S.guid("ks-switchable-tab");
+                        trigger.id = S.guid("ks-accordion-tab");
                     }
                 });
 
@@ -674,10 +723,6 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
                 self.on("switch", _tabSwitch, self);
 
-                if (activeIndex > -1) {
-                    self.focusIndex = activeIndex;
-                }
-
                 Event.on(container, "keydown", _tabKeydown, self);
                 /**
                  * prevent firefox native tab switch
@@ -690,7 +735,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     var setTabIndex = Aria.setTabIndex;
 
     function _currentTabFromEvent(t) {
-        var triggers = this.triggers,trigger;
+        var triggers = this.triggers,
+            trigger;
         S.each(triggers, function(ct) {
             if (ct == t || DOM.contains(ct, t)) {
                 trigger = ct;
@@ -699,16 +745,33 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
         return trigger;
     }
 
-//
-//    function _currentPanelFromEvent(t) {
-//        var panels = this.panels,panel;
-//        S.each(panels, function(ct) {
-//            if (ct == t || DOM.contains(ct, t)) {
-//                panel = ct;
-//            }
-//        });
-//        return panel;
-//    }
+
+    function _currentPanelFromEvent(t) {
+        var panels = this.panels,
+            panel;
+        S.each(panels, function(ct) {
+            if (ct == t || DOM.contains(ct, t)) {
+                panel = ct;
+            }
+        });
+        return panel;
+    }
+
+    function getTabFromPanel(panel) {
+        var triggers = this.triggers,
+            panels = this.panels;
+        return triggers[S.indexOf(panel, panels)];
+    }
+
+    function _currentTabByTarget(t) {
+        var self = this,
+            currentTarget = _currentTabFromEvent.call(self, t);
+        if (!currentTarget) {
+            currentTarget = getTabFromPanel.call(self,
+                _currentPanelFromEvent.call(self, t))
+        }
+        return currentTarget;
+    }
 
     function _tabKeypress(e) {
 
@@ -735,8 +798,10 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
      * @param e
      */
     function _tabKeydown(e) {
-        var t = e.target,self = this;
-        var triggers = self.triggers;
+        var t = e.target,
+            self = this,
+            currentTarget,
+            triggers = self.triggers;
 
         // Save information about a modifier key being pressed
         // May want to ignore keyboard events that include modifier keys
@@ -747,172 +812,168 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
 
             case KEY_ENTER:
             case KEY_SPACE:
-                if (_currentTabFromEvent.call(self, t)
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
                     && no_modifier_pressed_flag
                     ) {
-                    enter.call(self);
+
+                    enter.call(self, currentTarget);
                     e.halt();
                 }
                 break;
 
             case KEY_LEFT:
             case KEY_UP:
-                if (_currentTabFromEvent.call(self, t)
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    prev.call(self);
+                    prev.call(self, currentTarget);
                     e.halt();
                 } // endif
                 break;
 
             case KEY_RIGHT:
             case KEY_DOWN:
-                if (_currentTabFromEvent.call(self, t)
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
                 //&& no_modifier_pressed_flag
                     ) {
-                    next.call(self);
+                    next.call(self, currentTarget);
                     e.halt();
                 } // endif
                 break;
 
             case KEY_PAGEDOWN:
-
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    next.call(self);
-
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    next.call(self, currentTarget);
                 }
                 break;
 
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    prev.call(self);
-
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    prev.call(self, currentTarget);
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
+                    currentTarget = _currentTabByTarget.call(self, t);
                     switchTo.call(self, 0);
                     e.halt();
                 }
-
                 break;
+
             case KEY_END:
                 if (no_modifier_pressed_flag) {
+                    currentTarget = _currentTabByTarget.call(self, t);
                     switchTo.call(self, triggers.length - 1);
                     e.halt();
                 }
-
                 break;
+
             case KEY_TAB:
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
+                    currentTarget = _currentTabByTarget.call(self, t);
                     if (e.shiftKey)
-                        prev.call(self);
+                        prev.call(self, currentTarget);
                     else
-                        next.call(self);
-
+                        next.call(self, currentTarget);
                 }
                 break;
         }
     }
 
-    function focusTo(pre, nextIndex, focusNext) {
-        var self = this,triggers = self.triggers;
-        if (S.isNumber(pre)) {
-            var cur = triggers[pre];
-        }
-        var next = triggers[nextIndex];
-        if (cur) {
+    function focusTo(nextIndex, focusNext) {
+        var self = this,
+            triggers = self.triggers,
+            next = triggers[nextIndex];
+        S.each(triggers, function(cur) {
+            if (cur === next) return;
             setTabIndex(cur, "-1");
-            DOM.removeClass(cur, SELECT);
+            DOM.removeClass(cur, "ks-switchable-select");
             cur.setAttribute("aria-selected", "false");
-        }
+        });
         if (focusNext) {
             next.focus();
         }
         setTabIndex(next, "0");
-        DOM.addClass(next, SELECT);
+        DOM.addClass(next, "ks-switchable-select");
         next.setAttribute("aria-selected", "true");
     }
 
     // trigger 焦点转移
-    function prev() {
+    function prev(trigger) {
         var self = this,
             triggers = self.triggers,
-            focusIndex = self.focusIndex,
-            nFocusIndex = self.focusIndex = focusIndex == 0
+            focusIndex = S.indexOf(trigger, triggers),
+            nFocusIndex = focusIndex == 0
                 ? triggers.length - 1 : focusIndex - 1;
-        focusTo.call(self, focusIndex, nFocusIndex, true);
+        focusTo.call(self, nFocusIndex, true);
     }
 
     function switchTo(index) {
-        var self = this,
-            focusIndex = self.focusIndex;
-        self.focusIndex = index;
-        focusTo.call(self, focusIndex, index, true)
+        focusTo.call(this, index, true)
     }
 
 
     // trigger 焦点转移
-    function next() {
+    function next(trigger) {
         var self = this,
             triggers = self.triggers,
-            focusIndex = self.focusIndex,
-            nFocusIndex = self.focusIndex = (focusIndex == triggers.length - 1
+            focusIndex = S.indexOf(trigger, triggers),
+            nFocusIndex = (focusIndex == triggers.length - 1
                 ? 0 : focusIndex + 1);
-        focusTo.call(self, focusIndex, nFocusIndex, true);
+        focusTo.call(self, nFocusIndex, true);
     }
 
-    function enter() {
-        this.switchTo(this.focusIndex);
+    function enter(trigger) {
+        this.switchTo(S.indexOf(trigger, this.triggers));
     }
 
 
     // 显示 tabpanel
     function _tabSwitch(ev) {
 
-        var domEvent = !!ev.originalEvent.target;
-
-        var self = this,
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
+            self = this,
             multiple = self.config.multiple,
-            lastActiveIndex = self.activeIndex,
             activeIndex = ev.currentIndex,
-            trigger = self.triggers[activeIndex],
-            panel = self.panels[activeIndex];
+            panels = self.panels,
+            triggers = self.triggers,
+            trigger = triggers[activeIndex],
+            panel = panels[activeIndex];
 
-        if (lastActiveIndex > -1) {
-            var lastTrigger = self.triggers[lastActiveIndex],
-                lastPanel = self.panels[lastActiveIndex];
-            setTabIndex(lastTrigger, "-1");
-            // dom 引起的才聚焦
-            if (domEvent) {
-                trigger.focus();
-            }
-            if (!multiple) {
-                lastPanel.setAttribute("aria-hidden", "true");
-                lastTrigger.setAttribute("aria-expanded", "false");
-            }
+        if (!multiple) {
+            S.each(panels, function(p) {
+                if (p !== panel) {
+                    p.setAttribute("aria-hidden", "true");
+                }
+            });
+            S.each(triggers, function(t) {
+                if (t !== trigger) {
+                    t.setAttribute("aria-hidden", "true");
+                }
+            });
         }
 
-        setTabIndex(trigger, "0");
         var o = panel.getAttribute("aria-hidden");
         panel.setAttribute("aria-hidden", o == "false" ? "true" : "false");
         trigger.setAttribute("aria-expanded", o == "false" ? "false" : "true");
-        focusTo.call(self, self.focusIndex, activeIndex);
-        self.focusIndex = activeIndex;
+        focusTo.call(self, activeIndex, domEvent);
     }
-
-
 },
     {
-        requires:["../aria","./base"]
+        requires:["dom","event","../aria","./base"]
     });
 
 /**
+
+ 承玉：2011.06.02 review switchable
+
  2011-05-08 承玉：add support for aria & keydown
 
  <h2>键盘快捷键</h2>
@@ -936,10 +997,10 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        autoplay: false,
-        interval: 5, // 自动播放间隔时间
-        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
-    });
+            autoplay: false,
+            interval: 5, // 自动播放间隔时间
+            pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
+        });
 
     /**
      * 添加插件
@@ -948,59 +1009,61 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
      */
     Switchable.Plugins.push({
 
-        name: 'autoplay',
+            name: 'autoplay',
 
-        init: function(host) {
+            init: function(host) {
 
-            var cfg = host.config, interval = cfg.interval * 1000, timer;
-            if (!cfg.autoplay) return;
+                var cfg = host.config,
+                    interval = cfg.interval * 1000,
+                    timer;
 
-            // 鼠标悬停，停止自动播放
-            if (cfg.pauseOnHover) {
-                Event.on(host.container, 'mouseenter', function() {
-                    host.stop();
-                });
-                Event.on(host.container, 'mouseleave', function() {
-                    host.start();
-                });
-            }
+                if (!cfg.autoplay) return;
 
-            function startAutoplay() {
-                // 设置自动播放
-                timer = S.later(function() {
-                    if (host.paused) return;
-                    // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                    host.switchTo(host.activeIndex < host.length - 1 ? host.activeIndex + 1 : 0, 'forward');
-                }, interval, true);
-            }
-
-            // go
-            startAutoplay();
-
-            // 添加 stop 方法，使得外部可以停止自动播放
-            host.stop = function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+                // 鼠标悬停，停止自动播放
+                if (cfg.pauseOnHover) {
+                    Event.on(host.container, 'mouseenter', host.stop, host);
+                    Event.on(host.container, 'mouseleave', host.start, host);
                 }
-                host.paused = true; // paused 可以让外部知道 autoplay 的当前状态
 
-            };
-
-            host.start = function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+                function startAutoplay() {
+                    // 设置自动播放
+                    timer = S.later(function() {
+                        if (host.paused) return;
+                        // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                        host.switchTo(host.activeIndex < host.length - 1 ?
+                            host.activeIndex + 1 : 0,
+                            'forward');
+                    }, interval, true);
                 }
-                host.paused = false;
 
+                // go
                 startAutoplay();
 
-            };
-        }
-    });
+                // 添加 stop 方法，使得外部可以停止自动播放
+                host.stop = function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+                    // paused 可以让外部知道 autoplay 的当前状态
+                    host.paused = true;
+                };
+
+                host.start = function() {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+                    host.paused = false;
+                    startAutoplay();
+                };
+            }
+        });
     return Switchable;
-}, { requires:["event","./base"]});/**
+}, { requires:["event","./base"]});
+/**
+ 承玉：2011.06.02 review switchable
+ *//**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
@@ -1037,8 +1100,8 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     var CLS_PREFIX = 'ks-switchable-',
         DOT = '.',
         PREV_BTN = 'prevBtn',
-        NEXT_BTN = 'nextBtn';
-
+        NEXT_BTN = 'nextBtn',
+        DOM_EVENT = {originalEvent:{target:1}};
 
     /**
      * Carousel Class
@@ -1055,7 +1118,6 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
         // call super
         Carousel.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     Carousel.Config = {
@@ -1068,61 +1130,56 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     Carousel.Plugins = [];
 
     S.extend(Carousel, Switchable, {
-        /**
-         * 插入 carousel 的初始化逻辑
-         *
-         * Carousel 的初始化逻辑
-         * 增加了:
-         *   self.prevBtn
-         *   self.nextBtn
-         */
-        _init:function() {
-            var self = this;
-            Carousel.superclass._init.call(self);
-            var cfg = self.config, disableCls = cfg.disableBtnCls,
-                switching = false;
+            /**
+             * 插入 carousel 的初始化逻辑
+             *
+             * Carousel 的初始化逻辑
+             * 增加了:
+             *   self.prevBtn
+             *   self.nextBtn
+             */
+            _init:function() {
+                var self = this;
+                Carousel.superclass._init.call(self);
+                var cfg = self.config,
+                    disableCls = cfg.disableBtnCls;
 
-            // 获取 prev/next 按钮，并添加事件
-            S.each(['prev', 'next'], function(d) {
-                var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
+                // 获取 prev/next 按钮，并添加事件
+                S.each(['prev', 'next'], function(d) {
+                    var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
 
-                Event.on(btn, 'click', function(ev) {
-                    ev.preventDefault();
-                    if (switching) {
-                        return;
-                    }
-
-                    if (!DOM.hasClass(btn, disableCls)){
-                        self[d]();
-                    }
+                    Event.on(btn, 'mousedown', function(ev) {
+                        ev.preventDefault();
+                        if (!DOM.hasClass(btn, disableCls)) {
+                            self[d](DOM_EVENT);
+                        }
+                    });
                 });
-            });
 
-            // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
-            // circular = true 时，无需处理
-            if (!cfg.circular) {
-                self.on('beforeSwitch', function() {
-                    switching = true;
-                });
-                self.on('switch', function(ev) {
-                    var i = ev.currentIndex,
-                        disableBtn = (i === 0) ? self[PREV_BTN]
-                            : (i === self.length - 1) ? self[NEXT_BTN]
-                            : undefined;
+                // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
+                // circular = true 时，无需处理
+                if (!cfg.circular) {
+                    self.on('switch', function(ev) {
+                        var i = ev.currentIndex,
+                            disableBtn = (i === 0) ?
+                                self[PREV_BTN] :
+                                (i === self.length - 1) ? self[NEXT_BTN] :
+                                    undefined;
 
-                    DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
-                    if (disableBtn) DOM.addClass(disableBtn, disableCls);
+                        DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
 
-                    switching = false;
+                        if (disableBtn) {
+                            DOM.addClass(disableBtn, disableCls);
+                        }
+                    });
+                }
+
+                // 触发 itemSelected 事件
+                Event.on(self.panels, 'click', function() {
+                    self.fire('itemSelected', { item: this });
                 });
             }
-
-            // 触发 itemSelected 事件
-            Event.on(self.panels, 'click', function() {
-                self.fire('itemSelected', { item: this });
-            });
-        }
-    });
+        });
 
 
     return Carousel;
@@ -1132,6 +1189,9 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
 
 /**
  * NOTES:
+ *
+ * 承玉：2011.06.02 review switchable
+ *
  * 承玉：2011.05
  *  - 内部组件 init 覆盖父类而不是监听事件
  *
@@ -1167,6 +1227,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 //    var KEY_ESCAPE = 27;
     var setTabIndex = Aria.setTabIndex;
     var DOM_EVENT = {originalEvent:{target:1}};
+    var FORWARD = 'forward',
+        BACKWARD = 'backward';
 
     function _switch(ev) {
         var self = this;
@@ -1178,7 +1240,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         var triggers = self.triggers;
         var trigger = triggers[index];
 
-        var domEvent = !!ev.originalEvent.target;
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         // dom 事件触发
         if (domEvent
@@ -1193,7 +1255,9 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
                 setTabIndex(t, -1);
             });
 
-            trigger && setTabIndex(trigger, 0);
+            if (trigger) {
+                setTabIndex(trigger, 0);
+            }
             setTabIndex(panel, 0);
 
             //dom 事件触发时，才会进行聚焦，否则会干扰用户
@@ -1269,7 +1333,6 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
             case KEY_ENTER:
             case KEY_SPACE:
-
                 c = findTrigger.call(this, t);
                 if (c) {
                     this.switchTo(S.indexOf(c, this.triggers), undefined, DOM_EVENT);
@@ -1300,7 +1363,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         setTabIndex(c, -1);
         setTabIndex(n, 0);
 
-        if (checkPanel.call(this, n)) {
+        if (checkPanel.call(this, n, FORWARD)) {
             n.focus();
         }
     }
@@ -1314,14 +1377,15 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         }
         setTabIndex(c, -1);
         setTabIndex(n, 0);
-        if (checkPanel.call(this, n)) {
+        if (checkPanel.call(this, n, BACKWARD)) {
             n.focus();
         }
     }
 
-    function checkPanel(p) {
-        var index = S.indexOf(p, this.panels),steps = this.config.steps;
-        var dest = Math.floor(index / steps);
+    function checkPanel(p, direction) {
+        var index = S.indexOf(p, this.panels),
+            steps = this.config.steps,
+            dest = Math.floor(index / steps);
         // 在同一个 panel 组，立即返回
         if (dest == this.activeIndex) {
             return 1;
@@ -1329,9 +1393,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
         if (index % steps == 0 || index % steps == steps - 1) {
             //向前动画滚动中，focus，会不正常 ...
             //传递事件，动画后异步 focus
-            this.switchTo(dest, undefined, undefined, function() {
-                p.focus();
-            });
+            this.switchTo(dest, direction, DOM_EVENT);
             return 0;
         }
         return 1;
@@ -1340,7 +1402,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
     function _contentKeydown(e) {
 
-        var key = e.keyCode,t = e.target,
+        var key = e.keyCode,
+            t = e.target,
             c;
 
         switch (key) {
@@ -1384,12 +1447,12 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     Carousel.Plugins.push({
             name:"aria",
             init:function(self) {
-                if (!self.config.aria) return;
-                // triggers 不可靠，panels 可靠
+                if (!self.config.aria) {
+                    return;
+                }
                 var triggers = self.triggers;
                 var panels = self.panels;
                 var content = self.content;
-
                 var activeIndex = self.activeIndex;
 
                 if (!content.id) {
@@ -1412,6 +1475,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
                 self.on("switch", _switch, self);
                 var nav = self.nav;
+
                 if (nav) {
                     Event.on(nav, "keydown", _navKeydown, self);
                 }
@@ -1451,6 +1515,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     });
 
 /**
+ 承玉：2011.06.02 review switchable
+
  承玉:2011.05.12
 
  <h2>键盘快捷键</h2>
@@ -1500,12 +1566,21 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
  */
 KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefined) {
 
-    var
-        DISPLAY = 'display', BLOCK = 'block', NONE = 'none',
-        OPACITY = 'opacity', Z_INDEX = 'z-index',
-        POSITION = 'position', RELATIVE = 'relative', ABSOLUTE = 'absolute',
-        SCROLLX = 'scrollx', SCROLLY = 'scrolly', FADE = 'fade',
-        LEFT = 'left', TOP = 'top', FLOAT = 'float', PX = 'px',
+    var DISPLAY = 'display',
+        BLOCK = 'block',
+        NONE = 'none',
+        OPACITY = 'opacity',
+        Z_INDEX = 'z-index',
+        POSITION = 'position',
+        RELATIVE = 'relative',
+        ABSOLUTE = 'absolute',
+        SCROLLX = 'scrollx',
+        SCROLLY = 'scrolly',
+        FADE = 'fade',
+        LEFT = 'left',
+        TOP = 'top',
+        FLOAT = 'float',
+        PX = 'px',
         Effects;
 
     /**
@@ -1529,7 +1604,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 DOM.css(fromEls, DISPLAY, NONE);
             }
             DOM.css(toEls, DISPLAY, BLOCK);
-            callback();
+            callback && callback();
         },
 
         // 淡隐淡现效果
@@ -1546,29 +1621,39 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 toEl = toEls[0];
 
             if (self.anim) {
+                // 不执行回调
                 self.anim.stop();
+                // 防止上个未完，放在最下层
+                DOM.css(self.anim.fromEl, {
+                        zIndex: 1,
+                        opacity:0
+                    });
+                // 把上个的 toEl 放在最上面，防止 self.anim.toEl == fromEL
+                // 压不住后面了
+                DOM.css(self.anim.toEl, "zIndex", 9);
             }
+
 
             // 首先显示下一张
             DOM.css(toEl, OPACITY, 1);
 
-//            S.log("from:");
-//            S.log(fromEl);
-//            S.log("to:");
-//            S.log(toEl);
-
-
             if (fromEl) {
                 // 动画切换
-                self.anim = new Anim(fromEl, { opacity: 0 }, cfg.duration, cfg.easing, function() {
-                    self.anim = undefined; // free
-
-                    // 切换 z-index
-                    DOM.css(toEl, Z_INDEX, 9);
-                    DOM.css(fromEl, Z_INDEX, 1);
-                    callback && callback();
-                }, cfg.nativeAnim).run();
+                self.anim = new Anim(fromEl,
+                    { opacity: 0 },
+                    cfg.duration,
+                    cfg.easing,
+                    function() {
+                        self.anim = undefined; // free
+                        // 切换 z-index
+                        DOM.css(toEl, Z_INDEX, 9);
+                        DOM.css(fromEl, Z_INDEX, 1);
+                        callback && callback();
+                    }, cfg.nativeAnim).run();
+                self.anim.toEl = toEl;
+                self.anim.fromEl = fromEl;
             } else {
+                //初始情况下没有必要动画切换
                 DOM.css(toEl, Z_INDEX, 9);
                 callback && callback();
             }
@@ -1576,7 +1661,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
         // 水平/垂直滚动效果
         scroll: function(fromEls, toEls, callback, index) {
-            var self = this, cfg = self.config,
+            var self = this,
+                cfg = self.config,
                 isX = cfg.effect === SCROLLX,
                 diff = self.viewSize[isX ? 0 : 1] * index,
                 props = { };
@@ -1586,11 +1672,18 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
             if (self.anim) {
                 self.anim.stop();
             }
-            self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
-                self.anim = undefined; // free
-                callback();
-            }, cfg.nativeAnim).run();
-
+            if (fromEls) {
+                self.anim = new Anim(self.content, props,
+                    cfg.duration,
+                    cfg.easing,
+                    function() {
+                        self.anim = undefined; // free
+                        callback && callback();
+                    }, cfg.nativeAnim).run();
+            } else {
+                DOM.css(self.content, props);
+                callback && callback();
+            }
         }
     };
     Effects = Switchable.Effects;
@@ -1609,8 +1702,10 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
              * 根据 effect, 调整初始状态
              */
             init: function(host) {
-                var cfg = host.config, effect = cfg.effect,
-                    panels = host.panels, content = host.content,
+                var cfg = host.config,
+                    effect = cfg.effect,
+                    panels = host.panels,
+                    content = host.content,
                     steps = cfg.steps,
                     activeIndex = host.activeIndex,
                     len = panels.length;
@@ -1621,15 +1716,13 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     cfg.viewSize[1] || panels[0].offsetHeight * steps
                 ];
                 // 注：所有 panel 的尺寸应该相同
-                //    最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
+                // 最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
                 // 2. 初始化 panels 样式
                 if (effect !== NONE) { // effect = scrollx, scrolly, fade
 
                     // 这些特效需要将 panels 都显示出来
-                    S.each(panels, function(panel) {
-                        DOM.css(panel, DISPLAY, BLOCK);
-                    });
+                    DOM.css(panels, DISPLAY, BLOCK);
 
                     switch (effect) {
                         // 如果是滚动效果
@@ -1639,12 +1732,14 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                             // 设置定位信息，为滚动效果做铺垫
                             DOM.css(content, POSITION, ABSOLUTE);
 
-                            DOM.css(content.parentNode, POSITION, RELATIVE); // 注：content 的父级不一定是 container
+                            // 注：content 的父级不一定是 container
+                            if (DOM.css(content.parentNode, POSITION) == "static") {
+                                DOM.css(content.parentNode, POSITION, RELATIVE);
+                            }
 
                             // 水平排列
                             if (effect === SCROLLX) {
                                 DOM.css(panels, FLOAT, LEFT);
-
                                 // 设置最大宽度，以保证有空间让 panels 水平排布
                                 DOM.width(content, host.viewSize[0] * (len / steps));
                             }
@@ -1679,7 +1774,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
             _switchView: function(fromEls, toEls, index, direction, ev, callback) {
 
-                var self = this, cfg = self.config,
+                var self = this,
+                    cfg = self.config,
                     effect = cfg.effect,
                     fn = S.isFunction(effect) ? effect : Effects[effect];
 
@@ -1694,6 +1790,9 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
     return Switchable;
 
 }, { requires:["dom","event","anim","switchable/base"]});
+/**
+ * 承玉：2011.06.02 review switchable
+ */
 /**
  * Switchable Circular Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -1722,7 +1821,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      * 循环滚动效果函数
      */
     function circularScroll(fromEls, toEls, callback, index, direction) {
-        var self = this, cfg = self.config,
+        var self = this,
+            cfg = self.config,
             len = self.length,
             activeIndex = self.activeIndex,
             isX = cfg.scrollType === SCROLLX,
@@ -1732,7 +1832,6 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             props = {},
             isCritical,
             isBackward = direction === BACKWARD;
-
         // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
             || (direction === FORWARD && activeIndex === len - 1 && index === 0);
@@ -1748,17 +1847,26 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
         if (self.anim) {
             self.anim.stop();
         }
-       
-        self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
-            if (isCritical) {
-                // 复原位置
-                resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
-            }
-            // free
-            self.anim = undefined;
-            callback();
-        }, cfg.nativeAnim).run();
 
+        if (fromEls) {
+            self.anim = new Anim(self.content,
+                props,
+                cfg.duration,
+                cfg.easing,
+                function() {
+                    if (isCritical) {
+                        // 复原位置
+                        resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
+                    }
+                    // free
+                    self.anim = undefined;
+                    callback && callback();
+                }, cfg.nativeAnim).run();
+        } else {
+            // 初始化
+            DOM.css(self.content, props);
+            callback && callback();
+        }
 
     }
 
@@ -1775,10 +1883,9 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             i;
 
         // 调整 panels 到下一个视图中
-        for (i = from; i < to; i++) {
-            DOM.css(panels[i], POSITION, RELATIVE);
-            DOM.css(panels[i], prop, (isBackward ? -1 : 1) * viewDiff * len);
-        }
+        var actionPanels = panels.slice(from, to);
+        DOM.css(actionPanels, POSITION, RELATIVE);
+        DOM.css(actionPanels, prop, (isBackward ? -1 : 1) * viewDiff * len);
 
         // 偏移量
         return isBackward ? viewDiff : -viewDiff * len;
@@ -1788,7 +1895,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      * 复原位置
      */
     function resetPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config,
+        var self = this,
+            cfg = self.config,
             steps = cfg.steps,
             len = self.length,
             start = isBackward ? len - 1 : 0,
@@ -1797,10 +1905,9 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             i;
 
         // 滚动完成后，复位到正常状态
-        for (i = from; i < to; i++) {
-            DOM.css(panels[i], POSITION, EMPTY);
-            DOM.css(panels[i], prop, EMPTY);
-        }
+        var actionPanels = panels.slice(from, to);
+        DOM.css(actionPanels, POSITION, EMPTY);
+        DOM.css(actionPanels, prop, EMPTY);
 
         // 瞬移到正常位置
         DOM.css(self.content, prop, isBackward ? -viewDiff * (len - 1) : EMPTY);
@@ -1828,9 +1935,11 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             }
         });
 
-}, { requires:["dom","anim","switchable/base","switchable/effect"]});
+}, { requires:["dom","anim","./base","./effect"]});
 
 /**
+ * 承玉：2011.06.02 review switchable
+ *
  * TODO:
  *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
  */
@@ -1840,8 +1949,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
  */
 KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, undefined) {
 
-    var
-        CLS_PREFIX = 'ks-switchable-trigger-',
+    var CLS_PREFIX = 'ks-switchable-trigger-',
         TRIGGER_MASK_CLS = CLS_PREFIX + 'mask',
         TRIGGER_CONTENT_CLS = CLS_PREFIX + 'content',
         STYLE = 'style';
@@ -1850,119 +1958,129 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        countdown: false,
-        countdownFromStyle: '',      // 倒计时的初始样式
-        countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
-    });
+            countdown: false,
+            countdownFromStyle: '',      // 倒计时的初始样式
+            countdownToStyle: 'width: 0' // 初始样式由用户在 css 里指定，配置里仅需要传入有变化的最终样式
+        });
 
     /**
      * 添加插件
      */
     Switchable.Plugins.push({
 
-        name: 'countdown',
+            name: 'countdown',
 
-        init: function(host) {
-            var cfg = host.config,
-                animTimer,
-                interval = cfg.interval,
-                triggers = host.triggers,
-                masks = [],
-                fromStyle = cfg.countdownFromStyle,
-                toStyle = cfg.countdownToStyle,
-                anim;
+            init: function(host) {
+                var cfg = host.config,
+                    animTimer,
+                    interval = cfg.interval,
+                    triggers = host.triggers,
+                    masks = [],
+                    fromStyle = cfg.countdownFromStyle,
+                    toStyle = cfg.countdownToStyle,
+                    anim;
 
-            // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
-            if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
+                // 必须保证开启 autoplay 以及有 trigger 时，才能开启倒计时动画
+                if (!cfg.autoplay || !cfg.hasTriggers || !cfg.countdown) return;
 
-            // 为每个 trigger 增加倒计时动画覆盖层
-            S.each(triggers, function(trigger, i) {
-                trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
-                    '<div class="' + TRIGGER_CONTENT_CLS + '">' + trigger.innerHTML + '</div>';
-                masks[i] = trigger.firstChild;
-            });
+                // 为每个 trigger 增加倒计时动画覆盖层
+                S.each(triggers, function(trigger, i) {
+                    trigger.innerHTML = '<div class="' + TRIGGER_MASK_CLS + '"></div>' +
+                        '<div class="' + TRIGGER_CONTENT_CLS + '">' +
+                        trigger.innerHTML + '</div>';
+                    masks[i] = trigger.firstChild;
+                });
 
-            // 鼠标悬停，停止自动播放
-            if (cfg.pauseOnHover) {
-                Event.on(host.container, 'mouseenter', function() {
-                    // 先停止未完成动画
+                // 鼠标悬停，停止自动播放
+                if (cfg.pauseOnHover) {
+                    Event.on(host.container, 'mouseenter', function() {
+                        // 先停止未完成动画
+                        stopAnim();
+
+                        // 快速平滑回退到初始状态
+                        var mask = masks[host.activeIndex];
+                        if (fromStyle) {
+                            anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
+                        } else {
+                            DOM.attr(mask, STYLE, "");
+                        }
+                    });
+
+                    Event.on(host.container, 'mouseleave', function() {
+                        // 鼠标离开时立即停止未完成动画
+                        stopAnim();
+                        var index = host.activeIndex;
+
+                        // 初始化动画参数，准备开始新一轮动画
+                        // 设置初始样式
+                        DOM.attr(masks[index], STYLE, fromStyle);
+
+                        // 重新开始倒计时动画，缓冲下，避免快速滑动
+                        animTimer = setTimeout(function() {
+                            startAnim(index);
+                        }, 200);
+                    });
+                }
+
+                // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
+                host.on('beforeSwitch', function() {
+                    // 恢复前，先结束未完成动画效果
                     stopAnim();
 
-                    // 快速平滑回退到初始状态
-                    var mask = masks[host.ingIndex];
-                    if (fromStyle) {
-                        anim = new Anim(mask, fromStyle, .2, 'easeOut').run();
-                    } else {
-                        DOM.removeAttr(mask, STYLE);
+                    // 将当前 mask 恢复动画前状态
+                    if (masks[host.activeIndex]) {
+                        DOM.attr(masks[host.activeIndex], STYLE, fromStyle || "");
                     }
                 });
 
-                Event.on(host.container, 'mouseleave', function() {
-                    // 鼠标离开时立即停止未完成动画
-                    stopAnim();
-                    var index = host.ingIndex;
-                    // 初始化动画参数，准备开始新一轮动画
-                    DOM.removeAttr(masks[index], STYLE);
-
-                    // 重新开始倒计时动画，缓冲下，避免快速滑动
-                    animTimer = setTimeout(function() {
-                        startAnim(index);
-                    }, 200);
+                // panel 切换完成时，开始 trigger 的倒计时动画
+                host.on('switch', function(ev) {
+                    // 悬停状态，当用户主动触发切换时，不需要倒计时动画
+                    if (!host.paused) {
+                        startAnim(ev.currentIndex);
+                    }
                 });
-            }
 
-            // panels 切换前，当前 trigger 完成善后工作以及下一 trigger 进行初始化
-            host.on('beforeSwitch', function() {
-                // 恢复前，先结束未完成动画效果
-                stopAnim();
-
-                // 将当前 mask 恢复动画前状态
-                DOM.attr(masks[host.activeIndex], STYLE, fromStyle || "");
-            });
-
-            // panel 切换完成时，开始 trigger 的倒计时动画
-            host.on('switch', function(ev) {
-                // 悬停状态，当用户主动触发切换时，不需要倒计时动画
-                if (!host.paused) {
-                    startAnim(ev.currentIndex);
+                // 开始倒计时动画
+                function startAnim(index) {
+                    stopAnim(); // 开始之前，先确保停止掉之前的
+                    anim = new Anim(masks[index],
+                        toStyle, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
                 }
-            });
 
-            // 开始倒计时动画
-            function startAnim(index) {
-                stopAnim(); // 开始之前，先确保停止掉之前的
-                anim = new Anim(masks[index],
-                    toStyle, interval - 1).run(); // -1 是为了动画结束时停留一下，使得动画更自然
-            }
+                // 停止所有动画
+                function stopAnim() {
+                    if (animTimer) {
+                        clearTimeout(animTimer);
+                        animTimer = null;
+                    }
+                    if (anim) {
+                        anim.stop();
+                        anim = undefined;
+                    }
+                }
 
-            // 停止所有动画
-            function stopAnim() {
-                if (animTimer) {
-                    clearTimeout(animTimer);
-                    animTimer = null;
+                /**
+                 * 开始第一个倒计时
+                 */
+                if (host.activeIndex > -1) {
+                    startAnim(host.activeIndex);
                 }
-                if (anim) {
-                    anim.stop();
-                    anim = undefined;
-                }
+
+
             }
-        }
-    });
+        });
 
     return Switchable;
 
-}, { requires:["dom","event","anim","switchable/base"]});
-
+}, { requires:["dom","event","anim","./base"]});
 /**
- * NOTES:
- *
- *  - 2010/08/09: [yubo] 在 firefox 下 cpu 占用较高，暂不考虑。等 CSS3 普及了，再用 CSS3 来改造。
- */
-/**
+ * 承玉：2011.06.02 review switchable
+ *//**
  * Switchable Lazyload Plugin
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('switchable/lazyload', function(S,DOM,Switchable) {
+KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
 
     var EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img-src',
@@ -1976,61 +2094,73 @@ KISSY.add('switchable/lazyload', function(S,DOM,Switchable) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        lazyDataType: AREA_DATA // or IMG_SRC
-    });
+            lazyDataType: AREA_DATA // or IMG_SRC
+        });
 
     /**
      * 织入初始化函数
      */
     Switchable.Plugins.push({
 
-        name: 'lazyload',
+            name: 'lazyload',
 
-        init: function(host) {
-            var DataLazyload = S.require("datalazyload"),
-                cfg = host.config,
-                type = cfg.lazyDataType, flag = FLAGS[type];
+            init: function(host) {
+                var DataLazyload = S.require("datalazyload"),
+                    cfg = host.config,
+                    type = cfg.lazyDataType,
+                    flag = FLAGS[type];
 
-            if (!DataLazyload || !type || !flag) return; // 没有延迟项
-
-            host.on(EVENT_BEFORE_SWITCH, loadLazyData);
-
-            /**
-             * 加载延迟数据
-             */
-            function loadLazyData(ev) {
-                var steps = cfg.steps,
-                    from = ev.toIndex * steps ,
-                    to = from + steps;
-
-                DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
-                if (isAllDone()) {
-                    host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
+                // 没有延迟项
+                if (!DataLazyload || !type || !flag) {
+                    return;
                 }
-            }
 
-            /**
-             * 是否都已加载完成
-             */
-            function isAllDone() {
-                var elems, i, len,
-                    isImgSrc = type === IMG_SRC,
-                    tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
+                host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
-                if (tagName) {
-                    elems = DOM.query(tagName, host.container);
-                    for (i = 0, len = elems.length; i < len; i++) {
-                        if (isImgSrc ? DOM.attr(elems[i], flag) : DOM.hasClass(elems[i], flag)) return false;
+                /**
+                 * 加载延迟数据
+                 */
+                function loadLazyData(ev) {
+                    var steps = cfg.steps,
+                        from = ev.toIndex * steps ,
+                        to = from + steps;
+
+                    DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
+                    if (isAllDone()) {
+                        host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                     }
                 }
-                return true;
+
+                /**
+                 * 是否都已加载完成
+                 */
+                function isAllDone() {
+                    var elems,
+                        isImgSrc = type === IMG_SRC,
+                        tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
+
+                    if (tagName) {
+                        elems = DOM.query(tagName, host.container);
+                        for (var i = 0,len = elems.length; i < len; i++) {
+                            var el = elems[i];
+                            if (isImgSrc ?
+                                DOM.attr(el, flag) :
+                                DOM.hasClass(el, flag)) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
             }
-        }
-    });
+        });
 
     return Switchable;
 
-}, { requires:["dom","switchable/base"]});/**
+}, { requires:["dom","./base"]});
+/**
+ * 承玉：2011.06.02 review switchable
+ *//**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
  */
@@ -2052,7 +2182,6 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
         }
 
         Slide.superclass.constructor.apply(self, arguments);
-        return 0;
     }
 
     Slide.Config={
@@ -2067,6 +2196,10 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
     return Slide;
 
 }, { requires:["../base"]});
+
+/**
+ * 承玉：2011.06.02 review switchable
+ */
 /**
  * aria support for slide
  * @author:yiminghe@gmail.com
@@ -2091,11 +2224,11 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
 
-
-    var FORWARD = 'forward', BACKWARD = 'backward';
     S.mix(Slide.Config, {
             aria:true
         });
+
+    var DOM_EVENT = {originalEvent:{target:1}};
 
     var setTabIndex = Aria.setTabIndex;
     Slide.Plugins.push({
@@ -2121,94 +2254,45 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
                 DOM.attr(content, "role", "listbox");
 
-                Event.on(content, "keydown", _contentKeydown, self);
+                Event.on(content, "keydown", _contentKeydownProcess, self);
 
                 setTabIndex(panels[0], 0);
 
-                if (activeIndex > -1) {
-                    self.__slideIndex = activeIndex;
-                }
-
                 self.on("switch", function(ev) {
                     var index = ev.currentIndex,
-                        last = self.activeIndex;
+                        domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
+                        last = self.completedIndex;
 
-                    // 其实只有第一次有用
-                    self.__slideIndex = index;
-
-                    if (last != -1) {
+                    if (last > -1) {
                         setTabIndex(panels[last], -1);
                     }
                     setTabIndex(panels[index], 0);
+
+                    //dom 触发的事件，自动聚焦
+                    if (domEvent) {
+                        panels[index].focus();
+                    }
                 });
             }
         });
 
     function _contentKeydownProcess(e) {
         var self = this,
-            key = e.keyCode,
-            panels = self.panels,
-            __slideIndex = self.__slideIndex,
-            dest = __slideIndex;
+            key = e.keyCode;
         switch (key) {
 
             case KEY_DOWN:
             case KEY_RIGHT:
-
-                dest++;
-                if (dest == panels.length) {
-                    dest = 0;
-                }
-                self.__slideIndex = dest;
-
-                self.switchTo(dest, FORWARD, undefined, function() {
-                    panels[dest].focus();
-                });
+                self.next(DOM_EVENT);
                 e.halt();
                 break;
 
             case KEY_UP:
             case KEY_LEFT:
-
-                dest--;
-                if (dest == -1) {
-                    dest = panels.length - 1;
-                }
-                self.__slideIndex = dest;
-
-                self.switchTo(dest, BACKWARD, undefined, function() {
-                    panels[dest].focus();
-                });
+                self.prev(DOM_EVENT);
                 e.halt();
                 break;
         }
-    }
-
-    var keyDownTimer;
-
-    function _contentKeydown(e) {
-        var self = this,
-            t = e.target,
-            panels = self.panels;
-        if (!S.inArray(t, panels)) return;
-
-        if (keyDownTimer) {
-            clearTimeout(keyDownTimer);
-            keyDownTimer = undefined;
-        }
-        switch (e.keyCode) {
-            case KEY_DOWN:
-            case KEY_UP:
-            case KEY_LEFT:
-            case KEY_RIGHT:
-                e.halt();
-                break;
-        }
-
-        keyDownTimer = setTimeout(function() {
-            _contentKeydownProcess.call(self, e);
-            keyDownTimer = undefined;
-        }, 200);
     }
 
 }, {
@@ -2252,9 +2336,8 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
  * Tabs aria support
  * @creator yiminghe@gmail.com
  */
-KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
+KISSY.add('switchable/tabs/aria', function(S, DOM, Event,Switchable, Aria, Tabs) {
 
-    var Event = S.Event,DOM = S.DOM;
     var KEY_PAGEUP = 33;
     var KEY_PAGEDOWN = 34;
     var KEY_END = 35;
@@ -2265,8 +2348,6 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     var KEY_RIGHT = 39;
     var KEY_DOWN = 40;
     var KEY_TAB = 9;
-
-    var DOM_EVENT = {originalEvent:{target:1}};
 
 //    var KEY_SPACE = 32;
 //    var KEY_BACKSPACE = 8;
@@ -2287,7 +2368,9 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                     activeIndex = self.activeIndex,
                     panels = self.panels;
                 var container = self.container;
-                DOM.attr(container, "role", "tablist");
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
                 var i = 0;
                 S.each(triggers, function(trigger) {
                     trigger.setAttribute("role", "tab");
@@ -2322,7 +2405,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
 
     function _currentTabFromEvent(t) {
-        var triggers = this.triggers,trigger;
+        var triggers = this.triggers,
+            trigger;
         S.each(triggers, function(ct) {
             if (ct == t || DOM.contains(ct, t)) {
                 trigger = ct;
@@ -2351,6 +2435,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
         }
     }
 
+    var getDomEvent=Switchable.getDomEvent;
+
     /**
      * Keyboard commands for the Tab Panel
      * @param e
@@ -2372,7 +2458,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 // 争渡读屏器阻止了上下左右键
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.prev(DOM_EVENT);
+                    self.prev(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -2382,7 +2468,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (_currentTabFromEvent.call(self, t)
                 //&& no_modifier_pressed_flag
                     ) {
-                    self.next(DOM_EVENT);
+                    self.next(getDomEvent(e));
                     e.halt();
                 } // endif
                 break;
@@ -2391,28 +2477,26 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.next(DOM_EVENT);
-
+                    self.next(getDomEvent(e));
                 }
                 break;
 
             case KEY_PAGEUP:
                 if (control_modifier_pressed_flag) {
                     e.halt();
-                    self.prev(DOM_EVENT);
-
+                    self.prev(getDomEvent(e));
                 }
                 break;
 
             case KEY_HOME:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, DOM_EVENT);
+                    self.switchTo(0, undefined, getDomEvent(e));
                     e.halt();
                 }
                 break;
             case KEY_END:
                 if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, DOM_EVENT);
+                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
                     e.halt();
                 }
 
@@ -2421,21 +2505,20 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
                     if (e.shiftKey)
-                        self.prev(DOM_EVENT);
+                        self.prev(getDomEvent(e));
                     else
-                        self.next(DOM_EVENT);
-
+                        self.next(getDomEvent(e));
                 }
                 break;
         }
     }
 
     function _tabSwitch(ev) {
-        var domEvent = !!ev.originalEvent.target;
+        var domEvent = !!(ev.originalEvent.target||ev.originalEvent.srcElement);
 
         var self = this;
         // 上一个激活 tab
-        var lastActiveIndex = self.activeIndex;
+        var lastActiveIndex = self.completedIndex;
 
         // 当前激活 tab
         var activeIndex = ev.currentIndex;
@@ -2464,7 +2547,7 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
 
 },
     {
-        requires:["../aria","./base"]
+        requires:["dom","event","../base","../aria","./base"]
     });
 
 /**

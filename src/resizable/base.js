@@ -67,7 +67,7 @@ KISSY.add("resizable/base", function(S, Node, D, UIBase) {
             for (var i = 0; i < v.length; i++) {
                 var hc = v[i],
                     el = new Node("<div class='" + CLS_PREFIX +
-                        " " + CLS_PREFIX + "-" + hc + "'>")
+                        " " + CLS_PREFIX + "-" + hc + "'/>")
                         .prependTo(node),
                     dd = dds[hc] = new Draggable({
                         node:el,

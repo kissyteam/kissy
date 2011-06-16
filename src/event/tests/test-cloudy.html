@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="http://a.tbcdn.cn/p/cloudyrun/1.0/cloudyrun-jasmine-pkg.js"></script>
+
+<script src="../../../build/seed.js"></script>
+<script src="../../../build/ua.js"></script>
+<script src="../../../build/dom.js"></script>
+
+<script src="../base.js"></script>
+<script src="../object.js"></script>
+<script src="../target.js"></script>
+<script src="../focusin.js"></script>
+<script src="../mouseenter.js"></script>
+<script src="../delegate.js"></script>
+<script src="../hashchange.js"></script>
+<script src="../valuechange.js"></script>
+<script src="../../event.js"></script>
+
+</head>
+<body>
+<!-- test data -->
+<div style="border: 1px solid #ccc; height: 50px; overflow-y: auto; padding: 5px; margin-bottom: 20px">
+    <p>Test Data:</p>
+    <div id="foo">
+        <ul id="bar">
+            <li><a id="link-a" href="#">link a</a></li>
+            <li><input type="checkbox" id="checkbox-1"/><input type="checkbox" id="checkbox-2"/></li>
+            <li id="li-c"><a id="link-c1" href="#">link c1</a> | <a id="link-c2" href="#">link c2</a></li>
+            <li id="li-d"><a id="link-d1" href="#">link d1</a> | <a id="link-d2" href="#">link d2</a></li>
+            <li id="li-e"><a id="link-e1" href="#">link e1</a> | <a id="link-e2" href="#">link e2</a></li>
+            <li><a id="link-f" href="#">link f</a></li>
+            <li><a id="link-g" href="#">link g</a></li>
+            <li><a id="link-h" href="#">link h</a></li>
+            <li><a id="link-s" href="#">link s</a></li>
+            <li><a id="link-test-this" href="#">link for test this</a></li>
+            <li><a id="link-test-this-dom" href="#">link for test this</a></li>
+            <li id="link-test-this-all"><span id="link-test-this-all-span">link for test this</span><span></span></li>
+        </ul>
+    </div>
+    <div id="test-focusin">
+        test focusin: <input type="text" value="点击我"/>
+    </div>
+    <input id="test-focusin-input" type="text" value="另一个输入框"/>
+    <div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5">
+        <div id="outer" style="padding: 20px; background-color: #D6EDFC">
+            <div id="inner" style="padding: 20px; background-color: #FFCC00"></div>
+        </div>
+    </div>
+    <div id="link-detach">
+        <div>1</div>
+        <div>2</div>
+    </div>
+
+    <div id='test-delegate'>
+        <div id='test-delegate-outer' class='xx'>
+            <div style='padding:50px;border:1px solid red;width:100px;height:100px;'
+                 class='xx' id='test-delegate-inner'>
+                <a href='#xx' id='test-delegate-a'>click</a>
+                <button id='test-delegate-b'>click</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>KISSY.Event Test Cases</h1>
+<script src="event-spec.js"></script>
+<script src="delegate-spec.js"></script>
+<script src="fire-spec.js"></script>
+<script>
+    CloudyRun.runJasmine();
+</script>
+
+</body>
+</html>

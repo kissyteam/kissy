@@ -65,8 +65,8 @@ KISSY.use("dom", function(S, DOM) {
 
             it("should return correctly for readonly, checked, selected", function() {
 
-                expect(DOM.attr(input, "readonly")).toBe(true);
-                expect(DOM.attr(radio, 'checked')).toBe(false);
+                expect(DOM.attr(input, "readonly")).toBe("readonly");
+                expect(DOM.attr(radio, 'checked')).toBe(null);
                 expect(DOM.attr(input, 'value')).toBe('hello');
             });
 
@@ -75,7 +75,8 @@ KISSY.use("dom", function(S, DOM) {
             });
 
             it("should return selected correctly", function() {
-                expect(DOM.attr(opt, "selected")).toBe(true);
+                expect(DOM.attr(opt, "selected")).toBe("selected");
+                expect(DOM.prop(opt, "selected")).toBe(true);
             });
 
 
@@ -103,7 +104,7 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(img, 'src')).toBe('../../../docs/assets/logo.png');
 
                 // colspan / rowspan:
-                expect(DOM.attr(td, 'rowspan') + "").toBe('2');
+                expect(DOM.attr(td, 'rowspan') + '').toBe('2');
             });
 
             it("should get normal attribute correctly", function() {
@@ -139,9 +140,11 @@ KISSY.use("dom", function(S, DOM) {
                 var checkbox2 = S.get('#test-20100728-checkbox');
 
                 DOM.attr(checkbox2, 'checked', true);
-                expect(DOM.attr(checkbox2, 'checked')).toBe(true);
+                expect(DOM.attr(checkbox2, 'checked')).toBe('checked');
+                expect(DOM.prop(checkbox2, 'checked')).toBe(true);
                 DOM.removeAttr(checkbox2, 'checked');
-                expect(DOM.attr(checkbox2, 'checked')).toBe(false);
+                expect(DOM.attr(checkbox2, 'checked')).toBe(null);
+                expect(DOM.prop(checkbox2, 'checked')).toBe(false);
                 expect(DOM.hasAttr(checkbox2, "checked")).toBe(false);
             });
 
@@ -152,7 +155,8 @@ KISSY.use("dom", function(S, DOM) {
 
                 DOM.attr(disabledTest, "disabled", true);
 
-                expect(DOM.attr(disabledTest, "disabled")).toBe(true);
+                expect(DOM.attr(disabledTest, "disabled")).toBe("disabled");
+                expect(DOM.prop(disabledTest, "disabled")).toBe(true);
 
                 DOM.attr(disabledTest, "disabled", false);
 
@@ -211,6 +215,7 @@ KISSY.use("dom", function(S, DOM) {
 
             it("should set value correctly", function() {
                 // set value
+
                 DOM.val(a, 'test');
                 expect(DOM.val(a)).toBe('test');
                 DOM.removeAttr(a, 'value');
@@ -249,11 +254,54 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(select, "tabindex")).toBe(1);
                 expect(DOM.hasAttr(select, "tabindex")).toBe(true);
                 DOM.removeAttr(select, "tabindex");
-                //debugger
                 expect(DOM.hasAttr(select, "tabindex")).toBe(false);
+
+                var a = DOM.create("<a></a>");
+                expect(DOM.hasAttr(a, "tabindex")).toBe(false);
+
+                expect(DOM.attr(a, "tabindex")).toBe(null);
+
+                a = DOM.create("<a href='#'></a>");
+                expect(DOM.hasAttr(a, "tabindex")).toBe(false);
+                expect(DOM.attr(a, "tabindex")).toBe(0);
+
+                a = DOM.create("<a href='#' tabindex='2'></a>");
+                expect(DOM.hasAttr(a, "tabindex")).toBe(true);
+                expect(DOM.attr(a, "tabindex")).toBe(2);
+
             });
         });
 
+        describe("form/name/button.event works for ie6/7", function() {
+            it("get attribute from form correctly", function() {
+                var form = DOM.create("<form " +
+                    " xx='zz' " +
+                    " action='http://www.taobao.com' " +
+                    " name='form_name' " +
+                    " title='form_title' " +
+                    " onsubmit='return false;'><input name='xx' value='yy'></form>");
+                expect(DOM.attr(form, "action")).toBe("http://www.taobao.com");
+                expect(DOM.attr(form, "onsubmit")).toBe("return false;");
+                expect(DOM.attr(form, "name")).toBe("form_name");
+                expect(DOM.attr(form, "title")).toBe("form_title");
+                expect(DOM.attr(form, "xx")).toBe("zz");
+
+
+                var button = DOM.create("<button value='xxx'>zzzz</button>");
+                expect(DOM.attr(button, "value")).toBe("xxx");
+            });
+        });
+
+
+        describe("prop", function() {
+            it("should works", function() {
+                var d = DOM.create("<input type='checkbox' checked='checked'>");
+                expect(DOM.prop(d, 'checked')).toBe(true);
+                expect(DOM.prop(d, 'checked2')).toBe(null);
+                expect(DOM.hasProp(d, 'checked')).toBe(true);
+                expect(DOM.hasProp(d, 'checked2')).toBe(false);
+            });
+        });
         runs(function() {
             //S.get('#test-data').innerHTML = '';
         });

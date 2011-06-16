@@ -74,7 +74,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
             for (var i = 0; i < handlers.length; i++) {
                 var hl = handlers[i];
-                hl = S.one(hl);
+                hl = Node.one(hl);
                 //ie 不能在其内开始选择区域
                 hl.unselectable();
                 if (self.get("cursor")) {

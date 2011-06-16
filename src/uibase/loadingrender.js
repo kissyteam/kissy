@@ -22,7 +22,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
                     "left: 0;" +
                     "z-index: 99999;" +
                     "height:100%;" +
-                    "*height: expression(this.parentNode.offsetHeight);" + "'>")
+                    "*height: expression(this.parentNode.offsetHeight);" + "'/>")
                     .appendTo(self.get("el"));
             }
             self._loadingExtEl.show();

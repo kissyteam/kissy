@@ -4,13 +4,249 @@ MIT Licensed
 build time: ${build.time}
 */
 /**
+ * @module  anim-node-plugin
+ * @author  lifesinger@gmail.com, qiaohua@taobao.com
+ */
+KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
+
+    var NLP = N.prototype,
+        ANIM_KEY = "ksAnims" + S.now(),
+        DISPLAY = 'display',
+        NONE = 'none',
+        OVERFLOW = 'overflow',
+        HIDDEN = 'hidden',
+        OPCACITY = 'opacity',
+        HEIGHT = 'height', WIDTH = 'width',
+        FX = {
+            show: [OVERFLOW, OPCACITY, HEIGHT, WIDTH],
+            fade: [OPCACITY],
+            slide: [OVERFLOW, HEIGHT]
+        };
+
+    (function(P) {
+
+        function attachAnim(elem, anim) {
+            var anims = DOM.data(elem, ANIM_KEY);
+            if (!anims) {
+                DOM.data(elem, ANIM_KEY, anims = []);
+            }
+            anim.on("complete", function() {
+                var anims = DOM.data(elem, ANIM_KEY);
+                if (anims) {
+                    // 结束后从关联的动画队列中删除当前动画
+                    var index = S.indexOf(anim, anims);
+                    if (index >= 0) {
+                        anims.splice(index, 1);
+                    }
+                    if (!anims.length) {
+                        DOM.removeData(elem, ANIM_KEY);
+                    }
+                }
+            });
+            // 当前节点的所有动画队列
+            anims.push(anim);
+        }
+
+        P.animate = function() {
+            var self = this,
+                args = S.makeArray(arguments);
+            S.each(self, function(elem) {
+                var anim = Anim.apply(undefined, [elem].concat(args)).run();
+                attachAnim(elem, anim);
+            });
+            return this;
+        };
+
+        P.stop = function(finish) {
+            S.each(this, function(elem) {
+                var anims = DOM.data(elem, ANIM_KEY);
+                if (anims) {
+                    S.each(anims, function(anim) {
+                        anim.stop(finish);
+                    });
+                    DOM.removeData(elem, ANIM_KEY);
+                }
+            });
+        };
+
+        S.each({
+                show: ['show', 1],
+                hide: ['show', 0],
+                toggle: ['toggle'],
+                fadeIn: ['fade', 1],
+                fadeOut: ['fade', 0],
+                slideDown: ['slide', 1],
+                slideUp: ['slide', 0]
+            },
+            function(v, k) {
+
+                P[k] = function(speed, callback, easing, nativeSupport) {
+                    var self = this;
+
+                    // 没有参数时，调用 DOM 中的对应方法
+                    if (DOM[k] && arguments.length === 0) {
+                        DOM[k](self);
+                    }
+                    else {
+                        S.each(this, function(elem) {
+                            var anim = fx(elem, v[0], speed, callback,
+                                v[1], easing, nativeSupport);
+                            attachAnim(elem, anim);
+                        });
+                    }
+                    return self;
+                };
+            });
+    })(NLP);
+
+    function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
+        if (which === 'toggle') {
+            visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            which = 'show';
+        }
+
+        if (visible) {
+            DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+        }
+
+        // 根据不同类型设置初始 css 属性, 并设置动画参数
+        var originalStyle = {}, style = {};
+        S.each(FX[which], function(prop) {
+            if (prop === OVERFLOW) {
+                originalStyle[OVERFLOW] = DOM.css(elem, OVERFLOW);
+                DOM.css(elem, OVERFLOW, HIDDEN);
+            }
+            else if (prop === OPCACITY) {
+                originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
+                style.opacity = visible ? 1 : 0;
+                if (visible) {
+                    DOM.css(elem, OPCACITY, 0);
+                }
+            }
+            else if (prop === HEIGHT) {
+                originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
+                //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
+                style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
+
+                if (visible) {
+                    DOM.css(elem, HEIGHT, 0);
+                }
+            }
+            else if (prop === WIDTH) {
+                originalStyle[WIDTH] = DOM.css(elem, WIDTH);
+                style.width = (visible ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                if (visible) {
+                    DOM.css(elem, WIDTH, 0);
+                }
+            }
+        });
+
+        // 开始动画
+        return new Anim(elem, style, speed, easing || 'easeOut', function() {
+            // 如果是隐藏, 需要还原一些 css 属性
+            if (!visible) {
+                // 保留原有值
+                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
+                if (oldVal !== NONE) {
+                    if (oldVal) {
+                        DOM.data(elem, DISPLAY, oldVal);
+                    }
+                    currStyle[DISPLAY] = NONE;
+                }
+
+                // 还原样式
+                if (originalStyle[HEIGHT]) {
+                    DOM.css(elem, { height: originalStyle[HEIGHT] });
+                }
+                if (originalStyle[WIDTH]) {
+                    DOM.css(elem, { width: originalStyle[WIDTH] });
+                }
+                if (originalStyle[OPCACITY]) {
+                    DOM.css(elem, { opacity: originalStyle[OPCACITY] });
+                }
+                if (originalStyle[OVERFLOW]) {
+                    DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
+                }
+
+            }
+
+            if (callback && S.isFunction(callback)) {
+                callback();
+            }
+
+        }, nativeSupport).run();
+    }
+
+}, {
+        requires:["dom","anim","./base"]
+    });
+/**
+ * 2011-05-17
+ *  - 承玉：添加 stop ，随时停止动画
+ */
+/**
  * import methods from DOM to NodeList.prototype
  * @author  yiminghe@gmail.com
  */
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
-        isNodeList = DOM._isNodeList;
+        isNodeList = DOM._isNodeList,
+        // DOM 添加到 NP 上的方法
+        DOM_INCLUDES = [
+            "equals",
+            "contains",
+            "scrollTop",
+            "scrollLeft",
+            "height",
+            "width",
+            "addStyleSheet",
+            "append",
+            "appendTo",
+            "prepend",
+            "prependTo",
+            "insertBefore",
+            "before",
+            "after",
+            "insertAfter",
+            "filter",
+            "test",
+            "hasClass",
+            "addClass",
+            "removeClass",
+            "replaceClass",
+            "toggleClass",
+            "removeAttr",
+            "attr",
+            "hasAttr",
+            "prop",
+            "hasProp",
+            "val",
+            "text",
+            "css",
+            // anim override
+//            "show",
+//            "hide",
+            "toggle",
+            "offset",
+            "scrollIntoView",
+            "parent",
+            "closest",
+            "next",
+            "prev",
+            "siblings",
+            "children",
+            "html",
+            "remove",
+            "removeData",
+            "hasData",
+            // 返回值不一定是 nodelist ，特殊处理
+            // "data",
+            "unselectable"
+        ],
+        // Event 添加到 NP 上的方法
+        EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
+
 
     function normalize(val, node, nodeList) {
         // 链式操作
@@ -20,17 +256,6 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             val = null;
         } else if (nodeList
             && (val.nodeType || isNodeList(val) || S.isArray(val))) {
-
-//            if (val.nodeType) {
-//                val = [val];
-//            }
-//            //返回结果和自己相同，不用新建
-//            if (DOM.equals(val, node)) {
-//                val = node;
-//            } else {
-//                val = new NodeList(val);
-//            }
-
             // 包装为 KISSY NodeList
             val = new NodeList(val);
         }
@@ -57,38 +282,21 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         }
     };
 
-    //不能添加到 NP 的方法
-    var excludes = [
-        "_isElementNode",
-        "_getWin",
-        "_getComputedStyle",
-        "_isNodeList",
-        "_nodeTypeIs",
-        "_nl2frag",
-        "create",
-        "get",
-        "query",
-        "data",
-        // allow
-        // $=Node.all
-        // $(window).height()/width()
-        // $(document).height()/width()
-        "viewportHeight",
-        "viewportWidth",
-        "docHeight",
-        "docWidth"
-    ];
-
-    S.each(DOM, function(v, k) {
-        if (DOM.hasOwnProperty(k)
-            && S.isFunction(v)
-            && !S.inArray(k, excludes)
-            ) {
-            NodeList.addMethod(k, v, DOM, true);
-        }
+    S.each(DOM_INCLUDES, function(k) {
+        var v = DOM[k];
+        NodeList.addMethod(k, v, DOM, true);
     });
 
+    // data 不需要对返回结果转换 nodelist
     NodeList.addMethod("data", DOM.data, DOM);
+
+    S.each(EVENT_INCLUDES, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            args.unshift(this);
+            return Event[k].apply(Event, args);
+        }
+    });
 
 }, {
         requires:["dom","event","./base"]
@@ -107,7 +315,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
  * definition for node and nodelist
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add("node/base", function(S, DOM, Event, undefined) {
+KISSY.add("node/base", function(S, DOM, undefined) {
 
     var AP = Array.prototype;
 
@@ -156,21 +364,14 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
         return undefined;
     }
 
-    S.augment(NodeList, Event.Target, {
+    S.augment(NodeList, {
 
-            isCustomEventTarget:false,
-            /**
-             * 模拟事件触发，暂不实现
-             */
-            fire:null,
             /**
              * 默认长度为 0
              */
             length: 0,
 
-            /**
-             * 根据 index 或 DOMElement 获取对应的 KSNode
-             */
+
             item: function(index) {
                 if (S.isNumber(index)) {
                     if (index >= this.length) return null;
@@ -179,6 +380,26 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
                     return new NodeList(index, undefined, undefined);
             },
 
+            add:function(selector, context, index) {
+                if (S.isNumber(context)) {
+                    index = context;
+                    context = undefined;
+                }
+                var list = S.makeArray(NodeList.all(selector, context)),
+                    ret = new NodeList(this, undefined, undefined);
+                if (index === undefined) {
+                    AP.push.apply(ret, list);
+                } else {
+                    var args = [index,0];
+                    args.push.apply(args, list);
+                    AP.splice.apply(ret, args);
+                }
+                return ret;
+            },
+
+            slice:function(start, end) {
+                return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            },
 
             /**
              * Retrieves the DOMNodes.
@@ -250,12 +471,12 @@ KISSY.add("node/base", function(S, DOM, Event, undefined) {
         var all = NodeList.all(selector, context);
         return all.length ? all : null;
     };
-
-    NodeList.List = NodeList;
-
+    if (1 > 2) {
+        NodeList.getDOMNodes();
+    }
     return NodeList;
 }, {
-        requires:["dom","event"]
+        requires:["dom"]
     });
 
 
@@ -284,7 +505,7 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      * appendTo(parent,node) : 才是正常
      *
      */
-    S.each(['append', 'prepend'], function(insertType) {
+    S.each(['append', 'prepend','before','after'], function(insertType) {
         // append 和 prepend
 
         NodeList.addMethod(insertType, function(domNodes, html) {
@@ -313,5 +534,5 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  */KISSY.add("node", function(S, Node) {
     return Node;
 }, {
-        requires:["node/base","node/attach","node/override"]
+        requires:["node/base","node/attach","node/override","node/anim-plugin"]
     });

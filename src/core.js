@@ -5,8 +5,9 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         DOM:DOM,
         Event:Event,
         EventTarget:Event.Target,
+        EventObject:Event.Object,
         Node:Node,
-        NodeList:Node.List,
+        NodeList:Node,
         JSON:JSON,
         Ajax:Ajax,
         IO:Ajax,
@@ -18,7 +19,7 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         Base:Base,
         Cookie:Cookie,
         one:Node.one,
-        all:Node.List.all,
+        all:Node.all,
         get:DOM.get,
         query:DOM.query
     };

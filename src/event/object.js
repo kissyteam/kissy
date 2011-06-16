@@ -122,6 +122,8 @@ KISSY.add('event/object', function(S, undefined) {
             this.isPropagationStopped = true;
         },
 
+
+
         /**
          * Stops the propagation to the next bubble target and
          * prevents any additional listeners from being exectued

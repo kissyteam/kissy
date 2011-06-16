@@ -191,7 +191,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
          * root element handler for mouse enter
          */
         _handleClick:function(ev) {
-            if (this.get("disabled")) return false;
+            if (this.get("disabled")) {
+                return false;
+            }
             this._forwordToView("_handleClick");
             this._handleClickInternal(ev);
         },
@@ -232,31 +234,26 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                             c.set("parent", self);
                         });
                     }
-            }
-            ,
+            },
 
             //转交给渲染层
             //note1 : 兼容性考虑
             //note2 : 调用者可以完全不需要接触渲染层
             srcNode:{
                 view:true
-            }
-            ,
+            },
 
             render:{
                 view:true
-            }
-            ,
+            },
 
             //父组件
             parent:{
-            }
-            ,
+            },
 
             //渲染层
             view:{
-            }
-            ,
+            },
 
             //是否禁用
             disabled:{
@@ -266,9 +263,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     true
             }
         }
-    }
-        )
-        ;
+    });
 
     function capitalFirst(s) {
         s = s + '';

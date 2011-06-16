@@ -22,15 +22,35 @@ KISSY.use("dom", function(S, DOM) {
                 }).className).toBe('test-p');
 
             expect(DOM.parent(document.body)).toBe(document.documentElement);
+
             expect(DOM.parent('#test_cases')).toBe(document.body);
+
             expect(DOM.parent(t, 0)).toBe(t);
 
             expect(DOM.parent()).toBe(null);
 
             expect(DOM.parent('#test-data', 'p')).toBe(null);
-
-
+            expect(DOM.parent('#test-data', ['p']) + "").toBe([] + "");
+            expect(DOM.parent('#test-selector-tag', ['div']).length).toBe(4);
             expect(DOM.parent('#test-parent4', '.text-next')).toBe(null);
+        });
+
+
+        it("closest works", function() {
+            var t = DOM.get('#test-parent4');
+            // return itself
+            expect(DOM.closest(t, "a")).toBe(t);
+
+            expect(DOM.closest('#test-selector-1', ['div']).length).toBe(3);
+            // parent works
+            expect(DOM.closest(t, ".test-p")).toBe(DOM.get("#test-prev"));
+
+            // context works
+            expect(DOM.closest(t, ".test-parent", "#test-prev")).toBe(null);
+
+            expect(DOM.closest(t, ".test-parent")).toBe(DOM.get("#test-children"));
+
+            expect(DOM.closest(t, ".test-parent", "#test-children")).toBe(DOM.get("#test-children"));
         });
 
 
@@ -102,10 +122,16 @@ KISSY.use("dom", function(S, DOM) {
 
             // test text node
             var tn = DOM.get('#test-contains').firstChild;
+
             expect(tn.nodeType).toBe(3);
+
             expect(DOM.contains('#test-contains', tn)).toBe(true);
 
+            expect(DOM.contains(document.body, document.body)).toBe(false);
+
             expect(DOM.contains(document, document)).toBe(false);
+
+            expect(DOM.contains(document.body, document)).toBe(false);
         });
 
     });

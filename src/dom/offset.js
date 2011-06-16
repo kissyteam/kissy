@@ -61,14 +61,14 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 top = top === undefined ? true : !!top;
 
                 // default current window, use native for scrollIntoView(elem, top)
-                if (!container || container === win) {
+                if (!container ||
+                    (container = DOM.get(container)) === win) {
                     // 注意：
                     // 1. Opera 不支持 top 参数
                     // 2. 当 container 已经在视窗中时，也会重新定位
                     elem.scrollIntoView(top);
                     return;
                 }
-                container = DOM.get(container);
 
                 // document 归一化到 window
                 if (nodeTypeIs(container, 9)) {
@@ -166,9 +166,15 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                     w['scrollTo'](left, top);
                 }
                 d = w[DOCUMENT];
-                ret = w[i ? 'pageYOffset' : 'pageXOffset']
-                    || d[DOC_ELEMENT][method]
-                    || d[BODY][method]
+                ret =
+                    //标准
+                    //chrome == body.scrollTop
+                    //firefox/ie9 == documentElement.scrollTop
+                    w[i ? 'pageYOffset' : 'pageXOffset']
+                        //ie6,7,8 standard mode
+                        || d[DOC_ELEMENT][method]
+                        //quirks mode
+                        || d[BODY][method]
 
             } else if (isElementNode((elem = DOM.get(elem)))) {
                 ret = v !== undefined ? elem[method] = v : elem[method];
@@ -183,8 +189,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
-            return MAX(isStrict ?
-                d[DOC_ELEMENT][SCROLL + name] :
+            return MAX(
+                //firefox chrome documentElement.scrollHeight< body.scrollHeight
+                //ie standard mode : documentElement.scrollHeight> body.scrollHeight
+                d[DOC_ELEMENT][SCROLL + name],
+                //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
                 d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };
@@ -195,7 +204,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 w = getWin(refWin),
                 d = w[DOCUMENT];
             return (prop in w) ?
+                // 标准 = documentElement.clientHeight
                 w[prop] :
+                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
+                // ie quirks body.clientHeight: 在 body 上？
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });

@@ -139,28 +139,29 @@
             sb2.addChild(new Menu.Item({content:"submenuitem11"}));
             sb2.addChild(new Menu.Item({content:"submenuitem22"}));
             var b2 = new Menu.SubMenu({
-                content:"sub-sub-menu",
-                menu:sb2
-            });
+                        content:"sub-sub-menu",
+                        menu:sb2
+                    });
             sb.addChild(b2);
 
             var b = new Menu.SubMenu({
-                content:"submenu",
-                menu:sb
-            });
+                        content:"submenu",
+                        menu:sb
+                    });
 
+            var alone = new Menu.Item({content:"alone"});
             var menu = new Menu({
-                children:[b, new Menu.Item({content:"alone"})]
-            });
+                        children:[b, alone]
+                    });
             //model and control
             //view as a parameter
             var bbbbb = new MenuButton({
-                content:"测试",
-                describedby:"describe",
-                menu:menu,
-                render:"#button_container",
-                autoRender:true
-            });
+                        content:"测试",
+                        describedby:"describe",
+                        menu:menu,
+                        render:"#button_container",
+                        autoRender:true
+                    });
 
 
             menu.on("menuItemClick", function(ev) {
@@ -196,24 +197,24 @@
             sb2.addChild(new Menu.Item({content:"submenuitem11"}));
             sb2.addChild(new Menu.Item({content:"submenuitem22"}));
             var b2 = new Menu.SubMenu({
-                content:"sub-sub-menu",
-                menu:sb2
-            });
+                        content:"sub-sub-menu",
+                        menu:sb2
+                    });
             sb.addChild(b2);
 
             var b = new Menu.SubMenu({
-                content:"submenu",
-                menu:sb
-            });
+                        content:"submenu",
+                        menu:sb
+                    });
 
             var menu = new Menu({
-                children:[b,new Menu.Item({content:"alone"})]
-            });
+                        children:[b,new Menu.Item({content:"alone"})]
+                    });
             var exist = new MenuButton({
-                srcNode:"#exist",
-                menu:menu,
-                autoRender:true
-            });
+                        srcNode:"#exist",
+                        menu:menu,
+                        autoRender:true
+                    });
 
         })();
 

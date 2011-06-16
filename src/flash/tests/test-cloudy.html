@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="http://a.tbcdn.cn/p/cloudyrun/1.0/cloudyrun-jasmine-pkg.js"></script>
+
+<script src="../../../build/kissy.js"></script>
+
+<script src="../base.js"></script>
+<script src="../ua.js"></script>
+<script src="../embed.js"></script>
+<script src="../../flash.js"></script>
+<script>
+    var S=KISSY;
+    S.log(S.Flash);
+
+</script>
+<script src="flash-spec.js"></script>
+
+<style>
+	
+</style>
+
+</head>
+<body>
+<h1>KISSY.Flash Test Cases</h1>
+<script>
+    CloudyRun.runJasmine();
+</script>
+
+<table class="itable">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Static-publishing</th>
+			<th>Dynamic-publishing</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th>Normal</th>
+			<td>
+				<object  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="310" height="130" id="FP-Normal-S">
+			        <param name="movie" value="../assets/test.swf"/>
+			        <param name="bgcolor" value="#375BD0"/>
+					<!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="../assets/test.swf" width="310" height="130">
+			            <param name="bgcolor" value="#375BD0"/>
+						<!--<![endif]-->
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FC-Normal-D">
+					<a href="http://www.adobe.com/go/getflashplayer">
+		                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+		            </a>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>Simple flash variables</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="310" height="130" id="FP-SimpleVars-S">
+			        <param name="movie" value="../assets/flashvars.swf"/>
+			        <param name="bgcolor" value="#038C3C"/>
+					<param name="flashvars" value="name1=1&name2=2&name3=3"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="../assets/flashvars.swf" width="310" height="130">
+			        	<param name="flashvars" value="name1=[1,2,3,4]&name2=true&name3=1"/>
+			            <param name="bgcolor" value="#038C3C"/>
+						<!--<![endif]-->
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FC-SimpleVars-D">
+					<a href="http://www.adobe.com/go/getflashplayer">
+		                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+		            </a>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Complex flash variables
+				<p>(Complex flashvars to JSON)</p>
+			</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="310" height="130" id="FP-ComplexVars-S">
+			        <param name="movie" value="../assets/flashvars.swf"/>
+					<param name="bgcolor" value="#038C3C"/>
+			        <param name="flashvars" value="name1=http%3A%2F%2Ftaobao.com%2F%3Fx%3D1%26z%3D2&name2={'s':'string','b':false,'n':1,'url':'http%3A%2F%2Ftaobao.com%2F%3Fx%3D1%26z%3D2','cpx':{'s':'string','b':false,'n':1,'url':'http%3A%2F%2Ftaobao.com%2F%3Fx%3D1%26z%3D2'}}&name3=string"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="../assets/flashvars.swf" width="310" height="130">
+			        	<param name="flashvars" value="name1=http%3A%2F%2Ftaobao.com%2F%3Fx%3D1%26z%3D2&name2={'s':'string','b':false,'n':1,'url':'http%3A%2F%2Ftaobao.com%2F%3Fx%3D1%26z%3D2','cpx':{'s':'string','b':false,'n':1,'url':'http%3A%2F%2Ftaobao.com%2F%3Fx%3D1%26z%3D2'}}&name3=string"/>
+			            <param name="bgcolor" value="#038C3C"/>
+						<!--<![endif]-->
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FC-ComplexVars-D">
+					<a href="http://www.adobe.com/go/getflashplayer">
+		                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+		            </a>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>Express install</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="310" height="130" id="FP-ExpressInstall-S">
+			        <param name="movie" value="../express-install/expressInstall.swf"/>
+			        <param name="bgcolor" value="#FFAF09"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="../express-install/expressInstall.swf" width="310" height="130">
+						<param name="bgcolor" value="#FFAF09"/>
+			            <!--<![endif]-->
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FC-ExpressInstall-D">
+					<a href="http://www.adobe.com/go/getflashplayer">
+		                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+		            </a>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Only Flash Player
+				<p>(SWF did not load in time or not exit)</p>
+			</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="310" height="130" id="FP-OnlyPlayer-S">
+			        <param name="bgcolor" value="#ED2835"/>
+					 <param name="moive" value="http://CDN.YOURDOMAIN.COM/assets/HTTPERROR.swf"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" data="http://CDN.YOURDOMAIN.COM/assets/HTTPERROR.swf" width="310" height="130">
+			            <param name="bgcolor" value="#ED2835"/>
+						<!--<![endif]-->
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FC-OnlyPlayer-D">
+					<a href="http://www.adobe.com/go/getflashplayer">
+		                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+		            </a>
+					e.g. SWF HTTP ERROR
+				</div>
+				
+			</td>
+		</tr>
+		<tr>
+			<th>SWF unspecified</th>
+			<td>
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="310" height="130" id="FP-NoSWF-S">
+			        <param name="bgcolor" value="#ED2835"/>
+			        <!--[if !IE]>-->
+			        <object type="application/x-shockwave-flash" width="310" height="130">
+			        	<param name="bgcolor" value="#ED2835"/>
+			            <!--<![endif]-->
+			            <a href="http://www.adobe.com/go/getflashplayer">
+			                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+			            </a>
+			            <!--[if !IE]>-->
+			        </object>
+			        <!--<![endif]-->
+			    </object>
+			</td>
+			<td>
+				<div id="FC-NoSWF-D">
+					<a href="http://www.adobe.com/go/getflashplayer">
+		                <img src="../assets/get_flash_player.gif" alt="Get Adobe Flash player"/>
+		            </a>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr/>
+</body>
+</html>

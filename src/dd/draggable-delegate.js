@@ -85,7 +85,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
              */
             container:{
                 setter:function(v) {
-                    return S.one(v);
+                    return Node.one(v);
                 }
             },
 

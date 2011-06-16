@@ -6,18 +6,18 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     var MenuItem = UIBase.create(Component.ModelControl, {
 
         _handleMouseEnter:function() {
-            if (MenuItem.superclass._handleMouseEnter.call(this) === false) return false;
+            if (MenuItem.superclass._handleMouseEnter.call(this) === false) {
+                return false;
+            }
             this.set("highlighted", true);
         },
 
         _handleMouseLeave:function() {
-            if (MenuItem.superclass._handleMouseLeave.call(this) === false) return false;
+            if (MenuItem.superclass._handleMouseLeave.call(this) === false) {
+                return false;
+            }
             S.log("menuitem " + this.get("view").get("el").attr("id") + "  leave");
             this.set("highlighted", false);
-        },
-
-        _handleClickInternal:function(ev) {
-            this.fire("click");
         }
     }, {
         ATTRS:{

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test Runner</title>
+<link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+<script src="http://a.tbcdn.cn/p/cloudyrun/1.0/cloudyrun-jasmine-pkg.js"></script>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../zoomer.js"></script>
+<script src="../base.js"></script>
+<script src="../autorender.js"></script>
+<script src="../../imagezoom.js"></script>
+
+<style>
+    img {
+        border: none;
+    }
+    .ks-imagezoom-wrap {
+        position: relative;
+        width: 310px;
+        height: 310px;
+    }
+
+    .ks-imagezoom-icon {
+        display: block;
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        height: 23px;
+        width: 23px;
+        background: url(http://img02.taobaocdn.com/tps/i2/T1uJNuXX8tXXXXXXXX-23-23.png) no-repeat scroll left top transparent;
+    }
+
+    .ks-imagezoom-lens {
+        background: url(http://img04.taobaocdn.com/tps/i4/T12pdtXaldXXXXXXXX-2-2.png) repeat;
+        cursor: move;
+    }
+
+    .ks-imagezoom-viewer {
+        text-align: center;
+    }
+
+</style>
+
+</head>
+<body>
+<h1>KISSY.ImageZoom Test Cases</h1>
+<div class="demo">
+    <img id="standard" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
+<div class="demo">
+    <img id="inner" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/>
+</div>
+
+
+<div class="demo">
+    <a href="#"><img id="multi" data-ks-imagezoom="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg" src="http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg_310x310.jpg"/></a>
+</div>
+
+<script src="imagezoom-spec.js"></script>
+
+<script>
+    CloudyRun.runJasmine();
+</script>
+</body>
+</html>

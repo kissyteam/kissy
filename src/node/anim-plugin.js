@@ -2,11 +2,14 @@
  * @module  anim-node-plugin
  * @author  lifesinger@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
+KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
-    var NLP = N.List.prototype,
-        DISPLAY = 'display', NONE = 'none',
-        OVERFLOW = 'overflow', HIDDEN = 'hidden',
+    var NLP = N.prototype,
+        ANIM_KEY = "ksAnims" + S.now(),
+        DISPLAY = 'display',
+        NONE = 'none',
+        OVERFLOW = 'overflow',
+        HIDDEN = 'hidden',
         OPCACITY = 'opacity',
         HEIGHT = 'height', WIDTH = 'width',
         FX = {
@@ -16,20 +19,49 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
         };
 
     (function(P) {
+
+        function attachAnim(elem, anim) {
+            var anims = DOM.data(elem, ANIM_KEY);
+            if (!anims) {
+                DOM.data(elem, ANIM_KEY, anims = []);
+            }
+            anim.on("complete", function() {
+                var anims = DOM.data(elem, ANIM_KEY);
+                if (anims) {
+                    // 结束后从关联的动画队列中删除当前动画
+                    var index = S.indexOf(anim, anims);
+                    if (index >= 0) {
+                        anims.splice(index, 1);
+                    }
+                    if (!anims.length) {
+                        DOM.removeData(elem, ANIM_KEY);
+                    }
+                }
+            });
+            // 当前节点的所有动画队列
+            anims.push(anim);
+        }
+
         P.animate = function() {
-            var self = this,args = S.makeArray(arguments);
-            self.__anims = self.__anims || [];
-            S.each(this, function(elem) {
-                self.__anims.push(Anim.apply(undefined, [elem].concat(args)).run());
+            var self = this,
+                args = S.makeArray(arguments);
+            S.each(self, function(elem) {
+                var anim = Anim.apply(undefined, [elem].concat(args)).run();
+                attachAnim(elem, anim);
             });
             return this;
         };
 
         P.stop = function(finish) {
-            S.each(this.__anims, function(anim) {
-                anim.stop(finish);
+            S.each(this, function(elem) {
+                var anims = DOM.data(elem, ANIM_KEY);
+                if (anims) {
+                    S.each(anims, function(anim) {
+                        anim.stop(finish);
+                    });
+                    DOM.removeData(elem, ANIM_KEY);
+                }
             });
-            this.__anims = [];
         };
 
         S.each({
@@ -45,18 +77,19 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
                     var self = this;
-                    self.__anims = self.__anims || [];
+
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && arguments.length === 0) {
-                        DOM[k](this);
+                        DOM[k](self);
                     }
                     else {
                         S.each(this, function(elem) {
-                            self.__anims.push(fx(elem, v[0], speed, callback,
-                                v[1], easing, nativeSupport));
+                            var anim = fx(elem, v[0], speed, callback,
+                                v[1], easing, nativeSupport);
+                            attachAnim(elem, anim);
                         });
                     }
-                    return this;
+                    return self;
                 };
             });
     })(NLP);
@@ -140,11 +173,9 @@ KISSY.add('anim/node-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-        requires:["dom","anim/base","node"]
+        requires:["dom","anim","./base"]
     });
 /**
  * 2011-05-17
- *
  *  - 承玉：添加 stop ，随时停止动画
- *
  */

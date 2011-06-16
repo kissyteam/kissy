@@ -36,7 +36,7 @@
 
 <link rel="stylesheet" href="../assets/cool.css"/>
 
-<h3 class="s-title">Dialog - 新建 + Mask</h3>
+<h3 class="s-title">Dialog - 新建 + Mask + aria</h3>
 <div class="s-section">
     <div class="s-demo">
         <button id="btn4" class="button">收藏</button>
@@ -51,7 +51,8 @@
                             align: {
                                 points: ['cc', 'cc']
                             },
-                            draggable: false
+                            draggable: false,
+                            aria:true
                         });
                 Node.one('#btn4').on('click', function() {
                     dialog.show();

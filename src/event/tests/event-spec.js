@@ -1,10 +1,10 @@
 /**
  * @module  event-spec
- * @author  gonghao<gonghao@ghsky.com>
+ * @author  gonghao@ghsky.com,yiminghe@gmail.com
  */
-KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
-    var EventTarget =Event.Target,
-        Node = N,NodeList = N.List;
+KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
+    var EventTarget = Event.Target;
+
     describe('event', function() {
 
         var doc = document,
@@ -203,44 +203,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
             });
 
-            it('should set this properly', function() {
-                var ret;
 
-                // Node
-                runs(function() {
-
-                    Node.one('#link-test-this').on('click', function() {
-                        ret = this;
-                    });
-                    simulate('#link-test-this', 'click');
-                });
-                waits(0);
-
-
-                // NodeList
-                runs(function() {
-                    NodeList.all('#link-test-this-all span').on('click', function() {
-                        ret = this;
-                    });
-                    simulate('#link-test-this-all-span', 'click');
-                });
-                waits(0);
-                runs(function() {
-                    expect(ret.text()).toBe('link for test this');
-                });
-
-                // DOM Element
-                runs(function() {
-                    Event.on('#link-test-this-dom', 'click', function() {
-                        ret = this;
-                    });
-                    simulate('#link-test-this-dom', 'click');
-                });
-                waits(0);
-                runs(function() {
-                    expect(ret.nodeType).toBe(1);
-                });
-            });
         });
 
         describe('remove event', function() {
@@ -368,16 +331,18 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
 
         describe('focusin and focusout', function() {
 
-            it('should trigger the focusin/focusout event on the proper element, and support bubbling.', function() {
-                var container = DOM.get('#test-focusin'), input = DOM.get('input', container);
+            it('should trigger the focusin/focusout event on the proper element, ' +
+                'and support bubbling with correct order.', function() {
+                var ie = UA.ie,container = DOM.get('#test-focusin'), input = DOM.get('input', container);
 
                 // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
                 // so we should ignore the orders of the event
+
                 Event.on(container, 'focusin focusout', function() {
                     result.push(HAPPENED);
                 });
                 Event.on(input, 'focusin focusout', function() {
-                    result.push(HAPPENED);
+                    result.push(HAPPENED + "_inner");
                 });
 
                 // focus the input element
@@ -387,7 +352,10 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
                 waits(0);
                 runs(function() {
-                    expect(result.join(SEP)).toEqual([HAPPENED, HAPPENED].join(SEP));
+                    // guarantee bubble
+                    if (!ie) {
+                        expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
+                    }
                 });
 
                 // blur the input element
@@ -397,12 +365,14 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
                 waits(0);
                 runs(function() {
-                    expect(result.join(SEP)).toEqual([HAPPENED, HAPPENED].join(SEP));
+                    if (!ie) {
+                        expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
+                    }
                 });
             });
 
             it('should trigger the focusin/focusout event and focus event in order.', function() {
-                var input = DOM.get('#test-focusin-input');
+                var ie = UA.ie,input = DOM.get('#test-focusin-input');
 
                 Event.on(input, 'focusin focusout', function() {
                     result.push(FIRST);
@@ -418,7 +388,9 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
                 waits(0);
                 runs(function() {
-                    expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+                    if (!ie) {
+                        expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+                    }
                 });
 
                 // blur the input element
@@ -428,7 +400,9 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 });
                 waits(0);
                 runs(function() {
-                    expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+                    if (!ie) {
+                        expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+                    }
                 });
             });
         });
@@ -486,12 +460,13 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
                 }
 
                 S.augment(Dog, EventTarget, {
-                    run: function() {
-                        this.fire('running', {speed: SPEED});
-                    }
-                });
+                        run: function() {
+                            this.fire('running', {speed: SPEED});
+                        }
+                    });
 
                 dog = new Dog(NAME);
+
                 dog.on('running', function(ev) {
                     result.push(this.name);
                     result.push(ev.speed);
@@ -508,6 +483,7 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
 
                 // let dog run
                 result = [];
+
                 dog.run();
                 waits(0);
                 runs(function() {
@@ -528,27 +504,210 @@ KISSY.use("dom,event,ua,node", function(S, DOM, Event, UA, N) {
         });
 
 
-        it('should detach properly', function() {
-            var ret;
+        it('should no memory leak for dom node', function() {
 
-            // Node
-            runs(function() {
-                var node = Node.one('#link-detach')
-
-                function t() {
-                    ret = 1;
+            var domNode = DOM.create("<div></div>"),i,noop = function() {
+            },noop2 = function() {
+            },noop3 = function() {
+            };
+            Event.on(domNode, "click", noop);
+            Event.on(domNode, "click", noop2);
+            Event.on(domNode, "click", noop3);
+            Event.on(domNode, "keydown", noop);
+            (function() {
+                var eventDesc = Event._data(domNode);
+                var num = 0;
+                for (i in eventDesc) {
+                    if (eventDesc.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["handler","events"]))
+                            .toBe(true);
+                        num++;
+                    }
                 }
+                expect(num).toBe(2);
+                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                var events = eventDesc.events;
+                num = 0;
+                for (i in events) {
+                    if (events.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["click","keydown"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                var clickHandlers = events["click"];
+                expect(clickHandlers.length).toBe(3);
+            })();
 
-                node.on('click', t);
-                //debugger
-                Node.one('#link-detach').detach('click', t);
+            Event.remove(domNode, "click", noop);
 
-                simulate('#link-detach', 'click');
-            });
-            waits(10);
-            runs(function() {
-                expect(ret).toBeUndefined();
-            });
+            (function() {
+                var eventDesc = Event._data(domNode);
+                var num = 0;
+                for (i in eventDesc) {
+                    if (eventDesc.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["handler","events"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                var events = eventDesc.events;
+                num = 0;
+                for (i in events) {
+                    if (events.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["click","keydown"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                var clickHandlers = events["click"];
+                expect(clickHandlers.length).toBe(2);
+            })();
+
+            Event.remove(domNode, "click");
+
+            (function() {
+                var eventDesc = Event._data(domNode);
+                var num = 0;
+                for (i in eventDesc) {
+                    if (eventDesc.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["handler","events"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                var events = eventDesc.events;
+                num = 0;
+                for (i in events) {
+                    if (events.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["keydown"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(1);
+                var clickHandlers = events["click"];
+                expect(clickHandlers).toBeUndefined();
+            })();
+
+            Event.remove(domNode);
+
+            (function() {
+                var eventDesc = Event._data(domNode);
+                expect(eventDesc).toBe(null);
+            })();
+
+        });
+
+
+        it('should no memory leak for custom event', function() {
+
+            var domNode = S.mix({}, Event.Target),
+                i,
+                noop = function() {
+                },
+                noop2 = function() {
+                },
+                noop3 = function() {
+                };
+            Event.on(domNode, "click", noop);
+            Event.on(domNode, "click", noop2);
+            Event.on(domNode, "click", noop3);
+            Event.on(domNode, "keydown", noop);
+            (function() {
+                var eventDesc = Event._data(domNode);
+                var num = 0;
+                for (i in eventDesc) {
+                    if (eventDesc.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["handler","events"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                var events = eventDesc.events;
+                num = 0;
+                for (i in events) {
+                    if (events.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["click","keydown"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                var clickHandlers = events["click"];
+                expect(clickHandlers.length).toBe(3);
+            })();
+
+            Event.remove(domNode, "click", noop);
+
+            (function() {
+                var eventDesc = Event._data(domNode);
+                var num = 0;
+                for (i in eventDesc) {
+                    if (eventDesc.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["handler","events"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                var events = eventDesc.events;
+                num = 0;
+                for (i in events) {
+                    if (events.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["click","keydown"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                var clickHandlers = events["click"];
+                expect(clickHandlers.length).toBe(2);
+            })();
+
+            Event.remove(domNode, "click");
+
+            (function() {
+                var eventDesc = Event._data(domNode);
+                var num = 0;
+                for (i in eventDesc) {
+                    if (eventDesc.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["handler","events"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(2);
+                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                var events = eventDesc.events;
+                num = 0;
+                for (i in events) {
+                    if (events.hasOwnProperty(i)) {
+                        expect(S.inArray(i, ["keydown"]))
+                            .toBe(true);
+                        num++;
+                    }
+                }
+                expect(num).toBe(1);
+                var clickHandlers = events["click"];
+                expect(clickHandlers).toBeUndefined();
+            })();
+
+            Event.remove(domNode);
+
+            (function() {
+                var eventDesc = Event._data(domNode);
+                expect(eventDesc).toBe(null);
+            })();
         });
     });
 });

@@ -25,7 +25,7 @@ KISSY.use("dom", function(S, DOM) {
             area = S.get('#foo textarea');
 
         it("hasClass works", function() {
-            a.className = 'link link2 link3';
+            a.className = 'link link2\t' + 'link9 link3';
             expect(DOM.hasClass(a, 'link')).toBe(true);
             expect(DOM.hasClass(a, '.link')).toBe(true);
             expect(DOM.hasClass(a, 'link4')).toBe(false);
@@ -34,6 +34,7 @@ KISSY.use("dom", function(S, DOM) {
             expect(DOM.hasClass(a, 'link link4')).toBe(false);
             expect(DOM.hasClass(a, 'link link4')).toBe(false);
             expect(DOM.hasClass(a, '.link .link4')).toBe(false);
+            expect(DOM.hasClass(a, 'link9')).toBe(true);
         });
 
         it("addClass works", function() {

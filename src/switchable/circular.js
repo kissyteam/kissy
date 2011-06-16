@@ -26,7 +26,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      * 循环滚动效果函数
      */
     function circularScroll(fromEls, toEls, callback, index, direction) {
-        var self = this, cfg = self.config,
+        var self = this,
+            cfg = self.config,
             len = self.length,
             activeIndex = self.activeIndex,
             isX = cfg.scrollType === SCROLLX,
@@ -36,7 +37,6 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             props = {},
             isCritical,
             isBackward = direction === BACKWARD;
-
         // 从第一个反向滚动到最后一个 or 从最后一个正向滚动到第一个
         isCritical = (isBackward && activeIndex === 0 && index === len - 1)
             || (direction === FORWARD && activeIndex === len - 1 && index === 0);
@@ -52,17 +52,26 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
         if (self.anim) {
             self.anim.stop();
         }
-       
-        self.anim = new Anim(self.content, props, cfg.duration, cfg.easing, function() {
-            if (isCritical) {
-                // 复原位置
-                resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
-            }
-            // free
-            self.anim = undefined;
-            callback();
-        }, cfg.nativeAnim).run();
 
+        if (fromEls) {
+            self.anim = new Anim(self.content,
+                props,
+                cfg.duration,
+                cfg.easing,
+                function() {
+                    if (isCritical) {
+                        // 复原位置
+                        resetPosition.call(self, self.panels, index, isBackward, prop, viewDiff);
+                    }
+                    // free
+                    self.anim = undefined;
+                    callback && callback();
+                }, cfg.nativeAnim).run();
+        } else {
+            // 初始化
+            DOM.css(self.content, props);
+            callback && callback();
+        }
 
     }
 
@@ -79,10 +88,9 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             i;
 
         // 调整 panels 到下一个视图中
-        for (i = from; i < to; i++) {
-            DOM.css(panels[i], POSITION, RELATIVE);
-            DOM.css(panels[i], prop, (isBackward ? -1 : 1) * viewDiff * len);
-        }
+        var actionPanels = panels.slice(from, to);
+        DOM.css(actionPanels, POSITION, RELATIVE);
+        DOM.css(actionPanels, prop, (isBackward ? -1 : 1) * viewDiff * len);
 
         // 偏移量
         return isBackward ? viewDiff : -viewDiff * len;
@@ -92,7 +100,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
      * 复原位置
      */
     function resetPosition(panels, index, isBackward, prop, viewDiff) {
-        var self = this, cfg = self.config,
+        var self = this,
+            cfg = self.config,
             steps = cfg.steps,
             len = self.length,
             start = isBackward ? len - 1 : 0,
@@ -101,10 +110,9 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             i;
 
         // 滚动完成后，复位到正常状态
-        for (i = from; i < to; i++) {
-            DOM.css(panels[i], POSITION, EMPTY);
-            DOM.css(panels[i], prop, EMPTY);
-        }
+        var actionPanels = panels.slice(from, to);
+        DOM.css(actionPanels, POSITION, EMPTY);
+        DOM.css(actionPanels, prop, EMPTY);
 
         // 瞬移到正常位置
         DOM.css(self.content, prop, isBackward ? -viewDiff * (len - 1) : EMPTY);
@@ -132,9 +140,11 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             }
         });
 
-}, { requires:["dom","anim","switchable/base","switchable/effect"]});
+}, { requires:["dom","anim","./base","./effect"]});
 
 /**
+ * 承玉：2011.06.02 review switchable
+ *
  * TODO:
  *   - 是否需要考虑从 0 到 2（非最后一个） 的 backward 滚动？需要更灵活
  */
