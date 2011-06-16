@@ -164,9 +164,10 @@ build time: ${build.time}
 // Create a JSON object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
 
-KISSY.add("json/json2", function(S) {
+KISSY.add("json/json2", function(S, UA) {
     var win = window,JSON = win.JSON;
-    if (!JSON) {
+    // ie 8.0.7600.16315@win7 json 有问题
+    if (!JSON || UA['ie'] < 9) {
         JSON = win.JSON = {};
     }
 
@@ -218,7 +219,7 @@ KISSY.add("json/json2", function(S) {
 // Otherwise we must also replace the offending characters with safe escape
 // sequences.
 
-        escapable.lastIndex = 0;
+        escapable['lastIndex'] = 0;
         return escapable.test(string) ?
             '"' + string.replace(escapable, function (a) {
                 var c = meta[a];
@@ -439,7 +440,7 @@ KISSY.add("json/json2", function(S) {
 // incorrectly, either silently deleting them, or treating them as line endings.
 
             text = String(text);
-            cx.lastIndex = 0;
+            cx['lastIndex'] = 0;
             if (cx.test(text)) {
                 text = text.replace(cx, function (a) {
                     return '\\u' +
@@ -485,7 +486,7 @@ KISSY.add("json/json2", function(S) {
         };
     }
     return JSON;
-});
+}, {requires:['ua']});
 /**
  * adapt json2 to kissy
  * @author lifesinger@gmail.com

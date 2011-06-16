@@ -6,7 +6,7 @@ KISSY.use("ua,dom", function(S, UA,DOM) {
 
     describe("DOM.data", function() {
         it("data should works", function() {
-            var foo = document.body.appendChild(DOM.create("<div>"))
+            var foo = document.body.appendChild(DOM.create("<div>"));
             DOM.data(foo, 'data-1', 'val-1');
             expect(DOM.data(foo, 'data-1')).toBe('val-1');
 
