@@ -5,6 +5,10 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
         jasmine.simulate(target[0], type, { relatedTarget: relatedTarget });
     };
     
+    function isHidden(obj) {
+        return obj.css('display') === 'none' || obj.css('visibility') === 'hidden';
+    }
+
     beforeEach(function() {
         this.addMatchers({
             toBeHidden: function() {
@@ -22,7 +26,7 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
                     points: ["tr","tl"],
                     offset: [0, 0]
                 },
-                bigImageSrc: "T1fftwXf8jXXX7ps79_073021.jpg",
+                bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
                 bigImageWidth: 900,
                 bigImageHeight: 900
             });
@@ -54,17 +58,17 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
 
                 waits(500);
                 runs(function() {
-                    expect(a.icon).toBeHidden();
+                    expect(isHidden(a.icon)).toEqual(true);
                     expect(a.viewer).toBeDefined();
                     expect(a.bigImage).toBeDefined();
-                    expect(a.viewer).not.toBeHidden();
+                    expect(isHidden(a.viewer)).toEqual(false);
                     expect(a.bigImage.width()).toEqual(900);
                     expect(a.bigImage.height()).toEqual(900);
                     expect(a.viewer.width()).toEqual(310);
                     //expect(a.viewer.height()).toEqual(310);
                     //expect(a.viewer.css('height')).toEqual('310px');
                     expect(a.lens).toBeDefined();
-                    expect(a.lens).not.toBeHidden();
+                    expect(isHidden(a.lens)).toEqual(false);
                     expect(a.lens.width()).toEqual(107);
                     expect(a.lens.height()).toEqual(107);
                 });
@@ -90,9 +94,9 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
 
                 waits(500);
                 runs(function() {
-                    expect(a.icon).not.toBeHidden();
-                    expect(a.viewer).toBeHidden();
-                    expect(a.lens).toBeHidden();
+                    expect(isHidden(a.icon)).toEqual(false);
+                    expect(isHidden(a.viewer)).toEqual(true);
+                    expect(isHidden(a.lens)).toEqual(true);
                 });
             });
         });
@@ -101,7 +105,7 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
             var a = new ImageZoom({
                 imageNode: "#inner",
                 type: 'inner',
-                bigImageSrc: "T1fftwXf8jXXX7ps79_073021.jpg",
+                bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
                 bigImageWidth: 900,
                 bigImageHeight: 900
             });
@@ -144,18 +148,18 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
 
                 waits(500);
                 runs(function() {
-                    expect(a.viewer).not.toBeHidden();
+                    expect(isHidden(a.viewer)).toEqual(false);
                 });
             });
 
             it('改变小图src', function() {
-                a.changeImageSrc('T1DERIXmXsXXa26X.Z_031259.jpg_310x310.jpg');
-                a.set('bigImageSrc', 'T1DERIXmXsXXa26X.Z_031259.jpg');
+                a.changeImageSrc('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_310x310.jpg');
+                a.set('bigImageSrc', 'http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
                 a.show();
                 waits(500);
                 runs(function() {
-                    expect(a.viewer).not.toBeHidden();
-                    expect(a.get('bigImageSrc')).toEqual('T1DERIXmXsXXa26X.Z_031259.jpg');
+                    expect(isHidden(a.viewer)).toEqual(false);
+                    expect(a.get('bigImageSrc')).toEqual('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
                 });
             });
             it('设置小图没有大图预览时, 不显示大图', function() {
@@ -164,8 +168,8 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
                 simulate(a.image, 'mouseenter');
                 waits(500);
                 runs(function() {
-                    expect(a.viewer).toBeHidden();
-                    expect(a.icon).toBeHidden();
+                    expect(isHidden(a.viewer)).toEqual(true);
+                    expect(isHidden(a.icon)).toEqual(true);
                 });
             });
         });
