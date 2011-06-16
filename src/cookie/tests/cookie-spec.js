@@ -13,7 +13,6 @@ KISSY.use("cookie", function(S,Cookie) {
             document.cookie = '_ks_test_3=';
 
             it('should return the cookie value for the given name', function() {
-
                 expect(Cookie.get('_ks_test_1')).toBe('1');
                 expect(Cookie.get('_ks_test_2')).toBe('');
                 expect(Cookie.get('_ks_test_3')).toBe('');

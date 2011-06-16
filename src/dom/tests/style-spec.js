@@ -44,7 +44,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             expect(DOM.css(elem, 'backgroundColor')).toBe('transparent');
 
             expect(DOM.css(elem, 'backgroundPosition')).toBe('0% 0%');
-
+            
             expect(DOM.css(elem, 'fontSize')).toBe('16px');
 
             expect(DOM.css(elem, 'border-right-width')).toBe('5px');
