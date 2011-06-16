@@ -62,10 +62,10 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
             if (elem.css('display') !== 'inline') {
                 elem = image;
             }
-            wrap = self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
+            self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
                 wrapClass: self.get('wrapClass')
             })).insertBefore(elem);
-            wrap.prepend(elem);
+            self.imageWrap.prepend(elem);
 
             if (self.get('showIcon')) {
                 self.icon = new Node(S.substitute(IMAGEZOOM_ICON_TMPL, {
@@ -178,6 +178,9 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
             },
             iconClass: {
                 value: 'ks-imagezoom-icon'
+            },
+            prefixCls:{
+                value: 'ks-'
             }
         }
     });

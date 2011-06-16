@@ -22,20 +22,26 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
                     points: ["tr","tl"],
                     offset: [0, 0]
                 },
-                bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+                bigImageSrc: "T1fftwXf8jXXX7ps79_073021.jpg",
                 bigImageWidth: 900,
                 bigImageHeight: 900
             });
 
             it('初始化后, 小图 DOM 结构正确', function() {
-                expect(a.image).toBeDefined();
-                expect(a.imageWrap).toBeDefined();
-                expect(a.imageWrap.hasClass('ks-imagezoom-wrap')).toEqual(true);
+                waits(500);
+                runs(function() {
+                    expect(a.image).toBeDefined();
+                    expect(a.imageWrap).toBeDefined();
+                    expect(a.imageWrap.hasClass('ks-imagezoom-wrap')).toEqual(true);
+                });
             });
 
             it('显示放大镜图标', function() {
-                expect(a.icon).toBeDefined();
-                expect(a.icon.hasClass('ks-imagezoom-icon')).toEqual(true);
+                waits(500);
+                runs(function() {
+                    expect(a.icon).toBeDefined();
+                    expect(a.icon.hasClass('ks-imagezoom-icon')).toEqual(true);
+                });
             });
 
             it('能够正确显示大图', function() {
@@ -95,7 +101,7 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
             var a = new ImageZoom({
                 imageNode: "#inner",
                 type: 'inner',
-                bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
+                bigImageSrc: "T1fftwXf8jXXX7ps79_073021.jpg",
                 bigImageWidth: 900,
                 bigImageHeight: 900
             });
@@ -143,13 +149,13 @@ KISSY.use("imagezoom", function(S, ImageZoom) {
             });
 
             it('改变小图src', function() {
-                a.changeImageSrc('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_310x310.jpg');
-                a.set('bigImageSrc', 'http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
+                a.changeImageSrc('T1DERIXmXsXXa26X.Z_031259.jpg_310x310.jpg');
+                a.set('bigImageSrc', 'T1DERIXmXsXXa26X.Z_031259.jpg');
                 a.show();
                 waits(500);
                 runs(function() {
                     expect(a.viewer).not.toBeHidden();
-                    expect(a.get('bigImageSrc')).toEqual('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
+                    expect(a.get('bigImageSrc')).toEqual('T1DERIXmXsXXa26X.Z_031259.jpg');
                 });
             });
             it('设置小图没有大图预览时, 不显示大图', function() {
