@@ -8,13 +8,22 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
         EventTarget = Event.Target,
         noop = function() {
         },
-        GET = 'GET', POST = 'POST',
+        GET = 'GET',
+        POST = 'POST',
         CONTENT_TYPE = 'Content-Type',
-        JSON = 'json', JSONP = JSON + 'p', SCRIPT = 'script',
-        CALLBACK = 'callback', EMPTY = '',
-        START = 'start', SEND = 'send', STOP = 'stop',
-        SUCCESS = 'success', COMPLETE = 'complete',
-        ERROR = 'error', TIMEOUT = 'timeout', PARSERERR = 'parsererror',
+        JSON = 'json',
+        JSONP = JSON + 'p',
+        SCRIPT = 'script',
+        CALLBACK = 'callback',
+        EMPTY = '',
+        START = 'start',
+        SEND = 'send',
+        STOP = 'stop',
+        SUCCESS = 'success',
+        COMPLETE = 'complete',
+        ERROR = 'error',
+        TIMEOUT = 'timeout',
+        PARSERERR = 'parsererror',
 
         // 默认配置
         // 参数含义和 jQuery 保持一致：http://api.jquery.com/jQuery.ajax/
@@ -198,41 +207,41 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
     // 定制各种快捷操作
     S.mix(io, {
 
-        get: function(url, data, callback, dataType, _t) {
-            // data 参数可省略
-            if (S.isFunction(data)) {
-                dataType = callback;
-                callback = data;
-            }
+            get: function(url, data, callback, dataType, _t) {
+                // data 参数可省略
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                }
 
-            return io({
-                type: _t || GET,
-                url: url,
-                data: data,
-                success: function(data, textStatus, xhr) {
-                    callback && callback.call(this, data, textStatus, xhr);
-                },
-                dataType: dataType
-            });
-        },
+                return io({
+                        type: _t || GET,
+                        url: url,
+                        data: data,
+                        success: function(data, textStatus, xhr) {
+                            callback && callback.call(this, data, textStatus, xhr);
+                        },
+                        dataType: dataType
+                    });
+            },
 
-        post: function(url, data, callback, dataType) {
-            if (S.isFunction(data)) {
-                dataType = callback;
-                callback = data;
-                data = undef;
-            }
-            return io.get(url, data, callback, dataType, POST);
-        },
+            post: function(url, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                    data = undef;
+                }
+                return io.get(url, data, callback, dataType, POST);
+            },
 
-        jsonp: function(url, data, callback) {
-            if (S.isFunction(data)) {
-                callback = data;
-                data = null; // 占位符
+            jsonp: function(url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = null; // 占位符
+                }
+                return io.get(url, data, callback, JSONP);
             }
-            return io.get(url, data, callback, JSONP);
-        }
-    });
+        });
 
     // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
     // S 下有便捷入口 S.io/ajax/getScript/jsonp
@@ -299,8 +308,8 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
     return io;
 
 }, {
-    requires:["event","json"]
-});
+        requires:["event","json"]
+    });
 
 /**
  * TODO:
