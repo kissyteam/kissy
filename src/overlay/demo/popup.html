@@ -341,12 +341,9 @@
                     }
                 });
                 // 注意：使用定制的显示/隐藏方式
-<<<<<<< HEAD
-                Node.List.all('#multi img').each(function(t) {
-=======
                 Node.all('#multi img').each(function(t) {
                     t = new Node(t);
->>>>>>> bcb24c5f197cba8ed762a1ef86bfc892c190330a
+
                     t.on("mouseenter", function() {
                         popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
                         popup.set('align', {
@@ -404,7 +401,7 @@
     <div class="s-demo">
         <script>
             KISSY.use("node, overlay", function(S, Node, O) {
-                Node.List.all('#multi2 img').each(function(t) {
+                Node.all('#multi2 img').each(function(t) {
                     var popup = new O.Popup({
                         trigger: t,
                         triggerType: 'mouse',
