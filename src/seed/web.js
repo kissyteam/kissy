@@ -34,81 +34,99 @@
     S.mix(S, {
 
 
-        /**
-         * A crude way of determining if an object is a window
-         */
-        isWindow: function(o) {
-            return S.type(o) === 'object'
-                && 'setInterval' in o
-                && 'document' in o
-                && o.document.nodeType == 9;
-        },
+            /**
+             * A crude way of determining if an object is a window
+             */
+            isWindow: function(o) {
+                return S.type(o) === 'object'
+                    && 'setInterval' in o
+                    && 'document' in o
+                    && o.document.nodeType == 9;
+            },
 
-        /**
-         * Evalulates a script in a global context.
-         */
-        globalEval: function(data) {
-            if (data && RE_NOT_WHITE.test(data)) {
-                // Inspired by code by Andrea Giammarchi
-                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || docElem,
-                    script = doc.createElement('script');
 
-                // It works! All browsers support!
-                script.text = data;
+            parseXML: function(data) {
+                var xml;
+                // Standard
+                if (window.DOMParser) {
+                    xml = new DOMParser().parseFromString(data, "text/xml");
+                } else { // IE
+                    xml = new ActiveXObject("Microsoft.XMLDOM");
+                    xml.async = "false";
+                    xml.loadXML(data);
+                }
+                var root = xml.documentElement;
+                if (! root || ! root.nodeName || root.nodeName === "parsererror") {
+                    S.error("Invalid XML: " + data);
+                }
+                return xml;
+            },
 
-                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
-                // This arises when a base node is used.
-                head.insertBefore(script, head.firstChild);
-                head.removeChild(script);
+            /**
+             * Evalulates a script in a global context.
+             */
+            globalEval: function(data) {
+                if (data && RE_NOT_WHITE.test(data)) {
+                    // Inspired by code by Andrea Giammarchi
+                    // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
+                    var head = doc.getElementsByTagName('head')[0] || docElem,
+                        script = doc.createElement('script');
+
+                    // It works! All browsers support!
+                    script.text = data;
+
+                    // Use insertBefore instead of appendChild to circumvent an IE6 bug.
+                    // This arises when a base node is used.
+                    head.insertBefore(script, head.firstChild);
+                    head.removeChild(script);
+                }
+            },
+
+            /**
+             * Specify a function to execute when the DOM is fully loaded.
+             * @param fn {Function} A function to execute after the DOM is ready
+             * <code>
+             * KISSY.ready(function(S){ });
+             * </code>
+             * @return {KISSY}
+             */
+            ready: function(fn) {
+                // Attach the listeners
+                if (!readyBound) {
+                    _bindReady();
+                }
+
+                // If the DOM is already ready
+                if (isReady) {
+                    // Execute the function immediately
+                    fn.call(win, this);
+                } else {
+                    // Remember the function for later
+                    readyList.push(fn);
+                }
+
+                return this;
+            },
+
+            /**
+             * Executes the supplied callback when the item with the supplied id is found.
+             * @param id <String> The id of the element, or an array of ids to look for.
+             * @param fn <Function> What to execute when the element is found.
+             */
+            available: function(id, fn) {
+                id = (id + EMPTY).match(RE_IDSTR)[1];
+                if (!id || !S.isFunction(fn)) return;
+
+                var retryCount = 1,
+
+                    timer = S.later(function() {
+                        if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                            timer.cancel();
+                        }
+
+                    }, POLL_INTERVAL, true);
             }
-        },
-
-        /**
-         * Specify a function to execute when the DOM is fully loaded.
-         * @param fn {Function} A function to execute after the DOM is ready
-         * <code>
-         * KISSY.ready(function(S){ });
-         * </code>
-         * @return {KISSY}
-         */
-        ready: function(fn) {
-            // Attach the listeners
-            if (!readyBound) {
-                _bindReady();
-            }
-
-            // If the DOM is already ready
-            if (isReady) {
-                // Execute the function immediately
-                fn.call(win, this);
-            } else {
-                // Remember the function for later
-                readyList.push(fn);
-            }
-
-            return this;
-        },
-
-        /**
-         * Executes the supplied callback when the item with the supplied id is found.
-         * @param id <String> The id of the element, or an array of ids to look for.
-         * @param fn <Function> What to execute when the element is found.
-         */
-        available: function(id, fn) {
-            id = (id + EMPTY).match(RE_IDSTR)[1];
-            if (!id || !S.isFunction(fn)) return;
-
-            var retryCount = 1,
-
-                timer = S.later(function() {
-                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
-                        timer.cancel();
-                    }
-
-                }, POLL_INTERVAL, true);
-        }
-    });
+        });
 
 
     /**
