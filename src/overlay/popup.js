@@ -126,4 +126,4 @@ KISSY.add('overlay/popup', function(S, undefined) {
     S.Popup = Popup;
 
 
-});
+}, { host: 'overlay' });
