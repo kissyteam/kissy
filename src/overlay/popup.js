@@ -6,9 +6,9 @@ KISSY.add('overlay/popup', function(S, undefined) {
     function Popup(container, config) {
         var self = this;
 
-        if (!(self instanceof Popup)) {
-            return new Popup(container, config);
-        }
+        //if (!(self instanceof Popup)) {
+        //    return new Popup(container, config);
+        //}
 
         // 支持 Popup(config)
         if (S.isUndefined(config)) {
