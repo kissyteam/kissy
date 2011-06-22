@@ -3,14 +3,13 @@
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 
-    var
-        // get individual response header from responseheader str
+    var // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function XhrObject() {
         S.mix(this, {
                 // 结构化数据，如 json
-                data:null,
+                responseData:null,
                 config:{},
                 timeoutTimer:null,
                 responseText:null,
