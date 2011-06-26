@@ -40,14 +40,15 @@ KISSY.add("ajax/xhr", function(S, io) {
             allowCrossDomain = true;
         }
 
-
-        function XhrTransport(c) {
-            this.c = c;
+        function XhrTransport(xhrObj) {
+            this.xhrObj = xhrObj;
         }
 
         S.augment(XhrTransport, {
-                send:function(xhrObj, done) {
-                    var c = this.c;
+                send:function() {
+                    var self = this,
+                        xhrObj = self.xhrObj,
+                        c = xhrObj.config;
 
                     if (c.crossDomain && !allowCrossDomain) {
                         S.error("do not allow crossdomain xhr !");
@@ -57,9 +58,9 @@ KISSY.add("ajax/xhr", function(S, io) {
                     var xhr = io.xhr(),
                         xhrFields,
                         i;
-                    this.xhr = xhr;
-                    this.xhrObj = xhrObj;
-                    this._done = done;
+
+                    self.xhr = xhr;
+
                     if (c['username']) {
                         xhr.open(c.type, c.url, c.async, c['username'], c.password)
                     } else {
@@ -85,17 +86,29 @@ KISSY.add("ajax/xhr", function(S, io) {
 
                     xhr.send(c.hasContent && c.data || null);
 
+                    if (!c.async || xhr.readyState == 4) {
+                        self._callback();
+                    } else {
+                        xhr.onreadystatechange = function() {
+                            self._callback();
+                        }
+                    }
                 },
-                // _xhr == xhr except ie ?
-                _callback:function(xhr, abort) {
+                // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
+                abort:function() {
+                    this._callback(0, 1);
+                },
+
+                _callback:function(event, abort) {
 
                     // Firefox throws exceptions when accessing properties
                     // of an xhr when a network error occured
                     // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
                     try {
-                        var xhrObj = this.xhrObj,
-                            c = this.c,
-                            done = this._done;
+                        var self = this,
+                            xhr = self.xhr,
+                            xhrObj = self.xhrObj,
+                            c = xhrObj.config;
                         //abort or complete
                         if (abort || xhr.readyState == 4) {
                             xhr.onreadystatechange = S.noop;
@@ -137,13 +150,13 @@ KISSY.add("ajax/xhr", function(S, io) {
                                     status = 204;
                                 }
 
-                                done(status, statusText, xhrObj);
+                                xhrObj.callback(status, statusText);
                             }
                         }
                     } catch (firefoxAccessException) {
                         xhr.onreadystatechange = S.noop;
                         if (!abort) {
-                            done(-1, firefoxAccessException, xhrObj);
+                            xhrObj.callback(-1, firefoxAccessException);
                         }
                     }
                 }
@@ -151,8 +164,8 @@ KISSY.add("ajax/xhr", function(S, io) {
 
             });
 
-        transports["json"] = XhrTransport;
-
+        transports["*"] = XhrTransport;
+        return io;
     }
 }, {
         requires:["./base"]

@@ -1,0 +1,25 @@
+<script type="text/javascript" src="../../../tools/third-party/jquery.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $.ajax({
+                    url:"http://yiminghe.taobao.com/kissy_git/" +
+                            "kissy/src/ajax/tests/script.php",
+                    dataType:'script',
+                    success:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(1);
+                    },
+                    error:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(2);
+                    },
+                    complete:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(3);
+                    }
+                });
+    });
+</script>

@@ -1,6 +1,6 @@
 /**
  * special patch for making color gradual change
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 

@@ -14,6 +14,10 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/06/08)
+ - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）
+ - [x] ajax 无论什么错误，出错后都会触发 error
+
+
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
  - [*] 自定义事件 listeners 放入对象自身保存，避免内存泄露

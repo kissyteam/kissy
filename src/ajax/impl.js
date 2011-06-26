@@ -273,7 +273,9 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
             });
         } else {
             // 只调用与 status 匹配的 c.type, 比如成功时才调 c.success
-            if (status === type && c[type]) c[type].call(c.context, data, status, xhr);
+            if (status === type && c[type]) {
+                c[type].call(c.context, data, status, xhr);
+            }
             fire(type, c);
         }
     }
