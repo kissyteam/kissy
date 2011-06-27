@@ -1,0 +1,85 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title> 
+	<link rel="stylesheet" type="text/css"  href="src/css/base.css" /> 
+	<link rel="stylesheet" type="text/css"  href="src/css/doc.css" /> 
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	<script src="src/js/doc.js" charset="utf-8"></script>
+	
+</head>
+<body>
+
+<!-- {{{ crumbs -->
+<div class="crumbs">
+    <span>当前位置：</span>
+    <a href="home.html">Validation</a>
+    <span>如何引用</span>
+</div>
+<!-- crumbs }}} -->
+
+
+<div id="viewdemo" class="doc">
+
+
+<form method="post">
+<ul class="form">
+	<li>
+		<label class="hd">姓名：</label>
+		<input value="woshitaobaode" class="text" type="text" name="username" id="username" data-valid="{exclude:['taobao']}"/>
+	</li>
+	
+	<li>
+		<label class="hd">昵称：</label>
+		<input value="woshibaidude" class="text" type="text" name="nickname" id="nickname" data-valid="{exclude:['baidu']}"/>
+	</li>
+
+	
+	<li>
+		<button type="submit">提交</button>
+	</li>
+
+</ul>
+</form>
+
+<script>
+
+	KISSY.use("validation",function(S,Validation){
+
+		Validation.Rule.add('exclude','不能包含关键字{0}。',function(value,text,key){
+			if(new RegExp(key,"ig").test(value)){
+				return Validation.Util.format(text,key);
+			}
+		});
+	
+		var form = S.query("form")[0],
+		
+			check = new Validation(form,{
+				style: "under"
+			});
+		
+		
+		KISSY.Event.on(form,"submit",function(){
+			check.isValid();
+			return false;
+		});
+		
+	});
+
+</script>
+
+</div>
+
+
+
+<div id="viewcode"><h3>查看/关闭本页源代码</h3><div  id="democode"><pre class='brush:javascript;'>﻿</pre></div></div>
+<script src="src/js/loader.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shThemeDefault.css"/>
+<script type="text/javascript" src="src/js/code.js"></script>
+
+</body>
+</html>

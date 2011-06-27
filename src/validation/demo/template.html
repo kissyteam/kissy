@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title> 
+	<link rel="stylesheet" type="text/css"  href="src/css/base.css" /> 
+	<link rel="stylesheet" type="text/css"  href="src/css/doc.css" /> 
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	<script src="src/js/doc.js" charset="utf-8"></script>
+	
+</head>
+<body>
+
+<!-- {{{ crumbs -->
+<div class="crumbs">
+    <span>当前位置：</span>
+    <a href="home.html">Validation</a>
+    <span>如何引用</span>
+</div>
+<!-- crumbs }}} -->
+
+
+<div id="viewdemo" class="doc">
+
+1.引入KISSY
+<pre class='brush:javascript;'>
+&lt;script src="kissy-aio.js"&gt;&lt;/script&gt;
+</pre>
+
+
+
+2.配置环境
+<pre class='brush:javascript;'>
+	KISSY.config({
+	    packages:[{
+	            name:"Validation",
+	            path:"../"		//Auth存放的路径
+	        }
+	    ]
+	});
+
+</pre>
+
+
+
+3.使用Auth
+<pre class='brush:javascript;'>
+	KISSY.use("validation",function(S,Validation){
+
+		var form = new Validation('#J_form',{
+			//..config
+		});
+
+	});
+</pre>
+
+</div>
+
+
+
+<div id="viewcode"><h3>查看/关闭本页源代码</h3><div  id="democode"><pre class='brush:javascript;'>﻿</pre></div></div>
+<script src="src/js/loader.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shThemeDefault.css"/>
+<script type="text/javascript" src="src/js/code.js"></script>
+
+</body>
+</html>

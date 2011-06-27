@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title> 
+	<link rel="stylesheet" type="text/css"  href="src/css/base.css" /> 
+	<link rel="stylesheet" type="text/css"  href="src/css/doc.css" /> 
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	<script src="src/js/doc.js" charset="utf-8"></script>
+
+	
+</head>
+<body>
+ 
+
+<div id="viewdemo" class="doc">
+	
+
+
+<div class="note">
+<p>Field.addRule() : 增加校验规则</p>
+<p>Field.removeRule() : 移除校验规则</p>
+</div>
+
+<form method="post">
+<ul class="form">
+
+	<li>
+		<label class="hd">用户名：</label>
+		<input class="text" type="text" name="username" id="username" value="test" data-valid="{
+			email: ['用户名是一个邮箱']
+		}"/>
+	</li>
+	
+	
+	<li>
+		<button type="submit">提交</button>   <a href="#" id="optrule">移除email校验，增加中文校验</a>
+	</li>
+	
+</ul>
+</form>
+
+<script>
+
+	KISSY.use("validation",function(S,Validation){
+	
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					style: "under"
+				});
+
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+	
+;
+		
+		//通过字段的id可以获取对应的实例
+		var username = check.get("username");
+		S.one("#optrule").on("click",function(ev){
+			ev.halt();
+			
+			//移除email校验
+			username.removeRule("email");
+			
+			//增加中文校验
+			username.addRule("chinese",['必须为中文']);
+			
+			//触发校验
+			username.isValid();
+			
+		});
+
+
+		
+		KISSY.Event.on(form,"submit",function(){
+			check.isValid();
+			return false;
+		});
+		
+	});
+
+</script>
+
+
+
+</div>
+
+
+
+
+<div id="viewcode"><h3>查看/关闭本页源代码</h3><div  id="democode"><pre class='brush:javascript;'>﻿</pre></div></div>
+<script src="src/js/loader.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shThemeDefault.css"/>
+<script type="text/javascript" src="src/js/code.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
