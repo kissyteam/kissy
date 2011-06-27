@@ -1,19 +1,28 @@
-﻿<script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.1.6/kissy.js"></script>
+﻿<meta charset='utf-8'/>
+<script type="text/javascript" src="../../../build/seed.js"></script>
+<script type="text/javascript" src="../base.js"></script>
+<script type="text/javascript" src="../xhrobject.js"></script>
+<script type="text/javascript" src="../xhr.js"></script>
+<script type="text/javascript" src="../script.js"></script>
+<script type="text/javascript" src="../jsonp.js"></script>
+<script type="text/javascript" src="../../ajax.js"></script>
 <script type="text/javascript">
+    KISSY.__combines = {};
     KISSY.ready(function(S) {
         S.use("ajax", function(S, io) {
-            io = S.io;
             if (true) {
                 debugger
                 io({
-                            url:"ajax.php",
-                            // dataType:'xml',
-                            // dataType:'json',
+                            url:"jsonp2.php",
+                            dataType:'jsonp',
+                            forceScript:true,
                             success:function() {
                                 var args = S.makeArray(arguments);
                                 debugger
                                 console.log(1);
                             },
+                            // ie : parseerror ，成功 load，但是没有执行 callback ,script -> json 出错
+                            // firefox : scripterror , 没有成功 load，直接错了
                             error:function() {
                                 var args = S.makeArray(arguments);
                                 debugger

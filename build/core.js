@@ -38,7 +38,11 @@ D:\code\kissy_git\kissy\src\node\anim-plugin.js
 D:\code\kissy_git\kissy\src\node.js
 D:\code\kissy_git\kissy\src\json\json2.js
 D:\code\kissy_git\kissy\src\json.js
-D:\code\kissy_git\kissy\src\ajax\impl.js
+D:\code\kissy_git\kissy\src\ajax\xhrobject.js
+D:\code\kissy_git\kissy\src\ajax\base.js
+D:\code\kissy_git\kissy\src\ajax\xhr.js
+D:\code\kissy_git\kissy\src\ajax\script.js
+D:\code\kissy_git\kissy\src\ajax\jsonp.js
 D:\code\kissy_git\kissy\src\ajax.js
 D:\code\kissy_git\kissy\src\base\attribute.js
 D:\code\kissy_git\kissy\src\base\base.js
@@ -126,8 +130,7 @@ KISSY.add('ua/base', function() {
                 }
                 // Opera Mobile
                 // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
+                // issue: 由于 Opera Mobile �?Version/ 字段，可能会�?Opera 混淆，同时对�?Opera Mobile 的版本号也比较混�?                else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
                     o[MOBILE] = m[0];
                 }
             }
@@ -137,11 +140,9 @@ KISSY.add('ua/base', function() {
             // MSIE
             if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
                 o[core = 'trident'] = 0.1; // Trident detected, look for revision
-                // 注意：
-                //  o.shell = ie, 表示外壳是 ie
-                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
-                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
-                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+                // 注意�?                //  o.shell = ie, 表示外壳�?ie
+                //  �?o.ie = 7, 并不代表外壳�?ie7, 还有可能�?ie8 的兼容模�?                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断�?但此处不能让 o.ie = 8, 否则
+                //  很多脚本判断会失误�?因为 ie8 的兼容模式表现行为和 ie7 相同，�?不是�?ie8 相同
                 o[shell = 'ie'] = numberify(m[1]);
 
                 // Get the Trident's accurate version
@@ -178,16 +179,14 @@ KISSY.add('ua/base', function() {
  *
  * 2010.03
  *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
- *    if(document.addEventListener) 假设 IE9 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
- *    对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
- *    同时并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
- *    皆权衡。
- *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
+ *    if(document.addEventListener) 假设 IE9 支持标准事件，则代码不用修改，就自�?应了“未来浏览器”�?
+ *    对于未知浏览器也是如此�?但是，这并不意味�?��览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
+ *    同时并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患�?总之，一�? *    皆权衡�?
+ *  - UA.ie && UA.ie < 8 并不意味�?��览器就不�?IE8, 有可能是 IE8 的兼容模式�?进一步的判断�?��使用 documentMode.
  *
  * TODO:
  *  - test mobile
- *  - 3Q 大战后，360 去掉了 UA 信息中的 360 信息，需采用 res 方法去判断
- *
+ *  - 3Q 大战后，360 去掉�?UA 信息中的 360 信息，需采用 res 方法去判�? *
  */
 
 /**
@@ -201,11 +200,10 @@ KISSY.add('ua/extra', function(S, UA) {
         numberify = UA._numberify;
 
     /**
-     * 说明：
-     * @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
+     * 说明�?     * @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
      * 根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
-     * 如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
-     * 世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
+     * 如果�?��出浏览器，但是具体版本号未知�?0.1 作为标识
+     * 世界之窗 & 360 浏览器，�?3.x 以下的版本都无法通过 UA 或�?特�?�?��进行判断，所以目前只要检测到 UA 关键字就认为起版本号�?3
      */
 
     // 360Browser
@@ -264,16 +262,16 @@ KISSY.add('dom/base', function(S, undefined) {
     return {
 
         /**
-         * 是不是 element node
+         * 是不�?element node
          */
         _isElementNode: function(elem) {
             return nodeTypeIs(elem, 1);
         },
 
         /**
-         * elem 为 window 时，直接返回
-         * elem 为 document 时，返回关联的 window
-         * elem 为 undefined 时，返回当前 window
+         * elem �?window 时，直接返回
+         * elem �?document 时，返回关联�?window
+         * elem �?undefined 时，返回当前 window
          * 其它值，返回 false
          */
         _getWin: function(elem) {
@@ -289,11 +287,8 @@ KISSY.add('dom/base', function(S, undefined) {
 
         // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
         _isNodeList:function(o) {
-            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
-            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
-            // 注3：通过 namedItem 来判断不可靠
-            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
-            // 注5: 考虑 iframe.contentWindow
+            // �?：ie 下，�?window.item, typeof node.item �?ie 不同版本下，返回值不�?            // �?：select 等元素也�?item, 要用 !node.nodeType 排除�?            // �?：�?�?namedItem 来判断不可靠
+            // �?：getElementsByTagName �?querySelectorAll 返回的集合不�?            // �?: 考虑 iframe.contentWindow
             return o && !o.nodeType && o.item && !o.setTimeout;
         }
     };
@@ -346,9 +341,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                             null;
                 }
             },
-            // 在标准浏览器下，用 getAttribute 获取 style 值
-            // IE7- 下，需要用 cssText 来获取
-            // 统一使用 cssText
+            // 在标准浏览器下，�?getAttribute 获取 style �?            // IE7- 下，�?���?cssText 来获�?            // 统一使用 cssText
             style:{
                 get:function(el) {
                     return el.style.cssText;
@@ -375,10 +368,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         // Hook for boolean attributes
         boolHook = {
             get: function(elem, name) {
-                // 转发到 prop 方法
+                // 转发�?prop 方法
                 return DOM.prop(elem, name) ?
-                    // 根据 w3c attribute , true 时返回属性名字符串
-                    name.toLowerCase() :
+                    // 根据 w3c attribute , true 时返回属性名字符�?                    name.toLowerCase() :
                     null;
             },
             set: function(elem, value, name) {
@@ -387,8 +379,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     // Remove boolean attributes when set to false
                     DOM.removeAttr(elem, name);
                 } else {
-                    // 直接设置 true,因为这是 bool 类属性
-                    propName = propFix[ name ] || name;
+                    // 直接设置 true,因为这是 bool 类属�?                    propName = propFix[ name ] || name;
                     if (propName in elem) {
                         // Only set the IDL specifically if it already exists on the element
                         elem[ propName ] = true;
@@ -405,15 +396,14 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         valHooks = {
             option: {
                 get: function(elem) {
-                    // 当没有设定 value 时，标准浏览器 option.value === option.text
-                    // ie7- 下，没有设定 value 时，option.value === '', 需要用 el.attributes.value 来判断是否有设定 value
+                    // 当没有设�?value 时，标准浏览�?option.value === option.text
+                    // ie7- 下，没有设定 value 时，option.value === '', �?���?el.attributes.value 来判断是否有设定 value
                     var val = elem.attributes.value;
                     return !val || val.specified ? elem.value : elem.text;
                 }
             },
             select: {
-                // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                get: function(elem) {
+                // 对于 select, 特别�?multiple type, 存在很严重的兼容性问�?                get: function(elem) {
                     var index = elem.selectedIndex,
                         options = elem.options,
                         one = elem.type === "select-one";
@@ -473,13 +463,12 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         },
 
 
-            // ie6,7 不区分 attribute 与 property
+            // ie6,7 不区�?attribute �?property
             attrFix = propFix;
         // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
         attrHooks.tabIndex = attrHooks.tabindex;
         // fix ie bugs
-        // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
-        // 注意 colSpan rowSpan 已经由 propFix 转为大写
+        // 不光�?href, src, 还有 rowspan 等非 mapping 属�?，也�?��用第 2 个参数来获取原始�?        // 注意 colSpan rowSpan 已经�?propFix 转为大写
         S.each([ "href", "src", "width", "height","colSpan","rowSpan" ], function(name) {
             attrHooks[ name ] = {
                 get: function(elem) {
@@ -488,7 +477,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
             };
         });
-        // button 元素的 value 属性和其内容冲突
+        // button 元素�?value 属�?和其内容冲突
         // <button value='xx'>zzz</button>
         valHooks.button = attrHooks.value = attrNodeHook;
     }
@@ -525,7 +514,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
     S.mix(DOM, {
 
             /**
-             * 自定义属性不推荐使用，使用 .data
+             * 自定义属性不推荐使用，使�?.data
              * @param selector
              * @param name
              * @param value
@@ -796,22 +785,18 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
 /**
  * NOTES:
- * 承玉：2011-06-03
- *  - 借鉴 jquery 1.6,理清 attribute 与 property
+ * 承玉�?011-06-03
+ *  - 借鉴 jquery 1.6,理清 attribute �?property
  *
- * 承玉：2011-01-28
- *  - 处理 tabindex，顺便重构
- *
+ * 承玉�?011-01-28
+ *  - 处理 tabindex，顺便重�? *
  * 2010.03
- *  - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
- *    rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
- *    并无兼容性问题。
- *  - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
- *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
+ *  - �?jquery/support.js 中，special attrs 里还�?maxlength, cellspacing,
+ *    rowspan, colspan, useap, frameboder, 但测试发现，�?Grade-A 级浏览器�? *    并无兼容性问题�?
+ *  - �?colspan/rowspan 属�?值设置有误时，ie7- 会自动纠正，�?href �?��，需要传�? *    �?2 个参数来解决。jQuery 未�?虑，存在兼容�?bug.
  *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
  *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option 在 Safari 4 中已修复。
- *
+ *    property of an option �?Safari 4 中已修复�? *
  */
 
 /**
@@ -888,7 +873,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
                                 needle;
                             for (; j < cl; j++) {
                                 needle = SPACE + classNames[j] + SPACE;
-                                // 一个 cls 有可能多次出现：'link link2 link link3 link'
+                                // �?�� cls 有可能多次出现：'link link2 link link3 link'
                                 while (className.indexOf(needle) >= 0) {
                                     className = className.replace(needle, SPACE);
                                 }
@@ -968,9 +953,8 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
 
 /**
  * NOTES:
- *   - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
- *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
- */
+ *   - hasClass/addClass/removeClass 的�?辑和 jQuery 保持�?��
+ *   - toggleClass 不支�?value �?undefined 的情形（jQuery 支持�? */
 
 /**
  * @module  dom-create
@@ -1014,11 +998,11 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     k,
                     nodes;
 
-                // 简单 tag, 比如 DOM.create('<p>')
+                // �?�� tag, 比如 DOM.create('<p>')
                 if ((m = RE_SIMPLE_TAG.exec(html))) {
                     ret = (ownerDoc || doc).createElement(m[1]);
                 }
-                // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+                // 复杂情况，比�?DOM.create('<img src="sprite.png" />')
                 else {
                     // Fix "XHTML"-style tags in all browsers
                     html = html.replace(rxhtmlTag, "<$1></$2>");
@@ -1047,7 +1031,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             _creators: {
                 div: function(html, ownerDoc) {
                     var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                    // html 为 <style></style> 时不行，必须有其他元素？
+                    // html �?<style></style> 时不行，必须有其他元素？
                     frag.innerHTML = "w<div>" + html + "</div>";
                     return frag.lastChild;
                 }
@@ -1109,7 +1093,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         return elem;
     }
 
-    // 将 nodeList 转换为 fragment
+    // �?nodeList 转换�?fragment
     function nl2frag(nodes, ownerDoc) {
         var ret = null, i, len;
 
@@ -1163,9 +1147,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
         html += '<span id="' + id + '"></span>';
 
-        // 确保脚本执行时，相关联的 DOM 元素已经准备好
-        // 不依赖于浏览器特性，正则表达式自己分析
-        S.available(id, function() {
+        // 确保脚本执行时，相关联的 DOM 元素已经准备�?        // 不依赖于浏览器特性，正则表达式自己分�?        S.available(id, function() {
             var hd = DOM.get('head'),
                 match,
                 attrs,
@@ -1209,7 +1191,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     // 直接通过 innerHTML 设置 html
     function setHTMLSimple(elem, html) {
-        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
+        html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所�?script
         try {
             //if(UA.ie) {
             elem.innerHTML = html;
@@ -1220,7 +1202,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             //var tEl = elem.cloneNode(false);
             //tEl.innerHTML = html;
             //elem.parentNode.replaceChild(elem, tEl);
-            // 注：上面的方式会丢失掉 elem 上注册的事件，放类库里不妥当
+            // 注：上面的方式会丢失�?elem 上注册的事件，放类库里不妥当
             //}
         }
             // table.innerHTML = html will throw error in ie.
@@ -1229,7 +1211,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             while (elem.firstChild) {
                 elem.removeChild(elem.firstChild);
             }
-            // html == '' 时，无需再 appendChild
+            // html == '' 时，无需�?appendChild
             if (html) {
                 elem.appendChild(DOM.create(html));
             }
@@ -1239,8 +1221,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
     // only for gecko and ie
     // 2010-10-22: 发现 chrome 也与 gecko 的处理一致了
     if (ie || UA['gecko'] || UA['webkit']) {
-        // 定义 creators, 处理浏览器兼容
-        var creators = DOM._creators,
+        // 定义 creators, 处理浏览器兼�?        var creators = DOM._creators,
             create = DOM.create,
             TABLE_OPEN = '<table>',
             TABLE_CLOSE = '</table>',
@@ -1251,8 +1232,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 tr: 'tbody',
                 tbody: 'table',
                 col: 'colgroup',
-                legend: 'fieldset' // ie 支持，但 gecko 不支持
-            };
+                legend: 'fieldset' // ie 支持，但 gecko 不支�?            };
 
         for (var p in creatorsMap) {
             (function(tag) {
@@ -1263,7 +1243,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         }
 
         if (ie) {
-            // IE 下不能单独添加 script 元素
+            // IE 下不能单独添�?script 元素
             creators.script = function(html, ownerDoc) {
                 var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                 frag.innerHTML = '-' + html;
@@ -1286,8 +1266,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         }
 
         S.mix(creators, {
-                optgroup: creators.option, // gecko 支持，但 ie 不支持
-                th: creators.td,
+                optgroup: creators.option, // gecko 支持，但 ie 不支�?                th: creators.td,
                 thead: creators.tbody,
                 tfoot: creators.tbody,
                 caption: creators.tbody,
@@ -1301,11 +1280,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
 /**
  * TODO:
- *  - 研究 jQuery 的 buildFragment 和 clean
+ *  - 研究 jQuery �?buildFragment �?clean
  *  - 增加 cache, 完善 test cases
  *  - 支持更多 props
- *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
- */
+ *  - remove 时，是否�?��移除事件，以避免内存泄漏？需要详细的测试�? */
 
 /**
  * @module  dom-data
@@ -1314,8 +1292,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var win = window,
-        EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
-        dataCache = { },       // 存储 node 节点的 data
+        EXPANDO = '_ks_data_' + S.now(), // 让每�?�� kissy �?expando 都不�?        dataCache = { },       // 存储 node 节点�?data
         winDataCache = { };    // 避免污染全局
 
 
@@ -1514,9 +1491,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
         requires:["./base"]
     });
 /**
- * 承玉：2011-05-31
- *  - 分层 ，节点和普通对象分开粗合理
- **/
+ * 承玉�?011-05-31
+ *  - 分层 ，节点和普�?对象分开粗合�? **/
 
 /**
  * @module  dom-insertion
@@ -1537,13 +1513,13 @@ KISSY.add('dom/insertion', function(S, DOM) {
         var newNode = nl2frag(newNodes);
         if (!newNode) return;
         var cloneNode;
-        //fragment 一旦插入里面就空了，先复制下
+        //fragment �?��插入里面就空了，先复制下
         if (refNodes.length > 1) {
             cloneNode = newNode.cloneNode(true);
         }
         for (var i = 0; i < refNodes.length; i++) {
             var refNode = refNodes[i];
-            //refNodes 超过一个，clone
+            //refNodes 超过�?��，clone
             var node = i > 0 ? cloneNode.cloneNode(true) : newNode;
             fn(node, refNode);
         }
@@ -1607,7 +1583,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
 
 /**
  * 2011-05-25
- *  - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ *  - 承玉：参�?jquery 处理多对多的情形 :http://api.jquery.com/append/
  *      DOM.append(".multi1",".multi2");
  *
  */
@@ -1648,8 +1624,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
              * Gets the current coordinates of the element, relative to the document.
              */
             offset: function(elem, val) {
-                // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+                // ownerDocument 的判断可以保�?elem 没有游离�?document 之外（比�?fragment�?                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
 
                 // getter
                 if (val === undefined) {
@@ -1677,9 +1652,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 // default current window, use native for scrollIntoView(elem, top)
                 if (!container ||
                     (container = DOM.get(container)) === win) {
-                    // 注意：
-                    // 1. Opera 不支持 top 参数
-                    // 2. 当 container 已经在视窗中时，也会重新定位
+                    // 注意�?                    // 1. Opera 不支�?top 参数
+                    // 2. �?container 已经在视窗中时，也会重新定位
                     elem.scrollIntoView(top);
                     return;
                 }
@@ -1696,48 +1670,37 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                         top: DOM.scrollTop(container) }
                         : DOM.offset(container),
 
-                    // elem 相对 container 视窗的坐标
-                    diff = {
+                    // elem 相对 container 视窗的坐�?                    diff = {
                         left: elemOffset[LEFT] - containerOffset[LEFT],
                         top: elemOffset[TOP] - containerOffset[TOP]
                     },
 
-                    // container 视窗的高宽
-                    ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                    // container 视窗的高�?                    ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
                     cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
 
-                    // container 视窗相对 container 元素的坐标
-                    cl = DOM[SCROLL_LEFT](container),
+                    // container 视窗相对 container 元素的坐�?                    cl = DOM[SCROLL_LEFT](container),
                     ct = DOM[SCROLL_TOP](container),
                     cr = cl + cw,
                     cb = ct + ch,
 
-                    // elem 的高宽
-                    eh = elem.offsetHeight,
+                    // elem 的高�?                    eh = elem.offsetHeight,
                     ew = elem.offsetWidth,
 
-                    // elem 相对 container 元素的坐标
-                    // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                    l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                    // elem 相对 container 元素的坐�?                    // 注：diff.left �?border, cl 也含 border, 因此要减去一�?                    l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
                     t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
                     r = l + ew,
                     b = t + eh,
 
                     t2, l2;
 
-                // 根据情况将 elem 定位到 container 视窗中
-                // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-                // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-                // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-                // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+                // 根据情况�?elem 定位�?container 视窗�?                // 1. �?eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合�?                // 2. �?t < ct 时，elem �?container 视窗上方，优先顶部对�?                // 3. �?b > cb 时，elem �?container 视窗下方，优先底部对�?                // 4. 其它情况下，elem 已经�?container 视窗中，无需任何操作
                 if (eh > ch || t < ct || top) {
                     t2 = t;
                 } else if (b > cb) {
                     t2 = b - ch;
                 }
 
-                // 水平方向与上面同理
-                if (hscroll) {
+                // 水平方向与上面同�?                if (hscroll) {
                     if (ew > cw || l < cl || top) {
                         l2 = l;
                     } else if (r > cr) {
@@ -1774,7 +1737,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
             if (w) {
                 if (v !== undefined) {
-                    // 注意多 windw 情况，不能简单取 win
+                    // 注意�?windw 情况，不能简单取 win
                     var left = name == "Left" ? v : DOM.scrollLeft(w);
                     var top = name == "Top" ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
@@ -1807,7 +1770,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 //firefox chrome documentElement.scrollHeight< body.scrollHeight
                 //ie standard mode : documentElement.scrollHeight> body.scrollHeight
                 d[DOC_ELEMENT][SCROLL + name],
-                //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
+                //quirks : documentElement.scrollHeight �?��等于可视窗口多一点？
                 d[BODY][SCROLL + name],
                 DOM[VIEWPORT + name](d));
         };
@@ -1820,24 +1783,21 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             return (prop in w) ?
                 // 标准 = documentElement.clientHeight
                 w[prop] :
-                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
-                // ie quirks body.clientHeight: 在 body 上？
+                // ie 标准 documentElement.clientHeight , �?documentElement.clientHeight 上滚动？
+                // ie quirks body.clientHeight: �?body 上？
                 (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
 
-    // 获取 elem 相对 elem.ownerDocument 的坐标
-    function getOffset(elem) {
+    // 获取 elem 相对 elem.ownerDocument 的坐�?    function getOffset(elem) {
         var box, x = 0, y = 0,
             w = getWin(elem[OWNER_DOCUMENT]);
 
-        // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-        if (elem[GET_BOUNDING_CLIENT_RECT]) {
+        // 根据 GBS �?��数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方�?        if (elem[GET_BOUNDING_CLIENT_RECT]) {
             box = elem[GET_BOUNDING_CLIENT_RECT]();
 
-            // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-            // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+            // 注：jQuery 还�?虑减�?docElem.clientLeft/clientTop
+            // 但测试发现，这样反�?会导致当 html �?body 有边�?边框样式时，获取的�?不正�?            // 此外，ie6 会忽�?html �?margin 值，幸运地是没有谁会去设�?html �?margin
 
             x = box[LEFT];
             y = box[TOP];
@@ -1852,8 +1812,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         return { left: x, top: y };
     }
 
-    // 设置 elem 相对 elem.ownerDocument 的坐标
-    function setOffset(elem, offset) {
+    // 设置 elem 相对 elem.ownerDocument 的坐�?    function setOffset(elem, offset) {
         // set position first, in-case top/left are set even on static elem
         if (DOM.css(elem, POSITION) === 'static') {
             elem.style[POSITION] = RELATIVE;
@@ -1874,16 +1833,13 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
 /**
  * 2011-05-24
- *  - 承玉：
- *  - 调整 docWidth , docHeight ,
- *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
- *      便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+ *  - 承玉�? *  - 调整 docWidth , docHeight ,
+ *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数�? *      便于放置�?Node 中去，可以完全摆�?DOM，完全使�?Node
  *
  *
  *
  * TODO:
- *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
- *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+ *  - 考虑是否实现 jQuery �?position, offsetParent 等功�? *  - 更详细的测试用例（比如：测试 position �?fixed 的情况）
  */
 
 /**
@@ -1941,7 +1897,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 }
 
                 if (name.indexOf('-') > 0) {
-                    // webkit 认识 camel-case, 其它内核只认识 cameCase
+                    // webkit 认识 camel-case, 其它内核只认�?cameCase
                     name = name.replace(RE_DASH, CAMELCASE_FN);
                 }
 
@@ -1959,8 +1915,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                             name.get(elem, name_str) :
                             elem[STYLE][name];
 
-                        // 有 get 的直接用自定义函数的返回值
-                        if (ret === '' && !name.get) {
+                        // �?get 的直接用自定义函数的返回�?                        if (ret === '' && !name.get) {
                             ret = fixComputedStyle(elem,
                                 name,
                                 DOM._getComputedStyle(elem, name));
@@ -2108,15 +2063,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     elem = DOM.get('#' + id, doc);
                 }
 
-                // 仅添加一次，不重复添加
-                if (elem) {
+                // 仅添加一次，不重复添�?                if (elem) {
                     return;
                 }
 
                 elem = DOM.create('<style>', { id: id }, doc);
 
-                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
-                DOM.get('head', doc).appendChild(elem);
+                // 先添加到 DOM 树中，再�?cssText 赋�?，否�?css hack 会失�?                DOM.get('head', doc).appendChild(elem);
 
                 if (elem.styleSheet) { // IE
                     elem.styleSheet.cssText = cssText;
@@ -2183,22 +2136,19 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         return val;
     }
 
-    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
+    // 修正 getComputedStyle 返回值的部分浏览器兼容�?问题
     function fixComputedStyle(elem, name, val) {
         var offset, ret = val;
 
-        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
-        //    比如：firefox 返回 0, webkit/ie 返回 auto
-        // 2. style.left 设置为百分比时，返回值为百分比
-        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
-        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+        // 1. 当没有设�?style.left 时，getComputedStyle 在不同浏览器下，返回值不�?        //    比如：firefox 返回 0, webkit/ie 返回 auto
+        // 2. style.left 设置为百分比时，返回值为百分�?        // 对于第一种情况，如果�?relative 元素，�?�?0. 如果�?absolute 元素，�?�?offsetLeft - marginLeft
+        // 对于第二种情况，大部分类库都未做处理，属于�?明之而不 fix”的保留 bug
         if (val === AUTO && RE_LT.test(name)) {
             ret = 0;
             if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
-                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                // TODO: 改成特性探测
+                // ie8 下，elem.offsetLeft 包含 offsetParent �?border 宽度，需要减�?                // TODO: 改成特�?探测
                 if (UA['ie'] === 8 || UA['opera']) {
                     offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
                 }
@@ -2217,19 +2167,17 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
 /**
  * NOTES:
- *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
- *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
+ *  - Opera 下，color 默认返回 #XXYYZZ, �?rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略�?
+ *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略�?
  *
- *  - 非 webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
- *    返回的值不同。KISSY 做了统一，更符合预期。
+ *  - �?webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
+ *    返回的�?不同。KISSY 做了统一，更符合预期�? *
+ *  - getComputedStyle �?webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输�?float 值�?
  *
- *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
+ *  - color: blue 继承值，getComputedStyle, �?ie 下返�?blue, opera 返回 #0000ff, 其它浏览�? *    返回 rgb(0, 0, 255)
  *
- *  - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
- *    返回 rgb(0, 0, 255)
- *
- *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
- *    依旧存在浏览器差异。
+ *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未�?追求完美”�?YUI3 做了部分完美处理，但
+ *    依旧存在浏览器差异�?
  */
 
 /**
@@ -2269,14 +2217,13 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         // #id .cls
         // tag.cls
         // #id tag.cls
-        // 注 1：REG_QUERY 还会匹配 #id.cls
-        // 注 2：tag 可以为 * 字符
-        // 注 3: 支持 , 号分组
-        // 返回值为数组
+        // �?1：REG_QUERY 还会匹配 #id.cls
+        // �?2：tag 可以�?* 字符
+        // �?3: 支持 , 号分�?        // 返回值为数组
         // 选择器不支持时，抛出异常
 
         // selector 为字符串是最常见的情况，优先考虑
-        // 注：空白字符串无需判断，运行下去自动能返回空数组
+        // 注：空白字符串无�?��断，运行下去自动能返回空数组
         if (S.isString(selector)) {
 
             if (selector.indexOf(",") != -1) {
@@ -2289,13 +2236,11 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
                 selector = S.trim(selector);
 
-                // selector 为 #id 是最常见的情况，特殊优化处理
+                // selector �?#id 是最常见的情况，特殊优化处理
                 if (REG_ID.test(selector)) {
                     t = getElementById(selector.slice(1), context);
-                    if (t) ret = [t]; // #id 无效时，返回空数组
-                }
-                // selector 为支持列表中的其它 6 种
-                else if ((match = REG_QUERY.exec(String(selector)))) {
+                    if (t) ret = [t]; // #id 无效时，返回空数�?                }
+                // selector 为支持列表中的其�?6 �?                else if ((match = REG_QUERY.exec(String(selector)))) {
                     // 获取匹配出的信息
                     id = match[1];
                     tag = match[2];
@@ -2316,33 +2261,28 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                             }
                         }
                         // #id tag | tag
-                        else if (tag) { // 排除空白字符串
-                            ret = getElementsByTagName(tag, context);
+                        else if (tag) { // 排除空白字符�?                            ret = getElementsByTagName(tag, context);
                         }
                     }
                 }
-                // 采用外部选择器
-                else if (sizzle) {
+                // 采用外部选择�?                else if (sizzle) {
                     ret = sizzle(selector, context);
                 }
-                // 依旧不支持，抛异常
-                else {
+                // 依旧不支持，抛异�?                else {
                     error(selector);
                 }
             }
         }
-        // 传入的 selector 是 NodeList 或已是 Array
+        // 传入�?selector �?NodeList 或已�?Array
         else if (selector && (S.isArray(selector) || isNodeList(selector))) {
             ret = selector;
         }
-        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        // 传入�?selector �?Node 等非字符串对象，原样返回
         else if (selector) {
             ret = [selector];
         }
-        // 传入的 selector 是其它值时，返回空数组
-
-        // 将 NodeList 转换为普通数组
-        if (isNodeList(ret)) {
+        // 传入�?selector 是其它�?时，返回空数�?
+        // �?NodeList 转换为普通数�?        if (isNodeList(ret)) {
             ret = S.makeArray(ret);
         }
 
@@ -2355,23 +2295,23 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     }
 
 
-    // 调整 context 为合理值
+    // 调整 context 为合理�?
     function tuneContext(context) {
-        // 1). context 为 undefined 是最常见的情况，优先考虑
+        // 1). context �?undefined 是最常见的情况，优先考虑
         if (context === undefined) {
             context = doc;
         }
         // 2). context 的第二使用场景是传入 #id
         else if (S.isString(context) && REG_ID.test(context)) {
             context = getElementById(context.slice(1), doc);
-            // 注：#id 可能无效，这时获取的 context 为 null
+            // 注：#id 可能无效，这时获取的 context �?null
         }
-        // 3). nodelist 取第一个元素
+        // 3). nodelist 取第�?��元素
         else if (S.isArray(context) || isNodeList(context)) {
             context = context[0] || null;
         }
-        // 4). context 还可以传入 HTMLElement, 此时无需处理
-        // 5). 经历 1 - 4, 如果 context 还不是 HTMLElement, 赋值为 null
+        // 4). context 还可以传�?HTMLElement, 此时无需处理
+        // 5). 经历 1 - 4, 如果 context 还不�?HTMLElement, 赋�?�?null
         else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
             context = null;
         }
@@ -2478,7 +2418,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                     sizzle = S.require("sizzle"),
                     match, tag, cls, ret = [];
 
-                // 默认仅支持最简单的 tag.cls 形式
+                // 默认仅支持最�?���?tag.cls 形式
                 if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
                     tag = match[2];
                     cls = match[3];
@@ -2493,11 +2433,10 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 if (S.isFunction(filter)) {
                     ret = S.filter(elems, filter);
                 }
-                // 其它复杂 filter, 采用外部选择器
-                else if (filter && sizzle) {
+                // 其它复杂 filter, 采用外部选择�?                else if (filter && sizzle) {
                     ret = sizzle._filter(selector, filter, context);
                 }
-                // filter 为空或不支持的 selector
+                // filter 为空或不支持�?selector
                 else {
                     error(filter);
                 }
@@ -2522,48 +2461,42 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  * NOTES:
  *
  * 2010.01
- *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
- *  - getElementById 使用频率最高，使用直达通道优化。
- *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
- *  - instanceof 对性能有影响。
- *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
- *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面。
- *  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
- *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
+ *  - �?reg exec 的结�?id, tag, className)�?cache, 发现对�?能影响很小，去掉�? *  - getElementById 使用频率�?��，使用直达�?道优化�?
+ *  - getElementsByClassName 性能优于 querySelectorAll, �?IE 系列不支持�?
+ *  - instanceof 对�?能有影响�? *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无�?��余�?防卫”�?
+ *  - query 方法中的条件判断考虑了�?频率优先”原则�?�?��可能出现的情况放在前面�?
+ *  - Array �?push 方法可以�?j++ 来替代，性能有提升�?
+ *  - 返回值策略和 Sizzle �?��，正常时，返回数组；其它�?��情况，返回空数组�? *
+ *  - 从压缩角度�?虑，还可以将 getElmentsByTagName �?getElementsByClassName 定义为常量，
+ *    不过感觉这样做太“压缩控”，还是保留不替换的好�?
  *
- *  - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
- *    不过感觉这样做太“压缩控”，还是保留不替换的好。
- *
- *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
- *
+ *  - 调整 getElementsByClassName 的降级写法，性能�?��的放�?���? *
  * 2010.02
- *  - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
+ *  - 添加对分组�?择器的支持（主要参�? Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
  *
  * 2010.03
- *  - 基于原生 dom 的两个 api: S.query 返回数组; S.get 返回第一个。
- *    基于 Node 的 api: S.one, 在 Node 中实现。
- *    基于 NodeList 的 api: S.all, 在 NodeList 中实现。
- *    通过 api 的分层，同时满足初级用户和高级用户的需求。
- *
+ *  - 基于原生 dom 的两�?api: S.query 返回数组; S.get 返回第一个�?
+ *    基于 Node �?api: S.one, �?Node 中实现�?
+ *    基于 NodeList �?api: S.all, �?NodeList 中实现�?
+ *    通过 api 的分层，同时满足初级用户和高级用户的�?���? *
  * 2010.05
- *  - 去掉给 S.query 返回值默认添加的 each 方法，保持纯净。
- *  - 对于不支持的 selector, 采用外部耦合进来的 Selector.
+ *  - 去掉�?S.query 返回值默认添加的 each 方法，保持纯�??
+ *  - 对于不支持的 selector, 采用外部耦合进来�?Selector.
  *
  * 2010.06
- *  - 增加 filter 和 test 方法
+ *  - 增加 filter �?test 方法
  *
  * 2010.07
- *  - 取消对 , 分组的支持，group 直接用 Sizzle
+ *  - 取消�?, 分组的支持，group 直接�?Sizzle
  *
  * 2010.08
- *  - 给 S.query 的结果 attach each 方法
+ *  - �?S.query 的结�?attach each 方法
  *
  * 2011.05
- *  - 承玉：恢复对简单分组支持
+ *  - 承玉：恢复对�?��分组支持
  *
  * Bugs:
- *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
- *
+ *  - S.query('#test-data *') 等带 * 号的选择器，�?IE6 下返回的值不对�?jQuery 等类库也有此 bug, 诡异�? *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
  *  - http://ejohn.org/blog/thoughts-on-queryselectorall/
@@ -2621,7 +2554,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                         try {
                             val = elem[FILTERS]('alpha')[OPACITY];
                         } catch(ex) {
-                            // 没有设置过 opacity 时会报错，这时返回 1 即可
+                            // 没有设置�?opacity 时会报错，这时返�?1 即可
                             //如果该节点没有添加到 dom ，取不到 filters 结构
 
                             var currentFilter = (elem.currentStyle || 0).filter || '';
@@ -2633,8 +2566,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                         }
                     }
 
-                    // 和其他浏览器保持一致，转换为字符串类型
-                    return val / 100 + '';
+                    // 和其他浏览器保持�?��，转换为字符串类�?                    return val / 100 + '';
                 },
 
                 set: function(elem, val) {
@@ -2668,7 +2600,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
 
     /**
      * border fix
-     * ie 不返回数值，只返回 thick? medium ...
+     * ie 不返回数值，只返�?thick? medium ...
      */
     var IE8 = UA['ie'] == 8,
         BORDER_MAP = {
@@ -2704,9 +2636,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
             var style = elem.style,
                 ret = elem[CURRENT_STYLE][name];
 
-            // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-            // 在 ie 下不对，需要直接用 offset 方式
-            // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+            // �?width/height 设置为百分比时，通过 pixelLeft 方式转换�?width/height �?            // �?ie 下不对，�?��直接�?offset 方式
+            // borderWidth 等�?也有问题，但考虑�?borderWidth 设为百分比的概率很小，这里就不�?虑了
             if (RE_WH.test(name)) {
                 ret = DOM[name](elem) + PX;
             }
@@ -2737,13 +2668,10 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
     });
 /**
  * NOTES:
- * 承玉： 2011.05.19 opacity in ie
- *  - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
- *  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
+ * 承玉�?2011.05.19 opacity in ie
+ *  - 如果节点是动态创建，设置opacity，没有加�?dom 前，取不�?opacity �? *  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等�?，其它浏览器返回 px 值�?
  *
- *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但考虑
- *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
- *    依旧采用 Alpha 来实现。
+ *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但�?�? *    主流类库都是�?DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy �? *    依旧采用 Alpha 来实现�?
  *
  */
 
@@ -2813,18 +2741,18 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
                     var precondition;
                     if (b.nodeType == 3) {
                         b = b.parentNode;
-                        // a 和 b父亲相等也就是返回 true
+                        // a �?b父亲相等也就是返�?true
                         precondition = true;
                     } else if (b.nodeType == 9) {
                         // b === document
-                        // 没有任何元素能包含 document
+                        // 没有任何元素能包�?document
                         return false;
                     } else {
-                        // a 和 b 相等返回 false
+                        // a �?b 相等返回 false
                         precondition = a !== b;
                     }
                     // !a.contains => a===document
-                    // 注意原生 contains 判断时 a===b 也返回 true
+                    // 注意原生 contains 判断�?a===b 也返�?true
                     return precondition && (a.contains ? a.contains(b) : true);
                 } : (
                 document.documentElement.compareDocumentPosition ?
@@ -2848,11 +2776,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             }
         });
 
-    // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
-    // filter 可为 number, selector, fn array ，为数组时返回多个
-    // direction 可为 parentNode, nextSibling, previousSibling
-    // util : 到某个阶段不再查找直接返回
-    function nth(elem, filter, direction, extraFilter, until, includeSef) {
+    // 获取元素 elem �?direction 方向上满�?filter 的第�?��元素
+    // filter 可为 number, selector, fn array ，为数组时返回多�?    // direction 可为 parentNode, nextSibling, previousSibling
+    // util : 到某个阶段不再查找直接返�?    function nth(elem, filter, direction, extraFilter, until, includeSef) {
         if (!(elem = DOM.get(elem))) {
             return null;
         }
@@ -2868,7 +2794,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         until = (until && DOM.get(until)) || null;
 
         if (filter === undefined) {
-            // 默认取 1
+            // 默认�?1
             filter = 1;
         }
         var ret = [],
@@ -2912,8 +2838,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         return false;
     }
 
-    // 获取元素 elem 的 siblings, 不包括自身
-    function getSiblings(selector, filter, parent) {
+    // 获取元素 elem �?siblings, 不包括自�?    function getSiblings(selector, filter, parent) {
         var ret = [],
             elem = DOM.get(selector),
             j,
@@ -2946,8 +2871,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 /**
  * NOTES:
  *
- *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
- *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
+ *  - api 的设计上，没有跟�?jQuery. �?��为了和其�?api �?��，保�?first-all 原则。二�? *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能�?
  *
  */
 
@@ -3137,8 +3061,7 @@ KISSY.add('event/object', function(S, undefined) {
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
- */
+ *   - pageX, clientX, scrollLeft, clientLeft 的详细测�? */
 
 /**
  * @module  event
@@ -3171,8 +3094,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             },
         SPACE = " ",
         // 记录手工 fire(domElement,type) 时的 type
-        // 再在浏览器通知的系统 eventHandler 中检查
-        // 如果相同，那么证明已经 fire 过了，不要再次触发了
+        // 再在浏览器�?知的系统 eventHandler 中检�?        // 如果相同，那么证明已�?fire 过了，不要再次触发了
         Event_Triggered = "",
         TRIGGERED_NONE = "trigger-none-" + S.now(),
         // 事件存储位置 key
@@ -3202,8 +3124,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
          * @param fn {Function} The event handler.
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
-            // data : 附加在回调后面的数据，delegate 检查使用
-            // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
+            // data : 附加在回调后面的数据，delegate �?��使用
+            // remove �?data 相等(指向同一对象或�?定义�?equals 比较函数)
         add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
             if (batchForType('add', targets, type, fn, scope, data)) {
                 return targets;
@@ -3216,7 +3138,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     eventHandler,
                     eventDesc;
 
-                // 不是有效的 target 或 参数不对
+                // 不是有效�?target �?参数不对
                 if (!target ||
                     !type ||
                     !S.isFunction(fn) ||
@@ -3234,10 +3156,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 events = eventDesc.events = eventDesc.events || {};
                 eventHandler = eventDesc.handler;
 
-                // 该元素没有 handler
+                // 该元素没�?handler
                 if (!eventHandler) {
                     eventHandler = eventDesc.handler = function(event, data) {
-                        // 是经过 fire 手动调用而导致的，就不要再次触发了，已经在 fire 中 bubble 过一次了
+                        // 是经�?fire 手动调用而导致的，就不要再次触发了，已经�?fire �?bubble 过一次了
                         if (event && event.type == Event_Triggered) {
                             return;
                         }
@@ -3332,8 +3254,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 reserve = true;
                             } else if (data !== data2) {
                                 var data2 = listener.data;
-                                // undelgate 不能 remove 普通 on 的 handler
-                                // remove 不能 remove delegate 的 handler
+                                // undelgate 不能 remove 普�? on �?handler
+                                // remove 不能 remove delegate �?handler
                                 if (!data && data2
                                     || data2 && !data
                                     ) {
@@ -3393,13 +3315,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             for (; i < len; ++i) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope, event, listener.data);
-                // 和 jQuery 逻辑保持一致
+                // �?jQuery 逻辑保持�?��
 
                 if (ret !== undefined) {
 
-                    // 有一个 false，最终结果就是 false
-                    // 否则等于最后一个返回值
-                    if (gRet !== false) {
+                    // 有一�?false，最终结果就�?false
+                    // 否则等于�?���?��返回�?                    if (gRet !== false) {
                         gRet = ret;
                     }
 
@@ -3428,7 +3349,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
             DOM.query(targets).each(function(target) {
                 var isNativeEventTarget = !target.isCustomEventTarget;
-                // 自定义事件很简单，不需要冒泡，不需要默认事件处理
+                // 自定义事件很�?��，不�?��冒泡，不�?��默认事件处理
                 eventData = eventData || {};
                 eventData.type = eventType;
                 if (!isNativeEventTarget) {
@@ -3530,17 +3451,16 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     });
 
 /**
- * 承玉：2011-06-07
- *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
- *  - 减少闭包使用，prevent ie 内存泄露？
- *  - 增加 fire ，模拟冒泡处理 dom 事件
+ * 承玉�?011-06-07
+ *  - eventHandler �?��元素�?��而不是一个元素一个事件一个，节省内存
+ *  - 减少闭包使用，prevent ie 内存泄露�? *  - 增加 fire ，模拟冒泡处�?dom 事件
  *  - TODO: 自定义事件和 dom 事件操作分离?
  *
  * TODO:
- *   - event || window.event, 什么情况下取 window.event ? IE4 ?
+ *   - event || window.event, �?��情况下取 window.event ? IE4 ?
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
- *   - target 为 window, iframe 等特殊对象时的 test case
+ *   - target �?window, iframe 等特殊对象时�?test case
  */
 
 /**
@@ -3574,8 +3494,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
     };
 }, {
         /*
-         实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-         否则会导致build打包文件 dom 和 dom-data 重复载入
+         实际上只�?�� dom/data ，但是不要跨模块引用另一模块的子模块�?         否则会导致build打包文件 dom �?dom-data 重复载入
          */
         requires:["./base","dom"]
     });
@@ -3585,9 +3504,8 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
  *
  *  2010.04
  *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
- *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
- *
- *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
+ *     的，on 时能自动 publish. api �?��为：触发/订阅/反订�? *
+ *   - detach 命名是因�?removeEventListener 太长，remove 则太容易冲突
  */
 
 /**
@@ -3596,7 +3514,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
  */
 KISSY.add('event/focusin', function(S, UA, Event) {
 
-    // 让非 IE 浏览器支持 focusin/focusout
+    // 让非 IE 浏览器支�?focusin/focusout
     if (!UA.ie) {
         S.each([
             { name: 'focusin', fix: 'focus' },
@@ -3634,8 +3552,7 @@ KISSY.add('event/focusin', function(S, UA, Event) {
  * - refactor to jquery , 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  *
  * NOTES:
- *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
- */
+ *  - webkit �?opera 已支�?DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持�? */
 
 /**
  * @module  event-hashchange
@@ -3708,7 +3625,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             S.log("hash changed : " + hash);
             for (var i = 0; i < targets.length; i++) {
                 var t = targets[i];
-                //模拟暂时没有属性
+                //模拟暂时没有属�?
                 Event._handle(t, {
                         type: HASH_CHANGE
                     });
@@ -3721,15 +3638,15 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
         }
 
-        // ie6, 7, 用匿名函数来覆盖一些function
+        // ie6, 7, 用匿名函数来覆盖�?��function
         if (ie < 8) {
             (function() {
                 var iframe;
 
                 /**
-                 * 前进后退 : start -> notifyHashChange
+                 * 前进后�? : start -> notifyHashChange
                  * 直接输入 : poll -> hashChange -> start
-                 * iframe 内容和 url 同步
+                 * iframe 内容�?url 同步
                  */
 
                 setup = function() {
@@ -3759,26 +3676,21 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                         });
 
                         /**
-                         * 前进后退 ： start -> 触发
+                         * 前进后�? �?start -> 触发
                          * 直接输入 : timer -> hashChange -> start -> 触发
-                         * 触发统一在 start(load)
-                         * iframe 内容和 url 同步
+                         * 触发统一�?start(load)
+                         * iframe 内容�?url 同步
                          */
-                            //后退触发点
-                            //或addHistory 调用
-                            //只有 start 来通知应用程序
-                        function start() {
+                            //后�?触发�?                            //或addHistory 调用
+                            //只有 start 来�?知应用程�?                        function start() {
                             //console.log('iframe start load..');
                             //debugger
                             var c = S.trim(iframe.contentWindow.document.body.innerHTML);
                             var ch = getHash();
 
-                            //后退时不等
-                            //改变location则相等
-                            if (c != ch) {
+                            //后�?时不�?                            //改变location则相�?                            if (c != ch) {
                                 location.hash = c;
-                                // 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
-                                lastHash = c;
+                                // 使lasthash为iframe历史�?不然重新写iframe�?会导致最新状态（丢失前进状�?�?                                lastHash = c;
                             }
                             notifyHashChange(c);
                         }
@@ -3944,8 +3856,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                     return targets;
                 }
                 DOM.query(targets).each(function(target) {
-                    // 自定义事件 delegate 无意义
-                    if (target.isCustomEventTarget) {
+                    // 自定义事�?delegate 无意�?                    if (target.isCustomEventTarget) {
                         return;
                     }
                     type = delegateMap[type] || type;
@@ -3965,8 +3876,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                     return targets;
                 }
                 DOM.query(targets).each(function(target) {
-                    // 自定义事件 delegate 无意义
-                    if (target.isCustomEventTarget) {
+                    // 自定义事�?delegate 无意�?                    if (target.isCustomEventTarget) {
                         return;
                     }
                     type = delegateMap[type] || type;
@@ -3981,7 +3891,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
             }
         });
 
-    // 比较函数，两个 delegate 描述对象比较
+    // 比较函数，两�?delegate 描述对象比较
     function equals(d) {
         if (d.fn === undefined && d.selector === undefined) {
             return true;
@@ -3996,13 +3906,12 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         return (d1 == d2 || (!d1 && d2) || (!d1 && d2));
     }
 
-    // 根据 selector ，从事件源得到对应节点
-    function delegateHandler(event, data) {
+    // 根据 selector ，从事件源得到对应节�?    function delegateHandler(event, data) {
         var delegateTarget = this,
             gret,
             target = event.target,
             invokeds = DOM.closest(target, [data.selector], delegateTarget);
-        // 找到了符合 selector 的元素，可能并不是事件源
+        // 找到了符�?selector 的元素，可能并不是事件源
         if (invokeds) {
             for (var i = 0; i < invokeds.length; i++) {
                 event.currentTarget = invokeds[i];
@@ -4029,15 +3938,13 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     });
 
 /**
- * focusin/out 的特殊之处 , delegate 只能在容器上注册 focusin/out ，
- * 1.其实非 ie 都是注册 focus capture=true，然后注册到 focusin 对应 handlers
- *   1.1 当 Event.fire("focus")，没有 focus 对应的 handlers 数组，然后调用元素 focus 方法，
- *   focusin.js 调用 Event.fire("focusin") 进而执行 focusin 对应的 handlers 数组
- *   1.2 当调用 Event.fire("focusin")，直接执行 focusin 对应的 handlers 数组，但不会真正聚焦
+ * focusin/out 的特殊之�?, delegate 只能在容器上注册 focusin/out �? * 1.其实�?ie 都是注册 focus capture=true，然后注册到 focusin 对应 handlers
+ *   1.1 �?Event.fire("focus")，没�?focus 对应�?handlers 数组，然后调用元�?focus 方法�? *   focusin.js 调用 Event.fire("focusin") 进�?执行 focusin 对应�?handlers 数组
+ *   1.2 当调�?Event.fire("focusin")，直接执�?focusin 对应�?handlers 数组，但不会真正聚焦
  *
  * 2.ie 直接注册 focusin , focusin handlers 也有对应用户回调
- *   2.1 当 Event.fire("focus") , 同 1.1
- *   2.2 当 Event.fire("focusin"),直接执行 focusin 对应的 handlers 数组，但不会真正聚焦
+ *   2.1 �?Event.fire("focus") , �?1.1
+ *   2.2 �?Event.fire("focusin"),直接执行 focusin 对应�?handlers 数组，但不会真正聚焦
  *
  * TODO:
  * mouseenter/leave delegate??
@@ -4057,13 +3964,13 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
         ], function(o) {
 
 
-            // 元素内触发的 mouseover/out 不能算 mouseenter/leave
+            // 元素内触发的 mouseover/out 不能�?mouseenter/leave
             function withinElement(event) {
 
                 var self = this,
                     parent = event.relatedTarget;
 
-                // 设置用户实际注册的事件名，触发该事件所对应的 listener 数组
+                // 设置用户实际注册的事件名，触发该事件�?��应的 listener 数组
                 event.type = o.name;
 
                 // Firefox sometimes assigns relatedTarget a XUL element
@@ -4095,14 +4002,13 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
             Event.special[o.name] = {
 
-                // 第一次 mouseenter 时注册下
-                // 以后都直接放到 listener 数组里， 由 mouseover 读取触发
+                // 第一�?mouseenter 时注册下
+                // 以后都直接放�?listener 数组里， �?mouseover 读取触发
                 setup: function() {
                     Event.add(this, o.fix, withinElement);
                 },
 
-                //当 listener 数组为空时，也清掉 mouseover 注册，不再读取
-                tearDown:function() {
+                //�?listener 数组为空时，也清�?mouseover 注册，不再读�?                tearDown:function() {
                     Event.remove(this, o.fix, withinElement);
                 }
             }
@@ -4115,15 +4021,14 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
     });
 
 /**
- * 承玉：2011-06-07
+ * 承玉�?011-06-07
  * - 根据新结构，调整 mouseenter 兼容处理
- * - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
+ * - fire('mouseenter') 可以的，直接执行 mouseenter �?handlers 用户回调数组
  *
  *
  * TODO:
- *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
- *    jQuery 也异常，需要进一步研究
- */
+ *  - ie6 下，原生�?mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
+ *    jQuery 也异常，�?��进一步研�? */
 
 KISSY.add("event", function(S, Event, Target,Object) {
     Event.Target = Target;
@@ -4170,7 +4075,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         else if (S.isString(html)) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
-            // ('<p>1</p><p>2</p>') 转换为 NodeList
+            // ('<p>1</p><p>2</p>') 转换�?NodeList
             if (domNode.nodeType === 11) { // fragment
                 AP.push.apply(this, S.makeArray(domNode.childNodes));
                 return undefined;
@@ -4197,7 +4102,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
     S.augment(NodeList, {
 
             /**
-             * 默认长度为 0
+             * 默认长度�?0
              */
             length: 0,
 
@@ -4276,7 +4181,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
     // query api
     NodeList.all = function(selector, context) {
         // are we dealing with html string ?
-        // TextNode 仍需要自己 new Node
+        // TextNode 仍需要自�?new Node
 
         if (S.isString(selector)
             && (selector = S.trim(selector))
@@ -4313,17 +4218,11 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 /**
  * Notes:
  * 2011-05-25
- *  - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
- *
+ *  - 承玉：参�?jquery，只有一�?NodeList 对象，Node 就是 NodeList 的别�? *
  *  2010.04
- *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
- *     但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
- *     性能，以易用为首。
- *   - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
- *   - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
- *     直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
- *     以说，技术成本会制约 api 设计。
- */
+ *   - each 方法传给 fn �?this, �?jQuery 里指向原生对象，这样可以避免性能问题�? *     但从用户角度讲，this 的第�?��觉是 $(this), kissy �?yui3 保持�?��，牺�? *     性能，以易用为首�? *   - 有了 each 方法，似乎不再需�?import �?�� dom 方法，意义不大�?
+ *   - dom 是低�?api, node 是中�?api, 这是分层的一个原因�?还有�?��原因是，如果
+ *     直接�?node 里实�?dom 方法，则不大好将 dom 的方法�?合到 nodelist 里�?�? *     以说，技术成本会制约 api 设计�? */
 
 /**
  * import methods from DOM to NodeList.prototype
@@ -4333,7 +4232,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
         isNodeList = DOM._isNodeList,
-        // DOM 添加到 NP 上的方法
+        // DOM 添加�?NP 上的方法
         DOM_INCLUDES = [
             "equals",
             "contains",
@@ -4381,11 +4280,10 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "remove",
             "removeData",
             "hasData",
-            // 返回值不一定是 nodelist ，特殊处理
-            // "data",
+            // 返回值不�?���?nodelist ，特殊处�?            // "data",
             "unselectable"
         ],
-        // Event 添加到 NP 上的方法
+        // Event 添加�?NP 上的方法
         EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
 
 
@@ -4397,7 +4295,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             val = null;
         } else if (nodeList
             && (val.nodeType || isNodeList(val) || S.isArray(val))) {
-            // 包装为 KISSY NodeList
+            // 包装�?KISSY NodeList
             val = new NodeList(val);
         }
         return val;
@@ -4405,14 +4303,13 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     /**
      *
-     * @param {string} name 方法名
-     * @param {string} fn 实际方法
+     * @param {string} name 方法�?     * @param {string} fn 实际方法
      * @param {object} context 方法执行上下文，不指定为 this
-     * @param {boolean} nodeList 是否对返回对象 NodeList
+     * @param {boolean} nodeList 是否对返回对�?NodeList
      */
     NodeList.addMethod = function(name, fn, context, nodeList) {
         NLP[name] = function() {
-            //里面不要修改 context ,fn,name 会影响所有 ....
+            //里面不要修改 context ,fn,name 会影响所�?....
             // NLP && NP
             var self = this,
                 args = S.makeArray(arguments);
@@ -4445,12 +4342,10 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
 /**
  * 2011-05-24
- *  - 承玉：
- *  - 将 DOM 中的方法包装成 NodeList 方法
- *  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
+ *  - 承玉�? *  - �?DOM 中的方法包装�?NodeList 方法
+ *  - Node 方法调用参数中的 KISSY NodeList 要转换成第一�?HTML Node
  *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
- *  - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
- *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
+ *  - 实际上可以完全使�?NodeList 来代�?DOM，不和节点关联的方法如：viewportHeight 等，�?window，document 上调�? *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
 
 /**
@@ -4465,7 +4360,7 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      *
      */
     S.each(['append', 'prepend','before','after'], function(insertType) {
-        // append 和 prepend
+        // append �?prepend
 
         NodeList.addMethod(insertType, function(domNodes, html) {
 
@@ -4485,12 +4380,8 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
 
 /**
  * 2011-05-24
- * - 承玉：
- * - 重写 NodeList 的某些方法
- * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
- * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
- * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
- */
+ * - 承玉�? * - 重写 NodeList 的某些方�? * - 添加 one ,all ，从当前 NodeList �?���?��选择节点
+ * - 处理 append ,prepend �?DOM 的参数实际上是反过来�? * - append/prepend 参数是节点时，如果当�?NodeList 数量 > 1 �?��经过 clone，因为同�?��点不可能被添加到多个节点中去（NodeList�? */
 
 /**
  * @module anim-easing
@@ -4502,8 +4393,7 @@ KISSY.add('anim/easing', function(S) {
     // Preview: http://www.robertpenner.com/easing/easing_demo.html
 
     /**
-     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
-     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+     * �?YUI �?Easing 相比，S.Easing 进行了归�?��处理，参数调整为�?     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
      * @param {Number} b Starting value  b = 0
      * @param {Number} c Delta between start and end values  c = 1
      * @param {Number} d Total length of animation d = 1
@@ -4680,8 +4570,7 @@ KISSY.add('anim/easing', function(S) {
         //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
         //  2. http://www.robertpenner.com/easing/easing_demo.html
         //  3. assets/cubic-bezier-timing-function.html
-        // 注：是模拟值，非精确推导值
-        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+        // 注：是模拟�?，非精确推导�?        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
         easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
         easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
     };
@@ -4691,12 +4580,10 @@ KISSY.add('anim/easing', function(S) {
 
 /**
  * TODO:
- *  - test-easing.html 详细的测试 + 曲线可视化
- *
+ *  - test-easing.html 详细的测�?+ 曲线可视�? *
  * NOTES:
- *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
- *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
- *
+ *  - 综合比较 jQuery UI/scripty2/YUI �?easing 命名，还是觉�?YUI 的对用户
+ *    �?��好�?因此这次完全照搬 YUI �?Easing, 只是代码上做了点压缩优化�? *
  */
 
 /**
@@ -4790,15 +4677,14 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     EventTarget = Event.Target;
 
-    //支持的有效的 css 分属性，数字则动画，否则直接设最终结果
-    PROPS = (
+    //支持的有效的 css 分属性，数字则动画，否则直接设最终结�?    PROPS = (
 
         'borderBottomWidth ' +
             'borderBottomStyle ' +
 
             'borderLeftWidth ' +
             'borderLeftStyle ' +
-            // 同 font
+            // �?font
             //'borderColor ' +
 
             'borderRightWidth ' +
@@ -4809,7 +4695,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'borderTopStyle ' +
             'bottom ' +
 
-            // shorthand 属性去掉，取分解属性
+            // shorthand 属�?去掉，取分解属�?
             //'font ' +
             'fontFamily ' +
             'fontSize ' +
@@ -4841,8 +4727,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'wordSpacing ' +
             'zIndex').split(' ');
 
-    //支持的元素属性
-    CUSTOM_ATTRS = [];
+    //支持的元素属�?    CUSTOM_ATTRS = [];
 
     OPACITY = 'opacity';
     NONE = 'none';
@@ -4884,20 +4769,18 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
         /**
          * the transition properties
-         * 可以是 "width: 200px; color: #ccc" 字符串形式
-         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
+         * 可以�?"width: 200px; color: #ccc" 字符串形�?         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
          */
         if (S.isPlainObject(style)) {
             style = String(S.param(style, ';'))
                 .replace(/=/g, ':')
-                .replace(/%23/g, '#')// 还原颜色值中的 #
-                //注意：这里自定义属性也被 - 了，后面从字符串中取值时需要考虑
+                .replace(/%23/g, '#')// 还原颜色值中�?#
+                //注意：这里自定义属�?也被 - 了，后面从字符串中取值时�?��考虑
                 .replace(/([a-z])([A-Z])/g, '$1-$2')
                 .toLowerCase(); // backgroundColor => background-color
         }
 
-        //正则化，并且将shorthand属性分解成各个属性统一单独处理
-        //border:1px solid #fff =>
+        //正则化，并且将shorthand属�?分解成各个属性统�?��独处�?        //border:1px solid #fff =>
         //borderLeftWidth:1px
         //borderLeftColor:#fff
         self.props = normalize(style, elem);
@@ -4936,7 +4819,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         if (config.nativeSupport
             && getNativeTransitionName()
             && S.isString((easing = config.easing))) {
-            // 当 easing 是支持的字串时，才激活 native transition
+            // �?easing 是支持的字串时，才激�?native transition
             if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
                 (easing = Easing.NativeTimeFunction[easing])) {
                 config.easing = easing;
@@ -4947,23 +4830,21 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         // register callback
         if (S.isFunction(callback)) {
             self.callback = callback;
-            //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
-            //self.on(EVENT_COMPLETE, callback);
+            //不要这样注册了，常用方式(new 完就�?会忘�?detach，�?成内存不断增�?            //self.on(EVENT_COMPLETE, callback);
         }
     }
 
     Anim.PROPS = PROPS;
     Anim.CUSTOM_ATTRS = CUSTOM_ATTRS;
 
-    // 不能插值的直接返回终值，没有动画插值过程
+    // 不能插�?的直接返回终值，没有动画插�?过程
     function mirror(source, target) {
         source = null;
         return target;
     }
 
     /**
-     * 相应属性的读取设置操作，需要转化为动画模块格式
-     */
+     * 相应属�?的读取设置操作，�?��转化为动画模块格�?     */
     Anim.PROP_OPS = {
         "*":{
             getter:function(elem, prop) {
@@ -4979,12 +4860,10 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 return DOM.css(elem, prop, val);
             },
             /**
-             * 数值插值函数
-             * @param {Number} source 源值
-             * @param {Number} target 目的值
-             * @param {Number} pos 当前位置，从 easing 得到 0~1
-             * @return {Number} 当前值
-             */
+             * 数�?插�?函数
+             * @param {Number} source 源�?
+             * @param {Number} target 目的�?             * @param {Number} pos 当前位置，从 easing 得到 0~1
+             * @return {Number} 当前�?             */
             interpolate:function(source, target, pos) {
                 return (source + (target - source) * pos).toFixed(3);
             },
@@ -5000,20 +4879,17 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     S.augment(Anim, EventTarget, {
             /**
-             * @type {boolean} 是否在运行
-             */
+             * @type {boolean} 是否在运�?             */
             isRunning:false,
             /**
-             * 动画开始到现在逝去的时间
+             * 动画�?��到现在�?去的时间
              */
             elapsedTime:0,
             /**
-             * 动画开始的时间
-             */
+             * 动画�?��的时�?             */
             start:0,
             /**
-             * 动画结束的时间
-             */
+             * 动画结束的时�?             */
             finish:0,
             /**
              * 动画持续时间，不间断的话 = finish-start
@@ -5038,13 +4914,11 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 }
                 if (self.fire(EVENT_START) === false) return;
 
-                self.stop(); // 先停止掉正在运行的动画
-                duration = config.duration * 1000;
+                self.stop(); // 先停止掉正在运行的动�?                duration = config.duration * 1000;
                 self.duration = duration;
                 if (self.transitionName) {
-                    // !important firefox 如果结束样式对应的初始样式没有，则不会产生动画
-                    // <div> -> <div 'left=100px'>
-                    // 则初始 div 要设置行内 left=getComputed("left")
+                    // !important firefox 如果结束样式对应的初始样式没有，则不会产生动�?                    // <div> -> <div 'left=100px'>
+                    // 则初�?div 要设置行�?left=getComputed("left")
 //                    for (prop in target) {
 //                        var av = getAnimValue(elem, prop);// :)
 //                        setAnimValue(elem, prop, av.v + av.u);
@@ -5116,14 +4990,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                     //S.log(prop);
                     //S.log(tp.v + " : " + sp.v + " : " + sp.u + " : " + tp.u);
 
-                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                    // 这时要把 sp 的单位调整为和 tp 的一致
-                    if (tp.v == 0) {
+                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位�?pt )
+                    // 这时要把 sp 的单位调整为�?tp 的一�?                    if (tp.v == 0) {
                         tp.u = sp.u;
                     }
 
-                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                    // 比如：ie 下 border-width 默认为 medium
+                    // 单位不一样时，以 tp.u 的为主，同时 sp �?0 �?��
+                    // 比如：ie �?border-width 默认�?medium
                     if (sp.u !== tp.u) {
                         //S.log(prop + " : " + sp.v + " : " + sp.u);
                         //S.log(prop + " : " + tp.v + " : " + tp.u);
@@ -5134,8 +5007,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
                     setAnimValue(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
                     /**
-                     * 不能动画的量，直接设成最终值，下次不用动画，设置 dom 了
-                     */
+                     * 不能动画的量，直接设成最终�?，下次不用动画，设置 dom �?                     */
                     if (tp.f == mirror) {
                         sp.v = tp.v;
                         sp.u = tp.u;
@@ -5144,7 +5016,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
                 if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
                     self.stop();
-                    // complete 事件只在动画到达最后一帧时才触发
+                    // complete 事件只在动画到达�?���?��时才触发
                     if (b) {
                         self._complete();
                     }
@@ -5191,8 +5063,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 if (self.transitionName) {
                     self._nativeStop(finish);
                 } else {
-                    // 直接设置到最终样式
-                    if (finish) {
+                    // 直接设置到最终样�?                    if (finish) {
                         setToFinal(self.domEl,
                             //self.props,
                             self.targetStyle);
@@ -5272,8 +5143,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     }
 
     /**
-     * 建一个尽量相同的 dom 节点在相同的位置（不单行内，获得相同的 css 选择器样式定义），从中取值
-     */
+     * 建一个尽量相同的 dom 节点在相同的位置（不单行内，获得相同�?css 选择器样式定义），从中取�?     */
     function normalize(style, elem) {
         var css,
             rules = {},
@@ -5287,13 +5157,11 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         setAnimStyleText(el, style);
         while (i--) {
             var prop = PROPS[i];
-            // !important 只对行内样式得到计算当前真实值
-            if (v = css[prop]) {
+            // !important 只对行内样式得到计算当前真实�?            if (v = css[prop]) {
                 rules[prop] = getAnimValue(el, prop);
             }
         }
-        //自定义属性混入
-        var customAttrs = getCustomAttrs(style);
+        //自定义属性混�?        var customAttrs = getCustomAttrs(style);
         for (var a in customAttrs) {
             rules[a] = getAnimValue(el, a);
         }
@@ -5302,7 +5170,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     }
 
     /**
-     * 直接设置 cssText 以及属性字符串，注意 ie 的 opacity
+     * 直接设置 cssText 以及属�?字符串，注意 ie �?opacity
      * @param style
      * @param elem
      */
@@ -5313,19 +5181,17 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             if (match) {
                 DOM.css(elem, OPACITY, parseFloat(match[1]));
             }
-            //不要把它清除了
-            //ie style.opacity 要能取！
+            //不要把它清除�?            //ie style.opacity 要能取！
         }
         elem.style.cssText += ';' + style;
-        //设置自定义属性
-        var attrs = getCustomAttrs(style);
+        //设置自定义属�?        var attrs = getCustomAttrs(style);
         for (var a in attrs) {
             elem[a] = attrs[a];
         }
     }
 
     /**
-     * 从自定义属性和样式字符串中解出属性值
+     * 从自定义属�?和样式字符串中解出属性�?
      * @param style
      */
     function getCustomAttrs(style) {
@@ -5351,14 +5217,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 /**
  * TODO:
- *  - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
- *
+ *  - 实现 jQuery Effects �?queue / specialEasing / += / 等特�? *
  * NOTES:
- *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
- *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
- *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
- *  - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
- */
+ *  - �?emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
+ *  - api 借鉴�?YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
+ *  - 代码实现了�?鉴了 Emile.js: http://github.com/madrobby/emile
+ *  - 借鉴 yui3 ，中央定时器，否�?ie6 内存泄露�? */
 
 /**
  * special patch for making color gradual change
@@ -5388,7 +5252,7 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i;
 
 
-    //颜色 css 属性
+    //颜色 css 属�?
     var colors = ('backgroundColor ' +
         'borderBottomColor ' +
         'borderLeftColor ' +
@@ -5404,8 +5268,7 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
     PROPS.push.apply(PROPS, colors);
 
 
-    //得到颜色的数值表示，红绿蓝数字数组
-    function numericColor(val) {
+    //得到颜色的数值表示，红绿蓝数字数�?    function numericColor(val) {
         val = val.toLowerCase();
         var match;
         if (match = val.match(re_RGB)) {
@@ -5427,8 +5290,7 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
             ];
         }
         if (KEYWORDS[val]) return KEYWORDS[val];
-        //transparent 或者 颜色字符串返回
-        S.log("only allow rgb or hex color string : " + val, "warn");
+        //transparent 或�? 颜色字符串返�?        S.log("only allow rgb or hex color string : " + val, "warn");
         return [255,255,255];
     }
 
@@ -5443,11 +5305,10 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         },
         setter:OPS["*"].setter,
         /**
-         * 根据颜色的数值表示，执行数组插值
-         * @param source {Array.<Number>} 颜色源值表示
-         * @param target {Array.<Number>} 颜色目的值表示
-         * @param pos {Number} 当前进度
-         * @return {String} 可设置css属性的格式值 : rgb
+         * 根据颜色的数值表示，执行数组插�?
+         * @param source {Array.<Number>} 颜色源�?表示
+         * @param target {Array.<Number>} 颜色目的值表�?         * @param pos {Number} 当前进度
+         * @return {String} 可设置css属�?的格式�? : rgb
          */
         interpolate:function(source, target, pos) {
             var interpolate = OPS["*"].interpolate;
@@ -5480,8 +5341,7 @@ KISSY.add("anim/scroll", function(S, DOM, Anim) {
     //添加到支持集
     Anim.CUSTOM_ATTRS.push("scrollLeft", "scrollTop");
 
-    // 不从 css  中读取，从元素属性中得到值
-    OPS["scrollLeft"] = OPS["scrollTop"] = {
+    // 不从 css  中读取，从元素属性中得到�?    OPS["scrollLeft"] = OPS["scrollTop"] = {
         getter:function(elem, prop) {
 
             return {
@@ -5545,8 +5405,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     }
                 }
             });
-            // 当前节点的所有动画队列
-            anims.push(anim);
+            // 当前节点的所有动画队�?            anims.push(anim);
         }
 
         P.animate = function() {
@@ -5611,8 +5470,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
         }
 
-        // 根据不同类型设置初始 css 属性, 并设置动画参数
-        var originalStyle = {}, style = {};
+        // 根据不同类型设置初始 css 属�?, 并设置动画参�?        var originalStyle = {}, style = {};
         S.each(FX[which], function(prop) {
             if (prop === OVERFLOW) {
                 originalStyle[OVERFLOW] = DOM.css(elem, OVERFLOW);
@@ -5643,12 +5501,11 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             }
         });
 
-        // 开始动画
+        // �?��动画
         return new Anim(elem, style, speed, easing || 'easeOut', function() {
-            // 如果是隐藏, 需要还原一些 css 属性
+            // 如果是隐�? �?��还原�?�� css 属�?
             if (!visible) {
-                // 保留原有值
-                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
+                // 保留原有�?                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
                 if (oldVal !== NONE) {
                     if (oldVal) {
                         DOM.data(elem, DISPLAY, oldVal);
@@ -5684,8 +5541,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
     });
 /**
  * 2011-05-17
- *  - 承玉：添加 stop ，随时停止动画
- */
+ *  - 承玉：添�?stop ，随时停止动�? */
 
 KISSY.add("node", function(S, Node) {
     return Node;
@@ -5856,8 +5712,7 @@ KISSY.add("node", function(S, Node) {
 
 KISSY.add("json/json2", function(S, UA) {
     var win = window,JSON = win.JSON;
-    // ie 8.0.7600.16315@win7 json 有问题
-    if (!JSON || UA['ie'] < 9) {
+    // ie 8.0.7600.16315@win7 json 有问�?    if (!JSON || UA['ie'] < 9) {
         JSON = win.JSON = {};
     }
 
@@ -6198,229 +6053,784 @@ KISSY.add('json', function (S, JSON) {
     requires:["json/json2"]
 });
 
-/***
- * @module  ajax
- * @author  拔赤<lijing00333@163.com>
+/**
+ * encapsulation of io object
+ * @author: yiminghe@gmail.com
  */
-KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
+KISSY.add("ajax/xhrobject", function(S, Event) {
 
-    var win = window,
-        EventTarget = Event.Target,
-        noop = function() {
-        },
-        GET = 'GET',
-        POST = 'POST',
-        CONTENT_TYPE = 'Content-Type',
-        JSON = 'json',
-        JSONP = JSON + 'p',
-        SCRIPT = 'script',
-        CALLBACK = 'callback',
-        EMPTY = '',
-        START = 'start',
-        SEND = 'send',
-        STOP = 'stop',
-        SUCCESS = 'success',
-        COMPLETE = 'complete',
-        ERROR = 'error',
-        TIMEOUT = 'timeout',
-        PARSERERR = 'parsererror',
+    var // get individual response header from responseheader str
+        rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
-        // 默认配置
-        // 参数含义和 jQuery 保持一致：http://api.jquery.com/jQuery.ajax/
-        defaultConfig = {
-            type: GET,
-            url: EMPTY,
-            contentType: 'application/x-www-form-urlencoded',
-            async: true,
-            data: null,
-            xhr: win.ActiveXObject ?
-                function() {
-                    if (win.XmlHttpRequest) {
+    function handleResponseData(xhr) {
+
+        // text xml 是否原生转化支持
+        var text = xhr.responseText,
+            xml = xhr.responseXML,
+            c = xhr.config,
+            cConverts = c.converters,
+            xConverts = xhr.converters || {},
+            type,
+            responseData,
+            contents = c.contents,
+            dataType = c.dataType;
+
+        // 例如 script 直接是js引擎执行，没有返回�?，不�?��自己处理初始返回�?        // jsonp 时还�?���?script 转换�?json，后面还得自己来
+        if (text || xml) {
+
+            var contentType = xhr.mimeType || xhr.getResponseHeader("Content-Type");
+
+            // 去除无用的�?用格�?            while (dataType[0] == "*") {
+                dataType.shift();
+            }
+
+            if (!dataType.length) {
+                // 获取源数据格式，放在第一�?                for (type in contents) {
+                    if (contents[type].test(contentType)) {
+                        if (dataType[0] != type) {
+                            dataType.unshift(type);
+                        }
+                        break;
+                    }
+                }
+            }
+            // 服务器端没有告知（并且客户端没有mimetype）默�?text 类型
+            dataType[0] = dataType[0] || "text";
+
+            //获得合�?的初始数�?            if (dataType[0] == "text" && text != undefined) {
+                responseData = text;
+            }
+            // �?xml 值才直接取，否则可能还要�?xml �?            else if (dataType[0] == "xml" && xml != undefined) {
+                responseData = xml;
+            } else {
+                // 看能否从 text xml 转换到合适数�?                S.each(["text","xml"], function(prevType) {
+                    var type = dataType[0],
+                        converter = xConverts[prevType] && xConverts[prevType][type] ||
+                            cConverts[prevType] && cConverts[prevType][type];
+                    if (converter) {
+                        dataType.unshift(prevType);
+                        responseData = prevType == "text" ? text : xml;
+                        return false;
+                    }
+                });
+            }
+        }
+        var prevType = dataType[0];
+
+        // 按照转化链把初始数据转换成我们想要的数据类型
+        for (var i = 1; i < dataType.length; i++) {
+            type = dataType[i];
+
+            var converter = xConverts[prevType] && xConverts[prevType][type] ||
+                cConverts[prevType] && cConverts[prevType][type];
+
+            if (!converter) {
+                throw "no covert for " + prevType + " => " + type;
+            }
+            responseData = converter(responseData);
+
+            prevType = type;
+        }
+
+        xhr.responseData = responseData;
+    }
+
+    function XhrObject(c) {
+        S.mix(this, {
+                // 结构化数据，�?json
+                responseData:null,
+                config:c || {},
+                timeoutTimer:null,
+                responseText:null,
+                responseXML:null,
+                responseHeadersString:"",
+                responseHeaders:null,
+                requestHeaders:{},
+                readyState:0,
+                //internal state
+                state:0,
+                statusText:null,
+                status:0,
+                transport:null
+            });
+    }
+
+    S.augment(XhrObject, Event.Target, {
+            // Caches the header
+            setRequestHeader: function(name, value) {
+                this.requestHeaders[ name ] = value;
+                return this;
+            },
+
+            // Raw string
+            getAllResponseHeaders: function() {
+                return this.state === 2 ? this.responseHeadersString : null;
+            },
+
+            // Builds headers hashtable if needed
+            getResponseHeader: function(key) {
+                var match;
+                if (this.state === 2) {
+                    if (!this.responseHeaders) {
+                        this.responseHeaders = {};
+                        while (( match = rheaders.exec(this.responseHeadersString) )) {
+                            this.responseHeaders[ match[1] ] = match[ 2 ];
+                        }
+                    }
+                    match = this.responseHeaders[ key];
+                }
+                return match === undefined ? null : match;
+            },
+
+            // Overrides response content-type header
+            overrideMimeType: function(type) {
+                if (!this.state) {
+                    this.mimeType = type;
+                }
+                return this;
+            },
+
+            // Cancel the request
+            abort: function(statusText) {
+                statusText = statusText || "abort";
+                if (this.transport) {
+                    this.transport.abort(statusText);
+                }
+                this.callback(0, statusText);
+                return this;
+            },
+
+            callback:function(status, statusText) {
+                // debugger
+                var xhr = this;
+                // 只能执行�?��，防止重复执�?                // 例如完成后，调用 abort
+                if (xhr.state == 2) {
+                    return;
+                }
+                xhr.state = 2;
+                xhr.readyState = 4;
+                var isSuccess;
+                if (status >= 200 && status < 300 || status == 304) {
+
+                    if (status == 304) {
+                        statusText = "notmodified";
+                        isSuccess = true;
+                    } else {
                         try {
-                            return new win.XMLHttpRequest();
-                        } catch(xhrError) {
+                            handleResponseData(xhr);
+                            statusText = "success";
+                            isSuccess = true;
+                        } catch(e) {
+                            statusText = "parsererror : " + e;
                         }
                     }
 
-                    try {
-                        return new win.ActiveXObject('Microsoft.XMLHTTP');
-                    } catch(activeError) {
+                } else {
+                    if (status < 0) {
+                        status = 0;
                     }
-                } :
-                function() {
-                    return new win.XMLHttpRequest();
-                },
+                }
+
+                xhr.status = status;
+                xhr.statusText = statusText;
+
+                if (isSuccess) {
+                    xhr.fire("success");
+                } else {
+                    xhr.fire("error");
+                }
+                xhr.fire("complete");
+                xhr.transport = undefined;
+            }
+        }
+    );
+
+    return XhrObject;
+}, {
+        requires:["event"]
+    });
+
+/**
+ * a scalable client io framework
+ * @author: yiminghe@gmail.com , lijing00333@163.com
+ */
+KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
+
+    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
+        rspace = /\s+/,
+        rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        mirror = function(s) {
+            return s;
+        },
+        rnoContent = /^(?:GET|HEAD)$/,
+        curLocation,
+        curLocationParts;
+
+
+    try {
+        curLocation = location.href;
+    } catch(e) {
+        // Use the href attribute of an A element
+        // since IE will modify it given document.location
+        curLocation = document.createElement("a");
+        curLocation.href = "";
+        curLocation = curLocation.href;
+    }
+
+    curLocationParts = rurl.exec(curLocation);
+
+    var isLocal = rlocalProtocol.test(curLocationParts[1]),
+        transports = {},
+        defaultConfig = {
+            // isLocal:isLocal,
+            type:"GET",
+            contentType: "application/x-www-form-urlencoded",
+            async:true,
+
+            /*
+             url:"",
+             context:null,
+             timeout: 0,
+             data: null,
+
+             // 可取json | jsonp | script | xml | html | text | null | undefined
+             dataType: null,
+
+             username: null,
+             password: null,
+             cache: null,
+             mimeType:null,
+             headers: {},
+             xhrFields:{},
+             // jsonp script charset
+             scriptCharset:null,
+             crossdomain:false,
+             forceScript:false,
+             */
+
             accepts: {
-                xml: 'application/xml, text/xml',
-                html: 'text/html',
-                script: 'text/javascript, application/javascript',
-                json: 'application/json, text/javascript',
-                text: 'text/plain',
-                _default: '*/*'
+                xml: "application/xml, text/xml",
+                html: "text/html",
+                text: "text/plain",
+                json: "application/json, text/javascript",
+                "*": "*/*"
             },
-            //complete: fn,
-            //success: fn,
-            //error: fn,
-            jsonp: CALLBACK
-            // jsonpCallback
-            // dataType: 可以取 json | jsonp | script | xml | html | text
-            // headers
-            // context
+            converters:{
+                text:{
+                    json:JSON.parse,
+                    html:mirror,
+                    text:mirror,
+                    xml:S.parseXML
+                }
+            },
+            contents:{
+                xml:/xml/,
+                html:/html/,
+                json:/json/
+            }
         };
 
-    function io(c) {
-        c = S.merge(defaultConfig, c);
-        if (!c.url) {
-            return undef;
+    defaultConfig.converters.html = defaultConfig.converters.text;
+
+    function setUpConfig(c) {
+        c = c || {};
+        S.mix(c, defaultConfig, false);
+        if (c.crossDomain == null) {
+            var parts = rurl.exec(c.url.toLowerCase());
+            c.crossDomain = !!( parts &&
+                ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
+                    ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? 80 : 443 ) ) !=
+                        ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? 80 : 443 ) ) )
+                );
         }
+
         if (c.data && !S.isString(c.data)) {
             c.data = S.param(c.data);
         }
+        c.type = c.type.toUpperCase();
+        c.hasContent = !rnoContent.test(c.type);
+
+        if (!c.hasContent) {
+            if (c.data) {
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
+            }
+            if (c.cache === false) {
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+            }
+        }
+
+        // 数据类型处理链，�?��步将前面的数据类型转化成�?���?��
+        c.dataType = S.trim(c.dataType || "*").split(rspace);
+
         c.context = c.context || c;
+        return c;
+    }
 
-        var jsonp, status = SUCCESS, data, type = c.type.toUpperCase(), scriptEl;
+    function fire(eventType, xhr) {
+        io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
+    }
 
-        // handle JSONP
-        if (c.dataType === JSONP) {
-            //不使用 now() ，极端情况下可能重复
-            jsonp = c['jsonpCallback'] || S.guid(JSONP);
-            c.url = addQuery(c.url, c.jsonp + '=' + jsonp);
-            c.dataType = SCRIPT;
+    function handXhr(e) {
+        var xhr = this,
+            c = xhr.config,
+            type = e.type;
+        if (this.timeoutTimer) {
+            clearTimeout(this.timeoutTimer);
+        }
+        if (c[type]) {
+            c[type].call(c.context, xhr.responseData, xhr.statusText, xhr);
+        }
+        fire(type, xhr);
+    }
 
-            // build temporary JSONP function
-            var customJsonp = win[jsonp];
+    function io(c) {
+        if (!c.url) {
+            return undefined;
+        }
+        c = setUpConfig(c);
+        var xhr = new XhrObject(c);
+        fire("start", xhr);
+        var transportContructor = transports[c.dataType[0]] || transports["*"],
+            transport = new transportContructor(xhr);
+        xhr.transport = transport;
 
-            win[jsonp] = function(data) {
-                if (S.isFunction(customJsonp)) {
-                    customJsonp(data);
-                } else {
-                    // Garbage collect
-                    win[jsonp] = undef;
-                    try {
-                        delete win[jsonp];
-                    } catch(e) {
-                    }
-                }
-                handleEvent([SUCCESS, COMPLETE], data, status, xhr, c);
-            };
+        if (c.contentType) {
+            xhr.setRequestHeader("Content-Type", c.contentType);
+        }
+        var dataType = c.dataType[0],
+            accepts = c.accepts;
+        // Set the Accepts header for the server, depending on the dataType
+        xhr.setRequestHeader(
+            "Accept",
+            dataType && accepts[dataType] ?
+                accepts[ dataType ] + (dataType !== "*" ? ", */*; q=0.01" : "" ) :
+                accepts[ "*" ]
+        );
+
+        // Check for headers option
+        for (var i in c.headers) {
+            xhr.setRequestHeader(i, c.headers[ i ]);
         }
 
-        if (c.data && type === GET) {
-            c.url = addQuery(c.url, c.data);
+        xhr.on("complete success error", handXhr);
+
+        xhr.readyState = 1;
+
+        fire("send", xhr);
+
+        // Timeout
+        if (c.async && c.timeout > 0) {
+            xhr.timeoutTimer = setTimeout(function() {
+                S.log("timeout!!!!!!!!!");
+                xhr.abort("timeout");
+            }, c.timeout);
         }
 
-        if (c.dataType === SCRIPT) {
-            fire(START, c);
-            // jsonp 有自己的回调处理
-            scriptEl = S.getScript(c.url, jsonp ? null : function() {
-                handleEvent([SUCCESS, COMPLETE], EMPTY, status, xhr, c);
-            });
-            fire(SEND, c);
-            return scriptEl;
-        }
-
-
-        // 开始 XHR 之旅
-        var requestDone = false, xhr = c.xhr();
-
-        fire(START, c);
-        xhr.open(type, c.url, c.async);
-
-        // Need an extra try/catch for cross domain requests in Firefox 3
         try {
-            // Set the correct header, if data is being sent
-            if (c.data || c.contentType) {
-                xhr.setRequestHeader(CONTENT_TYPE, c.contentType);
+            xhr.state = 1;
+            transport.send();
+        } catch (e) {
+            // Propagate exception as error if not done
+            if (xhr.status < 2) {
+                xhr.callback(-1, e);
+                // Simply rethrow otherwise
+            } else {
+                S.error(e);
             }
-
-            // Set the Accepts header for the server, depending on the dataType
-            xhr.setRequestHeader('Accept', c.dataType && c.accepts[c.dataType] ?
-                c.accepts[c.dataType] + ', */*; q=0.01' :
-                c.accepts._default);
-        } catch(e) {
         }
 
-        // Wait for a response to come back
-        xhr.onreadystatechange = function(isTimeout) {
-            // The request was aborted
-            if (!xhr || xhr.readyState === 0 || isTimeout === 'abort') {
-                // Opera doesn't call onreadystatechange before this point
-                // so we simulate the call
-                if (!requestDone) {
-                    handleEvent(COMPLETE, null, ERROR, xhr, c);
-                }
-                requestDone = true;
-                if (xhr) {
-                    xhr.onreadystatechange = noop;
-                }
-            } else
-            // The transfer is complete and the data is available, or the request timed out
-            if (!requestDone && xhr && (xhr.readyState === 4 || isTimeout === TIMEOUT)) {
-                requestDone = true;
-                xhr.onreadystatechange = noop;
-                status = (isTimeout === TIMEOUT) ? TIMEOUT :
-                    xhrSuccessful(xhr) ? SUCCESS : ERROR;
-
-                // Watch for, and catch, XML document parse errors
-                try {
-                    // process the data (runs the xml through httpData regardless of callback)
-                    data = parseData(xhr, c.dataType);
-
-                    //alert(xhr);
-                    //S.log(data,'warn');
-                } catch(e) {
-                    status = PARSERERR;
-                }
-
-                // fire events
-                handleEvent([status === SUCCESS ? SUCCESS : ERROR, COMPLETE], data, status, xhr, c);
-
-                if (isTimeout === TIMEOUT) {
-                    xhr.abort();
-                    fire(STOP, c);
-                }
-
-                // Stop memory leaks
-                if (c.async) {
-                    xhr = null;
-                }
-            }
-        };
-
-        fire(SEND, c);
-        try {
-            xhr.send(type === POST ? c.data : null);
-        } catch(e) {
-            handleEvent([ERROR, COMPLETE], data, ERROR, xhr, c);
-        }
-
-        // return XMLHttpRequest to allow aborting the request etc.
-        if (!c.async) {
-            fire(COMPLETE, c);
-        }
         return xhr;
     }
 
-    // 事件支持
-    S.mix(io, EventTarget);
+    io.__transports = transports;
+    io.__defaultConfig = defaultConfig;
+    S.mix(io, Event.Target);
+    io.isLocal = isLocal;
 
-    // 定制各种快捷操作
+    return io;
+},
+    {
+        requires:["json","event","./xhrobject"]
+    });
+
+/**
+ * 借鉴 jquery，优化减少闭包使�? *
+ * TODO:
+ *  ifModified mode 是否�?���? *  优点�? *      不依赖浏览器处理，ajax 请求浏览不会自动�?If-Modified-Since If-None-Match ??
+ *  缺点�? *      内存占用
+ **/
+
+/**
+ * ajax xhr tranport class
+ * @author: yiminghe@gmail.com
+ */
+KISSY.add("ajax/xhr", function(S, io) {
+
+    var transports = io.__transports;
+
+    function createStandardXHR() {
+        try {
+            return new window.XMLHttpRequest();
+        } catch(e) {
+        }
+        return undefined;
+    }
+
+    function createActiveXHR() {
+        try {
+            return new window.ActiveXObject("Microsoft.XMLHTTP");
+        } catch(e) {
+        }
+        return undefined;
+    }
+
+    io.xhr = window.ActiveXObject ? function(forceStandard) {
+        var xhr;
+        // ie7 XMLHttpRequest 不能访问本地文件
+        if (io.isLocal && !forceStandard) {
+            xhr = createActiveXHR();
+        }
+        return xhr || createStandardXHR();
+    } : createStandardXHR;
+
+    var detectXhr = io.xhr(),
+        allowCrossDomain = false;
+
+    if (detectXhr) {
+
+        if ("withCredentials" in detectXhr) {
+            allowCrossDomain = true;
+        }
+
+        function XhrTransport(xhrObj) {
+            this.xhrObj = xhrObj;
+        }
+
+        S.augment(XhrTransport, {
+                send:function() {
+                    var self = this,
+                        xhrObj = self.xhrObj,
+                        c = xhrObj.config;
+
+                    if (c.crossDomain && !allowCrossDomain) {
+                        S.error("do not allow crossdomain xhr !");
+                        return;
+                    }
+
+                    var xhr = io.xhr(),
+                        xhrFields,
+                        i;
+
+                    self.xhr = xhr;
+
+                    if (c['username']) {
+                        xhr.open(c.type, c.url, c.async, c['username'], c.password)
+                    } else {
+                        xhr.open(c.type, c.url, c.async);
+                    }
+
+                    if (xhrFields = c['xhrFields']) {
+                        for (i in xhrFields) {
+                            xhr[ i ] = xhrFields[ i ];
+                        }
+                    }
+
+                    // Override mime type if supported
+                    if (xhrObj.mimeType && xhr.overrideMimeType) {
+                        xhr.overrideMimeType(xhrObj.mimeType);
+                    }
+                    try {
+                        for (i in xhrObj.requestHeaders) {
+                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                        }
+                    } catch(e) {
+                    }
+
+                    xhr.send(c.hasContent && c.data || null);
+
+                    if (!c.async || xhr.readyState == 4) {
+                        self._callback();
+                    } else {
+                        xhr.onreadystatechange = function() {
+                            self._callback();
+                        }
+                    }
+                },
+                // �?xhrObj.abort 调用，自己不可以调用 xhrObj.abort
+                abort:function() {
+                    this._callback(0, 1);
+                },
+
+                _callback:function(event, abort) {
+
+                    // Firefox throws exceptions when accessing properties
+                    // of an xhr when a network error occured
+                    // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+                    try {
+                        var self = this,
+                            xhr = self.xhr,
+                            xhrObj = self.xhrObj,
+                            c = xhrObj.config;
+                        //abort or complete
+                        if (abort || xhr.readyState == 4) {
+                            xhr.onreadystatechange = S.noop;
+
+
+                            if (abort) {
+                                // 完成以后 abort 不要调用
+                                if (xhr.readyState !== 4) {
+                                    xhr.abort();
+                                }
+                            } else {
+                                var status = xhr.status;
+                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+
+                                var xml = xhr.responseXML;
+
+                                // Construct response list
+                                if (xml && xml.documentElement /* #4958 */) {
+                                    xhrObj.responseXML = xml;
+                                }
+                                xhrObj.responseText = xhr.responseText;
+
+                                // Firefox throws an exception when accessing
+                                // statusText for faulty cross-domain requests
+                                try {
+                                    var statusText = xhr.statusText;
+                                } catch(e) {
+                                    // We normalize with Webkit giving an empty statusText
+                                    statusText = "";
+                                }
+
+                                // Filter status for non standard behaviors
+                                // If the request is local and we have data: assume a success
+                                // (success with no data won't get notified, that's the best we
+                                // can do given current implementations)
+                                if (!status && io.isLocal && !c.crossDomain) {
+                                    status = xhrObj.responseText ? 200 : 404;
+                                    // IE - #1450: sometimes returns 1223 when it should be 204
+                                } else if (status === 1223) {
+                                    status = 204;
+                                }
+
+                                xhrObj.callback(status, statusText);
+                            }
+                        }
+                    } catch (firefoxAccessException) {
+                        xhr.onreadystatechange = S.noop;
+                        if (!abort) {
+                            xhrObj.callback(-1, firefoxAccessException);
+                        }
+                    }
+                }
+
+
+            });
+
+        transports["*"] = XhrTransport;
+        return io;
+    }
+}, {
+        requires:["./base"]
+    });
+
+/**
+ * 借鉴 jquery，优化使用原型替代闭�? **/
+
+/**
+ * script transport for kissy io
+ * @description: modified version of S.getScript , add abort ability
+ * @author: yiminghe@gmail.com
+ */
+KISSY.add("ajax/script", function(S, io) {
+
+    var transports = io.__transports,
+        defaultConfig = io.__defaultConfig;
+
+    defaultConfig.accepts.script = "text/javascript, " +
+        "application/javascript, " +
+        "application/ecmascript, " +
+        "application/x-ecmascript";
+
+    defaultConfig.contents.script = /javascript|ecmascript/;
+    // 如果�?xhr+eval �?��下面的，否则直接 script node 不需要，引擎自己执行了，不需要手�?eval
+    defaultConfig.converters.text.script = function(text) {
+        S.globalEval(text);
+        return text;
+    };
+
+
+    function ScriptTransport(xhrObj) {
+        // 优先使用 xhr+eval 来执行脚�? ie 下可以探测到（更多）失败状�?
+        if (!xhrObj.config.crossDomain &&
+            !xhrObj.config['forceScript']) {
+            return new transports["*"](xhrObj);
+        }
+        this.xhrObj = xhrObj;
+        return 0;
+    }
+
+    S.augment(ScriptTransport, {
+            send:function() {
+                var self = this,
+                    script,
+                    xhrObj = this.xhrObj,
+                    c = xhrObj.config,
+                    head = document['head'] ||
+                        document.getElementsByTagName("head")[0] ||
+                        document.documentElement;
+                self.head = head;
+                script = document.createElement("script");
+                self.script = script;
+                script.async = "async";
+
+                if (c['scriptCharset']) {
+                    script.charset = c['scriptCharset'];
+                }
+
+                script.src = c.url;
+
+                script.onerror =
+                    script.onload =
+                        script.onreadystatechange = function(e) {
+                            e = e || window.event;
+                            // firefox onerror 没有 type ?!
+                            self._callback((e.type || "error").toLowerCase());
+                        };
+
+                head.insertBefore(script, head.firstChild);
+            },
+
+            _callback:function(event, abort) {
+                var script = this.script,
+                    xhrObj = this.xhrObj,
+                    head = this.head;
+
+                if (abort ||
+                    !script.readyState ||
+                    /loaded|complete/.test(script.readyState)
+                    || event == "error"
+                    ) {
+
+                    script['onerror'] = script.onload = script.onreadystatechange = null;
+
+                    // Remove the script
+                    if (head && script.parentNode) {
+                        head.removeChild(script);
+                    }
+
+                    this.script = undefined;
+                    this.head = undefined;
+
+                    // Callback if not abort
+                    if (!abort && event != "error") {
+                        xhrObj.callback(200, "success");
+                    }
+                    // �?ie<9 可以判断出来
+                    else if (event == "error") {
+                        xhrObj.callback(500, "scripterror");
+                    }
+                }
+            },
+
+            abort:function() {
+                this._callback(0, 1);
+            }
+        });
+
+    transports["script"] = ScriptTransport;
+
+    return io;
+
+}, {
+        requires:['./base','./xhr']
+    });
+
+/**
+ * jsonp transport based on script transport
+ */
+KISSY.add("ajax/jsonp", function(S, io) {
+
+    var defaultConfig = io.__defaultConfig;
+
+    defaultConfig.jsonp = "callback";
+    defaultConfig.jsonpCallback = function() {
+        //不使�?now() ，极端情况下可能重复
+        return S.guid("jsonp");
+    };
+
+    io.on("start", function(e) {
+        var xhr = e.xhr,c = xhr.config;
+        if (c.dataType[0] == "jsonp") {
+            var response,
+                cJsonpCallback = c.jsonpCallback,
+                jsonpCallback = S.isFunction(cJsonpCallback) ?
+                    cJsonpCallback() :
+                    cJsonpCallback,
+                previous = window[ jsonpCallback ];
+
+            c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
+
+            // build temporary JSONP function
+            window[jsonpCallback] = function(r) {
+                //debugger
+                // 使用数组，区别：故意调用�?jsonpCallback(undefined) �?根本没有调用
+                response = [r];
+            };
+
+            // cleanup whether success or failure
+            xhr.on("complete", function() {
+                window[ jsonpCallback ] = previous;
+                if (previous === undefined) {
+                    try {
+                        delete window[ jsonpCallback ];
+                    } catch(e) {
+                    }
+                } else if (response) {
+                    // after io success handler called
+                    // then call original existed jsonpcallback
+                    previous(response[0]);
+                }
+            });
+
+            xhr.converters = xhr.converters || {};
+            xhr.converters.script = xhr.converters.script || {};
+
+            // script -> jsonp ,jsonp need to see json not as script
+            xhr.converters.script.json = function() {
+                if (!response) {
+                    S.error(" not call jsonpCallback : " + jsonpCallback)
+                }
+                return response[0];
+            };
+
+            c.dataType.length = 2;
+            // 利用 script transport 发�? script 请求
+            c.dataType[0] = 'script';
+            c.dataType[1] = 'json';
+        }
+    });
+
+    return io;
+}, {
+        requires:['./base']
+    });
+
+KISSY.add("ajax", function(S, io) {
+
+    // some shortcut
     S.mix(io, {
-
             get: function(url, data, callback, dataType, _t) {
-                // data 参数可省略
-                if (S.isFunction(data)) {
+                // data 参数可省�?                if (S.isFunction(data)) {
                     dataType = callback;
                     callback = data;
                 }
 
                 return io({
-                        type: _t || GET,
+                        type: _t || "get",
                         url: url,
                         data: data,
-                        success: function(data, textStatus, xhr) {
-                            callback && callback.call(this, data, textStatus, xhr);
-                        },
+                        success: callback,
                         dataType: dataType
                     });
             },
@@ -6429,115 +6839,39 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
                 if (S.isFunction(data)) {
                     dataType = callback;
                     callback = data;
-                    data = undef;
+                    data = undefined;
                 }
-                return io.get(url, data, callback, dataType, POST);
+                return io.get(url, data, callback, dataType, "post");
             },
 
             jsonp: function(url, data, callback) {
                 if (S.isFunction(data)) {
                     callback = data;
-                    data = null; // 占位符
-                }
-                return io.get(url, data, callback, JSONP);
+                    data = null; // 占位�?                }
+                return io.get(url, data, callback, "jsonp");
+            },
+
+            // �?S.getScript 保持�?��
+            // 更好�?getScript 可以�?            /*
+             io({
+             dataType:'script'
+             });
+             */
+            getScript:S.getScript,
+
+            getJSON: function(url, data, callback) {
+                return io.get(url, data, callback, "json");
             }
         });
 
-    // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
-    // S 下有便捷入口 S.io/ajax/getScript/jsonp
-
-    //检测 xhr 是否成功
-    function xhrSuccessful(xhr) {
-        try {
-            // IE error sometimes returns 1223 when it should be 204 so treat it as success, see #1450
-            // ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-            // IE 中如果请求一个缓存住的页面，会出现如下状况 (jQuery 中未考虑,此处也不作处理)：
-            // 		请求一个页面成功，但头输出为 404, ie6/8 下检测为 200, ie7/ff/chrome/opera 检测为 404
-            // 		请求一个不存在的页面，ie 均检测为 200 ,ff/chrome/opera检测为 404
-            // 		请求一个不存在的页面，ie6/7 的 statusText为 'Not Found'，ie8 的为 'OK', statusText 是可以被程序赋值的
-            return xhr.status >= 200 && xhr.status < 300 ||
-                xhr.status === 304 || xhr.status === 1223;
-        } catch(e) {
-        }
-        return false;
-    }
-
-    function addQuery(url, params) {
-        return url + (url.indexOf('?') === -1 ? '?' : '&') + params;
-    }
-
-    function handleEvent(type, data, status, xhr, c) {
-        if (S.isArray(type)) {
-            S.each(type, function(t) {
-                handleEvent(t, data, status, xhr, c);
-            });
-        } else {
-            // 只调用与 status 匹配的 c.type, 比如成功时才调 c.success
-            if (status === type && c[type]) {
-                c[type].call(c.context, data, status, xhr);
-            }
-            fire(type, c);
-        }
-    }
-
-    function fire(type, config) {
-        io.fire(type, { ajaxConfig: config });
-    }
-
-    function parseData(xhr, type) {
-        var ct = EMPTY, xml, data = xhr;
-
-        // xhr 可以直接是 data
-        if (!S.isString(data)) {
-            ct = xhr.getResponseHeader(CONTENT_TYPE) || EMPTY;
-            xml = type === 'xml' || !type && ct.indexOf('xml') >= 0;
-            data = xml ? xhr.responseXML : xhr.responseText;
-
-            if (xml && data.documentElement.nodeName === PARSERERR) {
-                throw PARSERERR;
-            }
-        }
-
-        if (S.isString(data)) {
-            if (type === JSON || !type && ct.indexOf(JSON) >= 0) {
-                data = S_JSON.parse(data);
-            }
-        }
-
-        return data;
-    }
-
     return io;
-
 }, {
-        requires:["event","json"]
+        requires:["ajax/base",
+            "ajax/xhrobject",
+            "ajax/xhr",
+            "ajax/script",
+            "ajax/jsonp"]
     });
-
-/**
- * TODO:
- *   - 给 Node 增加 load 方法?
- *   - 请求缓存资源的状态的判断（主要针对404）？
- *
- * NOTES:
- *  2010.07
- *   - 实现常用功实现常用功实现常用功实现常用功,get,post以及类jquery的jsonp
- *     考虑是否继续实现iframe-upload和flash xdr，代码借鉴jquery-ajax，api形状借鉴yui3-io
- *     基本格式依照 callback(id,xhr,args)
- *   - 没有经过严格测试，包括jsonp里的内存泄漏的测试
- *     对xml,json的格式的回调支持是否必要
- * 2010.11
- *   - 实现了get/post/jsonp/getJSON
- *   - 实现了onComplete/onError/onSend/onStart/onStop/onSucess的ajax状态的处理
- *   - [玉伯] 在拔赤的代码基础上重构，调整了部分 public api
- *   - [玉伯] 增加部分 Jasmine 单元测试
- *   - [玉伯] 去掉 getJSON 接口，增加 jsonp 接口
- */
-
-KISSY.add("ajax", function(S, io) {
-    return io;
-}, {
-    requires:["ajax/impl"]
-});
 
 /**
  * @module  Attribute
@@ -6766,8 +7100,7 @@ KISSY.add('base/base', function (S, Attribute,Event) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
                 if (attrs.hasOwnProperty(attr)) {
-                    //父类后加，父类不覆盖子类的相同设置
-                    host.addAttr(attr, attrs[attr], false);
+                    //父类后加，父类不覆盖子类的相同设�?                    host.addAttr(attr, attrs[attr], false);
                 }
             }
         }
@@ -6777,8 +7110,7 @@ KISSY.add('base/base', function (S, Attribute,Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter 的
-                    host.__set(attr, config[attr]);
+                    //用户设置会调�?setter �?                    host.__set(attr, config[attr]);
                 }
 
             }
@@ -6815,8 +7147,7 @@ KISSY.add('cookie/base', function(S) {
     return {
 
         /**
-         * 获取 cookie 值
-         * @return {string} 如果 name 不存在，返回 undefined
+         * 获取 cookie �?         * @return {string} 如果 name 不存在，返回 undefined
          */
         get: function(name) {
             var ret, m;
@@ -6874,11 +7205,10 @@ KISSY.add('cookie/base', function(S) {
  * NOTES:
  *
  *  2010.04
- *   - get 方法要考虑 ie 下，
- *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
- *     除了正则获取，还可以 split 字符串的方式来获取。
- *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
- *     独立成静态工具类的方式更优。
+ *   - get 方法要�?�?ie 下，
+ *     值为空的 cookie �?'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号�?
+ *     除了正则获取，还可以 split 字符串的方式来获取�?
+ *   - api 设计上，原本想�?�?jQuery 的简明风格：S.cookie(name, ...), 但�?虑到可扩展�?，目�? *     独立成静态工具类的方式更优�?
  */
 
 KISSY.add("cookie", function(S,C) {

@@ -115,6 +115,7 @@ KISSY.add("ajax/xhr", function(S, io) {
 
 
                             if (abort) {
+                                // 完成以后 abort 不要调用
                                 if (xhr.readyState !== 4) {
                                     xhr.abort();
                                 }

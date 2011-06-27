@@ -22,10 +22,11 @@ KISSY.add("ajax/script", function(S, io) {
 
 
     function ScriptTransport(xhrObj) {
-        // 优先使用 xhr+eval 来执行脚本 ?
-//        if (!xhrObj.config.crossDomain) {
-//            return new transports["*"](xhrObj);
-//        }
+        // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
+        if (!xhrObj.config.crossDomain &&
+            !xhrObj.config['forceScript']) {
+            return new transports["*"](xhrObj);
+        }
         this.xhrObj = xhrObj;
         return 0;
     }

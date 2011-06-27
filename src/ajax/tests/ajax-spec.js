@@ -1,25 +1,11 @@
-KISSY.use("json,ajax", function(S,JSON,IO) {
-
+/**
+ * basic testcases for kissy ajax
+ * @author: lijing00333@163.com
+ */
+KISSY.use("json,ajax", function(S, JSON, IO) {
 
     describe('ajax', function() {
 
-
-        /*
-         describe('test',function(){
-
-         it('能正确获取返回值', function() {
-
-         var xhr = IO.get('interface.php?t='+S.now());
-         expect('onreadystatechange' in xhr).toBe(true);
-
-         // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
-         var scriptEl = IO.jsonp('interface.php?t='+S.now());
-         expect('setAttribute' in scriptEl).toBe(true);
-         });
-
-         });
-         return;
-         */
 
         describe('404s/301s', function() {
 
@@ -79,7 +65,6 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                         ok = true;
                         expect(typeof data).toBe('object');
                         expect(data.callback).toBe('customCallback');
-
                     };
                     S.getScript('interface.php?callback=customCallback');
                 });
@@ -94,14 +79,14 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                 var ok = false;
                 runs(function() {
                     IO({
-                        url:'interface.php?t=get',
-                        success: function(data) {
-                            ok = true;
-                            expect(typeof data).toBe('object');
-                        },
-                        dataType:'jsonp',
-                        jsonp:'customCallback'
-                    });
+                            url:'interface.php?t=get',
+                            success: function(data) {
+                                ok = true;
+                                expect(typeof data).toBe('object');
+                            },
+                            dataType:'jsonp',
+                            jsonp:'customCallback'
+                        });
 
                 });
 
@@ -129,17 +114,14 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
 
             it('带参数提交jsonp，获取回调参数', function() {
 
-                var scriptEl = IO.jsonp('interface.php?sleep=0', {
-                    myparam:'taobao'
-                }, function(data) {
+                IO.jsonp('interface.php?sleep=0', {
+                        myparam:'taobao'
+                    }, function(data) {
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
                     expect(data['myparam']).toBe('taobao');
 
                 });
-
-                //等待回调执行后执行这里
-                expect('setAttribute' in scriptEl).toBe(true);
 
             });
 
@@ -152,36 +134,31 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                 var str;
 
                 runs(function() {
-                    str = IO({
-                        type:'get',
-                        url:'interface.php?sleep=1&contype=text/json',
-                        async:false
-                    }).responseText;
+                    IO({
+                            type:'get',
+                            // 根据 content-type 自动 parse
+                            url:'interface.php?sleep=1&contype=text/json',
+                            async:false,
+                            success:function(o) {
+                                expect(o['name']).toBe('test');
+                            }
+                        });
                 });
-                runs(function() {
-                    expect(typeof str).toBe('string');
-                    var o = JSON.parse(S.trim(str));
-                    expect(o['name']).toBe('test');
-                });
-
             });
 
             it('post 同步加载,等待2秒钟继续执行', function() {
                 var str;
 
                 runs(function() {
-                    str = IO({
-                        type:'post',
-                        url:'interface.php?sleep=1&contype=text/json',
-                        async:false
-                    }).responseText;
+                    IO({
+                            type:'post',
+                            url:'interface.php?sleep=1&contype=text/json',
+                            async:false,
+                            success:function(o) {
+                                expect(o['name']).toBe('test');
+                            }
+                        });
                 });
-                runs(function() {
-                    expect(typeof str).toBe('string');
-                    var o = JSON.parse(S.trim(str));
-                    expect(o['name']).toBe('test');
-                });
-
             });
 
 
@@ -194,7 +171,6 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                 var ok = false;
                 IO.post('interface.php?t=post&contype=text/json', function(data) {
                     ok = true;
-                    //var o = JSON.parse(data);
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
                     expect(data['name']).toBe('test');
@@ -207,32 +183,30 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
 
             });
 
-            it('能正确发起post 请求，无参数,正确获取回调参数', function() {
+            it('能正确发起 post 请求，无参数,正确获取回调参数', function() {
                 var ok = false;
-                IO.post('interface.php?t=post', function(data) {
+                IO.post('interface.php?t=post', function(data, status, xhr) {
                     ok = true;
-                    expect(typeof data).toBe('string');
                     var o = JSON.parse(data);
                     expect(o).not.toBe(undefined);
                     expect(o['name']).toBe('test');
+                    expect(xhr.responseText).toBe(data);
                 });
 
                 waitsFor(function() {
                     return ok;
                 });
-
-
             });
 
 
             it('能正确发起 post 请求, 参数为json，并正确获取参数', function() {
                 var ok = false;
                 IO.post('interface.php?t=post', {
-                    type:'post',
-                    name:'test',
-                    company:'www.taobao.com',
-                    exp:'>,?/\%."`~'
-                }, function(data, textStatus, xhr) {
+                        type:'post',
+                        name:'test',
+                        company:'www.taobao.com',
+                        exp:'>,?/\%."`~'
+                    }, function(data, textStatus, xhr) {
                     ok = true;
                     var o = JSON.parse(data);
                     expect(o).not.toBe(undefined);
@@ -251,16 +225,19 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
 
             it('能正确发起 post 请求 参数为string，并正确获取参数', function() {
                 var ok = false;
-                IO.post('interface.php?t=post', 'name=test&company=www.taobao.com&exp=>,?/\%."`~', function(data, textStatus, xhr) {
-                    ok = true;
-                    var o = JSON.parse(data);
-                    expect(o).not.toBe(undefined);
-                    expect(o['name']).toBe('test');
-                    expect(o['company']).toBe('www.taobao.com');
+                IO.post('interface.php?t=post',
+                    'name=test&company=www.taobao.com&exp=>,?/\%."`~',
+                    function(data, textStatus, xhr) {
+                        ok = true;
 
-                    expect(textStatus).toBe('success');
-                    expect(xhr.responseText).toBe(data);
-                });
+                        var o = JSON.parse(data);
+                        expect(o).not.toBe(undefined);
+                        expect(o['name']).toBe('test');
+                        expect(o['company']).toBe('www.taobao.com');
+
+                        expect(textStatus).toBe('success');
+                        expect(xhr.responseText).toBe(data);
+                    });
                 waitsFor(function() {
                     return ok;
                 });
@@ -291,8 +268,8 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
             it('json 参数 可以覆盖url参数', function() {
                 var ok = false;
                 IO.post('interface.php?foo=sk1', {
-                    foo:'sk2'
-                }, function(data) {
+                        foo:'sk2'
+                    }, function(data) {
                     ok = true;
                     expect(typeof data).toBe('object');
                     expect(data['foo']).toBe('sk2');
@@ -310,7 +287,6 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                 runs(function() {
                     ok = false;
 
-                    // 注：此处的处理方式和get带jsonp的处理是一样的,不管post还是get，只要带参数jsonp，就用getScript来处理
                     IO.post('interface.php', function(data) {
                         ok = true;
                         o = data;
@@ -335,7 +311,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                     // 这里和get的处理一致
                     IO.post('interface.php?type=post&dataType=script', function(data) {
                         ok = true;
-                        expect(data).toBe("");
+                        expect(data).toBe("var global_script_test = 500;");
                     }, 'script');
                 });
 
@@ -350,7 +326,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
 
             });
 
-            it('正确处理 dataType 为 xml 的情况,回调参数为xml对象', function() {
+            it('正确处理 dataType 为 xml 的情况,回调参数为 xml 对象', function() {
                 var ok = false, o;
 
                 runs(function() {
@@ -359,7 +335,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                     IO.post('xml.php', function(data) {
                         ok = true;
                         o = data;
-                    }, 'xml');//'xml'不可以写成'json'?
+                    }, 'xml');
                 });
 
                 waitsFor(function() {
@@ -371,12 +347,32 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                 });
 
             });
-            //TODO: 暂不支持
-            /*
-             it('正确处理 dataType 为 xml 的情况,回调参数为json对象',function(){
 
-             });
-             */
+
+            it('正确处理 dataType 为 xml 的情况,回调参数为json对象', function() {
+                var ok = false, o;
+
+                runs(function() {
+
+                    // 可以么？ content-type 为 xml
+                    // 但 实际内容也为 json ，需要自动转换成 json
+                    IO.get('xml-json.php', function(data) {
+                        ok = true;
+                        o = data;
+                    }, 'json');
+                });
+
+                waitsFor(function() {
+                    return ok;
+                });
+
+                runs(function() {
+                    expect(o.x).toBe(1);
+                });
+
+            });
+
+
             it('能正确处理 dataType 为 html 和 text 的情况', function() {
                 var ok, o;
 
@@ -442,7 +438,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
 
                 IO.post('interface.php?t=get&dataType=script', function() {
                     ok = true;
-                    expect(this.dataType).toBe('script');
+                    expect(this.type).toBe('POST');
                 }, 'script');
 
                 waitsFor(function() {
@@ -452,13 +448,11 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
             });
             it('能正确获取返回值', function() {
                 var xhr = IO.post('interface.php');
-                expect('onreadystatechange' in xhr).toBe(true);
+                expect('abort' in xhr).toBe(true);
 
                 // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
-                var scriptEl = IO.jsonp('interface.php');
-                expect('setAttribute' in scriptEl).toBe(true);
-
-
+                xhr = IO.jsonp('interface.php');
+                expect('abort' in xhr).toBe(true);
             });
 
 
@@ -493,7 +487,6 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
 
                 IO.get('interface.php?t=get', {'data': 'hello'}, function(data) {
                     ok = true;
-
                     var o = JSON.parse(data);
                     expect(o['data']).toBe('hello');
                 });
@@ -540,6 +533,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                     // 注：此处的处理方式和 jQuery 不同
                     // 不跨域时，jQuery 会依旧调用 xhr 处理，得到结果后，再通过 globalEval 执行
                     // KISSY 里，无论跨不跨域，只要 dataType 为 jsonp, 都用 getScript 处理
+                    // 1.2 修正，和 jquery 保持一致，ie 下可以有出错处理，也方便 abort
                     //IO.get('http://test.com/kissy/src/ajax/tests/interface.php?t=get', function(data) {
                     IO.get('interface.php?t=get', function(data) {
                         ok = true;
@@ -566,6 +560,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
                     // 当不跨域时，jQuery 会调用 xhr + globalEval 来处理
                     // 跨域时，jQuery 会调用 getScript 方式处理
                     // KISSY 里，都用 getScript 方式处理
+                    // 1.2 使用 xhr
                     //$.get('http://test.com/kissy/src/ajax/tests/interface.php?t=get&dataType=script', function(data) {
                     IO.get('interface.php?t=get&dataType=script', function() {
                         ok = true;
@@ -630,7 +625,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
             it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function() {
 
                 try {
-                    IO.get('http://google.com/', function() {
+                    IO.get('http://www.google.com/', function() {
                         expect('此处').toBe('不运行');
                     });
                 } catch(e) {
@@ -670,7 +665,7 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
 
                 IO.get('interface.php?t=get&dataType=script', function() {
                     ok = true;
-                    expect(this.dataType).toBe('script');
+                    expect(this.type).toBe('GET');
                 }, 'script');
 
                 waitsFor(function() {
@@ -679,14 +674,9 @@ KISSY.use("json,ajax", function(S,JSON,IO) {
             });
 
             it('能正确获取返回值', function() {
-
                 //如果不加时间戳，ie下会从缓存中取数据，得不到预期的xhr
                 var xhr = IO.get('interface.php?t=' + S.now());
-                expect('onreadystatechange' in xhr).toBe(true);
-
-                // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
-                var scriptEl = IO.jsonp('interface.php?t=' + S.now());
-                expect('setAttribute' in scriptEl).toBe(true);
+                expect('responseText' in xhr).toBe(true);
             });
         });
 

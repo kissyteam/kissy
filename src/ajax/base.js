@@ -7,7 +7,6 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
         rspace = /\s+/,
         rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        rquery = /\?/,
         mirror = function(s) {
             return s;
         },
@@ -41,7 +40,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
              context:null,
              timeout: 0,
              data: null,
+
+             // 可取json | jsonp | script | xml | html | text | null | undefined
              dataType: null,
+
              username: null,
              password: null,
              cache: null,
@@ -51,6 +53,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
              // jsonp script charset
              scriptCharset:null,
              crossdomain:false,
+             forceScript:false,
              */
 
             accepts: {
@@ -97,10 +100,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
         if (!c.hasContent) {
             if (c.data) {
-                c.url += ( rquery.test(c.url) ? "&" : "?" ) + c.data;
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
             }
             if (c.cache === false) {
-                c.url += ( rquery.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
             }
         }
 
@@ -129,6 +132,9 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     }
 
     function io(c) {
+        if (!c.url) {
+            return undefined;
+        }
         c = setUpConfig(c);
         var xhr = new XhrObject(c);
         fire("start", xhr);
@@ -163,6 +169,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         // Timeout
         if (c.async && c.timeout > 0) {
             xhr.timeoutTimer = setTimeout(function() {
+                S.log("timeout!!!!!!!!!");
                 xhr.abort("timeout");
             }, c.timeout);
         }
