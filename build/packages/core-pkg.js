@@ -3101,7 +3101,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         // { handler: eventHandler, events:  {type:[{scope:scope,fn:fn}]}  } }
         EVENT_GUID = 'ksEventTargetId' + S.now();
 
-
     var Event = {
         _data:function(elem) {
             var args = S.makeArray(arguments);
@@ -3133,9 +3132,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
             DOM.query(targets).each(function(target) {
                 var isNativeEventTarget = !target.isCustomEventTarget,
-                    special,
-                    events,
-                    eventHandler,
                     eventDesc;
 
                 // 不是有效�?target �?参数不对
@@ -3145,18 +3141,17 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     (isNativeEventTarget && !isValidTarget(target))) {
                     return;
                 }
-
-
                 // 获取事件描述
                 eventDesc = Event._data(target);
                 if (!eventDesc) {
                     Event._data(target, eventDesc = {});
                 }
                 //事件 listeners
-                events = eventDesc.events = eventDesc.events || {};
-                eventHandler = eventDesc.handler;
-
-                // 该元素没�?handler
+                var events = eventDesc.events = eventDesc.events || {},
+                    handlers = events[type] = events[type] || [],
+                    handleObj = {fn: fn, scope: scope || target,data:data},
+                    eventHandler = eventDesc.handler;
+                // 该元素没�?handler ，并且该元素�?dom 节点时才�?��注册 dom 事件
                 if (!eventHandler) {
                     eventHandler = eventDesc.handler = function(event, data) {
                         // 是经�?fire 手动调用而导致的，就不要再次触发了，已经�?fire �?bubble 过一次了
@@ -3174,26 +3169,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     };
                     eventHandler.target = target;
                 }
-
-                var handlers = events[type];
-                special = Event.special[type] || {};
-
-                if (!handlers) {
-                    handlers = events[type] = [];
-                    if ((!special.setup || special.setup.call(target) === false) && isNativeEventTarget) {
-                        simpleAdd(target, type, eventHandler)
-                    }
-                }
-
-                var handleObj = {fn: fn, scope: scope || target,data:data};
-                if (special.add) {
-                    special.add.call(target, handleObj);
+                if (isNativeEventTarget) {
+                    addDomEvent(target, type, eventHandler, handlers, handleObj);
+                    //nullify to prevent memory leak in ie ?
+                    target = null;
                 }
                 // 增加 listener
                 handlers.push(handleObj);
-
-                //nullify to prevent memory leak in ie ?
-                target = null;
             });
             return targets;
         },
@@ -3280,10 +3262,11 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
                     // remove(el, type) or fn 已移除光
                     if (fn === undefined || len === 0) {
-                        if (isNativeEventTarget) {
-                            if (!special['tearDown'] || special['tearDown'].call(target) === false) {
-                                simpleRemove(target, type, eventDesc.handler);
-                            }
+                        // dom node need to detach handler from dom node
+                        if (isNativeEventTarget &&
+                            (!special['tearDown'] ||
+                                special['tearDown'].call(target) === false)) {
+                            simpleRemove(target, type, eventDesc.handler);
                         }
                         delete events[type];
                     }
@@ -3358,55 +3341,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
                 } else {
-                    if (!isValidTarget(target)) {
-                        return;
-                    }
-                    var event = new EventObject(target, eventData);
-                    event.target = target;
-                    var cur = target,
-                        ontype = "on" + eventType;
-                    //bubble up dom tree
-                    do{
-                        var handler = (Event._data(cur) || {}).handler;
-                        event.currentTarget = cur;
-                        if (handler) {
-                            handler.call(cur, event);
-                        }
-                        // Trigger an inline bound script
-                        if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
-                            ret = false;
-                            event.preventDefault();
-                        }
-                        // Bubble up to document, then to window
-                        cur = cur.parentNode || cur.ownerDocument || cur === target.ownerDocument && window;
-                    } while (cur && !event.isPropagationStopped);
-
-                    if (!event.isDefaultPrevented) {
-                        if (!(eventType === "click" && target.nodeName.toLowerCase() == "a")) {
-                            var old;
-                            try {
-                                if (ontype && target[ eventType ]) {
-                                    // Don't re-trigger an onFOO event when we call its FOO() method
-                                    old = target[ ontype ];
-
-                                    if (old) {
-                                        target[ ontype ] = null;
-                                    }
-                                    // 记录当前 trigger 触发
-                                    Event_Triggered = eventType;
-                                    // 只触发默认事件，而不要执行绑定的用户回调
-                                    // 同步触发
-                                    target[ eventType ]();
-                                }
-                            } catch (ieError) {
-                            }
-
-                            if (old) {
-                                target[ ontype ] = old;
-                            }
-
-                            Event_Triggered = TRIGGERED_NONE;
-                        }
+                    var r = fireDOMEvent(target, eventType, eventData);
+                    if (r !== undefined) {
+                        ret = r;
                     }
                 }
             });
@@ -3439,6 +3376,81 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         // 3 - is text node
         // 8 - is comment node
         return target && target.nodeType !== 3 && target.nodeType !== 8;
+    }
+
+    /**
+     * dom node need eventHandler attached to dom node
+     */
+    function addDomEvent(target, type, eventHandler, handlers, handleObj) {
+        var special = Event.special[type] || {};
+        // dom 节点才需要注�?dom 事件
+        if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
+            simpleAdd(target, type, eventHandler)
+        }
+        if (special.add) {
+            special.add.call(target, handleObj);
+        }
+    }
+
+
+    /**
+     * fire dom event from bottom to up
+     */
+    function fireDOMEvent(target, eventType, eventData) {
+        var ret;
+        if (!isValidTarget(target)) {
+            return ret;
+        }
+        var event = new EventObject(target, eventData);
+        event.target = target;
+        var cur = target,
+            ontype = "on" + eventType;
+        //bubble up dom tree
+        do{
+            var handler = (Event._data(cur) || {}).handler;
+            event.currentTarget = cur;
+            if (handler) {
+                handler.call(cur, event);
+            }
+            // Trigger an inline bound script
+            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+                ret = false;
+                event.preventDefault();
+            }
+            // Bubble up to document, then to window
+            cur = cur.parentNode ||
+                cur.ownerDocument ||
+                cur === target.ownerDocument && window;
+        } while (cur && !event.isPropagationStopped);
+
+        if (!event.isDefaultPrevented) {
+            if (!(eventType === "click" && target.nodeName.toLowerCase() == "a")) {
+                var old;
+                try {
+                    if (ontype && target[ eventType ]) {
+                        // Don't re-trigger an onFOO event when we call its FOO() method
+                        old = target[ ontype ];
+
+                        if (old) {
+                            target[ ontype ] = null;
+                        }
+                        // 记录当前 trigger 触发
+                        Event_Triggered = eventType;
+                        // 只触发默认事件，而不要执行绑定的用户回调
+                        // 同步触发
+                        target[ eventType ]();
+                    }
+                } catch (ieError) {
+                }
+
+                if (old) {
+                    target[ ontype ] = old;
+                }
+
+                Event_Triggered = TRIGGERED_NONE;
+            }
+        }
+        return ret;
     }
 
     if (1 > 2) {
