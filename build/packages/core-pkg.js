@@ -3394,13 +3394,17 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope, event, listener.data);
                 // 和 jQuery 逻辑保持一致
-                // return false 等价 preventDefault + stopProgation
+
                 if (ret !== undefined) {
-                    // no use
-                    // event.result = ret;
-                    //有一个 false，最终结果就是 false
-                    if (ret === false) {
+
+                    // 有一个 false，最终结果就是 false
+                    // 否则等于最后一个返回值
+                    if (gRet !== false) {
                         gRet = ret;
+                    }
+
+                    // return false 等价 preventDefault + stopProgation
+                    if (ret === false) {
                         event.halt();
                     }
                 }
@@ -4697,7 +4701,7 @@ KISSY.add('anim/easing', function(S) {
 
 /**
  * single timer for the whole anim module
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
     var tag = S.guid("anim-"),id = 1;
@@ -5358,7 +5362,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 /**
  * special patch for making color gradual change
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
@@ -5467,7 +5471,7 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
 
 /**
  * special patch for animate scroll property of element
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("anim/scroll", function(S, DOM, Anim) {
 
@@ -6204,13 +6208,22 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
         EventTarget = Event.Target,
         noop = function() {
         },
-        GET = 'GET', POST = 'POST',
+        GET = 'GET',
+        POST = 'POST',
         CONTENT_TYPE = 'Content-Type',
-        JSON = 'json', JSONP = JSON + 'p', SCRIPT = 'script',
-        CALLBACK = 'callback', EMPTY = '',
-        START = 'start', SEND = 'send', STOP = 'stop',
-        SUCCESS = 'success', COMPLETE = 'complete',
-        ERROR = 'error', TIMEOUT = 'timeout', PARSERERR = 'parsererror',
+        JSON = 'json',
+        JSONP = JSON + 'p',
+        SCRIPT = 'script',
+        CALLBACK = 'callback',
+        EMPTY = '',
+        START = 'start',
+        SEND = 'send',
+        STOP = 'stop',
+        SUCCESS = 'success',
+        COMPLETE = 'complete',
+        ERROR = 'error',
+        TIMEOUT = 'timeout',
+        PARSERERR = 'parsererror',
 
         // 默认配置
         // 参数含义和 jQuery 保持一致：http://api.jquery.com/jQuery.ajax/
@@ -6394,41 +6407,41 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
     // 定制各种快捷操作
     S.mix(io, {
 
-        get: function(url, data, callback, dataType, _t) {
-            // data 参数可省略
-            if (S.isFunction(data)) {
-                dataType = callback;
-                callback = data;
-            }
+            get: function(url, data, callback, dataType, _t) {
+                // data 参数可省略
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                }
 
-            return io({
-                type: _t || GET,
-                url: url,
-                data: data,
-                success: function(data, textStatus, xhr) {
-                    callback && callback.call(this, data, textStatus, xhr);
-                },
-                dataType: dataType
-            });
-        },
+                return io({
+                        type: _t || GET,
+                        url: url,
+                        data: data,
+                        success: function(data, textStatus, xhr) {
+                            callback && callback.call(this, data, textStatus, xhr);
+                        },
+                        dataType: dataType
+                    });
+            },
 
-        post: function(url, data, callback, dataType) {
-            if (S.isFunction(data)) {
-                dataType = callback;
-                callback = data;
-                data = undef;
-            }
-            return io.get(url, data, callback, dataType, POST);
-        },
+            post: function(url, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                    data = undef;
+                }
+                return io.get(url, data, callback, dataType, POST);
+            },
 
-        jsonp: function(url, data, callback) {
-            if (S.isFunction(data)) {
-                callback = data;
-                data = null; // 占位符
+            jsonp: function(url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = null; // 占位符
+                }
+                return io.get(url, data, callback, JSONP);
             }
-            return io.get(url, data, callback, JSONP);
-        }
-    });
+        });
 
     // 所有方法在 IO 下都可调 IO.ajax/get/post/getScript/jsonp
     // S 下有便捷入口 S.io/ajax/getScript/jsonp
@@ -6460,7 +6473,9 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
             });
         } else {
             // 只调用与 status 匹配的 c.type, 比如成功时才调 c.success
-            if (status === type && c[type]) c[type].call(c.context, data, status, xhr);
+            if (status === type && c[type]) {
+                c[type].call(c.context, data, status, xhr);
+            }
             fire(type, c);
         }
     }
@@ -6495,8 +6510,8 @@ KISSY.add('ajax/impl', function(S, Event, S_JSON, undef) {
     return io;
 
 }, {
-    requires:["event","json"]
-});
+        requires:["event","json"]
+    });
 
 /**
  * TODO:
@@ -6793,7 +6808,6 @@ KISSY.add('cookie/base', function(S) {
         decode = decodeURIComponent;
 
 
-
     function isNotEmptyString(val) {
         return S.isString(val) && val !== '';
     }
@@ -6850,7 +6864,7 @@ KISSY.add('cookie/base', function(S) {
 
         remove: function(name, domain, path, secure) {
             // 置空，并立刻过期
-            this.set(name, '', 0, domain, path, secure);
+            this.set(name, '', -1, domain, path, secure);
         }
     };
 

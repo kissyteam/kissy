@@ -449,60 +449,6 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             });
         });
 
-        describe('custom event target', function() {
-
-            it('should support custom event target.', function() {
-
-                var SPEED = '70 km/h', NAME = 'Lady Gogo', dog;
-
-                function Dog(name) {
-                    this.name = name;
-                }
-
-                S.augment(Dog, EventTarget, {
-                        run: function() {
-                            this.fire('running', {speed: SPEED});
-                        }
-                    });
-
-                dog = new Dog(NAME);
-
-                dog.on('running', function(ev) {
-                    result.push(this.name);
-                    result.push(ev.speed);
-                });
-                dog.on('running', function() {
-                    result.push(FIRST);
-                    return false;
-                });
-                function f() {
-                    result.push(SECOND);
-                }
-
-                dog.on('running', f);
-
-                // let dog run
-                result = [];
-
-                dog.run();
-                waits(0);
-                runs(function() {
-                    expect(result.join(SEP)).toEqual([NAME, SPEED, FIRST, SECOND].join(SEP));
-                });
-
-                // test detach
-                runs(function() {
-                    result = [];
-                    dog.detach('running', f);
-                    dog.run();
-                    waits(0);
-                    runs(function() {
-                        expect(result.join(SEP)).toEqual([NAME, SPEED, FIRST].join(SEP));
-                    });
-                });
-            });
-        });
-
 
         it('should no memory leak for dom node', function() {
 

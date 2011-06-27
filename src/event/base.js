@@ -252,13 +252,17 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope, event, listener.data);
                 // 和 jQuery 逻辑保持一致
-                // return false 等价 preventDefault + stopProgation
+
                 if (ret !== undefined) {
-                    // no use
-                    // event.result = ret;
-                    //有一个 false，最终结果就是 false
-                    if (ret === false) {
+
+                    // 有一个 false，最终结果就是 false
+                    // 否则等于最后一个返回值
+                    if (gRet !== false) {
                         gRet = ret;
+                    }
+
+                    // return false 等价 preventDefault + stopProgation
+                    if (ret === false) {
                         event.halt();
                     }
                 }
