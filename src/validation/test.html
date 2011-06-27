@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test Runner</title>
+<script src="../../build/kissy-aio-min.js"></script>
+
+</head>
+<body>
+
+<script>
+	var S= KISSY;
+		
+
+	function Bird(name) { this.name = name; }
+	
+	S.augment(Bird, S.EventTarget, {
+		fly:function(){
+			var result = this.fire("fly");
+			console.log(result);
+		}
+	});
+
+	var t = new Bird('Frank');
+	
+	t.on("fly",function(){
+		console.log("fly");
+		return "fly fly fly..";
+	})
+	
+	t.fly();
+
+</script>
+
+</body>
+</html>
