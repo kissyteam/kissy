@@ -231,10 +231,15 @@
             })();
 
 
-        (function() {
-            MenuButton.decorateSelect('#decorateSelect', {
+         (function() {
+            var button = MenuButton.decorateSelect('#decorateSelect', {
                         prefixCls:"goog-"
-                    })
+                    });
+
+
+            button.get("menu").on("menuItemClick", function(e) {
+                alert(e.menuItem.get("value"));
+            });
         })();
 
 
