@@ -680,6 +680,21 @@ build time: ${build.time}
             },
 
             /**
+             * it is not same with native bind
+             * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+             */
+            bind:function(fn, obj) {
+                var slice = [].slice,
+                    args = slice.call(arguments, 2),
+                    bound = function () {
+                        return fn.apply(this instanceof bound ? this : obj,
+                            args.concat(slice.call(arguments)));
+                    };
+                bound.prototype = fn.prototype;
+                return bound;
+            },
+
+            /**
              * Gets current date in milliseconds.
              */
             now: function() {

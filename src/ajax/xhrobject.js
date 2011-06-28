@@ -1,5 +1,5 @@
 /**
- * encapsulation of io object
+ * encapsulation of io object . as transaction object in yui3
  * @author: yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {

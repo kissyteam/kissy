@@ -118,7 +118,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
     }
 
-    function handXhr(e) {
+    function handleXhrEvent(e) {
         var xhr = this,
             c = xhr.config,
             type = e.type;
@@ -160,7 +160,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             xhr.setRequestHeader(i, c.headers[ i ]);
         }
 
-        xhr.on("complete success error", handXhr);
+        xhr.on("complete success error", handleXhrEvent);
 
         xhr.readyState = 1;
 

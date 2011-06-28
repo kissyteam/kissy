@@ -77,7 +77,12 @@ KISSY.add("ajax/xhr", function(S, io) {
                     if (xhrObj.mimeType && xhr.overrideMimeType) {
                         xhr.overrideMimeType(xhrObj.mimeType);
                     }
+                    // yui3 and jquery both have
+                    if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
+                        xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+                    }
                     try {
+
                         for (i in xhrObj.requestHeaders) {
                             xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
                         }

@@ -1,24 +1,24 @@
 describe('lang.js', function() {
     beforeEach(function() {
         this.addMatchers({
-            toBeAlmostEqual: function(expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-            },
+                toBeAlmostEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                },
 
 
-            toBeEqual: function(expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-            },
+                toBeEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                },
 
-            toBeArrayEq:function(expected) {
-                var actual = this.actual;
-                if (expected.length != actual.length) return false;
-                for (var i = 0; i < expected.length; i++) {
-                    if (expected[i] != actual[i]) return false;
+                toBeArrayEq:function(expected) {
+                    var actual = this.actual;
+                    if (expected.length != actual.length) return false;
+                    for (var i = 0; i < expected.length; i++) {
+                        if (expected[i] != actual[i]) return false;
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
     });
     var S = KISSY,
         host = S.__HOST,
@@ -71,7 +71,7 @@ describe('lang.js', function() {
         expect(S.param({foo:1, bar:[]})).toBe('foo=1');
         expect(S.param({foo:{}, bar:2})).toBe('bar=2');
         expect(S.param({foo:function() {
-        }, bar:2})).toBe('bar=2');
+            }, bar:2})).toBe('bar=2');
 
         expect(S.param({foo:undefined, bar:2})).toBe('foo=undefined&bar=2');
         expect(S.param({foo:null, bar:2})).toBe('foo=null&bar=2');
@@ -480,6 +480,38 @@ describe('lang.js', function() {
             return previousValue + currentValue;
         }, 10);
         expect(r).toBe(20);
+    });
+
+
+    it("S.bind", function() {
+        function x() {
+            expect(this).toBe(window);
+        }
+
+        S.bind(x)();
+
+        function y(a, b, c) {
+            expect(a).toBe(1);
+            expect(b).toBe(2);
+            expect(c).toBe(3);
+            expect(this instanceof y).toBe(true);
+        }
+
+        var context = {};
+
+        // when new ,ignore context
+        new (S.bind(y, context, 1, 2))(3);
+
+
+        function z(a, b, c) {
+            expect(a).toBe(1);
+            expect(b).toBe(2);
+            expect(c).toBe(3);
+            expect(this).toBe(context);
+        }
+
+        // consider context
+        S.bind(z, context,1, 2)(3);
     });
 
     it('S.now', function() {

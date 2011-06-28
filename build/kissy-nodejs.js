@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110628102543',
+        buildTime:'20110628115714',
 
         /**
          * Returns a new object containing all of the properties of
@@ -864,6 +864,21 @@ build time: ${build.time}
                 }
 
                 return accumulator;
+            },
+
+            /**
+             * it is not same with native bind
+             * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+             */
+            bind:function(fn, obj) {
+                var slice = [].slice,
+                    args = slice.call(arguments, 2),
+                    bound = function () {
+                        return fn.apply(this instanceof bound ? this : obj,
+                            args.concat(slice.call(arguments)));
+                    };
+                bound.prototype = fn.prototype;
+                return bound;
             },
 
             /**
@@ -8820,7 +8835,7 @@ KISSY.add('json', function (S, JSON) {
 });
 
 /**
- * encapsulation of io object
+ * encapsulation of io object . as transaction object in yui3
  * @author: yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
@@ -9143,7 +9158,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
     }
 
-    function handXhr(e) {
+    function handleXhrEvent(e) {
         var xhr = this,
             c = xhr.config,
             type = e.type;
@@ -9185,7 +9200,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             xhr.setRequestHeader(i, c.headers[ i ]);
         }
 
-        xhr.on("complete success error", handXhr);
+        xhr.on("complete success error", handleXhrEvent);
 
         xhr.readyState = 1;
 
@@ -9316,7 +9331,12 @@ KISSY.add("ajax/xhr", function(S, io) {
                     if (xhrObj.mimeType && xhr.overrideMimeType) {
                         xhr.overrideMimeType(xhrObj.mimeType);
                     }
+                    // yui3 and jquery both have
+                    if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
+                        xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+                    }
                     try {
+
                         for (i in xhrObj.requestHeaders) {
                             xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
                         }
