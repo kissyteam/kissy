@@ -18,7 +18,7 @@ History:
  - [x] ajax 无论什么错误，出错后都会触发 error
  - [!] ajax 所有方法都返回模拟 xhr 对象，包含 abort 方法用于中断当前请求等
  - [!] ajax 请求地址的响应头如果设置了 content-type 为 json 或 xml ，回调的第一个参数自动为该格式，不需要手动 parse
-
+ - [+] 增加 S.io.upload 方法，用于无刷新文件上传
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法

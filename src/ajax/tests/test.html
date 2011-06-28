@@ -17,15 +17,21 @@
 <script src="../../../build/json.js"></script>
 <script type="text/javascript" src="../base.js"></script>
 <script type="text/javascript" src="../xhrobject.js"></script>
-<script type="text/javascript" src="../xhr.js"></script>
-<script type="text/javascript" src="../script.js"></script>
+<script type="text/javascript" src="../iframe-upload.js"></script>
+<script type="text/javascript" src="../form-serializer.js"></script>
+<script type="text/javascript" src="../form.js"></script>
 <script type="text/javascript" src="../jsonp.js"></script>
-<script src="../../ajax.js"></script>
+<script type="text/javascript" src="../script.js"></script>
+<script type="text/javascript" src="../xhr.js"></script>
+<script type="text/javascript" src="../../ajax.js"></script>
 <script src="ajax-spec.js"></script>
 <script src="1.2-spec.js"></script>
 </head>
 <body>
 <h1>KISSY.Ajax Test Cases</h1>
+<form id="f" enctype="multipart/form-data" method="post">
+    <input name="test" value="t"/>
+</form>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
     jasmine.getEnv().execute(function() {

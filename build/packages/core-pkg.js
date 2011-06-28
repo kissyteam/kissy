@@ -43,6 +43,9 @@ D:\code\kissy_git\kissy\src\ajax\base.js
 D:\code\kissy_git\kissy\src\ajax\xhr.js
 D:\code\kissy_git\kissy\src\ajax\script.js
 D:\code\kissy_git\kissy\src\ajax\jsonp.js
+D:\code\kissy_git\kissy\src\ajax\form-serializer.js
+D:\code\kissy_git\kissy\src\ajax\form.js
+D:\code\kissy_git\kissy\src\ajax\iframe-upload.js
 D:\code\kissy_git\kissy\src\ajax.js
 D:\code\kissy_git\kissy\src\base\attribute.js
 D:\code\kissy_git\kissy\src\base\base.js
@@ -6368,10 +6371,14 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             },
 
             callback:function(status, statusText) {
-                // debugger
+                //debugger
                 var xhr = this;
                 // 只能执行一次，防止重复执行
                 // 例如完成后，调用 abort
+
+                // 到这要么成功，调用success
+                // 要么失败，调用 error
+                // 最终都会调用 complete
                 if (xhr.state == 2) {
                     return;
                 }
@@ -6452,7 +6459,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         defaultConfig = {
             // isLocal:isLocal,
             type:"GET",
-            contentType: "application/x-www-form-urlencoded",
+            // only support utf-8 when post, encoding can not be changed actually
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             async:true,
 
             /*
@@ -6513,8 +6521,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         }
 
         if (c.data && !S.isString(c.data)) {
+            // 必须 encodeURIComponent 编码 utf-8
             c.data = S.param(c.data);
         }
+
         c.type = c.type.toUpperCase();
         c.hasContent = !rnoContent.test(c.type);
 
@@ -6589,7 +6599,6 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         // Timeout
         if (c.async && c.timeout > 0) {
             xhr.timeoutTimer = setTimeout(function() {
-                S.log("timeout!!!!!!!!!");
                 xhr.abort("timeout");
             }, c.timeout);
         }
@@ -6926,6 +6935,7 @@ KISSY.add("ajax/script", function(S, io) {
 
 /**
  * jsonp transport based on script transport
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
@@ -6994,6 +7004,201 @@ KISSY.add("ajax/jsonp", function(S, io) {
         requires:['./base']
     });
 
+/**
+ * form data  serialization util
+ * @author: yiminghe@gmail.com
+ */
+KISSY.add("ajax/form-serializer", function(S, DOM) {
+    var enc = encodeURIComponent;
+    return {
+        serialize:function(form) {
+            form = DOM.get(form);
+            var data = [];
+            S.each(form.elements, function(e) {
+                var d = e.disabled;
+                //必须编码
+                if (!d) {
+                    data.push(enc(e.name) + "=" + enc(DOM.val(e)));
+                }
+            });
+            return data.join("&");
+        }
+    };
+}, {
+        requires:['dom']
+    });
+
+KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
+
+    io.on("start", function(e) {
+        //debugger
+        var xhr = e.xhr,
+            c = xhr.config;
+        // serialize form if needed
+        if (c.form) {
+            var form = DOM.get(c.form),
+                enctype = form['encoding'] || form.enctype;
+            // 上传有其他方法
+            if (enctype.toLowerCase() != "multipart/form-data") {
+                // when get need encode
+                var formParam = FormSerializer.serialize(form);
+
+                if (formParam) {
+                    if (c.hasContent) {
+                        // post 加到 data 中
+                        c.data = c.data || "";
+                        if (c.data) {
+                            c.data += "&";
+                        }
+                        c.data += formParam;
+                    } else {
+                        // get 直接加到 url
+                        c.url += ( /\?/.test(c.url) ? "&" : "?" ) + formParam;
+                    }
+                }
+            } else {
+                var d = c.dataType[0];
+                if (d == "*") {
+                    d = "text";
+                }
+                c.dataType.length = 2;
+                c.dataType[0] = "iframe";
+                c.dataType[1] = d;
+            }
+        }
+    });
+
+    return io;
+
+}, {
+        requires:['./base',"dom","./form-serializer"]
+    });
+
+/**
+ * non-refresh upload file with form by iframe
+ * @author: yiminghe@gmail.com
+ */
+KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
+
+    var transports = io.__transports,
+        doc = document,
+        defaultConfig = io.__defaultConfig;
+
+    // iframe 内的内容就是 body.innerText
+    defaultConfig.converters.text.iframe = function(text) {
+        return text;
+    };
+
+
+    // iframe 到其他类型的转化和 text 一样
+    defaultConfig.converters.iframe = defaultConfig.converters.text;
+
+    function createIframe(xhr) {
+        var id = S.guid("ajax-iframe");
+        xhr.iframe = DOM.create("<iframe " +
+            " id='" + id + "'" +
+            // need name for target of form
+            " name='" + id + "'" +
+            " style='position:absolute;left:-9999px;top:-9999px;'/>");
+        xhr.iframeId = id;
+        DOM.prepend(xhr.iframe, doc.body || doc.documentElement);
+    }
+
+    function addDataToForm(data, form) {
+        data = S.unparam(data);
+        var ret = [];
+        for (var d in data) {
+            var e = doc.createElement("input");
+            e.type = 'hidden';
+            e.name = d;
+            e.value = data[d];
+            DOM.append(e, form);
+            ret.push(e);
+        }
+        return ret;
+    }
+
+
+    function removeFieldsFromData(fields) {
+        DOM.remove(fields);
+    }
+
+    function IframeTransport(xhr) {
+        this.xhr = xhr;
+    }
+
+    S.augment(IframeTransport, {
+            send:function() {
+                //debugger
+                var xhr = this.xhr,
+                    c = xhr.config,
+                    fields,
+                    form = DOM.get(c.form);
+
+                this.attrs = {
+                    target:DOM.attr(form, "target") || "",
+                    action:DOM.attr(form, "action") || ""
+                };
+                this.form = form;
+
+                createIframe(xhr);
+
+                // set target to iframe to avoid main page refresh
+                DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
+
+                if (c.data) {
+                    fields = addDataToForm(c.data, form);
+                }
+
+                this.fields = fields;
+
+                var iframe = xhr.iframe;
+
+                Event.on(iframe, "load error", this._callback, this);
+
+                form.submit();
+
+            },
+
+            _callback:function(event, abort) {
+                //debugger
+                var form = this.form,
+                    xhr = this.xhr,
+                    eventType = event.type,
+                    iframe = xhr.iframe;
+
+                DOM.attr(form, this.attrs);
+
+                if (eventType == "load") {
+                    var iframeDoc = iframe.contentWindow.document;
+                    xhr.responseXML = iframeDoc;
+                    xhr.responseText = DOM.text(iframeDoc.body);
+                    xhr.callback(200, "success");
+                } else if (eventType == 'error') {
+                    xhr.callback(500, "error");
+                }
+
+                removeFieldsFromData(this.fields);
+                Event.detach(iframe);
+                DOM.remove(iframe);
+
+                // nullify to prevent memory leak?
+                xhr.iframe = null;
+            },
+
+            abort:function() {
+                this._callback(0, 1);
+            }
+        });
+
+    transports['iframe'] = IframeTransport;
+
+    return io;
+
+}, {
+        requires:["dom","event","./base"]
+    });
+
 KISSY.add("ajax", function(S, io) {
 
     // some shortcut
@@ -7042,6 +7247,21 @@ KISSY.add("ajax", function(S, io) {
 
             getJSON: function(url, data, callback) {
                 return io.get(url, data, callback, "json");
+            },
+
+            upload:function(url, form, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = null; // 占位符
+                }
+                return io({
+                        url:url,
+                        type:'post',
+                        dataType:dataType,
+                        form:form,
+                        data:data,
+                        success:callback
+                    });
             }
         });
 
@@ -7051,7 +7271,9 @@ KISSY.add("ajax", function(S, io) {
             "ajax/xhrobject",
             "ajax/xhr",
             "ajax/script",
-            "ajax/jsonp"]
+            "ajax/jsonp",
+            "ajax/form",
+            "ajax/iframe-upload"]
     });
 
 /**

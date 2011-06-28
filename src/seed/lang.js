@@ -600,7 +600,7 @@
 
             endsWith:function(str, suffix) {
                 var ind = str.length - suffix.length;
-                return str.indexOf(suffix, ind) == ind;
+                return ind >= 0 && str.indexOf(suffix, ind) == ind;
             }
 
         });

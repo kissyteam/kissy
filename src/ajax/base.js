@@ -32,7 +32,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         defaultConfig = {
             // isLocal:isLocal,
             type:"GET",
-            contentType: "application/x-www-form-urlencoded",
+            // only support utf-8 when post, encoding can not be changed actually
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             async:true,
 
             /*
@@ -93,8 +94,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         }
 
         if (c.data && !S.isString(c.data)) {
+            // 必须 encodeURIComponent 编码 utf-8
             c.data = S.param(c.data);
         }
+
         c.type = c.type.toUpperCase();
         c.hasContent = !rnoContent.test(c.type);
 
@@ -169,7 +172,6 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         // Timeout
         if (c.async && c.timeout > 0) {
             xhr.timeoutTimer = setTimeout(function() {
-                S.log("timeout!!!!!!!!!");
                 xhr.abort("timeout");
             }, c.timeout);
         }

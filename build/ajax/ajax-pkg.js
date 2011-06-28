@@ -37,7 +37,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         defaultConfig = {
             // isLocal:isLocal,
             type:"GET",
-            contentType: "application/x-www-form-urlencoded",
+            // only support utf-8 when post, encoding can not be changed actually
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             async:true,
 
             /*
@@ -98,8 +99,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         }
 
         if (c.data && !S.isString(c.data)) {
+            // 必须 encodeURIComponent 编码 utf-8
             c.data = S.param(c.data);
         }
+
         c.type = c.type.toUpperCase();
         c.hasContent = !rnoContent.test(c.type);
 
@@ -112,7 +115,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             }
         }
 
-        // 数据类型处理链，�?��步将前面的数据类型转化成�?���?��
+        // 数据类型处理链，一步步将前面的数据类型转化成最后一个
         c.dataType = S.trim(c.dataType || "*").split(rspace);
 
         c.context = c.context || c;
@@ -123,7 +126,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
     }
 
-    function handXhr(e) {
+    function handleXhrEvent(e) {
         var xhr = this,
             c = xhr.config,
             type = e.type;
@@ -165,7 +168,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             xhr.setRequestHeader(i, c.headers[ i ]);
         }
 
-        xhr.on("complete success error", handXhr);
+        xhr.on("complete success error", handleXhrEvent);
 
         xhr.readyState = 1;
 
@@ -174,7 +177,6 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         // Timeout
         if (c.async && c.timeout > 0) {
             xhr.timeoutTimer = setTimeout(function() {
-                S.log("timeout!!!!!!!!!");
                 xhr.abort("timeout");
             }, c.timeout);
         }
@@ -207,216 +209,379 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     });
 
 /**
- * 借鉴 jquery，优化减少闭包使�?
+ * 借鉴 jquery，优化减少闭包使用
  *
  * TODO:
- *  ifModified mode 是否�?���?
- *  优点�?
- *      不依赖浏览器处理，ajax 请求浏览不会自动�?If-Modified-Since If-None-Match ??
- *  缺点�?
+ *  ifModified mode 是否需要？
+ *  优点：
+ *      不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
+ *  缺点：
  *      内存占用
  **//**
- * encapsulation of io object
+ * form data  serialization util
  * @author: yiminghe@gmail.com
  */
-KISSY.add("ajax/xhrobject", function(S, Event) {
-
-    var // get individual response header from responseheader str
-        rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
-
-    function handleResponseData(xhr) {
-
-        // text xml 是否原生转化支持
-        var text = xhr.responseText,
-            xml = xhr.responseXML,
-            c = xhr.config,
-            cConverts = c.converters,
-            xConverts = xhr.converters || {},
-            type,
-            responseData,
-            contents = c.contents,
-            dataType = c.dataType;
-
-        // 例如 script 直接是js引擎执行，没有返回�?，不�?��自己处理初始返回�?
-        // jsonp 时还�?���?script 转换�?json，后面还得自己来
-        if (text || xml) {
-
-            var contentType = xhr.mimeType || xhr.getResponseHeader("Content-Type");
-
-            // 去除无用的�?用格�?
-            while (dataType[0] == "*") {
-                dataType.shift();
-            }
-
-            if (!dataType.length) {
-                // 获取源数据格式，放在第一�?
-                for (type in contents) {
-                    if (contents[type].test(contentType)) {
-                        if (dataType[0] != type) {
-                            dataType.unshift(type);
-                        }
-                        break;
-                    }
+KISSY.add("ajax/form-serializer", function(S, DOM) {
+    var enc = encodeURIComponent;
+    return {
+        serialize:function(form) {
+            form = DOM.get(form);
+            var data = [];
+            S.each(form.elements, function(e) {
+                var d = e.disabled;
+                //必须编码
+                if (!d) {
+                    data.push(enc(e.name) + "=" + enc(DOM.val(e)));
                 }
-            }
-            // 服务器端没有告知（并且客户端没有mimetype）默�?text 类型
-            dataType[0] = dataType[0] || "text";
-
-            //获得合�?的初始数�?
-            if (dataType[0] == "text" && text != undefined) {
-                responseData = text;
-            }
-            // �?xml 值才直接取，否则可能还要�?xml �?
-            else if (dataType[0] == "xml" && xml != undefined) {
-                responseData = xml;
-            } else {
-                // 看能否从 text xml 转换到合适数�?
-                S.each(["text","xml"], function(prevType) {
-                    var type = dataType[0],
-                        converter = xConverts[prevType] && xConverts[prevType][type] ||
-                            cConverts[prevType] && cConverts[prevType][type];
-                    if (converter) {
-                        dataType.unshift(prevType);
-                        responseData = prevType == "text" ? text : xml;
-                        return false;
-                    }
-                });
-            }
-        }
-        var prevType = dataType[0];
-
-        // 按照转化链把初始数据转换成我们想要的数据类型
-        for (var i = 1; i < dataType.length; i++) {
-            type = dataType[i];
-
-            var converter = xConverts[prevType] && xConverts[prevType][type] ||
-                cConverts[prevType] && cConverts[prevType][type];
-
-            if (!converter) {
-                throw "no covert for " + prevType + " => " + type;
-            }
-            responseData = converter(responseData);
-
-            prevType = type;
-        }
-
-        xhr.responseData = responseData;
-    }
-
-    function XhrObject(c) {
-        S.mix(this, {
-                // 结构化数据，�?json
-                responseData:null,
-                config:c || {},
-                timeoutTimer:null,
-                responseText:null,
-                responseXML:null,
-                responseHeadersString:"",
-                responseHeaders:null,
-                requestHeaders:{},
-                readyState:0,
-                //internal state
-                state:0,
-                statusText:null,
-                status:0,
-                transport:null
             });
-    }
+            return data.join("&");
+        }
+    };
+}, {
+        requires:['dom']
+    });KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
-    S.augment(XhrObject, Event.Target, {
-            // Caches the header
-            setRequestHeader: function(name, value) {
-                this.requestHeaders[ name ] = value;
-                return this;
-            },
+    io.on("start", function(e) {
+        //debugger
+        var xhr = e.xhr,
+            c = xhr.config;
+        // serialize form if needed
+        if (c.form) {
+            var form = DOM.get(c.form),
+                enctype = form['encoding'] || form.enctype;
+            // 上传有其他方法
+            if (enctype.toLowerCase() != "multipart/form-data") {
+                // when get need encode
+                var formParam = FormSerializer.serialize(form);
 
-            // Raw string
-            getAllResponseHeaders: function() {
-                return this.state === 2 ? this.responseHeadersString : null;
-            },
-
-            // Builds headers hashtable if needed
-            getResponseHeader: function(key) {
-                var match;
-                if (this.state === 2) {
-                    if (!this.responseHeaders) {
-                        this.responseHeaders = {};
-                        while (( match = rheaders.exec(this.responseHeadersString) )) {
-                            this.responseHeaders[ match[1] ] = match[ 2 ];
+                if (formParam) {
+                    if (c.hasContent) {
+                        // post 加到 data 中
+                        c.data = c.data || "";
+                        if (c.data) {
+                            c.data += "&";
                         }
-                    }
-                    match = this.responseHeaders[ key];
-                }
-                return match === undefined ? null : match;
-            },
-
-            // Overrides response content-type header
-            overrideMimeType: function(type) {
-                if (!this.state) {
-                    this.mimeType = type;
-                }
-                return this;
-            },
-
-            // Cancel the request
-            abort: function(statusText) {
-                statusText = statusText || "abort";
-                if (this.transport) {
-                    this.transport.abort(statusText);
-                }
-                this.callback(0, statusText);
-                return this;
-            },
-
-            callback:function(status, statusText) {
-                // debugger
-                var xhr = this;
-                // 只能执行�?��，防止重复执�?
-                // 例如完成后，调用 abort
-                if (xhr.state == 2) {
-                    return;
-                }
-                xhr.state = 2;
-                xhr.readyState = 4;
-                var isSuccess;
-                if (status >= 200 && status < 300 || status == 304) {
-
-                    if (status == 304) {
-                        statusText = "notmodified";
-                        isSuccess = true;
+                        c.data += formParam;
                     } else {
-                        try {
-                            handleResponseData(xhr);
-                            statusText = "success";
-                            isSuccess = true;
-                        } catch(e) {
-                            statusText = "parsererror : " + e;
-                        }
-                    }
-
-                } else {
-                    if (status < 0) {
-                        status = 0;
+                        // get 直接加到 url
+                        c.url += ( /\?/.test(c.url) ? "&" : "?" ) + formParam;
                     }
                 }
-
-                xhr.status = status;
-                xhr.statusText = statusText;
-
-                if (isSuccess) {
-                    xhr.fire("success");
-                } else {
-                    xhr.fire("error");
+            } else {
+                var d = c.dataType[0];
+                if (d == "*") {
+                    d = "text";
                 }
-                xhr.fire("complete");
-                xhr.transport = undefined;
+                c.dataType.length = 2;
+                c.dataType[0] = "iframe";
+                c.dataType[1] = d;
             }
         }
-    );
+    });
 
-    return XhrObject;
+    return io;
+
 }, {
-        requires:["event"]
+        requires:['./base',"dom","./form-serializer"]
+    });/**
+ * non-refresh upload file with form by iframe
+ * @author: yiminghe@gmail.com
+ */
+KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
+
+    var transports = io.__transports,
+        doc = document,
+        defaultConfig = io.__defaultConfig;
+
+    // iframe 内的内容就是 body.innerText
+    defaultConfig.converters.text.iframe = function(text) {
+        return text;
+    };
+
+
+    // iframe 到其他类型的转化和 text 一样
+    defaultConfig.converters.iframe = defaultConfig.converters.text;
+
+    function createIframe(xhr) {
+        var id = S.guid("ajax-iframe");
+        xhr.iframe = DOM.create("<iframe " +
+            " id='" + id + "'" +
+            // need name for target of form
+            " name='" + id + "'" +
+            " style='position:absolute;left:-9999px;top:-9999px;'/>");
+        xhr.iframeId = id;
+        DOM.prepend(xhr.iframe, doc.body || doc.documentElement);
+    }
+
+    function addDataToForm(data, form) {
+        data = S.unparam(data);
+        var ret = [];
+        for (var d in data) {
+            var e = doc.createElement("input");
+            e.type = 'hidden';
+            e.name = d;
+            e.value = data[d];
+            DOM.append(e, form);
+            ret.push(e);
+        }
+        return ret;
+    }
+
+
+    function removeFieldsFromData(fields) {
+        DOM.remove(fields);
+    }
+
+    function IframeTransport(xhr) {
+        this.xhr = xhr;
+    }
+
+    S.augment(IframeTransport, {
+            send:function() {
+                //debugger
+                var xhr = this.xhr,
+                    c = xhr.config,
+                    fields,
+                    form = DOM.get(c.form);
+
+                this.attrs = {
+                    target:DOM.attr(form, "target") || "",
+                    action:DOM.attr(form, "action") || ""
+                };
+                this.form = form;
+
+                createIframe(xhr);
+
+                // set target to iframe to avoid main page refresh
+                DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
+
+                if (c.data) {
+                    fields = addDataToForm(c.data, form);
+                }
+
+                this.fields = fields;
+
+                var iframe = xhr.iframe;
+
+                Event.on(iframe, "load error", this._callback, this);
+
+                form.submit();
+
+            },
+
+            _callback:function(event, abort) {
+                //debugger
+                var form = this.form,
+                    xhr = this.xhr,
+                    eventType = event.type,
+                    iframe = xhr.iframe;
+
+                DOM.attr(form, this.attrs);
+
+                if (eventType == "load") {
+                    var iframeDoc = iframe.contentWindow.document;
+                    xhr.responseXML = iframeDoc;
+                    xhr.responseText = DOM.text(iframeDoc.body);
+                    xhr.callback(200, "success");
+                } else if (eventType == 'error') {
+                    xhr.callback(500, "error");
+                }
+
+                removeFieldsFromData(this.fields);
+                Event.detach(iframe);
+                DOM.remove(iframe);
+
+                // nullify to prevent memory leak?
+                xhr.iframe = null;
+            },
+
+            abort:function() {
+                this._callback(0, 1);
+            }
+        });
+
+    transports['iframe'] = IframeTransport;
+
+    return io;
+
+}, {
+        requires:["dom","event","./base"]
+    });/**
+ * jsonp transport based on script transport
+ * @author: yiminghe@gmail.com
+ */
+KISSY.add("ajax/jsonp", function(S, io) {
+
+    var defaultConfig = io.__defaultConfig;
+
+    defaultConfig.jsonp = "callback";
+    defaultConfig.jsonpCallback = function() {
+        //不使用 now() ，极端情况下可能重复
+        return S.guid("jsonp");
+    };
+
+    io.on("start", function(e) {
+        var xhr = e.xhr,c = xhr.config;
+        if (c.dataType[0] == "jsonp") {
+            var response,
+                cJsonpCallback = c.jsonpCallback,
+                jsonpCallback = S.isFunction(cJsonpCallback) ?
+                    cJsonpCallback() :
+                    cJsonpCallback,
+                previous = window[ jsonpCallback ];
+
+            c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
+
+            // build temporary JSONP function
+            window[jsonpCallback] = function(r) {
+                //debugger
+                // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
+                response = [r];
+            };
+
+            // cleanup whether success or failure
+            xhr.on("complete", function() {
+                window[ jsonpCallback ] = previous;
+                if (previous === undefined) {
+                    try {
+                        delete window[ jsonpCallback ];
+                    } catch(e) {
+                    }
+                } else if (response) {
+                    // after io success handler called
+                    // then call original existed jsonpcallback
+                    previous(response[0]);
+                }
+            });
+
+            xhr.converters = xhr.converters || {};
+            xhr.converters.script = xhr.converters.script || {};
+
+            // script -> jsonp ,jsonp need to see json not as script
+            xhr.converters.script.json = function() {
+                if (!response) {
+                    S.error(" not call jsonpCallback : " + jsonpCallback)
+                }
+                return response[0];
+            };
+
+            c.dataType.length = 2;
+            // 利用 script transport 发送 script 请求
+            c.dataType[0] = 'script';
+            c.dataType[1] = 'json';
+        }
+    });
+
+    return io;
+}, {
+        requires:['./base']
+    });/**
+ * script transport for kissy io
+ * @description: modified version of S.getScript , add abort ability
+ * @author: yiminghe@gmail.com
+ */
+KISSY.add("ajax/script", function(S, io) {
+
+    var transports = io.__transports,
+        defaultConfig = io.__defaultConfig;
+
+    defaultConfig.accepts.script = "text/javascript, " +
+        "application/javascript, " +
+        "application/ecmascript, " +
+        "application/x-ecmascript";
+
+    defaultConfig.contents.script = /javascript|ecmascript/;
+    // 如果以 xhr+eval 需要下面的，否则直接 script node 不需要，引擎自己执行了，不需要手动 eval
+    defaultConfig.converters.text.script = function(text) {
+        S.globalEval(text);
+        return text;
+    };
+
+
+    function ScriptTransport(xhrObj) {
+        // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
+        if (!xhrObj.config.crossDomain &&
+            !xhrObj.config['forceScript']) {
+            return new transports["*"](xhrObj);
+        }
+        this.xhrObj = xhrObj;
+        return 0;
+    }
+
+    S.augment(ScriptTransport, {
+            send:function() {
+                var self = this,
+                    script,
+                    xhrObj = this.xhrObj,
+                    c = xhrObj.config,
+                    head = document['head'] ||
+                        document.getElementsByTagName("head")[0] ||
+                        document.documentElement;
+                self.head = head;
+                script = document.createElement("script");
+                self.script = script;
+                script.async = "async";
+
+                if (c['scriptCharset']) {
+                    script.charset = c['scriptCharset'];
+                }
+
+                script.src = c.url;
+
+                script.onerror =
+                    script.onload =
+                        script.onreadystatechange = function(e) {
+                            e = e || window.event;
+                            // firefox onerror 没有 type ?!
+                            self._callback((e.type || "error").toLowerCase());
+                        };
+
+                head.insertBefore(script, head.firstChild);
+            },
+
+            _callback:function(event, abort) {
+                var script = this.script,
+                    xhrObj = this.xhrObj,
+                    head = this.head;
+
+                if (abort ||
+                    !script.readyState ||
+                    /loaded|complete/.test(script.readyState)
+                    || event == "error"
+                    ) {
+
+                    script['onerror'] = script.onload = script.onreadystatechange = null;
+
+                    // Remove the script
+                    if (head && script.parentNode) {
+                        head.removeChild(script);
+                    }
+
+                    this.script = undefined;
+                    this.head = undefined;
+
+                    // Callback if not abort
+                    if (!abort && event != "error") {
+                        xhrObj.callback(200, "success");
+                    }
+                    // 非 ie<9 可以判断出来
+                    else if (event == "error") {
+                        xhrObj.callback(500, "scripterror");
+                    }
+                }
+            },
+
+            abort:function() {
+                this._callback(0, 1);
+            }
+        });
+
+    transports["script"] = ScriptTransport;
+
+    return io;
+
+}, {
+        requires:['./base','./xhr']
     });/**
  * ajax xhr tranport class
  * @author: yiminghe@gmail.com
@@ -496,7 +661,12 @@ KISSY.add("ajax/xhr", function(S, io) {
                     if (xhrObj.mimeType && xhr.overrideMimeType) {
                         xhr.overrideMimeType(xhrObj.mimeType);
                     }
+                    // yui3 and jquery both have
+                    if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
+                        xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+                    }
                     try {
+
                         for (i in xhrObj.requestHeaders) {
                             xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
                         }
@@ -513,7 +683,7 @@ KISSY.add("ajax/xhr", function(S, io) {
                         }
                     }
                 },
-                // �?xhrObj.abort 调用，自己不可以调用 xhrObj.abort
+                // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
                 abort:function() {
                     this._callback(0, 1);
                 },
@@ -592,188 +762,219 @@ KISSY.add("ajax/xhr", function(S, io) {
     });
 
 /**
- * 借鉴 jquery，优化使用原型替代闭�?
+ * 借鉴 jquery，优化使用原型替代闭包
  **//**
- * script transport for kissy io
- * @description: modified version of S.getScript , add abort ability
+ * encapsulation of io object . as transaction object in yui3
  * @author: yiminghe@gmail.com
  */
-KISSY.add("ajax/script", function(S, io) {
+KISSY.add("ajax/xhrobject", function(S, Event) {
 
-    var transports = io.__transports,
-        defaultConfig = io.__defaultConfig;
+    var // get individual response header from responseheader str
+        rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
-    defaultConfig.accepts.script = "text/javascript, " +
-        "application/javascript, " +
-        "application/ecmascript, " +
-        "application/x-ecmascript";
+    function handleResponseData(xhr) {
 
-    defaultConfig.contents.script = /javascript|ecmascript/;
-    // 如果�?xhr+eval �?��下面的，否则直接 script node 不需要，引擎自己执行了，不需要手�?eval
-    defaultConfig.converters.text.script = function(text) {
-        S.globalEval(text);
-        return text;
-    };
+        // text xml 是否原生转化支持
+        var text = xhr.responseText,
+            xml = xhr.responseXML,
+            c = xhr.config,
+            cConverts = c.converters,
+            xConverts = xhr.converters || {},
+            type,
+            responseData,
+            contents = c.contents,
+            dataType = c.dataType;
 
+        // 例如 script 直接是js引擎执行，没有返回值，不需要自己处理初始返回值
+        // jsonp 时还需要把 script 转换成 json，后面还得自己来
+        if (text || xml) {
 
-    function ScriptTransport(xhrObj) {
-        // 优先使用 xhr+eval 来执行脚�? ie 下可以探测到（更多）失败状�?
-        if (!xhrObj.config.crossDomain &&
-            !xhrObj.config['forceScript']) {
-            return new transports["*"](xhrObj);
+            var contentType = xhr.mimeType || xhr.getResponseHeader("Content-Type");
+
+            // 去除无用的通用格式
+            while (dataType[0] == "*") {
+                dataType.shift();
+            }
+
+            if (!dataType.length) {
+                // 获取源数据格式，放在第一个
+                for (type in contents) {
+                    if (contents[type].test(contentType)) {
+                        if (dataType[0] != type) {
+                            dataType.unshift(type);
+                        }
+                        break;
+                    }
+                }
+            }
+            // 服务器端没有告知（并且客户端没有mimetype）默认 text 类型
+            dataType[0] = dataType[0] || "text";
+
+            //获得合适的初始数据
+            if (dataType[0] == "text" && text != undefined) {
+                responseData = text;
+            }
+            // 有 xml 值才直接取，否则可能还要从 xml 转
+            else if (dataType[0] == "xml" && xml != undefined) {
+                responseData = xml;
+            } else {
+                // 看能否从 text xml 转换到合适数据
+                S.each(["text","xml"], function(prevType) {
+                    var type = dataType[0],
+                        converter = xConverts[prevType] && xConverts[prevType][type] ||
+                            cConverts[prevType] && cConverts[prevType][type];
+                    if (converter) {
+                        dataType.unshift(prevType);
+                        responseData = prevType == "text" ? text : xml;
+                        return false;
+                    }
+                });
+            }
         }
-        this.xhrObj = xhrObj;
-        return 0;
+        var prevType = dataType[0];
+
+        // 按照转化链把初始数据转换成我们想要的数据类型
+        for (var i = 1; i < dataType.length; i++) {
+            type = dataType[i];
+
+            var converter = xConverts[prevType] && xConverts[prevType][type] ||
+                cConverts[prevType] && cConverts[prevType][type];
+
+            if (!converter) {
+                throw "no covert for " + prevType + " => " + type;
+            }
+            responseData = converter(responseData);
+
+            prevType = type;
+        }
+
+        xhr.responseData = responseData;
     }
 
-    S.augment(ScriptTransport, {
-            send:function() {
-                var self = this,
-                    script,
-                    xhrObj = this.xhrObj,
-                    c = xhrObj.config,
-                    head = document['head'] ||
-                        document.getElementsByTagName("head")[0] ||
-                        document.documentElement;
-                self.head = head;
-                script = document.createElement("script");
-                self.script = script;
-                script.async = "async";
-
-                if (c['scriptCharset']) {
-                    script.charset = c['scriptCharset'];
-                }
-
-                script.src = c.url;
-
-                script.onerror =
-                    script.onload =
-                        script.onreadystatechange = function(e) {
-                            e = e || window.event;
-                            // firefox onerror 没有 type ?!
-                            self._callback((e.type || "error").toLowerCase());
-                        };
-
-                head.insertBefore(script, head.firstChild);
-            },
-
-            _callback:function(event, abort) {
-                var script = this.script,
-                    xhrObj = this.xhrObj,
-                    head = this.head;
-
-                if (abort ||
-                    !script.readyState ||
-                    /loaded|complete/.test(script.readyState)
-                    || event == "error"
-                    ) {
-
-                    script['onerror'] = script.onload = script.onreadystatechange = null;
-
-                    // Remove the script
-                    if (head && script.parentNode) {
-                        head.removeChild(script);
-                    }
-
-                    this.script = undefined;
-                    this.head = undefined;
-
-                    // Callback if not abort
-                    if (!abort && event != "error") {
-                        xhrObj.callback(200, "success");
-                    }
-                    // �?ie<9 可以判断出来
-                    else if (event == "error") {
-                        xhrObj.callback(500, "scripterror");
-                    }
-                }
-            },
-
-            abort:function() {
-                this._callback(0, 1);
-            }
-        });
-
-    transports["script"] = ScriptTransport;
-
-    return io;
-
-}, {
-        requires:['./base','./xhr']
-    });/**
- * jsonp transport based on script transport
- */
-KISSY.add("ajax/jsonp", function(S, io) {
-
-    var defaultConfig = io.__defaultConfig;
-
-    defaultConfig.jsonp = "callback";
-    defaultConfig.jsonpCallback = function() {
-        //不使�?now() ，极端情况下可能重复
-        return S.guid("jsonp");
-    };
-
-    io.on("start", function(e) {
-        var xhr = e.xhr,c = xhr.config;
-        if (c.dataType[0] == "jsonp") {
-            var response,
-                cJsonpCallback = c.jsonpCallback,
-                jsonpCallback = S.isFunction(cJsonpCallback) ?
-                    cJsonpCallback() :
-                    cJsonpCallback,
-                previous = window[ jsonpCallback ];
-
-            c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
-
-            // build temporary JSONP function
-            window[jsonpCallback] = function(r) {
-                //debugger
-                // 使用数组，区别：故意调用�?jsonpCallback(undefined) �?根本没有调用
-                response = [r];
-            };
-
-            // cleanup whether success or failure
-            xhr.on("complete", function() {
-                window[ jsonpCallback ] = previous;
-                if (previous === undefined) {
-                    try {
-                        delete window[ jsonpCallback ];
-                    } catch(e) {
-                    }
-                } else if (response) {
-                    // after io success handler called
-                    // then call original existed jsonpcallback
-                    previous(response[0]);
-                }
+    function XhrObject(c) {
+        S.mix(this, {
+                // 结构化数据，如 json
+                responseData:null,
+                config:c || {},
+                timeoutTimer:null,
+                responseText:null,
+                responseXML:null,
+                responseHeadersString:"",
+                responseHeaders:null,
+                requestHeaders:{},
+                readyState:0,
+                //internal state
+                state:0,
+                statusText:null,
+                status:0,
+                transport:null
             });
+    }
 
-            xhr.converters = xhr.converters || {};
-            xhr.converters.script = xhr.converters.script || {};
+    S.augment(XhrObject, Event.Target, {
+            // Caches the header
+            setRequestHeader: function(name, value) {
+                this.requestHeaders[ name ] = value;
+                return this;
+            },
 
-            // script -> jsonp ,jsonp need to see json not as script
-            xhr.converters.script.json = function() {
-                if (!response) {
-                    S.error(" not call jsonpCallback : " + jsonpCallback)
+            // Raw string
+            getAllResponseHeaders: function() {
+                return this.state === 2 ? this.responseHeadersString : null;
+            },
+
+            // Builds headers hashtable if needed
+            getResponseHeader: function(key) {
+                var match;
+                if (this.state === 2) {
+                    if (!this.responseHeaders) {
+                        this.responseHeaders = {};
+                        while (( match = rheaders.exec(this.responseHeadersString) )) {
+                            this.responseHeaders[ match[1] ] = match[ 2 ];
+                        }
+                    }
+                    match = this.responseHeaders[ key];
                 }
-                return response[0];
-            };
+                return match === undefined ? null : match;
+            },
 
-            c.dataType.length = 2;
-            // 利用 script transport 发�? script 请求
-            c.dataType[0] = 'script';
-            c.dataType[1] = 'json';
+            // Overrides response content-type header
+            overrideMimeType: function(type) {
+                if (!this.state) {
+                    this.mimeType = type;
+                }
+                return this;
+            },
+
+            // Cancel the request
+            abort: function(statusText) {
+                statusText = statusText || "abort";
+                if (this.transport) {
+                    this.transport.abort(statusText);
+                }
+                this.callback(0, statusText);
+                return this;
+            },
+
+            callback:function(status, statusText) {
+                //debugger
+                var xhr = this;
+                // 只能执行一次，防止重复执行
+                // 例如完成后，调用 abort
+
+                // 到这要么成功，调用success
+                // 要么失败，调用 error
+                // 最终都会调用 complete
+                if (xhr.state == 2) {
+                    return;
+                }
+                xhr.state = 2;
+                xhr.readyState = 4;
+                var isSuccess;
+                if (status >= 200 && status < 300 || status == 304) {
+
+                    if (status == 304) {
+                        statusText = "notmodified";
+                        isSuccess = true;
+                    } else {
+                        try {
+                            handleResponseData(xhr);
+                            statusText = "success";
+                            isSuccess = true;
+                        } catch(e) {
+                            statusText = "parsererror : " + e;
+                        }
+                    }
+
+                } else {
+                    if (status < 0) {
+                        status = 0;
+                    }
+                }
+
+                xhr.status = status;
+                xhr.statusText = statusText;
+
+                if (isSuccess) {
+                    xhr.fire("success");
+                } else {
+                    xhr.fire("error");
+                }
+                xhr.fire("complete");
+                xhr.transport = undefined;
+            }
         }
-    });
+    );
 
-    return io;
+    return XhrObject;
 }, {
-        requires:['./base']
+        requires:["event"]
     });KISSY.add("ajax", function(S, io) {
 
     // some shortcut
     S.mix(io, {
             get: function(url, data, callback, dataType, _t) {
-                // data 参数可省�?
+                // data 参数可省略
                 if (S.isFunction(data)) {
                     dataType = callback;
                     callback = data;
@@ -800,13 +1001,13 @@ KISSY.add("ajax/jsonp", function(S, io) {
             jsonp: function(url, data, callback) {
                 if (S.isFunction(data)) {
                     callback = data;
-                    data = null; // 占位�?
+                    data = null; // 占位符
                 }
                 return io.get(url, data, callback, "jsonp");
             },
 
-            // �?S.getScript 保持�?��
-            // 更好�?getScript 可以�?
+            // 和 S.getScript 保持一致
+            // 更好的 getScript 可以用
             /*
              io({
              dataType:'script'
@@ -816,6 +1017,21 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
             getJSON: function(url, data, callback) {
                 return io.get(url, data, callback, "json");
+            },
+
+            upload:function(url, form, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = null; // 占位符
+                }
+                return io({
+                        url:url,
+                        type:'post',
+                        dataType:dataType,
+                        form:form,
+                        data:data,
+                        success:callback
+                    });
             }
         });
 
@@ -825,5 +1041,7 @@ KISSY.add("ajax/jsonp", function(S, io) {
             "ajax/xhrobject",
             "ajax/xhr",
             "ajax/script",
-            "ajax/jsonp"]
+            "ajax/jsonp",
+            "ajax/form",
+            "ajax/iframe-upload"]
     });

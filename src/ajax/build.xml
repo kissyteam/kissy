@@ -8,11 +8,7 @@
 
     <target name="concat">
         <concat destfile="ajax-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="base.js"/>
-            <path path="xhrobject.js"/>
-            <path path="xhr.js"/>
-            <path path="script.js"/>
-            <path path="jsonp.js"/>
+            <fileset dir="${src.dir}" includes="*.js"/>
             <path path="../ajax.js"/>
         </concat>
     </target>

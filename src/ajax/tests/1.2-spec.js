@@ -33,17 +33,15 @@ KISSY.use("json,ajax", function(S, JSON, io) {
 
         it("timeout should work for xhr", function() {
 
-            var re = [];
+            var re = [],ok;
             var xhr = io({
                     url:'ajax.php',
-                    // ie Ä¬ÈÏ»á»º´æ£¬¿ÉÄÜÖ±½Ó´¥·¢ success
-                    // fiddler ¿´²»µ½ÇëÇó£¬×Ô´øÍøÂç²¶»ñÎª 304
+                    // ie é»˜è®¤ä¼šç¼“å­˜ï¼Œå¯èƒ½ç›´æ¥è§¦å‘ success
+                    // fiddler çœ‹ä¸åˆ°è¯·æ±‚ï¼Œè‡ªå¸¦ç½‘ç»œæ•è·ä¸º 304
                     cache:false,
                     dataType:'json',
                     timeout:100,
                     success:function(d, status, r) {
-                        data = d;
-                        request = r;
                         var args = S.makeArray(arguments);
                         re.push(status);
                     },
@@ -52,16 +50,51 @@ KISSY.use("json,ajax", function(S, JSON, io) {
                         re.push(status);
                     },
                     complete:function(data, status) {
+                        ok = true;
                         var args = S.makeArray(arguments);
                         re.push(status);
                     }
                 });
 
-            waits(500);
+            waitsFor(function() {
+                return ok;
+            }, 10000);
 
             runs(function() {
                 expect(re.toString()).toBe(["timeout","timeout"].toString());
             });
+        });
+
+
+        it("should works for form file upload", function() {
+            var re = [],ok,d;
+            var xhr = io({
+                    url:'upload.php',
+                    form:'#f',
+                    type:'post',
+                    dataType:'json',
+                    data:{
+                        test2:"t2"
+                    },
+                    success:function(data) {
+                        ok = true;
+                        d = data;
+
+                    }
+                });
+
+            expect(xhr.iframe.nodeName.toLowerCase()).toBe("iframe");
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(d.test).toBe("t");
+                expect(d.test2).toBe("t2");
+            });
+
+
         });
 
     });

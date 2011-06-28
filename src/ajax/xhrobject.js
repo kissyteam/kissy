@@ -152,10 +152,14 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             },
 
             callback:function(status, statusText) {
-                // debugger
+                //debugger
                 var xhr = this;
                 // 只能执行一次，防止重复执行
                 // 例如完成后，调用 abort
+
+                // 到这要么成功，调用success
+                // 要么失败，调用 error
+                // 最终都会调用 complete
                 if (xhr.state == 2) {
                     return;
                 }

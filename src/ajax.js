@@ -46,6 +46,21 @@ KISSY.add("ajax", function(S, io) {
 
             getJSON: function(url, data, callback) {
                 return io.get(url, data, callback, "json");
+            },
+
+            upload:function(url, form, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = null; // 占位符
+                }
+                return io({
+                        url:url,
+                        type:'post',
+                        dataType:dataType,
+                        form:form,
+                        data:data,
+                        success:callback
+                    });
             }
         });
 
@@ -55,5 +70,7 @@ KISSY.add("ajax", function(S, io) {
             "ajax/xhrobject",
             "ajax/xhr",
             "ajax/script",
-            "ajax/jsonp"]
+            "ajax/jsonp",
+            "ajax/form",
+            "ajax/iframe-upload"]
     });
