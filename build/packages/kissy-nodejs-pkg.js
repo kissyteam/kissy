@@ -256,7 +256,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110628162300',
+        buildTime:'20110628182619',
 
         /**
          * Returns a new object containing all of the properties of

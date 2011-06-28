@@ -34,8 +34,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             },
         SPACE = " ",
         // 记录手工 fire(domElement,type) 时的 type
-        // 再在浏览器�?知的系统 eventHandler 中检�?
-        // 如果相同，那么证明已�?fire 过了，不要再次触发了
+        // 再在浏览器通知的系统 eventHandler 中检查
+        // 如果相同，那么证明已经 fire 过了，不要再次触发了
         Event_Triggered = "",
         TRIGGERED_NONE = "trigger-none-" + S.now(),
         // 事件存储位置 key
@@ -64,8 +64,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
          * @param fn {Function} The event handler.
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
-            // data : 附加在回调后面的数据，delegate �?��使用
-            // remove �?data 相等(指向同一对象或�?定义�?equals 比较函数)
+            // data : 附加在回调后面的数据，delegate 检查使用
+            // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
         add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
             if (batchForType('add', targets, type, fn, scope, data)) {
                 return targets;
@@ -75,7 +75,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 var isNativeEventTarget = !target.isCustomEventTarget,
                     eventDesc;
 
-                // 不是有效�?target �?参数不对
+                // 不是有效的 target 或 参数不对
                 if (!target ||
                     !type ||
                     !S.isFunction(fn) ||
@@ -92,10 +92,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     handlers = events[type] = events[type] || [],
                     handleObj = {fn: fn, scope: scope || target,data:data},
                     eventHandler = eventDesc.handler;
-                // 该元素没�?handler ，并且该元素�?dom 节点时才�?��注册 dom 事件
+                // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
                 if (!eventHandler) {
                     eventHandler = eventDesc.handler = function(event, data) {
-                        // 是经�?fire 手动调用而导致的，就不要再次触发了，已经�?fire �?bubble 过一次了
+                        // 是经过 fire 手动调用而导致的，就不要再次触发了，已经在 fire 中 bubble 过一次了
                         if (event && event.type == Event_Triggered) {
                             return;
                         }
@@ -177,8 +177,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 reserve = true;
                             } else if (data !== data2) {
                                 var data2 = listener.data;
-                                // undelgate 不能 remove 普�? on �?handler
-                                // remove 不能 remove delegate �?handler
+                                // undelgate 不能 remove 普通 on 的 handler
+                                // remove 不能 remove delegate 的 handler
                                 if (!data && data2
                                     || data2 && !data
                                     ) {
@@ -239,12 +239,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             for (; i < len; ++i) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope, event, listener.data);
-                // �?jQuery 逻辑保持�?��
+                // 和 jQuery 逻辑保持一致
 
                 if (ret !== undefined) {
 
-                    // 有一�?false，最终结果就�?false
-                    // 否则等于�?���?��返回�?
+                    // 有一个 false，最终结果就是 false
+                    // 否则等于最后一个返回值
                     if (gRet !== false) {
                         gRet = ret;
                     }
@@ -274,7 +274,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
             DOM.query(targets).each(function(target) {
                 var isNativeEventTarget = !target.isCustomEventTarget;
-                // 自定义事件很�?��，不�?��冒泡，不�?��默认事件处理
+                // 自定义事件很简单，不需要冒泡，不需要默认事件处理
                 eventData = eventData || {};
                 eventData.type = eventType;
                 if (!isNativeEventTarget) {
@@ -325,7 +325,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = Event.special[type] || {};
-        // dom 节点才需要注�?dom 事件
+        // dom 节点才需要注册 dom 事件
         if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
         }
@@ -405,17 +405,17 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     });
 
 /**
- * 承玉�?011-06-07
- *  - eventHandler �?��元素�?��而不是一个元素一个事件一个，节省内存
- *  - 减少闭包使用，prevent ie 内存泄露�?
- *  - 增加 fire ，模拟冒泡处�?dom 事件
+ * 承玉：2011-06-07
+ *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
+ *  - 减少闭包使用，prevent ie 内存泄露？
+ *  - 增加 fire ，模拟冒泡处理 dom 事件
  *  - TODO: 自定义事件和 dom 事件操作分离?
  *
  * TODO:
- *   - event || window.event, �?��情况下取 window.event ? IE4 ?
+ *   - event || window.event, 什么情况下取 window.event ? IE4 ?
  *   - 更详尽细致的 test cases
  *   - 内存泄漏测试
- *   - target �?window, iframe 等特殊对象时�?test case
+ *   - target 为 window, iframe 等特殊对象时的 test case
  */
 /**
  * kissy delegate for event module
@@ -434,7 +434,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                     return targets;
                 }
                 DOM.query(targets).each(function(target) {
-                    // 自定义事�?delegate 无意�?
+                    // 自定义事件 delegate 无意义
                     if (target.isCustomEventTarget) {
                         return;
                     }
@@ -455,7 +455,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                     return targets;
                 }
                 DOM.query(targets).each(function(target) {
-                    // 自定义事�?delegate 无意�?
+                    // 自定义事件 delegate 无意义
                     if (target.isCustomEventTarget) {
                         return;
                     }
@@ -471,7 +471,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
             }
         });
 
-    // 比较函数，两�?delegate 描述对象比较
+    // 比较函数，两个 delegate 描述对象比较
     function equals(d) {
         if (d.fn === undefined && d.selector === undefined) {
             return true;
@@ -486,13 +486,13 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         return (d1 == d2 || (!d1 && d2) || (!d1 && d2));
     }
 
-    // 根据 selector ，从事件源得到对应节�?
+    // 根据 selector ，从事件源得到对应节点
     function delegateHandler(event, data) {
         var delegateTarget = this,
             gret,
             target = event.target,
             invokeds = DOM.closest(target, [data.selector], delegateTarget);
-        // 找到了符�?selector 的元素，可能并不是事件源
+        // 找到了符合 selector 的元素，可能并不是事件源
         if (invokeds) {
             for (var i = 0; i < invokeds.length; i++) {
                 event.currentTarget = invokeds[i];
@@ -519,15 +519,15 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     });
 
 /**
- * focusin/out 的特殊之�?, delegate 只能在容器上注册 focusin/out �?
- * 1.其实�?ie 都是注册 focus capture=true，然后注册到 focusin 对应 handlers
- *   1.1 �?Event.fire("focus")，没�?focus 对应�?handlers 数组，然后调用元�?focus 方法�?
- *   focusin.js 调用 Event.fire("focusin") 进�?执行 focusin 对应�?handlers 数组
- *   1.2 当调�?Event.fire("focusin")，直接执�?focusin 对应�?handlers 数组，但不会真正聚焦
+ * focusin/out 的特殊之处 , delegate 只能在容器上注册 focusin/out ，
+ * 1.其实非 ie 都是注册 focus capture=true，然后注册到 focusin 对应 handlers
+ *   1.1 当 Event.fire("focus")，没有 focus 对应的 handlers 数组，然后调用元素 focus 方法，
+ *   focusin.js 调用 Event.fire("focusin") 进而执行 focusin 对应的 handlers 数组
+ *   1.2 当调用 Event.fire("focusin")，直接执行 focusin 对应的 handlers 数组，但不会真正聚焦
  *
  * 2.ie 直接注册 focusin , focusin handlers 也有对应用户回调
- *   2.1 �?Event.fire("focus") , �?1.1
- *   2.2 �?Event.fire("focusin"),直接执行 focusin 对应�?handlers 数组，但不会真正聚焦
+ *   2.1 当 Event.fire("focus") , 同 1.1
+ *   2.2 当 Event.fire("focusin"),直接执行 focusin 对应的 handlers 数组，但不会真正聚焦
  *
  * TODO:
  * mouseenter/leave delegate??
@@ -538,7 +538,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  */
 KISSY.add('event/focusin', function(S, UA, Event) {
 
-    // 让非 IE 浏览器支�?focusin/focusout
+    // 让非 IE 浏览器支持 focusin/focusout
     if (!UA.ie) {
         S.each([
             { name: 'focusin', fix: 'focus' },
@@ -576,7 +576,7 @@ KISSY.add('event/focusin', function(S, UA, Event) {
  * - refactor to jquery , 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  *
  * NOTES:
- *  - webkit �?opera 已支�?DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持�?
+ *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /**
  * @module  event-hashchange
@@ -649,7 +649,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             S.log("hash changed : " + hash);
             for (var i = 0; i < targets.length; i++) {
                 var t = targets[i];
-                //模拟暂时没有属�?
+                //模拟暂时没有属性
                 Event._handle(t, {
                         type: HASH_CHANGE
                     });
@@ -662,15 +662,15 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
         }
 
-        // ie6, 7, 用匿名函数来覆盖�?��function
+        // ie6, 7, 用匿名函数来覆盖一些function
         if (ie < 8) {
             (function() {
                 var iframe;
 
                 /**
-                 * 前进后�? : start -> notifyHashChange
+                 * 前进后退 : start -> notifyHashChange
                  * 直接输入 : poll -> hashChange -> start
-                 * iframe 内容�?url 同步
+                 * iframe 内容和 url 同步
                  */
 
                 setup = function() {
@@ -700,25 +700,25 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                         });
 
                         /**
-                         * 前进后�? �?start -> 触发
+                         * 前进后退 ： start -> 触发
                          * 直接输入 : timer -> hashChange -> start -> 触发
-                         * 触发统一�?start(load)
-                         * iframe 内容�?url 同步
+                         * 触发统一在 start(load)
+                         * iframe 内容和 url 同步
                          */
-                            //后�?触发�?
+                            //后退触发点
                             //或addHistory 调用
-                            //只有 start 来�?知应用程�?
+                            //只有 start 来通知应用程序
                         function start() {
                             //console.log('iframe start load..');
                             //debugger
                             var c = S.trim(iframe.contentWindow.document.body.innerHTML);
                             var ch = getHash();
 
-                            //后�?时不�?
-                            //改变location则相�?
+                            //后退时不等
+                            //改变location则相等
                             if (c != ch) {
                                 location.hash = c;
-                                // 使lasthash为iframe历史�?不然重新写iframe�?会导致最新状态（丢失前进状�?�?
+                                // 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
                                 lastHash = c;
                             }
                             notifyHashChange(c);
@@ -765,13 +765,13 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
         ], function(o) {
 
 
-            // 元素内触发的 mouseover/out 不能�?mouseenter/leave
+            // 元素内触发的 mouseover/out 不能算 mouseenter/leave
             function withinElement(event) {
 
                 var self = this,
                     parent = event.relatedTarget;
 
-                // 设置用户实际注册的事件名，触发该事件�?��应的 listener 数组
+                // 设置用户实际注册的事件名，触发该事件所对应的 listener 数组
                 event.type = o.name;
 
                 // Firefox sometimes assigns relatedTarget a XUL element
@@ -803,13 +803,13 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
             Event.special[o.name] = {
 
-                // 第一�?mouseenter 时注册下
-                // 以后都直接放�?listener 数组里， �?mouseover 读取触发
+                // 第一次 mouseenter 时注册下
+                // 以后都直接放到 listener 数组里， 由 mouseover 读取触发
                 setup: function() {
                     Event.add(this, o.fix, withinElement);
                 },
 
-                //�?listener 数组为空时，也清�?mouseover 注册，不再读�?
+                //当 listener 数组为空时，也清掉 mouseover 注册，不再读取
                 tearDown:function() {
                     Event.remove(this, o.fix, withinElement);
                 }
@@ -823,14 +823,14 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
     });
 
 /**
- * 承玉�?011-06-07
+ * 承玉：2011-06-07
  * - 根据新结构，调整 mouseenter 兼容处理
- * - fire('mouseenter') 可以的，直接执行 mouseenter �?handlers 用户回调数组
+ * - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  *
  *
  * TODO:
- *  - ie6 下，原生�?mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
- *    jQuery 也异常，�?��进一步研�?
+ *  - ie6 下，原生的 mouseenter/leave 貌似也有 bug, 比如 <div><div /><div /><div /></div>
+ *    jQuery 也异常，需要进一步研究
  */
 /**
  * @module  EventObject
@@ -1003,7 +1003,7 @@ KISSY.add('event/object', function(S, undefined) {
  *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  *
  * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft 的详细测�?
+ *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
  */
 /**
  * @module  EventTarget
@@ -1036,8 +1036,8 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
     };
 }, {
         /*
-         实际上只�?�� dom/data ，但是不要跨模块引用另一模块的子模块�?
-         否则会导致build打包文件 dom �?dom-data 重复载入
+         实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
+         否则会导致build打包文件 dom 和 dom-data 重复载入
          */
         requires:["./base","dom"]
     });
@@ -1047,9 +1047,9 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
  *
  *  2010.04
  *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
- *     的，on 时能自动 publish. api �?��为：触发/订阅/反订�?
+ *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
  *
- *   - detach 命名是因�?removeEventListener 太长，remove 则太容易冲突
+ *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
  */
 /**
  * inspired by yui3 :

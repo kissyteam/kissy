@@ -2,7 +2,7 @@
  * combination of menu and button ,similar to native select
  * @author:yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender) {
+KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
 
     var MenuButton = UIBase.create(Button, {
 
@@ -105,9 +105,55 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender)
             }
         });
 
+    MenuButton.decorateSelect = function(select, cfg) {
+        cfg = cfg || {};
+        select = S.one(select);
+
+        var optionMenu = new Menu({
+                prefixCls:cfg.prefixCls
+            }),
+            curCurContent,
+            curValue = select.val(),
+            options = select.all("option");
+
+        options.each(function(option) {
+            if (curValue == option.val()) {
+                curCurContent = option.text();
+            }
+
+            optionMenu.addChild(new Menu.Item({
+                    content:option.text(),
+                    prefixCls:cfg.prefixCls,
+                    value:option.val()
+                }));
+        });
+
+        var menuButton = new MenuButton({
+                content:curCurContent,
+                describedby:"describe",
+                menu:optionMenu,
+                prefixCls:cfg.prefixCls,
+                autoRender:true
+            });
+
+        menuButton.get("el").insertBefore(select);
+
+        var input = new Node("<input type='hidden' name='" + select.getDOMNode().name
+            + "' value='" + curValue + "'>").insertBefore(select);
+
+        optionMenu.on("menuItemClick", function(e) {
+            input.val(e.menuItem.get("value"));
+            menuButton.set("content", e.menuItem.get("content"));
+            optionMenu.hide();
+        });
+
+        select.remove();
+        return menuButton;
+    };
+
     MenuButton.DefaultRender = MenuButtonRender;
 
     return MenuButton;
 }, {
-        requires:["uibase","button","./menubuttonrender"]
+        requires:["uibase","node","button","./menubuttonrender","menu"]
     });

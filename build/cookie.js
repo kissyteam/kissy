@@ -14,7 +14,6 @@ KISSY.add('cookie/base', function(S) {
         decode = decodeURIComponent;
 
 
-
     function isNotEmptyString(val) {
         return S.isString(val) && val !== '';
     }
@@ -71,7 +70,7 @@ KISSY.add('cookie/base', function(S) {
 
         remove: function(name, domain, path, secure) {
             // 置空，并立刻过期
-            this.set(name, '', 0, domain, path, secure);
+            this.set(name, '', -1, domain, path, secure);
         }
     };
 

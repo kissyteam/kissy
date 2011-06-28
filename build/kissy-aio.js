@@ -69,7 +69,7 @@ build time: ${build.time}
          */
         version: '1.20dev',
 
-        buildTime:'20110628162300',
+        buildTime:'20110628182619',
 
         /**
          * Returns a new object containing all of the properties of
@@ -15506,257 +15506,260 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
     return UIBase.create([UIBase.Box], {
 
-        renderUI:function() {
-            var self = this;
-            /**
-             * 将 view 的属性转发过去
-             * 用户一般实际上只需在一个地点设置
-             */
-            var attrs = self.__attrs;
-            for (var attrName in attrs) {
-                if (attrs.hasOwnProperty(attrName)) {
-                    var attrCfg = attrs[attrName];
-                    if (attrCfg.view && !self['_uiSet' + capitalFirst(attrName)]) {
-                        self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
+            renderUI:function() {
+                var self = this;
+                /**
+                 * 将 view 的属性转发过去
+                 * 用户一般实际上只需在一个地点设置
+                 */
+                var attrs = self.__attrs;
+                for (var attrName in attrs) {
+                    if (attrs.hasOwnProperty(attrName)) {
+                        var attrCfg = attrs[attrName];
+                        if (attrCfg.view && !self['_uiSet' + capitalFirst(attrName)]) {
+                            self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
+                        }
                     }
                 }
-            }
 
 
-            var view = self.get("view") || getDefaultView.call(self);
-            if (!view) {
-                S.error("no view for");
-                S.error(self.constructor);
-            }
-            self.set("view", view);
-            //first render myself to my parent
-            if (self.get("parent")) {
-                var pv = self.get("parent").get("view");
-                view.set("render", pv.get("contentEl") || pv.get("el"));
-            }
-            view.render();
+                var view = self.get("view") || getDefaultView.call(self);
+                if (!view) {
+                    S.error("no view for");
+                    S.error(self.constructor);
+                }
+                self.set("view", view);
+                //first render myself to my parent
+                if (self.get("parent")) {
+                    var pv = self.get("parent").get("view");
+                    view.set("render", pv.get("contentEl") || pv.get("el"));
+                }
+                view.render();
 
-            //then render my children
-            var children = self.get("children");
-            S.each(children, function(child) {
-                child.render();
-            });
-        },
+                //then render my children
+                var children = self.get("children");
+                S.each(children, function(child) {
+                    child.render();
+                });
+            },
 
-        /**
-         *
-         * @param c  children to be added
-         * @param {int=} index  position to be inserted
-         */
-        addChild:function(c, index) {
-            var children = this.get("children");
-            if (index) {
-                children.splice(index, 0, c);
-            } else {
-                children.push(c);
-            }
-            c.set("parent", this);
-        },
+            /**
+             *
+             * @param c  children to be added
+             * @param {int=} index  position to be inserted
+             */
+            addChild:function(c, index) {
+                var children = this.get("children");
+                if (index) {
+                    children.splice(index, 0, c);
+                } else {
+                    children.push(c);
+                }
+                c.set("parent", this);
+            },
 
-        removeChild:function(c) {
-            var children = this.get("children");
-            var index = S.indexOf(c, children);
-            if (index != -1) children.splice(index, 1);
-            c.destroy();
-        },
+            removeChild:function(c) {
+                var children = this.get("children");
+                var index = S.indexOf(c, children);
+                if (index != -1) children.splice(index, 1);
+                c.destroy();
+            },
 
-        bindUI:function() {
-            var self = this,view = self.get("view");
-            var el = view.get("el");
-            el.on("mouseenter", self._handleMouseEnter, self);
-            el.on("mouseleave", self._handleMouseLeave, self);
-            el.on("mousedown", self._handleMouseDown, self);
-            el.on("mouseup", self._handleMouseUp, self);
-            el.on("focus", self._handleFocus, self);
-            el.on("blur", self._handleBlur, self);
-            el.on("keydown", self._handleKeydown, self);
-            el.on("click", self._handleClick, self);
-
-        },
-
-        _forwordToView:function(method, ev) {
-            var self = this,view = self.get("view");
-            view[method] && view[method](ev);
-        },
-
-
-        /**
-         * root element handler for mouse enter
-         * @param ev
-         */
-        _handleMouseEnter:function(ev) {
-            if (this.get("disabled")) return false;
-            this._forwordToView('_handleMouseEnter', ev);
-        },
-        /**
-         * root element handler for mouse leave
-         * @param ev
-         */
-        _handleMouseLeave:function(ev) {
-            if (this.get("disabled")) return false;
-            this._forwordToView('_handleMouseLeave', ev);
-        },
-        /**
-         * root element handler for mouse down
-         * @param ev
-         */
-        _handleMouseDown:function(ev) {
-            if (this.get("disabled")) return false;
-            this._forwordToView('_handleMouseDown', ev);
-        },
-        /**
-         * root element handler for mouse up
-         * @param ev
-         */
-        _handleMouseUp:function(ev) {
-            if (this.get("disabled")) return false;
-            this._forwordToView('_handleMouseUp', ev);
-        },
-        /**
-         * root element handler for focus
-         * @param ev
-         */
-        _handleFocus:function(ev) {
-            if (this.get("disabled")) return false;
-            this._forwordToView('_handleFocus', ev);
-        },
-        /**
-         * root element handler for blur
-         * @param ev
-         */
-        _handleBlur:function(ev) {
-            if (this.get("disabled")) return false;
-            this._forwordToView('_handleBlur', ev);
-        },
-        /**
-         * root element handler for keydown
-         * @param ev
-         */
-        _handleKeydown:function(ev) {
-
-            if (this.get("disabled")) return false;
-            var self = this,view = self.get("view");
-            if (!view['_handleKeydown']) return;
-            if (ev.keyCode == 13 || ev.keyCode == 32) {
-                this._handleClick(ev);
-                ev.preventDefault();
-            } else {
-                return view['_handleKeydown'](ev);
-            }
-        },
-
-        /**
-         * root element handler for mouse enter
-         */
-        _handleClick:function(ev) {
-            if (this.get("disabled")) {
-                return false;
-            }
-            this._forwordToView("_handleClick");
-            this._handleClickInternal(ev);
-        },
-
-        _handleClickInternal:function() {
-            this.fire("click");
-        },
-
-        _uiSetDisabled:function(d) {
-            var view = this.get("view");
-            view.set("disabled", d);
-        },
-
-        destructor:function() {
-            var children = this.get("children");
-            S.each(children, function(child) {
-                child.destroy();
-            });
-            var view = this.get("view");
-            if (view) {
+            bindUI:function() {
+                var self = this,view = self.get("view");
                 var el = view.get("el");
-                el.detach();
-                view.destroy();
+                el.on("mouseenter", self._handleMouseEnter, self);
+                el.on("mouseleave", self._handleMouseLeave, self);
+                el.on("mousedown", self._handleMouseDown, self);
+                el.on("mouseup", self._handleMouseUp, self);
+                el.on("focus", self._handleFocus, self);
+                el.on("blur", self._handleBlur, self);
+                el.on("keydown", self._handleKeydown, self);
+                el.on("click", self._handleClick, self);
+
+            },
+
+            _forwordToView:function(method, ev) {
+                var self = this,view = self.get("view");
+                view[method] && view[method](ev);
+            },
+
+
+            /**
+             * root element handler for mouse enter
+             * @param ev
+             */
+            _handleMouseEnter:function(ev) {
+                if (this.get("disabled")) return false;
+                this._forwordToView('_handleMouseEnter', ev);
+            },
+            /**
+             * root element handler for mouse leave
+             * @param ev
+             */
+            _handleMouseLeave:function(ev) {
+                if (this.get("disabled")) return false;
+                this._forwordToView('_handleMouseLeave', ev);
+            },
+            /**
+             * root element handler for mouse down
+             * @param ev
+             */
+            _handleMouseDown:function(ev) {
+                if (this.get("disabled")) return false;
+                this._forwordToView('_handleMouseDown', ev);
+            },
+            /**
+             * root element handler for mouse up
+             * @param ev
+             */
+            _handleMouseUp:function(ev) {
+                if (this.get("disabled")) return false;
+                this._forwordToView('_handleMouseUp', ev);
+            },
+            /**
+             * root element handler for focus
+             * @param ev
+             */
+            _handleFocus:function(ev) {
+                if (this.get("disabled")) return false;
+                this._forwordToView('_handleFocus', ev);
+            },
+            /**
+             * root element handler for blur
+             * @param ev
+             */
+            _handleBlur:function(ev) {
+                if (this.get("disabled")) return false;
+                this._forwordToView('_handleBlur', ev);
+            },
+            /**
+             * root element handler for keydown
+             * @param ev
+             */
+            _handleKeydown:function(ev) {
+
+                if (this.get("disabled")) return false;
+                var self = this,view = self.get("view");
+                if (!view['_handleKeydown']) return;
+                if (ev.keyCode == 13 || ev.keyCode == 32) {
+                    this._handleClick(ev);
+                    ev.preventDefault();
+                } else {
+                    return view['_handleKeydown'](ev);
+                }
+            },
+
+            /**
+             * root element handler for mouse enter
+             */
+            _handleClick:function(ev) {
+                if (this.get("disabled")) {
+                    return false;
+                }
+                this._forwordToView("_handleClick");
+                this._handleClickInternal(ev);
+            },
+
+            _handleClickInternal:function() {
+                this.fire("click");
+            },
+
+            _uiSetDisabled:function(d) {
+                var view = this.get("view");
+                view.set("disabled", d);
+            },
+
+            destructor:function() {
+                var children = this.get("children");
+                S.each(children, function(child) {
+                    child.destroy();
+                });
+                var view = this.get("view");
+                if (view) {
+                    var el = view.get("el");
+                    el.detach();
+                    view.destroy();
+                }
             }
-        }
-    },
-    {
-        ATTRS:{
-            //子组件
-            children:{
-                value:[],
-                setter
-                    :
-                    function(v) {
-                        var self = this;
-                        //自动给儿子组件加入父亲链
-                        S.each(v, function(c) {
-                            c.set("parent", self);
-                        });
-                    }
-            },
+        },
+        {
+            ATTRS:{
+                //子组件
+                children:{
+                    value:[],
+                    setter
+                        :
+                        function(v) {
+                            var self = this;
+                            //自动给儿子组件加入父亲链
+                            S.each(v, function(c) {
+                                c.set("parent", self);
+                            });
+                        }
+                },
 
-            //转交给渲染层
-            //note1 : 兼容性考虑
-            //note2 : 调用者可以完全不需要接触渲染层
-            srcNode:{
-                view:true
-            },
+                //转交给渲染层
+                //note1 : 兼容性考虑
+                //note2 : 调用者可以完全不需要接触渲染层
+                srcNode:{
+                    view:true
+                },
 
-            render:{
-                view:true
-            },
+                // 转交给渲染层
+                prefixCls:{
+                    view:true
+                },
 
-            //父组件
-            parent:{
-            },
+                render:{
+                    view:true
+                },
 
-            //渲染层
-            view:{
-            },
+                //父组件
+                parent:{
+                },
 
-            //是否禁用
-            disabled:{
-                value:false,
-                view
-                    :
-                    true
+                //渲染层
+                view:{
+                },
+
+                //是否禁用
+                disabled:{
+                    value:false,
+                    view:true
+                }
             }
-        }
-    });
+        });
 
     function capitalFirst(s) {
         s = s + '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 }, {
-    requires:['uibase']
-});/**
+        requires:['uibase']
+    });/**
  * render base class for kissy
  * @author:yiminghe@gmail.com
  */
 KISSY.add("component/render", function(S, UIBase) {
     return UIBase.create([UIBase.Box.Render], {
 
-    }, {
-        ATTRS:{
-            //从 maskup 中渲染
-            srcNode:{},
-            prefixCls:{
-                value:""
-            },
-            //是否禁用
-            disabled:{
-                value:false
+        }, {
+            ATTRS:{
+                //从 maskup 中渲染
+                srcNode:{},
+                prefixCls:{
+                    value:""
+                },
+                //是否禁用
+                disabled:{
+                    value:false
+                }
             }
-        }
-    });
+        });
 }, {
-    requires:['uibase']
-});/**
+        requires:['uibase']
+    });/**
  * mvc based component framework for kissy
  * @author:yiminghe@gmail.com
  */
@@ -20443,10 +20446,10 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
             if (elem.css('display') !== 'inline') {
                 elem = image;
             }
-            wrap = self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
+            self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
                 wrapClass: self.get('wrapClass')
             })).insertBefore(elem);
-            wrap.prepend(elem);
+            self.imageWrap.prepend(elem);
 
             if (self.get('showIcon')) {
                 self.icon = new Node(S.substitute(IMAGEZOOM_ICON_TMPL, {
@@ -20559,6 +20562,9 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
             },
             iconClass: {
                 value: 'ks-imagezoom-icon'
+            },
+            prefixCls:{
+                value: 'ks-'
             }
         }
     });
@@ -22054,38 +22060,41 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     var MenuItem = UIBase.create(Component.ModelControl, {
 
-        _handleMouseEnter:function() {
-            if (MenuItem.superclass._handleMouseEnter.call(this) === false) {
-                return false;
-            }
-            this.set("highlighted", true);
-        },
-
-        _handleMouseLeave:function() {
-            if (MenuItem.superclass._handleMouseLeave.call(this) === false) {
-                return false;
-            }
-            S.log("menuitem " + this.get("view").get("el").attr("id") + "  leave");
-            this.set("highlighted", false);
-        }
-    }, {
-        ATTRS:{
-            content:{
-                view:true
+            _handleMouseEnter:function() {
+                if (MenuItem.superclass._handleMouseEnter.call(this) === false) {
+                    return false;
+                }
+                this.set("highlighted", true);
             },
-            highlighted:{
-                view:true,
-                value:false
+
+            _handleMouseLeave:function() {
+                if (MenuItem.superclass._handleMouseLeave.call(this) === false) {
+                    return false;
+                }
+                S.log("menuitem " + this.get("view").get("el").attr("id") + "  leave");
+                this.set("highlighted", false);
             }
-        }
-    });
+        }, {
+            ATTRS:{
+                // option.text
+                content:{
+                    view:true
+                },
+                // option.value
+                value:{},
+                highlighted:{
+                    view:true,
+                    value:false
+                }
+            }
+        });
 
     MenuItem.DefaultRender = MenuItemRender;
 
     return MenuItem;
 }, {
-    requires:['uibase','component','./menuitemrender']
-});/**
+        requires:['uibase','component','./menuitemrender']
+    });/**
  * simple menuitem render
  * @author:yiminghe@gmail.com
  */
@@ -22652,53 +22661,53 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
         "<div class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
-    return UIBase.create(Css3Render,  {
-        renderUI:function() {
-            this.get("el").html(S.substitute(CUSTOM_RENDER_HTML, {
-                prefixCls:this.get("prefixCls")
-            }));
-            var id = S.guid('ks-button-labelby');
-            this.get("el").one('div').one('div').attr("id", id);
+    return UIBase.create(Css3Render, {
+            renderUI:function() {
+                this.get("el").html(S.substitute(CUSTOM_RENDER_HTML, {
+                        prefixCls:this.get("prefixCls")
+                    }));
+                var id = S.guid('ks-button-labelby');
+                this.get("el").one('div').one('div').attr("id", id);
 
-            //按钮的描述节点在最内层，其余都是装饰
-            this.get("el").attr("aria-labelledby", id);
-        },
-        _uiSetContent:function(v) {
-            if (v == undefined) return;
-            this.get("el").one('div').one('div').html(v);
-        }
-    }, {
-        ATTRS:{
-            elCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "custom-button";
-                }
+                //按钮的描述节点在最内层，其余都是装饰
+                this.get("el").attr("aria-labelledby", id);
             },
-            hoverCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-hover";
-                }
-            },
-            focusCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-focused";
-                }
-            },
-            activeCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-active";
-                }
-            },
-            disabledCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-disabled";
+            _uiSetContent:function(v) {
+                if (v == undefined) return;
+                this.get("el").one('div').one('div').html(v);
+            }
+        }, {
+            ATTRS:{
+                elCls:{
+                    valueFn:function() {
+                        return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "custom-button";
+                    }
+                },
+                hoverCls:{
+                    valueFn:function() {
+                        return this.get("prefixCls") + "custom-button-hover";
+                    }
+                },
+                focusCls:{
+                    valueFn:function() {
+                        return this.get("prefixCls") + "custom-button-focused";
+                    }
+                },
+                activeCls:{
+                    valueFn:function() {
+                        return this.get("prefixCls") + "custom-button-active";
+                    }
+                },
+                disabledCls:{
+                    valueFn:function() {
+                        return this.get("prefixCls") + "custom-button-disabled";
+                    }
                 }
             }
-        }
-    });
+        });
 }, {
-    requires:['uibase','./css3render']
-});/**
+        requires:['uibase','./css3render']
+    });/**
  * view: render button using native button
  * @author:yiminghe@gmail.com
  */
@@ -22737,7 +22746,7 @@ build time: ${build.time}
  * combination of menu and button ,similar to native select
  * @author:yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender) {
+KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
 
     var MenuButton = UIBase.create(Button, {
 
@@ -22840,65 +22849,111 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Button, MenuButtonRender)
             }
         });
 
+    MenuButton.decorateSelect = function(select, cfg) {
+        cfg = cfg || {};
+        select = S.one(select);
+
+        var optionMenu = new Menu({
+                prefixCls:cfg.prefixCls
+            }),
+            curCurContent,
+            curValue = select.val(),
+            options = select.all("option");
+
+        options.each(function(option) {
+            if (curValue == option.val()) {
+                curCurContent = option.text();
+            }
+
+            optionMenu.addChild(new Menu.Item({
+                    content:option.text(),
+                    prefixCls:cfg.prefixCls,
+                    value:option.val()
+                }));
+        });
+
+        var menuButton = new MenuButton({
+                content:curCurContent,
+                describedby:"describe",
+                menu:optionMenu,
+                prefixCls:cfg.prefixCls,
+                autoRender:true
+            });
+
+        menuButton.get("el").insertBefore(select);
+
+        var input = new Node("<input type='hidden' name='" + select.getDOMNode().name
+            + "' value='" + curValue + "'>").insertBefore(select);
+
+        optionMenu.on("menuItemClick", function(e) {
+            input.val(e.menuItem.get("value"));
+            menuButton.set("content", e.menuItem.get("content"));
+            optionMenu.hide();
+        });
+
+        select.remove();
+        return menuButton;
+    };
+
     MenuButton.DefaultRender = MenuButtonRender;
 
     return MenuButton;
 }, {
-        requires:["uibase","button","./menubuttonrender"]
+        requires:["uibase","node","button","./menubuttonrender","menu"]
     });/**
  * render aria and drop arrow for menubutton
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="goog-inline-block {prefixCls}-caption"></div>' +
-        '<div class="goog-inline-block {prefixCls}-dropdown">&nbsp;</div>';
+    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block {prefixCls}menu-button-caption"></div>' +
+        '<div class="{prefixCls}inline-block {prefixCls}menu-button-dropdown">&nbsp;</div>';
 
     var MenuButtonRender = UIBase.create(Button.Render, {
-        renderUI:function() {
-            var el = this.get("el");
-            el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
-                prefixCls:this.get("prefixCls") + "menu-button"
-            }));
-            //带有 menu
-            el.attr("aria-haspopup", true);
-        },
-
-        _uiSetContent:function(v) {
-            if (v == undefined) return;
-            this.get("el").one("." + this.get("prefixCls") + "menu-button-caption").html(v);
-        },
-
-        _uiSetCollapsed:function(v) {
-            var el = this.get("el"),prefixCls = this.get("prefixCls") + "menu-button";
-            if (!v) {
-                el.addClass(prefixCls + "menu-button-open");
-                el.attr("aria-expanded", true);
-            } else {
-                el.removeClass(prefixCls + "menu-button-open");
-                el.attr("aria-expanded", false);
-            }
-        },
-
-        _uiSetActiveItem:function(v) {
-            S.log("button set aria " + (v && v.get("view").get("el").attr("id")) || "");
-            this.get("el").attr("aria-activedescendant", (v && v.get("view").get("el").attr("id")) || "");
-        }
-    }, {
-        ATTRS:{
-            activeItem:{
-
+            renderUI:function() {
+                var el = this.get("el");
+                el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
+                        prefixCls:this.get("prefixCls")
+                    }));
+                //带有 menu
+                el.attr("aria-haspopup", true);
             },
-            collapsed:{
-                value:true
+
+            _uiSetContent:function(v) {
+                if (v == undefined) return;
+                this.get("el").one("." + this.get("prefixCls") + "menu-button-caption").html(v);
+            },
+
+            _uiSetCollapsed:function(v) {
+                var el = this.get("el"),prefixCls = this.get("prefixCls") + "menu-button";
+                if (!v) {
+                    el.addClass(prefixCls + "menu-button-open");
+                    el.attr("aria-expanded", true);
+                } else {
+                    el.removeClass(prefixCls + "menu-button-open");
+                    el.attr("aria-expanded", false);
+                }
+            },
+
+            _uiSetActiveItem:function(v) {
+                S.log("button set aria " + (v && v.get("view").get("el").attr("id")) || "");
+                this.get("el").attr("aria-activedescendant", (v && v.get("view").get("el").attr("id")) || "");
             }
-        }
-    });
+        }, {
+            ATTRS:{
+                activeItem:{
+
+                },
+                collapsed:{
+                    value:true
+                }
+            }
+        });
 
     return MenuButtonRender;
 }, {
-    requires:['uibase','button']
-});KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender) {
+        requires:['uibase','button']
+    });KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender) {
     MenuButton.Render = MenuButtonRender;
     return MenuButton;
 }, {
