@@ -95,7 +95,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
         if (c.data && !S.isString(c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
-            c.data = S.param(c.data);
+            // 和原生保持一致，不加 []
+            c.data = S.param(c.data,undefined,undefined,false);
         }
 
         c.type = c.type.toUpperCase();

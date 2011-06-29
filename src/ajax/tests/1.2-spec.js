@@ -2,8 +2,8 @@
  * 1.2 new testcases
  * @author: yiminghe@gmail.com
  **/
-KISSY.use("json,ajax", function(S, JSON, io) {
-
+KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
+    var $ = Node.all;
     describe("ajax@1.2", function() {
 
         it("should abort for xhr", function() {
@@ -67,19 +67,29 @@ KISSY.use("json,ajax", function(S, JSON, io) {
 
 
         it("should works for form file upload", function() {
+
+            var f = $('<form id="f" method="post" enctype="multipart/form-data">' +
+                //php need []
+                '<select name="test[]" multiple>' +
+                '<option value="t1" selected>v</option>' +
+                '<option value="t2" selected>v2</option>' +
+                '</select>' +
+                '</form>').appendTo("body");
+
+
             var re = [],ok,d;
             var xhr = io({
                     url:'upload.php',
-                    form:'#f',
+                    form:"#" + f.prop("id"),
                     type:'post',
                     dataType:'json',
                     data:{
-                        test2:"t2"
+                        // php need []
+                        "test2[]":["t2","t3"]
                     },
                     success:function(data) {
                         ok = true;
                         d = data;
-
                     }
                 });
 
@@ -90,13 +100,44 @@ KISSY.use("json,ajax", function(S, JSON, io) {
             });
 
             runs(function() {
-                expect(d.test).toBe("t");
-                expect(d.test2).toBe("t2");
+                expect(d.test + "").toBe(["t1","t2"] + "");
+                expect(d.test2 + "").toBe(["t2","t3"] + "");
             });
-
-
         });
 
-    });
 
+        it("should works for common form", function() {
+
+            var f = $('<form id="f2">' +
+                '<select name="test[]" multiple>' +
+                '<option value="t1" selected>v</option>' +
+                '<option value="t2" selected>v2</option>' +
+                '</select>' +
+                '</form>').appendTo("body");
+
+            var re = [],ok,d;
+            var xhr = io({
+                    url:'upload.php',
+                    form:"#" + f.prop("id"),
+                    type:'post',
+                    dataType:'json',
+                    data:{
+                        "test2[]":["t2","t3"]
+                    },
+                    success:function(data) {
+                        ok = true;
+                        d = data;
+                    }
+                });
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(d.test + "").toBe(["t1","t2"] + "");
+                expect(d.test2 + "").toBe(["t2","t3"] + "");
+            });
+        });
+    });
 });
