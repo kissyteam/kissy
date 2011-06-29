@@ -21,9 +21,52 @@ describe('kissy.js', function() {
         S.mix(o3, o, true, ['c']);
         expect(o3.a).toBe(1);
 
-        // blacklist
-        //S.mix(o4, o, true, null, ['a']);
-        //expect(o4.a).toBe(1);
+
+        // deep object mix testcase
+        var r = {
+            x:1,
+            y:{
+                z:1
+            },
+            q:[2,5]
+        };
+
+        S.mix(r, {
+                x:2,
+                y:{
+                    s:1
+                },
+                q:[6]
+            });
+
+        expect(r.x).toBe(2);
+        expect(r.y.s).toBe(1);
+        expect(r.y.z).toBeUndefined();
+        expect(r.q + "").toBe([6] + "");
+
+        // 1.2 新加 deep 参数测试
+        r = {
+            x:1,
+            y:{
+                z:1
+            },
+            q:[2,5]
+        };
+
+        S.mix(r, {
+                x:2,
+                y:{
+                    s:1
+                },
+                q:[undefined,6]
+            }, undefined, undefined, true);
+
+        expect(r.x).toBe(2);
+        expect(r.y.s).toBe(1);
+        expect(r.y.z).toBe(1);
+        expect(r.q + "").toBe([2,6] + "");
+
+
     });
 
     it('S.merge', function() {
@@ -91,6 +134,7 @@ describe('kissy.js', function() {
         function Chicken(name) {
             Chicken.superclass.constructor.call(this, name);
         }
+
         Chicken.prototype.featcher = 2;
         S.extend(Chicken, Bird);
         var chicken = new Chicken('Tom');
