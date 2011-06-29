@@ -100,7 +100,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
         if (c.data && !S.isString(c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
-            c.data = S.param(c.data);
+            // 和原生保持一致，不加 []
+            c.data = S.param(c.data, undefined, undefined, false);
         }
 
         c.type = c.type.toUpperCase();
@@ -197,10 +198,23 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         return xhr;
     }
 
-    io.__transports = transports;
-    io.__defaultConfig = defaultConfig;
     S.mix(io, Event.Target);
-    io.isLocal = isLocal;
+    S.mix(io, {
+            isLocal:isLocal,
+            setupConfig:function(setting) {
+                S.mix(defaultConfig, setting, undefined, undefined, true);
+            },
+            setupTransport:function(name, fn) {
+                transports[name] = fn;
+            },
+            getTransport:function(name) {
+                return transports[name];
+            },
+            getConfig:function() {
+                return defaultConfig;
+            }
+        });
+
 
     return io;
 },
@@ -226,15 +240,16 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
     return {
         serialize:function(form) {
             form = DOM.get(form);
-            var data = [];
+            var data = {};
             S.each(form.elements, function(e) {
                 var d = e.disabled;
                 //必须编码
                 if (!d) {
-                    data.push(enc(e.name) + "=" + enc(DOM.val(e)));
+                    data[e.name] = DOM.val(e);
                 }
             });
-            return data.join("&");
+            // 不要自动加 [] ，和原生保持一致，由用户自己加
+            return S.param(data, undefined, undefined, false);
         }
     };
 }, {
@@ -289,18 +304,17 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
-    var transports = io.__transports,
-        doc = document,
-        defaultConfig = io.__defaultConfig;
-
+    var doc = document;
     // iframe 内的内容就是 body.innerText
-    defaultConfig.converters.text.iframe = function(text) {
-        return text;
-    };
-
-
-    // iframe 到其他类型的转化和 text 一样
-    defaultConfig.converters.iframe = defaultConfig.converters.text;
+    io.setupConfig({
+            converters:{
+                // iframe 到其他类型的转化和 text 一样
+                iframe:io.getConfig().converters.text,
+                text:{
+                    iframe:function(text) {
+                        return text;
+                    }
+                }}});
 
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe");
@@ -314,15 +328,19 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     }
 
     function addDataToForm(data, form) {
-        data = S.unparam(data);
+        data = S.unparam(data, undefined, undefined, false);
         var ret = [];
         for (var d in data) {
-            var e = doc.createElement("input");
-            e.type = 'hidden';
-            e.name = d;
-            e.value = data[d];
-            DOM.append(e, form);
-            ret.push(e);
+            var vs = S.makeArray(data[d]);
+            // 数组和原生一样对待，创建多个同名输入域
+            for (var i = 0; i < vs.length; i++) {
+                var e = doc.createElement("input");
+                e.type = 'hidden';
+                e.name = d;
+                e.value = vs[i];
+                DOM.append(e, form);
+                ret.push(e);
+            }
         }
         return ret;
     }
@@ -400,11 +418,11 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             }
         });
 
-    transports['iframe'] = IframeTransport;
+    io.setupTransport("iframe",IframeTransport);
 
     return io;
 
-}, {
+},{
         requires:["dom","event","./base"]
     });/**
  * jsonp transport based on script transport
@@ -412,13 +430,13 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
-    var defaultConfig = io.__defaultConfig;
-
-    defaultConfig.jsonp = "callback";
-    defaultConfig.jsonpCallback = function() {
-        //不使用 now() ，极端情况下可能重复
-        return S.guid("jsonp");
-    };
+    io.setupConfig({
+            jsonp:"callback",
+            jsonpCallback:function() {
+                //不使用 now() ，极端情况下可能重复
+                return S.guid("jsonp");
+            }
+        });
 
     io.on("start", function(e) {
         var xhr = e.xhr,c = xhr.config;
@@ -482,27 +500,35 @@ KISSY.add("ajax/jsonp", function(S, io) {
  */
 KISSY.add("ajax/script", function(S, io) {
 
-    var transports = io.__transports,
-        defaultConfig = io.__defaultConfig;
+    io.setupConfig({
+            accepts:{
+                script:"text/javascript, " +
+                    "application/javascript, " +
+                    "application/ecmascript, " +
+                    "application/x-ecmascript"
+            },
 
-    defaultConfig.accepts.script = "text/javascript, " +
-        "application/javascript, " +
-        "application/ecmascript, " +
-        "application/x-ecmascript";
-
-    defaultConfig.contents.script = /javascript|ecmascript/;
-    // 如果以 xhr+eval 需要下面的，否则直接 script node 不需要，引擎自己执行了，不需要手动 eval
-    defaultConfig.converters.text.script = function(text) {
-        S.globalEval(text);
-        return text;
-    };
-
+            contents:{
+                script:/javascript|ecmascript/
+            },
+            converters:{
+                text:{
+                    // 如果以 xhr+eval 需要下面的，
+                    // 否则直接 script node 不需要，引擎自己执行了，
+                    // 不需要手动 eval
+                    script:function(text) {
+                        S.globalEval(text);
+                        return text;
+                    }
+                }
+            }
+        });
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!xhrObj.config.crossDomain &&
             !xhrObj.config['forceScript']) {
-            return new transports["*"](xhrObj);
+            return new (io.getTransport("*"))(xhrObj);
         }
         this.xhrObj = xhrObj;
         return 0;
@@ -576,7 +602,7 @@ KISSY.add("ajax/script", function(S, io) {
             }
         });
 
-    transports["script"] = ScriptTransport;
+    io.setupTransport("script", ScriptTransport);
 
     return io;
 
@@ -587,8 +613,6 @@ KISSY.add("ajax/script", function(S, io) {
  * @author: yiminghe@gmail.com
  */
 KISSY.add("ajax/xhr", function(S, io) {
-
-    var transports = io.__transports;
 
     function createStandardXHR() {
         try {
@@ -754,7 +778,8 @@ KISSY.add("ajax/xhr", function(S, io) {
 
             });
 
-        transports["*"] = XhrTransport;
+        io.setupTransport("*", XhrTransport);
+
         return io;
     }
 }, {

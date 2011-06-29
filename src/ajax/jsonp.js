@@ -4,13 +4,13 @@
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
-    var defaultConfig = io.__defaultConfig;
-
-    defaultConfig.jsonp = "callback";
-    defaultConfig.jsonpCallback = function() {
-        //不使用 now() ，极端情况下可能重复
-        return S.guid("jsonp");
-    };
+    io.setupConfig({
+            jsonp:"callback",
+            jsonpCallback:function() {
+                //不使用 now() ，极端情况下可能重复
+                return S.guid("jsonp");
+            }
+        });
 
     io.on("start", function(e) {
         var xhr = e.xhr,c = xhr.config;

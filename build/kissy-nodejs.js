@@ -201,32 +201,50 @@ build time: ${build.time}
         meta = {
             /**
              * Copies all the properties of s to r.
+             * @param deep {boolean} whether recurse mix if encouter object
              * @return {Object} the augmented object
              */
-            mix: function(r, s, ov, wl) {
+            mix: function(r, s, ov, wl, deep) {
                 if (!s || !r) return r;
-                if (ov === undefined) ov = true;
+                if (ov === undefined) {
+                    ov = true;
+                }
                 var i, p, len;
 
                 if (wl && (len = wl.length)) {
                     for (i = 0; i < len; i++) {
                         p = wl[i];
                         if (p in s) {
-                            _mix(p, r, s, ov);
+                            _mix(p, r, s, ov, deep);
                         }
                     }
                 } else {
                     for (p in s) {
-                        _mix(p, r, s, ov);
+                        _mix(p, r, s, ov, deep);
                     }
                 }
                 return r;
             }
         },
 
-        _mix = function(p, r, s, ov) {
+        _mix = function(p, r, s, ov, deep) {
             if (ov || !(p in r)) {
-                r[p] = s[p];
+                var target = r[p],src = s[p];
+                // prevent never-end loop
+                if (target === src) {
+                    return;
+                }
+                // 来源是数组和对象，并且要求深度 mix
+                if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
+                    // 目标值为对象或数组，直接 mix
+                    // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
+                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
+                        target :
+                        (S.isArray(src) ? [] : {});
+                    r[p] = S.mix(clone, src, ov, undefined, true);
+                } else if (src !== undefined) {
+                    r[p] = s[p];
+                }
             }
         },
 
@@ -246,227 +264,227 @@ build time: ${build.time}
 
     S.mix(S, {
 
-        // S.app() with these members.
-        __APP_MEMBERS: ['namespace'],
-        __APP_INIT_METHODS: ['__init'],
+            // S.app() with these members.
+            __APP_MEMBERS: ['namespace'],
+            __APP_INIT_METHODS: ['__init'],
 
-        /**
-         * The version of the library.
-         * @type {String}
-         */
-        version: '1.20dev',
+            /**
+             * The version of the library.
+             * @type {String}
+             */
+            version: '1.20dev',
 
-        buildTime:'20110628182619',
+            buildTime:'20110629134836',
 
-        /**
-         * Returns a new object containing all of the properties of
-         * all the supplied objects. The properties from later objects
-         * will overwrite those in earlier objects. Passing in a
-         * single object will create a shallow copy of it.
-         * @return {Object} the new merged object
-         */
-        merge: function() {
-            var o = {}, i, l = arguments.length;
-            for (i = 0; i < l; i++) {
-                S.mix(o, arguments[i]);
-            }
-            return o;
-        },
+            /**
+             * Returns a new object containing all of the properties of
+             * all the supplied objects. The properties from later objects
+             * will overwrite those in earlier objects. Passing in a
+             * single object will create a shallow copy of it.
+             * @return {Object} the new merged object
+             */
+            merge: function() {
+                var o = {}, i, l = arguments.length;
+                for (i = 0; i < l; i++) {
+                    S.mix(o, arguments[i]);
+                }
+                return o;
+            },
 
-        /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @return {Object} the augmented object
-         */
-        augment: function(/*r, s1, s2, ..., ov, wl*/) {
-            var args = S.makeArray(arguments),
-                len = args.length - 2,
-                r = args[0],
-                ov = args[len],
-                wl = args[len + 1],
-                i = 1;
+            /**
+             * Applies prototype properties from the supplier to the receiver.
+             * @return {Object} the augmented object
+             */
+            augment: function(/*r, s1, s2, ..., ov, wl*/) {
+                var args = S.makeArray(arguments),
+                    len = args.length - 2,
+                    r = args[0],
+                    ov = args[len],
+                    wl = args[len + 1],
+                    i = 1;
 
-            if (!S.isArray(wl)) {
-                ov = wl;
-                wl = undefined;
-                len++;
-            }
-            if (!S.isBoolean(ov)) {
-                ov = undefined;
-                len++;
-            }
+                if (!S.isArray(wl)) {
+                    ov = wl;
+                    wl = undefined;
+                    len++;
+                }
+                if (!S.isBoolean(ov)) {
+                    ov = undefined;
+                    len++;
+                }
 
-            for (; i < len; i++) {
-                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
-            }
+                for (; i < len; i++) {
+                    S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+                }
 
-            return r;
-        },
+                return r;
+            },
 
-        /**
-         * Utility to set up the prototype, constructor and superclass properties to
-         * support an inheritance strategy that can chain constructors and methods.
-         * Static members will not be inherited.
-         * @param r {Function} the object to modify
-         * @param s {Function} the object to inherit
-         * @param px {Object} prototype properties to add/override
-         * @param sx {Object} static properties to add/override
-         * @return r {Object}
-         */
-        extend: function(r, s, px, sx) {
-            if (!s || !r) return r;
+            /**
+             * Utility to set up the prototype, constructor and superclass properties to
+             * support an inheritance strategy that can chain constructors and methods.
+             * Static members will not be inherited.
+             * @param r {Function} the object to modify
+             * @param s {Function} the object to inherit
+             * @param px {Object} prototype properties to add/override
+             * @param sx {Object} static properties to add/override
+             * @return r {Object}
+             */
+            extend: function(r, s, px, sx) {
+                if (!s || !r) return r;
 
-            var create = Object.create ?
-                function(proto, c) {
-                    return Object.create(proto, {
-                        constructor: {
-                            value: c
+                var create = Object.create ?
+                    function(proto, c) {
+                        return Object.create(proto, {
+                                constructor: {
+                                    value: c
+                                }
+                            });
+                    } :
+                    function (proto, c) {
+                        function F() {
                         }
-                    });
-                } :
-                function (proto, c) {
-                    function F() {
+
+                        F.prototype = proto;
+
+                        var o = new F();
+                        o.constructor = c;
+                        return o;
+                    },
+                    sp = s.prototype,
+                    rp;
+
+                // add prototype chain
+                rp = create(sp, r);
+                r.prototype = S.mix(rp, r.prototype);
+                r.superclass = create(sp, s);
+
+                // add prototype overrides
+                if (px) {
+                    S.mix(rp, px);
+                }
+
+                // add object overrides
+                if (sx) {
+                    S.mix(r, sx);
+                }
+
+                return r;
+            },
+
+            /****************************************************************************************
+
+             *                            The KISSY System Framework                                *
+
+             ****************************************************************************************/
+
+            /**
+             * Initializes KISSY
+             */
+            __init: function() {
+                this.Config = this.Config || {};
+                this.Env = this.Env || {};
+
+                // NOTICE: '@DEBUG@' will replace with '' when compressing.
+                // So, if loading source file, debug is on by default.
+                // If loading min version, debug is turned off automatically.
+                this.Config.debug = '@DEBUG@';
+            },
+
+            /**
+             * Returns the namespace specified and creates it if it doesn't exist. Be careful
+             * when naming packages. Reserved words may work in some browsers and not others.
+             * <code>
+             * S.namespace('KISSY.app'); // returns KISSY.app
+             * S.namespace('app.Shop'); // returns KISSY.app.Shop
+             * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
+             * </code>
+             * @return {Object}  A reference to the last namespace object created
+             */
+            namespace: function() {
+                var args = S.makeArray(arguments),
+                    l = args.length,
+                    o = null, i, j, p,
+                    global = (args[l - 1] === true && l--);
+
+                for (i = 0; i < l; i++) {
+                    p = (EMPTY + args[i]).split('.');
+                    o = global ? host : this;
+                    for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                        o = o[p[j]] = o[p[j]] || { };
                     }
-
-                    F.prototype = proto;
-
-                    var o = new F();
-                    o.constructor = c;
-                    return o;
-                },
-                sp = s.prototype,
-                rp;
-
-            // add prototype chain
-            rp = create(sp, r);
-            r.prototype = S.mix(rp, r.prototype);
-            r.superclass = create(sp, s);
-
-            // add prototype overrides
-            if (px) {
-                S.mix(rp, px);
-            }
-
-            // add object overrides
-            if (sx) {
-                S.mix(r, sx);
-            }
-
-            return r;
-        },
-
-    /****************************************************************************************
-
-     *                            The KISSY System Framework                                *
-
-     ****************************************************************************************/
-
-        /**
-         * Initializes KISSY
-         */
-        __init: function() {
-            this.Config = this.Config || {};
-            this.Env = this.Env || {};
-
-            // NOTICE: '@DEBUG@' will replace with '' when compressing.
-            // So, if loading source file, debug is on by default.
-            // If loading min version, debug is turned off automatically.
-            this.Config.debug = '@DEBUG@';
-        },
-
-        /**
-         * Returns the namespace specified and creates it if it doesn't exist. Be careful
-         * when naming packages. Reserved words may work in some browsers and not others.
-         * <code>
-         * S.namespace('KISSY.app'); // returns KISSY.app
-         * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-         * </code>
-         * @return {Object}  A reference to the last namespace object created
-         */
-        namespace: function() {
-            var args = S.makeArray(arguments),
-                l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === true && l--);
-
-            for (i = 0; i < l; i++) {
-                p = (EMPTY + args[i]).split('.');
-                o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
                 }
-            }
-            return o;
-        },
+                return o;
+            },
 
-        /**
-         * create app based on KISSY.
-         * @param name {String} the app name
-         * @param sx {Object} static properties to add/override
-         * <code>
-         * S.app('TB');
-         * TB.namespace('app'); // returns TB.app
-         * </code>
-         * @return {Object}  A reference to the app global object
-         */
-        app: function(name, sx) {
-            var isStr = S.isString(name),
-                O = isStr ? host[name] || {} : name,
-                i = 0,
-                len = S.__APP_INIT_METHODS.length;
+            /**
+             * create app based on KISSY.
+             * @param name {String} the app name
+             * @param sx {Object} static properties to add/override
+             * <code>
+             * S.app('TB');
+             * TB.namespace('app'); // returns TB.app
+             * </code>
+             * @return {Object}  A reference to the app global object
+             */
+            app: function(name, sx) {
+                var isStr = S.isString(name),
+                    O = isStr ? host[name] || {} : name,
+                    i = 0,
+                    len = S.__APP_INIT_METHODS.length;
 
-            S.mix(O, this, true, S.__APP_MEMBERS);
-            for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
+                S.mix(O, this, true, S.__APP_MEMBERS);
+                for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
 
-            S.mix(O, S.isFunction(sx) ? sx() : sx);
-            isStr && (host[name] = O);
+                S.mix(O, S.isFunction(sx) ? sx() : sx);
+                isStr && (host[name] = O);
 
-            return O;
-        },
+                return O;
+            },
 
 
-        config:function(c) {
-            for (var p in c) {
-                if (this["_" + p]) this["_" + p](c[p]);
-            }
-        },
-
-        /**
-         * Prints debug info.
-         * @param msg {String} the message to log.
-         * @param cat {String} the log category for the message. Default
-         *        categories are "info", "warn", "error", "time" etc.
-         * @param src {String} the source of the the message (opt)
-         */
-        log: function(msg, cat, src) {
-            if (S.Config.debug) {
-                if (src) {
-                    msg = src + ': ' + msg;
+            config:function(c) {
+                for (var p in c) {
+                    if (this["_" + p]) this["_" + p](c[p]);
                 }
-                if (host['console'] !== undefined && console.log) {
-                    console[cat && console[cat] ? cat : 'log'](msg);
+            },
+
+            /**
+             * Prints debug info.
+             * @param msg {String} the message to log.
+             * @param cat {String} the log category for the message. Default
+             *        categories are "info", "warn", "error", "time" etc.
+             * @param src {String} the source of the the message (opt)
+             */
+            log: function(msg, cat, src) {
+                if (S.Config.debug) {
+                    if (src) {
+                        msg = src + ': ' + msg;
+                    }
+                    if (host['console'] !== undefined && console.log) {
+                        console[cat && console[cat] ? cat : 'log'](msg);
+                    }
                 }
-            }
-        },
+            },
 
-        /**
-         * Throws error message.
-         */
-        error: function(msg) {
-            if (S.Config.debug) {
-                throw msg;
-            }
-        },
+            /**
+             * Throws error message.
+             */
+            error: function(msg) {
+                if (S.Config.debug) {
+                    throw msg;
+                }
+            },
 
-        /*
-         * Generate a global unique id.
-         * @param pre {String} optional guid prefix
-         * @return {String} the guid
-         */
-        guid: function(pre) {
-            return (pre || EMPTY) + guid++;
-        }
-    });
+            /*
+             * Generate a global unique id.
+             * @param pre {String} optional guid prefix
+             * @return {String} the guid
+             */
+            guid: function(pre) {
+                return (pre || EMPTY) + guid++;
+            }
+        });
 
     S.__init();
     return S;
@@ -983,7 +1001,7 @@ build time: ${build.time}
              * 'id=45&raw'        // -> {id: '45', raw: ''}
              * </code>
              */
-            unparam: function(str, sep, eq) {
+            unparam: function(str, sep, eq, arr) {
                 if (typeof str !== 'string'
                     || (str = S.trim(str)).length === 0) {
                     return {};
@@ -1004,7 +1022,7 @@ build time: ${build.time}
                         S.log("decodeURIComponent error : " + pair[1], "error");
                         val = pair[1] || EMPTY;
                     }
-                    if (S.endsWith(key, "[]")) {
+                    if (arr !== false && S.endsWith(key, "[]")) {
                         key = key.substring(0, key.length - 2);
                     }
                     if (hasOwnProperty.call(ret, key)) {
@@ -9142,7 +9160,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
         if (c.data && !S.isString(c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
-            c.data = S.param(c.data);
+            // 和原生保持一致，不加 []
+            c.data = S.param(c.data, undefined, undefined, false);
         }
 
         c.type = c.type.toUpperCase();
@@ -9239,10 +9258,23 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         return xhr;
     }
 
-    io.__transports = transports;
-    io.__defaultConfig = defaultConfig;
     S.mix(io, Event.Target);
-    io.isLocal = isLocal;
+    S.mix(io, {
+            isLocal:isLocal,
+            setupConfig:function(setting) {
+                S.mix(defaultConfig, setting, undefined, undefined, true);
+            },
+            setupTransport:function(name, fn) {
+                transports[name] = fn;
+            },
+            getTransport:function(name) {
+                return transports[name];
+            },
+            getConfig:function() {
+                return defaultConfig;
+            }
+        });
+
 
     return io;
 },
@@ -9266,8 +9298,6 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  * @author: yiminghe@gmail.com
  */
 KISSY.add("ajax/xhr", function(S, io) {
-
-    var transports = io.__transports;
 
     function createStandardXHR() {
         try {
@@ -9433,7 +9463,8 @@ KISSY.add("ajax/xhr", function(S, io) {
 
             });
 
-        transports["*"] = XhrTransport;
+        io.setupTransport("*", XhrTransport);
+
         return io;
     }
 }, {
@@ -9451,27 +9482,35 @@ KISSY.add("ajax/xhr", function(S, io) {
  */
 KISSY.add("ajax/script", function(S, io) {
 
-    var transports = io.__transports,
-        defaultConfig = io.__defaultConfig;
+    io.setupConfig({
+            accepts:{
+                script:"text/javascript, " +
+                    "application/javascript, " +
+                    "application/ecmascript, " +
+                    "application/x-ecmascript"
+            },
 
-    defaultConfig.accepts.script = "text/javascript, " +
-        "application/javascript, " +
-        "application/ecmascript, " +
-        "application/x-ecmascript";
-
-    defaultConfig.contents.script = /javascript|ecmascript/;
-    // 如果以 xhr+eval 需要下面的，否则直接 script node 不需要，引擎自己执行了，不需要手动 eval
-    defaultConfig.converters.text.script = function(text) {
-        S.globalEval(text);
-        return text;
-    };
-
+            contents:{
+                script:/javascript|ecmascript/
+            },
+            converters:{
+                text:{
+                    // 如果以 xhr+eval 需要下面的，
+                    // 否则直接 script node 不需要，引擎自己执行了，
+                    // 不需要手动 eval
+                    script:function(text) {
+                        S.globalEval(text);
+                        return text;
+                    }
+                }
+            }
+        });
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!xhrObj.config.crossDomain &&
             !xhrObj.config['forceScript']) {
-            return new transports["*"](xhrObj);
+            return new (io.getTransport("*"))(xhrObj);
         }
         this.xhrObj = xhrObj;
         return 0;
@@ -9545,7 +9584,7 @@ KISSY.add("ajax/script", function(S, io) {
             }
         });
 
-    transports["script"] = ScriptTransport;
+    io.setupTransport("script", ScriptTransport);
 
     return io;
 
@@ -9559,13 +9598,13 @@ KISSY.add("ajax/script", function(S, io) {
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
-    var defaultConfig = io.__defaultConfig;
-
-    defaultConfig.jsonp = "callback";
-    defaultConfig.jsonpCallback = function() {
-        //不使用 now() ，极端情况下可能重复
-        return S.guid("jsonp");
-    };
+    io.setupConfig({
+            jsonp:"callback",
+            jsonpCallback:function() {
+                //不使用 now() ，极端情况下可能重复
+                return S.guid("jsonp");
+            }
+        });
 
     io.on("start", function(e) {
         var xhr = e.xhr,c = xhr.config;
@@ -9633,15 +9672,16 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
     return {
         serialize:function(form) {
             form = DOM.get(form);
-            var data = [];
+            var data = {};
             S.each(form.elements, function(e) {
                 var d = e.disabled;
                 //必须编码
                 if (!d) {
-                    data.push(enc(e.name) + "=" + enc(DOM.val(e)));
+                    data[e.name] = DOM.val(e);
                 }
             });
-            return data.join("&");
+            // 不要自动加 [] ，和原生保持一致，由用户自己加
+            return S.param(data, undefined, undefined, false);
         }
     };
 }, {
@@ -9700,18 +9740,17 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
-    var transports = io.__transports,
-        doc = document,
-        defaultConfig = io.__defaultConfig;
-
+    var doc = document;
     // iframe 内的内容就是 body.innerText
-    defaultConfig.converters.text.iframe = function(text) {
-        return text;
-    };
-
-
-    // iframe 到其他类型的转化和 text 一样
-    defaultConfig.converters.iframe = defaultConfig.converters.text;
+    io.setupConfig({
+            converters:{
+                // iframe 到其他类型的转化和 text 一样
+                iframe:io.getConfig().converters.text,
+                text:{
+                    iframe:function(text) {
+                        return text;
+                    }
+                }}});
 
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe");
@@ -9725,15 +9764,19 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     }
 
     function addDataToForm(data, form) {
-        data = S.unparam(data);
+        data = S.unparam(data, undefined, undefined, false);
         var ret = [];
         for (var d in data) {
-            var e = doc.createElement("input");
-            e.type = 'hidden';
-            e.name = d;
-            e.value = data[d];
-            DOM.append(e, form);
-            ret.push(e);
+            var vs = S.makeArray(data[d]);
+            // 数组和原生一样对待，创建多个同名输入域
+            for (var i = 0; i < vs.length; i++) {
+                var e = doc.createElement("input");
+                e.type = 'hidden';
+                e.name = d;
+                e.value = vs[i];
+                DOM.append(e, form);
+                ret.push(e);
+            }
         }
         return ret;
     }
@@ -9811,11 +9854,11 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             }
         });
 
-    transports['iframe'] = IframeTransport;
+    io.setupTransport("iframe",IframeTransport);
 
     return io;
 
-}, {
+},{
         requires:["dom","event","./base"]
     });
 

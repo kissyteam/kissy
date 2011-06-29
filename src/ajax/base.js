@@ -96,7 +96,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         if (c.data && !S.isString(c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
             // 和原生保持一致，不加 []
-            c.data = S.param(c.data,undefined,undefined,false);
+            c.data = S.param(c.data, undefined, undefined, false);
         }
 
         c.type = c.type.toUpperCase();
@@ -193,10 +193,23 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         return xhr;
     }
 
-    io.__transports = transports;
-    io.__defaultConfig = defaultConfig;
     S.mix(io, Event.Target);
-    io.isLocal = isLocal;
+    S.mix(io, {
+            isLocal:isLocal,
+            setupConfig:function(setting) {
+                S.mix(defaultConfig, setting, undefined, undefined, true);
+            },
+            setupTransport:function(name, fn) {
+                transports[name] = fn;
+            },
+            getTransport:function(name) {
+                return transports[name];
+            },
+            getConfig:function() {
+                return defaultConfig;
+            }
+        });
+
 
     return io;
 },

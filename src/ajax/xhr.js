@@ -4,8 +4,6 @@
  */
 KISSY.add("ajax/xhr", function(S, io) {
 
-    var transports = io.__transports;
-
     function createStandardXHR() {
         try {
             return new window.XMLHttpRequest();
@@ -170,7 +168,8 @@ KISSY.add("ajax/xhr", function(S, io) {
 
             });
 
-        transports["*"] = XhrTransport;
+        io.setupTransport("*", XhrTransport);
+
         return io;
     }
 }, {

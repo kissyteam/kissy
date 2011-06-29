@@ -5,27 +5,35 @@
  */
 KISSY.add("ajax/script", function(S, io) {
 
-    var transports = io.__transports,
-        defaultConfig = io.__defaultConfig;
+    io.setupConfig({
+            accepts:{
+                script:"text/javascript, " +
+                    "application/javascript, " +
+                    "application/ecmascript, " +
+                    "application/x-ecmascript"
+            },
 
-    defaultConfig.accepts.script = "text/javascript, " +
-        "application/javascript, " +
-        "application/ecmascript, " +
-        "application/x-ecmascript";
-
-    defaultConfig.contents.script = /javascript|ecmascript/;
-    // 如果以 xhr+eval 需要下面的，否则直接 script node 不需要，引擎自己执行了，不需要手动 eval
-    defaultConfig.converters.text.script = function(text) {
-        S.globalEval(text);
-        return text;
-    };
-
+            contents:{
+                script:/javascript|ecmascript/
+            },
+            converters:{
+                text:{
+                    // 如果以 xhr+eval 需要下面的，
+                    // 否则直接 script node 不需要，引擎自己执行了，
+                    // 不需要手动 eval
+                    script:function(text) {
+                        S.globalEval(text);
+                        return text;
+                    }
+                }
+            }
+        });
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!xhrObj.config.crossDomain &&
             !xhrObj.config['forceScript']) {
-            return new transports["*"](xhrObj);
+            return new (io.getTransport("*"))(xhrObj);
         }
         this.xhrObj = xhrObj;
         return 0;
@@ -99,7 +107,7 @@ KISSY.add("ajax/script", function(S, io) {
             }
         });
 
-    transports["script"] = ScriptTransport;
+    io.setupTransport("script", ScriptTransport);
 
     return io;
 

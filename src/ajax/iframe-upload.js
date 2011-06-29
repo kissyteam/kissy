@@ -4,18 +4,17 @@
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
-    var transports = io.__transports,
-        doc = document,
-        defaultConfig = io.__defaultConfig;
-
+    var doc = document;
     // iframe 内的内容就是 body.innerText
-    defaultConfig.converters.text.iframe = function(text) {
-        return text;
-    };
-
-
-    // iframe 到其他类型的转化和 text 一样
-    defaultConfig.converters.iframe = defaultConfig.converters.text;
+    io.setupConfig({
+            converters:{
+                // iframe 到其他类型的转化和 text 一样
+                iframe:io.getConfig().converters.text,
+                text:{
+                    iframe:function(text) {
+                        return text;
+                    }
+                }}});
 
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe");
@@ -29,7 +28,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     }
 
     function addDataToForm(data, form) {
-        data = S.unparam(data,undefined,undefined,false);
+        data = S.unparam(data, undefined, undefined, false);
         var ret = [];
         for (var d in data) {
             var vs = S.makeArray(data[d]);
@@ -119,10 +118,10 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             }
         });
 
-    transports['iframe'] = IframeTransport;
+    io.setupTransport("iframe",IframeTransport);
 
     return io;
 
-}, {
+},{
         requires:["dom","event","./base"]
     });
