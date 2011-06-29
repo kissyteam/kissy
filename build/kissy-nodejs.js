@@ -274,7 +274,7 @@ build time: ${build.time}
              */
             version: '1.20dev',
 
-            buildTime:'20110629134836',
+            buildTime:'20110629162855',
 
             /**
              * Returns a new object containing all of the properties of
@@ -9147,8 +9147,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     defaultConfig.converters.html = defaultConfig.converters.text;
 
     function setUpConfig(c) {
-        c = c || {};
-        S.mix(c, defaultConfig, false);
+        // deep mix
+        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
         if (c.crossDomain == null) {
             var parts = rurl.exec(c.url.toLowerCase());
             c.crossDomain = !!( parts &&

@@ -82,8 +82,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     defaultConfig.converters.html = defaultConfig.converters.text;
 
     function setUpConfig(c) {
-        c = c || {};
-        S.mix(c, defaultConfig, false);
+        // deep mix
+        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
         if (c.crossDomain == null) {
             var parts = rurl.exec(c.url.toLowerCase());
             c.crossDomain = !!( parts &&
