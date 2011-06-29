@@ -2,20 +2,50 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Validation</title> 
-	<link rel="stylesheet" type="text/css"  href="src/css/base.css" /> 
-	<link rel="stylesheet" type="text/css"  href="src/css/doc.css" /> 
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="http://docs.kissyui.com/kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
-	<script src="src/js/doc.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
+	<script src="doc.js" charset="utf-8"></script>
+	
 
 	
 </head>
 <body>
  
 
+<div class="note">
+<pre>
+	KISSY.use("validation",function(S,Validation){
+
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					style: "under"
+				});
+
+			//实例化字段，配置通过参数传入
+			var f = new Validation.Field("#username",{
+				style:'under',
+				chinese:['姓名只能是中文']
+			})
+	
+			//增加到校验中
+			check.add(f);
+
+
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+		
+	});
+</pre>
+</div>
+ 
 <div id="viewdemo" class="doc">
 	
-
 
 <form method="post">
 <ul class="form">
@@ -70,13 +100,9 @@
 
 
 
-<div id="viewcode"><h3>查看/关闭本页源代码</h3><div  id="democode"><pre class='brush:javascript;'>﻿</pre></div></div>
-<script src="src/js/loader.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
-<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shCore.js"></script>
-<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
-<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="src/js/code.js"></script>
+
+<script src="http://docs.kissyui.com/kissy-util/adaptive-frame/adaptive-frame.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+
 
 </body>
 </html>

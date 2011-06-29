@@ -2,11 +2,13 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>Validation</title> 
-	<link rel="stylesheet" type="text/css"  href="src/css/base.css" /> 
-	<link rel="stylesheet" type="text/css"  href="src/css/doc.css" /> 
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="http://docs.kissyui.com/kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
-	<script src="src/js/doc.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
+	<script src="doc.js" charset="utf-8"></script>
+	
 	
 </head>
 <body>
@@ -20,14 +22,55 @@
 <!-- crumbs }}} -->
 
 
-<div id="viewdemo" class="doc">
+<div class="note">
 
-<div>
-	<pre name="code" id="see"></pre>
+<pre>
+//Validation.Rule.toString(rulename)方法可以很方便的打印出校验规则
+//方便查看校验规则的实现方法，知道要传入哪些参数
+
+//例如：
+console.log(Validation.Rule.toString("func"););
+
+</pre>
+
 </div>
 
-<div>
-	<input type="text" id="rulename" value="func" /> <button type="button" id="btn">查看</button>
+
+
+<div id="viewdemo" class="doc">
+
+<div id="see" class='highlighterbox'>
+	
+</div>
+
+<div style="margin:10px 0;">
+	
+	<select id="rulelist">
+		<option>- 请选择要查看的规则 -</option>
+		<option>func</option>
+		<option>regex</option>
+		<option>required</option>
+		<option>equalTo</option>
+		<option>length</option>
+		<option>minLength</option>
+		<option>maxLength</option>
+		<option>fiter</option>
+		<option>range</option>
+		<option>group</option>
+		<option>trim</option>
+		<option>ltrim</option>
+		<option>rtrim</option>
+		<option>chinese</option>
+		<option>english</option>
+		<option>currency</option>
+		<option>phone</option>
+		<option>mobile</option>
+		<option>url</option>
+		<option>email</option>
+	</select>
+
+	<!--<input type="text" id="rulename" value="func" /> <button type="button" id="btn">查看</button>-->
+	
 </div>
 
 
@@ -44,21 +87,30 @@
 			return Validation.Rule.toString(name);
 		}
 		
-		if(input.val()){
-			see.html(getcode(input.val()));
+		/*if(input.val()){
+			see.html(Highlighter.Execute(getcode(input.val()), "js"));
 		}
 		
 		S.one("#btn").on("click",function(){
-			see.html(getcode(input.val()));
+			see.html(Highlighter.Execute(getcode(input.val()), "js"));
 		})
 
 		input.on("keydown",function(ev){
 			if(ev.keyCode==13){
-				see.html(getcode(input.val()));
+				see.html(Highlighter.Execute(getcode(input.val()), "js"));
 			}
-		});
+		});*/
 		
 		
+		S.Event.on("#rulelist", "change", function(ev){
+			var tg = ev.target,
+				option = tg.options[tg.selectedIndex].text;
+			if(option)see.html(Highlighter.Execute(getcode(option), "js"));
+			
+		})
+		
+		S.get("#rulelist").value="func";
+		see.html(Highlighter.Execute(getcode("func"), "js"));
 		
 
 	});
@@ -71,13 +123,9 @@
 
 
 
-<div id="viewcode"><h3>查看/关闭本页源代码</h3><div  id="democode"><pre class='brush:javascript;'>﻿</pre></div></div>
-<script src="src/js/loader.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
-<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shCore.js"></script>
-<script type="text/javascript" src="src/js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
-<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="src/js/syntaxhighlighter/styles/shThemeDefault.css"/>
-<script type="text/javascript" src="src/js/code.js"></script>
+
+<script src="http://docs.kissyui.com/kissy-util/adaptive-frame/adaptive-frame.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+
 
 </body>
 </html>

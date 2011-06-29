@@ -70,9 +70,7 @@ KISSY.add("validation/utils", function(S, undefined) {
 			 * 打印错误信息
 			 * @param {Object} msg
 			 */
-			log: function(msg){
-				console.log(msg);
-			},
+			log: S.log,
 			
 			/**
 			 * 获取form表单的值 checkbox,rado,select-multiple返回数组

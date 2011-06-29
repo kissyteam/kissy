@@ -19,30 +19,12 @@
 	
 
 
-<div class="note">
-	配置错误信息的显示样式通常都是在实例化的时候传入样式名称：
-	<pre class='brush:javascript;'>
-		var check = new Validation(form,{
-			style: "under"	//错误信息提示样式
-		});
-	</pre>
-	如何想针对个别字段单独配置，传入参数即可
-	<pre class='brush:javascript;'>
-		&lt;input class="text" type="text" data-valid="{style:'siderr'}"/&gt;
-	</pre>
-</div>
-
 <form method="post">
 <ul class="form">
 
 	<li>
 		<label class="hd">姓名：</label>
-		<input class="text" type="text" data-valid="{}"/>
-	</li>
-	
-	<li>
-		<label class="hd">密码：</label>
-		<input class="text" type="text" data-valid="{style:'siderr'}"/>
+		<input class="text" type="text" name="url" id="url" data-valid="{length:[3,6,true],remote:['interface.txt']}"/>
 	</li>
 	
 	<li>
@@ -76,6 +58,7 @@
 
 
 </div>
+
 
 
 

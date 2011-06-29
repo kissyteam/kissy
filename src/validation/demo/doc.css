@@ -18,6 +18,16 @@
 				margin:10px 0 20px 0;
 			}
 	
+			.highlighterbox {
+				display: block;
+				margin: 5px 0px 0px;
+				padding: 10px;
+				font-size: 14px;
+				font-family: consolas;
+				background: #EFE;
+				border: 1px solid #DDD;
+			}
+			
 		/* }}} */
 
 
