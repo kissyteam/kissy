@@ -6462,8 +6462,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             // only support utf-8 when post, encoding can not be changed actually
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             async:true,
+            // whether add []
             serializeArray:true,
-
+            // whether param data
+            processData:true,
             /*
              url:"",
              context:null,
@@ -6521,7 +6523,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                 );
         }
 
-        if (c.data && !S.isString(c.data)) {
+        if (c.processData && c.data && !S.isString(c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
             c.data = S.param(c.data, undefined, undefined, c.serializeArray);
         }
