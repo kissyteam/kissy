@@ -19,7 +19,6 @@ History:
  - [!] ajax 所有方法都返回模拟 xhr 对象，包含 abort 方法用于中断当前请求等
  - [!] ajax 请求地址的响应头如果设置了 content-type 为 json 或 xml ，回调的第一个参数自动为该格式，不需要手动 parse
  - [+] 增加 S.io.upload 方法，用于无刷新文件上传
- - [!] ajax data 其中一个 key 对应值为数组时，在 php 环境下需要手动写 [],例如 data:{ "test[]":["1","2"]}
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法

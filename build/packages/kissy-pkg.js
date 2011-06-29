@@ -87,7 +87,7 @@ build time: ${build.time}
              */
             version: '1.20dev',
 
-            buildTime:'20110629162855',
+            buildTime:'20110629204455',
 
             /**
              * Returns a new object containing all of the properties of
@@ -814,7 +814,7 @@ build time: ${build.time}
              * 'id=45&raw'        // -> {id: '45', raw: ''}
              * </code>
              */
-            unparam: function(str, sep, eq, arr) {
+            unparam: function(str, sep, eq) {
                 if (typeof str !== 'string'
                     || (str = S.trim(str)).length === 0) {
                     return {};
@@ -835,7 +835,7 @@ build time: ${build.time}
                         S.log("decodeURIComponent error : " + pair[1], "error");
                         val = pair[1] || EMPTY;
                     }
-                    if (arr !== false && S.endsWith(key, "[]")) {
+                    if (S.endsWith(key, "[]")) {
                         key = key.substring(0, key.length - 2);
                     }
                     if (hasOwnProperty.call(ret, key)) {
@@ -8913,6 +8913,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             // only support utf-8 when post, encoding can not be changed actually
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             async:true,
+            serializeArray:true,
 
             /*
              url:"",
@@ -8973,8 +8974,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
         if (c.data && !S.isString(c.data)) {
             // 必须 encodeURIComponent 编码 utf-8
-            // 和原生保持一致，不加 []
-            c.data = S.param(c.data, undefined, undefined, false);
+            c.data = S.param(c.data, undefined, undefined, c.serializeArray);
         }
 
         c.type = c.type.toUpperCase();
@@ -9493,7 +9493,6 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
                     data[e.name] = DOM.val(e);
                 }
             });
-            // 不要自动加 [] ，和原生保持一致，由用户自己加
             return S.param(data, undefined, undefined, false);
         }
     };
@@ -9576,8 +9575,8 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
         DOM.prepend(xhr.iframe, doc.body || doc.documentElement);
     }
 
-    function addDataToForm(data, form) {
-        data = S.unparam(data, undefined, undefined, false);
+    function addDataToForm(data, form, serializeArray) {
+        data = S.unparam(data);
         var ret = [];
         for (var d in data) {
             var vs = S.makeArray(data[d]);
@@ -9585,7 +9584,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             for (var i = 0; i < vs.length; i++) {
                 var e = doc.createElement("input");
                 e.type = 'hidden';
-                e.name = d;
+                e.name = d + (serializeArray ? "[]" : "");
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);
@@ -9623,7 +9622,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
                 DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
 
                 if (c.data) {
-                    fields = addDataToForm(c.data, form);
+                    fields = addDataToForm(c.data, form, c.serializeArray);
                 }
 
                 this.fields = fields;
@@ -9667,11 +9666,11 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             }
         });
 
-    io.setupTransport("iframe",IframeTransport);
+    io.setupTransport("iframe", IframeTransport);
 
     return io;
 
-},{
+}, {
         requires:["dom","event","./base"]
     });
 

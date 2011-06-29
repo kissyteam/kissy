@@ -15,7 +15,6 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
                     data[e.name] = DOM.val(e);
                 }
             });
-            // 不要自动加 [] ，和原生保持一致，由用户自己加
             return S.param(data, undefined, undefined, false);
         }
     };

@@ -84,12 +84,14 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
                     type:'post',
                     dataType:'json',
                     data:{
-                        // php need []
-                        "test2[]":["t2","t3"]
+                        "test2":["t2","t3"]
                     },
                     success:function(data) {
                         ok = true;
                         d = data;
+                    },
+                    complete:function() {
+                        ok = true
                     }
                 });
 
@@ -122,11 +124,14 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
                     type:'post',
                     dataType:'json',
                     data:{
-                        "test2[]":["t2","t3"]
+                        "test2":["t2","t3"]
                     },
                     success:function(data) {
                         ok = true;
                         d = data;
+                    },
+                    complete:function() {
+                        ok = true
                     }
                 });
 

@@ -509,7 +509,7 @@
              * 'id=45&raw'        // -> {id: '45', raw: ''}
              * </code>
              */
-            unparam: function(str, sep, eq, arr) {
+            unparam: function(str, sep, eq) {
                 if (typeof str !== 'string'
                     || (str = S.trim(str)).length === 0) {
                     return {};
@@ -530,7 +530,7 @@
                         S.log("decodeURIComponent error : " + pair[1], "error");
                         val = pair[1] || EMPTY;
                     }
-                    if (arr !== false && S.endsWith(key, "[]")) {
+                    if (S.endsWith(key, "[]")) {
                         key = key.substring(0, key.length - 2);
                     }
                     if (hasOwnProperty.call(ret, key)) {
