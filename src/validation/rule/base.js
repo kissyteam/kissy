@@ -93,7 +93,7 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 	
 	return Rule
 	
-}, { requires: ['dom',"event","validation/utils"] });
+}, { requires: ['dom',"event","../utils"] });
 
 
 

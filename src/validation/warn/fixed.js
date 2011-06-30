@@ -72,5 +72,5 @@ KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
 
 	return Fixed;
 
-}, { requires: ['dom',"event","validation/utils","validation/define"] });
+}, { requires: ['dom',"event","../utils","../define"] });
 

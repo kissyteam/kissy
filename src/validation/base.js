@@ -8,7 +8,6 @@ KISSY.add("validation/base",function(S, DOM, Event, Util, Define, Field, Warn, R
 	
 	/**
 	 * KISSY.Validation构造函数
-	 * @constructor
 	 * @param form {String} 要验证的form表单
 	 * @param config {Object} 配置
 	 * @return {Validation} 返回Validation实例
@@ -22,11 +21,10 @@ KISSY.add("validation/base",function(S, DOM, Event, Util, Define, Field, Warn, R
         
         if(!form){
         	Util.log("请配置正确的form ID.");
-        	return;
+        	return 0;
         }
 		
         self._init(form,config||{});
-        return self;
 	}
 
 
@@ -105,7 +103,7 @@ KISSY.add("validation/base",function(S, DOM, Event, Util, Define, Field, Warn, R
 			
 			if(!el || el.form!=self.form){
 				Util.log("字段"+field+"不存在或不属于该form");
-				return;
+				return undefined;
 			}
 			
 			//给对应的field生成一个id
@@ -193,4 +191,4 @@ KISSY.add("validation/base",function(S, DOM, Event, Util, Define, Field, Warn, R
      */
     return Validation;
     
-}, { requires: ["dom","event","validation/utils","validation/define","validation/field","validation/warn","validation/rule"] });
+}, { requires: ["dom","event","./utils","./define","./field","./warn","./rule"] });

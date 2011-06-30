@@ -7,6 +7,6 @@ KISSY.add("validation/rule", function(S, Util, Rule, Normal) {
 
 	return Rule;
 
-}, { requires: ["validation/utils", "validation/rule/base", "validation/rule/normal"] });
+}, { requires: ["./utils", "./rule/base", "./rule/normal"] });
 
 

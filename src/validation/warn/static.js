@@ -85,5 +85,5 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
 
 	return Static;
 
-}, { requires: ['dom',"event","validation/utils","validation/define"] });
+}, { requires: ['dom',"event","../utils","../define"] });
 

@@ -60,7 +60,7 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 	
 	return Warn;
 
-}, { requires: ['dom',"event","validation/utils","validation/warn/baseclass"] });
+}, { requires: ['dom',"event","../utils","./baseclass"] });
 
 
 

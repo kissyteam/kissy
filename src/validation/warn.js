@@ -20,4 +20,5 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
 
 	return Warn;
 		
-}, { requires: ["validation/utils","validation/warn/base","validation/warn/baseclass","validation/warn/alert","validation/warn/static","validation/warn/float","validation/warn/fixed"] });
+}, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float",
+        "./warn/fixed"] });

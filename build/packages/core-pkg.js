@@ -1627,6 +1627,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     var win = window,
         doc = document,
+        isIE = UA['ie'],
+        docElem = doc.documentElement,
         isElementNode = DOM._isElementNode,
         nodeTypeIs = DOM._nodeTypeIs,
         getWin = DOM._getWin,
@@ -1765,6 +1767,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             viewportWidth:0
         });
 
+    // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
+    // http://www.quirksmode.org/dom/w3c_cssom.html
     // add ScrollLeft/ScrollTop getter/setter methods
     S.each(['Left', 'Top'], function(name, i) {
         var method = SCROLL + name;
@@ -1836,6 +1840,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     // 获取 elem 相对 elem.ownerDocument 的坐标
     function getOffset(elem) {
         var box, x = 0, y = 0,
+            body = doc.body,
             w = getWin(elem[OWNER_DOCUMENT]);
 
         // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
@@ -1848,6 +1853,20 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
             x = box[LEFT];
             y = box[TOP];
+
+            // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
+            // 窗口边框标准是设 documentElement ,quirks 时设置 body
+            // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
+            // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
+            // 标准 ie 下 docElem.clientTop 就是 border-top
+            // ie7 html 即窗口边框改变不了。永远为 2
+
+            // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
+            var clientTop = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientTop : body.clientTop) || 0,
+                clientLeft = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientLeft : body.clientLeft) || 0;
+
+            x -= clientLeft;
+            y -= clientTop;
 
             // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
             if (UA.mobile !== 'apple') {
@@ -1901,6 +1920,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     var doc = document,
         docElem = doc.documentElement,
+        isIE = UA['ie'],
         STYLE = 'style',
         FLOAT = 'float',
         CSS_FLOAT = 'cssFloat',
@@ -2204,10 +2224,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
-                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                // TODO: 改成特性探测
-                if (UA['ie'] === 8 || UA['opera']) {
-                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
+                // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                if (isIE && document['documentMode'] != 9 || UA['opera']) {
+                    // 类似 offset ie 下的边框处理
+                    // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
+                    // 否则减去 borderTop 其实也是 clientTop
+                    offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                        || 0;
                 }
 
                 ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);

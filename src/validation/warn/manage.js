@@ -11,7 +11,7 @@ KISSY.add("validation/warn/manage", function(S, Warn, Alert, Static, Float) {
 
 	
 }, {requires: [
-			"validation/warn/base",
-			"validation/warn/alert","validation/warn/static","validation/warn/float"
+			"./base",
+			"./alert","./static","./float"
 		]}
 );

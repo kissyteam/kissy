@@ -32,7 +32,7 @@ KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 	
 	return Alert;
 
-}, { requires: ['dom',"event","validation/utils","validation/define"] });
+}, { requires: ['dom',"event","../utils","../define"] });
 
 
 

@@ -344,4 +344,4 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 
 	return Field;
 		
-}, { requires: ['dom',"event","validation/utils","validation/define","validation/rule","validation/rule/remote","validation/warn"] });
+}, { requires: ['dom',"event","./utils","./define","./rule","./rule/remote","./warn"] });

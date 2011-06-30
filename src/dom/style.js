@@ -6,6 +6,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     var doc = document,
         docElem = doc.documentElement,
+        isIE = UA['ie'],
         STYLE = 'style',
         FLOAT = 'float',
         CSS_FLOAT = 'cssFloat',
@@ -309,10 +310,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
-                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                // TODO: 改成特性探测
-                if (UA['ie'] === 8 || UA['opera']) {
-                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
+                // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                if (isIE && document['documentMode'] != 9 || UA['opera']) {
+                    // 类似 offset ie 下的边框处理
+                    // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
+                    // 否则减去 borderTop 其实也是 clientTop
+                    offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                        || 0;
                 }
 
                 ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
