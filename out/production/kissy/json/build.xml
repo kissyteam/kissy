@@ -1,0 +1,22 @@
+<project name="json.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="json-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="json2.js"/>
+            <path path="../json.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="json-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>

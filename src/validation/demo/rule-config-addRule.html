@@ -7,7 +7,11 @@
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
 	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
-	<script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
 	
 
 	
@@ -17,7 +21,7 @@
  
 
 <div class="note">
-<pre>
+<pre class="brush: js;">
 
 
 //可以通过编程的方式随意动态的增加字段的校验规则
@@ -64,7 +68,7 @@
 </form>
 
 <script>
-
+KISSY.Config.base = "../../";
 	KISSY.use("validation",function(S,Validation){
 	
 			var form = S.query("form")[0],

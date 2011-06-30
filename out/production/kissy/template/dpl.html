@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf8" />
+        <title>Template Demo</title>
+        <link href="http://kissyteam.github.com/kissy-dpl/src/tabs/style.css" rel="stylesheet" />
+        <link href="http://kissyteam.github.com/kissy-dpl/src/tabs/custom.css" rel="stylesheet" />
+        <link href="http://kissyteam.github.com/kissy/build/cssreset/reset.css" rel="stylesheet" />
+        <link href="http://kissyteam.github.com/kissy-dpl/assets/docs.css" rel="stylesheet" />
+        <script src="../../build/kissy.js"></script>
+        <script src="template.js"></script>
+        <script src="beautify.js"></script>
+        <script src="template-node.js"></script>
+        <script src="template-dpl.js"></script>
+        <style>
+            .tabs-panel {display: none;}
+            .current {display: block;}
+        </style>
+    </head>
+
+    <body>
+        <script type="text/x-kissy-template" id="dpl-template">
+            {{#tabs}}
+                {{#tabs-hd}}
+                    {{#tabs-trigger}}Tab1{{/tabs-trigger}}
+                    {{#tabs-trigger current}}Tab2{{/tabs-trigger}}
+                    {{#tabs-trigger}}Tab3{{/tabs-trigger}}
+                {{/tabs-hd}}
+                {{#tabs-bd}}
+                    {{#tabs-panel}}{{/tabs-panel}}
+                    {{#tabs-panel current}}{{/tabs-panel}}
+                    {{#tabs-panel}}{{/tabs-panel}}
+                {{/tabs-bd}}
+            {{/tabs}}
+        </script>
+        <div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
+        <script>
+            var S = KISSY, T = S.Template;
+            S.tmpl('#dpl-template', {}).appendTo('#console');
+        </script>
+    </body>
+</html>
+

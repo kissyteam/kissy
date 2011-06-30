@@ -13,7 +13,6 @@ KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 			showMessage: function(estate,msg) {
 				var self = this;
 				if(estate == symbol.error){
-					console.log(self.invalidClass);
 					self.invalidClass&&DOM.addClass(self.target,self.invalidClass);
 					alert(msg);
 					self.target.focus();

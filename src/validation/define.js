@@ -3,7 +3,7 @@
  * @author: 常胤 (lzlu.com)
  */
 
-KISSY.add("validation/define",function(S, undefined){
+KISSY.add("validation/define",function(){
 	
 	var Define = {};
 	
@@ -20,8 +20,8 @@ KISSY.add("validation/define",function(S, undefined){
 		/**
 		 * 默认消息提示类型
 		 */
-		defatltwarn: "alert"
-	}
+		defaultwarn: "alert"
+	};
 	
 	
 	//常量定义
@@ -39,7 +39,11 @@ KISSY.add("validation/define",function(S, undefined){
 			hint: 2,
 			ignore: 3
 		}
-	}
+	};
+
+    if(1>2){
+        Define.Config.defaultwarn();
+    }
 	
 
 	return Define

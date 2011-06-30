@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>S.Ajax Demo</title>
+<script src="../../build/kissy.js"></script>
+</head>
+<body style="padding: 20px">
+
+<button id="get">GET</button>
+<button id="post">POST</button>
+<button id="json">JSON</button>
+<button id="jsonp">JSONP</button>
+<button id="sync">同步获取数据</button>
+
+<div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
+<script>
+    (function() {
+        var S = KISSY, _log = S.log, c = S.get('#console');
+        S.log = function() {
+            c.innerHTML = arguments[0];
+            _log.apply(S, arguments);
+        };
+    })();
+</script>
+
+<script>
+    (function() {
+        var S = KISSY, IO = S.IO;
+
+        // 全局事件
+        IO.on('start', function() {
+            S.one('#console').html('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>');
+        });
+
+        IO.on('complete', function() {
+            var p = S.one('#console p');
+            if (p) p.remove();
+        });
+
+        //普通 get 请求
+        S.one('#get').on('click', function() {
+            IO.get('tests/interface.php?t=get', function(data) {
+                S.log('GET ' + data);
+            });
+        });
+
+        //普通 post 请求
+        S.one('#post').on('click', function() {
+            IO.post('tests/interface.php?t=post', {
+                type:'post',
+                name:'jayli',
+                company:'cn.yahoo.com',
+                countru:'china'
+            }, function(o) {
+                S.log('POST ' + o);
+            });
+        });
+
+        // JSON
+        S.one('#json').on('click', function() {
+            IO.get('tests/interface.php?t=get', function(data) {
+                S.log('json ' + S.JSON.stringify(data));
+            }, 'json');
+
+        });
+
+        // JSONP
+        S.one('#jsonp').on('click', function() {
+
+            S.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
+                    function(data) {
+                        S.log(S.JSON.stringify(data));
+                    }
+                    );
+        });
+
+        // 同步
+        S.one('#sync').on('click', function() {
+            var str = S.ajax({
+                type:'get',
+                url:'tests/interface.php?t=get',
+                async:false,
+                complete: function(data) {
+                    S.log(data);
+                }
+            }).responseText;
+            S.log('ASYN block the thread :' + str);
+        });
+    })();
+</script>
+</body>
+</html>

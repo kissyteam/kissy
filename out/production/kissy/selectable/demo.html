@@ -1,0 +1,348 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Switchable Widgets Test</title>
+
+<script src="../../build/seed.js"></script>
+<script src="../../build/ua.js"></script>
+<script src="../../build/node.js"></script>
+<script src="../../build/dom.js"></script>
+<script src="../../build/event.js"></script>
+<script src="../../build/base.js"></script>
+<script src="../../build/json.js"></script>
+<script src="../../build/dd.js"></script>
+<script src="../../build/resizable.js"></script>
+<script src="base.js"></script>
+<script src="combobox.js"></script>
+
+<link rel="stylesheet" href="../../build/cssbase/base-min.css"/>
+<style>
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 30px 0 10px; font-size: 17px; }
+    /*.loading { background: #ebf5fa url('assets/loading.gif') no-repeat 50% 50%; }*/
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+
+<body>
+<!----       基本selectable START        ---->
+<div class="section">
+	<style>
+		#J_BasicList{width:300px;border:solid 1px #999;padding:2px;padding-bottom:0px;}
+		#J_BasicList li{background:#cce;margin-bottom:2px;padding:5px 0;text-indent:10px;}
+		#J_BasicList li.selected{background-color:#aae;}
+		.section .action{margin-top:10px;} 
+	</style>
+
+	<h2>基本selectable</h2>
+	<div id = "selectable">
+		<ul id="J_BasicList">
+		  <li class ='filter'>list 1</li>
+		  <li>list 2</li>
+		  <li>list 3</li>
+		  <li class ='filter'>list 4</li>
+		  <li class ='filter selected'>list 5</li>
+		  <li class ='filter selected'>list 6</li>
+		  <li class ='selected'>list 7</li>
+		  <li>list 8</li>
+		  <li>list 9</li>
+		  <li>list 10</li>
+		</ul>
+	</div>  
+	<div class ="action">
+	    <a id="J_BasicListPrev" href="#">前一项</a>|
+		<a id="J_BasicListNext" href="#">后一项</a>|
+		<a id="J_BasicSelect" href="#">选中指定项</a>|
+		<a id="J_BasicItem" href="#">获取当前选中的item</a>|
+		<a id="J_BasicFilter" href="#">根据提供方法过滤</a>|
+		<a id="J_BasicClearFilter" href="#">清除过滤</a>
+	</div>
+
+	<script>
+	    KISSY.use("dom,event,selectable/base",function(S,D,E,Selectable){
+
+			var mySelect = new Selectable('#J_BasicList',
+            {selectedItemCls : 'selected',selectedIndex: 2});
+
+			//前一项
+			E.add('#J_BasicListPrev', 'click', function(e){
+				e.preventDefault();
+				mySelect.prev();
+			});
+
+			//后一项
+			E.add('#J_BasicListNext', 'click', function(e){
+				e.preventDefault();
+				mySelect.next();
+			})
+
+			//选中指定项
+			E.add('#J_BasicSelect', 'click', function(e){
+				e.preventDefault();
+				mySelect.index(5);
+			})
+
+			//获取当前选中的item
+			E.add('#J_BasicItem', 'click', function(e){
+				e.preventDefault();
+				if (mySelect.item()){
+					alert(mySelect.item().innerHTML);
+				}else{
+					alert('没有选中任何项');
+				}
+			})
+
+			//根据提供方法过滤
+			E.add('#J_BasicFilter', 'click', function(e){
+				e.preventDefault();
+				mySelect.filter(function(list){
+					if (D.hasClass(list,'filter')) {
+						return true;
+					}else{
+						return false;
+					}
+				});
+			})
+
+			//清除过滤
+			E.add('#J_BasicClearFilter', 'click', function(e){
+				e.preventDefault();
+				mySelect.clearFilter();
+			})
+		});
+	</script>
+</div>
+<!----       基本selectable END         ---->
+
+<!----       通过class自定义selectable START         ---->
+<div class="section">
+	<style>
+		#J_CustomList span,
+		#J_CustomList a{border:dotted 1px #999;display:inline-block;width:50px; height:20px;background-color:#e0eeee;text-align:center;}
+		#J_CustomList .list{border:solid 1px #888;background-color:#cce;}
+		#J_CustomList .list.selected{background-color:#aae;}
+	</style>
+
+	<h2>通过class自定义selectable</h2>
+	<div id = "selectable2">
+		<div id ="J_CustomList">
+		    <span class="list">span标签</span>
+			<span>&nbsp</span>
+			<a class="list">a标签</a>
+			<span>&nbsp</span>
+			<span class="list">span标签</span>
+			<span>&nbsp</span>
+			<a class="list">a标签</a>
+			<span>&nbsp</span>
+			<span class="list">span标签</span>
+			<span>&nbsp</span>
+		</div>
+	</div>  
+	<div class ="action">
+	    <a id="J_CustomListPrev" href="#">前一项</a>|
+		<a id="J_CustomListNext" href="#">后一项</a>|
+		<a id="J_CustomSelect" href="#">选中指定项</a>|
+		<a id="J_CustomItem" href="#">获取当前选中的item</a>|
+		<a id="J_CustomFilter" href="#">根据提供方法过滤</a>|
+		<a id="J_CustomClearFilter" href="#">清除过滤</a>
+	</div>
+
+	<script>
+	    KISSY.use("dom,event,selectable/base",function(S,D,E,Selectable){
+
+
+			var mySelect = new Selectable('#J_CustomList',
+            {selectedItemCls : 'selected',itemCls:'list',selectedIndex:0});
+
+			//前一项
+			E.add('#J_CustomListPrev', 'click', function(e){
+				e.preventDefault();
+				mySelect.prev();
+			});
+
+			//后一项
+			E.add('#J_CustomListNext', 'click', function(e){
+				e.preventDefault();
+				mySelect.next();
+			})
+
+			//选中指定项
+			E.add('#J_CustomSelect', 'click', function(e){
+				e.preventDefault();
+				mySelect.index(1);
+			})
+
+			//获取当前选中的item
+			E.add('#J_CustomItem', 'click', function(e){
+				e.preventDefault();
+				if (mySelect.item()){
+					alert(mySelect.item().innerHTML);
+				}else{
+					alert('没有选中任何项');
+				}
+			})
+
+			//根据提供方法过滤
+			E.add('#J_CustomFilter', 'click', function(e){
+				e.preventDefault();
+				mySelect.filter(function(list){
+					if (list.tagName.toLowerCase() == 'a') {
+						return true;
+					}else{
+						return false;
+					}
+				});
+			})
+
+			//清除过滤
+			E.add('#J_CustomClearFilter', 'click', function(e){
+				e.preventDefault();
+				mySelect.clearFilter();
+			})
+		});
+	</script>
+</div>
+<!----       通过class自定义selectable END         ---->
+
+<!----       通过自传items定义selectable START         ---->
+<div class="section">
+	<style>
+		#J_ItemList{width:300px;}
+		#J_ItemList ul{padding-left:10px;border-bottom:solid 1px #aae;zoom:1;}
+		#J_ItemList .tab:after{content:'.';height:0px;display:block;clear:both;visibility:hidden;}
+
+		#J_ItemList li{display:block;width:40px;height:20px;border:solid 1px #aae;border-bottom:none;float:left;margin-right:10px;}
+		#J_ItemList li.selected{background:#cce;}
+		#J_ItemList li.disable{background:#ccc;}
+	</style>
+
+	<h2>通过自传items定义selectable</h2>
+	<div id = "selectable3">
+		<div id ="J_ItemList">
+			<ul class="tab">
+			  <li class="active">tab1</li>
+			  <li class="active">tab2</li>
+			  <li class="active">tab3</li>
+			  <li>tab4</li>
+			  <li>tab5</li>
+			</ul>
+		</div>
+	</div>  
+	<div class ="action">
+	    <a id="J_ItemListPrev" href="#">前一项</a>|
+		<a id="J_ItemListNext" href="#">后一项</a>|
+		<a id="J_ItemSelect" href="#">选中指定项</a>|
+		<a id="J_ItemItem" href="#">获取当前选中的Item</a>|
+		<a id="J_ItemFilter" href="#">根据提供方法过滤</a>|
+		<a id="J_ItemClearFilter" href="#">清除过滤</a>
+	</div>
+
+	<script>
+	     KISSY.use("dom,event,selectable/base",function(S,D,E,Selectable){
+			var myItems = D.get('.tab').children;
+
+			var mySelect = new Selectable('#J_ItemList',
+            {selectedItemCls : 'selected',items:myItems,invisibleItemCls:'disable'});
+
+			//前一项
+			E.add('#J_ItemListPrev', 'click', function(e){
+				e.preventDefault();
+				mySelect.prev();
+			});
+
+			//后一项
+			E.add('#J_ItemListNext', 'click', function(e){
+				e.preventDefault();
+				mySelect.next();
+			})
+
+			//选中指定项
+			E.add('#J_ItemSelect', 'click', function(e){
+				e.preventDefault();
+				mySelect.index(1);
+			})
+
+			//获取当前选中的Item
+			E.add('#J_ItemItem', 'click', function(e){
+				e.preventDefault();
+				if (mySelect.item()){
+					alert(mySelect.item().innerHTML);
+				}else{
+					alert('没有选中任何项');
+				}
+			})
+
+			//根据提供方法过滤
+			E.add('#J_ItemFilter', 'click', function(e){
+				e.preventDefault();
+				mySelect.filter(function(list){
+					if (D.hasClass(list, 'active')) {
+						return true;
+					}else{
+						return false;
+					}
+				});
+			})
+
+			//清除过滤
+			E.add('#J_ItemClearFilter', 'click', function(e){
+				e.preventDefault();
+				mySelect.clearFilter();
+			})
+		});
+	</script>
+</div>
+<!----       通过自传item定义selectable END         ---->
+
+<!----       通过结构定义ComboBox START         ---->
+<div class="section">
+	<style>
+	#page{padding:0px}
+		.ks-combobox{position:relative;width:150px;height:18px;border:solid 1px #ccc;}
+
+		.ks-combobox-textinput{width:133px;border:0px;}
+		.ks-combobox-trigger{top:0px;background:url("assets/icon.png") no-repeat scroll 0 -61px transparent;height:18px;line-height:1000px;overflow:hidden;right:0px;position:absolute;width:17px;}
+		
+		.ks-combobox-droplist{display:block;min-height:20px;z-index:101;margin-top:1px;background:#fff;border:solid 1px #aaa;overflow:hidden;}
+		.ks-combobox-droplist ul li{cursor:pointer;}
+		.ks-combobox-droplist ul li.selected{background-color:#ccc;}
+
+		.ks-combobox-shim{z-index:100;}
+	</style>
+
+	<h2>提供markup的combobox</h2>
+	<div id="select1" class="ks-combobox">
+		<input name="select1" class="ks-combobox-valueinput" type="hidden"/>
+		<input class="ks-combobox-textinput" type="text"/>
+		<span class="ks-combobox-trigger">选项</span>
+
+		<div  class="ks-combobox-droplist">
+			<ul>
+			  <li ks-data-value="value1">list1</li>
+			  <li ks-data-value="value2">list2</li>
+			  <li ks-data-value="value3">list3</li>
+			  <li ks-data-value="value4">list4</li>
+			  <li ks-data-value="value5">list5</li>
+			</ul>    
+		</div>
+	</div>
+	<script>
+		 KISSY.use("dom,event,selectable/combobox",function(S,DOM,Event,ComboBox){
+            ;
+			var select = DOM.get('#select1');
+			var widget = new ComboBox(select, {selectedItemCls:'selected'});
+		});
+	</script>
+</div>
+</body>
+</html>

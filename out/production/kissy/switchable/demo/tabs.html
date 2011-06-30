@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Tabs - 普通标签页</title>
+<link rel="shortcut icon" href="../../../../kissy-dpl/base/assets/favicon.ico"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/reset.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/assets/kissy-docs.css"/>
+
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/loading.css"/>
+<link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
+
+<script src="../../../build/kissy.js"></script>
+<script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
+</head>
+<body>
+<div id="header">
+    <h1 class="logo"><a alt="KISSY" href="http://kissyui.com/"><img src="../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
+    <div class="sub-title">Switchable</div>
+    <ul class="navigation">
+        <li><a href="http://blog.kissyui.com/">博客</a></li>
+        <li><a href="http://github.com/kissyteam">源码</a></li>
+    </ul>
+
+</div>
+<div id="content" class="form">
+    <div class="s-crumbs">
+        <span>当前位置：</span>
+        <a href="http://kissyui.com/">KISSY</a>
+        <a href="http://docs.kissyui.com/docs/html/api/component/switchable/tabs.html">Tabs</a>
+        <span>Demo</span>
+    </div>
+
+    <pre class="s-section">
+作者：玉伯(yubo@taobao.com),承玉(yiminghe@gmail.com)
+功能：标签页
+源码：<a href="../tabs/base.js">../tabs/base.js</a></pre>
+
+    <h3 class="s-title" id="tabs_aria">Tabs - 普通标签页</h3>
+    <div class="s-section">
+        <style>
+            #demo1 {
+                position: relative;
+                width: 750px;
+                padding-top: 29px;
+            }
+
+            #demo1 .ks-switchable-nav {
+                position: absolute;
+                left: 20px;
+                margin-top: -29px;
+                z-index: 99;
+            }
+
+            #demo1 .ks-switchable-nav li {
+                float: left;
+                width: 130px;
+                height: 27px;
+                line-height: 21px;
+                text-align: center;
+                background: url(../assets/tabs-sprite.gif) no-repeat 0 6px;
+                margin-right: 3px;
+                padding-top: 8px;
+                cursor: pointer;
+            }
+
+            #demo1 .ks-switchable-nav li.ks-active {
+                background-position: 0 -40px;
+                cursor: default;
+            }
+
+            #demo1 .ks-switchable-content {
+                position: relative;
+                height: 120px;
+                padding: 20px;
+                border: 1px solid #AEC7E5;
+            }
+        </style>
+
+        <div id="demo1" class="s-demo">
+            <ul class="ks-switchable-nav">
+                <!-- title 争渡读屏器不读-->
+                <li aria-labelledby='a_tip' title="读屏器读不出来">
+                    <span style="display:none" id="a_tip">标题 A，可左右键切换操作</span>
+                    <a href="http://www.taobao.com">标题 A</a></li>
+                <li><a href="http://www.taobao.com">标题 B</a></li>
+                <li>标题 C</li>
+                <li>标题 D</li>
+                <li>标题 E</li>
+            </ul>
+            <div class="ks-switchable-content">
+                <div style="display: none">
+<pre>
+  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
+  - 鼠标快速滑过非当前 trigger, 不触发
+  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
+  - click 或 Tab 切换到 trigger, 立即触发
+  - beforeSwitch/switch 事件的触发
+  - 延迟的内容能正确加载
+    <a href="#"> 内容 a</a>
+</pre>
+                </div>
+                <div style="display: none"><a href="#">内容 B</a></div>
+                <div style="display: none"><a href="#">内容 C</a></div>
+                <div style="display: none"><a href="#">内容 D</a></div>
+                <div style="display: none">
+                    <textarea class="ks-datalazyload-custom">
+                        <a href="#">我是延迟内容</a>
+                        <script>alert('我是延迟内容中的脚本，仅在第一次加载时执行。');</script>
+                    </textarea>
+                </div>
+            </div>
+            <script>
+                KISSY.use("datalazyload,switchable", function(S) {
+
+                    var Tabs = S.Tabs;
+
+                    S.ready(function(S) {
+
+                        window.tabs = new Tabs('#demo1', {
+                                    // aria:false 默认 true，支持 aria
+                                    switchTo:0
+                                });
+
+                        tabs.on('beforeSwitch', function(ev) {
+                            var index = ev.toIndex;
+                            if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
+                                //this.panels[index].innerHTML = 'index = ' + index;
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+        <a class="s-view-code" href="#">显示源码</a>
+    </div>
+
+    <h3 class="s-title">键盘快捷键</h3>
+    <div class="s-section">
+        <ul class="s-list">
+            <li>左/上键:当焦点在标签时转到上一个标签
+            <li>右/下键:当焦点在标签时转到下一个标签
+            <li>Home: 当焦点在标签时转到第一个标签
+            <li>End: 当焦点在标签时转到最后一个标签
+            <li>Control + PgUp : 当然焦点在容器内时转到当前标签上一个标签
+            <li>Control + PgDn : 当然焦点在容器内时转到当前标签下一个标签
+        </ul>
+    </div>
+
+    <h3 class="s-title">Note</h3>
+    <div class="s-section">chrome 不支持 Control + PgUp 以及 Control + PgDn</div>
+</div>
+</body>
+</html>

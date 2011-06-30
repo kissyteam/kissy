@@ -17,7 +17,7 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 					msg = DOM.get('div.msg',panel);
 				
 				
-				S.ready(function(S){
+				S.ready(function(){
 					document.body.appendChild(panel);
 				});
 				S.mix(self,{
@@ -30,7 +30,7 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 					if(S.isArray(result) && result.length==2){
 						self.showMessage(result[1],result[0],ev.type,ev.target);
 					}
-				})
+				});
 				
 				//绑定对象的focus,blur事件来显示隐藏消息面板
 				Event.on(self.el,"focus",function(ev){
@@ -64,8 +64,7 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 			//定位
 			_pos: function(target){
 				var self = this, offset = DOM.offset(target||self.target),
-					fw = DOM.width(self.target), fh = DOM.height(self.target),
-					pw = self.panel.width(), ph = self.panel.height(),
+				 ph = self.panel.height(),
 					pl = offset.left-10,pt = offset.top-ph-20;
 				self.panel.css('left',pl).css('top',pt);
 			},
@@ -81,8 +80,8 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 				}
 			},
 			style:{
-				float:{
-					template: '<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><s>◥◤</s></div>',
+				"float":{
+					template: '<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><'+'s>◥◤</s></div>',
 					event: 'focus blur',
 					invalidClass: 'vailInvalid'
 				}

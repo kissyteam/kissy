@@ -7,15 +7,15 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 		/**
 		 * 规则对象
 		 */
-		var Rule = new function(){
+		return new function(){
 			var self = this,
 				store = new Util.storage();
 			
 			/**
 			 * 增加规则
-			 * @param {String} name:  规则名
-			 * @param {String} text: 提示信息
-			 * @param {Function} fn: 校验函数
+			 * @param {String} name 规则名
+			 * @param {String} text 提示信息
+			 * @param {Function} fn 校验函数
 			 */
 			self.add = function(name,text,fn){
 				if(S.isFunction(fn)){
@@ -25,11 +25,11 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 						text: text
 					});
 				}
-			}
+			};
 			
 			/**
 			 * 获取规则
-			 * @param {String} name: 规则名
+			 * @param {String} name 规则名
 			 * @return {Object} 规则实例  
 			 */
 			self.get = function(name,param){
@@ -72,26 +72,25 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 					return fun.apply(this,[value].concat(arg));
 				}	
 
-			}
+			};
 
 			/**
 			 * 辅助调试
-			 * @param {String} name: 规则名
+			 * @param {String} name 规则名
 			 * @return {string} 规则详细信息
 			 */
 			self.toString = function(name,template){
-				var r = store.get(name),
+				var r = store.get(name);
 					template = template || "【规则名】\n {0}\n\n【默认提示信息】\n {1}\n\n【函数体】\n {2}";
 				if(r){
 					return Util.format(template, r.name, r.text, r.fun.toString());
 				}else{
 					return Util.format("规则[{0}]不存在",name);
 				}
-			}
+			};
 	
 		};
-	
-	return Rule
+
 	
 }, { requires: ['dom',"event","../utils"] });
 

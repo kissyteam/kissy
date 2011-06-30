@@ -76,7 +76,6 @@
         <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="kissy-pkg.js"/>
             <path path="../sizzle.js"/>
-
             <path path="../datalazyload.js"/>
             <path path="../template.js"/>
             <path path="../flash.js"/>
@@ -92,6 +91,7 @@
             <path path="../menu.js"/>
             <path path="../button.js"/>
             <path path="../menubutton.js"/>
+            <path path="../validation.js"/>
         </concat>
     </target>
 

@@ -198,7 +198,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
             // 收集扩展类
             t = [];
-            if ((exts = c.__ks_exts)) {
+            if (exts = c.__ks_exts) {
                 for (var i = 0; i < exts.length; i++) {
                     ext = exts[i];
                     if (ext) {
@@ -217,7 +217,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
             // 收集主类
             // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
-            //所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            // 所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
             if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
                 t.push(main);
             }
@@ -239,7 +239,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     /**
      * 销毁组件
-     * 顺序：子类扩展 destructor -> 子类 destructor -> 父类扩展 destructor -> 父类 destructor
+     * 顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
      */
     function destroyHierarchy(host) {
         var c = host.constructor,

@@ -37,17 +37,7 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 //	});
 	//ajax校验
 	Rule.add("ajax","校验失败。",function(value,text,fun){
-		var result = fun.call(this,value);
-		return result;
-//		
-//		if(result===false){
-//			return text;
-//		}
-//		
-//		if(!Util.isEmpty(result)){
-//			return result;
-//		}
-
+		return fun.call(this,value);
 	});
 	
 	//为空校验
@@ -146,7 +136,7 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 			["currency",/^\d+(\.\d+)?$/,"金额格式不正确。"],
 			["phone",/^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/,"电话号码格式不正确。"],
 			["mobile",/^((\(\d{2,3}\))|(\d{3}\-))?13\d{9}$/,"手机号码格式不正确。"],
-			["url",/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/,"url格式不正确。"],
+			["url",/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]':+!]*([^<>""])*$/,"url格式不正确。"],
 			["email",/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,"请输入正确的email格式"]
 		],function(item){
 			Rule.add(item[0],item[2],function(value,text){

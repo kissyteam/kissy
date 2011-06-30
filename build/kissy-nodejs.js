@@ -274,7 +274,7 @@ build time: ${build.time}
              */
             version: '1.20dev',
 
-            buildTime:'20110630134144',
+            buildTime:'20110630213101',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1869,7 +1869,7 @@ build time: ${build.time}
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
- * @description: constant memeber and common method holder
+ * @description: constant member and common method holder
  */
 (function(S, loader,data) {
     if("require" in this) return;
@@ -1959,92 +1959,86 @@ build time: ${build.time}
     if ("require" in this) return;
     var win = S.__HOST,
         doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        buildTime = encodeURIComponent(S.buildTime);
+        head = doc.getElementsByTagName('head')[0] || doc.documentElement;
 
     S.mix(loader, {
 
-        /**
-         * 包声明
-         * biz -> .
-         * 表示遇到 biz/x
-         * 在当前网页路径找 biz/x.js
-         */
-        _packages:function(cfgs) {
-            var self = this,
-                ps;
-            ps = self.__packages = self.__packages || {};
-            S.each(cfgs, function(cfg) {
-                ps[cfg.name] = cfg;
-                if (cfg.path) {
+            /**
+             * 包声明
+             * biz -> .
+             * 表示遇到 biz/x
+             * 在当前网页路径找 biz/x.js
+             */
+            _packages:function(cfgs) {
+                var self = this,
+                    ps;
+                ps = self.__packages = self.__packages || {};
+                S.each(cfgs, function(cfg) {
+                    ps[cfg.name] = cfg;
                     //注意正则化
-                    cfg.path = utils.normalBasePath(cfg.path);
-                }
-                if (cfg.tag) {
-                    cfg.tag = encodeURIComponent(cfg.tag);
-                }
-            });
-        },
-
-        __getPackagePath:function(mod) {
-            //缓存包路径，未申明的包的模块都到核心模块中找
-            if (mod.packagepath) {
-                return mod.packagepath;
-            }
-            var self = this,
-                //一个模块合并到了另一个模块文件中去
-                modName = self._combine(mod.name),
-                packages = self.__packages || {},
-                pName = "",
-                p_def,
-                p_path;
-
-            for (var p in packages) {
-                if (packages.hasOwnProperty(p)
-                    && S.startsWith(modName, p)
-                    && p.length > pName
-                    ) {
-                    pName = p;
-                }
-            }
-            p_def = packages[pName];
-            p_path = (p_def && p_def.path) || self.Config.base;
-            if (p_def && p_def.charset) {
-                mod.charset = p_def.charset;
-            }
-            if (p_def) {
-                mod.tag = p_def.tag;
-            } else {
-                mod.tag = buildTime;
-            }
-            mod.packagepath = p_path;
-            return p_path;
-        },
-        /**
-         * compress 'from module' to 'to module'
-         * {
-         *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
-         * }
-         */
-        _combine:function(from, to) {
-            var self = this,
-                cs;
-            if (S.isObject(from)) {
-                S.each(from, function(v, k) {
-                    S.each(v, function(v2) {
-                        self._combine(v2, k);
-                    });
+                    cfg.path = cfg.path && utils.normalBasePath(cfg.path);
+                    cfg.tag = cfg.tag && encodeURIComponent(cfg.tag);
                 });
-                return;
+            },
+
+            __getPackagePath:function(mod) {
+                //缓存包路径，未申明的包的模块都到核心模块中找
+                if (mod.packagepath) {
+                    return mod.packagepath;
+                }
+                var self = this,
+                    //一个模块合并到了另一个模块文件中去
+                    modName = self._combine(mod.name),
+                    packages = self.__packages || {},
+                    pName = "",
+                    p_def,
+                    p_path;
+
+                for (var p in packages) {
+                    if (packages.hasOwnProperty(p)
+                        && S.startsWith(modName, p)
+                        && p.length > pName
+                        ) {
+                        pName = p;
+                    }
+                }
+                p_def = packages[pName];
+                p_path = (p_def && p_def.path) || self.Config.base;
+                mod.charset = p_def && p_def.charset;
+                if (p_def) {
+                    mod.tag = p_def.tag;
+                } else {
+                    // kissy 自身组件的事件戳后缀
+                    mod.tag = encodeURIComponent(S.Config.tag || S.buildTime);
+                }
+                mod.packagepath = p_path;
+                return p_path;
+            },
+            /**
+             * compress 'from module' to 'to module'
+             * {
+             *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
+             * }
+             */
+            _combine:function(from, to) {
+                var self = this,
+                    cs;
+                if (S.isObject(from)) {
+                    S.each(from, function(v, k) {
+                        S.each(v, function(v2) {
+                            self._combine(v2, k);
+                        });
+                    });
+                    return;
+                }
+                cs = self.__combines = self.__combines || {};
+                if (to) {
+                    cs[from] = to;
+                } else {
+                    return cs[from] || from;
+                }
             }
-            cs = self.__combines = self.__combines || {};
-            if (to) {
-                cs[from] = to;
-            } else {
-                return cs[from] || from;
-            }
-        }
-    });
+        });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * register module ,associate module name with module factory(definition)
  * @author: lifesinger@gmail.com,yiminghe@gmail.com
@@ -9866,8 +9860,14 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
                 }
 
                 removeFieldsFromData(this.fields);
+
+
                 Event.detach(iframe);
-                DOM.remove(iframe);
+
+                setTimeout(function() {
+                    // firefox will keep loading if not settimeout
+                    DOM.remove(iframe);
+                }, 30);
 
                 // nullify to prevent memory leak?
                 xhr.iframe = null;
@@ -9998,166 +9998,173 @@ KISSY.add('base/attribute', function(S, undef) {
 
     S.augment(Attribute, {
 
-        __getDefAttrs: function() {
-            return S.clone(this.__attrs);
-        },
+            __getDefAttrs: function() {
+                return S.clone(this.__attrs);
+            },
 
-        /**
-         * Adds an attribute with the provided configuration to the host object.
-         * The config supports the following properties:
-         * {
-         *     value: 'the default value',
-         *     valueFn: function
-         *     setter: function
-         *     getter: function
-         * }
-         * @param {boolean} override whether override existing attribute config ,default true
-         */
-        addAttr: function(name, attrConfig, override) {
-            var host = this;
-            if (!host.__attrs[name]) {
-                host.__attrs[name] = S.clone(attrConfig || {});
-            }else{
-                S.mix(host.__attrs[name],attrConfig,override);
-            }
-            return host;
-        },
-
-        /**
-         * Checks if the given attribute has been added to the host.
-         */
-        hasAttr: function(name) {
-            return name && this.__attrs.hasOwnProperty(name);
-        },
-
-        /**
-         * Removes an attribute from the host object.
-         */
-        removeAttr: function(name) {
-            var host = this;
-
-            if (host.hasAttr(name)) {
-                delete host.__attrs[name];
-                delete host.__attrVals[name];
-            }
-
-            return host;
-        },
-
-        /**
-         * Sets the value of an attribute.
-         */
-        set: function(name, value) {
-            var host = this,
-                prevVal = host.get(name);
-
-            // if no change, just return
-            if (prevVal === value) return;
-
-            // check before event
-            if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
-
-            // set it
-            host.__set(name, value);
-
-            // fire after event
-            host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
-
-            return host;
-        },
-
-        __fireAttrChange: function(when, name, prevVal, newVal) {
-            return this.fire(when + capitalFirst(name) + 'Change', {
-                attrName: name,
-                prevVal: prevVal,
-                newVal: newVal
-            });
-        },
-
-        /**
-         * internal use, no event involved, just set.
-         */
-        __set: function(name, value) {
-            var host = this,
-                setValue,
-                attrConfig = host.__attrs[name],
-                setter = attrConfig && attrConfig['setter'];
-
-            // if setter has effect
-            if (setter) setValue = setter.call(host, value);
-            if (setValue !== undef) value = setValue;
-
-            // finally set
-            host.__attrVals[name] = value;
-        },
-
-        /**
-         * Gets the current value of the attribute.
-         */
-        get: function(name) {
-            var host = this, attrConfig, getter, ret;
-
-            attrConfig = host.__attrs[name];
-            getter = attrConfig && attrConfig['getter'];
-
-            // get user-set value or default value
-            //user-set value takes privilege
-            ret = name in host.__attrVals ?
-                host.__attrVals[name] :
-                host.__getDefAttrVal(name);
-
-            // invoke getter for this attribute
-            if (getter) ret = getter.call(host, ret);
-
-            return ret;
-        },
-
-        __getDefAttrVal: function(name) {
-            var host = this,
-                attrConfig = host.__attrs[name],
-                valFn, val;
-
-            if (!attrConfig) return;
-
-            if ((valFn = attrConfig.valueFn)) {
-                val = valFn.call(host);
-                if (val !== undef) {
-                    attrConfig.value = val;
+            /**
+             * Adds an attribute with the provided configuration to the host object.
+             * The config supports the following properties:
+             * {
+             *     value: 'the default value',
+             *     valueFn: function
+             *     setter: function
+             *     getter: function
+             * }
+             * @param {boolean} override whether override existing attribute config ,default true
+             */
+            addAttr: function(name, attrConfig, override) {
+                var host = this;
+                if (!host.__attrs[name]) {
+                    host.__attrs[name] = S.clone(attrConfig || {});
+                } else {
+                    S.mix(host.__attrs[name], attrConfig, override);
                 }
-                delete attrConfig.valueFn;
-            }
+                return host;
+            },
 
-            return attrConfig.value;
-        },
+            /**
+             * Checks if the given attribute has been added to the host.
+             */
+            hasAttr: function(name) {
+                return name && this.__attrs.hasOwnProperty(name);
+            },
 
-        /**
-         * Resets the value of an attribute.
-         */
-        reset: function (name) {
-            var host = this;
+            /**
+             * Removes an attribute from the host object.
+             */
+            removeAttr: function(name) {
+                var host = this;
 
-            if (host.hasAttr(name)) {
-                // if attribute does not have default value, then set to undefined.
-                return host.set(name, host.__getDefAttrVal(name));
-            }
-
-            // reset all
-            for (name in host.__attrs) {
                 if (host.hasAttr(name)) {
-                    host.reset(name);
+                    delete host.__attrs[name];
+                    delete host.__attrVals[name];
                 }
-            }
 
-            return host;
-        }
-    });
+                return host;
+            },
+
+            /**
+             * Sets the value of an attribute.
+             */
+            set: function(name, value) {
+                var host = this,
+                    prevVal = host.get(name);
+
+                // if no change, just return
+                if (prevVal === value) return;
+
+                // check before event
+                if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
+
+                // set it
+                host.__set(name, value);
+
+                // fire after event
+                host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
+
+                return host;
+            },
+
+            __fireAttrChange: function(when, name, prevVal, newVal) {
+                return this.fire(when + capitalFirst(name) + 'Change', {
+                        attrName: name,
+                        prevVal: prevVal,
+                        newVal: newVal
+                    });
+            },
+
+            /**
+             * internal use, no event involved, just set.
+             */
+            __set: function(name, value) {
+                var host = this,
+                    setValue,
+                    // if host does not have meta info corresponding to (name,value)
+                    // then register on demand in order to collect all data meta info
+                    attrConfig = host.__attrs[name] = host.__attrs[name] || {},
+                    setter = attrConfig['setter'];
+
+                // if setter has effect
+                if (setter) {
+                    setValue = setter.call(host, value);
+                }
+                if (setValue !== undef) {
+                    value = setValue;
+                }
+
+                // finally set
+                host.__attrVals[name] = value;
+            },
+
+            /**
+             * Gets the current value of the attribute.
+             */
+            get: function(name) {
+                var host = this, attrConfig, getter, ret;
+
+                attrConfig = host.__attrs[name];
+                getter = attrConfig && attrConfig['getter'];
+
+                // get user-set value or default value
+                //user-set value takes privilege
+                ret = name in host.__attrVals ?
+                    host.__attrVals[name] :
+                    host.__getDefAttrVal(name);
+
+                // invoke getter for this attribute
+                if (getter) ret = getter.call(host, ret);
+
+                return ret;
+            },
+
+            __getDefAttrVal: function(name) {
+                var host = this,
+                    attrConfig = host.__attrs[name],
+                    valFn, val;
+
+                if (!attrConfig) return;
+
+                if ((valFn = attrConfig.valueFn)) {
+                    val = valFn.call(host);
+                    if (val !== undef) {
+                        attrConfig.value = val;
+                    }
+                    delete attrConfig.valueFn;
+                }
+
+                return attrConfig.value;
+            },
+
+            /**
+             * Resets the value of an attribute.
+             * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+             */
+            reset: function (name) {
+                var host = this;
+
+                if (host.hasAttr(name)) {
+                    // if attribute does not have default value, then set to undefined.
+                    return host.set(name, host.__getDefAttrVal(name));
+                }
+
+                // reset all
+                for (name in host.__attrs) {
+                    if (host.hasAttr(name)) {
+                        host.reset(name);
+                    }
+                }
+
+                return host;
+            }
+        });
 
     function capitalFirst(s) {
         s = s + '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    Attribute.__capitalFirst = capitalFirst;
+    Attribute['__capitalFirst'] = capitalFirst;
 
     return Attribute;
 });
@@ -10166,7 +10173,7 @@ KISSY.add('base/attribute', function(S, undef) {
  * @module  Base
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute,Event) {
+KISSY.add('base/base', function (S, Attribute, Event) {
 
     /*
      * Base for class-based component
@@ -10212,8 +10219,8 @@ KISSY.add('base/base', function (S, Attribute,Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-    requires:["./attribute","event"]
-});
+        requires:["./attribute","event"]
+    });
 
 KISSY.add("base", function(S, Base) {
     return Base;

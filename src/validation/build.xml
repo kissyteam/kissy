@@ -1,0 +1,28 @@
+<project name="validation.build" default="build" basedir=".">
+    <description>Component Build File</description>
+
+    <import file="../../tools/build.xml"/>
+
+    <property file="build.properties"/>
+    <property name="src.dir" location="."/>
+
+    <target name="concat">
+        <concat destfile="validation-pkg.js"
+                encoding="${charset}"
+                outputencoding="${charset}">
+            <fileset dir="${src.dir}">
+                <include name="*.js"/>
+                <include name="rule/*.js"/>
+                <include name="warn/*.js"/>
+            </fileset>
+            <path location="../validation.js"/>
+        </concat>
+    </target>
+
+    <target name="clean">
+        <delete file="validation-pkg.js"/>
+    </target>
+
+    <target name="build" depends="concat,common.build,clean">
+    </target>
+</project>

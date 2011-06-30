@@ -8,7 +8,11 @@
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
 	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
-	<script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
 	
 </head>
 <body>
@@ -103,7 +107,7 @@
 				S.mix(self,{
 					panel: S.one(panel),
 					estate: S.one(estate),
-					label: S.one(label),
+					label: S.one(label)
 				});
 				self._bindEvent(self.el, 'click' ,function(ev){
 					var result = self.fire("valid",{event:ev.type});
@@ -146,7 +150,7 @@
 	
 
 
-
+KISSY.Config.base = "../../";
 	KISSY.use("validation",function(S,Validation){
 		
 		//增加提示类Cool

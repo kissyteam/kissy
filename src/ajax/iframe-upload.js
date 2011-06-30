@@ -106,8 +106,14 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
                 }
 
                 removeFieldsFromData(this.fields);
+
+
                 Event.detach(iframe);
-                DOM.remove(iframe);
+
+                setTimeout(function() {
+                    // firefox will keep loading if not settimeout
+                    DOM.remove(iframe);
+                }, 30);
 
                 // nullify to prevent memory leak?
                 xhr.iframe = null;

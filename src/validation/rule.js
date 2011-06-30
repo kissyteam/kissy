@@ -3,7 +3,7 @@
  * @author: 常胤 <lzlu.com>
  */
 
-KISSY.add("validation/rule", function(S, Util, Rule, Normal) {
+KISSY.add("validation/rule", function(S, Util, Rule) {
 
 	return Rule;
 

@@ -34,8 +34,9 @@
         </replaceregexp>
 
         <!-- 用 YUICompressor 压缩 CSS -->
-        <apply executable="java" verbose="true" dest="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.css"/>
+        <apply executable="java" verbose="true"
+               dest="${kissy.build.dir}/${component.name}">
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="**/*.css"/>
             <arg line="-jar"/>
             <arg path="${kissy-tools.dir}/yuicompressor/yuicompressor.jar"/>
             <arg line="--charset ${charset}"/>
@@ -46,8 +47,9 @@
         </apply>
 
         <!-- 用 Closure Compiler 压缩 JS -->
-        <apply executable="java" verbose="true" dest="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.js"/>
+        <apply executable="java" verbose="true"
+               dest="${kissy.build.dir}/${component.name}">
+            <fileset dir="${kissy.build.dir}/${component.name}" includes="**/*.js"/>
             <arg line="-jar"/>
             <arg path="${kissy-tools.dir}/closure-compiler/compiler.jar"/>
             <arg line="--charset ${charset}"/>
@@ -62,7 +64,8 @@
 
         <!-- 还原 debug 版本 -->
         <move todir="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}/debug" includes="${component.files}"/>
+            <fileset dir="${kissy.build.dir}/${component.name}/debug"
+                     includes="${component.files}"/>
         </move>
         <delete dir="${kissy.build.dir}/${component.name}/debug"/>
     </target>
