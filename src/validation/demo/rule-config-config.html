@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="http://docs.kissyui.com/kissy-dpl/base/build/css/dpl-pkg.css" />
+	<script src="../../../build/kissy.js" charset="utf-8"></script>
+	
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
+	<script src="doc.js" charset="utf-8"></script>
+	
+
+	
+</head>
+<body>
+ 
+
+<div class="note">
+<pre>
+	KISSY.use("validation",function(S,Validation){
+
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					style: "under"
+				});
+
+			//实例化字段，配置通过参数传入
+			var f = new Validation.Field("#username",{
+				style:'under',
+				chinese:['姓名只能是中文']
+			})
+	
+			//增加到校验中
+			check.add(f);
+
+
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+		
+	});
+</pre>
+</div>
+ 
+<div id="viewdemo" class="doc">
+	
+
+<form method="post">
+<ul class="form">
+
+	<li>
+		<label class="hd">姓名：</label>
+		<input class="text" type="text" name="username" id="username"/>
+	</li>
+	
+	<li>
+		<button type="submit">提交</button> 
+	</li>
+	
+</ul>
+</form>
+
+<script>
+
+
+
+	KISSY.use("validation",function(S,Validation){
+
+			var form = S.query("form")[0],
+			
+				check = new Validation(form,{
+					style: "under"
+				});
+
+			//实例化字段，配置通过参数传入
+			var f = new Validation.Field("#username",{
+				style:'under',
+				chinese:['姓名只能是中文']
+			})
+	
+			//增加到校验中
+			check.add(f);
+
+
+			KISSY.Event.on(form,"submit",function(){
+				check.isValid();
+				return false;
+			});
+		
+	});
+
+</script>
+
+
+
+</div>
+
+
+
+
+
+<script src="http://docs.kissyui.com/kissy-util/adaptive-frame/adaptive-frame.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
