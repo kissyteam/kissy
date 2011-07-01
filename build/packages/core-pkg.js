@@ -4437,10 +4437,15 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             val = node;
         } else if (val === null) {
             val = null;
-        } else if (nodeList
-            && (val.nodeType || isNodeList(val) || S.isArray(val))) {
-            // 包装为 KISSY NodeList
+        } else if (nodeList && val.nodeType) {
             val = new NodeList(val);
+        } else if (nodeList && (isNodeList(val) || S.isArray(val))) {
+            // 包装为 KISSY NodeList
+            // 要小心，如果第一项已经明确不是 node 了就不要转了
+            if (val[0] && !val[0].nodeType) {
+            } else {
+                val = new NodeList(val);
+            }
         }
         return val;
     }
