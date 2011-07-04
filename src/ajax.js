@@ -46,11 +46,16 @@ KISSY.add("ajax", function(S, io) {
         getScript:S.getScript,
 
         getJSON: function(url, data, callback) {
+            if (S.isFunction(data)) {
+                callback = data;
+                data = undefined;
+            }
             return io.get(url, data, callback, "json");
         },
 
         upload:function(url, form, data, callback, dataType) {
             if (S.isFunction(data)) {
+                dataType = callback;
                 callback = data;
                 data = null; // 占位符
             }
