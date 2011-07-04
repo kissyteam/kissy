@@ -40,10 +40,10 @@ KISSY.use("anim,node", function(S, Anim, Node) {
             var test1 = Node.one("#test6");
 
             test1.css({
-                    width: '100px',
-                    height: '100px',
-                    'background-color': '#ccc'
-                });
+                width: '100px',
+                height: '100px',
+                'background-color': '#ccc'
+            });
 
             test1.slideUp(1);
 
@@ -121,9 +121,9 @@ KISSY.use("anim,node", function(S, Anim, Node) {
             var test2 = Node.one("#test2");
 
             test2.css({
-                    width: '100px',
-                    height: '100px'
-                });
+                width: '100px',
+                height: '100px'
+            });
 
             test2.hide(1);
 
@@ -190,6 +190,34 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 expect(test2.css("height")).toBe("100px");
                 expect(test2.css("opacity") + "").toBe('1');
             });
+
+        });
+
+
+        it("should not exist memory leak", function() {
+            var test = $('#test2'),ANIM_KEY = Node.__ANIM_KEY;
+            test.hide(1);
+            //一个动画
+            expect(test.data(ANIM_KEY).length).toBe(1);
+            waits(100);
+            runs(function() {
+                test.stop();
+                var anims = test.data(ANIM_KEY);
+                // stop 后清空
+                expect(anims).toBe(null);
+            });
+            runs(function() {
+                test.hide(0.5);
+            });
+
+            waits(1000);
+
+            runs(function() {
+                var anims = test.data(ANIM_KEY);
+                // stop 后清空
+                expect(anims).toBe(null);
+            });
+
 
         });
     });

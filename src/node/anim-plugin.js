@@ -18,6 +18,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             slide: [OVERFLOW, HEIGHT]
         };
 
+    N.__ANIM_KEY = ANIM_KEY;
+
     (function(P) {
 
         function attachAnim(elem, anim) {
@@ -173,8 +175,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-        requires:["dom","anim","./base"]
-    });
+    requires:["dom","anim","./base"]
+});
 /**
  * 2011-05-17
  *  - 承玉：添加 stop ，随时停止动画
