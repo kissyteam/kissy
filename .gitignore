@@ -13,3 +13,4 @@ Thumbs.db
 .*proj
 .svn/
 *.swp
+out/
