@@ -109,15 +109,16 @@ KISSY.add('dialog', function(S) {
 
 
 /**
- * Created by IntelliJ IDEA.
- * User: qiaohua
- * Date: 11-5-16
- * Time: 下午1:44
- * To change this template use File | Settings | File Templates.
+ * KISSY Popup
+ * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/popup', function(S, undefined) {
     function Popup(container, config) {
         var self = this;
+
+        //if (!(self instanceof Popup)) {
+        //    return new Popup(container, config);
+        //}
 
         // 支持 Popup(config)
         if (S.isUndefined(config)) {

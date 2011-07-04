@@ -12,7 +12,7 @@ KISSY.add('suggest', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
         win = window, doc = document, bd, head = S.get('head'),
-        ie = S.UA.ie, ie6 = (ie === 6),
+        ie = S.UA.ie, ie6 = (ie === 6), ie9 = (ie >= 9),
 
         CALLBACK_FN = 'KISSY.Suggest.callback', // 约定的全局回调函数
         PREFIX = 'ks-suggest-',
@@ -484,7 +484,9 @@ KISSY.add('suggest', function(S, undefined) {
                     if(self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    input.blur();
+                    try{
+                        input.blur();
+                    }catch(e) {}
 
                     // 提交表单
                     self._submitForm();
@@ -722,7 +724,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this, config = self.config, script;
             //S.log('request data via script');
 
-            if (!ie) self.dataScript = undefined; // IE不需要重新创建 script 元素
+            if (!ie || ie9) self.dataScript = undefined; // IE不需要重新创建 script 元素
 
             if (!self.dataScript) {
                 script = doc.createElement('script');
@@ -732,7 +734,7 @@ KISSY.add('suggest', function(S, undefined) {
                 head.insertBefore(script, head.firstChild);
                 self.dataScript = script;
 
-                if (!ie) {
+                if (!ie || ie9) {
                     var t = S.now();
                     self._latestScriptTime = t;
                     DOM.attr(script, DATA_TIME, t);
@@ -1050,7 +1052,7 @@ KISSY.add('suggest', function(S, undefined) {
  * 一、数据处理很 core，但相对来说是简单的，由 requestData + handleResponse + formatData 等辅助方法组成
  * 需要注意两点：
  *  a. IE 中，改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
- *     requestData 方法中存在两种处理方式的原因。
+ *     requestData 方法中存在两种处理方式的原因。  --- IE9 中修改 src 不会发送新请求(qiaohua)
  *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加 data-time
  *     的解决方案。更好的解决方案是，调整 API，使得返回的数据中，带有 query 值。
  *
