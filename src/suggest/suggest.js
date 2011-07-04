@@ -479,7 +479,9 @@ KISSY.add('suggest', function(S, undefined) {
                     if(self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    input.blur();
+                    try{
+                        input.blur();
+                    }catch(e) {}
 
                     // 提交表单
                     self._submitForm();
