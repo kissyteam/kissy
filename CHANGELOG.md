@@ -20,6 +20,7 @@ History:
  - [!] ajax 请求地址的响应头如果设置了 content-type 为 json 或 xml ，回调的第一个参数自动为该格式，不需要手动 parse
  - [+] 增加 S.io.upload 方法，用于无刷新文件上传
 
+
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
  - [*] 自定义事件 listeners 放入对象自身保存，避免内存泄露
@@ -30,14 +31,18 @@ History:
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
 
 
- - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked"，增加 prop 方法 ，返回 prop('checked')==true
+
+ - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
  - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
- - [!] DOM 所有读操作如果返回 undefined 现在返回 null
+ - [!] DOM.attr/prop 属性不存在时返回 undefined
  - [*] ie: dom opacity bug fix , border-width 数值归一化
  - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
+ - [!] DOM 第一个参数为空时或不符合条件时返回 undefined 	
+
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
  - [*] Node 与 NodeList 合一
+
 
  - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
  - [*] anim 提高性能，不重复 touch dom / css
@@ -45,45 +50,59 @@ History:
  - [+] 增加 anim 单元测试
  - [x] bugfix anim 内存泄露
 
+
  - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
  - [x] Suggest fix: IE9 下无法更新数据
  - [x] Suggest fix: chrome 下光标鼠标移动问题
 
+
  - [*] Accordion 增加 aria 配置
  - [*] Carousel 增加 aria 配置
  - [*] Tabs 增加 aria 配置
+
 
  - [*] Overlay 增加 closeAction 配置, destroy or hide
  - [*] Overlay 增加 aria 配置, trap focus and keydown
  - [+] overlay 增加 resize 配置
  - [+] overlay 增加单元测试
 
+
  - [*] KISSY.param/unparam 增加数组处理选项
  - [+] KISSY.getScript 支持 css 载入后调用回调
  - [+] KISSY.getScript 支持除了 ie < 9外的 error 立即回调
+
 
  - [x] Loader 初步重构，拆分文件
  - [+] loader 支持包配置，各个模块无需配置路径 (http://docs.kissyui.com/docs/html/api/seed/loader/index.html)
  - [+] loader 增加单元测试
  - [*] 所有模块结构根据 loader 重新组织
 
+
  - [+] 增加 button 组件
+
 
  - [+] 增加 menubutton 组件
 
+
  - [+] 增加 menu 组件
+
 
  - [+] 增加 component 组件基类
 
+
  - [+] kissy-tools 增加 module-compiler 工具
+
 
  - [+] dd 支持 drop 以及基于委托的 drag&drop
  - [+] dd 增加单元测试
  - [+] dd 增加 portal 示例
 
+
  - [*] kissyteam 文档利用 sphinx 重新编写整理
 
+
  - [!] calendar 模块 use("calendar") 将不再动态加载其css，方便自由定制样式，若需要默认样式需静态引入或S.getScript加载
+
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
 

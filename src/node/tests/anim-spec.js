@@ -1,6 +1,6 @@
 /**
  * testcases for anim on node
- * author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("anim,node", function(S, Anim, Node) {
     var $ = Node.all;
@@ -204,7 +204,8 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 test.stop();
                 var anims = test.data(ANIM_KEY);
                 // stop 后清空
-                expect(anims).toBe(null);
+                expect(test.hasData(ANIM_KEY)).toBe(false);
+                expect(anims).toBe(undefined);
             });
             runs(function() {
                 test.hide(0.5);
@@ -215,7 +216,8 @@ KISSY.use("anim,node", function(S, Anim, Node) {
             runs(function() {
                 var anims = test.data(ANIM_KEY);
                 // stop 后清空
-                expect(anims).toBe(null);
+                expect(test.hasData(ANIM_KEY)).toBe(false);
+                expect(anims).toBe(undefined);
             });
 
 

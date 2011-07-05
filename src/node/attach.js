@@ -5,9 +5,9 @@
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
-        isNodeList = DOM._isNodeList,
         // DOM 添加到 NP 上的方法
-        DOM_INCLUDES = [
+        // if DOM methods return undefined , Node methods need to transform result to itself
+        DOM_INCLUDES_NORM = [
             "equals",
             "contains",
             "scrollTop",
@@ -15,15 +15,14 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "height",
             "width",
             "addStyleSheet",
-            "append",
+            // "append" will be overridden
             "appendTo",
-            "prepend",
+            // "prepend" will be overridden
             "prependTo",
             "insertBefore",
             "before",
             "after",
             "insertAfter",
-            "filter",
             "test",
             "hasClass",
             "addClass",
@@ -31,83 +30,94 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "replaceClass",
             "toggleClass",
             "removeAttr",
-            "attr",
             "hasAttr",
-            "prop",
             "hasProp",
-            "val",
-            "text",
-            "css",
             // anim override
 //            "show",
 //            "hide",
             "toggle",
-            "offset",
             "scrollIntoView",
+            "remove",
+            "removeData",
+            "hasData",
+            "unselectable"
+        ],
+        // if return array ,need transform to nodelist
+        DOM_INCLUDES_NORM_NODE_LIST = [
+            "filter",
             "parent",
             "closest",
             "next",
             "prev",
             "siblings",
-            "children",
-            "html",
-            "remove",
-            "removeData",
-            "hasData",
-            // 返回值不一定是 nodelist ，特殊处理
-            // "data",
-            "unselectable"
+            "children"
         ],
+        // if set return this else if get return true value ,no nodelist transform
+        DOM_INCLUDES_NORM_IF = {
+            // dom method : set parameter index
+            "attr":1,
+            "text":1,
+            "css":1,
+            "val":0,
+            "prop":1,
+            "offset":1,
+            "html":0,
+            "data":1
+        },
         // Event 添加到 NP 上的方法
         EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
 
 
-    function normalize(val, node, nodeList) {
-        // 链式操作
-        if (val === undefined) {
-            val = node;
-        } else if (val === null) {
-            val = null;
-        } else if (nodeList && val.nodeType) {
-            val = new NodeList(val);
-        } else if (nodeList && (isNodeList(val) || S.isArray(val))) {
-            // 包装为 KISSY NodeList
-            // 要小心，如果第一项已经明确不是 node 了就不要转了
-            if (val[0] && !val[0].nodeType) {
-            } else {
-                val = new NodeList(val);
-            }
-        }
-        return val;
+    function accessNorm(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+
+        return ret;
     }
 
-    /**
-     *
-     * @param {string} name 方法名
-     * @param {string} fn 实际方法
-     * @param {object} context 方法执行上下文，不指定为 this
-     * @param {boolean} nodeList 是否对返回对象 NodeList
-     */
-    NodeList.addMethod = function(name, fn, context, nodeList) {
-        NLP[name] = function() {
-            //里面不要修改 context ,fn,name 会影响所有 ....
-            // NLP && NP
-            var self = this,
-                args = S.makeArray(arguments);
-            args.unshift(self);
-            var ctx = context || self;
-            var ret = fn.apply(ctx, args);
-            return  normalize(ret, self, nodeList);
-        }
-    };
+    function accessNormList(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+        else if (ret === null)
+            return null;
+        return new NodeList(ret);
+    }
 
-    S.each(DOM_INCLUDES, function(k) {
-        var v = DOM[k];
-        NodeList.addMethod(k, v, DOM, true);
+    function accessNormIf(fn, self, index, args) {
+
+        // get
+        if (args[index] === undefined) {
+            args.unshift(self);
+            return DOM[fn].apply(DOM, args);
+        }
+        // set
+        return accessNorm(fn, self, args);
+    }
+
+    S.each(DOM_INCLUDES_NORM, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNorm(k, this, args);
+        };
     });
 
-    // data 不需要对返回结果转换 nodelist
-    NodeList.addMethod("data", DOM.data, DOM);
+    S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormList(k, this, args);
+        };
+    });
+
+    S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormIf(k, this, index, args);
+        };
+    });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
@@ -118,8 +128,8 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-        requires:["dom","event","./base"]
-    });
+    requires:["dom","event","./base"]
+});
 
 /**
  * 2011-05-24

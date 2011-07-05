@@ -94,7 +94,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     if (isElementNode(el)) {
                         return el.innerHTML;
                     }
-                    return null;
+                    return;
                 }
                 // setter
                 else {

@@ -1,6 +1,6 @@
 /**
  * overrides methods in NodeList.prototype
- * @author : yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("node/override", function(S, DOM, Event, NodeList) {
 
@@ -10,23 +10,23 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      *
      */
     S.each(['append', 'prepend','before','after'], function(insertType) {
-        // append 和 prepend
 
-        NodeList.addMethod(insertType, function(domNodes, html) {
+        NodeList.prototype[insertType] = function(html) {
 
-            var newNode = html;
+            var newNode = html,self = this;
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, domNodes);
-            
-        }, undefined, true);
+            DOM[insertType](newNode, self);
+            return self;
+
+        };
     });
 
 }, {
-        requires:["dom","event","./base","./attach"]
-    });
+    requires:["dom","event","./base","./attach"]
+});
 
 /**
  * 2011-05-24

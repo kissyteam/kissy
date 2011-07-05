@@ -41,7 +41,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         parseInt(attributeNode.value, 10) :
                         rfocusable.test(el.nodeName) || rclickable.test(el.nodeName) && el.href ?
                             0 :
-                            null;
+                            undefined;
                 }
             },
             // 在标准浏览器下，用 getAttribute 获取 style 值
@@ -71,13 +71,17 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             "contenteditable": "contentEditable"
         },
         // Hook for boolean attributes
+        // if bool is false
+        //  - standard browser returns null
+        //  - ie<8 return false
+        //   - so norm to undefined
         boolHook = {
             get: function(elem, name) {
                 // 转发到 prop 方法
                 return DOM.prop(elem, name) ?
                     // 根据 w3c attribute , true 时返回属性名字符串
                     name.toLowerCase() :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 var propName;
@@ -158,7 +162,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 // Return undefined if nodeValue is empty string
                 return ret && ret.nodeValue !== "" ?
                     ret.nodeValue :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 // Check form objects in IE (multiple bugs related)
@@ -182,7 +186,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             attrHooks[ name ] = {
                 get: function(elem) {
                     var ret = elem.getAttribute(name, 2);
-                    return ret === undefined ? null : ret;
+                    return ret === null ? undefined : ret;
                 }
             };
         });
@@ -222,275 +226,272 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * 自定义属性不推荐使用，使用 .data
-             * @param selector
-             * @param name
-             * @param value
-             */
-            prop: function(selector, name, value) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.prop(selector, k, name[k]);
-                    }
-                    return;
+        /**
+         * 自定义属性不推荐使用，使用 .data
+         * @param selector
+         * @param name
+         * @param value
+         */
+        prop: function(selector, name, value) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.prop(selector, k, name[k]);
                 }
-                var elems = DOM.query(selector);
-                // Try to normalize/fix the name
-                name = propFix[ name ] || name;
-                var hook = propHooks[ name ];
-                if (value !== undefined) {
-                    S.each(elems, function(elem) {
-                        if (hook && hook.set) {
-                            hook.set(elem, value, name);
-                        } else {
-                            elem[ name ] = value;
-                        }
-                    });
-                } else {
-                    var elem = elems[0],ret;
-                    if (!elem) return null;
-                    ret = getProp(elem, name);
-                    return ret === undefined ? null : ret;
-                }
-            },
-            hasProp:function(selector, name) {
-                var elem = DOM.get(selector);
-                return getProp(elem, name) !== undefined;
-            },
-
-            /**
-             * 不推荐使用，使用 .data .removeData
-             * @param selector
-             * @param name
-             */
-            removeProp:function(selector, name) {
-                name = propFix[ name ] || name;
-                DOM.query(selector).each(function(el) {
-                    try {
-                        el[ name ] = undefined;
-                        delete el[ name ];
-                    } catch(e) {
+                return;
+            }
+            var elems = DOM.query(selector);
+            // Try to normalize/fix the name
+            name = propFix[ name ] || name;
+            var hook = propHooks[ name ];
+            if (value !== undefined) {
+                S.each(elems, function(elem) {
+                    if (hook && hook.set) {
+                        hook.set(elem, value, name);
+                    } else {
+                        elem[ name ] = value;
                     }
                 });
-            },
+            } else {
+                var elem = elems[0];
+                if (!elem) return;
+                return getProp(elem, name);
+            }
+        },
+        hasProp:function(selector, name) {
+            return getProp(selector, name) !== undefined;
+        },
 
-            /**
-             * Gets the value of an attribute for the first element in the set of matched elements or
-             * Sets an attribute for the set of matched elements.
-             */
-            attr:function(selector, name, val, pass) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    pass = val; // 塌缩参数
-                    for (var k in name) {
-                        DOM.attr(selector, k, name[k], pass);
-                    }
+        /**
+         * 不推荐使用，使用 .data .removeData
+         * @param selector
+         * @param name
+         */
+        removeProp:function(selector, name) {
+            name = propFix[ name ] || name;
+            DOM.query(selector).each(function(el) {
+                try {
+                    el[ name ] = undefined;
+                    delete el[ name ];
+                } catch(e) {
+                }
+            });
+        },
+
+        /**
+         * Gets the value of an attribute for the first element in the set of matched elements or
+         * Sets an attribute for the set of matched elements.
+         */
+        attr:function(selector, name, val, pass) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                pass = val; // 塌缩参数
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k], pass);
+                }
+                return;
+            }
+
+            if (!(name = S.trim(name))) return;
+
+            name = name.toLowerCase();
+
+            // attr functions
+            if (pass && attrFn[name]) {
+                return DOM[name](selector, val);
+            }
+
+            // custom attrs
+            name = attrFix[name] || name;
+
+            var attrNormalizer;
+
+            if (rboolean.test(name)) {
+                attrNormalizer = boolHook;
+            }
+            // only old ie?
+            else if (rinvalidChar.test(name)) {
+                attrNormalizer = attrNodeHook;
+            } else {
+                attrNormalizer = attrHooks[name];
+            }
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+                // only get attributes on element nodes
+                if (!isElementNode(el)) {
                     return;
                 }
 
-                if (!(name = S.trim(name))) return;
-
-                name = name.toLowerCase();
-
-                // attr functions
-                if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
-                }
-
-                // custom attrs
-                name = attrFix[name] || name;
-
-                var attrNormalizer;
-
-                if (rboolean.test(name)) {
-                    attrNormalizer = boolHook;
-                }
-                // only old ie?
-                else if (rinvalidChar.test(name)) {
+                // browsers index elements by id/name on forms, give priority to attributes.
+                if (el.nodeName.toLowerCase() == "form") {
                     attrNormalizer = attrNodeHook;
-                } else {
-                    attrNormalizer = attrHooks[name];
+                }
+                if (attrNormalizer && attrNormalizer.get) {
+                    return attrNormalizer.get(el, name);
                 }
 
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-                    // only get attributes on element nodes
-                    if (!isElementNode(el)) {
-                        return null;
-                    }
+                var ret = el.getAttribute(name);
 
-                    // browsers index elements by id/name on forms, give priority to attributes.
-                    if (el.nodeName.toLowerCase() == "form") {
-                        attrNormalizer = attrNodeHook;
-                    }
-                    if (attrNormalizer && attrNormalizer.get) {
-                        return attrNormalizer.get(el, name);
-                    }
-
-                    var ret = el.getAttribute(name);
-
-                    /**
-                     * undefined 会形成链状，so 不能
-                     */
-                    return ret === undefined ? null : ret;
-                } else {
-                    // setter
-                    S.each(DOM.query(selector), function(el) {
-                        // only set attributes on element nodes
-                        if (!isElementNode(el)) {
-                            return;
-                        }
-
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Removes the attribute of the matched elements.
-             */
-            removeAttr: function(selector, name) {
-                name = name.toLowerCase();
-                name = attrFix[name] || name;
+                // standard browser non-existing attribute return null
+                // ie<8 will return undefined , because it return property
+                // so norm to undefined
+                return ret === null ? undefined : ret;
+            } else {
+                // setter
                 S.each(DOM.query(selector), function(el) {
-                    if (isElementNode(el)) {
-                        var propName;
-                        el.removeAttribute(name);
-                        // Set corresponding property to false for boolean attributes
-                        if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
-                            el[ propName ] = false;
-                        }
-                    }
-                });
-            },
-
-            hasAttr: oldIE ?
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    // from ppk :http://www.quirksmode.org/dom/w3c_core.html
-                    // IE5-7 doesn't return the value of a style attribute.
-                    // var $attr = el.attributes[name];
-                    var $attr = el.getAttributeNode(name);
-                    return !!( $attr && $attr.specified );
-                }
-                :
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    //使用原生实现
-                    return el.hasAttribute(name);
-                },
-
-            /**
-             * Gets the current value of the first element in the set of matched or
-             * Sets the value of each element in the set of matched elements.
-             */
-            val : function(selector, value) {
-                var hook, ret;
-
-                //getter
-                if (value === undefined) {
-
-                    var elem = DOM.get(selector);
-
-                    if (elem) {
-                        hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                        if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
-                            return ret;
-                        }
-
-                        ret = elem.value;
-
-                        return typeof ret === "string" ?
-                            // handle most common string cases
-                            ret.replace(rreturn, "") :
-                            // handle cases where value is null/undef or number
-                            ret == null ? "" : ret;
-                    }
-
-                    return null;
-                }
-
-                DOM.query(selector).each(function(elem) {
-
-                    if (elem.nodeType !== 1) {
+                    // only set attributes on element nodes
+                    if (!isElementNode(el)) {
                         return;
                     }
 
-                    var val = value;
-
-                    // Treat null/undefined as ""; convert numbers to string
-                    if (val == null) {
-                        val = "";
-                    } else if (typeof val === "number") {
-                        val += "";
-                    } else if (S.isArray(val)) {
-                        val = S.map(val, function (value) {
-                            return value == null ? "" : value + "";
-                        });
-                    }
-
-                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                    // If set returns undefined, fall back to normal setting
-                    if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
-                        elem.value = val;
+                    if (attrNormalizer && attrNormalizer.set) {
+                        attrNormalizer.set(el, val, name);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
                     }
                 });
+            }
+        },
+
+        /**
+         * Removes the attribute of the matched elements.
+         */
+        removeAttr: function(selector, name) {
+            name = name.toLowerCase();
+            name = attrFix[name] || name;
+            S.each(DOM.query(selector), function(el) {
+                if (isElementNode(el)) {
+                    var propName;
+                    el.removeAttribute(name);
+                    // Set corresponding property to false for boolean attributes
+                    if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
+                        el[ propName ] = false;
+                    }
+                }
+            });
+        },
+
+        hasAttr: oldIE ?
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                // from ppk :http://www.quirksmode.org/dom/w3c_core.html
+                // IE5-7 doesn't return the value of a style attribute.
+                // var $attr = el.attributes[name];
+                var $attr = el.getAttributeNode(name);
+                return !!( $attr && $attr.specified );
+            }
+            :
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                //使用原生实现
+                return el.hasAttribute(name);
             },
 
-            /**
-             * Gets the text context of the first element in the set of matched elements or
-             * Sets the text content of the matched elements.
-             */
-            text: function(selector, val) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
+        /**
+         * Gets the current value of the first element in the set of matched or
+         * Sets the value of each element in the set of matched elements.
+         */
+        val : function(selector, value) {
+            var hook, ret;
 
-                    // only gets value on supported nodes
-                    if (isElementNode(el)) {
-                        return el[TEXT] || EMPTY;
+            //getter
+            if (value === undefined) {
+
+                var elem = DOM.get(selector);
+
+                if (elem) {
+                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                    if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
+                        return ret;
                     }
-                    else if (isTextNode(el)) {
-                        return el.nodeValue;
-                    }
-                    //prevent chain in Node
-                    return null;
+
+                    ret = elem.value;
+
+                    return typeof ret === "string" ?
+                        // handle most common string cases
+                        ret.replace(rreturn, "") :
+                        // handle cases where value is null/undefined or number
+                        ret == null ? "" : ret;
                 }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(el) {
-                        if (isElementNode(el)) {
-                            el[TEXT] = val;
-                        }
-                        else if (isTextNode(el)) {
-                            el.nodeValue = val;
-                        }
+
+                return;
+            }
+
+            DOM.query(selector).each(function(elem) {
+
+                if (elem.nodeType !== 1) {
+                    return;
+                }
+
+                var val = value;
+
+                // Treat null/undefined as ""; convert numbers to string
+                if (val == null) {
+                    val = "";
+                } else if (typeof val === "number") {
+                    val += "";
+                } else if (S.isArray(val)) {
+                    val = S.map(val, function (value) {
+                        return value == null ? "" : value + "";
                     });
                 }
+
+                hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                // If set returns undefined, fall back to normal setting
+                if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
+                    elem.value = val;
+                }
+            });
+        },
+
+        /**
+         * Gets the text context of the first element in the set of matched elements or
+         * Sets the text content of the matched elements.
+         */
+        text: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on supported nodes
+                if (isElementNode(el)) {
+                    return el[TEXT] || EMPTY;
+                }
+                else if (isTextNode(el)) {
+                    return el.nodeValue;
+                }
+                return undefined;
             }
-        });
+            // setter
+            else {
+                S.each(DOM.query(selector), function(el) {
+                    if (isElementNode(el)) {
+                        el[TEXT] = val;
+                    }
+                    else if (isTextNode(el)) {
+                        el.nodeValue = val;
+                    }
+                });
+            }
+        }
+    });
     if (1 > 2) {
         DOM.removeProp().hasProp();
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    }
-);
+    requires:["./base","ua"]
+}
+    );
 
 /**
  * NOTES:

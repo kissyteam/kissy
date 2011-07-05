@@ -37,7 +37,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
              */
             offset: function(elem, val) {
                 // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
                 // getter
                 if (val === undefined) {
