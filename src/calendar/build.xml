@@ -6,10 +6,6 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <target name="pre">
-        <copy file="assets/calendar.css" todir="."/>
-    </target>
-
     <target name="concat">
         <concat destfile="calendar-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path location="base.js" />
@@ -22,9 +18,8 @@
 
     <target name="clean">
         <delete file="calendar-pkg.js"/>
-        <delete file="calendar.css"/>
     </target>
 
-    <target name="build" depends="pre,concat,common.build,clean">
+    <target name="build" depends="concat,common.build,clean">
     </target>
 </project>

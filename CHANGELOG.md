@@ -32,11 +32,9 @@ History:
 
 
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
- - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
- - [!] DOM.attr/prop 属性不存在时返回 undefined
+ - [!] DOM.insertBefore/insertAfter 没有返回值
  - [*] ie: dom opacity bug fix , border-width 数值归一化
  - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
- - [!] DOM 第一个参数为空时或不符合条件时返回 undefined 	
 
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
@@ -100,7 +98,7 @@ History:
  - [*] kissyteam 文档利用 sphinx 重新编写整理
 
 
- - [!] calendar 模块 use("calendar") 将不再动态加载其css，方便自由定制样式，若需要默认样式需静态引入或S.getScript加载
+ - [!] calendar 模块 use("calendar") 会默认加载基础css，需要重定义皮肤的话请用高优先 css 规则覆盖
 
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
