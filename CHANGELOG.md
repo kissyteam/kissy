@@ -31,7 +31,6 @@ History:
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
 
 
-
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
  - [!] DOM.insertBefore/insertAfter/append/prepend 没有返回值
  - [!] DOM.attr/prop 属性不存在时返回 undefined
