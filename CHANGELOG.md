@@ -98,7 +98,7 @@ History:
  - [*] kissyteam 文档利用 sphinx 重新编写整理
 
 
- - [!] calendar 模块 use("calendar") 会默认加载基础css，需要重定义皮肤的话请用高优先 css 规则覆盖
+ - [!] calendar 模块 use("calendar") 不会会默认加载基础css，需要的话可以静态引入或者user("calendar,calendar/assets/base.css") 载入
 
 
 ### v1.1.5 -> v1.1.6 (2010/11/30)
