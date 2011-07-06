@@ -419,7 +419,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
  */
 /**
  * kissy delegate for event module
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
@@ -468,6 +468,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                             equals:equals
                         });
                 });
+                return targets;
             }
         });
 

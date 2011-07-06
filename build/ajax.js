@@ -1002,7 +1002,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 }, {
         requires:["event"]
     });KISSY.add("ajax", function(S, io) {
-
+    var undef = undefined;
     // some shortcut
     S.mix(io, {
         get: function(url, data, callback, dataType, _t) {
@@ -1010,7 +1010,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
 
             return io({
@@ -1026,7 +1026,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, dataType, "post");
         },
@@ -1034,7 +1034,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
         jsonp: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "jsonp");
         },
@@ -1051,7 +1051,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
         getJSON: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "json");
         },
@@ -1060,7 +1060,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = null; // 占位符
+                data = undef;
             }
             return io({
                 url:url,
