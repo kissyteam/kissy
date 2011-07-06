@@ -1,6 +1,6 @@
 /**
  * @module  UIBase
- * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
@@ -20,8 +20,12 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
      * UIBase for class-based component
      */
     function UIBase(config) {
+        // 读取用户设置的属性值并设置到自身
         Base.apply(this, arguments);
+        // 根据 srcNode 设置属性值
+        // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(this, config);
+        // 是否自动渲染
         config && config.autoRender && this.render();
     }
 
@@ -39,8 +43,9 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
             if (config &&
                 config[SRC_NODE] &&
                 c.HTML_PARSER) {
-                if ((config[SRC_NODE] = Node.one(config[SRC_NODE])))
+                if ((config[SRC_NODE] = Node.one(config[SRC_NODE]))) {
                     applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                }
             }
 
             c = c.superclass && c.superclass.constructor;
@@ -83,6 +88,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
             // 收集主类
             // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
             // 所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            // 以及 initializer 等同理
             if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
                 t.push(main);
             }
@@ -113,7 +119,10 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
             i;
 
         while (c) {
-            (d = c.prototype.destructor) && d.apply(host);
+            // 只触发该类真正的析构器，和父亲没关系，所以不要在子类析构器中调用 superclass
+            if (c.prototype.hasOwnProperty("destructor")) {
+                c.prototype.destructor.apply(host);
+            }
 
             if ((exts = c.__ks_exts)) {
                 for (i = exts.length - 1; i >= 0; i--) {
@@ -152,7 +161,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     UIBase.HTML_PARSER = {};
     UIBase.ATTRS = {
-        //渲染容器
+        // 渲染该组件的目的容器
         render:{
             valueFn:function() {
                 return document.body;
@@ -162,85 +171,88 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                     return Node.one(v);
             }
         },
-        //是否已经渲染过
+        // 是否已经渲染过
         rendered:{value:false}
     };
 
     S.extend(UIBase, Base, {
 
-            render: function() {
-                var self = this;
-                if (!self.get("rendered")) {
-                    self._renderUI();
-                    self.fire('renderUI');
-                    callMethodByHierarchy(self, "renderUI", "__renderUI");
-                    self.fire('afterRenderUI');
-                    self._bindUI();
-                    self.fire('bindUI');
-                    callMethodByHierarchy(self, "bindUI", "__bindUI");
-                    self.fire('afterBindUI');
-                    self._syncUI();
-                    self.fire('syncUI');
-                    callMethodByHierarchy(self, "syncUI", "__syncUI");
-                    self.fire('afterSyncUI');
-                    self.set("rendered", true);
-                }
-            },
-
-            /**
-             * 根据属性添加 DOM 节点
-             */
-            _renderUI: noop,
-            renderUI: noop,
-
-            /**
-             * 根据属性变化设置 UI
-             */
-            _bindUI: function() {
-                var self = this,
-                    attrs = self.__attrs,
-                    attr, m;
-
-                for (attr in attrs) {
-                    if (attrs.hasOwnProperty(attr)) {
-                        m = UI_SET + capitalFirst(attr);
-                        if (self[m]) {
-                            // 自动绑定事件到对应函数
-                            (function(attr, m) {
-                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
-                                    self[m](ev.newVal, ev);
-                                });
-                            })(attr, m);
-                        }
-                    }
-                }
-            },
-            bindUI: noop,
-
-            /**
-             * 根据当前（初始化）状态来设置 UI
-             */
-            _syncUI: function() {
-                var self = this,
-                    attrs = self.__getDefAttrs();
-                for (var a in attrs) {
-                    if (attrs.hasOwnProperty(a)) {
-                        var m = UI_SET + capitalFirst(a);
-                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                        if (self[m] && self.get(a) !== undefined) {
-                            self[m](self.get(a));
-                        }
-                    }
-                }
-            },
-            syncUI: noop,
-
-            destroy: function() {
-                destroyHierarchy(this);
-                this.fire('destroy');
-                this.detach();
+        render: function() {
+            var self = this;
+            if (!self.get("rendered")) {
+                self._renderUI();
+                // 实际上是 beforeRenderUI
+                self.fire('renderUI');
+                callMethodByHierarchy(self, "renderUI", "__renderUI");
+                self.fire('afterRenderUI');
+                self._bindUI();
+                // 实际上是 beforeBindUI
+                self.fire('bindUI');
+                callMethodByHierarchy(self, "bindUI", "__bindUI");
+                self.fire('afterBindUI');
+                self._syncUI();
+                // 实际上是 beforeSyncUI
+                self.fire('syncUI');
+                callMethodByHierarchy(self, "syncUI", "__syncUI");
+                self.fire('afterSyncUI');
+                self.set("rendered", true);
             }
-        });
+        },
+
+        /**
+         * 根据属性添加 DOM 节点
+         */
+        _renderUI: noop,
+        renderUI: noop,
+
+        /**
+         * 根据属性变化设置 UI
+         */
+        _bindUI: function() {
+            var self = this,
+                attrs = self.__attrs,
+                attr, m;
+
+            for (attr in attrs) {
+                if (attrs.hasOwnProperty(attr)) {
+                    m = UI_SET + capitalFirst(attr);
+                    if (self[m]) {
+                        // 自动绑定事件到对应函数
+                        (function(attr, m) {
+                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                self[m](ev.newVal, ev);
+                            });
+                        })(attr, m);
+                    }
+                }
+            }
+        },
+        bindUI: noop,
+
+        /**
+         * 根据当前（初始化）状态来设置 UI
+         */
+        _syncUI: function() {
+            var self = this,
+                attrs = self.__attrs;
+            for (var a in attrs) {
+                if (attrs.hasOwnProperty(a)) {
+                    var m = UI_SET + capitalFirst(a);
+                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                    if (self[m] && self.get(a) !== undefined) {
+                        self[m](self.get(a));
+                    }
+                }
+            }
+        },
+        syncUI: noop,
+
+        destroy: function() {
+            destroyHierarchy(this);
+            this.fire('destroy');
+            this.detach();
+        }
+    });
 
     /**
      * 根据基类以及扩展类得到新类
@@ -278,7 +290,8 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 S.each([ATTRS, HTML_PARSER], function(K) {
                     if (ext[K]) {
                         C[K] = C[K] || {};
-                        // 不覆盖主类上的定义
+                        // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
+                        // 但是值是对象的话会深度合并
                         deepMix(C[K], ext[K]);
                     }
                 });
@@ -305,5 +318,5 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     return UIBase;
 }, {
-        requires:["base","dom","node"]
-    });
+    requires:["base","dom","node"]
+});

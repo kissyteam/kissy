@@ -1,6 +1,6 @@
 /**
  * model and control base class for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component/modelcontrol", function(S, UIBase) {
     function wrapperViewSetter(attrName) {
