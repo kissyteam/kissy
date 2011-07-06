@@ -110,19 +110,63 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
-            bindUI:function() {
+            _uiSetHandleMouseEvents:function(v) {
                 var self = this,
                     view = self.get("view"),
                     el = view.get("el");
-                el.on("mouseenter", self._handleMouseEnter, self);
-                el.on("mouseleave", self._handleMouseLeave, self);
-                el.on("mousedown", self._handleMouseDown, self);
-                el.on("mouseup", self._handleMouseUp, self);
-                el.on("focus", self._handleFocus, self);
-                el.on("blur", self._handleBlur, self);
-                el.on("keydown", self.__handleKeydown, self);
-                el.on("click", self._handleClick, self);
+                if (v) {
+                    el.on("mouseenter", self._handleMouseEnter, self);
+                    el.on("mouseleave", self._handleMouseLeave, self);
+                    el.on("mousedown", self._handleMouseDown, self);
+                    el.on("mouseup", self._handleMouseUp, self);
+                    el.on("click", self._handleClick, self);
+                } else {
+                    el.detach("mouseenter", self._handleMouseEnter, self);
+                    el.detach("mouseleave", self._handleMouseLeave, self);
+                    el.detach("mousedown", self._handleMouseDown, self);
+                    el.detach("mouseup", self._handleMouseUp, self);
+                    el.detach("click", self._handleClick, self);
+                }
             },
+
+            isMouseEventWithinElement_:function(e, elem) {
+                return !!e.relatedTarget && elem.contains(e.relatedTarget);
+            },
+
+            _handleMouseOver:function(e) {
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseEnter(e);
+                }
+            },
+
+
+            _handleMouseOut:function(e) {
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseLeave(e);
+                }
+            },
+
+            _uiSetSupportFocused:function(v) {
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (v) {
+                    el.on("focus", self._handleFocus, self);
+                    el.on("blur", self._handleBlur, self);
+                    el.on("keydown", self.__handleKeydown, self);
+                } else {
+                    el.detach("focus", self._handleFocus, self);
+                    el.detach("blur", self._handleBlur, self);
+                    el.detach("keydown", self.__handleKeydown, self);
+                }
+            },
+
 
             _forwordToView:function(method, ev) {
                 var self = this,
@@ -193,7 +237,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             },
 
             _handleKeydown:function(ev) {
-                this._forwordToView('_handleFocus', ev);
+                this._forwordToView('_handleKeydown', ev);
             },
             /**
              * root element handler for keydown
@@ -208,10 +252,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     view = self.get("view");
                 // 默认情况下空格和 enter 直接交给 click 负责
                 if (ev.keyCode == 13 || ev.keyCode == 32) {
-                    self._handleClick(ev);
                     ev.preventDefault();
+                    return self._handleClick(ev);
                 } else {
-                    this._handleKeydown();
+                    return this._handleKeydown(ev);
                 }
             },
 
@@ -243,6 +287,17 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         },
         {
             ATTRS:{
+
+                // 是否绑定鼠标事件
+                handleMouseEvents:{
+                    value:true
+                },
+
+                // 是否支持焦点处理
+                supportFocused:{
+                    value:true
+                },
+
                 //子组件
                 children:{
                     value:[],
