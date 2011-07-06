@@ -20,15 +20,7 @@
 <div id="exist">渐进增强</div>
 
 
-
-<script src="../../build/seed.js"></script>
-<script src="../../build/ua.js"></script>
-<script src="../../build/node.js"></script>
-<script src="../../build/dom.js"></script>
-<script src="../../build/event.js"></script>
-<script src="../../build/base.js"></script>
-<script src="../../build/json.js"></script>
-<script src="../../build/uibase.js"></script>
+<script src="../../build/kissy.js"></script>
 <script src="../component.js"></script>
 <script src="../component/modelcontrol.js"></script>
 <script src="../component/render.js"></script>
@@ -42,20 +34,16 @@
     KISSY.use("node,button", function(S, Node, Button) {
         //view
         //render to container : button_container
-        var r = new Button.Render({
-            render:"#button_container"
-        });
-
         //model and control
         //view as a parameter
         var b = new Button({
             content:"测试",
             describedby:"describe",
-            view:r,
-            autoRender:true
+            render:"#button_container",
+            prefixCls:"goog-"
         });
-        //or
-        //b.render()
+
+        b.render();
 
         b.on("click", function() {
             setTimeout(function() {
@@ -80,17 +68,14 @@
         }
 
         var exist = new Button({
-            view:new Button.Render({
-                srcNode:"#exist"
-            }),
-            autoRender:true
+            srcNode:"#exist",
+            prefixCls:"goog-"
         });
 
+        exist.render();
         exist.on("click", function() {
             alert("渐进增强 click");
         });
-
-        S.log(exist.get("content"));
     });
 </script>
 </body>
