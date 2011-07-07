@@ -19,7 +19,7 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
     }, {
         ATTRS:{
             /**
-             * @inherited
+             * @inheritedDoc
              * disabled:{}
              */
             value:{},
@@ -70,12 +70,12 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     }, {
         ATTRS:{
             /**
-             * @inherited
+             * @inheritedDoc
              * disabled:{}
              */
 
             /**
-             * @inherited
+             * @inheritedDoc
              * prefixCls:{}
              */
 
@@ -235,7 +235,7 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
             }
         }
         /**
-         * @inherited
+         * @inheritedDoc
          * content:{}
          */
     );

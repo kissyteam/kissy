@@ -242,7 +242,19 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("resize"),
         require("mask"),
         Effect
-    ]);
+    ], {
+        ATTRS:{
+            // 是否绑定鼠标事件
+            handleMouseEvents:{
+                value:false
+            },
+
+            // 是否支持焦点处理
+            supportFocused:{
+                value:false
+            }
+        }
+    });
 
     Overlay.DefaultRender = OverlayRender;
 
