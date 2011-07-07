@@ -35,6 +35,25 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 // 使用熟悉的 target，而不是自造新词！
                 target:this
             });
+        },
+
+        _uiSetHighlighted:function(v) {
+            this.get("view").set("highlighted", v);
+
+            // 是否要滚动到当前菜单项
+            if (v) {
+                var el = this.get("el"),
+                    p = this.get("parent").get("el"),
+                    y = el.offset().top,
+                    h = el[0].offsetHeight,
+                    py = p.offset().top,
+                    ph = p[0].offsetHeight;
+                if (y - py >= ph) {
+                    p[0].scrollTop += y - py + h - ph;
+                } else if (y - py < 0) {
+                    p[0].scrollTop += y - py;
+                }
+            }
         }
 
     }, {
