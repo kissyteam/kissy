@@ -82,7 +82,7 @@ KISSY.add(
                 clearTimers : function() {
                     if (this.dismissTimer_) {
                         clearTimeout(this.dismissTimer_);
-                        this.dismissTimer = null;
+                        this.dismissTimer_ = null;
                     }
                     if (this.showTimer_) {
                         clearTimeout(this.showTimer_);
