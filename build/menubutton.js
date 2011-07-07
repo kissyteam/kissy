@@ -184,8 +184,8 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
  * represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/option", function(S, UIBase, MenuItem) {
-
+KISSY.add("menubutton/option", function(S, UIBase, Menu) {
+    var MenuItem = Menu.Item;
     return UIBase.create(MenuItem, {
     }, {
         ATTRS:{
@@ -197,7 +197,7 @@ KISSY.add("menubutton/option", function(S, UIBase, MenuItem) {
 
 
 }, {
-    requires:['uibase','menu/menuitem']
+    requires:['uibase','menu']
 });/**
  * manage a list of single-select options
  * @author yiminghe@gmail.com
@@ -331,7 +331,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
     return Select;
 
 }, {
-    requires:['node','uibase','./menubutton','menu/menu','./option']
+    requires:['node','uibase','./menubutton','menu','./option']
 });
 
 /**
