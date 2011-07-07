@@ -148,25 +148,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
-            _handleMouseOver:function(e) {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (!self.isMouseEventWithinElement_(e, el)) {
-                    self._handleMouseEnter(e);
-                }
-            },
-
-
-            _handleMouseOut:function(e) {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (!self.isMouseEventWithinElement_(e, el)) {
-                    self._handleMouseLeave(e);
-                }
-            },
-
             _uiSetSupportFocused:function(v) {
                 var self = this,
                     view = self.get("view"),
@@ -192,6 +173,30 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 view[method] && view[method](ev);
             },
 
+            _handleMouseOver:function(e) {
+                if (this.get("disabled")) {
+                    return true;
+                }
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseEnter(e);
+                }
+            },
+
+
+            _handleMouseOut:function(e) {
+                if (this.get("disabled")) {
+                    return true;
+                }
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseLeave(e);
+                }
+            },
 
             /**
              * root element handler for mouse enter

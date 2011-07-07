@@ -10,7 +10,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         UIBase.Position,
         UIBase.Align
     ], {
-
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
@@ -21,7 +20,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         },
 
         _handleBlur:function(e) {
-            if (Menu.superclass._handleBlur.call(this,e) === true) {
+            // 父亲不允许自己处理
+            if (Menu.superclass._handleBlur.call(this, e)) {
                 return true;
             }
             this.set("highlightedItem", null);
@@ -31,90 +31,114 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         //dir : -1 ,+1
         //skip disabled items
         _getNextEnabledHighlighted:function(index, dir) {
-            var children = this.get("children");
-            if (children.length == 0) {
-                return null;
-            }
-            if (!children[index].get("disabled")) {
-                return children[index];
-            }
-            var o = index;
-            index += dir;
-            while (index != o) {
+            var children = this.get("children"),
+                len = children.length,
+                o = index;
+            do {
                 if (!children[index].get("disabled")) {
                     return children[index];
                 }
-                index += dir;
-                if (index == -1) {
-                    index = children.length - 1;
-                }
-                else if (index == children.length) {
-                    index = 0;
-                }
-            }
+                index = (index + dir + len) % len;
+            } while (index != o);
             return null;
         },
 
         _handleClick:function(e) {
-            if (Menu.superclass._handleClick.call(this, e) === true)
+            if (Menu.superclass._handleClick.call(this, e))
                 return true;
+
             var highlightedItem = this.get("highlightedItem");
 
             //先看当前活跃 menuitem 是否要处理
-            if (highlightedItem) {
-                if (highlightedItem._handleClick(e) === true) {
-                    return true;
-                }
+            if (highlightedItem && highlightedItem._handleClick(e)) {
+                return true;
             }
         },
 
         _handleKeydown:function(e) {
-
-            if (Menu.superclass._handleKeydown.call(this, e) === true)
+            if (this._handleKeydownInternal(e)) {
+                e.halt();
                 return true;
-             var highlightedItem = this.get("highlightedItem");
+            }
+            return false;
+        },
 
-            //先看当前活跃 menuitem 是否要处理
-            if (highlightedItem) {
+        /**
+         * Attempts to handle a keyboard event; returns true if the event was handled,
+         * false otherwise.  If the container is enabled, and a child is highlighted,
+         * calls the child control's {@code handleKeyEvent} method to give the control
+         * a chance to handle the event first.
+         * @param  e Key event to handle.
+         * @return {boolean} Whether the event was handled by the container (or one of
+         *     its children).
+         */
+        _handleKeydownInternal:function(e) {
 
-                if (highlightedItem._handleKeydown(e) === true) {
-                    return true;
-                }
+            if (Menu.superclass._handleKeydown.call(this, e)) {
+                return true;
             }
 
-            //自己这边只处理上下
-            var children = this.get("children");
-            if (children.length === 0) {
-                return;
+            // Give the highlighted control the chance to handle the key event.
+            var highlightedItem = this.get("highlightedItem");
+
+            // 先看当前活跃 menuitem 是否要处理
+            if (highlightedItem && highlightedItem._handleKeydown(e)) {
+                return true;
             }
+
+            var children = this.get("children"),len = children.length;
+
+            if (len == 0) {
+                return false;
+            }
+
             var index,destIndex;
 
-            //up
-            if (e.keyCode == 38) {
-                if (!highlightedItem) {
-                    this.set("highlightedItem", this._getNextEnabledHighlighted(children.length - 1, -1));
-                } else {
-                    index = S.indexOf(highlightedItem, children);
-                    destIndex = index == 0 ? children.length - 1 : index - 1;
-                    this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, -1));
-                }
-                e.preventDefault();
-                //自己处理了，嵌套菜单情况
-                return true;
+            //自己处理了，不要向上处理，嵌套菜单情况
+            switch (e.keyCode) {
+                // esc
+                case 27:
+                    // TODO
+                    // focus 的话手动失去焦点
+                    return false;
+                    break;
+
+                // home
+                case 36:
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(0, 1));
+                    break;
+                // end
+                case 35:
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(len - 1, -1));
+                    break;
+                // up
+                case 38:
+                    if (!highlightedItem) {
+                        destIndex = len - 1;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index - 1 + len) % len;
+                    }
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(destIndex, -1));
+                    break;
+                //down
+                case 40:
+                    if (!highlightedItem) {
+                        destIndex = 0;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index + 1 + len) % len;
+                    }
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(destIndex, 1));
+                    break;
+                default:
+                    return false;
             }
-            //down
-            else if (e.keyCode == 40) {
-                if (!highlightedItem) {
-                    this.set("highlightedItem", this._getNextEnabledHighlighted(0, 1));
-                } else {
-                    index = S.indexOf(highlightedItem, children);
-                    destIndex = index == children.length - 1 ? 0 : index + 1;
-                    this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, 1));
-                }
-                e.preventDefault();
-                //自己处理了，不要向上处理，嵌套菜单情况
-                return true;
-            }
+            return true;
         },
 
         bindUI:function() {
@@ -147,3 +171,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 }, {
     requires:['uibase','component','./menurender','./submenu']
 });
+
+/**
+ * TODO
+ *  - 去除 activeItem
+ **/

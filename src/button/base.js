@@ -6,8 +6,9 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
     var Button = UIBase.create(Component.ModelControl, {
         _handleClick:function(ev) {
-            var self = this,ret = Button.superclass._handleClick.call(self, ev);
-            if (ret !== true) {
+            var self = this;
+            // 如果父亲允许自己处理
+            if (!Button.superclass._handleClick.call(self, ev)) {
                 self.fire("click");
             }
         }

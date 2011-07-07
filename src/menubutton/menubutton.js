@@ -51,28 +51,28 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
          * @inheritDoc
          */
         _handleKeydown:function(e) {
-
             var menu = this.get("menu");
             //转发给 menu 处理
             if (menu && menu.get("visible")) {
-                if (menu._handleKeydown(e) === true) {
+                var handledByMenu = menu._handleKeydown(e);
+                if (e.keyCode == 27) {
+                    this.hideMenu();
                     return true;
                 }
+                return handledByMenu;
             }
-            if (e.keyCode == 27) {
-                this.hideMenu();
-            } else if (e.keyCode == 38 || e.keyCode == 40) {
-                if (!menu.get("visible")) {
-                    this.showMenu();
-                }
+            if (e.keyCode == 38 || e.keyCode == 40) {
+                this.showMenu();
+                return true;
             }
+            return false;
         },
 
         /**
          * @inheritDoc
          */
         _handleBlur:function(e) {
-            var ret = MenuButton.superclass._handleBlur.call(this,e);
+            var ret = MenuButton.superclass._handleBlur.call(this, e);
             if (ret === true) {
                 return ret;
             }
@@ -83,9 +83,8 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
          * @inheritDoc
          */
         _handleClick:function(e) {
-            var re = Button.superclass._handleClick.call(this,e);
-            if (re === true) {
-                return re;
+            if (Button.superclass._handleClick.call(this, e)) {
+                return true;
             }
             var menu = this.get("menu");
 
@@ -103,6 +102,8 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                         menu._handleClick(e);
                     }
                 } else if (e.keyCode == 32) {
+                    // Prevent page scrolling in Chrome.
+                    e.preventDefault();
                     // space 只负责打开
                     this.showMenu();
                 }
@@ -116,7 +117,11 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             },
             // 不关心选中元素 , 由 select 负责
             // selectedItem
-            menu:{}
+            menu:{
+                setter:function(v) {
+                    v.set("parent", this);
+                }
+            }
         }
     });
 
