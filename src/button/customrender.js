@@ -5,7 +5,7 @@
 KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     //双层 div 模拟圆角
     var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div id='{{id}}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
     return UIBase.create(Css3Render, {
 

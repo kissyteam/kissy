@@ -5,23 +5,23 @@
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     var MenuItem = UIBase.create(Component.ModelControl, {
 
-        _handleMouseEnter:function() {
-            if (MenuItem.superclass._handleMouseEnter.call(this) === false) {
-                return false;
+        _handleMouseEnter:function(e) {
+            if (MenuItem.superclass._handleMouseEnter.call(this,e) === true) {
+                return true;
             }
             this.get("parent").set("highlightedItem", this);
         },
 
-        _handleMouseLeave:function() {
-            if (MenuItem.superclass._handleMouseLeave.call(this) === false) {
-                return false;
+        _handleMouseLeave:function(e) {
+            if (MenuItem.superclass._handleMouseLeave.call(this,e) === true) {
+                return true;
             }
             this.get("parent").set("highlightedItem", null);
         },
 
-        _handleClick:function() {
-            if (MenuItem.superclass._handleClick.call(this) === false) {
-                return false;
+        _handleClick:function(e) {
+            if (MenuItem.superclass._handleClick.call(this,e) === true) {
+                return true;
             }
             // 可选
             if (this.get("selectable")) {

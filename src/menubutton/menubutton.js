@@ -1,6 +1,6 @@
 /**
  * combination of menu and button ,similar to native select
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender) {
 
@@ -55,16 +55,14 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             var menu = this.get("menu");
             //转发给 menu 处理
             if (menu && menu.get("visible")) {
-                if (menu._handleKeydown(e) === false) {
-                    return false;
+                if (menu._handleKeydown(e) === true) {
+                    return true;
                 }
             }
             if (e.keyCode == 27) {
-                e.preventDefault();
                 this.hideMenu();
             } else if (e.keyCode == 38 || e.keyCode == 40) {
                 if (!menu.get("visible")) {
-                    e.preventDefault();
                     this.showMenu();
                 }
             }
@@ -73,9 +71,11 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         /**
          * @inheritDoc
          */
-        _handleBlur:function() {
-            var re = MenuButton.superclass._handleBlur.call(this);
-            if (re === false) return re;
+        _handleBlur:function(e) {
+            var ret = MenuButton.superclass._handleBlur.call(this,e);
+            if (ret === true) {
+                return ret;
+            }
             this.hideMenu();
         },
 
@@ -83,8 +83,8 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
          * @inheritDoc
          */
         _handleClick:function(e) {
-            var re = Button.superclass._handleClick.call(this);
-            if (re === false) {
+            var re = Button.superclass._handleClick.call(this,e);
+            if (re === true) {
                 return re;
             }
             var menu = this.get("menu");

@@ -13,8 +13,8 @@ KISSY.add(
                  * menuitem leave 会设成 false
                  * 这里不要继承 menuitem ，直接重写组件最顶层基类
                  */
-                if (MenuItem.superclass._handleMouseLeave.call(this, ev) === false) {
-                    return false;
+                if (MenuItem.superclass._handleMouseLeave.call(this, ev) === true) {
+                    return true;
                 }
 
                 var menu = this.get("menu"),relatedTarget = S.one(ev.relatedTarget)[0];
@@ -72,9 +72,9 @@ KISSY.add(
                 }
             },
 
-            _handleMouseEnter:function() {
-                if (SubMenu.superclass._handleMouseEnter.call(this) === false) {
-                    return false;
+            _handleMouseEnter:function(e) {
+                if (SubMenu.superclass._handleMouseEnter.call(this,e) === true) {
+                    return true;
                 }
                 this.showMenu();
             },
@@ -106,8 +106,8 @@ KISSY.add(
 
             _handleKeydown:function(e) {
 
-                if (SubMenu.superclass._handleKeydown.call(this, e) === false) {
-                    return false;
+                if (SubMenu.superclass._handleKeydown.call(this, e) === true) {
+                    return true;
                 }
 
                 var menu = this.get("menu");
@@ -120,9 +120,9 @@ KISSY.add(
 
                 if (menu && menu.get("visible")) {
                     var ret = menu._handleKeydown(e);
-                    if (ret === false) {
+                    if (ret === true) {
                         //父亲不要处理了
-                        return false;
+                        return true;
                     }
                 }
 
@@ -135,13 +135,13 @@ KISSY.add(
                     if (menuChildren[0]) {
                         menu.set("highlightedItem", menuChildren[0]);
                     }
-                    return false;
+                    return true;
                 }
                 //left
                 else if (e.keyCode == 37 && menu && menu.get("visible")) {
                     this.hideMenu();
                     this.get("parent").set("activeItem", this);
-                    return false;
+                    return true;
                 }
 
 

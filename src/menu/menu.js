@@ -20,9 +20,9 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             this.set("activeItem", v);
         },
 
-        _handleBlur:function() {
-            if (Menu.superclass._handleBlur.call(this) === false) {
-                return false;
+        _handleBlur:function(e) {
+            if (Menu.superclass._handleBlur.call(this,e) === true) {
+                return true;
             }
             this.set("highlightedItem", null);
         },
@@ -56,29 +56,29 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         },
 
         _handleClick:function(e) {
-            if (Menu.superclass._handleClick.call(this, e) === false)
-                return false;
+            if (Menu.superclass._handleClick.call(this, e) === true)
+                return true;
             var highlightedItem = this.get("highlightedItem");
 
             //先看当前活跃 menuitem 是否要处理
             if (highlightedItem) {
-                if (highlightedItem._handleClick(e) === false) {
-                    return false;
+                if (highlightedItem._handleClick(e) === true) {
+                    return true;
                 }
             }
         },
 
         _handleKeydown:function(e) {
 
-            if (Menu.superclass._handleKeydown.call(this, e) === false)
-                return false;
+            if (Menu.superclass._handleKeydown.call(this, e) === true)
+                return true;
              var highlightedItem = this.get("highlightedItem");
 
             //先看当前活跃 menuitem 是否要处理
             if (highlightedItem) {
 
-                if (highlightedItem._handleKeydown(e) === false) {
-                    return false;
+                if (highlightedItem._handleKeydown(e) === true) {
+                    return true;
                 }
             }
 
@@ -100,7 +100,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 }
                 e.preventDefault();
                 //自己处理了，嵌套菜单情况
-                return false;
+                return true;
             }
             //down
             else if (e.keyCode == 40) {
@@ -113,7 +113,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 }
                 e.preventDefault();
                 //自己处理了，不要向上处理，嵌套菜单情况
-                return false;
+                return true;
             }
         },
 
