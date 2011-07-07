@@ -11,7 +11,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 self.get("menu").on("show", self._handleMenuShow, self)
             },
             /**
-             *  different from menubutton by highlighting the currently selected option on open menu.
+             *  different from menubutton by highlighting the currently selected option
+             *  on open menu.
              */
             _handleMenuShow:function() {
                 this.get("menu").set("highlightedItem", this.get("selectedItem") || this.get("menu").getChildAt(0));
@@ -84,27 +85,27 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 
     Select.decorate = function(element, cfg) {
         element = S.one(element);
-        var optionMenu = new Menu({
+        var optionMenu = new Menu(S.mix({
             prefixCls:cfg.prefixCls
-        }),
-            curCurContent,
+        }, cfg.menuCfg)),
+            selectedItem,
             curValue = element.val(),
             options = element.all("option");
 
         options.each(function(option) {
-            if (curValue == option.val()) {
-                curCurContent = option.text();
-            }
-
-            optionMenu.addChild(new Option({
+            var item = new Option({
                 content:option.text(),
                 prefixCls:cfg.prefixCls,
                 value:option.val()
-            }));
+            });
+            if (curValue == option.val()) {
+                selectedItem = item;
+            }
+            optionMenu.addChild(item);
         });
 
         var select = new Select({
-            content:curCurContent,
+            selectedItem:selectedItem,
             menu:optionMenu,
             defaultCaption:cfg.defaultCaption,
             prefixCls:cfg.prefixCls,
