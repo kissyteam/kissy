@@ -129,6 +129,11 @@
 
 <script src="menubuttonrender.js"></script>
 <script src="menubutton.js"></script>
+
+<script src="select.js"></script>
+<script src="option.js"></script>
+
+
 <script src="../menubutton.js"></script>
 
 <script>
@@ -235,7 +240,7 @@
                 });
 
                 var menu = new Menu({
-                     prefixCls:"goog-",
+                    prefixCls:"goog-",
                     children:[b,new Menu.Item({content:"alone",prefixCls:"goog-"})]
                 });
                 var exist = new MenuButton({
@@ -249,13 +254,14 @@
 
 
         (function() {
-            var button = MenuButton.decorateSelect('#decorateSelect', {
+
+            var select = MenuButton.Select.decorate('#decorateSelect', {
                 prefixCls:"goog-"
             });
 
 
-            button.get("menu").on("menuItemClick", function(e) {
-                alert(e.menuItem.get("value"));
+            select.on("click", function(e) {
+                alert(e.target.get("value"));
             });
         })();
 

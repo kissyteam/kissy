@@ -21,12 +21,12 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     }, {
         ATTRS:{
             /**
-             * @inherited
+             * @inheritedDoc
              * disabled:{}
              */
 
             /**
-             * @inherited
+             * @inheritedDoc
              * prefixCls:{}
              */
 

@@ -32,7 +32,7 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
             }
         }
         /**
-         * @inherited
+         * @inheritedDoc
          * content:{}
          */
     );

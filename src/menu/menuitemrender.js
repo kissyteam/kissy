@@ -7,6 +7,7 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
 
     var HIGHLIGHTED_CLS = "{prefixCls}menuitem-highlight",
         SELECTED_CLS = "{prefixCls}menuitem-selected",
+        CHECKED_CLS = "{prefixCls}menuitem-checked",
         ACTIVE_CLS = "{prefixCls}menuitem-active",
         CONTENT_CLS = "{prefixCls}menuitem-content",
         EL_CLS = "{prefixCls}menuitem",
@@ -36,14 +37,12 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         },
 
         _uiSetDisabled:function(v) {
-
-            var el = this.get("el");
+            var el = this.get("el").attr("aria-disabled", !!v);
             if (v) {
                 el.addClass(getCls(this, DISABLED_CLS));
             } else {
                 el.removeClass(getCls(this, DISABLED_CLS));
             }
-            el.attr("aria-disabled", !!v);
         },
 
         _uiSetHighlighted:function(v) {
@@ -52,6 +51,24 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
             } else {
                 this.get("el").removeClass(getCls(this, HIGHLIGHTED_CLS));
             }
+        },
+
+        _uiSetSelected:function(v) {
+            var el = this.get("el");
+            el[v ? "addClass" : "removeClass"](getCls(this, SELECTED_CLS));
+        },
+
+        _uiSetChecked:function(v) {
+            var el = this.get("el");
+            el[v ? "addClass" : "removeClass"](getCls(this, CHECKED_CLS));
+        },
+
+        _uiSetSelectable:function(v) {
+            this.get("el").attr("role", v ? 'menuitemradio' : 'menuitem');
+        },
+
+        _uiSetCheckable:function(v) {
+            this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
         },
 
         _handleMouseDown:function() {

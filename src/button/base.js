@@ -14,7 +14,7 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
     }, {
         ATTRS:{
             /**
-             * @inherited
+             * @inheritedDoc
              * disabled:{}
              */
             value:{},

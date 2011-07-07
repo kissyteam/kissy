@@ -110,6 +110,11 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
+            getChildAt:function(index) {
+                var children = this.get("children");
+                return children[index];
+            },
+
             _uiSetHandleMouseEvents:function(v) {
                 var self = this,
                     view = self.get("view"),
@@ -130,7 +135,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             },
 
             isMouseEventWithinElement_:function(e, elem) {
-                return !!e.relatedTarget && elem.contains(e.relatedTarget);
+                var relatedTarget = e.relatedTarget;
+                relatedTarget = relatedTarget && S.one(relatedTarget)[0];
+                if (!relatedTarget) {
+                    return false;
+                }
+                // 在里面或等于自身都不算 mouseenter/leave
+                if (relatedTarget === elem[0] || elem.contains(relatedTarget)) {
+                    return true;
+                }
             },
 
             _handleMouseOver:function(e) {

@@ -23,7 +23,18 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             if (MenuItem.superclass._handleClick.call(this) === false) {
                 return false;
             }
-            this.get("parent").set("selectedItem", this);
+            // 可选
+            if (this.get("selectable")) {
+                this.set("selected", true);
+            }
+            // 可选中，取消选中
+            if (this.get("checkable")) {
+                this.set("checked", !this.get("checked"));
+            }
+            this.get("parent").fire("click", {
+                // 使用熟悉的 target，而不是自造新词！
+                target:this
+            });
         }
 
     }, {
@@ -46,6 +57,15 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 value:false
             },
 
+            selectable:{
+                value:false,
+                view:true
+            },
+
+            checkable:{
+                value:false,
+                view:true
+            },
 
             // option.text
             content:{
@@ -54,11 +74,16 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                     return this.get("view") && this.get("view").get("content");
                 }
             },
+
             // option.value
             value:{},
             highlighted:{
                 view:true,
                 value:false
+            },
+            checked:{
+                value:false,
+                view:true
             },
             selected:{
                 view:true,

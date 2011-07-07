@@ -2,163 +2,127 @@
  * combination of menu and button ,similar to native select
  * @author:yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
+KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender) {
 
-        var MenuButton = UIBase.create(Button, {
+    var MenuButton = UIBase.create(Button, {
 
-            hideMenu:function() {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el"),
-                    menu = this.get("menu");
-                menu.hide();
-                self.get("view").set("collapsed", true);
-            },
+        hideMenu:function() {
+            var self = this,
+                view = self.get("view"),
+                el = view.get("el"),
+                menu = this.get("menu");
+            menu.hide();
+            self.get("view").set("collapsed", true);
+        },
 
-            showMenu:function() {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el"),
-                    menu = self.get("menu");
-                if (!menu.get("visible")) {
-                    menu.set("align", {
-                        node:el,
-                        points:["bl","tl"]
-                    });
-                    menu.show();
-                    el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
-                    view.set("collapsed", false);
-                }
-            },
-
-            bindUI:function() {
-                var self = this,
-                    menu = this.get("menu");
-
-                menu.on("afterActiveItemChange", function(ev) {
-                    S.log("active : " + ( ev.newVal && ev.newVal.get("content") || ""));
-                    self.set("activeItem", ev.newVal);
+        showMenu:function() {
+            var self = this,
+                view = self.get("view"),
+                el = view.get("el"),
+                menu = self.get("menu");
+            if (!menu.get("visible")) {
+                menu.set("align", {
+                    node:el,
+                    points:["bl","tl"]
                 });
+                menu.show();
+                el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
+                view.set("collapsed", false);
+            }
+        },
 
-                menu.on("afterSelectedItemChange", function(ev) {
-                    self.set("selectedItem", ev.newVal);
+        bindUI:function() {
+            var self = this,
+                menu = this.get("menu");
+
+            menu.on("afterActiveItemChange", function(ev) {
+                //S.log("active : " + ( ev.newVal && ev.newVal.get("content") || ""));
+                self.set("activeItem", ev.newVal);
+            });
+
+            menu.on("click", function(e) {
+                self.fire("click", {
+                    target:e.target
                 });
-            },
+            });
+        },
 
-            /**
-             * @inheritDoc
-             */
-            _handleKeydown:function(e) {
+        /**
+         * @inheritDoc
+         */
+        _handleKeydown:function(e) {
 
-                var menu = this.get("menu");
-                //转发给 menu 处理
-                if (menu && menu.get("visible")) {
-                    if (menu._handleKeydown(e) === false) {
-                        return false;
-                    }
+            var menu = this.get("menu");
+            //转发给 menu 处理
+            if (menu && menu.get("visible")) {
+                if (menu._handleKeydown(e) === false) {
+                    return false;
                 }
-                if (e.keyCode == 27) {
-                    e.preventDefault();
-                    this.hideMenu();
-                } else if (e.keyCode == 38 || e.keyCode == 40) {
-                    if (!menu.get("visible")) {
-                        e.preventDefault();
-                        this.showMenu();
-                        //e.keyCode = 40;
-                        menu._handleKeydown(e);
-                    }
-                }
-            },
-
-            /**
-             * @inheritDoc
-             */
-            _handleBlur:function() {
-                var re = MenuButton.superclass._handleBlur.call(this);
-                if (re === false) return re;
+            }
+            if (e.keyCode == 27) {
+                e.preventDefault();
                 this.hideMenu();
-            },
-
-            /**
-             * @inheritDoc
-             */
-            _handleClick:function(e) {
-                var re = Button.superclass._handleClick.call(this);
-                if (re === false) {
-                    return re;
+            } else if (e.keyCode == 38 || e.keyCode == 40) {
+                if (!menu.get("visible")) {
+                    e.preventDefault();
+                    this.showMenu();
                 }
-                var menu = this.get("menu");
-                //转发给 menu 处理
-                if (menu && menu.get("visible")) {
-                    menu._handleClick(e);
+            }
+        },
+
+        /**
+         * @inheritDoc
+         */
+        _handleBlur:function() {
+            var re = MenuButton.superclass._handleBlur.call(this);
+            if (re === false) return re;
+            this.hideMenu();
+        },
+
+        /**
+         * @inheritDoc
+         */
+        _handleClick:function(e) {
+            var re = Button.superclass._handleClick.call(this);
+            if (re === false) {
+                return re;
+            }
+            var menu = this.get("menu");
+
+            // 鼠标点击只是简单隐藏，显示切换
+            if (e.type == 'click') {
+                if (menu.get("visible")) {
+                    this.hideMenu();
                 } else {
                     this.showMenu();
                 }
-                this.fire("select");
-            }
-
-        }, {
-            ATTRS:{
-                activeItem:{
-                    view:true
-                },
-                selectedItem:{},
-                menu:{}
-            }
-        });
-
-        MenuButton.decorateSelect = function(select, cfg) {
-            cfg = cfg || {};
-            select = S.one(select);
-
-            var optionMenu = new Menu({
-                prefixCls:cfg.prefixCls
-            }),
-                curCurContent,
-                curValue = select.val(),
-                options = select.all("option");
-
-            options.each(function(option) {
-                if (curValue == option.val()) {
-                    curCurContent = option.text();
+            } else if (e.type == 'keydown') {
+                // enter 转发给 menu 处理
+                if (e.keyCode == 13) {
+                    if (menu.get("visible")) {
+                        menu._handleClick(e);
+                    }
+                } else if (e.keyCode == 32) {
+                    // space 只负责打开
+                    this.showMenu();
                 }
+            }
+        }
 
-                optionMenu.addChild(new Menu.Item({
-                    content:option.text(),
-                    prefixCls:cfg.prefixCls,
-                    value:option.val()
-                }));
-            });
+    }, {
+        ATTRS:{
+            activeItem:{
+                view:true
+            },
+            // 不关心选中元素 , 由 select 负责
+            // selectedItem
+            menu:{}
+        }
+    });
 
-            var menuButton = new MenuButton({
-                content:curCurContent,
-                describedby:"describe",
-                menu:optionMenu,
-                prefixCls:cfg.prefixCls,
-                autoRender:true
-            });
+    MenuButton.DefaultRender = MenuButtonRender;
 
-            menuButton.get("el").insertBefore(select);
-
-            var input = new Node("<input type='hidden' name='" + select.getDOMNode().name
-                + "' value='" + curValue + "'>").insertBefore(select);
-
-            optionMenu.on("afterSelectedItemChange", function(e) {
-                input.val(e.newVal.get("value"));
-                menuButton.set("content", e.newVal.get("content"));
-                optionMenu.hide();
-            });
-
-            select.remove();
-            return menuButton;
-        };
-
-        MenuButton.DefaultRender = MenuButtonRender;
-
-        return MenuButton;
-    },
-    {
-        requires:["uibase","node","button","./menubuttonrender","menu"]
-    }
-)
-    ;
+    return MenuButton;
+}, {
+    requires:["uibase","node","button","./menubuttonrender"]
+});

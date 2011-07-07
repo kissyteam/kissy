@@ -17,12 +17,12 @@ KISSY.add(
                     return false;
                 }
 
-                var menu = this.get("menu");
+                var menu = this.get("menu"),relatedTarget = S.one(ev.relatedTarget)[0];
                 //到了子菜单中，高亮不要消失
                 if (menu && menu.get("visible")
                     &&
-                    (menu.get("view").get("el").contains(ev.relatedTarget)
-                        || menu.get("view").get("el")[0] == ev.relatedTarget[0]
+                    (menu.get("view").get("el").contains(relatedTarget)
+                        || menu.get("view").get("el")[0] == relatedTarget
                         )
                     ) {
                 } else {
@@ -59,8 +59,10 @@ KISSY.add(
                     // 子菜单选中后也要通知父级菜单
                     // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
                     // 单个 menu 来看可能 selectedItem没有变化
-                    menu.on("selectedItemChange", function(ev) {
-                        parentMenu.set("selectedItem", ev.newVal);
+                    menu.on("click", function(ev) {
+                        parentMenu.fire("click", {
+                            target:ev.target
+                        });
                     });
 
                     // 通知父级菜单

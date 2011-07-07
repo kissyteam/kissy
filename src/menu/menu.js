@@ -20,14 +20,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             this.set("activeItem", v);
         },
 
-        _uiSetSelectedItem:function(v, ev) {
-            var prev;
-            if (ev && (prev = ev.prevVal)) {
-                prev.set("selected", false);
-            }
-            v && v.set("selected", true);
-        },
-
         _handleBlur:function() {
             if (Menu.superclass._handleBlur.call(this) === false) {
                 return false;
@@ -140,12 +132,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              * 当前高亮的儿子菜单项
              */
             highlightedItem:{},
-
-            /**
-             * 当前选择的菜单项
-             */
-            selectedItem:{},
-
             /**
              * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
              */
