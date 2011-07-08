@@ -61,6 +61,8 @@ KISSY.add("component/container", function(S, UIBase, MC) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/modelcontrol", function(S, UIBase) {
+    var doc = S.one(document);
+
     function wrapperViewSetter(attrName) {
         return function(value) {
             this.get("view").set(attrName, value);
@@ -106,6 +108,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
             renderUI:function() {
                 var self = this;
+                self.get("view").render();
+                //then render my children
+                var children = self.get("children");
+                S.each(children, function(child) {
+                    child.render();
+                });
+            },
+
+            createDom:function() {
+                var self = this;
                 /**
                  * 将 view 的属性转发过去
                  * 用户一般实际上只需在一个地点设置
@@ -119,27 +131,19 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                         }
                     }
                 }
-
-
                 var view = self.get("view") || getDefaultView.call(self);
                 if (!view) {
                     S.error("no view for");
                     S.error(self.constructor);
                     return;
                 }
+                view.create();
                 self.set("view", view);
-                //first render myself to my parent
-                if (self.get("parent")) {
-                    var pv = self.get("parent").get("view");
-                    view.set("render", pv.get("contentEl") || pv.get("el"));
-                }
-                view.render();
+            },
 
-                //then render my children
-                var children = self.get("children");
-                S.each(children, function(child) {
-                    child.render();
-                });
+            getContentElement:function() {
+                var view = this.get('view');
+                return view.get("contentEl") || view.get("el");
             },
 
             /**
@@ -148,13 +152,27 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param {int=} index  position to be inserted
              */
             addChild:function(c, index) {
-                var children = this.get("children");
+                var self = this,
+                    children = self.get("children"),
+                    elBefore = children[index];
                 if (index) {
                     children.splice(index, 0, c);
                 } else {
                     children.push(c);
                 }
-                c.set("parent", this);
+                self._initChild(c, elBefore);
+            },
+
+            _initChild:function(c, elBefore) {
+                var self = this;
+                self.create();
+                var contentEl = self.getContentElement();
+                c.set("parent", self);
+                c.set("render", contentEl);
+                c.set("elBefore", elBefore);
+                // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
+                c.create();
+                contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0]);
             },
 
             removeChild:function(c, destroy) {
@@ -204,25 +222,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
-            _handleMouseOver:function(e) {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (!self.isMouseEventWithinElement_(e, el)) {
-                    self._handleMouseEnter(e);
-                }
-            },
-
-
-            _handleMouseOut:function(e) {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (!self.isMouseEventWithinElement_(e, el)) {
-                    self._handleMouseLeave(e);
-                }
-            },
-
             _uiSetSupportFocused:function(v) {
                 var self = this,
                     view = self.get("view"),
@@ -230,10 +229,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (v) {
                     el.on("focus", self._handleFocus, self);
                     el.on("blur", self._handleBlur, self);
+                    // ie 触发不了 el 的 blur，双保险
+                    //doc.on("click", self._handleBlur, self);
                     el.on("keydown", self.__handleKeydown, self);
                 } else {
                     el.detach("focus", self._handleFocus, self);
                     el.detach("blur", self._handleBlur, self);
+                    //doc.detach("blur", self._handleBlur, self);
                     el.detach("keydown", self.__handleKeydown, self);
                 }
             },
@@ -245,6 +247,30 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 view[method] && view[method](ev);
             },
 
+            _handleMouseOver:function(e) {
+                if (this.get("disabled")) {
+                    return true;
+                }
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseEnter(e);
+                }
+            },
+
+
+            _handleMouseOut:function(e) {
+                if (this.get("disabled")) {
+                    return true;
+                }
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseLeave(e);
+                }
+            },
 
             /**
              * root element handler for mouse enter
@@ -252,7 +278,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleMouseEnter:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 this._forwordToView('_handleMouseEnter', ev);
             },
@@ -262,7 +288,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleMouseLeave:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 this._forwordToView('_handleMouseLeave', ev);
             },
@@ -272,7 +298,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleMouseDown:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 this._forwordToView('_handleMouseDown', ev);
             },
@@ -282,7 +308,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleMouseUp:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 this._forwordToView('_handleMouseUp', ev);
             },
@@ -292,7 +318,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleFocus:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 this._forwordToView('_handleFocus', ev);
             },
@@ -302,7 +328,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleBlur:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 this._forwordToView('_handleBlur', ev);
             },
@@ -315,9 +341,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param ev
              */
             __handleKeydown:function(ev) {
-
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 var self = this,
                     view = self.get("view");
@@ -335,7 +360,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleClick:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
                 this._forwordToView("_handleClick", ev);
             },
@@ -346,11 +371,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             },
 
             destructor:function() {
-                var children = this.get("children");
+                var self = this;
+//                if (self.get("supportFocused")) {
+//                    doc.detach("blur", self._handleBlur, self);
+//                }
+                var children = self.get("children");
                 S.each(children, function(child) {
                     child.destroy();
                 });
-                var view = this.get("view");
+                var view = self.get("view");
                 if (view) {
                     view.destroy();
                 }
@@ -376,7 +405,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                         var self = this;
                         //自动给儿子组件加入父亲链
                         S.each(v, function(c) {
-                            c.set("parent", self);
+                            self._initChild(c);
                         });
                     }
                 },

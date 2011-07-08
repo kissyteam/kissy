@@ -24,7 +24,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             if (Menu.superclass._handleBlur.call(this, e)) {
                 return true;
             }
-            this.set("highlightedItem", null);
+            this.set("highlightedItem", undefined);
         },
 
 
@@ -40,7 +40,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 }
                 index = (index + dir + len) % len;
             } while (index != o);
-            return null;
+            return undefined;
         },
 
         _handleClick:function(e) {
@@ -60,7 +60,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 e.halt();
                 return true;
             }
-            return false;
+            // return false , 会阻止 tab 键 ....
+            return undefined;
         },
 
         /**
@@ -89,7 +90,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             var children = this.get("children"),len = children.length;
 
             if (len == 0) {
-                return false;
+                return undefined;
             }
 
             var index,destIndex;
@@ -100,7 +101,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 case 27:
                     // TODO
                     // focus 的话手动失去焦点
-                    return false;
+                    return undefined;
                     break;
 
                 // home
@@ -136,7 +137,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                         this._getNextEnabledHighlighted(destIndex, 1));
                     break;
                 default:
-                    return false;
+                    return undefined;
             }
             return true;
         },
@@ -147,7 +148,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              * 隐藏后，去掉高亮与当前
              */
             self.on("hide", function() {
-                self.set("highlightedItem", null);
+                self.set("highlightedItem", undefined);
             });
         }
     }, {

@@ -25,7 +25,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
             prefixCls:{
                 value:"ks-"
             },
-            elOrder:0
+            elBefore:{
+                valueFn:function() {
+                    return S.one(this.get("render")[0].firstChild);
+                }
+            }
         }
     });
 }, {

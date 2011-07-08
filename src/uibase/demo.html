@@ -3,21 +3,28 @@
 <head>
 <meta charset="utf-8"/>
 <title>UIBase Test</title>
-<style>
-    .settings, .ks-test-form button {
-        display: none
-    }
-    #log { height: 500px !important }
-</style>
+<script src="../../build/kissy.js"></script>
+<script src="../../build/uibase.js"></script>
+<script src="../component/modelcontrol.js"></script>
+<script src="../component/render.js"></script>
+<script src="../component/container.js"></script>
+<script src="../component.js"></script>
 </head>
 <body>
-<script src="../../src/test/test.js"></script>
-<script> KISSY.Test.Config.times = 1; </script>
-
 <script>
-
-    // TODO
-
+    KISSY.use("uibase,component", function(S, UIBase, Component) {
+        var c = UIBase.create(Component.ModelControl, {
+            renderUI:function() {
+                this.get("el").attr("id",this.get("id"));
+            }
+        });
+        var v = UIBase.create(Component.Render, {
+        });
+        c.DefaultRender = v;
+        var instance = new c({id:"x"});
+        instance.addChild(new c());
+        instance.render();
+    });
 </script>
 </body>
 </html>

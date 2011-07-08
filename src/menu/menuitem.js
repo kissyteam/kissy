@@ -7,7 +7,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
         _handleMouseEnter:function(e) {
             // 父亲不允许自己处理
-            if (MenuItem.superclass._handleMouseEnter.call(this,e)) {
+            if (MenuItem.superclass._handleMouseEnter.call(this, e)) {
                 return true;
             }
             this.get("parent").set("highlightedItem", this);
@@ -15,15 +15,15 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
         _handleMouseLeave:function(e) {
             // 父亲不允许自己处理
-            if (MenuItem.superclass._handleMouseLeave.call(this,e)) {
+            if (MenuItem.superclass._handleMouseLeave.call(this, e)) {
                 return true;
             }
-            this.get("parent").set("highlightedItem", null);
+            this.get("parent").set("highlightedItem", undefined);
         },
 
         _handleClick:function(e) {
             // 父亲不允许自己处理
-            if (MenuItem.superclass._handleClick.call(this,e)) {
+            if (MenuItem.superclass._handleClick.call(this, e)) {
                 return true;
             }
             // 可选
@@ -80,12 +80,10 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             },
 
             selectable:{
-                value:false,
                 view:true
             },
 
             checkable:{
-                value:false,
                 view:true
             },
 
@@ -100,16 +98,14 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             // option.value
             value:{},
             highlighted:{
-                view:true,
-                value:false
+                // 不要值，防止初始就调用
+                view:true
             },
             checked:{
-                value:false,
                 view:true
             },
             selected:{
-                view:true,
-                value:false
+                view:true
             }
         }
     });

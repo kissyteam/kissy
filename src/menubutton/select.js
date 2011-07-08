@@ -104,14 +104,12 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
             optionMenu.addChild(item);
         });
 
-        var select = new Select({
+        var select = new Select(S.mix({
             selectedItem:selectedItem,
-            menu:optionMenu,
-            defaultCaption:cfg.defaultCaption,
-            prefixCls:cfg.prefixCls,
-            autoRender:true
-        });
+            menu:optionMenu
+        }, cfg));
 
+        select.render();
         select.get("el").insertBefore(element);
 
         var name;

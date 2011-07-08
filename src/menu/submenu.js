@@ -45,7 +45,13 @@ KISSY.add(
                         });
                     }
                     // 访问子菜单，当前 submenu 不隐藏 menu
-                    menu.on("afterHighlightedItemChange", self.onChildHighlight_, self);
+                    // leave submenuitem -> enter menuitem -> menu item highlight ->
+                    // -> menu highlight -> onChildHighlight_ ->
+
+                    // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
+                    // 这里的 onChildHighlight_ 比 afterHighlightedItemChange 先执行
+                    // 保险点用 beforeHighlightedItemChange
+                    menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
                 },
 
                 /**
@@ -81,11 +87,11 @@ KISSY.add(
                  */
                 clearTimers : function() {
                     if (this.dismissTimer_) {
-                        clearTimeout(this.dismissTimer_);
+                        this.dismissTimer_.cancel();
                         this.dismissTimer_ = null;
                     }
                     if (this.showTimer_) {
-                        clearTimeout(this.showTimer_);
+                        this.showTimer_.cancel();
                         this.showTimer_ = null;
                     }
                 },
@@ -101,6 +107,9 @@ KISSY.add(
                     if (e.newVal) {
                         if (this.get("menu").get("parent") == this) {
                             this.clearTimers();
+                            // superclass(menuitem)._handleMouseLeave 已经把自己 highlight 去掉了
+                            // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
+                            this.get("parent").set("highlightedItem", this);
                         }
                     }
                 },
@@ -145,7 +154,7 @@ KISSY.add(
                                 menu.set("highlightedItem", menuChildren[0]);
                             }
                         } else {
-                            return false;
+                            return undefined;
                         }
                     } else if (menu._handleKeydown(e)) {
                     }
@@ -157,7 +166,7 @@ KISSY.add(
                         // 隐藏后，当前激活项重回
                         this.get("parent").set("activeItem", this);
                     } else {
-                        return false;
+                        return undefined;
                     }
                     return true;
                 },
@@ -171,7 +180,7 @@ KISSY.add(
                     SubMenu.superclass._uiSetHighlighted.call(this, highlight, ev);
                     if (!highlight) {
                         if (this.dismissTimer_) {
-                            clearTimeout(this.dismissTimer_);
+                            this.dismissTimer_.cancel();
                         }
                         this.dismissTimer_ = S.later(this.hideMenu,
                             this.get("menuDelay"),

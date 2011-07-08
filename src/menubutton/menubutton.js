@@ -65,7 +65,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 this.showMenu();
                 return true;
             }
-            return false;
+            return undefined;
         },
 
         /**

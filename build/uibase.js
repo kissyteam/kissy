@@ -298,23 +298,38 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
     UIBase.ATTRS = {
         // 渲染该组件的目的容器
         render:{
+            view:true,
             valueFn:function() {
-                return document.body;
+                return Node.one(document.body);
             },
             setter:function(v) {
                 if (S.isString(v))
                     return Node.one(v);
             }
-        },
-        // 是否已经渲染过
-        rendered:{value:false}
+        }
     };
 
     S.extend(UIBase, Base, {
 
+        /**
+         * 建立节点，先不放在 dom 树中，为了性能!
+         */
+        create:function() {
+            var self = this;
+            // 是否生成过节点
+            if (!self.__domCreated) {
+                self.fire('createDom');
+                callMethodByHierarchy(self, "createDom", "__createDom");
+                self.fire('afterCreateDom');
+                self.__domCreated = true;
+            }
+        },
+
         render: function() {
             var self = this;
-            if (!self.get("rendered")) {
+            // 是否已经渲染过
+            if (!self.__rendered) {
+                self.create();
                 self._renderUI();
                 // 实际上是 beforeRenderUI
                 self.fire('renderUI');
@@ -330,7 +345,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 self.fire('syncUI');
                 callMethodByHierarchy(self, "syncUI", "__syncUI");
                 self.fire('afterSyncUI');
-                self.set("rendered", true);
+                self.__rendered = true;
             }
         },
 
@@ -459,7 +474,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
  * UIBase.Box
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase/box', function(S) {
+KISSY.add('uibase/box', function() {
 
 
     function Box() {
@@ -485,10 +500,12 @@ KISSY.add('uibase/box', function(S) {
             //其他属性
             view:true
         },
-        elOrder:{},
+        elBefore:{
+            view:true
+        },
         el:{
             getter:function() {
-                return this.get("view")&&this.get("view").get("el");
+                return this.get("view") && this.get("view").get("el");
             }
         }
     };
@@ -506,11 +523,6 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     function Box() {
     }
-
-    S.mix(Box, {
-            APPEND:1,
-            INSERT:0
-        });
 
     Box.ATTRS = {
         el: {
@@ -539,11 +551,9 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         elAttrs:{
             //其他属性
         },
-        elOrder:{
-            //插入容器位置
-            //0 : prepend
-            //1 : append
-            value:1
+        elBefore:{
+            //插入到该元素前
+            value:null
         },
         html: {}
     };
@@ -591,26 +601,34 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     Box.prototype = {
 
+
         __renderUI:function() {
+            var self = this;
+            // 新建的节点才需要摆放定位
+            if (self.__boxRenderNew) {
+                var render = self.get("render"),
+                    el = self.get("el");
+                var elBefore = self.get("elBefore");
+                elBefore = elBefore && elBefore[0];
+                render[0].insertBefore(el[0], elBefore);
+            }
+        },
+
+        __createDom:function() {
             var self = this,
-                render = self.get("render"),
                 el = self.get("el");
-            render = new Node(render);
             if (!el) {
+                self.__boxRenderNew = true;
                 el = new Node(constructEl(self.get("elCls"),
                     self.get("elStyle"),
                     self.get("width"),
                     self.get("height"),
                     self.get("elTagName"),
                     self.get("elAttrs")));
-                if (self.get("elOrder")) {
-                    render.append(el);
-                } else {
-                    render.prepend(el);
-                }
                 self.set("el", el);
             }
         },
+
         _uiSetElAttrs:function(attrs) {
             this.get("el").attr(attrs);
         },
@@ -648,8 +666,8 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     return Box;
 }, {
-        requires:['node']
-    });
+    requires:['node']
+});
 /**
  * close extension for kissy dialog
  * @author: 承玉<yiminghe@gmail.com>

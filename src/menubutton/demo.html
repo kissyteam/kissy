@@ -10,6 +10,7 @@
 <link href="../menu/tests/menu.css" rel="stylesheet"/>
 <link href="../menu/tests/menuitem.css" rel="stylesheet"/>
 <link href="../menu/tests/submenu.css" rel="stylesheet"/>
+<link href="../menu/tests/c2c-ui.css" rel="stylesheet"/>
 <style>
     .ks-menu {
         background: white;
@@ -97,7 +98,6 @@
 <div id="parentSelect">
     <select name="decorateSelect" id="decorateSelect">
     </select>
-
 </div>
 
 <script src="../../build/kissy.js"></script>
@@ -255,8 +255,10 @@
             (function() {
 
                 var select = MenuButton.Select.decorate('#decorateSelect', {
-                    prefixCls:"goog-",
+                    prefixCls:"c2c-",
+                    width:82,
                     menuCfg:{
+                        width:82,
                         height:150,
                         elStyle:{
                             overflow:"auto",

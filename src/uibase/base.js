@@ -163,23 +163,38 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
     UIBase.ATTRS = {
         // 渲染该组件的目的容器
         render:{
+            view:true,
             valueFn:function() {
-                return document.body;
+                return Node.one(document.body);
             },
             setter:function(v) {
                 if (S.isString(v))
                     return Node.one(v);
             }
-        },
-        // 是否已经渲染过
-        rendered:{value:false}
+        }
     };
 
     S.extend(UIBase, Base, {
 
+        /**
+         * 建立节点，先不放在 dom 树中，为了性能!
+         */
+        create:function() {
+            var self = this;
+            // 是否生成过节点
+            if (!self.__domCreated) {
+                self.fire('createDom');
+                callMethodByHierarchy(self, "createDom", "__createDom");
+                self.fire('afterCreateDom');
+                self.__domCreated = true;
+            }
+        },
+
         render: function() {
             var self = this;
-            if (!self.get("rendered")) {
+            // 是否已经渲染过
+            if (!self.__rendered) {
+                self.create();
                 self._renderUI();
                 // 实际上是 beforeRenderUI
                 self.fire('renderUI');
@@ -195,7 +210,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 self.fire('syncUI');
                 callMethodByHierarchy(self, "syncUI", "__syncUI");
                 self.fire('afterSyncUI');
-                self.set("rendered", true);
+                self.__rendered = true;
             }
         },
 

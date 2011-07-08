@@ -2,7 +2,7 @@
  * UIBase.Box
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase/box', function(S) {
+KISSY.add('uibase/box', function() {
 
 
     function Box() {
@@ -28,10 +28,12 @@ KISSY.add('uibase/box', function(S) {
             //其他属性
             view:true
         },
-        elOrder:{},
+        elBefore:{
+            view:true
+        },
         el:{
             getter:function() {
-                return this.get("view")&&this.get("view").get("el");
+                return this.get("view") && this.get("view").get("el");
             }
         }
     };
