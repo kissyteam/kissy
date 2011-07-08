@@ -610,7 +610,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
                     el = self.get("el");
                 var elBefore = self.get("elBefore");
                 elBefore = elBefore && elBefore[0];
-                render[0].insertBefore(el[0], elBefore);
+                render[0].insertBefore(el[0], elBefore || null);
             }
         },
 

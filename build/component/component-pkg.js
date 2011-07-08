@@ -61,7 +61,6 @@ KISSY.add("component/container", function(S, UIBase, MC) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/modelcontrol", function(S, UIBase) {
-    var doc = S.one(document);
 
     function wrapperViewSetter(attrName) {
         return function(value) {
@@ -172,7 +171,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 c.set("elBefore", elBefore);
                 // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
                 c.create();
-                contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0]);
+                contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0]||null);
             },
 
             removeChild:function(c, destroy) {
@@ -229,13 +228,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (v) {
                     el.on("focus", self._handleFocus, self);
                     el.on("blur", self._handleBlur, self);
-                    // ie 触发不了 el 的 blur，双保险
-                    //doc.on("click", self._handleBlur, self);
                     el.on("keydown", self.__handleKeydown, self);
                 } else {
                     el.detach("focus", self._handleFocus, self);
                     el.detach("blur", self._handleBlur, self);
-                    //doc.detach("blur", self._handleBlur, self);
                     el.detach("keydown", self.__handleKeydown, self);
                 }
             },
@@ -372,9 +368,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
             destructor:function() {
                 var self = this;
-//                if (self.get("supportFocused")) {
-//                    doc.detach("blur", self._handleBlur, self);
-//                }
                 var children = self.get("children");
                 S.each(children, function(child) {
                     child.destroy();
