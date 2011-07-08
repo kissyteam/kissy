@@ -935,8 +935,11 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
     ContentBox.prototype = {
 
+        // no need ,shift create work to __createDom
         __renderUI:function() {
+        },
 
+        __createDom:function() {
             var self = this,
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
