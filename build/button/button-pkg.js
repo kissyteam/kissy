@@ -11,8 +11,9 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
     var Button = UIBase.create(Component.ModelControl, {
         _handleClick:function(ev) {
-            var self = this,ret = Button.superclass._handleClick.call(self, ev);
-            if (ret !== false) {
+            var self = this;
+            // 如果父亲允许自己处理
+            if (!Button.superclass._handleClick.call(self, ev)) {
                 self.fire("click");
             }
         }
@@ -121,8 +122,10 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            el.addClass(getCls(self, CLS)).unselectable();
+            el.addClass(getCls(self, CLS));
         },
+
+
 
         /**
          * @override
@@ -208,14 +211,21 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     //双层 div 模拟圆角
     var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div id='{{id}}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
     return UIBase.create(Css3Render, {
 
             __css_tag:"custom",
 
             renderUI:function() {
-                var self = this,id = S.guid('ks-button-labelby');
+            },
+
+            /**
+             *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
+             */
+            createDom:function() {
+                var self = this,
+                    id = S.guid('ks-button-labelby');
                 //按钮的描述节点在最内层，其余都是装饰
                 self.get("el")
                     .html(S.substitute(CUSTOM_RENDER_HTML, {

@@ -57,6 +57,10 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                     p[0].scrollTop += y - py;
                 }
             }
+        },
+
+        containsElement:function(element){
+            return this.get('view').containsElement(element);
         }
 
     }, {

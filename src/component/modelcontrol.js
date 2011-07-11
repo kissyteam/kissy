@@ -47,6 +47,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
     return UIBase.create([UIBase.Box], {
 
+            /**
+             * control 层的渲染 ui 就是 render view
+             */
             renderUI:function() {
                 var self = this;
                 self.get("view").render();
@@ -79,6 +82,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return;
                 }
                 view.create();
+                if (!self.get("allowTextSelection_")) {
+                    view.get("el").unselectable();
+                }
                 self.set("view", view);
             },
 
@@ -92,7 +98,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param c  children to be added
              * @param {int=} index  position to be inserted
              */
-            addChild:function(c, index) {
+            addChild:function(c, index, render) {
                 var self = this,
                     children = self.get("children"),
                     elBefore = children[index];
@@ -101,19 +107,34 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 } else {
                     children.push(c);
                 }
-                self._initChild(c, elBefore);
+                self._initChild(c, elBefore, render);
             },
 
-            _initChild:function(c, elBefore) {
+            _initChild:function(c, elBefore, render) {
                 var self = this;
+                // If this (parent) component doesn't have a DOM yet, call createDom now
+                // to make sure we render the child component's element into the correct
+                // parent element (otherwise render_ with a null first argument would
+                // render the child into the document body, which is almost certainly not
+                // what we want).
                 self.create();
                 var contentEl = self.getContentElement();
                 c.set("parent", self);
                 c.set("render", contentEl);
                 c.set("elBefore", elBefore);
-                // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-                c.create();
-                contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0]||null);
+                // 如果需要立即渲染，就 创建 dom ，绑定事件
+                // 要求 parent  也渲染完毕才好
+                if (render) {
+                    c.render();
+                }
+                // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
+                // 子组件和 parent 组件一起渲染
+                else {
+                    // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
+                    c.create();
+                    contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0] || null);
+
+                }
             },
 
             removeChild:function(c, destroy) {
@@ -239,6 +260,17 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return true;
                 }
                 this._forwordToView('_handleMouseDown', ev);
+                var el = this.get("el");
+                // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
+                if (ev.which == 1 && el.attr("tabindex") >= 0) {
+                    this.getKeyEventTarget()[0].focus();
+                }
+            },
+            /**
+             * 焦点所在元素即键盘事件处理元素
+             */
+            getKeyEventTarget:function() {
+                return this.get("view").getKeyEventTarget();
             },
             /**
              * root element handler for mouse up
@@ -362,7 +394,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     view:true
                 },
 
-                //父组件
+                // 父组件
+                // Parent component to which events will be propagated. 
                 parent:{
                 },
 
@@ -374,6 +407,11 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 disabled:{
                     value:false,
                     view:true
+                },
+
+                // 是否允许 DOM 结构内的文字选定
+                allowTextSelection_:{
+                    value:false
                 }
             }
         });

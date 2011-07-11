@@ -318,6 +318,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
             var self = this;
             // 是否生成过节点
             if (!self.__domCreated) {
+                self._createDom();
                 self.fire('createDom');
                 callMethodByHierarchy(self, "createDom", "__createDom");
                 self.fire('afterCreateDom');
@@ -350,7 +351,12 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         },
 
         /**
-         * 根据属性添加 DOM 节点
+         * 创建 dom 节点，但不放在 document 中
+         */
+        _createDom:noop,
+
+        /**
+         * 节点已经创建完毕，可以放在 document 中了
          */
         _renderUI: noop,
         renderUI: noop,
@@ -471,6 +477,10 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
     requires:["base","dom","node"]
 });
 /**
+ * render 和 create 区别
+ * render 包括 create ，以及把生成的节点放在 document 中
+ * create 仅仅包括创建节点
+ **//**
  * UIBase.Box
  * @author: 承玉<yiminghe@gmail.com>
  */

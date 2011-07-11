@@ -150,6 +150,25 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             self.on("hide", function() {
                 self.set("highlightedItem", undefined);
             });
+        },
+
+
+        containsElement:function(element) {
+            if (this.get("view").containsElement(element)) {
+                return true;
+            }
+
+            var children = this.get('children');
+
+            for (var i = 0, count = children.length; i < count; i++) {
+                var child = children[i];
+                if (typeof child.containsElement == 'function' &&
+                    child.containsElement(element)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }, {
         ATTRS:{

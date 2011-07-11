@@ -12,7 +12,14 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
             __css_tag:"custom",
 
             renderUI:function() {
-                var self = this,id = S.guid('ks-button-labelby');
+            },
+
+            /**
+             *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
+             */
+            createDom:function() {
+                var self = this,
+                    id = S.guid('ks-button-labelby');
                 //按钮的描述节点在最内层，其余都是装饰
                 self.get("el")
                     .html(S.substitute(CUSTOM_RENDER_HTML, {

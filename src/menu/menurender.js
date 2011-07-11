@@ -18,8 +18,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
                 prefixCls:this.get("prefixCls")
             }))
                 .attr("role", "menu")
-                .attr("aria-haspopup", true)
-                .unselectable();
+                .attr("aria-haspopup", true);
             if (!UA.ie) {
                 el.attr('onmousedown', 'return false;');
             }
@@ -41,6 +40,11 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
                 //S.log("menurender :" + el.attr("id") + " _uiSetActiveItem : " + "");
             }
 
+        },
+
+        containsElement:function(element) {
+            var el = this.get("el");
+            return el[0] === element || el.contains(element);
         }
     }, {
         ATTRS:{

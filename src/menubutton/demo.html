@@ -77,6 +77,7 @@
     </ol>
 </div>
 
+<h1>普通菜单</h1>
 <div id="button_container" role='application'>
 
 </div>
@@ -86,10 +87,9 @@
 </div>
 <label>禁用：<input type="checkbox" id='dis'/></label>
 
-<h2>从已知元素生成</h2>
+<h2>checked menu</h2>
 
-<div role='application'>
-    <div id="exist">渐进增强</div>
+<div role='application' id="exist">
 </div>
 
 <h2>
@@ -99,13 +99,6 @@
     <select name="decorateSelect" id="decorateSelect">
     </select>
 </div>
-
-<h1>
-    known issue
-</h1>
-<ol>
-    <li>ie 点击文档不能关闭菜单</li>
-</ol>
 
 <script src="../../build/kissy.js"></script>
 <script src="../../build/uibase.js"></script>
@@ -223,15 +216,27 @@
                     var sb = new Menu({
                         prefixCls:"goog-"
                     });
-                    sb.addChild(new Menu.Item({content:"submenuitem1",prefixCls:"goog-"}));
-                    sb.addChild(new Menu.Item({content:"submenuitem2",prefixCls:"goog-"}));
+                    sb.addChild(new Menu.Item({
+                        content:"submenuitem1",
+                        checkable:true,
+                        prefixCls:"goog-"}));
+                    sb.addChild(new Menu.Item({
+                        content:"submenuitem2",
+                        checkable:true,
+                        prefixCls:"goog-"}));
 
 
                     var sb2 = new Menu({
                         prefixCls:"goog-"
                     });
-                    sb2.addChild(new Menu.Item({content:"submenuitem11",prefixCls:"goog-"}));
-                    sb2.addChild(new Menu.Item({content:"submenuitem22",prefixCls:"goog-"}));
+                    sb2.addChild(new Menu.Item({
+                        content:"submenuitem11",
+                        checkable:true,
+                        prefixCls:"goog-"}));
+                    sb2.addChild(new Menu.Item({
+                        content:"submenuitem22",
+                        checkable:true,
+                        prefixCls:"goog-"}));
                     var b2 = new Menu.SubMenu({
                         content:"sub-sub-menu",
                         prefixCls:"goog-",
@@ -247,15 +252,21 @@
 
                     var menu = new Menu({
                         prefixCls:"goog-",
-                        children:[b,new Menu.Item({content:"alone",prefixCls:"goog-"})]
-                    });
-                    var exist = new MenuButton({
-                        srcNode:"#exist",
-                        prefixCls:"goog-",
-                        menu:menu,
-                        autoRender:true
+                        children:[
+                            b,
+                            new Menu.Item({content:"alone",
+                                checkable:true,
+                                prefixCls:"goog-"})
+                        ]
                     });
 
+                    var exist = new MenuButton({
+                        render:"#exist",
+                        content:"多选菜单",
+                        prefixCls:"goog-",
+                        menu:menu
+                    });
+                    exist.render();
                 })();
 
 

@@ -9,6 +9,9 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     return UIBase.create(Button.Render, {
         renderUI:function() {
+        },
+
+        createDom:function() {
             var el = this.get("el");
             el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
                 prefixCls:this.get("prefixCls")

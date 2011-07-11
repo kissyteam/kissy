@@ -1441,7 +1441,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     S.mix(Carousel.Config, {
-            aria:true
+            aria:false
         });
 
     Carousel.Plugins.push({
@@ -2225,7 +2225,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Slide.Config, {
-            aria:true
+            aria:false
         });
 
     var DOM_EVENT = {originalEvent:{target:1}};

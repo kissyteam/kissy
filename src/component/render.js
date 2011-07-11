@@ -4,7 +4,9 @@
  */
 KISSY.add("component/render", function(S, UIBase) {
     return UIBase.create([UIBase.Box.Render], {
-
+        getKeyEventTarget:function() {
+            return this.get("el");
+        }
     }, {
         ATTRS:{
             //从 maskup 中渲染

@@ -188,6 +188,11 @@ KISSY.add(
                     }
                 },
 
+                containsElement:function(element) {
+                    var menu = this.get("menu");
+                    return menu && menu.containsElement(element);
+                },
+
                 destructor : function() {
                     var self = this,
                         parentMenu = self.get("parent"),

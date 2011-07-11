@@ -24,8 +24,10 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            el.addClass(getCls(self, CLS)).unselectable();
+            el.addClass(getCls(self, CLS));
         },
+
+
 
         /**
          * @override

@@ -2,13 +2,14 @@
  * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
+KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
 
     var HIGHLIGHTED_CLS = "{prefixCls}menuitem-highlight",
         SELECTED_CLS = "{prefixCls}menuitem-selected",
         CHECKED_CLS = "{prefixCls}menuitem-checked",
         ACTIVE_CLS = "{prefixCls}menuitem-active",
+        CHECK_CLS = "{prefixCls}menuitem-checkbox",
         CONTENT_CLS = "{prefixCls}menuitem-content",
         EL_CLS = "{prefixCls}menuitem",
         DISABLED_CLS = "{prefixCls}menuitem-disabled";
@@ -19,13 +20,30 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         });
     }
 
+    function setUpCheckEl(self) {
+        var el = self.get("el"),
+            cls = S.substitute(CHECK_CLS, {
+                prefixCls:self.get("prefixCls")
+            }),
+            checkEl = el.one("." + cls);
+        if (!checkEl) {
+            checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
+            // if not ie will lose focus when click
+            checkEl.unselectable();
+        }
+        return checkEl;
+    }
+
     return UIBase.create(Component.Render, {
         renderUI:function() {
-            var self = this,el = self.get("el");
+        },
+
+        createDom:function() {
+            var self = this,
+                el = self.get("el");
             el.addClass(getCls(self, EL_CLS))
                 .html("<div class='" + getCls(self, CONTENT_CLS) + "'>")
-                .attr("role", "menuitem")
-                .unselectable();
+                .attr("role", "menuitem");
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
@@ -61,6 +79,7 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         _uiSetChecked:function(v) {
             var el = this.get("el");
             el[v ? "addClass" : "removeClass"](getCls(this, CHECKED_CLS));
+            v && setUpCheckEl(this);
         },
 
         _uiSetSelectable:function(v) {
@@ -79,12 +98,19 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         _handleMouseUp:function() {
             this.get("el").removeClass(getCls(this, ACTIVE_CLS));
             this.get("el").attr("aria-pressed", false);
+        },
+
+        containsElement:function(element) {
+            var el = this.get("el");
+            return el[0] == element || el.contains(element);
         }
     }, {
         ATTRS:{
             highlighted:{},
             selected:{},
-            content:{}
+            content:{},
+            // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
+            checked:{}
         },
         HTML_PARSER:{
             content:function(el) {
@@ -93,5 +119,5 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         }
     });
 }, {
-    requires:['uibase','component']
+    requires:['node','uibase','component']
 });

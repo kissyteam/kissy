@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender) {
-
+    var doc = new Node(document);
     var MenuButton = UIBase.create(Button, {
 
         hideMenu:function() {
@@ -11,6 +11,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 view = self.get("view"),
                 el = view.get("el"),
                 menu = this.get("menu");
+            doc.detach("mousedown", self.handleDocumentMouseDown, self);
             menu.hide();
             self.get("view").set("collapsed", true);
         },
@@ -21,6 +22,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 el = view.get("el"),
                 menu = self.get("menu");
             if (!menu.get("visible")) {
+                doc.on("mousedown", self.handleDocumentMouseDown, self);
                 menu.set("align", {
                     node:el,
                     points:["bl","tl"]
@@ -28,7 +30,24 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu.show();
                 el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 view.set("collapsed", false);
+
             }
+        },
+
+        handleDocumentMouseDown:function(e) {
+            var self = this,
+                target = S.one(e.target)[0],
+                menu = self.get("menu");
+            // console.log(target.nodeName);
+            if (menu && menu.get("visible") && !this.containsElement(target)) {
+                this.hideMenu();
+            }
+        },
+
+
+        containsElement:function(target) {
+            var el = this.get("el"),menu = this.get("menu");
+            return (el && (el.contains(target) || el[0] === target)) || (menu && menu.containsElement(target));
         },
 
         bindUI:function() {
@@ -36,7 +55,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu = this.get("menu");
 
             menu.on("afterActiveItemChange", function(ev) {
-                //S.log("active : " + ( ev.newVal && ev.newVal.get("content") || ""));
                 self.set("activeItem", ev.newVal);
             });
 
@@ -72,9 +90,8 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
          * @inheritDoc
          */
         _handleBlur:function(e) {
-            var ret = MenuButton.superclass._handleBlur.call(this, e);
-            if (ret === true) {
-                return ret;
+            if (MenuButton.superclass._handleBlur.call(this, e)) {
+                return true;
             }
             this.hideMenu();
         },

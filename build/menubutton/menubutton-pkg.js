@@ -5,10 +5,10 @@ build time: ${build.time}
 */
 /**
  * combination of menu and button ,similar to native select
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender) {
-
+    var doc = new Node(document);
     var MenuButton = UIBase.create(Button, {
 
         hideMenu:function() {
@@ -16,6 +16,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 view = self.get("view"),
                 el = view.get("el"),
                 menu = this.get("menu");
+            doc.detach("mousedown", self.handleDocumentMouseDown, self);
             menu.hide();
             self.get("view").set("collapsed", true);
         },
@@ -26,6 +27,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 el = view.get("el"),
                 menu = self.get("menu");
             if (!menu.get("visible")) {
+                doc.on("mousedown", self.handleDocumentMouseDown, self);
                 menu.set("align", {
                     node:el,
                     points:["bl","tl"]
@@ -33,7 +35,24 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu.show();
                 el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 view.set("collapsed", false);
+
             }
+        },
+
+        handleDocumentMouseDown:function(e) {
+            var self = this,
+                target = S.one(e.target)[0],
+                menu = self.get("menu");
+            // console.log(target.nodeName);
+            if (menu && menu.get("visible") && !this.containsElement(target)) {
+                this.hideMenu();
+            }
+        },
+
+
+        containsElement:function(target) {
+            var el = this.get("el"),menu = this.get("menu");
+            return (el && (el.contains(target) || el[0] === target)) || (menu && menu.containsElement(target));
         },
 
         bindUI:function() {
@@ -41,7 +60,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu = this.get("menu");
 
             menu.on("afterActiveItemChange", function(ev) {
-                //S.log("active : " + ( ev.newVal && ev.newVal.get("content") || ""));
                 self.set("activeItem", ev.newVal);
             });
 
@@ -56,31 +74,30 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
          * @inheritDoc
          */
         _handleKeydown:function(e) {
-
             var menu = this.get("menu");
             //转发给 menu 处理
             if (menu && menu.get("visible")) {
-                if (menu._handleKeydown(e) === false) {
-                    return false;
+                var handledByMenu = menu._handleKeydown(e);
+                if (e.keyCode == 27) {
+                    this.hideMenu();
+                    return true;
                 }
+                return handledByMenu;
             }
-            if (e.keyCode == 27) {
-                e.preventDefault();
-                this.hideMenu();
-            } else if (e.keyCode == 38 || e.keyCode == 40) {
-                if (!menu.get("visible")) {
-                    e.preventDefault();
-                    this.showMenu();
-                }
+            if (e.keyCode == 38 || e.keyCode == 40) {
+                this.showMenu();
+                return true;
             }
+            return undefined;
         },
 
         /**
          * @inheritDoc
          */
-        _handleBlur:function() {
-            var re = MenuButton.superclass._handleBlur.call(this);
-            if (re === false) return re;
+        _handleBlur:function(e) {
+            if (MenuButton.superclass._handleBlur.call(this, e)) {
+                return true;
+            }
             this.hideMenu();
         },
 
@@ -88,9 +105,8 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
          * @inheritDoc
          */
         _handleClick:function(e) {
-            var re = Button.superclass._handleClick.call(this);
-            if (re === false) {
-                return re;
+            if (Button.superclass._handleClick.call(this, e)) {
+                return true;
             }
             var menu = this.get("menu");
 
@@ -108,6 +124,8 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                         menu._handleClick(e);
                     }
                 } else if (e.keyCode == 32) {
+                    // Prevent page scrolling in Chrome.
+                    e.preventDefault();
                     // space 只负责打开
                     this.showMenu();
                 }
@@ -121,7 +139,11 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             },
             // 不关心选中元素 , 由 select 负责
             // selectedItem
-            menu:{}
+            menu:{
+                setter:function(v) {
+                    v.set("parent", this);
+                }
+            }
         }
     });
 
@@ -141,6 +163,9 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     return UIBase.create(Button.Render, {
         renderUI:function() {
+        },
+
+        createDom:function() {
             var el = this.get("el");
             el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
                 prefixCls:this.get("prefixCls")
@@ -304,14 +329,12 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
             optionMenu.addChild(item);
         });
 
-        var select = new Select({
+        var select = new Select(S.mix({
             selectedItem:selectedItem,
-            menu:optionMenu,
-            defaultCaption:cfg.defaultCaption,
-            prefixCls:cfg.prefixCls,
-            autoRender:true
-        });
+            menu:optionMenu
+        }, cfg));
 
+        select.render();
         select.get("el").insertBefore(element);
 
         var name;
