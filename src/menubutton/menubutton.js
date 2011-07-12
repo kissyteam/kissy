@@ -2,7 +2,7 @@
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender) {
+KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
     var MenuButton = UIBase.create(Button, {
 
         hideMenu:function() {
@@ -87,8 +87,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             // 鼠标点击只是简单隐藏，显示切换
             if (e.type == 'click') {
                 if (menu.get("visible")) {
-                    this.hideMenu();
-                } else {
+                    // TODO popup menu 会监听 doc click
+                    // this.hideMenu();
+                }
+                else {
                     this.showMenu();
                 }
             } else if (e.type == 'keydown') {
@@ -106,6 +108,26 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             }
         },
 
+        /**
+         * Adds a new menu item at the end of the menu.
+         * @param item Menu item to add to the menu.
+         */
+        addItem:function(item, index) {
+            this.get("menu").addChild(item, index);
+        },
+
+        removeItem:function(c, destroy) {
+            this.get("menu").removeChild(c, destroy);
+        },
+
+        removeItems:function(destroy) {
+            this.get("menu").removeChildren(destroy);
+        },
+
+        getItemAt:function(index) {
+            return this.get("menu").getChildAt(index);
+        },
+
         destructor:function() {
             var menu = this.get("menu");
             menu && menu.destroy();
@@ -119,6 +141,12 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             // 不关心选中元素 , 由 select 负责
             // selectedItem
             menu:{
+                valueFn:function() {
+                    return new Menu.PopupMenu(S.mix({
+                        prefixCls:this.get("prefixCls"),
+                        parent:this
+                    }, this.get("menuCfg")));
+                },
                 setter:function(v) {
                     v.set("parent", this);
                 }
@@ -130,5 +158,5 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
 
     return MenuButton;
 }, {
-    requires:["uibase","node","button","./menubuttonrender"]
+    requires:["uibase","node","button","./menubuttonrender","menu"]
 });

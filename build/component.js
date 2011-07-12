@@ -118,6 +118,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 });
             },
 
+            /**
+             * 控制层的 createDom 实际上就是调用 view 层的 create 来创建真正的节点
+             */
             createDom:function() {
                 var self = this;
                 /**
@@ -151,24 +154,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 return view.get("contentEl") || view.get("el");
             },
 
-            /**
-             *
-             * @param c  children to be added
-             * @param {int=} index  position to be inserted
-             */
-            addChild:function(c, index, render) {
-                var self = this,
-                    children = self.get("children"),
-                    elBefore = children[index];
-                if (index) {
-                    children.splice(index, 0, c);
-                } else {
-                    children.push(c);
-                }
-                self._initChild(c, elBefore, render);
-            },
 
-            _initChild:function(c, elBefore, render) {
+
+            _initChild:function(c, elBefore) {
                 var self = this;
                 // If this (parent) component doesn't have a DOM yet, call createDom now
                 // to make sure we render the child component's element into the correct
@@ -180,9 +168,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 c.set("parent", self);
                 c.set("render", contentEl);
                 c.set("elBefore", elBefore);
-                // 如果需要立即渲染，就 创建 dom ，绑定事件
-                // 要求 parent  也渲染完毕才好
-                if (render) {
+                // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
+                if (this.get("rendered")) {
                     c.render();
                 }
                 // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
@@ -195,6 +182,23 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
+            /**
+             *
+             * @param c  children to be added
+             * @param {int=} index  position to be inserted
+             */
+            addChild:function(c, index) {
+                var self = this,
+                    children = self.get("children"),
+                    elBefore = children[index];
+                if (index) {
+                    children.splice(index, 0, c);
+                } else {
+                    children.push(c);
+                }
+                self._initChild(c, elBefore);
+            },
+
             removeChild:function(c, destroy) {
                 var children = this.get("children"),
                     index = S.indexOf(c, children);
@@ -204,6 +208,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (destroy) {
                     c.destroy();
                 }
+            },
+
+            removeChildren:function(destroy) {
+                S.each(this.get("children"), function(c) {
+                    destroy && c.destroy();
+                });
+                this.set("children", []);
             },
 
             getChildAt:function(index) {
@@ -241,23 +252,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return true;
                 }
             },
-
-            _uiSetSupportFocused:function(v) {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (v) {
-                    el.on("focus", self._handleFocus, self);
-                    el.on("blur", self._handleBlur, self);
-                    el.on("keydown", self.__handleKeydown, self);
-                } else {
-                    el.detach("focus", self._handleFocus, self);
-                    el.detach("blur", self._handleBlur, self);
-                    el.detach("keydown", self.__handleKeydown, self);
-                }
-            },
-
-
             _forwordToView:function(method, ev) {
                 var self = this,
                     view = self.get("view");
@@ -324,6 +318,24 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     this.getKeyEventTarget()[0].focus();
                 }
             },
+            /**
+             * whether component can receive focus
+             */
+            _uiSetFocusable:function(v) {
+                var self = this,
+                    el = self.getKeyEventTarget();
+                if (v) {
+                    el.on("focus", self._handleFocus, self);
+                    el.on("blur", self._handleBlur, self);
+                    el.on("keydown", self.__handleKeydown, self);
+                } else {
+                    el.detach("focus", self._handleFocus, self);
+                    el.detach("blur", self._handleBlur, self);
+                    el.detach("keydown", self.__handleKeydown, self);
+                }
+                self.get("view").set("focusable", v);
+            },
+
             /**
              * 焦点所在元素即键盘事件处理元素
              */
@@ -419,7 +431,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 },
 
                 // 是否支持焦点处理
-                supportFocused:{
+                focusable:{
                     value:true
                 },
 
@@ -494,15 +506,25 @@ KISSY.add("component/render", function(S, UIBase) {
     return UIBase.create([UIBase.Box.Render], {
         getKeyEventTarget:function() {
             return this.get("el");
+        },
+
+        _uiSetFocusable:function(v) {
+            var el = this.getKeyEventTarget(),
+                tabindex = el.attr("tabindex");
+            if (tabindex >= 0 && !v) {
+                el.attr("tabindex", -1);
+            } else if (!(tabindex >= 0) && v) {
+                el.attr("tabindex", 0);
+            }
         }
     }, {
         ATTRS:{
             //从 maskup 中渲染
             srcNode:{},
             prefixCls:{},
+            focusable:{},
             //是否禁用
-            disabled:{
-            }
+            disabled:{}
         }
     });
 }, {

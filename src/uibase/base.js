@@ -161,6 +161,14 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     UIBase.HTML_PARSER = {};
     UIBase.ATTRS = {
+        // 是否已经渲染完毕
+        rendered:{
+            value:false
+        },
+        // dom 节点是否已经创建完毕
+        created:{
+            value:false
+        },
         // 渲染该组件的目的容器
         render:{
             view:true,
@@ -182,19 +190,19 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         create:function() {
             var self = this;
             // 是否生成过节点
-            if (!self.__domCreated) {
+            if (!self.get("created")) {
                 self._createDom();
                 self.fire('createDom');
                 callMethodByHierarchy(self, "createDom", "__createDom");
                 self.fire('afterCreateDom');
-                self.__domCreated = true;
+                self.set("created", true);
             }
         },
 
         render: function() {
             var self = this;
             // 是否已经渲染过
-            if (!self.__rendered) {
+            if (!self.get("rendered")) {
                 self.create();
                 self._renderUI();
                 // 实际上是 beforeRenderUI
@@ -211,7 +219,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 self.fire('syncUI');
                 callMethodByHierarchy(self, "syncUI", "__syncUI");
                 self.fire('afterSyncUI');
-                self.__rendered = true;
+                self.set("rendered", true);
             }
         },
 

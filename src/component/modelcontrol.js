@@ -60,6 +60,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 });
             },
 
+            /**
+             * 控制层的 createDom 实际上就是调用 view 层的 create 来创建真正的节点
+             */
             createDom:function() {
                 var self = this;
                 /**
@@ -93,24 +96,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 return view.get("contentEl") || view.get("el");
             },
 
-            /**
-             *
-             * @param c  children to be added
-             * @param {int=} index  position to be inserted
-             */
-            addChild:function(c, index, render) {
-                var self = this,
-                    children = self.get("children"),
-                    elBefore = children[index];
-                if (index) {
-                    children.splice(index, 0, c);
-                } else {
-                    children.push(c);
-                }
-                self._initChild(c, elBefore, render);
-            },
 
-            _initChild:function(c, elBefore, render) {
+
+            _initChild:function(c, elBefore) {
                 var self = this;
                 // If this (parent) component doesn't have a DOM yet, call createDom now
                 // to make sure we render the child component's element into the correct
@@ -122,9 +110,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 c.set("parent", self);
                 c.set("render", contentEl);
                 c.set("elBefore", elBefore);
-                // 如果需要立即渲染，就 创建 dom ，绑定事件
-                // 要求 parent  也渲染完毕才好
-                if (render) {
+                // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
+                if (this.get("rendered")) {
                     c.render();
                 }
                 // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
@@ -137,6 +124,23 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             },
 
+            /**
+             *
+             * @param c  children to be added
+             * @param {int=} index  position to be inserted
+             */
+            addChild:function(c, index) {
+                var self = this,
+                    children = self.get("children"),
+                    elBefore = children[index];
+                if (index) {
+                    children.splice(index, 0, c);
+                } else {
+                    children.push(c);
+                }
+                self._initChild(c, elBefore);
+            },
+
             removeChild:function(c, destroy) {
                 var children = this.get("children"),
                     index = S.indexOf(c, children);
@@ -146,6 +150,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (destroy) {
                     c.destroy();
                 }
+            },
+
+            removeChildren:function(destroy) {
+                S.each(this.get("children"), function(c) {
+                    destroy && c.destroy();
+                });
+                this.set("children", []);
             },
 
             getChildAt:function(index) {

@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>menubutton 测试</title>
+<link href="../../button/tests/common.css" rel="stylesheet"/>
+<link href="../../button/tests/custombutton.css" rel="stylesheet"/>
+<link href="../tests/menubutton.css" rel="stylesheet"/>
+<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../menu/tests/menu.css" rel="stylesheet"/>
+<link href="../../menu/tests/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/tests/submenu.css" rel="stylesheet"/>
+<link href="../../menu/tests/c2c-ui.css" rel="stylesheet"/>
+<style>
+    .ks-menu {
+        background: white;
+        border: 1px solid red;
+    }
+
+    li {
+        padding: 5px;
+        border: 1px solid white;
+    }
+</style>
+</head>
+<body>
+<script src="../../../build/kissy.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../../component/modelcontrol.js"></script>
+<script src="../../component/render.js"></script>
+<script src="../../component/container.js"></script>
+<script src="../../component.js"></script>
+<script src="../../button/base.js"></script>
+<script src="../../button/buttonrender.js"></script>
+<script src="../../button/nativerender.js"></script>
+<script src="../../button/css3render.js"></script>
+<script src="../../button/customrender.js"></script>
+<script src="../../button.js"></script>
+<script src="../../menu/menuitemrender.js"></script>
+<script src="../../menu/menuitem.js"></script>
+<script src="../../menu/submenurender.js"></script>
+<script src="../../menu/submenu.js"></script>
+<script src="../../menu/menurender.js"></script>
+<script src="../../menu/menu.js"></script>
+
+<script src="../../menu/popupmenurender.js"></script>
+<script src="../../menu/separatorrender.js"></script>
+<script src="../../menu/popupmenu.js"></script>
+<script src="../../menu/separator.js"></script>
+
+<script src="../../menu.js"></script>
+<script src="../menubuttonrender.js"></script>
+<script src="../menubutton.js"></script>
+<script src="../select.js"></script>
+<script src="../option.js"></script>
+<script src="../../menubutton.js"></script>
+<!--
+<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
+-->
+
+<h1>层联 select demo</h1>
+<div id="selectContainer">
+
+    <h2>known issue</h2>
+    <ol>
+        <li>第二次点击 select 不能关闭下拉层</li>
+    </ol>
+</div>
+
+<script>
+    KISSY.ready(function(S) {
+        KISSY.use("menubutton", function(S, MenuButton) {
+            var data = {
+                "上海":["上海市","崇明"],
+                "河南":["焦作","洛阳"],
+                "浙江":["杭州","温州"]
+            };
+            var s1 = new MenuButton.Select({
+                render:"#selectContainer",
+                prefixCls:"c2c-",
+                menuCfg:{
+                    width:70
+                }
+            });
+
+            for (var d in data) {
+                s1.addItem(new MenuButton.Option({value:d,
+                    prefixCls:"c2c-",
+                    content:d}));
+            }
+            s1.set("selectedIndex", 0);
+            s1.render();
+
+            var s2 = new MenuButton.Select({
+                render:"#selectContainer",
+                prefixCls:"c2c-",
+                menuCfg:{
+                    width:70
+                }
+            });
+
+            update("上海");
+            s2.render();
+
+            function update(v) {
+                var vs = data[v];
+                s2.removeItems(true);
+                S.log("*********************");
+                S.each(vs, function(v_) {
+                    S.log(v_);
+                    s2.addItem(new MenuButton.Option({
+                        value:v_,
+                        prefixCls:"c2c-",
+                        content:v_}));
+                });
+                s2.set("selectedIndex", 0);
+            }
+
+            s1.on("click", function(e) {
+                var v = e.target.get("value");
+                update(v);
+            });
+
+        });
+    });
+</script>
+
+</body>
+</html>
