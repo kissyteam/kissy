@@ -183,23 +183,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return true;
                 }
             },
-
-            _uiSetSupportFocused:function(v) {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (v) {
-                    el.on("focus", self._handleFocus, self);
-                    el.on("blur", self._handleBlur, self);
-                    el.on("keydown", self.__handleKeydown, self);
-                } else {
-                    el.detach("focus", self._handleFocus, self);
-                    el.detach("blur", self._handleBlur, self);
-                    el.detach("keydown", self.__handleKeydown, self);
-                }
-            },
-
-
             _forwordToView:function(method, ev) {
                 var self = this,
                     view = self.get("view");
@@ -266,6 +249,24 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     this.getKeyEventTarget()[0].focus();
                 }
             },
+            /**
+             * whether component can receive focus
+             */
+            _uiSetFocusable:function(v) {
+                var self = this,
+                    el = self.getKeyEventTarget();
+                if (v) {
+                    el.on("focus", self._handleFocus, self);
+                    el.on("blur", self._handleBlur, self);
+                    el.on("keydown", self.__handleKeydown, self);
+                } else {
+                    el.detach("focus", self._handleFocus, self);
+                    el.detach("blur", self._handleBlur, self);
+                    el.detach("keydown", self.__handleKeydown, self);
+                }
+                self.get("view").set("focusable", v);
+            },
+
             /**
              * 焦点所在元素即键盘事件处理元素
              */
@@ -361,7 +362,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 },
 
                 // 是否支持焦点处理
-                supportFocused:{
+                focusable:{
                     value:true
                 },
 

@@ -31,14 +31,45 @@ KISSY.add('uibase/box', function() {
         elBefore:{
             view:true
         },
+
         el:{
             getter:function() {
                 return this.get("view") && this.get("view").get("el");
             }
-        }
+        },
+
+        visibleMode:{
+            value:"display",
+            view:true
+        },
+        visible:{}
     };
 
-    Box.prototype = {};
+    Box.prototype = {
+
+        _uiSetVisible:function(isVisible) {
+            var self = this;
+            this.get("view").set("visible", isVisible);
+            self.fire(isVisible ? "show" : "hide");
+        },
+
+
+        /**
+         * 显示 Overlay
+         */
+        show: function() {
+            var self = this;
+            self.render();
+            self.set("visible", true);
+        },
+
+        /**
+         * 隐藏
+         */
+        hide: function() {
+            this.set("visible", false);
+        }
+    };
 
     return Box;
 });

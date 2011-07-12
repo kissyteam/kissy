@@ -7,9 +7,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
     var CLS = "{prefixCls}menu  {prefixCls}menu-vertical";
 
     return UIBase.create(Component.Render, [
-        UIBase.Contentbox.Render,
-        UIBase.Position.Render,
-        UA['ie'] === 6 ? UIBase.Shim.Render : null
+        UIBase.Contentbox.Render
     ], {
 
         renderUI:function() {

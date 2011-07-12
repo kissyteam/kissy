@@ -118,6 +118,12 @@
 <script src="../menu/submenu.js"></script>
 <script src="../menu/menurender.js"></script>
 <script src="../menu/menu.js"></script>
+
+<script src="../menu/popupmenurender.js"></script>
+<script src="../menu/separatorrender.js"></script>
+<script src="../menu/popupmenu.js"></script>
+<script src="../menu/separator.js"></script>
+
 <script src="../menu.js"></script>
 <script src="menubuttonrender.js"></script>
 <script src="menubutton.js"></script>
@@ -144,20 +150,24 @@
 
             if (true)
                 (function() {
-                    var sb = new Menu({
+
+                    var sb = new Menu.PopupMenu({
                         prefixCls:"goog-"
                     });
 
+                    sb.addChild(new Menu.Item({content:"已买到的宝贝",
+                        prefixCls:"goog-"}));
+                    sb.addChild(new Menu.Item({content:"已卖出的宝贝",
+                        prefixCls:"goog-",disabled:true}));
 
-                    sb.addChild(new Menu.Item({content:"已买到的宝贝",prefixCls:"goog-"}));
-                    sb.addChild(new Menu.Item({content:"已卖出的宝贝",prefixCls:"goog-",disabled:true}));
 
-
-                    var sb2 = new Menu({
+                    var sb2 = new Menu.PopupMenu({
                         prefixCls:"goog-"
                     });
-                    sb2.addChild(new Menu.Item({content:"收藏的宝贝",prefixCls:"goog-"}));
-                    sb2.addChild(new Menu.Item({content:"收藏的店铺",prefixCls:"goog-"}));
+                    sb2.addChild(new Menu.Item({content:"收藏的宝贝",
+                        prefixCls:"goog-"}));
+                    sb2.addChild(new Menu.Item({content:"收藏的店铺",
+                        prefixCls:"goog-"}));
                     var b2 = new Menu.SubMenu({
                         content:"收藏夹",
                         prefixCls:"goog-",
@@ -172,9 +182,12 @@
                     });
 
                     var alone = new Menu.Item({content:"我要买",prefixCls:"goog-"});
-                    var menu = new Menu({
+                    var menu = new Menu.PopupMenu({
                         prefixCls:"goog-",
-                        children:[b, alone,new Menu.Item({content:"我要卖",prefixCls:"goog-"})]
+                        children:[b,
+                            new Menu.Separator({prefixCls:"goog-"}),
+                            alone,
+                            new Menu.Item({content:"我要卖",prefixCls:"goog-"})]
                     });
                     //model and control
                     //view as a parameter
@@ -188,8 +201,8 @@
                     });
 
 
-                    menu.on("menuItemClick", function(ev) {
-                        log("selected : " + ev.menuItem.get("content"));
+                    menu.on("click", function(ev) {
+                        log("selected : " + ev.target.get("content"));
                     });
 
                     //or
@@ -213,7 +226,7 @@
                 })();
             if (true)
                 (function() {
-                    var sb = new Menu({
+                    var sb = new Menu.PopupMenu({
                         prefixCls:"goog-"
                     });
                     sb.addChild(new Menu.Item({
@@ -226,7 +239,7 @@
                         prefixCls:"goog-"}));
 
 
-                    var sb2 = new Menu({
+                    var sb2 = new Menu.PopupMenu({
                         prefixCls:"goog-"
                     });
                     sb2.addChild(new Menu.Item({
@@ -250,7 +263,7 @@
                         menu:sb
                     });
 
-                    var menu = new Menu({
+                    var menu = new Menu.PopupMenu({
                         prefixCls:"goog-",
                         children:[
                             b,

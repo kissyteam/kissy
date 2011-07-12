@@ -3,17 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender) {
-    var doc = new Node(document);
     var MenuButton = UIBase.create(Button, {
 
         hideMenu:function() {
-            var self = this,
-                view = self.get("view"),
-                el = view.get("el"),
-                menu = this.get("menu");
-            doc.detach("mousedown", self.handleDocumentMouseDown, self);
-            menu.hide();
-            self.get("view").set("collapsed", true);
+            this.get("menu").hide();
         },
 
         showMenu:function() {
@@ -22,7 +15,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 el = view.get("el"),
                 menu = self.get("menu");
             if (!menu.get("visible")) {
-                doc.on("mousedown", self.handleDocumentMouseDown, self);
                 menu.set("align", {
                     node:el,
                     points:["bl","tl"]
@@ -30,24 +22,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu.show();
                 el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 view.set("collapsed", false);
-
             }
-        },
-
-        handleDocumentMouseDown:function(e) {
-            var self = this,
-                target = S.one(e.target)[0],
-                menu = self.get("menu");
-            // console.log(target.nodeName);
-            if (menu && menu.get("visible") && !this.containsElement(target)) {
-                this.hideMenu();
-            }
-        },
-
-
-        containsElement:function(target) {
-            var el = this.get("el"),menu = this.get("menu");
-            return (el && (el.contains(target) || el[0] === target)) || (menu && menu.containsElement(target));
         },
 
         bindUI:function() {
@@ -62,6 +37,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 self.fire("click", {
                     target:e.target
                 });
+            });
+
+            menu.on("hide", function() {
+                self.get("view").set("collapsed", true);
             });
         },
 
@@ -125,6 +104,11 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                     this.showMenu();
                 }
             }
+        },
+
+        destructor:function() {
+            var menu = this.get("menu");
+            menu && menu.destroy();
         }
 
     }, {

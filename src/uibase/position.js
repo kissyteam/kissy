@@ -52,19 +52,11 @@ KISSY.add("uibase/position", function(S) {
         },
         zIndex: {
             view:true
-        },
-        visible:{}
+        }
     };
 
 
     Position.prototype = {
-
-        _uiSetVisible:function(isVisible) {
-
-            var self = this;
-            this.get("view").set("visible", isVisible);
-            self.fire(isVisible ? "show" : "hide");
-        },
 
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
@@ -78,23 +70,8 @@ KISSY.add("uibase/position", function(S) {
                 x = x[0];
             }
             self.set("xy", [x,y]);
-        },
-
-        /**
-         * 显示 Overlay
-         */
-        show: function() {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        /**
-         * 隐藏
-         */
-        hide: function() {
-            this.set("visible", false);
         }
+
 
     };
 

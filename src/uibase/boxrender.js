@@ -39,7 +39,9 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             //插入到该元素前
             value:null
         },
-        html: {}
+        html: {},
+        visible:{},
+        visibleMode:{}
     };
 
     Box.construct = constructEl;
@@ -136,6 +138,24 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
         _uiSetHtml:function(c) {
             this.get("el").html(c);
+        },
+
+        _uiSetVisible:function(isVisible) {
+            var el = this.get("el"),
+                visibleMode = this.get("visibleMode");
+            if (visibleMode == "visible") {
+                el.css("visibility", isVisible ? "visible" : "hidden");
+            } else {
+                el.css("display", isVisible ? "" : "none");
+            }
+        },
+
+        show:function() {
+            this.render();
+            this.set("visible", true);
+        },
+        hide:function() {
+            this.set("visible", false);
         },
 
         __destructor:function() {

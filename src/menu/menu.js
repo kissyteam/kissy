@@ -6,10 +6,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
     var Menu;
 
-    Menu = UIBase.create(Component.Container, [
-        UIBase.Position,
-        UIBase.Align
-    ], {
+    Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
@@ -172,6 +169,11 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
+            // 普通菜单可聚焦
+            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+            focusable:{
+                value:true
+            },
             /**
              * 当前高亮的儿子菜单项
              */

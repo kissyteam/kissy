@@ -513,14 +513,45 @@ KISSY.add('uibase/box', function() {
         elBefore:{
             view:true
         },
+
         el:{
             getter:function() {
                 return this.get("view") && this.get("view").get("el");
             }
-        }
+        },
+
+        visibleMode:{
+            value:"display",
+            view:true
+        },
+        visible:{}
     };
 
-    Box.prototype = {};
+    Box.prototype = {
+
+        _uiSetVisible:function(isVisible) {
+            var self = this;
+            this.get("view").set("visible", isVisible);
+            self.fire(isVisible ? "show" : "hide");
+        },
+
+
+        /**
+         * 显示 Overlay
+         */
+        show: function() {
+            var self = this;
+            self.render();
+            self.set("visible", true);
+        },
+
+        /**
+         * 隐藏
+         */
+        hide: function() {
+            this.set("visible", false);
+        }
+    };
 
     return Box;
 });
@@ -565,7 +596,9 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             //插入到该元素前
             value:null
         },
-        html: {}
+        html: {},
+        visible:{},
+        visibleMode:{}
     };
 
     Box.construct = constructEl;
@@ -662,6 +695,24 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
         _uiSetHtml:function(c) {
             this.get("el").html(c);
+        },
+
+        _uiSetVisible:function(isVisible) {
+            var el = this.get("el"),
+                visibleMode = this.get("visibleMode");
+            if (visibleMode == "visible") {
+                el.css("visibility", isVisible ? "visible" : "hidden");
+            } else {
+                el.css("display", isVisible ? "" : "none");
+            }
+        },
+
+        show:function() {
+            this.render();
+            this.set("visible", true);
+        },
+        hide:function() {
+            this.set("visible", false);
         },
 
         __destructor:function() {
@@ -1292,19 +1343,11 @@ KISSY.add("uibase/position", function(S) {
         },
         zIndex: {
             view:true
-        },
-        visible:{}
+        }
     };
 
 
     Position.prototype = {
-
-        _uiSetVisible:function(isVisible) {
-
-            var self = this;
-            this.get("view").set("visible", isVisible);
-            self.fire(isVisible ? "show" : "hide");
-        },
 
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
@@ -1318,23 +1361,8 @@ KISSY.add("uibase/position", function(S) {
                 x = x[0];
             }
             self.set("xy", [x,y]);
-        },
-
-        /**
-         * 显示 Overlay
-         */
-        show: function() {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        /**
-         * 隐藏
-         */
-        hide: function() {
-            this.set("visible", false);
         }
+
 
     };
 
@@ -1363,8 +1391,7 @@ KISSY.add("uibase/positionrender", function() {
         },
         zIndex: {
             value: 9999
-        },
-        visible:{}
+        }
     };
 
 
@@ -1374,7 +1401,7 @@ KISSY.add("uibase/positionrender", function() {
             var el = this.get("el");
             el.addClass(this.get("prefixCls") + "ext-position");
             el.css({
-                visibility:'hidden',
+                visibility:"visible",
                 display: "",
                 left:-9999,
                 top:-9999,
@@ -1395,17 +1422,6 @@ KISSY.add("uibase/positionrender", function() {
             this.get("el").offset({
                 top:y
             });
-        },
-        _uiSetVisible:function(isVisible) {
-            this.get("el").css("visibility", isVisible ? "visible" : "hidden");
-        },
-
-        show:function() {
-            this.render();
-            this.set("visible", true);
-        },
-        hide:function() {
-            this.set("visible", false);
         }
     };
 

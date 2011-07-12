@@ -79,7 +79,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
              * 是否支持焦点处理
              * @override
              */
-            supportFocused:{
+            focusable:{
                 value:false
             },
 
