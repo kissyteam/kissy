@@ -1,6 +1,6 @@
 /**
  * kissy delegate for event module
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
