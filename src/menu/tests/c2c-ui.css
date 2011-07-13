@@ -53,7 +53,7 @@
     padding: 0;
 }
 
-.c2c-menu-buttonmenu-button-open .c2c-custom-button-outer-box {
+.c2c-menu-button-open .c2c-custom-button-outer-box {
     /* border-bottom:none; */
 }
 
@@ -241,8 +241,7 @@
 /* State: active, open. */
 .c2c-menu-button-active,
 .c2c-menu-button-open {
-    background-color: #bbb;
-    background-position: bottom left;
+
 }
 
 /* State: focused. */
@@ -366,5 +365,4 @@
     right: 0;
     text-align: right;
 }
-
 /* menu item end */

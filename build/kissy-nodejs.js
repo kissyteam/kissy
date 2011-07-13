@@ -274,7 +274,7 @@ build time: ${build.time}
              */
             version: '1.20dev',
 
-            buildTime:'20110713101458',
+            buildTime:'20110713130840',
 
             /**
              * Returns a new object containing all of the properties of
@@ -5314,7 +5314,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
                         //出现 alpha(opacity:0), alpha(opacity=0) ?
-                        currentFilter = S.trim(currentFilter.replace(/alpha\(opacity[=:][^)]+\),?/ig, ''));
+                        currentFilter = S.trim(currentFilter.replace(
+                            /alpha\(opacity[^=]*=[^)]+\),?/ig, ''));
                     }
 
                     if (currentFilter && val != 1) {
@@ -7089,7 +7090,9 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     function accessNormIf(fn, self, index, args) {
 
         // get
-        if (args[index] === undefined) {
+        if (args[index] === undefined
+            // 并且第一个参数不是对象，否则可能是批量设置写
+            && !S.isObject(args[0])) {
             args.unshift(self);
             return DOM[fn].apply(DOM, args);
         }
