@@ -225,6 +225,11 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         return ret;
     }
 
+    function flipOffset(offset, index) {
+        offset[index] = -offset[index];
+        return offset;
+    }
+
     function Align() {
     }
 
@@ -309,6 +314,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
+            offset = S.clone(offset);
             if (overflow.failX) {
                 flag.failX = 1;
             }
@@ -328,6 +334,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
                         l:"r",
                         r:"l"
                     });
+                    offset = flipOffset(offset, 0);
                 }
 
                 if (status.failY) {
@@ -335,6 +342,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
                         t:"b",
                         b:"t"
                     });
+                    offset = flipOffset(offset, 1);
                 }
             }
 

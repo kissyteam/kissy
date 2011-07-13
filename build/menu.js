@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 13 21:48
 */
 /**
  * menu model and controller for kissy,accommodate menu items
@@ -188,6 +188,9 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              */
             activeItem:{
                 view:true
+            },
+            visibleMode:{
+                value:"display"
             }
         }
     });
@@ -263,7 +266,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             }
         },
 
-        containsElement:function(element){
+        containsElement:function(element) {
             return this.get('view').containsElement(element);
         }
 
@@ -314,6 +317,9 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             },
             selected:{
                 view:true
+            },
+            visibleMode:{
+                value:"display"
             }
         }
     });
@@ -500,7 +506,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 }, {
     requires:['ua','uibase','component']
 });/**
- * positiaonable and not focusabled menu
+ * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
@@ -534,6 +540,10 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
             focusable:{
                 value:false
+            },
+
+            visibleMode:{
+                value:"visibility"
             }
         },
         DefaultRender:PopupMenuRender
