@@ -25,10 +25,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
             // 是否支持焦点处理
             focusable:{
                 value:false
-            },
-
-            visibleMode:{
-                value:"visible"
             }
         }
     });

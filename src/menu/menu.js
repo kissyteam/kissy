@@ -183,6 +183,9 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              */
             activeItem:{
                 view:true
+            },
+            visibleMode:{
+                value:"display"
             }
         }
     });

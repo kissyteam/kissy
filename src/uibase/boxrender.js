@@ -143,7 +143,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         _uiSetVisible:function(isVisible) {
             var el = this.get("el"),
                 visibleMode = this.get("visibleMode");
-            if (visibleMode == "visible") {
+            if (visibleMode == "visibility") {
                 el.css("visibility", isVisible ? "visible" : "hidden");
             } else {
                 el.css("display", isVisible ? "" : "none");

@@ -15,10 +15,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 el = view.get("el"),
                 menu = self.get("menu");
             if (!menu.get("visible")) {
-                menu.set("align", {
-                    node:el,
-                    points:["bl","tl"]
-                });
+                menu.set("align", S.mix({
+                    node:el
+                }, self.get("menuAlign")));
                 menu.show();
                 el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 view.set("collapsed", false);
@@ -137,6 +136,17 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         ATTRS:{
             activeItem:{
                 view:true
+            },
+            menuAlign:{
+                value:{
+                    points:["bl","tl"],
+                    overflow:{
+                        failX:1,
+                        failY:1,
+                        adjustX:1,
+                        adjustY:1
+                    }
+                }
             },
             // 不关心选中元素 , 由 select 负责
             // selectedItem

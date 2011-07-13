@@ -39,7 +39,7 @@ KISSY.add('uibase/box', function() {
         },
 
         visibleMode:{
-            value:"display",
+            value:"visibility",
             view:true
         },
         visible:{}

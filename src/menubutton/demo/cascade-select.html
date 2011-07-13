@@ -25,35 +25,9 @@
 </head>
 <body>
 <script src="../../../build/kissy.js"></script>
-<script src="../../../build/uibase.js"></script>
-<script src="../../component/modelcontrol.js"></script>
-<script src="../../component/render.js"></script>
-<script src="../../component/container.js"></script>
-<script src="../../component.js"></script>
-<script src="../../button/base.js"></script>
-<script src="../../button/buttonrender.js"></script>
-<script src="../../button/nativerender.js"></script>
-<script src="../../button/css3render.js"></script>
-<script src="../../button/customrender.js"></script>
-<script src="../../button.js"></script>
-<script src="../../menu/menuitemrender.js"></script>
-<script src="../../menu/menuitem.js"></script>
-<script src="../../menu/submenurender.js"></script>
-<script src="../../menu/submenu.js"></script>
-<script src="../../menu/menurender.js"></script>
-<script src="../../menu/menu.js"></script>
-
-<script src="../../menu/popupmenurender.js"></script>
-<script src="../../menu/separatorrender.js"></script>
-<script src="../../menu/popupmenu.js"></script>
-<script src="../../menu/separator.js"></script>
-
-<script src="../../menu.js"></script>
-<script src="../menubuttonrender.js"></script>
-<script src="../menubutton.js"></script>
-<script src="../select.js"></script>
-<script src="../option.js"></script>
-<script src="../../menubutton.js"></script>
+<script>
+    KISSY.Config.base = '../../';
+</script>
 <!--
 <script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
 -->
@@ -78,6 +52,10 @@
             var s1 = new MenuButton.Select({
                 render:"#selectContainer",
                 prefixCls:"c2c-",
+                menuAlign:{
+                    points:["bl","tl"],
+                    offset:[0,-1]
+                },
                 menuCfg:{
                     width:70
                 }
@@ -94,6 +72,10 @@
             var s2 = new MenuButton.Select({
                 render:"#selectContainer",
                 prefixCls:"c2c-",
+                menuAlign:{
+                    points:["bl","tl"],
+                    offset:[0,-1]
+                },
                 menuCfg:{
                     width:70
                 }

@@ -59,7 +59,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             }
         },
 
-        containsElement:function(element){
+        containsElement:function(element) {
             return this.get('view').containsElement(element);
         }
 
@@ -110,6 +110,9 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             },
             selected:{
                 view:true
+            },
+            visibleMode:{
+                value:"display"
             }
         }
     });
