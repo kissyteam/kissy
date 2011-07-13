@@ -14,7 +14,8 @@
     <target name="prepare">
         <mkdir dir="${kissy.build.dir}/${component.name}"/>
         <delete>
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.css,*.js"/>
+            <fileset dir="${kissy.build.dir}/${component.name}"
+                     includes="*.css,*.js"/>
         </delete>
 
         <copy todir="${kissy.build.dir}/${component.name}">
@@ -27,7 +28,8 @@
         <!-- 去除 S.log -->
         <mkdir dir="${kissy.build.dir}/${component.name}/debug"/>
         <copy todir="${kissy.build.dir}/${component.name}/debug">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="${component.files}"/>
+            <fileset dir="${kissy.build.dir}/${component.name}"
+                     includes="${component.files}"/>
         </copy>
         <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true" encoding="${charset}">
             <fileset dir="${kissy.build.dir}/${component.name}" includes="${component.files}"/>
@@ -36,7 +38,10 @@
         <!-- 用 YUICompressor 压缩 CSS -->
         <apply executable="java" verbose="true"
                dest="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="**/*.css"/>
+            <fileset dir="${kissy.build.dir}/${component.name}"
+                     includes="**/*.css"
+                     excludes="**/*-min.css"
+                    />
             <arg line="-jar"/>
             <arg path="${kissy-tools.dir}/yuicompressor/yuicompressor.jar"/>
             <arg line="--charset ${charset}"/>
@@ -49,7 +54,10 @@
         <!-- 用 Closure Compiler 压缩 JS -->
         <apply executable="java" verbose="true"
                dest="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="**/*.js"/>
+            <fileset dir="${kissy.build.dir}/${component.name}"
+                     includes="**/*.js"
+                     excludes="**/*-min.js"
+                    />
             <arg line="-jar"/>
             <arg path="${kissy-tools.dir}/closure-compiler/compiler.jar"/>
             <arg line="--charset ${charset}"/>

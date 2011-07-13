@@ -7,18 +7,11 @@ build time: ${build.time}
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender) {
-    var doc = new Node(document);
+KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
     var MenuButton = UIBase.create(Button, {
 
         hideMenu:function() {
-            var self = this,
-                view = self.get("view"),
-                el = view.get("el"),
-                menu = this.get("menu");
-            doc.detach("mousedown", self.handleDocumentMouseDown, self);
-            menu.hide();
-            self.get("view").set("collapsed", true);
+            this.get("menu").hide();
         },
 
         showMenu:function() {
@@ -27,7 +20,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 el = view.get("el"),
                 menu = self.get("menu");
             if (!menu.get("visible")) {
-                doc.on("mousedown", self.handleDocumentMouseDown, self);
                 menu.set("align", {
                     node:el,
                     points:["bl","tl"]
@@ -35,24 +27,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu.show();
                 el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 view.set("collapsed", false);
-
             }
-        },
-
-        handleDocumentMouseDown:function(e) {
-            var self = this,
-                target = S.one(e.target)[0],
-                menu = self.get("menu");
-            // console.log(target.nodeName);
-            if (menu && menu.get("visible") && !this.containsElement(target)) {
-                this.hideMenu();
-            }
-        },
-
-
-        containsElement:function(target) {
-            var el = this.get("el"),menu = this.get("menu");
-            return (el && (el.contains(target) || el[0] === target)) || (menu && menu.containsElement(target));
         },
 
         bindUI:function() {
@@ -67,6 +42,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 self.fire("click", {
                     target:e.target
                 });
+            });
+
+            menu.on("hide", function() {
+                self.get("view").set("collapsed", true);
             });
         },
 
@@ -113,8 +92,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             // 鼠标点击只是简单隐藏，显示切换
             if (e.type == 'click') {
                 if (menu.get("visible")) {
-                    this.hideMenu();
-                } else {
+                    // TODO popup menu 会监听 doc click
+                    // this.hideMenu();
+                }
+                else {
                     this.showMenu();
                 }
             } else if (e.type == 'keydown') {
@@ -130,6 +111,31 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                     this.showMenu();
                 }
             }
+        },
+
+        /**
+         * Adds a new menu item at the end of the menu.
+         * @param item Menu item to add to the menu.
+         */
+        addItem:function(item, index) {
+            this.get("menu").addChild(item, index);
+        },
+
+        removeItem:function(c, destroy) {
+            this.get("menu").removeChild(c, destroy);
+        },
+
+        removeItems:function(destroy) {
+            this.get("menu").removeChildren(destroy);
+        },
+
+        getItemAt:function(index) {
+            return this.get("menu").getChildAt(index);
+        },
+
+        destructor:function() {
+            var menu = this.get("menu");
+            menu && menu.destroy();
         }
 
     }, {
@@ -140,6 +146,12 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             // 不关心选中元素 , 由 select 负责
             // selectedItem
             menu:{
+                valueFn:function() {
+                    return new Menu.PopupMenu(S.mix({
+                        prefixCls:this.get("prefixCls"),
+                        parent:this
+                    }, this.get("menuCfg")));
+                },
                 setter:function(v) {
                     v.set("parent", this);
                 }
@@ -151,7 +163,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
 
     return MenuButton;
 }, {
-    requires:["uibase","node","button","./menubuttonrender"]
+    requires:["uibase","node","button","./menubuttonrender","menu"]
 });/**
  * render aria and drop arrow for menubutton
  * @author: yiminghe@gmail.com
@@ -310,7 +322,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 
     Select.decorate = function(element, cfg) {
         element = S.one(element);
-        var optionMenu = new Menu(S.mix({
+        var optionMenu = new Menu.PopupMenu(S.mix({
             prefixCls:cfg.prefixCls
         }, cfg.menuCfg)),
             selectedItem,
@@ -360,10 +372,14 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /**
  * TODO
  *  how to emulate multiple ?
- **/KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select) {
+ **/KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
     MenuButton.Render = MenuButtonRender;
     MenuButton.Select = Select;
+    MenuButton.Option = Option;
     return MenuButton;
 }, {
-    requires:['menubutton/menubutton','menubutton/menubuttonrender','menubutton/select']
+    requires:['menubutton/menubutton',
+        'menubutton/menubuttonrender',
+        'menubutton/select',
+        'menubutton/option']
 });

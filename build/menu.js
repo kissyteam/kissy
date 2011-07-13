@@ -11,10 +11,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
     var Menu;
 
-    Menu = UIBase.create(Component.Container, [
-        UIBase.Position,
-        UIBase.Align
-    ], {
+    Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
@@ -177,6 +174,11 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
+            // 普通菜单可聚焦
+            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+            focusable:{
+                value:true
+            },
             /**
              * 当前高亮的儿子菜单项
              */
@@ -281,7 +283,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
              * 是否支持焦点处理
              * @override
              */
-            supportFocused:{
+            focusable:{
                 value:false
             },
 
@@ -452,9 +454,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
     var CLS = "{prefixCls}menu  {prefixCls}menu-vertical";
 
     return UIBase.create(Component.Render, [
-        UIBase.Contentbox.Render,
-        UIBase.Position.Render,
-        UA['ie'] === 6 ? UIBase.Shim.Render : null
+        UIBase.Contentbox.Render
     ], {
 
         renderUI:function() {
@@ -499,6 +499,104 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
     });
 }, {
     requires:['ua','uibase','component']
+});/**
+ * positiaonable and not focusabled menu
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
+    var doc = S.one(document);
+    return UIBase.create(Menu, [
+        UIBase.Position,
+        UIBase.Align
+    ], {
+
+        handleDocumentMouseDown:function(e) {
+            var self = this,
+                target = S.one(e.target)[0];
+            if (self.get("visible") && !self.containsElement(target)) {
+                self.hide();
+            }
+        },
+
+        bindUI:function() {
+            var self = this;
+
+            self.on("show", function() {
+                doc.on("mousedown", self.handleDocumentMouseDown, self);
+            });
+
+            self.on("hide", function() {
+                doc.detach("mousedown", self.handleDocumentMouseDown, self);
+            });
+        }
+    }, {
+        ATTRS:{
+            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+            focusable:{
+                value:false
+            }
+        },
+        DefaultRender:PopupMenuRender
+    });
+}, {
+    requires:['uibase','component','./menu','./popupmenurender']
+});/**
+ * popup menu render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
+    return UIBase.create(MenuRender, [
+        UIBase.Position.Render,
+        UA['ie'] === 6 ? UIBase.Shim.Render : null
+    ]);
+}, {
+    requires:['ua','uibase','./menurender']
+});/**
+ * menu separator def
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
+
+    return UIBase.create(Component.ModelControl, {
+    }, {
+        ATTRS:{
+            focusable:{
+                value:false
+            },
+            handleMouseEvents:{
+                value:false
+            },
+            // 分隔线禁用，不可以被键盘访问
+            disabled:{
+                value:true
+            }
+        },
+
+        DefaultRender:SeparatorRender
+    });
+
+}, {
+    requires:['uibase','component','./separatorrender']
+});/**
+ * menu separator render def
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
+
+    var CLS = "{prefixCls}menuseparator";
+    return UIBase.create(Component.Render, {
+
+        createDom:function() {
+            var el = this.get("el");
+            el.attr("role", "separator").addClass(S.substitute(CLS, {
+                prefixCls:this.get("prefixCls")
+            }));
+        }
+
+    });
+
+}, {
+    requires:['uibase','component']
 });/**
  * submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
@@ -762,12 +860,14 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     },
     {
         requires:['uibase','./menuitemrender']
-    });KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender) {
+    });KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Menu.Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
+    Menu.Separator = Separator;
+    Menu.PopupMenu = PopupMenu;
     return Menu;
 }, {
     requires:[
@@ -776,6 +876,9 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         'menu/menuitem',
         'menu/menuitemrender',
         'menu/submenu',
-        'menu/submenurender'
+        'menu/submenurender',
+        'menu/separator',
+        'menu/separatorrender',
+        'menu/popupmenu'
     ]
 });
