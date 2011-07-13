@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * @module  anim-node-plugin
@@ -283,7 +283,9 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     function accessNormIf(fn, self, index, args) {
 
         // get
-        if (args[index] === undefined) {
+        if (args[index] === undefined
+            // 并且第一个参数不是对象，否则可能是批量设置写
+            && !S.isObject(args[0])) {
             args.unshift(self);
             return DOM[fn].apply(DOM, args);
         }

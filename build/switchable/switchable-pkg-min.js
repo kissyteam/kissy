@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 KISSY.add("switchable/base",function(h,e,p,t){function m(a,c){c=c||{};if(!("markupType"in c))if(c.panelCls)c.markupType=1;else if(c.panels)c.markupType=2;for(var d=this.constructor;d;){c=h.merge(d.Config,c);d=d.superclass?d.superclass.constructor:null}this.container=e.get(a);this.config=c;this.activeIndex=this.completedIndex=c.activeIndex;if(!(this.activeIndex>-1))if(typeof c.switchTo!="number")this.completedIndex=this.activeIndex=0;this._init();this._initPlugins();this.fire(i);this.activeIndex>-1||
 typeof c.switchTo=="number"&&this.switchTo(c.switchTo)}function u(a){var c={};c.type=a.originalEvent.type;c.target=a.originalEvent.target||a.originalEvent.srcElement;return{originalEvent:c}}var r=p.Target,i="init";m.getDomEvent=u;m.Config={markupType:0,navCls:"ks-switchable-nav",contentCls:"ks-switchable-content",triggerCls:"ks-switchable-trigger",panelCls:"ks-switchable-panel",triggers:[],panels:[],hasTriggers:true,triggerType:"mouse",delay:0.1,activeIndex:-1,activeTriggerCls:"ks-active",steps:1,

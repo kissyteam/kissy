@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: ${build.time}
              */
             version: '1.20dev',
 
-            buildTime:'20110713130840',
+            buildTime:'20110713170411',
 
             /**
              * Returns a new object containing all of the properties of
@@ -4102,119 +4102,122 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     S.mix(DOM, {
 
 
-            /**
-             * Gets the current coordinates of the element, relative to the document.
-             */
-            offset: function(elem, val) {
-                // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
+        /**
+         * Gets the current coordinates of the element, relative to the document.
+         * @param relativeWin The window to measure relative to. If relativeWin
+         *     is not in the ancestor frame chain of the element, we measure relative to
+         *     the top-most window.
+         */
+        offset: function(elem, val, relativeWin) {
+            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-                // getter
-                if (val === undefined) {
-                    return getOffset(elem);
+            // getter
+            if (val === undefined) {
+                return getOffset(elem, relativeWin);
+            }
+
+            // setter
+            setOffset(elem, val);
+        },
+
+        /**
+         * Makes elem visible in the container
+         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+         *        http://yiminghe.javaeye.com/blog/390732
+         */
+        scrollIntoView: function(elem, container, top, hscroll) {
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
+                return;
+            }
+
+            hscroll = hscroll === undefined ? true : !!hscroll;
+            top = top === undefined ? true : !!top;
+
+            // default current window, use native for scrollIntoView(elem, top)
+            if (!container ||
+                (container = DOM.get(container)) === win) {
+                // 注意：
+                // 1. Opera 不支持 top 参数
+                // 2. 当 container 已经在视窗中时，也会重新定位
+                elem.scrollIntoView(top);
+                return;
+            }
+
+            // document 归一化到 window
+            if (nodeTypeIs(container, 9)) {
+                container = getWin(container);
+            }
+
+            var isWin = !!getWin(container),
+                elemOffset = DOM.offset(elem),
+                containerOffset = isWin ? {
+                    left: DOM.scrollLeft(container),
+                    top: DOM.scrollTop(container) }
+                    : DOM.offset(container),
+
+                // elem 相对 container 视窗的坐标
+                diff = {
+                    left: elemOffset[LEFT] - containerOffset[LEFT],
+                    top: elemOffset[TOP] - containerOffset[TOP]
+                },
+
+                // container 视窗的高宽
+                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+
+                // container 视窗相对 container 元素的坐标
+                cl = DOM[SCROLL_LEFT](container),
+                ct = DOM[SCROLL_TOP](container),
+                cr = cl + cw,
+                cb = ct + ch,
+
+                // elem 的高宽
+                eh = elem.offsetHeight,
+                ew = elem.offsetWidth,
+
+                // elem 相对 container 元素的坐标
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                r = l + ew,
+                b = t + eh,
+
+                t2, l2;
+
+            // 根据情况将 elem 定位到 container 视窗中
+            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
+            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
+            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
+            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            if (eh > ch || t < ct || top) {
+                t2 = t;
+            } else if (b > cb) {
+                t2 = b - ch;
+            }
+
+            // 水平方向与上面同理
+            if (hscroll) {
+                if (ew > cw || l < cl || top) {
+                    l2 = l;
+                } else if (r > cr) {
+                    l2 = r - cw;
                 }
+            }
 
-                // setter
-                setOffset(elem, val);
-            },
-
-            /**
-             * Makes elem visible in the container
-             * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
-             *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
-             *        http://yiminghe.javaeye.com/blog/390732
-             */
-            scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
-                    return;
-                }
-
-                hscroll = hscroll === undefined ? true : !!hscroll;
-                top = top === undefined ? true : !!top;
-
-                // default current window, use native for scrollIntoView(elem, top)
-                if (!container ||
-                    (container = DOM.get(container)) === win) {
-                    // 注意：
-                    // 1. Opera 不支持 top 参数
-                    // 2. 当 container 已经在视窗中时，也会重新定位
-                    elem.scrollIntoView(top);
-                    return;
-                }
-
-                // document 归一化到 window
-                if (nodeTypeIs(container, 9)) {
-                    container = getWin(container);
-                }
-
-                var isWin = !!getWin(container),
-                    elemOffset = DOM.offset(elem),
-                    containerOffset = isWin ? {
-                        left: DOM.scrollLeft(container),
-                        top: DOM.scrollTop(container) }
-                        : DOM.offset(container),
-
-                    // elem 相对 container 视窗的坐标
-                    diff = {
-                        left: elemOffset[LEFT] - containerOffset[LEFT],
-                        top: elemOffset[TOP] - containerOffset[TOP]
-                    },
-
-                    // container 视窗的高宽
-                    ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                    cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
-
-                    // container 视窗相对 container 元素的坐标
-                    cl = DOM[SCROLL_LEFT](container),
-                    ct = DOM[SCROLL_TOP](container),
-                    cr = cl + cw,
-                    cb = ct + ch,
-
-                    // elem 的高宽
-                    eh = elem.offsetHeight,
-                    ew = elem.offsetWidth,
-
-                    // elem 相对 container 元素的坐标
-                    // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                    l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                    t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
-                    r = l + ew,
-                    b = t + eh,
-
-                    t2, l2;
-
-                // 根据情况将 elem 定位到 container 视窗中
-                // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-                // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-                // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-                // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-                if (eh > ch || t < ct || top) {
-                    t2 = t;
-                } else if (b > cb) {
-                    t2 = b - ch;
-                }
-
-                // 水平方向与上面同理
-                if (hscroll) {
-                    if (ew > cw || l < cl || top) {
-                        l2 = l;
-                    } else if (r > cr) {
-                        l2 = r - cw;
-                    }
-                }
-
-                // go
-                DOM[SCROLL_TOP](container, t2);
-                DOM[SCROLL_LEFT](container, l2);
-            },
-            /**
-             * for idea autocomplete
-             */
-            docWidth:0,
-            docHeight:0,
-            viewportHeight:0,
-            viewportWidth:0
-        });
+            // go
+            DOM[SCROLL_TOP](container, t2);
+            DOM[SCROLL_LEFT](container, l2);
+        },
+        /**
+         * for idea autocomplete
+         */
+        docWidth:0,
+        docHeight:0,
+        viewportHeight:0,
+        viewportWidth:0
+    });
 
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
     // http://www.quirksmode.org/dom/w3c_cssom.html
@@ -4286,8 +4289,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         }
     });
 
-    // 获取 elem 相对 elem.ownerDocument 的坐标
-    function getOffset(elem) {
+    function getClientPosition(elem) {
         var box, x = 0, y = 0,
             body = doc.body,
             w = getWin(elem[OWNER_DOCUMENT]);
@@ -4311,20 +4313,61 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             // ie7 html 即窗口边框改变不了。永远为 2
 
             // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-            var clientTop = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientTop : body.clientTop) || 0,
-                clientLeft = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientLeft : body.clientLeft) || 0;
-
+            var clientTop = isIE && doc['documentMode'] != 9
+                && (isStrict ? docElem.clientTop : body.clientTop)
+                || 0,
+                clientLeft = isIE && doc['documentMode'] != 9
+                    && (isStrict ? docElem.clientLeft : body.clientLeft)
+                    || 0;
+            if (1 > 2) {
+            }
             x -= clientLeft;
             y -= clientTop;
 
             // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-            if (UA.mobile !== 'apple') {
-                x += DOM[SCROLL_LEFT](w);
-                y += DOM[SCROLL_TOP](w);
+            if (UA.mobile == 'apple') {
+                x -= DOM[SCROLL_LEFT](w);
+                y -= DOM[SCROLL_TOP](w);
             }
         }
 
         return { left: x, top: y };
+    }
+
+
+    function getPageOffset(el) {
+        var pos = getClientPosition(el);
+        var w = getWin(el[OWNER_DOCUMENT]);
+        pos.left += DOM[SCROLL_LEFT](w);
+        pos.top += DOM[SCROLL_TOP](w);
+        return pos;
+    }
+
+    // 获取 elem 相对 elem.ownerDocument 的坐标
+    function getOffset(el, relativeWin) {
+        var position = {left:0,top:0};
+
+        // Iterate up the ancestor frame chain, keeping track of the current window
+        // and the current element in that window.
+        var currentWin = getWin(el[OWNER_DOCUMENT]);
+        var currentEl = el;
+        relativeWin = relativeWin || currentWin;
+        do {
+            // if we're at the top window, we want to get the page offset.
+            // if we're at an inner frame, we only want to get the window position
+            // so that we can determine the actual page offset in the context of
+            // the outer window.
+            var offset = currentWin == relativeWin ?
+                getPageOffset(currentEl) :
+                getClientPosition(currentEl);
+
+            position.left += offset.left;
+            position.top += offset.top;
+        } while (currentWin && currentWin != relativeWin &&
+            (currentEl = currentWin['frameElement']) &&
+            (currentWin = currentWin.parent));
+
+        return position;
     }
 
     // 设置 elem 相对 elem.ownerDocument 的坐标
@@ -4344,8 +4387,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * 2011-05-24
@@ -10209,7 +10252,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -11289,7 +11332,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * 数据延迟加载组件
@@ -11780,7 +11823,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:04
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12039,7 +12082,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * @module   Flash 全局静态类
@@ -12550,7 +12593,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -13764,7 +13807,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * resizable support for kissy
@@ -13929,7 +13972,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:04
 */
 /**
  * UIBase.Align
@@ -15632,7 +15675,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * container can delegate event for its children
@@ -16176,7 +16219,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * Switchable
@@ -18772,7 +18815,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * KISSY Overlay
@@ -19240,7 +19283,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -20419,7 +20462,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * @fileoverview 图像放大区域
@@ -21044,7 +21087,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:02
 */
 /**
  * KISSY Calendar
@@ -22323,7 +22366,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * menu model and controller for kissy,accommodate menu items
@@ -23207,7 +23250,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:02
 */
 /**
  * Model and Control for button
@@ -23490,7 +23533,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * combination of menu and button ,similar to native select
@@ -23659,8 +23702,19 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block {prefixCls}menu-button-caption"></div>' +
-        '<div class="{prefixCls}inline-block {prefixCls}menu-button-dropdown">&nbsp;</div>';
+    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
+        '{prefixCls}menu-button-caption"></div>' +
+        '<div class="{prefixCls}inline-block ' +
+        '{prefixCls}menu-button-dropdown">&nbsp;</div>',
+        CAPTION_CLS = "{prefixCls}menu-button-caption",
+        COLLAPSE_CLS = "{prefixCls}menu-button-open";
+
+    function getCls(self, str) {
+        return S.substitute(str, {
+            prefixCls:self.get("prefixCls")
+        });
+    }
+
 
     return UIBase.create(Button.Render, {
         renderUI:function() {
@@ -23668,32 +23722,30 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
         createDom:function() {
             var el = this.get("el");
-            el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
-                prefixCls:this.get("prefixCls")
-            }));
+            el.one("div").one("div").html(getCls(this, MENU_BUTTON_TMPL));
             //带有 menu
             el.attr("aria-haspopup", true);
         },
 
         _uiSetContent:function(v) {
             if (v == undefined) return;
-            this.get("el").one("." + this.get("prefixCls") + "menu-button-caption").html(v);
+            this.get("el").one("." + getCls(this, CAPTION_CLS)).html(v);
         },
 
         _uiSetCollapsed:function(v) {
-            var el = this.get("el"),prefixCls = this.get("prefixCls") + "menu-button";
+            var el = this.get("el"),cls = getCls(this, COLLAPSE_CLS);
             if (!v) {
-                el.addClass(prefixCls + "menu-button-open");
+                el.addClass(cls);
                 el.attr("aria-expanded", true);
             } else {
-                el.removeClass(prefixCls + "menu-button-open");
+                el.removeClass(cls);
                 el.attr("aria-expanded", false);
             }
         },
 
         _uiSetActiveItem:function(v) {
-            //S.log("button set aria " + (v && v.get("view").get("el").attr("id")) || "");
-            this.get("el").attr("aria-activedescendant", (v && v.get("view").get("el").attr("id")) || "");
+            this.get("el").attr("aria-activedescendant",
+                (v && v.get("view").get("el").attr("id")) || "");
         }
     }, {
         ATTRS:{
@@ -23875,7 +23927,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:04
 */
 /**
  * @author: 常胤 (lzlu.com)

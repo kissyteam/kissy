@@ -100,9 +100,11 @@
             <format property="build.year" pattern="yyyy"/>
         </tstamp>
         <!-- 仅在版本发布时，打时间戳 -->
-        <condition property="build.time" value="${stamp.time}">
-            <matches string="${version}" pattern=".+\d$"/>
-        </condition>
+        <!--<condition property="build.time" value="${stamp.time}">-->
+        <!--<matches string="${version}" pattern=".+\d$"/>-->
+        <!--</condition>-->
+        <!-- 都记下时间，便于区分 -->
+
         <!--<svn>-->
         <!--<wcVersion path="${kissy.dir}" prefix="svn."/>-->
         <!--</svn>-->
@@ -116,11 +118,13 @@
                 <fileset dir="${kissy.build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
             </path>
             <sequential>
-                <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
+                <concat destfile="@{file}.tmp"
+                        encoding="${charset}"
+                        outputencoding="${charset}">
                     <header filtering="no" trimleading="yes">/*
                         Copyright ${build.year}, KISSY UI Library v${version}
                         MIT Licensed
-                        build time: ${build.time}
+                        build time: ${stamp.time}
                         */
                     </header>
                     <fileset file="@{file}"/>

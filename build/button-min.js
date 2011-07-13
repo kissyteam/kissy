@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:02
 */
 KISSY.add("button/base",function(d,b,c,a){var e=b.create(c.ModelControl,{_handleClick:function(f){e.superclass._handleClick.call(this,f)||this.fire("click")}},{ATTRS:{value:{},content:{view:true,valueFn:function(){return this.get("view")&&this.get("view").get("content")}},describedby:{view:true},tooltip:{view:true}}});e.DefaultRender=a;return e},{requires:["uibase","component","./customrender"]});
 KISSY.add("button/buttonrender",function(d,b,c){return b.create(c.Render,{renderUI:function(){this.get("el").attr("role","button")},_uiSetContent:function(a){this.get("el").html(a)},_uiSetTooltip:function(a){this.get("el").attr("title",a)},_uiSetDescribedby:function(a){this.get("el").attr("aria-describedby",a)}},{ATTRS:{content:{},describedby:{},tooltip:{}},HTML_PARSER:{content:function(a){return a.html()}}})},{requires:["uibase","component"]});

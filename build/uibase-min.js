@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:04
 */
 KISSY.add("uibase/align",function(f,i,b){function e(){}function g(a,c){var k=c.charAt(0),l=c.charAt(1),d,h,j,m;if(a){a=b.one(a);d=a.offset();h=a[0].offsetWidth;j=a[0].offsetHeight}else{d={left:i.scrollLeft(),top:i.scrollTop()};h=i.viewportWidth();j=i.viewportHeight()}m=d.left;d=d.top;if(k==="c")d+=j/2;else if(k==="b")d+=j;if(l==="c")m+=h/2;else if(l==="r")m+=h;return{left:m,top:d}}f.mix(e,{TL:"tl",TC:"tc",TR:"tr",CL:"cl",CC:"cc",CR:"cr",BL:"bl",BC:"bc",BR:"br"});e.ATTRS={align:{}};e.prototype={_uiSetAlign:function(a){f.isPlainObject(a)&&
 this.align(a.node,a.points,a.offset)},align:function(a,c,k){var l,d=(this.get("view")||this).get("el");k=k||[0,0];l=d.offset();a=g(a,c[0]);c=g(d,c[1]);c=[c.left-a.left,c.top-a.top];l=[l.left-c[0]+ +k[0],l.top-c[1]+ +k[1]];this.set("x",l[0]);this.set("y",l[1])},center:function(a){this.set("align",{node:a,points:[e.CC,e.CC],offset:[0,0]})}};return e},{requires:["dom","node"]});
