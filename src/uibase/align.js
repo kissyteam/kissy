@@ -6,25 +6,48 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
 
     /**
-     * 得到定位父亲元素或者可滚动的父亲元素
+     * inspired by closure library by Google
+     * @refer http://yiminghe.iteye.com/blog/1124720
+     */
+
+    /**
+     * 得到影响元素显示的父亲元素
      */
     function getOffsetParent(element) {
-        if (UA['ie']) {
-            return element.offsetParent;
-        }
-        var doc = element.ownerDocument;
-        var positionStyle = DOM.css(element, 'position');
-        var skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
-        for (var parent = element.parentNode; parent && parent != doc;
+        // ie 这个也不是完全可行
+        /**
+         <div style="width: 50px;height: 100px;overflow: hidden">
+         <div style="width: 50px;height: 100px;position: relative;" id="d6">
+         元素 6 高 100px 宽 50px<br/>
+         </div>
+         </div>
+         **/
+//            if (UA['ie']) {
+//                return element.offsetParent;
+//            }
+        var body = element.ownerDocument.body,
+            positionStyle = DOM.css(element, 'position'),
+            skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
+
+        for (var parent = element.parentNode;
+             parent && parent != body;
              parent = parent.parentNode) {
+
             positionStyle = DOM.css(parent, 'position');
-            skipStatic = skipStatic && positionStyle == 'static' &&
-                parent != doc.documentElement && parent != doc.body;
-            if (!skipStatic && (parent.scrollWidth > parent.clientWidth ||
-                parent.scrollHeight > parent.clientHeight ||
-                positionStyle == 'fixed' ||
-                positionStyle == 'absolute' ||
-                positionStyle == 'relative')) {
+
+            skipStatic = skipStatic && positionStyle == 'static';
+
+            var parentOverflow = DOM.css(parent, "overflow");
+
+            // 必须有 overflow 属性，可能会隐藏掉子孙元素
+            if (parentOverflow != 'visible' && (
+                // 元素初始为 fixed absolute ，遇到 父亲不是 定位元素忽略
+                // 否则就可以
+                !skipStatic ||
+                    positionStyle == 'fixed' ||
+                    positionStyle == 'absolute' ||
+                    positionStyle == 'relative'
+                )) {
                 return parent;
             }
         }
@@ -35,55 +58,54 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
      * 获得元素的显示部分的区域
      */
     function getVisibleRectForElement(element) {
-        var visibleRect = {left:0,right:Infinity,top:0,bottom:Infinity};
-        var doc = element.ownerDocument;
-        var body = doc.body;
-        // 可滚动根元素
-        var scrollEl = !UA['webkit'] ? doc.documentElement : body;
-        var inContainer;
+        var visibleRect = {
+            left:0,
+            right:Infinity,
+            top:0,
+            bottom:Infinity
+        };
 
         for (var el = element; el = getOffsetParent(el);) {
+
+
+            var clientWidth = el.clientWidth;
+
+            if (
             // clientWidth is zero for inline block elements in IE.
+                (!UA['ie'] || clientWidth != 0)
             // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
-            if ((!UA['ie'] || el.clientWidth != 0)
-                && (!UA['webkit'] || el.clientHeight != 0 || el != body)
-                && (el.scrollWidth != el.clientWidth || el.scrollHeight != el.clientHeight) &&
-                DOM.css(el, 'overflow') != 'visible') {
-                var pos = DOM.offset(el);
-                var client = {left:el.clientLeft,top:el.clientTop};
+            // && (!UA['webkit'] || clientHeight != 0 || el != body)
+            // overflow 不为 visible 则可以限定其内元素
+            // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
+            // offsetParent 已经判断过了
+            //&& DOM.css(el, 'overflow') != 'visible'
+                ) {
+                var clientLeft = el.clientLeft,
+                    clientTop = el.clientTop,
+                    pos = DOM.offset(el),
+                    client = {
+                        left:clientLeft,
+                        top:clientTop
+                    };
                 pos.left += client.left;
                 pos.top += client.top;
 
-                visibleRect.top = Math.max(visibleRect.top, pos.top);
+                visibleRect.top = Math.max(visibleRect['top'], pos.top);
                 visibleRect.right = Math.min(visibleRect.right,
                     pos.left + el.clientWidth);
-                visibleRect.bottom = Math.min(visibleRect.bottom,
+                visibleRect.bottom = Math.min(visibleRect['bottom'],
                     pos.top + el.clientHeight);
                 visibleRect.left = Math.max(visibleRect.left, pos.left);
-                inContainer = inContainer || el != scrollEl;
             }
         }
 
-        // webkit 在 body 上滚动
-        var scrollX = scrollEl.scrollLeft,
-            scrollY = scrollEl.scrollTop;
+        var scrollX = DOM.scrollLeft(),
+            scrollY = DOM.scrollTop();
 
-        if (UA['webkit']) {
-            visibleRect.left += scrollX;
-            visibleRect.top += scrollY;
-        } else {
-            visibleRect.left = Math.max(visibleRect.left, scrollX);
-            visibleRect.top = Math.max(visibleRect.top, scrollY);
-        }
-
-        // 可视区域不在根容器中，更新 right
-        if (!inContainer || UA['webkit']) {
-            visibleRect.right += scrollX;
-            visibleRect.bottom += scrollY;
-        }
-
+        visibleRect.left = Math.max(visibleRect.left, scrollX);
+        visibleRect.top = Math.max(visibleRect['top'], scrollY);
         visibleRect.right = Math.min(visibleRect.right, scrollX + DOM.viewportWidth());
-        visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + DOM.viewportHeight());
+        visibleRect.bottom = Math.min(visibleRect['bottom'], scrollY + DOM.viewportHeight());
 
         return visibleRect.top >= 0 && visibleRect.left >= 0 &&
             visibleRect.bottom > visibleRect.top &&
@@ -234,18 +256,6 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
     function Align() {
     }
 
-    S.mix(Align, {
-        TL: 'tl',
-        TC: 'tc',
-        TR: 'tr',
-        CL: 'cl',
-        CC: 'cc',
-        CR: 'cr',
-        BL: 'bl',
-        BC: 'bc',
-        BR: 'br'
-    });
-
     Align.ATTRS = {
         align: {
             // 默认不是正中，可以实现自由动画 zoom
@@ -315,7 +325,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
-            offset = S.clone(offset);
+            offset = S.clone(offset) || [0,0];
             if (overflow.failX) {
                 flag.failX = 1;
             }
@@ -372,11 +382,15 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         center: function(node) {
             this.set('align', {
                 node: node,
-                points: [Align.CC, Align.CC],
+                points: ["cc", "cc"],
                 offset: [0, 0]
             });
         }
     };
+
+    if (1 > 2) {
+        Align._uiSetAlign();
+    }
 
     return Align;
 }, {
