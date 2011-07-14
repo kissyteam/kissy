@@ -86,8 +86,8 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             // 鼠标点击只是简单隐藏，显示切换
             if (e.type == 'click') {
                 if (menu.get("visible")) {
-                    // TODO popup menu 会监听 doc click
-                    // this.hideMenu();
+                    // popup menu 监听 doc click ?
+                    this.hideMenu();
                 }
                 else {
                     this.showMenu();
