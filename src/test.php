@@ -8,6 +8,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 </head>
 <h1>KISSY 集成化测试</h1>
 <iframe id="test" src=''
+        scrolling="no"
         style="width:100%;height:600px;border:1px solid red;"></iframe>
 <script type="text/javascript">
     var index = 0;

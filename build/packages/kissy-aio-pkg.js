@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 14 17:01
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 13 17:03
              */
             version: '1.20dev',
 
-            buildTime:'20110713170411',
+            buildTime:'20110714170111',
 
             /**
              * Returns a new object containing all of the properties of
@@ -6081,7 +6081,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 /**
  * @module  EventTarget
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/target', function(S, Event, DOM, undefined) {
 
@@ -6128,7 +6128,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
 
 /**
  * @module  event-focusin
- * @author  lifesinger@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function(S, UA, Event) {
 
@@ -6140,6 +6140,9 @@ KISSY.add('event/focusin', function(S, UA, Event) {
         ], function(o) {
             var attaches = 0;
             Event.special[o.name] = {
+                // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
+                // 达到和 focusin 一样的效果 focusin -> focus
+                // refer: http://yiminghe.iteye.com/blog/813255
                 setup: function() {
                     if (attaches++ === 0) {
                         document.addEventListener(o.fix, handler, true);
@@ -6162,8 +6165,8 @@ KISSY.add('event/focusin', function(S, UA, Event) {
     }
     return Event;
 }, {
-        requires:["ua","./base"]
-    });
+    requires:["ua","./base"]
+});
 
 /**
  * 承玉:2011-06-07
@@ -6175,7 +6178,7 @@ KISSY.add('event/focusin', function(S, UA, Event) {
 
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com, xiaomacji@gmail.com
+ * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
@@ -6353,7 +6356,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
  * reports IME and multi-stroke input more reliably than <code>oninput</code> or
  * the various key events across browsers.
  *
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
     var VALUE_CHANGE = "valueChange",
@@ -6457,7 +6460,7 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
 
 /**
  * kissy delegate for event module
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
@@ -6575,7 +6578,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
 /**
  * @module  event-mouseenter
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
@@ -9192,8 +9195,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  **/
 
 /**
- * ajax xhr tranport class
- * @author: yiminghe@gmail.com
+ * ajax xhr transport class
+ * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhr", function(S, io) {
 
@@ -9213,13 +9216,9 @@ KISSY.add("ajax/xhr", function(S, io) {
         return undefined;
     }
 
-    io.xhr = window.ActiveXObject ? function(forceStandard) {
-        var xhr;
+    io.xhr = window.ActiveXObject ? function() {
         // ie7 XMLHttpRequest 不能访问本地文件
-        if (io.isLocal && !forceStandard) {
-            xhr = createActiveXHR();
-        }
-        return xhr || createStandardXHR();
+        return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
 
     var detectXhr = io.xhr(),
@@ -9236,138 +9235,138 @@ KISSY.add("ajax/xhr", function(S, io) {
         }
 
         S.augment(XhrTransport, {
-                send:function() {
-                    var self = this,
-                        xhrObj = self.xhrObj,
-                        c = xhrObj.config;
+            send:function() {
+                var self = this,
+                    xhrObj = self.xhrObj,
+                    c = xhrObj.config;
 
-                    if (c.crossDomain && !allowCrossDomain) {
-                        S.error("do not allow crossdomain xhr !");
-                        return;
-                    }
+                if (c.crossDomain && !allowCrossDomain) {
+                    S.error("do not allow crossdomain xhr !");
+                    return;
+                }
 
-                    var xhr = io.xhr(),
-                        xhrFields,
-                        i;
+                var xhr = io.xhr(),
+                    xhrFields,
+                    i;
 
-                    self.xhr = xhr;
+                self.xhr = xhr;
 
-                    if (c['username']) {
-                        xhr.open(c.type, c.url, c.async, c['username'], c.password)
-                    } else {
-                        xhr.open(c.type, c.url, c.async);
-                    }
+                if (c['username']) {
+                    xhr.open(c.type, c.url, c.async, c['username'], c.password)
+                } else {
+                    xhr.open(c.type, c.url, c.async);
+                }
 
-                    if (xhrFields = c['xhrFields']) {
-                        for (i in xhrFields) {
-                            xhr[ i ] = xhrFields[ i ];
-                        }
-                    }
-
-                    // Override mime type if supported
-                    if (xhrObj.mimeType && xhr.overrideMimeType) {
-                        xhr.overrideMimeType(xhrObj.mimeType);
-                    }
-                    // yui3 and jquery both have
-                    if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
-                        xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
-                    }
-                    try {
-
-                        for (i in xhrObj.requestHeaders) {
-                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
-                        }
-                    } catch(e) {
-                    }
-
-                    xhr.send(c.hasContent && c.data || null);
-
-                    if (!c.async || xhr.readyState == 4) {
-                        self._callback();
-                    } else {
-                        xhr.onreadystatechange = function() {
-                            self._callback();
-                        }
-                    }
-                },
-                // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-                abort:function() {
-                    this._callback(0, 1);
-                },
-
-                _callback:function(event, abort) {
-
-                    // Firefox throws exceptions when accessing properties
-                    // of an xhr when a network error occured
-                    // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
-                    try {
-                        var self = this,
-                            xhr = self.xhr,
-                            xhrObj = self.xhrObj,
-                            c = xhrObj.config;
-                        //abort or complete
-                        if (abort || xhr.readyState == 4) {
-                            xhr.onreadystatechange = S.noop;
-
-
-                            if (abort) {
-                                // 完成以后 abort 不要调用
-                                if (xhr.readyState !== 4) {
-                                    xhr.abort();
-                                }
-                            } else {
-                                var status = xhr.status;
-                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
-
-                                var xml = xhr.responseXML;
-
-                                // Construct response list
-                                if (xml && xml.documentElement /* #4958 */) {
-                                    xhrObj.responseXML = xml;
-                                }
-                                xhrObj.responseText = xhr.responseText;
-
-                                // Firefox throws an exception when accessing
-                                // statusText for faulty cross-domain requests
-                                try {
-                                    var statusText = xhr.statusText;
-                                } catch(e) {
-                                    // We normalize with Webkit giving an empty statusText
-                                    statusText = "";
-                                }
-
-                                // Filter status for non standard behaviors
-                                // If the request is local and we have data: assume a success
-                                // (success with no data won't get notified, that's the best we
-                                // can do given current implementations)
-                                if (!status && io.isLocal && !c.crossDomain) {
-                                    status = xhrObj.responseText ? 200 : 404;
-                                    // IE - #1450: sometimes returns 1223 when it should be 204
-                                } else if (status === 1223) {
-                                    status = 204;
-                                }
-
-                                xhrObj.callback(status, statusText);
-                            }
-                        }
-                    } catch (firefoxAccessException) {
-                        xhr.onreadystatechange = S.noop;
-                        if (!abort) {
-                            xhrObj.callback(-1, firefoxAccessException);
-                        }
+                if (xhrFields = c['xhrFields']) {
+                    for (i in xhrFields) {
+                        xhr[ i ] = xhrFields[ i ];
                     }
                 }
 
+                // Override mime type if supported
+                if (xhrObj.mimeType && xhr.overrideMimeType) {
+                    xhr.overrideMimeType(xhrObj.mimeType);
+                }
+                // yui3 and jquery both have
+                if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
+                    xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+                }
+                try {
 
-            });
+                    for (i in xhrObj.requestHeaders) {
+                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                    }
+                } catch(e) {
+                }
+
+                xhr.send(c.hasContent && c.data || null);
+
+                if (!c.async || xhr.readyState == 4) {
+                    self._callback();
+                } else {
+                    xhr.onreadystatechange = function() {
+                        self._callback();
+                    }
+                }
+            },
+            // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
+            abort:function() {
+                this._callback(0, 1);
+            },
+
+            _callback:function(event, abort) {
+
+                // Firefox throws exceptions when accessing properties
+                // of an xhr when a network error occured
+                // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+                try {
+                    var self = this,
+                        xhr = self.xhr,
+                        xhrObj = self.xhrObj,
+                        c = xhrObj.config;
+                    //abort or complete
+                    if (abort || xhr.readyState == 4) {
+                        xhr.onreadystatechange = S.noop;
+
+
+                        if (abort) {
+                            // 完成以后 abort 不要调用
+                            if (xhr.readyState !== 4) {
+                                xhr.abort();
+                            }
+                        } else {
+                            var status = xhr.status;
+                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+
+                            var xml = xhr.responseXML;
+
+                            // Construct response list
+                            if (xml && xml.documentElement /* #4958 */) {
+                                xhrObj.responseXML = xml;
+                            }
+                            xhrObj.responseText = xhr.responseText;
+
+                            // Firefox throws an exception when accessing
+                            // statusText for faulty cross-domain requests
+                            try {
+                                var statusText = xhr.statusText;
+                            } catch(e) {
+                                // We normalize with Webkit giving an empty statusText
+                                statusText = "";
+                            }
+
+                            // Filter status for non standard behaviors
+                            // If the request is local and we have data: assume a success
+                            // (success with no data won't get notified, that's the best we
+                            // can do given current implementations)
+                            if (!status && io.isLocal && !c.crossDomain) {
+                                status = xhrObj.responseText ? 200 : 404;
+                                // IE - #1450: sometimes returns 1223 when it should be 204
+                            } else if (status === 1223) {
+                                status = 204;
+                            }
+
+                            xhrObj.callback(status, statusText);
+                        }
+                    }
+                } catch (firefoxAccessException) {
+                    xhr.onreadystatechange = S.noop;
+                    if (!abort) {
+                        xhrObj.callback(-1, firefoxAccessException);
+                    }
+                }
+            }
+
+
+        });
 
         io.setupTransport("*", XhrTransport);
 
         return io;
     }
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 
 /**
  * 借鉴 jquery，优化使用原型替代闭包
@@ -11823,33 +11822,12 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:04
+build time: Jul 14 17:00
 */
 /**
  * @fileoverview KISSY Template Engine.
  * @author 文河(yyfrankyy) <yyfrankyy@gmail.com>
  * @see https://github.com/yyfrankyy/kissy/tree/template/src/template
- *
- * @license
- * Copyright (c) 2010 Taobao Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
  */
 KISSY.add('template/template', function(S) {
 
@@ -13972,29 +13950,254 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:04
+build time: Jul 13 21:47
 */
 /**
  * UIBase.Align
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
-KISSY.add('uibase/align', function(S, DOM,Node) {
+KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
+
+    /**
+     * 得到定位父亲元素或者可滚动的父亲元素
+     */
+    function getOffsetParent(element) {
+        if (UA['ie']) {
+            return element.offsetParent;
+        }
+        var doc = element.ownerDocument;
+        var positionStyle = DOM.css(element, 'position');
+        var skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
+        for (var parent = element.parentNode; parent && parent != doc;
+             parent = parent.parentNode) {
+            positionStyle = DOM.css(parent, 'position');
+            skipStatic = skipStatic && positionStyle == 'static' &&
+                parent != doc.documentElement && parent != doc.body;
+            if (!skipStatic && (parent.scrollWidth > parent.clientWidth ||
+                parent.scrollHeight > parent.clientHeight ||
+                positionStyle == 'fixed' ||
+                positionStyle == 'absolute')) {
+                return parent;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获得元素的显示部分的区域
+     */
+    function getVisibleRectForElement(element) {
+        var visibleRect = {left:0,right:Infinity,top:0,bottom:Infinity};
+        var doc = element.ownerDocument;
+        var body = doc.body;
+        // 可滚动根元素
+        var scrollEl = !UA['webkit'] ? doc.documentElement : body;
+        var inContainer;
+
+        for (var el = element; el = getOffsetParent(el);) {
+            // clientWidth is zero for inline block elements in IE.
+            // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
+            if ((!UA['ie'] || el.clientWidth != 0)
+                && (!UA['webkit'] || el.clientHeight != 0 || el != body)
+                && (el.scrollWidth != el.clientWidth || el.scrollHeight != el.clientHeight) &&
+                DOM.css(el, 'overflow') != 'visible') {
+                var pos = DOM.offset(el);
+                var client = {left:el.clientLeft,top:el.clientTop};
+                pos.left += client.left;
+                pos.top += client.top;
+
+                visibleRect.top = Math.max(visibleRect.top, pos.top);
+                visibleRect.right = Math.min(visibleRect.right,
+                    pos.left + el.clientWidth);
+                visibleRect.bottom = Math.min(visibleRect.bottom,
+                    pos.top + el.clientHeight);
+                visibleRect.left = Math.max(visibleRect.left, pos.left);
+                inContainer = inContainer || el != scrollEl;
+            }
+        }
+
+        // webkit 在 body 上滚动
+        var scrollX = scrollEl.scrollLeft,
+            scrollY = scrollEl.scrollTop;
+
+        if (UA['webkit']) {
+            visibleRect.left += scrollX;
+            visibleRect.top += scrollY;
+        } else {
+            visibleRect.left = Math.max(visibleRect.left, scrollX);
+            visibleRect.top = Math.max(visibleRect.top, scrollY);
+        }
+
+        // 可视区域不在根容器中，更新 right
+        if (!inContainer || UA['webkit']) {
+            visibleRect.right += scrollX;
+            visibleRect.bottom += scrollY;
+        }
+
+        visibleRect.right = Math.min(visibleRect.right, scrollX + DOM.viewportWidth());
+        visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + DOM.viewportHeight());
+
+        return visibleRect.top >= 0 && visibleRect.left >= 0 &&
+            visibleRect.bottom > visibleRect.top &&
+            visibleRect.right > visibleRect.left ?
+            visibleRect : null;
+    }
+
+    function isFailed(status) {
+        for (var s in status) {
+            if (s.indexOf("fail") == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function positionAtAnchor(alignCfg) {
+        var offset = alignCfg.offset,
+            node = alignCfg.node,
+            points = alignCfg.points,
+            self = this,
+            xy,
+            diff,
+            p1,
+            //如果没有view，就是不区分mvc
+            el = self.get('el'),
+            p2;
+
+        offset = offset || [0,0];
+        xy = el.offset();
+
+        // p1 是 node 上 points[0] 的 offset
+        // p2 是 overlay 上 points[1] 的 offset
+        p1 = getAlignOffset(node, points[0]);
+        p2 = getAlignOffset(el, points[1]);
+
+        diff = [p2.left - p1.left, p2.top - p1.top];
+        xy = {
+            left: xy.left - diff[0] + (+offset[0]),
+            top: xy.top - diff[1] + (+offset[1])
+        };
+
+        return positionAtCoordinate.call(self, xy, alignCfg);
+    }
+
+
+    function positionAtCoordinate(absolutePos, alignCfg) {
+        var self = this,el = self.get('el');
+        var status = {};
+        var elSize = {width:el[0].offsetWidth,height:el[0].offsetHeight},
+            size = S.clone(elSize);
+        if (!S.isEmptyObject(alignCfg.overflow)) {
+            var viewport = getVisibleRectForElement(el[0]);
+            status = adjustForViewport(absolutePos, size, viewport, alignCfg.overflow || {});
+            if (isFailed(status)) {
+                return status;
+            }
+        }
+
+        self.set("x", absolutePos.left);
+        self.set("y", absolutePos.top);
+
+        if (size.width != elSize.width || size.height != elSize.height) {
+            el.width(size.width);
+            el.height(size.height);
+        }
+
+        return status;
+
+    }
+
+
+    function adjustForViewport(pos, size, viewport, overflow) {
+        var status = {};
+        if (pos.left < viewport.left && overflow.adjustX) {
+            pos.left = viewport.left;
+            status.adjustX = 1;
+        }
+        // Left edge inside and right edge outside viewport, try to resize it.
+        if (pos.left < viewport.left &&
+            pos.left + size.width > viewport.right &&
+            overflow.resizeWidth) {
+            size.width -= (pos.left + size.width) - viewport.right;
+            status.resizeWidth = 1;
+        }
+
+        // Right edge outside viewport, try to move it.
+        if (pos.left + size.width > viewport.right &&
+            overflow.adjustX) {
+            pos.left = Math.max(viewport.right - size.width, viewport.left);
+            status.adjustX = 1;
+        }
+
+        // Left or right edge still outside viewport, fail if the FAIL_X option was
+        // specified, ignore it otherwise.
+        if (overflow.failX) {
+            status.failX = pos.left < viewport.left ||
+                pos.left + size.width > viewport.right;
+        }
+
+        // Top edge outside viewport, try to move it.
+        if (pos.top < viewport.top && overflow.adjustY) {
+            pos.top = viewport.top;
+            status.adjustY = 1;
+        }
+
+        // Top edge inside and bottom edge outside viewport, try to resize it.
+        if (pos.top >= viewport.top &&
+            pos.top + size.height > viewport.bottom &&
+            overflow.resizeHeight) {
+            size.height -= (pos.top + size.height) - viewport.bottom;
+            status.resizeHeight = 1;
+        }
+
+        // Bottom edge outside viewport, try to move it.
+        if (pos.top + size.height > viewport.bottom &&
+            overflow.adjustY) {
+            pos.top = Math.max(viewport.bottom - size.height, viewport.top);
+            status.adjustY = 1;
+        }
+
+        // Top or bottom edge still outside viewport, fail if the FAIL_Y option was
+        // specified, ignore it otherwise.
+        if (overflow.failY) {
+            status.failY = pos.top < viewport.top ||
+                pos.top + size.height > viewport.bottom;
+        }
+
+        return status;
+    }
+
+
+    function flip(points, reg, map) {
+        var ret = [];
+        S.each(points, function(p) {
+            ret.push(p.replace(reg, function(m) {
+                return map[m];
+            }));
+        });
+        return ret;
+    }
+
+    function flipOffset(offset, index) {
+        offset[index] = -offset[index];
+        return offset;
+    }
 
     function Align() {
     }
 
     S.mix(Align, {
-            TL: 'tl',
-            TC: 'tc',
-            TR: 'tr',
-            CL: 'cl',
-            CC: 'cc',
-            CR: 'cr',
-            BL: 'bl',
-            BC: 'bc',
-            BR: 'br'
-        });
+        TL: 'tl',
+        TC: 'tc',
+        TR: 'tr',
+        CL: 'cl',
+        CC: 'cc',
+        CR: 'cr',
+        BL: 'bl',
+        BC: 'bc',
+        BR: 'br'
+    });
 
     Align.ATTRS = {
         align: {
@@ -14049,9 +14252,8 @@ KISSY.add('uibase/align', function(S, DOM,Node) {
     Align.prototype = {
 
         _uiSetAlign: function(v) {
-
             if (S.isPlainObject(v)) {
-                this.align(v.node, v.points, v.offset);
+                this.align(v.node, v.points, v.offset, v.overflow);
             }
         },
 
@@ -14061,31 +14263,60 @@ KISSY.add('uibase/align', function(S, DOM,Node) {
          * @param {Array.<string>} points 对齐方式
          * @param {Array.<number>} offset 偏移
          */
-        align: function(node, points, offset) {
+        align: function(node, points, offset, overflow) {
             var self = this,
-                xy,
-                diff,
-                p1,
-                //如果没有view，就是不区分mvc
-                el = (self.get("view") || self).get('el'),
-                p2;
+                flag = {};
+            // 后面会改的，先保存下
+            overflow = S.clone(overflow || {});
+            offset = S.clone(offset);
+            if (overflow.failX) {
+                flag.failX = 1;
+            }
+            if (overflow.failY) {
+                flag.failY = 1;
+            }
+            var status = positionAtAnchor.call(self, {
+                node:node,
+                points:points,
+                offset:offset,
+                overflow:flag
+            });
+            // 如果错误调整重试
+            if (isFailed(status)) {
+                if (status.failX) {
+                    points = flip(points, /[lr]/ig, {
+                        l:"r",
+                        r:"l"
+                    });
+                    offset = flipOffset(offset, 0);
+                }
 
-            offset = offset || [0,0];
-            xy = el.offset();
+                if (status.failY) {
+                    points = flip(points, /[tb]/ig, {
+                        t:"b",
+                        b:"t"
+                    });
+                    offset = flipOffset(offset, 1);
+                }
+            }
 
-            // p1 是 node 上 points[0] 的 offset
-            // p2 是 overlay 上 points[1] 的 offset
-            p1 = getAlignOffset(node, points[0]);
-            p2 = getAlignOffset(el, points[1]);
+            status = positionAtAnchor.call(self, {
+                node:node,
+                points:points,
+                offset:offset,
+                overflow:flag
+            });
 
-            diff = [p2.left - p1.left, p2.top - p1.top];
-            xy = [
-                xy.left - diff[0] + (+offset[0]),
-                xy.top - diff[1] + (+offset[1])
-            ];
-
-            self.set('x', xy[0]);
-            self.set('y', xy[1]);
+            if (isFailed(status)) {
+                delete overflow.failX;
+                delete overflow.failY;
+                status = positionAtAnchor.call(self, {
+                    node:node,
+                    points:points,
+                    offset:offset,
+                    overflow:overflow
+                });
+            }
         },
 
         /**
@@ -14093,18 +14324,21 @@ KISSY.add('uibase/align', function(S, DOM,Node) {
          */
         center: function(node) {
             this.set('align', {
-                    node: node,
-                    points: [Align.CC, Align.CC],
-                    offset: [0, 0]
-                });
+                node: node,
+                points: [Align.CC, Align.CC],
+                offset: [0, 0]
+            });
         }
     };
 
     return Align;
 }, {
-        requires:["dom","node"]
-    });
+    requires:["ua","dom","node"]
+});
 /**
+ *  2011-07-13 承玉 note:
+ *   - 增加智能对齐，以及大小调整选项
+ **//**
  * @module  UIBase
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
@@ -14500,7 +14734,7 @@ KISSY.add('uibase/box', function() {
         },
 
         visibleMode:{
-            value:"display",
+            value:"visibility",
             view:true
         },
         visible:{}
@@ -14679,7 +14913,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         _uiSetVisible:function(isVisible) {
             var el = this.get("el"),
                 visibleMode = this.get("visibleMode");
-            if (visibleMode == "visible") {
+            if (visibleMode == "visibility") {
                 el.css("visibility", isVisible ? "visible" : "hidden");
             } else {
                 el.css("display", isVisible ? "" : "none");
@@ -15675,7 +15909,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 13 21:47
 */
 /**
  * container can delegate event for its children
@@ -22366,7 +22600,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 13 21:48
 */
 /**
  * menu model and controller for kissy,accommodate menu items
@@ -22553,6 +22787,9 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              */
             activeItem:{
                 view:true
+            },
+            visibleMode:{
+                value:"display"
             }
         }
     });
@@ -22628,7 +22865,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             }
         },
 
-        containsElement:function(element){
+        containsElement:function(element) {
             return this.get('view').containsElement(element);
         }
 
@@ -22679,6 +22916,9 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             },
             selected:{
                 view:true
+            },
+            visibleMode:{
+                value:"display"
             }
         }
     });
@@ -22865,7 +23105,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 }, {
     requires:['ua','uibase','component']
 });/**
- * positiaonable and not focusabled menu
+ * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
@@ -22899,6 +23139,10 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
             focusable:{
                 value:false
+            },
+
+            visibleMode:{
+                value:"visibility"
             }
         },
         DefaultRender:PopupMenuRender
@@ -23533,7 +23777,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 13 21:48
 */
 /**
  * combination of menu and button ,similar to native select
@@ -23552,10 +23796,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 el = view.get("el"),
                 menu = self.get("menu");
             if (!menu.get("visible")) {
-                menu.set("align", {
-                    node:el,
-                    points:["bl","tl"]
-                });
+                menu.set("align", S.mix({
+                    node:el
+                }, self.get("menuAlign")));
                 menu.show();
                 el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
                 view.set("collapsed", false);
@@ -23674,6 +23917,17 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         ATTRS:{
             activeItem:{
                 view:true
+            },
+            menuAlign:{
+                value:{
+                    points:["bl","tl"],
+                    overflow:{
+                        failX:1,
+                        failY:1,
+                        adjustX:1,
+                        adjustY:1
+                    }
+                }
             },
             // 不关心选中元素 , 由 select 负责
             // selectedItem

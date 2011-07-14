@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>getVisibleRectForElement</title>
+</head>
+<body>
+
+<div style="position: relative;
+height: 50px;
+overflow: auto;">
+    <div>
+        x<br/>
+        x<br/>
+    </div>
+    <div id="d1" style="height:100px;width: 50px;">
+        元素 1 高 100px 宽 50px
+    </div>
+</div>
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+<div style="width: 50px;height: 100px;" id="d2">
+    元素 2 高 100px 宽 50px
+</div>
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+<div style="width: 50px;height: 100px;position: relative;" id="d3">
+    元素 3 高 100px 宽 50px
+</div>
+
+<script src="../../../build/kissy.js"></script>
+
+<script>
+    KISSY.ready(function(S) {
+        var DOM = S.DOM,UA = S.UA,Node = S.Node,Event = S.Event;
+
+        /**
+         * 得到定位父亲元素或者可滚动的父亲元素
+         */
+        function getOffsetParent(element) {
+            if (UA['ie']) {
+                return element.offsetParent;
+            }
+            var doc = element.ownerDocument;
+            var positionStyle = DOM.css(element, 'position');
+            var skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
+            for (var parent = element.parentNode; parent && parent != doc;
+                 parent = parent.parentNode) {
+                positionStyle = DOM.css(parent, 'position');
+                skipStatic = skipStatic && positionStyle == 'static' &&
+                        parent != doc.documentElement && parent != doc.body;
+
+                var parentScrollWidth = parent.scrollWidth,
+                        parentclientWidth = parent.clientWidth,
+                        parentscrollHeight = parent.scrollHeight,
+                        parentclientHeight = parent.clientHeight;
+
+                if (!skipStatic && (parentScrollWidth > parentclientWidth ||
+                        parentscrollHeight > parentclientHeight ||
+                        positionStyle == 'fixed' ||
+                        positionStyle == 'absolute' ||
+                        positionStyle == 'relative')) {
+                    return parent;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * 获得元素的显示部分的区域
+         */
+        function getVisibleRectForElement(element) {
+            var visibleRect = {left:0,right:Infinity,top:0,bottom:Infinity};
+            var doc = element.ownerDocument;
+            var body = doc.body;
+            // 可滚动根元素
+            var scrollEl = !UA['webkit'] ? doc.documentElement : body;
+            var inContainer;
+
+            for (var el = element; el = getOffsetParent(el);) {
+                // clientWidth is zero for inline block elements in IE.
+                // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
+
+                var clientWidth = el.clientWidth;
+
+                var clientHeight = el.clientHeight;
+
+                var scrollWidth = el.scrollWidth;
+
+                var scrollHeight = el.scrollHeight;
+
+
+                var clientLeft = el.clientLeft;
+
+                var clientTop = el.clientTop;
+
+                if ((!UA['ie'] || clientWidth != 0)
+                        && (!UA['webkit'] || clientHeight != 0 || el != body)
+                        && (scrollWidth != clientWidth || scrollHeight != clientHeight) &&
+                        DOM.css(el, 'overflow') != 'visible') {
+                    var pos = DOM.offset(el);
+                    var client = {left:clientLeft,top:clientTop};
+                    pos.left += client.left;
+                    pos.top += client.top;
+
+                    visibleRect.top = Math.max(visibleRect.top, pos.top);
+                    visibleRect.right = Math.min(visibleRect.right,
+                            pos.left + el.clientWidth);
+                    visibleRect.bottom = Math.min(visibleRect.bottom,
+                            pos.top + el.clientHeight);
+                    visibleRect.left = Math.max(visibleRect.left, pos.left);
+                    inContainer = inContainer || el != scrollEl;
+                }
+            }
+
+            // webkit 在 body 上滚动
+            var scrollX = scrollEl.scrollLeft,
+                    scrollY = scrollEl.scrollTop;
+
+            if (UA['webkit']) {
+                visibleRect.left += scrollX;
+                visibleRect.top += scrollY;
+            } else {
+                visibleRect.left = Math.max(visibleRect.left, scrollX);
+                visibleRect.top = Math.max(visibleRect.top, scrollY);
+            }
+
+            // 可视区域不在根容器中，更新 right
+            if (!inContainer || UA['webkit']) {
+                visibleRect.right += scrollX;
+                visibleRect.bottom += scrollY;
+            }
+
+            visibleRect.right = Math.min(visibleRect.right, scrollX + DOM.viewportWidth());
+            visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + DOM.viewportHeight());
+
+            return visibleRect.top >= 0 && visibleRect.left >= 0 &&
+                    visibleRect.bottom > visibleRect.top &&
+                    visibleRect.right > visibleRect.left ?
+                    visibleRect : null;
+        }
+
+
+        Event.on(document, "keydown", function(ev) {
+            if (ev.keyCode == 13) {
+                debugger
+                var rect = getVisibleRectForElement(DOM.get("#real"));
+                S.log(rect);
+                var offset = DOM.offset("#real");
+                S.log(offset);
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

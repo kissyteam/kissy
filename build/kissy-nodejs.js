@@ -188,7 +188,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 14 17:01
 */
 /*
  * @module kissy
@@ -274,7 +274,7 @@ build time: Jul 13 17:03
              */
             version: '1.20dev',
 
-            buildTime:'20110713170411',
+            buildTime:'20110714170111',
 
             /**
              * Returns a new object containing all of the properties of
@@ -6268,7 +6268,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 /**
  * @module  EventTarget
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/target', function(S, Event, DOM, undefined) {
 
@@ -6315,7 +6315,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
 
 /**
  * @module  event-focusin
- * @author  lifesinger@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function(S, UA, Event) {
 
@@ -6327,6 +6327,9 @@ KISSY.add('event/focusin', function(S, UA, Event) {
         ], function(o) {
             var attaches = 0;
             Event.special[o.name] = {
+                // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
+                // 达到和 focusin 一样的效果 focusin -> focus
+                // refer: http://yiminghe.iteye.com/blog/813255
                 setup: function() {
                     if (attaches++ === 0) {
                         document.addEventListener(o.fix, handler, true);
@@ -6349,8 +6352,8 @@ KISSY.add('event/focusin', function(S, UA, Event) {
     }
     return Event;
 }, {
-        requires:["ua","./base"]
-    });
+    requires:["ua","./base"]
+});
 
 /**
  * 承玉:2011-06-07
@@ -6362,7 +6365,7 @@ KISSY.add('event/focusin', function(S, UA, Event) {
 
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com, xiaomacji@gmail.com
+ * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
@@ -6540,7 +6543,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
  * reports IME and multi-stroke input more reliably than <code>oninput</code> or
  * the various key events across browsers.
  *
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
     var VALUE_CHANGE = "valueChange",
@@ -6644,7 +6647,7 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
 
 /**
  * kissy delegate for event module
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
@@ -6762,7 +6765,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
 /**
  * @module  event-mouseenter
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
@@ -9379,8 +9382,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  **/
 
 /**
- * ajax xhr tranport class
- * @author: yiminghe@gmail.com
+ * ajax xhr transport class
+ * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhr", function(S, io) {
 
@@ -9400,13 +9403,9 @@ KISSY.add("ajax/xhr", function(S, io) {
         return undefined;
     }
 
-    io.xhr = window.ActiveXObject ? function(forceStandard) {
-        var xhr;
+    io.xhr = window.ActiveXObject ? function() {
         // ie7 XMLHttpRequest 不能访问本地文件
-        if (io.isLocal && !forceStandard) {
-            xhr = createActiveXHR();
-        }
-        return xhr || createStandardXHR();
+        return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
 
     var detectXhr = io.xhr(),
@@ -9423,138 +9422,138 @@ KISSY.add("ajax/xhr", function(S, io) {
         }
 
         S.augment(XhrTransport, {
-                send:function() {
-                    var self = this,
-                        xhrObj = self.xhrObj,
-                        c = xhrObj.config;
+            send:function() {
+                var self = this,
+                    xhrObj = self.xhrObj,
+                    c = xhrObj.config;
 
-                    if (c.crossDomain && !allowCrossDomain) {
-                        S.error("do not allow crossdomain xhr !");
-                        return;
-                    }
+                if (c.crossDomain && !allowCrossDomain) {
+                    S.error("do not allow crossdomain xhr !");
+                    return;
+                }
 
-                    var xhr = io.xhr(),
-                        xhrFields,
-                        i;
+                var xhr = io.xhr(),
+                    xhrFields,
+                    i;
 
-                    self.xhr = xhr;
+                self.xhr = xhr;
 
-                    if (c['username']) {
-                        xhr.open(c.type, c.url, c.async, c['username'], c.password)
-                    } else {
-                        xhr.open(c.type, c.url, c.async);
-                    }
+                if (c['username']) {
+                    xhr.open(c.type, c.url, c.async, c['username'], c.password)
+                } else {
+                    xhr.open(c.type, c.url, c.async);
+                }
 
-                    if (xhrFields = c['xhrFields']) {
-                        for (i in xhrFields) {
-                            xhr[ i ] = xhrFields[ i ];
-                        }
-                    }
-
-                    // Override mime type if supported
-                    if (xhrObj.mimeType && xhr.overrideMimeType) {
-                        xhr.overrideMimeType(xhrObj.mimeType);
-                    }
-                    // yui3 and jquery both have
-                    if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
-                        xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
-                    }
-                    try {
-
-                        for (i in xhrObj.requestHeaders) {
-                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
-                        }
-                    } catch(e) {
-                    }
-
-                    xhr.send(c.hasContent && c.data || null);
-
-                    if (!c.async || xhr.readyState == 4) {
-                        self._callback();
-                    } else {
-                        xhr.onreadystatechange = function() {
-                            self._callback();
-                        }
-                    }
-                },
-                // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-                abort:function() {
-                    this._callback(0, 1);
-                },
-
-                _callback:function(event, abort) {
-
-                    // Firefox throws exceptions when accessing properties
-                    // of an xhr when a network error occured
-                    // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
-                    try {
-                        var self = this,
-                            xhr = self.xhr,
-                            xhrObj = self.xhrObj,
-                            c = xhrObj.config;
-                        //abort or complete
-                        if (abort || xhr.readyState == 4) {
-                            xhr.onreadystatechange = S.noop;
-
-
-                            if (abort) {
-                                // 完成以后 abort 不要调用
-                                if (xhr.readyState !== 4) {
-                                    xhr.abort();
-                                }
-                            } else {
-                                var status = xhr.status;
-                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
-
-                                var xml = xhr.responseXML;
-
-                                // Construct response list
-                                if (xml && xml.documentElement /* #4958 */) {
-                                    xhrObj.responseXML = xml;
-                                }
-                                xhrObj.responseText = xhr.responseText;
-
-                                // Firefox throws an exception when accessing
-                                // statusText for faulty cross-domain requests
-                                try {
-                                    var statusText = xhr.statusText;
-                                } catch(e) {
-                                    // We normalize with Webkit giving an empty statusText
-                                    statusText = "";
-                                }
-
-                                // Filter status for non standard behaviors
-                                // If the request is local and we have data: assume a success
-                                // (success with no data won't get notified, that's the best we
-                                // can do given current implementations)
-                                if (!status && io.isLocal && !c.crossDomain) {
-                                    status = xhrObj.responseText ? 200 : 404;
-                                    // IE - #1450: sometimes returns 1223 when it should be 204
-                                } else if (status === 1223) {
-                                    status = 204;
-                                }
-
-                                xhrObj.callback(status, statusText);
-                            }
-                        }
-                    } catch (firefoxAccessException) {
-                        xhr.onreadystatechange = S.noop;
-                        if (!abort) {
-                            xhrObj.callback(-1, firefoxAccessException);
-                        }
+                if (xhrFields = c['xhrFields']) {
+                    for (i in xhrFields) {
+                        xhr[ i ] = xhrFields[ i ];
                     }
                 }
 
+                // Override mime type if supported
+                if (xhrObj.mimeType && xhr.overrideMimeType) {
+                    xhr.overrideMimeType(xhrObj.mimeType);
+                }
+                // yui3 and jquery both have
+                if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
+                    xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+                }
+                try {
 
-            });
+                    for (i in xhrObj.requestHeaders) {
+                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                    }
+                } catch(e) {
+                }
+
+                xhr.send(c.hasContent && c.data || null);
+
+                if (!c.async || xhr.readyState == 4) {
+                    self._callback();
+                } else {
+                    xhr.onreadystatechange = function() {
+                        self._callback();
+                    }
+                }
+            },
+            // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
+            abort:function() {
+                this._callback(0, 1);
+            },
+
+            _callback:function(event, abort) {
+
+                // Firefox throws exceptions when accessing properties
+                // of an xhr when a network error occured
+                // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+                try {
+                    var self = this,
+                        xhr = self.xhr,
+                        xhrObj = self.xhrObj,
+                        c = xhrObj.config;
+                    //abort or complete
+                    if (abort || xhr.readyState == 4) {
+                        xhr.onreadystatechange = S.noop;
+
+
+                        if (abort) {
+                            // 完成以后 abort 不要调用
+                            if (xhr.readyState !== 4) {
+                                xhr.abort();
+                            }
+                        } else {
+                            var status = xhr.status;
+                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+
+                            var xml = xhr.responseXML;
+
+                            // Construct response list
+                            if (xml && xml.documentElement /* #4958 */) {
+                                xhrObj.responseXML = xml;
+                            }
+                            xhrObj.responseText = xhr.responseText;
+
+                            // Firefox throws an exception when accessing
+                            // statusText for faulty cross-domain requests
+                            try {
+                                var statusText = xhr.statusText;
+                            } catch(e) {
+                                // We normalize with Webkit giving an empty statusText
+                                statusText = "";
+                            }
+
+                            // Filter status for non standard behaviors
+                            // If the request is local and we have data: assume a success
+                            // (success with no data won't get notified, that's the best we
+                            // can do given current implementations)
+                            if (!status && io.isLocal && !c.crossDomain) {
+                                status = xhrObj.responseText ? 200 : 404;
+                                // IE - #1450: sometimes returns 1223 when it should be 204
+                            } else if (status === 1223) {
+                                status = 204;
+                            }
+
+                            xhrObj.callback(status, statusText);
+                        }
+                    }
+                } catch (firefoxAccessException) {
+                    xhr.onreadystatechange = S.noop;
+                    if (!abort) {
+                        xhrObj.callback(-1, firefoxAccessException);
+                    }
+                }
+            }
+
+
+        });
 
         io.setupTransport("*", XhrTransport);
 
         return io;
     }
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 
 /**
  * 借鉴 jquery，优化使用原型替代闭包

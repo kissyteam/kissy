@@ -58,7 +58,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             runs(function() {
                 expect(ret + "").toBe([] + "");
                 var eventDesc = Event._data(S.get('#test-delegate'));
-                expect(eventDesc).toBe(null);
+                expect(eventDesc).toBe(undefined);
             });
 
         });
@@ -109,7 +109,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             runs(function() {
                 expect(ret + "").toBe([] + "");
                 var eventDesc = Event._data(S.get('#test-delegate'));
-                expect(eventDesc).toBe(null);
+                expect(eventDesc).toBe(undefined);
             });
 
         });

@@ -1,7 +1,12 @@
 <project name="packages.build" default="build" basedir=".">
     <description>Component Build File</description>
 
+    <!--
+    only copyright min file
+    pkg file has been copyright individually
+    -->
     <property name="copyright.files" value="*-min.css, *-min.js"/>
+
     <dirname property="current.dir" file="${ant.file.packages.build}"/>
 
     <import file="${current.dir}/../../tools/build.xml"/>
@@ -19,10 +24,20 @@
     <target name="pre-clean">
         <delete>
             <fileset dir="." includes="${component.files}"/>
+            <!--每次都要重新 build seed-->
+            <fileset dir="../" includes="seed*.js"/>
         </delete>
     </target>
 
-    <target name="concat">
+    <target name="build-seed">
+        <!--
+        build seed first，刷新 seed 前的时间戳到最新
+        seed 的时间戳也代表 kissy 以及 kissy-aio 的时间戳
+        -->
+        <ant dir="${kissy.src.dir}/seed/" inheritall="false"/>
+    </target>
+
+    <target name="concat" depends="build-seed">
 
         <!-- using module compiler to gen core.js -->
         <delete file="${current.dir}/core-pkg.js"/>
