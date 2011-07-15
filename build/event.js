@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 15 14:17
 */
 /**
  * @module  event
@@ -419,7 +419,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
  */
 /**
  * kissy delegate for event module
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
@@ -535,7 +535,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  *
  **//**
  * @module  event-focusin
- * @author  lifesinger@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function(S, UA, Event) {
 
@@ -547,6 +547,9 @@ KISSY.add('event/focusin', function(S, UA, Event) {
         ], function(o) {
             var attaches = 0;
             Event.special[o.name] = {
+                // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
+                // 达到和 focusin 一样的效果 focusin -> focus
+                // refer: http://yiminghe.iteye.com/blog/813255
                 setup: function() {
                     if (attaches++ === 0) {
                         document.addEventListener(o.fix, handler, true);
@@ -569,8 +572,8 @@ KISSY.add('event/focusin', function(S, UA, Event) {
     }
     return Event;
 }, {
-        requires:["ua","./base"]
-    });
+    requires:["ua","./base"]
+});
 
 /**
  * 承玉:2011-06-07
@@ -581,7 +584,7 @@ KISSY.add('event/focusin', function(S, UA, Event) {
  */
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com, xiaomacji@gmail.com
+ * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
@@ -747,7 +750,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
  *         https://github.com/cowboy/jquery-hashchange
  *//**
  * @module  event-mouseenter
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
@@ -1000,7 +1003,7 @@ KISSY.add('event/object', function(S, undefined) {
  */
 /**
  * @module  EventTarget
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/target', function(S, Event, DOM, undefined) {
 
@@ -1056,7 +1059,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
  * reports IME and multi-stroke input more reliably than <code>oninput</code> or
  * the various key events across browsers.
  *
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
     var VALUE_CHANGE = "valueChange",

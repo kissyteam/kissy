@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 21:47
+build time: Jul 15 14:16
 */
 KISSY.add("component/container",function(f,g,h){return g.create(h,{bindUI:function(){this.get("view").get("el").on("mousedown mouseup mouseover mouseout",this._handleChildMouseEvents,this)},_handleChildMouseEvents:function(d){var a=this.getOwnerControl(f.one(d.target)[0]);if(a)switch(d.type){case "mousedown":a._handleMouseDown(d);break;case "mouseup":a._handleMouseUp(d);break;case "mouseover":a._handleMouseOver(d);break;case "mouseout":a._handleMouseOut(d)}},getOwnerControl:function(d){for(var a=
 this.get("children"),b=a.length,c=this.get("view").get("el")[0];d&&d!==c;){for(var e=0;e<b;e++)if(a[e].get("view").get("el")[0]===d)return a[e];d=d.parentNode}return null}})},{requires:["uibase","./modelcontrol"]});

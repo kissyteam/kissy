@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:03
+build time: Jul 15 14:17
 */
 /**
  * KISSY Overlay
@@ -256,10 +256,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
             // 是否支持焦点处理
             focusable:{
                 value:false
-            },
-
-            visibleMode:{
-                value:"visible"
             }
         }
     });

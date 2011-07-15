@@ -1,10 +1,12 @@
+<?xml version="1.0"?>
 <project name="seed.build" default="build" basedir=".">
     <description>Component Build File</description>
 
-    <import file="../../tools/build.xml"/>
-
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
+
+    <import file="../../tools/common.xml"/>
+
 
     <target name="concat">
         <concat destfile="seed-pkg.js" encoding="${charset}" outputencoding="${charset}">

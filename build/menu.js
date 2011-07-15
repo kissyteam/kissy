@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 21:48
+build time: Jul 15 14:17
 */
 /**
  * menu model and controller for kissy,accommodate menu items
@@ -510,31 +510,10 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
-    var doc = S.one(document);
     return UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
-
-        handleDocumentMouseDown:function(e) {
-            var self = this,
-                target = S.one(e.target)[0];
-            if (self.get("visible") && !self.containsElement(target)) {
-                self.hide();
-            }
-        },
-
-        bindUI:function() {
-            var self = this;
-
-            self.on("show", function() {
-                doc.on("mousedown", self.handleDocumentMouseDown, self);
-            });
-
-            self.on("hide", function() {
-                doc.detach("mousedown", self.handleDocumentMouseDown, self);
-            });
-        }
     }, {
         ATTRS:{
             // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上

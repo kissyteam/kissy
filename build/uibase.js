@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 14 22:02
+build time: Jul 15 14:17
 */
 /**
  * UIBase.Align
@@ -330,7 +330,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
-            offset = S.clone(offset);
+            offset = S.clone(offset) || [0,0];
             if (overflow.failX) {
                 flag.failX = 1;
             }

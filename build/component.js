@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 21:47
+build time: Jul 15 14:16
 */
 /**
  * container can delegate event for its children
