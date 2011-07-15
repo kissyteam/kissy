@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 KISSY.add("node/anim-plugin",function(e,d,f,g,l){function n(h,w,o,k,i,q,x){if(w==="toggle"){i=d.css(h,c)===j?1:0;w="show"}if(i)d.css(h,c,d.data(h,c)||"");var m={},v={};e.each(z[w],function(r){if(r===p){m[p]=d.css(h,p);d.css(h,p,A)}else if(r===t){m[t]=d.css(h,t);v.opacity=i?1:0;i&&d.css(h,t,0)}else if(r===s){m[s]=d.css(h,s);v.height=i?d.css(h,s)||h.naturalHeight:0;i&&d.css(h,s,0)}else if(r===u){m[u]=d.css(h,u);v.width=i?d.css(h,u)||h.naturalWidth:0;i&&d.css(h,u,0)}});return(new f(h,v,o,q||"easeOut",
 function(){if(!i){var r=h.style,y=r[c];if(y!==j){y&&d.data(h,c,y);r[c]=j}m[s]&&d.css(h,{height:m[s]});m[u]&&d.css(h,{width:m[u]});m[t]&&d.css(h,{opacity:m[t]});m[p]&&d.css(h,{overflow:m[p]})}k&&e.isFunction(k)&&k()},x)).run()}var a=g.prototype,b="ksAnims"+e.now(),c="display",j="none",p="overflow",A="hidden",t="opacity",s="height",u="width",z={show:[p,t,s,u],fade:[t],slide:[p,s]};g.__ANIM_KEY=b;(function(h){function w(o,k){var i=d.data(o,b);i||d.data(o,b,i=[]);k.on("complete",function(){var q=d.data(o,

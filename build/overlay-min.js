@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 KISSY.add("overlay/overlayrender",function(f,b,h,c){function a(d){return f.require("uibase/"+d)}return h.create(c.Render,[a("contentboxrender"),a("positionrender"),a("loadingrender"),b.ie==6?a("shimrender"):null,a("maskrender")],{renderUI:function(){this.get("el").addClass(this.get("prefixCls")+"overlay")}},{ATTRS:{prefixCls:{value:"ks-"},elBefore:{valueFn:function(){return f.one(this.get("render")[0].firstChild)}}}})},{requires:["ua","uibase","component"]});
 KISSY.add("overlay/ariarender",function(f,b){function h(){}function c(e){var g=e.keyCode,i=this.get("el");if(g==d){g=a(e.target);var j=this.__ariaArchor;if(g.equals(i)&&e.shiftKey){j[0].focus();e.halt()}else if(g.equals(j)&&!e.shiftKey){i[0].focus();e.halt()}else if(g.equals(i)||i.contains(g))return;e.halt()}}var a=b.all,d=9;h.prototype={__renderUI:function(){var e=this.get("el"),g=this.get("header");if(this.get("aria")){e.attr("role","dialog");e.attr("tabindex",0);g.attr("id")||g.attr("id",f.guid("ks-dialog-header"));

@@ -1,0 +1,210 @@
+<!--
+ 各个组件的公用构建文件
+ @author lifesinger@gmail.com , yiminghe@gmaill.com
+ @refer http://ant.apache.org/manual/Tasks/subant.html
+-->
+<project name="common-build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+    <description>Common Build File</description>
+
+    <!-- 各个组件公用的属性 -->
+    <property name="kissy.dir" location="${ant.file.common-build}/../../"/>
+    <property name="kissy-tools.dir" location="${kissy.dir}/../kissy-tools/"/>
+    <property name="kissy.build.dir" location="${kissy.dir}/build/"/>
+    <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
+    <property name="version" value="1.20dev"/>
+    <property name="charset" value="utf-8"/>
+    <property name="copyright.files" value="*.css, *.js"/>
+
+
+    <!-- 需要组件覆盖的属性 -->
+    <property name="component.name" value="component.name.need.override"/>
+    <property name="component.files" value="component.files.need.override"/>
+    <property name="src.dir" value="src.file.need.override"/>
+
+
+    <!-- 本 xml 需要的属性 -->
+    <property name="component.build.dir" value="${kissy.build.dir}/${component.name}/"/>
+    <property name="component.build.dir.tmp" value="${kissy.build.dir}/${component.name}/tmp/"/>
+    <tstamp>
+        <format property="timestamp.isoformat"
+                pattern="yyyyMMddHHmmss" locale="en"/>
+    </tstamp>
+
+    <!-- 清空与复制等准备工作 -->
+    <target name="prepare">
+
+        <delete dir="${component.build.dir}"/>
+
+        <mkdir dir="${component.build.dir}"/>
+
+        <copy todir="${component.build.dir}">
+            <fileset dir="${src.dir}" includes="${component.files}"/>
+        </copy>
+
+    </target>
+
+    <!-- 压缩代码 -->
+    <target name="compress">
+        <!-- 去除 S.log -->
+        <mkdir dir="${component.build.dir.tmp}"/>
+        <copy todir="${component.build.dir.tmp}">
+            <fileset dir="${component.build.dir}"
+                     includes="${component.files}"/>
+        </copy>
+        <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
+                       replace=""
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${component.build.dir}"
+                     includes="*.js"/>
+        </replaceregexp>
+
+        <!-- 用 YUICompressor 压缩 CSS -->
+        <apply executable="java" verbose="true"
+               dest="${component.build.dir}">
+            <fileset dir="${component.build.dir}"
+                     includes="**/*.css"/>
+            <arg line="-jar"/>
+            <arg path="${kissy-tools.dir}/yuicompressor/yuicompressor.jar"/>
+            <arg line="--charset ${charset}"/>
+            <srcfile/>
+            <arg line="-o"/>
+            <targetfile/>
+            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
+        </apply>
+
+        <!-- 用 Closure Compiler 压缩 JS -->
+        <apply executable="java" verbose="true"
+               dest="${component.build.dir}">
+            <fileset dir="${component.build.dir}"
+                     includes="**/*.js"
+                    />
+            <arg line="-jar"/>
+            <arg path="${kissy-tools.dir}/closure-compiler/compiler.jar"/>
+            <arg line="--charset ${charset}"/>
+            <arg value="--warning_level"/>
+            <arg value="QUIET"/>
+            <arg value="--js"/>
+            <srcfile/>
+            <arg value="--js_output_file"/>
+            <targetfile/>
+            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
+        </apply>
+
+        <!-- 还原 debug 版本 -->
+        <move todir="${component.build.dir}">
+            <fileset dir="${component.build.dir.tmp}"
+                     includes="${component.files}"/>
+        </move>
+        <delete dir="${component.build.dir.tmp}"/>
+    </target>
+
+    <!-- 对 JS 文件 ASCII 化 -->
+    <target name="native2ascii" depends="compress">
+        <mkdir dir="${component.build.dir.tmp}"/>
+        <move todir="${component.build.dir.tmp}">
+            <fileset dir="${component.build.dir}" includes="*-min.js"/>
+        </move>
+        <native2ascii encoding="${charset}"
+                      src="${component.build.dir.tmp}"
+                      dest="${component.build.dir}"
+                      includes="*.js"/>
+        <delete dir="${component.build.dir.tmp}"/>
+    </target>
+
+    <!-- 替换版本信息以及给文件加上版权信息 -->
+    <target name="copyright">
+        <tstamp>
+            <format property="stamp.time" pattern="MMM d HH:mm" locale="en,UK"/>
+            <format property="build.year" pattern="yyyy"/>
+        </tstamp>
+
+        <mkdir dir="${component.build.dir.tmp}"/>
+        <move todir="${component.build.dir.tmp}">
+            <fileset dir="${component.build.dir}" includes="${copyright.files}"/>
+        </move>
+
+        <ac:for param="file">
+            <path>
+                <fileset dir="${component.build.dir.tmp}"
+                         includes="${copyright.files}"/>
+            </path>
+            <sequential>
+                <concat destfile="@{file}.tmp"
+                        encoding="${charset}"
+                        outputencoding="${charset}">
+                    <header filtering="no" trimleading="yes">/*
+                        Copyright ${build.year}, KISSY UI Library v${version}
+                        MIT Licensed
+                        build time: ${stamp.time}
+                        */
+                    </header>
+                    <fileset file="@{file}"/>
+                </concat>
+                <replaceregexp match="@VERSION@"
+                               replace="${version}"
+                               flags="g"
+                               encoding="${charset}"
+                               byline="true"
+                               file="@{file}.tmp"/>
+
+                <replaceregexp match="@DEBUG@"
+                               replace=""
+                               flags="g"
+                               byline="true"
+                               encoding="${charset}"
+                               file="@{file}.tmp"/>
+
+                <replaceregexp match="@TIMESTAMP@"
+                               replace="${timestamp.isoformat}"
+                               flags="g"
+                               byline="true"
+                               encoding="${charset}"
+                               file="@{file}.tmp"/>
+
+                <move file="@{file}.tmp"
+                      tofile="@{file}"/>
+            </sequential>
+        </ac:for>
+
+        <move todir="${component.build.dir}">
+            <fileset dir="${component.build.dir.tmp}"
+                     includes="${copyright.files}"/>
+        </move>
+        <delete dir="${component.build.dir.tmp}"/>
+
+    </target>
+
+
+    <target name="fix-cr-lf">
+        <fixcrlf srcdir="${component.build.dir}"
+                 tablength="4"
+                 includes="**/*.js,**/*.css"
+                 encoding="${charset}"/>
+    </target>
+
+    <target name="common.build" depends="prepare,compress,native2ascii,copyright,fix-cr-lf">
+
+        <!-- 1.2 不需要 pkg -->
+        <move encoding="${charset}" todir="${kissy.build.dir}">
+            <fileset dir="${component.build.dir}" includes="*-pkg*"/>
+            <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
+        </move>
+
+        <!-- 空组件文件夹直接删除 -->
+        <condition property="empty.component.build.dir">
+            <length length="0">
+                <fileset dir="${component.build.dir}"/>
+            </length>
+        </condition>
+
+        <ac:if>
+            <isset property="empty.component.build.dir"/>
+            <ac:then>
+                <delete dir="${component.build.dir}"/>
+            </ac:then>
+        </ac:if>
+
+    </target>
+</project>

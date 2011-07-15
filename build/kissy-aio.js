@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:28
+build time: Jul 15 15:46
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 15 14:28
              */
             version: '1.20dev',
 
-            buildTime:'20110715142803',
+            buildTime:'20110715154606',
 
             /**
              * Returns a new object containing all of the properties of
@@ -10251,7 +10251,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -11331,7 +11331,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:16
+build time: Jul 15 15:45
 */
 /**
  * 数据延迟加载组件
@@ -11822,7 +11822,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12060,7 +12060,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * @module   Flash 全局静态类
@@ -12571,7 +12571,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:16
+build time: Jul 15 15:45
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -13785,7 +13785,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * resizable support for kissy
@@ -13950,7 +13950,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * UIBase.Align
@@ -15924,7 +15924,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:16
+build time: Jul 15 15:45
 */
 /**
  * container can delegate event for its children
@@ -16468,7 +16468,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * Switchable
@@ -19064,7 +19064,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * KISSY Overlay
@@ -19528,7 +19528,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -20707,7 +20707,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * @fileoverview 图像放大区域
@@ -21332,7 +21332,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:16
+build time: Jul 15 15:45
 */
 /**
  * KISSY Calendar
@@ -22611,7 +22611,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * menu model and controller for kissy,accommodate menu items
@@ -23484,7 +23484,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:16
+build time: Jul 15 15:44
 */
 /**
  * Model and Control for button
@@ -23767,7 +23767,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:45
 */
 /**
  * combination of menu and button ,similar to native select
@@ -24171,7 +24171,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 14:17
+build time: Jul 15 15:46
 */
 /**
  * @author: 常胤 (lzlu.com)
