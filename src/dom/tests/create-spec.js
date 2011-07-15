@@ -1,6 +1,6 @@
 /**
  * test cases for create sub module of dom module
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom", function(S, DOM) {
     describe("create", function() {
@@ -60,7 +60,7 @@ KISSY.use("dom", function(S, DOM) {
             var style,d;
             expect((style = DOM.create("<style>.styleie67 {width:99px;}</style>"))
                 .nodeName.toLowerCase()).toBe("style");
-            DOM.append(d = DOM.create("<div class='styleie67'></style>"), document.body);
+            DOM.append(d = DOM.create("<div class='styleie67'></div>"), document.body);
             DOM.append(style, document.getElementsByTagName("head")[0]);
             expect(DOM.css(d, "width")).toBe("99px");
         });

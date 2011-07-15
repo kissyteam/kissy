@@ -188,7 +188,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /*
  * @module kissy
@@ -274,7 +274,7 @@ build time: ${build.time}
              */
             version: '1.20dev',
 
-            buildTime:'20110704134631',
+            buildTime:'20110713170411',
 
             /**
              * Returns a new object containing all of the properties of
@@ -563,551 +563,554 @@ build time: ${build.time}
     }
 
     S.mix(S, {
-            noop:function() {
-            },
+        noop:function() {
+        },
 
-            /**
-             * Determine the internal JavaScript [[Class]] of an object.
-             */
-            type: function(o) {
-                return o == null ?
-                    String(o) :
-                    class2type[toString.call(o)] || 'object';
-            },
+        /**
+         * Determine the internal JavaScript [[Class]] of an object.
+         */
+        type: function(o) {
+            return o == null ?
+                String(o) :
+                class2type[toString.call(o)] || 'object';
+        },
 
-            isNull: function(o) {
-                return o === null;
-            },
+        isNull: function(o) {
+            return o === null;
+        },
 
-            isUndefined: function(o) {
-                return o === undefined;
-            },
+        isUndefined: function(o) {
+            return o === undefined;
+        },
 
-            /**
-             * Checks to see if an object is empty.
-             */
-            isEmptyObject: function(o) {
-                for (var p in o) {
-                    if (p !== undefined) {
-                        return false;
-                    }
+        /**
+         * Checks to see if an object is empty.
+         */
+        isEmptyObject: function(o) {
+            for (var p in o) {
+                if (p !== undefined) {
+                    return false;
                 }
-                return true;
-            },
+            }
+            return true;
+        },
 
+        /**
+         * Checks to see if an object is a plain object (created using "{}"
+         * or "new Object()" or "new FunctionClass()").
+         * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+         */
+        isPlainObject: function(o) {
             /**
-             * Checks to see if an object is a plain object (created using "{}"
-             * or "new Object()" or "new FunctionClass()").
-             * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+             * note by yiminghe
+             * isPlainObject(node=document.getElementById("xx")) -> false
+             * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+             * 'isPrototypeOf' in node : ie678 === false ,other === true
              */
-            isPlainObject: function(o) {
-                /**
-                 * note by yiminghe
-                 * isPlainObject(node=document.getElementById("xx")) -> false
-                 * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
-                 * 'isPrototypeOf' in node : ie678 === false ,other === true
-                 */
 
-                return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
-            },
+            return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
+        },
 
-            /**
-             * Creates a deep copy of a plain object or array. Others are returned untouched.
-             */
-            clone: function(o, f, cloned) {
-                var ret = o, isArray, k, stamp, marked = cloned || {};
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         */
+        clone: function(o, f, cloned) {
+            var ret = o, isArray, k, stamp, marked = cloned || {};
 
-                // array or plain object
-                if (o
-                    && (
-                    (isArray = S.isArray(o))
-                        || S.isPlainObject(o)
-                    )
-                    ) {
+            // array or plain object
+            if (o
+                && (
+                (isArray = S.isArray(o))
+                    || S.isPlainObject(o)
+                )
+                ) {
 
-                    // avoid recursive clone
-                    if (o[CLONE_MARKER]) {
-                        return marked[o[CLONE_MARKER]];
-                    }
-                    o[CLONE_MARKER] = (stamp = S.guid());
-                    marked[stamp] = o;
-
-                    // clone it
-                    if (isArray) {
-                        ret = f ? S.filter(o, f) : o.concat();
-                    } else {
-                        ret = {};
-                        for (k in o) {
-                            if (k !== CLONE_MARKER &&
-                                o.hasOwnProperty(k) &&
-                                (!f || (f.call(o, o[k], k, o) !== false))) {
-                                ret[k] = S.clone(o[k], f, marked);
-                            }
-                        }
-                    }
+                // avoid recursive clone
+                if (o[CLONE_MARKER]) {
+                    return marked[o[CLONE_MARKER]];
                 }
+                o[CLONE_MARKER] = (stamp = S.guid());
+                marked[stamp] = o;
 
-                // clear marked
-                if (!cloned) {
-                    S.each(marked, function(v) {
-                        if (v[CLONE_MARKER]) {
-                            try {
-                                delete v[CLONE_MARKER];
-                            } catch (e) {
-                                v[CLONE_MARKER] = undefined;
-                            }
-                        }
-                    });
-                    marked = undefined;
-                }
-
-                return ret;
-            },
-
-            /**
-             * Removes the whitespace from the beginning and end of a string.
-             */
-            trim: trim ?
-                function(str) {
-                    return (str == undefined) ? EMPTY : trim.call(str);
-                } :
-                function(str) {
-                    return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
-                },
-
-            /**
-             * Substitutes keywords in a string using an object/array.
-             * Removes undefined keywords and ignores escaped keywords.
-             */
-            substitute: function(str, o, regexp) {
-                if (!S.isString(str)
-                    || !S.isPlainObject(o)) {
-                    return str;
-                }
-
-                return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
-                    if (match.charAt(0) === '\\') {
-                        return match.slice(1);
-                    }
-                    return (o[name] !== undefined) ? o[name] : EMPTY;
-                });
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * @param object {Object} the object to iterate
-             * @param fn {Function} the function to execute on each item. The function
-             *        receives three arguments: the value, the index, the full array.
-             * @param context {Object} (opt)
-             */
-            each: function(object, fn, context) {
-                var key,
-                    val,
-                    i = 0,
-                    length = object && object.length,
-                    isObj = length === undefined || S.type(object) === 'function';
-                context = context || host;
-
-                if (isObj) {
-                    for (key in object) {
-                        if (fn.call(context, object[key], key, object) === false) {
-                            break;
-                        }
-                    }
+                // clone it
+                if (isArray) {
+                    ret = f ? S.filter(o, f) : o.concat();
                 } else {
-                    for (val = object[0];
-                         i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
-                    }
-                }
-
-                return object;
-            },
-
-            /**
-             * Search for a specified value within an array.
-             */
-            indexOf: indexOf ?
-                function(item, arr) {
-                    return indexOf.call(arr, item);
-                } :
-                function(item, arr) {
-                    for (var i = 0, len = arr.length; i < len; ++i) {
-                        if (arr[i] === item) {
-                            return i;
+                    ret = {};
+                    for (k in o) {
+                        if (k !== CLONE_MARKER &&
+                            o.hasOwnProperty(k) &&
+                            (!f || (f.call(o, o[k], k, o) !== false))) {
+                            ret[k] = S.clone(o[k], f, marked);
                         }
                     }
-                    return -1;
-                },
-
-            /**
-             * Returns the index of the last item in the array
-             * that contains the specified value, -1 if the
-             * value isn't found.
-             */
-            lastIndexOf: (lastIndexOf) ?
-                function(item, arr) {
-                    return lastIndexOf.call(arr, item);
-                } :
-                function(item, arr) {
-                    for (var i = arr.length - 1; i >= 0; i--) {
-                        if (arr[i] === item) {
-                            break;
-                        }
-                    }
-                    return i;
-                },
-
-            /**
-             * Returns a copy of the array with the duplicate entries removed
-             * @param a {Array} the array to find the subset of uniques for
-             * @param override {Boolean}
-             *        if override is true, S.unique([a, b, a]) => [b, a]
-             *        if override is false, S.unique([a, b, a]) => [a, b]
-             * @return {Array} a copy of the array with duplicate entries removed
-             */
-            unique: function(a, override) {
-                var b = a.slice();
-                if (override) {
-                    b.reverse();
                 }
-                var i = 0,
-                    n,
-                    item;
-
-                while (i < b.length) {
-                    item = b[i];
-                    while ((n = S.lastIndexOf(item, b)) !== i) {
-                        b.splice(n, 1);
-                    }
-                    i += 1;
-                }
-
-                if (override) {
-                    b.reverse();
-                }
-                return b;
-            },
-
-            /**
-             * Search for a specified value index within an array.
-             */
-            inArray: function(item, arr) {
-                return S.indexOf(item, arr) > -1;
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a new array containing the items that the supplied
-             * function returned true for.
-             * @param arr {Array} the array to iterate
-             * @param fn {Function} the function to execute on each item
-             * @param context {Object} optional context object
-             * @return {Array} The items on which the supplied function
-             *         returned true. If no items matched an empty array is
-             *         returned.
-             */
-            filter: filter ?
-                function(arr, fn, context) {
-                    return filter.call(arr, fn, context || this);
-                } :
-                function(arr, fn, context) {
-                    var ret = [];
-                    S.each(arr, function(item, i, arr) {
-                        if (fn.call(context || this, item, i, arr)) {
-                            ret.push(item);
-                        }
-                    });
-                    return ret;
-                },
-            // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-            map:map ?
-                function(arr, fn, context) {
-                    return map.call(arr, fn, context || this);
-                } :
-                function(arr, fn, context) {
-                    var len = arr.length,
-                        res = new Array(len);
-                    for (var i = 0; i < len; i++) {
-                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
-                        if (el
-                            ||
-                            //ie<9 in invalid when typeof arr == string
-                            i in arr) {
-                            res[i] = fn.call(context || this, el, i, arr);
-                        }
-                    }
-                    return res;
-                },
-
-            /**
-             * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
-             */
-            reduce:/*
-             NaN ?
-             reduce ? function(arr, callback, initialValue) {
-             return arr.reduce(callback, initialValue);
-             } : */function(arr, callback, initialValue) {
-                var len = arr.length;
-                if (typeof callback !== "function")
-                    throw new TypeError();
-
-                // no value to return if no initial value and an empty array
-                if (len == 0 && arguments.length == 2)
-                    throw new TypeError();
-
-                var k = 0;
-                var accumulator;
-                if (arguments.length >= 3) {
-                    accumulator = arguments[2];
-                }
-                else {
-                    do {
-                        if (k in arr) {
-                            accumulator = arr[k++];
-                            break;
-                        }
-
-                        // if array contains no values, no initial value to return
-                        if (++k >= len)
-                            throw new TypeError();
-                    }
-                    while (true);
-                }
-
-                while (k < len) {
-                    if (k in arr) {
-                        accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
-                    }
-                    k++;
-                }
-
-                return accumulator;
-            },
-
-            /**
-             * it is not same with native bind
-             * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
-             */
-            bind:function(fn, obj) {
-                var slice = [].slice,
-                    args = slice.call(arguments, 2),
-                    bound = function () {
-                        return fn.apply(this instanceof bound ? this : obj,
-                            args.concat(slice.call(arguments)));
-                    };
-                bound.prototype = fn.prototype;
-                return bound;
-            },
-
-            /**
-             * Gets current date in milliseconds.
-             */
-            now: function() {
-                return new Date().getTime();
-            },
-            /**
-             * frequently used in taobao cookie about nick
-             */
-            fromUnicode:function(str) {
-                return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
-                    return  String.fromCharCode(parseInt(u, 16));
-                });
-            },
-            /**
-             * escape string to html
-             * @refer http://yiminghe.javaeye.com/blog/788929
-             * @param str {string} text2html show
-             */
-            escapeHTML:function(str) {
-                return str.replace(getEscapeReg(), function(m) {
-                    return reverseEntities[m];
-                });
-            },
-
-            /**
-             * unescape html to string
-             * @param str {string} html2text
-             */
-            unEscapeHTML:function(str) {
-                return str.replace(getUnEscapeReg(), function(m, n) {
-                    return htmlEntities[m] || String.fromCharCode(+n);
-                });
-            },
-            /**
-             * Converts object to a true array.
-             * @param o {object|Array} array like object or array
-             */
-            makeArray: function(o) {
-                if (o === null || o === undefined) return [];
-                if (S.isArray(o)) return o;
-
-                // The strings and functions also have 'length'
-                if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
-                    return [o];
-                }
-                var ret = [];
-                for (var i = 0,l = o.length; i < l; i++) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            },
-            /**
-             * Creates a serialized string of an array or object.
-             * @return {String}
-             * <code>
-             * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-             * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-             * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-             * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-             * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-             * </code>
-             */
-            param: function(o, sep, eq, arr) {
-                if (!S.isPlainObject(o)) return EMPTY;
-                sep = sep || SEP;
-                eq = eq || EQ;
-                if (S.isUndefined(arr)) arr = true;
-                var buf = [], key, val;
-                for (key in o) {
-                    val = o[key];
-                    key = encode(key);
-
-                    // val is valid non-array value
-                    if (isValidParamValue(val)) {
-                        buf.push(key, eq, encode(val + EMPTY), sep);
-                    }
-                    // val is not empty array
-                    else if (S.isArray(val) && val.length) {
-                        for (var i = 0, len = val.length; i < len; ++i) {
-                            if (isValidParamValue(val[i])) {
-                                buf.push(key,
-                                    (arr ? encode("[]") : EMPTY),
-                                    eq, encode(val[i] + EMPTY), sep);
-                            }
-                        }
-                    }
-                    // ignore other cases, including empty array, Function, RegExp, Date etc.
-                }
-                buf.pop();
-                return buf.join(EMPTY);
-            },
-
-            /**
-             * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-             * <code>
-             * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-             * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-             * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-             * 'id=45&raw'        // -> {id: '45', raw: ''}
-             * </code>
-             */
-            unparam: function(str, sep, eq) {
-                if (typeof str !== 'string'
-                    || (str = S.trim(str)).length === 0) {
-                    return {};
-                }
-                sep = sep || SEP;
-                eq = eq || EQ;
-                var ret = {},
-                    pairs = str.split(sep),
-                    pair, key, val,
-                    i = 0, len = pairs.length;
-
-                for (; i < len; ++i) {
-                    pair = pairs[i].split(eq);
-                    key = decode(pair[0]);
-                    try {
-                        val = decode(pair[1] || EMPTY);
-                    } catch(e) {
-                        S.log("decodeURIComponent error : " + pair[1], "error");
-                        val = pair[1] || EMPTY;
-                    }
-                    if (S.endsWith(key, "[]")) {
-                        key = key.substring(0, key.length - 2);
-                    }
-                    if (hasOwnProperty.call(ret, key)) {
-                        if (S.isArray(ret[key])) {
-                            ret[key].push(val);
-                        } else {
-                            ret[key] = [ret[key],val];
-                        }
-                    } else {
-                        ret[key] = val;
-                    }
-                }
-                return ret;
-            },
-            /**
-             * Executes the supplied function in the context of the supplied
-             * object 'when' milliseconds later. Executes the function a
-             * single time unless periodic is set to true.
-             * @param fn {Function|String} the function to execute or the name of the method in
-             *        the 'o' object to execute.
-             * @param when {Number} the number of milliseconds to wait until the fn is executed.
-             * @param periodic {Boolean} if true, executes continuously at supplied interval
-             *        until canceled.
-             * @param o {Object} the context object.
-             * @param data [Array] that is provided to the function. This accepts either a single
-             *        item or an array. If an array is provided, the function is executed with
-             *        one parameter for each array item. If you need to pass a single array
-             *        parameter, it needs to be wrapped in an array [myarray].
-             * @return {Object} a timer object. Call the cancel() method on this object to stop
-             *         the timer.
-             */
-            later: function(fn, when, periodic, o, data) {
-                when = when || 0;
-                o = o || { };
-                var m = fn, d = S.makeArray(data), f, r;
-
-                if (S.isString(fn)) {
-                    m = o[fn];
-                }
-
-                if (!m) {
-                    S.error('method undefined');
-                }
-
-                f = function() {
-                    m.apply(o, d);
-                };
-
-                r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-                return {
-                    id: r,
-                    interval: periodic,
-                    cancel: function() {
-                        if (this.interval) {
-                            clearInterval(r);
-                        } else {
-                            clearTimeout(r);
-                        }
-                    }
-                };
-            },
-
-            startsWith:function(str, prefix) {
-                return str.lastIndexOf(prefix, 0) == 0;
-            },
-
-            endsWith:function(str, suffix) {
-                var ind = str.length - suffix.length;
-                return ind >= 0 && str.indexOf(suffix, ind) == ind;
             }
 
-        });
+            // clear marked
+            if (!cloned) {
+                S.each(marked, function(v) {
+                    if (v[CLONE_MARKER]) {
+                        try {
+                            delete v[CLONE_MARKER];
+                        } catch (e) {
+                            v[CLONE_MARKER] = undefined;
+                        }
+                    }
+                });
+                marked = undefined;
+            }
+
+            return ret;
+        },
+
+        /**
+         * Removes the whitespace from the beginning and end of a string.
+         */
+        trim: trim ?
+            function(str) {
+                return (str == undefined) ? EMPTY : trim.call(str);
+            } :
+            function(str) {
+                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+            },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         */
+        substitute: function(str, o, regexp) {
+            if (!S.isString(str)
+                || !S.isPlainObject(o)) {
+                return str;
+            }
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+                if (match.charAt(0) === '\\') {
+                    return match.slice(1);
+                }
+                return (o[name] !== undefined) ? o[name] : EMPTY;
+            });
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param object {Object} the object to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param context {Object} (opt)
+         */
+        each: function(object, fn, context) {
+            var key,
+                val,
+                i = 0,
+                length = object && object.length,
+                isObj = length === undefined || S.type(object) === 'function';
+            context = context || host;
+
+            if (isObj) {
+                for (key in object) {
+                    if (fn.call(context, object[key], key, object) === false) {
+                        break;
+                    }
+                }
+            } else {
+                for (val = object[0];
+                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                }
+            }
+
+            return object;
+        },
+
+        /**
+         * Search for a specified value within an array.
+         */
+        indexOf: indexOf ?
+            function(item, arr) {
+                return indexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === item) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+
+        /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @param override {Boolean}
+         *        if override is true, S.unique([a, b, a]) => [b, a]
+         *        if override is false, S.unique([a, b, a]) => [a, b]
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a, override) {
+            var b = a.slice();
+            if (override) {
+                b.reverse();
+            }
+            var i = 0,
+                n,
+                item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if (override) {
+                b.reverse();
+            }
+            return b;
+        },
+
+        /**
+         * Search for a specified value index within an array.
+         */
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned true for.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param context {Object} optional context object
+         * @return {Array} The items on which the supplied function
+         *         returned true. If no items matched an empty array is
+         *         returned.
+         */
+        filter: filter ?
+            function(arr, fn, context) {
+                return filter.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var ret = [];
+                S.each(arr, function(item, i, arr) {
+                    if (fn.call(context || this, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
+        // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+        map:map ?
+            function(arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                    if (el
+                        ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
+                    }
+                }
+                return res;
+            },
+
+        /**
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         */
+        reduce:/*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
+         return arr.reduce(callback, initialValue);
+         } : */function(arr, callback, initialValue) {
+            var len = arr.length;
+            if (typeof callback !== "function")
+                throw new TypeError();
+
+            // no value to return if no initial value and an empty array
+            if (len == 0 && arguments.length == 2)
+                throw new TypeError();
+
+            var k = 0;
+            var accumulator;
+            if (arguments.length >= 3) {
+                accumulator = arguments[2];
+            }
+            else {
+                do {
+                    if (k in arr) {
+                        accumulator = arr[k++];
+                        break;
+                    }
+
+                    // if array contains no values, no initial value to return
+                    if (++k >= len)
+                        throw new TypeError();
+                }
+                while (true);
+            }
+
+            while (k < len) {
+                if (k in arr) {
+                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                }
+                k++;
+            }
+
+            return accumulator;
+        },
+
+        /**
+         * it is not same with native bind
+         * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         */
+        bind:function(fn, obj) {
+            var slice = [].slice,
+                args = slice.call(arguments, 2),
+                bound = function () {
+                    return fn.apply(this instanceof bound ? this : obj,
+                        args.concat(slice.call(arguments)));
+                };
+            bound.prototype = fn.prototype;
+            return bound;
+        },
+
+        /**
+         * Gets current date in milliseconds.
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
+         * http://kangax.github.com/es5-compat-table/
+         */
+        now: Date.now || function() {
+            return +new Date();
+        },
+        /**
+         * frequently used in taobao cookie about nick
+         */
+        fromUnicode:function(str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+                return  String.fromCharCode(parseInt(u, 16));
+            });
+        },
+        /**
+         * escape string to html
+         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @param str {string} text2html show
+         */
+        escapeHTML:function(str) {
+            return str.replace(getEscapeReg(), function(m) {
+                return reverseEntities[m];
+            });
+        },
+
+        /**
+         * unescape html to string
+         * @param str {string} html2text
+         */
+        unEscapeHTML:function(str) {
+            return str.replace(getUnEscapeReg(), function(m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+        /**
+         * Converts object to a true array.
+         * @param o {object|Array} array like object or array
+         */
+        makeArray: function(o) {
+            if (o === null || o === undefined) return [];
+            if (S.isArray(o)) return o;
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                return [o];
+            }
+            var ret = [];
+            for (var i = 0,l = o.length; i < l; i++) {
+                ret[i] = o[i];
+            }
+            return ret;
+        },
+        /**
+         * Creates a serialized string of an array or object.
+         * @return {String}
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
+         */
+        param: function(o, sep, eq, arr) {
+            if (!S.isPlainObject(o)) return EMPTY;
+            sep = sep || SEP;
+            eq = eq || EQ;
+            if (S.isUndefined(arr)) arr = true;
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+                key = encode(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key, eq, encode(val + EMPTY), sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key,
+                                (arr ? encode("[]") : EMPTY),
+                                eq, encode(val[i] + EMPTY), sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <code>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </code>
+         */
+        unparam: function(str, sep, eq) {
+            if (typeof str !== 'string'
+                || (str = S.trim(str)).length === 0) {
+                return {};
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            var ret = {},
+                pairs = str.split(sep),
+                pair, key, val,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split(eq);
+                key = decode(pair[0]);
+                try {
+                    val = decode(pair[1] || EMPTY);
+                } catch(e) {
+                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    val = pair[1] || EMPTY;
+                }
+                if (S.endsWith(key, "[]")) {
+                    key = key.substring(0, key.length - 2);
+                }
+                if (hasOwnProperty.call(ret, key)) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key],val];
+                    }
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (S.isString(fn)) {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
+            };
+        },
+
+        startsWith:function(str, prefix) {
+            return str.lastIndexOf(prefix, 0) == 0;
+        },
+
+        endsWith:function(str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) == ind;
+        }
+
+    });
 
     // for idea ..... auto-hint
     S.mix(S, {
-            isBoolean:isValidParamValue,
-            isNumber:isValidParamValue,
-            isString:isValidParamValue,
-            isFunction:isValidParamValue,
-            isArray:isValidParamValue,
-            isDate:isValidParamValue,
-            isRegExp:isValidParamValue,
-            isObject:isValidParamValue
-        });
+        isBoolean:isValidParamValue,
+        isNumber:isValidParamValue,
+        isString:isValidParamValue,
+        isFunction:isValidParamValue,
+        isArray:isValidParamValue,
+        isDate:isValidParamValue,
+        isRegExp:isValidParamValue,
+        isObject:isValidParamValue
+    });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function(name, lc) {
@@ -2982,7 +2985,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         parseInt(attributeNode.value, 10) :
                         rfocusable.test(el.nodeName) || rclickable.test(el.nodeName) && el.href ?
                             0 :
-                            null;
+                            undefined;
                 }
             },
             // 在标准浏览器下，用 getAttribute 获取 style 值
@@ -3012,13 +3015,17 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             "contenteditable": "contentEditable"
         },
         // Hook for boolean attributes
+        // if bool is false
+        //  - standard browser returns null
+        //  - ie<8 return false
+        //   - so norm to undefined
         boolHook = {
             get: function(elem, name) {
                 // 转发到 prop 方法
                 return DOM.prop(elem, name) ?
                     // 根据 w3c attribute , true 时返回属性名字符串
                     name.toLowerCase() :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 var propName;
@@ -3099,7 +3106,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 // Return undefined if nodeValue is empty string
                 return ret && ret.nodeValue !== "" ?
                     ret.nodeValue :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 // Check form objects in IE (multiple bugs related)
@@ -3123,7 +3130,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             attrHooks[ name ] = {
                 get: function(elem) {
                     var ret = elem.getAttribute(name, 2);
-                    return ret === undefined ? null : ret;
+                    return ret === null ? undefined : ret;
                 }
             };
         });
@@ -3163,275 +3170,272 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * 自定义属性不推荐使用，使用 .data
-             * @param selector
-             * @param name
-             * @param value
-             */
-            prop: function(selector, name, value) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.prop(selector, k, name[k]);
-                    }
-                    return;
+        /**
+         * 自定义属性不推荐使用，使用 .data
+         * @param selector
+         * @param name
+         * @param value
+         */
+        prop: function(selector, name, value) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.prop(selector, k, name[k]);
                 }
-                var elems = DOM.query(selector);
-                // Try to normalize/fix the name
-                name = propFix[ name ] || name;
-                var hook = propHooks[ name ];
-                if (value !== undefined) {
-                    S.each(elems, function(elem) {
-                        if (hook && hook.set) {
-                            hook.set(elem, value, name);
-                        } else {
-                            elem[ name ] = value;
-                        }
-                    });
-                } else {
-                    var elem = elems[0],ret;
-                    if (!elem) return null;
-                    ret = getProp(elem, name);
-                    return ret === undefined ? null : ret;
-                }
-            },
-            hasProp:function(selector, name) {
-                var elem = DOM.get(selector);
-                return getProp(elem, name) !== undefined;
-            },
-
-            /**
-             * 不推荐使用，使用 .data .removeData
-             * @param selector
-             * @param name
-             */
-            removeProp:function(selector, name) {
-                name = propFix[ name ] || name;
-                DOM.query(selector).each(function(el) {
-                    try {
-                        el[ name ] = undefined;
-                        delete el[ name ];
-                    } catch(e) {
+                return;
+            }
+            var elems = DOM.query(selector);
+            // Try to normalize/fix the name
+            name = propFix[ name ] || name;
+            var hook = propHooks[ name ];
+            if (value !== undefined) {
+                S.each(elems, function(elem) {
+                    if (hook && hook.set) {
+                        hook.set(elem, value, name);
+                    } else {
+                        elem[ name ] = value;
                     }
                 });
-            },
+            } else {
+                var elem = elems[0];
+                if (!elem) return;
+                return getProp(elem, name);
+            }
+        },
+        hasProp:function(selector, name) {
+            return getProp(selector, name) !== undefined;
+        },
 
-            /**
-             * Gets the value of an attribute for the first element in the set of matched elements or
-             * Sets an attribute for the set of matched elements.
-             */
-            attr:function(selector, name, val, pass) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    pass = val; // 塌缩参数
-                    for (var k in name) {
-                        DOM.attr(selector, k, name[k], pass);
-                    }
+        /**
+         * 不推荐使用，使用 .data .removeData
+         * @param selector
+         * @param name
+         */
+        removeProp:function(selector, name) {
+            name = propFix[ name ] || name;
+            DOM.query(selector).each(function(el) {
+                try {
+                    el[ name ] = undefined;
+                    delete el[ name ];
+                } catch(e) {
+                }
+            });
+        },
+
+        /**
+         * Gets the value of an attribute for the first element in the set of matched elements or
+         * Sets an attribute for the set of matched elements.
+         */
+        attr:function(selector, name, val, pass) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                pass = val; // 塌缩参数
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k], pass);
+                }
+                return;
+            }
+
+            if (!(name = S.trim(name))) return;
+
+            name = name.toLowerCase();
+
+            // attr functions
+            if (pass && attrFn[name]) {
+                return DOM[name](selector, val);
+            }
+
+            // custom attrs
+            name = attrFix[name] || name;
+
+            var attrNormalizer;
+
+            if (rboolean.test(name)) {
+                attrNormalizer = boolHook;
+            }
+            // only old ie?
+            else if (rinvalidChar.test(name)) {
+                attrNormalizer = attrNodeHook;
+            } else {
+                attrNormalizer = attrHooks[name];
+            }
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+                // only get attributes on element nodes
+                if (!isElementNode(el)) {
                     return;
                 }
 
-                if (!(name = S.trim(name))) return;
-
-                name = name.toLowerCase();
-
-                // attr functions
-                if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
-                }
-
-                // custom attrs
-                name = attrFix[name] || name;
-
-                var attrNormalizer;
-
-                if (rboolean.test(name)) {
-                    attrNormalizer = boolHook;
-                }
-                // only old ie?
-                else if (rinvalidChar.test(name)) {
+                // browsers index elements by id/name on forms, give priority to attributes.
+                if (el.nodeName.toLowerCase() == "form") {
                     attrNormalizer = attrNodeHook;
-                } else {
-                    attrNormalizer = attrHooks[name];
+                }
+                if (attrNormalizer && attrNormalizer.get) {
+                    return attrNormalizer.get(el, name);
                 }
 
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-                    // only get attributes on element nodes
-                    if (!isElementNode(el)) {
-                        return null;
-                    }
+                var ret = el.getAttribute(name);
 
-                    // browsers index elements by id/name on forms, give priority to attributes.
-                    if (el.nodeName.toLowerCase() == "form") {
-                        attrNormalizer = attrNodeHook;
-                    }
-                    if (attrNormalizer && attrNormalizer.get) {
-                        return attrNormalizer.get(el, name);
-                    }
-
-                    var ret = el.getAttribute(name);
-
-                    /**
-                     * undefined 会形成链状，so 不能
-                     */
-                    return ret === undefined ? null : ret;
-                } else {
-                    // setter
-                    S.each(DOM.query(selector), function(el) {
-                        // only set attributes on element nodes
-                        if (!isElementNode(el)) {
-                            return;
-                        }
-
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Removes the attribute of the matched elements.
-             */
-            removeAttr: function(selector, name) {
-                name = name.toLowerCase();
-                name = attrFix[name] || name;
+                // standard browser non-existing attribute return null
+                // ie<8 will return undefined , because it return property
+                // so norm to undefined
+                return ret === null ? undefined : ret;
+            } else {
+                // setter
                 S.each(DOM.query(selector), function(el) {
-                    if (isElementNode(el)) {
-                        var propName;
-                        el.removeAttribute(name);
-                        // Set corresponding property to false for boolean attributes
-                        if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
-                            el[ propName ] = false;
-                        }
-                    }
-                });
-            },
-
-            hasAttr: oldIE ?
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    // from ppk :http://www.quirksmode.org/dom/w3c_core.html
-                    // IE5-7 doesn't return the value of a style attribute.
-                    // var $attr = el.attributes[name];
-                    var $attr = el.getAttributeNode(name);
-                    return !!( $attr && $attr.specified );
-                }
-                :
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    //使用原生实现
-                    return el.hasAttribute(name);
-                },
-
-            /**
-             * Gets the current value of the first element in the set of matched or
-             * Sets the value of each element in the set of matched elements.
-             */
-            val : function(selector, value) {
-                var hook, ret;
-
-                //getter
-                if (value === undefined) {
-
-                    var elem = DOM.get(selector);
-
-                    if (elem) {
-                        hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                        if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
-                            return ret;
-                        }
-
-                        ret = elem.value;
-
-                        return typeof ret === "string" ?
-                            // handle most common string cases
-                            ret.replace(rreturn, "") :
-                            // handle cases where value is null/undef or number
-                            ret == null ? "" : ret;
-                    }
-
-                    return null;
-                }
-
-                DOM.query(selector).each(function(elem) {
-
-                    if (elem.nodeType !== 1) {
+                    // only set attributes on element nodes
+                    if (!isElementNode(el)) {
                         return;
                     }
 
-                    var val = value;
-
-                    // Treat null/undefined as ""; convert numbers to string
-                    if (val == null) {
-                        val = "";
-                    } else if (typeof val === "number") {
-                        val += "";
-                    } else if (S.isArray(val)) {
-                        val = S.map(val, function (value) {
-                            return value == null ? "" : value + "";
-                        });
-                    }
-
-                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                    // If set returns undefined, fall back to normal setting
-                    if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
-                        elem.value = val;
+                    if (attrNormalizer && attrNormalizer.set) {
+                        attrNormalizer.set(el, val, name);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
                     }
                 });
+            }
+        },
+
+        /**
+         * Removes the attribute of the matched elements.
+         */
+        removeAttr: function(selector, name) {
+            name = name.toLowerCase();
+            name = attrFix[name] || name;
+            S.each(DOM.query(selector), function(el) {
+                if (isElementNode(el)) {
+                    var propName;
+                    el.removeAttribute(name);
+                    // Set corresponding property to false for boolean attributes
+                    if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
+                        el[ propName ] = false;
+                    }
+                }
+            });
+        },
+
+        hasAttr: oldIE ?
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                // from ppk :http://www.quirksmode.org/dom/w3c_core.html
+                // IE5-7 doesn't return the value of a style attribute.
+                // var $attr = el.attributes[name];
+                var $attr = el.getAttributeNode(name);
+                return !!( $attr && $attr.specified );
+            }
+            :
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                //使用原生实现
+                return el.hasAttribute(name);
             },
 
-            /**
-             * Gets the text context of the first element in the set of matched elements or
-             * Sets the text content of the matched elements.
-             */
-            text: function(selector, val) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
+        /**
+         * Gets the current value of the first element in the set of matched or
+         * Sets the value of each element in the set of matched elements.
+         */
+        val : function(selector, value) {
+            var hook, ret;
 
-                    // only gets value on supported nodes
-                    if (isElementNode(el)) {
-                        return el[TEXT] || EMPTY;
+            //getter
+            if (value === undefined) {
+
+                var elem = DOM.get(selector);
+
+                if (elem) {
+                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                    if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
+                        return ret;
                     }
-                    else if (isTextNode(el)) {
-                        return el.nodeValue;
-                    }
-                    //prevent chain in Node
-                    return null;
+
+                    ret = elem.value;
+
+                    return typeof ret === "string" ?
+                        // handle most common string cases
+                        ret.replace(rreturn, "") :
+                        // handle cases where value is null/undefined or number
+                        ret == null ? "" : ret;
                 }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(el) {
-                        if (isElementNode(el)) {
-                            el[TEXT] = val;
-                        }
-                        else if (isTextNode(el)) {
-                            el.nodeValue = val;
-                        }
+
+                return;
+            }
+
+            DOM.query(selector).each(function(elem) {
+
+                if (elem.nodeType !== 1) {
+                    return;
+                }
+
+                var val = value;
+
+                // Treat null/undefined as ""; convert numbers to string
+                if (val == null) {
+                    val = "";
+                } else if (typeof val === "number") {
+                    val += "";
+                } else if (S.isArray(val)) {
+                    val = S.map(val, function (value) {
+                        return value == null ? "" : value + "";
                     });
                 }
+
+                hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                // If set returns undefined, fall back to normal setting
+                if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
+                    elem.value = val;
+                }
+            });
+        },
+
+        /**
+         * Gets the text context of the first element in the set of matched elements or
+         * Sets the text content of the matched elements.
+         */
+        text: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on supported nodes
+                if (isElementNode(el)) {
+                    return el[TEXT] || EMPTY;
+                }
+                else if (isTextNode(el)) {
+                    return el.nodeValue;
+                }
+                return undefined;
             }
-        });
+            // setter
+            else {
+                S.each(DOM.query(selector), function(el) {
+                    if (isElementNode(el)) {
+                        el[TEXT] = val;
+                    }
+                    else if (isTextNode(el)) {
+                        el.nodeValue = val;
+                    }
+                });
+            }
+        }
+    });
     if (1 > 2) {
         DOM.removeProp().hasProp();
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    }
-);
+    requires:["./base","ua"]
+}
+    );
 
 /**
  * NOTES:
@@ -3707,7 +3711,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     if (isElementNode(el)) {
                         return el.innerHTML;
                     }
-                    return null;
+                    return;
                 }
                 // setter
                 else {
@@ -4001,7 +4005,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] === undefined ? null : cache[name];
+                    return cache[name];
                 } else {
                     return cache;
                 }
@@ -4048,7 +4052,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] === undefined ? null : cache[name];
+                    return cache[name] ;
                 } else {
                     return cache;
                 }
@@ -4285,119 +4289,122 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     S.mix(DOM, {
 
 
-            /**
-             * Gets the current coordinates of the element, relative to the document.
-             */
-            offset: function(elem, val) {
-                // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+        /**
+         * Gets the current coordinates of the element, relative to the document.
+         * @param relativeWin The window to measure relative to. If relativeWin
+         *     is not in the ancestor frame chain of the element, we measure relative to
+         *     the top-most window.
+         */
+        offset: function(elem, val, relativeWin) {
+            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-                // getter
-                if (val === undefined) {
-                    return getOffset(elem);
+            // getter
+            if (val === undefined) {
+                return getOffset(elem, relativeWin);
+            }
+
+            // setter
+            setOffset(elem, val);
+        },
+
+        /**
+         * Makes elem visible in the container
+         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+         *        http://yiminghe.javaeye.com/blog/390732
+         */
+        scrollIntoView: function(elem, container, top, hscroll) {
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
+                return;
+            }
+
+            hscroll = hscroll === undefined ? true : !!hscroll;
+            top = top === undefined ? true : !!top;
+
+            // default current window, use native for scrollIntoView(elem, top)
+            if (!container ||
+                (container = DOM.get(container)) === win) {
+                // 注意：
+                // 1. Opera 不支持 top 参数
+                // 2. 当 container 已经在视窗中时，也会重新定位
+                elem.scrollIntoView(top);
+                return;
+            }
+
+            // document 归一化到 window
+            if (nodeTypeIs(container, 9)) {
+                container = getWin(container);
+            }
+
+            var isWin = !!getWin(container),
+                elemOffset = DOM.offset(elem),
+                containerOffset = isWin ? {
+                    left: DOM.scrollLeft(container),
+                    top: DOM.scrollTop(container) }
+                    : DOM.offset(container),
+
+                // elem 相对 container 视窗的坐标
+                diff = {
+                    left: elemOffset[LEFT] - containerOffset[LEFT],
+                    top: elemOffset[TOP] - containerOffset[TOP]
+                },
+
+                // container 视窗的高宽
+                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+
+                // container 视窗相对 container 元素的坐标
+                cl = DOM[SCROLL_LEFT](container),
+                ct = DOM[SCROLL_TOP](container),
+                cr = cl + cw,
+                cb = ct + ch,
+
+                // elem 的高宽
+                eh = elem.offsetHeight,
+                ew = elem.offsetWidth,
+
+                // elem 相对 container 元素的坐标
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                r = l + ew,
+                b = t + eh,
+
+                t2, l2;
+
+            // 根据情况将 elem 定位到 container 视窗中
+            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
+            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
+            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
+            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            if (eh > ch || t < ct || top) {
+                t2 = t;
+            } else if (b > cb) {
+                t2 = b - ch;
+            }
+
+            // 水平方向与上面同理
+            if (hscroll) {
+                if (ew > cw || l < cl || top) {
+                    l2 = l;
+                } else if (r > cr) {
+                    l2 = r - cw;
                 }
+            }
 
-                // setter
-                setOffset(elem, val);
-            },
-
-            /**
-             * Makes elem visible in the container
-             * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
-             *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
-             *        http://yiminghe.javaeye.com/blog/390732
-             */
-            scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
-                    return;
-                }
-
-                hscroll = hscroll === undefined ? true : !!hscroll;
-                top = top === undefined ? true : !!top;
-
-                // default current window, use native for scrollIntoView(elem, top)
-                if (!container ||
-                    (container = DOM.get(container)) === win) {
-                    // 注意：
-                    // 1. Opera 不支持 top 参数
-                    // 2. 当 container 已经在视窗中时，也会重新定位
-                    elem.scrollIntoView(top);
-                    return;
-                }
-
-                // document 归一化到 window
-                if (nodeTypeIs(container, 9)) {
-                    container = getWin(container);
-                }
-
-                var isWin = !!getWin(container),
-                    elemOffset = DOM.offset(elem),
-                    containerOffset = isWin ? {
-                        left: DOM.scrollLeft(container),
-                        top: DOM.scrollTop(container) }
-                        : DOM.offset(container),
-
-                    // elem 相对 container 视窗的坐标
-                    diff = {
-                        left: elemOffset[LEFT] - containerOffset[LEFT],
-                        top: elemOffset[TOP] - containerOffset[TOP]
-                    },
-
-                    // container 视窗的高宽
-                    ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                    cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
-
-                    // container 视窗相对 container 元素的坐标
-                    cl = DOM[SCROLL_LEFT](container),
-                    ct = DOM[SCROLL_TOP](container),
-                    cr = cl + cw,
-                    cb = ct + ch,
-
-                    // elem 的高宽
-                    eh = elem.offsetHeight,
-                    ew = elem.offsetWidth,
-
-                    // elem 相对 container 元素的坐标
-                    // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                    l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                    t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
-                    r = l + ew,
-                    b = t + eh,
-
-                    t2, l2;
-
-                // 根据情况将 elem 定位到 container 视窗中
-                // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-                // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-                // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-                // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-                if (eh > ch || t < ct || top) {
-                    t2 = t;
-                } else if (b > cb) {
-                    t2 = b - ch;
-                }
-
-                // 水平方向与上面同理
-                if (hscroll) {
-                    if (ew > cw || l < cl || top) {
-                        l2 = l;
-                    } else if (r > cr) {
-                        l2 = r - cw;
-                    }
-                }
-
-                // go
-                DOM[SCROLL_TOP](container, t2);
-                DOM[SCROLL_LEFT](container, l2);
-            },
-            /**
-             * for idea autocomplete
-             */
-            docWidth:0,
-            docHeight:0,
-            viewportHeight:0,
-            viewportWidth:0
-        });
+            // go
+            DOM[SCROLL_TOP](container, t2);
+            DOM[SCROLL_LEFT](container, l2);
+        },
+        /**
+         * for idea autocomplete
+         */
+        docWidth:0,
+        docHeight:0,
+        viewportHeight:0,
+        viewportWidth:0
+    });
 
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
     // http://www.quirksmode.org/dom/w3c_cssom.html
@@ -4469,8 +4476,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         }
     });
 
-    // 获取 elem 相对 elem.ownerDocument 的坐标
-    function getOffset(elem) {
+    function getClientPosition(elem) {
         var box, x = 0, y = 0,
             body = doc.body,
             w = getWin(elem[OWNER_DOCUMENT]);
@@ -4494,20 +4500,61 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             // ie7 html 即窗口边框改变不了。永远为 2
 
             // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-            var clientTop = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientTop : body.clientTop) || 0,
-                clientLeft = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientLeft : body.clientLeft) || 0;
-
+            var clientTop = isIE && doc['documentMode'] != 9
+                && (isStrict ? docElem.clientTop : body.clientTop)
+                || 0,
+                clientLeft = isIE && doc['documentMode'] != 9
+                    && (isStrict ? docElem.clientLeft : body.clientLeft)
+                    || 0;
+            if (1 > 2) {
+            }
             x -= clientLeft;
             y -= clientTop;
 
             // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-            if (UA.mobile !== 'apple') {
-                x += DOM[SCROLL_LEFT](w);
-                y += DOM[SCROLL_TOP](w);
+            if (UA.mobile == 'apple') {
+                x -= DOM[SCROLL_LEFT](w);
+                y -= DOM[SCROLL_TOP](w);
             }
         }
 
         return { left: x, top: y };
+    }
+
+
+    function getPageOffset(el) {
+        var pos = getClientPosition(el);
+        var w = getWin(el[OWNER_DOCUMENT]);
+        pos.left += DOM[SCROLL_LEFT](w);
+        pos.top += DOM[SCROLL_TOP](w);
+        return pos;
+    }
+
+    // 获取 elem 相对 elem.ownerDocument 的坐标
+    function getOffset(el, relativeWin) {
+        var position = {left:0,top:0};
+
+        // Iterate up the ancestor frame chain, keeping track of the current window
+        // and the current element in that window.
+        var currentWin = getWin(el[OWNER_DOCUMENT]);
+        var currentEl = el;
+        relativeWin = relativeWin || currentWin;
+        do {
+            // if we're at the top window, we want to get the page offset.
+            // if we're at an inner frame, we only want to get the window position
+            // so that we can determine the actual page offset in the context of
+            // the outer window.
+            var offset = currentWin == relativeWin ?
+                getPageOffset(currentEl) :
+                getClientPosition(currentEl);
+
+            position.left += offset.left;
+            position.top += offset.top;
+        } while (currentWin && currentWin != relativeWin &&
+            (currentEl = currentWin['frameElement']) &&
+            (currentWin = currentWin.parent));
+
+        return position;
     }
 
     // 设置 elem 相对 elem.ownerDocument 的坐标
@@ -4527,8 +4574,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * 2011-05-24
@@ -5310,7 +5357,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
                         //出现 alpha(opacity:0), alpha(opacity=0) ?
-                        currentFilter = S.trim(currentFilter.replace(/alpha\(opacity[=:][^)]+\),?/ig, ''));
+                        currentFilter = S.trim(currentFilter.replace(
+                            /alpha\(opacity[^=]*=[^)]+\),?/ig, ''));
                     }
 
                     if (currentFilter && val != 1) {
@@ -5607,6 +5655,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
 /**
  * NOTES:
+ * - jquery does not return null ,it only returns empty array , but kissy does.
  *
  *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
  *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
@@ -6322,10 +6371,44 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'];
 
-
     // IE8以上切换浏览器模式到IE7，会导致 'onhashchange' in window === true
     if ((!( 'on' + HASH_CHANGE in window)) || ie < 8) {
-        var timer,
+        var getHash = function() {
+            var url = location.href;
+            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+        },
+            setup = function () {
+                poll();
+            },
+            tearDown = function () {
+                timer && clearTimeout(timer);
+                timer = null;
+            },
+            poll = function () {
+                //console.log('poll start..' + +new Date());
+                var hash = getHash();
+
+                if (hash !== lastHash) {
+                    //debugger
+                    hashChange(hash);
+                    lastHash = hash;
+                }
+                timer = setTimeout(poll, 50);
+            },
+            hashChange = function (hash) {
+                notifyHashChange(hash);
+            },
+            notifyHashChange = function (hash) {
+                S.log("hash changed : " + hash);
+                for (var i = 0; i < targets.length; i++) {
+                    var t = targets[i];
+                    //模拟暂时没有属性
+                    Event._handle(t, {
+                        type: HASH_CHANGE
+                    });
+                }
+            },
+            timer,
             targets = [],
             lastHash = getHash();
 
@@ -6352,48 +6435,6 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 }
             }
         };
-
-        function setup() {
-            poll();
-        }
-
-        function tearDown() {
-            timer && clearTimeout(timer);
-            timer = null;
-        }
-
-        function poll() {
-            //console.log('poll start..' + +new Date());
-            var hash = getHash();
-
-            if (hash !== lastHash) {
-                //debugger
-                hashChange(hash);
-                lastHash = hash;
-            }
-            timer = setTimeout(poll, 50);
-        }
-
-        function hashChange(hash) {
-            notifyHashChange(hash);
-        }
-
-        function notifyHashChange(hash) {
-            S.log("hash changed : " + hash);
-            for (var i = 0; i < targets.length; i++) {
-                var t = targets[i];
-                //模拟暂时没有属性
-                Event._handle(t, {
-                        type: HASH_CHANGE
-                    });
-            }
-        }
-
-
-        function getHash() {
-            var url = location.href;
-            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
-        }
 
         // ie6, 7, 用匿名函数来覆盖一些function
         if (ie < 8) {
@@ -6477,8 +6518,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         }
     }
 }, {
-        requires:["./base","dom","ua"]
-    });
+    requires:["./base","dom","ua"]
+});
 
 /**
  * v1 : 2010-12-29
@@ -6603,7 +6644,7 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
 
 /**
  * kissy delegate for event module
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
@@ -6652,6 +6693,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                             equals:equals
                         });
                 });
+                return targets;
             }
         });
 
@@ -6817,7 +6859,7 @@ KISSY.add("event", function(S, Event, Target,Object) {
 
 /**
  * definition for node and nodelist
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
@@ -7006,9 +7048,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
-        isNodeList = DOM._isNodeList,
         // DOM 添加到 NP 上的方法
-        DOM_INCLUDES = [
+        // if DOM methods return undefined , Node methods need to transform result to itself
+        DOM_INCLUDES_NORM = [
             "equals",
             "contains",
             "scrollTop",
@@ -7016,15 +7058,14 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "height",
             "width",
             "addStyleSheet",
-            "append",
+            // "append" will be overridden
             "appendTo",
-            "prepend",
+            // "prepend" will be overridden
             "prependTo",
             "insertBefore",
             "before",
             "after",
             "insertAfter",
-            "filter",
             "test",
             "hasClass",
             "addClass",
@@ -7032,83 +7073,96 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "replaceClass",
             "toggleClass",
             "removeAttr",
-            "attr",
             "hasAttr",
-            "prop",
             "hasProp",
-            "val",
-            "text",
-            "css",
             // anim override
 //            "show",
 //            "hide",
             "toggle",
-            "offset",
             "scrollIntoView",
+            "remove",
+            "removeData",
+            "hasData",
+            "unselectable"
+        ],
+        // if return array ,need transform to nodelist
+        DOM_INCLUDES_NORM_NODE_LIST = [
+            "filter",
             "parent",
             "closest",
             "next",
             "prev",
             "siblings",
-            "children",
-            "html",
-            "remove",
-            "removeData",
-            "hasData",
-            // 返回值不一定是 nodelist ，特殊处理
-            // "data",
-            "unselectable"
+            "children"
         ],
+        // if set return this else if get return true value ,no nodelist transform
+        DOM_INCLUDES_NORM_IF = {
+            // dom method : set parameter index
+            "attr":1,
+            "text":1,
+            "css":1,
+            "val":0,
+            "prop":1,
+            "offset":1,
+            "html":0,
+            "data":1
+        },
         // Event 添加到 NP 上的方法
         EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
 
 
-    function normalize(val, node, nodeList) {
-        // 链式操作
-        if (val === undefined) {
-            val = node;
-        } else if (val === null) {
-            val = null;
-        } else if (nodeList && val.nodeType) {
-            val = new NodeList(val);
-        } else if (nodeList && (isNodeList(val) || S.isArray(val))) {
-            // 包装为 KISSY NodeList
-            // 要小心，如果第一项已经明确不是 node 了就不要转了
-            if (val[0] && !val[0].nodeType) {
-            } else {
-                val = new NodeList(val);
-            }
-        }
-        return val;
+    function accessNorm(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+
+        return ret;
     }
 
-    /**
-     *
-     * @param {string} name 方法名
-     * @param {string} fn 实际方法
-     * @param {object} context 方法执行上下文，不指定为 this
-     * @param {boolean} nodeList 是否对返回对象 NodeList
-     */
-    NodeList.addMethod = function(name, fn, context, nodeList) {
-        NLP[name] = function() {
-            //里面不要修改 context ,fn,name 会影响所有 ....
-            // NLP && NP
-            var self = this,
-                args = S.makeArray(arguments);
-            args.unshift(self);
-            var ctx = context || self;
-            var ret = fn.apply(ctx, args);
-            return  normalize(ret, self, nodeList);
-        }
-    };
+    function accessNormList(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+        else if (ret === null)
+            return null;
+        return new NodeList(ret);
+    }
 
-    S.each(DOM_INCLUDES, function(k) {
-        var v = DOM[k];
-        NodeList.addMethod(k, v, DOM, true);
+    function accessNormIf(fn, self, index, args) {
+
+        // get
+        if (args[index] === undefined
+            // 并且第一个参数不是对象，否则可能是批量设置写
+            && !S.isObject(args[0])) {
+            args.unshift(self);
+            return DOM[fn].apply(DOM, args);
+        }
+        // set
+        return accessNorm(fn, self, args);
+    }
+
+    S.each(DOM_INCLUDES_NORM, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNorm(k, this, args);
+        };
     });
 
-    // data 不需要对返回结果转换 nodelist
-    NodeList.addMethod("data", DOM.data, DOM);
+    S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormList(k, this, args);
+        };
+    });
+
+    S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormIf(k, this, index, args);
+        };
+    });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
@@ -7119,8 +7173,8 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-        requires:["dom","event","./base"]
-    });
+    requires:["dom","event","./base"]
+});
 
 /**
  * 2011-05-24
@@ -7134,7 +7188,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
 /**
  * overrides methods in NodeList.prototype
- * @author : yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("node/override", function(S, DOM, Event, NodeList) {
 
@@ -7144,23 +7198,23 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      *
      */
     S.each(['append', 'prepend','before','after'], function(insertType) {
-        // append 和 prepend
 
-        NodeList.addMethod(insertType, function(domNodes, html) {
+        NodeList.prototype[insertType] = function(html) {
 
-            var newNode = html;
+            var newNode = html,self = this;
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, domNodes);
-            
-        }, undefined, true);
+            DOM[insertType](newNode, self);
+            return self;
+
+        };
     });
 
 }, {
-        requires:["dom","event","./base","./attach"]
-    });
+    requires:["dom","event","./base","./attach"]
+});
 
 /**
  * 2011-05-24
@@ -8204,6 +8258,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             slide: [OVERFLOW, HEIGHT]
         };
 
+    N.__ANIM_KEY = ANIM_KEY;
+
     (function(P) {
 
         function attachAnim(elem, anim) {
@@ -8235,11 +8291,12 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 var anim = Anim.apply(undefined, [elem].concat(args)).run();
                 attachAnim(elem, anim);
             });
-            return this;
+            return self;
         };
 
         P.stop = function(finish) {
-            S.each(this, function(elem) {
+            var self = this;
+            S.each(self, function(elem) {
                 var anims = DOM.data(elem, ANIM_KEY);
                 if (anims) {
                     S.each(anims, function(anim) {
@@ -8248,17 +8305,18 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     DOM.removeData(elem, ANIM_KEY);
                 }
             });
+            return self;
         };
 
         S.each({
-                show: ['show', 1],
-                hide: ['show', 0],
-                toggle: ['toggle'],
-                fadeIn: ['fade', 1],
-                fadeOut: ['fade', 0],
-                slideDown: ['slide', 1],
-                slideUp: ['slide', 0]
-            },
+            show: ['show', 1],
+            hide: ['show', 0],
+            toggle: ['toggle'],
+            fadeIn: ['fade', 1],
+            fadeOut: ['fade', 0],
+            slideDown: ['slide', 1],
+            slideUp: ['slide', 0]
+        },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -8359,11 +8417,14 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-        requires:["dom","anim","./base"]
-    });
+    requires:["dom","anim","./base"]
+});
 /**
  * 2011-05-17
  *  - 承玉：添加 stop ，随时停止动画
+ *
+ *  TODO
+ *  - anim needs queue mechanism ?
  */
 
 KISSY.add("node", function(S, Node) {
@@ -9892,7 +9953,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     });
 
 KISSY.add("ajax", function(S, io) {
-
+    var undef = undefined;
     // some shortcut
     S.mix(io, {
         get: function(url, data, callback, dataType, _t) {
@@ -9900,7 +9961,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
 
             return io({
@@ -9916,7 +9977,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, dataType, "post");
         },
@@ -9924,7 +9985,7 @@ KISSY.add("ajax", function(S, io) {
         jsonp: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "jsonp");
         },
@@ -9941,7 +10002,7 @@ KISSY.add("ajax", function(S, io) {
         getJSON: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "json");
         },
@@ -9950,7 +10011,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = null; // 占位符
+                data = undef;
             }
             return io({
                 url:url,
@@ -10009,166 +10070,168 @@ KISSY.add('base/attribute', function(S, undef) {
 
     S.augment(Attribute, {
 
-            __getDefAttrs: function() {
-                return S.clone(this.__attrs);
-            },
+        __getDefAttrs: function() {
+            return S.clone(this.__attrs);
+        },
 
-            /**
-             * Adds an attribute with the provided configuration to the host object.
-             * The config supports the following properties:
-             * {
-             *     value: 'the default value',
-             *     valueFn: function
-             *     setter: function
-             *     getter: function
-             * }
-             * @param {boolean} override whether override existing attribute config ,default true
-             */
-            addAttr: function(name, attrConfig, override) {
-                var host = this;
-                if (!host.__attrs[name]) {
-                    host.__attrs[name] = S.clone(attrConfig || {});
-                } else {
-                    S.mix(host.__attrs[name], attrConfig, override);
-                }
-                return host;
-            },
-
-            /**
-             * Checks if the given attribute has been added to the host.
-             */
-            hasAttr: function(name) {
-                return name && this.__attrs.hasOwnProperty(name);
-            },
-
-            /**
-             * Removes an attribute from the host object.
-             */
-            removeAttr: function(name) {
-                var host = this;
-
-                if (host.hasAttr(name)) {
-                    delete host.__attrs[name];
-                    delete host.__attrVals[name];
-                }
-
-                return host;
-            },
-
-            /**
-             * Sets the value of an attribute.
-             */
-            set: function(name, value) {
-                var host = this,
-                    prevVal = host.get(name);
-
-                // if no change, just return
-                if (prevVal === value) return;
-
-                // check before event
-                if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
-
-                // set it
-                host.__set(name, value);
-
-                // fire after event
-                host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
-
-                return host;
-            },
-
-            __fireAttrChange: function(when, name, prevVal, newVal) {
-                return this.fire(when + capitalFirst(name) + 'Change', {
-                        attrName: name,
-                        prevVal: prevVal,
-                        newVal: newVal
-                    });
-            },
-
-            /**
-             * internal use, no event involved, just set.
-             */
-            __set: function(name, value) {
-                var host = this,
-                    setValue,
-                    // if host does not have meta info corresponding to (name,value)
-                    // then register on demand in order to collect all data meta info
-                    attrConfig = host.__attrs[name] = host.__attrs[name] || {},
-                    setter = attrConfig['setter'];
-
-                // if setter has effect
-                if (setter) {
-                    setValue = setter.call(host, value);
-                }
-                if (setValue !== undef) {
-                    value = setValue;
-                }
-
-                // finally set
-                host.__attrVals[name] = value;
-            },
-
-            /**
-             * Gets the current value of the attribute.
-             */
-            get: function(name) {
-                var host = this, attrConfig, getter, ret;
-
-                attrConfig = host.__attrs[name];
-                getter = attrConfig && attrConfig['getter'];
-
-                // get user-set value or default value
-                //user-set value takes privilege
-                ret = name in host.__attrVals ?
-                    host.__attrVals[name] :
-                    host.__getDefAttrVal(name);
-
-                // invoke getter for this attribute
-                if (getter) ret = getter.call(host, ret);
-
-                return ret;
-            },
-
-            __getDefAttrVal: function(name) {
-                var host = this,
-                    attrConfig = host.__attrs[name],
-                    valFn, val;
-
-                if (!attrConfig) return;
-
-                if ((valFn = attrConfig.valueFn)) {
-                    val = valFn.call(host);
-                    if (val !== undef) {
-                        attrConfig.value = val;
-                    }
-                    delete attrConfig.valueFn;
-                }
-
-                return attrConfig.value;
-            },
-
-            /**
-             * Resets the value of an attribute.
-             * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-             */
-            reset: function (name) {
-                var host = this;
-
-                if (host.hasAttr(name)) {
-                    // if attribute does not have default value, then set to undefined.
-                    return host.set(name, host.__getDefAttrVal(name));
-                }
-
-                // reset all
-                for (name in host.__attrs) {
-                    if (host.hasAttr(name)) {
-                        host.reset(name);
-                    }
-                }
-
-                return host;
+        /**
+         * Adds an attribute with the provided configuration to the host object.
+         * The config supports the following properties:
+         * {
+         *     value: 'the default value',
+         *     valueFn: function
+         *     setter: function
+         *     getter: function
+         * }
+         * @param {boolean} override whether override existing attribute config ,default true
+         */
+        addAttr: function(name, attrConfig, override) {
+            var host = this;
+            if (!host.__attrs[name]) {
+                host.__attrs[name] = S.clone(attrConfig || {});
+            } else {
+                S.mix(host.__attrs[name], attrConfig, override);
             }
-        });
+            return host;
+        },
+
+        /**
+         * Checks if the given attribute has been added to the host.
+         */
+        hasAttr: function(name) {
+            return name && this.__attrs.hasOwnProperty(name);
+        },
+
+        /**
+         * Removes an attribute from the host object.
+         */
+        removeAttr: function(name) {
+            var host = this;
+
+            if (host.hasAttr(name)) {
+                delete host.__attrs[name];
+                delete host.__attrVals[name];
+            }
+
+            return host;
+        },
+
+        /**
+         * Sets the value of an attribute.
+         */
+        set: function(name, value) {
+            var host = this,
+                prevVal = host.get(name);
+
+            // if no change, just return
+            if (prevVal === value) return;
+
+            // check before event
+            if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
+
+            // set it
+            host.__set(name, value);
+
+            // fire after event
+            host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
+
+            return host;
+        },
+
+        __fireAttrChange: function(when, name, prevVal, newVal) {
+            return this.fire(when + capitalFirst(name) + 'Change', {
+                attrName: name,
+                prevVal: prevVal,
+                newVal: newVal
+            });
+        },
+
+        /**
+         * internal use, no event involved, just set.
+         */
+        __set: function(name, value) {
+            var host = this,
+                setValue,
+                // if host does not have meta info corresponding to (name,value)
+                // then register on demand in order to collect all data meta info
+                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                // 因为属性在声明注册前可以直接设置值
+                attrConfig = host.__attrs[name] = host.__attrs[name] || {},
+                setter = attrConfig['setter'];
+
+            // if setter has effect
+            if (setter) {
+                setValue = setter.call(host, value);
+            }
+            if (setValue !== undef) {
+                value = setValue;
+            }
+
+            // finally set
+            host.__attrVals[name] = value;
+        },
+
+        /**
+         * Gets the current value of the attribute.
+         */
+        get: function(name) {
+            var host = this, attrConfig, getter, ret;
+
+            attrConfig = host.__attrs[name];
+            getter = attrConfig && attrConfig['getter'];
+
+            // get user-set value or default value
+            //user-set value takes privilege
+            ret = name in host.__attrVals ?
+                host.__attrVals[name] :
+                host.__getDefAttrVal(name);
+
+            // invoke getter for this attribute
+            if (getter) ret = getter.call(host, ret);
+
+            return ret;
+        },
+
+        __getDefAttrVal: function(name) {
+            var host = this,
+                attrConfig = host.__attrs[name],
+                valFn, val;
+
+            if (!attrConfig) return;
+
+            if ((valFn = attrConfig.valueFn)) {
+                val = valFn.call(host);
+                if (val !== undef) {
+                    attrConfig.value = val;
+                }
+                delete attrConfig.valueFn;
+            }
+
+            return attrConfig.value;
+        },
+
+        /**
+         * Resets the value of an attribute.
+         * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+         */
+        reset: function (name) {
+            var host = this;
+
+            if (host.hasAttr(name)) {
+                // if attribute does not have default value, then set to undefined.
+                return host.set(name, host.__getDefAttrVal(name));
+            }
+
+            // reset all
+            for (name in host.__attrs) {
+                if (host.hasAttr(name)) {
+                    host.reset(name);
+                }
+            }
+
+            return host;
+        }
+    });
 
     function capitalFirst(s) {
         s = s + '';
@@ -10219,7 +10282,7 @@ KISSY.add('base/base', function (S, Attribute, Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter 的
+                    //用户设置会调用 setter 的，但不会触发属性变化事件
                     host.__set(attr, config[attr]);
                 }
 

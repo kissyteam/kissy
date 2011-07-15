@@ -1,5 +1,5 @@
 KISSY.add("ajax", function(S, io) {
-
+    var undef = undefined;
     // some shortcut
     S.mix(io, {
         get: function(url, data, callback, dataType, _t) {
@@ -7,7 +7,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
 
             return io({
@@ -23,7 +23,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, dataType, "post");
         },
@@ -31,7 +31,7 @@ KISSY.add("ajax", function(S, io) {
         jsonp: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "jsonp");
         },
@@ -48,7 +48,7 @@ KISSY.add("ajax", function(S, io) {
         getJSON: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "json");
         },
@@ -57,7 +57,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = null; // 占位符
+                data = undef;
             }
             return io({
                 url:url,

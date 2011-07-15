@@ -39,7 +39,7 @@ KISSY - An Enjoyable JavaScript Library
 
 Questions?
 ----------
-
+ - Docs: <http://docs.kissyui.com>
  - Bug：<http://github.com/kissyteam/kissy/issues>
  - 邮件：<kissyteam@gmail.com>
  - Twitter: <http://twitter.com/#!/kissyteam>

@@ -1,6 +1,6 @@
 /**
  * test cases for insertion sub module of dom module
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom", function(S, DOM) {
     describe("insertion", function() {

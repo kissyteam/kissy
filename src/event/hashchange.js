@@ -1,6 +1,6 @@
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com, xiaomacji@gmail.com
+ * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
@@ -9,10 +9,44 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'];
 
-
     // IE8以上切换浏览器模式到IE7，会导致 'onhashchange' in window === true
     if ((!( 'on' + HASH_CHANGE in window)) || ie < 8) {
-        var timer,
+        var getHash = function() {
+            var url = location.href;
+            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+        },
+            setup = function () {
+                poll();
+            },
+            tearDown = function () {
+                timer && clearTimeout(timer);
+                timer = null;
+            },
+            poll = function () {
+                //console.log('poll start..' + +new Date());
+                var hash = getHash();
+
+                if (hash !== lastHash) {
+                    //debugger
+                    hashChange(hash);
+                    lastHash = hash;
+                }
+                timer = setTimeout(poll, 50);
+            },
+            hashChange = function (hash) {
+                notifyHashChange(hash);
+            },
+            notifyHashChange = function (hash) {
+                S.log("hash changed : " + hash);
+                for (var i = 0; i < targets.length; i++) {
+                    var t = targets[i];
+                    //模拟暂时没有属性
+                    Event._handle(t, {
+                        type: HASH_CHANGE
+                    });
+                }
+            },
+            timer,
             targets = [],
             lastHash = getHash();
 
@@ -39,48 +73,6 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 }
             }
         };
-
-        function setup() {
-            poll();
-        }
-
-        function tearDown() {
-            timer && clearTimeout(timer);
-            timer = null;
-        }
-
-        function poll() {
-            //console.log('poll start..' + +new Date());
-            var hash = getHash();
-
-            if (hash !== lastHash) {
-                //debugger
-                hashChange(hash);
-                lastHash = hash;
-            }
-            timer = setTimeout(poll, 50);
-        }
-
-        function hashChange(hash) {
-            notifyHashChange(hash);
-        }
-
-        function notifyHashChange(hash) {
-            S.log("hash changed : " + hash);
-            for (var i = 0; i < targets.length; i++) {
-                var t = targets[i];
-                //模拟暂时没有属性
-                Event._handle(t, {
-                        type: HASH_CHANGE
-                    });
-            }
-        }
-
-
-        function getHash() {
-            var url = location.href;
-            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
-        }
 
         // ie6, 7, 用匿名函数来覆盖一些function
         if (ie < 8) {
@@ -164,8 +156,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         }
     }
 }, {
-        requires:["./base","dom","ua"]
-    });
+    requires:["./base","dom","ua"]
+});
 
 /**
  * v1 : 2010-12-29

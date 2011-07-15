@@ -1,3 +1,7 @@
+/**
+ * event attached for node
+ * @author  gonghao , yiminghe@gmail.com
+ */
 KISSY.use("node", function(S, Node) {
     var $ = Node.all;
 // simulate mouse event on any element
@@ -17,17 +21,20 @@ KISSY.use("node", function(S, Node) {
             runs(function() {
 
                 Node.one('#link-test-this').on('click', function() {
-                    ret = Node.one(this);
+                    ret = this;
                 });
                 simulate('#link-test-this', 'click');
             });
             waits(0);
 
+            runs(function() {
+                expect(ret.nodeType).not.toBe(undefined);
+            });
+
 
             // NodeList
             runs(function() {
                 $('#link-test-this-all span').on('click', function() {
-
                     ret = Node.one(this);
                 });
                 simulate('#link-test-this-all-span', 'click');

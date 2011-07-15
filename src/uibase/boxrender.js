@@ -8,11 +8,6 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     function Box() {
     }
 
-    S.mix(Box, {
-            APPEND:1,
-            INSERT:0
-        });
-
     Box.ATTRS = {
         el: {
             //容器元素
@@ -40,13 +35,13 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         elAttrs:{
             //其他属性
         },
-        elOrder:{
-            //插入容器位置
-            //0 : prepend
-            //1 : append
-            value:1
+        elBefore:{
+            //插入到该元素前
+            value:null
         },
-        html: {}
+        html: {},
+        visible:{},
+        visibleMode:{}
     };
 
     Box.construct = constructEl;
@@ -92,26 +87,34 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     Box.prototype = {
 
+
         __renderUI:function() {
+            var self = this;
+            // 新建的节点才需要摆放定位
+            if (self.__boxRenderNew) {
+                var render = self.get("render"),
+                    el = self.get("el");
+                var elBefore = self.get("elBefore");
+                elBefore = elBefore && elBefore[0];
+                render[0].insertBefore(el[0], elBefore || null);
+            }
+        },
+
+        __createDom:function() {
             var self = this,
-                render = self.get("render"),
                 el = self.get("el");
-            render = new Node(render);
             if (!el) {
+                self.__boxRenderNew = true;
                 el = new Node(constructEl(self.get("elCls"),
                     self.get("elStyle"),
                     self.get("width"),
                     self.get("height"),
                     self.get("elTagName"),
                     self.get("elAttrs")));
-                if (self.get("elOrder")) {
-                    render.append(el);
-                } else {
-                    render.prepend(el);
-                }
                 self.set("el", el);
             }
         },
+
         _uiSetElAttrs:function(attrs) {
             this.get("el").attr(attrs);
         },
@@ -137,6 +140,24 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             this.get("el").html(c);
         },
 
+        _uiSetVisible:function(isVisible) {
+            var el = this.get("el"),
+                visibleMode = this.get("visibleMode");
+            if (visibleMode == "visibility") {
+                el.css("visibility", isVisible ? "visible" : "hidden");
+            } else {
+                el.css("display", isVisible ? "" : "none");
+            }
+        },
+
+        show:function() {
+            this.render();
+            this.set("visible", true);
+        },
+        hide:function() {
+            this.set("visible", false);
+        },
+
         __destructor:function() {
             //S.log("box __destructor");
             var el = this.get("el");
@@ -149,5 +170,5 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     return Box;
 }, {
-        requires:['node']
-    });
+    requires:['node']
+});

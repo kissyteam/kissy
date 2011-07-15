@@ -66,7 +66,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
                         //出现 alpha(opacity:0), alpha(opacity=0) ?
-                        currentFilter = S.trim(currentFilter.replace(/alpha\(opacity[=:][^)]+\),?/ig, ''));
+                        currentFilter = S.trim(currentFilter.replace(
+                            /alpha\(opacity[^=]*=[^)]+\),?/ig, ''));
                     }
 
                     if (currentFilter && val != 1) {

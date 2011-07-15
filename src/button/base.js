@@ -1,20 +1,31 @@
 /**
  * Model and Control for button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
     var Button = UIBase.create(Component.ModelControl, {
+        _handleClick:function(ev) {
+            var self = this;
+            // 如果父亲允许自己处理
+            if (!Button.superclass._handleClick.call(self, ev)) {
+                self.fire("click");
+            }
+        }
     }, {
         ATTRS:{
+            /**
+             * @inheritedDoc
+             * disabled:{}
+             */
             value:{},
             content:{
-                //model 中数据属性变化后要更新到 view 层
+                // model 中数据属性变化后要更新到 view 层
                 view:true,
-                //如果没有用户值默认值，则要委托给 view 层
-                //比如 view 层使用 html_parser 来利用既有元素
+                // 如果没有用户值默认值，则要委托给 view 层
+                // 比如 view 层使用 html_parser 来利用既有元素
                 valueFn:function() {
-                    return this.get("view").get("content");
+                    return this.get("view") && this.get("view").get("content");
                 }
             },
             describedby:{

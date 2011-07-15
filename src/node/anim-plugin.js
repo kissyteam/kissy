@@ -18,6 +18,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             slide: [OVERFLOW, HEIGHT]
         };
 
+    N.__ANIM_KEY = ANIM_KEY;
+
     (function(P) {
 
         function attachAnim(elem, anim) {
@@ -49,11 +51,12 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 var anim = Anim.apply(undefined, [elem].concat(args)).run();
                 attachAnim(elem, anim);
             });
-            return this;
+            return self;
         };
 
         P.stop = function(finish) {
-            S.each(this, function(elem) {
+            var self = this;
+            S.each(self, function(elem) {
                 var anims = DOM.data(elem, ANIM_KEY);
                 if (anims) {
                     S.each(anims, function(anim) {
@@ -62,17 +65,18 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     DOM.removeData(elem, ANIM_KEY);
                 }
             });
+            return self;
         };
 
         S.each({
-                show: ['show', 1],
-                hide: ['show', 0],
-                toggle: ['toggle'],
-                fadeIn: ['fade', 1],
-                fadeOut: ['fade', 0],
-                slideDown: ['slide', 1],
-                slideUp: ['slide', 0]
-            },
+            show: ['show', 1],
+            hide: ['show', 0],
+            toggle: ['toggle'],
+            fadeIn: ['fade', 1],
+            fadeOut: ['fade', 0],
+            slideDown: ['slide', 1],
+            slideUp: ['slide', 0]
+        },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -173,9 +177,12 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-        requires:["dom","anim","./base"]
-    });
+    requires:["dom","anim","./base"]
+});
 /**
  * 2011-05-17
  *  - 承玉：添加 stop ，随时停止动画
+ *
+ *  TODO
+ *  - anim needs queue mechanism ?
  */

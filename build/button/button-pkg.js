@@ -1,25 +1,36 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:02
 */
 /**
  * Model and Control for button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
     var Button = UIBase.create(Component.ModelControl, {
+        _handleClick:function(ev) {
+            var self = this;
+            // 如果父亲允许自己处理
+            if (!Button.superclass._handleClick.call(self, ev)) {
+                self.fire("click");
+            }
+        }
     }, {
         ATTRS:{
+            /**
+             * @inheritedDoc
+             * disabled:{}
+             */
             value:{},
             content:{
-                //model 中数据属性变化后要更新到 view 层
+                // model 中数据属性变化后要更新到 view 层
                 view:true,
-                //如果没有用户值默认值，则要委托给 view 层
-                //比如 view 层使用 html_parser 来利用既有元素
+                // 如果没有用户值默认值，则要委托给 view 层
+                // 比如 view 层使用 html_parser 来利用既有元素
                 valueFn:function() {
-                    return this.get("view").get("content");
+                    return this.get("view") && this.get("view").get("content");
                 }
             },
             describedby:{
@@ -39,31 +50,40 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
     requires:['uibase','component','./customrender']
 });/**
  * abstract view for button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function(S, UIBase,Component) {
+KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render,{
+    return UIBase.create(Component.Render, {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
         },
-        _uiSetContent:function(v) {
-            this.get("el").html(v);
+        _uiSetContent:function(content) {
+            this.get("el").html(content);
         },
-        _uiSetTooltip:function(t) {
-            this.get("el").attr("title", t);
+        _uiSetTooltip:function(title) {
+            this.get("el").attr("title", title);
         },
-        _uiSetDescribedby:function(d) {
-            this.get("el").attr("aria-describedby", d);
+        _uiSetDescribedby:function(describedby) {
+            this.get("el").attr("aria-describedby", describedby);
         }
     }, {
         ATTRS:{
-            //按钮内容
+            /**
+             * @inheritedDoc
+             * disabled:{}
+             */
+
+            /**
+             * @inheritedDoc
+             * prefixCls:{}
+             */
+
+                //按钮内容
             content:{},
             //aria-describledby support
             describedby:{},
-
             tooltip:{}
         },
         HTML_PARSER:{
@@ -78,156 +98,162 @@ KISSY.add("button/buttonrender", function(S, UIBase,Component) {
     requires:['uibase','component']
 });/**
  * view : render button using div
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 
+    function getCls(self, str) {
+        return S.substitute(str, {
+            prefixCls:self.get("prefixCls"),
+            tag:self.__css_tag
+        });
+    }
+
+    var CLS = "{prefixCls}inline-block " + " {prefixCls}{tag}-button",
+        FOCUS_CLS = "{prefixCls}{tag}-button-focused",
+        HOVER_CLS = "{prefixCls}{tag}-button-hover",
+        ACTIVE_CLS = "{prefixCls}{tag}-button-active",
+        DISABLED_CLS = "{prefixCls}{tag}-button-disabled";
+
     return UIBase.create(ButtonRender, {
 
+        __css_tag:"css3",
+
         renderUI:function() {
-            this.get("el").unselectable();
+            var self = this,
+                el = self.get("el");
+            el.addClass(getCls(self, CLS));
         },
 
+
+
+        /**
+         * @override
+         */
         _handleFocus:function() {
-            if (this.get("disabled")) return false;
-            this.get("el").addClass(this.get("focusCls"));
+            var self = this;
+            self.get("el").addClass(getCls(self, FOCUS_CLS));
         },
 
+        /**
+         * @override
+         */
         _handleBlur:function() {
-            this.get("el").removeClass(this.get("focusCls"));
+            var self = this;
+            self.get("el").removeClass(getCls(self, FOCUS_CLS));
         },
 
+        /**
+         * @override
+         */
         _handleMouseEnter:function() {
-            this.get("el").addClass(this.get("hoverCls"));
+            var self = this;
+            self.get("el").addClass(getCls(self, HOVER_CLS));
         },
 
+        /**
+         * @override
+         */
         _handleMouseLeave:function() {
-            this.get("el").removeClass(this.get("hoverCls"));
-            this._handleMouseUp();
+            var self = this;
+            self.get("el").removeClass(getCls(self, HOVER_CLS));
+            // 鼠标离开时，默认设为鼠标松开状态
+            self._handleMouseUp();
         },
 
-        //模拟原生 disabled 机制
+
+        /**
+         * 模拟原生 disabled 机制
+         * @param v
+         */
         _uiSetDisabled:function(v) {
-            var el = this.get("el");
+            var self = this,el = self.get("el");
             if (v) {
-                el.addClass(this.get("disabledCls"));
-                //不能被 tab focus 到
-                el.removeAttr("tabindex");
-                //support aria
-                el.attr("aria-disabled", true);
+                el.addClass(getCls(self, DISABLED_CLS))
+                    //不能被 tab focus 到
+                    //support aria
+                    .attr({
+                        "tabindex": -1,
+                        "aria-disabled": true
+                    });
             } else {
-                el.removeClass(this.get("disabledCls"));
-                el.attr("tabindex", 0);
-                el.attr("aria-disabled", false);
+                el.removeClass(getCls(self, DISABLED_CLS))
+                    .attr({"tabindex": 0,"aria-disabled": false});
             }
         },
 
+        /**
+         * @override
+         */
         _handleMouseDown:function() {
-            this.get("el").addClass(this.get("activeCls"));
-            this.get("el").attr("aria-pressed", true);
+            var self = this;
+            self.get("el").addClass(getCls(self, ACTIVE_CLS))
+                .attr("aria-pressed", true);
         },
 
+        /**
+         * @override
+         */
         _handleMouseUp:function() {
-            this.get("el").removeClass(this.get("activeCls"));
-            this.get("el").attr("aria-pressed", false);
-        },
-
-        _handleKeydown:function() {
+            var self = this;
+            self.get("el").removeClass(getCls(self, ACTIVE_CLS))
+                .attr("aria-pressed", false);
         }
 
-    }, {
-        ATTRS:{
-            prefixCls:{
-                value:"goog-"
-            },
-            elCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "css3-button";
-                }
-            },
-            hoverCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-hover";
-                }
-            },
-            focusCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-focused";
-                }
-            },
-            activeCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-active";
-                }
-            },
-            disabledCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-disabled";
-                }
-            }
-        }
     });
 
 }, {
     requires:['uibase','./buttonrender']
 });/**
  * view for button , double div for pseudo-round corner
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     //双层 div 模拟圆角
     var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
     return UIBase.create(Css3Render, {
-            renderUI:function() {
-                this.get("el").html(S.substitute(CUSTOM_RENDER_HTML, {
-                        prefixCls:this.get("prefixCls")
-                    }));
-                var id = S.guid('ks-button-labelby');
-                this.get("el").one('div').one('div').attr("id", id);
 
-                //按钮的描述节点在最内层，其余都是装饰
-                this.get("el").attr("aria-labelledby", id);
+            __css_tag:"custom",
+
+            renderUI:function() {
             },
+
+            /**
+             *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
+             */
+            createDom:function() {
+                var self = this,
+                    id = S.guid('ks-button-labelby');
+                //按钮的描述节点在最内层，其余都是装饰
+                self.get("el")
+                    .html(S.substitute(CUSTOM_RENDER_HTML, {
+                    prefixCls:this.get("prefixCls"),
+                    id:id
+                }))
+                    .attr("aria-labelledby", id);
+            },
+
+            /**
+             * 内容移到内层
+             * @override
+             * @param v
+             */
             _uiSetContent:function(v) {
-                if (v == undefined) return;
-                this.get("el").one('div').one('div').html(v);
+                this.get("el").one('div').one('div').html(v || "");
             }
-        }, {
-            ATTRS:{
-                elCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "custom-button";
-                    }
-                },
-                hoverCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-hover";
-                    }
-                },
-                focusCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-focused";
-                    }
-                },
-                activeCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-active";
-                    }
-                },
-                disabledCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-disabled";
-                    }
-                }
-            }
-        });
+        }
+        /**
+         * @inheritedDoc
+         * content:{}
+         */
+    );
 }, {
-        requires:['uibase','./css3render']
-    });/**
+    requires:['uibase','./css3render']
+});/**
  * view: render button using native button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/nativerender", function(S, UIBase, ButtonRender) {
     return UIBase.create(ButtonRender, {

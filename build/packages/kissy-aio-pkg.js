@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: ${build.time}
              */
             version: '1.20dev',
 
-            buildTime:'20110704134631',
+            buildTime:'20110713170411',
 
             /**
              * Returns a new object containing all of the properties of
@@ -376,551 +376,554 @@ build time: ${build.time}
     }
 
     S.mix(S, {
-            noop:function() {
-            },
+        noop:function() {
+        },
 
-            /**
-             * Determine the internal JavaScript [[Class]] of an object.
-             */
-            type: function(o) {
-                return o == null ?
-                    String(o) :
-                    class2type[toString.call(o)] || 'object';
-            },
+        /**
+         * Determine the internal JavaScript [[Class]] of an object.
+         */
+        type: function(o) {
+            return o == null ?
+                String(o) :
+                class2type[toString.call(o)] || 'object';
+        },
 
-            isNull: function(o) {
-                return o === null;
-            },
+        isNull: function(o) {
+            return o === null;
+        },
 
-            isUndefined: function(o) {
-                return o === undefined;
-            },
+        isUndefined: function(o) {
+            return o === undefined;
+        },
 
-            /**
-             * Checks to see if an object is empty.
-             */
-            isEmptyObject: function(o) {
-                for (var p in o) {
-                    if (p !== undefined) {
-                        return false;
-                    }
+        /**
+         * Checks to see if an object is empty.
+         */
+        isEmptyObject: function(o) {
+            for (var p in o) {
+                if (p !== undefined) {
+                    return false;
                 }
-                return true;
-            },
+            }
+            return true;
+        },
 
+        /**
+         * Checks to see if an object is a plain object (created using "{}"
+         * or "new Object()" or "new FunctionClass()").
+         * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+         */
+        isPlainObject: function(o) {
             /**
-             * Checks to see if an object is a plain object (created using "{}"
-             * or "new Object()" or "new FunctionClass()").
-             * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+             * note by yiminghe
+             * isPlainObject(node=document.getElementById("xx")) -> false
+             * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+             * 'isPrototypeOf' in node : ie678 === false ,other === true
              */
-            isPlainObject: function(o) {
-                /**
-                 * note by yiminghe
-                 * isPlainObject(node=document.getElementById("xx")) -> false
-                 * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
-                 * 'isPrototypeOf' in node : ie678 === false ,other === true
-                 */
 
-                return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
-            },
+            return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
+        },
 
-            /**
-             * Creates a deep copy of a plain object or array. Others are returned untouched.
-             */
-            clone: function(o, f, cloned) {
-                var ret = o, isArray, k, stamp, marked = cloned || {};
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         */
+        clone: function(o, f, cloned) {
+            var ret = o, isArray, k, stamp, marked = cloned || {};
 
-                // array or plain object
-                if (o
-                    && (
-                    (isArray = S.isArray(o))
-                        || S.isPlainObject(o)
-                    )
-                    ) {
+            // array or plain object
+            if (o
+                && (
+                (isArray = S.isArray(o))
+                    || S.isPlainObject(o)
+                )
+                ) {
 
-                    // avoid recursive clone
-                    if (o[CLONE_MARKER]) {
-                        return marked[o[CLONE_MARKER]];
-                    }
-                    o[CLONE_MARKER] = (stamp = S.guid());
-                    marked[stamp] = o;
-
-                    // clone it
-                    if (isArray) {
-                        ret = f ? S.filter(o, f) : o.concat();
-                    } else {
-                        ret = {};
-                        for (k in o) {
-                            if (k !== CLONE_MARKER &&
-                                o.hasOwnProperty(k) &&
-                                (!f || (f.call(o, o[k], k, o) !== false))) {
-                                ret[k] = S.clone(o[k], f, marked);
-                            }
-                        }
-                    }
+                // avoid recursive clone
+                if (o[CLONE_MARKER]) {
+                    return marked[o[CLONE_MARKER]];
                 }
+                o[CLONE_MARKER] = (stamp = S.guid());
+                marked[stamp] = o;
 
-                // clear marked
-                if (!cloned) {
-                    S.each(marked, function(v) {
-                        if (v[CLONE_MARKER]) {
-                            try {
-                                delete v[CLONE_MARKER];
-                            } catch (e) {
-                                v[CLONE_MARKER] = undefined;
-                            }
-                        }
-                    });
-                    marked = undefined;
-                }
-
-                return ret;
-            },
-
-            /**
-             * Removes the whitespace from the beginning and end of a string.
-             */
-            trim: trim ?
-                function(str) {
-                    return (str == undefined) ? EMPTY : trim.call(str);
-                } :
-                function(str) {
-                    return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
-                },
-
-            /**
-             * Substitutes keywords in a string using an object/array.
-             * Removes undefined keywords and ignores escaped keywords.
-             */
-            substitute: function(str, o, regexp) {
-                if (!S.isString(str)
-                    || !S.isPlainObject(o)) {
-                    return str;
-                }
-
-                return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
-                    if (match.charAt(0) === '\\') {
-                        return match.slice(1);
-                    }
-                    return (o[name] !== undefined) ? o[name] : EMPTY;
-                });
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * @param object {Object} the object to iterate
-             * @param fn {Function} the function to execute on each item. The function
-             *        receives three arguments: the value, the index, the full array.
-             * @param context {Object} (opt)
-             */
-            each: function(object, fn, context) {
-                var key,
-                    val,
-                    i = 0,
-                    length = object && object.length,
-                    isObj = length === undefined || S.type(object) === 'function';
-                context = context || host;
-
-                if (isObj) {
-                    for (key in object) {
-                        if (fn.call(context, object[key], key, object) === false) {
-                            break;
-                        }
-                    }
+                // clone it
+                if (isArray) {
+                    ret = f ? S.filter(o, f) : o.concat();
                 } else {
-                    for (val = object[0];
-                         i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
-                    }
-                }
-
-                return object;
-            },
-
-            /**
-             * Search for a specified value within an array.
-             */
-            indexOf: indexOf ?
-                function(item, arr) {
-                    return indexOf.call(arr, item);
-                } :
-                function(item, arr) {
-                    for (var i = 0, len = arr.length; i < len; ++i) {
-                        if (arr[i] === item) {
-                            return i;
+                    ret = {};
+                    for (k in o) {
+                        if (k !== CLONE_MARKER &&
+                            o.hasOwnProperty(k) &&
+                            (!f || (f.call(o, o[k], k, o) !== false))) {
+                            ret[k] = S.clone(o[k], f, marked);
                         }
                     }
-                    return -1;
-                },
-
-            /**
-             * Returns the index of the last item in the array
-             * that contains the specified value, -1 if the
-             * value isn't found.
-             */
-            lastIndexOf: (lastIndexOf) ?
-                function(item, arr) {
-                    return lastIndexOf.call(arr, item);
-                } :
-                function(item, arr) {
-                    for (var i = arr.length - 1; i >= 0; i--) {
-                        if (arr[i] === item) {
-                            break;
-                        }
-                    }
-                    return i;
-                },
-
-            /**
-             * Returns a copy of the array with the duplicate entries removed
-             * @param a {Array} the array to find the subset of uniques for
-             * @param override {Boolean}
-             *        if override is true, S.unique([a, b, a]) => [b, a]
-             *        if override is false, S.unique([a, b, a]) => [a, b]
-             * @return {Array} a copy of the array with duplicate entries removed
-             */
-            unique: function(a, override) {
-                var b = a.slice();
-                if (override) {
-                    b.reverse();
                 }
-                var i = 0,
-                    n,
-                    item;
-
-                while (i < b.length) {
-                    item = b[i];
-                    while ((n = S.lastIndexOf(item, b)) !== i) {
-                        b.splice(n, 1);
-                    }
-                    i += 1;
-                }
-
-                if (override) {
-                    b.reverse();
-                }
-                return b;
-            },
-
-            /**
-             * Search for a specified value index within an array.
-             */
-            inArray: function(item, arr) {
-                return S.indexOf(item, arr) > -1;
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a new array containing the items that the supplied
-             * function returned true for.
-             * @param arr {Array} the array to iterate
-             * @param fn {Function} the function to execute on each item
-             * @param context {Object} optional context object
-             * @return {Array} The items on which the supplied function
-             *         returned true. If no items matched an empty array is
-             *         returned.
-             */
-            filter: filter ?
-                function(arr, fn, context) {
-                    return filter.call(arr, fn, context || this);
-                } :
-                function(arr, fn, context) {
-                    var ret = [];
-                    S.each(arr, function(item, i, arr) {
-                        if (fn.call(context || this, item, i, arr)) {
-                            ret.push(item);
-                        }
-                    });
-                    return ret;
-                },
-            // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-            map:map ?
-                function(arr, fn, context) {
-                    return map.call(arr, fn, context || this);
-                } :
-                function(arr, fn, context) {
-                    var len = arr.length,
-                        res = new Array(len);
-                    for (var i = 0; i < len; i++) {
-                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
-                        if (el
-                            ||
-                            //ie<9 in invalid when typeof arr == string
-                            i in arr) {
-                            res[i] = fn.call(context || this, el, i, arr);
-                        }
-                    }
-                    return res;
-                },
-
-            /**
-             * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
-             */
-            reduce:/*
-             NaN ?
-             reduce ? function(arr, callback, initialValue) {
-             return arr.reduce(callback, initialValue);
-             } : */function(arr, callback, initialValue) {
-                var len = arr.length;
-                if (typeof callback !== "function")
-                    throw new TypeError();
-
-                // no value to return if no initial value and an empty array
-                if (len == 0 && arguments.length == 2)
-                    throw new TypeError();
-
-                var k = 0;
-                var accumulator;
-                if (arguments.length >= 3) {
-                    accumulator = arguments[2];
-                }
-                else {
-                    do {
-                        if (k in arr) {
-                            accumulator = arr[k++];
-                            break;
-                        }
-
-                        // if array contains no values, no initial value to return
-                        if (++k >= len)
-                            throw new TypeError();
-                    }
-                    while (true);
-                }
-
-                while (k < len) {
-                    if (k in arr) {
-                        accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
-                    }
-                    k++;
-                }
-
-                return accumulator;
-            },
-
-            /**
-             * it is not same with native bind
-             * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
-             */
-            bind:function(fn, obj) {
-                var slice = [].slice,
-                    args = slice.call(arguments, 2),
-                    bound = function () {
-                        return fn.apply(this instanceof bound ? this : obj,
-                            args.concat(slice.call(arguments)));
-                    };
-                bound.prototype = fn.prototype;
-                return bound;
-            },
-
-            /**
-             * Gets current date in milliseconds.
-             */
-            now: function() {
-                return new Date().getTime();
-            },
-            /**
-             * frequently used in taobao cookie about nick
-             */
-            fromUnicode:function(str) {
-                return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
-                    return  String.fromCharCode(parseInt(u, 16));
-                });
-            },
-            /**
-             * escape string to html
-             * @refer http://yiminghe.javaeye.com/blog/788929
-             * @param str {string} text2html show
-             */
-            escapeHTML:function(str) {
-                return str.replace(getEscapeReg(), function(m) {
-                    return reverseEntities[m];
-                });
-            },
-
-            /**
-             * unescape html to string
-             * @param str {string} html2text
-             */
-            unEscapeHTML:function(str) {
-                return str.replace(getUnEscapeReg(), function(m, n) {
-                    return htmlEntities[m] || String.fromCharCode(+n);
-                });
-            },
-            /**
-             * Converts object to a true array.
-             * @param o {object|Array} array like object or array
-             */
-            makeArray: function(o) {
-                if (o === null || o === undefined) return [];
-                if (S.isArray(o)) return o;
-
-                // The strings and functions also have 'length'
-                if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
-                    return [o];
-                }
-                var ret = [];
-                for (var i = 0,l = o.length; i < l; i++) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            },
-            /**
-             * Creates a serialized string of an array or object.
-             * @return {String}
-             * <code>
-             * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-             * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-             * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-             * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-             * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-             * </code>
-             */
-            param: function(o, sep, eq, arr) {
-                if (!S.isPlainObject(o)) return EMPTY;
-                sep = sep || SEP;
-                eq = eq || EQ;
-                if (S.isUndefined(arr)) arr = true;
-                var buf = [], key, val;
-                for (key in o) {
-                    val = o[key];
-                    key = encode(key);
-
-                    // val is valid non-array value
-                    if (isValidParamValue(val)) {
-                        buf.push(key, eq, encode(val + EMPTY), sep);
-                    }
-                    // val is not empty array
-                    else if (S.isArray(val) && val.length) {
-                        for (var i = 0, len = val.length; i < len; ++i) {
-                            if (isValidParamValue(val[i])) {
-                                buf.push(key,
-                                    (arr ? encode("[]") : EMPTY),
-                                    eq, encode(val[i] + EMPTY), sep);
-                            }
-                        }
-                    }
-                    // ignore other cases, including empty array, Function, RegExp, Date etc.
-                }
-                buf.pop();
-                return buf.join(EMPTY);
-            },
-
-            /**
-             * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-             * <code>
-             * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-             * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-             * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-             * 'id=45&raw'        // -> {id: '45', raw: ''}
-             * </code>
-             */
-            unparam: function(str, sep, eq) {
-                if (typeof str !== 'string'
-                    || (str = S.trim(str)).length === 0) {
-                    return {};
-                }
-                sep = sep || SEP;
-                eq = eq || EQ;
-                var ret = {},
-                    pairs = str.split(sep),
-                    pair, key, val,
-                    i = 0, len = pairs.length;
-
-                for (; i < len; ++i) {
-                    pair = pairs[i].split(eq);
-                    key = decode(pair[0]);
-                    try {
-                        val = decode(pair[1] || EMPTY);
-                    } catch(e) {
-                        S.log("decodeURIComponent error : " + pair[1], "error");
-                        val = pair[1] || EMPTY;
-                    }
-                    if (S.endsWith(key, "[]")) {
-                        key = key.substring(0, key.length - 2);
-                    }
-                    if (hasOwnProperty.call(ret, key)) {
-                        if (S.isArray(ret[key])) {
-                            ret[key].push(val);
-                        } else {
-                            ret[key] = [ret[key],val];
-                        }
-                    } else {
-                        ret[key] = val;
-                    }
-                }
-                return ret;
-            },
-            /**
-             * Executes the supplied function in the context of the supplied
-             * object 'when' milliseconds later. Executes the function a
-             * single time unless periodic is set to true.
-             * @param fn {Function|String} the function to execute or the name of the method in
-             *        the 'o' object to execute.
-             * @param when {Number} the number of milliseconds to wait until the fn is executed.
-             * @param periodic {Boolean} if true, executes continuously at supplied interval
-             *        until canceled.
-             * @param o {Object} the context object.
-             * @param data [Array] that is provided to the function. This accepts either a single
-             *        item or an array. If an array is provided, the function is executed with
-             *        one parameter for each array item. If you need to pass a single array
-             *        parameter, it needs to be wrapped in an array [myarray].
-             * @return {Object} a timer object. Call the cancel() method on this object to stop
-             *         the timer.
-             */
-            later: function(fn, when, periodic, o, data) {
-                when = when || 0;
-                o = o || { };
-                var m = fn, d = S.makeArray(data), f, r;
-
-                if (S.isString(fn)) {
-                    m = o[fn];
-                }
-
-                if (!m) {
-                    S.error('method undefined');
-                }
-
-                f = function() {
-                    m.apply(o, d);
-                };
-
-                r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-                return {
-                    id: r,
-                    interval: periodic,
-                    cancel: function() {
-                        if (this.interval) {
-                            clearInterval(r);
-                        } else {
-                            clearTimeout(r);
-                        }
-                    }
-                };
-            },
-
-            startsWith:function(str, prefix) {
-                return str.lastIndexOf(prefix, 0) == 0;
-            },
-
-            endsWith:function(str, suffix) {
-                var ind = str.length - suffix.length;
-                return ind >= 0 && str.indexOf(suffix, ind) == ind;
             }
 
-        });
+            // clear marked
+            if (!cloned) {
+                S.each(marked, function(v) {
+                    if (v[CLONE_MARKER]) {
+                        try {
+                            delete v[CLONE_MARKER];
+                        } catch (e) {
+                            v[CLONE_MARKER] = undefined;
+                        }
+                    }
+                });
+                marked = undefined;
+            }
+
+            return ret;
+        },
+
+        /**
+         * Removes the whitespace from the beginning and end of a string.
+         */
+        trim: trim ?
+            function(str) {
+                return (str == undefined) ? EMPTY : trim.call(str);
+            } :
+            function(str) {
+                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+            },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         */
+        substitute: function(str, o, regexp) {
+            if (!S.isString(str)
+                || !S.isPlainObject(o)) {
+                return str;
+            }
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+                if (match.charAt(0) === '\\') {
+                    return match.slice(1);
+                }
+                return (o[name] !== undefined) ? o[name] : EMPTY;
+            });
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param object {Object} the object to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param context {Object} (opt)
+         */
+        each: function(object, fn, context) {
+            var key,
+                val,
+                i = 0,
+                length = object && object.length,
+                isObj = length === undefined || S.type(object) === 'function';
+            context = context || host;
+
+            if (isObj) {
+                for (key in object) {
+                    if (fn.call(context, object[key], key, object) === false) {
+                        break;
+                    }
+                }
+            } else {
+                for (val = object[0];
+                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                }
+            }
+
+            return object;
+        },
+
+        /**
+         * Search for a specified value within an array.
+         */
+        indexOf: indexOf ?
+            function(item, arr) {
+                return indexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === item) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+
+        /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @param override {Boolean}
+         *        if override is true, S.unique([a, b, a]) => [b, a]
+         *        if override is false, S.unique([a, b, a]) => [a, b]
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a, override) {
+            var b = a.slice();
+            if (override) {
+                b.reverse();
+            }
+            var i = 0,
+                n,
+                item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if (override) {
+                b.reverse();
+            }
+            return b;
+        },
+
+        /**
+         * Search for a specified value index within an array.
+         */
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned true for.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param context {Object} optional context object
+         * @return {Array} The items on which the supplied function
+         *         returned true. If no items matched an empty array is
+         *         returned.
+         */
+        filter: filter ?
+            function(arr, fn, context) {
+                return filter.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var ret = [];
+                S.each(arr, function(item, i, arr) {
+                    if (fn.call(context || this, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
+        // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+        map:map ?
+            function(arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                    if (el
+                        ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
+                    }
+                }
+                return res;
+            },
+
+        /**
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         */
+        reduce:/*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
+         return arr.reduce(callback, initialValue);
+         } : */function(arr, callback, initialValue) {
+            var len = arr.length;
+            if (typeof callback !== "function")
+                throw new TypeError();
+
+            // no value to return if no initial value and an empty array
+            if (len == 0 && arguments.length == 2)
+                throw new TypeError();
+
+            var k = 0;
+            var accumulator;
+            if (arguments.length >= 3) {
+                accumulator = arguments[2];
+            }
+            else {
+                do {
+                    if (k in arr) {
+                        accumulator = arr[k++];
+                        break;
+                    }
+
+                    // if array contains no values, no initial value to return
+                    if (++k >= len)
+                        throw new TypeError();
+                }
+                while (true);
+            }
+
+            while (k < len) {
+                if (k in arr) {
+                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                }
+                k++;
+            }
+
+            return accumulator;
+        },
+
+        /**
+         * it is not same with native bind
+         * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         */
+        bind:function(fn, obj) {
+            var slice = [].slice,
+                args = slice.call(arguments, 2),
+                bound = function () {
+                    return fn.apply(this instanceof bound ? this : obj,
+                        args.concat(slice.call(arguments)));
+                };
+            bound.prototype = fn.prototype;
+            return bound;
+        },
+
+        /**
+         * Gets current date in milliseconds.
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
+         * http://kangax.github.com/es5-compat-table/
+         */
+        now: Date.now || function() {
+            return +new Date();
+        },
+        /**
+         * frequently used in taobao cookie about nick
+         */
+        fromUnicode:function(str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+                return  String.fromCharCode(parseInt(u, 16));
+            });
+        },
+        /**
+         * escape string to html
+         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @param str {string} text2html show
+         */
+        escapeHTML:function(str) {
+            return str.replace(getEscapeReg(), function(m) {
+                return reverseEntities[m];
+            });
+        },
+
+        /**
+         * unescape html to string
+         * @param str {string} html2text
+         */
+        unEscapeHTML:function(str) {
+            return str.replace(getUnEscapeReg(), function(m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+        /**
+         * Converts object to a true array.
+         * @param o {object|Array} array like object or array
+         */
+        makeArray: function(o) {
+            if (o === null || o === undefined) return [];
+            if (S.isArray(o)) return o;
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                return [o];
+            }
+            var ret = [];
+            for (var i = 0,l = o.length; i < l; i++) {
+                ret[i] = o[i];
+            }
+            return ret;
+        },
+        /**
+         * Creates a serialized string of an array or object.
+         * @return {String}
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
+         */
+        param: function(o, sep, eq, arr) {
+            if (!S.isPlainObject(o)) return EMPTY;
+            sep = sep || SEP;
+            eq = eq || EQ;
+            if (S.isUndefined(arr)) arr = true;
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+                key = encode(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key, eq, encode(val + EMPTY), sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key,
+                                (arr ? encode("[]") : EMPTY),
+                                eq, encode(val[i] + EMPTY), sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <code>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </code>
+         */
+        unparam: function(str, sep, eq) {
+            if (typeof str !== 'string'
+                || (str = S.trim(str)).length === 0) {
+                return {};
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            var ret = {},
+                pairs = str.split(sep),
+                pair, key, val,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split(eq);
+                key = decode(pair[0]);
+                try {
+                    val = decode(pair[1] || EMPTY);
+                } catch(e) {
+                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    val = pair[1] || EMPTY;
+                }
+                if (S.endsWith(key, "[]")) {
+                    key = key.substring(0, key.length - 2);
+                }
+                if (hasOwnProperty.call(ret, key)) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key],val];
+                    }
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (S.isString(fn)) {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
+            };
+        },
+
+        startsWith:function(str, prefix) {
+            return str.lastIndexOf(prefix, 0) == 0;
+        },
+
+        endsWith:function(str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) == ind;
+        }
+
+    });
 
     // for idea ..... auto-hint
     S.mix(S, {
-            isBoolean:isValidParamValue,
-            isNumber:isValidParamValue,
-            isString:isValidParamValue,
-            isFunction:isValidParamValue,
-            isArray:isValidParamValue,
-            isDate:isValidParamValue,
-            isRegExp:isValidParamValue,
-            isObject:isValidParamValue
-        });
+        isBoolean:isValidParamValue,
+        isNumber:isValidParamValue,
+        isString:isValidParamValue,
+        isFunction:isValidParamValue,
+        isArray:isValidParamValue,
+        isDate:isValidParamValue,
+        isRegExp:isValidParamValue,
+        isObject:isValidParamValue
+    });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function(name, lc) {
@@ -2795,7 +2798,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         parseInt(attributeNode.value, 10) :
                         rfocusable.test(el.nodeName) || rclickable.test(el.nodeName) && el.href ?
                             0 :
-                            null;
+                            undefined;
                 }
             },
             // 在标准浏览器下，用 getAttribute 获取 style 值
@@ -2825,13 +2828,17 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             "contenteditable": "contentEditable"
         },
         // Hook for boolean attributes
+        // if bool is false
+        //  - standard browser returns null
+        //  - ie<8 return false
+        //   - so norm to undefined
         boolHook = {
             get: function(elem, name) {
                 // 转发到 prop 方法
                 return DOM.prop(elem, name) ?
                     // 根据 w3c attribute , true 时返回属性名字符串
                     name.toLowerCase() :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 var propName;
@@ -2912,7 +2919,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 // Return undefined if nodeValue is empty string
                 return ret && ret.nodeValue !== "" ?
                     ret.nodeValue :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 // Check form objects in IE (multiple bugs related)
@@ -2936,7 +2943,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             attrHooks[ name ] = {
                 get: function(elem) {
                     var ret = elem.getAttribute(name, 2);
-                    return ret === undefined ? null : ret;
+                    return ret === null ? undefined : ret;
                 }
             };
         });
@@ -2976,275 +2983,272 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * 自定义属性不推荐使用，使用 .data
-             * @param selector
-             * @param name
-             * @param value
-             */
-            prop: function(selector, name, value) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.prop(selector, k, name[k]);
-                    }
-                    return;
+        /**
+         * 自定义属性不推荐使用，使用 .data
+         * @param selector
+         * @param name
+         * @param value
+         */
+        prop: function(selector, name, value) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.prop(selector, k, name[k]);
                 }
-                var elems = DOM.query(selector);
-                // Try to normalize/fix the name
-                name = propFix[ name ] || name;
-                var hook = propHooks[ name ];
-                if (value !== undefined) {
-                    S.each(elems, function(elem) {
-                        if (hook && hook.set) {
-                            hook.set(elem, value, name);
-                        } else {
-                            elem[ name ] = value;
-                        }
-                    });
-                } else {
-                    var elem = elems[0],ret;
-                    if (!elem) return null;
-                    ret = getProp(elem, name);
-                    return ret === undefined ? null : ret;
-                }
-            },
-            hasProp:function(selector, name) {
-                var elem = DOM.get(selector);
-                return getProp(elem, name) !== undefined;
-            },
-
-            /**
-             * 不推荐使用，使用 .data .removeData
-             * @param selector
-             * @param name
-             */
-            removeProp:function(selector, name) {
-                name = propFix[ name ] || name;
-                DOM.query(selector).each(function(el) {
-                    try {
-                        el[ name ] = undefined;
-                        delete el[ name ];
-                    } catch(e) {
+                return;
+            }
+            var elems = DOM.query(selector);
+            // Try to normalize/fix the name
+            name = propFix[ name ] || name;
+            var hook = propHooks[ name ];
+            if (value !== undefined) {
+                S.each(elems, function(elem) {
+                    if (hook && hook.set) {
+                        hook.set(elem, value, name);
+                    } else {
+                        elem[ name ] = value;
                     }
                 });
-            },
+            } else {
+                var elem = elems[0];
+                if (!elem) return;
+                return getProp(elem, name);
+            }
+        },
+        hasProp:function(selector, name) {
+            return getProp(selector, name) !== undefined;
+        },
 
-            /**
-             * Gets the value of an attribute for the first element in the set of matched elements or
-             * Sets an attribute for the set of matched elements.
-             */
-            attr:function(selector, name, val, pass) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    pass = val; // 塌缩参数
-                    for (var k in name) {
-                        DOM.attr(selector, k, name[k], pass);
-                    }
+        /**
+         * 不推荐使用，使用 .data .removeData
+         * @param selector
+         * @param name
+         */
+        removeProp:function(selector, name) {
+            name = propFix[ name ] || name;
+            DOM.query(selector).each(function(el) {
+                try {
+                    el[ name ] = undefined;
+                    delete el[ name ];
+                } catch(e) {
+                }
+            });
+        },
+
+        /**
+         * Gets the value of an attribute for the first element in the set of matched elements or
+         * Sets an attribute for the set of matched elements.
+         */
+        attr:function(selector, name, val, pass) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                pass = val; // 塌缩参数
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k], pass);
+                }
+                return;
+            }
+
+            if (!(name = S.trim(name))) return;
+
+            name = name.toLowerCase();
+
+            // attr functions
+            if (pass && attrFn[name]) {
+                return DOM[name](selector, val);
+            }
+
+            // custom attrs
+            name = attrFix[name] || name;
+
+            var attrNormalizer;
+
+            if (rboolean.test(name)) {
+                attrNormalizer = boolHook;
+            }
+            // only old ie?
+            else if (rinvalidChar.test(name)) {
+                attrNormalizer = attrNodeHook;
+            } else {
+                attrNormalizer = attrHooks[name];
+            }
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+                // only get attributes on element nodes
+                if (!isElementNode(el)) {
                     return;
                 }
 
-                if (!(name = S.trim(name))) return;
-
-                name = name.toLowerCase();
-
-                // attr functions
-                if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
-                }
-
-                // custom attrs
-                name = attrFix[name] || name;
-
-                var attrNormalizer;
-
-                if (rboolean.test(name)) {
-                    attrNormalizer = boolHook;
-                }
-                // only old ie?
-                else if (rinvalidChar.test(name)) {
+                // browsers index elements by id/name on forms, give priority to attributes.
+                if (el.nodeName.toLowerCase() == "form") {
                     attrNormalizer = attrNodeHook;
-                } else {
-                    attrNormalizer = attrHooks[name];
+                }
+                if (attrNormalizer && attrNormalizer.get) {
+                    return attrNormalizer.get(el, name);
                 }
 
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-                    // only get attributes on element nodes
-                    if (!isElementNode(el)) {
-                        return null;
-                    }
+                var ret = el.getAttribute(name);
 
-                    // browsers index elements by id/name on forms, give priority to attributes.
-                    if (el.nodeName.toLowerCase() == "form") {
-                        attrNormalizer = attrNodeHook;
-                    }
-                    if (attrNormalizer && attrNormalizer.get) {
-                        return attrNormalizer.get(el, name);
-                    }
-
-                    var ret = el.getAttribute(name);
-
-                    /**
-                     * undefined 会形成链状，so 不能
-                     */
-                    return ret === undefined ? null : ret;
-                } else {
-                    // setter
-                    S.each(DOM.query(selector), function(el) {
-                        // only set attributes on element nodes
-                        if (!isElementNode(el)) {
-                            return;
-                        }
-
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Removes the attribute of the matched elements.
-             */
-            removeAttr: function(selector, name) {
-                name = name.toLowerCase();
-                name = attrFix[name] || name;
+                // standard browser non-existing attribute return null
+                // ie<8 will return undefined , because it return property
+                // so norm to undefined
+                return ret === null ? undefined : ret;
+            } else {
+                // setter
                 S.each(DOM.query(selector), function(el) {
-                    if (isElementNode(el)) {
-                        var propName;
-                        el.removeAttribute(name);
-                        // Set corresponding property to false for boolean attributes
-                        if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
-                            el[ propName ] = false;
-                        }
-                    }
-                });
-            },
-
-            hasAttr: oldIE ?
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    // from ppk :http://www.quirksmode.org/dom/w3c_core.html
-                    // IE5-7 doesn't return the value of a style attribute.
-                    // var $attr = el.attributes[name];
-                    var $attr = el.getAttributeNode(name);
-                    return !!( $attr && $attr.specified );
-                }
-                :
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    //使用原生实现
-                    return el.hasAttribute(name);
-                },
-
-            /**
-             * Gets the current value of the first element in the set of matched or
-             * Sets the value of each element in the set of matched elements.
-             */
-            val : function(selector, value) {
-                var hook, ret;
-
-                //getter
-                if (value === undefined) {
-
-                    var elem = DOM.get(selector);
-
-                    if (elem) {
-                        hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                        if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
-                            return ret;
-                        }
-
-                        ret = elem.value;
-
-                        return typeof ret === "string" ?
-                            // handle most common string cases
-                            ret.replace(rreturn, "") :
-                            // handle cases where value is null/undef or number
-                            ret == null ? "" : ret;
-                    }
-
-                    return null;
-                }
-
-                DOM.query(selector).each(function(elem) {
-
-                    if (elem.nodeType !== 1) {
+                    // only set attributes on element nodes
+                    if (!isElementNode(el)) {
                         return;
                     }
 
-                    var val = value;
-
-                    // Treat null/undefined as ""; convert numbers to string
-                    if (val == null) {
-                        val = "";
-                    } else if (typeof val === "number") {
-                        val += "";
-                    } else if (S.isArray(val)) {
-                        val = S.map(val, function (value) {
-                            return value == null ? "" : value + "";
-                        });
-                    }
-
-                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                    // If set returns undefined, fall back to normal setting
-                    if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
-                        elem.value = val;
+                    if (attrNormalizer && attrNormalizer.set) {
+                        attrNormalizer.set(el, val, name);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
                     }
                 });
+            }
+        },
+
+        /**
+         * Removes the attribute of the matched elements.
+         */
+        removeAttr: function(selector, name) {
+            name = name.toLowerCase();
+            name = attrFix[name] || name;
+            S.each(DOM.query(selector), function(el) {
+                if (isElementNode(el)) {
+                    var propName;
+                    el.removeAttribute(name);
+                    // Set corresponding property to false for boolean attributes
+                    if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
+                        el[ propName ] = false;
+                    }
+                }
+            });
+        },
+
+        hasAttr: oldIE ?
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                // from ppk :http://www.quirksmode.org/dom/w3c_core.html
+                // IE5-7 doesn't return the value of a style attribute.
+                // var $attr = el.attributes[name];
+                var $attr = el.getAttributeNode(name);
+                return !!( $attr && $attr.specified );
+            }
+            :
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                //使用原生实现
+                return el.hasAttribute(name);
             },
 
-            /**
-             * Gets the text context of the first element in the set of matched elements or
-             * Sets the text content of the matched elements.
-             */
-            text: function(selector, val) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
+        /**
+         * Gets the current value of the first element in the set of matched or
+         * Sets the value of each element in the set of matched elements.
+         */
+        val : function(selector, value) {
+            var hook, ret;
 
-                    // only gets value on supported nodes
-                    if (isElementNode(el)) {
-                        return el[TEXT] || EMPTY;
+            //getter
+            if (value === undefined) {
+
+                var elem = DOM.get(selector);
+
+                if (elem) {
+                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                    if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
+                        return ret;
                     }
-                    else if (isTextNode(el)) {
-                        return el.nodeValue;
-                    }
-                    //prevent chain in Node
-                    return null;
+
+                    ret = elem.value;
+
+                    return typeof ret === "string" ?
+                        // handle most common string cases
+                        ret.replace(rreturn, "") :
+                        // handle cases where value is null/undefined or number
+                        ret == null ? "" : ret;
                 }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(el) {
-                        if (isElementNode(el)) {
-                            el[TEXT] = val;
-                        }
-                        else if (isTextNode(el)) {
-                            el.nodeValue = val;
-                        }
+
+                return;
+            }
+
+            DOM.query(selector).each(function(elem) {
+
+                if (elem.nodeType !== 1) {
+                    return;
+                }
+
+                var val = value;
+
+                // Treat null/undefined as ""; convert numbers to string
+                if (val == null) {
+                    val = "";
+                } else if (typeof val === "number") {
+                    val += "";
+                } else if (S.isArray(val)) {
+                    val = S.map(val, function (value) {
+                        return value == null ? "" : value + "";
                     });
                 }
+
+                hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                // If set returns undefined, fall back to normal setting
+                if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
+                    elem.value = val;
+                }
+            });
+        },
+
+        /**
+         * Gets the text context of the first element in the set of matched elements or
+         * Sets the text content of the matched elements.
+         */
+        text: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on supported nodes
+                if (isElementNode(el)) {
+                    return el[TEXT] || EMPTY;
+                }
+                else if (isTextNode(el)) {
+                    return el.nodeValue;
+                }
+                return undefined;
             }
-        });
+            // setter
+            else {
+                S.each(DOM.query(selector), function(el) {
+                    if (isElementNode(el)) {
+                        el[TEXT] = val;
+                    }
+                    else if (isTextNode(el)) {
+                        el.nodeValue = val;
+                    }
+                });
+            }
+        }
+    });
     if (1 > 2) {
         DOM.removeProp().hasProp();
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    }
-);
+    requires:["./base","ua"]
+}
+    );
 
 /**
  * NOTES:
@@ -3520,7 +3524,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     if (isElementNode(el)) {
                         return el.innerHTML;
                     }
-                    return null;
+                    return;
                 }
                 // setter
                 else {
@@ -3814,7 +3818,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] === undefined ? null : cache[name];
+                    return cache[name];
                 } else {
                     return cache;
                 }
@@ -3861,7 +3865,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] === undefined ? null : cache[name];
+                    return cache[name] ;
                 } else {
                     return cache;
                 }
@@ -4098,119 +4102,122 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     S.mix(DOM, {
 
 
-            /**
-             * Gets the current coordinates of the element, relative to the document.
-             */
-            offset: function(elem, val) {
-                // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+        /**
+         * Gets the current coordinates of the element, relative to the document.
+         * @param relativeWin The window to measure relative to. If relativeWin
+         *     is not in the ancestor frame chain of the element, we measure relative to
+         *     the top-most window.
+         */
+        offset: function(elem, val, relativeWin) {
+            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-                // getter
-                if (val === undefined) {
-                    return getOffset(elem);
+            // getter
+            if (val === undefined) {
+                return getOffset(elem, relativeWin);
+            }
+
+            // setter
+            setOffset(elem, val);
+        },
+
+        /**
+         * Makes elem visible in the container
+         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+         *        http://yiminghe.javaeye.com/blog/390732
+         */
+        scrollIntoView: function(elem, container, top, hscroll) {
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
+                return;
+            }
+
+            hscroll = hscroll === undefined ? true : !!hscroll;
+            top = top === undefined ? true : !!top;
+
+            // default current window, use native for scrollIntoView(elem, top)
+            if (!container ||
+                (container = DOM.get(container)) === win) {
+                // 注意：
+                // 1. Opera 不支持 top 参数
+                // 2. 当 container 已经在视窗中时，也会重新定位
+                elem.scrollIntoView(top);
+                return;
+            }
+
+            // document 归一化到 window
+            if (nodeTypeIs(container, 9)) {
+                container = getWin(container);
+            }
+
+            var isWin = !!getWin(container),
+                elemOffset = DOM.offset(elem),
+                containerOffset = isWin ? {
+                    left: DOM.scrollLeft(container),
+                    top: DOM.scrollTop(container) }
+                    : DOM.offset(container),
+
+                // elem 相对 container 视窗的坐标
+                diff = {
+                    left: elemOffset[LEFT] - containerOffset[LEFT],
+                    top: elemOffset[TOP] - containerOffset[TOP]
+                },
+
+                // container 视窗的高宽
+                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+
+                // container 视窗相对 container 元素的坐标
+                cl = DOM[SCROLL_LEFT](container),
+                ct = DOM[SCROLL_TOP](container),
+                cr = cl + cw,
+                cb = ct + ch,
+
+                // elem 的高宽
+                eh = elem.offsetHeight,
+                ew = elem.offsetWidth,
+
+                // elem 相对 container 元素的坐标
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                r = l + ew,
+                b = t + eh,
+
+                t2, l2;
+
+            // 根据情况将 elem 定位到 container 视窗中
+            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
+            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
+            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
+            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            if (eh > ch || t < ct || top) {
+                t2 = t;
+            } else if (b > cb) {
+                t2 = b - ch;
+            }
+
+            // 水平方向与上面同理
+            if (hscroll) {
+                if (ew > cw || l < cl || top) {
+                    l2 = l;
+                } else if (r > cr) {
+                    l2 = r - cw;
                 }
+            }
 
-                // setter
-                setOffset(elem, val);
-            },
-
-            /**
-             * Makes elem visible in the container
-             * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
-             *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
-             *        http://yiminghe.javaeye.com/blog/390732
-             */
-            scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
-                    return;
-                }
-
-                hscroll = hscroll === undefined ? true : !!hscroll;
-                top = top === undefined ? true : !!top;
-
-                // default current window, use native for scrollIntoView(elem, top)
-                if (!container ||
-                    (container = DOM.get(container)) === win) {
-                    // 注意：
-                    // 1. Opera 不支持 top 参数
-                    // 2. 当 container 已经在视窗中时，也会重新定位
-                    elem.scrollIntoView(top);
-                    return;
-                }
-
-                // document 归一化到 window
-                if (nodeTypeIs(container, 9)) {
-                    container = getWin(container);
-                }
-
-                var isWin = !!getWin(container),
-                    elemOffset = DOM.offset(elem),
-                    containerOffset = isWin ? {
-                        left: DOM.scrollLeft(container),
-                        top: DOM.scrollTop(container) }
-                        : DOM.offset(container),
-
-                    // elem 相对 container 视窗的坐标
-                    diff = {
-                        left: elemOffset[LEFT] - containerOffset[LEFT],
-                        top: elemOffset[TOP] - containerOffset[TOP]
-                    },
-
-                    // container 视窗的高宽
-                    ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                    cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
-
-                    // container 视窗相对 container 元素的坐标
-                    cl = DOM[SCROLL_LEFT](container),
-                    ct = DOM[SCROLL_TOP](container),
-                    cr = cl + cw,
-                    cb = ct + ch,
-
-                    // elem 的高宽
-                    eh = elem.offsetHeight,
-                    ew = elem.offsetWidth,
-
-                    // elem 相对 container 元素的坐标
-                    // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                    l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                    t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
-                    r = l + ew,
-                    b = t + eh,
-
-                    t2, l2;
-
-                // 根据情况将 elem 定位到 container 视窗中
-                // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-                // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-                // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-                // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-                if (eh > ch || t < ct || top) {
-                    t2 = t;
-                } else if (b > cb) {
-                    t2 = b - ch;
-                }
-
-                // 水平方向与上面同理
-                if (hscroll) {
-                    if (ew > cw || l < cl || top) {
-                        l2 = l;
-                    } else if (r > cr) {
-                        l2 = r - cw;
-                    }
-                }
-
-                // go
-                DOM[SCROLL_TOP](container, t2);
-                DOM[SCROLL_LEFT](container, l2);
-            },
-            /**
-             * for idea autocomplete
-             */
-            docWidth:0,
-            docHeight:0,
-            viewportHeight:0,
-            viewportWidth:0
-        });
+            // go
+            DOM[SCROLL_TOP](container, t2);
+            DOM[SCROLL_LEFT](container, l2);
+        },
+        /**
+         * for idea autocomplete
+         */
+        docWidth:0,
+        docHeight:0,
+        viewportHeight:0,
+        viewportWidth:0
+    });
 
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
     // http://www.quirksmode.org/dom/w3c_cssom.html
@@ -4282,8 +4289,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         }
     });
 
-    // 获取 elem 相对 elem.ownerDocument 的坐标
-    function getOffset(elem) {
+    function getClientPosition(elem) {
         var box, x = 0, y = 0,
             body = doc.body,
             w = getWin(elem[OWNER_DOCUMENT]);
@@ -4307,20 +4313,61 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             // ie7 html 即窗口边框改变不了。永远为 2
 
             // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-            var clientTop = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientTop : body.clientTop) || 0,
-                clientLeft = isIE && doc['documentMode'] != 9 && (isStrict ? docElem.clientLeft : body.clientLeft) || 0;
-
+            var clientTop = isIE && doc['documentMode'] != 9
+                && (isStrict ? docElem.clientTop : body.clientTop)
+                || 0,
+                clientLeft = isIE && doc['documentMode'] != 9
+                    && (isStrict ? docElem.clientLeft : body.clientLeft)
+                    || 0;
+            if (1 > 2) {
+            }
             x -= clientLeft;
             y -= clientTop;
 
             // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-            if (UA.mobile !== 'apple') {
-                x += DOM[SCROLL_LEFT](w);
-                y += DOM[SCROLL_TOP](w);
+            if (UA.mobile == 'apple') {
+                x -= DOM[SCROLL_LEFT](w);
+                y -= DOM[SCROLL_TOP](w);
             }
         }
 
         return { left: x, top: y };
+    }
+
+
+    function getPageOffset(el) {
+        var pos = getClientPosition(el);
+        var w = getWin(el[OWNER_DOCUMENT]);
+        pos.left += DOM[SCROLL_LEFT](w);
+        pos.top += DOM[SCROLL_TOP](w);
+        return pos;
+    }
+
+    // 获取 elem 相对 elem.ownerDocument 的坐标
+    function getOffset(el, relativeWin) {
+        var position = {left:0,top:0};
+
+        // Iterate up the ancestor frame chain, keeping track of the current window
+        // and the current element in that window.
+        var currentWin = getWin(el[OWNER_DOCUMENT]);
+        var currentEl = el;
+        relativeWin = relativeWin || currentWin;
+        do {
+            // if we're at the top window, we want to get the page offset.
+            // if we're at an inner frame, we only want to get the window position
+            // so that we can determine the actual page offset in the context of
+            // the outer window.
+            var offset = currentWin == relativeWin ?
+                getPageOffset(currentEl) :
+                getClientPosition(currentEl);
+
+            position.left += offset.left;
+            position.top += offset.top;
+        } while (currentWin && currentWin != relativeWin &&
+            (currentEl = currentWin['frameElement']) &&
+            (currentWin = currentWin.parent));
+
+        return position;
     }
 
     // 设置 elem 相对 elem.ownerDocument 的坐标
@@ -4340,8 +4387,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * 2011-05-24
@@ -5123,7 +5170,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
                         //出现 alpha(opacity:0), alpha(opacity=0) ?
-                        currentFilter = S.trim(currentFilter.replace(/alpha\(opacity[=:][^)]+\),?/ig, ''));
+                        currentFilter = S.trim(currentFilter.replace(
+                            /alpha\(opacity[^=]*=[^)]+\),?/ig, ''));
                     }
 
                     if (currentFilter && val != 1) {
@@ -5420,6 +5468,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
 /**
  * NOTES:
+ * - jquery does not return null ,it only returns empty array , but kissy does.
  *
  *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
  *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
@@ -6135,10 +6184,44 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'];
 
-
     // IE8以上切换浏览器模式到IE7，会导致 'onhashchange' in window === true
     if ((!( 'on' + HASH_CHANGE in window)) || ie < 8) {
-        var timer,
+        var getHash = function() {
+            var url = location.href;
+            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+        },
+            setup = function () {
+                poll();
+            },
+            tearDown = function () {
+                timer && clearTimeout(timer);
+                timer = null;
+            },
+            poll = function () {
+                //console.log('poll start..' + +new Date());
+                var hash = getHash();
+
+                if (hash !== lastHash) {
+                    //debugger
+                    hashChange(hash);
+                    lastHash = hash;
+                }
+                timer = setTimeout(poll, 50);
+            },
+            hashChange = function (hash) {
+                notifyHashChange(hash);
+            },
+            notifyHashChange = function (hash) {
+                S.log("hash changed : " + hash);
+                for (var i = 0; i < targets.length; i++) {
+                    var t = targets[i];
+                    //模拟暂时没有属性
+                    Event._handle(t, {
+                        type: HASH_CHANGE
+                    });
+                }
+            },
+            timer,
             targets = [],
             lastHash = getHash();
 
@@ -6165,48 +6248,6 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 }
             }
         };
-
-        function setup() {
-            poll();
-        }
-
-        function tearDown() {
-            timer && clearTimeout(timer);
-            timer = null;
-        }
-
-        function poll() {
-            //console.log('poll start..' + +new Date());
-            var hash = getHash();
-
-            if (hash !== lastHash) {
-                //debugger
-                hashChange(hash);
-                lastHash = hash;
-            }
-            timer = setTimeout(poll, 50);
-        }
-
-        function hashChange(hash) {
-            notifyHashChange(hash);
-        }
-
-        function notifyHashChange(hash) {
-            S.log("hash changed : " + hash);
-            for (var i = 0; i < targets.length; i++) {
-                var t = targets[i];
-                //模拟暂时没有属性
-                Event._handle(t, {
-                        type: HASH_CHANGE
-                    });
-            }
-        }
-
-
-        function getHash() {
-            var url = location.href;
-            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
-        }
 
         // ie6, 7, 用匿名函数来覆盖一些function
         if (ie < 8) {
@@ -6290,8 +6331,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         }
     }
 }, {
-        requires:["./base","dom","ua"]
-    });
+    requires:["./base","dom","ua"]
+});
 
 /**
  * v1 : 2010-12-29
@@ -6416,7 +6457,7 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
 
 /**
  * kissy delegate for event module
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
@@ -6465,6 +6506,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                             equals:equals
                         });
                 });
+                return targets;
             }
         });
 
@@ -6630,7 +6672,7 @@ KISSY.add("event", function(S, Event, Target,Object) {
 
 /**
  * definition for node and nodelist
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
@@ -6819,9 +6861,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
-        isNodeList = DOM._isNodeList,
         // DOM 添加到 NP 上的方法
-        DOM_INCLUDES = [
+        // if DOM methods return undefined , Node methods need to transform result to itself
+        DOM_INCLUDES_NORM = [
             "equals",
             "contains",
             "scrollTop",
@@ -6829,15 +6871,14 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "height",
             "width",
             "addStyleSheet",
-            "append",
+            // "append" will be overridden
             "appendTo",
-            "prepend",
+            // "prepend" will be overridden
             "prependTo",
             "insertBefore",
             "before",
             "after",
             "insertAfter",
-            "filter",
             "test",
             "hasClass",
             "addClass",
@@ -6845,83 +6886,96 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "replaceClass",
             "toggleClass",
             "removeAttr",
-            "attr",
             "hasAttr",
-            "prop",
             "hasProp",
-            "val",
-            "text",
-            "css",
             // anim override
 //            "show",
 //            "hide",
             "toggle",
-            "offset",
             "scrollIntoView",
+            "remove",
+            "removeData",
+            "hasData",
+            "unselectable"
+        ],
+        // if return array ,need transform to nodelist
+        DOM_INCLUDES_NORM_NODE_LIST = [
+            "filter",
             "parent",
             "closest",
             "next",
             "prev",
             "siblings",
-            "children",
-            "html",
-            "remove",
-            "removeData",
-            "hasData",
-            // 返回值不一定是 nodelist ，特殊处理
-            // "data",
-            "unselectable"
+            "children"
         ],
+        // if set return this else if get return true value ,no nodelist transform
+        DOM_INCLUDES_NORM_IF = {
+            // dom method : set parameter index
+            "attr":1,
+            "text":1,
+            "css":1,
+            "val":0,
+            "prop":1,
+            "offset":1,
+            "html":0,
+            "data":1
+        },
         // Event 添加到 NP 上的方法
         EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
 
 
-    function normalize(val, node, nodeList) {
-        // 链式操作
-        if (val === undefined) {
-            val = node;
-        } else if (val === null) {
-            val = null;
-        } else if (nodeList && val.nodeType) {
-            val = new NodeList(val);
-        } else if (nodeList && (isNodeList(val) || S.isArray(val))) {
-            // 包装为 KISSY NodeList
-            // 要小心，如果第一项已经明确不是 node 了就不要转了
-            if (val[0] && !val[0].nodeType) {
-            } else {
-                val = new NodeList(val);
-            }
-        }
-        return val;
+    function accessNorm(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+
+        return ret;
     }
 
-    /**
-     *
-     * @param {string} name 方法名
-     * @param {string} fn 实际方法
-     * @param {object} context 方法执行上下文，不指定为 this
-     * @param {boolean} nodeList 是否对返回对象 NodeList
-     */
-    NodeList.addMethod = function(name, fn, context, nodeList) {
-        NLP[name] = function() {
-            //里面不要修改 context ,fn,name 会影响所有 ....
-            // NLP && NP
-            var self = this,
-                args = S.makeArray(arguments);
-            args.unshift(self);
-            var ctx = context || self;
-            var ret = fn.apply(ctx, args);
-            return  normalize(ret, self, nodeList);
-        }
-    };
+    function accessNormList(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+        else if (ret === null)
+            return null;
+        return new NodeList(ret);
+    }
 
-    S.each(DOM_INCLUDES, function(k) {
-        var v = DOM[k];
-        NodeList.addMethod(k, v, DOM, true);
+    function accessNormIf(fn, self, index, args) {
+
+        // get
+        if (args[index] === undefined
+            // 并且第一个参数不是对象，否则可能是批量设置写
+            && !S.isObject(args[0])) {
+            args.unshift(self);
+            return DOM[fn].apply(DOM, args);
+        }
+        // set
+        return accessNorm(fn, self, args);
+    }
+
+    S.each(DOM_INCLUDES_NORM, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNorm(k, this, args);
+        };
     });
 
-    // data 不需要对返回结果转换 nodelist
-    NodeList.addMethod("data", DOM.data, DOM);
+    S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormList(k, this, args);
+        };
+    });
+
+    S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormIf(k, this, index, args);
+        };
+    });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
@@ -6932,8 +6986,8 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-        requires:["dom","event","./base"]
-    });
+    requires:["dom","event","./base"]
+});
 
 /**
  * 2011-05-24
@@ -6947,7 +7001,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
 /**
  * overrides methods in NodeList.prototype
- * @author : yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("node/override", function(S, DOM, Event, NodeList) {
 
@@ -6957,23 +7011,23 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      *
      */
     S.each(['append', 'prepend','before','after'], function(insertType) {
-        // append 和 prepend
 
-        NodeList.addMethod(insertType, function(domNodes, html) {
+        NodeList.prototype[insertType] = function(html) {
 
-            var newNode = html;
+            var newNode = html,self = this;
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, domNodes);
-            
-        }, undefined, true);
+            DOM[insertType](newNode, self);
+            return self;
+
+        };
     });
 
 }, {
-        requires:["dom","event","./base","./attach"]
-    });
+    requires:["dom","event","./base","./attach"]
+});
 
 /**
  * 2011-05-24
@@ -8017,6 +8071,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             slide: [OVERFLOW, HEIGHT]
         };
 
+    N.__ANIM_KEY = ANIM_KEY;
+
     (function(P) {
 
         function attachAnim(elem, anim) {
@@ -8048,11 +8104,12 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 var anim = Anim.apply(undefined, [elem].concat(args)).run();
                 attachAnim(elem, anim);
             });
-            return this;
+            return self;
         };
 
         P.stop = function(finish) {
-            S.each(this, function(elem) {
+            var self = this;
+            S.each(self, function(elem) {
                 var anims = DOM.data(elem, ANIM_KEY);
                 if (anims) {
                     S.each(anims, function(anim) {
@@ -8061,17 +8118,18 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     DOM.removeData(elem, ANIM_KEY);
                 }
             });
+            return self;
         };
 
         S.each({
-                show: ['show', 1],
-                hide: ['show', 0],
-                toggle: ['toggle'],
-                fadeIn: ['fade', 1],
-                fadeOut: ['fade', 0],
-                slideDown: ['slide', 1],
-                slideUp: ['slide', 0]
-            },
+            show: ['show', 1],
+            hide: ['show', 0],
+            toggle: ['toggle'],
+            fadeIn: ['fade', 1],
+            fadeOut: ['fade', 0],
+            slideDown: ['slide', 1],
+            slideUp: ['slide', 0]
+        },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -8172,11 +8230,14 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-        requires:["dom","anim","./base"]
-    });
+    requires:["dom","anim","./base"]
+});
 /**
  * 2011-05-17
  *  - 承玉：添加 stop ，随时停止动画
+ *
+ *  TODO
+ *  - anim needs queue mechanism ?
  */
 
 KISSY.add("node", function(S, Node) {
@@ -9705,7 +9766,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     });
 
 KISSY.add("ajax", function(S, io) {
-
+    var undef = undefined;
     // some shortcut
     S.mix(io, {
         get: function(url, data, callback, dataType, _t) {
@@ -9713,7 +9774,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
 
             return io({
@@ -9729,7 +9790,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, dataType, "post");
         },
@@ -9737,7 +9798,7 @@ KISSY.add("ajax", function(S, io) {
         jsonp: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "jsonp");
         },
@@ -9754,7 +9815,7 @@ KISSY.add("ajax", function(S, io) {
         getJSON: function(url, data, callback) {
             if (S.isFunction(data)) {
                 callback = data;
-                data = undefined;
+                data = undef;
             }
             return io.get(url, data, callback, "json");
         },
@@ -9763,7 +9824,7 @@ KISSY.add("ajax", function(S, io) {
             if (S.isFunction(data)) {
                 dataType = callback;
                 callback = data;
-                data = null; // 占位符
+                data = undef;
             }
             return io({
                 url:url,
@@ -9822,166 +9883,168 @@ KISSY.add('base/attribute', function(S, undef) {
 
     S.augment(Attribute, {
 
-            __getDefAttrs: function() {
-                return S.clone(this.__attrs);
-            },
+        __getDefAttrs: function() {
+            return S.clone(this.__attrs);
+        },
 
-            /**
-             * Adds an attribute with the provided configuration to the host object.
-             * The config supports the following properties:
-             * {
-             *     value: 'the default value',
-             *     valueFn: function
-             *     setter: function
-             *     getter: function
-             * }
-             * @param {boolean} override whether override existing attribute config ,default true
-             */
-            addAttr: function(name, attrConfig, override) {
-                var host = this;
-                if (!host.__attrs[name]) {
-                    host.__attrs[name] = S.clone(attrConfig || {});
-                } else {
-                    S.mix(host.__attrs[name], attrConfig, override);
-                }
-                return host;
-            },
-
-            /**
-             * Checks if the given attribute has been added to the host.
-             */
-            hasAttr: function(name) {
-                return name && this.__attrs.hasOwnProperty(name);
-            },
-
-            /**
-             * Removes an attribute from the host object.
-             */
-            removeAttr: function(name) {
-                var host = this;
-
-                if (host.hasAttr(name)) {
-                    delete host.__attrs[name];
-                    delete host.__attrVals[name];
-                }
-
-                return host;
-            },
-
-            /**
-             * Sets the value of an attribute.
-             */
-            set: function(name, value) {
-                var host = this,
-                    prevVal = host.get(name);
-
-                // if no change, just return
-                if (prevVal === value) return;
-
-                // check before event
-                if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
-
-                // set it
-                host.__set(name, value);
-
-                // fire after event
-                host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
-
-                return host;
-            },
-
-            __fireAttrChange: function(when, name, prevVal, newVal) {
-                return this.fire(when + capitalFirst(name) + 'Change', {
-                        attrName: name,
-                        prevVal: prevVal,
-                        newVal: newVal
-                    });
-            },
-
-            /**
-             * internal use, no event involved, just set.
-             */
-            __set: function(name, value) {
-                var host = this,
-                    setValue,
-                    // if host does not have meta info corresponding to (name,value)
-                    // then register on demand in order to collect all data meta info
-                    attrConfig = host.__attrs[name] = host.__attrs[name] || {},
-                    setter = attrConfig['setter'];
-
-                // if setter has effect
-                if (setter) {
-                    setValue = setter.call(host, value);
-                }
-                if (setValue !== undef) {
-                    value = setValue;
-                }
-
-                // finally set
-                host.__attrVals[name] = value;
-            },
-
-            /**
-             * Gets the current value of the attribute.
-             */
-            get: function(name) {
-                var host = this, attrConfig, getter, ret;
-
-                attrConfig = host.__attrs[name];
-                getter = attrConfig && attrConfig['getter'];
-
-                // get user-set value or default value
-                //user-set value takes privilege
-                ret = name in host.__attrVals ?
-                    host.__attrVals[name] :
-                    host.__getDefAttrVal(name);
-
-                // invoke getter for this attribute
-                if (getter) ret = getter.call(host, ret);
-
-                return ret;
-            },
-
-            __getDefAttrVal: function(name) {
-                var host = this,
-                    attrConfig = host.__attrs[name],
-                    valFn, val;
-
-                if (!attrConfig) return;
-
-                if ((valFn = attrConfig.valueFn)) {
-                    val = valFn.call(host);
-                    if (val !== undef) {
-                        attrConfig.value = val;
-                    }
-                    delete attrConfig.valueFn;
-                }
-
-                return attrConfig.value;
-            },
-
-            /**
-             * Resets the value of an attribute.
-             * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-             */
-            reset: function (name) {
-                var host = this;
-
-                if (host.hasAttr(name)) {
-                    // if attribute does not have default value, then set to undefined.
-                    return host.set(name, host.__getDefAttrVal(name));
-                }
-
-                // reset all
-                for (name in host.__attrs) {
-                    if (host.hasAttr(name)) {
-                        host.reset(name);
-                    }
-                }
-
-                return host;
+        /**
+         * Adds an attribute with the provided configuration to the host object.
+         * The config supports the following properties:
+         * {
+         *     value: 'the default value',
+         *     valueFn: function
+         *     setter: function
+         *     getter: function
+         * }
+         * @param {boolean} override whether override existing attribute config ,default true
+         */
+        addAttr: function(name, attrConfig, override) {
+            var host = this;
+            if (!host.__attrs[name]) {
+                host.__attrs[name] = S.clone(attrConfig || {});
+            } else {
+                S.mix(host.__attrs[name], attrConfig, override);
             }
-        });
+            return host;
+        },
+
+        /**
+         * Checks if the given attribute has been added to the host.
+         */
+        hasAttr: function(name) {
+            return name && this.__attrs.hasOwnProperty(name);
+        },
+
+        /**
+         * Removes an attribute from the host object.
+         */
+        removeAttr: function(name) {
+            var host = this;
+
+            if (host.hasAttr(name)) {
+                delete host.__attrs[name];
+                delete host.__attrVals[name];
+            }
+
+            return host;
+        },
+
+        /**
+         * Sets the value of an attribute.
+         */
+        set: function(name, value) {
+            var host = this,
+                prevVal = host.get(name);
+
+            // if no change, just return
+            if (prevVal === value) return;
+
+            // check before event
+            if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
+
+            // set it
+            host.__set(name, value);
+
+            // fire after event
+            host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
+
+            return host;
+        },
+
+        __fireAttrChange: function(when, name, prevVal, newVal) {
+            return this.fire(when + capitalFirst(name) + 'Change', {
+                attrName: name,
+                prevVal: prevVal,
+                newVal: newVal
+            });
+        },
+
+        /**
+         * internal use, no event involved, just set.
+         */
+        __set: function(name, value) {
+            var host = this,
+                setValue,
+                // if host does not have meta info corresponding to (name,value)
+                // then register on demand in order to collect all data meta info
+                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                // 因为属性在声明注册前可以直接设置值
+                attrConfig = host.__attrs[name] = host.__attrs[name] || {},
+                setter = attrConfig['setter'];
+
+            // if setter has effect
+            if (setter) {
+                setValue = setter.call(host, value);
+            }
+            if (setValue !== undef) {
+                value = setValue;
+            }
+
+            // finally set
+            host.__attrVals[name] = value;
+        },
+
+        /**
+         * Gets the current value of the attribute.
+         */
+        get: function(name) {
+            var host = this, attrConfig, getter, ret;
+
+            attrConfig = host.__attrs[name];
+            getter = attrConfig && attrConfig['getter'];
+
+            // get user-set value or default value
+            //user-set value takes privilege
+            ret = name in host.__attrVals ?
+                host.__attrVals[name] :
+                host.__getDefAttrVal(name);
+
+            // invoke getter for this attribute
+            if (getter) ret = getter.call(host, ret);
+
+            return ret;
+        },
+
+        __getDefAttrVal: function(name) {
+            var host = this,
+                attrConfig = host.__attrs[name],
+                valFn, val;
+
+            if (!attrConfig) return;
+
+            if ((valFn = attrConfig.valueFn)) {
+                val = valFn.call(host);
+                if (val !== undef) {
+                    attrConfig.value = val;
+                }
+                delete attrConfig.valueFn;
+            }
+
+            return attrConfig.value;
+        },
+
+        /**
+         * Resets the value of an attribute.
+         * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+         */
+        reset: function (name) {
+            var host = this;
+
+            if (host.hasAttr(name)) {
+                // if attribute does not have default value, then set to undefined.
+                return host.set(name, host.__getDefAttrVal(name));
+            }
+
+            // reset all
+            for (name in host.__attrs) {
+                if (host.hasAttr(name)) {
+                    host.reset(name);
+                }
+            }
+
+            return host;
+        }
+    });
 
     function capitalFirst(s) {
         s = s + '';
@@ -10032,7 +10095,7 @@ KISSY.add('base/base', function (S, Attribute, Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter 的
+                    //用户设置会调用 setter 的，但不会触发属性变化事件
                     host.__set(attr, config[attr]);
                 }
 
@@ -10189,7 +10252,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -11269,7 +11332,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * 数据延迟加载组件
@@ -11760,7 +11823,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:04
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12019,7 +12082,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * @module   Flash 全局静态类
@@ -12530,7 +12593,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -13744,7 +13807,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * resizable support for kissy
@@ -13909,7 +13972,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:04
 */
 /**
  * UIBase.Align
@@ -14043,7 +14106,7 @@ KISSY.add('uibase/align', function(S, DOM,Node) {
     });
 /**
  * @module  UIBase
- * @author  承玉<yiminghe@gmail.com>,lifesinger@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
@@ -14063,8 +14126,12 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
      * UIBase for class-based component
      */
     function UIBase(config) {
+        // 读取用户设置的属性值并设置到自身
         Base.apply(this, arguments);
+        // 根据 srcNode 设置属性值
+        // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(this, config);
+        // 是否自动渲染
         config && config.autoRender && this.render();
     }
 
@@ -14082,8 +14149,9 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
             if (config &&
                 config[SRC_NODE] &&
                 c.HTML_PARSER) {
-                if ((config[SRC_NODE] = Node.one(config[SRC_NODE])))
+                if ((config[SRC_NODE] = Node.one(config[SRC_NODE]))) {
                     applyParser.call(host, config[SRC_NODE], c.HTML_PARSER);
+                }
             }
 
             c = c.superclass && c.superclass.constructor;
@@ -14126,6 +14194,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
             // 收集主类
             // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
             // 所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            // 以及 initializer 等同理
             if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
                 t.push(main);
             }
@@ -14156,7 +14225,10 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
             i;
 
         while (c) {
-            (d = c.prototype.destructor) && d.apply(host);
+            // 只触发该类真正的析构器，和父亲没关系，所以不要在子类析构器中调用 superclass
+            if (c.prototype.hasOwnProperty("destructor")) {
+                c.prototype.destructor.apply(host);
+            }
 
             if ((exts = c.__ks_exts)) {
                 for (i = exts.length - 1; i >= 0; i--) {
@@ -14195,95 +14267,127 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     UIBase.HTML_PARSER = {};
     UIBase.ATTRS = {
-        //渲染容器
+        // 是否已经渲染完毕
+        rendered:{
+            value:false
+        },
+        // dom 节点是否已经创建完毕
+        created:{
+            value:false
+        },
+        // 渲染该组件的目的容器
         render:{
+            view:true,
             valueFn:function() {
-                return document.body;
+                return Node.one(document.body);
             },
             setter:function(v) {
                 if (S.isString(v))
                     return Node.one(v);
             }
-        },
-        //是否已经渲染过
-        rendered:{value:false}
+        }
     };
 
     S.extend(UIBase, Base, {
 
-            render: function() {
-                var self = this;
-                if (!self.get("rendered")) {
-                    self._renderUI();
-                    self.fire('renderUI');
-                    callMethodByHierarchy(self, "renderUI", "__renderUI");
-                    self.fire('afterRenderUI');
-                    self._bindUI();
-                    self.fire('bindUI');
-                    callMethodByHierarchy(self, "bindUI", "__bindUI");
-                    self.fire('afterBindUI');
-                    self._syncUI();
-                    self.fire('syncUI');
-                    callMethodByHierarchy(self, "syncUI", "__syncUI");
-                    self.fire('afterSyncUI');
-                    self.set("rendered", true);
-                }
-            },
-
-            /**
-             * 根据属性添加 DOM 节点
-             */
-            _renderUI: noop,
-            renderUI: noop,
-
-            /**
-             * 根据属性变化设置 UI
-             */
-            _bindUI: function() {
-                var self = this,
-                    attrs = self.__attrs,
-                    attr, m;
-
-                for (attr in attrs) {
-                    if (attrs.hasOwnProperty(attr)) {
-                        m = UI_SET + capitalFirst(attr);
-                        if (self[m]) {
-                            // 自动绑定事件到对应函数
-                            (function(attr, m) {
-                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
-                                    self[m](ev.newVal, ev);
-                                });
-                            })(attr, m);
-                        }
-                    }
-                }
-            },
-            bindUI: noop,
-
-            /**
-             * 根据当前（初始化）状态来设置 UI
-             */
-            _syncUI: function() {
-                var self = this,
-                    attrs = self.__getDefAttrs();
-                for (var a in attrs) {
-                    if (attrs.hasOwnProperty(a)) {
-                        var m = UI_SET + capitalFirst(a);
-                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                        if (self[m] && self.get(a) !== undefined) {
-                            self[m](self.get(a));
-                        }
-                    }
-                }
-            },
-            syncUI: noop,
-
-            destroy: function() {
-                destroyHierarchy(this);
-                this.fire('destroy');
-                this.detach();
+        /**
+         * 建立节点，先不放在 dom 树中，为了性能!
+         */
+        create:function() {
+            var self = this;
+            // 是否生成过节点
+            if (!self.get("created")) {
+                self._createDom();
+                self.fire('createDom');
+                callMethodByHierarchy(self, "createDom", "__createDom");
+                self.fire('afterCreateDom');
+                self.set("created", true);
             }
-        });
+        },
+
+        render: function() {
+            var self = this;
+            // 是否已经渲染过
+            if (!self.get("rendered")) {
+                self.create();
+                self._renderUI();
+                // 实际上是 beforeRenderUI
+                self.fire('renderUI');
+                callMethodByHierarchy(self, "renderUI", "__renderUI");
+                self.fire('afterRenderUI');
+                self._bindUI();
+                // 实际上是 beforeBindUI
+                self.fire('bindUI');
+                callMethodByHierarchy(self, "bindUI", "__bindUI");
+                self.fire('afterBindUI');
+                self._syncUI();
+                // 实际上是 beforeSyncUI
+                self.fire('syncUI');
+                callMethodByHierarchy(self, "syncUI", "__syncUI");
+                self.fire('afterSyncUI');
+                self.set("rendered", true);
+            }
+        },
+
+        /**
+         * 创建 dom 节点，但不放在 document 中
+         */
+        _createDom:noop,
+
+        /**
+         * 节点已经创建完毕，可以放在 document 中了
+         */
+        _renderUI: noop,
+        renderUI: noop,
+
+        /**
+         * 根据属性变化设置 UI
+         */
+        _bindUI: function() {
+            var self = this,
+                attrs = self.__attrs,
+                attr, m;
+
+            for (attr in attrs) {
+                if (attrs.hasOwnProperty(attr)) {
+                    m = UI_SET + capitalFirst(attr);
+                    if (self[m]) {
+                        // 自动绑定事件到对应函数
+                        (function(attr, m) {
+                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                self[m](ev.newVal, ev);
+                            });
+                        })(attr, m);
+                    }
+                }
+            }
+        },
+        bindUI: noop,
+
+        /**
+         * 根据当前（初始化）状态来设置 UI
+         */
+        _syncUI: function() {
+            var self = this,
+                attrs = self.__attrs;
+            for (var a in attrs) {
+                if (attrs.hasOwnProperty(a)) {
+                    var m = UI_SET + capitalFirst(a);
+                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                    if (self[m] && self.get(a) !== undefined) {
+                        self[m](self.get(a));
+                    }
+                }
+            }
+        },
+        syncUI: noop,
+
+        destroy: function() {
+            destroyHierarchy(this);
+            this.fire('destroy');
+            this.detach();
+        }
+    });
 
     /**
      * 根据基类以及扩展类得到新类
@@ -14321,7 +14425,8 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 S.each([ATTRS, HTML_PARSER], function(K) {
                     if (ext[K]) {
                         C[K] = C[K] || {};
-                        // 不覆盖主类上的定义
+                        // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
+                        // 但是值是对象的话会深度合并
                         deepMix(C[K], ext[K]);
                     }
                 });
@@ -14348,13 +14453,17 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     return UIBase;
 }, {
-        requires:["base","dom","node"]
-    });
+    requires:["base","dom","node"]
+});
 /**
+ * render 和 create 区别
+ * render 包括 create ，以及把生成的节点放在 document 中
+ * create 仅仅包括创建节点
+ **//**
  * UIBase.Box
  * @author: 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase/box', function(S) {
+KISSY.add('uibase/box', function() {
 
 
     function Box() {
@@ -14380,15 +14489,48 @@ KISSY.add('uibase/box', function(S) {
             //其他属性
             view:true
         },
-        elOrder:{},
+        elBefore:{
+            view:true
+        },
+
         el:{
             getter:function() {
-                return this.get("view")&&this.get("view").get("el");
+                return this.get("view") && this.get("view").get("el");
             }
-        }
+        },
+
+        visibleMode:{
+            value:"display",
+            view:true
+        },
+        visible:{}
     };
 
-    Box.prototype = {};
+    Box.prototype = {
+
+        _uiSetVisible:function(isVisible) {
+            var self = this;
+            this.get("view").set("visible", isVisible);
+            self.fire(isVisible ? "show" : "hide");
+        },
+
+
+        /**
+         * 显示 Overlay
+         */
+        show: function() {
+            var self = this;
+            self.render();
+            self.set("visible", true);
+        },
+
+        /**
+         * 隐藏
+         */
+        hide: function() {
+            this.set("visible", false);
+        }
+    };
 
     return Box;
 });
@@ -14401,11 +14543,6 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     function Box() {
     }
-
-    S.mix(Box, {
-            APPEND:1,
-            INSERT:0
-        });
 
     Box.ATTRS = {
         el: {
@@ -14434,13 +14571,13 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         elAttrs:{
             //其他属性
         },
-        elOrder:{
-            //插入容器位置
-            //0 : prepend
-            //1 : append
-            value:1
+        elBefore:{
+            //插入到该元素前
+            value:null
         },
-        html: {}
+        html: {},
+        visible:{},
+        visibleMode:{}
     };
 
     Box.construct = constructEl;
@@ -14486,26 +14623,34 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     Box.prototype = {
 
+
         __renderUI:function() {
+            var self = this;
+            // 新建的节点才需要摆放定位
+            if (self.__boxRenderNew) {
+                var render = self.get("render"),
+                    el = self.get("el");
+                var elBefore = self.get("elBefore");
+                elBefore = elBefore && elBefore[0];
+                render[0].insertBefore(el[0], elBefore || null);
+            }
+        },
+
+        __createDom:function() {
             var self = this,
-                render = self.get("render"),
                 el = self.get("el");
-            render = new Node(render);
             if (!el) {
+                self.__boxRenderNew = true;
                 el = new Node(constructEl(self.get("elCls"),
                     self.get("elStyle"),
                     self.get("width"),
                     self.get("height"),
                     self.get("elTagName"),
                     self.get("elAttrs")));
-                if (self.get("elOrder")) {
-                    render.append(el);
-                } else {
-                    render.prepend(el);
-                }
                 self.set("el", el);
             }
         },
+
         _uiSetElAttrs:function(attrs) {
             this.get("el").attr(attrs);
         },
@@ -14531,6 +14676,24 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             this.get("el").html(c);
         },
 
+        _uiSetVisible:function(isVisible) {
+            var el = this.get("el"),
+                visibleMode = this.get("visibleMode");
+            if (visibleMode == "visible") {
+                el.css("visibility", isVisible ? "visible" : "hidden");
+            } else {
+                el.css("display", isVisible ? "" : "none");
+            }
+        },
+
+        show:function() {
+            this.render();
+            this.set("visible", true);
+        },
+        hide:function() {
+            this.set("visible", false);
+        },
+
         __destructor:function() {
             //S.log("box __destructor");
             var el = this.get("el");
@@ -14543,8 +14706,8 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 
     return Box;
 }, {
-        requires:['node']
-    });
+    requires:['node']
+});
 /**
  * close extension for kissy dialog
  * @author: 承玉<yiminghe@gmail.com>
@@ -14812,8 +14975,11 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
     ContentBox.prototype = {
 
+        // no need ,shift create work to __createDom
         __renderUI:function() {
+        },
 
+        __createDom:function() {
             var self = this,
                 contentEl = self.get("contentEl"),
                 el = self.get("el");
@@ -15156,19 +15322,11 @@ KISSY.add("uibase/position", function(S) {
         },
         zIndex: {
             view:true
-        },
-        visible:{}
+        }
     };
 
 
     Position.prototype = {
-
-        _uiSetVisible:function(isVisible) {
-
-            var self = this;
-            this.get("view").set("visible", isVisible);
-            self.fire(isVisible ? "show" : "hide");
-        },
 
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
@@ -15182,23 +15340,8 @@ KISSY.add("uibase/position", function(S) {
                 x = x[0];
             }
             self.set("xy", [x,y]);
-        },
-
-        /**
-         * 显示 Overlay
-         */
-        show: function() {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        /**
-         * 隐藏
-         */
-        hide: function() {
-            this.set("visible", false);
         }
+
 
     };
 
@@ -15227,8 +15370,7 @@ KISSY.add("uibase/positionrender", function() {
         },
         zIndex: {
             value: 9999
-        },
-        visible:{}
+        }
     };
 
 
@@ -15238,7 +15380,7 @@ KISSY.add("uibase/positionrender", function() {
             var el = this.get("el");
             el.addClass(this.get("prefixCls") + "ext-position");
             el.css({
-                visibility:'hidden',
+                visibility:"visible",
                 display: "",
                 left:-9999,
                 top:-9999,
@@ -15259,17 +15401,6 @@ KISSY.add("uibase/positionrender", function() {
             this.get("el").offset({
                 top:y
             });
-        },
-        _uiSetVisible:function(isVisible) {
-            this.get("el").css("visibility", isVisible ? "visible" : "hidden");
-        },
-
-        show:function() {
-            this.render();
-            this.set("visible", true);
-        },
-        hide:function() {
-            this.set("visible", false);
         }
     };
 
@@ -15544,13 +15675,67 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
+ * container can delegate event for its children
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/container", function(S, UIBase, MC) {
+
+    return UIBase.create(MC, {
+        bindUI:function() {
+            var self = this,
+                view = self.get("view"),
+                el = view.get("el");
+            el.on("mousedown mouseup mouseover mouseout", self._handleChildMouseEvents, self);
+        },
+        _handleChildMouseEvents:function(e) {
+            var control = this.getOwnerControl(S.one(e.target)[0]);
+            if (control) {
+                // Child control identified; forward the event.
+                switch (e.type) {
+                    case "mousedown":
+                        control._handleMouseDown(e);
+                        break;
+                    case "mouseup":
+                        control._handleMouseUp(e);
+                        break;
+                    case "mouseover":
+                        control._handleMouseOver(e);
+                        break;
+                    case "mouseout":
+                        control._handleMouseOut(e);
+                        break;
+                }
+            }
+        },
+        getOwnerControl:function(node) {
+            var self = this,
+                children = self.get("children"),
+                len = children.length,
+                elem = this.get('view').get("el")[0];
+            while (node && node !== elem) {
+                for (var i = 0; i < len; i++) {
+                    if (children[i].get("view").get("el")[0] === node) {
+                        return children[i];
+                    }
+                }
+                node = node.parentNode;
+            }
+            return null;
+        }
+
+    });
+
+}, {
+    requires:['uibase','./modelcontrol']
+});/**
  * model and control base class for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component/modelcontrol", function(S, UIBase) {
+
     function wrapperViewSetter(attrName) {
         return function(value) {
             this.get("view").set(attrName, value);
@@ -15563,7 +15748,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
      */
     function getDefaultView() {
         // 逐层找默认渲染器
-        var c = this.constructor,DefaultRender;
+        var self = this,
+            c = self.constructor,
+            DefaultRender;
         while (c && !DefaultRender) {
             DefaultRender = c['DefaultRender'];
             c = c.superclass && c.superclass.constructor;
@@ -15572,26 +15759,43 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             /**
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
-            var attrs = this.__attrs,cfg = {};
+            var attrs = self.__attrs,cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
-                    var attrCfg = attrs[attrName];
+                    var attrCfg = attrs[attrName],v;
                     if (attrCfg.view
-                        //如果用户没设，不要帮他设 undefined
-                        //attribute get 判断是 name in attrs
-                        && this.__attrVals[attrName] !== undefined) {
-                        cfg[attrName] = this.__attrVals[attrName];
+                        // 如果用户没设，不要帮他设 undefined
+                        // attribute get 判断是 name in attrs
+                        // 使用 get ，属性可以只在控制层设置默认值，如果有有效值，这里通过参数传给 view 层
+                        && (v = self.get(attrName)) !== undefined) {
+                        cfg[attrName] = v;
                     }
                 }
             }
             return new DefaultRender(cfg);
         }
-        return undefined;
+        return 0;
     }
 
     return UIBase.create([UIBase.Box], {
 
+            /**
+             * control 层的渲染 ui 就是 render view
+             */
             renderUI:function() {
+                var self = this;
+                self.get("view").render();
+                //then render my children
+                var children = self.get("children");
+                S.each(children, function(child) {
+                    child.render();
+                });
+            },
+
+            /**
+             * 控制层的 createDom 实际上就是调用 view 层的 create 来创建真正的节点
+             */
+            createDom:function() {
                 var self = this;
                 /**
                  * 将 view 的属性转发过去
@@ -15606,26 +15810,50 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                         }
                     }
                 }
-
-
                 var view = self.get("view") || getDefaultView.call(self);
                 if (!view) {
                     S.error("no view for");
                     S.error(self.constructor);
+                    return;
+                }
+                view.create();
+                if (!self.get("allowTextSelection_")) {
+                    view.get("el").unselectable();
                 }
                 self.set("view", view);
-                //first render myself to my parent
-                if (self.get("parent")) {
-                    var pv = self.get("parent").get("view");
-                    view.set("render", pv.get("contentEl") || pv.get("el"));
-                }
-                view.render();
+            },
 
-                //then render my children
-                var children = self.get("children");
-                S.each(children, function(child) {
-                    child.render();
-                });
+            getContentElement:function() {
+                var view = this.get('view');
+                return view.get("contentEl") || view.get("el");
+            },
+
+
+
+            _initChild:function(c, elBefore) {
+                var self = this;
+                // If this (parent) component doesn't have a DOM yet, call createDom now
+                // to make sure we render the child component's element into the correct
+                // parent element (otherwise render_ with a null first argument would
+                // render the child into the document body, which is almost certainly not
+                // what we want).
+                self.create();
+                var contentEl = self.getContentElement();
+                c.set("parent", self);
+                c.set("render", contentEl);
+                c.set("elBefore", elBefore);
+                // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
+                if (this.get("rendered")) {
+                    c.render();
+                }
+                // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
+                // 子组件和 parent 组件一起渲染
+                else {
+                    // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
+                    c.create();
+                    contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0] || null);
+
+                }
             },
 
             /**
@@ -15634,48 +15862,109 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param {int=} index  position to be inserted
              */
             addChild:function(c, index) {
-                var children = this.get("children");
+                var self = this,
+                    children = self.get("children"),
+                    elBefore = children[index];
                 if (index) {
                     children.splice(index, 0, c);
                 } else {
                     children.push(c);
                 }
-                c.set("parent", this);
+                self._initChild(c, elBefore);
             },
 
-            removeChild:function(c) {
+            removeChild:function(c, destroy) {
+                var children = this.get("children"),
+                    index = S.indexOf(c, children);
+                if (index != -1) {
+                    children.splice(index, 1);
+                }
+                if (destroy) {
+                    c.destroy();
+                }
+            },
+
+            removeChildren:function(destroy) {
+                S.each(this.get("children"), function(c) {
+                    destroy && c.destroy();
+                });
+                this.set("children", []);
+            },
+
+            getChildAt:function(index) {
                 var children = this.get("children");
-                var index = S.indexOf(c, children);
-                if (index != -1) children.splice(index, 1);
-                c.destroy();
+                return children[index];
             },
 
-            bindUI:function() {
-                var self = this,view = self.get("view");
-                var el = view.get("el");
-                el.on("mouseenter", self._handleMouseEnter, self);
-                el.on("mouseleave", self._handleMouseLeave, self);
-                el.on("mousedown", self._handleMouseDown, self);
-                el.on("mouseup", self._handleMouseUp, self);
-                el.on("focus", self._handleFocus, self);
-                el.on("blur", self._handleBlur, self);
-                el.on("keydown", self._handleKeydown, self);
-                el.on("click", self._handleClick, self);
-
+            _uiSetHandleMouseEvents:function(v) {
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (v) {
+                    el.on("mouseenter", self._handleMouseEnter, self);
+                    el.on("mouseleave", self._handleMouseLeave, self);
+                    el.on("mousedown", self._handleMouseDown, self);
+                    el.on("mouseup", self._handleMouseUp, self);
+                    el.on("click", self._handleClick, self);
+                } else {
+                    el.detach("mouseenter", self._handleMouseEnter, self);
+                    el.detach("mouseleave", self._handleMouseLeave, self);
+                    el.detach("mousedown", self._handleMouseDown, self);
+                    el.detach("mouseup", self._handleMouseUp, self);
+                    el.detach("click", self._handleClick, self);
+                }
             },
 
+            isMouseEventWithinElement_:function(e, elem) {
+                var relatedTarget = e.relatedTarget;
+                relatedTarget = relatedTarget && S.one(relatedTarget)[0];
+                if (!relatedTarget) {
+                    return false;
+                }
+                // 在里面或等于自身都不算 mouseenter/leave
+                if (relatedTarget === elem[0] || elem.contains(relatedTarget)) {
+                    return true;
+                }
+            },
             _forwordToView:function(method, ev) {
-                var self = this,view = self.get("view");
+                var self = this,
+                    view = self.get("view");
                 view[method] && view[method](ev);
             },
 
+            _handleMouseOver:function(e) {
+                if (this.get("disabled")) {
+                    return true;
+                }
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseEnter(e);
+                }
+            },
+
+
+            _handleMouseOut:function(e) {
+                if (this.get("disabled")) {
+                    return true;
+                }
+                var self = this,
+                    view = self.get("view"),
+                    el = view.get("el");
+                if (!self.isMouseEventWithinElement_(e, el)) {
+                    self._handleMouseLeave(e);
+                }
+            },
 
             /**
              * root element handler for mouse enter
              * @param ev
              */
             _handleMouseEnter:function(ev) {
-                if (this.get("disabled")) return false;
+                if (this.get("disabled")) {
+                    return true;
+                }
                 this._forwordToView('_handleMouseEnter', ev);
             },
             /**
@@ -15683,7 +15972,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param ev
              */
             _handleMouseLeave:function(ev) {
-                if (this.get("disabled")) return false;
+                if (this.get("disabled")) {
+                    return true;
+                }
                 this._forwordToView('_handleMouseLeave', ev);
             },
             /**
@@ -15691,15 +15982,48 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param ev
              */
             _handleMouseDown:function(ev) {
-                if (this.get("disabled")) return false;
+                if (this.get("disabled")) {
+                    return true;
+                }
                 this._forwordToView('_handleMouseDown', ev);
+                var el = this.get("el");
+                // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
+                if (ev.which == 1 && el.attr("tabindex") >= 0) {
+                    this.getKeyEventTarget()[0].focus();
+                }
+            },
+            /**
+             * whether component can receive focus
+             */
+            _uiSetFocusable:function(v) {
+                var self = this,
+                    el = self.getKeyEventTarget();
+                if (v) {
+                    el.on("focus", self._handleFocus, self);
+                    el.on("blur", self._handleBlur, self);
+                    el.on("keydown", self.__handleKeydown, self);
+                } else {
+                    el.detach("focus", self._handleFocus, self);
+                    el.detach("blur", self._handleBlur, self);
+                    el.detach("keydown", self.__handleKeydown, self);
+                }
+                self.get("view").set("focusable", v);
+            },
+
+            /**
+             * 焦点所在元素即键盘事件处理元素
+             */
+            getKeyEventTarget:function() {
+                return this.get("view").getKeyEventTarget();
             },
             /**
              * root element handler for mouse up
              * @param ev
              */
             _handleMouseUp:function(ev) {
-                if (this.get("disabled")) return false;
+                if (this.get("disabled")) {
+                    return true;
+                }
                 this._forwordToView('_handleMouseUp', ev);
             },
             /**
@@ -15707,7 +16031,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param ev
              */
             _handleFocus:function(ev) {
-                if (this.get("disabled")) return false;
+                if (this.get("disabled")) {
+                    return true;
+                }
                 this._forwordToView('_handleFocus', ev);
             },
             /**
@@ -15715,23 +16041,31 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              * @param ev
              */
             _handleBlur:function(ev) {
-                if (this.get("disabled")) return false;
+                if (this.get("disabled")) {
+                    return true;
+                }
                 this._forwordToView('_handleBlur', ev);
+            },
+
+            _handleKeydown:function(ev) {
+                this._forwordToView('_handleKeydown', ev);
             },
             /**
              * root element handler for keydown
              * @param ev
              */
-            _handleKeydown:function(ev) {
-
-                if (this.get("disabled")) return false;
-                var self = this,view = self.get("view");
-                if (!view['_handleKeydown']) return;
+            __handleKeydown:function(ev) {
+                if (this.get("disabled")) {
+                    return true;
+                }
+                var self = this,
+                    view = self.get("view");
+                // 默认情况下空格和 enter 直接交给 click 负责
                 if (ev.keyCode == 13 || ev.keyCode == 32) {
-                    this._handleClick(ev);
                     ev.preventDefault();
+                    return self._handleClick(ev);
                 } else {
-                    return view['_handleKeydown'](ev);
+                    return this._handleKeydown(ev);
                 }
             },
 
@@ -15740,14 +16074,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             _handleClick:function(ev) {
                 if (this.get("disabled")) {
-                    return false;
+                    return true;
                 }
-                this._forwordToView("_handleClick");
-                this._handleClickInternal(ev);
-            },
-
-            _handleClickInternal:function() {
-                this.fire("click");
+                this._forwordToView("_handleClick", ev);
             },
 
             _uiSetDisabled:function(d) {
@@ -15756,32 +16085,40 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             },
 
             destructor:function() {
-                var children = this.get("children");
+                var self = this;
+                var children = self.get("children");
                 S.each(children, function(child) {
                     child.destroy();
                 });
-                var view = this.get("view");
+                var view = self.get("view");
                 if (view) {
-                    var el = view.get("el");
-                    el.detach();
                     view.destroy();
                 }
             }
         },
         {
             ATTRS:{
+
+                // 是否绑定鼠标事件
+                handleMouseEvents:{
+                    value:true
+                },
+
+                // 是否支持焦点处理
+                focusable:{
+                    value:true
+                },
+
                 //子组件
                 children:{
                     value:[],
-                    setter
-                        :
-                        function(v) {
-                            var self = this;
-                            //自动给儿子组件加入父亲链
-                            S.each(v, function(c) {
-                                c.set("parent", self);
-                            });
-                        }
+                    setter:function(v) {
+                        var self = this;
+                        //自动给儿子组件加入父亲链
+                        S.each(v, function(c) {
+                            self._initChild(c);
+                        });
+                    }
                 },
 
                 //转交给渲染层
@@ -15793,14 +16130,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 // 转交给渲染层
                 prefixCls:{
-                    view:true
+                    view:true,
+                    value:"ks-"
                 },
 
                 render:{
                     view:true
                 },
 
-                //父组件
+                // 父组件
+                // Parent component to which events will be propagated. 
                 parent:{
                 },
 
@@ -15812,6 +16151,11 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 disabled:{
                     value:false,
                     view:true
+                },
+
+                // 是否允许 DOM 结构内的文字选定
+                allowTextSelection_:{
+                    value:false
                 }
             }
         });
@@ -15821,45 +16165,61 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 }, {
-        requires:['uibase']
-    });/**
+    requires:['uibase']
+});
+/**
+ *  Note:
+ *  控制层元属性配置中 view 的作用
+ *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
+ *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
+ **//**
  * render base class for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component/render", function(S, UIBase) {
     return UIBase.create([UIBase.Box.Render], {
+        getKeyEventTarget:function() {
+            return this.get("el");
+        },
 
-        }, {
-            ATTRS:{
-                //从 maskup 中渲染
-                srcNode:{},
-                prefixCls:{
-                    value:""
-                },
-                //是否禁用
-                disabled:{
-                    value:false
-                }
+        _uiSetFocusable:function(v) {
+            var el = this.getKeyEventTarget(),
+                tabindex = el.attr("tabindex");
+            if (tabindex >= 0 && !v) {
+                el.attr("tabindex", -1);
+            } else if (!(tabindex >= 0) && v) {
+                el.attr("tabindex", 0);
             }
-        });
+        }
+    }, {
+        ATTRS:{
+            //从 maskup 中渲染
+            srcNode:{},
+            prefixCls:{},
+            focusable:{},
+            //是否禁用
+            disabled:{}
+        }
+    });
 }, {
-        requires:['uibase']
-    });/**
+    requires:['uibase']
+});/**
  * mvc based component framework for kissy
  * @author:yiminghe@gmail.com
  */
-KISSY.add("component", function(S, ModelControl, Render) {
+KISSY.add("component", function(S, ModelControl, Render, Container) {
     return {
         ModelControl:ModelControl,
-        Render:Render
+        Render:Render,
+        Container:Container
     };
 }, {
-    requires:['component/modelcontrol','component/render']
+    requires:['component/modelcontrol','component/render','component/container']
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * Switchable
@@ -17299,7 +17659,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     S.mix(Carousel.Config, {
-            aria:true
+            aria:false
         });
 
     Carousel.Plugins.push({
@@ -18083,7 +18443,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Slide.Config, {
-            aria:true
+            aria:false
         });
 
     var DOM_EVENT = {originalEvent:{target:1}};
@@ -18455,7 +18815,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * KISSY Overlay
@@ -18484,7 +18844,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
             prefixCls:{
                 value:"ks-"
             },
-            elOrder:0
+            elBefore:{
+                valueFn:function() {
+                    return S.one(this.get("render")[0].firstChild);
+                }
+            }
         }
     });
 }, {
@@ -18696,7 +19060,23 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("resize"),
         require("mask"),
         Effect
-    ]);
+    ], {
+        ATTRS:{
+            // 是否绑定鼠标事件
+            handleMouseEvents:{
+                value:false
+            },
+
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+
+            visibleMode:{
+                value:"visible"
+            }
+        }
+    });
 
     Overlay.DefaultRender = OverlayRender;
 
@@ -18903,7 +19283,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -20082,7 +20462,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * @fileoverview 图像放大区域
@@ -20707,7 +21087,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:02
 */
 /**
  * KISSY Calendar
@@ -21986,211 +22366,374 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * menu model and controller for kissy,accommodate menu items
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
     var Menu;
 
-    Menu = UIBase.create(Component.ModelControl, [
-        UIBase.Position,
-        UIBase.Align
-    ], {
+    Menu = UIBase.create(Component.Container, {
+        _uiSetHighlightedItem:function(v, ev) {
+            var pre = ev && ev.prevVal;
+            if (pre) {
+                pre.set("highlighted", false);
+            }
+            v && v.set("highlighted", true);
+            this.set("activeItem", v);
+        },
 
-            _bindMenuItem:function(menuItem) {
-                var self = this;
+        _handleBlur:function(e) {
+            // 父亲不允许自己处理
+            if (Menu.superclass._handleBlur.call(this, e)) {
+                return true;
+            }
+            this.set("highlightedItem", undefined);
+        },
 
-                menuItem.on("afterHighlightedChange", function(ev) {
-                    //允许取消
-                    //S.log("menu knows menuitemchange : " + ev.newVal
-                    //    + " : " + menuItem.get("view").get("el").attr("id"));
-                    self.set("highlightedItem", ev.newVal ? menuItem : null);
-                });
 
-                menuItem.on("click", function() {
-                    S.log("menu fire click : " + menuItem.get("view").get("el").attr("id"));
-                    self.fire("menuItemClick", {
-                            menuItem:this
-                        });
-                });
-            },
-
-            _uiSetHighlightedItem:function(v, ev) {
-                if (ev && ev.prevVal) {
-                    ev.prevVal.set("highlighted", false);
+        //dir : -1 ,+1
+        //skip disabled items
+        _getNextEnabledHighlighted:function(index, dir) {
+            var children = this.get("children"),
+                len = children.length,
+                o = index;
+            do {
+                if (!children[index].get("disabled")) {
+                    return children[index];
                 }
-                v && v.set("highlighted", true);
-                this.get("view").set("highlightedItem", v);
-                this.set("activeItem", v);
-            },
-            _handleBlur:function() {
-                if (Menu.superclass._handleBlur.call(this) === false) {
-                    return false;
-                }
-                this.set("highlightedItem", null);
-            },
+                index = (index + dir + len) % len;
+            } while (index != o);
+            return undefined;
+        },
 
+        _handleClick:function(e) {
+            if (Menu.superclass._handleClick.call(this, e))
+                return true;
 
-            //dir : -1 ,+1
-            //skip disabled items
-            _getNextEnabledHighlighted:function(index, dir) {
-                var children = this.get("children");
-                if (children.length == 0)return null;
-                if (!children[index].get("disabled")) return children[index];
-                var o = index;
-                index += dir;
-                while (index != o) {
-                    if (!children[index].get("disabled")) return children[index];
-                    index += dir;
-                    if (index == -1) index = children.length - 1;
-                    else if (index == children.length) index = 0;
-                }
-                return null;
-            },
+            var highlightedItem = this.get("highlightedItem");
 
-            _handleKeydown:function(e) {
+            //先看当前活跃 menuitem 是否要处理
+            if (highlightedItem && highlightedItem._handleClick(e)) {
+                return true;
+            }
+        },
 
-                if (Menu.superclass._handleKeydown.call(this, e) === false)
-                    return false;
-                var highlightedItem = this.get("highlightedItem");
+        _handleKeydown:function(e) {
+            if (this._handleKeydownInternal(e)) {
+                e.halt();
+                return true;
+            }
+            // return false , 会阻止 tab 键 ....
+            return undefined;
+        },
 
-                //先看当前活跃 menuitem 是否要处理
-                if (highlightedItem && highlightedItem._handleKeydown) {
-                    if (highlightedItem._handleKeydown(e) === false) {
-                        return false;
-                    }
-                }
+        /**
+         * Attempts to handle a keyboard event; returns true if the event was handled,
+         * false otherwise.  If the container is enabled, and a child is highlighted,
+         * calls the child control's {@code handleKeyEvent} method to give the control
+         * a chance to handle the event first.
+         * @param  e Key event to handle.
+         * @return {boolean} Whether the event was handled by the container (or one of
+         *     its children).
+         */
+        _handleKeydownInternal:function(e) {
 
-                //自己这边只处理上下
-                var children = this.get("children");
-                if (children.length === 0) {
-                    return;
-                }
-                var index,destIndex;
+            if (Menu.superclass._handleKeydown.call(this, e)) {
+                return true;
+            }
 
-                //up
-                if (e.keyCode == 38) {
+            // Give the highlighted control the chance to handle the key event.
+            var highlightedItem = this.get("highlightedItem");
+
+            // 先看当前活跃 menuitem 是否要处理
+            if (highlightedItem && highlightedItem._handleKeydown(e)) {
+                return true;
+            }
+
+            var children = this.get("children"),len = children.length;
+
+            if (len == 0) {
+                return undefined;
+            }
+
+            var index,destIndex;
+
+            //自己处理了，不要向上处理，嵌套菜单情况
+            switch (e.keyCode) {
+                // esc
+                case 27:
+                    // TODO
+                    // focus 的话手动失去焦点
+                    return undefined;
+                    break;
+
+                // home
+                case 36:
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(0, 1));
+                    break;
+                // end
+                case 35:
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(len - 1, -1));
+                    break;
+                // up
+                case 38:
                     if (!highlightedItem) {
-                        this.set("highlightedItem", this._getNextEnabledHighlighted(children.length - 1, -1));
+                        destIndex = len - 1;
                     } else {
                         index = S.indexOf(highlightedItem, children);
-                        destIndex = index == 0 ? children.length - 1 : index - 1;
-                        this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, -1));
+                        destIndex = (index - 1 + len) % len;
                     }
-                    e.preventDefault();
-                    //自己处理了，嵌套菜单情况
-                    return false;
-                }
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(destIndex, -1));
+                    break;
                 //down
-                else if (e.keyCode == 40) {
+                case 40:
                     if (!highlightedItem) {
-                        this.set("highlightedItem", this._getNextEnabledHighlighted(0, 1));
+                        destIndex = 0;
                     } else {
                         index = S.indexOf(highlightedItem, children);
-                        destIndex = index == children.length - 1 ? 0 : index + 1;
-                        this.set("highlightedItem", this._getNextEnabledHighlighted(destIndex, 1));
+                        destIndex = (index + 1 + len) % len;
                     }
-                    e.preventDefault();
-                    //自己处理了，不要向上处理，嵌套菜单情况
-                    return false;
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(destIndex, 1));
+                    break;
+                default:
+                    return undefined;
+            }
+            return true;
+        },
+
+        bindUI:function() {
+            var self = this;
+            /**
+             * 隐藏后，去掉高亮与当前
+             */
+            self.on("hide", function() {
+                self.set("highlightedItem", undefined);
+            });
+        },
+
+
+        containsElement:function(element) {
+            if (this.get("view").containsElement(element)) {
+                return true;
+            }
+
+            var children = this.get('children');
+
+            for (var i = 0, count = children.length; i < count; i++) {
+                var child = children[i];
+                if (typeof child.containsElement == 'function' &&
+                    child.containsElement(element)) {
+                    return true;
                 }
+            }
+
+            return false;
+        }
+    }, {
+        ATTRS:{
+            // 普通菜单可聚焦
+            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+            focusable:{
+                value:true
             },
-
-            bindUI:function() {
-                var self = this;
-                S.each(this.get("children"), function(c) {
-                    self._bindMenuItem(c);
-                });
-
-                /**
-                 * 隐藏后，去掉高亮与当前
-                 */
-                self.on("hide", function() {
-                    self.set("highlightedItem", null);
-                });
+            /**
+             * 当前高亮的儿子菜单项
+             */
+            highlightedItem:{},
+            /**
+             * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
+             */
+            activeItem:{
+                view:true
             }
-        }, {
-            ATTRS:{
-                /**
-                 * 当前高亮的儿子菜单项
-                 */
-                highlightedItem:{},
-
-                /**
-                 * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
-                 */
-                activeItem:{
-                    view:true
-                },
-                focusable:{
-                    //默认可以获得焦点
-                    value:true,
-                    view:true
-                }
-            }
-        });
+        }
+    });
 
     Menu.DefaultRender = MenuRender;
     return Menu;
 
 }, {
-        requires:['uibase','component','./menurender']
-    });/**
+    requires:['uibase','component','./menurender','./submenu']
+});
+
+/**
+ * TODO
+ *  - 去除 activeItem
+ **//**
  * menu item ,child component for menu
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     var MenuItem = UIBase.create(Component.ModelControl, {
 
-            _handleMouseEnter:function() {
-                if (MenuItem.superclass._handleMouseEnter.call(this) === false) {
-                    return false;
+        _handleMouseEnter:function(e) {
+            // 父亲不允许自己处理
+            if (MenuItem.superclass._handleMouseEnter.call(this, e)) {
+                return true;
+            }
+            this.get("parent").set("highlightedItem", this);
+        },
+
+        _handleMouseLeave:function(e) {
+            // 父亲不允许自己处理
+            if (MenuItem.superclass._handleMouseLeave.call(this, e)) {
+                return true;
+            }
+            this.get("parent").set("highlightedItem", undefined);
+        },
+
+        _handleClick:function(e) {
+            // 父亲不允许自己处理
+            if (MenuItem.superclass._handleClick.call(this, e)) {
+                return true;
+            }
+            // 可选
+            if (this.get("selectable")) {
+                this.set("selected", true);
+            }
+            // 可选中，取消选中
+            if (this.get("checkable")) {
+                this.set("checked", !this.get("checked"));
+            }
+            this.get("parent").fire("click", {
+                // 使用熟悉的 target，而不是自造新词！
+                target:this
+            });
+        },
+
+        _uiSetHighlighted:function(v) {
+            this.get("view").set("highlighted", v);
+
+            // 是否要滚动到当前菜单项
+            if (v) {
+                var el = this.get("el"),
+                    p = this.get("parent").get("el"),
+                    y = el.offset().top,
+                    h = el[0].offsetHeight,
+                    py = p.offset().top,
+                    ph = p[0].offsetHeight;
+                if (y - py >= ph) {
+                    p[0].scrollTop += y - py + h - ph;
+                } else if (y - py < 0) {
+                    p[0].scrollTop += y - py;
                 }
-                this.set("highlighted", true);
+            }
+        },
+
+        containsElement:function(element){
+            return this.get('view').containsElement(element);
+        }
+
+    }, {
+        ATTRS:{
+
+
+            /**
+             * 是否绑定鼠标事件
+             * @override
+             */
+            handleMouseEvents:{
+                value:false
             },
 
-            _handleMouseLeave:function() {
-                if (MenuItem.superclass._handleMouseLeave.call(this) === false) {
-                    return false;
+            /**
+             * 是否支持焦点处理
+             * @override
+             */
+            focusable:{
+                value:false
+            },
+
+            selectable:{
+                view:true
+            },
+
+            checkable:{
+                view:true
+            },
+
+            // option.text
+            content:{
+                view:true,
+                valueFn:function() {
+                    return this.get("view") && this.get("view").get("content");
                 }
-                S.log("menuitem " + this.get("view").get("el").attr("id") + "  leave");
-                this.set("highlighted", false);
+            },
+
+            // option.value
+            value:{},
+            highlighted:{
+                // 不要值，防止初始就调用
+                view:true
+            },
+            checked:{
+                view:true
+            },
+            selected:{
+                view:true
             }
-        }, {
-            ATTRS:{
-                // option.text
-                content:{
-                    view:true
-                },
-                // option.value
-                value:{},
-                highlighted:{
-                    view:true,
-                    value:false
-                }
-            }
-        });
+        }
+    });
 
     MenuItem.DefaultRender = MenuItemRender;
 
     return MenuItem;
 }, {
-        requires:['uibase','component','./menuitemrender']
-    });/**
+    requires:['uibase','component','./menuitemrender']
+});/**
  * simple menuitem render
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
+KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
+
+
+    var HIGHLIGHTED_CLS = "{prefixCls}menuitem-highlight",
+        SELECTED_CLS = "{prefixCls}menuitem-selected",
+        CHECKED_CLS = "{prefixCls}menuitem-checked",
+        ACTIVE_CLS = "{prefixCls}menuitem-active",
+        CHECK_CLS = "{prefixCls}menuitem-checkbox",
+        CONTENT_CLS = "{prefixCls}menuitem-content",
+        EL_CLS = "{prefixCls}menuitem",
+        DISABLED_CLS = "{prefixCls}menuitem-disabled";
+
+    function getCls(self, str) {
+        return S.substitute(str, {
+            prefixCls:self.get("prefixCls")
+        });
+    }
+
+    function setUpCheckEl(self) {
+        var el = self.get("el"),
+            cls = S.substitute(CHECK_CLS, {
+                prefixCls:self.get("prefixCls")
+            }),
+            checkEl = el.one("." + cls);
+        if (!checkEl) {
+            checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
+            // if not ie will lose focus when click
+            checkEl.unselectable();
+        }
+        return checkEl;
+    }
+
     return UIBase.create(Component.Render, {
         renderUI:function() {
-            var el = this.get("el");
-            el.html("<div class='" + this.get("prefixCls") + "menuitem-content" + "'>")
-            el.attr("role", "menuitem");
-            el.unselectable();
+        },
+
+        createDom:function() {
+            var self = this,
+                el = self.get("el");
+            el.addClass(getCls(self, EL_CLS))
+                .html("<div class='" + getCls(self, CONTENT_CLS) + "'>")
+                .attr("role", "menuitem");
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
@@ -22202,49 +22745,62 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         },
 
         _uiSetDisabled:function(v) {
-
-            var el = this.get("el");
+            var el = this.get("el").attr("aria-disabled", !!v);
             if (v) {
-                el.addClass(this.get("prefixCls") + "menuitem-disabled");
+                el.addClass(getCls(this, DISABLED_CLS));
             } else {
-                el.removeClass(this.get("prefixCls") + "menuitem-disabled");
+                el.removeClass(getCls(this, DISABLED_CLS));
             }
-            el.attr("aria-disabled", !!v);
         },
 
         _uiSetHighlighted:function(v) {
             if (v) {
-                this.get("el").addClass(this.get("prefixCls") + "menuitem-highlight");
+                this.get("el").addClass(getCls(this, HIGHLIGHTED_CLS));
             } else {
-                this.get("el").removeClass(this.get("prefixCls") + "menuitem-highlight");
+                this.get("el").removeClass(getCls(this, HIGHLIGHTED_CLS));
             }
         },
 
+        _uiSetSelected:function(v) {
+            var el = this.get("el");
+            el[v ? "addClass" : "removeClass"](getCls(this, SELECTED_CLS));
+        },
+
+        _uiSetChecked:function(v) {
+            var el = this.get("el");
+            el[v ? "addClass" : "removeClass"](getCls(this, CHECKED_CLS));
+            v && setUpCheckEl(this);
+        },
+
+        _uiSetSelectable:function(v) {
+            this.get("el").attr("role", v ? 'menuitemradio' : 'menuitem');
+        },
+
+        _uiSetCheckable:function(v) {
+            this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
+        },
+
         _handleMouseDown:function() {
-            this.get("el").addClass(this.get("prefixCls") + "menuitem-active");
+            this.get("el").addClass(getCls(this, ACTIVE_CLS));
             this.get("el").attr("aria-pressed", true);
         },
 
         _handleMouseUp:function() {
-            this.get("el").removeClass(this.get("prefixCls") + "menuitem-active");
+            this.get("el").removeClass(getCls(this, ACTIVE_CLS));
             this.get("el").attr("aria-pressed", false);
         },
 
-        //支持按钮，默认按键 space ，enter 映射到 model and view handleClick
-        _handleKeydown:function() {
+        containsElement:function(element) {
+            var el = this.get("el");
+            return el[0] == element || el.contains(element);
         }
     }, {
         ATTRS:{
-            elCls:{
-                valueFn:function(v) {
-                    return this.get("prefixCls") + "menuitem";
-                }
-            },
             highlighted:{},
-            prefixCls:{
-                value:"goog-"
-            },
-            content:{}
+            selected:{},
+            content:{},
+            // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
+            checked:{}
         },
         HTML_PARSER:{
             content:function(el) {
@@ -22253,308 +22809,430 @@ KISSY.add("menu/menuitemrender", function(S, UIBase, Component) {
         }
     });
 }, {
-    requires:['uibase','component']
+    requires:['node','uibase','component']
 });/**
  * render aria from menu according to current menuitem
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
-    function setActiveDescendant(self, v) {
-        var el = self.get("el");
 
-        if (v) {
-            var menuItemEl = v.get("view").get("el"),
-                id = menuItemEl.attr("id");
-            S.log("set aria-activedescendant " + id);
-            el.attr("aria-activedescendant", id);
-        } else {
-            S.log("remove aria-activedescendant ");
-            el.attr("aria-activedescendant", "");
-        }
-    }
+    var CLS = "{prefixCls}menu  {prefixCls}menu-vertical";
 
-    var MenuRender = UIBase.create(Component.Render, [
-
-        UIBase.Contentbox.Render,
-        UIBase.Position.Render,
-        UA['ie'] === 6 ? UIBase.Shim.Render : null
+    return UIBase.create(Component.Render, [
+        UIBase.Contentbox.Render
     ], {
 
         renderUI:function() {
             var el = this.get("el");
-            el.attr("role", "menu");
-            el.attr("aria-haspopup", true);
+            el.addClass(S.substitute(CLS, {
+                prefixCls:this.get("prefixCls")
+            }))
+                .attr("role", "menu")
+                .attr("aria-haspopup", true);
+            if (!UA.ie) {
+                el.attr('onmousedown', 'return false;');
+            }
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menu"));
             }
         },
 
-
-        _uiSetHighlightedItem:function(v) {
-            setActiveDescendant(this, v);
-        },
-
         _uiSetActiveItem:function(v) {
-            setActiveDescendant(this, v);
-        },
-
-        _uiSetDisabled:function(v) {
-            if (this.get("focusable")) {
-                //接受键盘焦点
-                this.get("el").attr("tabindex", v ? -1 : 0);
+            var el = this.get("el");
+            if (v) {
+                var menuItemEl = v.get("view").get("el"),
+                    id = menuItemEl.attr("id");
+                el.attr("aria-activedescendant", id);
+                // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
+                //S.log("menurender :" + el.attr("id") + " _uiSetActiveItem : " + v.get("content"));
+            } else {
+                el.attr("aria-activedescendant", "");
+                //S.log("menurender :" + el.attr("id") + " _uiSetActiveItem : " + "");
             }
+
         },
 
-        _uiSetFocusable:function(v) {
-            if (!this.get("disabled")) {
-                if (v) {
-                } else {
-                    this.get("el").unselectable();
-                    this.get("el").attr("onmousedown", "return false;");
-                }
-            }
-        },
-
-        /**
-         * just a tag
-         * allow keydown
-         */
-        _handleKeydown:function() {
-
+        containsElement:function(element) {
+            var el = this.get("el");
+            return el[0] === element || el.contains(element);
         }
-
     }, {
         ATTRS:{
             highlightedItem:{},
-            activeItem:{},
-            elCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "menu "
-                        + this.get("prefixCls") + "menu-vertical";
-                }
-            },
-            prefixCls:{
-                value:"goog-"
-            },
-            focusable:{
-                value:true
-            }
+            activeItem:{}
         }
     });
-    return MenuRender;
 }, {
     requires:['ua','uibase','component']
 });/**
+ * positiaonable and not focusabled menu
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
+    var doc = S.one(document);
+    return UIBase.create(Menu, [
+        UIBase.Position,
+        UIBase.Align
+    ], {
+
+        handleDocumentMouseDown:function(e) {
+            var self = this,
+                target = S.one(e.target)[0];
+            if (self.get("visible") && !self.containsElement(target)) {
+                self.hide();
+            }
+        },
+
+        bindUI:function() {
+            var self = this;
+
+            self.on("show", function() {
+                doc.on("mousedown", self.handleDocumentMouseDown, self);
+            });
+
+            self.on("hide", function() {
+                doc.detach("mousedown", self.handleDocumentMouseDown, self);
+            });
+        }
+    }, {
+        ATTRS:{
+            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+            focusable:{
+                value:false
+            }
+        },
+        DefaultRender:PopupMenuRender
+    });
+}, {
+    requires:['uibase','component','./menu','./popupmenurender']
+});/**
+ * popup menu render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
+    return UIBase.create(MenuRender, [
+        UIBase.Position.Render,
+        UA['ie'] === 6 ? UIBase.Shim.Render : null
+    ]);
+}, {
+    requires:['ua','uibase','./menurender']
+});/**
+ * menu separator def
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
+
+    return UIBase.create(Component.ModelControl, {
+    }, {
+        ATTRS:{
+            focusable:{
+                value:false
+            },
+            handleMouseEvents:{
+                value:false
+            },
+            // 分隔线禁用，不可以被键盘访问
+            disabled:{
+                value:true
+            }
+        },
+
+        DefaultRender:SeparatorRender
+    });
+
+}, {
+    requires:['uibase','component','./separatorrender']
+});/**
+ * menu separator render def
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
+
+    var CLS = "{prefixCls}menuseparator";
+    return UIBase.create(Component.Render, {
+
+        createDom:function() {
+            var el = this.get("el");
+            el.attr("role", "separator").addClass(S.substitute(CLS, {
+                prefixCls:this.get("prefixCls")
+            }));
+        }
+
+    });
+
+}, {
+    requires:['uibase','component']
+});/**
  * submenu model and control for kissy , transfer item's keycode to menu
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add(
     /* or precisely submenuitem */
     "menu/submenu",
     function(S, UIBase, Component, MenuItem, SubMenuRender) {
         var SubMenu;
+
+        /**
+         * Class representing a submenu that can be added as an item to other menus.
+         */
         SubMenu = UIBase.create(MenuItem, {
-            _handleMouseLeave:function(ev) {
-                /**
-                 * menuitem leave 会设成 false
-                 * 这里不要继承 menuitem ，直接重写组件最顶层基类
-                 */
-                if (MenuItem.superclass._handleMouseLeave.call(this, ev) === false) {
-                    return false;
-                }
 
-                var menu = this.get("menu");
-                //到了子菜单中，高亮不要消失
-                if (menu && menu.get("visible")
-                    &&
-                    (menu.get("view").get("el").contains(ev.relatedTarget)
-                        || menu.get("view").get("el")[0] == ev.relatedTarget[0]
-                        )
-                    ) {
-                    //S.log("submenuitem highlighted unchanged");
-                    return;
-                }
-                //S.log("submenuitem highlighted changed !!!!!!!!!!");
-                this.set("highlighted", false);
-            },
+                _onParentHide:function() {
+                    this.get("menu") && this.get("menu").hide();
+                },
 
-            _uiSetHighlighted:function(v) {
-                this.get("view").set("highlighted", v);
-                if (!v) {
-                    this._hideSubMenu();
-                }
-                // 不负责显示，显示两种方式
-                // 1. submenuitem mouseenter
-                // 2. submenuitem 当前右键
-            },
+                bindUI:function() {
+                    /**
+                     * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
+                     */
+                    var self = this,
+                        parentMenu = self.get("parent"),
+                        menu = this.get("menu");
 
-            bindUI:function() {
-                /**
-                 * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
-                 */
-                var self = this,
-                    parentMenu = self.get("parent");
+                    //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+                    if (parentMenu) {
 
-                var menu = this.get("menu");
+                        parentMenu.on("hide", self._onParentHide, self);
 
-                //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
-                if (parentMenu) {
-                    parentMenu.on("hide", function() {
-                        if (self.get("menu")) {
-                            self.get("menu").hide();
-                        }
-                    });
-
-                    // 子菜单选中后也要通知父级菜单
-                    // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-                    // 单个 menu 来看可能 selectedItem没有变化
-                    menu.on("menuItemClick", function(ev) {
-                        parentMenu.fire("menuItemClick", {
-                            menuItem:ev.menuItem
+                        // 子菜单选中后也要通知父级菜单
+                        // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
+                        // 单个 menu 来看可能 selectedItem没有变化
+                        menu.on("click", function(ev) {
+                            parentMenu.fire("click", {
+                                target:ev.target
+                            });
                         });
-                    });
 
-                    // 通知父级菜单
-                    menu.on("afterHighlightedItemChange afterActiveItemChange", function(ev) {
-                        S.log("通知父级菜单 : " + ev.newVal + "  : " + ev.type);
-                        parentMenu.set("activeItem", ev.newVal);
-                    });
+                        // 通知父级菜单
+                        menu.on("afterActiveItemChange", function(ev) {
+                            parentMenu.set("activeItem", ev.newVal);
+                        });
+                    }
+                    // 访问子菜单，当前 submenu 不隐藏 menu
+                    // leave submenuitem -> enter menuitem -> menu item highlight ->
+                    // -> menu highlight -> onChildHighlight_ ->
 
-                }
+                    // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
+                    // 这里的 onChildHighlight_ 比 afterHighlightedItemChange 先执行
+                    // 保险点用 beforeHighlightedItemChange
+                    menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
+                },
 
-
-                //!TODO
-                //parentMenu 的 aria-activedescendant 同步 menu 的 aria-activedescendant
-            },
-
-            _handleMouseEnter:function() {
-                if (SubMenu.superclass._handleMouseEnter.call(this) === false) return false;
-                this._showSubMenu();
-            },
-
-            _showSubMenu:function() {
-                var menu = this.get("menu");
-                menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
-                menu.render();
                 /**
-                 * If activation of your menuitem produces a popup menu,
-                 then the menuitem should have aria-haspopup set to the ID of the corresponding menu
-                 to allow the assistive technology to follow the menu hierarchy
-                 and assist the user in determining context during menu navigation.
-                 */
-                this.get("view").get("el").attr("aria-haspopup",
-                    menu.get("view").get("el").attr("id"));
-                menu.show();
-            },
+                 * @inheritDoc
+                 * Sets a timer to show the submenu
+                 **/
+                _handleMouseEnter:function(e) {
+                    if (SubMenu.superclass._handleMouseEnter.call(this, e)) {
+                        return true;
+                    }
+                    this.clearTimers();
+                    this.showTimer_ = S.later(this.showMenu, this.get("menuDelay"), false, this);
+                },
 
-            _hideSubMenu:function() {
-                var menu = this.get("menu");
-                menu && menu.hide();
-            },
-
-            _handleClickInternal:function(ev) {
-                //从键盘过来的，如果子菜单有高亮，则不要把自己当做选中项
-                if (ev && ev.type == "keydown") {
+                showMenu:function() {
                     var menu = this.get("menu");
-                    if (menu && menu.get("visible") && menu.get("highlightedItem")) {
-                        return;
+                    menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
+                    menu.render();
+                    /**
+                     * If activation of your menuitem produces a popup menu,
+                     then the menuitem should have aria-haspopup set to the ID of the corresponding menu
+                     to allow the assistive technology to follow the menu hierarchy
+                     and assist the user in determining context during menu navigation.
+                     */
+                    this.get("view").get("el").attr("aria-haspopup",
+                        menu.get("view").get("el").attr("id"));
+                    menu.show();
+                },
+
+
+                /**
+                 * Clears the show and hide timers for the sub menu.
+                 */
+                clearTimers : function() {
+                    if (this.dismissTimer_) {
+                        this.dismissTimer_.cancel();
+                        this.dismissTimer_ = null;
+                    }
+                    if (this.showTimer_) {
+                        this.showTimer_.cancel();
+                        this.showTimer_ = null;
+                    }
+                },
+
+                /**
+                 * Listens to the sub menus items and ensures that this menu item is selected
+                 * while dismissing the others.  This handles the case when the user mouses
+                 * over other items on their way to the sub menu.
+                 * @param  e Highlight event to handle.
+                 * @private
+                 */
+                onChildHighlight_ :function(e) {
+                    if (e.newVal) {
+                        if (this.get("menu").get("parent") == this) {
+                            this.clearTimers();
+                            // superclass(menuitem)._handleMouseLeave 已经把自己 highlight 去掉了
+                            // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
+                            this.get("parent").set("highlightedItem", this);
+                        }
+                    }
+                },
+
+                hideMenu:function() {
+                    var menu = this.get("menu");
+                    menu && menu.hide();
+                },
+
+                _handleClick:function(ev) {
+                    this.showMenu();
+                    var menu = this.get("menu");
+                    return menu._handleClick(ev);
+                },
+
+                /**
+                 * Handles a key event that is passed to the menu item from its parent because
+                 * it is highlighted.  If the right key is pressed the sub menu takes control
+                 * and delegates further key events to its menu until it is dismissed OR the
+                 * left key is pressed.
+                 * @param e A key event.
+                 * @return {boolean} Whether the event was handled.
+                 */
+                _handleKeydown:function(e) {
+
+                    if (SubMenu.superclass._handleKeydown.call(this, e)) {
+                        return true;
+                    }
+
+                    var menu = this.get("menu");
+
+                    var hasKeyboardControl_ = menu && menu.get("visible");
+
+                    var keyCode = e.keyCode;
+
+                    if (!hasKeyboardControl_) {
+                        // right
+                        if (keyCode == 39) {
+                            this.showMenu();
+                            var menuChildren = menu.get("children");
+                            if (menuChildren[0]) {
+                                menu.set("highlightedItem", menuChildren[0]);
+                            }
+                        } else {
+                            return undefined;
+                        }
+                    } else if (menu._handleKeydown(e)) {
+                    }
+                    // The menu has control and the key hasn't yet been handled, on left arrow
+                    // we turn off key control.
+                    // left
+                    else if (keyCode == 37) {
+                        this.hideMenu();
+                        // 隐藏后，当前激活项重回
+                        this.get("parent").set("activeItem", this);
+                    } else {
+                        return undefined;
+                    }
+                    return true;
+                },
+
+                /**
+                 * @inheritDoc
+                 * Dismisses the submenu on a delay, with the result that the user needs less
+                 * accuracy when moving to submenus.
+                 **/
+                _uiSetHighlighted:function(highlight, ev) {
+                    SubMenu.superclass._uiSetHighlighted.call(this, highlight, ev);
+                    if (!highlight) {
+                        if (this.dismissTimer_) {
+                            this.dismissTimer_.cancel();
+                        }
+                        this.dismissTimer_ = S.later(this.hideMenu,
+                            this.get("menuDelay"),
+                            false, this);
+                    }
+                },
+
+                containsElement:function(element) {
+                    var menu = this.get("menu");
+                    return menu && menu.containsElement(element);
+                },
+
+                destructor : function() {
+                    var self = this,
+                        parentMenu = self.get("parent"),
+                        menu = this.get("menu");
+
+                    self.clearTimers();
+
+                    //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+                    if (parentMenu) {
+                        parentMenu.detach("hide", self._onParentHide, self);
+                    }
+                    if (menu) {
+                        menu.destroy();
                     }
                 }
-                SubMenu.superclass._handleClickInternal.call(this);
             },
-
-            _handleKeydown:function(e) {
-
-
-                if (SubMenu.superclass._handleKeydown.call(this, e) === false) return false;
-
-                var menu = this.get("menu");
-
-                if (e.keyCode == 27) {
-                    this._hideSubMenu();
-                    return;
-                }
-
-
-                if (menu && menu.get("visible")) {
-                    if (menu._handleKeydown(e) === false) {
-                        //父亲不要处理了
-                        return false;
-                    }
-                }
-
-                //父亲不要处理了
-                //right
-                if (e.keyCode == 39 && (!menu ||
-                    !menu.get("visible"))) {
-                    this._showSubMenu();
-                    var menuChildren = menu.get("children");
-                    if (menuChildren[0]) {
-                        menuChildren[0].set("highlighted", true);
-                    }
-                    return false;
-                }
-                //left
-                else if (e.keyCode == 37 && menu && menu.get("visible")) {
-                    this._hideSubMenu();
-                    return false;
-                }
-
-
-            }
-
-        }, {
-            ATTRS:{
-                menu:{
-                    setter:function(m) {
-                        m.set("focusable", false);
+            {
+                ATTRS:{
+                    /**
+                     * The delay before opening the sub menu in milliseconds.  (This number is
+                     * arbitrary, it would be good to get some user studies or a designer to play
+                     * with some numbers).
+                     * @type {number}
+                     */
+                    menuDelay:{
+                        value:300
+                    },
+                    menu:{
+                        setter:function(m) {
+                            m.set("parent", this);
+                        }
                     }
                 }
             }
-        });
+        );
 
         SubMenu.DefaultRender = SubMenuRender;
         return SubMenu;
     }, {
-    requires:['uibase','component','./menuitem','./submenurender']
-});
+        requires:['uibase','component','./menuitem','./submenurender']
+    });
 
 /**
 
  **//**
  * submenu render for kissy ,extend menuitem render with arrow
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
-    var SubMenuRender;
-    var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►</span>';
-    SubMenuRender = UIBase.create(MenuItemRender, {
-        renderUI:function() {
-            this.get("el").addClass(this.get("prefixCls") + "submenu");
-            this.get("el").attr("aria-haspopup", "true");
-        },
-        _uiSetContent:function(v) {
+        var SubMenuRender;
+        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►</span>';
+        SubMenuRender = UIBase.create(MenuItemRender, {
+            renderUI:function() {
+                this.get("el").addClass(this.get("prefixCls") + "submenu");
+                this.get("el").attr("aria-haspopup", "true");
+            },
+            _uiSetContent:function(v) {
+                this.get("el").one("." + this.get("prefixCls")
+                    + "menuitem-content").html(v + S.substitute(ARROW_TMPL, {
+                    prefixCls:this.get("prefixCls")
+                }));
+            }
 
-            this.get("el").one("." + this.get("prefixCls")
-                + "menuitem-content").html(v + S.substitute(ARROW_TMPL, {
-                prefixCls:this.get("prefixCls")
-            }));
-        }
-
+        });
+        return SubMenuRender;
     },
     {
-
-    });
-    return SubMenuRender;
-},
-{
-    requires:['uibase','./menuitemrender']
-});KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender) {
+        requires:['uibase','./menuitemrender']
+    });KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Menu.Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
+    Menu.Separator = Separator;
+    Menu.PopupMenu = PopupMenu;
     return Menu;
 }, {
     requires:[
@@ -22563,31 +23241,45 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         'menu/menuitem',
         'menu/menuitemrender',
         'menu/submenu',
-        'menu/submenurender'
+        'menu/submenurender',
+        'menu/separator',
+        'menu/separatorrender',
+        'menu/popupmenu'
     ]
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:02
 */
 /**
  * Model and Control for button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
     var Button = UIBase.create(Component.ModelControl, {
+        _handleClick:function(ev) {
+            var self = this;
+            // 如果父亲允许自己处理
+            if (!Button.superclass._handleClick.call(self, ev)) {
+                self.fire("click");
+            }
+        }
     }, {
         ATTRS:{
+            /**
+             * @inheritedDoc
+             * disabled:{}
+             */
             value:{},
             content:{
-                //model 中数据属性变化后要更新到 view 层
+                // model 中数据属性变化后要更新到 view 层
                 view:true,
-                //如果没有用户值默认值，则要委托给 view 层
-                //比如 view 层使用 html_parser 来利用既有元素
+                // 如果没有用户值默认值，则要委托给 view 层
+                // 比如 view 层使用 html_parser 来利用既有元素
                 valueFn:function() {
-                    return this.get("view").get("content");
+                    return this.get("view") && this.get("view").get("content");
                 }
             },
             describedby:{
@@ -22607,31 +23299,40 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
     requires:['uibase','component','./customrender']
 });/**
  * abstract view for button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function(S, UIBase,Component) {
+KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render,{
+    return UIBase.create(Component.Render, {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
         },
-        _uiSetContent:function(v) {
-            this.get("el").html(v);
+        _uiSetContent:function(content) {
+            this.get("el").html(content);
         },
-        _uiSetTooltip:function(t) {
-            this.get("el").attr("title", t);
+        _uiSetTooltip:function(title) {
+            this.get("el").attr("title", title);
         },
-        _uiSetDescribedby:function(d) {
-            this.get("el").attr("aria-describedby", d);
+        _uiSetDescribedby:function(describedby) {
+            this.get("el").attr("aria-describedby", describedby);
         }
     }, {
         ATTRS:{
-            //按钮内容
+            /**
+             * @inheritedDoc
+             * disabled:{}
+             */
+
+            /**
+             * @inheritedDoc
+             * prefixCls:{}
+             */
+
+                //按钮内容
             content:{},
             //aria-describledby support
             describedby:{},
-
             tooltip:{}
         },
         HTML_PARSER:{
@@ -22646,156 +23347,162 @@ KISSY.add("button/buttonrender", function(S, UIBase,Component) {
     requires:['uibase','component']
 });/**
  * view : render button using div
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 
+    function getCls(self, str) {
+        return S.substitute(str, {
+            prefixCls:self.get("prefixCls"),
+            tag:self.__css_tag
+        });
+    }
+
+    var CLS = "{prefixCls}inline-block " + " {prefixCls}{tag}-button",
+        FOCUS_CLS = "{prefixCls}{tag}-button-focused",
+        HOVER_CLS = "{prefixCls}{tag}-button-hover",
+        ACTIVE_CLS = "{prefixCls}{tag}-button-active",
+        DISABLED_CLS = "{prefixCls}{tag}-button-disabled";
+
     return UIBase.create(ButtonRender, {
 
+        __css_tag:"css3",
+
         renderUI:function() {
-            this.get("el").unselectable();
+            var self = this,
+                el = self.get("el");
+            el.addClass(getCls(self, CLS));
         },
 
+
+
+        /**
+         * @override
+         */
         _handleFocus:function() {
-            if (this.get("disabled")) return false;
-            this.get("el").addClass(this.get("focusCls"));
+            var self = this;
+            self.get("el").addClass(getCls(self, FOCUS_CLS));
         },
 
+        /**
+         * @override
+         */
         _handleBlur:function() {
-            this.get("el").removeClass(this.get("focusCls"));
+            var self = this;
+            self.get("el").removeClass(getCls(self, FOCUS_CLS));
         },
 
+        /**
+         * @override
+         */
         _handleMouseEnter:function() {
-            this.get("el").addClass(this.get("hoverCls"));
+            var self = this;
+            self.get("el").addClass(getCls(self, HOVER_CLS));
         },
 
+        /**
+         * @override
+         */
         _handleMouseLeave:function() {
-            this.get("el").removeClass(this.get("hoverCls"));
-            this._handleMouseUp();
+            var self = this;
+            self.get("el").removeClass(getCls(self, HOVER_CLS));
+            // 鼠标离开时，默认设为鼠标松开状态
+            self._handleMouseUp();
         },
 
-        //模拟原生 disabled 机制
+
+        /**
+         * 模拟原生 disabled 机制
+         * @param v
+         */
         _uiSetDisabled:function(v) {
-            var el = this.get("el");
+            var self = this,el = self.get("el");
             if (v) {
-                el.addClass(this.get("disabledCls"));
-                //不能被 tab focus 到
-                el.removeAttr("tabindex");
-                //support aria
-                el.attr("aria-disabled", true);
+                el.addClass(getCls(self, DISABLED_CLS))
+                    //不能被 tab focus 到
+                    //support aria
+                    .attr({
+                        "tabindex": -1,
+                        "aria-disabled": true
+                    });
             } else {
-                el.removeClass(this.get("disabledCls"));
-                el.attr("tabindex", 0);
-                el.attr("aria-disabled", false);
+                el.removeClass(getCls(self, DISABLED_CLS))
+                    .attr({"tabindex": 0,"aria-disabled": false});
             }
         },
 
+        /**
+         * @override
+         */
         _handleMouseDown:function() {
-            this.get("el").addClass(this.get("activeCls"));
-            this.get("el").attr("aria-pressed", true);
+            var self = this;
+            self.get("el").addClass(getCls(self, ACTIVE_CLS))
+                .attr("aria-pressed", true);
         },
 
+        /**
+         * @override
+         */
         _handleMouseUp:function() {
-            this.get("el").removeClass(this.get("activeCls"));
-            this.get("el").attr("aria-pressed", false);
-        },
-
-        _handleKeydown:function() {
+            var self = this;
+            self.get("el").removeClass(getCls(self, ACTIVE_CLS))
+                .attr("aria-pressed", false);
         }
 
-    }, {
-        ATTRS:{
-            prefixCls:{
-                value:"goog-"
-            },
-            elCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "css3-button";
-                }
-            },
-            hoverCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-hover";
-                }
-            },
-            focusCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-focused";
-                }
-            },
-            activeCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-active";
-                }
-            },
-            disabledCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "css3-button-disabled";
-                }
-            }
-        }
     });
 
 }, {
     requires:['uibase','./buttonrender']
 });/**
  * view for button , double div for pseudo-round corner
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     //双层 div 模拟圆角
     var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
     return UIBase.create(Css3Render, {
-            renderUI:function() {
-                this.get("el").html(S.substitute(CUSTOM_RENDER_HTML, {
-                        prefixCls:this.get("prefixCls")
-                    }));
-                var id = S.guid('ks-button-labelby');
-                this.get("el").one('div').one('div').attr("id", id);
 
-                //按钮的描述节点在最内层，其余都是装饰
-                this.get("el").attr("aria-labelledby", id);
+            __css_tag:"custom",
+
+            renderUI:function() {
             },
+
+            /**
+             *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
+             */
+            createDom:function() {
+                var self = this,
+                    id = S.guid('ks-button-labelby');
+                //按钮的描述节点在最内层，其余都是装饰
+                self.get("el")
+                    .html(S.substitute(CUSTOM_RENDER_HTML, {
+                    prefixCls:this.get("prefixCls"),
+                    id:id
+                }))
+                    .attr("aria-labelledby", id);
+            },
+
+            /**
+             * 内容移到内层
+             * @override
+             * @param v
+             */
             _uiSetContent:function(v) {
-                if (v == undefined) return;
-                this.get("el").one('div').one('div').html(v);
+                this.get("el").one('div').one('div').html(v || "");
             }
-        }, {
-            ATTRS:{
-                elCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "custom-button";
-                    }
-                },
-                hoverCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-hover";
-                    }
-                },
-                focusCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-focused";
-                    }
-                },
-                activeCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-active";
-                    }
-                },
-                disabledCls:{
-                    valueFn:function() {
-                        return this.get("prefixCls") + "custom-button-disabled";
-                    }
-                }
-            }
-        });
+        }
+        /**
+         * @inheritedDoc
+         * content:{}
+         */
+    );
 }, {
-        requires:['uibase','./css3render']
-    });/**
+    requires:['uibase','./css3render']
+});/**
  * view: render button using native button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/nativerender", function(S, UIBase, ButtonRender) {
     return UIBase.create(ButtonRender, {
@@ -22826,229 +23533,401 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * combination of menu and button ,similar to native select
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
-
     var MenuButton = UIBase.create(Button, {
 
-            _hideMenu:function() {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                var menu = this.get("menu");
-                menu.hide();
-                this.get("view").set("collapsed", true);
-            },
+        hideMenu:function() {
+            this.get("menu").hide();
+        },
 
-            _showMenu:function() {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                var menu = self.get("menu");
-                if (!menu.get("visible")) {
-                    menu.set("align", {
-                            node:el,
-                            points:["bl","tl"]
-                        });
-                    menu.render();
-                    el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
-                    menu.show();
-                    view.set("collapsed", false);
-                }
-            },
-
-            bindUI:function() {
-                var self = this,
-                    menu = this.get("menu");
-
-                menu.on("afterActiveItemChange", function(ev) {
-                    self.set("activeItem", ev.newVal);
+        showMenu:function() {
+            var self = this,
+                view = self.get("view"),
+                el = view.get("el"),
+                menu = self.get("menu");
+            if (!menu.get("visible")) {
+                menu.set("align", {
+                    node:el,
+                    points:["bl","tl"]
                 });
-            },
-
-            /**
-             * @inheritDoc
-             */
-            _handleKeydown:function(e) {
-
-                //不继承 button 的按钮设置，space , enter 都要留给 menu
-                //if (MenuButton.superclass._handleKeydown.call(this, e) === false) {
-                //    return false;
-                //}
-
-                var menu = this.get("menu");
-                //转发给 menu 处理
-                if (menu && menu.get("visible")) {
-                    menu._handleKeydown(e);
-                }
-                if (e.keyCode == 27) {
-                    e.preventDefault();
-                    this._hideMenu();
-                } else if (e.keyCode == 38 || e.keyCode == 40) {
-                    if (!menu.get("visible")) {
-                        e.preventDefault();
-                        this._showMenu();
-                    }
-                }
-            },
-
-            /**
-             * @inheritDoc
-             */
-            _handleBlur:function() {
-                var re = MenuButton.superclass._handleBlur.call(this);
-                if (re === false) return re;
-                this._hideMenu();
-            },
-
-            /**
-             * @inheritDoc
-             */
-            _handleClick:function() {
-                var re = MenuButton.superclass._handleClick.call(this);
-                if (re === false) {
-                    return re;
-                }
-                var menu = this.get("menu");
-                if (!menu.get("visible")) {
-                    this._showMenu();
-                } else {
-                    this._hideMenu();
-                }
+                menu.show();
+                el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
+                view.set("collapsed", false);
             }
-        }, {
-            ATTRS:{
-                activeItem:{
-                    view:true
-                },
-                menu:{
-                    setter:function(v) {
-                        //menubutton 的 menu 不可以获得焦点
-                        v.set("focusable", false);
-                    }
-                }
-            }
-        });
+        },
 
-    MenuButton.decorateSelect = function(select, cfg) {
-        cfg = cfg || {};
-        select = S.one(select);
+        bindUI:function() {
+            var self = this,
+                menu = this.get("menu");
 
-        var optionMenu = new Menu({
-                prefixCls:cfg.prefixCls
-            }),
-            curCurContent,
-            curValue = select.val(),
-            options = select.all("option");
-
-        options.each(function(option) {
-            if (curValue == option.val()) {
-                curCurContent = option.text();
-            }
-
-            optionMenu.addChild(new Menu.Item({
-                    content:option.text(),
-                    prefixCls:cfg.prefixCls,
-                    value:option.val()
-                }));
-        });
-
-        var menuButton = new MenuButton({
-                content:curCurContent,
-                describedby:"describe",
-                menu:optionMenu,
-                prefixCls:cfg.prefixCls,
-                autoRender:true
+            menu.on("afterActiveItemChange", function(ev) {
+                self.set("activeItem", ev.newVal);
             });
 
-        menuButton.get("el").insertBefore(select);
+            menu.on("click", function(e) {
+                self.fire("click", {
+                    target:e.target
+                });
+            });
 
-        var input = new Node("<input type='hidden' name='" + select.getDOMNode().name
-            + "' value='" + curValue + "'>").insertBefore(select);
+            menu.on("hide", function() {
+                self.get("view").set("collapsed", true);
+            });
+        },
 
-        optionMenu.on("menuItemClick", function(e) {
-            input.val(e.menuItem.get("value"));
-            menuButton.set("content", e.menuItem.get("content"));
-            optionMenu.hide();
-        });
+        /**
+         * @inheritDoc
+         */
+        _handleKeydown:function(e) {
+            var menu = this.get("menu");
+            //转发给 menu 处理
+            if (menu && menu.get("visible")) {
+                var handledByMenu = menu._handleKeydown(e);
+                if (e.keyCode == 27) {
+                    this.hideMenu();
+                    return true;
+                }
+                return handledByMenu;
+            }
+            if (e.keyCode == 38 || e.keyCode == 40) {
+                this.showMenu();
+                return true;
+            }
+            return undefined;
+        },
 
-        select.remove();
-        return menuButton;
-    };
+        /**
+         * @inheritDoc
+         */
+        _handleBlur:function(e) {
+            if (MenuButton.superclass._handleBlur.call(this, e)) {
+                return true;
+            }
+            this.hideMenu();
+        },
+
+        /**
+         * @inheritDoc
+         */
+        _handleClick:function(e) {
+            if (Button.superclass._handleClick.call(this, e)) {
+                return true;
+            }
+            var menu = this.get("menu");
+
+            // 鼠标点击只是简单隐藏，显示切换
+            if (e.type == 'click') {
+                if (menu.get("visible")) {
+                    // TODO popup menu 会监听 doc click
+                    // this.hideMenu();
+                }
+                else {
+                    this.showMenu();
+                }
+            } else if (e.type == 'keydown') {
+                // enter 转发给 menu 处理
+                if (e.keyCode == 13) {
+                    if (menu.get("visible")) {
+                        menu._handleClick(e);
+                    }
+                } else if (e.keyCode == 32) {
+                    // Prevent page scrolling in Chrome.
+                    e.preventDefault();
+                    // space 只负责打开
+                    this.showMenu();
+                }
+            }
+        },
+
+        /**
+         * Adds a new menu item at the end of the menu.
+         * @param item Menu item to add to the menu.
+         */
+        addItem:function(item, index) {
+            this.get("menu").addChild(item, index);
+        },
+
+        removeItem:function(c, destroy) {
+            this.get("menu").removeChild(c, destroy);
+        },
+
+        removeItems:function(destroy) {
+            this.get("menu").removeChildren(destroy);
+        },
+
+        getItemAt:function(index) {
+            return this.get("menu").getChildAt(index);
+        },
+
+        destructor:function() {
+            var menu = this.get("menu");
+            menu && menu.destroy();
+        }
+
+    }, {
+        ATTRS:{
+            activeItem:{
+                view:true
+            },
+            // 不关心选中元素 , 由 select 负责
+            // selectedItem
+            menu:{
+                valueFn:function() {
+                    return new Menu.PopupMenu(S.mix({
+                        prefixCls:this.get("prefixCls"),
+                        parent:this
+                    }, this.get("menuCfg")));
+                },
+                setter:function(v) {
+                    v.set("parent", this);
+                }
+            }
+        }
+    });
 
     MenuButton.DefaultRender = MenuButtonRender;
 
     return MenuButton;
 }, {
-        requires:["uibase","node","button","./menubuttonrender","menu"]
-    });/**
+    requires:["uibase","node","button","./menubuttonrender","menu"]
+});/**
  * render aria and drop arrow for menubutton
  * @author: yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
-    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block {prefixCls}menu-button-caption"></div>' +
-        '<div class="{prefixCls}inline-block {prefixCls}menu-button-dropdown">&nbsp;</div>';
+    var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
+        '{prefixCls}menu-button-caption"></div>' +
+        '<div class="{prefixCls}inline-block ' +
+        '{prefixCls}menu-button-dropdown">&nbsp;</div>',
+        CAPTION_CLS = "{prefixCls}menu-button-caption",
+        COLLAPSE_CLS = "{prefixCls}menu-button-open";
 
-    var MenuButtonRender = UIBase.create(Button.Render, {
-            renderUI:function() {
-                var el = this.get("el");
-                el.one("div").one("div").html(S.substitute(MENU_BUTTON_TMPL, {
-                        prefixCls:this.get("prefixCls")
-                    }));
-                //带有 menu
-                el.attr("aria-haspopup", true);
-            },
+    function getCls(self, str) {
+        return S.substitute(str, {
+            prefixCls:self.get("prefixCls")
+        });
+    }
 
-            _uiSetContent:function(v) {
-                if (v == undefined) return;
-                this.get("el").one("." + this.get("prefixCls") + "menu-button-caption").html(v);
-            },
 
-            _uiSetCollapsed:function(v) {
-                var el = this.get("el"),prefixCls = this.get("prefixCls") + "menu-button";
-                if (!v) {
-                    el.addClass(prefixCls + "menu-button-open");
-                    el.attr("aria-expanded", true);
-                } else {
-                    el.removeClass(prefixCls + "menu-button-open");
-                    el.attr("aria-expanded", false);
-                }
-            },
+    return UIBase.create(Button.Render, {
+        renderUI:function() {
+        },
 
-            _uiSetActiveItem:function(v) {
-                S.log("button set aria " + (v && v.get("view").get("el").attr("id")) || "");
-                this.get("el").attr("aria-activedescendant", (v && v.get("view").get("el").attr("id")) || "");
+        createDom:function() {
+            var el = this.get("el");
+            el.one("div").one("div").html(getCls(this, MENU_BUTTON_TMPL));
+            //带有 menu
+            el.attr("aria-haspopup", true);
+        },
+
+        _uiSetContent:function(v) {
+            if (v == undefined) return;
+            this.get("el").one("." + getCls(this, CAPTION_CLS)).html(v);
+        },
+
+        _uiSetCollapsed:function(v) {
+            var el = this.get("el"),cls = getCls(this, COLLAPSE_CLS);
+            if (!v) {
+                el.addClass(cls);
+                el.attr("aria-expanded", true);
+            } else {
+                el.removeClass(cls);
+                el.attr("aria-expanded", false);
             }
-        }, {
+        },
+
+        _uiSetActiveItem:function(v) {
+            this.get("el").attr("aria-activedescendant",
+                (v && v.get("view").get("el").attr("id")) || "");
+        }
+    }, {
+        ATTRS:{
+            activeItem:{
+            },
+            collapsed:{
+                value:true
+            }
+        }
+    });
+}, {
+    requires:['uibase','button']
+});/**
+ * represent a menu option , just make it selectable and can have select status
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menubutton/option", function(S, UIBase, Menu) {
+    var MenuItem = Menu.Item;
+    return UIBase.create(MenuItem, {
+    }, {
+        ATTRS:{
+            selectable:{
+                value:true
+            }
+        }
+    });
+
+
+}, {
+    requires:['uibase','menu']
+});/**
+ * manage a list of single-select options
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Option) {
+
+    var Select = UIBase.create(MenuButton, {
+            bindUI:function() {
+                var self = this;
+                self.on("click", self.handleMenuClick, self);
+                self.get("menu").on("show", self._handleMenuShow, self)
+            },
+            /**
+             *  different from menubutton by highlighting the currently selected option
+             *  on open menu.
+             */
+            _handleMenuShow:function() {
+                this.get("menu").set("highlightedItem", this.get("selectedItem") || this.get("menu").getChildAt(0));
+            },
+            updateCaption_:function() {
+                var self = this;
+                var item = self.get("selectedItem");
+                self.set("content", item ? item.get("content") : self.get("defaultCaption"));
+            },
+            handleMenuClick:function(e) {
+                var self = this;
+                self.set("selectedItem", e.target);
+                self.hideMenu();
+            },
+            _uiSetSelectedItem:function(v, ev) {
+                if (ev && ev.prevVal) {
+                    ev.prevVal.set("selected", false);
+                }
+                var self = this;
+                self.set("value", v && v.get("value"));
+                self.updateCaption_();
+            },
+            _uiSetDefaultCaption:function() {
+                this.updateCaption_();
+            },
+
+            _uiSetValue:function(v) {
+                var self = this;
+                var children = self.get("menu").get("children");
+                for (var i = 0; i < children.length; i++) {
+                    var item = children[i];
+                    if (item.get("value") == v) {
+                        self.set("selectedItem", item);
+                        return;
+                    }
+                }
+                self.set("selectedItem", null);
+            }
+        },
+        {
             ATTRS:{
-                activeItem:{
+                // @inheritedDoc  from button
+                // value :{}
 
+
+                // @inheritedDoc  from button
+                // content :{}
+
+                selectedItem:{
                 },
-                collapsed:{
-                    value:true
+
+                // 只是 selectedItem 的一个视图，无状态
+                selectedIndex:{
+                    setter:function(index) {
+                        var self = this;
+                        self.set("selectedItem", self.get("menu").getChildAt(index));
+                    },
+
+                    getter:function() {
+                        return S.indexOf(this.get("selectedItem"), this.get("menu").get("children"));
+                    }
+                },
+
+                defaultCaption:{
                 }
             }
+        }
+    );
+
+
+    Select.decorate = function(element, cfg) {
+        element = S.one(element);
+        var optionMenu = new Menu.PopupMenu(S.mix({
+            prefixCls:cfg.prefixCls
+        }, cfg.menuCfg)),
+            selectedItem,
+            curValue = element.val(),
+            options = element.all("option");
+
+        options.each(function(option) {
+            var item = new Option({
+                content:option.text(),
+                prefixCls:cfg.prefixCls,
+                value:option.val()
+            });
+            if (curValue == option.val()) {
+                selectedItem = item;
+            }
+            optionMenu.addChild(item);
         });
 
-    return MenuButtonRender;
+        var select = new Select(S.mix({
+            selectedItem:selectedItem,
+            menu:optionMenu
+        }, cfg));
+
+        select.render();
+        select.get("el").insertBefore(element);
+
+        var name;
+
+        if (name = element.attr("name")) {
+            var input = new Node("<input type='hidden' name='" + name
+                + "' value='" + curValue + "'>").insertBefore(element);
+
+            optionMenu.on("click", function(e) {
+                input.val(e.target.get("value"));
+            });
+        }
+        element.remove();
+        return select;
+    };
+
+    return Select;
+
 }, {
-        requires:['uibase','button']
-    });KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender) {
+    requires:['node','uibase','./menubutton','menu','./option']
+});
+
+/**
+ * TODO
+ *  how to emulate multiple ?
+ **/KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
     MenuButton.Render = MenuButtonRender;
+    MenuButton.Select = Select;
+    MenuButton.Option = Option;
     return MenuButton;
 }, {
-    requires:['menubutton/menubutton','menubutton/menubuttonrender']
+    requires:['menubutton/menubutton',
+        'menubutton/menubuttonrender',
+        'menubutton/select',
+        'menubutton/option']
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:04
 */
 /**
  * @author: 常胤 (lzlu.com)
@@ -24449,51 +25328,51 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
 
     S.augment(BaseClass, S.EventTarget, {
 
-            /**
-             * init
-             */
-            init: function() {
-                //dosth
-            },
+        /**
+         * init
+         */
+        init: function() {
+            //dosth
+        },
 
-            /**
-             * 给对象绑定事件
-             *     - checkbox，radiobox默认只能绑定click事件
-             *    - select默认只能绑定select事件
-             *     - 如果你有特殊需求也可以重写此方法
-             * @param {Element} el
-             * @param {String} evttype
-             * @param {Function} fun
-             */
-            _bindEvent: function(el, evttype, fun) {
-                switch (DOM.attr(el, 'type').toLowerCase()) {
-                    case "radio":
-                    case "checkbox":
-                        Event.on(el, 'click', fun);
-                        break;
-                    case "select":
-                    case "select-multi":
-                    case "file":
-                        Event.on(el, "change", fun);
-                        break;
-                    default:
-                        Event.on(el, evttype, fun);
-                }
-            },
-
-            /**
-             * 显示出错信息
-             * @param {Boolean} result
-             * @param {String} msg
-             * @param  evttype
-             */
-            showMessage: function(result, msg, evttype) {
-                result = 1;
-                msg = 1;
-                evttype = 1;
+        /**
+         * 给对象绑定事件
+         *     - checkbox，radiobox默认只能绑定click事件
+         *    - select默认只能绑定select事件
+         *     - 如果你有特殊需求也可以重写此方法
+         * @param {Element} el
+         * @param {String} evttype
+         * @param {Function} fun
+         */
+        _bindEvent: function(el, evttype, fun) {
+            switch ((DOM.attr(el, 'type') || "input").toLowerCase()) {
+                case "radio":
+                case "checkbox":
+                    Event.on(el, 'click', fun);
+                    break;
+                case "select":
+                case "select-multi":
+                case "file":
+                    Event.on(el, "change", fun);
+                    break;
+                default:
+                    Event.on(el, evttype, fun);
             }
+        },
 
-        });
+        /**
+         * 显示出错信息
+         * @param {Boolean} result
+         * @param {String} msg
+         * @param  evttype
+         */
+        showMessage: function(result, msg, evttype) {
+            result = 1;
+            msg = 1;
+            evttype = 1;
+        }
+
+    });
 
     return BaseClass;
 

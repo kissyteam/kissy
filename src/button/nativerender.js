@@ -1,6 +1,6 @@
 /**
  * view: render button using native button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/nativerender", function(S, UIBase, ButtonRender) {
     return UIBase.create(ButtonRender, {

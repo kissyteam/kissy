@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 13 17:03
 */
 /**
  * @module  anim-node-plugin
@@ -22,6 +22,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             fade: [OPCACITY],
             slide: [OVERFLOW, HEIGHT]
         };
+
+    N.__ANIM_KEY = ANIM_KEY;
 
     (function(P) {
 
@@ -54,11 +56,12 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 var anim = Anim.apply(undefined, [elem].concat(args)).run();
                 attachAnim(elem, anim);
             });
-            return this;
+            return self;
         };
 
         P.stop = function(finish) {
-            S.each(this, function(elem) {
+            var self = this;
+            S.each(self, function(elem) {
                 var anims = DOM.data(elem, ANIM_KEY);
                 if (anims) {
                     S.each(anims, function(anim) {
@@ -67,17 +70,18 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     DOM.removeData(elem, ANIM_KEY);
                 }
             });
+            return self;
         };
 
         S.each({
-                show: ['show', 1],
-                hide: ['show', 0],
-                toggle: ['toggle'],
-                fadeIn: ['fade', 1],
-                fadeOut: ['fade', 0],
-                slideDown: ['slide', 1],
-                slideUp: ['slide', 0]
-            },
+            show: ['show', 1],
+            hide: ['show', 0],
+            toggle: ['toggle'],
+            fadeIn: ['fade', 1],
+            fadeOut: ['fade', 0],
+            slideDown: ['slide', 1],
+            slideUp: ['slide', 0]
+        },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -178,11 +182,14 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
     }
 
 }, {
-        requires:["dom","anim","./base"]
-    });
+    requires:["dom","anim","./base"]
+});
 /**
  * 2011-05-17
  *  - 承玉：添加 stop ，随时停止动画
+ *
+ *  TODO
+ *  - anim needs queue mechanism ?
  */
 /**
  * import methods from DOM to NodeList.prototype
@@ -191,9 +198,9 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
-        isNodeList = DOM._isNodeList,
         // DOM 添加到 NP 上的方法
-        DOM_INCLUDES = [
+        // if DOM methods return undefined , Node methods need to transform result to itself
+        DOM_INCLUDES_NORM = [
             "equals",
             "contains",
             "scrollTop",
@@ -201,15 +208,14 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "height",
             "width",
             "addStyleSheet",
-            "append",
+            // "append" will be overridden
             "appendTo",
-            "prepend",
+            // "prepend" will be overridden
             "prependTo",
             "insertBefore",
             "before",
             "after",
             "insertAfter",
-            "filter",
             "test",
             "hasClass",
             "addClass",
@@ -217,78 +223,96 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "replaceClass",
             "toggleClass",
             "removeAttr",
-            "attr",
             "hasAttr",
-            "prop",
             "hasProp",
-            "val",
-            "text",
-            "css",
             // anim override
 //            "show",
 //            "hide",
             "toggle",
-            "offset",
             "scrollIntoView",
+            "remove",
+            "removeData",
+            "hasData",
+            "unselectable"
+        ],
+        // if return array ,need transform to nodelist
+        DOM_INCLUDES_NORM_NODE_LIST = [
+            "filter",
             "parent",
             "closest",
             "next",
             "prev",
             "siblings",
-            "children",
-            "html",
-            "remove",
-            "removeData",
-            "hasData",
-            // 返回值不一定是 nodelist ，特殊处理
-            // "data",
-            "unselectable"
+            "children"
         ],
+        // if set return this else if get return true value ,no nodelist transform
+        DOM_INCLUDES_NORM_IF = {
+            // dom method : set parameter index
+            "attr":1,
+            "text":1,
+            "css":1,
+            "val":0,
+            "prop":1,
+            "offset":1,
+            "html":0,
+            "data":1
+        },
         // Event 添加到 NP 上的方法
         EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
 
 
-    function normalize(val, node, nodeList) {
-        // 链式操作
-        if (val === undefined) {
-            val = node;
-        } else if (val === null) {
-            val = null;
-        } else if (nodeList
-            && (val.nodeType || isNodeList(val) || S.isArray(val))) {
-            // 包装为 KISSY NodeList
-            val = new NodeList(val);
-        }
-        return val;
+    function accessNorm(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+
+        return ret;
     }
 
-    /**
-     *
-     * @param {string} name 方法名
-     * @param {string} fn 实际方法
-     * @param {object} context 方法执行上下文，不指定为 this
-     * @param {boolean} nodeList 是否对返回对象 NodeList
-     */
-    NodeList.addMethod = function(name, fn, context, nodeList) {
-        NLP[name] = function() {
-            //里面不要修改 context ,fn,name 会影响所有 ....
-            // NLP && NP
-            var self = this,
-                args = S.makeArray(arguments);
-            args.unshift(self);
-            var ctx = context || self;
-            var ret = fn.apply(ctx, args);
-            return  normalize(ret, self, nodeList);
-        }
-    };
+    function accessNormList(fn, self, args) {
+        args.unshift(self);
+        var ret = DOM[fn].apply(DOM, args);
+        if (ret === undefined)
+            return self;
+        else if (ret === null)
+            return null;
+        return new NodeList(ret);
+    }
 
-    S.each(DOM_INCLUDES, function(k) {
-        var v = DOM[k];
-        NodeList.addMethod(k, v, DOM, true);
+    function accessNormIf(fn, self, index, args) {
+
+        // get
+        if (args[index] === undefined
+            // 并且第一个参数不是对象，否则可能是批量设置写
+            && !S.isObject(args[0])) {
+            args.unshift(self);
+            return DOM[fn].apply(DOM, args);
+        }
+        // set
+        return accessNorm(fn, self, args);
+    }
+
+    S.each(DOM_INCLUDES_NORM, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNorm(k, this, args);
+        };
     });
 
-    // data 不需要对返回结果转换 nodelist
-    NodeList.addMethod("data", DOM.data, DOM);
+    S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormList(k, this, args);
+        };
+    });
+
+    S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
+        NLP[k] = function() {
+            var args = S.makeArray(arguments);
+            return accessNormIf(k, this, index, args);
+        };
+    });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
@@ -299,8 +323,8 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-        requires:["dom","event","./base"]
-    });
+    requires:["dom","event","./base"]
+});
 
 /**
  * 2011-05-24
@@ -313,7 +337,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
  */
 /**
  * definition for node and nodelist
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
@@ -496,7 +520,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
  */
 /**
  * overrides methods in NodeList.prototype
- * @author : yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("node/override", function(S, DOM, Event, NodeList) {
 
@@ -506,23 +530,23 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
      *
      */
     S.each(['append', 'prepend','before','after'], function(insertType) {
-        // append 和 prepend
 
-        NodeList.addMethod(insertType, function(domNodes, html) {
+        NodeList.prototype[insertType] = function(html) {
 
-            var newNode = html;
+            var newNode = html,self = this;
             // 创建
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, domNodes);
-            
-        }, undefined, true);
+            DOM[insertType](newNode, self);
+            return self;
+
+        };
     });
 
 }, {
-        requires:["dom","event","./base","./attach"]
-    });
+    requires:["dom","event","./base","./attach"]
+});
 
 /**
  * 2011-05-24

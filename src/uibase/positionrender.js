@@ -22,8 +22,7 @@ KISSY.add("uibase/positionrender", function() {
         },
         zIndex: {
             value: 9999
-        },
-        visible:{}
+        }
     };
 
 
@@ -33,7 +32,7 @@ KISSY.add("uibase/positionrender", function() {
             var el = this.get("el");
             el.addClass(this.get("prefixCls") + "ext-position");
             el.css({
-                visibility:'hidden',
+                visibility:"visible",
                 display: "",
                 left:-9999,
                 top:-9999,
@@ -54,17 +53,6 @@ KISSY.add("uibase/positionrender", function() {
             this.get("el").offset({
                 top:y
             });
-        },
-        _uiSetVisible:function(isVisible) {
-            this.get("el").css("visibility", isVisible ? "visible" : "hidden");
-        },
-
-        show:function() {
-            this.render();
-            this.set("visible", true);
-        },
-        hide:function() {
-            this.set("visible", false);
         }
     };
 

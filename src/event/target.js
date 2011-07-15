@@ -1,6 +1,6 @@
 /**
  * @module  EventTarget
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/target', function(S, Event, DOM, undefined) {
 

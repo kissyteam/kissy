@@ -37,7 +37,7 @@ KISSY.add('base/base', function (S, Attribute, Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter 的
+                    //用户设置会调用 setter 的，但不会触发属性变化事件
                     host.__set(attr, config[attr]);
                 }
 

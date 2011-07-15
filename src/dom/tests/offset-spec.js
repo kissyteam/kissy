@@ -1,7 +1,7 @@
 /**
  * test cases for offset sub module of dom module
- * @author:yiminghe@gmail.com
- * @description:need to be completed
+ * @author yiminghe@gmail.com
+ * @description need to be completed
  */
 KISSY.use("dom", function(S, DOM) {
     describe("offset", function() {
@@ -35,13 +35,30 @@ KISSY.use("dom", function(S, DOM) {
             // ie < 9 相对于 document.documentElement 即窗口
             expect(DOM.offset(a).top).toBe(0);
             DOM.offset(a, {
-                    top:0
-                });
+                top:0
+            });
 
             expect(parseInt(DOM.css(a, "top"))).toBe(0);
 
             document.documentElement.style.borderTop = "";
         });
+
+
+        it("should works for framed element", function() {
+            var iframe = DOM.get("#test-iframe");
+            waitsFor(function() {
+                return iframe.contentWindow;
+            }, "iframe cano not loaded!");
+            runs(function() {
+                var win = iframe.contentWindow;
+                var inner = DOM.get("#test-inner", win.document);
+                var innerOffsetTop = DOM.offset(inner).top-DOM.scrollTop(win);
+                var iframeTop=DOM.offset(iframe).top;
+                var totalTop=DOM.offset(inner,undefined,window).top;
+                expect(innerOffsetTop+iframeTop).toBe(totalTop);
+            });
+
+        })
 
     });
 });

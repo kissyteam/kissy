@@ -1,7 +1,7 @@
 /**
  * test cases for scroll sub module of dom module
- * @author:yiminghe@gmail.com
- * @description:need to be completed
+ * @author yiminghe@gmail.com
+ * @description: need to be completed
  */
 KISSY.use("dom", function(S, DOM) {
     describe("scroll", function() {
