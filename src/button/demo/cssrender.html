@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>CustomRender for button 测试</title>
-<link href="common.css" rel="stylesheet"/>
-<link href="custombutton.css" rel="stylesheet"/>
+<title>css3render for button 测试</title>
+<link href="../assets/common.css" rel="stylesheet"/>
+<link href="../assets/css3button.css" rel="stylesheet"/>
 </head>
 <body>
 
-<h1 id="describe">CustomRender for button 测试</h1>
+<h1 id="describe">css3render for button 测试</h1>
 
 <div id="button_container">
 
@@ -18,6 +18,7 @@
 <h2>从已知元素生成</h2>
 
 <div id="exist">渐进增强</div>
+
 
 
 <script src="../../../build/seed.js"></script>
@@ -37,10 +38,10 @@
 <script src="../css3render.js"></script>
 <script src="../customrender.js"></script>
 <script>
-    KISSY.use("node,button/base,button/customrender", function(S, Node, Button, CustomRender) {
+    KISSY.use("node,button/base,button/css3render", function(S, Node, Button, Css3Render) {
         //view
         //render to container : button_container
-        var r = new CustomRender({
+        var r = new Css3Render({
             render:"#button_container"
         });
 
@@ -56,7 +57,9 @@
         //b.render()
 
         b.on("click", function() {
-            alert("button click");
+            setTimeout(function() {
+                alert("button click");
+            }, 0);
         });
 
         var dis = Node.one("#dis");
@@ -76,7 +79,9 @@
         }
 
         var exist = new Button({
-            srcNode:"#exist",
+            view:new Css3Render({
+                srcNode:"#exist"
+            }),
             autoRender:true
         });
 

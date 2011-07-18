@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>filtermenu 测试</title>
+<link href="../assets/menu.css" rel="stylesheet"/>
+<link href="../assets/menuitem.css" rel="stylesheet"/>
+<link href="../assets/submenu.css" rel="stylesheet"/>
+<link href="../assets/filtermenu.css" rel="stylesheet"/>
+<style>
+    .hasChildren .goog-menuitem-content {
+        background: url("http://a.tbcdn.cn/apps/sell/1.0/img/ic_bg.png") no-repeat scroll 500px 500px transparent;
+        background-position: 100% -78px;
+    }
+
+    .goog-menuitem-selected {
+        background-color: #D6EDF4;
+        color: #1B4D91;
+    }
+
+    .goog-menu-item-hit {
+        font-weight: bold;
+        color: red;
+    }
+
+    .goog-menuitem {
+        padding-right: 10px;
+    }
+</style>
+</head>
+<body>
+
+<h1>可过滤菜单</h1>
+<h2>操作指南</h2>
+
+<ol>
+    <li>可在输入框输入过滤</li>
+    <li>上下键过滤项间导航</li>
+    <li>输入字后，再输入 ，或, 根据当前高亮项进行自动补全</li>
+</ol>
+
+<div id="container">
+
+</div>
+<script src="../../../build/kissy.js"></script>
+<script>
+    KISSY.Config.base = "../../";
+
+    KISSY.ready(function(S) {
+        S.use("menu", function(S, Menu) {
+
+            var m1 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女鞋"});
+            var m4 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女装女服"});
+            var m2 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"家居服务",elCls:"hasChildren"});
+            var m3 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"手机",elCls:"hasChildren"});
+            var filterMenu = new Menu.FilterMenu({
+                render:"#container",
+                width:200,
+                allowMultiple:true,
+                prefixCls:"goog-",
+                label:"请输入"
+            });
+            filterMenu.addChild(m1);
+            filterMenu.addChild(m2);
+            filterMenu.addChild(m3);
+            filterMenu.addChild(m4);
+            filterMenu.render();
+            var selected = null;
+            filterMenu.on("click", function(e) {
+                if (selected != e.target) {
+                    selected && selected.set("selected", false);
+                    selected = e.target;
+                    alert("selected : " + selected.get("content"));
+                }
+            });
+
+
+        });
+    });
+
+</script>
+</body>
+</html>

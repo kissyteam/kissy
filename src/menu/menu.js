@@ -32,7 +32,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 len = children.length,
                 o = index;
             do {
-                if (!children[index].get("disabled")) {
+                var c = children[index];
+                if (!c.get("disabled") && (c.get("visible") !== false)) {
                     return children[index];
                 }
                 index = (index + dir + len) % len;

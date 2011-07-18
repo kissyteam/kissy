@@ -142,31 +142,35 @@
                     </header>
                     <fileset file="@{file}"/>
                 </concat>
-                <replaceregexp match="@VERSION@"
-                               replace="${version}"
-                               flags="g"
-                               encoding="${charset}"
-                               byline="true"
-                               file="@{file}.tmp"/>
-
-                <replaceregexp match="@DEBUG@"
-                               replace=""
-                               flags="g"
-                               byline="true"
-                               encoding="${charset}"
-                               file="@{file}.tmp"/>
-
-                <replaceregexp match="@TIMESTAMP@"
-                               replace="${timestamp.isoformat}"
-                               flags="g"
-                               byline="true"
-                               encoding="${charset}"
-                               file="@{file}.tmp"/>
-
                 <move file="@{file}.tmp"
                       tofile="@{file}"/>
             </sequential>
         </ac:for>
+
+        <replaceregexp match="@VERSION@"
+                       replace="${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${component.build.dir.tmp}" includes="*.js,*.css"/>
+        </replaceregexp>
+
+        <replaceregexp match="@DEBUG@"
+                       replace=""
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${component.build.dir.tmp}" includes="*-min.js,*-min.css"/>
+        </replaceregexp>
+
+        <replaceregexp match="@TIMESTAMP@"
+                       replace="${timestamp.isoformat}"
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${component.build.dir.tmp}" includes="*.js,*.css"/>
+        </replaceregexp>
+
 
         <move todir="${component.build.dir}">
             <fileset dir="${component.build.dir.tmp}"

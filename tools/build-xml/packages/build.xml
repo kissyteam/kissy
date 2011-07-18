@@ -113,8 +113,7 @@
     </target>
 
     <target name="clean">
-        <delete dir="${src.dir}" includes="${component.files}">
-        </delete>
+        <delete dir="${src.dir}" includes="${component.files}"/>
     </target>
 
     <target name="build" depends="concat,nodejs-patch,common.build,clean">

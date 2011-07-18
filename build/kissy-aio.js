@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:46
+build time: Jul 18 18:23
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 15 15:46
              */
             version: '1.20dev',
 
-            buildTime:'20110715154606',
+            buildTime:'20110718182337',
 
             /**
              * Returns a new object containing all of the properties of
@@ -198,10 +198,10 @@ build time: Jul 15 15:46
                 this.Config = this.Config || {};
                 this.Env = this.Env || {};
 
-                // NOTICE: '' will replace with '' when compressing.
+                // NOTICE: '@DEBUG@' will replace with '' when compressing.
                 // So, if loading source file, debug is on by default.
                 // If loading min version, debug is turned off automatically.
-                this.Config.debug = '';
+                this.Config.debug = '@DEBUG@';
             },
 
             /**
@@ -10251,7 +10251,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -11331,7 +11331,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:22
 */
 /**
  * 数据延迟加载组件
@@ -11822,7 +11822,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12060,7 +12060,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:22
 */
 /**
  * @module   Flash 全局静态类
@@ -12571,7 +12571,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:22
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -13785,7 +13785,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /**
  * resizable support for kissy
@@ -13950,7 +13950,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /**
  * UIBase.Align
@@ -14752,6 +14752,7 @@ KISSY.add('uibase/box', function() {
             value:"visibility",
             view:true
         },
+        // 默认显示，但不触发事件
         visible:{}
     };
 
@@ -15924,7 +15925,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:22
 */
 /**
  * container can delegate event for its children
@@ -16072,9 +16073,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 self.set("view", view);
             },
 
+            /**
+             * Returns the DOM element into which child components are to be rendered,
+             or null if the container itself hasn't been rendered yet.  Overrides
+             */
             getContentElement:function() {
                 var view = this.get('view');
-                return view.get("contentEl") || view.get("el");
+                return view && view.getContentElement();
             },
 
 
@@ -16235,10 +16240,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return true;
                 }
                 this._forwordToView('_handleMouseDown', ev);
-                var el = this.get("el");
+                var el = this.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
+                }
+                // Cancel the default action unless the control allows text selection.
+                if (ev.which == 1 && !this.get("allowTextSelection_")) {
+                    // firefox 不会引起焦点转移
+                    ev.preventDefault();
                 }
             },
             /**
@@ -16431,6 +16441,10 @@ KISSY.add("component/render", function(S, UIBase) {
             return this.get("el");
         },
 
+        getContentElement:function() {
+            return this.get("contentEl") || this.get("el");
+        },
+
         _uiSetFocusable:function(v) {
             var el = this.getKeyEventTarget(),
                 tabindex = el.attr("tabindex");
@@ -16468,7 +16482,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /**
  * Switchable
@@ -19064,7 +19078,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /**
  * KISSY Overlay
@@ -19528,7 +19542,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -20707,7 +20721,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:22
 */
 /**
  * @fileoverview 图像放大区域
@@ -21332,7 +21346,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:22
 */
 /**
  * KISSY Calendar
@@ -22611,9 +22625,226 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /**
+ *  menu where items can be filtered based on user keyboard input
+ *  @author yiminghe@gmail.com
+ */
+KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
+
+    var HIT_CLS = "{prefixCls}menu-item-hit";
+
+    // 转义正则特殊字符，返回字符串用来构建正则表达式
+    function regExpEscape(s) {
+        return s.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1').
+            replace(/\x08/g, '\\x08');
+    }
+
+    return UIBase.create(Menu, {
+            bindUI:function() {
+                var self = this;
+                var view = self.get("view");
+                var filterInput = view._filterInput;
+                /*监控键盘事件*/
+                filterInput.on("keyup", self.handleFilterEvent, self);
+            },
+
+            handleFilterEvent:function() {
+                var self = this;
+                var view = self.get("view");
+                var filterInput = view._filterInput;
+                /* 根据用户输入过滤 */
+                self.set("filterStr", filterInput.val());
+                var highlightedItem = self.get("highlightedItem");
+                // 如果没有高亮项或者高亮项因为过滤被隐藏了
+                // 默认选择符合条件的第一项
+                if (!highlightedItem || !highlightedItem.get("visible")) {
+                    self.set("highlightedItem", self._getNextEnabledHighlighted(0, 1));
+                }
+            },
+
+            _uiSetFilterStr:function(v) {
+                // 过滤条件变了立即过滤
+                this.filterItems(v);
+            },
+
+            filterItems:function(str) {
+                var self = this;
+                var view = self.get("view");
+                var _labelEl = view._labelEl;
+                var filterInput = view._filterInput;
+
+                // 有过滤条件提示隐藏，否则提示显示
+                _labelEl[str ? "hide" : "show"]();
+
+                if (self.get("allowMultiple")) {
+                    var enteredItems = [],
+                        lastWord;
+
+                    var match = str.match(/(.+)[,，]\s*([^，,]*)/);
+                    // 已经确认的项
+                    // , 号之前的项必定确认
+
+                    var items = [];
+
+                    if (match) {
+                        items = match[1].split(/[,，]/);
+                    }
+
+                    // 逗号结尾
+                    // 如果可以补全，那么补全最后一项为第一个高亮项
+                    if (/[,，]$/.test(str)) {
+                        enteredItems = [];
+                        if (match) {
+                            enteredItems = items;
+                            //待补全的项
+                            lastWord = items[items.length - 1];
+                            var item = self.get("highlightedItem");
+                            var content = item && item.get("content");
+                            // 有高亮而且最后一项不为空补全
+                            if (content && content.indexOf(lastWord) > -1 && lastWord) {
+                                enteredItems[enteredItems.length - 1] = content;
+                            }
+                            filterInput.val(enteredItems.join(",") + ",");
+                        }
+                        str = '';
+                    } else {
+                        // 需要菜单过滤的过滤词，在最后一个 , 后面
+                        if (match) {
+                            str = match[2] || "";
+                        }
+                        // 没有 , 则就是当前输入的
+                        // else{ str=str}
+
+                        //记录下
+                        enteredItems = items;
+                    }
+                    var oldEnteredItems = self.get("enteredItems");
+                    // 发生变化，长度变化和内容变化等同
+                    if (oldEnteredItems.length != enteredItems.length) {
+                        S.log("enteredItems : ");
+                        S.log(enteredItems);
+                        self.set("enteredItems", enteredItems);
+                    }
+                }
+
+                var children = self.get("children");
+
+                var strExp = str && new RegExp(regExpEscape(str), "ig");
+
+                // 匹配项样式类
+                var hit = S.substitute(HIT_CLS, {
+                    prefixCls:this.get("prefixCls")
+                });
+
+                // 过滤所有子组件
+                S.each(children, function(c) {
+                    var content = c.get("content"),
+                        view = c.get("view");
+                    if (!str) {
+                        // 没有过滤条件
+                        // 恢复原有内容
+                        // 显示出来
+                        view.set("content", content);
+                        c.set("visible", true);
+                    } else {
+                        if (content.indexOf(str) > -1) {
+                            // 如果符合过滤项
+                            // 显示
+                            c.set("visible", true);
+                            // 匹配子串着重 wrap
+                            c.get("view").set("content", content.replace(strExp, function(m) {
+                                return "<span class='" + hit + "'>" + m + "</span>";
+                            }));
+                        } else {
+                            // 不符合
+                            // 隐藏
+                            c.set("visible", false);
+                        }
+                    }
+                });
+            }
+            ,
+
+            destructor:function() {
+                var view = this.get("view");
+                var filterInput = view && view._filterInput;
+                filterInput && filterInput.detach();
+            }
+
+        },
+        {
+            ATTRS:{
+                label:{
+                    view:true
+                }
+                ,
+                filterStr:{
+                }
+                ,
+                enteredItems:{
+                    value:[]
+                }
+                ,
+                allowMultiple:{
+                    value:false
+                }
+            }
+            ,
+            DefaultRender:FilterMenuRender
+        }
+    )
+        ;
+
+}, {
+    requires:['uibase','./menu','./filtermenurender']
+});/**
+ * filter menu render
+ * 1.create filter input
+ * 2.change menu contentelement
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
+    var $ = Node.all,
+        MENU_FILTER = "{prefixCls}menu-filter",
+        MENU_CONTENT = "{prefixCls}menu-content";
+
+    function getCls(self, str) {
+        return S.substitute(str, {
+            prefixCls:self.get("prefixCls")
+        });
+    }
+
+    return UIBase.create(MenuRender, {
+        getContentElement:function() {
+            return this._menuContent;
+        },
+
+        getKeyEventTarget:function() {
+            return this._filterInput;
+        },
+        createDom:function() {
+            var contentEl = MenuRender.prototype.getContentElement.call(this);
+            var filterWrap = $("<div class='" + getCls(this, MENU_FILTER) + "'/>").appendTo(contentEl);
+            this._labelEl = $("<div/>").appendTo(filterWrap);
+            this._filterInput = $("<input autocomplete='off'/>").appendTo(filterWrap);
+            this._menuContent = $("<div class='" + getCls(this, MENU_CONTENT) + "'/>").appendTo(contentEl);
+        },
+
+        _uiSetLabel:function(v) {
+            this._labelEl.html(v);
+        }
+    }, {
+        ATTRS:{
+            /* 过滤输入框的提示 */
+            label:{}
+        }
+    });
+
+}, {
+    requires:['node','uibase','./menurender']
+});/**
  * menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
@@ -22647,7 +22878,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 len = children.length,
                 o = index;
             do {
-                if (!children[index].get("disabled")) {
+                var c = children[index];
+                if (!c.get("disabled") && (c.get("visible") !== false)) {
                     return children[index];
                 }
                 index = (index + dir + len) % len;
@@ -23080,9 +23312,6 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
             }))
                 .attr("role", "menu")
                 .attr("aria-haspopup", true);
-            if (!UA.ie) {
-                el.attr('onmousedown', 'return false;');
-            }
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menu"));
             }
@@ -23459,7 +23688,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     },
     {
         requires:['uibase','./menuitemrender']
-    });KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu) {
+    });KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Menu.Item.Render = ItemRender;
@@ -23467,6 +23696,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     SubMenu.Render = SubMenuRender;
     Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
+    Menu.FilterMenu = FilterMenu;
     return Menu;
 }, {
     requires:[
@@ -23478,13 +23708,14 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         'menu/submenurender',
         'menu/separator',
         'menu/separatorrender',
-        'menu/popupmenu'
+        'menu/popupmenu',
+        'menu/filtermenu'
     ]
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:44
+build time: Jul 18 18:22
 */
 /**
  * Model and Control for button
@@ -23767,7 +23998,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:23
 */
 /**
  * combination of menu and button ,similar to native select
@@ -24171,7 +24402,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:46
+build time: Jul 18 18:23
 */
 /**
  * @author: 常胤 (lzlu.com)

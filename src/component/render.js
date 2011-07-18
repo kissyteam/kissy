@@ -8,6 +8,10 @@ KISSY.add("component/render", function(S, UIBase) {
             return this.get("el");
         },
 
+        getContentElement:function() {
+            return this.get("contentEl") || this.get("el");
+        },
+
         _uiSetFocusable:function(v) {
             var el = this.getKeyEventTarget(),
                 tabindex = el.attr("tabindex");

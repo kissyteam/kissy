@@ -42,6 +42,7 @@ KISSY.add('uibase/box', function() {
             value:"visibility",
             view:true
         },
+        // 默认显示，但不触发事件
         visible:{}
     };
 

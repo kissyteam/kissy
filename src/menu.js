@@ -1,4 +1,4 @@
-KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu) {
+KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Menu.Item.Render = ItemRender;
@@ -6,6 +6,7 @@ KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRe
     SubMenu.Render = SubMenuRender;
     Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
+    Menu.FilterMenu = FilterMenu;
     return Menu;
 }, {
     requires:[
@@ -17,6 +18,7 @@ KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRe
         'menu/submenurender',
         'menu/separator',
         'menu/separatorrender',
-        'menu/popupmenu'
+        'menu/popupmenu',
+        'menu/filtermenu'
     ]
 });

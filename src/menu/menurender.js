@@ -17,9 +17,6 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
             }))
                 .attr("role", "menu")
                 .attr("aria-haspopup", true);
-            if (!UA.ie) {
-                el.attr('onmousedown', 'return false;');
-            }
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menu"));
             }

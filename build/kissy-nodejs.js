@@ -188,7 +188,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:46
+build time: Jul 18 18:23
 */
 /*
  * @module kissy
@@ -274,7 +274,7 @@ build time: Jul 15 15:46
              */
             version: '1.20dev',
 
-            buildTime:'20110715154606',
+            buildTime:'20110718182337',
 
             /**
              * Returns a new object containing all of the properties of
@@ -385,10 +385,10 @@ build time: Jul 15 15:46
                 this.Config = this.Config || {};
                 this.Env = this.Env || {};
 
-                // NOTICE: '' will replace with '' when compressing.
+                // NOTICE: '@DEBUG@' will replace with '' when compressing.
                 // So, if loading source file, debug is on by default.
                 // If loading min version, debug is turned off automatically.
-                this.Config.debug = '';
+                this.Config.debug = '@DEBUG@';
             },
 
             /**

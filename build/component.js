@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:45
+build time: Jul 18 18:22
 */
 /**
  * container can delegate event for its children
@@ -149,9 +149,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 self.set("view", view);
             },
 
+            /**
+             * Returns the DOM element into which child components are to be rendered,
+             or null if the container itself hasn't been rendered yet.  Overrides
+             */
             getContentElement:function() {
                 var view = this.get('view');
-                return view.get("contentEl") || view.get("el");
+                return view && view.getContentElement();
             },
 
 
@@ -312,10 +316,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return true;
                 }
                 this._forwordToView('_handleMouseDown', ev);
-                var el = this.get("el");
+                var el = this.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
+                }
+                // Cancel the default action unless the control allows text selection.
+                if (ev.which == 1 && !this.get("allowTextSelection_")) {
+                    // firefox 不会引起焦点转移
+                    ev.preventDefault();
                 }
             },
             /**
@@ -506,6 +515,10 @@ KISSY.add("component/render", function(S, UIBase) {
     return UIBase.create([UIBase.Box.Render], {
         getKeyEventTarget:function() {
             return this.get("el");
+        },
+
+        getContentElement:function() {
+            return this.get("contentEl") || this.get("el");
         },
 
         _uiSetFocusable:function(v) {

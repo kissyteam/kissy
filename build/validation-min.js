@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 15 15:46
+build time: Jul 18 18:23
 */
 KISSY.add("validation/base",function(f,j,o,e,h,b,a,d){function i(g,k){if(f.isString(g))g=f.get(g);g?this._init(g,k||{}):e.log("\u8bf7\u914d\u7f6e\u6b63\u786e\u7684form ID.")}f.augment(i,f.EventTarget,{_init:function(g,k){this.config=f.merge(h.Config,k);this.form=g;this.fields=new e.storage;this._initfields()},_initfields:function(){var g=this,k=g.config;f.each(g.form.elements,function(c){var l=j.attr(c,k.attrname);l&&g.add(c,e.toJSON(l))})},add:function(g,k){var c=this.fields,l=f.merge(this.config,k);if(f.isObject(g)&&g instanceof
 b){c.add(g.id,g);return this}if(f.isString(g)&&g.substr(0,1)!="#")g="#"+g;var m=j.get(g),n=j.attr(m,"id");if(!m||m.form!=this.form)e.log("\u5b57\u6bb5"+g+"\u4e0d\u5b58\u5728\u6216\u4e0d\u5c5e\u4e8e\u8be5form");else{if(!n){n=l.prefix+f.guid();j.attr(m,"id",n)}c.add(n,new b(m,l));return this}},remove:function(g){this.fields.remove(g)},get:function(g){return this.fields.get(g)},isValid:function(g){var k=this.fields;if(g&&k.get(g))return k.get(g).isValid();var c=true;k.each(function(l,m){if(!m.isValid()){c=false;if(m.single)return false}});return c},
