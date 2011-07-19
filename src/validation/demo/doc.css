@@ -28,6 +28,9 @@
 				border: 1px solid #DDD;
 			}
 			
+			.hidden {
+				display:none !important;
+			}
 		/* }}} */
 
 

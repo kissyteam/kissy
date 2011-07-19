@@ -37,17 +37,7 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 //	});
 	//ajax校验
 	Rule.add("ajax","校验失败。",function(value,text,fun){
-		var result = fun.call(this,value);
-		return result;
-//		
-//		if(result===false){
-//			return text;
-//		}
-//		
-//		if(!Util.isEmpty(result)){
-//			return result;
-//		}
-
+		return fun.call(this,value);
 	});
 	
 	//为空校验
@@ -140,13 +130,30 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 		}
 	});
 	
+	Rule.add("card","身份证号码不正确",function(value,text){
+		var iW = [7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2,1],
+			iSum = 0;
+		for( i=0;i<17;i++){
+			iSum += parseInt(value.charAt(i))* iW[i];
+		}
+		var sJYM = (12-(iSum % 11)) % 11;
+		if(sJYM == 10){
+			sJYM = 'x';
+		}
+		var cCheck = value.charAt(17).toLowerCase();
+		if( cCheck != sJYM ){
+			return text;
+		}
+	});
+	
+	
 	
 	S.each([["chinese",/^[\u0391-\uFFE5]+$/,"只能输入中文"],
 			["english",/^[A-Za-z]+$/,"只能输入英文字母"],
 			["currency",/^\d+(\.\d+)?$/,"金额格式不正确。"],
 			["phone",/^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/,"电话号码格式不正确。"],
 			["mobile",/^((\(\d{2,3}\))|(\d{3}\-))?13\d{9}$/,"手机号码格式不正确。"],
-			["url",/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/,"url格式不正确。"],
+			["url",/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]':+!]*([^<>""])*$/,"url格式不正确。"],
 			["email",/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,"请输入正确的email格式"]
 		],function(item){
 			Rule.add(item[0],item[2],function(value,text){
@@ -158,7 +165,7 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 
 
 
-}, { requires: ['dom',"event","validation/utils","validation/rule/base"] });
+}, { requires: ['dom',"event","../utils","./base"] });
 
 
 

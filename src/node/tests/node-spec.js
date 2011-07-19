@@ -1,16 +1,17 @@
 /**
  * test cases for node about chained call and return value
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom,node", function(S, DOM, Node) {
     S.one = Node.one;
     S.all = Node.all;
+    var jq = jQuery;
     var $ = S.all;
     var NodeList = Node;
     //DOM 已经测试通过，通过 DOM 测 Node
     describe("node", function() {
-        
-        it("setup",function() {
+
+        it("setup", function() {
             var textarea = $("textarea");
             $("body").append(textarea.val());
             textarea.hide();
@@ -44,12 +45,17 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
 
             //data chained
+            expect(n.data("x")).toBe(undefined);
+            expect(jq(n).data("x")).toBe(undefined);
+            n.data("x", null);
+            jq(n).data("x", null);
+            expect(jq(n).data("x")).toBe(null);
             expect(n.data("x")).toBe(null);
             expect(n.data("x", "y")).toBe(n);
             expect(n.data("x")).toBe("y");
 
             //attr chained
-            expect(n.attr("test")).toBe(null);
+            expect(n.attr("test")).toBe(undefined);
             expect(n.attr("test", "xx")).toBe(n);
             expect(n.attr("test")).toBe("xx");
             expect(n.hasAttr("test")).toBe(true);
@@ -180,11 +186,15 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
         it("one/all should select nodes ", function() {
             var body = S.one(document.body);
+
+
             var doms = DOM.query(".test-div");
 
             var testDivs = S.all(".test-div");
             expect(testDivs instanceof NodeList).toBe(true);
             expect(doms.length).toBe(testDivs.length);
+
+
             var i;
             for (i = 0; i < doms.length; i++) {
                 expect(doms[i]).toBe(testDivs[i]);
@@ -196,6 +206,14 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             for (i = 0; i < doms.length; i++) {
                 expect(doms[i]).toBe(ps[i]);
             }
+        });
+
+        it("children should return nodelist", function() {
+            var body = S.one(document.body);
+            var dbivs = DOM.children(body[0], "div");
+            var bdivnodes = body.children("div");
+            expect(bdivnodes instanceof NodeList).toBe(true);
+            expect(dbivs.length).toBe(bdivnodes.length);
         });
 
         it("one/all should create nodes", function() {
@@ -271,7 +289,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(n.attr("test")).toBe('5');
 
             // no-exist attribute return null
-            expect(n.attr("test2")).toBe(null);
+            expect(n.attr("test2")).toBe(undefined);
 
 
             var ret2 = n.css("font-size", "13px");

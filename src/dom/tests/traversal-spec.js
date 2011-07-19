@@ -1,6 +1,6 @@
 /**
  * test cases for traversal sub module of dom module
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom", function(S, DOM) {
     describe("traversal", function() {

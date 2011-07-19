@@ -1,6 +1,6 @@
 /**
  * test cases for attribute sub module of dom module
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom", function(S, DOM) {
 
@@ -58,15 +58,20 @@ KISSY.use("dom", function(S, DOM) {
 
         describe("getter/setter", function() {
 
-            // kissy 里，对不存在的属性，统一返回 null
-            it("should return null when get no-exist attribute", function() {
-                expect(DOM.attr("a", "no-exist")).toBe(null)
+            // kissy 里，对不存在的属性，统一返回 undefined
+            it("should return undefined when get no-exist attribute", function() {
+                expect(DOM.attr("a", "no-exist")).toBe(undefined)
             });
 
             it("should return correctly for readonly, checked, selected", function() {
 
                 expect(DOM.attr(input, "readonly")).toBe("readonly");
-                expect(DOM.attr(radio, 'checked')).toBe(null);
+                // same with jquery , null changed to undefined
+                expect(DOM.attr(radio, 'checked')).toBe(undefined);
+                expect($(radio).attr( 'checked')).toBe(undefined);
+                // standard browser returns null
+                // ie<8 return false , === radio.checked
+                // expect(radio.getAttribute("checked")).toBe(undefined);
                 expect(DOM.attr(input, 'value')).toBe('hello');
             });
 
@@ -143,7 +148,7 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(checkbox2, 'checked')).toBe('checked');
                 expect(DOM.prop(checkbox2, 'checked')).toBe(true);
                 DOM.removeAttr(checkbox2, 'checked');
-                expect(DOM.attr(checkbox2, 'checked')).toBe(null);
+                expect(DOM.attr(checkbox2, 'checked')).toBe(undefined);
                 expect(DOM.prop(checkbox2, 'checked')).toBe(false);
                 expect(DOM.hasAttr(checkbox2, "checked")).toBe(false);
             });
@@ -172,7 +177,7 @@ KISSY.use("dom", function(S, DOM) {
                 DOM.attr(label, 'test-remove', 'xx');
                 expect(DOM.attr(label, 'test-remove')).toBe('xx');
                 DOM.removeAttr(label, 'test-remove');
-                expect(DOM.attr(label, 'test-remove')).toBe(null);
+                expect(DOM.attr(label, 'test-remove')).toBe(undefined);
 
                 // style
                 DOM.removeAttr(a, 'style');
@@ -259,7 +264,8 @@ KISSY.use("dom", function(S, DOM) {
                 var a = DOM.create("<a></a>");
                 expect(DOM.hasAttr(a, "tabindex")).toBe(false);
 
-                expect(DOM.attr(a, "tabindex")).toBe(null);
+                expect(DOM.attr(a, "tabindex")).toBe(undefined);
+                expect($(a).attr("tabindex")).toBe(undefined);
 
                 a = DOM.create("<a href='#'></a>");
                 expect(DOM.hasAttr(a, "tabindex")).toBe(false);
@@ -297,7 +303,8 @@ KISSY.use("dom", function(S, DOM) {
             it("should works", function() {
                 var d = DOM.create("<input type='checkbox' checked='checked'>");
                 expect(DOM.prop(d, 'checked')).toBe(true);
-                expect(DOM.prop(d, 'checked2')).toBe(null);
+                // undefined property
+                expect(DOM.prop(d, 'checked2')).toBe(undefined);
                 expect(DOM.hasProp(d, 'checked')).toBe(true);
                 expect(DOM.hasProp(d, 'checked2')).toBe(false);
             });

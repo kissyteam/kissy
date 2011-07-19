@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 18 18:22
 */
 /**
  * @module  cookie
@@ -12,7 +12,6 @@ KISSY.add('cookie/base', function(S) {
     var doc = document,
         encode = encodeURIComponent,
         decode = decodeURIComponent;
-
 
 
     function isNotEmptyString(val) {
@@ -71,7 +70,7 @@ KISSY.add('cookie/base', function(S) {
 
         remove: function(name, domain, path, secure) {
             // 置空，并立刻过期
-            this.set(name, '', 0, domain, path, secure);
+            this.set(name, '', -1, domain, path, secure);
         }
     };
 

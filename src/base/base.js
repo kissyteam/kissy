@@ -2,7 +2,7 @@
  * @module  Base
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute,Event) {
+KISSY.add('base/base', function (S, Attribute, Event) {
 
     /*
      * Base for class-based component
@@ -37,7 +37,7 @@ KISSY.add('base/base', function (S, Attribute,Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter 的
+                    //用户设置会调用 setter 的，但不会触发属性变化事件
                     host.__set(attr, config[attr]);
                 }
 
@@ -48,5 +48,5 @@ KISSY.add('base/base', function (S, Attribute,Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-    requires:["./attribute","event"]
-});
+        requires:["./attribute","event"]
+    });

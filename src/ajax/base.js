@@ -7,7 +7,6 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
         rspace = /\s+/,
         rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        rquery = /\?/,
         mirror = function(s) {
             return s;
         },
@@ -33,15 +32,22 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         defaultConfig = {
             // isLocal:isLocal,
             type:"GET",
-            contentType: "application/x-www-form-urlencoded",
+            // only support utf-8 when post, encoding can not be changed actually
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             async:true,
-
+            // whether add []
+            serializeArray:true,
+            // whether param data
+            processData:true,
             /*
              url:"",
              context:null,
              timeout: 0,
              data: null,
+
+             // 可取json | jsonp | script | xml | html | text | null | undefined
              dataType: null,
+
              username: null,
              password: null,
              cache: null,
@@ -51,6 +57,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
              // jsonp script charset
              scriptCharset:null,
              crossdomain:false,
+             forceScript:false,
              */
 
             accepts: {
@@ -78,8 +85,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     defaultConfig.converters.html = defaultConfig.converters.text;
 
     function setUpConfig(c) {
-        c = c || {};
-        S.mix(c, defaultConfig, false);
+        // deep mix
+        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
         if (c.crossDomain == null) {
             var parts = rurl.exec(c.url.toLowerCase());
             c.crossDomain = !!( parts &&
@@ -89,18 +96,20 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                 );
         }
 
-        if (c.data && !S.isString(c.data)) {
-            c.data = S.param(c.data);
+        if (c.processData && c.data && !S.isString(c.data)) {
+            // 必须 encodeURIComponent 编码 utf-8
+            c.data = S.param(c.data, undefined, undefined, c.serializeArray);
         }
+
         c.type = c.type.toUpperCase();
         c.hasContent = !rnoContent.test(c.type);
 
         if (!c.hasContent) {
             if (c.data) {
-                c.url += ( rquery.test(c.url) ? "&" : "?" ) + c.data;
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
             }
             if (c.cache === false) {
-                c.url += ( rquery.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
             }
         }
 
@@ -115,7 +124,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
     }
 
-    function handXhr(e) {
+    function handleXhrEvent(e) {
         var xhr = this,
             c = xhr.config,
             type = e.type;
@@ -129,6 +138,9 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
     }
 
     function io(c) {
+        if (!c.url) {
+            return undefined;
+        }
         c = setUpConfig(c);
         var xhr = new XhrObject(c);
         fire("start", xhr);
@@ -154,7 +166,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             xhr.setRequestHeader(i, c.headers[ i ]);
         }
 
-        xhr.on("complete success error", handXhr);
+        xhr.on("complete success error", handleXhrEvent);
 
         xhr.readyState = 1;
 
@@ -183,10 +195,23 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         return xhr;
     }
 
-    io.__transports = transports;
-    io.__defaultConfig = defaultConfig;
     S.mix(io, Event.Target);
-    io.isLocal = isLocal;
+    S.mix(io, {
+            isLocal:isLocal,
+            setupConfig:function(setting) {
+                S.mix(defaultConfig, setting, undefined, undefined, true);
+            },
+            setupTransport:function(name, fn) {
+                transports[name] = fn;
+            },
+            getTransport:function(name) {
+                return transports[name];
+            },
+            getConfig:function() {
+                return defaultConfig;
+            }
+        });
+
 
     return io;
 },

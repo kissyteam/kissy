@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 18 18:23
 */
 /**
  * KISSY Overlay
@@ -30,7 +30,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
             prefixCls:{
                 value:"ks-"
             },
-            elOrder:0
+            elBefore:{
+                valueFn:function() {
+                    return S.one(this.get("render")[0].firstChild);
+                }
+            }
         }
     });
 }, {
@@ -242,7 +246,19 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("resize"),
         require("mask"),
         Effect
-    ]);
+    ], {
+        ATTRS:{
+            // 是否绑定鼠标事件
+            handleMouseEvents:{
+                value:false
+            },
+
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            }
+        }
+    });
 
     Overlay.DefaultRender = OverlayRender;
 

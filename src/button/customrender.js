@@ -1,56 +1,48 @@
 /**
  * view for button , double div for pseudo-round corner
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
     //双层 div 模拟圆角
     var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
 
-    return UIBase.create(Css3Render,  {
-        renderUI:function() {
-            this.get("el").html(S.substitute(CUSTOM_RENDER_HTML, {
-                prefixCls:this.get("prefixCls")
-            }));
-            var id = S.guid('ks-button-labelby');
-            this.get("el").one('div').one('div').attr("id", id);
+    return UIBase.create(Css3Render, {
 
-            //按钮的描述节点在最内层，其余都是装饰
-            this.get("el").attr("aria-labelledby", id);
-        },
-        _uiSetContent:function(v) {
-            if (v == undefined) return;
-            this.get("el").one('div').one('div').html(v);
-        }
-    }, {
-        ATTRS:{
-            elCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "inline-block " + this.get("prefixCls") + "custom-button";
-                }
+            __css_tag:"custom",
+
+            renderUI:function() {
             },
-            hoverCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-hover";
-                }
+
+            /**
+             *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
+             */
+            createDom:function() {
+                var self = this,
+                    id = S.guid('ks-button-labelby');
+                //按钮的描述节点在最内层，其余都是装饰
+                self.get("el")
+                    .html(S.substitute(CUSTOM_RENDER_HTML, {
+                    prefixCls:this.get("prefixCls"),
+                    id:id
+                }))
+                    .attr("aria-labelledby", id);
             },
-            focusCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-focused";
-                }
-            },
-            activeCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-active";
-                }
-            },
-            disabledCls:{
-                valueFn:function() {
-                    return this.get("prefixCls") + "custom-button-disabled";
-                }
+
+            /**
+             * 内容移到内层
+             * @override
+             * @param v
+             */
+            _uiSetContent:function(v) {
+                this.get("el").one('div').one('div').html(v || "");
             }
         }
-    });
+        /**
+         * @inheritedDoc
+         * content:{}
+         */
+    );
 }, {
     requires:['uibase','./css3render']
 });

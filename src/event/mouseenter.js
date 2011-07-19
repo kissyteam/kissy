@@ -1,6 +1,6 @@
 /**
  * @module  event-mouseenter
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 

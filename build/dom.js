@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 18 18:22
 */
 /**
  * @module  dom-attr
@@ -46,7 +46,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         parseInt(attributeNode.value, 10) :
                         rfocusable.test(el.nodeName) || rclickable.test(el.nodeName) && el.href ?
                             0 :
-                            null;
+                            undefined;
                 }
             },
             // 在标准浏览器下，用 getAttribute 获取 style 值
@@ -76,13 +76,17 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             "contenteditable": "contentEditable"
         },
         // Hook for boolean attributes
+        // if bool is false
+        //  - standard browser returns null
+        //  - ie<8 return false
+        //   - so norm to undefined
         boolHook = {
             get: function(elem, name) {
                 // 转发到 prop 方法
                 return DOM.prop(elem, name) ?
                     // 根据 w3c attribute , true 时返回属性名字符串
                     name.toLowerCase() :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 var propName;
@@ -163,7 +167,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 // Return undefined if nodeValue is empty string
                 return ret && ret.nodeValue !== "" ?
                     ret.nodeValue :
-                    null;
+                    undefined;
             },
             set: function(elem, value, name) {
                 // Check form objects in IE (multiple bugs related)
@@ -187,7 +191,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             attrHooks[ name ] = {
                 get: function(elem) {
                     var ret = elem.getAttribute(name, 2);
-                    return ret === undefined ? null : ret;
+                    return ret === null ? undefined : ret;
                 }
             };
         });
@@ -227,275 +231,272 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * 自定义属性不推荐使用，使用 .data
-             * @param selector
-             * @param name
-             * @param value
-             */
-            prop: function(selector, name, value) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.prop(selector, k, name[k]);
-                    }
-                    return;
+        /**
+         * 自定义属性不推荐使用，使用 .data
+         * @param selector
+         * @param name
+         * @param value
+         */
+        prop: function(selector, name, value) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.prop(selector, k, name[k]);
                 }
-                var elems = DOM.query(selector);
-                // Try to normalize/fix the name
-                name = propFix[ name ] || name;
-                var hook = propHooks[ name ];
-                if (value !== undefined) {
-                    S.each(elems, function(elem) {
-                        if (hook && hook.set) {
-                            hook.set(elem, value, name);
-                        } else {
-                            elem[ name ] = value;
-                        }
-                    });
-                } else {
-                    var elem = elems[0],ret;
-                    if (!elem) return null;
-                    ret = getProp(elem, name);
-                    return ret === undefined ? null : ret;
-                }
-            },
-            hasProp:function(selector, name) {
-                var elem = DOM.get(selector);
-                return getProp(elem, name) !== undefined;
-            },
-
-            /**
-             * 不推荐使用，使用 .data .removeData
-             * @param selector
-             * @param name
-             */
-            removeProp:function(selector, name) {
-                name = propFix[ name ] || name;
-                DOM.query(selector).each(function(el) {
-                    try {
-                        el[ name ] = undefined;
-                        delete el[ name ];
-                    } catch(e) {
+                return;
+            }
+            var elems = DOM.query(selector);
+            // Try to normalize/fix the name
+            name = propFix[ name ] || name;
+            var hook = propHooks[ name ];
+            if (value !== undefined) {
+                S.each(elems, function(elem) {
+                    if (hook && hook.set) {
+                        hook.set(elem, value, name);
+                    } else {
+                        elem[ name ] = value;
                     }
                 });
-            },
+            } else {
+                var elem = elems[0];
+                if (!elem) return;
+                return getProp(elem, name);
+            }
+        },
+        hasProp:function(selector, name) {
+            return getProp(selector, name) !== undefined;
+        },
 
-            /**
-             * Gets the value of an attribute for the first element in the set of matched elements or
-             * Sets an attribute for the set of matched elements.
-             */
-            attr:function(selector, name, val, pass) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    pass = val; // 塌缩参数
-                    for (var k in name) {
-                        DOM.attr(selector, k, name[k], pass);
-                    }
+        /**
+         * 不推荐使用，使用 .data .removeData
+         * @param selector
+         * @param name
+         */
+        removeProp:function(selector, name) {
+            name = propFix[ name ] || name;
+            DOM.query(selector).each(function(el) {
+                try {
+                    el[ name ] = undefined;
+                    delete el[ name ];
+                } catch(e) {
+                }
+            });
+        },
+
+        /**
+         * Gets the value of an attribute for the first element in the set of matched elements or
+         * Sets an attribute for the set of matched elements.
+         */
+        attr:function(selector, name, val, pass) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                pass = val; // 塌缩参数
+                for (var k in name) {
+                    DOM.attr(selector, k, name[k], pass);
+                }
+                return;
+            }
+
+            if (!(name = S.trim(name))) return;
+
+            name = name.toLowerCase();
+
+            // attr functions
+            if (pass && attrFn[name]) {
+                return DOM[name](selector, val);
+            }
+
+            // custom attrs
+            name = attrFix[name] || name;
+
+            var attrNormalizer;
+
+            if (rboolean.test(name)) {
+                attrNormalizer = boolHook;
+            }
+            // only old ie?
+            else if (rinvalidChar.test(name)) {
+                attrNormalizer = attrNodeHook;
+            } else {
+                attrNormalizer = attrHooks[name];
+            }
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+                // only get attributes on element nodes
+                if (!isElementNode(el)) {
                     return;
                 }
 
-                if (!(name = S.trim(name))) return;
-
-                name = name.toLowerCase();
-
-                // attr functions
-                if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
-                }
-
-                // custom attrs
-                name = attrFix[name] || name;
-
-                var attrNormalizer;
-
-                if (rboolean.test(name)) {
-                    attrNormalizer = boolHook;
-                }
-                // only old ie?
-                else if (rinvalidChar.test(name)) {
+                // browsers index elements by id/name on forms, give priority to attributes.
+                if (el.nodeName.toLowerCase() == "form") {
                     attrNormalizer = attrNodeHook;
-                } else {
-                    attrNormalizer = attrHooks[name];
+                }
+                if (attrNormalizer && attrNormalizer.get) {
+                    return attrNormalizer.get(el, name);
                 }
 
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-                    // only get attributes on element nodes
-                    if (!isElementNode(el)) {
-                        return null;
-                    }
+                var ret = el.getAttribute(name);
 
-                    // browsers index elements by id/name on forms, give priority to attributes.
-                    if (el.nodeName.toLowerCase() == "form") {
-                        attrNormalizer = attrNodeHook;
-                    }
-                    if (attrNormalizer && attrNormalizer.get) {
-                        return attrNormalizer.get(el, name);
-                    }
-
-                    var ret = el.getAttribute(name);
-
-                    /**
-                     * undefined 会形成链状，so 不能
-                     */
-                    return ret === undefined ? null : ret;
-                } else {
-                    // setter
-                    S.each(DOM.query(selector), function(el) {
-                        // only set attributes on element nodes
-                        if (!isElementNode(el)) {
-                            return;
-                        }
-
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Removes the attribute of the matched elements.
-             */
-            removeAttr: function(selector, name) {
-                name = name.toLowerCase();
-                name = attrFix[name] || name;
+                // standard browser non-existing attribute return null
+                // ie<8 will return undefined , because it return property
+                // so norm to undefined
+                return ret === null ? undefined : ret;
+            } else {
+                // setter
                 S.each(DOM.query(selector), function(el) {
-                    if (isElementNode(el)) {
-                        var propName;
-                        el.removeAttribute(name);
-                        // Set corresponding property to false for boolean attributes
-                        if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
-                            el[ propName ] = false;
-                        }
-                    }
-                });
-            },
-
-            hasAttr: oldIE ?
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    // from ppk :http://www.quirksmode.org/dom/w3c_core.html
-                    // IE5-7 doesn't return the value of a style attribute.
-                    // var $attr = el.attributes[name];
-                    var $attr = el.getAttributeNode(name);
-                    return !!( $attr && $attr.specified );
-                }
-                :
-                function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    //使用原生实现
-                    return el.hasAttribute(name);
-                },
-
-            /**
-             * Gets the current value of the first element in the set of matched or
-             * Sets the value of each element in the set of matched elements.
-             */
-            val : function(selector, value) {
-                var hook, ret;
-
-                //getter
-                if (value === undefined) {
-
-                    var elem = DOM.get(selector);
-
-                    if (elem) {
-                        hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                        if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
-                            return ret;
-                        }
-
-                        ret = elem.value;
-
-                        return typeof ret === "string" ?
-                            // handle most common string cases
-                            ret.replace(rreturn, "") :
-                            // handle cases where value is null/undef or number
-                            ret == null ? "" : ret;
-                    }
-
-                    return null;
-                }
-
-                DOM.query(selector).each(function(elem) {
-
-                    if (elem.nodeType !== 1) {
+                    // only set attributes on element nodes
+                    if (!isElementNode(el)) {
                         return;
                     }
 
-                    var val = value;
-
-                    // Treat null/undefined as ""; convert numbers to string
-                    if (val == null) {
-                        val = "";
-                    } else if (typeof val === "number") {
-                        val += "";
-                    } else if (S.isArray(val)) {
-                        val = S.map(val, function (value) {
-                            return value == null ? "" : value + "";
-                        });
-                    }
-
-                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                    // If set returns undefined, fall back to normal setting
-                    if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
-                        elem.value = val;
+                    if (attrNormalizer && attrNormalizer.set) {
+                        attrNormalizer.set(el, val, name);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
                     }
                 });
+            }
+        },
+
+        /**
+         * Removes the attribute of the matched elements.
+         */
+        removeAttr: function(selector, name) {
+            name = name.toLowerCase();
+            name = attrFix[name] || name;
+            S.each(DOM.query(selector), function(el) {
+                if (isElementNode(el)) {
+                    var propName;
+                    el.removeAttribute(name);
+                    // Set corresponding property to false for boolean attributes
+                    if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
+                        el[ propName ] = false;
+                    }
+                }
+            });
+        },
+
+        hasAttr: oldIE ?
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                // from ppk :http://www.quirksmode.org/dom/w3c_core.html
+                // IE5-7 doesn't return the value of a style attribute.
+                // var $attr = el.attributes[name];
+                var $attr = el.getAttributeNode(name);
+                return !!( $attr && $attr.specified );
+            }
+            :
+            function(selector, name) {
+                name = name.toLowerCase();
+                var el = DOM.get(selector);
+                //使用原生实现
+                return el.hasAttribute(name);
             },
 
-            /**
-             * Gets the text context of the first element in the set of matched elements or
-             * Sets the text content of the matched elements.
-             */
-            text: function(selector, val) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
+        /**
+         * Gets the current value of the first element in the set of matched or
+         * Sets the value of each element in the set of matched elements.
+         */
+        val : function(selector, value) {
+            var hook, ret;
 
-                    // only gets value on supported nodes
-                    if (isElementNode(el)) {
-                        return el[TEXT] || EMPTY;
+            //getter
+            if (value === undefined) {
+
+                var elem = DOM.get(selector);
+
+                if (elem) {
+                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                    if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
+                        return ret;
                     }
-                    else if (isTextNode(el)) {
-                        return el.nodeValue;
-                    }
-                    //prevent chain in Node
-                    return null;
+
+                    ret = elem.value;
+
+                    return typeof ret === "string" ?
+                        // handle most common string cases
+                        ret.replace(rreturn, "") :
+                        // handle cases where value is null/undefined or number
+                        ret == null ? "" : ret;
                 }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(el) {
-                        if (isElementNode(el)) {
-                            el[TEXT] = val;
-                        }
-                        else if (isTextNode(el)) {
-                            el.nodeValue = val;
-                        }
+
+                return;
+            }
+
+            DOM.query(selector).each(function(elem) {
+
+                if (elem.nodeType !== 1) {
+                    return;
+                }
+
+                var val = value;
+
+                // Treat null/undefined as ""; convert numbers to string
+                if (val == null) {
+                    val = "";
+                } else if (typeof val === "number") {
+                    val += "";
+                } else if (S.isArray(val)) {
+                    val = S.map(val, function (value) {
+                        return value == null ? "" : value + "";
                     });
                 }
+
+                hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                // If set returns undefined, fall back to normal setting
+                if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
+                    elem.value = val;
+                }
+            });
+        },
+
+        /**
+         * Gets the text context of the first element in the set of matched elements or
+         * Sets the text content of the matched elements.
+         */
+        text: function(selector, val) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on supported nodes
+                if (isElementNode(el)) {
+                    return el[TEXT] || EMPTY;
+                }
+                else if (isTextNode(el)) {
+                    return el.nodeValue;
+                }
+                return undefined;
             }
-        });
+            // setter
+            else {
+                S.each(DOM.query(selector), function(el) {
+                    if (isElementNode(el)) {
+                        el[TEXT] = val;
+                    }
+                    else if (isTextNode(el)) {
+                        el.nodeValue = val;
+                    }
+                });
+            }
+        }
+    });
     if (1 > 2) {
         DOM.removeProp().hasProp();
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    }
-);
+    requires:["./base","ua"]
+}
+    );
 
 /**
  * NOTES:
@@ -817,7 +818,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     if (isElementNode(el)) {
                         return el.innerHTML;
                     }
-                    return null;
+                    return;
                 }
                 // setter
                 else {
@@ -1110,7 +1111,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] === undefined ? null : cache[name];
+                    return cache[name];
                 } else {
                     return cache;
                 }
@@ -1157,7 +1158,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] === undefined ? null : cache[name];
+                    return cache[name] ;
                 } else {
                     return cache;
                 }
@@ -1365,6 +1366,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     var win = window,
         doc = document,
+        isIE = UA['ie'],
+        docElem = doc.documentElement,
         isElementNode = DOM._isElementNode,
         nodeTypeIs = DOM._nodeTypeIs,
         getWin = DOM._getWin,
@@ -1389,120 +1392,125 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     S.mix(DOM, {
 
 
-            /**
-             * Gets the current coordinates of the element, relative to the document.
-             */
-            offset: function(elem, val) {
-                // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return null;
+        /**
+         * Gets the current coordinates of the element, relative to the document.
+         * @param relativeWin The window to measure relative to. If relativeWin
+         *     is not in the ancestor frame chain of the element, we measure relative to
+         *     the top-most window.
+         */
+        offset: function(elem, val, relativeWin) {
+            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) return;
 
-                // getter
-                if (val === undefined) {
-                    return getOffset(elem);
+            // getter
+            if (val === undefined) {
+                return getOffset(elem, relativeWin);
+            }
+
+            // setter
+            setOffset(elem, val);
+        },
+
+        /**
+         * Makes elem visible in the container
+         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+         *        http://yiminghe.javaeye.com/blog/390732
+         */
+        scrollIntoView: function(elem, container, top, hscroll) {
+            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
+                return;
+            }
+
+            hscroll = hscroll === undefined ? true : !!hscroll;
+            top = top === undefined ? true : !!top;
+
+            // default current window, use native for scrollIntoView(elem, top)
+            if (!container ||
+                (container = DOM.get(container)) === win) {
+                // 注意：
+                // 1. Opera 不支持 top 参数
+                // 2. 当 container 已经在视窗中时，也会重新定位
+                elem.scrollIntoView(top);
+                return;
+            }
+
+            // document 归一化到 window
+            if (nodeTypeIs(container, 9)) {
+                container = getWin(container);
+            }
+
+            var isWin = !!getWin(container),
+                elemOffset = DOM.offset(elem),
+                containerOffset = isWin ? {
+                    left: DOM.scrollLeft(container),
+                    top: DOM.scrollTop(container) }
+                    : DOM.offset(container),
+
+                // elem 相对 container 视窗的坐标
+                diff = {
+                    left: elemOffset[LEFT] - containerOffset[LEFT],
+                    top: elemOffset[TOP] - containerOffset[TOP]
+                },
+
+                // container 视窗的高宽
+                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
+                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+
+                // container 视窗相对 container 元素的坐标
+                cl = DOM[SCROLL_LEFT](container),
+                ct = DOM[SCROLL_TOP](container),
+                cr = cl + cw,
+                cb = ct + ch,
+
+                // elem 的高宽
+                eh = elem.offsetHeight,
+                ew = elem.offsetWidth,
+
+                // elem 相对 container 元素的坐标
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                r = l + ew,
+                b = t + eh,
+
+                t2, l2;
+
+            // 根据情况将 elem 定位到 container 视窗中
+            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
+            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
+            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
+            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
+            if (eh > ch || t < ct || top) {
+                t2 = t;
+            } else if (b > cb) {
+                t2 = b - ch;
+            }
+
+            // 水平方向与上面同理
+            if (hscroll) {
+                if (ew > cw || l < cl || top) {
+                    l2 = l;
+                } else if (r > cr) {
+                    l2 = r - cw;
                 }
+            }
 
-                // setter
-                setOffset(elem, val);
-            },
+            // go
+            DOM[SCROLL_TOP](container, t2);
+            DOM[SCROLL_LEFT](container, l2);
+        },
+        /**
+         * for idea autocomplete
+         */
+        docWidth:0,
+        docHeight:0,
+        viewportHeight:0,
+        viewportWidth:0
+    });
 
-            /**
-             * Makes elem visible in the container
-             * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
-             *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
-             *        http://yiminghe.javaeye.com/blog/390732
-             */
-            scrollIntoView: function(elem, container, top, hscroll) {
-                if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
-                    return;
-                }
-
-                hscroll = hscroll === undefined ? true : !!hscroll;
-                top = top === undefined ? true : !!top;
-
-                // default current window, use native for scrollIntoView(elem, top)
-                if (!container ||
-                    (container = DOM.get(container)) === win) {
-                    // 注意：
-                    // 1. Opera 不支持 top 参数
-                    // 2. 当 container 已经在视窗中时，也会重新定位
-                    elem.scrollIntoView(top);
-                    return;
-                }
-
-                // document 归一化到 window
-                if (nodeTypeIs(container, 9)) {
-                    container = getWin(container);
-                }
-
-                var isWin = !!getWin(container),
-                    elemOffset = DOM.offset(elem),
-                    containerOffset = isWin ? {
-                        left: DOM.scrollLeft(container),
-                        top: DOM.scrollTop(container) }
-                        : DOM.offset(container),
-
-                    // elem 相对 container 视窗的坐标
-                    diff = {
-                        left: elemOffset[LEFT] - containerOffset[LEFT],
-                        top: elemOffset[TOP] - containerOffset[TOP]
-                    },
-
-                    // container 视窗的高宽
-                    ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                    cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
-
-                    // container 视窗相对 container 元素的坐标
-                    cl = DOM[SCROLL_LEFT](container),
-                    ct = DOM[SCROLL_TOP](container),
-                    cr = cl + cw,
-                    cb = ct + ch,
-
-                    // elem 的高宽
-                    eh = elem.offsetHeight,
-                    ew = elem.offsetWidth,
-
-                    // elem 相对 container 元素的坐标
-                    // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                    l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                    t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
-                    r = l + ew,
-                    b = t + eh,
-
-                    t2, l2;
-
-                // 根据情况将 elem 定位到 container 视窗中
-                // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-                // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-                // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-                // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-                if (eh > ch || t < ct || top) {
-                    t2 = t;
-                } else if (b > cb) {
-                    t2 = b - ch;
-                }
-
-                // 水平方向与上面同理
-                if (hscroll) {
-                    if (ew > cw || l < cl || top) {
-                        l2 = l;
-                    } else if (r > cr) {
-                        l2 = r - cw;
-                    }
-                }
-
-                // go
-                DOM[SCROLL_TOP](container, t2);
-                DOM[SCROLL_LEFT](container, l2);
-            },
-            /**
-             * for idea autocomplete
-             */
-            docWidth:0,
-            docHeight:0,
-            viewportHeight:0,
-            viewportWidth:0
-        });
-
+    // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
+    // http://www.quirksmode.org/dom/w3c_cssom.html
     // add ScrollLeft/ScrollTop getter/setter methods
     S.each(['Left', 'Top'], function(name, i) {
         var method = SCROLL + name;
@@ -1571,9 +1579,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         }
     });
 
-    // 获取 elem 相对 elem.ownerDocument 的坐标
-    function getOffset(elem) {
+    function getClientPosition(elem) {
         var box, x = 0, y = 0,
+            body = doc.body,
             w = getWin(elem[OWNER_DOCUMENT]);
 
         // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
@@ -1587,14 +1595,69 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             x = box[LEFT];
             y = box[TOP];
 
+            // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
+            // 窗口边框标准是设 documentElement ,quirks 时设置 body
+            // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
+            // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
+            // 标准 ie 下 docElem.clientTop 就是 border-top
+            // ie7 html 即窗口边框改变不了。永远为 2
+
+            // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
+            var clientTop = isIE && doc['documentMode'] != 9
+                && (isStrict ? docElem.clientTop : body.clientTop)
+                || 0,
+                clientLeft = isIE && doc['documentMode'] != 9
+                    && (isStrict ? docElem.clientLeft : body.clientLeft)
+                    || 0;
+            if (1 > 2) {
+            }
+            x -= clientLeft;
+            y -= clientTop;
+
             // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-            if (UA.mobile !== 'apple') {
-                x += DOM[SCROLL_LEFT](w);
-                y += DOM[SCROLL_TOP](w);
+            if (UA.mobile == 'apple') {
+                x -= DOM[SCROLL_LEFT](w);
+                y -= DOM[SCROLL_TOP](w);
             }
         }
 
         return { left: x, top: y };
+    }
+
+
+    function getPageOffset(el) {
+        var pos = getClientPosition(el);
+        var w = getWin(el[OWNER_DOCUMENT]);
+        pos.left += DOM[SCROLL_LEFT](w);
+        pos.top += DOM[SCROLL_TOP](w);
+        return pos;
+    }
+
+    // 获取 elem 相对 elem.ownerDocument 的坐标
+    function getOffset(el, relativeWin) {
+        var position = {left:0,top:0};
+
+        // Iterate up the ancestor frame chain, keeping track of the current window
+        // and the current element in that window.
+        var currentWin = getWin(el[OWNER_DOCUMENT]);
+        var currentEl = el;
+        relativeWin = relativeWin || currentWin;
+        do {
+            // if we're at the top window, we want to get the page offset.
+            // if we're at an inner frame, we only want to get the window position
+            // so that we can determine the actual page offset in the context of
+            // the outer window.
+            var offset = currentWin == relativeWin ?
+                getPageOffset(currentEl) :
+                getClientPosition(currentEl);
+
+            position.left += offset.left;
+            position.top += offset.top;
+        } while (currentWin && currentWin != relativeWin &&
+            (currentEl = currentWin['frameElement']) &&
+            (currentWin = currentWin.parent));
+
+        return position;
     }
 
     // 设置 elem 相对 elem.ownerDocument 的坐标
@@ -1614,8 +1677,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * 2011-05-24
@@ -2045,7 +2108,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style, undefined) {
                     // keep existed filters, and remove opacity filter
                     if (currentFilter) {
                         //出现 alpha(opacity:0), alpha(opacity=0) ?
-                        currentFilter = S.trim(currentFilter.replace(/alpha\(opacity[=:][^)]+\),?/ig, ''));
+                        currentFilter = S.trim(currentFilter.replace(
+                            /alpha\(opacity[^=]*=[^)]+\),?/ig, ''));
                     }
 
                     if (currentFilter && val != 1) {
@@ -2151,6 +2215,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     var doc = document,
         docElem = doc.documentElement,
+        isIE = UA['ie'],
         STYLE = 'style',
         FLOAT = 'float',
         CSS_FLOAT = 'cssFloat',
@@ -2454,10 +2519,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
                 offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
-                // ie8 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                // TODO: 改成特性探测
-                if (UA['ie'] === 8 || UA['opera']) {
-                    offset -= PARSEINT(DOM.css(elem.offsetParent, 'border-' + name + '-width')) || 0;
+                // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                if (isIE && document['documentMode'] != 9 || UA['opera']) {
+                    // 类似 offset ie 下的边框处理
+                    // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
+                    // 否则减去 borderTop 其实也是 clientTop
+                    offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                        || 0;
                 }
 
                 ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
@@ -2686,6 +2754,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
 /**
  * NOTES:
+ * - jquery does not return null ,it only returns empty array , but kissy does.
  *
  *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
  *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。

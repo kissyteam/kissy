@@ -196,6 +196,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
 /**
  * NOTES:
+ * - jquery does not return null ,it only returns empty array , but kissy does.
  *
  *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
  *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。

@@ -1,30 +1,39 @@
 /**
  * abstract view for button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonrender", function(S, UIBase,Component) {
+KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render,{
+    return UIBase.create(Component.Render, {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
         },
-        _uiSetContent:function(v) {
-            this.get("el").html(v);
+        _uiSetContent:function(content) {
+            this.get("el").html(content);
         },
-        _uiSetTooltip:function(t) {
-            this.get("el").attr("title", t);
+        _uiSetTooltip:function(title) {
+            this.get("el").attr("title", title);
         },
-        _uiSetDescribedby:function(d) {
-            this.get("el").attr("aria-describedby", d);
+        _uiSetDescribedby:function(describedby) {
+            this.get("el").attr("aria-describedby", describedby);
         }
     }, {
         ATTRS:{
-            //按钮内容
+            /**
+             * @inheritedDoc
+             * disabled:{}
+             */
+
+            /**
+             * @inheritedDoc
+             * prefixCls:{}
+             */
+
+                //按钮内容
             content:{},
             //aria-describledby support
             describedby:{},
-
             tooltip:{}
         },
         HTML_PARSER:{

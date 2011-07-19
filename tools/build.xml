@@ -1,136 +1,48 @@
-<project name="common-build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
-    <description>Common Build File</description>
+<?xml version="1.0"?>
+<!--
+  kissy 构建文件，开启每个组件的构建
+  @author lifesinger@gmail.com , yiminghe@gmail.com
+-->
+<project name="kissy-project-build"
+         default="build-packages">
+    <description>KISSY Project Build File</description>
 
-    <property name="kissy.dir" location="${ant.file.common-build}/../../"/>
+    <!-- kissy 主目录 -->
+    <property name="kissy.dir" location="${ant.file.kissy-project-build}/../../"/>
+    <!-- kissy 工具目录 -->
     <property name="kissy-tools.dir" location="${kissy.dir}/../kissy-tools/"/>
+    <!-- kissy build 目录 -->
     <property name="kissy.build.dir" location="${kissy.dir}/build/"/>
+    <!-- kissy 源码目录 -->
     <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
-
-    <property name="version" value="1.20dev"/>
+    <!-- kissy 源码编码 -->
     <property name="charset" value="utf-8"/>
-    <property name="copyright.files" value="*.css, *.js"/>
-
-    <!-- 清空与复制等准备工作 -->
-    <target name="prepare">
-        <mkdir dir="${kissy.build.dir}/${component.name}"/>
-        <delete>
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.css,*.js"/>
-        </delete>
-
-        <copy todir="${kissy.build.dir}/${component.name}">
-            <fileset dir="${src.dir}" includes="${component.files}"/>
-        </copy>
+    <!--
+        打包 core kissy kissy-aio 以及 css 组件的合并
+    -->
+    <target name="build-packages">
+        <subant target="" failonerror="false" inheritall="false">
+            <fileset dir="./build-xml/" includes="**/build.xml"/>
+        </subant>
     </target>
 
-    <!-- 压缩代码 -->
-    <target name="compress">
-        <!-- 去除 S.log -->
-        <mkdir dir="${kissy.build.dir}/${component.name}/debug"/>
-        <copy todir="${kissy.build.dir}/${component.name}/debug">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="${component.files}"/>
-        </copy>
-        <replaceregexp match="^\s*S\.log\(.+$" replace="" flags="g" byline="true" encoding="${charset}">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="${component.files}"/>
-        </replaceregexp>
-
-        <!-- 用 YUICompressor 压缩 CSS -->
-        <apply executable="java" verbose="true" dest="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.css"/>
-            <arg line="-jar"/>
-            <arg path="${kissy-tools.dir}/yuicompressor/yuicompressor.jar"/>
-            <arg line="--charset ${charset}"/>
-            <srcfile/>
-            <arg line="-o"/>
-            <targetfile/>
-            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
-        </apply>
-
-        <!-- 用 Closure Compiler 压缩 JS -->
-        <apply executable="java" verbose="true" dest="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="*.js"/>
-            <arg line="-jar"/>
-            <arg path="${kissy-tools.dir}/closure-compiler/compiler.jar"/>
-            <arg line="--charset ${charset}"/>
-            <arg value="--warning_level"/>
-            <arg value="QUIET"/>
-            <arg value="--js"/>
-            <srcfile/>
-            <arg value="--js_output_file"/>
-            <targetfile/>
-            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
-        </apply>
-
-        <!-- 还原 debug 版本 -->
-        <move todir="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}/debug" includes="${component.files}"/>
-        </move>
-        <delete dir="${kissy.build.dir}/${component.name}/debug"/>
+    <!--
+      全部构建
+    -->
+    <target name="build-all">
+        <!--
+        各个组件构建
+        -->
+        <subant target="" failonerror="false" inheritall="false">
+            <fileset dir="${kissy.src.dir}" includes="**/build.xml"/>
+        </subant>
+        <subant target="build-packages"
+                buildpath="."
+                inheritall="false" inheritrefs="false"/>
     </target>
 
-    <!-- 对 JS 文件 ASCII 化 -->
-    <target name="native2ascii" depends="compress">
-        <mkdir dir="${kissy.build.dir}/${component.name}/ascii"/>
-        <move todir="${kissy.build.dir}/${component.name}/ascii">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="*-min.js"/>
-        </move>
-        <native2ascii encoding="${charset}"
-                      src="${kissy.build.dir}/${component.name}/ascii"
-                      dest="${kissy.build.dir}/${component.name}"
-                      includes="*.js"/>
-        <delete dir="${kissy.build.dir}/${component.name}/ascii"/>
-
-        <fixcrlf srcdir="${kissy.build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
+    <target name="clean">
+        <delete dir="${kissy.build.dir}"/>
     </target>
 
-    <!-- 替换版本信息以及给文件加上版权信息 -->
-    <target name="copyright">
-        <tstamp>
-            <format property="stamp.time" pattern="MMM d HH:mm" locale="en,UK"/>
-            <format property="build.year" pattern="yyyy"/>
-        </tstamp>
-        <!-- 仅在版本发布时，打时间戳 -->
-        <condition property="build.time" value="${stamp.time}">
-            <matches string="${version}" pattern=".+\d$"/>
-        </condition>
-        <!--<svn>-->
-        <!--<wcVersion path="${kissy.dir}" prefix="svn."/>-->
-        <!--</svn>-->
-        <mkdir dir="${kissy.build.dir}/${component.name}/tmp"/>
-        <move todir="${kissy.build.dir}/${component.name}/tmp">
-            <fileset dir="${kissy.build.dir}/${component.name}" includes="${copyright.files}"/>
-        </move>
-
-        <ac:for param="file">
-            <path>
-                <fileset dir="${kissy.build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
-            </path>
-            <sequential>
-                <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
-                    <header filtering="no" trimleading="yes">/*
-                        Copyright ${build.year}, KISSY UI Library v${version}
-                        MIT Licensed
-                        build time: ${build.time}
-                        */
-                    </header>
-                    <fileset file="@{file}"/>
-                </concat>
-                <replaceregexp match="@VERSION@" replace="${version}" flags="g" encoding="${charset}" byline="true" file="@{file}.tmp"/>
-                <move file="@{file}.tmp" tofile="@{file}"/>
-            </sequential>
-        </ac:for>
-
-        <move todir="${kissy.build.dir}/${component.name}">
-            <fileset dir="${kissy.build.dir}/${component.name}/tmp" includes="${copyright.files}"/>
-        </move>
-        <delete dir="${kissy.build.dir}/${component.name}/tmp"/>
-        <fixcrlf srcdir="${kissy.build.dir}/${component.name}/" includes="**/*.js,**/*.css"/>
-    </target>
-
-    <target name="common.build" depends="prepare,compress,native2ascii,copyright">
-        <!--兼容性考虑，pkg保留-->
-        <copy encoding="${charset}" todir="${kissy.build.dir}">
-            <fileset dir="${kissy.build.dir}/${component.name}/" includes="*-pkg*.js"/>
-            <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
-        </copy>
-    </target>
 </project>

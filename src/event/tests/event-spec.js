@@ -546,7 +546,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             (function() {
                 var eventDesc = Event._data(domNode);
-                expect(eventDesc).toBe(null);
+                expect(eventDesc).toBe(undefined);
             })();
 
         });
@@ -652,7 +652,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             (function() {
                 var eventDesc = Event._data(domNode);
-                expect(eventDesc).toBe(null);
+                expect(eventDesc).toBe(undefined);
             })();
         });
     });

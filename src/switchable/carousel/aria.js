@@ -237,7 +237,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     S.mix(Carousel.Config, {
-            aria:true
+            aria:false
         });
 
     Carousel.Plugins.push({

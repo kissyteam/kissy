@@ -1,24 +1,260 @@
 /**
  * UIBase.Align
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
-KISSY.add('uibase/align', function(S, DOM,Node) {
+KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
+
+    /**
+     * inspired by closure library by Google
+     * @refer http://yiminghe.iteye.com/blog/1124720
+     */
+
+    /**
+     * 得到影响元素显示的父亲元素
+     */
+    function getOffsetParent(element) {
+        // ie 这个也不是完全可行
+        /**
+         <div style="width: 50px;height: 100px;overflow: hidden">
+         <div style="width: 50px;height: 100px;position: relative;" id="d6">
+         元素 6 高 100px 宽 50px<br/>
+         </div>
+         </div>
+         **/
+//            if (UA['ie']) {
+//                return element.offsetParent;
+//            }
+        var body = element.ownerDocument.body,
+            positionStyle = DOM.css(element, 'position'),
+            skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
+
+        for (var parent = element.parentNode;
+             parent && parent != body;
+             parent = parent.parentNode) {
+
+            positionStyle = DOM.css(parent, 'position');
+
+            skipStatic = skipStatic && positionStyle == 'static';
+
+            var parentOverflow = DOM.css(parent, "overflow");
+
+            // 必须有 overflow 属性，可能会隐藏掉子孙元素
+            if (parentOverflow != 'visible' && (
+                // 元素初始为 fixed absolute ，遇到 父亲不是 定位元素忽略
+                // 否则就可以
+                !skipStatic ||
+                    positionStyle == 'fixed' ||
+                    positionStyle == 'absolute' ||
+                    positionStyle == 'relative'
+                )) {
+                return parent;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获得元素的显示部分的区域
+     */
+    function getVisibleRectForElement(element) {
+        var visibleRect = {
+            left:0,
+            right:Infinity,
+            top:0,
+            bottom:Infinity
+        };
+
+        for (var el = element; el = getOffsetParent(el);) {
+
+
+            var clientWidth = el.clientWidth;
+
+            if (
+            // clientWidth is zero for inline block elements in IE.
+                (!UA['ie'] || clientWidth != 0)
+            // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
+            // && (!UA['webkit'] || clientHeight != 0 || el != body)
+            // overflow 不为 visible 则可以限定其内元素
+            // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
+            // offsetParent 已经判断过了
+            //&& DOM.css(el, 'overflow') != 'visible'
+                ) {
+                var clientLeft = el.clientLeft,
+                    clientTop = el.clientTop,
+                    pos = DOM.offset(el),
+                    client = {
+                        left:clientLeft,
+                        top:clientTop
+                    };
+                pos.left += client.left;
+                pos.top += client.top;
+
+                visibleRect.top = Math.max(visibleRect['top'], pos.top);
+                visibleRect.right = Math.min(visibleRect.right,
+                    pos.left + el.clientWidth);
+                visibleRect.bottom = Math.min(visibleRect['bottom'],
+                    pos.top + el.clientHeight);
+                visibleRect.left = Math.max(visibleRect.left, pos.left);
+            }
+        }
+
+        var scrollX = DOM.scrollLeft(),
+            scrollY = DOM.scrollTop();
+
+        visibleRect.left = Math.max(visibleRect.left, scrollX);
+        visibleRect.top = Math.max(visibleRect['top'], scrollY);
+        visibleRect.right = Math.min(visibleRect.right, scrollX + DOM.viewportWidth());
+        visibleRect.bottom = Math.min(visibleRect['bottom'], scrollY + DOM.viewportHeight());
+
+        return visibleRect.top >= 0 && visibleRect.left >= 0 &&
+            visibleRect.bottom > visibleRect.top &&
+            visibleRect.right > visibleRect.left ?
+            visibleRect : null;
+    }
+
+    function isFailed(status) {
+        for (var s in status) {
+            if (s.indexOf("fail") == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function positionAtAnchor(alignCfg) {
+        var offset = alignCfg.offset,
+            node = alignCfg.node,
+            points = alignCfg.points,
+            self = this,
+            xy,
+            diff,
+            p1,
+            //如果没有view，就是不区分mvc
+            el = self.get('el'),
+            p2;
+
+        offset = offset || [0,0];
+        xy = el.offset();
+
+        // p1 是 node 上 points[0] 的 offset
+        // p2 是 overlay 上 points[1] 的 offset
+        p1 = getAlignOffset(node, points[0]);
+        p2 = getAlignOffset(el, points[1]);
+
+        diff = [p2.left - p1.left, p2.top - p1.top];
+        xy = {
+            left: xy.left - diff[0] + (+offset[0]),
+            top: xy.top - diff[1] + (+offset[1])
+        };
+
+        return positionAtCoordinate.call(self, xy, alignCfg);
+    }
+
+
+    function positionAtCoordinate(absolutePos, alignCfg) {
+        var self = this,el = self.get('el');
+        var status = {};
+        var elSize = {width:el[0].offsetWidth,height:el[0].offsetHeight},
+            size = S.clone(elSize);
+        if (!S.isEmptyObject(alignCfg.overflow)) {
+            var viewport = getVisibleRectForElement(el[0]);
+            status = adjustForViewport(absolutePos, size, viewport, alignCfg.overflow || {});
+            if (isFailed(status)) {
+                return status;
+            }
+        }
+
+        self.set("x", absolutePos.left);
+        self.set("y", absolutePos.top);
+
+        if (size.width != elSize.width || size.height != elSize.height) {
+            el.width(size.width);
+            el.height(size.height);
+        }
+
+        return status;
+
+    }
+
+
+    function adjustForViewport(pos, size, viewport, overflow) {
+        var status = {};
+        if (pos.left < viewport.left && overflow.adjustX) {
+            pos.left = viewport.left;
+            status.adjustX = 1;
+        }
+        // Left edge inside and right edge outside viewport, try to resize it.
+        if (pos.left < viewport.left &&
+            pos.left + size.width > viewport.right &&
+            overflow.resizeWidth) {
+            size.width -= (pos.left + size.width) - viewport.right;
+            status.resizeWidth = 1;
+        }
+
+        // Right edge outside viewport, try to move it.
+        if (pos.left + size.width > viewport.right &&
+            overflow.adjustX) {
+            pos.left = Math.max(viewport.right - size.width, viewport.left);
+            status.adjustX = 1;
+        }
+
+        // Left or right edge still outside viewport, fail if the FAIL_X option was
+        // specified, ignore it otherwise.
+        if (overflow.failX) {
+            status.failX = pos.left < viewport.left ||
+                pos.left + size.width > viewport.right;
+        }
+
+        // Top edge outside viewport, try to move it.
+        if (pos.top < viewport.top && overflow.adjustY) {
+            pos.top = viewport.top;
+            status.adjustY = 1;
+        }
+
+        // Top edge inside and bottom edge outside viewport, try to resize it.
+        if (pos.top >= viewport.top &&
+            pos.top + size.height > viewport.bottom &&
+            overflow.resizeHeight) {
+            size.height -= (pos.top + size.height) - viewport.bottom;
+            status.resizeHeight = 1;
+        }
+
+        // Bottom edge outside viewport, try to move it.
+        if (pos.top + size.height > viewport.bottom &&
+            overflow.adjustY) {
+            pos.top = Math.max(viewport.bottom - size.height, viewport.top);
+            status.adjustY = 1;
+        }
+
+        // Top or bottom edge still outside viewport, fail if the FAIL_Y option was
+        // specified, ignore it otherwise.
+        if (overflow.failY) {
+            status.failY = pos.top < viewport.top ||
+                pos.top + size.height > viewport.bottom;
+        }
+
+        return status;
+    }
+
+
+    function flip(points, reg, map) {
+        var ret = [];
+        S.each(points, function(p) {
+            ret.push(p.replace(reg, function(m) {
+                return map[m];
+            }));
+        });
+        return ret;
+    }
+
+    function flipOffset(offset, index) {
+        offset[index] = -offset[index];
+        return offset;
+    }
 
     function Align() {
     }
-
-    S.mix(Align, {
-            TL: 'tl',
-            TC: 'tc',
-            TR: 'tr',
-            CL: 'cl',
-            CC: 'cc',
-            CR: 'cr',
-            BL: 'bl',
-            BC: 'bc',
-            BR: 'br'
-        });
 
     Align.ATTRS = {
         align: {
@@ -73,9 +309,8 @@ KISSY.add('uibase/align', function(S, DOM,Node) {
     Align.prototype = {
 
         _uiSetAlign: function(v) {
-
             if (S.isPlainObject(v)) {
-                this.align(v.node, v.points, v.offset);
+                this.align(v.node, v.points, v.offset, v.overflow);
             }
         },
 
@@ -85,31 +320,60 @@ KISSY.add('uibase/align', function(S, DOM,Node) {
          * @param {Array.<string>} points 对齐方式
          * @param {Array.<number>} offset 偏移
          */
-        align: function(node, points, offset) {
+        align: function(node, points, offset, overflow) {
             var self = this,
-                xy,
-                diff,
-                p1,
-                //如果没有view，就是不区分mvc
-                el = (self.get("view") || self).get('el'),
-                p2;
+                flag = {};
+            // 后面会改的，先保存下
+            overflow = S.clone(overflow || {});
+            offset = S.clone(offset) || [0,0];
+            if (overflow.failX) {
+                flag.failX = 1;
+            }
+            if (overflow.failY) {
+                flag.failY = 1;
+            }
+            var status = positionAtAnchor.call(self, {
+                node:node,
+                points:points,
+                offset:offset,
+                overflow:flag
+            });
+            // 如果错误调整重试
+            if (isFailed(status)) {
+                if (status.failX) {
+                    points = flip(points, /[lr]/ig, {
+                        l:"r",
+                        r:"l"
+                    });
+                    offset = flipOffset(offset, 0);
+                }
 
-            offset = offset || [0,0];
-            xy = el.offset();
+                if (status.failY) {
+                    points = flip(points, /[tb]/ig, {
+                        t:"b",
+                        b:"t"
+                    });
+                    offset = flipOffset(offset, 1);
+                }
+            }
 
-            // p1 是 node 上 points[0] 的 offset
-            // p2 是 overlay 上 points[1] 的 offset
-            p1 = getAlignOffset(node, points[0]);
-            p2 = getAlignOffset(el, points[1]);
+            status = positionAtAnchor.call(self, {
+                node:node,
+                points:points,
+                offset:offset,
+                overflow:flag
+            });
 
-            diff = [p2.left - p1.left, p2.top - p1.top];
-            xy = [
-                xy.left - diff[0] + (+offset[0]),
-                xy.top - diff[1] + (+offset[1])
-            ];
-
-            self.set('x', xy[0]);
-            self.set('y', xy[1]);
+            if (isFailed(status)) {
+                delete overflow.failX;
+                delete overflow.failY;
+                status = positionAtAnchor.call(self, {
+                    node:node,
+                    points:points,
+                    offset:offset,
+                    overflow:overflow
+                });
+            }
         },
 
         /**
@@ -117,14 +381,22 @@ KISSY.add('uibase/align', function(S, DOM,Node) {
          */
         center: function(node) {
             this.set('align', {
-                    node: node,
-                    points: [Align.CC, Align.CC],
-                    offset: [0, 0]
-                });
+                node: node,
+                points: ["cc", "cc"],
+                offset: [0, 0]
+            });
         }
     };
 
+    if (1 > 2) {
+        Align._uiSetAlign();
+    }
+
     return Align;
 }, {
-        requires:["dom","node"]
-    });
+    requires:["ua","dom","node"]
+});
+/**
+ *  2011-07-13 承玉 note:
+ *   - 增加智能对齐，以及大小调整选项
+ **/

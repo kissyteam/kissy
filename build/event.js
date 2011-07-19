@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 18 18:22
 */
 /**
  * @module  event
@@ -42,7 +42,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         // { handler: eventHandler, events:  {type:[{scope:scope,fn:fn}]}  } }
         EVENT_GUID = 'ksEventTargetId' + S.now();
 
-
     var Event = {
         _data:function(elem) {
             var args = S.makeArray(arguments);
@@ -74,9 +73,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
             DOM.query(targets).each(function(target) {
                 var isNativeEventTarget = !target.isCustomEventTarget,
-                    special,
-                    events,
-                    eventHandler,
                     eventDesc;
 
                 // 不是有效的 target 或 参数不对
@@ -86,18 +82,17 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     (isNativeEventTarget && !isValidTarget(target))) {
                     return;
                 }
-
-
                 // 获取事件描述
                 eventDesc = Event._data(target);
                 if (!eventDesc) {
                     Event._data(target, eventDesc = {});
                 }
                 //事件 listeners
-                events = eventDesc.events = eventDesc.events || {};
-                eventHandler = eventDesc.handler;
-
-                // 该元素没有 handler
+                var events = eventDesc.events = eventDesc.events || {},
+                    handlers = events[type] = events[type] || [],
+                    handleObj = {fn: fn, scope: scope || target,data:data},
+                    eventHandler = eventDesc.handler;
+                // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
                 if (!eventHandler) {
                     eventHandler = eventDesc.handler = function(event, data) {
                         // 是经过 fire 手动调用而导致的，就不要再次触发了，已经在 fire 中 bubble 过一次了
@@ -115,26 +110,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     };
                     eventHandler.target = target;
                 }
-
-                var handlers = events[type];
-                special = Event.special[type] || {};
-
-                if (!handlers) {
-                    handlers = events[type] = [];
-                    if ((!special.setup || special.setup.call(target) === false) && isNativeEventTarget) {
-                        simpleAdd(target, type, eventHandler)
-                    }
-                }
-
-                var handleObj = {fn: fn, scope: scope || target,data:data};
-                if (special.add) {
-                    special.add.call(target, handleObj);
+                if (isNativeEventTarget) {
+                    addDomEvent(target, type, eventHandler, handlers, handleObj);
+                    //nullify to prevent memory leak in ie ?
+                    target = null;
                 }
                 // 增加 listener
                 handlers.push(handleObj);
-
-                //nullify to prevent memory leak in ie ?
-                target = null;
             });
             return targets;
         },
@@ -221,10 +203,11 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
                     // remove(el, type) or fn 已移除光
                     if (fn === undefined || len === 0) {
-                        if (isNativeEventTarget) {
-                            if (!special['tearDown'] || special['tearDown'].call(target) === false) {
-                                simpleRemove(target, type, eventDesc.handler);
-                            }
+                        // dom node need to detach handler from dom node
+                        if (isNativeEventTarget &&
+                            (!special['tearDown'] ||
+                                special['tearDown'].call(target) === false)) {
+                            simpleRemove(target, type, eventDesc.handler);
                         }
                         delete events[type];
                     }
@@ -300,55 +283,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
                 } else {
-                    if (!isValidTarget(target)) {
-                        return;
-                    }
-                    var event = new EventObject(target, eventData);
-                    event.target = target;
-                    var cur = target,
-                        ontype = "on" + eventType;
-                    //bubble up dom tree
-                    do{
-                        var handler = (Event._data(cur) || {}).handler;
-                        event.currentTarget = cur;
-                        if (handler) {
-                            handler.call(cur, event);
-                        }
-                        // Trigger an inline bound script
-                        if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
-                            ret = false;
-                            event.preventDefault();
-                        }
-                        // Bubble up to document, then to window
-                        cur = cur.parentNode || cur.ownerDocument || cur === target.ownerDocument && window;
-                    } while (cur && !event.isPropagationStopped);
-
-                    if (!event.isDefaultPrevented) {
-                        if (!(eventType === "click" && target.nodeName.toLowerCase() == "a")) {
-                            var old;
-                            try {
-                                if (ontype && target[ eventType ]) {
-                                    // Don't re-trigger an onFOO event when we call its FOO() method
-                                    old = target[ ontype ];
-
-                                    if (old) {
-                                        target[ ontype ] = null;
-                                    }
-                                    // 记录当前 trigger 触发
-                                    Event_Triggered = eventType;
-                                    // 只触发默认事件，而不要执行绑定的用户回调
-                                    // 同步触发
-                                    target[ eventType ]();
-                                }
-                            } catch (ieError) {
-                            }
-
-                            if (old) {
-                                target[ ontype ] = old;
-                            }
-
-                            Event_Triggered = TRIGGERED_NONE;
-                        }
+                    var r = fireDOMEvent(target, eventType, eventData);
+                    if (r !== undefined) {
+                        ret = r;
                     }
                 }
             });
@@ -383,6 +320,81 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         return target && target.nodeType !== 3 && target.nodeType !== 8;
     }
 
+    /**
+     * dom node need eventHandler attached to dom node
+     */
+    function addDomEvent(target, type, eventHandler, handlers, handleObj) {
+        var special = Event.special[type] || {};
+        // dom 节点才需要注册 dom 事件
+        if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
+            simpleAdd(target, type, eventHandler)
+        }
+        if (special.add) {
+            special.add.call(target, handleObj);
+        }
+    }
+
+
+    /**
+     * fire dom event from bottom to up
+     */
+    function fireDOMEvent(target, eventType, eventData) {
+        var ret;
+        if (!isValidTarget(target)) {
+            return ret;
+        }
+        var event = new EventObject(target, eventData);
+        event.target = target;
+        var cur = target,
+            ontype = "on" + eventType;
+        //bubble up dom tree
+        do{
+            var handler = (Event._data(cur) || {}).handler;
+            event.currentTarget = cur;
+            if (handler) {
+                handler.call(cur, event);
+            }
+            // Trigger an inline bound script
+            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+                ret = false;
+                event.preventDefault();
+            }
+            // Bubble up to document, then to window
+            cur = cur.parentNode ||
+                cur.ownerDocument ||
+                cur === target.ownerDocument && window;
+        } while (cur && !event.isPropagationStopped);
+
+        if (!event.isDefaultPrevented) {
+            if (!(eventType === "click" && target.nodeName.toLowerCase() == "a")) {
+                var old;
+                try {
+                    if (ontype && target[ eventType ]) {
+                        // Don't re-trigger an onFOO event when we call its FOO() method
+                        old = target[ ontype ];
+
+                        if (old) {
+                            target[ ontype ] = null;
+                        }
+                        // 记录当前 trigger 触发
+                        Event_Triggered = eventType;
+                        // 只触发默认事件，而不要执行绑定的用户回调
+                        // 同步触发
+                        target[ eventType ]();
+                    }
+                } catch (ieError) {
+                }
+
+                if (old) {
+                    target[ ontype ] = old;
+                }
+
+                Event_Triggered = TRIGGERED_NONE;
+            }
+        }
+        return ret;
+    }
+
     if (1 > 2) {
         Event._simpleAdd()._simpleRemove();
     }
@@ -407,7 +419,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
  */
 /**
  * kissy delegate for event module
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
@@ -456,6 +468,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                             equals:equals
                         });
                 });
+                return targets;
             }
         });
 
@@ -522,7 +535,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  *
  **//**
  * @module  event-focusin
- * @author  lifesinger@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function(S, UA, Event) {
 
@@ -534,6 +547,9 @@ KISSY.add('event/focusin', function(S, UA, Event) {
         ], function(o) {
             var attaches = 0;
             Event.special[o.name] = {
+                // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
+                // 达到和 focusin 一样的效果 focusin -> focus
+                // refer: http://yiminghe.iteye.com/blog/813255
                 setup: function() {
                     if (attaches++ === 0) {
                         document.addEventListener(o.fix, handler, true);
@@ -556,8 +572,8 @@ KISSY.add('event/focusin', function(S, UA, Event) {
     }
     return Event;
 }, {
-        requires:["ua","./base"]
-    });
+    requires:["ua","./base"]
+});
 
 /**
  * 承玉:2011-06-07
@@ -568,7 +584,7 @@ KISSY.add('event/focusin', function(S, UA, Event) {
  */
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com, xiaomacji@gmail.com
+ * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
@@ -577,10 +593,44 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'];
 
-
     // IE8以上切换浏览器模式到IE7，会导致 'onhashchange' in window === true
     if ((!( 'on' + HASH_CHANGE in window)) || ie < 8) {
-        var timer,
+        var getHash = function() {
+            var url = location.href;
+            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+        },
+            setup = function () {
+                poll();
+            },
+            tearDown = function () {
+                timer && clearTimeout(timer);
+                timer = null;
+            },
+            poll = function () {
+                //console.log('poll start..' + +new Date());
+                var hash = getHash();
+
+                if (hash !== lastHash) {
+                    //debugger
+                    hashChange(hash);
+                    lastHash = hash;
+                }
+                timer = setTimeout(poll, 50);
+            },
+            hashChange = function (hash) {
+                notifyHashChange(hash);
+            },
+            notifyHashChange = function (hash) {
+                S.log("hash changed : " + hash);
+                for (var i = 0; i < targets.length; i++) {
+                    var t = targets[i];
+                    //模拟暂时没有属性
+                    Event._handle(t, {
+                        type: HASH_CHANGE
+                    });
+                }
+            },
+            timer,
             targets = [],
             lastHash = getHash();
 
@@ -607,48 +657,6 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 }
             }
         };
-
-        function setup() {
-            poll();
-        }
-
-        function tearDown() {
-            timer && clearTimeout(timer);
-            timer = null;
-        }
-
-        function poll() {
-            //console.log('poll start..' + +new Date());
-            var hash = getHash();
-
-            if (hash !== lastHash) {
-                //debugger
-                hashChange(hash);
-                lastHash = hash;
-            }
-            timer = setTimeout(poll, 50);
-        }
-
-        function hashChange(hash) {
-            notifyHashChange(hash);
-        }
-
-        function notifyHashChange(hash) {
-            S.log("hash changed : " + hash);
-            for (var i = 0; i < targets.length; i++) {
-                var t = targets[i];
-                //模拟暂时没有属性
-                Event._handle(t, {
-                        type: HASH_CHANGE
-                    });
-            }
-        }
-
-
-        function getHash() {
-            var url = location.href;
-            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
-        }
 
         // ie6, 7, 用匿名函数来覆盖一些function
         if (ie < 8) {
@@ -732,8 +740,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         }
     }
 }, {
-        requires:["./base","dom","ua"]
-    });
+    requires:["./base","dom","ua"]
+});
 
 /**
  * v1 : 2010-12-29
@@ -742,7 +750,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
  *         https://github.com/cowboy/jquery-hashchange
  *//**
  * @module  event-mouseenter
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
@@ -995,7 +1003,7 @@ KISSY.add('event/object', function(S, undefined) {
  */
 /**
  * @module  EventTarget
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/target', function(S, Event, DOM, undefined) {
 
@@ -1051,7 +1059,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
  * reports IME and multi-stroke input more reliably than <code>oninput</code> or
  * the various key events across browsers.
  *
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
     var VALUE_CHANGE = "valueChange",

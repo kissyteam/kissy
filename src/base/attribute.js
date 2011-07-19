@@ -52,8 +52,8 @@ KISSY.add('base/attribute', function(S, undef) {
             var host = this;
             if (!host.__attrs[name]) {
                 host.__attrs[name] = S.clone(attrConfig || {});
-            }else{
-                S.mix(host.__attrs[name],attrConfig,override);
+            } else {
+                S.mix(host.__attrs[name], attrConfig, override);
             }
             return host;
         },
@@ -115,12 +115,20 @@ KISSY.add('base/attribute', function(S, undef) {
         __set: function(name, value) {
             var host = this,
                 setValue,
-                attrConfig = host.__attrs[name],
-                setter = attrConfig && attrConfig['setter'];
+                // if host does not have meta info corresponding to (name,value)
+                // then register on demand in order to collect all data meta info
+                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                // 因为属性在声明注册前可以直接设置值
+                attrConfig = host.__attrs[name] = host.__attrs[name] || {},
+                setter = attrConfig['setter'];
 
             // if setter has effect
-            if (setter) setValue = setter.call(host, value);
-            if (setValue !== undef) value = setValue;
+            if (setter) {
+                setValue = setter.call(host, value);
+            }
+            if (setValue !== undef) {
+                value = setValue;
+            }
 
             // finally set
             host.__attrVals[name] = value;
@@ -167,6 +175,7 @@ KISSY.add('base/attribute', function(S, undef) {
 
         /**
          * Resets the value of an attribute.
+         * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
          */
         reset: function (name) {
             var host = this;
@@ -192,7 +201,7 @@ KISSY.add('base/attribute', function(S, undef) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    Attribute.__capitalFirst = capitalFirst;
+    Attribute['__capitalFirst'] = capitalFirst;
 
     return Attribute;
 });

@@ -3,11 +3,15 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Validation</title>
-	<link rel="stylesheet" type="text/css"  href="http://docs.kissyui.com/kissy-dpl/base/build/css/dpl-pkg.css" />
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
 	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
-	<script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
 	
 	
 	<style>
@@ -39,7 +43,7 @@
 	
 	<div class="note">
 		内置的校验规则可能很难满足各式各样的需求，复杂的逻辑你可以使用func自定义函数校验
-		<pre>
+		<pre class="brush: js;">
 		{
 			func:function(){
 				//...
@@ -50,7 +54,7 @@
 		}
 		</pre>
 		简单的可以直接使用regex正则校验（这里提供一个正则网站<a target="_blank" href="http://www.regexlib.com/(A(erv9OQG0amDORUqPDVKDSRhIaMEfNet7dM_uVc629c32WVUX1ijQLasizRKKmruPd29JmfUppcWzWnSgYfEv21H5wKWbQnw_ankmdl0zJitbk7o8Gvey58fIZ0BxUhrVDWcWtD138fx5sVt_9hRebmBfM24bi6YzWlOrYOtfxyxJo_q9YGyFFEc17FUVvnt60))/Search.aspx?k=money&c=-1&m=-1&ps=20">http://www.regexlib.com/</a>，你可以直接搜索到很多实用的正则表达式）
-		<pre>
+		<pre class="brush: js;">
 		{
 			regex:[^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w ]*))+\.(txt|TXT)$,'只能是txt文件']
 		}
@@ -175,7 +179,7 @@
 		<dl>
 			<dt>最小长度校验：</dt>
 			<dd>
-				<input  type="file" name="fiter" id="fiter" data-valid="{required:false,fiter:['gif,jpg','只允许的格式为{0}']}"/>
+				<input  type="file" name="fiter" id="fiter2" data-valid="{required:false,fiter:['gif,jpg','只允许的格式为{0}']}"/>
 			</dd>
 			<dd>
 				<pre class='brush:javascript;'>
@@ -395,7 +399,7 @@
 
 
 
-<script src="http://docs.kissyui.com/kissy-util/adaptive-frame/adaptive-frame.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+
 
 
 </body>

@@ -2,11 +2,12 @@
  * mvc based component framework for kissy
  * @author:yiminghe@gmail.com
  */
-KISSY.add("component", function(S, ModelControl, Render) {
+KISSY.add("component", function(S, ModelControl, Render, Container) {
     return {
         ModelControl:ModelControl,
-        Render:Render
+        Render:Render,
+        Container:Container
     };
 }, {
-    requires:['component/modelcontrol','component/render']
+    requires:['component/modelcontrol','component/render','component/container']
 });

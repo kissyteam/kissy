@@ -10,7 +10,7 @@
  * reports IME and multi-stroke input more reliably than <code>oninput</code> or
  * the various key events across browsers.
  *
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
     var VALUE_CHANGE = "valueChange",

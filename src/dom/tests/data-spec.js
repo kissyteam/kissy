@@ -1,6 +1,6 @@
 /**
  * test cases for data sub module of dom module
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("ua,dom", function(S, UA,DOM) {
 
@@ -45,14 +45,15 @@ KISSY.use("ua,dom", function(S, UA,DOM) {
             var foo = document.body.appendChild(DOM.create("<div>"));
             DOM.data(foo, 'data', 'val');
             DOM.removeData(foo, 'data');
-            expect(DOM.data(foo, 'data')).toBe(null);
-            //expect(DOM.data('#foo2')).toBe(null);
+            //  if data is removed ,then its value is undefined
+            expect(DOM.data(foo, 'data')).toBe(undefined);
+            expect(DOM.hasData(foo, 'data')).toBe(false);
 
             DOM.data(window, 'data', 'val');
 
             DOM.removeData(window, 'data');
 
-            expect(DOM.data(window, 'data')).toBe(null);
+            expect(DOM.data(window, 'data')).toBe(undefined);
             expect(DOM.hasData(window)).toBe(false);
 
             // 返回空对象

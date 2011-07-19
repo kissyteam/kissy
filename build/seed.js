@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 18 18:23
 */
 /*
  * @module kissy
@@ -14,32 +14,50 @@ build time: ${build.time}
         meta = {
             /**
              * Copies all the properties of s to r.
+             * @param deep {boolean} whether recurse mix if encouter object
              * @return {Object} the augmented object
              */
-            mix: function(r, s, ov, wl) {
+            mix: function(r, s, ov, wl, deep) {
                 if (!s || !r) return r;
-                if (ov === undefined) ov = true;
+                if (ov === undefined) {
+                    ov = true;
+                }
                 var i, p, len;
 
                 if (wl && (len = wl.length)) {
                     for (i = 0; i < len; i++) {
                         p = wl[i];
                         if (p in s) {
-                            _mix(p, r, s, ov);
+                            _mix(p, r, s, ov, deep);
                         }
                     }
                 } else {
                     for (p in s) {
-                        _mix(p, r, s, ov);
+                        _mix(p, r, s, ov, deep);
                     }
                 }
                 return r;
             }
         },
 
-        _mix = function(p, r, s, ov) {
+        _mix = function(p, r, s, ov, deep) {
             if (ov || !(p in r)) {
-                r[p] = s[p];
+                var target = r[p],src = s[p];
+                // prevent never-end loop
+                if (target === src) {
+                    return;
+                }
+                // 来源是数组和对象，并且要求深度 mix
+                if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
+                    // 目标值为对象或数组，直接 mix
+                    // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
+                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
+                        target :
+                        (S.isArray(src) ? [] : {});
+                    r[p] = S.mix(clone, src, ov, undefined, true);
+                } else if (src !== undefined) {
+                    r[p] = s[p];
+                }
             }
         },
 
@@ -59,227 +77,227 @@ build time: ${build.time}
 
     S.mix(S, {
 
-        // S.app() with these members.
-        __APP_MEMBERS: ['namespace'],
-        __APP_INIT_METHODS: ['__init'],
+            // S.app() with these members.
+            __APP_MEMBERS: ['namespace'],
+            __APP_INIT_METHODS: ['__init'],
 
-        /**
-         * The version of the library.
-         * @type {String}
-         */
-        version: '1.20dev',
+            /**
+             * The version of the library.
+             * @type {String}
+             */
+            version: '1.20dev',
 
-        buildTime:'@TIMESTAMP@',
+            buildTime:'20110718182337',
 
-        /**
-         * Returns a new object containing all of the properties of
-         * all the supplied objects. The properties from later objects
-         * will overwrite those in earlier objects. Passing in a
-         * single object will create a shallow copy of it.
-         * @return {Object} the new merged object
-         */
-        merge: function() {
-            var o = {}, i, l = arguments.length;
-            for (i = 0; i < l; i++) {
-                S.mix(o, arguments[i]);
-            }
-            return o;
-        },
+            /**
+             * Returns a new object containing all of the properties of
+             * all the supplied objects. The properties from later objects
+             * will overwrite those in earlier objects. Passing in a
+             * single object will create a shallow copy of it.
+             * @return {Object} the new merged object
+             */
+            merge: function() {
+                var o = {}, i, l = arguments.length;
+                for (i = 0; i < l; i++) {
+                    S.mix(o, arguments[i]);
+                }
+                return o;
+            },
 
-        /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @return {Object} the augmented object
-         */
-        augment: function(/*r, s1, s2, ..., ov, wl*/) {
-            var args = S.makeArray(arguments),
-                len = args.length - 2,
-                r = args[0],
-                ov = args[len],
-                wl = args[len + 1],
-                i = 1;
+            /**
+             * Applies prototype properties from the supplier to the receiver.
+             * @return {Object} the augmented object
+             */
+            augment: function(/*r, s1, s2, ..., ov, wl*/) {
+                var args = S.makeArray(arguments),
+                    len = args.length - 2,
+                    r = args[0],
+                    ov = args[len],
+                    wl = args[len + 1],
+                    i = 1;
 
-            if (!S.isArray(wl)) {
-                ov = wl;
-                wl = undefined;
-                len++;
-            }
-            if (!S.isBoolean(ov)) {
-                ov = undefined;
-                len++;
-            }
+                if (!S.isArray(wl)) {
+                    ov = wl;
+                    wl = undefined;
+                    len++;
+                }
+                if (!S.isBoolean(ov)) {
+                    ov = undefined;
+                    len++;
+                }
 
-            for (; i < len; i++) {
-                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
-            }
+                for (; i < len; i++) {
+                    S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+                }
 
-            return r;
-        },
+                return r;
+            },
 
-        /**
-         * Utility to set up the prototype, constructor and superclass properties to
-         * support an inheritance strategy that can chain constructors and methods.
-         * Static members will not be inherited.
-         * @param r {Function} the object to modify
-         * @param s {Function} the object to inherit
-         * @param px {Object} prototype properties to add/override
-         * @param sx {Object} static properties to add/override
-         * @return r {Object}
-         */
-        extend: function(r, s, px, sx) {
-            if (!s || !r) return r;
+            /**
+             * Utility to set up the prototype, constructor and superclass properties to
+             * support an inheritance strategy that can chain constructors and methods.
+             * Static members will not be inherited.
+             * @param r {Function} the object to modify
+             * @param s {Function} the object to inherit
+             * @param px {Object} prototype properties to add/override
+             * @param sx {Object} static properties to add/override
+             * @return r {Object}
+             */
+            extend: function(r, s, px, sx) {
+                if (!s || !r) return r;
 
-            var create = Object.create ?
-                function(proto, c) {
-                    return Object.create(proto, {
-                        constructor: {
-                            value: c
+                var create = Object.create ?
+                    function(proto, c) {
+                        return Object.create(proto, {
+                                constructor: {
+                                    value: c
+                                }
+                            });
+                    } :
+                    function (proto, c) {
+                        function F() {
                         }
-                    });
-                } :
-                function (proto, c) {
-                    function F() {
+
+                        F.prototype = proto;
+
+                        var o = new F();
+                        o.constructor = c;
+                        return o;
+                    },
+                    sp = s.prototype,
+                    rp;
+
+                // add prototype chain
+                rp = create(sp, r);
+                r.prototype = S.mix(rp, r.prototype);
+                r.superclass = create(sp, s);
+
+                // add prototype overrides
+                if (px) {
+                    S.mix(rp, px);
+                }
+
+                // add object overrides
+                if (sx) {
+                    S.mix(r, sx);
+                }
+
+                return r;
+            },
+
+            /****************************************************************************************
+
+             *                            The KISSY System Framework                                *
+
+             ****************************************************************************************/
+
+            /**
+             * Initializes KISSY
+             */
+            __init: function() {
+                this.Config = this.Config || {};
+                this.Env = this.Env || {};
+
+                // NOTICE: '@DEBUG@' will replace with '' when compressing.
+                // So, if loading source file, debug is on by default.
+                // If loading min version, debug is turned off automatically.
+                this.Config.debug = '@DEBUG@';
+            },
+
+            /**
+             * Returns the namespace specified and creates it if it doesn't exist. Be careful
+             * when naming packages. Reserved words may work in some browsers and not others.
+             * <code>
+             * S.namespace('KISSY.app'); // returns KISSY.app
+             * S.namespace('app.Shop'); // returns KISSY.app.Shop
+             * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
+             * </code>
+             * @return {Object}  A reference to the last namespace object created
+             */
+            namespace: function() {
+                var args = S.makeArray(arguments),
+                    l = args.length,
+                    o = null, i, j, p,
+                    global = (args[l - 1] === true && l--);
+
+                for (i = 0; i < l; i++) {
+                    p = (EMPTY + args[i]).split('.');
+                    o = global ? host : this;
+                    for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                        o = o[p[j]] = o[p[j]] || { };
                     }
-
-                    F.prototype = proto;
-
-                    var o = new F();
-                    o.constructor = c;
-                    return o;
-                },
-                sp = s.prototype,
-                rp;
-
-            // add prototype chain
-            rp = create(sp, r);
-            r.prototype = S.mix(rp, r.prototype);
-            r.superclass = create(sp, s);
-
-            // add prototype overrides
-            if (px) {
-                S.mix(rp, px);
-            }
-
-            // add object overrides
-            if (sx) {
-                S.mix(r, sx);
-            }
-
-            return r;
-        },
-
-    /****************************************************************************************
-
-     *                            The KISSY System Framework                                *
-
-     ****************************************************************************************/
-
-        /**
-         * Initializes KISSY
-         */
-        __init: function() {
-            this.Config = this.Config || {};
-            this.Env = this.Env || {};
-
-            // NOTICE: '@DEBUG@' will replace with '' when compressing.
-            // So, if loading source file, debug is on by default.
-            // If loading min version, debug is turned off automatically.
-            this.Config.debug = '@DEBUG@';
-        },
-
-        /**
-         * Returns the namespace specified and creates it if it doesn't exist. Be careful
-         * when naming packages. Reserved words may work in some browsers and not others.
-         * <code>
-         * S.namespace('KISSY.app'); // returns KISSY.app
-         * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-         * </code>
-         * @return {Object}  A reference to the last namespace object created
-         */
-        namespace: function() {
-            var args = S.makeArray(arguments),
-                l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === true && l--);
-
-            for (i = 0; i < l; i++) {
-                p = (EMPTY + args[i]).split('.');
-                o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
                 }
-            }
-            return o;
-        },
+                return o;
+            },
 
-        /**
-         * create app based on KISSY.
-         * @param name {String} the app name
-         * @param sx {Object} static properties to add/override
-         * <code>
-         * S.app('TB');
-         * TB.namespace('app'); // returns TB.app
-         * </code>
-         * @return {Object}  A reference to the app global object
-         */
-        app: function(name, sx) {
-            var isStr = S.isString(name),
-                O = isStr ? host[name] || {} : name,
-                i = 0,
-                len = S.__APP_INIT_METHODS.length;
+            /**
+             * create app based on KISSY.
+             * @param name {String} the app name
+             * @param sx {Object} static properties to add/override
+             * <code>
+             * S.app('TB');
+             * TB.namespace('app'); // returns TB.app
+             * </code>
+             * @return {Object}  A reference to the app global object
+             */
+            app: function(name, sx) {
+                var isStr = S.isString(name),
+                    O = isStr ? host[name] || {} : name,
+                    i = 0,
+                    len = S.__APP_INIT_METHODS.length;
 
-            S.mix(O, this, true, S.__APP_MEMBERS);
-            for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
+                S.mix(O, this, true, S.__APP_MEMBERS);
+                for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
 
-            S.mix(O, S.isFunction(sx) ? sx() : sx);
-            isStr && (host[name] = O);
+                S.mix(O, S.isFunction(sx) ? sx() : sx);
+                isStr && (host[name] = O);
 
-            return O;
-        },
+                return O;
+            },
 
 
-        config:function(c) {
-            for (var p in c) {
-                if (this["_" + p]) this["_" + p](c[p]);
-            }
-        },
-
-        /**
-         * Prints debug info.
-         * @param msg {String} the message to log.
-         * @param cat {String} the log category for the message. Default
-         *        categories are "info", "warn", "error", "time" etc.
-         * @param src {String} the source of the the message (opt)
-         */
-        log: function(msg, cat, src) {
-            if (S.Config.debug) {
-                if (src) {
-                    msg = src + ': ' + msg;
+            config:function(c) {
+                for (var p in c) {
+                    if (this["_" + p]) this["_" + p](c[p]);
                 }
-                if (host['console'] !== undefined && console.log) {
-                    console[cat && console[cat] ? cat : 'log'](msg);
+            },
+
+            /**
+             * Prints debug info.
+             * @param msg {String} the message to log.
+             * @param cat {String} the log category for the message. Default
+             *        categories are "info", "warn", "error", "time" etc.
+             * @param src {String} the source of the the message (opt)
+             */
+            log: function(msg, cat, src) {
+                if (S.Config.debug) {
+                    if (src) {
+                        msg = src + ': ' + msg;
+                    }
+                    if (host['console'] !== undefined && console.log) {
+                        console[cat && console[cat] ? cat : 'log'](msg);
+                    }
                 }
-            }
-        },
+            },
 
-        /**
-         * Throws error message.
-         */
-        error: function(msg) {
-            if (S.Config.debug) {
-                throw msg;
-            }
-        },
+            /**
+             * Throws error message.
+             */
+            error: function(msg) {
+                if (S.Config.debug) {
+                    throw msg;
+                }
+            },
 
-        /*
-         * Generate a global unique id.
-         * @param pre {String} optional guid prefix
-         * @return {String} the guid
-         */
-        guid: function(pre) {
-            return (pre || EMPTY) + guid++;
-        }
-    });
+            /*
+             * Generate a global unique id.
+             * @param pre {String} optional guid prefix
+             * @return {String} the guid
+             */
+            guid: function(pre) {
+                return (pre || EMPTY) + guid++;
+            }
+        });
 
     S.__init();
     return S;
@@ -358,536 +376,554 @@ build time: ${build.time}
     }
 
     S.mix(S, {
-            noop:function() {
-            },
+        noop:function() {
+        },
 
-            /**
-             * Determine the internal JavaScript [[Class]] of an object.
-             */
-            type: function(o) {
-                return o == null ?
-                    String(o) :
-                    class2type[toString.call(o)] || 'object';
-            },
+        /**
+         * Determine the internal JavaScript [[Class]] of an object.
+         */
+        type: function(o) {
+            return o == null ?
+                String(o) :
+                class2type[toString.call(o)] || 'object';
+        },
 
-            isNull: function(o) {
-                return o === null;
-            },
+        isNull: function(o) {
+            return o === null;
+        },
 
-            isUndefined: function(o) {
-                return o === undefined;
-            },
+        isUndefined: function(o) {
+            return o === undefined;
+        },
 
-            /**
-             * Checks to see if an object is empty.
-             */
-            isEmptyObject: function(o) {
-                for (var p in o) {
-                    if (p !== undefined) {
-                        return false;
-                    }
+        /**
+         * Checks to see if an object is empty.
+         */
+        isEmptyObject: function(o) {
+            for (var p in o) {
+                if (p !== undefined) {
+                    return false;
                 }
-                return true;
-            },
+            }
+            return true;
+        },
 
+        /**
+         * Checks to see if an object is a plain object (created using "{}"
+         * or "new Object()" or "new FunctionClass()").
+         * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+         */
+        isPlainObject: function(o) {
             /**
-             * Checks to see if an object is a plain object (created using "{}"
-             * or "new Object()" or "new FunctionClass()").
-             * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+             * note by yiminghe
+             * isPlainObject(node=document.getElementById("xx")) -> false
+             * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+             * 'isPrototypeOf' in node : ie678 === false ,other === true
              */
-            isPlainObject: function(o) {
-                /**
-                 * note by yiminghe
-                 * isPlainObject(node=document.getElementById("xx")) -> false
-                 * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
-                 * 'isPrototypeOf' in node : ie678 === false ,other === true
-                 */
 
-                return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
-            },
+            return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
+        },
 
-            /**
-             * Creates a deep copy of a plain object or array. Others are returned untouched.
-             */
-            clone: function(o, f, cloned) {
-                var ret = o, isArray, k, stamp, marked = cloned || {};
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         */
+        clone: function(o, f, cloned) {
+            var ret = o, isArray, k, stamp, marked = cloned || {};
 
-                // array or plain object
-                if (o
-                    && (
-                    (isArray = S.isArray(o))
-                        || S.isPlainObject(o)
-                    )
-                    ) {
+            // array or plain object
+            if (o
+                && (
+                (isArray = S.isArray(o))
+                    || S.isPlainObject(o)
+                )
+                ) {
 
-                    // avoid recursive clone
-                    if (o[CLONE_MARKER]) {
-                        return marked[o[CLONE_MARKER]];
-                    }
-                    o[CLONE_MARKER] = (stamp = S.guid());
-                    marked[stamp] = o;
-
-                    // clone it
-                    if (isArray) {
-                        ret = f ? S.filter(o, f) : o.concat();
-                    } else {
-                        ret = {};
-                        for (k in o) {
-                            if (k !== CLONE_MARKER &&
-                                o.hasOwnProperty(k) &&
-                                (!f || (f.call(o, o[k], k, o) !== false))) {
-                                ret[k] = S.clone(o[k], f, marked);
-                            }
-                        }
-                    }
+                // avoid recursive clone
+                if (o[CLONE_MARKER]) {
+                    return marked[o[CLONE_MARKER]];
                 }
+                o[CLONE_MARKER] = (stamp = S.guid());
+                marked[stamp] = o;
 
-                // clear marked
-                if (!cloned) {
-                    S.each(marked, function(v) {
-                        if (v[CLONE_MARKER]) {
-                            try {
-                                delete v[CLONE_MARKER];
-                            } catch (e) {
-                                v[CLONE_MARKER] = undefined;
-                            }
-                        }
-                    });
-                    marked = undefined;
-                }
-
-                return ret;
-            },
-
-            /**
-             * Removes the whitespace from the beginning and end of a string.
-             */
-            trim: trim ?
-                function(str) {
-                    return (str == undefined) ? EMPTY : trim.call(str);
-                } :
-                function(str) {
-                    return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
-                },
-
-            /**
-             * Substitutes keywords in a string using an object/array.
-             * Removes undefined keywords and ignores escaped keywords.
-             */
-            substitute: function(str, o, regexp) {
-                if (!S.isString(str)
-                    || !S.isPlainObject(o)) {
-                    return str;
-                }
-
-                return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
-                    if (match.charAt(0) === '\\') {
-                        return match.slice(1);
-                    }
-                    return (o[name] !== undefined) ? o[name] : EMPTY;
-                });
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * @param object {Object} the object to iterate
-             * @param fn {Function} the function to execute on each item. The function
-             *        receives three arguments: the value, the index, the full array.
-             * @param context {Object} (opt)
-             */
-            each: function(object, fn, context) {
-                var key,
-                    val,
-                    i = 0,
-                    length = object && object.length,
-                    isObj = length === undefined || S.type(object) === 'function';
-                context = context || host;
-
-                if (isObj) {
-                    for (key in object) {
-                        if (fn.call(context, object[key], key, object) === false) {
-                            break;
-                        }
-                    }
+                // clone it
+                if (isArray) {
+                    ret = f ? S.filter(o, f) : o.concat();
                 } else {
-                    for (val = object[0];
-                         i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
-                    }
-                }
-
-                return object;
-            },
-
-            /**
-             * Search for a specified value within an array.
-             */
-            indexOf: indexOf ?
-                function(item, arr) {
-                    return indexOf.call(arr, item);
-                } :
-                function(item, arr) {
-                    for (var i = 0, len = arr.length; i < len; ++i) {
-                        if (arr[i] === item) {
-                            return i;
+                    ret = {};
+                    for (k in o) {
+                        if (k !== CLONE_MARKER &&
+                            o.hasOwnProperty(k) &&
+                            (!f || (f.call(o, o[k], k, o) !== false))) {
+                            ret[k] = S.clone(o[k], f, marked);
                         }
                     }
-                    return -1;
-                },
-
-            /**
-             * Returns the index of the last item in the array
-             * that contains the specified value, -1 if the
-             * value isn't found.
-             */
-            lastIndexOf: (lastIndexOf) ?
-                function(item, arr) {
-                    return lastIndexOf.call(arr, item);
-                } :
-                function(item, arr) {
-                    for (var i = arr.length - 1; i >= 0; i--) {
-                        if (arr[i] === item) {
-                            break;
-                        }
-                    }
-                    return i;
-                },
-
-            /**
-             * Returns a copy of the array with the duplicate entries removed
-             * @param a {Array} the array to find the subset of uniques for
-             * @param override {Boolean}
-             *        if override is true, S.unique([a, b, a]) => [b, a]
-             *        if override is false, S.unique([a, b, a]) => [a, b]
-             * @return {Array} a copy of the array with duplicate entries removed
-             */
-            unique: function(a, override) {
-                var b = a.slice();
-                if (override) {
-                    b.reverse();
                 }
-                var i = 0,
-                    n,
-                    item;
-
-                while (i < b.length) {
-                    item = b[i];
-                    while ((n = S.lastIndexOf(item, b)) !== i) {
-                        b.splice(n, 1);
-                    }
-                    i += 1;
-                }
-
-                if (override) {
-                    b.reverse();
-                }
-                return b;
-            },
-
-            /**
-             * Search for a specified value index within an array.
-             */
-            inArray: function(item, arr) {
-                return S.indexOf(item, arr) > -1;
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a new array containing the items that the supplied
-             * function returned true for.
-             * @param arr {Array} the array to iterate
-             * @param fn {Function} the function to execute on each item
-             * @param context {Object} optional context object
-             * @return {Array} The items on which the supplied function
-             *         returned true. If no items matched an empty array is
-             *         returned.
-             */
-            filter: filter ?
-                function(arr, fn, context) {
-                    return filter.call(arr, fn, context || this);
-                } :
-                function(arr, fn, context) {
-                    var ret = [];
-                    S.each(arr, function(item, i, arr) {
-                        if (fn.call(context || this, item, i, arr)) {
-                            ret.push(item);
-                        }
-                    });
-                    return ret;
-                },
-            // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-            map:map ?
-                function(arr, fn, context) {
-                    return map.call(arr, fn, context || this);
-                } :
-                function(arr, fn, context) {
-                    var len = arr.length,
-                        res = new Array(len);
-                    for (var i = 0; i < len; i++) {
-                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
-                        if (el
-                            ||
-                            //ie<9 in invalid when typeof arr == string
-                            i in arr) {
-                            res[i] = fn.call(context || this, el, i, arr);
-                        }
-                    }
-                    return res;
-                },
-
-            /**
-             * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
-             */
-            reduce:/*
-             NaN ?
-             reduce ? function(arr, callback, initialValue) {
-             return arr.reduce(callback, initialValue);
-             } : */function(arr, callback, initialValue) {
-                var len = arr.length;
-                if (typeof callback !== "function")
-                    throw new TypeError();
-
-                // no value to return if no initial value and an empty array
-                if (len == 0 && arguments.length == 2)
-                    throw new TypeError();
-
-                var k = 0;
-                var accumulator;
-                if (arguments.length >= 3) {
-                    accumulator = arguments[2];
-                }
-                else {
-                    do {
-                        if (k in arr) {
-                            accumulator = arr[k++];
-                            break;
-                        }
-
-                        // if array contains no values, no initial value to return
-                        if (++k >= len)
-                            throw new TypeError();
-                    }
-                    while (true);
-                }
-
-                while (k < len) {
-                    if (k in arr) {
-                        accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
-                    }
-                    k++;
-                }
-
-                return accumulator;
-            },
-
-            /**
-             * Gets current date in milliseconds.
-             */
-            now: function() {
-                return new Date().getTime();
-            },
-            /**
-             * frequently used in taobao cookie about nick
-             */
-            fromUnicode:function(str) {
-                return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
-                    return  String.fromCharCode(parseInt(u, 16));
-                });
-            },
-            /**
-             * escape string to html
-             * @refer http://yiminghe.javaeye.com/blog/788929
-             * @param str {string} text2html show
-             */
-            escapeHTML:function(str) {
-                return str.replace(getEscapeReg(), function(m) {
-                    return reverseEntities[m];
-                });
-            },
-
-            /**
-             * unescape html to string
-             * @param str {string} html2text
-             */
-            unEscapeHTML:function(str) {
-                return str.replace(getUnEscapeReg(), function(m, n) {
-                    return htmlEntities[m] || String.fromCharCode(+n);
-                });
-            },
-            /**
-             * Converts object to a true array.
-             * @param o {object|Array} array like object or array
-             */
-            makeArray: function(o) {
-                if (o === null || o === undefined) return [];
-                if (S.isArray(o)) return o;
-
-                // The strings and functions also have 'length'
-                if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
-                    return [o];
-                }
-                var ret = [];
-                for (var i = 0,l = o.length; i < l; i++) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            },
-            /**
-             * Creates a serialized string of an array or object.
-             * @return {String}
-             * <code>
-             * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-             * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-             * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-             * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-             * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-             * </code>
-             */
-            param: function(o, sep, eq, arr) {
-                if (!S.isPlainObject(o)) return EMPTY;
-                sep = sep || SEP;
-                eq = eq || EQ;
-                if (S.isUndefined(arr)) arr = true;
-                var buf = [], key, val;
-                for (key in o) {
-                    val = o[key];
-                    key = encode(key);
-
-                    // val is valid non-array value
-                    if (isValidParamValue(val)) {
-                        buf.push(key, eq, encode(val + EMPTY), sep);
-                    }
-                    // val is not empty array
-                    else if (S.isArray(val) && val.length) {
-                        for (var i = 0, len = val.length; i < len; ++i) {
-                            if (isValidParamValue(val[i])) {
-                                buf.push(key,
-                                    (arr ? encode("[]") : EMPTY),
-                                    eq, encode(val[i] + EMPTY), sep);
-                            }
-                        }
-                    }
-                    // ignore other cases, including empty array, Function, RegExp, Date etc.
-                }
-                buf.pop();
-                return buf.join(EMPTY);
-            },
-
-            /**
-             * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-             * <code>
-             * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-             * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-             * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-             * 'id=45&raw'        // -> {id: '45', raw: ''}
-             * </code>
-             */
-            unparam: function(str, sep, eq) {
-                if (typeof str !== 'string'
-                    || (str = S.trim(str)).length === 0) {
-                    return {};
-                }
-                sep = sep || SEP;
-                eq = eq || EQ;
-                var ret = {},
-                    pairs = str.split(sep),
-                    pair, key, val,
-                    i = 0, len = pairs.length;
-
-                for (; i < len; ++i) {
-                    pair = pairs[i].split(eq);
-                    key = decode(pair[0]);
-                    try {
-                        val = decode(pair[1] || EMPTY);
-                    } catch(e) {
-                        S.log("decodeURIComponent error : " + pair[1], "error");
-                        val = pair[1] || EMPTY;
-                    }
-                    if (S.endsWith(key, "[]")) {
-                        key = key.substring(0, key.length - 2);
-                    }
-                    if (hasOwnProperty.call(ret, key)) {
-                        if (S.isArray(ret[key])) {
-                            ret[key].push(val);
-                        } else {
-                            ret[key] = [ret[key],val];
-                        }
-                    } else {
-                        ret[key] = val;
-                    }
-                }
-                return ret;
-            },
-            /**
-             * Executes the supplied function in the context of the supplied
-             * object 'when' milliseconds later. Executes the function a
-             * single time unless periodic is set to true.
-             * @param fn {Function|String} the function to execute or the name of the method in
-             *        the 'o' object to execute.
-             * @param when {Number} the number of milliseconds to wait until the fn is executed.
-             * @param periodic {Boolean} if true, executes continuously at supplied interval
-             *        until canceled.
-             * @param o {Object} the context object.
-             * @param data [Array] that is provided to the function. This accepts either a single
-             *        item or an array. If an array is provided, the function is executed with
-             *        one parameter for each array item. If you need to pass a single array
-             *        parameter, it needs to be wrapped in an array [myarray].
-             * @return {Object} a timer object. Call the cancel() method on this object to stop
-             *         the timer.
-             */
-            later: function(fn, when, periodic, o, data) {
-                when = when || 0;
-                o = o || { };
-                var m = fn, d = S.makeArray(data), f, r;
-
-                if (S.isString(fn)) {
-                    m = o[fn];
-                }
-
-                if (!m) {
-                    S.error('method undefined');
-                }
-
-                f = function() {
-                    m.apply(o, d);
-                };
-
-                r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-                return {
-                    id: r,
-                    interval: periodic,
-                    cancel: function() {
-                        if (this.interval) {
-                            clearInterval(r);
-                        } else {
-                            clearTimeout(r);
-                        }
-                    }
-                };
-            },
-
-            startsWith:function(str, prefix) {
-                return str.lastIndexOf(prefix, 0) == 0;
-            },
-
-            endsWith:function(str, suffix) {
-                var ind = str.length - suffix.length;
-                return str.indexOf(suffix, ind) == ind;
             }
 
-        });
+            // clear marked
+            if (!cloned) {
+                S.each(marked, function(v) {
+                    if (v[CLONE_MARKER]) {
+                        try {
+                            delete v[CLONE_MARKER];
+                        } catch (e) {
+                            v[CLONE_MARKER] = undefined;
+                        }
+                    }
+                });
+                marked = undefined;
+            }
+
+            return ret;
+        },
+
+        /**
+         * Removes the whitespace from the beginning and end of a string.
+         */
+        trim: trim ?
+            function(str) {
+                return (str == undefined) ? EMPTY : trim.call(str);
+            } :
+            function(str) {
+                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+            },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         */
+        substitute: function(str, o, regexp) {
+            if (!S.isString(str)
+                || !S.isPlainObject(o)) {
+                return str;
+            }
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+                if (match.charAt(0) === '\\') {
+                    return match.slice(1);
+                }
+                return (o[name] !== undefined) ? o[name] : EMPTY;
+            });
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param object {Object} the object to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param context {Object} (opt)
+         */
+        each: function(object, fn, context) {
+            var key,
+                val,
+                i = 0,
+                length = object && object.length,
+                isObj = length === undefined || S.type(object) === 'function';
+            context = context || host;
+
+            if (isObj) {
+                for (key in object) {
+                    if (fn.call(context, object[key], key, object) === false) {
+                        break;
+                    }
+                }
+            } else {
+                for (val = object[0];
+                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                }
+            }
+
+            return object;
+        },
+
+        /**
+         * Search for a specified value within an array.
+         */
+        indexOf: indexOf ?
+            function(item, arr) {
+                return indexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === item) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+
+        /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function(item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function(item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of uniques for
+         * @param override {Boolean}
+         *        if override is true, S.unique([a, b, a]) => [b, a]
+         *        if override is false, S.unique([a, b, a]) => [a, b]
+         * @return {Array} a copy of the array with duplicate entries removed
+         */
+        unique: function(a, override) {
+            var b = a.slice();
+            if (override) {
+                b.reverse();
+            }
+            var i = 0,
+                n,
+                item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if (override) {
+                b.reverse();
+            }
+            return b;
+        },
+
+        /**
+         * Search for a specified value index within an array.
+         */
+        inArray: function(item, arr) {
+            return S.indexOf(item, arr) > -1;
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned true for.
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param context {Object} optional context object
+         * @return {Array} The items on which the supplied function
+         *         returned true. If no items matched an empty array is
+         *         returned.
+         */
+        filter: filter ?
+            function(arr, fn, context) {
+                return filter.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var ret = [];
+                S.each(arr, function(item, i, arr) {
+                    if (fn.call(context || this, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
+        // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+        map:map ?
+            function(arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                    if (el
+                        ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
+                    }
+                }
+                return res;
+            },
+
+        /**
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         */
+        reduce:/*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
+         return arr.reduce(callback, initialValue);
+         } : */function(arr, callback, initialValue) {
+            var len = arr.length;
+            if (typeof callback !== "function")
+                throw new TypeError();
+
+            // no value to return if no initial value and an empty array
+            if (len == 0 && arguments.length == 2)
+                throw new TypeError();
+
+            var k = 0;
+            var accumulator;
+            if (arguments.length >= 3) {
+                accumulator = arguments[2];
+            }
+            else {
+                do {
+                    if (k in arr) {
+                        accumulator = arr[k++];
+                        break;
+                    }
+
+                    // if array contains no values, no initial value to return
+                    if (++k >= len)
+                        throw new TypeError();
+                }
+                while (true);
+            }
+
+            while (k < len) {
+                if (k in arr) {
+                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                }
+                k++;
+            }
+
+            return accumulator;
+        },
+
+        /**
+         * it is not same with native bind
+         * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         */
+        bind:function(fn, obj) {
+            var slice = [].slice,
+                args = slice.call(arguments, 2),
+                bound = function () {
+                    return fn.apply(this instanceof bound ? this : obj,
+                        args.concat(slice.call(arguments)));
+                };
+            bound.prototype = fn.prototype;
+            return bound;
+        },
+
+        /**
+         * Gets current date in milliseconds.
+         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
+         * http://kangax.github.com/es5-compat-table/
+         */
+        now: Date.now || function() {
+            return +new Date();
+        },
+        /**
+         * frequently used in taobao cookie about nick
+         */
+        fromUnicode:function(str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+                return  String.fromCharCode(parseInt(u, 16));
+            });
+        },
+        /**
+         * escape string to html
+         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @param str {string} text2html show
+         */
+        escapeHTML:function(str) {
+            return str.replace(getEscapeReg(), function(m) {
+                return reverseEntities[m];
+            });
+        },
+
+        /**
+         * unescape html to string
+         * @param str {string} html2text
+         */
+        unEscapeHTML:function(str) {
+            return str.replace(getUnEscapeReg(), function(m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+        /**
+         * Converts object to a true array.
+         * @param o {object|Array} array like object or array
+         */
+        makeArray: function(o) {
+            if (o === null || o === undefined) return [];
+            if (S.isArray(o)) return o;
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                return [o];
+            }
+            var ret = [];
+            for (var i = 0,l = o.length; i < l; i++) {
+                ret[i] = o[i];
+            }
+            return ret;
+        },
+        /**
+         * Creates a serialized string of an array or object.
+         * @return {String}
+         * <code>
+         * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+         * {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+         * </code>
+         */
+        param: function(o, sep, eq, arr) {
+            if (!S.isPlainObject(o)) return EMPTY;
+            sep = sep || SEP;
+            eq = eq || EQ;
+            if (S.isUndefined(arr)) arr = true;
+            var buf = [], key, val;
+            for (key in o) {
+                val = o[key];
+                key = encode(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key, eq, encode(val + EMPTY), sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (var i = 0, len = val.length; i < len; ++i) {
+                        if (isValidParamValue(val[i])) {
+                            buf.push(key,
+                                (arr ? encode("[]") : EMPTY),
+                                eq, encode(val[i] + EMPTY), sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         * <code>
+         * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         * 'id=45&raw'        // -> {id: '45', raw: ''}
+         * </code>
+         */
+        unparam: function(str, sep, eq) {
+            if (typeof str !== 'string'
+                || (str = S.trim(str)).length === 0) {
+                return {};
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            var ret = {},
+                pairs = str.split(sep),
+                pair, key, val,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                pair = pairs[i].split(eq);
+                key = decode(pair[0]);
+                try {
+                    val = decode(pair[1] || EMPTY);
+                } catch(e) {
+                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    val = pair[1] || EMPTY;
+                }
+                if (S.endsWith(key, "[]")) {
+                    key = key.substring(0, key.length - 2);
+                }
+                if (hasOwnProperty.call(ret, key)) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key],val];
+                    }
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        },
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         * @param fn {Function|String} the function to execute or the name of the method in
+         *        the 'o' object to execute.
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         *        until canceled.
+         * @param o {Object} the context object.
+         * @param data [Array] that is provided to the function. This accepts either a single
+         *        item or an array. If an array is provided, the function is executed with
+         *        one parameter for each array item. If you need to pass a single array
+         *        parameter, it needs to be wrapped in an array [myarray].
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         *         the timer.
+         */
+        later: function(fn, when, periodic, o, data) {
+            when = when || 0;
+            o = o || { };
+            var m = fn, d = S.makeArray(data), f, r;
+
+            if (S.isString(fn)) {
+                m = o[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function() {
+                m.apply(o, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function() {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
+                    }
+                }
+            };
+        },
+
+        startsWith:function(str, prefix) {
+            return str.lastIndexOf(prefix, 0) == 0;
+        },
+
+        endsWith:function(str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) == ind;
+        }
+
+    });
 
     // for idea ..... auto-hint
     S.mix(S, {
-            isBoolean:isValidParamValue,
-            isNumber:isValidParamValue,
-            isString:isValidParamValue,
-            isFunction:isValidParamValue,
-            isArray:isValidParamValue,
-            isDate:isValidParamValue,
-            isRegExp:isValidParamValue,
-            isObject:isValidParamValue
-        });
+        isBoolean:isValidParamValue,
+        isNumber:isValidParamValue,
+        isString:isValidParamValue,
+        isFunction:isValidParamValue,
+        isArray:isValidParamValue,
+        isDate:isValidParamValue,
+        isRegExp:isValidParamValue,
+        isObject:isValidParamValue
+    });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
         function(name, lc) {
@@ -1649,7 +1685,7 @@ build time: ${build.time}
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * @module loader
  * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
- * @description: constant memeber and common method holder
+ * @description: constant member and common method holder
  */
 (function(S, loader,data) {
     if("require" in this) return;
@@ -1739,92 +1775,86 @@ build time: ${build.time}
     if ("require" in this) return;
     var win = S.__HOST,
         doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        buildTime = encodeURIComponent(S.buildTime);
+        head = doc.getElementsByTagName('head')[0] || doc.documentElement;
 
     S.mix(loader, {
 
-        /**
-         * 包声明
-         * biz -> .
-         * 表示遇到 biz/x
-         * 在当前网页路径找 biz/x.js
-         */
-        _packages:function(cfgs) {
-            var self = this,
-                ps;
-            ps = self.__packages = self.__packages || {};
-            S.each(cfgs, function(cfg) {
-                ps[cfg.name] = cfg;
-                if (cfg.path) {
+            /**
+             * 包声明
+             * biz -> .
+             * 表示遇到 biz/x
+             * 在当前网页路径找 biz/x.js
+             */
+            _packages:function(cfgs) {
+                var self = this,
+                    ps;
+                ps = self.__packages = self.__packages || {};
+                S.each(cfgs, function(cfg) {
+                    ps[cfg.name] = cfg;
                     //注意正则化
-                    cfg.path = utils.normalBasePath(cfg.path);
-                }
-                if (cfg.tag) {
-                    cfg.tag = encodeURIComponent(cfg.tag);
-                }
-            });
-        },
-
-        __getPackagePath:function(mod) {
-            //缓存包路径，未申明的包的模块都到核心模块中找
-            if (mod.packagepath) {
-                return mod.packagepath;
-            }
-            var self = this,
-                //一个模块合并到了另一个模块文件中去
-                modName = self._combine(mod.name),
-                packages = self.__packages || {},
-                pName = "",
-                p_def,
-                p_path;
-
-            for (var p in packages) {
-                if (packages.hasOwnProperty(p)
-                    && S.startsWith(modName, p)
-                    && p.length > pName
-                    ) {
-                    pName = p;
-                }
-            }
-            p_def = packages[pName];
-            p_path = (p_def && p_def.path) || self.Config.base;
-            if (p_def && p_def.charset) {
-                mod.charset = p_def.charset;
-            }
-            if (p_def) {
-                mod.tag = p_def.tag;
-            } else {
-                mod.tag = buildTime;
-            }
-            mod.packagepath = p_path;
-            return p_path;
-        },
-        /**
-         * compress 'from module' to 'to module'
-         * {
-         *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
-         * }
-         */
-        _combine:function(from, to) {
-            var self = this,
-                cs;
-            if (S.isObject(from)) {
-                S.each(from, function(v, k) {
-                    S.each(v, function(v2) {
-                        self._combine(v2, k);
-                    });
+                    cfg.path = cfg.path && utils.normalBasePath(cfg.path);
+                    cfg.tag = cfg.tag && encodeURIComponent(cfg.tag);
                 });
-                return;
+            },
+
+            __getPackagePath:function(mod) {
+                //缓存包路径，未申明的包的模块都到核心模块中找
+                if (mod.packagepath) {
+                    return mod.packagepath;
+                }
+                var self = this,
+                    //一个模块合并到了另一个模块文件中去
+                    modName = self._combine(mod.name),
+                    packages = self.__packages || {},
+                    pName = "",
+                    p_def,
+                    p_path;
+
+                for (var p in packages) {
+                    if (packages.hasOwnProperty(p)
+                        && S.startsWith(modName, p)
+                        && p.length > pName
+                        ) {
+                        pName = p;
+                    }
+                }
+                p_def = packages[pName];
+                p_path = (p_def && p_def.path) || self.Config.base;
+                mod.charset = p_def && p_def.charset;
+                if (p_def) {
+                    mod.tag = p_def.tag;
+                } else {
+                    // kissy 自身组件的事件戳后缀
+                    mod.tag = encodeURIComponent(S.Config.tag || S.buildTime);
+                }
+                mod.packagepath = p_path;
+                return p_path;
+            },
+            /**
+             * compress 'from module' to 'to module'
+             * {
+             *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
+             * }
+             */
+            _combine:function(from, to) {
+                var self = this,
+                    cs;
+                if (S.isObject(from)) {
+                    S.each(from, function(v, k) {
+                        S.each(v, function(v2) {
+                            self._combine(v2, k);
+                        });
+                    });
+                    return;
+                }
+                cs = self.__combines = self.__combines || {};
+                if (to) {
+                    cs[from] = to;
+                } else {
+                    return cs[from] || from;
+                }
             }
-            cs = self.__combines = self.__combines || {};
-            if (to) {
-                cs[from] = to;
-            } else {
-                return cs[from] || from;
-            }
-        }
-    });
+        });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * register module ,associate module name with module factory(definition)
  * @author: lifesinger@gmail.com,yiminghe@gmail.com

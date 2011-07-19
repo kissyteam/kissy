@@ -1,0 +1,368 @@
+/*
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache 2.0 License.
+ * See the COPYING file for details.
+ */
+
+/*
+ * Styling for custom buttons rendered by.c2c.ui.CustomButtonRenderer.
+ *
+ * @author attila.c2cle.com (Attila Bodis)
+ */
+.c2c-inline-block {
+    position: relative;
+    display: -moz-inline-box; /* Ignored by FF3 and later. */
+    display: inline-block;
+}
+
+* html .c2c-inline-block {
+    display: inline;
+}
+
+*:first-child+html .c2c-inline-block {
+    display: inline;
+}
+
+/* custom button begin */
+.c2c-custom-button {
+    margin: 2px;
+    border: 0;
+    padding: 0;
+    /* Client apps may override the URL at which they serve the image. */
+    text-decoration: none;
+    list-style: none;
+    vertical-align: middle;
+    cursor: default;
+    outline: none;
+    background-color: #FFF;
+    line-height: 18px;
+}
+
+/* Pseudo-rounded corners. */
+.c2c-custom-button-outer-box,
+.c2c-custom-button-inner-box {
+    border-style: solid;
+    border-color: #8ab6dd;
+    vertical-align: top;
+}
+
+.c2c-custom-button-outer-box {
+    margin: 0;
+    border-width: 1px 0;
+    padding: 0;
+}
+
+.c2c-menu-button-open .c2c-custom-button-outer-box {
+    /* border-bottom:none; */
+}
+
+.c2c-custom-button-inner-box {
+    /* By default in FF2, block elements inside a moz-inline-box are stacked
+* horizontally next to each other.  This stops that weird behavior. */
+    -moz-box-orient: vertical;
+    border-width: 0 1px;
+    white-space: nowrap; /* Prevents buttons from line breaking on android. */
+}
+
+/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
+* html .c2c-custom-button-inner-box {
+    /* IE6 needs to have the box shifted to make the borders line up. */
+    left: -1px;
+}
+
+/* Pre-IE7 BiDi fixes. */
+* html .c2c-custom-button-rtl .c2c-custom-button-outer-box {
+    /* @noflip */
+    left: -1px;
+}
+
+* html .c2c-custom-button-rtl .c2c-custom-button-inner-box {
+    /* @noflip */
+    right: auto;
+}
+
+/* IE7-only hack; ignored by all other browsers. */
+*:first-child+html .c2c-custom-button-inner-box {
+    /* IE7 needs to have the box shifted to make the borders line up. */
+    left: -1px;
+}
+
+/* IE7 BiDi fix. */
+*:first-child+html .c2c-custom-button-rtl .c2c-custom-button-inner-box {
+    /* @noflip */
+    left: 1px;
+}
+
+/* Safari-only hacks. */
+::root .c2c-custom-button,
+::root .c2c-custom-button-outer-box {
+    /* Required to make pseudo-rounded corners work on Safari. */
+    line-height: 0;
+}
+
+::root .c2c-custom-button-inner-box {
+    /* Required to make pseudo-rounded corners work on Safari. */
+    line-height: normal;
+}
+
+/* State: disabled. */
+.c2c-custom-button-disabled {
+    background-image: none !important;
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
+}
+
+.c2c-custom-button-disabled .c2c-custom-button-outer-box,
+.c2c-custom-button-disabled .c2c-custom-button-inner-box {
+    border-color: #999 !important;
+}
+
+/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
+* html .c2c-custom-button-disabled {
+    margin: 2px 1px !important;
+    padding: 0 1px !important;
+}
+
+/* IE7-only hack; ignored by all other browsers. */
+*:first-child+html .c2c-custom-button-disabled {
+    margin: 2px 1px !important;
+    padding: 0 1px !important;
+}
+
+/* State: hover. */
+.c2c-custom-button-hover .c2c-custom-button-outer-box,
+.c2c-custom-button-hover .c2c-custom-button-inner-box,
+.c2c-menu-buttonmenu-button-open .c2c-custom-button-outer-box,
+.c2c-menu-buttonmenu-button-open .c2c-custom-button-inner-box {
+    border-color: #ffad33 !important; /* Hover border wins. */
+}
+
+/* State: active, checked. */
+.c2c-custom-button-active,
+.c2c-custom-button-checked {
+    /*
+     background-color: #bbb;
+     background-position: bottom left;
+    */
+}
+
+/* State: focused. */
+.c2c-custom-button-focused .c2c-custom-button-outer-box,
+.c2c-custom-button-focused .c2c-custom-button-inner-box {
+    /*border-color: orange;*/
+}
+
+/* Pill (collapsed border) styles. */
+.c2c-custom-button-collapse-right,
+.c2c-custom-button-collapse-right .c2c-custom-button-outer-box,
+.c2c-custom-button-collapse-right .c2c-custom-button-inner-box {
+    margin-right: 0;
+}
+
+.c2c-custom-button-collapse-left,
+.c2c-custom-button-collapse-left .c2c-custom-button-outer-box,
+.c2c-custom-button-collapse-left .c2c-custom-button-inner-box {
+    margin-left: 0;
+}
+
+.c2c-custom-button-collapse-left .c2c-custom-button-inner-box {
+    border-left: 1px solid #fff;
+}
+
+.c2c-custom-button-collapse-left.c2c-custom-button-checked
+.c2c-custom-button-inner-box {
+    border-left: 1px solid #ddd;
+}
+
+/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
+* html .c2c-custom-button-collapse-left .c2c-custom-button-inner-box {
+    left: 0;
+}
+
+/* IE7-only hack; ignored by all other browsers. */
+*:first-child+html .c2c-custom-button-collapse-left
+.c2c-custom-button-inner-box {
+    left: 0;
+}
+
+/* custom button end */
+
+/* menu arrow icon begin */
+
+/* Safari-only hacks. */
+::root .c2c-menu-button,
+::root .c2c-menu-button-outer-box,
+::root .c2c-menu-button-inner-box {
+    /* Required to make pseudo-rounded corners work on Safari. */
+    line-height: 0;
+}
+
+::root .c2c-menu-button-caption,
+::root .c2c-menu-button-dropdown {
+    /* Required to make pseudo-rounded corners work on Safari. */
+    line-height: normal;
+}
+
+/* State: disabled. */
+.c2c-menu-button-disabled {
+    background-image: none !important;
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
+}
+
+.c2c-menu-button-disabled .c2c-menu-button-outer-box,
+.c2c-menu-button-disabled .c2c-menu-button-inner-box,
+.c2c-menu-button-disabled .c2c-menu-button-caption,
+.c2c-menu-button-disabled .c2c-menu-button-dropdown {
+    border-color: #999 !important;
+}
+
+/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
+* html .c2c-menu-button-disabled {
+    margin: 2px 1px !important;
+    padding: 0 1px !important;
+}
+
+/* IE7-only hack; ignored by all other browsers. */
+*:first-child+html .c2c-menu-button-disabled {
+    margin: 2px 1px !important;
+    padding: 0 1px !important;
+}
+
+/* State: hover. */
+.c2c-menu-button-hover .c2c-menu-button-outer-box,
+.c2c-menu-button-hover .c2c-menu-button-inner-box {
+    border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
+}
+
+/* State: active, open. */
+.c2c-menu-button-active,
+.c2c-menu-button-open {
+
+}
+
+/* State: focused. */
+.c2c-menu-button-focused .c2c-menu-button-outer-box,
+.c2c-menu-button-focused .c2c-menu-button-inner-box {
+    border-color: orange;
+}
+
+/* Caption style. */
+.c2c-menu-button-caption {
+    padding: 0 4px 0 0;
+    vertical-align: top;
+    margin: 0 4px;
+}
+
+/* Dropdown arrow style. */
+.c2c-menu-button-dropdown {
+    height: 20px;
+    width: 20px;
+    /* Client apps may override the URL at which they serve the sprite. */
+    background: url(http://img01.taobaocdn.com/tps/i1/T1xqXwXmRuXXXXXXXX-22-44.png) no-repeat -1px -1px;
+    vertical-align: top;
+}
+
+.c2c-custom-button-hover .c2c-menu-button-dropdown, .c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown {
+    background-position: -1px -23px;
+}
+
+.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown, .c2c-custom-button-hover .c2c-menu-button-dropdown {
+    border-color: #ffad33;
+}
+
+/* menu arrow icon end */
+/* menu begin */
+
+.c2c-menu {
+    background: #fff;
+    border: 1px solid #ffad33;
+    cursor: default;
+    margin: 0;
+    outline: none;
+    padding: 4px 0;
+    position: absolute;
+    z-index: 20000; /* Arbitrary, but some apps depend on it... */
+}
+
+/* menu end */
+/* menu item begin */
+/* State: resting. */
+.c2c-menuitem {
+    list-style: none;
+    margin: 0;
+    /* 28px on the left for icon or checkbox; 7em on the right for shortcut. */
+    padding: 4px;
+    white-space: nowrap;
+}
+
+/* If a menu doesn't have checkable items or items with icons, remove padding. */
+.c2c-menu-nocheckbox .c2c-menuitem,
+.c2c-menu-noicon .c2c-menuitem {
+    padding-left: 12px;
+}
+
+/*
+ * If a menu doesn't have items with shortcuts, leave just enough room for
+ * submenu arrows, if they are rendered.
+ */
+.c2c-menu-noaccel .c2c-menuitem {
+    padding-right: 20px;
+}
+
+.c2c-menuitem-content {
+    font: normal 13px Arial, sans-serif;
+}
+
+/* State: disabled. */
+.c2c-menuitem-disabled .c2c-menuitem-accel,
+.c2c-menuitem-disabled .c2c-menuitem-content {
+}
+
+.c2c-menuitem-disabled .c2c-menuitem-icon {
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
+}
+
+/* State: hover. */
+.c2c-menuitem-highlight,
+.c2c-menuitem-hover {
+    background-color: #ffefd6;
+    /* Use an explicit top and bottom border so that the selection is visible
+* in high contrast mode. */
+    border: 1px solid #ffe0b2;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    margin: 0 3px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* State: selected/checked. */
+.c2c-menuitem-checkbox,
+.c2c-menuitem-icon {
+    background-repeat: no-repeat;
+    height: 16px;
+    left: 6px;
+    position: absolute;
+    right: auto;
+    vertical-align: middle;
+    width: 16px;
+}
+
+/* Keyboard shortcut ("accelerator") style. */
+.c2c-menuitem-accel {
+    /* Keyboard shortcuts are untranslated; always left-to-right. */
+    /* @noflip */
+    direction: ltr;
+    left: auto;
+    padding: 0 6px;
+    position: absolute;
+    right: 0;
+    text-align: right;
+}
+/* menu item end */

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: ${build.time}
+build time: Jul 18 18:22
 */
 /**
  * @module   anim
@@ -592,7 +592,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  */
 /**
  * special patch for making color gradual change
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
@@ -905,7 +905,7 @@ KISSY.add('anim/easing', function(S) {
  */
 /**
  * single timer for the whole anim module
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
     var tag = S.guid("anim-"),id = 1;
@@ -976,7 +976,7 @@ KISSY.add("anim/manager", function(S) {
     };
 });/**
  * special patch for animate scroll property of element
- * @author:yiminghe@gmail.com
+ * @author: yiminghe@gmail.com
  */
 KISSY.add("anim/scroll", function(S, DOM, Anim) {
 

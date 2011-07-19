@@ -3,10 +3,10 @@
  * @author: 常胤 <lzlu.com>
  */
 
-KISSY.add("validation/rule", function(S, Util, Rule, Normal) {
+KISSY.add("validation/rule", function(S, Util, Rule) {
 
 	return Rule;
 
-}, { requires: ["validation/utils", "validation/rule/base", "validation/rule/normal"] });
+}, { requires: ["./utils", "./rule/base", "./rule/normal"] });
 
 

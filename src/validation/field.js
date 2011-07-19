@@ -3,7 +3,7 @@
  * @author: 常胤 <lzlu.com>
  */
 
-KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote, Warn, undefined){
+KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote, Warn){
 
 	var symbol = Define.Const.enumvalidsign,
 		doc = document;
@@ -16,7 +16,8 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 	 * @param config {Object} 配置
      */
 	function Field(el,config) {
-		var self = this, el = S.get(el);
+		var self = this;
+        el = S.get(el);
 		if(!el){
 			Util.log("字段不存在。");
 			return;
@@ -35,13 +36,13 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		//init
 		self._init(config);
 		
-	};
+	}
 	
 	//默认配置
 	Field.Config = {
 		required: [true,'此项为必填项。'],
 		initerror : "data-showerror"
-	}
+	};
 	
 	S.augment(Field, {
 	
@@ -62,7 +63,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 			self._initVType(cfg);
 			
 			//初始化提示组件
-			self._initWarn(cfg)
+			self._initWarn(cfg);
 			
 			//显示初始化错误
 			if(DOM.attr(self.el,cfg.initerror)){
@@ -110,8 +111,9 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 			// TODO
 			
 			//ajax校验
-			if(vtype.remote){
-				var ajaxcfg = S.isArray(vtype.remote)?{url:vtype.remote[0]}:vtype.remote;
+			if(vtype['remote']){
+				var ajaxcfg = S.isArray(vtype['remote'])?{url:vtype['remote'][0]}
+                    :vtype['remote'];
 				var callback = function(est,msg){
 					self.showMessage(est,msg);
 				};
@@ -178,11 +180,10 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 
 		/**
 		 * 核心函数，执行校验
-		 * @param {String} eventType 驱动验证的类型
 		 * 1.事件驱动focus，blur,click等
 		 * 2.方法驱动submit
 		 */
-		_validateValue: function(eventType){
+		_validateValue: function(){
 			var self = this,
 				rule = self.rule,
 				value = self._getValue(),
@@ -198,7 +199,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					if(!r)return true;
 					if(!S.isArray(r))r = [r];
 					for(var i=0; i<r.length; i++){
-						var result = item.call(this,value);
+						var result = r[i].call(this,value);
 						if(!Util.isEmpty(result))return result;
 					}
 					return true;
@@ -206,23 +207,31 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 			
 
 			//无需校验
-			if(DOM.attr(self.el,"disabled")==true || DOM.hasClass(self.el,"disabled")){
-				return make(symbol.ignore);
+			if(DOM.attr(self.el,"disabled")
+                || DOM.hasClass(self.el,"disabled")){
+				return make(symbol.ignore,undefined);
 			}
 			
 			//依赖校验
 			if(rs["depend"] && rs["depend"].call(this,value)!==true){
-				return make(symbol.ignore);
+				return make(symbol.ignore,undefined);
 			}
+			
+
 			
 			//执行所有校验
 			
 			for(var v in rs){
-				//required
 				if(v=="required"){
-					if(self.label && Util.isEmpty(value))return make(symbol.hint,self.label);
+					var require = rs["required"].call(this,value);
+					if(require){
+						return self.label?make(symbol.hint,self.label):make(symbol.error,require);
+					}else{
+						if(Util.isEmpty(value)) return make(symbol.ignore,"");
+					}
 				}
-				//这两个外面已经处理了
+				
+				//这个外面已经处理了
 				if("depend".indexOf(v)>-1){
 					continue;
 				}
@@ -232,7 +241,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 				}
 				var result = rs[v].call(this,value);
 				if(!Util.isEmpty(result)){
-					self._ajaxtimer && self._ajaxtimer.cancel();
+					self['_ajaxtimer'] && self['_ajaxtimer'].cancel();
 					return make(symbol.error,result);
 				}
 			}
@@ -243,7 +252,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 			}
 
 			//通过校验
-			return make(symbol.ok,self.okMsg||"OK");
+			return make(symbol.ok,self['okMsg']||"OK");
 			
 		},
 		
@@ -264,9 +273,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					});
 					break;
 				case "radio":
-					S.each(ele,function(el){
-						if(el.checked)val.push(el.value);
-					});
 				case "checkbox":
 					S.each(ele,function(el){
 						if(el.checked)val.push(el.value);
@@ -336,7 +342,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		isValid: function(){
 			var self = this, result = self._validateValue("submit");
 			self.showMessage(result[1],result[0],'submit');
-			return result[1]==0?false:true;
+			return result[1]!=0;
 		}
 		
 	});
@@ -344,4 +350,4 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 
 	return Field;
 		
-}, { requires: ['dom',"event","validation/utils","validation/define","validation/rule","validation/rule/remote","validation/warn"] });
+}, { requires: ['dom',"event","./utils","./define","./rule","./rule/remote","./warn"] });

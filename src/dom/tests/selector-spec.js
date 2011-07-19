@@ -1,3 +1,7 @@
+/**
+ * simple selector test
+ * @author lifesinger@gmail.com,yiminghe@gmail.com
+ */
 KISSY.use("dom", function(S, DOM) {
     S.get = DOM.get;
     S.query = DOM.query;

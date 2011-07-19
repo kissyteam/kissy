@@ -3,11 +3,15 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Validation</title>
-	<link rel="stylesheet" type="text/css"  href="http://docs.kissyui.com/kissy-dpl/base/build/css/dpl-pkg.css" />
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
 	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
-	<script src="doc.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
 	
 	
 </head>
@@ -24,7 +28,7 @@
 
 <div class="note">
 
-<pre>
+<pre class="brush: js;">
 //Validation.Rule.toString(rulename)方法可以很方便的打印出校验规则
 //方便查看校验规则的实现方法，知道要传入哪些参数
 
@@ -87,30 +91,18 @@ console.log(Validation.Rule.toString("func"););
 			return Validation.Rule.toString(name);
 		}
 		
-		/*if(input.val()){
-			see.html(Highlighter.Execute(getcode(input.val()), "js"));
-		}
-		
-		S.one("#btn").on("click",function(){
-			see.html(Highlighter.Execute(getcode(input.val()), "js"));
-		})
 
-		input.on("keydown",function(ev){
-			if(ev.keyCode==13){
-				see.html(Highlighter.Execute(getcode(input.val()), "js"));
-			}
-		});*/
 		
 		
 		S.Event.on("#rulelist", "change", function(ev){
 			var tg = ev.target,
 				option = tg.options[tg.selectedIndex].text;
-			if(option)see.html(Highlighter.Execute(getcode(option), "js"));
+			if(option)see.html("<pre>"+getcode(option)+"</pre>");
 			
-		})
+		});
 		
-		S.get("#rulelist").value="func";
-		see.html(Highlighter.Execute(getcode("func"), "js"));
+		//S.get("#rulelist").value="func";
+		//see.html("<pre>"+(getcode("func"), "js")+"</pre>");
 		
 
 	});
@@ -124,7 +116,7 @@ console.log(Validation.Rule.toString("func"););
 
 
 
-<script src="http://docs.kissyui.com/kissy-util/adaptive-frame/adaptive-frame.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+
 
 
 </body>

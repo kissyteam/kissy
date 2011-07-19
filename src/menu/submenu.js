@@ -1,177 +1,239 @@
 /**
  * submenu model and control for kissy , transfer item's keycode to menu
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add(
     /* or precisely submenuitem */
     "menu/submenu",
     function(S, UIBase, Component, MenuItem, SubMenuRender) {
         var SubMenu;
+
+        /**
+         * Class representing a submenu that can be added as an item to other menus.
+         */
         SubMenu = UIBase.create(MenuItem, {
-            _handleMouseLeave:function(ev) {
-                /**
-                 * menuitem leave 会设成 false
-                 * 这里不要继承 menuitem ，直接重写组件最顶层基类
-                 */
-                if (MenuItem.superclass._handleMouseLeave.call(this, ev) === false) {
-                    return false;
-                }
 
-                var menu = this.get("menu");
-                //到了子菜单中，高亮不要消失
-                if (menu && menu.get("visible")
-                    &&
-                    (menu.get("view").get("el").contains(ev.relatedTarget)
-                        || menu.get("view").get("el")[0] == ev.relatedTarget[0]
-                        )
-                    ) {
-                    //S.log("submenuitem highlighted unchanged");
-                    return;
-                }
-                //S.log("submenuitem highlighted changed !!!!!!!!!!");
-                this.set("highlighted", false);
-            },
+                _onParentHide:function() {
+                    this.get("menu") && this.get("menu").hide();
+                },
 
-            _uiSetHighlighted:function(v) {
-                this.get("view").set("highlighted", v);
-                if (!v) {
-                    this._hideSubMenu();
-                }
-                // 不负责显示，显示两种方式
-                // 1. submenuitem mouseenter
-                // 2. submenuitem 当前右键
-            },
+                bindUI:function() {
+                    /**
+                     * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
+                     */
+                    var self = this,
+                        parentMenu = self.get("parent"),
+                        menu = this.get("menu");
 
-            bindUI:function() {
-                /**
-                 * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
-                 */
-                var self = this,
-                    parentMenu = self.get("parent");
+                    //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+                    if (parentMenu) {
 
-                var menu = this.get("menu");
+                        parentMenu.on("hide", self._onParentHide, self);
 
-                //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
-                if (parentMenu) {
-                    parentMenu.on("hide", function() {
-                        if (self.get("menu")) {
-                            self.get("menu").hide();
-                        }
-                    });
-
-                    // 子菜单选中后也要通知父级菜单
-                    // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-                    // 单个 menu 来看可能 selectedItem没有变化
-                    menu.on("menuItemClick", function(ev) {
-                        parentMenu.fire("menuItemClick", {
-                            menuItem:ev.menuItem
+                        // 子菜单选中后也要通知父级菜单
+                        // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
+                        // 单个 menu 来看可能 selectedItem没有变化
+                        menu.on("click", function(ev) {
+                            parentMenu.fire("click", {
+                                target:ev.target
+                            });
                         });
-                    });
 
-                    // 通知父级菜单
-                    menu.on("afterHighlightedItemChange afterActiveItemChange", function(ev) {
-                        S.log("通知父级菜单 : " + ev.newVal + "  : " + ev.type);
-                        parentMenu.set("activeItem", ev.newVal);
-                    });
+                        // 通知父级菜单
+                        menu.on("afterActiveItemChange", function(ev) {
+                            parentMenu.set("activeItem", ev.newVal);
+                        });
+                    }
+                    // 访问子菜单，当前 submenu 不隐藏 menu
+                    // leave submenuitem -> enter menuitem -> menu item highlight ->
+                    // -> menu highlight -> onChildHighlight_ ->
 
-                }
+                    // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
+                    // 这里的 onChildHighlight_ 比 afterHighlightedItemChange 先执行
+                    // 保险点用 beforeHighlightedItemChange
+                    menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
+                },
 
-
-                //!TODO
-                //parentMenu 的 aria-activedescendant 同步 menu 的 aria-activedescendant
-            },
-
-            _handleMouseEnter:function() {
-                if (SubMenu.superclass._handleMouseEnter.call(this) === false) return false;
-                this._showSubMenu();
-            },
-
-            _showSubMenu:function() {
-                var menu = this.get("menu");
-                menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
-                menu.render();
                 /**
-                 * If activation of your menuitem produces a popup menu,
-                 then the menuitem should have aria-haspopup set to the ID of the corresponding menu
-                 to allow the assistive technology to follow the menu hierarchy
-                 and assist the user in determining context during menu navigation.
-                 */
-                this.get("view").get("el").attr("aria-haspopup",
-                    menu.get("view").get("el").attr("id"));
-                menu.show();
-            },
+                 * @inheritDoc
+                 * Sets a timer to show the submenu
+                 **/
+                _handleMouseEnter:function(e) {
+                    if (SubMenu.superclass._handleMouseEnter.call(this, e)) {
+                        return true;
+                    }
+                    this.clearTimers();
+                    this.showTimer_ = S.later(this.showMenu, this.get("menuDelay"), false, this);
+                },
 
-            _hideSubMenu:function() {
-                var menu = this.get("menu");
-                menu && menu.hide();
-            },
-
-            _handleClickInternal:function(ev) {
-                //从键盘过来的，如果子菜单有高亮，则不要把自己当做选中项
-                if (ev && ev.type == "keydown") {
+                showMenu:function() {
                     var menu = this.get("menu");
-                    if (menu && menu.get("visible") && menu.get("highlightedItem")) {
-                        return;
+                    menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
+                    menu.render();
+                    /**
+                     * If activation of your menuitem produces a popup menu,
+                     then the menuitem should have aria-haspopup set to the ID of the corresponding menu
+                     to allow the assistive technology to follow the menu hierarchy
+                     and assist the user in determining context during menu navigation.
+                     */
+                    this.get("view").get("el").attr("aria-haspopup",
+                        menu.get("view").get("el").attr("id"));
+                    menu.show();
+                },
+
+
+                /**
+                 * Clears the show and hide timers for the sub menu.
+                 */
+                clearTimers : function() {
+                    if (this.dismissTimer_) {
+                        this.dismissTimer_.cancel();
+                        this.dismissTimer_ = null;
+                    }
+                    if (this.showTimer_) {
+                        this.showTimer_.cancel();
+                        this.showTimer_ = null;
+                    }
+                },
+
+                /**
+                 * Listens to the sub menus items and ensures that this menu item is selected
+                 * while dismissing the others.  This handles the case when the user mouses
+                 * over other items on their way to the sub menu.
+                 * @param  e Highlight event to handle.
+                 * @private
+                 */
+                onChildHighlight_ :function(e) {
+                    if (e.newVal) {
+                        if (this.get("menu").get("parent") == this) {
+                            this.clearTimers();
+                            // superclass(menuitem)._handleMouseLeave 已经把自己 highlight 去掉了
+                            // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
+                            this.get("parent").set("highlightedItem", this);
+                        }
+                    }
+                },
+
+                hideMenu:function() {
+                    var menu = this.get("menu");
+                    menu && menu.hide();
+                },
+
+                _handleClick:function(ev) {
+                    this.showMenu();
+                    var menu = this.get("menu");
+                    return menu._handleClick(ev);
+                },
+
+                /**
+                 * Handles a key event that is passed to the menu item from its parent because
+                 * it is highlighted.  If the right key is pressed the sub menu takes control
+                 * and delegates further key events to its menu until it is dismissed OR the
+                 * left key is pressed.
+                 * @param e A key event.
+                 * @return {boolean} Whether the event was handled.
+                 */
+                _handleKeydown:function(e) {
+
+                    if (SubMenu.superclass._handleKeydown.call(this, e)) {
+                        return true;
+                    }
+
+                    var menu = this.get("menu");
+
+                    var hasKeyboardControl_ = menu && menu.get("visible");
+
+                    var keyCode = e.keyCode;
+
+                    if (!hasKeyboardControl_) {
+                        // right
+                        if (keyCode == 39) {
+                            this.showMenu();
+                            var menuChildren = menu.get("children");
+                            if (menuChildren[0]) {
+                                menu.set("highlightedItem", menuChildren[0]);
+                            }
+                        } else {
+                            return undefined;
+                        }
+                    } else if (menu._handleKeydown(e)) {
+                    }
+                    // The menu has control and the key hasn't yet been handled, on left arrow
+                    // we turn off key control.
+                    // left
+                    else if (keyCode == 37) {
+                        this.hideMenu();
+                        // 隐藏后，当前激活项重回
+                        this.get("parent").set("activeItem", this);
+                    } else {
+                        return undefined;
+                    }
+                    return true;
+                },
+
+                /**
+                 * @inheritDoc
+                 * Dismisses the submenu on a delay, with the result that the user needs less
+                 * accuracy when moving to submenus.
+                 **/
+                _uiSetHighlighted:function(highlight, ev) {
+                    SubMenu.superclass._uiSetHighlighted.call(this, highlight, ev);
+                    if (!highlight) {
+                        if (this.dismissTimer_) {
+                            this.dismissTimer_.cancel();
+                        }
+                        this.dismissTimer_ = S.later(this.hideMenu,
+                            this.get("menuDelay"),
+                            false, this);
+                    }
+                },
+
+                containsElement:function(element) {
+                    var menu = this.get("menu");
+                    return menu && menu.containsElement(element);
+                },
+
+                destructor : function() {
+                    var self = this,
+                        parentMenu = self.get("parent"),
+                        menu = this.get("menu");
+
+                    self.clearTimers();
+
+                    //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+                    if (parentMenu) {
+                        parentMenu.detach("hide", self._onParentHide, self);
+                    }
+                    if (menu) {
+                        menu.destroy();
                     }
                 }
-                SubMenu.superclass._handleClickInternal.call(this);
             },
-
-            _handleKeydown:function(e) {
-
-
-                if (SubMenu.superclass._handleKeydown.call(this, e) === false) return false;
-
-                var menu = this.get("menu");
-
-                if (e.keyCode == 27) {
-                    this._hideSubMenu();
-                    return;
-                }
-
-
-                if (menu && menu.get("visible")) {
-                    if (menu._handleKeydown(e) === false) {
-                        //父亲不要处理了
-                        return false;
-                    }
-                }
-
-                //父亲不要处理了
-                //right
-                if (e.keyCode == 39 && (!menu ||
-                    !menu.get("visible"))) {
-                    this._showSubMenu();
-                    var menuChildren = menu.get("children");
-                    if (menuChildren[0]) {
-                        menuChildren[0].set("highlighted", true);
-                    }
-                    return false;
-                }
-                //left
-                else if (e.keyCode == 37 && menu && menu.get("visible")) {
-                    this._hideSubMenu();
-                    return false;
-                }
-
-
-            }
-
-        }, {
-            ATTRS:{
-                menu:{
-                    setter:function(m) {
-                        m.set("focusable", false);
+            {
+                ATTRS:{
+                    /**
+                     * The delay before opening the sub menu in milliseconds.  (This number is
+                     * arbitrary, it would be good to get some user studies or a designer to play
+                     * with some numbers).
+                     * @type {number}
+                     */
+                    menuDelay:{
+                        value:300
+                    },
+                    menu:{
+                        setter:function(m) {
+                            m.set("parent", this);
+                        }
                     }
                 }
             }
-        });
+        );
 
         SubMenu.DefaultRender = SubMenuRender;
         return SubMenu;
     }, {
-    requires:['uibase','component','./menuitem','./submenurender']
-});
+        requires:['uibase','component','./menuitem','./submenurender']
+    });
 
 /**
 
