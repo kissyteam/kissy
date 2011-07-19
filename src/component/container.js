@@ -2,7 +2,7 @@
  * container can delegate event for its children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/container", function(S, UIBase, MC) {
+KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
 
     return UIBase.create(MC, {
         bindUI:function() {
@@ -31,6 +31,21 @@ KISSY.add("component/container", function(S, UIBase, MC) {
                 }
             }
         },
+        /**
+         * container 需要在装饰时对儿子特殊处理，递归装饰
+         */
+        decorateInternal:function(el) {
+            var self = this;
+            self.set("el", el);
+            var children = el.children();
+            S.each(children, function(c) {
+                var cls = c.attr("class") || "";
+                // 过滤掉特定前缀
+                cls = cls.replace(new RegExp("(?:^|\\s+)" + this.get("prefixCls"), "ig"), "")
+                var UI = UIStore.getUIByClass(cls);
+                self.addChild(new UI({srcNode:c}));
+            });
+        },
         getOwnerControl:function(node) {
             var self = this,
                 children = self.get("children"),
@@ -50,5 +65,5 @@ KISSY.add("component/container", function(S, UIBase, MC) {
     });
 
 }, {
-    requires:['uibase','./modelcontrol']
+    requires:['uibase','./modelcontrol','./uistore']
 });

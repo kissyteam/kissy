@@ -1,6 +1,6 @@
 /**
  * UIBase.Box
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/box', function() {
 
@@ -44,6 +44,19 @@ KISSY.add('uibase/box', function() {
         },
         // 默认显示，但不触发事件
         visible:{}
+    };
+
+
+    Box.HTML_PARSER = {
+        el:function(srcNode) {
+            /**
+             * 如果需要特殊的对现有元素的装饰行为
+             */
+            if (this.decorateInternal) {
+                this.decorateInternal(srcNode);
+            }
+            return srcNode;
+        }
     };
 
     Box.prototype = {

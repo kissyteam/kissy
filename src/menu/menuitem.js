@@ -119,6 +119,11 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
     MenuItem.DefaultRender = MenuItemRender;
 
+    Component.UIStore.setUIByClass("menuitem", {
+        priority:10,
+        ui:MenuItem
+    });
+
     return MenuItem;
 }, {
     requires:['uibase','component','./menuitemrender']

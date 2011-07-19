@@ -230,6 +230,12 @@ KISSY.add(
         );
 
         SubMenu.DefaultRender = SubMenuRender;
+
+        Component.UIStore.setUIByClass("submenu", {
+            priority:20,
+            ui:SubMenu
+        });
+
         return SubMenu;
     }, {
         requires:['uibase','component','./menuitem','./submenurender']
