@@ -5,7 +5,7 @@
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
-        '{prefixCls}menu-button-caption"></div>' +
+        '{prefixCls}menu-button-caption">{content}</div>' +
         '<div class="{prefixCls}inline-block ' +
         '{prefixCls}menu-button-dropdown">&nbsp;</div>',
         CAPTION_CLS = "{prefixCls}menu-button-caption",
@@ -19,19 +19,23 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
 
     return UIBase.create(Button.Render, {
-        renderUI:function() {
-        },
 
         createDom:function() {
-            var el = this.get("el");
-            el.one("div").one("div").html(getCls(this, MENU_BUTTON_TMPL));
-            //带有 menu
-            el.attr("aria-haspopup", true);
+            var el = this.get("contentEl"),
+                html = S.substitute(MENU_BUTTON_TMPL, {
+                    content:this.get("content") || "",
+                    prefixCls:this.get("prefixCls")
+                });
+            el.one("div")
+                .html(html)
+                //带有 menu
+                .attr("aria-haspopup", true);
         },
 
         _uiSetContent:function(v) {
-            if (v == undefined) return;
-            this.get("el").one("." + getCls(this, CAPTION_CLS)).html(v);
+            var caption = this.get("el").one("." + getCls(this, CAPTION_CLS));
+            caption.html("");
+            caption.append(v);
         },
 
         _uiSetCollapsed:function(v) {

@@ -42,6 +42,7 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         __createDom:function() {
             var self = this,
                 contentEl,
+                c,
                 el = self.get("el"),
                 elChildren = S.makeArray(el[0].childNodes);
             contentEl = new Node(constructEl(
@@ -57,8 +58,8 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
                 for (var i = 0; i < elChildren.length; i++) {
                     contentEl.append(elChildren[i]);
                 }
-            } else if (self.get("content")) {
-                self._uiSetContent(self.get("content"));
+            } else if (c = self.get("content")) {
+                setContent(self, c);
             }
 
 
@@ -74,11 +75,15 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
             this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
-            var contentEl = this.get("contentEl");
-            contentEl.html("");
-            c && contentEl.append(c);
+            setContent(this, c);
         }
     };
+
+    function setContent(self, c) {
+        var contentEl = self.get("contentEl");
+        contentEl.html("");
+        c && contentEl.append(c);
+    }
 
     return ContentBox;
 }, {
