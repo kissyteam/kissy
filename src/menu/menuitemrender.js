@@ -5,25 +5,19 @@
 KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
 
-    var HIGHLIGHTED_CLS = "{prefixCls}menuitem-highlight",
-        CONTENTBOX_CLS = "{prefixCls}contentbox",
-        SELECTED_CLS = "{prefixCls}menuitem-selected",
-        CHECKED_CLS = "{prefixCls}menuitem-checked",
-        ACTIVE_CLS = "{prefixCls}menuitem-active",
-        CHECK_CLS = "{prefixCls}menuitem-checkbox",
-        CONTENT_CLS = "{prefixCls}menuitem-content",
-        EL_CLS = "{prefixCls}menuitem",
-        DISABLED_CLS = "{prefixCls}menuitem-disabled";
-
-    function getCls(self, str) {
-        return S.substitute(str, {
-            prefixCls:self.get("prefixCls")
-        });
-    }
+    var HIGHLIGHTED_CLS = "menuitem-highlight",
+        CONTENTBOX_CLS = "contentbox",
+        SELECTED_CLS = "menuitem-selected",
+        CHECKED_CLS = "menuitem-checked",
+        ACTIVE_CLS = "menuitem-active",
+        CHECK_CLS = "menuitem-checkbox",
+        CONTENT_CLS = "menuitem-content",
+        EL_CLS = "menuitem",
+        DISABLED_CLS = "menuitem-disabled";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            cls = getCls(self, CHECK_CLS),
+            cls = self.getCls(CHECK_CLS),
             checkEl = el.one("." + cls);
         if (!checkEl) {
             checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
@@ -37,42 +31,42 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            var cls = getCls(self, CONTENTBOX_CLS);
-            el.addClass(getCls(self, EL_CLS))
+            var cls = self.getCls(CONTENTBOX_CLS);
+            el.addClass(self.getCls(EL_CLS))
                 .attr("role", "menuitem");
-            self.get("contentEl").addClass(getCls(self, CONTENT_CLS));
+            self.get("contentEl").addClass(self.getCls(CONTENT_CLS));
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
         },
 
         _uiSetDisabled:function(v) {
-            var el = this.get("el").attr("aria-disabled", !!v);
+            var self = this,el = self.get("el").attr("aria-disabled", !!v);
             if (v) {
-                el.addClass(getCls(this, DISABLED_CLS));
+                el.addClass(self.getCls(DISABLED_CLS));
             } else {
-                el.removeClass(getCls(this, DISABLED_CLS));
+                el.removeClass(self.getCls(DISABLED_CLS));
             }
         },
 
         _uiSetHighlighted:function(v) {
-            var el = this.get("el");
+            var self = this,el = this.get("el");
             if (v) {
-                el.addClass(getCls(this, HIGHLIGHTED_CLS));
+                el.addClass(self.getCls(HIGHLIGHTED_CLS));
             } else {
-                el.removeClass(getCls(this, HIGHLIGHTED_CLS));
+                el.removeClass(self.getCls(HIGHLIGHTED_CLS));
             }
         },
 
         _uiSetSelected:function(v) {
-            var el = this.get("el");
-            el[v ? "addClass" : "removeClass"](getCls(this, SELECTED_CLS));
+            var self = this,el = self.get("el");
+            el[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
         },
 
         _uiSetChecked:function(v) {
-            var el = this.get("el");
-            el[v ? "addClass" : "removeClass"](getCls(this, CHECKED_CLS));
-            v && setUpCheckEl(this);
+            var self = this,el = self.get("el");
+            el[v ? "addClass" : "removeClass"](self.getCls(CHECKED_CLS));
+            v && setUpCheckEl(self);
         },
 
         _uiSetSelectable:function(v) {
@@ -84,14 +78,14 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _handleMouseDown:function() {
-            var el = this.get("el");
-            el.addClass(getCls(this, ACTIVE_CLS));
+            var self = this,el = this.get("el");
+            el.addClass(self.getCls(ACTIVE_CLS));
             el.attr("aria-pressed", true);
         },
 
         _handleMouseUp:function() {
-            var el = this.get("el");
-            el.removeClass(getCls(this, ACTIVE_CLS));
+            var self = this,el = this.get("el");
+            el.removeClass(self.getCls(ACTIVE_CLS));
             el.attr("aria-pressed", false);
         },
 

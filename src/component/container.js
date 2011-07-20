@@ -65,7 +65,7 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                 elem = this.get('view').get("el")[0];
             while (node && node !== elem) {
                 for (var i = 0; i < len; i++) {
-                    if (children[i].get("view").get("el")[0] === node) {
+                    if (children[i].get("el")[0] === node) {
                         return children[i];
                     }
                 }

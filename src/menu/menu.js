@@ -4,9 +4,7 @@
  */
 KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
-    var Menu;
-
-    Menu = UIBase.create(Component.Container, {
+    var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
@@ -180,10 +178,9 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             activeItem:{
                 view:true
             }
-        }
+        },
+        DefaultRender:MenuRender
     });
-
-    Menu.DefaultRender = MenuRender;
 
     Component.UIStore.setUIByClass("menu", {
         priority:10,

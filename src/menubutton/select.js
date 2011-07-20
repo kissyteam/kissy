@@ -87,7 +87,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
         element = S.one(element);
         var optionMenu = new Menu.PopupMenu(S.mix({
             prefixCls:cfg.prefixCls
-        }, cfg.menuCfg)),
+        }, cfg['menuCfg'])),
             selectedItem,
             curValue = element.val(),
             options = element.all("option");

@@ -6,12 +6,11 @@ KISSY.add(
     /* or precisely submenuitem */
     "menu/submenu",
     function(S, UIBase, Component, MenuItem, SubMenuRender) {
-        var SubMenu;
 
         /**
          * Class representing a submenu that can be added as an item to other menus.
          */
-        SubMenu = UIBase.create(MenuItem, {
+        var SubMenu = UIBase.create(MenuItem, {
 
                 _onParentHide:function() {
                     this.get("menu") && this.get("menu").hide();
@@ -68,7 +67,7 @@ KISSY.add(
 
                 showMenu:function() {
                     var menu = this.get("menu");
-                    menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
+                    menu.set("align", {node:this.get("el"), points:['tr','tl']});
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -76,8 +75,8 @@ KISSY.add(
                      to allow the assistive technology to follow the menu hierarchy
                      and assist the user in determining context during menu navigation.
                      */
-                    this.get("view").get("el").attr("aria-haspopup",
-                        menu.get("view").get("el").attr("id"));
+                    this.get("el").attr("aria-haspopup",
+                        menu.get("el").attr("id"));
                     menu.show();
                 },
 
@@ -253,11 +252,12 @@ KISSY.add(
                             m.set("parent", this);
                         }
                     }
-                }
+                },
+
+                DefaultRender:SubMenuRender
             }
         );
 
-        SubMenu.DefaultRender = SubMenuRender;
 
         Component.UIStore.setUIByClass("submenu", {
             priority:20,

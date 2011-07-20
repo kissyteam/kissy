@@ -19,7 +19,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                     node:el
                 }, self.get("menuAlign")));
                 menu.show();
-                el.attr("aria-haspopup", menu.get("view").get("el").attr("id"));
+                el.attr("aria-haspopup", menu.get("el").attr("id"));
                 view.set("collapsed", false);
             }
         },
@@ -108,23 +108,37 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         },
 
         /**
+         * if no menu , then construct
+         */
+        getMenu:function() {
+            var m = this.get("menu");
+            if (!m) {
+                m = new Menu.PopupMenu(S.mix({
+                    prefixCls:this.get("prefixCls")
+                }, this.get("menuCfg")));
+                this.set("menu", m);
+            }
+            return m;
+        },
+
+        /**
          * Adds a new menu item at the end of the menu.
          * @param item Menu item to add to the menu.
          */
         addItem:function(item, index) {
-            this.get("menu").addChild(item, index);
+            this.getMenu().addChild(item, index);
         },
 
         removeItem:function(c, destroy) {
-            this.get("menu").removeChild(c, destroy);
+            this.get("menu") && this.get("menu").removeChild(c, destroy);
         },
 
         removeItems:function(destroy) {
-            this.get("menu").removeChildren(destroy);
+            this.get("menu") && this.get("menu").removeChildren(destroy);
         },
 
         getItemAt:function(index) {
-            return this.get("menu").getChildAt(index);
+            return this.get("menu") && this.get("menu").getChildAt(index);
         },
 
         destructor:function() {
@@ -151,20 +165,13 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             // 不关心选中元素 , 由 select 负责
             // selectedItem
             menu:{
-                valueFn:function() {
-                    return new Menu.PopupMenu(S.mix({
-                        prefixCls:this.get("prefixCls"),
-                        parent:this
-                    }, this.get("menuCfg")));
-                },
                 setter:function(v) {
                     v.set("parent", this);
                 }
             }
-        }
+        },
+        DefaultRender:MenuButtonRender
     });
-
-    MenuButton.DefaultRender = MenuButtonRender;
 
     return MenuButton;
 }, {

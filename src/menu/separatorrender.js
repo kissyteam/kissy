@@ -4,16 +4,11 @@
  */
 KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
 
-    var CLS = "{prefixCls}menuseparator";
+    var CLS = "menuseparator";
     return UIBase.create(Component.Render, {
-
         createDom:function() {
-            var el = this.get("el");
-            el.attr("role", "separator").addClass(S.substitute(CLS, {
-                prefixCls:this.get("prefixCls")
-            }));
+            this.get("el").attr("role", "separator").addClass(this.getCls(CLS));
         }
-
     }, {
         ATTRS:{
             focusable:{

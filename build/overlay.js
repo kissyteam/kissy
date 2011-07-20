@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 20 21:14
 */
 /**
  * KISSY Overlay
@@ -171,7 +171,7 @@ KISSY.add("overlay/aria", function() {
     Aria.prototype = {
 
         __bindUI:function() {
-            var self = this,el = self.get("view").get("el");
+            var self = this,el = self.get("el");
             if (self.get("aria")) {
                 el.on("keydown", function(e) {
                     if (e.keyCode === 27) {
@@ -217,7 +217,7 @@ KISSY.add("overlay/aria", function() {
                     return;
                 }
                 var v = ev.newVal,
-                    el = self.get("view").get("el");
+                    el = self.get("el");
                 el.stop(true);
                 el.css("visibility", "visible");
                 var m = effect + effects[effect][Number(v)];
@@ -295,9 +295,9 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
     ], {
         renderUI:function() {
             var self = this;
-            self.get("view").get("el").addClass(this.get("view").get("prefixCls")+"dialog");
+            self.get("el").addClass(this.get("prefixCls")+"dialog");
             //设置值，drag-ext 绑定时用到
-            self.set("handlers", [self.get("view").get("header")]);
+            self.set("handlers", [self.get("header")]);
         }
     });
 

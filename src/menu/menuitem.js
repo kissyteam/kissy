@@ -93,7 +93,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
             // @inheritedDoc
             // option.text
-            //content:{},
+            // content:{},
 
             // option.value
             value:{},

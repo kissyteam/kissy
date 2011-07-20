@@ -23,7 +23,7 @@ KISSY.add("uibase/drag", function(S) {
         __bindUI:function() {
             var Draggable = S.require("dd/draggable");
             var self = this,
-                el = self.get("view").get("el");
+                el = self.get("el");
             if (self.get("draggable") && Draggable)
                 self.__drag = new Draggable({
                     node:el,

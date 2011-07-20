@@ -2,7 +2,7 @@
  * model and control base class for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/modelcontrol", function(S, UIBase) {
+KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
     function wrapperViewSetter(attrName) {
         return function(ev) {
@@ -42,6 +42,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
                     if (attrCfg.view) {
+                        // 只设置用户设置的值
                         if ((v = attrVals[attrName]) !== undefined) {
                             cfg[attrName] = v;
                         }
@@ -60,6 +61,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
     return UIBase.create([UIBase.Box], {
 
+            getCls:UIStore.getCls,
+
             initializer:function() {
                 /**
                  * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
@@ -74,6 +77,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                             // attrCfg.setter = wrapperViewSetter(attrName);
                             self.on("after" + capitalFirst(attrName) + "Change",
                                 wrapperViewSetter(attrName));
+                            // 逻辑层读值直接从 view 层读
+                            // 那么如果存在默认值也设置在 view 层
                             attrCfg.getter = wrapperViewGetter(attrName);
                         }
                     }
@@ -455,7 +460,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             }
         });
 }, {
-    requires:['uibase']
+    requires:['uibase','./uistore']
 });
 /**
  *  Note:

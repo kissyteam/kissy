@@ -24,7 +24,17 @@ KISSY.add("component/uistore", function() {
         uis[cls] = uic;
     }
 
+
+    function getCls(cls) {
+        var cs = cls.split(/\s+/);
+        for (var i = 0; i < cs.length; i++) {
+            cs[i] = this.get("prefixCls") + cs[i];
+        }
+        return cs.join(" ");
+    }
+
     return {
+        getCls:getCls,
         getUIByClass:getUIByClass,
         setUIByClass:setUIByClass
     };

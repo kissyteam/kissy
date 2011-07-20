@@ -7,13 +7,10 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     return UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
-
             handleMouseEvents:{
                 value:false
             }
-
         },
-
         DefaultRender:SeparatorRender
     });
 

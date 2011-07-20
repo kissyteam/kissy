@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
-    var HIT_CLS = "{prefixCls}menuitem-hit";
+    var HIT_CLS = "menuitem-hit";
 
     // 转义正则特殊字符，返回字符串用来构建正则表达式
     function regExpEscape(s) {
@@ -14,24 +14,26 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
     return UIBase.create(Menu, {
             bindUI:function() {
-                var self = this;
-                var view = self.get("view");
-                var filterInput = view.get("filterInput");
+                var self = this,
+                    view = self.get("view"),
+                    filterInput = view.get("filterInput");
                 /*监控键盘事件*/
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
 
             handleFilterEvent:function() {
-                var self = this;
-                var view = self.get("view");
-                var filterInput = view.get("filterInput");
+                var self = this,
+                    view = self.get("view"),
+                    filterInput = view.get("filterInput"),
+                    highlightedItem = self.get("highlightedItem");
                 /* 根据用户输入过滤 */
                 self.set("filterStr", filterInput.val());
-                var highlightedItem = self.get("highlightedItem");
+
                 // 如果没有高亮项或者高亮项因为过滤被隐藏了
                 // 默认选择符合条件的第一项
                 if (!highlightedItem || !highlightedItem.get("visible")) {
-                    self.set("highlightedItem", self._getNextEnabledHighlighted(0, 1));
+                    self.set("highlightedItem",
+                        self._getNextEnabledHighlighted(0, 1));
                 }
             },
 
@@ -41,10 +43,10 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             },
 
             filterItems:function(str) {
-                var self = this;
-                var view = self.get("view");
-                var _labelEl = view.get("labelEl");
-                var filterInput = view.get("filterInput");
+                var self = this,
+                    view = self.get("view"),
+                    _labelEl = view.get("labelEl"),
+                    filterInput = view.get("filterInput");
 
                 // 有过滤条件提示隐藏，否则提示显示
                 _labelEl[str ? "hide" : "show"]();
@@ -71,10 +73,11 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             enteredItems = items;
                             //待补全的项
                             lastWord = items[items.length - 1];
-                            var item = self.get("highlightedItem");
-                            var content = item && item.get("caption");
+                            var item = self.get("highlightedItem"),
+                                content = item && item.get("caption");
                             // 有高亮而且最后一项不为空补全
-                            if (content && content.indexOf(lastWord) > -1 && lastWord) {
+                            if (content && content.indexOf(lastWord) > -1
+                                && lastWord) {
                                 enteredItems[enteredItems.length - 1] = content;
                             }
                             filterInput.val(enteredItems.join(",") + ",");
@@ -100,14 +103,10 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                     }
                 }
 
-                var children = self.get("children");
-
-                var strExp = str && new RegExp(regExpEscape(str), "ig");
-
-                // 匹配项样式类
-                var hit = S.substitute(HIT_CLS, {
-                    prefixCls:this.get("prefixCls")
-                });
+                var children = self.get("children"),
+                    strExp = str && new RegExp(regExpEscape(str), "ig"),
+                    // 匹配项样式类
+                    hit = this.getCls(HIT_CLS);
 
                 // 过滤所有子组件
                 S.each(children, function(c) {
@@ -138,9 +137,9 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             },
 
             decorateInternal:function(el) {
-                var self = this,prefixCls = this.get("prefixCls");
+                var self = this;
                 self.set("el", el);
-                var menuContent = el.one("." + prefixCls + "menu-content");
+                var menuContent = el.one("." + self.getCls("menu-content"));
                 self.decorateChildren(menuContent);
             },
 

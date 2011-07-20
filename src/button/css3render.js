@@ -6,16 +6,15 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 
     function getCls(self, str) {
         return S.substitute(str, {
-            prefixCls:self.get("prefixCls"),
             tag:self.__css_tag
         });
     }
 
-    var CLS = "{prefixCls}inline-block " + " {prefixCls}{tag}-button",
-        FOCUS_CLS = "{prefixCls}{tag}-button-focused",
-        HOVER_CLS = "{prefixCls}{tag}-button-hover",
-        ACTIVE_CLS = "{prefixCls}{tag}-button-active",
-        DISABLED_CLS = "{prefixCls}{tag}-button-disabled";
+    var CLS = "inline-block " + " {tag}-button",
+        FOCUS_CLS = "{tag}-button-focused",
+        HOVER_CLS = "{tag}-button-hover",
+        ACTIVE_CLS = "{tag}-button-active",
+        DISABLED_CLS = "{tag}-button-disabled";
 
     return UIBase.create(ButtonRender, {
 
@@ -24,7 +23,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            el.addClass(getCls(self, CLS));
+            el.addClass(getCls(self,
+                self.getCls(CLS)));
         },
 
         /**
@@ -32,7 +32,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleFocus:function() {
             var self = this;
-            self.get("el").addClass(getCls(self, FOCUS_CLS));
+            self.get("el").addClass(getCls(self,
+                self.getCls(FOCUS_CLS)));
         },
 
         /**
@@ -40,7 +41,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleBlur:function() {
             var self = this;
-            self.get("el").removeClass(getCls(self, FOCUS_CLS));
+            self.get("el").removeClass(getCls(self,
+                self.getCls(FOCUS_CLS)));
         },
 
         /**
@@ -48,7 +50,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseEnter:function() {
             var self = this;
-            self.get("el").addClass(getCls(self, HOVER_CLS));
+            self.get("el").addClass(getCls(self,
+                self.getCls(HOVER_CLS)));
         },
 
         /**
@@ -56,7 +59,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseLeave:function() {
             var self = this;
-            self.get("el").removeClass(getCls(self, HOVER_CLS));
+            self.get("el").removeClass(getCls(self,
+                self.getCls(HOVER_CLS)));
             // 鼠标离开时，默认设为鼠标松开状态
             self._handleMouseUp();
         },
@@ -69,7 +73,7 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         _uiSetDisabled:function(v) {
             var self = this,el = self.get("el");
             if (v) {
-                el.addClass(getCls(self, DISABLED_CLS))
+                el.addClass(getCls(self, self.getCls(DISABLED_CLS)))
                     //不能被 tab focus 到
                     //support aria
                     .attr({
@@ -77,8 +81,12 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
                         "aria-disabled": true
                     });
             } else {
-                el.removeClass(getCls(self, DISABLED_CLS))
-                    .attr({"tabindex": 0,"aria-disabled": false});
+                el.removeClass(getCls(self,
+                    self.getCls(DISABLED_CLS)))
+                    .attr({
+                        "tabindex": 0,
+                        "aria-disabled": false
+                    });
             }
         },
 
@@ -87,7 +95,9 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseDown:function() {
             var self = this;
-            self.get("el").addClass(getCls(self, ACTIVE_CLS))
+            self.get("el")
+                .addClass(getCls(self,
+                self.getCls(ACTIVE_CLS)))
                 .attr("aria-pressed", true);
         },
 
@@ -96,7 +106,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseUp:function() {
             var self = this;
-            self.get("el").removeClass(getCls(self, ACTIVE_CLS))
+            self.get("el").removeClass(getCls(self,
+                self.getCls(ACTIVE_CLS)))
                 .attr("aria-pressed", false);
         }
 

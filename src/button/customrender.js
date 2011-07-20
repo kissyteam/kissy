@@ -22,7 +22,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
                     contentEl = self.get("contentEl"),
                     id = S.guid('ks-button-labelby');
                 //按钮的描述节点在最内层，其余都是装饰
-                contentEl.addClass(this.getCls(CONTENT_CLS));
+                contentEl.addClass(self.getCls(CONTENT_CLS));
                 var elChildren = S.makeArray(contentEl[0].childNodes);
                 var innerEl = new Node("<div id='" + id + "' " +
                     "class='" + self.getCls(INNER_CLS) + "'/>").appendTo(contentEl);
@@ -31,7 +31,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
                     innerEl.append(elChildren[i]);
                 }
                 el.attr("aria-labelledby", id);
-                self._innerEl = innerEl;
+                self.set("innerEl", innerEl);
             }
             ,
 
@@ -41,15 +41,17 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
              * @param v
              */
             _uiSetContent:function(v) {
-                var innerEl = this._innerEl;
+                var innerEl = this.get("innerEl");
                 innerEl.html("");
                 v && innerEl.append(v);
             }
+        }, {
+            /**
+             * @inheritedDoc
+             * content:{}
+             */
+            innerEL:{}
         }
-        /**
-         * @inheritedDoc
-         * content:{}
-         */
     );
 }, {
     requires:['node','uibase','./css3render']

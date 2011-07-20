@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 20 21:14
 */
 /**
  * container can delegate event for its children
@@ -70,7 +70,7 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                 elem = this.get('view').get("el")[0];
             while (node && node !== elem) {
                 for (var i = 0; i < len; i++) {
-                    if (children[i].get("view").get("el")[0] === node) {
+                    if (children[i].get("el")[0] === node) {
                         return children[i];
                     }
                 }
@@ -87,7 +87,7 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
  * model and control base class for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/modelcontrol", function(S, UIBase) {
+KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
     function wrapperViewSetter(attrName) {
         return function(ev) {
@@ -127,6 +127,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
                     if (attrCfg.view) {
+                        // 只设置用户设置的值
                         if ((v = attrVals[attrName]) !== undefined) {
                             cfg[attrName] = v;
                         }
@@ -145,6 +146,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
     return UIBase.create([UIBase.Box], {
 
+            getCls:UIStore.getCls,
+
             initializer:function() {
                 /**
                  * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
@@ -159,6 +162,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                             // attrCfg.setter = wrapperViewSetter(attrName);
                             self.on("after" + capitalFirst(attrName) + "Change",
                                 wrapperViewSetter(attrName));
+                            // 逻辑层读值直接从 view 层读
+                            // 那么如果存在默认值也设置在 view 层
                             attrCfg.getter = wrapperViewGetter(attrName);
                         }
                     }
@@ -540,7 +545,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             }
         });
 }, {
-    requires:['uibase']
+    requires:['uibase','./uistore']
 });
 /**
  *  Note:
@@ -551,16 +556,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
  * render base class for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/render", function(S, UIBase) {
+KISSY.add("component/render", function(S, UIBase, UIStore) {
     return UIBase.create([UIBase.Box.Render], {
 
-        getCls:function(cls) {
-            var cs = cls.split(/\s+/);
-            for (var i = 0; i < cs.length; i++) {
-                cs[i] = this.get("prefixCls") + cs[i];
-            }
-            return cs.join(" ");
-        },
+        getCls:UIStore.getCls,
 
         getKeyEventTarget:function() {
             return this.get("el");
@@ -596,7 +595,7 @@ KISSY.add("component/render", function(S, UIBase) {
         }
     });
 }, {
-    requires:['uibase']
+    requires:['uibase','./uistore']
 });KISSY.add("component/uistore", function() {
     var uis = {
         // 不带前缀 prefixCls
@@ -623,7 +622,17 @@ KISSY.add("component/render", function(S, UIBase) {
         uis[cls] = uic;
     }
 
+
+    function getCls(cls) {
+        var cs = cls.split(/\s+/);
+        for (var i = 0; i < cs.length; i++) {
+            cs[i] = this.get("prefixCls") + cs[i];
+        }
+        return cs.join(" ");
+    }
+
     return {
+        getCls:getCls,
         getUIByClass:getUIByClass,
         setUIByClass:setUIByClass
     };

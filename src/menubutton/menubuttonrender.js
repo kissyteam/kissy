@@ -8,38 +8,31 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         '{prefixCls}menu-button-caption">{content}</div>' +
         '<div class="{prefixCls}inline-block ' +
         '{prefixCls}menu-button-dropdown">&nbsp;</div>',
-        CAPTION_CLS = "{prefixCls}menu-button-caption",
-        COLLAPSE_CLS = "{prefixCls}menu-button-open";
-
-    function getCls(self, str) {
-        return S.substitute(str, {
-            prefixCls:self.get("prefixCls")
-        });
-    }
-
+        CAPTION_CLS = "menu-button-caption",
+        COLLAPSE_CLS = "menu-button-open";
 
     return UIBase.create(Button.Render, {
 
         createDom:function() {
-            var el = this.get("contentEl"),
+            var innerEL = this.get("innerEL"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
                     content:this.get("content") || "",
                     prefixCls:this.get("prefixCls")
                 });
-            el.one("div")
+            innerEL
                 .html(html)
                 //带有 menu
                 .attr("aria-haspopup", true);
         },
 
         _uiSetContent:function(v) {
-            var caption = this.get("el").one("." + getCls(this, CAPTION_CLS));
+            var caption = this.get("el").one("." + this.getCls(CAPTION_CLS));
             caption.html("");
             caption.append(v);
         },
 
         _uiSetCollapsed:function(v) {
-            var el = this.get("el"),cls = getCls(this, COLLAPSE_CLS);
+            var el = this.get("el"),cls = this.getCls(COLLAPSE_CLS);
             if (!v) {
                 el.addClass(cls);
                 el.attr("aria-expanded", true);
@@ -51,7 +44,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
         _uiSetActiveItem:function(v) {
             this.get("el").attr("aria-activedescendant",
-                (v && v.get("view").get("el").attr("id")) || "");
+                (v && v.get("el").attr("id")) || "");
         }
     }, {
         ATTRS:{

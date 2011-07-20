@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
-    var CLS = "{prefixCls}menu  {prefixCls}menu-vertical";
+    var CLS = "menu  menu-vertical";
 
     return UIBase.create(Component.Render, [
         UIBase.Contentbox.Render
@@ -12,9 +12,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
         renderUI:function() {
             var el = this.get("el");
-            el.addClass(S.substitute(CLS, {
-                prefixCls:this.get("prefixCls")
-            }))
+            el.addClass(this.getCls(CLS))
                 .attr("role", "menu")
                 .attr("aria-haspopup", true);
             if (!el.attr("id")) {
@@ -25,7 +23,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         _uiSetActiveItem:function(v) {
             var el = this.get("el");
             if (v) {
-                var menuItemEl = v.get("view").get("el"),
+                var menuItemEl = v.get("el"),
                     id = menuItemEl.attr("id");
                 el.attr("aria-activedescendant", id);
                 // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系

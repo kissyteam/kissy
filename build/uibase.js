@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 19:12
+build time: Jul 20 21:14
 */
 /**
  * UIBase.Align
@@ -1165,7 +1165,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
     function _getConstrainRegion(constrain) {
         var ret;
         if (!constrain) return ret;
-        var el = this.get("view").get("el");
+        var el = this.get("el");
         if (constrain !== true) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
@@ -1384,7 +1384,7 @@ KISSY.add("uibase/drag", function(S) {
         __bindUI:function() {
             var Draggable = S.require("dd/draggable");
             var self = this,
-                el = self.get("view").get("el");
+                el = self.get("el");
             if (self.get("draggable") && Draggable)
                 self.__drag = new Draggable({
                     node:el,
@@ -1759,7 +1759,7 @@ KISSY.add("uibase/resize", function(S) {
             var Resizable = S.require("resizable"),self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
-                v.node = self.get("view").get("el");
+                v.node = self.get("el");
                 v.autoRender = true;
                 if (v.handlers) {
                     self.resizer = new Resizable(v);

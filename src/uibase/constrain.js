@@ -24,7 +24,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
     function _getConstrainRegion(constrain) {
         var ret;
         if (!constrain) return ret;
-        var el = this.get("view").get("el");
+        var el = this.get("el");
         if (constrain !== true) {
             constrain = Node.one(constrain);
             ret = constrain.offset();

@@ -2,16 +2,10 @@
  * render base class for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/render", function(S, UIBase) {
+KISSY.add("component/render", function(S, UIBase, UIStore) {
     return UIBase.create([UIBase.Box.Render], {
 
-        getCls:function(cls) {
-            var cs = cls.split(/\s+/);
-            for (var i = 0; i < cs.length; i++) {
-                cs[i] = this.get("prefixCls") + cs[i];
-            }
-            return cs.join(" ");
-        },
+        getCls:UIStore.getCls,
 
         getKeyEventTarget:function() {
             return this.get("el");
@@ -47,5 +41,5 @@ KISSY.add("component/render", function(S, UIBase) {
         }
     });
 }, {
-    requires:['uibase']
+    requires:['uibase','./uistore']
 });
