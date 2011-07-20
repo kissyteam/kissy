@@ -10,7 +10,8 @@ KISSY.add('uibase/box', function() {
 
     Box.ATTRS = {
         html: {
-            view:true
+            view:true,
+            sync:false
         },
         width:{
             view:true
@@ -31,19 +32,17 @@ KISSY.add('uibase/box', function() {
         elBefore:{
             view:true
         },
-
         el:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("el");
-            }
+            view:true
         },
 
         visibleMode:{
-            value:"visibility",
             view:true
         },
         // 默认显示，但不触发事件
-        visible:{}
+        visible:{
+            view:true
+        }
     };
 
 
@@ -63,7 +62,6 @@ KISSY.add('uibase/box', function() {
 
         _uiSetVisible:function(isVisible) {
             var self = this;
-            this.get("view").set("visible", isVisible);
             self.fire(isVisible ? "show" : "hide");
         },
 

@@ -26,3 +26,8 @@
 .goog-menuitem-disabled .goog-submenu-arrow {
   color: #ccc;
 }
+
+
+.goog-submenu {
+    position: relative;
+}

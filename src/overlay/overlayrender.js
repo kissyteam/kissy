@@ -22,13 +22,17 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
     }, {
         ATTRS:{
-            prefixCls:{
-                value:"ks-"
-            },
             elBefore:{
                 valueFn:function() {
                     return S.one(this.get("render")[0].firstChild);
                 }
+            },
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+            visibleMode:{
+                value:"visibility"
             }
         }
     });

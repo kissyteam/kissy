@@ -193,6 +193,27 @@ KISSY.add(
                     return menu && menu.containsElement(element);
                 },
 
+
+                decorateInternal:function(element) {
+                    var self = this,
+                        ui = "popupmenu",
+                        prefixCls = self.get("prefixCls");
+                    self.set("el", element);
+                    var child = element.one("." + prefixCls + ui);
+                    if (child) {
+                        // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
+                        child.hide();
+                        var docBody = S.one(element[0].ownerDocument.body);
+                        docBody.prepend(child);
+                        var UI = Component.UIStore.getUIByClass(ui);
+                        var menu = new UI({
+                            srcNode:child,
+                            prefixCls:prefixCls
+                        });
+                        self.set("menu", menu);
+                    }
+                },
+
                 destructor : function() {
                     var self = this,
                         parentMenu = self.get("parent"),
@@ -204,7 +225,7 @@ KISSY.add(
                     if (parentMenu) {
                         parentMenu.detach("hide", self._onParentHide, self);
                     }
-                    if (menu) {
+                    if (!self.get("externalSubMenu") && menu) {
                         menu.destroy();
                     }
                 }
@@ -219,6 +240,13 @@ KISSY.add(
                      */
                     menuDelay:{
                         value:300
+                    },
+                    /**
+                     * whether destroy submenu when destroy itself ,reverse result
+                     * @type {boolean}
+                     */
+                    externalSubMenu:{
+                        value:false
                     },
                     menu:{
                         setter:function(m) {

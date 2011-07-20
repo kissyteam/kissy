@@ -1,6 +1,6 @@
 /**
  * close extension for kissy dialog
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/close", function(S) {
     function Close() {
@@ -8,8 +8,7 @@ KISSY.add("uibase/close", function(S) {
 
     var HIDE = "hide";
     Close.ATTRS = {
-        closable: {             // 是否需要关闭按钮
-            value: true,
+        closable: {
             view:true
         },
         closeAction:{

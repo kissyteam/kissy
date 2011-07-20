@@ -18,7 +18,7 @@
         color: #1B4D91;
     }
 
-    .goog-menu-item-hit {
+    .goog-menuitem-hit {
         font-weight: bold;
         color: red;
     }
@@ -42,38 +42,65 @@
 <div id="container">
 
 </div>
+
+
+<h2>从已知元素生成</h2>
+
+<div id="filterMenuExist">
+    <div class='goog-menu-filter'>
+        <div class="goog-menu-filter-label">from markup</div>
+        <input autocomplete="off"/>
+    </div>
+    <div class="goog-menu-content">
+        <div class="goog-menuitem">女鞋</div>
+        <div class="goog-menuitem">家居服务</div>
+        <div class="goog-menuitem">手机</div>
+    </div>
+</div>
+
 <script src="../../../build/kissy.js"></script>
 <script>
     KISSY.Config.base = "../../";
 
     KISSY.ready(function(S) {
         S.use("menu", function(S, Menu) {
+            if (true)(function() {
+                var m1 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女鞋"});
+                var m4 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女装女服"});
+                var m2 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"家居服务",
+                    elCls:"hasChildren"});
+                var m3 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"手机",
+                    elCls:"hasChildren"});
+                var filterMenu = new Menu.FilterMenu({
+                    render:"#container",
+                    width:200,
+                    allowMultiple:true,
+                    prefixCls:"goog-",
+                    label:"请输入"
+                });
+                filterMenu.addChild(m1);
+                filterMenu.addChild(m2);
+                filterMenu.addChild(m3);
+                filterMenu.addChild(m4);
+                filterMenu.render();
+                var selected = null;
+                filterMenu.on("click", function(e) {
+                    if (selected != e.target) {
+                        selected && selected.set("selected", false);
+                        selected = e.target;
+                        alert("selected : " + selected.get("content"));
+                    }
+                });
+            })();
 
-            var m1 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女鞋"});
-            var m4 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女装女服"});
-            var m2 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"家居服务",elCls:"hasChildren"});
-            var m3 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"手机",elCls:"hasChildren"});
-            var filterMenu = new Menu.FilterMenu({
-                render:"#container",
+            /**
+             *  从 html 生成
+             */
+            new Menu.FilterMenu({
+                srcNode:'#filterMenuExist',
                 width:200,
-                allowMultiple:true,
-                prefixCls:"goog-",
-                label:"请输入"
-            });
-            filterMenu.addChild(m1);
-            filterMenu.addChild(m2);
-            filterMenu.addChild(m3);
-            filterMenu.addChild(m4);
-            filterMenu.render();
-            var selected = null;
-            filterMenu.on("click", function(e) {
-                if (selected != e.target) {
-                    selected && selected.set("selected", false);
-                    selected = e.target;
-                    alert("selected : " + selected.get("content"));
-                }
-            });
-
+                prefixCls:"goog-"
+            }).render();
 
         });
     });

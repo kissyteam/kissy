@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 18 18:23
              */
             version: '1.20dev',
 
-            buildTime:'20110718182337',
+            buildTime:'20110720184341',
 
             /**
              * Returns a new object containing all of the properties of
@@ -10251,7 +10251,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -11331,7 +11331,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * 数据延迟加载组件
@@ -11822,7 +11822,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12060,7 +12060,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * @module   Flash 全局静态类
@@ -12571,7 +12571,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -13785,7 +13785,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  * resizable support for kissy
@@ -13950,7 +13950,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  * UIBase.Align
@@ -14515,6 +14515,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
     }
 
     UIBase.HTML_PARSER = {};
+
     UIBase.ATTRS = {
         // 是否已经渲染完毕
         rendered:{
@@ -14623,7 +14624,10 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
                     //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m] && self.get(a) !== undefined) {
+                    if (self[m]
+                        // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
+                        && attrs[a].sync !== false
+                        && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }
@@ -14710,7 +14714,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
  * create 仅仅包括创建节点
  **//**
  * UIBase.Box
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/box', function() {
 
@@ -14720,7 +14724,8 @@ KISSY.add('uibase/box', function() {
 
     Box.ATTRS = {
         html: {
-            view:true
+            view:true,
+            sync:false
         },
         width:{
             view:true
@@ -14741,26 +14746,36 @@ KISSY.add('uibase/box', function() {
         elBefore:{
             view:true
         },
-
         el:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("el");
-            }
+            view:true
         },
 
         visibleMode:{
-            value:"visibility",
             view:true
         },
         // 默认显示，但不触发事件
-        visible:{}
+        visible:{
+            view:true
+        }
+    };
+
+
+    Box.HTML_PARSER = {
+        el:function(srcNode) {
+            /**
+             * 如果需要特殊的对现有元素的装饰行为
+             */
+            if (this.decorateInternal) {
+                this.decorateInternal(srcNode);
+            }
+            return srcNode;
+        }
     };
 
     Box.prototype = {
 
         _uiSetVisible:function(isVisible) {
             var self = this;
-            this.get("view").set("visible", isVisible);
             self.fire(isVisible ? "show" : "hide");
         },
 
@@ -14786,7 +14801,7 @@ KISSY.add('uibase/box', function() {
 });
 /**
  * UIBase.Box
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/boxrender', function(S, Node) {
 
@@ -14798,8 +14813,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         el: {
             //容器元素
             setter:function(v) {
-                if (S.isString(v))
-                    return Node.one(v);
+                return Node.one(v);
             }
         },
         elCls: {
@@ -14825,9 +14839,13 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             //插入到该元素前
             value:null
         },
-        html: {},
+        html: {
+            sync:false
+        },
         visible:{},
-        visibleMode:{}
+        visibleMode:{
+            value:"display"
+        }
     };
 
     Box.construct = constructEl;
@@ -14866,8 +14884,8 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     }
 
     Box.HTML_PARSER = {
-        el:function(srcNode) {
-            return srcNode;
+        html:function(el) {
+            return el.html();
         }
     };
 
@@ -14886,6 +14904,10 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             }
         },
 
+        /**
+         * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
+         * 通过 render 来重建原有的内容
+         */
         __createDom:function() {
             var self = this,
                 el = self.get("el");
@@ -14898,12 +14920,16 @@ KISSY.add('uibase/boxrender', function(S, Node) {
                     self.get("elTagName"),
                     self.get("elAttrs")));
                 self.set("el", el);
+                if (self.get("html")) {
+                    el.html(self.get("html"));
+                }
             }
         },
 
         _uiSetElAttrs:function(attrs) {
             this.get("el").attr(attrs);
         },
+
         _uiSetElCls:function(cls) {
             this.get("el").addClass(cls);
         },
@@ -14937,8 +14963,9 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         },
 
         show:function() {
-            this.render();
-            this.set("visible", true);
+            var self = this;
+            self.render();
+            self.set("visible", true);
         },
         hide:function() {
             this.set("visible", false);
@@ -14960,7 +14987,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 });
 /**
  * close extension for kissy dialog
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/close", function(S) {
     function Close() {
@@ -14968,8 +14995,7 @@ KISSY.add("uibase/close", function(S) {
 
     var HIDE = "hide";
     Close.ATTRS = {
-        closable: {             // 是否需要关闭按钮
-            value: true,
+        closable: {
             view:true
         },
         closeAction:{
@@ -14998,7 +15024,7 @@ KISSY.add("uibase/close", function(S) {
 
 });/**
  * close extension for kissy dialog
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/closerender", function(S, Node) {
 
@@ -15064,9 +15090,9 @@ KISSY.add("uibase/closerender", function(S, Node) {
         requires:["node"]
     });/**
  * constrain extension for kissy
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("uibase/constrain", function(S, DOM,Node) {
+KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
     function Constrain() {
 
@@ -15119,7 +15145,6 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
     Constrain.prototype = {
 
         __renderUI:function() {
-            //S.log("_renderUIConstrain");
             var self = this,
                 attrs = self.__getDefAttrs(),
                 xAttr = attrs["x"],
@@ -15127,7 +15152,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
                 oriXSetter = xAttr["setter"],
                 oriYSetter = yAttr["setter"];
             xAttr.setter = function(v) {
-                var r = oriXSetter && oriXSetter(v);
+                var r = oriXSetter && oriXSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
                 }
@@ -15139,7 +15164,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
                     _ConstrainExtRegion.maxLeft);
             };
             yAttr.setter = function(v) {
-                var r = oriYSetter && oriYSetter(v);
+                var r = oriYSetter && oriYSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
                 }
@@ -15162,7 +15187,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
     requires:["dom","node"]
 });/**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentbox", function(S) {
 
@@ -15172,12 +15197,11 @@ KISSY.add("uibase/contentbox", function(S) {
     ContentBox.ATTRS = {
         //层内容
         content:{
-            view:true
+            view:true,
+            sync:false
         },
         contentEl:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("contentEl");
-            }
+            view:true
         },
 
         contentElAttrs:{
@@ -15191,13 +15215,12 @@ KISSY.add("uibase/contentbox", function(S) {
         }
     };
 
-
     ContentBox.prototype = {    };
 
     return ContentBox;
 });/**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
@@ -15208,16 +15231,23 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         //内容容器节点
         contentEl:{},
         contentElAttrs:{},
+        contentElCls:{
+            value:""
+        },
         contentElStyle:{},
         contentTagName:{value:"div"},
         //层内容
-        content:{}
+        content:{
+            sync:false
+        }
     };
 
-
+    /**
+     * ! contentEl 只能由组件动态生成
+     */
     ContentBox.HTML_PARSER = {
-        contentEl:function(el) {
-            return el.one("." + this.get("prefixCls") + "contentbox");
+        content:function(el) {
+            return el.html();
         }
     };
 
@@ -15231,37 +15261,42 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
         __createDom:function() {
             var self = this,
-                contentEl = self.get("contentEl"),
-                el = self.get("el");
-
-            if (!contentEl) {
-                var elChildren = S.makeArray(el[0].childNodes);
-                contentEl = new Node(constructEl(this.get("prefixCls") + "contentbox",
-                    self.get("contentElStyle"),
-                    undefined,
-                    undefined,
-                    self.get("contentTagName"),
-                    self.get("contentElAttrs"))).appendTo(el);
+                contentEl,
+                el = self.get("el"),
+                elChildren = S.makeArray(el[0].childNodes);
+            contentEl = new Node(constructEl(
+                self.get("prefixCls") + "contentbox "
+                    + self.get("contentElCls"),
+                self.get("contentElStyle"),
+                undefined,
+                undefined,
+                self.get("contentTagName"),
+                self.get("contentElAttrs"))).appendTo(el);
+            self.set("contentEl", contentEl);
+            if (elChildren.length) {
                 for (var i = 0; i < elChildren.length; i++) {
                     contentEl.append(elChildren[i]);
                 }
-                self.set("contentEl", contentEl);
+            } else if (self.get("content")) {
+                self._uiSetContent(self.get("content"));
             }
+
+
         },
 
+        _uiSetContentElCls:function(cls) {
+            this.get("contentEl").addClass(cls);
+        },
         _uiSetContentElAttrs:function(attrs) {
-            attrs && this.get("contentEl").attr(attrs);
+            this.get("contentEl").attr(attrs);
         },
         _uiSetContentElStyle:function(v) {
-            v && this.get("contentEl").css(v);
+            this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
-            if (S.isString(c)) {
-                this.get("contentEl").html(c);
-            } else if (c !== undefined) {
-                this.get("contentEl").html("");
-                this.get("contentEl").append(c);
-            }
+            var contentEl = this.get("contentEl");
+            contentEl.html("");
+            c && contentEl.append(c);
         }
     };
 
@@ -15270,7 +15305,7 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
     requires:["node","./boxrender"]
 });/**
  * drag extension for position
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/drag", function(S) {
 
@@ -15332,7 +15367,7 @@ KISSY.add("uibase/drag", function(S) {
 
 });/**
  * loading mask support for overlay
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loading", function(S) {
 
@@ -15353,7 +15388,7 @@ KISSY.add("uibase/loading", function(S) {
 
 });/**
  * loading mask support for overlay
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loadingrender", function(S, Node) {
 
@@ -15393,7 +15428,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
     requires:['node']
 });/**
  * mask extension for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/mask", function(S) {
 
@@ -15424,7 +15459,7 @@ KISSY.add("uibase/mask", function(S) {
     return Mask;
 }, {requires:["ua"]});/**
  * mask extension for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 
@@ -15520,7 +15555,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
     return Mask;
 }, {requires:["ua","dom","node"]});/**
  * position and visible extension，可定位的隐藏层
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/position", function(S) {
 
@@ -15529,21 +15564,10 @@ KISSY.add("uibase/position", function(S) {
 
     Position.ATTRS = {
         x: {
-            view:true,
-            // 水平方向绝对位置
-            valueFn:function() {
-                //初始化 xy，结果调用了 set("x") 里面又调用了 get("x")
-                //这时还没有渲染，尚没有 view，必须判断
-                return this.get("view") && this.get("view").get("x");
-            }
+            view:true
         },
         y: {
-            view:true,
-            // 垂直方向绝对位置
-            // 水平方向绝对位置
-            valueFn:function() {
-                return this.get("view") && this.get("view").get("y");
-            }
+            view:true
         },
         xy: {
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
@@ -15655,7 +15679,11 @@ KISSY.add("uibase/positionrender", function() {
     };
 
     return Position;
-});KISSY.add("uibase/resize", function(S) {
+});/**
+ * resize extension using resizable
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("uibase/resize", function(S) {
     function Resize() {
     }
 
@@ -15687,7 +15715,7 @@ KISSY.add("uibase/positionrender", function() {
     return Resize;
 });/**
  * shim for ie6 ,require box-ext
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/shimrender", function(S, Node) {
 
@@ -15727,7 +15755,7 @@ KISSY.add("uibase/shimrender", function(S, Node) {
         requires:['node']
     });/**
  * support standard mod for component
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmod", function(S) {
 
@@ -15737,19 +15765,13 @@ KISSY.add("uibase/stdmod", function(S) {
 
     StdMod.ATTRS = {
         header:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("header");
-            }
+            view:true
         },
         body:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("body");
-            }
+            view:true
         },
         footer:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("footer");
-            }
+            view:true
         },
         bodyStyle:{
             view:true
@@ -15778,7 +15800,7 @@ KISSY.add("uibase/stdmod", function(S) {
 
 });/**
  * support standard mod for component
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmodrender", function(S, Node) {
 
@@ -15925,13 +15947,13 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * container can delegate event for its children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/container", function(S, UIBase, MC) {
+KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
 
     return UIBase.create(MC, {
         bindUI:function() {
@@ -15960,6 +15982,33 @@ KISSY.add("component/container", function(S, UIBase, MC) {
                 }
             }
         },
+
+        decorateInternal:function(el) {
+            var self = this;
+            self.set("el", el);
+            self.decorateChildren(el);
+        },
+        /**
+         * container 需要在装饰时对儿子特殊处理，递归装饰
+         */
+        decorateChildren:function(el) {
+            var self = this,children = el.children();
+            children.each(function(c) {
+                var cls = c.attr("class") || "",
+                    prefixCls = self.get("prefixCls");
+                // 过滤掉特定前缀
+                cls = cls.replace(new RegExp("(?:^|\\s+)" + prefixCls, "ig"), "");
+                var UI = UIStore.getUIByClass(cls);
+                if (!UI) {
+                    S.log(c);
+                    S.error("can not find ui from this markup");
+                }
+                self.addChild(new UI({
+                    srcNode:c,
+                    prefixCls:prefixCls
+                }));
+            });
+        },
         getOwnerControl:function(node) {
             var self = this,
                 children = self.get("children"),
@@ -15979,7 +16028,7 @@ KISSY.add("component/container", function(S, UIBase, MC) {
     });
 
 }, {
-    requires:['uibase','./modelcontrol']
+    requires:['uibase','./modelcontrol','./uistore']
 });/**
  * model and control base class for kissy
  * @author yiminghe@gmail.com
@@ -15987,10 +16036,18 @@ KISSY.add("component/container", function(S, UIBase, MC) {
 KISSY.add("component/modelcontrol", function(S, UIBase) {
 
     function wrapperViewSetter(attrName) {
-        return function(value) {
-            this.get("view").set(attrName, value);
+        return function(ev) {
+            var value = ev.newVal;
+            this.get("view") && this.get("view").set(attrName, value);
         };
     }
+
+    function wrapperViewGetter(attrName) {
+        return function(v) {
+            return v || this.get("view") && this.get("view").get(attrName);
+        };
+    }
+
 
     /**
      * 不使用 valueFn
@@ -16009,16 +16066,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             /**
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
-            var attrs = self.__attrs,cfg = {};
+            var attrs = self.__attrs,
+                attrVals = self.__attrVals,
+                cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
-                    if (attrCfg.view
-                        // 如果用户没设，不要帮他设 undefined
-                        // attribute get 判断是 name in attrs
-                        // 使用 get ，属性可以只在控制层设置默认值，如果有有效值，这里通过参数传给 view 层
-                        && (v = self.get(attrName)) !== undefined) {
-                        cfg[attrName] = v;
+                    if (attrCfg.view) {
+                        if ((v = attrVals[attrName]) !== undefined) {
+                            cfg[attrName] = v;
+                        }
                     }
                 }
             }
@@ -16027,7 +16084,33 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         return 0;
     }
 
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
+
     return UIBase.create([UIBase.Box], {
+
+            initializer:function() {
+                /**
+                 * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
+                 */
+                var self = this,
+                    attrs = self.__attrs;
+                for (var attrName in attrs) {
+                    if (attrs.hasOwnProperty(attrName)) {
+                        var attrCfg = attrs[attrName];
+                        if (attrCfg.view) {
+                            // setter 不应该有实际操作，仅用于正规化比较好
+                            // attrCfg.setter = wrapperViewSetter(attrName);
+                            self.on("after" + capitalFirst(attrName) + "Change",
+                                wrapperViewSetter(attrName));
+                            attrCfg.getter = wrapperViewGetter(attrName);
+                        }
+                    }
+                }
+
+            },
 
             /**
              * control 层的渲染 ui 就是 render view
@@ -16047,19 +16130,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             createDom:function() {
                 var self = this;
-                /**
-                 * 将 view 的属性转发过去
-                 * 用户一般实际上只需在一个地点设置
-                 */
-                var attrs = self.__attrs;
-                for (var attrName in attrs) {
-                    if (attrs.hasOwnProperty(attrName)) {
-                        var attrCfg = attrs[attrName];
-                        if (attrCfg.view && !self['_uiSet' + capitalFirst(attrName)]) {
-                            self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
-                        }
-                    }
-                }
                 var view = self.get("view") || getDefaultView.call(self);
                 if (!view) {
                     S.error("no view for");
@@ -16266,7 +16336,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     el.detach("blur", self._handleBlur, self);
                     el.detach("keydown", self.__handleKeydown, self);
                 }
-                self.get("view").set("focusable", v);
             },
 
             /**
@@ -16365,7 +16434,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 // 是否支持焦点处理
                 focusable:{
-                    value:true
+                    view:true
                 },
 
                 //子组件
@@ -16389,8 +16458,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 // 转交给渲染层
                 prefixCls:{
-                    view:true,
-                    value:"ks-"
+                    view:true
                 },
 
                 render:{
@@ -16408,7 +16476,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 //是否禁用
                 disabled:{
-                    value:false,
                     view:true
                 },
 
@@ -16418,11 +16485,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             }
         });
-
-    function capitalFirst(s) {
-        s = s + '';
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
 }, {
     requires:['uibase']
 });
@@ -16437,6 +16499,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
  */
 KISSY.add("component/render", function(S, UIBase) {
     return UIBase.create([UIBase.Box.Render], {
+
+        getCls:function(cls) {
+            var cs = cls.split(/\s+/);
+            for (var i = 0; i < cs.length; i++) {
+                cs[i] = this.get("prefixCls") + cs[i];
+            }
+            return cs.join(" ");
+        },
+
         getKeyEventTarget:function() {
             return this.get("el");
         },
@@ -16458,31 +16529,68 @@ KISSY.add("component/render", function(S, UIBase) {
         ATTRS:{
             //从 maskup 中渲染
             srcNode:{},
-            prefixCls:{},
-            focusable:{},
+            prefixCls:{
+                value:"ks-"
+            },
+            focusable:{
+                value:true
+            },
             //是否禁用
-            disabled:{}
+            disabled:{
+                value:false
+            }
         }
     });
 }, {
     requires:['uibase']
+});KISSY.add("component/uistore", function() {
+    var uis = {
+        // 不带前缀 prefixCls
+        /*
+         "menu" :{
+         priority:0,
+         ui:Menu
+         }
+         */
+    };
+
+    function getUIByClass(cls) {
+        var cs = cls.split(/\s+/),p = -1,ui = null;
+        for (var i = 0; i < cs.length; i++) {
+            var uic = uis[cs[i]];
+            if (uic && uic.priority > p) {
+                ui = uic.ui;
+            }
+        }
+        return ui;
+    }
+
+    function setUIByClass(cls, uic) {
+        uis[cls] = uic;
+    }
+
+    return {
+        getUIByClass:getUIByClass,
+        setUIByClass:setUIByClass
+    };
 });/**
  * mvc based component framework for kissy
  * @author:yiminghe@gmail.com
  */
-KISSY.add("component", function(S, ModelControl, Render, Container) {
+KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
     return {
         ModelControl:ModelControl,
         Render:Render,
-        Container:Container
+        Container:Container,
+        UIStore:UIStore
     };
 }, {
-    requires:['component/modelcontrol','component/render','component/container']
+    requires:['component/modelcontrol','component/render','component/container','component/uistore']
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  * Switchable
@@ -19078,7 +19186,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  * KISSY Overlay
@@ -19104,13 +19212,17 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
     }, {
         ATTRS:{
-            prefixCls:{
-                value:"ks-"
-            },
             elBefore:{
                 valueFn:function() {
                     return S.one(this.get("render")[0].firstChild);
                 }
+            },
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+            visibleMode:{
+                value:"visibility"
             }
         }
     });
@@ -19328,11 +19440,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
-            },
-
-            // 是否支持焦点处理
-            focusable:{
-                value:false
             }
         }
     });
@@ -19542,7 +19649,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -20721,7 +20828,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * @fileoverview 图像放大区域
@@ -21346,7 +21453,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * KISSY Calendar
@@ -22625,7 +22732,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  *  menu where items can be filtered based on user keyboard input
@@ -22633,7 +22740,7 @@ build time: Jul 18 18:23
  */
 KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
-    var HIT_CLS = "{prefixCls}menu-item-hit";
+    var HIT_CLS = "{prefixCls}menuitem-hit";
 
     // 转义正则特殊字符，返回字符串用来构建正则表达式
     function regExpEscape(s) {
@@ -22645,7 +22752,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             bindUI:function() {
                 var self = this;
                 var view = self.get("view");
-                var filterInput = view._filterInput;
+                var filterInput = view.get("filterInput");
                 /*监控键盘事件*/
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
@@ -22653,7 +22760,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             handleFilterEvent:function() {
                 var self = this;
                 var view = self.get("view");
-                var filterInput = view._filterInput;
+                var filterInput = view.get("filterInput");
                 /* 根据用户输入过滤 */
                 self.set("filterStr", filterInput.val());
                 var highlightedItem = self.get("highlightedItem");
@@ -22672,8 +22779,8 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             filterItems:function(str) {
                 var self = this;
                 var view = self.get("view");
-                var _labelEl = view._labelEl;
-                var filterInput = view._filterInput;
+                var _labelEl = view.get("labelEl");
+                var filterInput = view.get("filterInput");
 
                 // 有过滤条件提示隐藏，否则提示显示
                 _labelEl[str ? "hide" : "show"]();
@@ -22701,7 +22808,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get("highlightedItem");
-                            var content = item && item.get("content");
+                            var content = item && item.get("caption");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1 && lastWord) {
                                 enteredItems[enteredItems.length - 1] = content;
@@ -22740,7 +22847,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
                 // 过滤所有子组件
                 S.each(children, function(c) {
-                    var content = c.get("content"),
+                    var content = c.get("caption"),
                         view = c.get("view");
                     if (!str) {
                         // 没有过滤条件
@@ -22764,12 +22871,18 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                         }
                     }
                 });
-            }
-            ,
+            },
+
+            decorateInternal:function(el) {
+                var self = this,prefixCls = this.get("prefixCls");
+                self.set("el", el);
+                var menuContent = el.one("." + prefixCls + "menu-content");
+                self.decorateChildren(menuContent);
+            },
 
             destructor:function() {
                 var view = this.get("view");
-                var filterInput = view && view._filterInput;
+                var filterInput = view && view.get("filterInput");
                 filterInput && filterInput.detach();
             }
 
@@ -22778,24 +22891,22 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             ATTRS:{
                 label:{
                     view:true
-                }
-                ,
+                },
+
                 filterStr:{
-                }
-                ,
+                },
+
                 enteredItems:{
                     value:[]
-                }
-                ,
+                },
+
                 allowMultiple:{
                     value:false
                 }
-            }
-            ,
+            },
             DefaultRender:FilterMenuRender
         }
-    )
-        ;
+    );
 
 }, {
     requires:['uibase','./menu','./filtermenurender']
@@ -22808,6 +22919,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "{prefixCls}menu-filter",
+        MENU_FILTER_LABEL = "{prefixCls}menu-filter-label",
         MENU_CONTENT = "{prefixCls}menu-content";
 
     function getCls(self, str) {
@@ -22818,27 +22930,58 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
 
     return UIBase.create(MenuRender, {
         getContentElement:function() {
-            return this._menuContent;
+            return this.get("menuContent");
         },
 
         getKeyEventTarget:function() {
-            return this._filterInput;
+            return this.get("filterInput");
         },
         createDom:function() {
+            var self = this;
             var contentEl = MenuRender.prototype.getContentElement.call(this);
-            var filterWrap = $("<div class='" + getCls(this, MENU_FILTER) + "'/>").appendTo(contentEl);
-            this._labelEl = $("<div/>").appendTo(filterWrap);
-            this._filterInput = $("<input autocomplete='off'/>").appendTo(filterWrap);
-            this._menuContent = $("<div class='" + getCls(this, MENU_CONTENT) + "'/>").appendTo(contentEl);
+            var filterWrap = self.get("filterWrap");
+            if (!filterWrap) {
+                self.set("filterWrap",
+                    filterWrap = $("<div class='" + getCls(this, MENU_FILTER) + "'/>")
+                        .appendTo(contentEl));
+            }
+            if (!this.get("labelEl")) {
+                this.set("labelEl",
+                    $("<div class='" + getCls(this, MENU_FILTER_LABEL) + "'/>").appendTo(filterWrap));
+            }
+            if (!self.get("filterInput")) {
+                self.set("filterInput", $("<input autocomplete='off'/>").appendTo(filterWrap));
+            }
+            if (!self.get("menuContent")) {
+                self.set("menuContent",
+                    $("<div class='" + getCls(this, MENU_CONTENT) + "'/>").appendTo(contentEl));
+            }
         },
 
         _uiSetLabel:function(v) {
-            this._labelEl.html(v);
+            this.get("labelEl").html(v);
         }
     }, {
+
         ATTRS:{
             /* 过滤输入框的提示 */
             label:{}
+        },
+
+        HTML_PARSER:{
+            labelEl:function(el) {
+                return el.one("." + getCls(this, MENU_FILTER))
+                    .one("." + getCls(this, MENU_FILTER_LABEL))
+            },
+            filterWrap:function(el) {
+                return el.one("." + getCls(this, MENU_FILTER));
+            },
+            menuContent:function(el) {
+                return el.one("." + getCls(this, MENU_CONTENT));
+            },
+            filterInput:function(el) {
+                return el.one("." + getCls(this, MENU_FILTER)).one("input");
+            }
         }
     });
 
@@ -23016,11 +23159,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
-            // 普通菜单可聚焦
-            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-            focusable:{
-                value:true
-            },
             /**
              * 当前高亮的儿子菜单项
              */
@@ -23030,14 +23168,17 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              */
             activeItem:{
                 view:true
-            },
-            visibleMode:{
-                value:"display"
             }
         }
     });
 
     Menu.DefaultRender = MenuRender;
+
+    Component.UIStore.setUIByClass("menu", {
+        priority:10,
+        ui:Menu
+    });
+
     return Menu;
 
 }, {
@@ -23052,7 +23193,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
-    var MenuItem = UIBase.create(Component.ModelControl, {
+    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
         _handleMouseEnter:function(e) {
             // 父亲不允许自己处理
@@ -23090,8 +23231,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         },
 
         _uiSetHighlighted:function(v) {
-            this.get("view").set("highlighted", v);
-
             // 是否要滚动到当前菜单项
             if (v) {
                 var el = this.get("el"),
@@ -23124,14 +23263,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 value:false
             },
 
-            /**
-             * 是否支持焦点处理
-             * @override
-             */
-            focusable:{
-                value:false
-            },
-
             selectable:{
                 view:true
             },
@@ -23140,13 +23271,19 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 view:true
             },
 
-            // option.text
-            content:{
-                view:true,
-                valueFn:function() {
-                    return this.get("view") && this.get("view").get("content");
+            caption:{
+                getter:function(v) {
+                    if (!v) {
+                        // 不使用 set ，会连锁
+                        this.__set("caption", v = this.get("content"));
+                    }
+                    return v;
                 }
             },
+
+            // @inheritedDoc
+            // option.text
+            //content:{},
 
             // option.value
             value:{},
@@ -23159,14 +23296,16 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             },
             selected:{
                 view:true
-            },
-            visibleMode:{
-                value:"display"
             }
         }
     });
 
     MenuItem.DefaultRender = MenuItemRender;
+
+    Component.UIStore.setUIByClass("menuitem", {
+        priority:10,
+        ui:MenuItem
+    });
 
     return MenuItem;
 }, {
@@ -23179,6 +23318,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
 
     var HIGHLIGHTED_CLS = "{prefixCls}menuitem-highlight",
+        CONTENTBOX_CLS = "{prefixCls}contentbox",
         SELECTED_CLS = "{prefixCls}menuitem-selected",
         CHECKED_CLS = "{prefixCls}menuitem-checked",
         ACTIVE_CLS = "{prefixCls}menuitem-active",
@@ -23195,9 +23335,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            cls = S.substitute(CHECK_CLS, {
-                prefixCls:self.get("prefixCls")
-            }),
+            cls = getCls(self, CHECK_CLS),
             checkEl = el.one("." + cls);
         if (!checkEl) {
             checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
@@ -23207,24 +23345,17 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
-        },
-
-        createDom:function() {
             var self = this,
                 el = self.get("el");
+            var cls = getCls(self, CONTENTBOX_CLS);
             el.addClass(getCls(self, EL_CLS))
-                .html("<div class='" + getCls(self, CONTENT_CLS) + "'>")
                 .attr("role", "menuitem");
+            self.get("contentEl").addClass(getCls(self, CONTENT_CLS));
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
-        },
-
-        _uiSetContent:function(v) {
-            var cs = this.get("el").children("div");
-            cs.item(cs.length - 1).html(v);
         },
 
         _uiSetDisabled:function(v) {
@@ -23237,10 +23368,11 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _uiSetHighlighted:function(v) {
+            var el = this.get("el");
             if (v) {
-                this.get("el").addClass(getCls(this, HIGHLIGHTED_CLS));
+                el.addClass(getCls(this, HIGHLIGHTED_CLS));
             } else {
-                this.get("el").removeClass(getCls(this, HIGHLIGHTED_CLS));
+                el.removeClass(getCls(this, HIGHLIGHTED_CLS));
             }
         },
 
@@ -23264,13 +23396,15 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _handleMouseDown:function() {
-            this.get("el").addClass(getCls(this, ACTIVE_CLS));
-            this.get("el").attr("aria-pressed", true);
+            var el = this.get("el");
+            el.addClass(getCls(this, ACTIVE_CLS));
+            el.attr("aria-pressed", true);
         },
 
         _handleMouseUp:function() {
-            this.get("el").removeClass(getCls(this, ACTIVE_CLS));
-            this.get("el").attr("aria-pressed", false);
+            var el = this.get("el");
+            el.removeClass(getCls(this, ACTIVE_CLS));
+            el.attr("aria-pressed", false);
         },
 
         containsElement:function(element) {
@@ -23279,15 +23413,21 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         }
     }, {
         ATTRS:{
+            /**
+             * 是否支持焦点处理
+             * @override
+             */
+            focusable:{
+                value:false
+            },
             highlighted:{},
             selected:{},
-            content:{},
+            // @inheritedDoc
+            // content:{},
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
-            checked:{}
-        },
-        HTML_PARSER:{
-            content:function(el) {
-                return el.html();
+            checked:{},
+            visibleMode:{
+                value:"display"
             }
         }
     });
@@ -23329,7 +23469,6 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
                 el.attr("aria-activedescendant", "");
                 //S.log("menurender :" + el.attr("id") + " _uiSetActiveItem : " + "");
             }
-
         },
 
         containsElement:function(element) {
@@ -23338,8 +23477,15 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            highlightedItem:{},
-            activeItem:{}
+            // 普通菜单可聚焦
+            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+            focusable:{
+                value:true
+            },
+            activeItem:{},
+            visibleMode:{
+                value:"display"
+            }
         }
     });
 }, {
@@ -23349,23 +23495,21 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
-    return UIBase.create(Menu, [
+    var PopMenu = UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
     }, {
-        ATTRS:{
-            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-            focusable:{
-                value:false
-            },
-
-            visibleMode:{
-                value:"visibility"
-            }
-        },
         DefaultRender:PopupMenuRender
     });
+
+    Component.UIStore.setUIByClass("popupmenu", {
+        priority:20,
+        ui:PopMenu
+    });
+
+    return PopMenu;
+
 }, {
     requires:['uibase','component','./menu','./popupmenurender']
 });/**
@@ -23373,10 +23517,27 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
+    var CLS = "{prefixCls}popmenu";
     return UIBase.create(MenuRender, [
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
-    ]);
+    ], {
+        renderUI:function() {
+            this.get("el").addClass(S.substitute(CLS, {
+                prefixCls:this.get("prefixCls")
+            }));
+        }
+    }, {
+        ATTRS:{
+            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+            focusable:{
+                value:false
+            },
+            visibleMode:{
+                value:"visibility"
+            }
+        }
+    });
 }, {
     requires:['ua','uibase','./menurender']
 });/**
@@ -23388,16 +23549,11 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     return UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
-            focusable:{
-                value:false
-            },
+
             handleMouseEvents:{
                 value:false
-            },
-            // 分隔线禁用，不可以被键盘访问
-            disabled:{
-                value:true
             }
+
         },
 
         DefaultRender:SeparatorRender
@@ -23421,6 +23577,16 @@ KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
             }));
         }
 
+    }, {
+        ATTRS:{
+            focusable:{
+                value:false
+            },
+            // 分隔线禁用，不可以被键盘访问
+            disabled:{
+                value:true
+            }
+        }
     });
 
 }, {
@@ -23620,6 +23786,27 @@ KISSY.add(
                     return menu && menu.containsElement(element);
                 },
 
+
+                decorateInternal:function(element) {
+                    var self = this,
+                        ui = "popupmenu",
+                        prefixCls = self.get("prefixCls");
+                    self.set("el", element);
+                    var child = element.one("." + prefixCls + ui);
+                    if (child) {
+                        // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
+                        child.hide();
+                        var docBody = S.one(element[0].ownerDocument.body);
+                        docBody.prepend(child);
+                        var UI = Component.UIStore.getUIByClass(ui);
+                        var menu = new UI({
+                            srcNode:child,
+                            prefixCls:prefixCls
+                        });
+                        self.set("menu", menu);
+                    }
+                },
+
                 destructor : function() {
                     var self = this,
                         parentMenu = self.get("parent"),
@@ -23631,7 +23818,7 @@ KISSY.add(
                     if (parentMenu) {
                         parentMenu.detach("hide", self._onParentHide, self);
                     }
-                    if (menu) {
+                    if (!self.get("externalSubMenu") && menu) {
                         menu.destroy();
                     }
                 }
@@ -23647,6 +23834,13 @@ KISSY.add(
                     menuDelay:{
                         value:300
                     },
+                    /**
+                     * whether destroy submenu when destroy itself ,reverse result
+                     * @type {boolean}
+                     */
+                    externalSubMenu:{
+                        value:false
+                    },
                     menu:{
                         setter:function(m) {
                             m.set("parent", this);
@@ -23657,6 +23851,12 @@ KISSY.add(
         );
 
         SubMenu.DefaultRender = SubMenuRender;
+
+        Component.UIStore.setUIByClass("submenu", {
+            priority:20,
+            ui:SubMenu
+        });
+
         return SubMenu;
     }, {
         requires:['uibase','component','./menuitem','./submenurender']
@@ -23673,12 +23873,19 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►</span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function() {
-                this.get("el").addClass(this.get("prefixCls") + "submenu");
-                this.get("el").attr("aria-haspopup", "true");
+                var self = this,
+                    el = self.get("el"),
+                    contentEl = self.get("contentEl");
+                el.addClass(this.get("prefixCls") + "submenu")
+                    .attr("aria-haspopup", "true");
+                contentEl.append(S.substitute(ARROW_TMPL, {
+                    prefixCls:this.get("prefixCls")
+                }));
             },
             _uiSetContent:function(v) {
-                this.get("el").one("." + this.get("prefixCls")
-                    + "menuitem-content").html(v + S.substitute(ARROW_TMPL, {
+                var self = this;
+                SubMenuRender.superclass._uiSetContent.call(self, v);
+                self.get("contentEl").append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
             }
@@ -23715,7 +23922,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * Model and Control for button
@@ -23723,7 +23930,7 @@ build time: Jul 18 18:22
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
-    var Button = UIBase.create(Component.ModelControl, {
+    var Button = UIBase.create(Component.ModelControl,[UIBase.Contentbox],{
         _handleClick:function(ev) {
             var self = this;
             // 如果父亲允许自己处理
@@ -23738,15 +23945,6 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
              * disabled:{}
              */
             value:{},
-            content:{
-                // model 中数据属性变化后要更新到 view 层
-                view:true,
-                // 如果没有用户值默认值，则要委托给 view 层
-                // 比如 view 层使用 html_parser 来利用既有元素
-                valueFn:function() {
-                    return this.get("view") && this.get("view").get("content");
-                }
-            },
             describedby:{
                 view:true
             },
@@ -23768,13 +23966,10 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render,[UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
-        },
-        _uiSetContent:function(content) {
-            this.get("el").html(content);
         },
         _uiSetTooltip:function(title) {
             this.get("el").attr("title", title);
@@ -23794,18 +23989,9 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
              * prefixCls:{}
              */
 
-                //按钮内容
-            content:{},
-            //aria-describledby support
+            // aria-describledby support
             describedby:{},
             tooltip:{}
-        },
-        HTML_PARSER:{
-            //默认单标签包含 content
-            //多标签需要 override
-            content:function(el) {
-                return el.html();
-            }
         }
     });
 }, {
@@ -23838,8 +24024,6 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
                 el = self.get("el");
             el.addClass(getCls(self, CLS));
         },
-
-
 
         /**
          * @override
@@ -23922,32 +24106,38 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
  * view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
+KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
     //双层 div 模拟圆角
-    var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+
+    var CONTENT_CLS = "inline-block custom-button-outer-box",
+        INNER_CLS = "inline-block custom-button-inner-box";
+
 
     return UIBase.create(Css3Render, {
 
             __css_tag:"custom",
-
-            renderUI:function() {
-            },
 
             /**
              *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
              */
             createDom:function() {
                 var self = this,
+                    el = self.get("el"),
+                    contentEl = self.get("contentEl"),
                     id = S.guid('ks-button-labelby');
                 //按钮的描述节点在最内层，其余都是装饰
-                self.get("el")
-                    .html(S.substitute(CUSTOM_RENDER_HTML, {
-                    prefixCls:this.get("prefixCls"),
-                    id:id
-                }))
-                    .attr("aria-labelledby", id);
-            },
+                contentEl.addClass(this.getCls(CONTENT_CLS));
+                var elChildren = S.makeArray(contentEl[0].childNodes);
+                var innerEl = new Node("<div id='" + id + "' " +
+                    "class='" + self.getCls(INNER_CLS) + "'/>").appendTo(contentEl);
+                // content 由 contentboxrender 处理
+                for (var i = 0; i < elChildren.length; i++) {
+                    innerEl.append(elChildren[i]);
+                }
+                el.attr("aria-labelledby", id);
+                self._innerEl = innerEl;
+            }
+            ,
 
             /**
              * 内容移到内层
@@ -23955,7 +24145,9 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
              * @param v
              */
             _uiSetContent:function(v) {
-                this.get("el").one('div').one('div').html(v || "");
+                var innerEl = this._innerEl;
+                innerEl.html("");
+                v && innerEl.append(v);
             }
         }
         /**
@@ -23964,7 +24156,7 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
          */
     );
 }, {
-    requires:['uibase','./css3render']
+    requires:['node','uibase','./css3render']
 });/**
  * view: render button using native button
  * @author yiminghe@gmail.com
@@ -23998,7 +24190,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  * combination of menu and button ,similar to native select
@@ -24402,7 +24594,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:23
+build time: Jul 20 18:43
 */
 /**
  * @author: 常胤 (lzlu.com)

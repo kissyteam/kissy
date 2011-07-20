@@ -170,11 +170,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
-            // 普通菜单可聚焦
-            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-            focusable:{
-                value:true
-            },
             /**
              * 当前高亮的儿子菜单项
              */
@@ -184,14 +179,17 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              */
             activeItem:{
                 view:true
-            },
-            visibleMode:{
-                value:"display"
             }
         }
     });
 
     Menu.DefaultRender = MenuRender;
+
+    Component.UIStore.setUIByClass("menu", {
+        priority:10,
+        ui:Menu
+    });
+
     return Menu;
 
 }, {

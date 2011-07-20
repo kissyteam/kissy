@@ -1,8 +1,8 @@
 /**
  * constrain extension for kissy
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("uibase/constrain", function(S, DOM,Node) {
+KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
     function Constrain() {
 
@@ -55,7 +55,6 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
     Constrain.prototype = {
 
         __renderUI:function() {
-            //S.log("_renderUIConstrain");
             var self = this,
                 attrs = self.__getDefAttrs(),
                 xAttr = attrs["x"],
@@ -63,7 +62,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
                 oriXSetter = xAttr["setter"],
                 oriYSetter = yAttr["setter"];
             xAttr.setter = function(v) {
-                var r = oriXSetter && oriXSetter(v);
+                var r = oriXSetter && oriXSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
                 }
@@ -75,7 +74,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
                     _ConstrainExtRegion.maxLeft);
             };
             yAttr.setter = function(v) {
-                var r = oriYSetter && oriYSetter(v);
+                var r = oriYSetter && oriYSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
                 }

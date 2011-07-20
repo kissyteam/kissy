@@ -1,6 +1,6 @@
 /**
  * position and visible extension，可定位的隐藏层
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/position", function(S) {
 
@@ -9,21 +9,10 @@ KISSY.add("uibase/position", function(S) {
 
     Position.ATTRS = {
         x: {
-            view:true,
-            // 水平方向绝对位置
-            valueFn:function() {
-                //初始化 xy，结果调用了 set("x") 里面又调用了 get("x")
-                //这时还没有渲染，尚没有 view，必须判断
-                return this.get("view") && this.get("view").get("x");
-            }
+            view:true
         },
         y: {
-            view:true,
-            // 垂直方向绝对位置
-            // 水平方向绝对位置
-            valueFn:function() {
-                return this.get("view") && this.get("view").get("y");
-            }
+            view:true
         },
         xy: {
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置

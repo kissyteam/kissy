@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
-    var MenuItem = UIBase.create(Component.ModelControl, {
+    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
         _handleMouseEnter:function(e) {
             // 父亲不允许自己处理
@@ -41,8 +41,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         },
 
         _uiSetHighlighted:function(v) {
-            this.get("view").set("highlighted", v);
-
             // 是否要滚动到当前菜单项
             if (v) {
                 var el = this.get("el"),
@@ -75,14 +73,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 value:false
             },
 
-            /**
-             * 是否支持焦点处理
-             * @override
-             */
-            focusable:{
-                value:false
-            },
-
             selectable:{
                 view:true
             },
@@ -91,13 +81,19 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 view:true
             },
 
-            // option.text
-            content:{
-                view:true,
-                valueFn:function() {
-                    return this.get("view") && this.get("view").get("content");
+            caption:{
+                getter:function(v) {
+                    if (!v) {
+                        // 不使用 set ，会连锁
+                        this.__set("caption", v = this.get("content"));
+                    }
+                    return v;
                 }
             },
+
+            // @inheritedDoc
+            // option.text
+            //content:{},
 
             // option.value
             value:{},
@@ -110,9 +106,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             },
             selected:{
                 view:true
-            },
-            visibleMode:{
-                value:"display"
             }
         }
     });

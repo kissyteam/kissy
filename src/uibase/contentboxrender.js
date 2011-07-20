@@ -1,6 +1,6 @@
 /**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
@@ -11,16 +11,23 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         //内容容器节点
         contentEl:{},
         contentElAttrs:{},
+        contentElCls:{
+            value:""
+        },
         contentElStyle:{},
         contentTagName:{value:"div"},
         //层内容
-        content:{}
+        content:{
+            sync:false
+        }
     };
 
-
+    /**
+     * ! contentEl 只能由组件动态生成
+     */
     ContentBox.HTML_PARSER = {
-        contentEl:function(el) {
-            return el.one("." + this.get("prefixCls") + "contentbox");
+        content:function(el) {
+            return el.html();
         }
     };
 
@@ -34,37 +41,42 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
         __createDom:function() {
             var self = this,
-                contentEl = self.get("contentEl"),
-                el = self.get("el");
-
-            if (!contentEl) {
-                var elChildren = S.makeArray(el[0].childNodes);
-                contentEl = new Node(constructEl(this.get("prefixCls") + "contentbox",
-                    self.get("contentElStyle"),
-                    undefined,
-                    undefined,
-                    self.get("contentTagName"),
-                    self.get("contentElAttrs"))).appendTo(el);
+                contentEl,
+                el = self.get("el"),
+                elChildren = S.makeArray(el[0].childNodes);
+            contentEl = new Node(constructEl(
+                self.get("prefixCls") + "contentbox "
+                    + self.get("contentElCls"),
+                self.get("contentElStyle"),
+                undefined,
+                undefined,
+                self.get("contentTagName"),
+                self.get("contentElAttrs"))).appendTo(el);
+            self.set("contentEl", contentEl);
+            if (elChildren.length) {
                 for (var i = 0; i < elChildren.length; i++) {
                     contentEl.append(elChildren[i]);
                 }
-                self.set("contentEl", contentEl);
+            } else if (self.get("content")) {
+                self._uiSetContent(self.get("content"));
             }
+
+
         },
 
+        _uiSetContentElCls:function(cls) {
+            this.get("contentEl").addClass(cls);
+        },
         _uiSetContentElAttrs:function(attrs) {
-            attrs && this.get("contentEl").attr(attrs);
+            this.get("contentEl").attr(attrs);
         },
         _uiSetContentElStyle:function(v) {
-            v && this.get("contentEl").css(v);
+            this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
-            if (S.isString(c)) {
-                this.get("contentEl").html(c);
-            } else if (c !== undefined) {
-                this.get("contentEl").html("");
-                this.get("contentEl").append(c);
-            }
+            var contentEl = this.get("contentEl");
+            contentEl.html("");
+            c && contentEl.append(c);
         }
     };
 

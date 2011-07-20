@@ -6,6 +6,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
 
     var HIGHLIGHTED_CLS = "{prefixCls}menuitem-highlight",
+        CONTENTBOX_CLS = "{prefixCls}contentbox",
         SELECTED_CLS = "{prefixCls}menuitem-selected",
         CHECKED_CLS = "{prefixCls}menuitem-checked",
         ACTIVE_CLS = "{prefixCls}menuitem-active",
@@ -22,9 +23,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            cls = S.substitute(CHECK_CLS, {
-                prefixCls:self.get("prefixCls")
-            }),
+            cls = getCls(self, CHECK_CLS),
             checkEl = el.one("." + cls);
         if (!checkEl) {
             checkEl = new Node("<div class='" + cls + "'/>").prependTo(el);
@@ -34,24 +33,17 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
-        },
-
-        createDom:function() {
             var self = this,
                 el = self.get("el");
+            var cls = getCls(self, CONTENTBOX_CLS);
             el.addClass(getCls(self, EL_CLS))
-                .html("<div class='" + getCls(self, CONTENT_CLS) + "'>")
                 .attr("role", "menuitem");
+            self.get("contentEl").addClass(getCls(self, CONTENT_CLS));
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
-        },
-
-        _uiSetContent:function(v) {
-            var cs = this.get("el").children("div");
-            cs.item(cs.length - 1).html(v);
         },
 
         _uiSetDisabled:function(v) {
@@ -64,10 +56,11 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _uiSetHighlighted:function(v) {
+            var el = this.get("el");
             if (v) {
-                this.get("el").addClass(getCls(this, HIGHLIGHTED_CLS));
+                el.addClass(getCls(this, HIGHLIGHTED_CLS));
             } else {
-                this.get("el").removeClass(getCls(this, HIGHLIGHTED_CLS));
+                el.removeClass(getCls(this, HIGHLIGHTED_CLS));
             }
         },
 
@@ -91,13 +84,15 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _handleMouseDown:function() {
-            this.get("el").addClass(getCls(this, ACTIVE_CLS));
-            this.get("el").attr("aria-pressed", true);
+            var el = this.get("el");
+            el.addClass(getCls(this, ACTIVE_CLS));
+            el.attr("aria-pressed", true);
         },
 
         _handleMouseUp:function() {
-            this.get("el").removeClass(getCls(this, ACTIVE_CLS));
-            this.get("el").attr("aria-pressed", false);
+            var el = this.get("el");
+            el.removeClass(getCls(this, ACTIVE_CLS));
+            el.attr("aria-pressed", false);
         },
 
         containsElement:function(element) {
@@ -106,15 +101,21 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         }
     }, {
         ATTRS:{
+            /**
+             * 是否支持焦点处理
+             * @override
+             */
+            focusable:{
+                value:false
+            },
             highlighted:{},
             selected:{},
-            content:{},
+            // @inheritedDoc
+            // content:{},
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
-            checked:{}
-        },
-        HTML_PARSER:{
-            content:function(el) {
-                return el.html();
+            checked:{},
+            visibleMode:{
+                value:"display"
             }
         }
     });

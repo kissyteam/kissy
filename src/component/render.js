@@ -4,6 +4,15 @@
  */
 KISSY.add("component/render", function(S, UIBase) {
     return UIBase.create([UIBase.Box.Render], {
+
+        getCls:function(cls) {
+            var cs = cls.split(/\s+/);
+            for (var i = 0; i < cs.length; i++) {
+                cs[i] = this.get("prefixCls") + cs[i];
+            }
+            return cs.join(" ");
+        },
+
         getKeyEventTarget:function() {
             return this.get("el");
         },
@@ -25,10 +34,16 @@ KISSY.add("component/render", function(S, UIBase) {
         ATTRS:{
             //从 maskup 中渲染
             srcNode:{},
-            prefixCls:{},
-            focusable:{},
+            prefixCls:{
+                value:"ks-"
+            },
+            focusable:{
+                value:true
+            },
             //是否禁用
-            disabled:{}
+            disabled:{
+                value:false
+            }
         }
     });
 }, {

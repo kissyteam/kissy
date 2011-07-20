@@ -1,6 +1,6 @@
 /**
  * support standard mod for component
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmod", function(S) {
 
@@ -10,19 +10,13 @@ KISSY.add("uibase/stdmod", function(S) {
 
     StdMod.ATTRS = {
         header:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("header");
-            }
+            view:true
         },
         body:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("body");
-            }
+            view:true
         },
         footer:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("footer");
-            }
+            view:true
         },
         bodyStyle:{
             view:true

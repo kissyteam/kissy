@@ -14,6 +14,16 @@ KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
             }));
         }
 
+    }, {
+        ATTRS:{
+            focusable:{
+                value:false
+            },
+            // 分隔线禁用，不可以被键盘访问
+            disabled:{
+                value:true
+            }
+        }
     });
 
 }, {

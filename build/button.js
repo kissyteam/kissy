@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 18 18:22
+build time: Jul 20 18:42
 */
 /**
  * Model and Control for button
@@ -9,7 +9,7 @@ build time: Jul 18 18:22
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
-    var Button = UIBase.create(Component.ModelControl, {
+    var Button = UIBase.create(Component.ModelControl,[UIBase.Contentbox],{
         _handleClick:function(ev) {
             var self = this;
             // 如果父亲允许自己处理
@@ -24,15 +24,6 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
              * disabled:{}
              */
             value:{},
-            content:{
-                // model 中数据属性变化后要更新到 view 层
-                view:true,
-                // 如果没有用户值默认值，则要委托给 view 层
-                // 比如 view 层使用 html_parser 来利用既有元素
-                valueFn:function() {
-                    return this.get("view") && this.get("view").get("content");
-                }
-            },
             describedby:{
                 view:true
             },
@@ -54,13 +45,10 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render,[UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
-        },
-        _uiSetContent:function(content) {
-            this.get("el").html(content);
         },
         _uiSetTooltip:function(title) {
             this.get("el").attr("title", title);
@@ -80,18 +68,9 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
              * prefixCls:{}
              */
 
-                //按钮内容
-            content:{},
-            //aria-describledby support
+            // aria-describledby support
             describedby:{},
             tooltip:{}
-        },
-        HTML_PARSER:{
-            //默认单标签包含 content
-            //多标签需要 override
-            content:function(el) {
-                return el.html();
-            }
         }
     });
 }, {
@@ -124,8 +103,6 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
                 el = self.get("el");
             el.addClass(getCls(self, CLS));
         },
-
-
 
         /**
          * @override
@@ -208,32 +185,38 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
  * view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
+KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
     //双层 div 模拟圆角
-    var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+
+    var CONTENT_CLS = "inline-block custom-button-outer-box",
+        INNER_CLS = "inline-block custom-button-inner-box";
+
 
     return UIBase.create(Css3Render, {
 
             __css_tag:"custom",
-
-            renderUI:function() {
-            },
 
             /**
              *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
              */
             createDom:function() {
                 var self = this,
+                    el = self.get("el"),
+                    contentEl = self.get("contentEl"),
                     id = S.guid('ks-button-labelby');
                 //按钮的描述节点在最内层，其余都是装饰
-                self.get("el")
-                    .html(S.substitute(CUSTOM_RENDER_HTML, {
-                    prefixCls:this.get("prefixCls"),
-                    id:id
-                }))
-                    .attr("aria-labelledby", id);
-            },
+                contentEl.addClass(this.getCls(CONTENT_CLS));
+                var elChildren = S.makeArray(contentEl[0].childNodes);
+                var innerEl = new Node("<div id='" + id + "' " +
+                    "class='" + self.getCls(INNER_CLS) + "'/>").appendTo(contentEl);
+                // content 由 contentboxrender 处理
+                for (var i = 0; i < elChildren.length; i++) {
+                    innerEl.append(elChildren[i]);
+                }
+                el.attr("aria-labelledby", id);
+                self._innerEl = innerEl;
+            }
+            ,
 
             /**
              * 内容移到内层
@@ -241,7 +224,9 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
              * @param v
              */
             _uiSetContent:function(v) {
-                this.get("el").one('div').one('div').html(v || "");
+                var innerEl = this._innerEl;
+                innerEl.html("");
+                v && innerEl.append(v);
             }
         }
         /**
@@ -250,7 +235,7 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
          */
     );
 }, {
-    requires:['uibase','./css3render']
+    requires:['node','uibase','./css3render']
 });/**
  * view: render button using native button
  * @author yiminghe@gmail.com

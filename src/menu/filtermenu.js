@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
-    var HIT_CLS = "{prefixCls}menu-item-hit";
+    var HIT_CLS = "{prefixCls}menuitem-hit";
 
     // 转义正则特殊字符，返回字符串用来构建正则表达式
     function regExpEscape(s) {
@@ -16,7 +16,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             bindUI:function() {
                 var self = this;
                 var view = self.get("view");
-                var filterInput = view._filterInput;
+                var filterInput = view.get("filterInput");
                 /*监控键盘事件*/
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
@@ -24,7 +24,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             handleFilterEvent:function() {
                 var self = this;
                 var view = self.get("view");
-                var filterInput = view._filterInput;
+                var filterInput = view.get("filterInput");
                 /* 根据用户输入过滤 */
                 self.set("filterStr", filterInput.val());
                 var highlightedItem = self.get("highlightedItem");
@@ -43,8 +43,8 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             filterItems:function(str) {
                 var self = this;
                 var view = self.get("view");
-                var _labelEl = view._labelEl;
-                var filterInput = view._filterInput;
+                var _labelEl = view.get("labelEl");
+                var filterInput = view.get("filterInput");
 
                 // 有过滤条件提示隐藏，否则提示显示
                 _labelEl[str ? "hide" : "show"]();
@@ -72,7 +72,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get("highlightedItem");
-                            var content = item && item.get("content");
+                            var content = item && item.get("caption");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1 && lastWord) {
                                 enteredItems[enteredItems.length - 1] = content;
@@ -111,7 +111,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
                 // 过滤所有子组件
                 S.each(children, function(c) {
-                    var content = c.get("content"),
+                    var content = c.get("caption"),
                         view = c.get("view");
                     if (!str) {
                         // 没有过滤条件
@@ -135,12 +135,18 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                         }
                     }
                 });
-            }
-            ,
+            },
+
+            decorateInternal:function(el) {
+                var self = this,prefixCls = this.get("prefixCls");
+                self.set("el", el);
+                var menuContent = el.one("." + prefixCls + "menu-content");
+                self.decorateChildren(menuContent);
+            },
 
             destructor:function() {
                 var view = this.get("view");
-                var filterInput = view && view._filterInput;
+                var filterInput = view && view.get("filterInput");
                 filterInput && filterInput.detach();
             }
 
@@ -149,24 +155,22 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             ATTRS:{
                 label:{
                     view:true
-                }
-                ,
+                },
+
                 filterStr:{
-                }
-                ,
+                },
+
                 enteredItems:{
                     value:[]
-                }
-                ,
+                },
+
                 allowMultiple:{
                     value:false
                 }
-            }
-            ,
+            },
             DefaultRender:FilterMenuRender
         }
-    )
-        ;
+    );
 
 }, {
     requires:['uibase','./menu','./filtermenurender']

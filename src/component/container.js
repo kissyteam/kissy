@@ -31,19 +31,31 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                 }
             }
         },
-        /**
-         * container 需要在装饰时对儿子特殊处理，递归装饰
-         */
+
         decorateInternal:function(el) {
             var self = this;
             self.set("el", el);
-            var children = el.children();
-            S.each(children, function(c) {
-                var cls = c.attr("class") || "";
+            self.decorateChildren(el);
+        },
+        /**
+         * container 需要在装饰时对儿子特殊处理，递归装饰
+         */
+        decorateChildren:function(el) {
+            var self = this,children = el.children();
+            children.each(function(c) {
+                var cls = c.attr("class") || "",
+                    prefixCls = self.get("prefixCls");
                 // 过滤掉特定前缀
-                cls = cls.replace(new RegExp("(?:^|\\s+)" + this.get("prefixCls"), "ig"), "")
+                cls = cls.replace(new RegExp("(?:^|\\s+)" + prefixCls, "ig"), "");
                 var UI = UIStore.getUIByClass(cls);
-                self.addChild(new UI({srcNode:c}));
+                if (!UI) {
+                    S.log(c);
+                    S.error("can not find ui from this markup");
+                }
+                self.addChild(new UI({
+                    srcNode:c,
+                    prefixCls:prefixCls
+                }));
             });
         },
         getOwnerControl:function(node) {

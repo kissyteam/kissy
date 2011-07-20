@@ -27,8 +27,6 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
             el.addClass(getCls(self, CLS));
         },
 
-
-
         /**
          * @override
          */
