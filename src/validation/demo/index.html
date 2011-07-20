@@ -111,9 +111,29 @@
 			}else{
 				frame.attr("src","home.html");
 			}
-
 			
+			
+			function reinitIframe(){
+				var iframe = document.getElementById("mainframe");
+				if(!iframe)return;
+				try{
+					var bHeight = iframe.contentWindow.document.body.scrollHeight;
+					var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+					var height = Math.max(bHeight, dHeight);
+					iframe.height =  height;
+				}catch (ex){}
+			}
+
+			window.setInterval(function(){
+				reinitIframe();
+			}, 1000);
+
 		});
+		
+
+		
+		
+		
 	</script>
 	
 
