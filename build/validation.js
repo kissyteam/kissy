@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 20 18:57
 */
 /**
  * @author: 常胤 (lzlu.com)
@@ -469,16 +469,21 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 				return make(symbol.ignore,undefined);
 			}
 			
+
+			
 			//执行所有校验
 			
 			for(var v in rs){
-				//required
 				if(v=="required"){
-					if(self.label && Util.isEmpty(value)){
-                        return make(symbol.hint,self.label);
-                    }
+					var require = rs["required"].call(this,value);
+					if(require){
+						return self.label?make(symbol.hint,self.label):make(symbol.error,require);
+					}else{
+						if(Util.isEmpty(value)) return make(symbol.ignore,"");
+					}
 				}
-				//这两个外面已经处理了
+				
+				//这个外面已经处理了
 				if("depend".indexOf(v)>-1){
 					continue;
 				}
@@ -840,6 +845,23 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 			return text
 		}
 	});
+	
+	Rule.add("card","身份证号码不正确",function(value,text){
+		var iW = [7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2,1],
+			iSum = 0;
+		for( i=0;i<17;i++){
+			iSum += parseInt(value.charAt(i))* iW[i];
+		}
+		var sJYM = (12-(iSum % 11)) % 11;
+		if(sJYM == 10){
+			sJYM = 'x';
+		}
+		var cCheck = value.charAt(17).toLowerCase();
+		if( cCheck != sJYM ){
+			return text;
+		}
+	});
+	
 	
 	
 	S.each([["chinese",/^[\u0391-\uFFE5]+$/,"只能输入中文"],
