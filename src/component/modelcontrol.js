@@ -1,6 +1,7 @@
 /**
  * model and control base class for kissy
  * @author yiminghe@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
@@ -400,15 +401,41 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
         },
         {
             ATTRS:{
+                /**
+                 *  session state
+                 */
 
-                // 是否绑定鼠标事件
+                    // 是否绑定鼠标事件
                 handleMouseEvents:{
                     value:true
                 },
 
                 // 是否支持焦点处理
                 focusable:{
+                    /*
+                     *  observer synchronization , model 分成两类：
+                     *                view 负责监听 view 类 model 变化更新界面
+                     *                control 负责监听 control 类变化改变逻辑
+                     *  problem : Observer behavior is hard to understand and debug because it's implicit behavior.
+                     *
+                     *  Keeping screen state and session state synchronized is an important task
+                     *  Data Binding
+                     */
                     view:true
+                    /**
+                     * In general data binding gets tricky
+                     * because if you have to avoid cycles where a change to the control,
+                     * changes the record set, which updates the control,
+                     * which updates the record set....
+                     * The flow of usage helps avoid these -
+                     * we load from the session state to the screen when the screen is opened,
+                     * after that any changes to the screen state propagate back to the session state.
+                     * It's unusual for the session state to be updated directly once the screen is up.
+                     * As a result data binding might not be entirely bi-directional -
+                     * just confined to initial upload and
+                     * then propagating changes from the controls to the session state.
+                     */
+                    // sync
                 },
 
                 //子组件

@@ -1,6 +1,7 @@
 /**
  * render base class for kissy
  * @author yiminghe@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/render", function(S, UIBase, UIStore) {
     return UIBase.create([UIBase.Box.Render], {
@@ -26,6 +27,10 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         }
     }, {
         ATTRS:{
+            /**
+             *  screen state
+             */
+
             //从 maskup 中渲染
             srcNode:{},
             prefixCls:{
