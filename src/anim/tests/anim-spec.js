@@ -99,7 +99,7 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
             });
 
-            waits(2000);
+            waits(2500);
             runs(function() {
                 if (transitionName) {
                     expect(DOM.css(test1, transitionName)).toBe("none");

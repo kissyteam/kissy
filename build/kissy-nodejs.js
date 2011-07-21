@@ -188,7 +188,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 21 21:44
+build time: Jul 21 23:53
 */
 /*
  * @module kissy
@@ -274,7 +274,7 @@ build time: Jul 21 21:44
              */
             version: '1.20dev',
 
-            buildTime:'20110721214358',
+            buildTime:'20110721235342',
 
             /**
              * Returns a new object containing all of the properties of
@@ -7756,10 +7756,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 source = {},
                 prop;
 
-            // already running,please stop first
-            if (self.isRunning) {
-                return;
-            }
             if (self.fire(EVENT_START) === false) return;
 
             self.stop(); // 先停止掉正在运行的动画
@@ -7952,7 +7948,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 self = this,
                 elem = self.domEl,
                 prefix = self.transitionName;
-            transition[prefix + 'Property'] = "";
+            transition[prefix + 'Property'] = NONE;
             transition[prefix + 'Duration'] = "";
             transition[prefix + 'TimingFunction'] = "";
             DOM.css(elem, transition);

@@ -5121,10 +5121,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 source = {},
                 prop;
 
-            // already running,please stop first
-            if (self.isRunning) {
-                return;
-            }
             if (self.fire(EVENT_START) === false) return;
 
             self.stop(); // 先停止掉正在运行的动画
@@ -5317,7 +5313,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 self = this,
                 elem = self.domEl,
                 prefix = self.transitionName;
-            transition[prefix + 'Property'] = "";
+            transition[prefix + 'Property'] = NONE;
             transition[prefix + 'Duration'] = "";
             transition[prefix + 'TimingFunction'] = "";
             DOM.css(elem, transition);
