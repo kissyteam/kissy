@@ -188,7 +188,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 21 14:27
+build time: Jul 21 15:38
 */
 /*
  * @module kissy
@@ -274,7 +274,7 @@ build time: Jul 21 14:27
              */
             version: '1.20dev',
 
-            buildTime:'20110721142735',
+            buildTime:'20110721153856',
 
             /**
              * Returns a new object containing all of the properties of
@@ -7091,11 +7091,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         DOM_INCLUDES_NORM_IF = {
             // dom method : set parameter index
             "attr":1,
-            "text":1,
+            "text":0,
             "css":1,
             "val":0,
             "prop":1,
-            "offset":1,
+            "offset":0,
             "html":0,
             "data":1
         },

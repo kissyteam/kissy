@@ -56,11 +56,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         DOM_INCLUDES_NORM_IF = {
             // dom method : set parameter index
             "attr":1,
-            "text":1,
+            "text":0,
             "css":1,
             "val":0,
             "prop":1,
-            "offset":1,
+            "offset":0,
             "html":0,
             "data":1
         },
