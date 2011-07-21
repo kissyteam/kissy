@@ -32,8 +32,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
                 }
                 el.attr("aria-labelledby", id);
                 self.set("innerEl", innerEl);
-            }
-            ,
+            },
 
             /**
              * 内容移到内层

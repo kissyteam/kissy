@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 21 11:15
 */
 /**
  * combination of menu and button ,similar to native select
@@ -197,12 +197,12 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
     return UIBase.create(Button.Render, {
 
         createDom:function() {
-            var innerEL = this.get("innerEL"),
+            var innerEl = this.get("innerEl"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
                     content:this.get("content") || "",
                     prefixCls:this.get("prefixCls")
                 });
-            innerEL
+            innerEl
                 .html(html)
                 //带有 menu
                 .attr("aria-haspopup", true);

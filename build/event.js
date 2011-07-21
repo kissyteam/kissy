@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 21 14:27
 */
 /**
  * @module  event
@@ -158,7 +158,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 // remove all types of event
                 if (type === undefined) {
                     for (type in events) {
-                        Event.remove(target, type);
+                        Event.remove.call(Event, target, type);
                     }
                     return;
                 }
@@ -168,7 +168,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 if ((listeners = events[type])) {
                     len = listeners.length;
                     // 移除 fn
-                    if (S.isFunction(fn) && len) {
+                    if (fn && len) {
                         for (i = 0,j = 0,t = []; i < len; ++i) {
                             var reserve = false,listener = listeners[i];
                             if (fn !== listener.fn
@@ -209,11 +209,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 special['tearDown'].call(target) === false)) {
                             simpleRemove(target, type, eventDesc.handler);
                         }
+                        // remove target's single event description
                         delete events[type];
                     }
                 }
 
-                // remove expando
+                // remove target's  all events description
                 if (S.isEmptyObject(events)) {
                     eventDesc.handler.target = null;
                     delete eventDesc.handler;
@@ -265,7 +266,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         /**
          * fire event , simulate bubble in browser
          */
-        fire:function(targets, eventType, eventData) {
+        fire:function(targets, eventType, eventData, onlyHandlers) {
             if (batchForType("fire", targets, eventType, eventData)) {
                 return;
             }
@@ -283,7 +284,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
                 } else {
-                    var r = fireDOMEvent(target, eventType, eventData);
+                    var r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
                     if (r !== undefined) {
                         ret = r;
                     }
@@ -325,7 +326,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = Event.special[type] || {};
-        // dom 节点才需要注册 dom 事件
+        // 第一次注册该事件，dom 节点才需要注册 dom 事件
         if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
         }
@@ -338,12 +339,18 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     /**
      * fire dom event from bottom to up
      */
-    function fireDOMEvent(target, eventType, eventData) {
+    function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         var ret;
         if (!isValidTarget(target)) {
             return ret;
         }
-        var event = new EventObject(target, eventData);
+        var event = new EventObject(target);
+        S.mix(event, eventData);
+        // 只运行自己的绑定函数，不冒泡也不触发默认行为
+        if (onlyHandlers) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
         event.target = target;
         var cur = target,
             ontype = "on" + eventType;
@@ -401,21 +408,16 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     return Event;
 }, {
-        requires:["dom","event/object"]
-    });
+    requires:["dom","event/object"]
+});
 
 /**
  * 承玉：2011-06-07
  *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
  *  - 减少闭包使用，prevent ie 内存泄露？
  *  - 增加 fire ，模拟冒泡处理 dom 事件
- *  - TODO: 自定义事件和 dom 事件操作分离?
+ *  - TODO: 自定义事件和 dom 事件操作彻底分离?
  *
- * TODO:
- *   - event || window.event, 什么情况下取 window.event ? IE4 ?
- *   - 更详尽细致的 test cases
- *   - 内存泄漏测试
- *   - target 为 window, iframe 等特殊对象时的 test case
  */
 /**
  * kissy delegate for event module
@@ -588,156 +590,154 @@ KISSY.add('event/focusin', function(S, UA, Event) {
  */
 KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
-    var doc = document,
-        HASH_CHANGE = 'hashchange',
-        docMode = doc['documentMode'],
-        ie = docMode || UA['ie'];
+    var ie = docMode || UA['ie'],
+        HASH_CHANGE = 'hashchange';
 
     // IE8以上切换浏览器模式到IE7，会导致 'onhashchange' in window === true
+    // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
+    // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
     if ((!( 'on' + HASH_CHANGE in window)) || ie < 8) {
-        var getHash = function() {
-            var url = location.href;
-            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
-        },
+
+        var POLL_INTERVAL = 50,
+            doc = document,
+            win = window,
+            docMode = doc['documentMode'],
+            getHash = function() {
+                // ie 返回 "" ，其他返回 "#"
+                // return location.hash ?
+                var url = location.href;
+                return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+            },
+            timer,
+
+            lastHash = getHash(),
+
+            poll = function () {
+                var hash = getHash();
+                if (hash !== lastHash) {
+                    hashChange(hash);
+                    lastHash = hash;
+                }
+                timer = setTimeout(poll, POLL_INTERVAL);
+            },
+
+            hashChange = ie < 8 ? function(hash) {
+                //debugger
+                var html = '<html><body>' + hash + '</body></html>',
+                    doc = iframe.contentWindow.document;
+                try {
+                    // 写入历史 hash
+                    doc.open();
+                    doc.write(html);
+                    doc.close();
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            } : function (hash) {
+                notifyHashChange(hash);
+            },
+
+            notifyHashChange = function (hash) {
+                S.log("hash changed : " + hash);
+                Event.fire(win, HASH_CHANGE);
+            },
             setup = function () {
-                poll();
+                if (!timer) {
+                    poll();
+                }
             },
             tearDown = function () {
                 timer && clearTimeout(timer);
                 timer = null;
             },
-            poll = function () {
-                //console.log('poll start..' + +new Date());
-                var hash = getHash();
+            iframe;
 
-                if (hash !== lastHash) {
-                    //debugger
-                    hashChange(hash);
-                    lastHash = hash;
-                }
-                timer = setTimeout(poll, 50);
-            },
-            hashChange = function (hash) {
-                notifyHashChange(hash);
-            },
-            notifyHashChange = function (hash) {
-                S.log("hash changed : " + hash);
-                for (var i = 0; i < targets.length; i++) {
-                    var t = targets[i];
-                    //模拟暂时没有属性
-                    Event._handle(t, {
-                        type: HASH_CHANGE
+        // ie6, 7, 覆盖一些function
+        if (ie < 8) {
+
+            /**
+             * 前进后退 : start -> notifyHashChange
+             * 直接输入 : poll -> hashChange -> start
+             * iframe 内容和 url 同步
+             */
+            setup = function() {
+                if (!iframe) {
+                    //http://www.paciellogroup.com/blog/?p=604
+                    iframe = DOM.create('<iframe ' +
+                        //'src="#" ' +
+                        'style="display: none" ' +
+                        'height="0" ' +
+                        'width="0" ' +
+                        'tabindex="-1" ' +
+                        'title="empty"/>');
+                    // Append the iframe to the documentElement rather than the body.
+                    // Keeping it outside the body prevents scrolling on the initial
+                    // page load
+                    DOM.prepend(iframe, document.documentElement);
+
+                    // init，第一次触发，以后都是 start
+                    Event.add(iframe, "load", function() {
+                        Event.remove(iframe, "load");
+                        // Update the iframe with the initial location hash, if any. This
+                        // will create an initial history entry that the user can return to
+                        // after the state has changed.
+                        hashChange(getHash());
+                        Event.add(iframe, "load", start);
+                        poll();
                     });
+
+                    /**
+                     * 前进后退 ： start -> 触发
+                     * 直接输入 : timer -> hashChange -> start -> 触发
+                     * 触发统一在 start(load)
+                     * iframe 内容和 url 同步
+                     */
+                        //后退触发点
+                        //或addHistory 调用
+                        //只有 start 来通知应用程序
+                    function start() {
+                        // S.log('iframe start load..');
+                        //debugger
+                        var c = S.trim(iframe.contentWindow.document.body.innerHTML);
+                        var ch = getHash();
+
+                        //后退时不等
+                        //改变location则相等
+                        if (c != ch) {
+                            location.hash = c;
+                            // 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
+                            lastHash = c;
+                        }
+                        notifyHashChange(c);
+                    }
                 }
-            },
-            timer,
-            targets = [],
-            lastHash = getHash();
+            };
+
+            tearDown = function() {
+                timer && clearTimeout(timer);
+                timer = null;
+                Event.detach(iframe);
+                DOM.remove(iframe);
+                iframe = null;
+            };
+        }
 
         Event.special[HASH_CHANGE] = {
             setup: function() {
-                var target = this,
-                    index = S.indexOf(target, targets);
-                if (-1 === index) {
-                    targets.push(target);
+                if (this !== win) {
+                    return;
                 }
-                if (!timer) {
-                    setup();
-                }
-                //不用注册dom事件
+                // 不用注册 dom 事件
+                setup();
             },
             tearDown: function() {
-                var target = this,
-                    index = S.indexOf(target, targets);
-                if (index >= 0) {
-                    targets.splice(index, 1);
+                if (this !== win) {
+                    return;
                 }
-                if (targets.length === 0) {
-                    tearDown();
-                }
+                tearDown();
             }
         };
-
-        // ie6, 7, 用匿名函数来覆盖一些function
-        if (ie < 8) {
-            (function() {
-                var iframe;
-
-                /**
-                 * 前进后退 : start -> notifyHashChange
-                 * 直接输入 : poll -> hashChange -> start
-                 * iframe 内容和 url 同步
-                 */
-
-                setup = function() {
-                    if (!iframe) {
-                        //http://www.paciellogroup.com/blog/?p=604
-                        iframe = DOM.create('<iframe ' +
-                            //'src="#" ' +
-                            'style="display: none" ' +
-                            'height="0" ' +
-                            'width="0" ' +
-                            'tabindex="-1" ' +
-                            'title="empty"/>');
-                        // Append the iframe to the documentElement rather than the body.
-                        // Keeping it outside the body prevents scrolling on the initial
-                        // page load
-                        DOM.prepend(iframe, document.documentElement);
-
-                        // init
-                        Event.add(iframe, "load", function() {
-                            Event.remove(iframe, "load");
-                            // Update the iframe with the initial location hash, if any. This
-                            // will create an initial history entry that the user can return to
-                            // after the state has changed.
-                            hashChange(getHash());
-                            Event.add(iframe, "load", start);
-                            poll();
-                        });
-
-                        /**
-                         * 前进后退 ： start -> 触发
-                         * 直接输入 : timer -> hashChange -> start -> 触发
-                         * 触发统一在 start(load)
-                         * iframe 内容和 url 同步
-                         */
-                            //后退触发点
-                            //或addHistory 调用
-                            //只有 start 来通知应用程序
-                        function start() {
-                            //console.log('iframe start load..');
-                            //debugger
-                            var c = S.trim(iframe.contentWindow.document.body.innerHTML);
-                            var ch = getHash();
-
-                            //后退时不等
-                            //改变location则相等
-                            if (c != ch) {
-                                location.hash = c;
-                                // 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
-                                lastHash = c;
-                            }
-                            notifyHashChange(c);
-                        }
-                    }
-                };
-
-                hashChange = function(hash) {
-                    //debugger
-                    var html = '<html><body>' + hash + '</body></html>';
-                    var doc = iframe.contentWindow.document;
-                    try {
-                        // 写入历史 hash
-                        doc.open();
-                        doc.write(html);
-                        doc.close();
-                        return true;
-                    } catch (e) {
-                        return false;
-                    }
-                };
-            })();
-        }
     }
 }, {
     requires:["./base","dom","ua"]
@@ -835,7 +835,12 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 KISSY.add('event/object', function(S, undefined) {
 
     var doc = document,
-        props = 'altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode layerX layerY metaKey newValue offsetX offsetY originalTarget pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target toElement view wheelDelta which'.split(' ');
+        props = ('altKey attrChange attrName bubbles button cancelable ' +
+            'charCode clientX clientY ctrlKey currentTarget data detail ' +
+            'eventPhase fromElement handler keyCode layerX layerY metaKey ' +
+            'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
+            'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
+            'target toElement view wheelDelta which').split(' ');
 
     /**
      * KISSY's event system normalizes the event object according to
@@ -1062,86 +1067,64 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
-    var VALUE_CHANGE = "valueChange",
+    var VALUE_CHANGE = "valuechange",
         KEY = "event/valuechange",
-        history = {},
-        poll = {},
+        HISTORY_KEY = KEY + "/history",
+        POLL_KEY = KEY + "/poll",
         interval = 50;
 
-    function timestamp(node) {
-        var r = DOM.data(node, KEY);
-        if (!r) {
-            r = (+new Date());
-            DOM.data(node, KEY, r);
-        }
-        return r;
-    }
-
-    function untimestamp(node) {
-        DOM.removeData(node, KEY);
-    }
-
-    //pre value for input monitored
-
-
     function stopPoll(target) {
-        var t = timestamp(target);
-        delete history[t];
-        if (poll[t]) {
-            clearTimeout(poll[t]);
-            delete poll[t];
+        DOM.removeData(target, HISTORY_KEY);
+        if (DOM.hasData(target, POLL_KEY)) {
+            var poll = DOM.data(target, POLL_KEY);
+            clearTimeout(poll);
+            DOM.removeData(target, POLL_KEY);
         }
     }
 
-    function blur(ev) {
+    function stopPollHandler(ev) {
         var target = ev.target;
         stopPoll(target);
     }
 
     function startPoll(target) {
-        var t = timestamp(target);
-        if (poll[t]) return;
-
-        poll[t] = setTimeout(function() {
-            var v = target.value;
-            if (v !== history[t]) {
-                Event._handle(target, {
-                        type:VALUE_CHANGE,
-                        prevVal:history[t],
-                        newVal:v
-                    });
-                history[t] = v;
+        if (DOM.hasData(target, POLL_KEY)) return;
+        DOM.data(target, POLL_KEY, setTimeout(function() {
+            var v = target.value,h = DOM.data(target, HISTORY_KEY);
+            if (v !== h) {
+                // 只触发自己绑定的 handler
+                Event.fire(target, VALUE_CHANGE, {
+                    prevVal:h,
+                    newVal:v
+                }, true);
+                DOM.data(target, HISTORY_KEY, v);
             }
-            poll[t] = setTimeout(arguments.callee, interval);
-        }, interval);
+            DOM.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
+        }, interval));
     }
 
     function startPollHandler(ev) {
         var target = ev.target;
-        //when focus ,record its previous value
+        // when focus ,record its current value immediately
         if (ev.type == "focus") {
-            var t = timestamp(target);
-            history[t] = target.value;
+            DOM.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
     }
 
     function monitor(target) {
         unmonitored(target);
-        Event.on(target, "blur", blur);
+        Event.on(target, "blur", stopPollHandler);
         Event.on(target, "mousedown keyup keydown focus", startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
-        Event.remove(target, "blur", blur);
+        Event.remove(target, "blur", stopPollHandler);
         Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
-        untimestamp(target);
     }
 
     Event.special[VALUE_CHANGE] = {
-        //no corresponding dom event needed
-        fix: false,
         setup: function() {
             var target = this,
                 nodeName = target.nodeName.toLowerCase();
@@ -1155,11 +1138,10 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
             unmonitored(target);
         }
     };
-
     return Event;
 }, {
-        requires:["./base","dom"]
-    });KISSY.add("event", function(S, Event, Target,Object) {
+    requires:["./base","dom"]
+});KISSY.add("event", function(S, Event, Target,Object) {
     Event.Target = Target;
     Event.Object=Object;
     return Event;
