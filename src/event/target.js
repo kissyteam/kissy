@@ -2,7 +2,7 @@
  * @module  EventTarget
  * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, DOM, undefined) {
+KISSY.add('event/target', function(S, Event) {
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -32,7 +32,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
          实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
          否则会导致build打包文件 dom 和 dom-data 重复载入
          */
-        requires:["./base","dom"]
+        requires:["./base"]
     });
 
 /**

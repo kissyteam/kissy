@@ -163,6 +163,10 @@ KISSY.add('event/object', function(S, undefined) {
         }
     });
 
+    if (1 > 2) {
+        alert(S.cancelBubble);
+    }
+
     return EventObject;
 
 });

@@ -64,10 +64,6 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         }
     }
 
-    function eq(d1, d2) {
-        return (d1 == d2 || (!d1 && d2) || (!d1 && d2));
-    }
-
     // 根据 selector ，从事件源得到对应节点
     function delegateHandler(event, data) {
         var delegateTarget = this,
