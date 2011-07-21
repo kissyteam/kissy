@@ -15,19 +15,83 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             waits(100);
 
             runs(function() {
-                location.hash = "#abc";
+                location.hash = "#a";
             });
 
             waits(100);
 
             runs(function() {
-                expect(hash).toBe("#abc");
+                expect(hash).toBe("#a");
+            });
+
+            waits(100);
+
+            runs(function() {
+                location.hash = "#b";
+            });
+
+            waits(100);
+
+            runs(function() {
+                expect(hash).toBe("#b");
+            });
+
+            waits(100);
+
+            runs(function() {
+                location.hash = "#a";
+            });
+
+            waits(100);
+
+            runs(function() {
+                expect(hash).toBe("#a");
+            });
+
+            waits(100);
+
+            runs(function() {
+                location.hash = "#b";
+            });
+
+            waits(100);
+
+            runs(function() {
+                expect(hash).toBe("#b");
+            });
+
+            waits(100);
+            runs(function() {
+                history.back();
+            });
+            waits(100);
+
+            runs(function() {
+                expect(hash).toBe("#a");
             });
 
             runs(function() {
                 history.back();
             });
-            waits(1000);
+            waits(100);
+
+            runs(function() {
+                expect(hash).toBe("#b");
+            });
+
+            runs(function() {
+                history.back();
+            });
+            waits(100);
+
+            runs(function() {
+                expect(hash).toBe("#a");
+            });
+            runs(function() {
+                history.back();
+            });
+            waits(100);
+
             runs(function() {
                 // non-ie 返回 ""
                 // expect(hash).toBe("#");

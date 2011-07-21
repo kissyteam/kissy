@@ -111,7 +111,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                         //或addHistory 调用
                         //只有 start 来通知应用程序
                     function start() {
-                        // S.log('iframe start load..');
+                        S.log('iframe start load..');
                         //debugger
                         var c = S.trim(iframe.contentWindow.document.body.innerHTML);
                         var ch = getHash();
@@ -158,6 +158,9 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 });
 
 /**
+ * 已知 bug :
+ * - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
+ *
  * v1 : 2010-12-29
  * v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
  * refer : http://yiminghe.javaeye.com/blog/377867

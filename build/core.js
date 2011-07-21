@@ -3859,7 +3859,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                         //或addHistory 调用
                         //只有 start 来通知应用程序
                     function start() {
-                        // S.log('iframe start load..');
+                        S.log('iframe start load..');
                         //debugger
                         var c = S.trim(iframe.contentWindow.document.body.innerHTML);
                         var ch = getHash();
@@ -3906,6 +3906,9 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 });
 
 /**
+ * 已知 bug :
+ * - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
+ *
  * v1 : 2010-12-29
  * v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
  * refer : http://yiminghe.javaeye.com/blog/377867
@@ -4872,7 +4875,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         PROPS,
         CUSTOM_ATTRS,
         OPACITY,NONE,
-        PROPERTY,EVENT_START,
+        EVENT_START,
         EVENT_STEP,
         EVENT_COMPLETE,
         defaultConfig,
@@ -4936,7 +4939,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     OPACITY = 'opacity';
     NONE = 'none';
-    PROPERTY = 'Property';
     EVENT_START = 'start';
     EVENT_STEP = 'step';
     EVENT_COMPLETE = 'complete';
@@ -4951,9 +4953,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      * @constructor
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
-
-
-
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) return;
 
@@ -5132,14 +5131,10 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             duration = config.duration * 1000;
             self.duration = duration;
             if (self.transitionName) {
-                // !important firefox 如果结束样式对应的初始样式没有，则不会产生动画
-                // <div> -> <div 'left=100px'>
-                // 则初始 div 要设置行内 left=getComputed("left")
-//                    for (prop in target) {
-//                        var av = getAnimValue(elem, prop);// :)
-//                        setAnimValue(elem, prop, av.v + av.u);
-//                    }
-                self._nativeRun();
+                // some hack ,Weird but ff/chrome need a break
+                setTimeout(function() {
+                    self._nativeRun();
+                }, 10);
             } else {
                 for (prop in target) {
                     source[prop] = getAnimValue(elem, prop);
@@ -5259,7 +5254,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             DOM.css(elem, transition);
 
             // set the final style value (need some hack for opera)
-            S.later(function() {
+            setTimeout(function() {
                 setToFinal(elem,
                     // target,
                     self.targetStyle);
@@ -5299,14 +5294,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         _nativeStop: function(finish) {
             var self = this,
                 elem = self.domEl,
-                prefix = self.transitionName,
                 props = self.props,
                 prop;
 
             // handle for the CSS transition
             if (finish) {
                 // CSS transition value remove should come first
-                DOM.css(elem, prefix + PROPERTY, NONE);
+                self._clearNativeProperty();
                 self._complete();
             } else {
                 // if want to stop the CSS transition, should set the current computed style value to the final CSS value
@@ -5314,8 +5308,19 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                     DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
                 }
                 // CSS transition value remove should come last
-                DOM.css(elem, prefix + PROPERTY, NONE);
+                self._clearNativeProperty();
             }
+        },
+
+        _clearNativeProperty:function() {
+            var transition = {},
+                self = this,
+                elem = self.domEl,
+                prefix = self.transitionName;
+            transition[prefix + 'Property'] = "";
+            transition[prefix + 'Duration'] = "";
+            transition[prefix + 'TimingFunction'] = "";
+            DOM.css(elem, transition);
         }
     });
 
@@ -5442,6 +5447,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 /**
  * TODO:
  *  - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
+ *  - opera nativeSupport 存在 bug ，浏览器自身 bug ?
  *  - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
  *
  * NOTES:
@@ -5667,14 +5673,14 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         };
 
         S.each({
-            show: ['show', 1],
-            hide: ['show', 0],
-            toggle: ['toggle'],
-            fadeIn: ['fade', 1],
-            fadeOut: ['fade', 0],
-            slideDown: ['slide', 1],
-            slideUp: ['slide', 0]
-        },
+                show: ['show', 1],
+                hide: ['show', 0],
+                toggle: ['toggle'],
+                fadeIn: ['fade', 1],
+                fadeOut: ['fade', 0],
+                slideDown: ['slide', 1],
+                slideUp: ['slide', 0]
+            },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -5685,6 +5691,10 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                         DOM[k](self);
                     }
                     else {
+                        // 原生支持问题很多，默认不采用原生
+                        if (nativeSupport === undefined) {
+                            nativeSupport = false;
+                        }
                         S.each(this, function(elem) {
                             var anim = fx(elem, v[0], speed, callback,
                                 v[1], easing, nativeSupport);

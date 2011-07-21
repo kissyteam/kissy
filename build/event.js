@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 21 14:27
+build time: Jul 21 21:40
 */
 /**
  * @module  event
@@ -485,10 +485,6 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         }
     }
 
-    function eq(d1, d2) {
-        return (d1 == d2 || (!d1 && d2) || (!d1 && d2));
-    }
-
     // 根据 selector ，从事件源得到对应节点
     function delegateHandler(event, data) {
         var delegateTarget = this,
@@ -542,7 +538,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 KISSY.add('event/focusin', function(S, UA, Event) {
 
     // 让非 IE 浏览器支持 focusin/focusout
-    if (!UA.ie) {
+    if (!UA['ie']) {
         S.each([
             { name: 'focusin', fix: 'focus' },
             { name: 'focusout', fix: 'blur' }
@@ -697,7 +693,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                         //或addHistory 调用
                         //只有 start 来通知应用程序
                     function start() {
-                        // S.log('iframe start load..');
+                        S.log('iframe start load..');
                         //debugger
                         var c = S.trim(iframe.contentWindow.document.body.innerHTML);
                         var ch = getHash();
@@ -993,6 +989,10 @@ KISSY.add('event/object', function(S, undefined) {
         }
     });
 
+    if (1 > 2) {
+        alert(S.cancelBubble);
+    }
+
     return EventObject;
 
 });
@@ -1010,7 +1010,7 @@ KISSY.add('event/object', function(S, undefined) {
  * @module  EventTarget
  * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, DOM, undefined) {
+KISSY.add('event/target', function(S, Event) {
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -1040,7 +1040,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
          实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
          否则会导致build打包文件 dom 和 dom-data 重复载入
          */
-        requires:["./base","dom"]
+        requires:["./base"]
     });
 
 /**
