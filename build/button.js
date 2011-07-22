@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 22 15:53
 */
 /**
  * Model and Control for button
@@ -226,8 +226,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
                 }
                 el.attr("aria-labelledby", id);
                 self.set("innerEl", innerEl);
-            }
-            ,
+            },
 
             /**
              * 内容移到内层

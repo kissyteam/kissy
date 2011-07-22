@@ -1,17 +1,18 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 21 11:15
+build time: Jul 22 15:53
 */
 /**
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
+KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
+    var $ = Node.all;
     var MenuButton = UIBase.create(Button, {
 
         hideMenu:function() {
-            this.get("menu").hide();
+            this.get("menu") && this.get("menu").hide();
         },
 
         showMenu:function() {
@@ -26,6 +27,16 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu.show();
                 el.attr("aria-haspopup", menu.get("el").attr("id"));
                 view.set("collapsed", false);
+            }
+        },
+
+
+        _reposition:function() {
+            var self = this,menu = self.get("menu"),el = self.get("el");
+            if (menu && menu.get("visible")) {
+                menu.set("align", S.mix({
+                    node:el
+                }, self.get("menuAlign")));
             }
         },
 
@@ -46,6 +57,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             menu.on("hide", function() {
                 self.get("view").set("collapsed", true);
             });
+
+            //窗口改变大小，重新调整
+            $(window).on("resize", self._reposition, self);
         },
 
         /**
@@ -146,8 +160,37 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             return this.get("menu") && this.get("menu").getChildAt(index);
         },
 
+        // 禁用时关闭已显示菜单
+        _uiSetDisabled:function(v) {
+            var o = MenuButton.superclass._uiSetDisabled;
+            o && o.apply(this, S.makeArray(arguments));
+            !v && this.hideMenu();
+        },
+
+        // 找到下面有 popupmenu class 的元素，装饰为 PopupMenu 返回
+        decorateInternal:function(el) {
+            var self = this,
+                ui = "popupmenu",
+                prefixCls = self.get("prefixCls");
+            self.set("el", el);
+            var menuItem = el.one("." + self.getCls(ui));
+            if (menuItem) {
+                // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
+                menuItem.hide();
+                var docBody = S.one(el[0].ownerDocument.body);
+                docBody.prepend(menuItem);
+                var UI = Component.UIStore.getUIByClass(ui);
+                var menu = new UI({
+                    srcNode:menuItem,
+                    prefixCls:prefixCls
+                });
+                self.set("menu", menu);
+            }
+        },
+
         destructor:function() {
-            var menu = this.get("menu");
+            var self = this, menu = self.get("menu");
+            $(window).detach("resize", self._reposition, self);
             menu && menu.destroy();
         }
 
@@ -180,7 +223,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
 
     return MenuButton;
 }, {
-    requires:["uibase","node","button","./menubuttonrender","menu"]
+    requires:["uibase","node","button","./menubuttonrender","menu","component"]
 });/**
  * render aria and drop arrow for menubutton
  * @author: yiminghe@gmail.com
@@ -244,9 +287,12 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
  * represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/option", function(S, UIBase, Menu) {
+KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
     var MenuItem = Menu.Item;
-    return UIBase.create(MenuItem, {
+    var Option = UIBase.create(MenuItem, {
+        renderUI:function() {
+            this.get("el").addClass(this.getCls("option"));
+        }
     }, {
         ATTRS:{
             selectable:{
@@ -254,10 +300,14 @@ KISSY.add("menubutton/option", function(S, UIBase, Menu) {
             }
         }
     });
-
+    Component.UIStore.setUIByClass("option", {
+        priority:10,
+        ui:Option
+    });
+    return Option;
 
 }, {
-    requires:['uibase','menu']
+    requires:['uibase','component','menu']
 });/**
  * manage a list of single-select options
  * @author yiminghe@gmail.com

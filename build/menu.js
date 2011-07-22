@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 22 15:53
 */
 /**
  *  menu where items can be filtered based on user keyboard input
@@ -129,7 +129,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            c.get("view").set("content", content.replace(strExp, function(m) {
+                            view.set("content", content.replace(strExp, function(m) {
                                 return "<span class='" + hit + "'>" + m + "</span>";
                             }));
                         } else {
@@ -798,7 +798,7 @@ KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
  */
 KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
 
-    return UIBase.create(Component.ModelControl, {
+    var Separator = UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
             handleMouseEvents:{
@@ -807,6 +807,13 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
         },
         DefaultRender:SeparatorRender
     });
+
+    Component.UIStore.setUIByClass("menuseparator", {
+        priority:20,
+        ui:Separator
+    });
+
+    return Separator;
 
 }, {
     requires:['uibase','component','./separatorrender']
@@ -1035,7 +1042,7 @@ KISSY.add(
                         ui = "popupmenu",
                         prefixCls = self.get("prefixCls");
                     self.set("el", element);
-                    var child = element.one("." + prefixCls + ui);
+                    var child = element.one("." + self.getCls(ui));
                     if (child) {
                         // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
                         child.hide();
