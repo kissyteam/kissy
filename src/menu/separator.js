@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
 
-    return UIBase.create(Component.ModelControl, {
+    var Separator = UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
             handleMouseEvents:{
@@ -13,6 +13,13 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
         },
         DefaultRender:SeparatorRender
     });
+
+    Component.UIStore.setUIByClass("menuseparator", {
+        priority:20,
+        ui:Separator
+    });
+
+    return Separator;
 
 }, {
     requires:['uibase','component','./separatorrender']

@@ -165,7 +165,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         // 找到下面有 popupmenu class 的元素，装饰为 PopupMenu 返回
         decorateInternal:function(el) {
             var self = this,
-                ui = "popmenu",
+                ui = "popupmenu",
                 prefixCls = self.get("prefixCls");
             self.set("el", el);
             var menuItem = el.one("." + self.getCls(ui));

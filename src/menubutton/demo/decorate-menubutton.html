@@ -2,15 +2,15 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>KISSY MenuButton</title>
-<link href="../button/assets/common.css" rel="stylesheet"/>
-<link href="../button/assets/custombutton.css" rel="stylesheet"/>
-<link href="assets/menubutton.css" rel="stylesheet"/>
-<link href="../overlay/assets/cool.css" rel="stylesheet"/>
-<link href="../menu/assets/menu.css" rel="stylesheet"/>
-<link href="../menu/assets/menuitem.css" rel="stylesheet"/>
-<link href="../menu/assets/submenu.css" rel="stylesheet"/>
-<link href="../menu/assets/c2c-ui.css" rel="stylesheet"/>
+<title>decorate menubutton</title>
+<link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<link href="../assets/menubutton.css" rel="stylesheet"/>
+<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../menu/assets/menu.css" rel="stylesheet"/>
+<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/assets/submenu.css" rel="stylesheet"/>
+<link href="../../menu/assets/c2c-ui.css" rel="stylesheet"/>
 <style>
     .ks-menu {
         background: white;
@@ -77,24 +77,42 @@
     </ol>
 </div>
 
-<h2>simple menubutton</h2>
+<h1>装饰已有元素为菜单按钮</h1>
+<div class="goog-inline-block goog-custom-button" id="exist">
+    淘宝网
+    <div class="goog-menu goog-popupmenu">
+        <div class="goog-menuitem goog-submenu">我的淘宝
+            <div class="goog-menu goog-popupmenu">
+                <div class="goog-menuitem">已买到的宝贝</div>
+                <div class="goog-menuitem">已卖出的宝贝</div>
+            </div>
+        </div>
+        <div class="goog-menuseparator"></div>
+        <div class="goog-menuitem">我要买</div>
+        <div class="goog-menuitem">我要卖</div>
+    </div>
+</div>
 
-<a href="demo/simple-menubutton.html" target="_blank">demo</a>
+<script src="../../../build/kissy.js"></script>
+<script>
+    KISSY.Config.base = '../../';
+</script>
+<!--
+<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
+-->
 
-<h2>decorate menubutton</h2>
+<script>
 
-<a href="demo/decorate-menubutton.html" target="_blank">demo</a>
-
-<h2>checkable menubutton</h2>
-
-<a href="demo/checkable-menu.html" target="_blank">demo</a>
-
-<h2>simple select</h2>
-
-<a href="demo/simple-select.html" target="_blank">demo</a>
-
-<h2>cascaded select</h2>
-
-<a href="demo/cascade-select.html" target="_blank">demo</a>
+    KISSY.ready(function(S) {
+        KISSY.use("menubutton,menu", function(S, MenuButton, Menu) {
+            var $ = S.all;
+            //return;
+            new MenuButton({
+                srcNode:"#exist",
+                prefixCls:"goog-"
+            }).render();
+        });
+    });
+</script>
 </body>
 </html>

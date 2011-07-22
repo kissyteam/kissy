@@ -198,7 +198,7 @@ KISSY.add(
                         ui = "popupmenu",
                         prefixCls = self.get("prefixCls");
                     self.set("el", element);
-                    var child = element.one("." + prefixCls + ui);
+                    var child = element.one("." + self.getCls(ui));
                     if (child) {
                         // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
                         child.hide();

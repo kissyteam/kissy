@@ -46,11 +46,11 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                 var cls = c.attr("class") || "",
                     prefixCls = self.get("prefixCls");
                 // 过滤掉特定前缀
-                cls = cls.replace(new RegExp("(?:^|\\s+)" + prefixCls, "ig"), "");
+                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
                 var UI = UIStore.getUIByClass(cls);
                 if (!UI) {
                     S.log(c);
-                    S.error("can not find ui from this markup");
+                    S.error("can not find ui " + cls + " from this markup");
                 }
                 self.addChild(new UI({
                     srcNode:c,
