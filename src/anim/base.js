@@ -192,6 +192,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 var val = DOM.css(elem, prop),
                     num = parseFloat(val),
                     unit = (val + '').replace(/^[-\d.]+/, '');
+                // 不能动画的量，插值直接设为最终，下次也不运行
                 if (isNaN(num)) {
                     return {v:unit,u:'',f:mirror};
                 }
