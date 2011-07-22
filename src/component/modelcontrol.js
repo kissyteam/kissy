@@ -382,11 +382,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 this._forwordToView("_handleClick", ev);
             },
 
-            _uiSetDisabled:function(d) {
-                var view = this.get("view");
-                view.set("disabled", d);
-            },
-
             destructor:function() {
                 var self = this;
                 var children = self.get("children");

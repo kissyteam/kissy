@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>simple-select</title>
+<link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<link href="../assets/menubutton.css" rel="stylesheet"/>
+<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../menu/assets/menu.css" rel="stylesheet"/>
+<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/assets/submenu.css" rel="stylesheet"/>
+<link href="../../menu/assets/c2c-ui.css" rel="stylesheet"/>
+<style>
+    .ks-menu {
+        background: white;
+        border: 1px solid red;
+    }
+
+    li {
+        padding: 5px;
+        border: 1px solid white;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="describe">菜单按钮演示</h1>
+<div style="height:200px;overflow: auto;border:1px solid red;">
+    <h2>设计说明</h2>
+    <ol>
+        <li>支持键盘，鼠标互操作</li>
+        <li>符合 wai-aria 规范</li>
+        <li>构建组件层次</li>
+    </ol>
+
+    <h2>使用说明</h2>
+    <ol>
+        <li>
+            tab 移动焦点到按钮：按钮周边粉框
+        </li>
+        <li>
+            按钮获得焦点时点击上或下键，弹出菜单
+            <ol>
+                <li>或点击按钮弹出菜单</li>
+            </ol>
+        </li>
+
+
+        <li>
+            菜单弹出后，上下键选择菜单项
+            <ol>
+                <li>或通过鼠标掠过</li>
+            </ol>
+        </li>
+
+        <li>
+            带有子菜单的菜单项通过右键激活子菜单，左键收缩子菜单
+            <ol>
+                <li>或通过鼠标掠过，自动弹出子菜单</li>
+            </ol>
+        </li>
+
+        <li>
+            菜单项弹出后，按下 enter 或 space 则选中当前高亮菜单项
+            <ol>
+                <li>或通过鼠标点击选中任意菜单项</li>
+            </ol>
+        </li>
+
+        <li>
+            esc 隐藏下拉菜单（焦点仍然在按钮上）
+            <ol>
+                <li>或通过鼠标点击文档空白区域（按钮失去焦点）</li>
+            </ol>
+        </li>
+    </ol>
+</div>
+
+<h2>
+    直接从 select 生成
+</h2>
+<label>
+    <select>
+        <option>native-1</option>
+        <option>native-2</option>
+    </select>
+</label>
+
+<hr style="margin: 20px 0"/>
+
+<div id="parentSelect">
+    <label>
+        <select name="decorateSelect" id="decorateSelect">
+        </select>
+    </label>
+</div>
+
+
+<script src="../../../build/kissy.js"></script>
+<script>
+    KISSY.Config.base = '../../';
+</script>
+<!--
+<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
+-->
+
+<script>
+    KISSY.ready(function(S) {
+        var s = S.one("#decorateSelect");
+        for (var i = 0; i < 20; i++) {
+            s.append("<option value='" + i + "'>项目" + i + "</option>")
+        }
+        KISSY.use("menubutton", function(S, MenuButton) {
+            var select = MenuButton.Select.decorate('#decorateSelect', {
+                prefixCls:"c2c-",
+                elCls:"custom-xx",
+                // 没法搞，通过 elCls 自己指定吧
+                // width
+                menuAlign:{
+                    points:["bl","tl"],
+                    offset:[0,-1],
+                    overflow:{
+                        failX:1,
+                        failY:1,
+                        adjustX:1,
+                        adjustY:1
+                    }
+                },
+                menuCfg:{
+                    width:82,
+                    height:150,
+                    elStyle:{
+                        overflow:"auto",
+                        overflowX:"hidden"
+                    }
+                }
+            });
+            select.on("click", function(e) {
+                S.log(e.target.get("value"));
+            });
+        });
+    });
+</script>
+</body>
+</html>

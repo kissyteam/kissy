@@ -124,7 +124,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            c.get("view").set("content", content.replace(strExp, function(m) {
+                            view.set("content", content.replace(strExp, function(m) {
                                 return "<span class='" + hit + "'>" + m + "</span>";
                             }));
                         } else {
