@@ -118,10 +118,10 @@ KISSY.add(
                     menu && menu.hide();
                 },
 
-                _handleClick:function(ev) {
+                // click ，立即显示
+                _performInternal:function() {
+                    this.clearTimers();
                     this.showMenu();
-                    var menu = this.get("menu");
-                    return menu._handleClick(ev);
                 },
 
                 /**
@@ -133,10 +133,6 @@ KISSY.add(
                  * @return {boolean} Whether the event was handled.
                  */
                 _handleKeydown:function(e) {
-
-                    if (SubMenu.superclass._handleKeydown.call(this, e)) {
-                        return true;
-                    }
 
                     var menu = this.get("menu");
 

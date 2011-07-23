@@ -21,11 +21,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             this.get("parent").set("highlightedItem", undefined);
         },
 
-        _handleClick:function(e) {
-            // 父亲不允许自己处理
-            if (MenuItem.superclass._handleClick.call(this, e)) {
-                return true;
-            }
+        _performInternal:function(e) {
             // 可选
             if (this.get("selectable")) {
                 this.set("selected", true);
@@ -38,6 +34,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 // 使用熟悉的 target，而不是自造新词！
                 target:this
             });
+            return true;
         },
 
         _uiSetHighlighted:function(v) {

@@ -15,9 +15,6 @@
 <div id="menuitem_container" style="width:200px;position:relative;height:150px;">
 
 </div>
-<div id="log" style="height:0px;border:1px solid green;overflow:auto;">
-
-</div>
 <label>禁用：<input type="checkbox" id='dis'/></label>
 
 <h1>可过滤菜单</h1>
@@ -34,10 +31,7 @@
     KISSY.use("node,menu",
             function(S, Node, Menu) {
 
-                function log(s) {
-                    Node.one("#log").append(new Node("<p>" + s + "</p>"));
-                    Node.one("#log")[0].scrollTop = Node.one("#log")[0].scrollHeight;
-                }
+
 
                 //view
                 //render to container : button_container
@@ -94,7 +88,7 @@
                 menu.render();
 
                 menu.on("click", function(ev) {
-                    log("selected : " + ev.target.get("content"));
+                    S.log("selected : " + ev.target.get("content"));
                 });
 
 

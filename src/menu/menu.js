@@ -39,20 +39,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             return undefined;
         },
 
-        _handleClick:function(e) {
-            if (Menu.superclass._handleClick.call(this, e))
-                return true;
-
-            var highlightedItem = this.get("highlightedItem");
-
-            //先看当前活跃 menuitem 是否要处理
-            if (highlightedItem && highlightedItem._handleClick(e)) {
-                return true;
-            }
-        },
-
         _handleKeydown:function(e) {
-            if (this._handleKeydownInternal(e)) {
+            if (this._handleKeyEventInternal(e)) {
                 e.halt();
                 return true;
             }
@@ -69,11 +57,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
          * @return {boolean} Whether the event was handled by the container (or one of
          *     its children).
          */
-        _handleKeydownInternal:function(e) {
-
-            if (Menu.superclass._handleKeydown.call(this, e)) {
-                return true;
-            }
+        _handleKeyEventInternal:function(e) {
 
             // Give the highlighted control the chance to handle the key event.
             var highlightedItem = this.get("highlightedItem");

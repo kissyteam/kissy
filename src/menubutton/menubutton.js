@@ -60,65 +60,54 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         /**
          * @inheritDoc
          */
-        _handleKeydown:function(e) {
+        _handleKeyEventInternal:function(e) {
             var menu = this.get("menu");
+
+            // space 只在 keyup 时处理
+            if (e.keyCode == 32) {
+                // Prevent page scrolling in Chrome.
+                e.preventDefault();
+                if (e.type != "keyup") {
+                    return undefined;
+                }
+            } else if (e.type != "keydown") {
+                return undefined;
+            }
             //转发给 menu 处理
             if (menu && menu.get("visible")) {
                 var handledByMenu = menu._handleKeydown(e);
+                // esc
                 if (e.keyCode == 27) {
                     this.hideMenu();
                     return true;
                 }
                 return handledByMenu;
             }
-            if (e.keyCode == 38 || e.keyCode == 40) {
+
+            // Menu is closed, and the user hit the down/up/space key; open menu.
+            if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 32) {
                 this.showMenu();
                 return true;
             }
             return undefined;
         },
 
-        /**
-         * @inheritDoc
-         */
-        _handleBlur:function(e) {
-            if (MenuButton.superclass._handleBlur.call(this, e)) {
-                return true;
+        _performInternal:function() {
+            var menu = this.get("menu");
+            if (menu.get("visible")) {
+                // popup menu 监听 doc click ?
+                this.hideMenu();
             }
-            this.hideMenu();
+            else {
+                this.showMenu();
+            }
         },
 
         /**
          * @inheritDoc
          */
-        _handleClick:function(e) {
-            if (Button.superclass._handleClick.call(this, e)) {
-                return true;
-            }
-            var menu = this.get("menu");
-
-            // 鼠标点击只是简单隐藏，显示切换
-            if (e.type == 'click') {
-                if (menu.get("visible")) {
-                    // popup menu 监听 doc click ?
-                    this.hideMenu();
-                }
-                else {
-                    this.showMenu();
-                }
-            } else if (e.type == 'keydown') {
-                // enter 转发给 menu 处理
-                if (e.keyCode == 13) {
-                    if (menu.get("visible")) {
-                        menu._handleClick(e);
-                    }
-                } else if (e.keyCode == 32) {
-                    // Prevent page scrolling in Chrome.
-                    e.preventDefault();
-                    // space 只负责打开
-                    this.showMenu();
-                }
-            }
+        _handleBlur:function(e) {
+            this.hideMenu();
         },
 
         /**
