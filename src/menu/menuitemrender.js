@@ -77,18 +77,11 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
         },
 
-        _handleMouseDown:function() {
+        _uiSetActive:function(v) {
             var self = this,el = this.get("el");
-            el.addClass(self.getCls(ACTIVE_CLS));
-            el.attr("aria-pressed", true);
+            el[v?'addClass':'removeClass'](self.getCls(ACTIVE_CLS))
+                .attr("aria-pressed", v);
         },
-
-        _handleMouseUp:function() {
-            var self = this,el = this.get("el");
-            el.removeClass(self.getCls(ACTIVE_CLS));
-            el.attr("aria-pressed", false);
-        },
-
         containsElement:function(element) {
             var el = this.get("el");
             return el[0] == element || el.contains(element);
@@ -102,7 +95,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             focusable:{
                 value:false
             },
-            highlighted:{},
             selected:{},
             // @inheritedDoc
             // content:{},

@@ -94,10 +94,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
             // option.value
             value:{},
-            highlighted:{
-                // 不要值，防止初始就调用
-                view:true
-            },
+
             checked:{
                 view:true
             },

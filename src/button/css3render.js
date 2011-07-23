@@ -30,41 +30,20 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         /**
          * @override
          */
-        _handleFocus:function() {
-            var self = this;
-            self.get("el").addClass(getCls(self,
+        _uiSetFocused:function(v) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(FOCUS_CLS)));
         },
 
         /**
          * @override
          */
-        _handleBlur:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(FOCUS_CLS)));
-        },
-
-        /**
-         * @override
-         */
-        _handleMouseEnter:function() {
-            var self = this;
-            self.get("el").addClass(getCls(self,
+        _uiSetHighlighted:function(v) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(HOVER_CLS)));
         },
-
-        /**
-         * @override
-         */
-        _handleMouseLeave:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(HOVER_CLS)));
-            // 鼠标离开时，默认设为鼠标松开状态
-            self._handleMouseUp();
-        },
-
 
         /**
          * 模拟原生 disabled 机制
@@ -72,43 +51,24 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _uiSetDisabled:function(v) {
             var self = this,el = self.get("el");
-            if (v) {
-                el.addClass(getCls(self, self.getCls(DISABLED_CLS)))
-                    //不能被 tab focus 到
-                    //support aria
-                    .attr({
-                        "tabindex": -1,
-                        "aria-disabled": true
-                    });
-            } else {
-                el.removeClass(getCls(self,
-                    self.getCls(DISABLED_CLS)))
-                    .attr({
-                        "tabindex": 0,
-                        "aria-disabled": false
-                    });
-            }
+            el[v ? 'addClass' : 'removeClass'](getCls(self, self.getCls(DISABLED_CLS)))
+                //不能被 tab focus 到
+                //support aria
+                .attr({
+                    "tabindex": v ? -1 : 0,
+                    "aria-disabled": v
+                });
+
         },
 
         /**
          * @override
          */
-        _handleMouseDown:function() {
+        _uiSetActive:function(v) {
             var self = this;
-            self.get("el")
-                .addClass(getCls(self,
+            self.get("el")[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(ACTIVE_CLS)))
-                .attr("aria-pressed", true);
-        },
-
-        /**
-         * @override
-         */
-        _handleMouseUp:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(ACTIVE_CLS)))
-                .attr("aria-pressed", false);
+                .attr("aria-pressed", !!v);
         }
 
     });

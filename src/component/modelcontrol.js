@@ -230,13 +230,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                     return true;
                 }
             },
-
-            _forwordToView:function(method, ev) {
-                var self = this,
-                    view = self.get("view");
-                view[method] && view[method](ev);
-            },
-
             _handleMouseOver:function(e) {
                 if (this.get("disabled")) {
                     return true;
@@ -265,21 +258,21 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
             /**
              * root element handler for mouse enter
              */
-            _handleMouseEnter:function(ev) {
+            _handleMouseEnter:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView("_handleMouseEnter", ev);
+                this.set("highlighted", true);
             },
             /**
              * root element handler for mouse leave
              */
-            _handleMouseLeave:function(ev) {
+            _handleMouseLeave:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
                 this.set("active", false);
-                this._forwordToView("_handleMouseLeave", ev);
+                this.set("highlighted", false);
             },
             /**
              * root element handler for mouse down
@@ -292,7 +285,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (this.get("activeable")) {
                     this.set("active", true);
                 }
-                this._forwordToView("_handleMouseDown", ev);
                 var el = this.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
@@ -334,28 +326,22 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView("_handleMouseUp", ev);
                 if (this.get("active")) {
                     this._performInternal(ev);
+                    this.set("active", false);
                 }
             },
             /**
              * root element handler for focus
              */
-            _handleFocus:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView("_handleFocus", ev);
+            _handleFocus:function() {
+                this.set("focused", true);
             },
             /**
              * root element handler for blur
              */
-            _handleBlur:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView("_handleBlur", ev);
+            _handleBlur:function() {
+                this.set("focused", false);
             },
 
             _handleKeyEventInternal:function(ev) {
@@ -438,8 +424,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                     value:true
                 },
 
+                focused:{
+                    view:true
+                },
                 active:{
-                    value:false
+                    view:true
+                },
+
+                highlighted:{
+                    view:true
                 },
 
                 //子组件

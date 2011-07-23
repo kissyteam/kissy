@@ -31,7 +31,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
              *  screen state
              */
 
-            //从 maskup 中渲染
+                //从 maskup 中渲染
             srcNode:{},
             prefixCls:{
                 value:"ks-"
@@ -39,10 +39,12 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             focusable:{
                 value:true
             },
+            highlighted:{},
+            focused:{},
+            active:{},
+            render:{},
             //是否禁用
-            disabled:{
-                value:false
-            }
+            disabled:{}
         }
     });
 }, {

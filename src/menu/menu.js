@@ -15,10 +15,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         },
 
         _handleBlur:function(e) {
-            // 父亲不允许自己处理
-            if (Menu.superclass._handleBlur.call(this, e)) {
-                return true;
-            }
+            Menu.superclass._handleBlur.call(this, e);
             this.set("highlightedItem", undefined);
         },
 
