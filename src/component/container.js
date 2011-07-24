@@ -32,6 +32,22 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
             }
         },
 
+        getOwnerControl:function(node) {
+            var self = this,
+                children = self.get("children"),
+                len = children.length,
+                elem = this.get('view').get("el")[0];
+            while (node && node !== elem) {
+                for (var i = 0; i < len; i++) {
+                    if (children[i].get("el")[0] === node) {
+                        return children[i];
+                    }
+                }
+                node = node.parentNode;
+            }
+            return null;
+        },
+
         decorateInternal:function(el) {
             var self = this;
             self.set("el", el);
@@ -57,21 +73,6 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                     prefixCls:prefixCls
                 }));
             });
-        },
-        getOwnerControl:function(node) {
-            var self = this,
-                children = self.get("children"),
-                len = children.length,
-                elem = this.get('view').get("el")[0];
-            while (node && node !== elem) {
-                for (var i = 0; i < len; i++) {
-                    if (children[i].get("el")[0] === node) {
-                        return children[i];
-                    }
-                }
-                node = node.parentNode;
-            }
-            return null;
         }
 
     });

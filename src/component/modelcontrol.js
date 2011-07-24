@@ -14,7 +14,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
     function wrapperViewGetter(attrName) {
         return function(v) {
-            return v || this.get("view") && this.get("view").get(attrName);
+            return v !== undefined ? v : this.get("view") && this.get("view").get(attrName);
         };
     }
 
@@ -184,8 +184,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
             },
 
             removeChildren:function(destroy) {
+                var t = [];
                 S.each(this.get("children"), function(c) {
-                    destroy && c.destroy();
+                    t.push(c);
+                });
+                var self = this;
+                S.each(t, function(c) {
+                    self.removeChild(c, destroy);
                 });
                 this.set("children", []);
             },

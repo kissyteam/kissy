@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>tree 测试</title>
+<link href="assets/tree.css" rel="stylesheet"/>
+<style>
+    .goog-tree-children {
+        margin-left: 19px;
+    }
+
+    .goog-tree-item-selected .goog-tree-item-label {
+        background: buttonface;
+        color: buttontext;
+    }
+
+    .goog-tree-item-focused {
+        outline: none;
+    }
+
+    .goog-tree-item-focused .goog-tree-item-selected .goog-tree-item-label {
+        background: highlight;
+        color: highlighttext;
+    }
+
+
+</style>
+</head>
+<body>
+<div id="treeContainer">
+
+</div>
+<script src="../../build/kissy.js"></script>
+<script>
+    KISSY.Config.base = "../";
+    KISSY.use("tree", function(S, Tree) {
+        var tree = new Tree({
+            content:"淘宝网",
+            prefixCls:"goog-",
+            expanded:true,
+            // showRootNode:false,
+            render:"#treeContainer"
+        });
+
+        tree.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"我要买"
+        }));
+
+        var one = new Tree.Node({
+            prefixCls:"goog-",
+            content:"我的淘宝",
+            tree:tree
+        });
+
+        one.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"已买到的宝贝"
+        }));
+
+        one.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"已卖出的宝贝"
+        }));
+
+        tree.addChild(one);
+
+        tree.render();
+    });
+</script>
+</body>
+</html>
