@@ -178,8 +178,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 return Node.one(document.body);
             },
             setter:function(v) {
-                if (S.isString(v))
-                    return Node.one(v);
+                return Node.one(v);
             }
         }
     };
