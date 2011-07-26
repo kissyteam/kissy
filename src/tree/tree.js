@@ -1,6 +1,7 @@
 /**
  * root node represent a simple tree
  * @author yiminghe@gmail.com
+ * @refer http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
 KISSY.add("tree/tree", function(S, UIBase, Component, AbstractNode, TreeRender) {
 
@@ -11,6 +12,13 @@ KISSY.add("tree/tree", function(S, UIBase, Component, AbstractNode, TreeRender) 
             this._allNodes = {
 
             };
+        },
+
+        renderUI:function() {
+            // add 过那么一定调用过 checkIcon 了
+            if (!this.get("children").length) {
+                this._computeClass("root_renderUI");
+            }
         },
 
         _register:function(c) {
@@ -24,7 +32,7 @@ KISSY.add("tree/tree", function(S, UIBase, Component, AbstractNode, TreeRender) 
 
         bindUI:function() {
             var self = this,el = self.get("el");
-            el.on("mousedown mouseup mouseover mouseout",
+            el.on("mousedown mouseup mouseover mouseout dblclick",
                 self._handleChildMouseEvents, self);
         },
 
@@ -44,6 +52,9 @@ KISSY.add("tree/tree", function(S, UIBase, Component, AbstractNode, TreeRender) 
                         break;
                     case "mouseout":
                         control._handleMouseOut(e);
+                        break;
+                    case "dblclick":
+                        control._handleDblClick(e);
                         break;
                 }
             }

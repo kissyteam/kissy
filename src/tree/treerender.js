@@ -5,6 +5,10 @@
 KISSY.add("tree/treerender", function(S, UIBase, Component, AbstractNodeRender) {
     var FOCUSED_CLS = "tree-item-focused";
     return UIBase.create(AbstractNodeRender, {
+        renderUI:function() {
+            this.get("el").addClass(this.getCls("tree-root"))[0].hideFocus = true;
+        },
+
         _uiSetShowRootNode:function(v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         },

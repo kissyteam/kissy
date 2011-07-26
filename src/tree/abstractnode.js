@@ -10,7 +10,9 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
         _performInternal:function(e) {
             var target = $(e.target);
             var tree = this.get("tree");
-            if (target.hasClass(this.getCls(EXPAND_ICON_CLS))) {
+            if (target.hasClass(this.getCls(EXPAND_ICON_CLS))
+                || e.type == 'dblclick'
+                ) {
                 this.set("expanded", !this.get("expanded"));
             } else {
                 this.set("selected", true);
@@ -27,30 +29,44 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
             c.set("tree", tree);
             c.set("depth", this.get('depth') + 1);
             AbstractNode.superclass.addChild.call(this, c);
-            this._updateAriaSize();
+            this._updateRecursive();
             tree._register(c);
             S.each(c.get("children"), function(cc) {
                 tree._register(cc);
             });
         },
 
-        _updateAriaSize:function() {
+        /*
+         每次添加/删除节点，都检查自己以及自己子孙 class
+         每次 expand/collapse，都检查
+         */
+        _computeClass:function(cause) {
             var view = this.get("view");
-            view._checkIcon(this.get('children'));
+            view._computeClass(this.get('children'), this.get("parent"), cause);
+        },
+
+        _updateRecursive:function() {
+            var view = this.get("view");
+            this._computeClass("_updateRecursive");
             view.set("ariaSize", this.get('children').length);
             S.each(this.get("children"), function(c, index) {
-                c.set("ariaPosInSet", index);
+                c._computeClass("_updateRecursive_children");
+                c.get("view").set("ariaPosInSet", index);
             });
         },
 
-        removeChild:function() {
+        removeChild:function(c) {
             var tree = this.get("tree");
             tree._unregister(c);
             S.each(c.get("children"), function(cc) {
                 tree._unregister(cc);
             });
             AbstractNode.superclass.removeChild.apply(this, S.makeArray(arguments));
-            this._updateAriaSize();
+            this._updateRecursive();
+        },
+
+        _uiSetExpanded:function(v) {
+            this._computeClass("expanded-" + v);
         }
     }, {
         ATTRS:{
@@ -79,6 +95,7 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
             selected:{view:true},
 
             expanded:{
+                value:false,
                 view:true
             },
 

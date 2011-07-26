@@ -6,7 +6,11 @@
 <link href="assets/tree.css" rel="stylesheet"/>
 <style>
     .goog-tree-children {
-        margin-left: 19px;
+        padding-left: 19px;
+    }
+
+    .goog-tree-lchildren {
+        padding-left: 19px;
     }
 
     .goog-tree-item-selected .goog-tree-item-label {
@@ -42,10 +46,29 @@
             render:"#treeContainer"
         });
 
+        var favorates = new Tree.Node({
+            prefixCls:"goog-",
+            content:"收藏夹",
+            tree:tree
+        });
+
+        favorates.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"收藏的宝贝"
+        }));
+
+        favorates.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"收藏的店铺"
+        }));
+
+        tree.addChild(favorates);
+
         tree.addChild(new Tree.Node({
             prefixCls:"goog-",
             content:"我要买"
         }));
+
 
         var one = new Tree.Node({
             prefixCls:"goog-",
