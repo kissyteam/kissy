@@ -1,6 +1,6 @@
 /**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/ariarender", function(S, Node) {
 

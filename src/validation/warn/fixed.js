@@ -1,6 +1,6 @@
 /**
  * 扩展提示类：fixed
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
     var symbol = Define.Const.enumvalidsign;

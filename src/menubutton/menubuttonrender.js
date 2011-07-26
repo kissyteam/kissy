@@ -1,6 +1,6 @@
 /**
  * render aria and drop arrow for menubutton
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 

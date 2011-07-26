@@ -1,6 +1,6 @@
 /**
  * testcases for overlay
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
     var DOM = S.DOM;

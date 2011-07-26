@@ -1,6 +1,6 @@
 /**
  * testcase for kissy.anim
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom,anim", function(S, DOM, Anim) {
 

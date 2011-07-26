@@ -1,6 +1,6 @@
 /**
  * aria support for slide
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 

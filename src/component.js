@@ -1,6 +1,6 @@
 /**
  * mvc based component framework for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
     return {

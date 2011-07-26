@@ -1,6 +1,6 @@
 /**
  * dd support for kissy, drag for dd
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 

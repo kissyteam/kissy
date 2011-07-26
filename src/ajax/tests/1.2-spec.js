@@ -1,6 +1,6 @@
 /**
  * 1.2 new testcases
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  **/
 KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
     var $ = Node.all;
