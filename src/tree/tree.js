@@ -9,9 +9,7 @@ KISSY.add("tree/tree", function(S, UIBase, Component, AbstractNode, TreeRender) 
 
         initializer:function() {
             /*加快从事件代理获取原事件节点*/
-            this._allNodes = {
-
-            };
+            this._allNodes = {};
         },
 
         renderUI:function() {
@@ -60,12 +58,19 @@ KISSY.add("tree/tree", function(S, UIBase, Component, AbstractNode, TreeRender) 
             }
         },
 
+        _handleKeyEventInternal:function(e) {
+            var current = this.get("selectedItem");
+            if (e.keyCode == 13) {
+                // 传递给真正的单个子节点
+                return current._performInternal(e);
+            }
+            return current._keyNav(e);
+        },
+
         _getOwnerNode:function(node) {
             var self = this,
                 n,
-                children = self.get("children"),
-                len = children.length,
-                elem = self.get('view').get("el")[0];
+                elem = self.get("el")[0];
             while (node && node !== elem) {
                 if (n = self._allNodes[node.id]) {
                     return n;
@@ -80,6 +85,18 @@ KISSY.add("tree/tree", function(S, UIBase, Component, AbstractNode, TreeRender) 
         _uiSetSelectedItem:function(n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
+            }
+            n.set("selected", true);
+        },
+
+
+        _uiSetFocused:function(v) {
+            if (v) {
+                // 得到焦点时没有选择节点
+                // 默认选择自己
+                if (!this.get("selectedItem")) {
+                    this.select();
+                }
             }
         }
     }, {

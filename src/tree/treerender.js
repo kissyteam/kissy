@@ -6,7 +6,8 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, AbstractNodeRender) 
     var FOCUSED_CLS = "tree-item-focused";
     return UIBase.create(AbstractNodeRender, {
         renderUI:function() {
-            this.get("el").addClass(this.getCls("tree-root"))[0].hideFocus = true;
+            this.get("el").addClass(this.getCls("tree-root")).attr("role", "tree")[0].hideFocus = true;
+            this.get("rowEl").addClass(this.getCls("tree-root-row"));
         },
 
         _uiSetShowRootNode:function(v) {

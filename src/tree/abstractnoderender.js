@@ -4,7 +4,6 @@
  */
 KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
     var $ = Node.all,
-
         LABEL_CLS = "tree-item-label",
         FILE_CLS = "tree-file-icon",
         FILE_EXPAND = "tree-expand-icon-{t}",
@@ -31,8 +30,8 @@ KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
             this.get("el").addClass(this.getCls(ITEM_CLS));
         },
 
-        _computeClass:function(children, parent,cause) {
-            S.log("hi "+cause+": " + this.get("content"));
+        _computeClass:function(children, parent, cause) {
+            // S.log("hi "+cause+": " + this.get("content"));
             var expanded = this.get("expanded"),
                 expand_cls = [INLINE_BLOCK,ICON_CLS,EXPAND_ICON_CLS,""].join(" "),
                 icon_cls = this.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
@@ -81,8 +80,10 @@ KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
             var iconEl = $("<div />")
                 .appendTo(rowEl);
             var labelEl = $("<span id='" + id + "' class='" + this.getCls(LABEL_CLS) + "'/>")
-                .appendTo(rowEl)
-                .append(children);
+                .appendTo(rowEl);
+            if (children.length) {
+                labelEl.append(children);
+            }
             el.attr({
                 "role":"treeitem",
                 "aria-labelledby":id

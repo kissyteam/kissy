@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:41
+build time: Jul 26 15:53
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 22 15:41
              */
             version: '1.20dev',
 
-            buildTime:'20110722154138',
+            buildTime:'20110726155313',
 
             /**
              * Returns a new object containing all of the properties of
@@ -939,7 +939,7 @@ build time: Jul 22 15:41
 })(KISSY);
 /**
  * setup data structure for kissy loader
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S){
     if("require" in this) return;
@@ -948,7 +948,7 @@ build time: Jul 22 15:41
     S.__loaderData={};
 })(KISSY);/**
  * status constants
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S,data) {
     if("require" in this) return;
@@ -960,7 +960,7 @@ build time: Jul 22 15:41
     });
 })(KISSY,KISSY.__loaderData);/**
  * utils for kissy loader
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if (S.use) return;
@@ -1062,7 +1062,7 @@ build time: Jul 22 15:41
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * script/css load across browser
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
     if (S.use) return;
@@ -1190,7 +1190,7 @@ build time: Jul 22 15:41
     )
     (KISSY, KISSY.__loaderUtils);/**
  * getScript support for css and js callback after load
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
     if ("require" in this) return;
@@ -1303,7 +1303,7 @@ build time: Jul 22 15:41
 
 })(KISSY, KISSY.__loaderUtils);/**
  * add module definition
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils,data) {
     if("require" in this) return;
@@ -1434,7 +1434,7 @@ build time: Jul 22 15:41
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils,KISSY.__loaderData);/**
  * build full path from relative path and base path
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -1470,7 +1470,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * logic for config.global , mainly for kissy.editor
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
     if("require" in this) return;
@@ -1508,7 +1508,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * for ie ,find current executive script ,then infer module name
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if("require" in this) return;
@@ -1560,7 +1560,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * load a single mod (js or css)
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -1769,7 +1769,7 @@ build time: Jul 22 15:41
 
 /**
  * package mechanism
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if ("require" in this) return;
@@ -1857,7 +1857,7 @@ build time: Jul 22 15:41
         });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * register module ,associate module name with module factory(definition)
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader,data) {
     if ("require" in this) return;
@@ -1892,7 +1892,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderData);/**
  * use and attach mod
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -2107,7 +2107,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  *  mix loader into S and infer KISSy baseUrl if not set
- *  @author: lifesinger@gmail.com,yiminghe@gmail.com
+ *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if ("require" in this) return;
@@ -2437,7 +2437,7 @@ build time: Jul 22 15:41
 /**
  * 声明 kissy 核心中所包含的模块，动态加载时将直接从 core.js 中加载核心模块
  * @description: 为了和 1.1.7 及以前版本保持兼容，务实与创新，兼容与革新 ！
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, undef) {
     S.config({
@@ -3451,103 +3451,102 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * Creates a new HTMLElement using the provided html string.
-             */
-            create: function(html, props, ownerDoc) {
-                if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
-                    return cloneNode(html);
+        /**
+         * Creates a new HTMLElement using the provided html string.
+         */
+        create: function(html, props, ownerDoc) {
+            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+                return cloneNode(html);
+            }
+
+            if (!(html = S.trim(html))) {
+                return null;
+            }
+
+            var ret = null,
+                creators = DOM._creators,
+                m,
+                tag = DIV,
+                k,
+                nodes;
+
+            // 简单 tag, 比如 DOM.create('<p>')
+            if ((m = RE_SIMPLE_TAG.exec(html))) {
+                ret = (ownerDoc || doc).createElement(m[1]);
+            }
+            // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+            else {
+                // Fix "XHTML"-style tags in all browsers
+                html = html.replace(rxhtmlTag, "<$1></$2>");
+
+                if ((m = RE_TAG.exec(html))
+                    && (k = m[1])
+                    && S.isFunction(creators[(k = k.toLowerCase())])) {
+                    tag = k;
                 }
 
-                if (!(html = S.trim(html))) {
-                    return null;
-                }
+                nodes = creators[tag](html, ownerDoc).childNodes;
 
-                var ret = null,
-                    creators = DOM._creators,
-                    m,
-                    tag = DIV,
-                    k,
-                    nodes;
-
-                // 简单 tag, 比如 DOM.create('<p>')
-                if ((m = RE_SIMPLE_TAG.exec(html))) {
-                    ret = (ownerDoc || doc).createElement(m[1]);
+                if (nodes.length === 1) {
+                    // return single node, breaking parentNode ref from "fragment"
+                    ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
                 }
-                // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
-                    // Fix "XHTML"-style tags in all browsers
-                    html = html.replace(rxhtmlTag, "<$1></$2>");
-                    
-                    if ((m = RE_TAG.exec(html))
-                        && (k = m[1])
-                        && S.isFunction(creators[(k = k.toLowerCase())])) {
-                        tag = k;
-                    }
-
-                    nodes = creators[tag](html, ownerDoc).childNodes;
-
-                    if (nodes.length === 1) {
-                        // return single node, breaking parentNode ref from "fragment"
-                        ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
-                    }
-                    else {
-                        // return multiple nodes as a fragment
-                        ret = nl2frag(nodes, ownerDoc || doc);
-                    }
+                    // return multiple nodes as a fragment
+                    ret = nl2frag(nodes, ownerDoc || doc);
                 }
+            }
 
-                return attachProps(ret, props);
-            },
+            return attachProps(ret, props);
+        },
 
-            _creators: {
-                div: function(html, ownerDoc) {
-                    var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                    // html 为 <style></style> 时不行，必须有其他元素？
-                    frag.innerHTML = "w<div>" + html + "</div>";
-                    return frag.lastChild;
+        _creators: {
+            div: function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                // html 为 <style></style> 时不行，必须有其他元素？
+                frag.innerHTML = "w<div>" + html + "</div>";
+                return frag.lastChild;
+            }
+        },
+
+        /**
+         * Gets/Sets the HTML contents of the HTMLElement.
+         * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
+         * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
+         */
+        html: function(selector, val, loadScripts, callback) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el.innerHTML;
                 }
-            },
-
-            /**
-             * Gets/Sets the HTML contents of the HTMLElement.
-             * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
-             * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
-             */
-            html: function(selector, val, loadScripts, callback) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-
-                    // only gets value on element nodes
-                    if (isElementNode(el)) {
-                        return el.innerHTML;
-                    }
-                    return;
-                }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(elem) {
-                        if (isElementNode(elem)) {
-                            setHTML(elem, val, loadScripts, callback);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Remove the set of matched elements from the DOM.
-             */
-            remove: function(selector) {
-                S.each(DOM.query(selector), function(el) {
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+            }
+            // setter
+            else {
+                S.each(DOM.query(selector), function(elem) {
+                    if (isElementNode(elem)) {
+                        setHTML(elem, val, loadScripts, callback);
                     }
                 });
-            },
-            _nl2frag:nl2frag
-        });
+            }
+        },
+
+        /**
+         * Remove the set of matched elements from the DOM.
+         */
+        remove: function(selector) {
+            S.each(DOM.query(selector), function(el) {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
+        },
+        _nl2frag:nl2frag
+    });
 
     // 添加成员到元素中
     function attachProps(elem, props) {
@@ -3742,18 +3741,18 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         }
 
         S.mix(creators, {
-                optgroup: creators.option, // gecko 支持，但 ie 不支持
-                th: creators.td,
-                thead: creators.tbody,
-                tfoot: creators.tbody,
-                caption: creators.tbody,
-                colgroup: creators.tbody
-            });
+            optgroup: creators.option, // gecko 支持，但 ie 不支持
+            th: creators.td,
+            thead: creators.tbody,
+            tfoot: creators.tbody,
+            caption: creators.tbody,
+            colgroup: creators.tbody
+        });
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * TODO:
@@ -7050,8 +7049,9 @@ KISSY.add('anim/easing', function(S) {
      * @param {Number} d Total length of animation d = 1
      */
 
-    var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin,
+    var PI = Math.PI,
+        pow = Math.pow,
+        sin = Math.sin,
         BACK_CONST = 1.70158,
 
         Easing = {
@@ -7242,7 +7242,7 @@ KISSY.add('anim/easing', function(S) {
 
 /**
  * single timer for the whole anim module
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
     var tag = S.guid("anim-"),id = 1;
@@ -7904,7 +7904,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 /**
  * special patch for making color gradual change
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
@@ -8013,7 +8013,7 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
 
 /**
  * special patch for animate scroll property of element
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/scroll", function(S, DOM, Anim) {
 
@@ -8753,7 +8753,7 @@ KISSY.add('json', function (S, JSON) {
 
 /**
  * encapsulation of io object . as transaction object in yui3
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 
@@ -8961,7 +8961,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
 /**
  * a scalable client io framework
- * @author: yiminghe@gmail.com , lijing00333@163.com
+ * @author  yiminghe@gmail.com , lijing00333@163.com
  */
 KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
@@ -9372,7 +9372,7 @@ KISSY.add("ajax/xhr", function(S, io) {
 /**
  * script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/script", function(S, io) {
 
@@ -9488,7 +9488,7 @@ KISSY.add("ajax/script", function(S, io) {
 
 /**
  * jsonp transport based on script transport
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
@@ -9559,7 +9559,7 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
 /**
  * form data  serialization util
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
     var enc = encodeURIComponent;
@@ -9629,7 +9629,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
 /**
  * non-refresh upload file with form by iframe
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 

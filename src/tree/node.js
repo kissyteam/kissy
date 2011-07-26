@@ -1,5 +1,5 @@
 /**
- * tree node , extend abstract node
+ * non-root tree node , extend abstract node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node", function(S, UIBase, Component, AbstractNode, NodeRender) {

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>tree 测试</title>
+<title>KISSY Tree</title>
 <link href="assets/tree.css" rel="stylesheet"/>
 <style>
     .goog-tree-children {
@@ -31,7 +31,69 @@
 </style>
 </head>
 <body>
-<div id="treeContainer">
+
+
+<h1>KISSY Tree</h1>
+
+<h2>设计说明</h2>
+
+<ol>
+    <li>支持 <a href="http://www.w3.org/TR/wai-aria-practices/#TreeView" target="_blank">aria</a></li>
+    <li>重用组件框架</li>
+</ol>
+
+<h2>键盘操作指南</h2>
+<h3>Preposition：tab 到树，自动选择根节点</h3>
+<ol>
+    <li>
+        上下键在可视节点间深度遍历
+    </li>
+    <li>
+        左键
+        <ol>
+            <li>
+                已展开节点：关闭节点
+            </li>
+            <li>
+                已关闭节点: 移动到父亲节点
+            </li>
+        </ol>
+    </li>
+    <li>
+        右键
+        <ol>
+            <li>
+                已展开节点：移动到该节点的第一个子节点
+            </li>
+            <li>
+                已关闭节点: 无效
+            </li>
+        </ol>
+    </li>
+    <li>
+        enter : 触发 click 事件
+    </li>
+
+    <li>
+        home : 移动到根节点
+    </li>
+
+    <li>
+        end : 移动到前序遍历最后一个节点
+    </li>
+</ol>
+
+
+<h2>TODO</h2>
+<ol>
+    <li>collapseAll , expandAll 接口增加</li>
+    <li>checked tree node 增加</li>
+</ol>
+
+
+<h2>demo</h2>
+
+<div id="treeContainer" style="width: 200px;">
 
 </div>
 <script src="../../build/kissy.js"></script>
@@ -89,6 +151,11 @@
         tree.addChild(one);
 
         tree.render();
+
+
+        tree.on("click", function(e) {
+            S.log("action : " + e.target.get("content"));
+        });
     });
 </script>
 </body>

@@ -287,7 +287,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                if (this.get("activeable")) {
+                if (ev.which == 1 && this.get("activeable")) {
                     this.set("active", true);
                 }
                 var el = this.getKeyEventTarget();
@@ -331,7 +331,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                if (this.get("active")) {
+                // 左键
+                if (this.get("active") && ev.which == 1) {
                     this._performInternal(ev);
                     this.set("active", false);
                 }

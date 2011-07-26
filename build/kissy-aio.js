@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:41
+build time: Jul 26 15:53
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 22 15:41
              */
             version: '1.20dev',
 
-            buildTime:'20110722154138',
+            buildTime:'20110726155313',
 
             /**
              * Returns a new object containing all of the properties of
@@ -939,7 +939,7 @@ build time: Jul 22 15:41
 })(KISSY);
 /**
  * setup data structure for kissy loader
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S){
     if("require" in this) return;
@@ -948,7 +948,7 @@ build time: Jul 22 15:41
     S.__loaderData={};
 })(KISSY);/**
  * status constants
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S,data) {
     if("require" in this) return;
@@ -960,7 +960,7 @@ build time: Jul 22 15:41
     });
 })(KISSY,KISSY.__loaderData);/**
  * utils for kissy loader
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if (S.use) return;
@@ -1062,7 +1062,7 @@ build time: Jul 22 15:41
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * script/css load across browser
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
     if (S.use) return;
@@ -1190,7 +1190,7 @@ build time: Jul 22 15:41
     )
     (KISSY, KISSY.__loaderUtils);/**
  * getScript support for css and js callback after load
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
     if ("require" in this) return;
@@ -1303,7 +1303,7 @@ build time: Jul 22 15:41
 
 })(KISSY, KISSY.__loaderUtils);/**
  * add module definition
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils,data) {
     if("require" in this) return;
@@ -1434,7 +1434,7 @@ build time: Jul 22 15:41
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils,KISSY.__loaderData);/**
  * build full path from relative path and base path
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -1470,7 +1470,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * logic for config.global , mainly for kissy.editor
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
     if("require" in this) return;
@@ -1508,7 +1508,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * for ie ,find current executive script ,then infer module name
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if("require" in this) return;
@@ -1560,7 +1560,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * load a single mod (js or css)
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -1769,7 +1769,7 @@ build time: Jul 22 15:41
 
 /**
  * package mechanism
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if ("require" in this) return;
@@ -1857,7 +1857,7 @@ build time: Jul 22 15:41
         });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * register module ,associate module name with module factory(definition)
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader,data) {
     if ("require" in this) return;
@@ -1892,7 +1892,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderData);/**
  * use and attach mod
- * @author: lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) return;
@@ -2107,7 +2107,7 @@ build time: Jul 22 15:41
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  *  mix loader into S and infer KISSy baseUrl if not set
- *  @author: lifesinger@gmail.com,yiminghe@gmail.com
+ *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils) {
     if ("require" in this) return;
@@ -2437,7 +2437,7 @@ build time: Jul 22 15:41
 /**
  * 声明 kissy 核心中所包含的模块，动态加载时将直接从 core.js 中加载核心模块
  * @description: 为了和 1.1.7 及以前版本保持兼容，务实与创新，兼容与革新 ！
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S, undef) {
     S.config({
@@ -3451,103 +3451,102 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * Creates a new HTMLElement using the provided html string.
-             */
-            create: function(html, props, ownerDoc) {
-                if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
-                    return cloneNode(html);
+        /**
+         * Creates a new HTMLElement using the provided html string.
+         */
+        create: function(html, props, ownerDoc) {
+            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+                return cloneNode(html);
+            }
+
+            if (!(html = S.trim(html))) {
+                return null;
+            }
+
+            var ret = null,
+                creators = DOM._creators,
+                m,
+                tag = DIV,
+                k,
+                nodes;
+
+            // 简单 tag, 比如 DOM.create('<p>')
+            if ((m = RE_SIMPLE_TAG.exec(html))) {
+                ret = (ownerDoc || doc).createElement(m[1]);
+            }
+            // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+            else {
+                // Fix "XHTML"-style tags in all browsers
+                html = html.replace(rxhtmlTag, "<$1></$2>");
+
+                if ((m = RE_TAG.exec(html))
+                    && (k = m[1])
+                    && S.isFunction(creators[(k = k.toLowerCase())])) {
+                    tag = k;
                 }
 
-                if (!(html = S.trim(html))) {
-                    return null;
-                }
+                nodes = creators[tag](html, ownerDoc).childNodes;
 
-                var ret = null,
-                    creators = DOM._creators,
-                    m,
-                    tag = DIV,
-                    k,
-                    nodes;
-
-                // 简单 tag, 比如 DOM.create('<p>')
-                if ((m = RE_SIMPLE_TAG.exec(html))) {
-                    ret = (ownerDoc || doc).createElement(m[1]);
+                if (nodes.length === 1) {
+                    // return single node, breaking parentNode ref from "fragment"
+                    ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
                 }
-                // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
-                    // Fix "XHTML"-style tags in all browsers
-                    html = html.replace(rxhtmlTag, "<$1></$2>");
-                    
-                    if ((m = RE_TAG.exec(html))
-                        && (k = m[1])
-                        && S.isFunction(creators[(k = k.toLowerCase())])) {
-                        tag = k;
-                    }
-
-                    nodes = creators[tag](html, ownerDoc).childNodes;
-
-                    if (nodes.length === 1) {
-                        // return single node, breaking parentNode ref from "fragment"
-                        ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
-                    }
-                    else {
-                        // return multiple nodes as a fragment
-                        ret = nl2frag(nodes, ownerDoc || doc);
-                    }
+                    // return multiple nodes as a fragment
+                    ret = nl2frag(nodes, ownerDoc || doc);
                 }
+            }
 
-                return attachProps(ret, props);
-            },
+            return attachProps(ret, props);
+        },
 
-            _creators: {
-                div: function(html, ownerDoc) {
-                    var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                    // html 为 <style></style> 时不行，必须有其他元素？
-                    frag.innerHTML = "w<div>" + html + "</div>";
-                    return frag.lastChild;
+        _creators: {
+            div: function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                // html 为 <style></style> 时不行，必须有其他元素？
+                frag.innerHTML = "w<div>" + html + "</div>";
+                return frag.lastChild;
+            }
+        },
+
+        /**
+         * Gets/Sets the HTML contents of the HTMLElement.
+         * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
+         * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
+         */
+        html: function(selector, val, loadScripts, callback) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el.innerHTML;
                 }
-            },
-
-            /**
-             * Gets/Sets the HTML contents of the HTMLElement.
-             * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
-             * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
-             */
-            html: function(selector, val, loadScripts, callback) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-
-                    // only gets value on element nodes
-                    if (isElementNode(el)) {
-                        return el.innerHTML;
-                    }
-                    return;
-                }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(elem) {
-                        if (isElementNode(elem)) {
-                            setHTML(elem, val, loadScripts, callback);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Remove the set of matched elements from the DOM.
-             */
-            remove: function(selector) {
-                S.each(DOM.query(selector), function(el) {
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+            }
+            // setter
+            else {
+                S.each(DOM.query(selector), function(elem) {
+                    if (isElementNode(elem)) {
+                        setHTML(elem, val, loadScripts, callback);
                     }
                 });
-            },
-            _nl2frag:nl2frag
-        });
+            }
+        },
+
+        /**
+         * Remove the set of matched elements from the DOM.
+         */
+        remove: function(selector) {
+            S.each(DOM.query(selector), function(el) {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
+        },
+        _nl2frag:nl2frag
+    });
 
     // 添加成员到元素中
     function attachProps(elem, props) {
@@ -3742,18 +3741,18 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         }
 
         S.mix(creators, {
-                optgroup: creators.option, // gecko 支持，但 ie 不支持
-                th: creators.td,
-                thead: creators.tbody,
-                tfoot: creators.tbody,
-                caption: creators.tbody,
-                colgroup: creators.tbody
-            });
+            optgroup: creators.option, // gecko 支持，但 ie 不支持
+            th: creators.td,
+            thead: creators.tbody,
+            tfoot: creators.tbody,
+            caption: creators.tbody,
+            colgroup: creators.tbody
+        });
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * TODO:
@@ -7050,8 +7049,9 @@ KISSY.add('anim/easing', function(S) {
      * @param {Number} d Total length of animation d = 1
      */
 
-    var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin,
+    var PI = Math.PI,
+        pow = Math.pow,
+        sin = Math.sin,
         BACK_CONST = 1.70158,
 
         Easing = {
@@ -7242,7 +7242,7 @@ KISSY.add('anim/easing', function(S) {
 
 /**
  * single timer for the whole anim module
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
     var tag = S.guid("anim-"),id = 1;
@@ -7904,7 +7904,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 /**
  * special patch for making color gradual change
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
@@ -8013,7 +8013,7 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
 
 /**
  * special patch for animate scroll property of element
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/scroll", function(S, DOM, Anim) {
 
@@ -8753,7 +8753,7 @@ KISSY.add('json', function (S, JSON) {
 
 /**
  * encapsulation of io object . as transaction object in yui3
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 
@@ -8961,7 +8961,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
 /**
  * a scalable client io framework
- * @author: yiminghe@gmail.com , lijing00333@163.com
+ * @author  yiminghe@gmail.com , lijing00333@163.com
  */
 KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
@@ -9372,7 +9372,7 @@ KISSY.add("ajax/xhr", function(S, io) {
 /**
  * script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/script", function(S, io) {
 
@@ -9488,7 +9488,7 @@ KISSY.add("ajax/script", function(S, io) {
 
 /**
  * jsonp transport based on script transport
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
@@ -9559,7 +9559,7 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
 /**
  * form data  serialization util
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
     var enc = encodeURIComponent;
@@ -9629,7 +9629,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
 /**
  * non-refresh upload file with form by iframe
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
@@ -13947,7 +13947,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 25 17:24
 */
 /**
  * UIBase.Align
@@ -14353,6 +14353,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
  **//**
  * @module  UIBase
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
@@ -14529,8 +14530,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 return Node.one(document.body);
             },
             setter:function(v) {
-                if (S.isString(v))
-                    return Node.one(v);
+                return Node.one(v);
             }
         }
     };
@@ -15949,7 +15949,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 22 15:53
 */
 /**
  * container can delegate event for its children
@@ -15999,11 +15999,11 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                 var cls = c.attr("class") || "",
                     prefixCls = self.get("prefixCls");
                 // 过滤掉特定前缀
-                cls = cls.replace(new RegExp("(?:^|\\s+)" + prefixCls, "ig"), "");
+                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
                 var UI = UIStore.getUIByClass(cls);
                 if (!UI) {
                     S.log(c);
-                    S.error("can not find ui from this markup");
+                    S.error("can not find ui " + cls + " from this markup");
                 }
                 self.addChild(new UI({
                     srcNode:c,
@@ -16034,6 +16034,7 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
 });/**
  * model and control base class for kissy
  * @author yiminghe@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
@@ -16414,11 +16415,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 this._forwordToView("_handleClick", ev);
             },
 
-            _uiSetDisabled:function(d) {
-                var view = this.get("view");
-                view.set("disabled", d);
-            },
-
             destructor:function() {
                 var self = this;
                 var children = self.get("children");
@@ -16433,15 +16429,41 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
         },
         {
             ATTRS:{
+                /**
+                 *  session state
+                 */
 
-                // 是否绑定鼠标事件
+                    // 是否绑定鼠标事件
                 handleMouseEvents:{
                     value:true
                 },
 
                 // 是否支持焦点处理
                 focusable:{
+                    /*
+                     *  observer synchronization , model 分成两类：
+                     *                view 负责监听 view 类 model 变化更新界面
+                     *                control 负责监听 control 类变化改变逻辑
+                     *  problem : Observer behavior is hard to understand and debug because it's implicit behavior.
+                     *
+                     *  Keeping screen state and session state synchronized is an important task
+                     *  Data Binding
+                     */
                     view:true
+                    /**
+                     * In general data binding gets tricky
+                     * because if you have to avoid cycles where a change to the control,
+                     * changes the record set, which updates the control,
+                     * which updates the record set....
+                     * The flow of usage helps avoid these -
+                     * we load from the session state to the screen when the screen is opened,
+                     * after that any changes to the screen state propagate back to the session state.
+                     * It's unusual for the session state to be updated directly once the screen is up.
+                     * As a result data binding might not be entirely bi-directional -
+                     * just confined to initial upload and
+                     * then propagating changes from the controls to the session state.
+                     */
+                    // sync
                 },
 
                 //子组件
@@ -16503,6 +16525,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
  **//**
  * render base class for kissy
  * @author yiminghe@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/render", function(S, UIBase, UIStore) {
     return UIBase.create([UIBase.Box.Render], {
@@ -16528,6 +16551,10 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         }
     }, {
         ATTRS:{
+            /**
+             *  screen state
+             */
+
             //从 maskup 中渲染
             srcNode:{},
             prefixCls:{
@@ -22743,7 +22770,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 22 15:53
 */
 /**
  *  menu where items can be filtered based on user keyboard input
@@ -22871,7 +22898,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            c.get("view").set("content", content.replace(strExp, function(m) {
+                            view.set("content", content.replace(strExp, function(m) {
                                 return "<span class='" + hit + "'>" + m + "</span>";
                             }));
                         } else {
@@ -23540,7 +23567,7 @@ KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
  */
 KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
 
-    return UIBase.create(Component.ModelControl, {
+    var Separator = UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
             handleMouseEvents:{
@@ -23549,6 +23576,13 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
         },
         DefaultRender:SeparatorRender
     });
+
+    Component.UIStore.setUIByClass("menuseparator", {
+        priority:20,
+        ui:Separator
+    });
+
+    return Separator;
 
 }, {
     requires:['uibase','component','./separatorrender']
@@ -23777,7 +23811,7 @@ KISSY.add(
                         ui = "popupmenu",
                         prefixCls = self.get("prefixCls");
                     self.set("el", element);
-                    var child = element.one("." + prefixCls + ui);
+                    var child = element.one("." + self.getCls(ui));
                     if (child) {
                         // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
                         child.hide();
@@ -23908,7 +23942,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 22 15:53
 */
 /**
  * Model and Control for button
@@ -24133,8 +24167,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
                 }
                 el.attr("aria-labelledby", id);
                 self.set("innerEl", innerEl);
-            }
-            ,
+            },
 
             /**
              * 内容移到内层
@@ -24189,17 +24222,18 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 21 11:15
+build time: Jul 22 15:53
 */
 /**
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu) {
+KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
+    var $ = Node.all;
     var MenuButton = UIBase.create(Button, {
 
         hideMenu:function() {
-            this.get("menu").hide();
+            this.get("menu") && this.get("menu").hide();
         },
 
         showMenu:function() {
@@ -24214,6 +24248,16 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 menu.show();
                 el.attr("aria-haspopup", menu.get("el").attr("id"));
                 view.set("collapsed", false);
+            }
+        },
+
+
+        _reposition:function() {
+            var self = this,menu = self.get("menu"),el = self.get("el");
+            if (menu && menu.get("visible")) {
+                menu.set("align", S.mix({
+                    node:el
+                }, self.get("menuAlign")));
             }
         },
 
@@ -24234,6 +24278,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             menu.on("hide", function() {
                 self.get("view").set("collapsed", true);
             });
+
+            //窗口改变大小，重新调整
+            $(window).on("resize", self._reposition, self);
         },
 
         /**
@@ -24334,8 +24381,37 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             return this.get("menu") && this.get("menu").getChildAt(index);
         },
 
+        // 禁用时关闭已显示菜单
+        _uiSetDisabled:function(v) {
+            var o = MenuButton.superclass._uiSetDisabled;
+            o && o.apply(this, S.makeArray(arguments));
+            !v && this.hideMenu();
+        },
+
+        // 找到下面有 popupmenu class 的元素，装饰为 PopupMenu 返回
+        decorateInternal:function(el) {
+            var self = this,
+                ui = "popupmenu",
+                prefixCls = self.get("prefixCls");
+            self.set("el", el);
+            var menuItem = el.one("." + self.getCls(ui));
+            if (menuItem) {
+                // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
+                menuItem.hide();
+                var docBody = S.one(el[0].ownerDocument.body);
+                docBody.prepend(menuItem);
+                var UI = Component.UIStore.getUIByClass(ui);
+                var menu = new UI({
+                    srcNode:menuItem,
+                    prefixCls:prefixCls
+                });
+                self.set("menu", menu);
+            }
+        },
+
         destructor:function() {
-            var menu = this.get("menu");
+            var self = this, menu = self.get("menu");
+            $(window).detach("resize", self._reposition, self);
             menu && menu.destroy();
         }
 
@@ -24368,7 +24444,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
 
     return MenuButton;
 }, {
-    requires:["uibase","node","button","./menubuttonrender","menu"]
+    requires:["uibase","node","button","./menubuttonrender","menu","component"]
 });/**
  * render aria and drop arrow for menubutton
  * @author: yiminghe@gmail.com
@@ -24432,9 +24508,12 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
  * represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/option", function(S, UIBase, Menu) {
+KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
     var MenuItem = Menu.Item;
-    return UIBase.create(MenuItem, {
+    var Option = UIBase.create(MenuItem, {
+        renderUI:function() {
+            this.get("el").addClass(this.getCls("option"));
+        }
     }, {
         ATTRS:{
             selectable:{
@@ -24442,10 +24521,14 @@ KISSY.add("menubutton/option", function(S, UIBase, Menu) {
             }
         }
     });
-
+    Component.UIStore.setUIByClass("option", {
+        priority:10,
+        ui:Option
+    });
+    return Option;
 
 }, {
-    requires:['uibase','menu']
+    requires:['uibase','component','menu']
 });/**
  * manage a list of single-select options
  * @author yiminghe@gmail.com
