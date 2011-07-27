@@ -230,7 +230,9 @@ KISSY.use("dom,event", function(S, DOM, Event) {
                 d3 = DOM.get("#d3" + t);
 
             t = "";
+            var type = "";
             Event.delegate(d1, 'mouseenter', '.t', function(e) {
+                type = e.type;
                 t = e.target.id;
             });
 
@@ -240,7 +242,9 @@ KISSY.use("dom,event", function(S, DOM, Event) {
 
             runs(function() {
                 expect(t).toBe("");
+                expect(type).toBe("");
                 t = "";
+                type = "";
                 simulate(d2, "mouseover", d1);
             });
 
@@ -249,7 +253,9 @@ KISSY.use("dom,event", function(S, DOM, Event) {
 
             runs(function() {
                 expect(t).toBe(d2.id);
+                expect(type).toBe("mouseenter");
                 t = "";
+                type = "";
                 simulate(d3, "mouseover", d2);
             });
 
@@ -257,7 +263,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
 
             runs(function() {
                 expect(t).toBe("");
-
+                expect(type).toBe("");
                 DOM.remove(d1);
             });
 
