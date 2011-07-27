@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    
+    <div id='d1' style='width:500px;height:500px;border:1px solid red;'>
+        <div id='d2' class='t' style='width:300px;height:300px;margin:150px;border:1px solid green;'>
+            <div id='d3' style='width:100px;height:100px;margin:150px;border:1px solid black;'>
+            </div>
+        </div>
+    </div>
+
+<script src='http://localhost/lib/jquery/dist/jquery.js'></script>
+<script>
+
+    
+    if(true){        
+        (function(){
+            $("#d1").delegate(".t","mouseenter",function(e){
+                console.log(e.target.id +" : "+e.type);
+            });
+        })();
+    }
+</script>
+
+</body>
+</html>

@@ -188,7 +188,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 26 15:53
+build time: Jul 27 14:07
 */
 /*
  * @module kissy
@@ -274,7 +274,7 @@ build time: Jul 26 15:53
              */
             version: '1.20dev',
 
-            buildTime:'20110726155313',
+            buildTime:'20110727140740',
 
             /**
              * Returns a new object containing all of the properties of
@@ -6647,53 +6647,73 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
         delegateMap = {
-            focus:"focusin",
-            blur:"focusout"
+            "focus":{
+                type:"focusin"
+            },
+            "blur":{
+                type:"focusout"
+            },
+            "mouseenter":{
+                type:"mouseover",
+                handler:mouseHandler
+            },
+            "mouseleave":{
+                type:"mouseout",
+                handler:mouseHandler
+            }
         };
 
     S.mix(Event, {
-            delegate:function(targets, type, selector, fn, scope) {
-                if (batchForType('delegate', targets, type, selector, fn, scope)) {
-                    return targets;
-                }
-                DOM.query(targets).each(function(target) {
-                    // 自定义事件 delegate 无意义
-                    if (target.isCustomEventTarget) {
-                        return;
-                    }
-                    type = delegateMap[type] || type;
-                    Event.on(target, type, delegateHandler, target, {
-                            fn:fn,
-                            selector:selector,
-                            // type:type,
-                            scope:scope,
-                            equals:equals
-                        });
-                });
-                return targets;
-            },
-
-            undelegate:function(targets, type, selector, fn, scope) {
-                if (batchForType('undelegate', targets, type, selector, fn, scope)) {
-                    return targets;
-                }
-                DOM.query(targets).each(function(target) {
-                    // 自定义事件 delegate 无意义
-                    if (target.isCustomEventTarget) {
-                        return;
-                    }
-                    type = delegateMap[type] || type;
-                    Event.remove(target, type, delegateHandler, target, {
-                            fn:fn,
-                            selector:selector,
-                            // type:type,
-                            scope:scope,
-                            equals:equals
-                        });
-                });
+        delegate:function(targets, type, selector, fn, scope) {
+            if (batchForType('delegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
-        });
+            DOM.query(targets).each(function(target) {
+                // 自定义事件 delegate 无意义
+                if (target.isCustomEventTarget) {
+                    return;
+                }
+                var preType = type,handler = delegateHandler;
+                if (delegateMap[type]) {
+                    type = delegateMap[preType].type;
+                    handler = delegateMap[preType].handler || handler;
+                }
+                Event.on(target, type, handler, target, {
+                    fn:fn,
+                    selector:selector,
+                    preType:preType,
+                    scope:scope,
+                    equals:equals
+                });
+            });
+            return targets;
+        },
+
+        undelegate:function(targets, type, selector, fn, scope) {
+            if (batchForType('undelegate', targets, type, selector, fn, scope)) {
+                return targets;
+            }
+            DOM.query(targets).each(function(target) {
+                // 自定义事件 delegate 无意义
+                if (target.isCustomEventTarget) {
+                    return;
+                }
+                var preType = type,handler = delegateHandler;
+                if (delegateMap[type]) {
+                    type = delegateMap[preType].type;
+                    handler = delegateMap[preType].handler || handler;
+                }
+                Event.remove(target, type, handler, target, {
+                    fn:fn,
+                    selector:selector,
+                    preType:preType,
+                    scope:scope,
+                    equals:equals
+                });
+            });
+            return targets;
+        }
+    });
 
     // 比较函数，两个 delegate 描述对象比较
     function equals(d) {
@@ -6709,10 +6729,34 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     // 根据 selector ，从事件源得到对应节点
     function delegateHandler(event, data) {
         var delegateTarget = this,
-            gret,
             target = event.target,
             invokeds = DOM.closest(target, [data.selector], delegateTarget);
+
         // 找到了符合 selector 的元素，可能并不是事件源
+        return invokes.call(delegateTarget, invokeds, event, data);
+    }
+
+    // mouseenter/leave 特殊处理
+    function mouseHandler(event, data) {
+        var delegateTarget = this,
+            target = event.target,
+            relatedTarget = event.relatedTarget;
+        // 恢复为用户想要的 mouseenter/leave 类型
+        event.type = data.preType;
+        // mouseenter/leave 不会冒泡，只选择最近一个
+        target = DOM.closest(target, data.selector, delegateTarget);
+        if (target) {
+            if (target !== relatedTarget && !DOM.contains(target, relatedTarget)) {
+                return data.fn.call(data.scope || delegateTarget, event);
+            }
+        }
+        return undefined;
+    }
+
+
+    function invokes(invokeds, event, data) {
+        var delegateTarget = this,
+            gret;
         if (invokeds) {
             for (var i = 0; i < invokeds.length; i++) {
                 event.currentTarget = invokeds[i];
@@ -6735,8 +6779,8 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     return Event;
 }, {
-        requires:["dom","./base"]
-    });
+    requires:["dom","./base"]
+});
 
 /**
  * focusin/out 的特殊之处 , delegate 只能在容器上注册 focusin/out ，
@@ -6749,8 +6793,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  *   2.1 当 Event.fire("focus") , 同 1.1
  *   2.2 当 Event.fire("focusin"),直接执行 focusin 对应的 handlers 数组，但不会真正聚焦
  *
- * TODO:
- * mouseenter/leave delegate??
+ * mouseenter/leave delegate 特殊处理， mouseenter 没有冒泡的概念，只能替换为 mouseover/out
  *
  **/
 
@@ -6786,12 +6829,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
                         return;
                     }
 
-                    // Traverse up the tree
-                    parent = DOM.closest(parent, function(item) {
-                        return item == self;
-                    });
-
-                    if (parent !== self) {
+                    // 在自身外边就触发
+                    if (parent !== self && !DOM.contains(self, parent)) {
                         // handle event if we actually just moused on to a non sub-element
                         Event._handle(self, event);
                     }
@@ -6821,8 +6860,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
     return Event;
 }, {
-        requires:["./base","dom","ua"]
-    });
+    requires:["./base","dom","ua"]
+});
 
 /**
  * 承玉：2011-06-07
