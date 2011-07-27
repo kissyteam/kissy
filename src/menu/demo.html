@@ -3,10 +3,23 @@
 <head>
 <meta charset="utf-8"/>
 <title>submenu 测试</title>
-
+<link href="../button/assets/common.css" rel="stylesheet"/>
 <link href="assets/menu.css" rel="stylesheet"/>
 <link href="assets/menuitem.css" rel="stylesheet"/>
 <link href="assets/submenu.css" rel="stylesheet"/>
+<style>
+    .goog-menuitem-delete {
+        color: #000000;
+        left: auto;
+        padding-right: 6px;
+        position: absolute;
+        right: 0;
+        text-align: right;
+        border: 1px solid red;
+        margin-right: 5px;
+        padding: 0 5px;
+    }
+</style>
 </head>
 <body>
 
@@ -85,10 +98,19 @@
                         content:"alone"})]
                 });
 
+                menu.addChild(new Menu.DelMenuItem({
+                    prefixCls:"goog-",
+                    content:"可删除"
+                }));
+
                 menu.render();
 
                 menu.on("click", function(ev) {
                     S.log("selected : " + ev.target.get("content"));
+                });
+
+                menu.on("delete", function(e) {
+                    S.log("deleted : " + e.target.get("content"));
                 });
 
 
