@@ -173,12 +173,12 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
             },
 
             _updateRecursive:function() {
-                var view = this.get("view");
+                var len = this.get('children').length;
                 this._computeClass("_updateRecursive");
-                view.set("ariaSize", this.get('children').length);
                 S.each(this.get("children"), function(c, index) {
                     c._computeClass("_updateRecursive_children");
-                    c.get("view").set("ariaPosInSet", index);
+                    c.get("view").set("ariaPosInSet", index + 1);
+                    c.get("view").set("ariaSize", len);
                 });
             },
 
