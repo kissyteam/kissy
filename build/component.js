@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 12:26
+build time: Jul 28 15:35
 */
 /**
  * container can delegate event for its children
@@ -123,13 +123,14 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
             var attrs = self.__attrs,
-                attrVals = self.__attrVals,
+                // attrVals = self.__attrVals,
                 cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
                     if (attrCfg.view) {
                         // 只设置用户设置的值
+                        // 考虑 c 上的默认值
                         if (
                         // (v = attrVals[attrName])
                             ( v = self.get(attrName) )

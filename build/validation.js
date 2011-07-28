@@ -1,10 +1,10 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:57
+build time: Jul 28 15:36
 */
 /**
- * @author: 常胤 (lzlu.com)
+ * @author  常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
  */
@@ -201,7 +201,7 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
 }, { requires: ["dom","event","./utils","./define","./field","./warn","./rule"] });
 /**
  * Validation默认配置和常量
- * @author: 常胤 (lzlu.com)
+ * @author  常胤 (lzlu.com)
  */
 
 KISSY.add("validation/define",function(){
@@ -252,7 +252,7 @@ KISSY.add("validation/define",function(){
 });
 /**
  * Validation.Field
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote, Warn){
@@ -604,7 +604,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		
 }, { requires: ['dom',"event","./utils","./define","./rule","./rule/remote","./warn"] });/**
  * 校验规则管理
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/rule", function(S, Util, Rule) {
@@ -616,7 +616,7 @@ KISSY.add("validation/rule", function(S, Util, Rule) {
 
 /**
  * 规则管理类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 
@@ -716,7 +716,7 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 
 /**
  * 增加常用校验规则
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 	
@@ -889,7 +889,7 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 
 /**
  * 远程校验
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 
@@ -1001,7 +1001,7 @@ KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 
 /**
  * 工具类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/utils", function(S, undefined) {
@@ -1243,7 +1243,7 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
 }, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float",
         "./warn/fixed"] });/**
  * 扩展提示类:alert
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 	var symbol = Define.Const.enumvalidsign;
@@ -1305,7 +1305,7 @@ KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 
 /**
  * 提示类管理类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
@@ -1396,7 +1396,7 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
 /**
  * 扩展类基类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
@@ -1474,7 +1474,7 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
 
 }, { requires: ['dom',"event"]});/**
  * 扩展提示类：fixed
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
     var symbol = Define.Const.enumvalidsign;
@@ -1554,7 +1554,7 @@ KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
 
 /**
  * 扩展提示类：float
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 	var symbol = Define.Const.enumvalidsign;
@@ -1676,7 +1676,7 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 
 /**
  * 提示类：Static
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
     var symbol = Define.Const.enumvalidsign;
@@ -1768,7 +1768,7 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
 
 /**
  * @description 表单验证组件
- * @author: changyin@taobao.com (lzlu.com)
+ * @author  changyin@taobao.com (lzlu.com)
  * @version: 1.2
  * @date: 2011.06.21
  */

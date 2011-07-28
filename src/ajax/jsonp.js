@@ -5,12 +5,12 @@
 KISSY.add("ajax/jsonp", function(S, io) {
 
     io.setupConfig({
-            jsonp:"callback",
-            jsonpCallback:function() {
-                //不使用 now() ，极端情况下可能重复
-                return S.guid("jsonp");
-            }
-        });
+        jsonp:"callback",
+        jsonpCallback:function() {
+            //不使用 now() ，极端情况下可能重复
+            return S.guid("jsonp");
+        }
+    });
 
     io.on("start", function(e) {
         var xhr = e.xhr,c = xhr.config;
@@ -26,8 +26,11 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
             // build temporary JSONP function
             window[jsonpCallback] = function(r) {
-                //debugger
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
+                // jsonp 返回了数组
+                if (arguments.length > 1) {
+                    r = S.makeArray(arguments);
+                }
                 response = [r];
             };
 
@@ -66,5 +69,5 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
     return io;
 }, {
-        requires:['./base']
-    });
+    requires:['./base']
+});

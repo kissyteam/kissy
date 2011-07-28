@@ -1,11 +1,11 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:35
 */
 /**
  * dd support for kissy , dd objects central management module
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
@@ -360,7 +360,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
     });
 /**
  * dd support for kissy, drag for dd
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
@@ -560,7 +560,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 });
 /**
  * droppable for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
@@ -645,7 +645,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
 }, { requires:["node","base","./ddm"] });/**
  * generate proxy drag object,
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/proxy", function(S, Node) {
     var DESTRUCTOR_ID = "__proxy_destructors",
@@ -747,7 +747,7 @@ KISSY.add("dd/proxy", function(S, Node) {
     requires:['node']
 });/**
  * delegate all draggable nodes to one draggable object
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
     function Delegate() {
@@ -858,7 +858,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
     requires:['./ddm','./draggable','dom','node']
 });/**
  * only one droppable instance for multiple droppable nodes
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
     function DroppableDelegate() {
@@ -980,7 +980,7 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
         requires:['./ddm','./droppable','dom','node']
     });/**
  * auto scroll for drag object's container
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
@@ -1187,7 +1187,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
     requires:['base','node','dom']
 });/**
  * dd support for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate, Scroll) {
     var dd = {

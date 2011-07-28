@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:53
+build time: Jul 28 15:34
 */
 /**
  * Model and Control for button
@@ -9,13 +9,29 @@ build time: Jul 22 15:53
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
-    var Button = UIBase.create(Component.ModelControl,[UIBase.Contentbox],{
-        _handleClick:function(ev) {
-            var self = this;
-            // 如果父亲允许自己处理
-            if (!Button.superclass._handleClick.call(self, ev)) {
-                self.fire("click");
+    var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
+
+        bindUI:function() {
+            this.get("el").on("keyup", this._handleKeyEventInternal, this);
+        },
+
+        _handleKeyEventInternal:function(e) {
+            if (e.keyCode == 13 &&
+                e.type == "keydown" ||
+                e.keyCode == 32 &&
+                    e.type == "keyup") {
+                return this._performInternal(e);
             }
+            // Return true for space keypress (even though the event is handled on keyup)
+            // as preventDefault needs to be called up keypress to take effect in IE and
+            // WebKit.
+            return e.keyCode == 32;
+        },
+
+        /* button 的默认行为就是触发 click*/
+        _performInternal:function() {
+            var self = this;
+            self.fire("click");
         }
     }, {
         ATTRS:{
@@ -107,41 +123,20 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         /**
          * @override
          */
-        _handleFocus:function() {
-            var self = this;
-            self.get("el").addClass(getCls(self,
+        _uiSetFocused:function(v) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(FOCUS_CLS)));
         },
 
         /**
          * @override
          */
-        _handleBlur:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(FOCUS_CLS)));
-        },
-
-        /**
-         * @override
-         */
-        _handleMouseEnter:function() {
-            var self = this;
-            self.get("el").addClass(getCls(self,
+        _uiSetHighlighted:function(v) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(HOVER_CLS)));
         },
-
-        /**
-         * @override
-         */
-        _handleMouseLeave:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(HOVER_CLS)));
-            // 鼠标离开时，默认设为鼠标松开状态
-            self._handleMouseUp();
-        },
-
 
         /**
          * 模拟原生 disabled 机制
@@ -149,43 +144,24 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _uiSetDisabled:function(v) {
             var self = this,el = self.get("el");
-            if (v) {
-                el.addClass(getCls(self, self.getCls(DISABLED_CLS)))
-                    //不能被 tab focus 到
-                    //support aria
-                    .attr({
-                        "tabindex": -1,
-                        "aria-disabled": true
-                    });
-            } else {
-                el.removeClass(getCls(self,
-                    self.getCls(DISABLED_CLS)))
-                    .attr({
-                        "tabindex": 0,
-                        "aria-disabled": false
-                    });
-            }
+            el[v ? 'addClass' : 'removeClass'](getCls(self, self.getCls(DISABLED_CLS)))
+                //不能被 tab focus 到
+                //support aria
+                .attr({
+                    "tabindex": v ? -1 : 0,
+                    "aria-disabled": v
+                });
+
         },
 
         /**
          * @override
          */
-        _handleMouseDown:function() {
+        _uiSetActive:function(v) {
             var self = this;
-            self.get("el")
-                .addClass(getCls(self,
+            self.get("el")[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(ACTIVE_CLS)))
-                .attr("aria-pressed", true);
-        },
-
-        /**
-         * @override
-         */
-        _handleMouseUp:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(ACTIVE_CLS)))
-                .attr("aria-pressed", false);
+                .attr("aria-pressed", !!v);
         }
 
     });
@@ -270,7 +246,7 @@ KISSY.add("button/nativerender", function(S, UIBase, ButtonRender) {
     requires:['uibase','./buttonrender']
 });/**
  * simulated button for kissy , inspired by goog button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button", function(S, Button, Render) {
     Button.Render = Render;

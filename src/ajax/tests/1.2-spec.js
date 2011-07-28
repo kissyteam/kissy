@@ -6,24 +6,40 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
     var $ = Node.all;
     describe("ajax@1.2", function() {
 
+        it("should jsonp with array arguments", function() {
+            var re = false,data;
+            io.jsonp("jsonp-array.php", function(d, status, xhr) {
+                re = true;
+                data = d;
+            });
+
+            waitsFor(function() {
+                return re;
+            });
+
+            runs(function() {
+                expect(data.join(",")).toBe([1,2].join(","));
+            });
+        });
+
         it("should abort for xhr", function() {
             var re = [];
             var xhr = io({
-                    url:'ajax.php',
-                    cache:false,
-                    success:function(data, status) {
-                        var args = S.makeArray(arguments);
-                        re.push(status);
-                    },
-                    error:function(data, status) {
-                        var args = S.makeArray(arguments);
-                        re.push(status);
-                    },
-                    complete:function(data, status) {
-                        var args = S.makeArray(arguments);
-                        re.push(status);
-                    }
-                });
+                url:'ajax.php',
+                cache:false,
+                success:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                error:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                complete:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                }
+            });
 
             xhr.abort();
 
@@ -35,26 +51,26 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
 
             var re = [],ok;
             var xhr = io({
-                    url:'ajax.php',
-                    // ie 默认会缓存，可能直接触发 success
-                    // fiddler 看不到请求，自带网络捕获为 304
-                    cache:false,
-                    dataType:'json',
-                    timeout:100,
-                    success:function(d, status, r) {
-                        var args = S.makeArray(arguments);
-                        re.push(status);
-                    },
-                    error:function(data, status) {
-                        var args = S.makeArray(arguments);
-                        re.push(status);
-                    },
-                    complete:function(data, status) {
-                        ok = true;
-                        var args = S.makeArray(arguments);
-                        re.push(status);
-                    }
-                });
+                url:'ajax.php',
+                // ie 默认会缓存，可能直接触发 success
+                // fiddler 看不到请求，自带网络捕获为 304
+                cache:false,
+                dataType:'json',
+                timeout:100,
+                success:function(d, status, r) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                error:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                complete:function(data, status) {
+                    ok = true;
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                }
+            });
 
             waitsFor(function() {
                 return ok;
@@ -79,21 +95,21 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
 
             var re = [],ok,d;
             var xhr = io({
-                    url:'upload.php',
-                    form:"#" + f.prop("id"),
-                    type:'post',
-                    dataType:'json',
-                    data:{
-                        "test2":["t2","t3"]
-                    },
-                    success:function(data) {
-                        ok = true;
-                        d = data;
-                    },
-                    complete:function() {
-                        ok = true
-                    }
-                });
+                url:'upload.php',
+                form:"#" + f.prop("id"),
+                type:'post',
+                dataType:'json',
+                data:{
+                    "test2":["t2","t3"]
+                },
+                success:function(data) {
+                    ok = true;
+                    d = data;
+                },
+                complete:function() {
+                    ok = true
+                }
+            });
 
             expect(xhr.iframe.nodeName.toLowerCase()).toBe("iframe");
 
@@ -119,21 +135,21 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
 
             var re = [],ok,d;
             var xhr = io({
-                    url:'upload.php',
-                    form:"#" + f.prop("id"),
-                    type:'post',
-                    dataType:'json',
-                    data:{
-                        "test2":["t2","t3"]
-                    },
-                    success:function(data) {
-                        ok = true;
-                        d = data;
-                    },
-                    complete:function() {
-                        ok = true
-                    }
-                });
+                url:'upload.php',
+                form:"#" + f.prop("id"),
+                type:'post',
+                dataType:'json',
+                data:{
+                    "test2":["t2","t3"]
+                },
+                success:function(data) {
+                    ok = true;
+                    d = data;
+                },
+                complete:function() {
+                    ok = true
+                }
+            });
 
             waitsFor(function() {
                 return ok;

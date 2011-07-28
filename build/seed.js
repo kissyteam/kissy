@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 10:45
+build time: Jul 28 17:55
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 28 10:45
              */
             version: '1.20dev',
 
-            buildTime:'20110728104524',
+            buildTime:'20110728175521',
 
             /**
              * Returns a new object containing all of the properties of
@@ -653,7 +653,7 @@ build time: Jul 28 10:45
             },
 
         /**
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          */
         reduce:/*
          NaN ?
@@ -699,7 +699,7 @@ build time: Jul 28 10:45
 
         /**
          * it is not same with native bind
-         * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
         bind:function(fn, obj) {
             var slice = [].slice,
@@ -717,7 +717,7 @@ build time: Jul 28 10:45
 
         /**
          * Gets current date in milliseconds.
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
@@ -1209,7 +1209,7 @@ build time: Jul 28 10:45
          */
         getStyle:function(url, success, charset) {
             var doc = document,
-                head = doc.getElementsByTagName("head")[0],
+                head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('link'),
                 config = success;
 
@@ -1250,7 +1250,7 @@ build time: Jul 28 10:45
                 return S.getStyle(url, success, charset);
             }
             var doc = document,
-                head = doc.getElementsByTagName("head")[0],
+                head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('script'),
                 config = success,
                 error,

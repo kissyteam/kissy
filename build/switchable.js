@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 28 15:35
 */
 /**
  * Switchable
@@ -510,7 +510,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
  */
 /**
  * common aria for switchable and stop autoplay if necessary
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 
@@ -1204,7 +1204,7 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
  */
 /**
  * aria support for carousel
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
@@ -2202,7 +2202,7 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
  */
 /**
  * aria support for slide
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 

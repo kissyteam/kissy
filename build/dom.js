@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:35
 */
 /**
  * @module  dom-attr
@@ -745,103 +745,102 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * Creates a new HTMLElement using the provided html string.
-             */
-            create: function(html, props, ownerDoc) {
-                if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
-                    return cloneNode(html);
+        /**
+         * Creates a new HTMLElement using the provided html string.
+         */
+        create: function(html, props, ownerDoc) {
+            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+                return cloneNode(html);
+            }
+
+            if (!(html = S.trim(html))) {
+                return null;
+            }
+
+            var ret = null,
+                creators = DOM._creators,
+                m,
+                tag = DIV,
+                k,
+                nodes;
+
+            // 简单 tag, 比如 DOM.create('<p>')
+            if ((m = RE_SIMPLE_TAG.exec(html))) {
+                ret = (ownerDoc || doc).createElement(m[1]);
+            }
+            // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+            else {
+                // Fix "XHTML"-style tags in all browsers
+                html = html.replace(rxhtmlTag, "<$1></$2>");
+
+                if ((m = RE_TAG.exec(html))
+                    && (k = m[1])
+                    && S.isFunction(creators[(k = k.toLowerCase())])) {
+                    tag = k;
                 }
 
-                if (!(html = S.trim(html))) {
-                    return null;
-                }
+                nodes = creators[tag](html, ownerDoc).childNodes;
 
-                var ret = null,
-                    creators = DOM._creators,
-                    m,
-                    tag = DIV,
-                    k,
-                    nodes;
-
-                // 简单 tag, 比如 DOM.create('<p>')
-                if ((m = RE_SIMPLE_TAG.exec(html))) {
-                    ret = (ownerDoc || doc).createElement(m[1]);
+                if (nodes.length === 1) {
+                    // return single node, breaking parentNode ref from "fragment"
+                    ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
                 }
-                // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
-                    // Fix "XHTML"-style tags in all browsers
-                    html = html.replace(rxhtmlTag, "<$1></$2>");
-                    
-                    if ((m = RE_TAG.exec(html))
-                        && (k = m[1])
-                        && S.isFunction(creators[(k = k.toLowerCase())])) {
-                        tag = k;
-                    }
-
-                    nodes = creators[tag](html, ownerDoc).childNodes;
-
-                    if (nodes.length === 1) {
-                        // return single node, breaking parentNode ref from "fragment"
-                        ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
-                    }
-                    else {
-                        // return multiple nodes as a fragment
-                        ret = nl2frag(nodes, ownerDoc || doc);
-                    }
+                    // return multiple nodes as a fragment
+                    ret = nl2frag(nodes, ownerDoc || doc);
                 }
+            }
 
-                return attachProps(ret, props);
-            },
+            return attachProps(ret, props);
+        },
 
-            _creators: {
-                div: function(html, ownerDoc) {
-                    var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                    // html 为 <style></style> 时不行，必须有其他元素？
-                    frag.innerHTML = "w<div>" + html + "</div>";
-                    return frag.lastChild;
+        _creators: {
+            div: function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                // html 为 <style></style> 时不行，必须有其他元素？
+                frag.innerHTML = "w<div>" + html + "</div>";
+                return frag.lastChild;
+            }
+        },
+
+        /**
+         * Gets/Sets the HTML contents of the HTMLElement.
+         * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
+         * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
+         */
+        html: function(selector, val, loadScripts, callback) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el.innerHTML;
                 }
-            },
-
-            /**
-             * Gets/Sets the HTML contents of the HTMLElement.
-             * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
-             * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
-             */
-            html: function(selector, val, loadScripts, callback) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-
-                    // only gets value on element nodes
-                    if (isElementNode(el)) {
-                        return el.innerHTML;
-                    }
-                    return;
-                }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(elem) {
-                        if (isElementNode(elem)) {
-                            setHTML(elem, val, loadScripts, callback);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Remove the set of matched elements from the DOM.
-             */
-            remove: function(selector) {
-                S.each(DOM.query(selector), function(el) {
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+            }
+            // setter
+            else {
+                S.each(DOM.query(selector), function(elem) {
+                    if (isElementNode(elem)) {
+                        setHTML(elem, val, loadScripts, callback);
                     }
                 });
-            },
-            _nl2frag:nl2frag
-        });
+            }
+        },
+
+        /**
+         * Remove the set of matched elements from the DOM.
+         */
+        remove: function(selector) {
+            S.each(DOM.query(selector), function(el) {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
+        },
+        _nl2frag:nl2frag
+    });
 
     // 添加成员到元素中
     function attachProps(elem, props) {
@@ -1036,18 +1035,18 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         }
 
         S.mix(creators, {
-                optgroup: creators.option, // gecko 支持，但 ie 不支持
-                th: creators.td,
-                thead: creators.tbody,
-                tfoot: creators.tbody,
-                caption: creators.tbody,
-                colgroup: creators.tbody
-            });
+            optgroup: creators.option, // gecko 支持，但 ie 不支持
+            th: creators.td,
+            thead: creators.tbody,
+            tfoot: creators.tbody,
+            caption: creators.tbody,
+            colgroup: creators.tbody
+        });
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * TODO:
@@ -1077,7 +1076,6 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
     noData['embed'] = 1;
 
     var commonOps = {
-
         hasData:function(cache, name) {
             if (cache) {
                 if (name !== undefined) {
@@ -1106,13 +1104,15 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             if (ob == win) {
                 return objectOps.data(winDataCache, name, value);
             }
-            var cache = ob[EXPANDO] = ob[EXPANDO] || {};
+            var cache = ob[EXPANDO];
             if (value !== undefined) {
+                cache = ob[EXPANDO] = ob[EXPANDO] || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name];
+                    return cache && cache[name];
                 } else {
+                    cache = ob[EXPANDO] = ob[EXPANDO] || {};
                     return cache;
                 }
             }
@@ -1136,7 +1136,6 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var domOps = {
         hasData:function(elem, name) {
-
             var key = elem[EXPANDO];
             if (!key) {
                 return false;
@@ -1144,26 +1143,32 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             var thisCache = dataCache[key];
             return commonOps.hasData(thisCache, name);
         },
-        data:function(elem, name, value) {
 
+        data:function(elem, name, value) {
             if (noData[elem.nodeName.toLowerCase()]) {
                 return;
             }
             var key = elem[EXPANDO];
             if (!key) {
+                // 节点上关联键值也可以
                 key = elem[EXPANDO] = S.guid();
             }
-            var cache = dataCache[key] = dataCache[key] || {};
+            var cache = dataCache[key];
             if (value !== undefined) {
+                // 需要新建
+                cache = dataCache[key] = dataCache[key] || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] ;
+                    return cache && cache[name];
                 } else {
+                    // 需要新建
+                    cache = dataCache[key] = dataCache[key] || {};
                     return cache;
                 }
             }
         },
+
         removeData:function(elem, name) {
             var key = elem[EXPANDO];
             if (!key) {
@@ -1194,74 +1199,75 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            hasData:function(selector, name) {
-                var ret = false;
+        hasData:function(selector, name) {
+            var ret = false;
+            DOM.query(selector).each(function(elem) {
+                if (checkIsNode(elem)) {
+                    ret = ret || domOps.hasData(elem, name);
+                } else {
+                    ret = ret || objectOps.hasData(elem, name);
+                }
+            });
+            return ret;
+        },
+
+        /**
+         * Store arbitrary data associated with the matched elements.
+         */
+        data: function(selector, name, data) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.data(selector, k, name[k]);
+                }
+                return;
+            }
+
+            // getter
+            if (data === undefined) {
+                var elem = DOM.get(selector);
+                if (checkIsNode(elem)) {
+                    return domOps.data(elem, name, data);
+                } else {
+                    return objectOps.data(elem, name, data);
+                }
+            }
+            // setter
+            else {
                 DOM.query(selector).each(function(elem) {
                     if (checkIsNode(elem)) {
-                        ret = ret || domOps.hasData(elem, name);
+                        domOps.data(elem, name, data);
                     } else {
-                        ret = ret || objectOps.hasData(elem, name);
-                    }
-                });
-                return ret;
-            },
-
-            /**
-             * Store arbitrary data associated with the matched elements.
-             */
-            data: function(selector, name, data) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.data(selector, k, name[k]);
-                    }
-                    return;
-                }
-
-                // getter
-                if (data === undefined) {
-                    var elem = DOM.get(selector);
-                    if (checkIsNode(elem)) {
-                        return domOps.data(elem, name, data);
-                    } else {
-                        return objectOps.data(elem, name, data);
-                    }
-                }
-                // setter
-                else {
-                    DOM.query(selector).each(function(elem) {
-                        if (checkIsNode(elem)) {
-                            domOps.data(elem, name, data);
-                        } else {
-                            objectOps.data(elem, name, data);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Remove a previously-stored piece of data.
-             */
-            removeData: function(selector, name) {
-                DOM.query(selector).each(function(elem) {
-                    if (checkIsNode(elem)) {
-                        domOps.removeData(elem, name);
-                    } else {
-                        objectOps.removeData(elem, name);
+                        objectOps.data(elem, name, data);
                     }
                 });
             }
-        });
+        },
+
+        /**
+         * Remove a previously-stored piece of data.
+         */
+        removeData: function(selector, name) {
+            DOM.query(selector).each(function(elem) {
+                if (checkIsNode(elem)) {
+                    domOps.removeData(elem, name);
+                } else {
+                    objectOps.removeData(elem, name);
+                }
+            });
+        }
+    });
 
     function checkIsNode(elem) {
+        // note : 普通对象不要定义 nodeType 这种特殊属性!
         return elem && elem.nodeType;
     }
 
     return DOM;
 
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 /**
  * 承玉：2011-05-31
  *  - 分层 ，节点和普通对象分开粗合理
