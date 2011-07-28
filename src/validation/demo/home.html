@@ -58,13 +58,18 @@
             </li>
 
             <li>
-                <label class="hd">昵称：</label>
-                <input class="text" type="text" data-valid="{chinese:'昵称只能是中文'}"/>
+                <label class="hd">真实姓名：</label>
+                <input class="text" type="text" data-valid="{label:'请输入你的中文名称',chinese:['姓名只能是中文']}"/>
+            </li>
+			
+            <li>
+                <label class="hd">身份证号码：</label>
+                <input class="text" type="text" data-valid="{card:['请输入准确的二代身份证号码']}"/>
             </li>
 
             <li>
                 <label class="hd">个人主页：</label>
-                <input class="text" type="text" data-valid="{url:'请输入正确的网址'}"/>
+                <input class="text" type="text" data-valid="{required:false,url:['请输入正确的网址']}"/>
             </li>
 
             <li>
@@ -74,8 +79,7 @@
         </ul>
     </form>
     <script>
-        KISSY.Config.base = "../../";
-KISSY.Config.base = "../../";
+		KISSY.Config.base = "../../";
         KISSY.use("validation", function(S, Validation) {
 
             var form = new Validation('#J_form_eg1', {
@@ -94,6 +98,6 @@ KISSY.Config.base = "../../";
 </div>
 
 
-<script src="http://docs.kissyui.com/kissy-util/adaptive-frame/adaptive-frame.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html"></script>
+
 </body>
 </html>

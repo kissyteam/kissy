@@ -7,12 +7,19 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►</span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function() {
-                this.get("el").addClass(this.get("prefixCls") + "submenu");
-                this.get("el").attr("aria-haspopup", "true");
+                var self = this,
+                    el = self.get("el"),
+                    contentEl = self.get("contentEl");
+                el.addClass(this.get("prefixCls") + "submenu")
+                    .attr("aria-haspopup", "true");
+                contentEl.append(S.substitute(ARROW_TMPL, {
+                    prefixCls:this.get("prefixCls")
+                }));
             },
             _uiSetContent:function(v) {
-                this.get("el").one("." + this.get("prefixCls")
-                    + "menuitem-content").html(v + S.substitute(ARROW_TMPL, {
+                var self = this;
+                SubMenuRender.superclass._uiSetContent.call(self, v);
+                self.get("contentEl").append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
             }

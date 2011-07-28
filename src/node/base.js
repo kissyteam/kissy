@@ -53,81 +53,81 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     S.augment(NodeList, {
 
-            /**
-             * 默认长度为 0
-             */
-            length: 0,
+        /**
+         * 默认长度为 0
+         */
+        length: 0,
 
 
-            item: function(index) {
-                if (S.isNumber(index)) {
-                    if (index >= this.length) return null;
-                    return new NodeList(this[index], undefined, undefined);
-                } else
-                    return new NodeList(index, undefined, undefined);
-            },
+        item: function(index) {
+            if (S.isNumber(index)) {
+                if (index >= this.length) return null;
+                return new NodeList(this[index], undefined, undefined);
+            } else
+                return new NodeList(index, undefined, undefined);
+        },
 
-            add:function(selector, context, index) {
-                if (S.isNumber(context)) {
-                    index = context;
-                    context = undefined;
-                }
-                var list = S.makeArray(NodeList.all(selector, context)),
-                    ret = new NodeList(this, undefined, undefined);
-                if (index === undefined) {
-                    AP.push.apply(ret, list);
-                } else {
-                    var args = [index,0];
-                    args.push.apply(args, list);
-                    AP.splice.apply(ret, args);
-                }
-                return ret;
-            },
-
-            slice:function(start, end) {
-                return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
-            },
-
-            /**
-             * Retrieves the DOMNodes.
-             */
-            getDOMNodes: function() {
-                return AP.slice.call(this);
-            },
-
-            /**
-             * Applies the given function to each Node in the NodeList.
-             * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-             * @param context An optional context to apply the function with Default context is the current NodeList instance
-             */
-            each: function(fn, context) {
-                var self = this,len = self.length, i = 0, node;
-
-                for (node = new NodeList(self[0], undefined, undefined);
-                     i < len && fn.call(context || node, node, i, this) !== false;
-                     node = new NodeList(self[++i], undefined, undefined)) {
-                }
-
-                return this;
-            },
-            /**
-             * Retrieves the DOMNode.
-             */
-            getDOMNode: function() {
-                return this[0];
-            },
-
-            all:function(selector) {
-                if (this.length > 0) {
-                    return NodeList.all(selector, this[0]);
-                }
-                return new NodeList(undefined, undefined, undefined);
+        add:function(selector, context, index) {
+            if (S.isNumber(context)) {
+                index = context;
+                context = undefined;
             }
-        });
+            var list = S.makeArray(NodeList.all(selector, context)),
+                ret = new NodeList(this, undefined, undefined);
+            if (index === undefined) {
+                AP.push.apply(ret, list);
+            } else {
+                var args = [index,0];
+                args.push.apply(args, list);
+                AP.splice.apply(ret, args);
+            }
+            return ret;
+        },
+
+        slice:function(start, end) {
+            return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+        },
+
+        /**
+         * Retrieves the DOMNodes.
+         */
+        getDOMNodes: function() {
+            return AP.slice.call(this);
+        },
+
+        /**
+         * Applies the given function to each Node in the NodeList.
+         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
+         * @param context An optional context to apply the function with Default context is the current NodeList instance
+         */
+        each: function(fn, context) {
+            var self = this,len = self.length, i = 0, node;
+
+            for (node = new NodeList(self[0], undefined, undefined);
+                 i < len && fn.call(context || node, node, i, this) !== false;
+                 node = new NodeList(self[++i], undefined, undefined)) {
+            }
+
+            return this;
+        },
+        /**
+         * Retrieves the DOMNode.
+         */
+        getDOMNode: function() {
+            return this[0];
+        },
+
+        all:function(selector) {
+            if (this.length > 0) {
+                return NodeList.all(selector, this[0]);
+            }
+            return new NodeList(undefined, undefined, undefined);
+        }
+    });
 
     NodeList.prototype.one = function(selector) {
         var all = this.all(selector);
-        return all.length ? all : null;
+        return all.length ? all.slice(0, 1) : null;
     };
 
     // query api
@@ -156,15 +156,15 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     NodeList.one = function(selector, context) {
         var all = NodeList.all(selector, context);
-        return all.length ? all : null;
+        return all.length ? all.slice(0, 1) : null;
     };
     if (1 > 2) {
         NodeList.getDOMNodes();
     }
     return NodeList;
 }, {
-        requires:["dom"]
-    });
+    requires:["dom"]
+});
 
 
 /**

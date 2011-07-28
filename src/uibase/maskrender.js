@@ -1,6 +1,6 @@
 /**
  * mask extension for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 

@@ -19,7 +19,6 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
     noData['embed'] = 1;
 
     var commonOps = {
-
         hasData:function(cache, name) {
             if (cache) {
                 if (name !== undefined) {
@@ -48,13 +47,15 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             if (ob == win) {
                 return objectOps.data(winDataCache, name, value);
             }
-            var cache = ob[EXPANDO] = ob[EXPANDO] || {};
+            var cache = ob[EXPANDO];
             if (value !== undefined) {
+                cache = ob[EXPANDO] = ob[EXPANDO] || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name];
+                    return cache && cache[name];
                 } else {
+                    cache = ob[EXPANDO] = ob[EXPANDO] || {};
                     return cache;
                 }
             }
@@ -78,7 +79,6 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var domOps = {
         hasData:function(elem, name) {
-
             var key = elem[EXPANDO];
             if (!key) {
                 return false;
@@ -86,26 +86,32 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             var thisCache = dataCache[key];
             return commonOps.hasData(thisCache, name);
         },
-        data:function(elem, name, value) {
 
+        data:function(elem, name, value) {
             if (noData[elem.nodeName.toLowerCase()]) {
                 return;
             }
             var key = elem[EXPANDO];
             if (!key) {
+                // 节点上关联键值也可以
                 key = elem[EXPANDO] = S.guid();
             }
-            var cache = dataCache[key] = dataCache[key] || {};
+            var cache = dataCache[key];
             if (value !== undefined) {
+                // 需要新建
+                cache = dataCache[key] = dataCache[key] || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] ;
+                    return cache && cache[name];
                 } else {
+                    // 需要新建
+                    cache = dataCache[key] = dataCache[key] || {};
                     return cache;
                 }
             }
         },
+
         removeData:function(elem, name) {
             var key = elem[EXPANDO];
             if (!key) {
@@ -136,74 +142,75 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            hasData:function(selector, name) {
-                var ret = false;
+        hasData:function(selector, name) {
+            var ret = false;
+            DOM.query(selector).each(function(elem) {
+                if (checkIsNode(elem)) {
+                    ret = ret || domOps.hasData(elem, name);
+                } else {
+                    ret = ret || objectOps.hasData(elem, name);
+                }
+            });
+            return ret;
+        },
+
+        /**
+         * Store arbitrary data associated with the matched elements.
+         */
+        data: function(selector, name, data) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.data(selector, k, name[k]);
+                }
+                return;
+            }
+
+            // getter
+            if (data === undefined) {
+                var elem = DOM.get(selector);
+                if (checkIsNode(elem)) {
+                    return domOps.data(elem, name, data);
+                } else {
+                    return objectOps.data(elem, name, data);
+                }
+            }
+            // setter
+            else {
                 DOM.query(selector).each(function(elem) {
                     if (checkIsNode(elem)) {
-                        ret = ret || domOps.hasData(elem, name);
+                        domOps.data(elem, name, data);
                     } else {
-                        ret = ret || objectOps.hasData(elem, name);
-                    }
-                });
-                return ret;
-            },
-
-            /**
-             * Store arbitrary data associated with the matched elements.
-             */
-            data: function(selector, name, data) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.data(selector, k, name[k]);
-                    }
-                    return;
-                }
-
-                // getter
-                if (data === undefined) {
-                    var elem = DOM.get(selector);
-                    if (checkIsNode(elem)) {
-                        return domOps.data(elem, name, data);
-                    } else {
-                        return objectOps.data(elem, name, data);
-                    }
-                }
-                // setter
-                else {
-                    DOM.query(selector).each(function(elem) {
-                        if (checkIsNode(elem)) {
-                            domOps.data(elem, name, data);
-                        } else {
-                            objectOps.data(elem, name, data);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Remove a previously-stored piece of data.
-             */
-            removeData: function(selector, name) {
-                DOM.query(selector).each(function(elem) {
-                    if (checkIsNode(elem)) {
-                        domOps.removeData(elem, name);
-                    } else {
-                        objectOps.removeData(elem, name);
+                        objectOps.data(elem, name, data);
                     }
                 });
             }
-        });
+        },
+
+        /**
+         * Remove a previously-stored piece of data.
+         */
+        removeData: function(selector, name) {
+            DOM.query(selector).each(function(elem) {
+                if (checkIsNode(elem)) {
+                    domOps.removeData(elem, name);
+                } else {
+                    objectOps.removeData(elem, name);
+                }
+            });
+        }
+    });
 
     function checkIsNode(elem) {
+        // note : 普通对象不要定义 nodeType 这种特殊属性!
         return elem && elem.nodeType;
     }
 
     return DOM;
 
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 /**
  * 承玉：2011-05-31
  *  - 分层 ，节点和普通对象分开粗合理

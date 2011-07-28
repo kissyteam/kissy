@@ -32,7 +32,7 @@ KISSY.add("overlay/effect", function(S) {
                     return;
                 }
                 var v = ev.newVal,
-                    el = self.get("view").get("el");
+                    el = self.get("el");
                 el.stop(true);
                 el.css("visibility", "visible");
                 var m = effect + effects[effect][Number(v)];

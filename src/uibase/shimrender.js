@@ -1,6 +1,6 @@
 /**
  * shim for ie6 ,require box-ext
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/shimrender", function(S, Node) {
 

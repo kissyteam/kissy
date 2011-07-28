@@ -1,6 +1,6 @@
 /**
  * KISSY.Dialog
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
@@ -17,9 +17,9 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
     ], {
         renderUI:function() {
             var self = this;
-            self.get("view").get("el").addClass(this.get("view").get("prefixCls")+"dialog");
+            self.get("el").addClass(this.get("prefixCls")+"dialog");
             //设置值，drag-ext 绑定时用到
-            self.set("handlers", [self.get("view").get("header")]);
+            self.set("handlers", [self.get("header")]);
         }
     });
 

@@ -13,86 +13,64 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
-    var VALUE_CHANGE = "valueChange",
+    var VALUE_CHANGE = "valuechange",
         KEY = "event/valuechange",
-        history = {},
-        poll = {},
+        HISTORY_KEY = KEY + "/history",
+        POLL_KEY = KEY + "/poll",
         interval = 50;
 
-    function timestamp(node) {
-        var r = DOM.data(node, KEY);
-        if (!r) {
-            r = (+new Date());
-            DOM.data(node, KEY, r);
-        }
-        return r;
-    }
-
-    function untimestamp(node) {
-        DOM.removeData(node, KEY);
-    }
-
-    //pre value for input monitored
-
-
     function stopPoll(target) {
-        var t = timestamp(target);
-        delete history[t];
-        if (poll[t]) {
-            clearTimeout(poll[t]);
-            delete poll[t];
+        DOM.removeData(target, HISTORY_KEY);
+        if (DOM.hasData(target, POLL_KEY)) {
+            var poll = DOM.data(target, POLL_KEY);
+            clearTimeout(poll);
+            DOM.removeData(target, POLL_KEY);
         }
     }
 
-    function blur(ev) {
+    function stopPollHandler(ev) {
         var target = ev.target;
         stopPoll(target);
     }
 
     function startPoll(target) {
-        var t = timestamp(target);
-        if (poll[t]) return;
-
-        poll[t] = setTimeout(function() {
-            var v = target.value;
-            if (v !== history[t]) {
-                Event._handle(target, {
-                        type:VALUE_CHANGE,
-                        prevVal:history[t],
-                        newVal:v
-                    });
-                history[t] = v;
+        if (DOM.hasData(target, POLL_KEY)) return;
+        DOM.data(target, POLL_KEY, setTimeout(function() {
+            var v = target.value,h = DOM.data(target, HISTORY_KEY);
+            if (v !== h) {
+                // 只触发自己绑定的 handler
+                Event.fire(target, VALUE_CHANGE, {
+                    prevVal:h,
+                    newVal:v
+                }, true);
+                DOM.data(target, HISTORY_KEY, v);
             }
-            poll[t] = setTimeout(arguments.callee, interval);
-        }, interval);
+            DOM.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
+        }, interval));
     }
 
     function startPollHandler(ev) {
         var target = ev.target;
-        //when focus ,record its previous value
+        // when focus ,record its current value immediately
         if (ev.type == "focus") {
-            var t = timestamp(target);
-            history[t] = target.value;
+            DOM.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
     }
 
     function monitor(target) {
         unmonitored(target);
-        Event.on(target, "blur", blur);
+        Event.on(target, "blur", stopPollHandler);
         Event.on(target, "mousedown keyup keydown focus", startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
-        Event.remove(target, "blur", blur);
+        Event.remove(target, "blur", stopPollHandler);
         Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
-        untimestamp(target);
     }
 
     Event.special[VALUE_CHANGE] = {
-        //no corresponding dom event needed
-        fix: false,
         setup: function() {
             var target = this,
                 nodeName = target.nodeName.toLowerCase();
@@ -106,8 +84,7 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
             unmonitored(target);
         }
     };
-
     return Event;
 }, {
-        requires:["./base","dom"]
-    });
+    requires:["./base","dom"]
+});

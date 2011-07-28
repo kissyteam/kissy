@@ -14,6 +14,8 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/06/08)
+ - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
+
  - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）
  - [x] ajax 无论什么错误，出错后都会触发 error
  - [!] ajax 所有方法都返回模拟 xhr 对象，包含 abort 方法用于中断当前请求等

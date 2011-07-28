@@ -1,6 +1,6 @@
 /**
  * only one droppable instance for multiple droppable nodes
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
     function DroppableDelegate() {

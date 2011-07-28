@@ -1,3 +1,7 @@
+/**
+ * resize extension using resizable
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("uibase/resize", function(S) {
     function Resize() {
     }
@@ -18,7 +22,7 @@ KISSY.add("uibase/resize", function(S) {
             var Resizable = S.require("resizable"),self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
-                v.node = self.get("view").get("el");
+                v.node = self.get("el");
                 v.autoRender = true;
                 if (v.handlers) {
                     self.resizer = new Resizable(v);

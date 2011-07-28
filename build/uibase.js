@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 21:47
+build time: Jul 25 17:24
 */
 /**
  * UIBase.Align
@@ -11,24 +11,48 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
 
     /**
-     * 得到定位父亲元素或者可滚动的父亲元素
+     * inspired by closure library by Google
+     * @refer http://yiminghe.iteye.com/blog/1124720
+     */
+
+    /**
+     * 得到影响元素显示的父亲元素
      */
     function getOffsetParent(element) {
-        if (UA['ie']) {
-            return element.offsetParent;
-        }
-        var doc = element.ownerDocument;
-        var positionStyle = DOM.css(element, 'position');
-        var skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
-        for (var parent = element.parentNode; parent && parent != doc;
+        // ie 这个也不是完全可行
+        /**
+         <div style="width: 50px;height: 100px;overflow: hidden">
+         <div style="width: 50px;height: 100px;position: relative;" id="d6">
+         元素 6 高 100px 宽 50px<br/>
+         </div>
+         </div>
+         **/
+//            if (UA['ie']) {
+//                return element.offsetParent;
+//            }
+        var body = element.ownerDocument.body,
+            positionStyle = DOM.css(element, 'position'),
+            skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
+
+        for (var parent = element.parentNode;
+             parent && parent != body;
              parent = parent.parentNode) {
+
             positionStyle = DOM.css(parent, 'position');
-            skipStatic = skipStatic && positionStyle == 'static' &&
-                parent != doc.documentElement && parent != doc.body;
-            if (!skipStatic && (parent.scrollWidth > parent.clientWidth ||
-                parent.scrollHeight > parent.clientHeight ||
-                positionStyle == 'fixed' ||
-                positionStyle == 'absolute')) {
+
+            skipStatic = skipStatic && positionStyle == 'static';
+
+            var parentOverflow = DOM.css(parent, "overflow");
+
+            // 必须有 overflow 属性，可能会隐藏掉子孙元素
+            if (parentOverflow != 'visible' && (
+                // 元素初始为 fixed absolute ，遇到 父亲不是 定位元素忽略
+                // 否则就可以
+                !skipStatic ||
+                    positionStyle == 'fixed' ||
+                    positionStyle == 'absolute' ||
+                    positionStyle == 'relative'
+                )) {
                 return parent;
             }
         }
@@ -39,55 +63,54 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
      * 获得元素的显示部分的区域
      */
     function getVisibleRectForElement(element) {
-        var visibleRect = {left:0,right:Infinity,top:0,bottom:Infinity};
-        var doc = element.ownerDocument;
-        var body = doc.body;
-        // 可滚动根元素
-        var scrollEl = !UA['webkit'] ? doc.documentElement : body;
-        var inContainer;
+        var visibleRect = {
+            left:0,
+            right:Infinity,
+            top:0,
+            bottom:Infinity
+        };
 
         for (var el = element; el = getOffsetParent(el);) {
+
+
+            var clientWidth = el.clientWidth;
+
+            if (
             // clientWidth is zero for inline block elements in IE.
+                (!UA['ie'] || clientWidth != 0)
             // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
-            if ((!UA['ie'] || el.clientWidth != 0)
-                && (!UA['webkit'] || el.clientHeight != 0 || el != body)
-                && (el.scrollWidth != el.clientWidth || el.scrollHeight != el.clientHeight) &&
-                DOM.css(el, 'overflow') != 'visible') {
-                var pos = DOM.offset(el);
-                var client = {left:el.clientLeft,top:el.clientTop};
+            // && (!UA['webkit'] || clientHeight != 0 || el != body)
+            // overflow 不为 visible 则可以限定其内元素
+            // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
+            // offsetParent 已经判断过了
+            //&& DOM.css(el, 'overflow') != 'visible'
+                ) {
+                var clientLeft = el.clientLeft,
+                    clientTop = el.clientTop,
+                    pos = DOM.offset(el),
+                    client = {
+                        left:clientLeft,
+                        top:clientTop
+                    };
                 pos.left += client.left;
                 pos.top += client.top;
 
-                visibleRect.top = Math.max(visibleRect.top, pos.top);
+                visibleRect.top = Math.max(visibleRect['top'], pos.top);
                 visibleRect.right = Math.min(visibleRect.right,
                     pos.left + el.clientWidth);
-                visibleRect.bottom = Math.min(visibleRect.bottom,
+                visibleRect.bottom = Math.min(visibleRect['bottom'],
                     pos.top + el.clientHeight);
                 visibleRect.left = Math.max(visibleRect.left, pos.left);
-                inContainer = inContainer || el != scrollEl;
             }
         }
 
-        // webkit 在 body 上滚动
-        var scrollX = scrollEl.scrollLeft,
-            scrollY = scrollEl.scrollTop;
+        var scrollX = DOM.scrollLeft(),
+            scrollY = DOM.scrollTop();
 
-        if (UA['webkit']) {
-            visibleRect.left += scrollX;
-            visibleRect.top += scrollY;
-        } else {
-            visibleRect.left = Math.max(visibleRect.left, scrollX);
-            visibleRect.top = Math.max(visibleRect.top, scrollY);
-        }
-
-        // 可视区域不在根容器中，更新 right
-        if (!inContainer || UA['webkit']) {
-            visibleRect.right += scrollX;
-            visibleRect.bottom += scrollY;
-        }
-
+        visibleRect.left = Math.max(visibleRect.left, scrollX);
+        visibleRect.top = Math.max(visibleRect['top'], scrollY);
         visibleRect.right = Math.min(visibleRect.right, scrollX + DOM.viewportWidth());
-        visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + DOM.viewportHeight());
+        visibleRect.bottom = Math.min(visibleRect['bottom'], scrollY + DOM.viewportHeight());
 
         return visibleRect.top >= 0 && visibleRect.left >= 0 &&
             visibleRect.bottom > visibleRect.top &&
@@ -238,18 +261,6 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
     function Align() {
     }
 
-    S.mix(Align, {
-        TL: 'tl',
-        TC: 'tc',
-        TR: 'tr',
-        CL: 'cl',
-        CC: 'cc',
-        CR: 'cr',
-        BL: 'bl',
-        BC: 'bc',
-        BR: 'br'
-    });
-
     Align.ATTRS = {
         align: {
             // 默认不是正中，可以实现自由动画 zoom
@@ -319,7 +330,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
-            offset = S.clone(offset);
+            offset = S.clone(offset) || [0,0];
             if (overflow.failX) {
                 flag.failX = 1;
             }
@@ -376,11 +387,15 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         center: function(node) {
             this.set('align', {
                 node: node,
-                points: [Align.CC, Align.CC],
+                points: ["cc", "cc"],
                 offset: [0, 0]
             });
         }
     };
+
+    if (1 > 2) {
+        Align._uiSetAlign();
+    }
 
     return Align;
 }, {
@@ -392,6 +407,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
  **//**
  * @module  UIBase
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
@@ -551,6 +567,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
     }
 
     UIBase.HTML_PARSER = {};
+
     UIBase.ATTRS = {
         // 是否已经渲染完毕
         rendered:{
@@ -567,8 +584,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 return Node.one(document.body);
             },
             setter:function(v) {
-                if (S.isString(v))
-                    return Node.one(v);
+                return Node.one(v);
             }
         }
     };
@@ -659,7 +675,10 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
                     //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m] && self.get(a) !== undefined) {
+                    if (self[m]
+                        // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
+                        && attrs[a].sync !== false
+                        && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }
@@ -746,7 +765,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
  * create 仅仅包括创建节点
  **//**
  * UIBase.Box
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/box', function() {
 
@@ -756,7 +775,8 @@ KISSY.add('uibase/box', function() {
 
     Box.ATTRS = {
         html: {
-            view:true
+            view:true,
+            sync:false
         },
         width:{
             view:true
@@ -777,25 +797,36 @@ KISSY.add('uibase/box', function() {
         elBefore:{
             view:true
         },
-
         el:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("el");
-            }
+            view:true
         },
 
         visibleMode:{
-            value:"visibility",
             view:true
         },
-        visible:{}
+        // 默认显示，但不触发事件
+        visible:{
+            view:true
+        }
+    };
+
+
+    Box.HTML_PARSER = {
+        el:function(srcNode) {
+            /**
+             * 如果需要特殊的对现有元素的装饰行为
+             */
+            if (this.decorateInternal) {
+                this.decorateInternal(srcNode);
+            }
+            return srcNode;
+        }
     };
 
     Box.prototype = {
 
         _uiSetVisible:function(isVisible) {
             var self = this;
-            this.get("view").set("visible", isVisible);
             self.fire(isVisible ? "show" : "hide");
         },
 
@@ -821,7 +852,7 @@ KISSY.add('uibase/box', function() {
 });
 /**
  * UIBase.Box
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/boxrender', function(S, Node) {
 
@@ -833,8 +864,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         el: {
             //容器元素
             setter:function(v) {
-                if (S.isString(v))
-                    return Node.one(v);
+                return Node.one(v);
             }
         },
         elCls: {
@@ -860,9 +890,13 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             //插入到该元素前
             value:null
         },
-        html: {},
+        html: {
+            sync:false
+        },
         visible:{},
-        visibleMode:{}
+        visibleMode:{
+            value:"display"
+        }
     };
 
     Box.construct = constructEl;
@@ -901,8 +935,8 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     }
 
     Box.HTML_PARSER = {
-        el:function(srcNode) {
-            return srcNode;
+        html:function(el) {
+            return el.html();
         }
     };
 
@@ -921,6 +955,10 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             }
         },
 
+        /**
+         * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
+         * 通过 render 来重建原有的内容
+         */
         __createDom:function() {
             var self = this,
                 el = self.get("el");
@@ -933,12 +971,16 @@ KISSY.add('uibase/boxrender', function(S, Node) {
                     self.get("elTagName"),
                     self.get("elAttrs")));
                 self.set("el", el);
+                if (self.get("html")) {
+                    el.html(self.get("html"));
+                }
             }
         },
 
         _uiSetElAttrs:function(attrs) {
             this.get("el").attr(attrs);
         },
+
         _uiSetElCls:function(cls) {
             this.get("el").addClass(cls);
         },
@@ -972,8 +1014,9 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         },
 
         show:function() {
-            this.render();
-            this.set("visible", true);
+            var self = this;
+            self.render();
+            self.set("visible", true);
         },
         hide:function() {
             this.set("visible", false);
@@ -995,7 +1038,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
 });
 /**
  * close extension for kissy dialog
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/close", function(S) {
     function Close() {
@@ -1003,8 +1046,7 @@ KISSY.add("uibase/close", function(S) {
 
     var HIDE = "hide";
     Close.ATTRS = {
-        closable: {             // 是否需要关闭按钮
-            value: true,
+        closable: {
             view:true
         },
         closeAction:{
@@ -1033,7 +1075,7 @@ KISSY.add("uibase/close", function(S) {
 
 });/**
  * close extension for kissy dialog
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/closerender", function(S, Node) {
 
@@ -1099,9 +1141,9 @@ KISSY.add("uibase/closerender", function(S, Node) {
         requires:["node"]
     });/**
  * constrain extension for kissy
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("uibase/constrain", function(S, DOM,Node) {
+KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
     function Constrain() {
 
@@ -1123,7 +1165,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
     function _getConstrainRegion(constrain) {
         var ret;
         if (!constrain) return ret;
-        var el = this.get("view").get("el");
+        var el = this.get("el");
         if (constrain !== true) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
@@ -1154,7 +1196,6 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
     Constrain.prototype = {
 
         __renderUI:function() {
-            //S.log("_renderUIConstrain");
             var self = this,
                 attrs = self.__getDefAttrs(),
                 xAttr = attrs["x"],
@@ -1162,7 +1203,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
                 oriXSetter = xAttr["setter"],
                 oriYSetter = yAttr["setter"];
             xAttr.setter = function(v) {
-                var r = oriXSetter && oriXSetter(v);
+                var r = oriXSetter && oriXSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
                 }
@@ -1174,7 +1215,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
                     _ConstrainExtRegion.maxLeft);
             };
             yAttr.setter = function(v) {
-                var r = oriYSetter && oriYSetter(v);
+                var r = oriYSetter && oriYSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
                 }
@@ -1197,7 +1238,7 @@ KISSY.add("uibase/constrain", function(S, DOM,Node) {
     requires:["dom","node"]
 });/**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentbox", function(S) {
 
@@ -1207,12 +1248,11 @@ KISSY.add("uibase/contentbox", function(S) {
     ContentBox.ATTRS = {
         //层内容
         content:{
-            view:true
+            view:true,
+            sync:false
         },
         contentEl:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("contentEl");
-            }
+            view:true
         },
 
         contentElAttrs:{
@@ -1226,13 +1266,12 @@ KISSY.add("uibase/contentbox", function(S) {
         }
     };
 
-
     ContentBox.prototype = {    };
 
     return ContentBox;
 });/**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
@@ -1243,16 +1282,23 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         //内容容器节点
         contentEl:{},
         contentElAttrs:{},
+        contentElCls:{
+            value:""
+        },
         contentElStyle:{},
         contentTagName:{value:"div"},
         //层内容
-        content:{}
+        content:{
+            sync:false
+        }
     };
 
-
+    /**
+     * ! contentEl 只能由组件动态生成
+     */
     ContentBox.HTML_PARSER = {
-        contentEl:function(el) {
-            return el.one("." + this.get("prefixCls") + "contentbox");
+        content:function(el) {
+            return el.html();
         }
     };
 
@@ -1266,46 +1312,56 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 
         __createDom:function() {
             var self = this,
-                contentEl = self.get("contentEl"),
-                el = self.get("el");
-
-            if (!contentEl) {
-                var elChildren = S.makeArray(el[0].childNodes);
-                contentEl = new Node(constructEl(this.get("prefixCls") + "contentbox",
-                    self.get("contentElStyle"),
-                    undefined,
-                    undefined,
-                    self.get("contentTagName"),
-                    self.get("contentElAttrs"))).appendTo(el);
+                contentEl,
+                c,
+                el = self.get("el"),
+                elChildren = S.makeArray(el[0].childNodes);
+            contentEl = new Node(constructEl(
+                self.get("prefixCls") + "contentbox "
+                    + self.get("contentElCls"),
+                self.get("contentElStyle"),
+                undefined,
+                undefined,
+                self.get("contentTagName"),
+                self.get("contentElAttrs"))).appendTo(el);
+            self.set("contentEl", contentEl);
+            if (elChildren.length) {
                 for (var i = 0; i < elChildren.length; i++) {
                     contentEl.append(elChildren[i]);
                 }
-                self.set("contentEl", contentEl);
+            } else if (c = self.get("content")) {
+                setContent(self, c);
             }
+
+
         },
 
+        _uiSetContentElCls:function(cls) {
+            this.get("contentEl").addClass(cls);
+        },
         _uiSetContentElAttrs:function(attrs) {
-            attrs && this.get("contentEl").attr(attrs);
+            this.get("contentEl").attr(attrs);
         },
         _uiSetContentElStyle:function(v) {
-            v && this.get("contentEl").css(v);
+            this.get("contentEl").css(v);
         },
         _uiSetContent:function(c) {
-            if (S.isString(c)) {
-                this.get("contentEl").html(c);
-            } else if (c !== undefined) {
-                this.get("contentEl").html("");
-                this.get("contentEl").append(c);
-            }
+            setContent(this, c);
         }
     };
+
+    function setContent(self, c) {
+        var contentEl = self.get("contentEl");
+        contentEl.html("");
+        c && contentEl.append(c);
+    }
 
     return ContentBox;
 }, {
     requires:["node","./boxrender"]
 });/**
  * drag extension for position
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/drag", function(S) {
 
@@ -1328,7 +1384,7 @@ KISSY.add("uibase/drag", function(S) {
         __bindUI:function() {
             var Draggable = S.require("dd/draggable");
             var self = this,
-                el = self.get("view").get("el");
+                el = self.get("el");
             if (self.get("draggable") && Draggable)
                 self.__drag = new Draggable({
                     node:el,
@@ -1367,7 +1423,7 @@ KISSY.add("uibase/drag", function(S) {
 
 });/**
  * loading mask support for overlay
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loading", function(S) {
 
@@ -1388,7 +1444,7 @@ KISSY.add("uibase/loading", function(S) {
 
 });/**
  * loading mask support for overlay
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loadingrender", function(S, Node) {
 
@@ -1428,7 +1484,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
     requires:['node']
 });/**
  * mask extension for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/mask", function(S) {
 
@@ -1459,7 +1515,7 @@ KISSY.add("uibase/mask", function(S) {
     return Mask;
 }, {requires:["ua"]});/**
  * mask extension for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 
@@ -1555,7 +1611,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
     return Mask;
 }, {requires:["ua","dom","node"]});/**
  * position and visible extension，可定位的隐藏层
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/position", function(S) {
 
@@ -1564,21 +1620,10 @@ KISSY.add("uibase/position", function(S) {
 
     Position.ATTRS = {
         x: {
-            view:true,
-            // 水平方向绝对位置
-            valueFn:function() {
-                //初始化 xy，结果调用了 set("x") 里面又调用了 get("x")
-                //这时还没有渲染，尚没有 view，必须判断
-                return this.get("view") && this.get("view").get("x");
-            }
+            view:true
         },
         y: {
-            view:true,
-            // 垂直方向绝对位置
-            // 水平方向绝对位置
-            valueFn:function() {
-                return this.get("view") && this.get("view").get("y");
-            }
+            view:true
         },
         xy: {
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
@@ -1690,7 +1735,11 @@ KISSY.add("uibase/positionrender", function() {
     };
 
     return Position;
-});KISSY.add("uibase/resize", function(S) {
+});/**
+ * resize extension using resizable
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("uibase/resize", function(S) {
     function Resize() {
     }
 
@@ -1710,7 +1759,7 @@ KISSY.add("uibase/positionrender", function() {
             var Resizable = S.require("resizable"),self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
-                v.node = self.get("view").get("el");
+                v.node = self.get("el");
                 v.autoRender = true;
                 if (v.handlers) {
                     self.resizer = new Resizable(v);
@@ -1722,7 +1771,7 @@ KISSY.add("uibase/positionrender", function() {
     return Resize;
 });/**
  * shim for ie6 ,require box-ext
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/shimrender", function(S, Node) {
 
@@ -1762,7 +1811,7 @@ KISSY.add("uibase/shimrender", function(S, Node) {
         requires:['node']
     });/**
  * support standard mod for component
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmod", function(S) {
 
@@ -1772,19 +1821,13 @@ KISSY.add("uibase/stdmod", function(S) {
 
     StdMod.ATTRS = {
         header:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("header");
-            }
+            view:true
         },
         body:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("body");
-            }
+            view:true
         },
         footer:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("footer");
-            }
+            view:true
         },
         bodyStyle:{
             view:true
@@ -1813,7 +1856,7 @@ KISSY.add("uibase/stdmod", function(S) {
 
 });/**
  * support standard mod for component
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmodrender", function(S, Node) {
 

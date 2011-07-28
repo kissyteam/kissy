@@ -1,6 +1,6 @@
 /**
  * model and control for overlay
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effect) {
     function require(s) {
@@ -19,11 +19,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         ATTRS:{
             // 是否绑定鼠标事件
             handleMouseEvents:{
-                value:false
-            },
-
-            // 是否支持焦点处理
-            focusable:{
                 value:false
             }
         }

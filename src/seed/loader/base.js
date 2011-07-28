@@ -1,6 +1,6 @@
 /**
  * setup data structure for kissy loader
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S){
     if("require" in this) return;

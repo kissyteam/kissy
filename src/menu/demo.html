@@ -3,57 +3,48 @@
 <head>
 <meta charset="utf-8"/>
 <title>submenu 测试</title>
-
-<link href="tests/menu.css" rel="stylesheet"/>
-<link href="tests/menuitem.css" rel="stylesheet"/>
-<link href="tests/submenu.css" rel="stylesheet"/>
+<link href="../button/assets/common.css" rel="stylesheet"/>
+<link href="assets/menu.css" rel="stylesheet"/>
+<link href="assets/menuitem.css" rel="stylesheet"/>
+<link href="assets/submenu.css" rel="stylesheet"/>
+<style>
+    .goog-menuitem-delete {
+        color: #000000;
+        left: auto;
+        padding-right: 6px;
+        position: absolute;
+        right: 0;
+        text-align: right;
+        border: 1px solid red;
+        margin-right: 5px;
+        padding: 0 5px;
+    }
+</style>
 </head>
 <body>
 
-<h1 id="describe">submenu 测试</h1>
+<h1 id="describe">普通菜单</h1>
 
 <div id="menuitem_container" style="width:200px;position:relative;height:150px;">
 
 </div>
-<div id="log" style="height:300px;border:1px solid green;overflow:auto;">
-
-</div>
 <label>禁用：<input type="checkbox" id='dis'/></label>
 
+<h1>可过滤菜单</h1>
 
+<a target="_blank" href="./demo/filtermenu.html">filtermenu demo</a>
+
+<h2>known issue</h2>
+<ol>
+    <li>点击文档不能关闭子菜单</li>
+</ol>
 <script src="../../build/kissy.js"></script>
-
-<script src="../../build/uibase.js"></script>
-
-<script src="../component/container.js"></script>
-<script src="../component/modelcontrol.js"></script>
-<script src="../component/render.js"></script>
-<script src="../component.js"></script>
-
-<script src="menuitem.js"></script>
-<script src="menuitemrender.js"></script>
-
-<script src="submenu.js"></script>
-<script src="submenurender.js"></script>
-
-<script src="menu.js"></script>
-<script src="menurender.js"></script>
-
-<script src="separator.js"></script>
-<script src="separatorrender.js"></script>
-<script src="popupmenu.js"></script>
-<script src="popupmenurender.js"></script>
-
-<script src="../menu.js"></script>
-
 <script>
+    KISSY.Config.base = "../";
     KISSY.use("node,menu",
             function(S, Node, Menu) {
 
-                function log(s) {
-                    Node.one("#log").append(new Node("<p>" + s + "</p>"));
-                    Node.one("#log")[0].scrollTop = Node.one("#log")[0].scrollHeight;
-                }
+
 
                 //view
                 //render to container : button_container
@@ -107,10 +98,19 @@
                         content:"alone"})]
                 });
 
+                menu.addChild(new Menu.DelMenuItem({
+                    prefixCls:"goog-",
+                    content:"可删除"
+                }));
+
                 menu.render();
 
                 menu.on("click", function(ev) {
-                    log("selected : " + ev.target.get("content"));
+                    S.log("selected : " + ev.target.get("content"));
+                });
+
+                menu.on("delete", function(e) {
+                    S.log("deleted : " + e.target.get("content"));
                 });
 
 

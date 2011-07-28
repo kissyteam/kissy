@@ -30,12 +30,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
                         return;
                     }
 
-                    // Traverse up the tree
-                    parent = DOM.closest(parent, function(item) {
-                        return item == self;
-                    });
-
-                    if (parent !== self) {
+                    // 在自身外边就触发
+                    if (parent !== self && !DOM.contains(self, parent)) {
                         // handle event if we actually just moused on to a non sub-element
                         Event._handle(self, event);
                     }
@@ -65,8 +61,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
     return Event;
 }, {
-        requires:["./base","dom","ua"]
-    });
+    requires:["./base","dom","ua"]
+});
 
 /**
  * 承玉：2011-06-07

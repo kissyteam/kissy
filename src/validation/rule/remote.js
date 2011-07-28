@@ -1,6 +1,6 @@
 /**
  * 远程校验
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 

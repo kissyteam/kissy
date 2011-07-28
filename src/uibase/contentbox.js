@@ -1,6 +1,6 @@
 /**
  * 里层包裹层定义，适合mask以及shim
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentbox", function(S) {
 
@@ -10,12 +10,11 @@ KISSY.add("uibase/contentbox", function(S) {
     ContentBox.ATTRS = {
         //层内容
         content:{
-            view:true
+            view:true,
+            sync:false
         },
         contentEl:{
-            getter:function() {
-                return this.get("view") && this.get("view").get("contentEl");
-            }
+            view:true
         },
 
         contentElAttrs:{
@@ -28,7 +27,6 @@ KISSY.add("uibase/contentbox", function(S) {
             view:true
         }
     };
-
 
     ContentBox.prototype = {    };
 

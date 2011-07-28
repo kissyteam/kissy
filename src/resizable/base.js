@@ -1,6 +1,6 @@
 /**
  * resizable support for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  * @requires: dd
  */
 KISSY.add("resizable/base", function(S, Node, D, UIBase) {

@@ -6,12 +6,11 @@ KISSY.add(
     /* or precisely submenuitem */
     "menu/submenu",
     function(S, UIBase, Component, MenuItem, SubMenuRender) {
-        var SubMenu;
 
         /**
          * Class representing a submenu that can be added as an item to other menus.
          */
-        SubMenu = UIBase.create(MenuItem, {
+        var SubMenu = UIBase.create(MenuItem, {
 
                 _onParentHide:function() {
                     this.get("menu") && this.get("menu").hide();
@@ -68,7 +67,7 @@ KISSY.add(
 
                 showMenu:function() {
                     var menu = this.get("menu");
-                    menu.set("align", {node:this.get("view").get("el"), points:['tr','tl']});
+                    menu.set("align", {node:this.get("el"), points:['tr','tl']});
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -76,8 +75,8 @@ KISSY.add(
                      to allow the assistive technology to follow the menu hierarchy
                      and assist the user in determining context during menu navigation.
                      */
-                    this.get("view").get("el").attr("aria-haspopup",
-                        menu.get("view").get("el").attr("id"));
+                    this.get("el").attr("aria-haspopup",
+                        menu.get("el").attr("id"));
                     menu.show();
                 },
 
@@ -119,10 +118,10 @@ KISSY.add(
                     menu && menu.hide();
                 },
 
-                _handleClick:function(ev) {
+                // click ，立即显示
+                _performInternal:function() {
+                    this.clearTimers();
                     this.showMenu();
-                    var menu = this.get("menu");
-                    return menu._handleClick(ev);
                 },
 
                 /**
@@ -134,10 +133,6 @@ KISSY.add(
                  * @return {boolean} Whether the event was handled.
                  */
                 _handleKeydown:function(e) {
-
-                    if (SubMenu.superclass._handleKeydown.call(this, e)) {
-                        return true;
-                    }
 
                     var menu = this.get("menu");
 
@@ -193,6 +188,27 @@ KISSY.add(
                     return menu && menu.containsElement(element);
                 },
 
+
+                decorateInternal:function(element) {
+                    var self = this,
+                        ui = "popupmenu",
+                        prefixCls = self.get("prefixCls");
+                    self.set("el", element);
+                    var child = element.one("." + self.getCls(ui));
+                    if (child) {
+                        // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
+                        child.hide();
+                        var docBody = S.one(element[0].ownerDocument.body);
+                        docBody.prepend(child);
+                        var UI = Component.UIStore.getUIByClass(ui);
+                        var menu = new UI({
+                            srcNode:child,
+                            prefixCls:prefixCls
+                        });
+                        self.set("menu", menu);
+                    }
+                },
+
                 destructor : function() {
                     var self = this,
                         parentMenu = self.get("parent"),
@@ -204,7 +220,7 @@ KISSY.add(
                     if (parentMenu) {
                         parentMenu.detach("hide", self._onParentHide, self);
                     }
-                    if (menu) {
+                    if (!self.get("externalSubMenu") && menu) {
                         menu.destroy();
                     }
                 }
@@ -220,16 +236,30 @@ KISSY.add(
                     menuDelay:{
                         value:300
                     },
+                    /**
+                     * whether destroy submenu when destroy itself ,reverse result
+                     * @type {boolean}
+                     */
+                    externalSubMenu:{
+                        value:false
+                    },
                     menu:{
                         setter:function(m) {
                             m.set("parent", this);
                         }
                     }
-                }
+                },
+
+                DefaultRender:SubMenuRender
             }
         );
 
-        SubMenu.DefaultRender = SubMenuRender;
+
+        Component.UIStore.setUIByClass("submenu", {
+            priority:20,
+            ui:SubMenu
+        });
+
         return SubMenu;
     }, {
         requires:['uibase','component','./menuitem','./submenurender']

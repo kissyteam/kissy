@@ -153,7 +153,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 // remove all types of event
                 if (type === undefined) {
                     for (type in events) {
-                        Event.remove(target, type);
+                        Event.remove.call(Event, target, type);
                     }
                     return;
                 }
@@ -163,7 +163,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 if ((listeners = events[type])) {
                     len = listeners.length;
                     // 移除 fn
-                    if (S.isFunction(fn) && len) {
+                    if (fn && len) {
                         for (i = 0,j = 0,t = []; i < len; ++i) {
                             var reserve = false,listener = listeners[i];
                             if (fn !== listener.fn
@@ -204,11 +204,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 special['tearDown'].call(target) === false)) {
                             simpleRemove(target, type, eventDesc.handler);
                         }
+                        // remove target's single event description
                         delete events[type];
                     }
                 }
 
-                // remove expando
+                // remove target's  all events description
                 if (S.isEmptyObject(events)) {
                     eventDesc.handler.target = null;
                     delete eventDesc.handler;
@@ -260,7 +261,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         /**
          * fire event , simulate bubble in browser
          */
-        fire:function(targets, eventType, eventData) {
+        fire:function(targets, eventType, eventData, onlyHandlers) {
             if (batchForType("fire", targets, eventType, eventData)) {
                 return;
             }
@@ -278,7 +279,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
                 } else {
-                    var r = fireDOMEvent(target, eventType, eventData);
+                    var r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
                     if (r !== undefined) {
                         ret = r;
                     }
@@ -320,7 +321,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = Event.special[type] || {};
-        // dom 节点才需要注册 dom 事件
+        // 第一次注册该事件，dom 节点才需要注册 dom 事件
         if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
         }
@@ -333,12 +334,18 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     /**
      * fire dom event from bottom to up
      */
-    function fireDOMEvent(target, eventType, eventData) {
+    function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         var ret;
         if (!isValidTarget(target)) {
             return ret;
         }
-        var event = new EventObject(target, eventData);
+        var event = new EventObject(target);
+        S.mix(event, eventData);
+        // 只运行自己的绑定函数，不冒泡也不触发默认行为
+        if (onlyHandlers) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
         event.target = target;
         var cur = target,
             ontype = "on" + eventType;
@@ -396,19 +403,14 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     return Event;
 }, {
-        requires:["dom","event/object"]
-    });
+    requires:["dom","event/object"]
+});
 
 /**
  * 承玉：2011-06-07
  *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
  *  - 减少闭包使用，prevent ie 内存泄露？
  *  - 增加 fire ，模拟冒泡处理 dom 事件
- *  - TODO: 自定义事件和 dom 事件操作分离?
+ *  - TODO: 自定义事件和 dom 事件操作彻底分离?
  *
- * TODO:
- *   - event || window.event, 什么情况下取 window.event ? IE4 ?
- *   - 更详尽细致的 test cases
- *   - 内存泄漏测试
- *   - target 为 window, iframe 等特殊对象时的 test case
  */

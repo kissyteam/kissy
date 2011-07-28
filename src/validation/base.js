@@ -1,5 +1,5 @@
 /**
- * @author: 常胤 (lzlu.com)
+ * @author  常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
  */

@@ -1,25 +1,20 @@
 /**
  * testcases for overlay
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
     var DOM = S.DOM;
 
     beforeEach(function() {
         this.addMatchers({
-                toBeEqual: function(expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-                },
+            toBeEqual: function(expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+            },
 
-
-                toBeEqual: function(expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-                },
-
-                toBeArrayEq:function(expected) {
-                    var actual = this.actual;
-                }
-            });
+            toBeArrayEq:function(expected) {
+                var actual = this.actual;
+            }
+        });
     });
 
     describe("overlay", function() {
@@ -29,9 +24,9 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
 
 
             var o = new Overlay({
-                    srcNode:"#render",
-                    width:400
-                });
+                srcNode:"#render",
+                width:400
+            });
 
 
             it("渲染前取不到 el 元素", function() {
@@ -54,8 +49,8 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
 
             it("对齐居中有效", function() {
                 o.set("align", {
-                        points:['cc','cc']
-                    });
+                    points:['cc','cc']
+                });
 
                 o.show();
 
@@ -109,13 +104,13 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
 
 
             var o = new Overlay({
-                    width:400,
-                    elCls:"popup",
-                    resize:{
-                        handlers:["t"]
-                    },
-                    content:"render by javascript"
-                });
+                width:400,
+                elCls:"popup",
+                resize:{
+                    handlers:["t"]
+                },
+                content:"render by javascript"
+            });
 
 
             it("渲染前取不到 el 元素", function() {
@@ -139,8 +134,8 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
             it("对齐居中有效", function() {
 
                 o.set("align", {
-                        points:['cc','cc']
-                    });
+                    points:['cc','cc']
+                });
                 o.show();
 
                 expect(parseInt(o.get("el").css("left")))
@@ -197,9 +192,9 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
                 S.log(hxy);
 
                 jasmine.simulate(h[0], "mousedown", {
-                        clientX:hxy.left + 2 ,
-                        clientY:hxy.top + 2
-                    });
+                    clientX:hxy.left + 2 ,
+                    clientY:hxy.top + 2
+                });
 
                 waits(300);
 
@@ -207,9 +202,9 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
-                            clientX: hxy.left - 100,
-                            clientY:hxy.top - 100
-                        });
+                        clientX: hxy.left - 100,
+                        clientY:hxy.top - 100
+                    });
 
                 });
 
@@ -240,11 +235,11 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
         describe("从页面中取得已渲染元素", function() {
 
             var d = new Dialog({
-                    srcNode:"#drender",
-                    width:200,
-                    drag:true,
-                    constrain:true
-                });
+                srcNode:"#drender",
+                width:200,
+                drag:true,
+                constrain:true
+            });
 
             d.render();
             d.center();
@@ -265,13 +260,13 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
         describe("完全由 javascript 创建", function() {
 
             var d = new Dialog({
-                    headerContent:"头",
-                    bodyContent:"体",
-                    footerContent:"尾",
-                    width:200,
-                    drag:true,
-                    constrain:true
-                });
+                headerContent:"头",
+                bodyContent:"体",
+                footerContent:"尾",
+                width:200,
+                drag:true,
+                constrain:true
+            });
 
             d.render();
             d.center();
@@ -293,9 +288,9 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
 
 
                 jasmine.simulate(d.get("header")[0], "mousedown", {
-                        clientX: xy[0] + 10,
-                        clientY:xy[1] + 10
-                    });
+                    clientX: xy[0] + 10,
+                    clientY:xy[1] + 10
+                });
 
                 waits(300);
 
@@ -303,9 +298,9 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
-                            clientX: xy[0] + 100,
-                            clientY:xy[1] + 100
-                        });
+                        clientX: xy[0] + 100,
+                        clientY:xy[1] + 100
+                    });
 
                 });
 
@@ -332,9 +327,9 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
 
 
                 jasmine.simulate(d.get("header")[0], "mousedown", {
-                        clientX: xy[0] + 10,
-                        clientY:xy[1] + 10
-                    });
+                    clientX: xy[0] + 10,
+                    clientY:xy[1] + 10
+                });
 
                 waits(300);
 
@@ -342,9 +337,9 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
-                            clientX: xy[0] + DOM.viewportWidth(),
-                            clientY:xy[1] + DOM.viewportHeight()
-                        });
+                        clientX: xy[0] + DOM.viewportWidth(),
+                        clientY:xy[1] + DOM.viewportHeight()
+                    });
 
                 });
 

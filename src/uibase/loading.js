@@ -1,6 +1,6 @@
 /**
  * loading mask support for overlay
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loading", function(S) {
 

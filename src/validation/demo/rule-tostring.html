@@ -81,7 +81,7 @@ console.log(Validation.Rule.toString("func"););
 
 <script>
 
-KISSY.Config.base = "../../";
+
 	KISSY.use("validation",function(S,Validation){
 	
 		var input = S.one("#rulename"),
@@ -97,12 +97,12 @@ KISSY.Config.base = "../../";
 		S.Event.on("#rulelist", "change", function(ev){
 			var tg = ev.target,
 				option = tg.options[tg.selectedIndex].text;
-			if(option)see.html("<pre>"+(getcode(option), "js")+"</pre>");
+			if(option)see.html("<pre>"+getcode(option)+"</pre>");
 			
 		});
 		
-		S.get("#rulelist").value="func";
-		see.html("<pre>"+(getcode("func"), "js")+"</pre>");
+		//S.get("#rulelist").value="func";
+		//see.html("<pre>"+(getcode("func"), "js")+"</pre>");
 		
 
 	});
@@ -116,7 +116,7 @@ KISSY.Config.base = "../../";
 
 
 
-<script src="http://docs.kissyui.com/kissy-util/adaptive-frame/adaptive-frame.js" data-frameid="mainframe" data-timer="1000" data-proxy="proxy.html" ></script>
+
 
 
 </body>

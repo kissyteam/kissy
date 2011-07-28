@@ -1,6 +1,6 @@
 /**
  * droppable for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 

@@ -1,6 +1,6 @@
 /**
  * 扩展提示类：float
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 	var symbol = Define.Const.enumvalidsign;

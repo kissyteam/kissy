@@ -1,6 +1,6 @@
 /**
  * 增加常用校验规则
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 	
@@ -129,6 +129,23 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 			return text
 		}
 	});
+	
+	Rule.add("card","身份证号码不正确",function(value,text){
+		var iW = [7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2,1],
+			iSum = 0;
+		for( i=0;i<17;i++){
+			iSum += parseInt(value.charAt(i))* iW[i];
+		}
+		var sJYM = (12-(iSum % 11)) % 11;
+		if(sJYM == 10){
+			sJYM = 'x';
+		}
+		var cCheck = value.charAt(17).toLowerCase();
+		if( cCheck != sJYM ){
+			return text;
+		}
+	});
+	
 	
 	
 	S.each([["chinese",/^[\u0391-\uFFE5]+$/,"只能输入中文"],

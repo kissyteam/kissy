@@ -1,0 +1,21 @@
+/*
+Copyright 2011, KISSY UI Library v1.20dev
+MIT Licensed
+build time: Jul 20 18:42
+*/
+/*
+常用的通用样式 Common Style
+理念：少而精
+维护：玉伯<lifesinger@gmail.com>
+*/
+
+/* 隐藏 */
+.ks-hidden { display: none; }
+.ks-invisible { visibility: hidden; }
+
+/* 清除浮动 */
+.ks-clear:after { content: '\20'; display: block; height: 0; clear: both; }
+.ks-clear { *zoom: 1; }
+
+/* inline block */
+.ks-inline-block { display: inline-block; *display: inline; }

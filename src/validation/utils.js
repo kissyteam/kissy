@@ -1,6 +1,6 @@
 /**
  * 工具类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/utils", function(S, undefined) {

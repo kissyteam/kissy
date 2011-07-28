@@ -1,6 +1,6 @@
 /**
  * script/css load across browser
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
     if (S.use) return;

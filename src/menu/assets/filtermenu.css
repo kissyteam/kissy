@@ -1,0 +1,17 @@
+.goog-menu-filter {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid silver;
+    margin: 2px;
+    overflow: hidden;
+}
+.goog-menu-filter div {
+    color: gray;
+    padding: 1px;
+    position: absolute;
+}
+.goog-menu-filter input {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    margin: 0;
+    width: 100%;
+}

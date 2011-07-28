@@ -1,6 +1,6 @@
 /**
  * close extension for kissy dialog
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/closerender", function(S, Node) {
 

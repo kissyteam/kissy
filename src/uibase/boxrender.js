@@ -1,6 +1,6 @@
 /**
  * UIBase.Box
- * @author: 承玉<yiminghe@gmail.com>
+ * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/boxrender', function(S, Node) {
 
@@ -12,8 +12,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         el: {
             //容器元素
             setter:function(v) {
-                if (S.isString(v))
-                    return Node.one(v);
+                return Node.one(v);
             }
         },
         elCls: {
@@ -39,9 +38,13 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             //插入到该元素前
             value:null
         },
-        html: {},
+        html: {
+            sync:false
+        },
         visible:{},
-        visibleMode:{}
+        visibleMode:{
+            value:"display"
+        }
     };
 
     Box.construct = constructEl;
@@ -80,8 +83,8 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     }
 
     Box.HTML_PARSER = {
-        el:function(srcNode) {
-            return srcNode;
+        html:function(el) {
+            return el.html();
         }
     };
 
@@ -100,6 +103,10 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             }
         },
 
+        /**
+         * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
+         * 通过 render 来重建原有的内容
+         */
         __createDom:function() {
             var self = this,
                 el = self.get("el");
@@ -112,12 +119,16 @@ KISSY.add('uibase/boxrender', function(S, Node) {
                     self.get("elTagName"),
                     self.get("elAttrs")));
                 self.set("el", el);
+                if (self.get("html")) {
+                    el.html(self.get("html"));
+                }
             }
         },
 
         _uiSetElAttrs:function(attrs) {
             this.get("el").attr(attrs);
         },
+
         _uiSetElCls:function(cls) {
             this.get("el").addClass(cls);
         },
@@ -151,8 +162,9 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         },
 
         show:function() {
-            this.render();
-            this.set("visible", true);
+            var self = this;
+            self.render();
+            self.set("visible", true);
         },
         hide:function() {
             this.set("visible", false);

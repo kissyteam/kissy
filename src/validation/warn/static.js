@@ -1,6 +1,6 @@
 /**
  * 提示类：Static
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
     var symbol = Define.Const.enumvalidsign;

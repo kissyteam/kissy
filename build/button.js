@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 17:02
+build time: Jul 22 15:53
 */
 /**
  * Model and Control for button
@@ -9,7 +9,7 @@ build time: Jul 13 17:02
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
-    var Button = UIBase.create(Component.ModelControl, {
+    var Button = UIBase.create(Component.ModelControl,[UIBase.Contentbox],{
         _handleClick:function(ev) {
             var self = this;
             // 如果父亲允许自己处理
@@ -24,15 +24,6 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
              * disabled:{}
              */
             value:{},
-            content:{
-                // model 中数据属性变化后要更新到 view 层
-                view:true,
-                // 如果没有用户值默认值，则要委托给 view 层
-                // 比如 view 层使用 html_parser 来利用既有元素
-                valueFn:function() {
-                    return this.get("view") && this.get("view").get("content");
-                }
-            },
             describedby:{
                 view:true
             },
@@ -54,13 +45,10 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render,[UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
-        },
-        _uiSetContent:function(content) {
-            this.get("el").html(content);
         },
         _uiSetTooltip:function(title) {
             this.get("el").attr("title", title);
@@ -80,18 +68,9 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
              * prefixCls:{}
              */
 
-                //按钮内容
-            content:{},
-            //aria-describledby support
+            // aria-describledby support
             describedby:{},
             tooltip:{}
-        },
-        HTML_PARSER:{
-            //默认单标签包含 content
-            //多标签需要 override
-            content:function(el) {
-                return el.html();
-            }
         }
     });
 }, {
@@ -104,16 +83,15 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
 
     function getCls(self, str) {
         return S.substitute(str, {
-            prefixCls:self.get("prefixCls"),
             tag:self.__css_tag
         });
     }
 
-    var CLS = "{prefixCls}inline-block " + " {prefixCls}{tag}-button",
-        FOCUS_CLS = "{prefixCls}{tag}-button-focused",
-        HOVER_CLS = "{prefixCls}{tag}-button-hover",
-        ACTIVE_CLS = "{prefixCls}{tag}-button-active",
-        DISABLED_CLS = "{prefixCls}{tag}-button-disabled";
+    var CLS = "inline-block " + " {tag}-button",
+        FOCUS_CLS = "{tag}-button-focused",
+        HOVER_CLS = "{tag}-button-hover",
+        ACTIVE_CLS = "{tag}-button-active",
+        DISABLED_CLS = "{tag}-button-disabled";
 
     return UIBase.create(ButtonRender, {
 
@@ -122,17 +100,17 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            el.addClass(getCls(self, CLS));
+            el.addClass(getCls(self,
+                self.getCls(CLS)));
         },
-
-
 
         /**
          * @override
          */
         _handleFocus:function() {
             var self = this;
-            self.get("el").addClass(getCls(self, FOCUS_CLS));
+            self.get("el").addClass(getCls(self,
+                self.getCls(FOCUS_CLS)));
         },
 
         /**
@@ -140,7 +118,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleBlur:function() {
             var self = this;
-            self.get("el").removeClass(getCls(self, FOCUS_CLS));
+            self.get("el").removeClass(getCls(self,
+                self.getCls(FOCUS_CLS)));
         },
 
         /**
@@ -148,7 +127,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseEnter:function() {
             var self = this;
-            self.get("el").addClass(getCls(self, HOVER_CLS));
+            self.get("el").addClass(getCls(self,
+                self.getCls(HOVER_CLS)));
         },
 
         /**
@@ -156,7 +136,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseLeave:function() {
             var self = this;
-            self.get("el").removeClass(getCls(self, HOVER_CLS));
+            self.get("el").removeClass(getCls(self,
+                self.getCls(HOVER_CLS)));
             // 鼠标离开时，默认设为鼠标松开状态
             self._handleMouseUp();
         },
@@ -169,7 +150,7 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         _uiSetDisabled:function(v) {
             var self = this,el = self.get("el");
             if (v) {
-                el.addClass(getCls(self, DISABLED_CLS))
+                el.addClass(getCls(self, self.getCls(DISABLED_CLS)))
                     //不能被 tab focus 到
                     //support aria
                     .attr({
@@ -177,8 +158,12 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
                         "aria-disabled": true
                     });
             } else {
-                el.removeClass(getCls(self, DISABLED_CLS))
-                    .attr({"tabindex": 0,"aria-disabled": false});
+                el.removeClass(getCls(self,
+                    self.getCls(DISABLED_CLS)))
+                    .attr({
+                        "tabindex": 0,
+                        "aria-disabled": false
+                    });
             }
         },
 
@@ -187,7 +172,9 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseDown:function() {
             var self = this;
-            self.get("el").addClass(getCls(self, ACTIVE_CLS))
+            self.get("el")
+                .addClass(getCls(self,
+                self.getCls(ACTIVE_CLS)))
                 .attr("aria-pressed", true);
         },
 
@@ -196,7 +183,8 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _handleMouseUp:function() {
             var self = this;
-            self.get("el").removeClass(getCls(self, ACTIVE_CLS))
+            self.get("el").removeClass(getCls(self,
+                self.getCls(ACTIVE_CLS)))
                 .attr("aria-pressed", false);
         }
 
@@ -208,31 +196,36 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
  * view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
+KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
     //双层 div 模拟圆角
-    var CUSTOM_RENDER_HTML = "<div class='{prefixCls}inline-block {prefixCls}custom-button-outer-box'>" +
-        "<div id='{id}' class='{prefixCls}inline-block {prefixCls}custom-button-inner-box'></div></div>";
+
+    var CONTENT_CLS = "inline-block custom-button-outer-box",
+        INNER_CLS = "inline-block custom-button-inner-box";
+
 
     return UIBase.create(Css3Render, {
 
             __css_tag:"custom",
-
-            renderUI:function() {
-            },
 
             /**
              *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
              */
             createDom:function() {
                 var self = this,
+                    el = self.get("el"),
+                    contentEl = self.get("contentEl"),
                     id = S.guid('ks-button-labelby');
                 //按钮的描述节点在最内层，其余都是装饰
-                self.get("el")
-                    .html(S.substitute(CUSTOM_RENDER_HTML, {
-                    prefixCls:this.get("prefixCls"),
-                    id:id
-                }))
-                    .attr("aria-labelledby", id);
+                contentEl.addClass(self.getCls(CONTENT_CLS));
+                var elChildren = S.makeArray(contentEl[0].childNodes);
+                var innerEl = new Node("<div id='" + id + "' " +
+                    "class='" + self.getCls(INNER_CLS) + "'/>").appendTo(contentEl);
+                // content 由 contentboxrender 处理
+                for (var i = 0; i < elChildren.length; i++) {
+                    innerEl.append(elChildren[i]);
+                }
+                el.attr("aria-labelledby", id);
+                self.set("innerEl", innerEl);
             },
 
             /**
@@ -241,16 +234,20 @@ KISSY.add("button/customrender", function(S, UIBase, Css3Render) {
              * @param v
              */
             _uiSetContent:function(v) {
-                this.get("el").one('div').one('div').html(v || "");
+                var innerEl = this.get("innerEl");
+                innerEl.html("");
+                v && innerEl.append(v);
             }
+        }, {
+            /**
+             * @inheritedDoc
+             * content:{}
+             */
+            innerEL:{}
         }
-        /**
-         * @inheritedDoc
-         * content:{}
-         */
     );
 }, {
-    requires:['uibase','./css3render']
+    requires:['node','uibase','./css3render']
 });/**
  * view: render button using native button
  * @author yiminghe@gmail.com

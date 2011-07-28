@@ -1,6 +1,6 @@
 /**
  * basic testcases for kissy ajax
- * @author: lijing00333@163.com
+ * @author  lijing00333@163.com
  */
 KISSY.use("json,ajax", function(S, JSON, IO) {
 

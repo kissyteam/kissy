@@ -1,6 +1,6 @@
 /**
  * a scalable client io framework
- * @author: yiminghe@gmail.com , lijing00333@163.com
+ * @author  yiminghe@gmail.com , lijing00333@163.com
  */
 KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 

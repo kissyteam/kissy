@@ -1,6 +1,6 @@
 /**
  * generate proxy drag object,
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/proxy", function(S, Node) {
     var DESTRUCTOR_ID = "__proxy_destructors",

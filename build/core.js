@@ -1003,103 +1003,102 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            /**
-             * Creates a new HTMLElement using the provided html string.
-             */
-            create: function(html, props, ownerDoc) {
-                if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
-                    return cloneNode(html);
+        /**
+         * Creates a new HTMLElement using the provided html string.
+         */
+        create: function(html, props, ownerDoc) {
+            if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+                return cloneNode(html);
+            }
+
+            if (!(html = S.trim(html))) {
+                return null;
+            }
+
+            var ret = null,
+                creators = DOM._creators,
+                m,
+                tag = DIV,
+                k,
+                nodes;
+
+            // 简单 tag, 比如 DOM.create('<p>')
+            if ((m = RE_SIMPLE_TAG.exec(html))) {
+                ret = (ownerDoc || doc).createElement(m[1]);
+            }
+            // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+            else {
+                // Fix "XHTML"-style tags in all browsers
+                html = html.replace(rxhtmlTag, "<$1></$2>");
+
+                if ((m = RE_TAG.exec(html))
+                    && (k = m[1])
+                    && S.isFunction(creators[(k = k.toLowerCase())])) {
+                    tag = k;
                 }
 
-                if (!(html = S.trim(html))) {
-                    return null;
-                }
+                nodes = creators[tag](html, ownerDoc).childNodes;
 
-                var ret = null,
-                    creators = DOM._creators,
-                    m,
-                    tag = DIV,
-                    k,
-                    nodes;
-
-                // 简单 tag, 比如 DOM.create('<p>')
-                if ((m = RE_SIMPLE_TAG.exec(html))) {
-                    ret = (ownerDoc || doc).createElement(m[1]);
+                if (nodes.length === 1) {
+                    // return single node, breaking parentNode ref from "fragment"
+                    ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
                 }
-                // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
-                    // Fix "XHTML"-style tags in all browsers
-                    html = html.replace(rxhtmlTag, "<$1></$2>");
-                    
-                    if ((m = RE_TAG.exec(html))
-                        && (k = m[1])
-                        && S.isFunction(creators[(k = k.toLowerCase())])) {
-                        tag = k;
-                    }
-
-                    nodes = creators[tag](html, ownerDoc).childNodes;
-
-                    if (nodes.length === 1) {
-                        // return single node, breaking parentNode ref from "fragment"
-                        ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
-                    }
-                    else {
-                        // return multiple nodes as a fragment
-                        ret = nl2frag(nodes, ownerDoc || doc);
-                    }
+                    // return multiple nodes as a fragment
+                    ret = nl2frag(nodes, ownerDoc || doc);
                 }
+            }
 
-                return attachProps(ret, props);
-            },
+            return attachProps(ret, props);
+        },
 
-            _creators: {
-                div: function(html, ownerDoc) {
-                    var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                    // html 为 <style></style> 时不行，必须有其他元素？
-                    frag.innerHTML = "w<div>" + html + "</div>";
-                    return frag.lastChild;
+        _creators: {
+            div: function(html, ownerDoc) {
+                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                // html 为 <style></style> 时不行，必须有其他元素？
+                frag.innerHTML = "w<div>" + html + "</div>";
+                return frag.lastChild;
+            }
+        },
+
+        /**
+         * Gets/Sets the HTML contents of the HTMLElement.
+         * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
+         * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
+         */
+        html: function(selector, val, loadScripts, callback) {
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var el = DOM.get(selector);
+
+                // only gets value on element nodes
+                if (isElementNode(el)) {
+                    return el.innerHTML;
                 }
-            },
-
-            /**
-             * Gets/Sets the HTML contents of the HTMLElement.
-             * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
-             * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
-             */
-            html: function(selector, val, loadScripts, callback) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-
-                    // only gets value on element nodes
-                    if (isElementNode(el)) {
-                        return el.innerHTML;
-                    }
-                    return;
-                }
-                // setter
-                else {
-                    S.each(DOM.query(selector), function(elem) {
-                        if (isElementNode(elem)) {
-                            setHTML(elem, val, loadScripts, callback);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Remove the set of matched elements from the DOM.
-             */
-            remove: function(selector) {
-                S.each(DOM.query(selector), function(el) {
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+            }
+            // setter
+            else {
+                S.each(DOM.query(selector), function(elem) {
+                    if (isElementNode(elem)) {
+                        setHTML(elem, val, loadScripts, callback);
                     }
                 });
-            },
-            _nl2frag:nl2frag
-        });
+            }
+        },
+
+        /**
+         * Remove the set of matched elements from the DOM.
+         */
+        remove: function(selector) {
+            S.each(DOM.query(selector), function(el) {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
+        },
+        _nl2frag:nl2frag
+    });
 
     // 添加成员到元素中
     function attachProps(elem, props) {
@@ -1294,18 +1293,18 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         }
 
         S.mix(creators, {
-                optgroup: creators.option, // gecko 支持，但 ie 不支持
-                th: creators.td,
-                thead: creators.tbody,
-                tfoot: creators.tbody,
-                caption: creators.tbody,
-                colgroup: creators.tbody
-            });
+            optgroup: creators.option, // gecko 支持，但 ie 不支持
+            th: creators.td,
+            thead: creators.tbody,
+            tfoot: creators.tbody,
+            caption: creators.tbody,
+            colgroup: creators.tbody
+        });
     }
     return DOM;
 }, {
-        requires:["./base","ua"]
-    });
+    requires:["./base","ua"]
+});
 
 /**
  * TODO:
@@ -1336,7 +1335,6 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
     noData['embed'] = 1;
 
     var commonOps = {
-
         hasData:function(cache, name) {
             if (cache) {
                 if (name !== undefined) {
@@ -1365,13 +1363,15 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             if (ob == win) {
                 return objectOps.data(winDataCache, name, value);
             }
-            var cache = ob[EXPANDO] = ob[EXPANDO] || {};
+            var cache = ob[EXPANDO];
             if (value !== undefined) {
+                cache = ob[EXPANDO] = ob[EXPANDO] || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name];
+                    return cache && cache[name];
                 } else {
+                    cache = ob[EXPANDO] = ob[EXPANDO] || {};
                     return cache;
                 }
             }
@@ -1395,7 +1395,6 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var domOps = {
         hasData:function(elem, name) {
-
             var key = elem[EXPANDO];
             if (!key) {
                 return false;
@@ -1403,26 +1402,32 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             var thisCache = dataCache[key];
             return commonOps.hasData(thisCache, name);
         },
-        data:function(elem, name, value) {
 
+        data:function(elem, name, value) {
             if (noData[elem.nodeName.toLowerCase()]) {
                 return;
             }
             var key = elem[EXPANDO];
             if (!key) {
+                // 节点上关联键值也可以
                 key = elem[EXPANDO] = S.guid();
             }
-            var cache = dataCache[key] = dataCache[key] || {};
+            var cache = dataCache[key];
             if (value !== undefined) {
+                // 需要新建
+                cache = dataCache[key] = dataCache[key] || {};
                 cache[name] = value;
             } else {
                 if (name !== undefined) {
-                    return cache[name] ;
+                    return cache && cache[name];
                 } else {
+                    // 需要新建
+                    cache = dataCache[key] = dataCache[key] || {};
                     return cache;
                 }
             }
         },
+
         removeData:function(elem, name) {
             var key = elem[EXPANDO];
             if (!key) {
@@ -1453,74 +1458,75 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            hasData:function(selector, name) {
-                var ret = false;
+        hasData:function(selector, name) {
+            var ret = false;
+            DOM.query(selector).each(function(elem) {
+                if (checkIsNode(elem)) {
+                    ret = ret || domOps.hasData(elem, name);
+                } else {
+                    ret = ret || objectOps.hasData(elem, name);
+                }
+            });
+            return ret;
+        },
+
+        /**
+         * Store arbitrary data associated with the matched elements.
+         */
+        data: function(selector, name, data) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.data(selector, k, name[k]);
+                }
+                return;
+            }
+
+            // getter
+            if (data === undefined) {
+                var elem = DOM.get(selector);
+                if (checkIsNode(elem)) {
+                    return domOps.data(elem, name, data);
+                } else {
+                    return objectOps.data(elem, name, data);
+                }
+            }
+            // setter
+            else {
                 DOM.query(selector).each(function(elem) {
                     if (checkIsNode(elem)) {
-                        ret = ret || domOps.hasData(elem, name);
+                        domOps.data(elem, name, data);
                     } else {
-                        ret = ret || objectOps.hasData(elem, name);
-                    }
-                });
-                return ret;
-            },
-
-            /**
-             * Store arbitrary data associated with the matched elements.
-             */
-            data: function(selector, name, data) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.data(selector, k, name[k]);
-                    }
-                    return;
-                }
-
-                // getter
-                if (data === undefined) {
-                    var elem = DOM.get(selector);
-                    if (checkIsNode(elem)) {
-                        return domOps.data(elem, name, data);
-                    } else {
-                        return objectOps.data(elem, name, data);
-                    }
-                }
-                // setter
-                else {
-                    DOM.query(selector).each(function(elem) {
-                        if (checkIsNode(elem)) {
-                            domOps.data(elem, name, data);
-                        } else {
-                            objectOps.data(elem, name, data);
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Remove a previously-stored piece of data.
-             */
-            removeData: function(selector, name) {
-                DOM.query(selector).each(function(elem) {
-                    if (checkIsNode(elem)) {
-                        domOps.removeData(elem, name);
-                    } else {
-                        objectOps.removeData(elem, name);
+                        objectOps.data(elem, name, data);
                     }
                 });
             }
-        });
+        },
+
+        /**
+         * Remove a previously-stored piece of data.
+         */
+        removeData: function(selector, name) {
+            DOM.query(selector).each(function(elem) {
+                if (checkIsNode(elem)) {
+                    domOps.removeData(elem, name);
+                } else {
+                    objectOps.removeData(elem, name);
+                }
+            });
+        }
+    });
 
     function checkIsNode(elem) {
+        // note : 普通对象不要定义 nodeType 这种特殊属性!
         return elem && elem.nodeType;
     }
 
     return DOM;
 
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 /**
  * 承玉：2011-05-31
  *  - 分层 ，节点和普通对象分开粗合理
@@ -3049,7 +3055,12 @@ KISSY.add("dom", function(S,DOM) {
 KISSY.add('event/object', function(S, undefined) {
 
     var doc = document,
-        props = 'altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode layerX layerY metaKey newValue offsetX offsetY originalTarget pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target toElement view wheelDelta which'.split(' ');
+        props = ('altKey attrChange attrName bubbles button cancelable ' +
+            'charCode clientX clientY ctrlKey currentTarget data detail ' +
+            'eventPhase fromElement handler keyCode layerX layerY metaKey ' +
+            'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
+            'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
+            'target toElement view wheelDelta which').split(' ');
 
     /**
      * KISSY's event system normalizes the event object according to
@@ -3201,6 +3212,10 @@ KISSY.add('event/object', function(S, undefined) {
             this.preventDefault();
         }
     });
+
+    if (1 > 2) {
+        alert(S.cancelBubble);
+    }
 
     return EventObject;
 
@@ -3371,7 +3386,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 // remove all types of event
                 if (type === undefined) {
                     for (type in events) {
-                        Event.remove(target, type);
+                        Event.remove.call(Event, target, type);
                     }
                     return;
                 }
@@ -3381,7 +3396,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 if ((listeners = events[type])) {
                     len = listeners.length;
                     // 移除 fn
-                    if (S.isFunction(fn) && len) {
+                    if (fn && len) {
                         for (i = 0,j = 0,t = []; i < len; ++i) {
                             var reserve = false,listener = listeners[i];
                             if (fn !== listener.fn
@@ -3422,11 +3437,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                                 special['tearDown'].call(target) === false)) {
                             simpleRemove(target, type, eventDesc.handler);
                         }
+                        // remove target's single event description
                         delete events[type];
                     }
                 }
 
-                // remove expando
+                // remove target's  all events description
                 if (S.isEmptyObject(events)) {
                     eventDesc.handler.target = null;
                     delete eventDesc.handler;
@@ -3478,7 +3494,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         /**
          * fire event , simulate bubble in browser
          */
-        fire:function(targets, eventType, eventData) {
+        fire:function(targets, eventType, eventData, onlyHandlers) {
             if (batchForType("fire", targets, eventType, eventData)) {
                 return;
             }
@@ -3496,7 +3512,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         ret = eventDesc.handler(undefined, eventData);
                     }
                 } else {
-                    var r = fireDOMEvent(target, eventType, eventData);
+                    var r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
                     if (r !== undefined) {
                         ret = r;
                     }
@@ -3538,7 +3554,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = Event.special[type] || {};
-        // dom 节点才需要注册 dom 事件
+        // 第一次注册该事件，dom 节点才需要注册 dom 事件
         if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
         }
@@ -3551,12 +3567,18 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     /**
      * fire dom event from bottom to up
      */
-    function fireDOMEvent(target, eventType, eventData) {
+    function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         var ret;
         if (!isValidTarget(target)) {
             return ret;
         }
-        var event = new EventObject(target, eventData);
+        var event = new EventObject(target);
+        S.mix(event, eventData);
+        // 只运行自己的绑定函数，不冒泡也不触发默认行为
+        if (onlyHandlers) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
         event.target = target;
         var cur = target,
             ontype = "on" + eventType;
@@ -3614,28 +3636,23 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     return Event;
 }, {
-        requires:["dom","event/object"]
-    });
+    requires:["dom","event/object"]
+});
 
 /**
  * 承玉：2011-06-07
  *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
  *  - 减少闭包使用，prevent ie 内存泄露？
  *  - 增加 fire ，模拟冒泡处理 dom 事件
- *  - TODO: 自定义事件和 dom 事件操作分离?
+ *  - TODO: 自定义事件和 dom 事件操作彻底分离?
  *
- * TODO:
- *   - event || window.event, 什么情况下取 window.event ? IE4 ?
- *   - 更详尽细致的 test cases
- *   - 内存泄漏测试
- *   - target 为 window, iframe 等特殊对象时的 test case
  */
 
 /**
  * @module  EventTarget
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, DOM, undefined) {
+KISSY.add('event/target', function(S, Event) {
 
     /**
      * EventTarget provides the implementation for any object to publish,
@@ -3665,7 +3682,7 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
          实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
          否则会导致build打包文件 dom 和 dom-data 重复载入
          */
-        requires:["./base","dom"]
+        requires:["./base"]
     });
 
 /**
@@ -3680,18 +3697,21 @@ KISSY.add('event/target', function(S, Event, DOM, undefined) {
 
 /**
  * @module  event-focusin
- * @author  lifesinger@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function(S, UA, Event) {
 
     // 让非 IE 浏览器支持 focusin/focusout
-    if (!UA.ie) {
+    if (!UA['ie']) {
         S.each([
             { name: 'focusin', fix: 'focus' },
             { name: 'focusout', fix: 'blur' }
         ], function(o) {
             var attaches = 0;
             Event.special[o.name] = {
+                // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
+                // 达到和 focusin 一样的效果 focusin -> focus
+                // refer: http://yiminghe.iteye.com/blog/813255
                 setup: function() {
                     if (attaches++ === 0) {
                         document.addEventListener(o.fix, handler, true);
@@ -3714,8 +3734,8 @@ KISSY.add('event/focusin', function(S, UA, Event) {
     }
     return Event;
 }, {
-        requires:["ua","./base"]
-    });
+    requires:["ua","./base"]
+});
 
 /**
  * 承玉:2011-06-07
@@ -3727,166 +3747,167 @@ KISSY.add('event/focusin', function(S, UA, Event) {
 
 /**
  * @module  event-hashchange
- * @author  yiminghe@gmail.com, xiaomacji@gmail.com
+ * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
-    var doc = document,
-        HASH_CHANGE = 'hashchange',
-        docMode = doc['documentMode'],
-        ie = docMode || UA['ie'];
+    var ie = docMode || UA['ie'],
+        HASH_CHANGE = 'hashchange';
 
     // IE8以上切换浏览器模式到IE7，会导致 'onhashchange' in window === true
+    // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
+    // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
     if ((!( 'on' + HASH_CHANGE in window)) || ie < 8) {
-        var getHash = function() {
-            var url = location.href;
-            return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
-        },
+
+        var POLL_INTERVAL = 50,
+            doc = document,
+            win = window,
+            docMode = doc['documentMode'],
+            getHash = function() {
+                // ie 返回 "" ，其他返回 "#"
+                // return location.hash ?
+                var url = location.href;
+                return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+            },
+            timer,
+
+            lastHash = getHash(),
+
+            poll = function () {
+                var hash = getHash();
+                if (hash !== lastHash) {
+                    hashChange(hash);
+                    lastHash = hash;
+                }
+                timer = setTimeout(poll, POLL_INTERVAL);
+            },
+
+            hashChange = ie < 8 ? function(hash) {
+                //debugger
+                var html = '<html><body>' + hash + '</body></html>',
+                    doc = iframe.contentWindow.document;
+                try {
+                    // 写入历史 hash
+                    doc.open();
+                    doc.write(html);
+                    doc.close();
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            } : function (hash) {
+                notifyHashChange(hash);
+            },
+
+            notifyHashChange = function (hash) {
+                S.log("hash changed : " + hash);
+                Event.fire(win, HASH_CHANGE);
+            },
             setup = function () {
-                poll();
+                if (!timer) {
+                    poll();
+                }
             },
             tearDown = function () {
                 timer && clearTimeout(timer);
                 timer = null;
             },
-            poll = function () {
-                //console.log('poll start..' + +new Date());
-                var hash = getHash();
+            iframe;
 
-                if (hash !== lastHash) {
-                    //debugger
-                    hashChange(hash);
-                    lastHash = hash;
-                }
-                timer = setTimeout(poll, 50);
-            },
-            hashChange = function (hash) {
-                notifyHashChange(hash);
-            },
-            notifyHashChange = function (hash) {
-                S.log("hash changed : " + hash);
-                for (var i = 0; i < targets.length; i++) {
-                    var t = targets[i];
-                    //模拟暂时没有属性
-                    Event._handle(t, {
-                        type: HASH_CHANGE
+        // ie6, 7, 覆盖一些function
+        if (ie < 8) {
+
+            /**
+             * 前进后退 : start -> notifyHashChange
+             * 直接输入 : poll -> hashChange -> start
+             * iframe 内容和 url 同步
+             */
+            setup = function() {
+                if (!iframe) {
+                    //http://www.paciellogroup.com/blog/?p=604
+                    iframe = DOM.create('<iframe ' +
+                        //'src="#" ' +
+                        'style="display: none" ' +
+                        'height="0" ' +
+                        'width="0" ' +
+                        'tabindex="-1" ' +
+                        'title="empty"/>');
+                    // Append the iframe to the documentElement rather than the body.
+                    // Keeping it outside the body prevents scrolling on the initial
+                    // page load
+                    DOM.prepend(iframe, document.documentElement);
+
+                    // init，第一次触发，以后都是 start
+                    Event.add(iframe, "load", function() {
+                        Event.remove(iframe, "load");
+                        // Update the iframe with the initial location hash, if any. This
+                        // will create an initial history entry that the user can return to
+                        // after the state has changed.
+                        hashChange(getHash());
+                        Event.add(iframe, "load", start);
+                        poll();
                     });
+
+                    /**
+                     * 前进后退 ： start -> 触发
+                     * 直接输入 : timer -> hashChange -> start -> 触发
+                     * 触发统一在 start(load)
+                     * iframe 内容和 url 同步
+                     */
+                        //后退触发点
+                        //或addHistory 调用
+                        //只有 start 来通知应用程序
+                    function start() {
+                        S.log('iframe start load..');
+                        //debugger
+                        var c = S.trim(iframe.contentWindow.document.body.innerHTML);
+                        var ch = getHash();
+
+                        //后退时不等
+                        //改变location则相等
+                        if (c != ch) {
+                            location.hash = c;
+                            // 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
+                            lastHash = c;
+                        }
+                        notifyHashChange(c);
+                    }
                 }
-            },
-            timer,
-            targets = [],
-            lastHash = getHash();
+            };
+
+            tearDown = function() {
+                timer && clearTimeout(timer);
+                timer = null;
+                Event.detach(iframe);
+                DOM.remove(iframe);
+                iframe = null;
+            };
+        }
 
         Event.special[HASH_CHANGE] = {
             setup: function() {
-                var target = this,
-                    index = S.indexOf(target, targets);
-                if (-1 === index) {
-                    targets.push(target);
+                if (this !== win) {
+                    return;
                 }
-                if (!timer) {
-                    setup();
-                }
-                //不用注册dom事件
+                // 不用注册 dom 事件
+                setup();
             },
             tearDown: function() {
-                var target = this,
-                    index = S.indexOf(target, targets);
-                if (index >= 0) {
-                    targets.splice(index, 1);
+                if (this !== win) {
+                    return;
                 }
-                if (targets.length === 0) {
-                    tearDown();
-                }
+                tearDown();
             }
         };
-
-        // ie6, 7, 用匿名函数来覆盖一些function
-        if (ie < 8) {
-            (function() {
-                var iframe;
-
-                /**
-                 * 前进后退 : start -> notifyHashChange
-                 * 直接输入 : poll -> hashChange -> start
-                 * iframe 内容和 url 同步
-                 */
-
-                setup = function() {
-                    if (!iframe) {
-                        //http://www.paciellogroup.com/blog/?p=604
-                        iframe = DOM.create('<iframe ' +
-                            //'src="#" ' +
-                            'style="display: none" ' +
-                            'height="0" ' +
-                            'width="0" ' +
-                            'tabindex="-1" ' +
-                            'title="empty"/>');
-                        // Append the iframe to the documentElement rather than the body.
-                        // Keeping it outside the body prevents scrolling on the initial
-                        // page load
-                        DOM.prepend(iframe, document.documentElement);
-
-                        // init
-                        Event.add(iframe, "load", function() {
-                            Event.remove(iframe, "load");
-                            // Update the iframe with the initial location hash, if any. This
-                            // will create an initial history entry that the user can return to
-                            // after the state has changed.
-                            hashChange(getHash());
-                            Event.add(iframe, "load", start);
-                            poll();
-                        });
-
-                        /**
-                         * 前进后退 ： start -> 触发
-                         * 直接输入 : timer -> hashChange -> start -> 触发
-                         * 触发统一在 start(load)
-                         * iframe 内容和 url 同步
-                         */
-                            //后退触发点
-                            //或addHistory 调用
-                            //只有 start 来通知应用程序
-                        function start() {
-                            //console.log('iframe start load..');
-                            //debugger
-                            var c = S.trim(iframe.contentWindow.document.body.innerHTML);
-                            var ch = getHash();
-
-                            //后退时不等
-                            //改变location则相等
-                            if (c != ch) {
-                                location.hash = c;
-                                // 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
-                                lastHash = c;
-                            }
-                            notifyHashChange(c);
-                        }
-                    }
-                };
-
-                hashChange = function(hash) {
-                    //debugger
-                    var html = '<html><body>' + hash + '</body></html>';
-                    var doc = iframe.contentWindow.document;
-                    try {
-                        // 写入历史 hash
-                        doc.open();
-                        doc.write(html);
-                        doc.close();
-                        return true;
-                    } catch (e) {
-                        return false;
-                    }
-                };
-            })();
-        }
     }
 }, {
     requires:["./base","dom","ua"]
 });
 
 /**
+ * 已知 bug :
+ * - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
+ *
  * v1 : 2010-12-29
  * v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
  * refer : http://yiminghe.javaeye.com/blog/377867
@@ -3905,89 +3926,67 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
  * reports IME and multi-stroke input more reliably than <code>oninput</code> or
  * the various key events across browsers.
  *
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
-    var VALUE_CHANGE = "valueChange",
+    var VALUE_CHANGE = "valuechange",
         KEY = "event/valuechange",
-        history = {},
-        poll = {},
+        HISTORY_KEY = KEY + "/history",
+        POLL_KEY = KEY + "/poll",
         interval = 50;
 
-    function timestamp(node) {
-        var r = DOM.data(node, KEY);
-        if (!r) {
-            r = (+new Date());
-            DOM.data(node, KEY, r);
-        }
-        return r;
-    }
-
-    function untimestamp(node) {
-        DOM.removeData(node, KEY);
-    }
-
-    //pre value for input monitored
-
-
     function stopPoll(target) {
-        var t = timestamp(target);
-        delete history[t];
-        if (poll[t]) {
-            clearTimeout(poll[t]);
-            delete poll[t];
+        DOM.removeData(target, HISTORY_KEY);
+        if (DOM.hasData(target, POLL_KEY)) {
+            var poll = DOM.data(target, POLL_KEY);
+            clearTimeout(poll);
+            DOM.removeData(target, POLL_KEY);
         }
     }
 
-    function blur(ev) {
+    function stopPollHandler(ev) {
         var target = ev.target;
         stopPoll(target);
     }
 
     function startPoll(target) {
-        var t = timestamp(target);
-        if (poll[t]) return;
-
-        poll[t] = setTimeout(function() {
-            var v = target.value;
-            if (v !== history[t]) {
-                Event._handle(target, {
-                        type:VALUE_CHANGE,
-                        prevVal:history[t],
-                        newVal:v
-                    });
-                history[t] = v;
+        if (DOM.hasData(target, POLL_KEY)) return;
+        DOM.data(target, POLL_KEY, setTimeout(function() {
+            var v = target.value,h = DOM.data(target, HISTORY_KEY);
+            if (v !== h) {
+                // 只触发自己绑定的 handler
+                Event.fire(target, VALUE_CHANGE, {
+                    prevVal:h,
+                    newVal:v
+                }, true);
+                DOM.data(target, HISTORY_KEY, v);
             }
-            poll[t] = setTimeout(arguments.callee, interval);
-        }, interval);
+            DOM.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
+        }, interval));
     }
 
     function startPollHandler(ev) {
         var target = ev.target;
-        //when focus ,record its previous value
+        // when focus ,record its current value immediately
         if (ev.type == "focus") {
-            var t = timestamp(target);
-            history[t] = target.value;
+            DOM.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
     }
 
     function monitor(target) {
         unmonitored(target);
-        Event.on(target, "blur", blur);
+        Event.on(target, "blur", stopPollHandler);
         Event.on(target, "mousedown keyup keydown focus", startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
-        Event.remove(target, "blur", blur);
+        Event.remove(target, "blur", stopPollHandler);
         Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
-        untimestamp(target);
     }
 
     Event.special[VALUE_CHANGE] = {
-        //no corresponding dom event needed
-        fix: false,
         setup: function() {
             var target = this,
                 nodeName = target.nodeName.toLowerCase();
@@ -4001,66 +4000,85 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
             unmonitored(target);
         }
     };
-
     return Event;
 }, {
-        requires:["./base","dom"]
-    });
+    requires:["./base","dom"]
+});
 
 /**
  * kissy delegate for event module
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
     var batchForType = Event._batchForType,
         delegateMap = {
-            focus:"focusin",
-            blur:"focusout"
+            "focus":{
+                type:"focusin"
+            },
+            "blur":{
+                type:"focusout"
+            },
+            "mouseenter":{
+                type:"mouseover",
+                handler:mouseHandler
+            },
+            "mouseleave":{
+                type:"mouseout",
+                handler:mouseHandler
+            }
         };
 
     S.mix(Event, {
-            delegate:function(targets, type, selector, fn, scope) {
-                if (batchForType('delegate', targets, type, selector, fn, scope)) {
-                    return targets;
-                }
-                DOM.query(targets).each(function(target) {
-                    // 自定义事件 delegate 无意义
-                    if (target.isCustomEventTarget) {
-                        return;
-                    }
-                    type = delegateMap[type] || type;
-                    Event.on(target, type, delegateHandler, target, {
-                            fn:fn,
-                            selector:selector,
-                            // type:type,
-                            scope:scope,
-                            equals:equals
-                        });
-                });
-                return targets;
-            },
-
-            undelegate:function(targets, type, selector, fn, scope) {
-                if (batchForType('undelegate', targets, type, selector, fn, scope)) {
-                    return targets;
-                }
-                DOM.query(targets).each(function(target) {
-                    // 自定义事件 delegate 无意义
-                    if (target.isCustomEventTarget) {
-                        return;
-                    }
-                    type = delegateMap[type] || type;
-                    Event.remove(target, type, delegateHandler, target, {
-                            fn:fn,
-                            selector:selector,
-                            // type:type,
-                            scope:scope,
-                            equals:equals
-                        });
-                });
+        delegate:function(targets, type, selector, fn, scope) {
+            if (batchForType('delegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
-        });
+            DOM.query(targets).each(function(target) {
+                // 自定义事件 delegate 无意义
+                if (target.isCustomEventTarget) {
+                    return;
+                }
+                var preType = type,handler = delegateHandler;
+                if (delegateMap[type]) {
+                    type = delegateMap[preType].type;
+                    handler = delegateMap[preType].handler || handler;
+                }
+                Event.on(target, type, handler, target, {
+                    fn:fn,
+                    selector:selector,
+                    preType:preType,
+                    scope:scope,
+                    equals:equals
+                });
+            });
+            return targets;
+        },
+
+        undelegate:function(targets, type, selector, fn, scope) {
+            if (batchForType('undelegate', targets, type, selector, fn, scope)) {
+                return targets;
+            }
+            DOM.query(targets).each(function(target) {
+                // 自定义事件 delegate 无意义
+                if (target.isCustomEventTarget) {
+                    return;
+                }
+                var preType = type,handler = delegateHandler;
+                if (delegateMap[type]) {
+                    type = delegateMap[preType].type;
+                    handler = delegateMap[preType].handler || handler;
+                }
+                Event.remove(target, type, handler, target, {
+                    fn:fn,
+                    selector:selector,
+                    preType:preType,
+                    scope:scope,
+                    equals:equals
+                });
+            });
+            return targets;
+        }
+    });
 
     // 比较函数，两个 delegate 描述对象比较
     function equals(d) {
@@ -4073,17 +4091,37 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         }
     }
 
-    function eq(d1, d2) {
-        return (d1 == d2 || (!d1 && d2) || (!d1 && d2));
-    }
-
     // 根据 selector ，从事件源得到对应节点
     function delegateHandler(event, data) {
         var delegateTarget = this,
-            gret,
             target = event.target,
             invokeds = DOM.closest(target, [data.selector], delegateTarget);
+
         // 找到了符合 selector 的元素，可能并不是事件源
+        return invokes.call(delegateTarget, invokeds, event, data);
+    }
+
+    // mouseenter/leave 特殊处理
+    function mouseHandler(event, data) {
+        var delegateTarget = this,
+            target = event.target,
+            relatedTarget = event.relatedTarget;
+        // 恢复为用户想要的 mouseenter/leave 类型
+        event.type = data.preType;
+        // mouseenter/leave 不会冒泡，只选择最近一个
+        target = DOM.closest(target, data.selector, delegateTarget);
+        if (target) {
+            if (target !== relatedTarget && !DOM.contains(target, relatedTarget)) {
+                return data.fn.call(data.scope || delegateTarget, event);
+            }
+        }
+        return undefined;
+    }
+
+
+    function invokes(invokeds, event, data) {
+        var delegateTarget = this,
+            gret;
         if (invokeds) {
             for (var i = 0; i < invokeds.length; i++) {
                 event.currentTarget = invokeds[i];
@@ -4106,8 +4144,8 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     return Event;
 }, {
-        requires:["dom","./base"]
-    });
+    requires:["dom","./base"]
+});
 
 /**
  * focusin/out 的特殊之处 , delegate 只能在容器上注册 focusin/out ，
@@ -4120,14 +4158,13 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  *   2.1 当 Event.fire("focus") , 同 1.1
  *   2.2 当 Event.fire("focusin"),直接执行 focusin 对应的 handlers 数组，但不会真正聚焦
  *
- * TODO:
- * mouseenter/leave delegate??
+ * mouseenter/leave delegate 特殊处理， mouseenter 没有冒泡的概念，只能替换为 mouseover/out
  *
  **/
 
 /**
  * @module  event-mouseenter
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
@@ -4157,12 +4194,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
                         return;
                     }
 
-                    // Traverse up the tree
-                    parent = DOM.closest(parent, function(item) {
-                        return item == self;
-                    });
-
-                    if (parent !== self) {
+                    // 在自身外边就触发
+                    if (parent !== self && !DOM.contains(self, parent)) {
                         // handle event if we actually just moused on to a non sub-element
                         Event._handle(self, event);
                     }
@@ -4192,8 +4225,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
     return Event;
 }, {
-        requires:["./base","dom","ua"]
-    });
+    requires:["./base","dom","ua"]
+});
 
 /**
  * 承玉：2011-06-07
@@ -4277,81 +4310,81 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     S.augment(NodeList, {
 
-            /**
-             * 默认长度为 0
-             */
-            length: 0,
+        /**
+         * 默认长度为 0
+         */
+        length: 0,
 
 
-            item: function(index) {
-                if (S.isNumber(index)) {
-                    if (index >= this.length) return null;
-                    return new NodeList(this[index], undefined, undefined);
-                } else
-                    return new NodeList(index, undefined, undefined);
-            },
+        item: function(index) {
+            if (S.isNumber(index)) {
+                if (index >= this.length) return null;
+                return new NodeList(this[index], undefined, undefined);
+            } else
+                return new NodeList(index, undefined, undefined);
+        },
 
-            add:function(selector, context, index) {
-                if (S.isNumber(context)) {
-                    index = context;
-                    context = undefined;
-                }
-                var list = S.makeArray(NodeList.all(selector, context)),
-                    ret = new NodeList(this, undefined, undefined);
-                if (index === undefined) {
-                    AP.push.apply(ret, list);
-                } else {
-                    var args = [index,0];
-                    args.push.apply(args, list);
-                    AP.splice.apply(ret, args);
-                }
-                return ret;
-            },
-
-            slice:function(start, end) {
-                return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
-            },
-
-            /**
-             * Retrieves the DOMNodes.
-             */
-            getDOMNodes: function() {
-                return AP.slice.call(this);
-            },
-
-            /**
-             * Applies the given function to each Node in the NodeList.
-             * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-             * @param context An optional context to apply the function with Default context is the current NodeList instance
-             */
-            each: function(fn, context) {
-                var self = this,len = self.length, i = 0, node;
-
-                for (node = new NodeList(self[0], undefined, undefined);
-                     i < len && fn.call(context || node, node, i, this) !== false;
-                     node = new NodeList(self[++i], undefined, undefined)) {
-                }
-
-                return this;
-            },
-            /**
-             * Retrieves the DOMNode.
-             */
-            getDOMNode: function() {
-                return this[0];
-            },
-
-            all:function(selector) {
-                if (this.length > 0) {
-                    return NodeList.all(selector, this[0]);
-                }
-                return new NodeList(undefined, undefined, undefined);
+        add:function(selector, context, index) {
+            if (S.isNumber(context)) {
+                index = context;
+                context = undefined;
             }
-        });
+            var list = S.makeArray(NodeList.all(selector, context)),
+                ret = new NodeList(this, undefined, undefined);
+            if (index === undefined) {
+                AP.push.apply(ret, list);
+            } else {
+                var args = [index,0];
+                args.push.apply(args, list);
+                AP.splice.apply(ret, args);
+            }
+            return ret;
+        },
+
+        slice:function(start, end) {
+            return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+        },
+
+        /**
+         * Retrieves the DOMNodes.
+         */
+        getDOMNodes: function() {
+            return AP.slice.call(this);
+        },
+
+        /**
+         * Applies the given function to each Node in the NodeList.
+         * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
+         * @param context An optional context to apply the function with Default context is the current NodeList instance
+         */
+        each: function(fn, context) {
+            var self = this,len = self.length, i = 0, node;
+
+            for (node = new NodeList(self[0], undefined, undefined);
+                 i < len && fn.call(context || node, node, i, this) !== false;
+                 node = new NodeList(self[++i], undefined, undefined)) {
+            }
+
+            return this;
+        },
+        /**
+         * Retrieves the DOMNode.
+         */
+        getDOMNode: function() {
+            return this[0];
+        },
+
+        all:function(selector) {
+            if (this.length > 0) {
+                return NodeList.all(selector, this[0]);
+            }
+            return new NodeList(undefined, undefined, undefined);
+        }
+    });
 
     NodeList.prototype.one = function(selector) {
         var all = this.all(selector);
-        return all.length ? all : null;
+        return all.length ? all.slice(0, 1) : null;
     };
 
     // query api
@@ -4380,15 +4413,15 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     NodeList.one = function(selector, context) {
         var all = NodeList.all(selector, context);
-        return all.length ? all : null;
+        return all.length ? all.slice(0, 1) : null;
     };
     if (1 > 2) {
         NodeList.getDOMNodes();
     }
     return NodeList;
 }, {
-        requires:["dom"]
-    });
+    requires:["dom"]
+});
 
 
 /**
@@ -4464,11 +4497,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         DOM_INCLUDES_NORM_IF = {
             // dom method : set parameter index
             "attr":1,
-            "text":1,
+            "text":0,
             "css":1,
             "val":0,
             "prop":1,
-            "offset":1,
+            "offset":0,
             "html":0,
             "data":1
         },
@@ -4607,8 +4640,9 @@ KISSY.add('anim/easing', function(S) {
      * @param {Number} d Total length of animation d = 1
      */
 
-    var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin,
+    var PI = Math.PI,
+        pow = Math.pow,
+        sin = Math.sin,
         BACK_CONST = 1.70158,
 
         Easing = {
@@ -4799,7 +4833,7 @@ KISSY.add('anim/easing', function(S) {
 
 /**
  * single timer for the whole anim module
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
     var tag = S.guid("anim-"),id = 1;
@@ -4880,7 +4914,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         PROPS,
         CUSTOM_ATTRS,
         OPACITY,NONE,
-        PROPERTY,EVENT_START,
+        EVENT_START,
         EVENT_STEP,
         EVENT_COMPLETE,
         defaultConfig,
@@ -4944,7 +4978,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     OPACITY = 'opacity';
     NONE = 'none';
-    PROPERTY = 'Property';
     EVENT_START = 'start';
     EVENT_STEP = 'step';
     EVENT_COMPLETE = 'complete';
@@ -4959,9 +4992,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      * @constructor
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
-
-
-
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) return;
 
@@ -5068,6 +5098,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 var val = DOM.css(elem, prop),
                     num = parseFloat(val),
                     unit = (val + '').replace(/^[-\d.]+/, '');
+                // 不能动画的量，插值直接设为最终，下次也不运行
                 if (isNaN(num)) {
                     return {v:unit,u:'',f:mirror};
                 }
@@ -5097,235 +5128,237 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 
     S.augment(Anim, EventTarget, {
-            /**
-             * @type {boolean} 是否在运行
-             */
-            isRunning:false,
-            /**
-             * 动画开始到现在逝去的时间
-             */
-            elapsedTime:0,
-            /**
-             * 动画开始的时间
-             */
-            start:0,
-            /**
-             * 动画结束的时间
-             */
-            finish:0,
-            /**
-             * 动画持续时间，不间断的话 = finish-start
-             */
-            duration:0,
+        /**
+         * @type {boolean} 是否在运行
+         */
+        isRunning:false,
+        /**
+         * 动画开始到现在逝去的时间
+         */
+        elapsedTime:0,
+        /**
+         * 动画开始的时间
+         */
+        start:0,
+        /**
+         * 动画结束的时间
+         */
+        finish:0,
+        /**
+         * 动画持续时间，不间断的话 = finish-start
+         */
+        duration:0,
 
-            run: function() {
+        run: function() {
 
-                var self = this,
-                    config = self.config,
-                    elem = self.domEl,
-                    duration, easing,
-                    start,
-                    finish,
-                    target = self.props,
-                    source = {},
-                    prop;
+            var self = this,
+                config = self.config,
+                elem = self.domEl,
+                duration, easing,
+                start,
+                finish,
+                target = self.props,
+                source = {},
+                prop;
 
-                // already running,please stop first
-                if (self.isRunning) {
-                    return;
-                }
-                if (self.fire(EVENT_START) === false) return;
+            if (self.fire(EVENT_START) === false) return;
 
-                self.stop(); // 先停止掉正在运行的动画
-                duration = config.duration * 1000;
-                self.duration = duration;
-                if (self.transitionName) {
-                    // !important firefox 如果结束样式对应的初始样式没有，则不会产生动画
-                    // <div> -> <div 'left=100px'>
-                    // 则初始 div 要设置行内 left=getComputed("left")
-//                    for (prop in target) {
-//                        var av = getAnimValue(elem, prop);// :)
-//                        setAnimValue(elem, prop, av.v + av.u);
-//                    }
+            self.stop(); // 先停止掉正在运行的动画
+            duration = config.duration * 1000;
+            self.duration = duration;
+            if (self.transitionName) {
+                // some hack ,Weird but ff/chrome need a break
+                setTimeout(function() {
                     self._nativeRun();
-                } else {
-                    for (prop in target) {
-                        source[prop] = getAnimValue(elem, prop);
-                    }
-
-                    self.source = source;
-
-                    start = S.now();
-                    finish = start + duration;
-                    easing = config.easing;
-
-                    if (S.isString(easing)) {
-                        easing = Easing[easing] || Easing.easeNone;
-                    }
-
-
-                    self.start = start;
-                    self.finish = finish;
-                    self.easing = easing;
-
-                    AM.start(self);
-                }
-
-                self.isRunning = true;
-
-                return self;
-            },
-
-            _complete:function() {
-                var self = this;
-                self.fire(EVENT_COMPLETE);
-                self.callback && self.callback();
-            },
-
-            _runFrame:function() {
-
-                var self = this,
-                    elem = self.domEl,
-                    finish = self.finish,
-                    start = self.start,
-                    duration = self.duration,
-                    time = S.now(),
-                    source = self.source,
-                    easing = self.easing,
-                    target = self.props,
-                    prop,
-                    elapsedTime;
-                elapsedTime = time - start;
-                var t = time > finish ? 1 : elapsedTime / duration,
-                    sp, tp, b;
-
-                self.elapsedTime = elapsedTime;
-
-                //S.log("********************************  _runFrame");
-
+                }, 10);
+            } else {
                 for (prop in target) {
-
-                    sp = source[prop];
-                    tp = target[prop];
-
-                    // 没有发生变化的，直接略过
-                    if (eqAnimValue(prop, tp, sp)) continue;
-
-                    //S.log(prop);
-                    //S.log(tp.v + " : " + sp.v + " : " + sp.u + " : " + tp.u);
-
-                    // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                    // 这时要把 sp 的单位调整为和 tp 的一致
-                    if (tp.v == 0) {
-                        tp.u = sp.u;
-                    }
-
-                    // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                    // 比如：ie 下 border-width 默认为 medium
-                    if (sp.u !== tp.u) {
-                        //S.log(prop + " : " + sp.v + " : " + sp.u);
-                        //S.log(prop + " : " + tp.v + " : " + tp.u);
-                        //S.log(tp.f);
-                        sp.v = 0;
-                        sp.u = tp.u;
-                    }
-
-                    setAnimValue(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
-                    /**
-                     * 不能动画的量，直接设成最终值，下次不用动画，设置 dom 了
-                     */
-                    if (tp.f == mirror) {
-                        sp.v = tp.v;
-                        sp.u = tp.u;
-                    }
+                    source[prop] = getAnimValue(elem, prop);
                 }
 
-                if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                    self.stop();
-                    // complete 事件只在动画到达最后一帧时才触发
-                    if (b) {
-                        self._complete();
-                    }
-                }
-            },
+                self.source = source;
 
-            _nativeRun: function() {
-                var self = this,
-                    config = self.config,
-                    elem = self.domEl,
-                    duration = self.duration,
-                    easing = config.easing,
-                    prefix = self.transitionName,
-                    transition = {};
+                start = S.now();
+                finish = start + duration;
+                easing = config.easing;
 
-                // using CSS transition process
-                transition[prefix + 'Property'] = 'all';
-                transition[prefix + 'Duration'] = duration + 'ms';
-                transition[prefix + 'TimingFunction'] = easing;
-
-                // set the CSS transition style
-                DOM.css(elem, transition);
-
-                // set the final style value (need some hack for opera)
-                S.later(function() {
-                    setToFinal(elem,
-                        // target,
-                        self.targetStyle);
-                }, 0);
-
-                // after duration time, fire the stop function
-                S.later(function() {
-                    self.stop(true);
-                }, duration);
-            },
-
-            stop: function(finish) {
-                var self = this;
-                // already stopped
-                if (!self.isRunning) {
-                    return;
+                if (S.isString(easing)) {
+                    easing = Easing[easing] || Easing.easeNone;
                 }
 
-                if (self.transitionName) {
-                    self._nativeStop(finish);
-                } else {
-                    // 直接设置到最终样式
-                    if (finish) {
-                        setToFinal(self.domEl,
-                            //self.props,
-                            self.targetStyle);
-                        self._complete();
-                    }
-                    AM.stop(self);
+
+                self.start = start;
+                self.finish = finish;
+                self.easing = easing;
+
+                AM.start(self);
+            }
+
+            self.isRunning = true;
+
+            return self;
+        },
+
+        _complete:function() {
+            var self = this;
+            self.fire(EVENT_COMPLETE);
+            self.callback && self.callback();
+        },
+
+        _runFrame:function() {
+
+            var self = this,
+                elem = self.domEl,
+                finish = self.finish,
+                start = self.start,
+                duration = self.duration,
+                time = S.now(),
+                source = self.source,
+                easing = self.easing,
+                target = self.props,
+                prop,
+                elapsedTime;
+            elapsedTime = time - start;
+            var t = time > finish ? 1 : elapsedTime / duration,
+                sp, tp, b;
+
+            self.elapsedTime = elapsedTime;
+
+            //S.log("********************************  _runFrame");
+
+            for (prop in target) {
+
+                sp = source[prop];
+                tp = target[prop];
+
+                // 没有发生变化的，直接略过
+                if (eqAnimValue(prop, tp, sp)) continue;
+
+                //S.log(prop);
+                //S.log(tp.v + " : " + sp.v + " : " + sp.u + " : " + tp.u);
+
+                // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
+                // 这时要把 sp 的单位调整为和 tp 的一致
+                if (tp.v == 0) {
+                    tp.u = sp.u;
                 }
 
-                self.isRunning = false;
+                // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
+                // 比如：ie 下 border-width 默认为 medium
+                if (sp.u !== tp.u) {
+                    //S.log(prop + " : " + sp.v + " : " + sp.u);
+                    //S.log(prop + " : " + tp.v + " : " + tp.u);
+                    //S.log(tp.f);
+                    sp.v = 0;
+                    sp.u = tp.u;
+                }
 
-                return self;
-            },
-
-            _nativeStop: function(finish) {
-                var self = this,
-                    elem = self.domEl,
-                    prefix = self.transitionName,
-                    props = self.props,
-                    prop;
-
-                // handle for the CSS transition
-                if (finish) {
-                    // CSS transition value remove should come first
-                    DOM.css(elem, prefix + PROPERTY, NONE);
-                    self._complete();
-                } else {
-                    // if want to stop the CSS transition, should set the current computed style value to the final CSS value
-                    for (prop in props) {
-                        DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
-                    }
-                    // CSS transition value remove should come last
-                    DOM.css(elem, prefix + PROPERTY, NONE);
+                setAnimValue(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
+                /**
+                 * 不能动画的量，直接设成最终值，下次不用动画，设置 dom 了
+                 */
+                if (tp.f == mirror) {
+                    sp.v = tp.v;
+                    sp.u = tp.u;
                 }
             }
-        });
+
+            if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+                self.stop();
+                // complete 事件只在动画到达最后一帧时才触发
+                if (b) {
+                    self._complete();
+                }
+            }
+        },
+
+        _nativeRun: function() {
+            var self = this,
+                config = self.config,
+                elem = self.domEl,
+                duration = self.duration,
+                easing = config.easing,
+                prefix = self.transitionName,
+                transition = {};
+
+            // using CSS transition process
+            transition[prefix + 'Property'] = 'all';
+            transition[prefix + 'Duration'] = duration + 'ms';
+            transition[prefix + 'TimingFunction'] = easing;
+
+            // set the CSS transition style
+            DOM.css(elem, transition);
+
+            // set the final style value (need some hack for opera)
+            setTimeout(function() {
+                setToFinal(elem,
+                    // target,
+                    self.targetStyle);
+            }, 0);
+
+            // after duration time, fire the stop function
+            S.later(function() {
+                self.stop(true);
+            }, duration);
+        },
+
+        stop: function(finish) {
+            var self = this;
+            // already stopped
+            if (!self.isRunning) {
+                return;
+            }
+
+            if (self.transitionName) {
+                self._nativeStop(finish);
+            } else {
+                // 直接设置到最终样式
+                if (finish) {
+                    setToFinal(self.domEl,
+                        //self.props,
+                        self.targetStyle);
+                    self._complete();
+                }
+                AM.stop(self);
+            }
+
+            self.isRunning = false;
+
+            return self;
+        },
+
+        _nativeStop: function(finish) {
+            var self = this,
+                elem = self.domEl,
+                props = self.props,
+                prop;
+
+            // handle for the CSS transition
+            if (finish) {
+                // CSS transition value remove should come first
+                self._clearNativeProperty();
+                self._complete();
+            } else {
+                // if want to stop the CSS transition, should set the current computed style value to the final CSS value
+                for (prop in props) {
+                    DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
+                }
+                // CSS transition value remove should come last
+                self._clearNativeProperty();
+            }
+        },
+
+        _clearNativeProperty:function() {
+            var transition = {},
+                self = this,
+                elem = self.domEl,
+                prefix = self.transitionName;
+            transition[prefix + 'Property'] = NONE;
+            transition[prefix + 'Duration'] = "";
+            transition[prefix + 'TimingFunction'] = "";
+            DOM.css(elem, transition);
+        }
+    });
 
     Anim.supportTransition = function() {
         if (TRANSITION_NAME) return TRANSITION_NAME;
@@ -5444,11 +5477,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     return Anim;
 }, {
-        requires:["dom","event","./easing","ua","./manager"]
-    });
+    requires:["dom","event","./easing","ua","./manager"]
+});
 
 /**
  * TODO:
+ *  - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
+ *  - opera nativeSupport 存在 bug ，浏览器自身 bug ?
  *  - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
  *
  * NOTES:
@@ -5460,7 +5495,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
 /**
  * special patch for making color gradual change
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
@@ -5569,7 +5604,7 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
 
 /**
  * special patch for animate scroll property of element
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/scroll", function(S, DOM, Anim) {
 
@@ -5674,14 +5709,14 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         };
 
         S.each({
-            show: ['show', 1],
-            hide: ['show', 0],
-            toggle: ['toggle'],
-            fadeIn: ['fade', 1],
-            fadeOut: ['fade', 0],
-            slideDown: ['slide', 1],
-            slideUp: ['slide', 0]
-        },
+                show: ['show', 1],
+                hide: ['show', 0],
+                toggle: ['toggle'],
+                fadeIn: ['fade', 1],
+                fadeOut: ['fade', 0],
+                slideDown: ['slide', 1],
+                slideUp: ['slide', 0]
+            },
             function(v, k) {
 
                 P[k] = function(speed, callback, easing, nativeSupport) {
@@ -5692,6 +5727,10 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                         DOM[k](self);
                     }
                     else {
+                        // 原生支持问题很多，默认不采用原生
+                        if (nativeSupport === undefined) {
+                            nativeSupport = false;
+                        }
                         S.each(this, function(elem) {
                             var anim = fx(elem, v[0], speed, callback,
                                 v[1], easing, nativeSupport);
@@ -6305,7 +6344,7 @@ KISSY.add('json', function (S, JSON) {
 
 /**
  * encapsulation of io object . as transaction object in yui3
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 
@@ -6513,7 +6552,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
 /**
  * a scalable client io framework
- * @author: yiminghe@gmail.com , lijing00333@163.com
+ * @author  yiminghe@gmail.com , lijing00333@163.com
  */
 KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
@@ -6744,8 +6783,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  **/
 
 /**
- * ajax xhr tranport class
- * @author: yiminghe@gmail.com
+ * ajax xhr transport class
+ * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhr", function(S, io) {
 
@@ -6765,13 +6804,9 @@ KISSY.add("ajax/xhr", function(S, io) {
         return undefined;
     }
 
-    io.xhr = window.ActiveXObject ? function(forceStandard) {
-        var xhr;
+    io.xhr = window.ActiveXObject ? function() {
         // ie7 XMLHttpRequest 不能访问本地文件
-        if (io.isLocal && !forceStandard) {
-            xhr = createActiveXHR();
-        }
-        return xhr || createStandardXHR();
+        return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
 
     var detectXhr = io.xhr(),
@@ -6788,138 +6823,138 @@ KISSY.add("ajax/xhr", function(S, io) {
         }
 
         S.augment(XhrTransport, {
-                send:function() {
-                    var self = this,
-                        xhrObj = self.xhrObj,
-                        c = xhrObj.config;
+            send:function() {
+                var self = this,
+                    xhrObj = self.xhrObj,
+                    c = xhrObj.config;
 
-                    if (c.crossDomain && !allowCrossDomain) {
-                        S.error("do not allow crossdomain xhr !");
-                        return;
-                    }
+                if (c.crossDomain && !allowCrossDomain) {
+                    S.error("do not allow crossdomain xhr !");
+                    return;
+                }
 
-                    var xhr = io.xhr(),
-                        xhrFields,
-                        i;
+                var xhr = io.xhr(),
+                    xhrFields,
+                    i;
 
-                    self.xhr = xhr;
+                self.xhr = xhr;
 
-                    if (c['username']) {
-                        xhr.open(c.type, c.url, c.async, c['username'], c.password)
-                    } else {
-                        xhr.open(c.type, c.url, c.async);
-                    }
+                if (c['username']) {
+                    xhr.open(c.type, c.url, c.async, c['username'], c.password)
+                } else {
+                    xhr.open(c.type, c.url, c.async);
+                }
 
-                    if (xhrFields = c['xhrFields']) {
-                        for (i in xhrFields) {
-                            xhr[ i ] = xhrFields[ i ];
-                        }
-                    }
-
-                    // Override mime type if supported
-                    if (xhrObj.mimeType && xhr.overrideMimeType) {
-                        xhr.overrideMimeType(xhrObj.mimeType);
-                    }
-                    // yui3 and jquery both have
-                    if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
-                        xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
-                    }
-                    try {
-
-                        for (i in xhrObj.requestHeaders) {
-                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
-                        }
-                    } catch(e) {
-                    }
-
-                    xhr.send(c.hasContent && c.data || null);
-
-                    if (!c.async || xhr.readyState == 4) {
-                        self._callback();
-                    } else {
-                        xhr.onreadystatechange = function() {
-                            self._callback();
-                        }
-                    }
-                },
-                // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-                abort:function() {
-                    this._callback(0, 1);
-                },
-
-                _callback:function(event, abort) {
-
-                    // Firefox throws exceptions when accessing properties
-                    // of an xhr when a network error occured
-                    // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
-                    try {
-                        var self = this,
-                            xhr = self.xhr,
-                            xhrObj = self.xhrObj,
-                            c = xhrObj.config;
-                        //abort or complete
-                        if (abort || xhr.readyState == 4) {
-                            xhr.onreadystatechange = S.noop;
-
-
-                            if (abort) {
-                                // 完成以后 abort 不要调用
-                                if (xhr.readyState !== 4) {
-                                    xhr.abort();
-                                }
-                            } else {
-                                var status = xhr.status;
-                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
-
-                                var xml = xhr.responseXML;
-
-                                // Construct response list
-                                if (xml && xml.documentElement /* #4958 */) {
-                                    xhrObj.responseXML = xml;
-                                }
-                                xhrObj.responseText = xhr.responseText;
-
-                                // Firefox throws an exception when accessing
-                                // statusText for faulty cross-domain requests
-                                try {
-                                    var statusText = xhr.statusText;
-                                } catch(e) {
-                                    // We normalize with Webkit giving an empty statusText
-                                    statusText = "";
-                                }
-
-                                // Filter status for non standard behaviors
-                                // If the request is local and we have data: assume a success
-                                // (success with no data won't get notified, that's the best we
-                                // can do given current implementations)
-                                if (!status && io.isLocal && !c.crossDomain) {
-                                    status = xhrObj.responseText ? 200 : 404;
-                                    // IE - #1450: sometimes returns 1223 when it should be 204
-                                } else if (status === 1223) {
-                                    status = 204;
-                                }
-
-                                xhrObj.callback(status, statusText);
-                            }
-                        }
-                    } catch (firefoxAccessException) {
-                        xhr.onreadystatechange = S.noop;
-                        if (!abort) {
-                            xhrObj.callback(-1, firefoxAccessException);
-                        }
+                if (xhrFields = c['xhrFields']) {
+                    for (i in xhrFields) {
+                        xhr[ i ] = xhrFields[ i ];
                     }
                 }
 
+                // Override mime type if supported
+                if (xhrObj.mimeType && xhr.overrideMimeType) {
+                    xhr.overrideMimeType(xhrObj.mimeType);
+                }
+                // yui3 and jquery both have
+                if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
+                    xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+                }
+                try {
 
-            });
+                    for (i in xhrObj.requestHeaders) {
+                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                    }
+                } catch(e) {
+                }
+
+                xhr.send(c.hasContent && c.data || null);
+
+                if (!c.async || xhr.readyState == 4) {
+                    self._callback();
+                } else {
+                    xhr.onreadystatechange = function() {
+                        self._callback();
+                    }
+                }
+            },
+            // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
+            abort:function() {
+                this._callback(0, 1);
+            },
+
+            _callback:function(event, abort) {
+
+                // Firefox throws exceptions when accessing properties
+                // of an xhr when a network error occured
+                // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+                try {
+                    var self = this,
+                        xhr = self.xhr,
+                        xhrObj = self.xhrObj,
+                        c = xhrObj.config;
+                    //abort or complete
+                    if (abort || xhr.readyState == 4) {
+                        xhr.onreadystatechange = S.noop;
+
+
+                        if (abort) {
+                            // 完成以后 abort 不要调用
+                            if (xhr.readyState !== 4) {
+                                xhr.abort();
+                            }
+                        } else {
+                            var status = xhr.status;
+                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+
+                            var xml = xhr.responseXML;
+
+                            // Construct response list
+                            if (xml && xml.documentElement /* #4958 */) {
+                                xhrObj.responseXML = xml;
+                            }
+                            xhrObj.responseText = xhr.responseText;
+
+                            // Firefox throws an exception when accessing
+                            // statusText for faulty cross-domain requests
+                            try {
+                                var statusText = xhr.statusText;
+                            } catch(e) {
+                                // We normalize with Webkit giving an empty statusText
+                                statusText = "";
+                            }
+
+                            // Filter status for non standard behaviors
+                            // If the request is local and we have data: assume a success
+                            // (success with no data won't get notified, that's the best we
+                            // can do given current implementations)
+                            if (!status && io.isLocal && !c.crossDomain) {
+                                status = xhrObj.responseText ? 200 : 404;
+                                // IE - #1450: sometimes returns 1223 when it should be 204
+                            } else if (status === 1223) {
+                                status = 204;
+                            }
+
+                            xhrObj.callback(status, statusText);
+                        }
+                    }
+                } catch (firefoxAccessException) {
+                    xhr.onreadystatechange = S.noop;
+                    if (!abort) {
+                        xhrObj.callback(-1, firefoxAccessException);
+                    }
+                }
+            }
+
+
+        });
 
         io.setupTransport("*", XhrTransport);
 
         return io;
     }
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 
 /**
  * 借鉴 jquery，优化使用原型替代闭包
@@ -6928,7 +6963,7 @@ KISSY.add("ajax/xhr", function(S, io) {
 /**
  * script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/script", function(S, io) {
 
@@ -7044,7 +7079,7 @@ KISSY.add("ajax/script", function(S, io) {
 
 /**
  * jsonp transport based on script transport
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
@@ -7115,7 +7150,7 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
 /**
  * form data  serialization util
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
     var enc = encodeURIComponent;
@@ -7185,7 +7220,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
 /**
  * non-refresh upload file with form by iframe
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 

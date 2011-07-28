@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <title>CustomRender for button 测试</title>
-<link href="tests/common.css" rel="stylesheet"/>
-<link href="tests/custombutton.css" rel="stylesheet"/>
+<link href="assets/common.css" rel="stylesheet"/>
+<link href="assets/custombutton.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -21,19 +21,8 @@
 
 
 <script src="../../build/kissy.js"></script>
-<script src="../component.js"></script>
-<script src="../component/modelcontrol.js"></script>
-<script src="../component/render.js"></script>
-<script src="../component/container.js"></script>
-
-<script src="base.js"></script>
-<script src="buttonrender.js"></script>
-<script src="nativerender.js"></script>
-<script src="css3render.js"></script>
-<script src="customrender.js"></script>
-
-<script src="../button.js"></script>
 <script>
+    KISSY.Config.base = "../";
     KISSY.use("node,button", function(S, Node, Button) {
         //view
         //render to container : button_container
@@ -74,7 +63,6 @@
             srcNode:"#exist",
             prefixCls:"goog-"
         });
-
         exist.render();
         exist.on("click", function() {
             alert("渐进增强 click");

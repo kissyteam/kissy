@@ -26,12 +26,15 @@
 <script src="../focusin.js"></script>
 <script src="../mouseenter.js"></script>.
 <script src="../hashchange.js"></script>
+<script src="../delegate.js"></script>
+<script src="../valuechange.js"></script>
 <script src="../../event.js"></script>
 
 <script src="../../../build/node.js"></script>
 
 <script>
     KISSY.use("dom,event,event/hashchange", function(S, DOM, Event) {
+        debugger
         Event.on(window, "hashchange", function(ev) {
             DOM.get('#test').innerHTML = location.hash;
         });

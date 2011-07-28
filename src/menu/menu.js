@@ -4,9 +4,7 @@
  */
 KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
-    var Menu;
-
-    Menu = UIBase.create(Component.Container, {
+    var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
@@ -17,10 +15,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         },
 
         _handleBlur:function(e) {
-            // 父亲不允许自己处理
-            if (Menu.superclass._handleBlur.call(this, e)) {
-                return true;
-            }
+            Menu.superclass._handleBlur.call(this, e);
             this.set("highlightedItem", undefined);
         },
 
@@ -32,7 +27,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                 len = children.length,
                 o = index;
             do {
-                if (!children[index].get("disabled")) {
+                var c = children[index];
+                if (!c.get("disabled") && (c.get("visible") !== false)) {
                     return children[index];
                 }
                 index = (index + dir + len) % len;
@@ -40,20 +36,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             return undefined;
         },
 
-        _handleClick:function(e) {
-            if (Menu.superclass._handleClick.call(this, e))
-                return true;
-
-            var highlightedItem = this.get("highlightedItem");
-
-            //先看当前活跃 menuitem 是否要处理
-            if (highlightedItem && highlightedItem._handleClick(e)) {
-                return true;
-            }
-        },
-
         _handleKeydown:function(e) {
-            if (this._handleKeydownInternal(e)) {
+            if (this._handleKeyEventInternal(e)) {
                 e.halt();
                 return true;
             }
@@ -70,11 +54,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
          * @return {boolean} Whether the event was handled by the container (or one of
          *     its children).
          */
-        _handleKeydownInternal:function(e) {
-
-            if (Menu.superclass._handleKeydown.call(this, e)) {
-                return true;
-            }
+        _handleKeyEventInternal:function(e) {
 
             // Give the highlighted control the chance to handle the key event.
             var highlightedItem = this.get("highlightedItem");
@@ -169,11 +149,6 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
-            // 普通菜单可聚焦
-            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-            focusable:{
-                value:true
-            },
             /**
              * 当前高亮的儿子菜单项
              */
@@ -183,14 +158,16 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
              */
             activeItem:{
                 view:true
-            },
-            visibleMode:{
-                value:"display"
             }
-        }
+        },
+        DefaultRender:MenuRender
     });
 
-    Menu.DefaultRender = MenuRender;
+    Component.UIStore.setUIByClass("menu", {
+        priority:10,
+        ui:Menu
+    });
+
     return Menu;
 
 }, {

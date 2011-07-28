@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>getVisibleRectForElement</title>
+<style>
+    .flag {
+        background: yellow;
+        opacity: 0.5;
+        filter: alpha(opacity = 50);
+        position: absolute;
+        z-index: 9999;
+    }
+</style>
+</head>
+<body>
+
+<h1>按键高亮元素可移动范围</h1>
+
+<h3>
+    click document first , then press 1 or 2 or 3 or 4 or 5 or 6
+</h3>
+
+<div style="position: relative;
+height: 50px;
+overflow: auto;">
+    <div>
+        x<br/>
+        x<br/>
+    </div>
+    <div id="d1" style="height:100px;width: 50px;">
+        1 - 50*100
+    </div>
+</div>
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+<div style="width: 50px;height: 100px;" id="d2">
+    2 - 50*100
+</div>
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+<div style="width: 50px;height: 100px;position: absolute;overflow: hidden">
+    <div style="width: 50px;height: 100px;position: relative;" id="d3">
+        3 - 50*100
+    </div>
+</div>
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div style="width: 50px;height: 100px;overflow: hidden">
+    <div style="width: 50px;height: 100px;position: absolute;" id="d4">
+        4 - 50*100
+    </div>
+</div>
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div style="width: 50px;height: 100px;overflow: hidden">
+    <div style="height: 150px;"></div>
+    <div style="width: 50px;height: 100px;position: absolute;" id="d5">
+        5 - 50*100
+    </div>
+</div>
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<div style="width: 50px;height: 100px;overflow: hidden">
+    <div style="width: 50px;height: 100px;position: relative;" id="d6">
+        6 - 50*100
+    </div>
+</div>
+
+
+<script src="../../../build/kissy.js"></script>
+
+<script>
+    KISSY.ready(function(S) {
+        var DOM = S.DOM,
+                UA = S.UA,
+                Node = S.Node,
+                Event = S.Event;
+        /**
+         * inspired by closure library by Google
+         */
+
+        /**
+         * 得到影响元素显示的父亲元素
+         */
+        function getOffsetParent(element) {
+            // ie 这个也不是完全可行
+            /**
+             <div style="width: 50px;height: 100px;overflow: hidden">
+             <div style="width: 50px;height: 100px;position: relative;" id="d6">
+             元素 6 高 100px 宽 50px<br/>
+             </div>
+             </div>
+             **/
+//            if (UA['ie']) {
+//                return element.offsetParent;
+//            }
+            var body = element.ownerDocument.body,
+                    positionStyle = DOM.css(element, 'position'),
+                    skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
+
+            for (var parent = element.parentNode;
+                 parent && parent != body;
+                 parent = parent.parentNode) {
+
+                positionStyle = DOM.css(parent, 'position');
+
+                skipStatic = skipStatic && positionStyle == 'static';
+
+                var parentOverflow = DOM.css(parent, "overflow");
+
+                // 必须有 overflow 属性，可能会隐藏掉子孙元素
+                if (parentOverflow != 'visible' && (
+                    // 元素初始为 fixed absolute ，遇到 父亲不是 定位元素忽略
+                    // 否则就可以
+                        !skipStatic ||
+                                positionStyle == 'fixed' ||
+                                positionStyle == 'absolute' ||
+                                positionStyle == 'relative'
+                        )) {
+                    return parent;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * 获得元素的显示部分的区域
+         */
+        function getVisibleRectForElement(element) {
+            var visibleRect = {
+                left:0,
+                right:Infinity,
+                top:0,
+                bottom:Infinity
+            };
+
+            for (var el = element; el = getOffsetParent(el);) {
+
+
+                var clientWidth = el.clientWidth,
+                        clientHeight = el.clientHeight;
+
+                if (
+                // clientWidth is zero for inline block elements in IE.
+                        (!UA['ie'] || clientWidth != 0)
+                // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
+                // && (!UA['webkit'] || clientHeight != 0 || el != body)
+                // overflow 不为 visible 则可以限定其内元素
+                // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
+                // offsetParent 已经判断过了
+                //&& DOM.css(el, 'overflow') != 'visible'
+                        ) {
+                    var scrollWidth = el.scrollWidth,
+                            scrollHeight = el.scrollHeight,
+                            clientLeft = el.clientLeft,
+                            clientTop = el.clientTop,
+                            pos = DOM.offset(el),
+                            client = {
+                                left:clientLeft,
+                                top:clientTop
+                            };
+                    pos.left += client.left;
+                    pos.top += client.top;
+
+                    visibleRect.top = Math.max(visibleRect.top, pos.top);
+                    visibleRect.right = Math.min(visibleRect.right,
+                            pos.left + el.clientWidth);
+                    visibleRect.bottom = Math.min(visibleRect.bottom,
+                            pos.top + el.clientHeight);
+                    visibleRect.left = Math.max(visibleRect.left, pos.left);
+                }
+            }
+
+            var scrollX = DOM.scrollLeft(),
+                    scrollY = DOM.scrollTop(),
+                    originalLeft = visibleRect.left,
+                    originalTop = visibleRect.top;
+
+            visibleRect.left = Math.max(visibleRect.left, scrollX);
+            visibleRect.top = Math.max(visibleRect.top, scrollY);
+            visibleRect.right = Math.min(visibleRect.right, scrollX + DOM.viewportWidth());
+            visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + DOM.viewportHeight());
+
+            return visibleRect.top >= 0 && visibleRect.left >= 0 &&
+                    visibleRect.bottom > visibleRect.top &&
+                    visibleRect.right > visibleRect.left ?
+                    visibleRect : null;
+        }
+
+        var map = {},$ = S.all;
+
+        Event.on(document, "keydown", function(ev) {
+            var index = ev.keyCode - 48;
+            if (index > 0 && index < 7) {
+                //debugger
+                var id = 'd' + index;
+                var rect = getVisibleRectForElement(DOM.get("#" + id));
+                if (rect) {
+                    S.log(rect);
+                    var d = map[id];
+                    if (!d) {
+                        d = map[id] = $("<div class='flag' style='display: none'/>").prependTo("body");
+                    }
+                    if (d.css("display") == "none") {
+                        d.width(rect.right - rect.left);
+                        d.height(rect.bottom - rect.top);
+                        d.show();
+                        d.offset({
+                            left:rect.left,
+                            top:rect.top
+                        });
+                    } else {
+                        d.hide();
+                    }
+                } else {
+                    alert("找不到可视区域");
+                    document.body.focus();
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

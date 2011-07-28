@@ -1,31 +1,37 @@
+<?xml version="1.0"?>
+<!--
+    构建 core kissy kissy-aio
+-->
 <project name="packages.build" default="build" basedir=".">
     <description>Component Build File</description>
 
+    <!--
+    only copyright min file
+    pkg file has been copyright individually
+    -->
     <property name="copyright.files" value="*-min.css, *-min.js"/>
-    <dirname property="current.dir" file="${ant.file.packages.build}"/>
-
-    <import file="${current.dir}/../../tools/build.xml"/>
-
     <property name="component.name" value="packages"/>
     <property name="component.files" value="*.css, *.js"/>
+    <property name="src.dir" value="${ant.file.packages.build}/../"/>
 
-    <property name="nodejs.patch.file" location="${kissy.dir}/tools/nodejs-patch/patch.js"/>
+    <import file="../../common.xml"/>
 
-    <tstamp>
-        <format property="timestamp.isoformat"
-                pattern="yyyyMMddHHmmss" locale="en"/>
-    </tstamp>
+    <property name="nodejs.patch.file"
+              location="${kissy.dir}/tools/nodejs-patch/patch.js"/>
 
-    <target name="pre-clean">
+    <target name="build-seed">
+        <!--
+        build seed first，刷新 seed 前的时间戳到最新
+        seed 的时间戳也代表 kissy 以及 kissy-aio 的时间戳
+        -->
         <delete>
-            <fileset dir="." includes="${component.files}"/>
+            <!--每次都要重新 build seed-->
+            <fileset dir="../" includes="seed*.js"/>
         </delete>
+        <ant dir="${kissy.src.dir}/seed/" inheritall="false"/>
     </target>
 
-    <target name="concat">
-
-        <!-- using module compiler to gen core.js -->
-        <delete file="${current.dir}/core-pkg.js"/>
+    <target name="concat" depends="build-seed">
 
         <!--
             不使用 java -jar fork 的话，新开 jvm 和后面的 concat 不串行了
@@ -40,7 +46,7 @@
             <arg value="-outputEncoding"/>
             <arg value="utf-8"/>
             <arg value="-output"/>
-            <arg value="${current.dir}/core-pkg.js"/>
+            <arg value="${src.dir}/core-pkg.js"/>
             <classpath>
                 <pathelement location="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
                 <pathelement path="${java.class.path}"/>
@@ -51,89 +57,65 @@
             use core 直接放入 core.js 中 ??
             有的应用会先载入 seed.js，再载入 core.js ，希望能立刻用到 core 的东西
         -->
-        <concat destfile="${current.dir}/core_tmp.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="${current.dir}/core-pkg.js"/>
+        <concat destfile="${src.dir}/core.tmp.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <path path="${src.dir}/core-pkg.js"/>
             <footer filtering="no" trimleading="yes">
                 KISSY.use('core');
             </footer>
         </concat>
 
-        <delete file="${current.dir}/core-pkg.js"/>
-        <move tofile="${current.dir}/core-pkg.js" file="${current.dir}/core_tmp.js"/>
-
+        <move tofile="${src.dir}/core-pkg.js"
+              file="${src.dir}/core.tmp.js"/>
 
         <!-- kissy: seed + core, 独立单文件 -->
-        <concat destfile="kissy-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="../seed.js"/>
-            <path path="${current.dir}/core-pkg.js"/>
-            <!--
-            <footer filtering="no" trimleading="yes">
-                KISSY.use('core');
-            </footer>
-            -->
+        <concat destfile="${src.dir}/kissy-pkg.js"
+                encoding="${charset}" outputencoding="${charset}">
+            <path path="${kissy.build.dir}/seed.js"/>
+            <path path="${src.dir}/core-pkg.js"/>
         </concat>
+
         <!-- kissy-aio: 所有文件 -->
-        <concat destfile="kissy-aio-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="kissy-pkg.js"/>
-            <path path="../sizzle.js"/>
-            <path path="../datalazyload.js"/>
-            <path path="../template.js"/>
-            <path path="../flash.js"/>
-            <path path="../dd.js"/>
-            <path path="../resizable.js"/>
-            <path path="../uibase.js"/>
-            <path path="../component.js"/>
-            <path path="../switchable.js"/>
-            <path path="../overlay.js"/>
-            <path path="../suggest.js"/>
-            <path path="../imagezoom.js"/>
-            <path path="../calendar.js"/>
-            <path path="../menu.js"/>
-            <path path="../button.js"/>
-            <path path="../menubutton.js"/>
-            <path path="../validation.js"/>
+        <concat destfile="${src.dir}/kissy-aio-pkg.js"
+                encoding="${charset}"
+                outputencoding="${charset}">
+            <path path="${src.dir}/kissy-pkg.js"/>
+            <path path="${kissy.build.dir}/sizzle.js"/>
+            <path path="${kissy.build.dir}/datalazyload.js"/>
+            <path path="${kissy.build.dir}/template.js"/>
+            <path path="${kissy.build.dir}/flash.js"/>
+            <path path="${kissy.build.dir}/dd.js"/>
+            <path path="${kissy.build.dir}/resizable.js"/>
+            <path path="${kissy.build.dir}/uibase.js"/>
+            <path path="${kissy.build.dir}/component.js"/>
+            <path path="${kissy.build.dir}/switchable.js"/>
+            <path path="${kissy.build.dir}/overlay.js"/>
+            <path path="${kissy.build.dir}/suggest.js"/>
+            <path path="${kissy.build.dir}/imagezoom.js"/>
+            <path path="${kissy.build.dir}/calendar.js"/>
+            <path path="${kissy.build.dir}/menu.js"/>
+            <path path="${kissy.build.dir}/button.js"/>
+            <path path="${kissy.build.dir}/menubutton.js"/>
+            <path path="${kissy.build.dir}/validation.js"/>
         </concat>
-    </target>
-
-    <target name="clean">
-
-        <replaceregexp match="@DEBUG@"
-                       replace=""
-                       flags="g"
-                       byline="true"
-                       encoding="${charset}">
-            <fileset dir="${current.dir}"
-                     includes="*-min.js"/>
-        </replaceregexp>
-
-        <replaceregexp match="@TIMESTAMP@"
-                       replace="${timestamp.isoformat}"
-                       flags="g"
-                       byline="true"
-                       encoding="${charset}">
-            <fileset dir="${current.dir}"
-                     includes="*.js"/>
-        </replaceregexp>
-
-        <!--保持原有文件-->
-        <copy todir="${current.dir}/../">
-            <fileset dir="${current.dir}" includes="*.js"/>
-            <regexpmapper from="(.+)-pkg(.+)" to="\1\2"/>
-        </copy>
-
     </target>
 
     <!--
     apply nodejs patch to kissy.js
     -->
     <target name="nodejs-patch">
-        <concat destfile="${current.dir}/kissy-nodejs-pkg.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${src.dir}/kissy-nodejs-pkg.js"
+                encoding="${charset}"
+                outputencoding="${charset}">
             <path location="${nodejs.patch.file}"/>
-            <path location="${current.dir}/kissy-pkg.js"/>
+            <path location="${src.dir}/kissy-pkg.js"/>
         </concat>
     </target>
 
-    <target name="build"
-            depends="pre-clean,concat,nodejs-patch,compress,native2ascii,copyright,clean">
+    <target name="clean">
+        <delete dir="${src.dir}" includes="${component.files}"/>
+    </target>
+
+    <target name="build" depends="concat,nodejs-patch,common.build,clean">
     </target>
 </project>

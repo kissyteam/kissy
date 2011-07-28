@@ -6,6 +6,12 @@ KISSY.use("dom,event", function(S, DOM, Event) {
 
     S.get = DOM.get;
     S.query = DOM.query;
+    var simulate = function(target, type, relatedTarget) {
+        if (typeof target === 'string') {
+            target = DOM.get(target);
+        }
+        jasmine.simulate(target, type, { relatedTarget: relatedTarget });
+    };
     describe('delegate', function() {
 
         it("should invoke correctly", function() {
@@ -58,7 +64,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             runs(function() {
                 expect(ret + "").toBe([] + "");
                 var eventDesc = Event._data(S.get('#test-delegate'));
-                expect(eventDesc).toBe(null);
+                expect(eventDesc).toBe(undefined);
             });
 
         });
@@ -109,7 +115,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             runs(function() {
                 expect(ret + "").toBe([] + "");
                 var eventDesc = Event._data(S.get('#test-delegate'));
-                expect(eventDesc).toBe(null);
+                expect(eventDesc).toBe(undefined);
             });
 
         });
@@ -205,6 +211,60 @@ KISSY.use("dom,event", function(S, DOM, Event) {
                 expect(ret + "").toBe([9] + "");
 
                 DOM.remove(d);
+            });
+
+        });
+
+
+        it("should delegate mouseenter/leave properly", function() {
+            var t = S.now();
+            var code = "<div id='d1" + t + "' style='width:500px;height:500px;border:1px solid red;'>" +
+                "<div id='d2" + t + "' class='t' style='width:300px;height:300px;margin:150px;border:1px solid green;'>" +
+                "<div id='d3" + t + "' style='width:100px;height:100px;margin:150px;border:1px solid black;'>" +
+                "</div>" +
+                "</div>" +
+                "</div>";
+            DOM.append(DOM.create(code), document.body);
+            var d1 = DOM.get("#d1" + t),
+                d2 = DOM.get("#d2" + t),
+                d3 = DOM.get("#d3" + t);
+
+            t = "";
+            var type = "";
+            Event.delegate(d1, 'mouseenter', '.t', function(e) {
+                type = e.type;
+                t = e.target.id;
+            });
+
+            simulate(d1, "mouseover", document);
+
+            waits(100);
+
+            runs(function() {
+                expect(t).toBe("");
+                expect(type).toBe("");
+                t = "";
+                type = "";
+                simulate(d2, "mouseover", d1);
+            });
+
+
+            waits(100);
+
+            runs(function() {
+                expect(t).toBe(d2.id);
+                expect(type).toBe("mouseenter");
+                t = "";
+                type = "";
+                simulate(d3, "mouseover", d2);
+            });
+
+            waits(100);
+
+            runs(function() {
+                expect(t).toBe("");
+                expect(type).toBe("");
+                DOM.remove(d1);
             });
 
         });

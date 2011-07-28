@@ -11,6 +11,9 @@
 <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
 <script src="../../../build/kissy.js"></script>
+<script>
+    KISSY.Config.base = "../../";
+</script>
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
 <body>
@@ -238,59 +241,59 @@
 <h3 class="s-title">多个触发元素公用一个 Popup</h3>
 <div class="s-section">
     <style>
-            .shop-rank {
-                width: 300px;
-                font-size: 12px;
-            }
+        .shop-rank {
+            width: 300px;
+            font-size: 12px;
+        }
 
-            .shop-rank  li {
-                border-bottom: 1px dashed #EEEEEE;
-                height: 42px;
-                overflow: hidden;
-                padding: 9px 0;
-            }
+        .shop-rank  li {
+            border-bottom: 1px dashed #EEEEEE;
+            height: 42px;
+            overflow: hidden;
+            padding: 9px 0;
+        }
 
-            .shop-rank .pic {
-                border: 1px solid #CCCCCC;
-                float: left;
-                height: 40px;
-                margin-right: 10px;
-                text-align: center;
-                width: 40px;
-            }
+        .shop-rank .pic {
+            border: 1px solid #CCCCCC;
+            float: left;
+            height: 40px;
+            margin-right: 10px;
+            text-align: center;
+            width: 40px;
+        }
 
-            .shop-rank .pic a {
-                display: table-cell;
-                height: 40px;
-                text-align: center;
-                vertical-align: middle;
-                width: 40px;
-            }
+        .shop-rank .pic a {
+            display: table-cell;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            width: 40px;
+        }
 
-            .shop-rank .pic img {
-                vertical-align: middle;
-            }
+        .shop-rank .pic img {
+            vertical-align: middle;
+        }
 
-            .shop-rank .desc, .shop-rank .price {
-                float: left;
-                height: 14px;
-                line-height: 1.2;
-                overflow: hidden;
-                text-align: left;
-                width: 120px;
-            }
+        .shop-rank .desc, .shop-rank .price {
+            float: left;
+            height: 14px;
+            line-height: 1.2;
+            overflow: hidden;
+            text-align: left;
+            width: 120px;
+        }
 
-            .shop-rank .collecter, .shop-rank .sale {
-                float: left;
-                line-height: 1.4;
-                overflow: hidden;
-                width: 120px;
-            }
+        .shop-rank .collecter, .shop-rank .sale {
+            float: left;
+            line-height: 1.4;
+            overflow: hidden;
+            width: 120px;
+        }
 
-            #popup3 {
-                background: white;
-            }
-        </style>
+        #popup3 {
+            background: white;
+        }
+    </style>
     <div class="s-demo">
         <div class="shop-rank" id="multi">
             <ul>

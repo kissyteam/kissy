@@ -1,6 +1,6 @@
 /**
  * test loader for 1.1x and 1.2 both
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S) {
     var d = window.location.href.replace(/[^/]*$/, "");

@@ -1,6 +1,7 @@
 /**
  * @module  UIBase
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
@@ -160,6 +161,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
     }
 
     UIBase.HTML_PARSER = {};
+
     UIBase.ATTRS = {
         // 是否已经渲染完毕
         rendered:{
@@ -176,8 +178,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 return Node.one(document.body);
             },
             setter:function(v) {
-                if (S.isString(v))
-                    return Node.one(v);
+                return Node.one(v);
             }
         }
     };
@@ -268,7 +269,10 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 if (attrs.hasOwnProperty(a)) {
                     var m = UI_SET + capitalFirst(a);
                     //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m] && self.get(a) !== undefined) {
+                    if (self[m]
+                        // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
+                        && attrs[a].sync !== false
+                        && self.get(a) !== undefined) {
                         self[m](self.get(a));
                     }
                 }

@@ -1,15 +1,15 @@
 <project name="base.build" default="build" basedir=".">
     <description>Component Build File</description>
 
-    <import file="../../tools/build.xml"/>
-
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
+    <import file="../../tools/common.xml"/>
+
     <target name="concat">
         <concat destfile="base-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="*.js" />
-            <path location="../base.js" />
+            <fileset dir="${src.dir}" includes="*.js"/>
+            <path location="../base.js"/>
         </concat>
     </target>
 

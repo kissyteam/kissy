@@ -1,6 +1,6 @@
 /**
  * aria support for carousel
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 

@@ -1,14 +1,23 @@
 /**
  * model and control base class for kissy
  * @author yiminghe@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function(S, UIBase) {
+KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
     function wrapperViewSetter(attrName) {
-        return function(value) {
-            this.get("view").set(attrName, value);
+        return function(ev) {
+            var value = ev.newVal;
+            this.get("view") && this.get("view").set(attrName, value);
         };
     }
+
+    function wrapperViewGetter(attrName) {
+        return function(v) {
+            return v !== undefined ? v : this.get("view") && this.get("view").get(attrName);
+        };
+    }
+
 
     /**
      * 不使用 valueFn
@@ -27,16 +36,17 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             /**
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
-            var attrs = self.__attrs,cfg = {};
+            var attrs = self.__attrs,
+                attrVals = self.__attrVals,
+                cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
-                    if (attrCfg.view
-                        // 如果用户没设，不要帮他设 undefined
-                        // attribute get 判断是 name in attrs
-                        // 使用 get ，属性可以只在控制层设置默认值，如果有有效值，这里通过参数传给 view 层
-                        && (v = self.get(attrName)) !== undefined) {
-                        cfg[attrName] = v;
+                    if (attrCfg.view) {
+                        // 只设置用户设置的值
+                        if ((v = attrVals[attrName]) !== undefined) {
+                            cfg[attrName] = v;
+                        }
                     }
                 }
             }
@@ -45,7 +55,37 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         return 0;
     }
 
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
+
     return UIBase.create([UIBase.Box], {
+
+            getCls:UIStore.getCls,
+
+            initializer:function() {
+                /**
+                 * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
+                 */
+                var self = this,
+                    attrs = self.__attrs;
+                for (var attrName in attrs) {
+                    if (attrs.hasOwnProperty(attrName)) {
+                        var attrCfg = attrs[attrName];
+                        if (attrCfg.view) {
+                            // setter 不应该有实际操作，仅用于正规化比较好
+                            // attrCfg.setter = wrapperViewSetter(attrName);
+                            self.on("after" + capitalFirst(attrName) + "Change",
+                                wrapperViewSetter(attrName));
+                            // 逻辑层读值直接从 view 层读
+                            // 那么如果存在默认值也设置在 view 层
+                            attrCfg.getter = wrapperViewGetter(attrName);
+                        }
+                    }
+                }
+
+            },
 
             /**
              * control 层的渲染 ui 就是 render view
@@ -65,19 +105,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             createDom:function() {
                 var self = this;
-                /**
-                 * 将 view 的属性转发过去
-                 * 用户一般实际上只需在一个地点设置
-                 */
-                var attrs = self.__attrs;
-                for (var attrName in attrs) {
-                    if (attrs.hasOwnProperty(attrName)) {
-                        var attrCfg = attrs[attrName];
-                        if (attrCfg.view && !self['_uiSet' + capitalFirst(attrName)]) {
-                            self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
-                        }
-                    }
-                }
                 var view = self.get("view") || getDefaultView.call(self);
                 if (!view) {
                     S.error("no view for");
@@ -91,9 +118,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 self.set("view", view);
             },
 
+            /**
+             * Returns the DOM element into which child components are to be rendered,
+             or null if the container itself hasn't been rendered yet.  Overrides
+             */
             getContentElement:function() {
                 var view = this.get('view');
-                return view.get("contentEl") || view.get("el");
+                return view && view.getContentElement();
             },
 
 
@@ -153,8 +184,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             },
 
             removeChildren:function(destroy) {
+                var t = [];
                 S.each(this.get("children"), function(c) {
-                    destroy && c.destroy();
+                    t.push(c);
+                });
+                var self = this;
+                S.each(t, function(c) {
+                    self.removeChild(c, destroy);
                 });
                 this.set("children", []);
             },
@@ -173,16 +209,21 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     el.on("mouseleave", self._handleMouseLeave, self);
                     el.on("mousedown", self._handleMouseDown, self);
                     el.on("mouseup", self._handleMouseUp, self);
-                    el.on("click", self._handleClick, self);
+                    el.on("dblclick", self._handleDblClick, self);
                 } else {
                     el.detach("mouseenter", self._handleMouseEnter, self);
                     el.detach("mouseleave", self._handleMouseLeave, self);
                     el.detach("mousedown", self._handleMouseDown, self);
                     el.detach("mouseup", self._handleMouseUp, self);
-                    el.detach("click", self._handleClick, self);
+                    el.detach("dblclick", self._handleDblClick, self);
                 }
             },
 
+            _handleDblClick:function(e) {
+                if (!this.get("disabled")) {
+                    this._performInternal(e);
+                }
+            },
             isMouseEventWithinElement_:function(e, elem) {
                 var relatedTarget = e.relatedTarget;
                 relatedTarget = relatedTarget && S.one(relatedTarget)[0];
@@ -194,12 +235,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return true;
                 }
             },
-            _forwordToView:function(method, ev) {
-                var self = this,
-                    view = self.get("view");
-                view[method] && view[method](ev);
-            },
-
             _handleMouseOver:function(e) {
                 if (this.get("disabled")) {
                     return true;
@@ -227,23 +262,22 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
             /**
              * root element handler for mouse enter
-             * @param ev
              */
-            _handleMouseEnter:function(ev) {
+            _handleMouseEnter:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseEnter', ev);
+                this.set("highlighted", true);
             },
             /**
              * root element handler for mouse leave
-             * @param ev
              */
-            _handleMouseLeave:function(ev) {
+            _handleMouseLeave:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseLeave', ev);
+                this.set("active", false);
+                this.set("highlighted", false);
             },
             /**
              * root element handler for mouse down
@@ -253,11 +287,18 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseDown', ev);
-                var el = this.get("el");
+                if (ev.which == 1 && this.get("activeable")) {
+                    this.set("active", true);
+                }
+                var el = this.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
+                }
+                // Cancel the default action unless the control allows text selection.
+                if (ev.which == 1 && !this.get("allowTextSelection_")) {
+                    // firefox 不会引起焦点转移
+                    ev.preventDefault();
                 }
             },
             /**
@@ -269,13 +310,12 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 if (v) {
                     el.on("focus", self._handleFocus, self);
                     el.on("blur", self._handleBlur, self);
-                    el.on("keydown", self.__handleKeydown, self);
+                    el.on("keydown", self._handleKeydown, self);
                 } else {
                     el.detach("focus", self._handleFocus, self);
                     el.detach("blur", self._handleBlur, self);
-                    el.detach("keydown", self.__handleKeydown, self);
+                    el.detach("keydown", self._handleKeydown, self);
                 }
-                self.get("view").set("focusable", v);
             },
 
             /**
@@ -286,70 +326,53 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             },
             /**
              * root element handler for mouse up
-             * @param ev
              */
             _handleMouseUp:function(ev) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseUp', ev);
+                // 左键
+                if (this.get("active") && ev.which == 1) {
+                    this._performInternal(ev);
+                    this.set("active", false);
+                }
             },
             /**
              * root element handler for focus
-             * @param ev
              */
-            _handleFocus:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView('_handleFocus', ev);
+            _handleFocus:function() {
+                this.set("focused", true);
             },
             /**
              * root element handler for blur
-             * @param ev
              */
-            _handleBlur:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView('_handleBlur', ev);
+            _handleBlur:function() {
+                this.set("focused", false);
             },
 
-            _handleKeydown:function(ev) {
-                this._forwordToView('_handleKeydown', ev);
+            _handleKeyEventInternal:function(ev) {
+                if (ev.keyCode == 13) {
+                    return this._performInternal(ev);
+                }
             },
             /**
              * root element handler for keydown
              * @param ev
              */
-            __handleKeydown:function(ev) {
+            _handleKeydown:function(ev) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                var self = this,
-                    view = self.get("view");
-                // 默认情况下空格和 enter 直接交给 click 负责
-                if (ev.keyCode == 13 || ev.keyCode == 32) {
-                    ev.preventDefault();
-                    return self._handleClick(ev);
-                } else {
-                    return this._handleKeydown(ev);
+                if (this._handleKeyEventInternal(ev)) {
+                    ev.halt();
+                    return true;
                 }
             },
 
             /**
-             * root element handler for mouse enter
+             * root element handler for click
              */
-            _handleClick:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView("_handleClick", ev);
-            },
-
-            _uiSetDisabled:function(d) {
-                var view = this.get("view");
-                view.set("disabled", d);
+            _performInternal:function() {
             },
 
             destructor:function() {
@@ -366,15 +389,56 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         },
         {
             ATTRS:{
+                /**
+                 *  session state
+                 */
 
-                // 是否绑定鼠标事件
+                    // 是否绑定鼠标事件
                 handleMouseEvents:{
                     value:true
                 },
 
                 // 是否支持焦点处理
                 focusable:{
+                    /*
+                     *  observer synchronization , model 分成两类：
+                     *                view 负责监听 view 类 model 变化更新界面
+                     *                control 负责监听 control 类变化改变逻辑
+                     *  problem : Observer behavior is hard to understand and debug because it's implicit behavior.
+                     *
+                     *  Keeping screen state and session state synchronized is an important task
+                     *  Data Binding
+                     */
+                    view:true
+                    /**
+                     * In general data binding gets tricky
+                     * because if you have to avoid cycles where a change to the control,
+                     * changes the record set, which updates the control,
+                     * which updates the record set....
+                     * The flow of usage helps avoid these -
+                     * we load from the session state to the screen when the screen is opened,
+                     * after that any changes to the screen state propagate back to the session state.
+                     * It's unusual for the session state to be updated directly once the screen is up.
+                     * As a result data binding might not be entirely bi-directional -
+                     * just confined to initial upload and
+                     * then propagating changes from the controls to the session state.
+                     */
+                    // sync
+                },
+
+                activeable:{
                     value:true
+                },
+
+                focused:{
+                    view:true
+                },
+                active:{
+                    view:true
+                },
+
+                highlighted:{
+                    view:true
                 },
 
                 //子组件
@@ -398,8 +462,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 // 转交给渲染层
                 prefixCls:{
-                    view:true,
-                    value:"ks-"
+                    view:true
                 },
 
                 render:{
@@ -417,7 +480,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 //是否禁用
                 disabled:{
-                    value:false,
                     view:true
                 },
 
@@ -427,13 +489,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             }
         });
-
-    function capitalFirst(s) {
-        s = s + '';
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
 }, {
-    requires:['uibase']
+    requires:['uibase','./uistore']
 });
 /**
  *  Note:

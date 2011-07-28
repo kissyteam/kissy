@@ -1,13 +1,13 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 13 21:47
+build time: Jul 22 15:53
 */
 /**
  * container can delegate event for its children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/container", function(S, UIBase, MC) {
+KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
 
     return UIBase.create(MC, {
         bindUI:function() {
@@ -36,6 +36,33 @@ KISSY.add("component/container", function(S, UIBase, MC) {
                 }
             }
         },
+
+        decorateInternal:function(el) {
+            var self = this;
+            self.set("el", el);
+            self.decorateChildren(el);
+        },
+        /**
+         * container 需要在装饰时对儿子特殊处理，递归装饰
+         */
+        decorateChildren:function(el) {
+            var self = this,children = el.children();
+            children.each(function(c) {
+                var cls = c.attr("class") || "",
+                    prefixCls = self.get("prefixCls");
+                // 过滤掉特定前缀
+                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+                var UI = UIStore.getUIByClass(cls);
+                if (!UI) {
+                    S.log(c);
+                    S.error("can not find ui " + cls + " from this markup");
+                }
+                self.addChild(new UI({
+                    srcNode:c,
+                    prefixCls:prefixCls
+                }));
+            });
+        },
         getOwnerControl:function(node) {
             var self = this,
                 children = self.get("children"),
@@ -43,7 +70,7 @@ KISSY.add("component/container", function(S, UIBase, MC) {
                 elem = this.get('view').get("el")[0];
             while (node && node !== elem) {
                 for (var i = 0; i < len; i++) {
-                    if (children[i].get("view").get("el")[0] === node) {
+                    if (children[i].get("el")[0] === node) {
                         return children[i];
                     }
                 }
@@ -55,18 +82,27 @@ KISSY.add("component/container", function(S, UIBase, MC) {
     });
 
 }, {
-    requires:['uibase','./modelcontrol']
+    requires:['uibase','./modelcontrol','./uistore']
 });/**
  * model and control base class for kissy
  * @author yiminghe@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function(S, UIBase) {
+KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
     function wrapperViewSetter(attrName) {
-        return function(value) {
-            this.get("view").set(attrName, value);
+        return function(ev) {
+            var value = ev.newVal;
+            this.get("view") && this.get("view").set(attrName, value);
         };
     }
+
+    function wrapperViewGetter(attrName) {
+        return function(v) {
+            return v || this.get("view") && this.get("view").get(attrName);
+        };
+    }
+
 
     /**
      * 不使用 valueFn
@@ -85,16 +121,17 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
             /**
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
-            var attrs = self.__attrs,cfg = {};
+            var attrs = self.__attrs,
+                attrVals = self.__attrVals,
+                cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
-                    if (attrCfg.view
-                        // 如果用户没设，不要帮他设 undefined
-                        // attribute get 判断是 name in attrs
-                        // 使用 get ，属性可以只在控制层设置默认值，如果有有效值，这里通过参数传给 view 层
-                        && (v = self.get(attrName)) !== undefined) {
-                        cfg[attrName] = v;
+                    if (attrCfg.view) {
+                        // 只设置用户设置的值
+                        if ((v = attrVals[attrName]) !== undefined) {
+                            cfg[attrName] = v;
+                        }
                     }
                 }
             }
@@ -103,7 +140,37 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         return 0;
     }
 
+    function capitalFirst(s) {
+        s = s + '';
+        return s.charAt(0).toUpperCase() + s.substring(1);
+    }
+
     return UIBase.create([UIBase.Box], {
+
+            getCls:UIStore.getCls,
+
+            initializer:function() {
+                /**
+                 * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
+                 */
+                var self = this,
+                    attrs = self.__attrs;
+                for (var attrName in attrs) {
+                    if (attrs.hasOwnProperty(attrName)) {
+                        var attrCfg = attrs[attrName];
+                        if (attrCfg.view) {
+                            // setter 不应该有实际操作，仅用于正规化比较好
+                            // attrCfg.setter = wrapperViewSetter(attrName);
+                            self.on("after" + capitalFirst(attrName) + "Change",
+                                wrapperViewSetter(attrName));
+                            // 逻辑层读值直接从 view 层读
+                            // 那么如果存在默认值也设置在 view 层
+                            attrCfg.getter = wrapperViewGetter(attrName);
+                        }
+                    }
+                }
+
+            },
 
             /**
              * control 层的渲染 ui 就是 render view
@@ -123,19 +190,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
              */
             createDom:function() {
                 var self = this;
-                /**
-                 * 将 view 的属性转发过去
-                 * 用户一般实际上只需在一个地点设置
-                 */
-                var attrs = self.__attrs;
-                for (var attrName in attrs) {
-                    if (attrs.hasOwnProperty(attrName)) {
-                        var attrCfg = attrs[attrName];
-                        if (attrCfg.view && !self['_uiSet' + capitalFirst(attrName)]) {
-                            self['_uiSet' + capitalFirst(attrName)] = wrapperViewSetter(attrName);
-                        }
-                    }
-                }
                 var view = self.get("view") || getDefaultView.call(self);
                 if (!view) {
                     S.error("no view for");
@@ -149,9 +203,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 self.set("view", view);
             },
 
+            /**
+             * Returns the DOM element into which child components are to be rendered,
+             or null if the container itself hasn't been rendered yet.  Overrides
+             */
             getContentElement:function() {
                 var view = this.get('view');
-                return view.get("contentEl") || view.get("el");
+                return view && view.getContentElement();
             },
 
 
@@ -312,10 +370,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     return true;
                 }
                 this._forwordToView('_handleMouseDown', ev);
-                var el = this.get("el");
+                var el = this.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
+                }
+                // Cancel the default action unless the control allows text selection.
+                if (ev.which == 1 && !this.get("allowTextSelection_")) {
+                    // firefox 不会引起焦点转移
+                    ev.preventDefault();
                 }
             },
             /**
@@ -333,7 +396,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                     el.detach("blur", self._handleBlur, self);
                     el.detach("keydown", self.__handleKeydown, self);
                 }
-                self.get("view").set("focusable", v);
             },
 
             /**
@@ -405,11 +467,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 this._forwordToView("_handleClick", ev);
             },
 
-            _uiSetDisabled:function(d) {
-                var view = this.get("view");
-                view.set("disabled", d);
-            },
-
             destructor:function() {
                 var self = this;
                 var children = self.get("children");
@@ -424,15 +481,41 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
         },
         {
             ATTRS:{
+                /**
+                 *  session state
+                 */
 
-                // 是否绑定鼠标事件
+                    // 是否绑定鼠标事件
                 handleMouseEvents:{
                     value:true
                 },
 
                 // 是否支持焦点处理
                 focusable:{
-                    value:true
+                    /*
+                     *  observer synchronization , model 分成两类：
+                     *                view 负责监听 view 类 model 变化更新界面
+                     *                control 负责监听 control 类变化改变逻辑
+                     *  problem : Observer behavior is hard to understand and debug because it's implicit behavior.
+                     *
+                     *  Keeping screen state and session state synchronized is an important task
+                     *  Data Binding
+                     */
+                    view:true
+                    /**
+                     * In general data binding gets tricky
+                     * because if you have to avoid cycles where a change to the control,
+                     * changes the record set, which updates the control,
+                     * which updates the record set....
+                     * The flow of usage helps avoid these -
+                     * we load from the session state to the screen when the screen is opened,
+                     * after that any changes to the screen state propagate back to the session state.
+                     * It's unusual for the session state to be updated directly once the screen is up.
+                     * As a result data binding might not be entirely bi-directional -
+                     * just confined to initial upload and
+                     * then propagating changes from the controls to the session state.
+                     */
+                    // sync
                 },
 
                 //子组件
@@ -456,8 +539,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 // 转交给渲染层
                 prefixCls:{
-                    view:true,
-                    value:"ks-"
+                    view:true
                 },
 
                 render:{
@@ -475,7 +557,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
 
                 //是否禁用
                 disabled:{
-                    value:false,
                     view:true
                 },
 
@@ -485,13 +566,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
                 }
             }
         });
-
-    function capitalFirst(s) {
-        s = s + '';
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
 }, {
-    requires:['uibase']
+    requires:['uibase','./uistore']
 });
 /**
  *  Note:
@@ -501,11 +577,19 @@ KISSY.add("component/modelcontrol", function(S, UIBase) {
  **//**
  * render base class for kissy
  * @author yiminghe@gmail.com
+ * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/render", function(S, UIBase) {
+KISSY.add("component/render", function(S, UIBase, UIStore) {
     return UIBase.create([UIBase.Box.Render], {
+
+        getCls:UIStore.getCls,
+
         getKeyEventTarget:function() {
             return this.get("el");
+        },
+
+        getContentElement:function() {
+            return this.get("contentEl") || this.get("el");
         },
 
         _uiSetFocusable:function(v) {
@@ -519,26 +603,77 @@ KISSY.add("component/render", function(S, UIBase) {
         }
     }, {
         ATTRS:{
+            /**
+             *  screen state
+             */
+
             //从 maskup 中渲染
             srcNode:{},
-            prefixCls:{},
-            focusable:{},
+            prefixCls:{
+                value:"ks-"
+            },
+            focusable:{
+                value:true
+            },
             //是否禁用
-            disabled:{}
+            disabled:{
+                value:false
+            }
         }
     });
 }, {
-    requires:['uibase']
+    requires:['uibase','./uistore']
+});KISSY.add("component/uistore", function() {
+    var uis = {
+        // 不带前缀 prefixCls
+        /*
+         "menu" :{
+         priority:0,
+         ui:Menu
+         }
+         */
+    };
+
+    function getUIByClass(cls) {
+        var cs = cls.split(/\s+/),p = -1,ui = null;
+        for (var i = 0; i < cs.length; i++) {
+            var uic = uis[cs[i]];
+            if (uic && uic.priority > p) {
+                ui = uic.ui;
+            }
+        }
+        return ui;
+    }
+
+    function setUIByClass(cls, uic) {
+        uis[cls] = uic;
+    }
+
+
+    function getCls(cls) {
+        var cs = cls.split(/\s+/);
+        for (var i = 0; i < cs.length; i++) {
+            cs[i] = this.get("prefixCls") + cs[i];
+        }
+        return cs.join(" ");
+    }
+
+    return {
+        getCls:getCls,
+        getUIByClass:getUIByClass,
+        setUIByClass:setUIByClass
+    };
 });/**
  * mvc based component framework for kissy
  * @author:yiminghe@gmail.com
  */
-KISSY.add("component", function(S, ModelControl, Render, Container) {
+KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
     return {
         ModelControl:ModelControl,
         Render:Render,
-        Container:Container
+        Container:Container,
+        UIStore:UIStore
     };
 }, {
-    requires:['component/modelcontrol','component/render','component/container']
+    requires:['component/modelcontrol','component/render','component/container','component/uistore']
 });

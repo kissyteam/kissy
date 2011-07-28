@@ -1,6 +1,6 @@
 /**
  * status constants
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function(S,data) {
     if("require" in this) return;
