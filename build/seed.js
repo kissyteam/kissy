@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 27 14:07
+build time: Jul 28 10:45
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 27 14:07
              */
             version: '1.20dev',
 
-            buildTime:'20110727140740',
+            buildTime:'20110728104524',
 
             /**
              * Returns a new object containing all of the properties of
@@ -704,11 +704,14 @@ build time: Jul 27 14:07
         bind:function(fn, obj) {
             var slice = [].slice,
                 args = slice.call(arguments, 2),
+                fNOP = function () {
+                },
                 bound = function () {
-                    return fn.apply(this instanceof bound ? this : obj,
+                    return fn.apply(this instanceof fNOP ? this : obj,
                         args.concat(slice.call(arguments)));
                 };
-            bound.prototype = fn.prototype;
+            fNOP.prototype = fn.prototype;
+            bound.prototype = new fNOP();
             return bound;
         },
 

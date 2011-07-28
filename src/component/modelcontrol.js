@@ -295,7 +295,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
                 }
-                // Cancel the default action unless the control allows text selection.
+                // Cancel the default action unless the control
+                // allows text selection.
                 if (ev.which == 1 && !this.get("allowTextSelection_")) {
                     // firefox 不会引起焦点转移
                     ev.preventDefault();

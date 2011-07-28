@@ -15,11 +15,14 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("resize"),
         require("mask"),
         Effect
-    ], {
+    ], {}, {
         ATTRS:{
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
+            },
+            allowTextSelection_:{
+                value:true
             }
         }
     });

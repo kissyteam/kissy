@@ -348,7 +348,7 @@
             },
 
         /**
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          */
         reduce:/*
          NaN ?
@@ -394,22 +394,25 @@
 
         /**
          * it is not same with native bind
-         * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
         bind:function(fn, obj) {
             var slice = [].slice,
                 args = slice.call(arguments, 2),
+                fNOP = function () {
+                },
                 bound = function () {
-                    return fn.apply(this instanceof bound ? this : obj,
+                    return fn.apply(this instanceof fNOP ? this : obj,
                         args.concat(slice.call(arguments)));
                 };
-            bound.prototype = fn.prototype;
+            fNOP.prototype = fn.prototype;
+            bound.prototype = new fNOP();
             return bound;
         },
 
         /**
          * Gets current date in milliseconds.
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
