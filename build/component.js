@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 11:51
+build time: Jul 28 12:26
 */
 /**
  * container can delegate event for its children
@@ -130,7 +130,10 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                     var attrCfg = attrs[attrName],v;
                     if (attrCfg.view) {
                         // 只设置用户设置的值
-                        if ((v = attrVals[attrName]) !== undefined) {
+                        if (
+                        // (v = attrVals[attrName])
+                            ( v = self.get(attrName) )
+                                !== undefined) {
                             cfg[attrName] = v;
                         }
                     }

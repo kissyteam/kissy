@@ -72,7 +72,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                     },
 
                     getter:function() {
-                        return S.indexOf(this.get("selectedItem"), this.get("menu").get("children"));
+                        return S.indexOf(this.get("selectedItem"),
+                            this.get("menu").get("children"));
                     }
                 },
 
