@@ -37,14 +37,18 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
             var attrs = self.__attrs,
-                attrVals = self.__attrVals,
+                // attrVals = self.__attrVals,
                 cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
                     if (attrCfg.view) {
                         // 只设置用户设置的值
-                        if ((v = attrVals[attrName]) !== undefined) {
+                        // 考虑 c 上的默认值
+                        if (
+                        // (v = attrVals[attrName])
+                            ( v = self.get(attrName) )
+                                !== undefined) {
                             cfg[attrName] = v;
                         }
                     }
@@ -295,7 +299,8 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
                 }
-                // Cancel the default action unless the control allows text selection.
+                // Cancel the default action unless the control
+                // allows text selection.
                 if (ev.which == 1 && !this.get("allowTextSelection_")) {
                     // firefox 不会引起焦点转移
                     ev.preventDefault();

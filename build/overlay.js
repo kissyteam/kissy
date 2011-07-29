@@ -1,11 +1,11 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 28 15:35
 */
 /**
  * KISSY Overlay
- * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -50,7 +50,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  */
 /**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/ariarender", function(S, Node) {
 
@@ -156,7 +156,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
         requires:["node"]
     });/**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/aria", function() {
     function Aria() {
@@ -235,7 +235,7 @@ KISSY.add("overlay/aria", function() {
     requires:['anim']
 });/**
  * model and control for overlay
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effect) {
     function require(s) {
@@ -250,11 +250,14 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("resize"),
         require("mask"),
         Effect
-    ], {
+    ], {}, {
         ATTRS:{
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
+            },
+            allowTextSelection_:{
+                value:true
             }
         }
     });
@@ -278,7 +281,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
     requires:['uibase','./overlayrender','./ariarender']
 });/**
  * KISSY.Dialog
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
@@ -317,7 +320,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
 /**
  * KISSY.Popup
- * @author: 乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
+ * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 

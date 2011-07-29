@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 21 20:49
+build time: Jul 28 15:34
 */
 /**
  * @module   anim
@@ -197,6 +197,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 var val = DOM.css(elem, prop),
                     num = parseFloat(val),
                     unit = (val + '').replace(/^[-\d.]+/, '');
+                // 不能动画的量，插值直接设为最终，下次也不运行
                 if (isNaN(num)) {
                     return {v:unit,u:'',f:mirror};
                 }
@@ -259,10 +260,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 source = {},
                 prop;
 
-            // already running,please stop first
-            if (self.isRunning) {
-                return;
-            }
             if (self.fire(EVENT_START) === false) return;
 
             self.stop(); // 先停止掉正在运行的动画
@@ -455,7 +452,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 self = this,
                 elem = self.domEl,
                 prefix = self.transitionName;
-            transition[prefix + 'Property'] = "";
+            transition[prefix + 'Property'] = NONE;
             transition[prefix + 'Duration'] = "";
             transition[prefix + 'TimingFunction'] = "";
             DOM.css(elem, transition);
@@ -596,7 +593,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  */
 /**
  * special patch for making color gradual change
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
@@ -718,8 +715,9 @@ KISSY.add('anim/easing', function(S) {
      * @param {Number} d Total length of animation d = 1
      */
 
-    var M = Math, PI = M.PI,
-        pow = M.pow, sin = M.sin,
+    var PI = Math.PI,
+        pow = Math.pow,
+        sin = Math.sin,
         BACK_CONST = 1.70158,
 
         Easing = {
@@ -909,7 +907,7 @@ KISSY.add('anim/easing', function(S) {
  */
 /**
  * single timer for the whole anim module
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
     var tag = S.guid("anim-"),id = 1;
@@ -980,7 +978,7 @@ KISSY.add("anim/manager", function(S) {
     };
 });/**
  * special patch for animate scroll property of element
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/scroll", function(S, DOM, Anim) {
 

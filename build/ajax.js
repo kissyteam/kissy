@@ -1,11 +1,11 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:34
 */
 /**
  * a scalable client io framework
- * @author: yiminghe@gmail.com , lijing00333@163.com
+ * @author  yiminghe@gmail.com , lijing00333@163.com
  */
 KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
@@ -235,7 +235,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  *      内存占用
  **//**
  * form data  serialization util
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
     var enc = encodeURIComponent;
@@ -301,7 +301,7 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
         requires:['./base',"dom","./form-serializer"]
     });/**
  * non-refresh upload file with form by iframe
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
@@ -433,7 +433,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
         requires:["dom","event","./base"]
     });/**
  * jsonp transport based on script transport
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function(S, io) {
 
@@ -503,7 +503,7 @@ KISSY.add("ajax/jsonp", function(S, io) {
     });/**
  * script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/script", function(S, io) {
 
@@ -793,7 +793,7 @@ KISSY.add("ajax/xhr", function(S, io) {
  * 借鉴 jquery，优化使用原型替代闭包
  **//**
  * encapsulation of io object . as transaction object in yui3
- * @author: yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 

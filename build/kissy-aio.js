@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 27 14:07
+build time: Jul 29 12:18
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 27 14:07
              */
             version: '1.20dev',
 
-            buildTime:'20110727140740',
+            buildTime:'20110729121838',
 
             /**
              * Returns a new object containing all of the properties of
@@ -653,7 +653,7 @@ build time: Jul 27 14:07
             },
 
         /**
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          */
         reduce:/*
          NaN ?
@@ -699,22 +699,25 @@ build time: Jul 27 14:07
 
         /**
          * it is not same with native bind
-         * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
         bind:function(fn, obj) {
             var slice = [].slice,
                 args = slice.call(arguments, 2),
+                fNOP = function () {
+                },
                 bound = function () {
-                    return fn.apply(this instanceof bound ? this : obj,
+                    return fn.apply(this instanceof fNOP ? this : obj,
                         args.concat(slice.call(arguments)));
                 };
-            bound.prototype = fn.prototype;
+            fNOP.prototype = fn.prototype;
+            bound.prototype = new fNOP();
             return bound;
         },
 
         /**
          * Gets current date in milliseconds.
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
@@ -1206,7 +1209,7 @@ build time: Jul 27 14:07
          */
         getStyle:function(url, success, charset) {
             var doc = document,
-                head = doc.getElementsByTagName("head")[0],
+                head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('link'),
                 config = success;
 
@@ -1247,7 +1250,7 @@ build time: Jul 27 14:07
                 return S.getStyle(url, success, charset);
             }
             var doc = document,
-                head = doc.getElementsByTagName("head")[0],
+                head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('script'),
                 config = success,
                 error,
@@ -9415,29 +9418,31 @@ KISSY.add("ajax/xhr", function(S, io) {
  */
 KISSY.add("ajax/script", function(S, io) {
 
-    io.setupConfig({
-            accepts:{
-                script:"text/javascript, " +
-                    "application/javascript, " +
-                    "application/ecmascript, " +
-                    "application/x-ecmascript"
-            },
+    var doc = document;
 
-            contents:{
-                script:/javascript|ecmascript/
-            },
-            converters:{
-                text:{
-                    // 如果以 xhr+eval 需要下面的，
-                    // 否则直接 script node 不需要，引擎自己执行了，
-                    // 不需要手动 eval
-                    script:function(text) {
-                        S.globalEval(text);
-                        return text;
-                    }
+    io.setupConfig({
+        accepts:{
+            script:"text/javascript, " +
+                "application/javascript, " +
+                "application/ecmascript, " +
+                "application/x-ecmascript"
+        },
+
+        contents:{
+            script:/javascript|ecmascript/
+        },
+        converters:{
+            text:{
+                // 如果以 xhr+eval 需要下面的，
+                // 否则直接 script node 不需要，引擎自己执行了，
+                // 不需要手动 eval
+                script:function(text) {
+                    S.globalEval(text);
+                    return text;
                 }
             }
-        });
+        }
+    });
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
@@ -9450,80 +9455,85 @@ KISSY.add("ajax/script", function(S, io) {
     }
 
     S.augment(ScriptTransport, {
-            send:function() {
-                var self = this,
-                    script,
-                    xhrObj = this.xhrObj,
-                    c = xhrObj.config,
-                    head = document['head'] ||
-                        document.getElementsByTagName("head")[0] ||
-                        document.documentElement;
-                self.head = head;
-                script = document.createElement("script");
-                self.script = script;
-                script.async = "async";
+        send:function() {
+            var self = this,
+                script,
+                xhrObj = this.xhrObj,
+                c = xhrObj.config,
+                head = doc['head'] ||
+                    doc.getElementsByTagName("head")[0] ||
+                    doc.documentElement;
+            self.head = head;
+            script = doc.createElement("script");
+            self.script = script;
+            script.async = "async";
 
-                if (c['scriptCharset']) {
-                    script.charset = c['scriptCharset'];
-                }
-
-                script.src = c.url;
-
-                script.onerror =
-                    script.onload =
-                        script.onreadystatechange = function(e) {
-                            e = e || window.event;
-                            // firefox onerror 没有 type ?!
-                            self._callback((e.type || "error").toLowerCase());
-                        };
-
-                head.insertBefore(script, head.firstChild);
-            },
-
-            _callback:function(event, abort) {
-                var script = this.script,
-                    xhrObj = this.xhrObj,
-                    head = this.head;
-
-                if (abort ||
-                    !script.readyState ||
-                    /loaded|complete/.test(script.readyState)
-                    || event == "error"
-                    ) {
-
-                    script['onerror'] = script.onload = script.onreadystatechange = null;
-
-                    // Remove the script
-                    if (head && script.parentNode) {
-                        head.removeChild(script);
-                    }
-
-                    this.script = undefined;
-                    this.head = undefined;
-
-                    // Callback if not abort
-                    if (!abort && event != "error") {
-                        xhrObj.callback(200, "success");
-                    }
-                    // 非 ie<9 可以判断出来
-                    else if (event == "error") {
-                        xhrObj.callback(500, "scripterror");
-                    }
-                }
-            },
-
-            abort:function() {
-                this._callback(0, 1);
+            if (c['scriptCharset']) {
+                script.charset = c['scriptCharset'];
             }
-        });
+
+            script.src = c.url;
+
+            script.onerror =
+                script.onload =
+                    script.onreadystatechange = function(e) {
+                        e = e || window.event;
+                        // firefox onerror 没有 type ?!
+                        self._callback((e.type || "error").toLowerCase());
+                    };
+
+            head.insertBefore(script, head.firstChild);
+        },
+
+        _callback:function(event, abort) {
+            var script = this.script,
+                xhrObj = this.xhrObj,
+                head = this.head;
+
+            // 防止重复调用,成功后 abort
+            if (!script) {
+                return;
+            }
+
+            if (abort ||
+                !script.readyState ||
+                /loaded|complete/.test(script.readyState)
+                || event == "error"
+                ) {
+
+                script['onerror'] = script.onload = script.onreadystatechange = null;
+
+                // Remove the script
+                if (head && script.parentNode) {
+                    head.removeChild(script);
+                }
+
+                this.script = undefined;
+                this.head = undefined;
+
+                // Callback if not abort
+                if (!abort && event != "error") {
+                    xhrObj.callback(200, "success");
+                }
+                // 非 ie<9 可以判断出来
+                else if (event == "error") {
+                    xhrObj.callback(500, "scripterror");
+                }
+            }
+        },
+
+        abort:function() {
+            this._callback(0, 1);
+        }
+    });
 
     io.setupTransport("script", ScriptTransport);
 
     return io;
 
 }, {
-        requires:['./base','./xhr']
-    });
+    requires:['./base','./xhr']
+});
 
 /**
  * jsonp transport based on script transport
@@ -9532,12 +9542,12 @@ KISSY.add("ajax/script", function(S, io) {
 KISSY.add("ajax/jsonp", function(S, io) {
 
     io.setupConfig({
-            jsonp:"callback",
-            jsonpCallback:function() {
-                //不使用 now() ，极端情况下可能重复
-                return S.guid("jsonp");
-            }
-        });
+        jsonp:"callback",
+        jsonpCallback:function() {
+            //不使用 now() ，极端情况下可能重复
+            return S.guid("jsonp");
+        }
+    });
 
     io.on("start", function(e) {
         var xhr = e.xhr,c = xhr.config;
@@ -9553,8 +9563,11 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
             // build temporary JSONP function
             window[jsonpCallback] = function(r) {
-                //debugger
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
+                // jsonp 返回了数组
+                if (arguments.length > 1) {
+                    r = S.makeArray(arguments);
+                }
                 response = [r];
             };
 
@@ -9593,8 +9606,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
     return io;
 }, {
-        requires:['./base']
-    });
+    requires:['./base']
+});
 
 /**
  * form data  serialization util
@@ -9675,14 +9688,14 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     var doc = document;
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
-            converters:{
-                // iframe 到其他类型的转化和 text 一样
-                iframe:io.getConfig().converters.text,
-                text:{
-                    iframe:function(text) {
-                        return text;
-                    }
-                }}});
+        converters:{
+            // iframe 到其他类型的转化和 text 一样
+            iframe:io.getConfig().converters.text,
+            text:{
+                iframe:function(text) {
+                    return text;
+                }
+            }}});
 
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe");
@@ -9723,82 +9736,86 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     }
 
     S.augment(IframeTransport, {
-            send:function() {
-                //debugger
-                var xhr = this.xhr,
-                    c = xhr.config,
-                    fields,
-                    form = DOM.get(c.form);
+        send:function() {
+            //debugger
+            var xhr = this.xhr,
+                c = xhr.config,
+                fields,
+                form = DOM.get(c.form);
 
-                this.attrs = {
-                    target:DOM.attr(form, "target") || "",
-                    action:DOM.attr(form, "action") || ""
-                };
-                this.form = form;
+            this.attrs = {
+                target:DOM.attr(form, "target") || "",
+                action:DOM.attr(form, "action") || ""
+            };
+            this.form = form;
 
-                createIframe(xhr);
+            createIframe(xhr);
 
-                // set target to iframe to avoid main page refresh
-                DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
+            // set target to iframe to avoid main page refresh
+            DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
 
-                if (c.data) {
-                    fields = addDataToForm(c.data, form, c.serializeArray);
-                }
-
-                this.fields = fields;
-
-                var iframe = xhr.iframe;
-
-                Event.on(iframe, "load error", this._callback, this);
-
-                form.submit();
-
-            },
-
-            _callback:function(event, abort) {
-                //debugger
-                var form = this.form,
-                    xhr = this.xhr,
-                    eventType = event.type,
-                    iframe = xhr.iframe;
-
-                DOM.attr(form, this.attrs);
-
-                if (eventType == "load") {
-                    var iframeDoc = iframe.contentWindow.document;
-                    xhr.responseXML = iframeDoc;
-                    xhr.responseText = DOM.text(iframeDoc.body);
-                    xhr.callback(200, "success");
-                } else if (eventType == 'error') {
-                    xhr.callback(500, "error");
-                }
-
-                removeFieldsFromData(this.fields);
-
-
-                Event.detach(iframe);
-
-                setTimeout(function() {
-                    // firefox will keep loading if not settimeout
-                    DOM.remove(iframe);
-                }, 30);
-
-                // nullify to prevent memory leak?
-                xhr.iframe = null;
-            },
-
-            abort:function() {
-                this._callback(0, 1);
+            if (c.data) {
+                fields = addDataToForm(c.data, form, c.serializeArray);
             }
-        });
+
+            this.fields = fields;
+
+            var iframe = xhr.iframe;
+
+            Event.on(iframe, "load error", this._callback, this);
+
+            form.submit();
+
+        },
+
+        _callback:function(event, abort) {
+            //debugger
+            var form = this.form,
+                xhr = this.xhr,
+                eventType = event.type,
+                iframe = xhr.iframe;
+            // 防止重复调用 , 成功后 abort
+            if (!iframe) {
+                return;
+            }
+
+            DOM.attr(form, this.attrs);
+
+            if (eventType == "load") {
+                var iframeDoc = iframe.contentWindow.document;
+                xhr.responseXML = iframeDoc;
+                xhr.responseText = DOM.text(iframeDoc.body);
+                xhr.callback(200, "success");
+            } else if (eventType == 'error') {
+                xhr.callback(500, "error");
+            }
+
+            removeFieldsFromData(this.fields);
+
+
+            Event.detach(iframe);
+
+            setTimeout(function() {
+                // firefox will keep loading if not settimeout
+                DOM.remove(iframe);
+            }, 30);
+
+            // nullify to prevent memory leak?
+            xhr.iframe = null;
+        },
+
+        abort:function() {
+            this._callback(0, 1);
+        }
+    });
 
     io.setupTransport("iframe", IframeTransport);
 
     return io;
 
 }, {
-        requires:["dom","event","./base"]
-    });
+    requires:["dom","event","./base"]
+});
 
 KISSY.add("ajax", function(S, io) {
     var undef = undefined;
@@ -10287,7 +10304,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 28 15:35
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -11367,7 +11384,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:35
 */
 /**
  * 数据延迟加载组件
@@ -11858,7 +11875,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 28 15:35
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12096,7 +12113,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:35
 */
 /**
  * @module   Flash 全局静态类
@@ -12607,11 +12624,11 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:35
 */
 /**
  * dd support for kissy , dd objects central management module
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
@@ -12966,7 +12983,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
     });
 /**
  * dd support for kissy, drag for dd
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
@@ -13166,7 +13183,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 });
 /**
  * droppable for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
@@ -13251,7 +13268,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
 }, { requires:["node","base","./ddm"] });/**
  * generate proxy drag object,
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/proxy", function(S, Node) {
     var DESTRUCTOR_ID = "__proxy_destructors",
@@ -13353,7 +13370,7 @@ KISSY.add("dd/proxy", function(S, Node) {
     requires:['node']
 });/**
  * delegate all draggable nodes to one draggable object
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
     function Delegate() {
@@ -13464,7 +13481,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
     requires:['./ddm','./draggable','dom','node']
 });/**
  * only one droppable instance for multiple droppable nodes
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
     function DroppableDelegate() {
@@ -13586,7 +13603,7 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
         requires:['./ddm','./droppable','dom','node']
     });/**
  * auto scroll for drag object's container
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
@@ -13793,7 +13810,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
     requires:['base','node','dom']
 });/**
  * dd support for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate, Scroll) {
     var dd = {
@@ -13821,11 +13838,11 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 28 15:35
 */
 /**
  * resizable support for kissy
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  * @requires: dd
  */
 KISSY.add("resizable/base", function(S, Node, D, UIBase) {
@@ -13986,7 +14003,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 25 17:24
+build time: Jul 28 15:36
 */
 /**
  * UIBase.Align
@@ -15663,7 +15680,7 @@ KISSY.add("uibase/position", function(S) {
     return Position;
 });/**
  * position and visible extension，可定位的隐藏层
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/positionrender", function() {
 
@@ -15988,7 +16005,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:53
+build time: Jul 28 15:35
 */
 /**
  * container can delegate event for its children
@@ -16024,6 +16041,22 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
             }
         },
 
+        getOwnerControl:function(node) {
+            var self = this,
+                children = self.get("children"),
+                len = children.length,
+                elem = this.get('view').get("el")[0];
+            while (node && node !== elem) {
+                for (var i = 0; i < len; i++) {
+                    if (children[i].get("el")[0] === node) {
+                        return children[i];
+                    }
+                }
+                node = node.parentNode;
+            }
+            return null;
+        },
+
         decorateInternal:function(el) {
             var self = this;
             self.set("el", el);
@@ -16049,21 +16082,6 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                     prefixCls:prefixCls
                 }));
             });
-        },
-        getOwnerControl:function(node) {
-            var self = this,
-                children = self.get("children"),
-                len = children.length,
-                elem = this.get('view').get("el")[0];
-            while (node && node !== elem) {
-                for (var i = 0; i < len; i++) {
-                    if (children[i].get("el")[0] === node) {
-                        return children[i];
-                    }
-                }
-                node = node.parentNode;
-            }
-            return null;
         }
 
     });
@@ -16086,7 +16104,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
     function wrapperViewGetter(attrName) {
         return function(v) {
-            return v || this.get("view") && this.get("view").get(attrName);
+            return v !== undefined ? v : this.get("view") && this.get("view").get(attrName);
         };
     }
 
@@ -16109,14 +16127,18 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
             var attrs = self.__attrs,
-                attrVals = self.__attrVals,
+                // attrVals = self.__attrVals,
                 cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
                     if (attrCfg.view) {
                         // 只设置用户设置的值
-                        if ((v = attrVals[attrName]) !== undefined) {
+                        // 考虑 c 上的默认值
+                        if (
+                        // (v = attrVals[attrName])
+                            ( v = self.get(attrName) )
+                                !== undefined) {
                             cfg[attrName] = v;
                         }
                     }
@@ -16256,8 +16278,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
             },
 
             removeChildren:function(destroy) {
+                var t = [];
                 S.each(this.get("children"), function(c) {
-                    destroy && c.destroy();
+                    t.push(c);
+                });
+                var self = this;
+                S.each(t, function(c) {
+                    self.removeChild(c, destroy);
                 });
                 this.set("children", []);
             },
@@ -16276,16 +16303,21 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                     el.on("mouseleave", self._handleMouseLeave, self);
                     el.on("mousedown", self._handleMouseDown, self);
                     el.on("mouseup", self._handleMouseUp, self);
-                    el.on("click", self._handleClick, self);
+                    el.on("dblclick", self._handleDblClick, self);
                 } else {
                     el.detach("mouseenter", self._handleMouseEnter, self);
                     el.detach("mouseleave", self._handleMouseLeave, self);
                     el.detach("mousedown", self._handleMouseDown, self);
                     el.detach("mouseup", self._handleMouseUp, self);
-                    el.detach("click", self._handleClick, self);
+                    el.detach("dblclick", self._handleDblClick, self);
                 }
             },
 
+            _handleDblClick:function(e) {
+                if (!this.get("disabled")) {
+                    this._performInternal(e);
+                }
+            },
             isMouseEventWithinElement_:function(e, elem) {
                 var relatedTarget = e.relatedTarget;
                 relatedTarget = relatedTarget && S.one(relatedTarget)[0];
@@ -16297,12 +16329,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                     return true;
                 }
             },
-            _forwordToView:function(method, ev) {
-                var self = this,
-                    view = self.get("view");
-                view[method] && view[method](ev);
-            },
-
             _handleMouseOver:function(e) {
                 if (this.get("disabled")) {
                     return true;
@@ -16330,23 +16356,22 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
             /**
              * root element handler for mouse enter
-             * @param ev
              */
-            _handleMouseEnter:function(ev) {
+            _handleMouseEnter:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseEnter', ev);
+                this.set("highlighted", true);
             },
             /**
              * root element handler for mouse leave
-             * @param ev
              */
-            _handleMouseLeave:function(ev) {
+            _handleMouseLeave:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseLeave', ev);
+                this.set("active", false);
+                this.set("highlighted", false);
             },
             /**
              * root element handler for mouse down
@@ -16356,13 +16381,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseDown', ev);
+                if (ev.which == 1 && this.get("activeable")) {
+                    this.set("active", true);
+                }
                 var el = this.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
                 }
-                // Cancel the default action unless the control allows text selection.
+                // Cancel the default action unless the control
+                // allows text selection.
                 if (ev.which == 1 && !this.get("allowTextSelection_")) {
                     // firefox 不会引起焦点转移
                     ev.preventDefault();
@@ -16377,11 +16405,11 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (v) {
                     el.on("focus", self._handleFocus, self);
                     el.on("blur", self._handleBlur, self);
-                    el.on("keydown", self.__handleKeydown, self);
+                    el.on("keydown", self._handleKeydown, self);
                 } else {
                     el.detach("focus", self._handleFocus, self);
                     el.detach("blur", self._handleBlur, self);
-                    el.detach("keydown", self.__handleKeydown, self);
+                    el.detach("keydown", self._handleKeydown, self);
                 }
             },
 
@@ -16393,65 +16421,53 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
             },
             /**
              * root element handler for mouse up
-             * @param ev
              */
             _handleMouseUp:function(ev) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseUp', ev);
+                // 左键
+                if (this.get("active") && ev.which == 1) {
+                    this._performInternal(ev);
+                    this.set("active", false);
+                }
             },
             /**
              * root element handler for focus
-             * @param ev
              */
-            _handleFocus:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView('_handleFocus', ev);
+            _handleFocus:function() {
+                this.set("focused", true);
             },
             /**
              * root element handler for blur
-             * @param ev
              */
-            _handleBlur:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView('_handleBlur', ev);
+            _handleBlur:function() {
+                this.set("focused", false);
             },
 
-            _handleKeydown:function(ev) {
-                this._forwordToView('_handleKeydown', ev);
+            _handleKeyEventInternal:function(ev) {
+                if (ev.keyCode == 13) {
+                    return this._performInternal(ev);
+                }
             },
             /**
              * root element handler for keydown
              * @param ev
              */
-            __handleKeydown:function(ev) {
+            _handleKeydown:function(ev) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                var self = this,
-                    view = self.get("view");
-                // 默认情况下空格和 enter 直接交给 click 负责
-                if (ev.keyCode == 13 || ev.keyCode == 32) {
-                    ev.preventDefault();
-                    return self._handleClick(ev);
-                } else {
-                    return this._handleKeydown(ev);
+                if (this._handleKeyEventInternal(ev)) {
+                    ev.halt();
+                    return true;
                 }
             },
 
             /**
-             * root element handler for mouse enter
+             * root element handler for click
              */
-            _handleClick:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView("_handleClick", ev);
+            _performInternal:function() {
             },
 
             destructor:function() {
@@ -16503,6 +16519,21 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                      * then propagating changes from the controls to the session state.
                      */
                     // sync
+                },
+
+                activeable:{
+                    value:true
+                },
+
+                focused:{
+                    view:true
+                },
+                active:{
+                    view:true
+                },
+
+                highlighted:{
+                    view:true
                 },
 
                 //子组件
@@ -16594,7 +16625,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
              *  screen state
              */
 
-            //从 maskup 中渲染
+                //从 maskup 中渲染
             srcNode:{},
             prefixCls:{
                 value:"ks-"
@@ -16602,10 +16633,12 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             focusable:{
                 value:true
             },
+            highlighted:{},
+            focused:{},
+            active:{},
+            render:{},
             //是否禁用
-            disabled:{
-                value:false
-            }
+            disabled:{}
         }
     });
 }, {
@@ -16652,7 +16685,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
     };
 });/**
  * mvc based component framework for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
     return {
@@ -16667,7 +16700,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 28 15:35
 */
 /**
  * Switchable
@@ -17176,7 +17209,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
  */
 /**
  * common aria for switchable and stop autoplay if necessary
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 
@@ -17870,7 +17903,7 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
  */
 /**
  * aria support for carousel
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
@@ -18868,7 +18901,7 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
  */
 /**
  * aria support for slide
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 
@@ -19263,11 +19296,11 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 21:14
+build time: Jul 28 15:35
 */
 /**
  * KISSY Overlay
- * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -19312,7 +19345,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  */
 /**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/ariarender", function(S, Node) {
 
@@ -19418,7 +19451,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
         requires:["node"]
     });/**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/aria", function() {
     function Aria() {
@@ -19497,7 +19530,7 @@ KISSY.add("overlay/aria", function() {
     requires:['anim']
 });/**
  * model and control for overlay
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effect) {
     function require(s) {
@@ -19512,11 +19545,14 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("resize"),
         require("mask"),
         Effect
-    ], {
+    ], {}, {
         ATTRS:{
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
+            },
+            allowTextSelection_:{
+                value:true
             }
         }
     });
@@ -19540,7 +19576,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
     requires:['uibase','./overlayrender','./ariarender']
 });/**
  * KISSY.Dialog
- * @author: 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
@@ -19579,7 +19615,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
 /**
  * KISSY.Popup
- * @author: 乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
+ * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 
@@ -19726,7 +19762,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:43
+build time: Jul 28 15:35
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -20905,7 +20941,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:35
 */
 /**
  * @fileoverview 图像放大区域
@@ -21530,7 +21566,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:42
+build time: Jul 28 15:35
 */
 /**
  * KISSY Calendar
@@ -22809,9 +22845,106 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:53
+build time: Jul 28 15:35
 */
 /**
+ * deletable menuitem
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, DelMenuItemRender) {
+    var $ = Node.all;
+    var CLS = DelMenuItemRender.CLS,
+        DEL_CLS = DelMenuItemRender.DEL_CLS;
+    var DelMenuItem = UIBase.create(MenuItem, {
+        _performInternal:function(e) {
+            var target = $(e.target);
+            // 点击了删除
+            if (target.hasClass(this.getCls(DEL_CLS))) {
+                this.get("parent").removeChild(this, true);
+                this.get("parent").set("highlightedItem", null);
+                this.get("parent").fire("delete", {
+                    target:this
+                });
+                return true;
+            }
+            return MenuItem.prototype._performInternal.call(this, e);
+        },
+        _handleKeydown:function(e) {
+            // d 键
+            if (e.keyCode == 68) {
+                this.get("parent").removeChild(this, true);
+                this.get("parent").set("highlightedItem", null);
+                this.get("parent").fire("delete", {
+                    target:this
+                });
+                return true;
+            }
+        }
+    }, {
+        ATTRS:{
+            delTooltip:{
+                view:true
+            }
+        },
+        DefaultRender:DelMenuItemRender
+    });
+
+
+    Component.UIStore.setUIByClass(CLS, {
+        priority:40,
+        ui:DelMenuItem
+    });
+    return DelMenuItem;
+}, {
+    requires:['node','uibase','component','./menuitem','./delmenuitemrender']
+});/**
+ * deletable menuitemrender
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuItemRender) {
+    var CLS = "menuitem-deletable",
+        DEL_CLS = "menuitem-delete";
+    var DEL_TMPL = '<span class="{prefixCls}' + DEL_CLS + '" title="{tooltip}">X</span>';
+
+    function addDel(self) {
+        self.get("contentEl").append(S.substitute(DEL_TMPL, {
+            prefixCls:self.get("prefixCls"),
+            tooltip:self.get("delTooltip")
+        }));
+    }
+
+    return UIBase.create(MenuItemRender, {
+        renderUI:function() {
+            this.get("el").addClass(this.getCls(CLS))
+        },
+        createDom:function() {
+            addDel(this);
+        },
+        _uiSetContent:function(v) {
+            var self = this;
+            MenuItemRender.prototype._uiSetContent.call(self, v);
+            addDel(this);
+        },
+
+        _uiSetDelTooltip:function(v) {
+            this._uiSetContent(this.get("content"));
+        }
+    }, {
+        ATTRS:{
+            delTooltip:{}
+        },
+        HTML_PARSER:{
+            delEl:function(el) {
+                return el.one("." + this.getCls(DEL_CLS));
+            }
+        },
+        CLS:CLS,
+        DEL_CLS:DEL_CLS
+    });
+
+}, {
+    requires:['node','uibase','component','./menuitemrender']
+});/**
  *  menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
@@ -23077,10 +23210,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
         },
 
         _handleBlur:function(e) {
-            // 父亲不允许自己处理
-            if (Menu.superclass._handleBlur.call(this, e)) {
-                return true;
-            }
+            Menu.superclass._handleBlur.call(this, e);
             this.set("highlightedItem", undefined);
         },
 
@@ -23101,20 +23231,8 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             return undefined;
         },
 
-        _handleClick:function(e) {
-            if (Menu.superclass._handleClick.call(this, e))
-                return true;
-
-            var highlightedItem = this.get("highlightedItem");
-
-            //先看当前活跃 menuitem 是否要处理
-            if (highlightedItem && highlightedItem._handleClick(e)) {
-                return true;
-            }
-        },
-
         _handleKeydown:function(e) {
-            if (this._handleKeydownInternal(e)) {
+            if (this._handleKeyEventInternal(e)) {
                 e.halt();
                 return true;
             }
@@ -23131,11 +23249,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
          * @return {boolean} Whether the event was handled by the container (or one of
          *     its children).
          */
-        _handleKeydownInternal:function(e) {
-
-            if (Menu.superclass._handleKeydown.call(this, e)) {
-                return true;
-            }
+        _handleKeyEventInternal:function(e) {
 
             // Give the highlighted control the chance to handle the key event.
             var highlightedItem = this.get("highlightedItem");
@@ -23281,11 +23395,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             this.get("parent").set("highlightedItem", undefined);
         },
 
-        _handleClick:function(e) {
-            // 父亲不允许自己处理
-            if (MenuItem.superclass._handleClick.call(this, e)) {
-                return true;
-            }
+        _performInternal:function(e) {
             // 可选
             if (this.get("selectable")) {
                 this.set("selected", true);
@@ -23298,6 +23408,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 // 使用熟悉的 target，而不是自造新词！
                 target:this
             });
+            return true;
         },
 
         _uiSetHighlighted:function(v) {
@@ -23357,10 +23468,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
             // option.value
             value:{},
-            highlighted:{
-                // 不要值，防止初始就调用
-                view:true
-            },
+
             checked:{
                 view:true
             },
@@ -23459,18 +23567,11 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
         },
 
-        _handleMouseDown:function() {
+        _uiSetActive:function(v) {
             var self = this,el = this.get("el");
-            el.addClass(self.getCls(ACTIVE_CLS));
-            el.attr("aria-pressed", true);
+            el[v?'addClass':'removeClass'](self.getCls(ACTIVE_CLS))
+                .attr("aria-pressed", v);
         },
-
-        _handleMouseUp:function() {
-            var self = this,el = this.get("el");
-            el.removeClass(self.getCls(ACTIVE_CLS));
-            el.attr("aria-pressed", false);
-        },
-
         containsElement:function(element) {
             var el = this.get("el");
             return el[0] == element || el.contains(element);
@@ -23484,7 +23585,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             focusable:{
                 value:false
             },
-            highlighted:{},
             selected:{},
             // @inheritedDoc
             // content:{},
@@ -23770,10 +23870,10 @@ KISSY.add(
                     menu && menu.hide();
                 },
 
-                _handleClick:function(ev) {
+                // click ，立即显示
+                _performInternal:function() {
+                    this.clearTimers();
                     this.showMenu();
-                    var menu = this.get("menu");
-                    return menu._handleClick(ev);
                 },
 
                 /**
@@ -23785,10 +23885,6 @@ KISSY.add(
                  * @return {boolean} Whether the event was handled.
                  */
                 _handleKeydown:function(e) {
-
-                    if (SubMenu.superclass._handleKeydown.call(this, e)) {
-                        return true;
-                    }
 
                     var menu = this.get("menu");
 
@@ -23954,7 +24050,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     },
     {
         requires:['uibase','./menuitemrender']
-    });KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu) {
+    });KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu, DelMenuItem) {
     Menu.Render = Render;
     Menu.Item = Item;
     Menu.Item.Render = ItemRender;
@@ -23963,6 +24059,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
     Menu.FilterMenu = FilterMenu;
+    Menu.DelMenuItem = DelMenuItem;
     return Menu;
 }, {
     requires:[
@@ -23975,13 +24072,15 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         'menu/separator',
         'menu/separatorrender',
         'menu/popupmenu',
-        'menu/filtermenu'
+        'menu/filtermenu',
+        'menu/delmenuitem',
+        'menu/delmenuitemrender'
     ]
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:53
+build time: Jul 28 15:34
 */
 /**
  * Model and Control for button
@@ -23989,13 +24088,29 @@ build time: Jul 22 15:53
  */
 KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
 
-    var Button = UIBase.create(Component.ModelControl,[UIBase.Contentbox],{
-        _handleClick:function(ev) {
-            var self = this;
-            // 如果父亲允许自己处理
-            if (!Button.superclass._handleClick.call(self, ev)) {
-                self.fire("click");
+    var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
+
+        bindUI:function() {
+            this.get("el").on("keyup", this._handleKeyEventInternal, this);
+        },
+
+        _handleKeyEventInternal:function(e) {
+            if (e.keyCode == 13 &&
+                e.type == "keydown" ||
+                e.keyCode == 32 &&
+                    e.type == "keyup") {
+                return this._performInternal(e);
             }
+            // Return true for space keypress (even though the event is handled on keyup)
+            // as preventDefault needs to be called up keypress to take effect in IE and
+            // WebKit.
+            return e.keyCode == 32;
+        },
+
+        /* button 的默认行为就是触发 click*/
+        _performInternal:function() {
+            var self = this;
+            self.fire("click");
         }
     }, {
         ATTRS:{
@@ -24087,41 +24202,20 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
         /**
          * @override
          */
-        _handleFocus:function() {
-            var self = this;
-            self.get("el").addClass(getCls(self,
+        _uiSetFocused:function(v) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(FOCUS_CLS)));
         },
 
         /**
          * @override
          */
-        _handleBlur:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(FOCUS_CLS)));
-        },
-
-        /**
-         * @override
-         */
-        _handleMouseEnter:function() {
-            var self = this;
-            self.get("el").addClass(getCls(self,
+        _uiSetHighlighted:function(v) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(HOVER_CLS)));
         },
-
-        /**
-         * @override
-         */
-        _handleMouseLeave:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(HOVER_CLS)));
-            // 鼠标离开时，默认设为鼠标松开状态
-            self._handleMouseUp();
-        },
-
 
         /**
          * 模拟原生 disabled 机制
@@ -24129,43 +24223,24 @@ KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
          */
         _uiSetDisabled:function(v) {
             var self = this,el = self.get("el");
-            if (v) {
-                el.addClass(getCls(self, self.getCls(DISABLED_CLS)))
-                    //不能被 tab focus 到
-                    //support aria
-                    .attr({
-                        "tabindex": -1,
-                        "aria-disabled": true
-                    });
-            } else {
-                el.removeClass(getCls(self,
-                    self.getCls(DISABLED_CLS)))
-                    .attr({
-                        "tabindex": 0,
-                        "aria-disabled": false
-                    });
-            }
+            el[v ? 'addClass' : 'removeClass'](getCls(self, self.getCls(DISABLED_CLS)))
+                //不能被 tab focus 到
+                //support aria
+                .attr({
+                    "tabindex": v ? -1 : 0,
+                    "aria-disabled": v
+                });
+
         },
 
         /**
          * @override
          */
-        _handleMouseDown:function() {
+        _uiSetActive:function(v) {
             var self = this;
-            self.get("el")
-                .addClass(getCls(self,
+            self.get("el")[v ? 'addClass' : 'removeClass'](getCls(self,
                 self.getCls(ACTIVE_CLS)))
-                .attr("aria-pressed", true);
-        },
-
-        /**
-         * @override
-         */
-        _handleMouseUp:function() {
-            var self = this;
-            self.get("el").removeClass(getCls(self,
-                self.getCls(ACTIVE_CLS)))
-                .attr("aria-pressed", false);
+                .attr("aria-pressed", !!v);
         }
 
     });
@@ -24250,7 +24325,7 @@ KISSY.add("button/nativerender", function(S, UIBase, ButtonRender) {
     requires:['uibase','./buttonrender']
 });/**
  * simulated button for kissy , inspired by goog button
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("button", function(S, Button, Render) {
     Button.Render = Render;
@@ -24261,7 +24336,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:53
+build time: Jul 29 11:56
 */
 /**
  * combination of menu and button ,similar to native select
@@ -24325,65 +24400,55 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         /**
          * @inheritDoc
          */
-        _handleKeydown:function(e) {
+        _handleKeyEventInternal:function(e) {
             var menu = this.get("menu");
+
+            // space 只在 keyup 时处理
+            if (e.keyCode == 32) {
+                // Prevent page scrolling in Chrome.
+                e.preventDefault();
+                if (e.type != "keyup") {
+                    return undefined;
+                }
+            } else if (e.type != "keydown") {
+                return undefined;
+            }
             //转发给 menu 处理
             if (menu && menu.get("visible")) {
                 var handledByMenu = menu._handleKeydown(e);
+                // esc
                 if (e.keyCode == 27) {
                     this.hideMenu();
                     return true;
                 }
                 return handledByMenu;
             }
-            if (e.keyCode == 38 || e.keyCode == 40) {
+
+            // Menu is closed, and the user hit the down/up/space key; open menu.
+            if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 32) {
                 this.showMenu();
                 return true;
             }
             return undefined;
         },
 
-        /**
-         * @inheritDoc
-         */
-        _handleBlur:function(e) {
-            if (MenuButton.superclass._handleBlur.call(this, e)) {
-                return true;
+        _performInternal:function() {
+            var menu = this.get("menu");
+            if (menu.get("visible")) {
+                // popup menu 监听 doc click ?
+                this.hideMenu();
             }
-            this.hideMenu();
+            else {
+                this.showMenu();
+            }
         },
 
         /**
          * @inheritDoc
          */
-        _handleClick:function(e) {
-            if (Button.superclass._handleClick.call(this, e)) {
-                return true;
-            }
-            var menu = this.get("menu");
-
-            // 鼠标点击只是简单隐藏，显示切换
-            if (e.type == 'click') {
-                if (menu.get("visible")) {
-                    // popup menu 监听 doc click ?
-                    this.hideMenu();
-                }
-                else {
-                    this.showMenu();
-                }
-            } else if (e.type == 'keydown') {
-                // enter 转发给 menu 处理
-                if (e.keyCode == 13) {
-                    if (menu.get("visible")) {
-                        menu._handleClick(e);
-                    }
-                } else if (e.keyCode == 32) {
-                    // Prevent page scrolling in Chrome.
-                    e.preventDefault();
-                    // space 只负责打开
-                    this.showMenu();
-                }
-            }
+        _handleBlur:function(e) {
+            MenuButton.superclass._handleBlur.call(this, e);
+            this.hideMenu();
         },
 
         /**
@@ -24486,7 +24551,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
     requires:["uibase","node","button","./menubuttonrender","menu","component"]
 });/**
  * render aria and drop arrow for menubutton
- * @author: yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
@@ -24642,7 +24707,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                     },
 
                     getter:function() {
-                        return S.indexOf(this.get("selectedItem"), this.get("menu").get("children"));
+                        return S.indexOf(this.get("selectedItem"),
+                            this.get("menu").get("children"));
                     }
                 },
 
@@ -24688,8 +24754,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
             var input = new Node("<input type='hidden' name='" + name
                 + "' value='" + curValue + "'>").insertBefore(element);
 
-            optionMenu.on("click", function(e) {
-                input.val(e.target.get("value"));
+            select.on("afterSelectedItemChange", function(e) {
+                input.val(e.newVal.get("value"));
             });
         }
         element.remove();
@@ -24719,10 +24785,10 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 20 18:57
+build time: Jul 28 15:36
 */
 /**
- * @author: 常胤 (lzlu.com)
+ * @author  常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
  */
@@ -24919,7 +24985,7 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
 }, { requires: ["dom","event","./utils","./define","./field","./warn","./rule"] });
 /**
  * Validation默认配置和常量
- * @author: 常胤 (lzlu.com)
+ * @author  常胤 (lzlu.com)
  */
 
 KISSY.add("validation/define",function(){
@@ -24970,7 +25036,7 @@ KISSY.add("validation/define",function(){
 });
 /**
  * Validation.Field
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote, Warn){
@@ -25322,7 +25388,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		
 }, { requires: ['dom',"event","./utils","./define","./rule","./rule/remote","./warn"] });/**
  * 校验规则管理
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/rule", function(S, Util, Rule) {
@@ -25334,7 +25400,7 @@ KISSY.add("validation/rule", function(S, Util, Rule) {
 
 /**
  * 规则管理类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 
@@ -25434,7 +25500,7 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 
 /**
  * 增加常用校验规则
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 	
@@ -25607,7 +25673,7 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 
 /**
  * 远程校验
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 
@@ -25719,7 +25785,7 @@ KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 
 /**
  * 工具类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/utils", function(S, undefined) {
@@ -25961,7 +26027,7 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
 }, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float",
         "./warn/fixed"] });/**
  * 扩展提示类:alert
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 	var symbol = Define.Const.enumvalidsign;
@@ -26023,7 +26089,7 @@ KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 
 /**
  * 提示类管理类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
@@ -26114,7 +26180,7 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
 /**
  * 扩展类基类
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 
 KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
@@ -26192,7 +26258,7 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
 
 }, { requires: ['dom',"event"]});/**
  * 扩展提示类：fixed
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
     var symbol = Define.Const.enumvalidsign;
@@ -26272,7 +26338,7 @@ KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
 
 /**
  * 扩展提示类：float
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 	var symbol = Define.Const.enumvalidsign;
@@ -26394,7 +26460,7 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 
 /**
  * 提示类：Static
- * @author: 常胤 <lzlu.com>
+ * @author  常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
     var symbol = Define.Const.enumvalidsign;
@@ -26486,7 +26552,7 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
 
 /**
  * @description 表单验证组件
- * @author: changyin@taobao.com (lzlu.com)
+ * @author  changyin@taobao.com (lzlu.com)
  * @version: 1.2
  * @date: 2011.06.21
  */

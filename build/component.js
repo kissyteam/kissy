@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 22 15:53
+build time: Jul 28 15:35
 */
 /**
  * container can delegate event for its children
@@ -37,6 +37,22 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
             }
         },
 
+        getOwnerControl:function(node) {
+            var self = this,
+                children = self.get("children"),
+                len = children.length,
+                elem = this.get('view').get("el")[0];
+            while (node && node !== elem) {
+                for (var i = 0; i < len; i++) {
+                    if (children[i].get("el")[0] === node) {
+                        return children[i];
+                    }
+                }
+                node = node.parentNode;
+            }
+            return null;
+        },
+
         decorateInternal:function(el) {
             var self = this;
             self.set("el", el);
@@ -62,21 +78,6 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                     prefixCls:prefixCls
                 }));
             });
-        },
-        getOwnerControl:function(node) {
-            var self = this,
-                children = self.get("children"),
-                len = children.length,
-                elem = this.get('view').get("el")[0];
-            while (node && node !== elem) {
-                for (var i = 0; i < len; i++) {
-                    if (children[i].get("el")[0] === node) {
-                        return children[i];
-                    }
-                }
-                node = node.parentNode;
-            }
-            return null;
         }
 
     });
@@ -99,7 +100,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
     function wrapperViewGetter(attrName) {
         return function(v) {
-            return v || this.get("view") && this.get("view").get(attrName);
+            return v !== undefined ? v : this.get("view") && this.get("view").get(attrName);
         };
     }
 
@@ -122,14 +123,18 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
              * 将渲染层初始化所需要的属性，直接构造器设置过去
              */
             var attrs = self.__attrs,
-                attrVals = self.__attrVals,
+                // attrVals = self.__attrVals,
                 cfg = {};
             for (var attrName in attrs) {
                 if (attrs.hasOwnProperty(attrName)) {
                     var attrCfg = attrs[attrName],v;
                     if (attrCfg.view) {
                         // 只设置用户设置的值
-                        if ((v = attrVals[attrName]) !== undefined) {
+                        // 考虑 c 上的默认值
+                        if (
+                        // (v = attrVals[attrName])
+                            ( v = self.get(attrName) )
+                                !== undefined) {
                             cfg[attrName] = v;
                         }
                     }
@@ -269,8 +274,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
             },
 
             removeChildren:function(destroy) {
+                var t = [];
                 S.each(this.get("children"), function(c) {
-                    destroy && c.destroy();
+                    t.push(c);
+                });
+                var self = this;
+                S.each(t, function(c) {
+                    self.removeChild(c, destroy);
                 });
                 this.set("children", []);
             },
@@ -289,16 +299,21 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                     el.on("mouseleave", self._handleMouseLeave, self);
                     el.on("mousedown", self._handleMouseDown, self);
                     el.on("mouseup", self._handleMouseUp, self);
-                    el.on("click", self._handleClick, self);
+                    el.on("dblclick", self._handleDblClick, self);
                 } else {
                     el.detach("mouseenter", self._handleMouseEnter, self);
                     el.detach("mouseleave", self._handleMouseLeave, self);
                     el.detach("mousedown", self._handleMouseDown, self);
                     el.detach("mouseup", self._handleMouseUp, self);
-                    el.detach("click", self._handleClick, self);
+                    el.detach("dblclick", self._handleDblClick, self);
                 }
             },
 
+            _handleDblClick:function(e) {
+                if (!this.get("disabled")) {
+                    this._performInternal(e);
+                }
+            },
             isMouseEventWithinElement_:function(e, elem) {
                 var relatedTarget = e.relatedTarget;
                 relatedTarget = relatedTarget && S.one(relatedTarget)[0];
@@ -310,12 +325,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                     return true;
                 }
             },
-            _forwordToView:function(method, ev) {
-                var self = this,
-                    view = self.get("view");
-                view[method] && view[method](ev);
-            },
-
             _handleMouseOver:function(e) {
                 if (this.get("disabled")) {
                     return true;
@@ -343,23 +352,22 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
 
             /**
              * root element handler for mouse enter
-             * @param ev
              */
-            _handleMouseEnter:function(ev) {
+            _handleMouseEnter:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseEnter', ev);
+                this.set("highlighted", true);
             },
             /**
              * root element handler for mouse leave
-             * @param ev
              */
-            _handleMouseLeave:function(ev) {
+            _handleMouseLeave:function() {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseLeave', ev);
+                this.set("active", false);
+                this.set("highlighted", false);
             },
             /**
              * root element handler for mouse down
@@ -369,13 +377,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseDown', ev);
+                if (ev.which == 1 && this.get("activeable")) {
+                    this.set("active", true);
+                }
                 var el = this.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     this.getKeyEventTarget()[0].focus();
                 }
-                // Cancel the default action unless the control allows text selection.
+                // Cancel the default action unless the control
+                // allows text selection.
                 if (ev.which == 1 && !this.get("allowTextSelection_")) {
                     // firefox 不会引起焦点转移
                     ev.preventDefault();
@@ -390,11 +401,11 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 if (v) {
                     el.on("focus", self._handleFocus, self);
                     el.on("blur", self._handleBlur, self);
-                    el.on("keydown", self.__handleKeydown, self);
+                    el.on("keydown", self._handleKeydown, self);
                 } else {
                     el.detach("focus", self._handleFocus, self);
                     el.detach("blur", self._handleBlur, self);
-                    el.detach("keydown", self.__handleKeydown, self);
+                    el.detach("keydown", self._handleKeydown, self);
                 }
             },
 
@@ -406,65 +417,53 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
             },
             /**
              * root element handler for mouse up
-             * @param ev
              */
             _handleMouseUp:function(ev) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                this._forwordToView('_handleMouseUp', ev);
+                // 左键
+                if (this.get("active") && ev.which == 1) {
+                    this._performInternal(ev);
+                    this.set("active", false);
+                }
             },
             /**
              * root element handler for focus
-             * @param ev
              */
-            _handleFocus:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView('_handleFocus', ev);
+            _handleFocus:function() {
+                this.set("focused", true);
             },
             /**
              * root element handler for blur
-             * @param ev
              */
-            _handleBlur:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView('_handleBlur', ev);
+            _handleBlur:function() {
+                this.set("focused", false);
             },
 
-            _handleKeydown:function(ev) {
-                this._forwordToView('_handleKeydown', ev);
+            _handleKeyEventInternal:function(ev) {
+                if (ev.keyCode == 13) {
+                    return this._performInternal(ev);
+                }
             },
             /**
              * root element handler for keydown
              * @param ev
              */
-            __handleKeydown:function(ev) {
+            _handleKeydown:function(ev) {
                 if (this.get("disabled")) {
                     return true;
                 }
-                var self = this,
-                    view = self.get("view");
-                // 默认情况下空格和 enter 直接交给 click 负责
-                if (ev.keyCode == 13 || ev.keyCode == 32) {
-                    ev.preventDefault();
-                    return self._handleClick(ev);
-                } else {
-                    return this._handleKeydown(ev);
+                if (this._handleKeyEventInternal(ev)) {
+                    ev.halt();
+                    return true;
                 }
             },
 
             /**
-             * root element handler for mouse enter
+             * root element handler for click
              */
-            _handleClick:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this._forwordToView("_handleClick", ev);
+            _performInternal:function() {
             },
 
             destructor:function() {
@@ -516,6 +515,21 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                      * then propagating changes from the controls to the session state.
                      */
                     // sync
+                },
+
+                activeable:{
+                    value:true
+                },
+
+                focused:{
+                    view:true
+                },
+                active:{
+                    view:true
+                },
+
+                highlighted:{
+                    view:true
                 },
 
                 //子组件
@@ -607,7 +621,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
              *  screen state
              */
 
-            //从 maskup 中渲染
+                //从 maskup 中渲染
             srcNode:{},
             prefixCls:{
                 value:"ks-"
@@ -615,10 +629,12 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             focusable:{
                 value:true
             },
+            highlighted:{},
+            focused:{},
+            active:{},
+            render:{},
             //是否禁用
-            disabled:{
-                value:false
-            }
+            disabled:{}
         }
     });
 }, {
@@ -665,7 +681,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
     };
 });/**
  * mvc based component framework for kissy
- * @author:yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
     return {

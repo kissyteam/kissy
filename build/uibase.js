@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 25 17:24
+build time: Jul 28 15:36
 */
 /**
  * UIBase.Align
@@ -1678,7 +1678,7 @@ KISSY.add("uibase/position", function(S) {
     return Position;
 });/**
  * position and visible extension，可定位的隐藏层
- * @author: 承玉<yiminghe@gmail.com>
+ * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/positionrender", function() {
 

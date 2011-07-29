@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 27 14:07
+build time: Jul 29 12:18
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Jul 27 14:07
              */
             version: '1.20dev',
 
-            buildTime:'20110727140740',
+            buildTime:'20110729121838',
 
             /**
              * Returns a new object containing all of the properties of
@@ -653,7 +653,7 @@ build time: Jul 27 14:07
             },
 
         /**
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          */
         reduce:/*
          NaN ?
@@ -699,22 +699,25 @@ build time: Jul 27 14:07
 
         /**
          * it is not same with native bind
-         * @refer:https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
         bind:function(fn, obj) {
             var slice = [].slice,
                 args = slice.call(arguments, 2),
+                fNOP = function () {
+                },
                 bound = function () {
-                    return fn.apply(this instanceof bound ? this : obj,
+                    return fn.apply(this instanceof fNOP ? this : obj,
                         args.concat(slice.call(arguments)));
                 };
-            bound.prototype = fn.prototype;
+            fNOP.prototype = fn.prototype;
+            bound.prototype = new fNOP();
             return bound;
         },
 
         /**
          * Gets current date in milliseconds.
-         * @refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
@@ -1206,7 +1209,7 @@ build time: Jul 27 14:07
          */
         getStyle:function(url, success, charset) {
             var doc = document,
-                head = doc.getElementsByTagName("head")[0],
+                head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('link'),
                 config = success;
 
@@ -1247,7 +1250,7 @@ build time: Jul 27 14:07
                 return S.getStyle(url, success, charset);
             }
             var doc = document,
-                head = doc.getElementsByTagName("head")[0],
+                head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('script'),
                 config = success,
                 error,
@@ -9415,29 +9418,31 @@ KISSY.add("ajax/xhr", function(S, io) {
  */
 KISSY.add("ajax/script", function(S, io) {
 
-    io.setupConfig({
-            accepts:{
-                script:"text/javascript, " +
-                    "application/javascript, " +
-                    "application/ecmascript, " +
-                    "application/x-ecmascript"
-            },
+    var doc = document;
 
-            contents:{
-                script:/javascript|ecmascript/
-            },
-            converters:{
-                text:{
-                    // 如果以 xhr+eval 需要下面的，
-                    // 否则直接 script node 不需要，引擎自己执行了，
-                    // 不需要手动 eval
-                    script:function(text) {
-                        S.globalEval(text);
-                        return text;
-                    }
+    io.setupConfig({
+        accepts:{
+            script:"text/javascript, " +
+                "application/javascript, " +
+                "application/ecmascript, " +
+                "application/x-ecmascript"
+        },
+
+        contents:{
+            script:/javascript|ecmascript/
+        },
+        converters:{
+            text:{
+                // 如果以 xhr+eval 需要下面的，
+                // 否则直接 script node 不需要，引擎自己执行了，
+                // 不需要手动 eval
+                script:function(text) {
+                    S.globalEval(text);
+                    return text;
                 }
             }
-        });
+        }
+    });
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
@@ -9450,80 +9455,85 @@ KISSY.add("ajax/script", function(S, io) {
     }
 
     S.augment(ScriptTransport, {
-            send:function() {
-                var self = this,
-                    script,
-                    xhrObj = this.xhrObj,
-                    c = xhrObj.config,
-                    head = document['head'] ||
-                        document.getElementsByTagName("head")[0] ||
-                        document.documentElement;
-                self.head = head;
-                script = document.createElement("script");
-                self.script = script;
-                script.async = "async";
+        send:function() {
+            var self = this,
+                script,
+                xhrObj = this.xhrObj,
+                c = xhrObj.config,
+                head = doc['head'] ||
+                    doc.getElementsByTagName("head")[0] ||
+                    doc.documentElement;
+            self.head = head;
+            script = doc.createElement("script");
+            self.script = script;
+            script.async = "async";
 
-                if (c['scriptCharset']) {
-                    script.charset = c['scriptCharset'];
-                }
-
-                script.src = c.url;
-
-                script.onerror =
-                    script.onload =
-                        script.onreadystatechange = function(e) {
-                            e = e || window.event;
-                            // firefox onerror 没有 type ?!
-                            self._callback((e.type || "error").toLowerCase());
-                        };
-
-                head.insertBefore(script, head.firstChild);
-            },
-
-            _callback:function(event, abort) {
-                var script = this.script,
-                    xhrObj = this.xhrObj,
-                    head = this.head;
-
-                if (abort ||
-                    !script.readyState ||
-                    /loaded|complete/.test(script.readyState)
-                    || event == "error"
-                    ) {
-
-                    script['onerror'] = script.onload = script.onreadystatechange = null;
-
-                    // Remove the script
-                    if (head && script.parentNode) {
-                        head.removeChild(script);
-                    }
-
-                    this.script = undefined;
-                    this.head = undefined;
-
-                    // Callback if not abort
-                    if (!abort && event != "error") {
-                        xhrObj.callback(200, "success");
-                    }
-                    // 非 ie<9 可以判断出来
-                    else if (event == "error") {
-                        xhrObj.callback(500, "scripterror");
-                    }
-                }
-            },
-
-            abort:function() {
-                this._callback(0, 1);
+            if (c['scriptCharset']) {
+                script.charset = c['scriptCharset'];
             }
-        });
+
+            script.src = c.url;
+
+            script.onerror =
+                script.onload =
+                    script.onreadystatechange = function(e) {
+                        e = e || window.event;
+                        // firefox onerror 没有 type ?!
+                        self._callback((e.type || "error").toLowerCase());
+                    };
+
+            head.insertBefore(script, head.firstChild);
+        },
+
+        _callback:function(event, abort) {
+            var script = this.script,
+                xhrObj = this.xhrObj,
+                head = this.head;
+
+            // 防止重复调用,成功后 abort
+            if (!script) {
+                return;
+            }
+
+            if (abort ||
+                !script.readyState ||
+                /loaded|complete/.test(script.readyState)
+                || event == "error"
+                ) {
+
+                script['onerror'] = script.onload = script.onreadystatechange = null;
+
+                // Remove the script
+                if (head && script.parentNode) {
+                    head.removeChild(script);
+                }
+
+                this.script = undefined;
+                this.head = undefined;
+
+                // Callback if not abort
+                if (!abort && event != "error") {
+                    xhrObj.callback(200, "success");
+                }
+                // 非 ie<9 可以判断出来
+                else if (event == "error") {
+                    xhrObj.callback(500, "scripterror");
+                }
+            }
+        },
+
+        abort:function() {
+            this._callback(0, 1);
+        }
+    });
 
     io.setupTransport("script", ScriptTransport);
 
     return io;
 
 }, {
-        requires:['./base','./xhr']
-    });
+    requires:['./base','./xhr']
+});
 
 /**
  * jsonp transport based on script transport
@@ -9532,12 +9542,12 @@ KISSY.add("ajax/script", function(S, io) {
 KISSY.add("ajax/jsonp", function(S, io) {
 
     io.setupConfig({
-            jsonp:"callback",
-            jsonpCallback:function() {
-                //不使用 now() ，极端情况下可能重复
-                return S.guid("jsonp");
-            }
-        });
+        jsonp:"callback",
+        jsonpCallback:function() {
+            //不使用 now() ，极端情况下可能重复
+            return S.guid("jsonp");
+        }
+    });
 
     io.on("start", function(e) {
         var xhr = e.xhr,c = xhr.config;
@@ -9553,8 +9563,11 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
             // build temporary JSONP function
             window[jsonpCallback] = function(r) {
-                //debugger
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
+                // jsonp 返回了数组
+                if (arguments.length > 1) {
+                    r = S.makeArray(arguments);
+                }
                 response = [r];
             };
 
@@ -9593,8 +9606,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
 
     return io;
 }, {
-        requires:['./base']
-    });
+    requires:['./base']
+});
 
 /**
  * form data  serialization util
@@ -9675,14 +9688,14 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     var doc = document;
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
-            converters:{
-                // iframe 到其他类型的转化和 text 一样
-                iframe:io.getConfig().converters.text,
-                text:{
-                    iframe:function(text) {
-                        return text;
-                    }
-                }}});
+        converters:{
+            // iframe 到其他类型的转化和 text 一样
+            iframe:io.getConfig().converters.text,
+            text:{
+                iframe:function(text) {
+                    return text;
+                }
+            }}});
 
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe");
@@ -9723,82 +9736,86 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     }
 
     S.augment(IframeTransport, {
-            send:function() {
-                //debugger
-                var xhr = this.xhr,
-                    c = xhr.config,
-                    fields,
-                    form = DOM.get(c.form);
+        send:function() {
+            //debugger
+            var xhr = this.xhr,
+                c = xhr.config,
+                fields,
+                form = DOM.get(c.form);
 
-                this.attrs = {
-                    target:DOM.attr(form, "target") || "",
-                    action:DOM.attr(form, "action") || ""
-                };
-                this.form = form;
+            this.attrs = {
+                target:DOM.attr(form, "target") || "",
+                action:DOM.attr(form, "action") || ""
+            };
+            this.form = form;
 
-                createIframe(xhr);
+            createIframe(xhr);
 
-                // set target to iframe to avoid main page refresh
-                DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
+            // set target to iframe to avoid main page refresh
+            DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
 
-                if (c.data) {
-                    fields = addDataToForm(c.data, form, c.serializeArray);
-                }
-
-                this.fields = fields;
-
-                var iframe = xhr.iframe;
-
-                Event.on(iframe, "load error", this._callback, this);
-
-                form.submit();
-
-            },
-
-            _callback:function(event, abort) {
-                //debugger
-                var form = this.form,
-                    xhr = this.xhr,
-                    eventType = event.type,
-                    iframe = xhr.iframe;
-
-                DOM.attr(form, this.attrs);
-
-                if (eventType == "load") {
-                    var iframeDoc = iframe.contentWindow.document;
-                    xhr.responseXML = iframeDoc;
-                    xhr.responseText = DOM.text(iframeDoc.body);
-                    xhr.callback(200, "success");
-                } else if (eventType == 'error') {
-                    xhr.callback(500, "error");
-                }
-
-                removeFieldsFromData(this.fields);
-
-
-                Event.detach(iframe);
-
-                setTimeout(function() {
-                    // firefox will keep loading if not settimeout
-                    DOM.remove(iframe);
-                }, 30);
-
-                // nullify to prevent memory leak?
-                xhr.iframe = null;
-            },
-
-            abort:function() {
-                this._callback(0, 1);
+            if (c.data) {
+                fields = addDataToForm(c.data, form, c.serializeArray);
             }
-        });
+
+            this.fields = fields;
+
+            var iframe = xhr.iframe;
+
+            Event.on(iframe, "load error", this._callback, this);
+
+            form.submit();
+
+        },
+
+        _callback:function(event, abort) {
+            //debugger
+            var form = this.form,
+                xhr = this.xhr,
+                eventType = event.type,
+                iframe = xhr.iframe;
+            // 防止重复调用 , 成功后 abort
+            if (!iframe) {
+                return;
+            }
+
+            DOM.attr(form, this.attrs);
+
+            if (eventType == "load") {
+                var iframeDoc = iframe.contentWindow.document;
+                xhr.responseXML = iframeDoc;
+                xhr.responseText = DOM.text(iframeDoc.body);
+                xhr.callback(200, "success");
+            } else if (eventType == 'error') {
+                xhr.callback(500, "error");
+            }
+
+            removeFieldsFromData(this.fields);
+
+
+            Event.detach(iframe);
+
+            setTimeout(function() {
+                // firefox will keep loading if not settimeout
+                DOM.remove(iframe);
+            }, 30);
+
+            // nullify to prevent memory leak?
+            xhr.iframe = null;
+        },
+
+        abort:function() {
+            this._callback(0, 1);
+        }
+    });
 
     io.setupTransport("iframe", IframeTransport);
 
     return io;
 
 }, {
-        requires:["dom","event","./base"]
-    });
+    requires:["dom","event","./base"]
+});
 
 KISSY.add("ajax", function(S, io) {
     var undef = undefined;

@@ -72,7 +72,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                     },
 
                     getter:function() {
-                        return S.indexOf(this.get("selectedItem"), this.get("menu").get("children"));
+                        return S.indexOf(this.get("selectedItem"),
+                            this.get("menu").get("children"));
                     }
                 },
 
@@ -118,8 +119,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
             var input = new Node("<input type='hidden' name='" + name
                 + "' value='" + curValue + "'>").insertBefore(element);
 
-            optionMenu.on("click", function(e) {
-                input.val(e.target.get("value"));
+            select.on("afterSelectedItemChange", function(e) {
+                input.val(e.newVal.get("value"));
             });
         }
         element.remove();
