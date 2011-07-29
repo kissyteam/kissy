@@ -92,6 +92,7 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Remove the script
                 if (head && script.parentNode) {
+                    script.src = "#";
                     head.removeChild(script);
                 }
 

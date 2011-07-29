@@ -260,5 +260,99 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
                 expect(d.test2 + "").toBe(["t2","t3"] + "");
             });
         });
+
+        it("should abort for form file upload", function() {
+
+            var f = $('<form id="f" method="post" enctype="multipart/form-data">' +
+                //php need []
+                '<select name="test[]" multiple>' +
+                '<option value="t1" selected>v</option>' +
+                '<option value="t2" selected>v2</option>' +
+                '</select>' +
+                '</form>').appendTo("body");
+
+            var re = [],ok,d;
+
+            var xhr = io({
+                url:'upload.php',
+                form:"#" + f.prop("id"),
+                type:'post',
+                dataType:'json',
+                data:{
+                    "test2":["t2","t3"]
+                },
+                error:function(d, s) {
+                    re.push(s);
+                },
+                success:function(data, s) {
+                    d = data;
+                    re.push(s);
+                },
+                complete:function(d, s) {
+                    ok = true;
+                    re.push(s);
+                }
+            });
+
+            expect(xhr.iframe.nodeName.toLowerCase()).toBe("iframe");
+
+            xhr.abort();
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                expect(re.join(",")).toBe(["abort","abort"].join(","));
+            });
+        });
+
+
+        it("nothing happens if abort after form file upload", function() {
+
+            var f = $('<form id="f" method="post" enctype="multipart/form-data">' +
+                //php need []
+                '<select name="test[]" multiple>' +
+                '<option value="t1" selected>v</option>' +
+                '<option value="t2" selected>v2</option>' +
+                '</select>' +
+                '</form>').appendTo("body");
+
+            var re = [],ok,d;
+
+            var xhr = io({
+                url:'upload.php',
+                form:"#" + f.prop("id"),
+                type:'post',
+                dataType:'json',
+                data:{
+                    "test2":["t2","t3"]
+                },
+                error:function(d, s) {
+                    re.push(s);
+                },
+                success:function(data, s) {
+                    d = data;
+                    re.push(s);
+                },
+                complete:function(d, s) {
+                    ok = true;
+                    re.push(s);
+                }
+            });
+
+            expect(xhr.iframe.nodeName.toLowerCase()).toBe("iframe");
+
+            waitsFor(function() {
+                return ok;
+            });
+
+            runs(function() {
+                xhr.abort();
+                expect(re.join(",")).toBe(["success","success"].join(","));
+            });
+        });
+
+
     });
 });
