@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Jul 29 11:56
 */
 /**
  * combination of menu and button ,similar to native select
@@ -419,8 +419,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
             var input = new Node("<input type='hidden' name='" + name
                 + "' value='" + curValue + "'>").insertBefore(element);
 
-            optionMenu.on("click", function(e) {
-                input.val(e.target.get("value"));
+            select.on("afterSelectedItemChange", function(e) {
+                input.val(e.newVal.get("value"));
             });
         }
         element.remove();

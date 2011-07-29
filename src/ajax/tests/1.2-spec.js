@@ -47,6 +47,106 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
 
         });
 
+
+        it("nothing happens if abort xhr after complete", function() {
+            var re = [],ok = false;
+
+            var xhr = io({
+                url:'ajax.php',
+                cache:false,
+                success:function(data, status) {
+                    ok = true;
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                error:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                complete:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                }
+            });
+
+            waitsFor(function() {
+                return ok;
+            }, 10000);
+
+
+            runs(function() {
+                // 成功后 abort 无影响
+                xhr.abort();
+                expect(re.toString()).toBe(["success","success"].toString());
+            });
+
+        });
+
+
+        it("should abort for jsonp", function() {
+
+            var re = [];
+            var xhr = io({
+                forceScript:true,
+                dataType:'jsonp',
+                url:'jsonp.php',
+                cache:false,
+                success:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                error:function(data, status) {
+                    re.push(status);
+                    var args = S.makeArray(arguments);
+                },
+                complete:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                }
+            });
+
+            xhr.abort();
+
+            expect(re.toString()).toBe(["abort","abort"].toString());
+
+        });
+
+
+        it("nothing happens if abort jsonp after complete", function() {
+            var re = [],ok;
+
+            var xhr = io({
+                forceScript:true,
+                url:'ajax.php',
+                cache:false,
+                success:function(data, status) {
+                    ok = true;
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                error:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                },
+                complete:function(data, status) {
+                    var args = S.makeArray(arguments);
+                    re.push(status);
+                }
+            });
+
+
+            waitsFor(function() {
+                return ok;
+            }, 10000);
+
+            runs(function() {
+                // 成功后 abort 无影响
+                xhr.abort();
+                expect(re.toString()).toBe(["success","success"].toString());
+            });
+
+        });
+
         it("timeout should work for xhr", function() {
 
             var re = [],ok;
