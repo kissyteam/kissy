@@ -93,6 +93,8 @@
 
 <h2>demo</h2>
 
+<a href="javascript:void(0)" id="expandAll">展开全部</a>&nbsp;
+<a href="javascript:void(0)" id="collapseAll">关闭全部</a>
 <div id="treeContainer" style="width: 200px;">
 
 </div>
@@ -100,6 +102,7 @@
 <script>
     KISSY.Config.base = "../";
     KISSY.use("tree", function(S, Tree) {
+        var $ = S.all;
         var tree = new Tree({
             content:"淘宝网",
             prefixCls:"goog-",
@@ -155,6 +158,14 @@
 
         tree.on("click", function(e) {
             S.log("action : " + e.target.get("content"));
+        });
+
+        $("#expandAll").on("click", function() {
+            tree.expandAll();
+        });
+
+        $("#collapseAll").on("click", function() {
+            tree.collapseAll();
         });
     });
 </script>

@@ -194,6 +194,21 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
 
             _uiSetExpanded:function(v) {
                 this._computeClass("expanded-" + v);
+            },
+
+
+            expandAll:function() {
+                this.set("expanded", true);
+                S.each(this.get("children"), function(c) {
+                    c.set("expanded", true);
+                });
+            },
+
+            collapseAll:function() {
+                this.set("expanded", false);
+                S.each(this.get("children"), function(c) {
+                    c.set("expanded", false);
+                });
             }
         }, {
             ATTRS:{
