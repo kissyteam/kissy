@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 29 11:56
+build time: Aug 1 10:12
 */
 /**
  * combination of menu and button ,similar to native select
@@ -315,7 +315,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
              *  on open menu.
              */
             _handleMenuShow:function() {
-                this.get("menu").set("highlightedItem", this.get("selectedItem") || this.get("menu").getChildAt(0));
+                this.get("menu").set("highlightedItem",
+                    this.get("selectedItem") || this.get("menu").getChildAt(0));
             },
             updateCaption_:function() {
                 var self = this;
@@ -331,31 +332,35 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 if (ev && ev.prevVal) {
                     ev.prevVal.set("selected", false);
                 }
-                var self = this;
-                self.set("value", v && v.get("value"));
-                self.updateCaption_();
+                this.updateCaption_();
             },
             _uiSetDefaultCaption:function() {
                 this.updateCaption_();
-            },
-
-            _uiSetValue:function(v) {
-                var self = this;
-                var children = self.get("menu").get("children");
-                for (var i = 0; i < children.length; i++) {
-                    var item = children[i];
-                    if (item.get("value") == v) {
-                        self.set("selectedItem", item);
-                        return;
-                    }
-                }
-                self.set("selectedItem", null);
             }
         },
         {
             ATTRS:{
-                // @inheritedDoc  from button
-                // value :{}
+
+                // 也是 selectedItem 的一个视图
+                value :{
+                    getter:function() {
+                        var selectedItem = this.get("selectedItem");
+                        return selectedItem && selectedItem.get("value");
+                    },
+                    setter:function(v) {
+                        var self = this;
+                        var children = self.get("menu").get("children");
+                        for (var i = 0; i < children.length; i++) {
+                            var item = children[i];
+                            if (item.get("value") == v) {
+                                self.set("selectedItem", item);
+                                return;
+                            }
+                        }
+                        self.set("selectedItem", null);
+                        return null;
+                    }
+                },
 
 
                 // @inheritedDoc  from button
@@ -367,8 +372,13 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 // 只是 selectedItem 的一个视图，无状态
                 selectedIndex:{
                     setter:function(index) {
-                        var self = this;
-                        self.set("selectedItem", self.get("menu").getChildAt(index));
+                        var self = this,
+                            children = self.get("menu").get("children");
+                        if (index < 0 || index >= children.length) {
+                            // 和原生保持一致
+                            return -1;
+                        }
+                        self.set("selectedItem", children[index]);
                     },
 
                     getter:function() {

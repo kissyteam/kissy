@@ -81,9 +81,9 @@
     直接从 select 生成
 </h2>
 <label>
-    <select>
-        <option>native-1</option>
-        <option>native-2</option>
+    <select id="nativeSelect">
+        <option value="1">native-1</option>
+        <option value="2">native-2</option>
     </select>
 </label>
 
@@ -107,6 +107,7 @@
 
 <script>
     KISSY.ready(function(S) {
+        var $ = S.all;
         var s = S.one("#decorateSelect");
         for (var i = 0; i < 20; i++) {
             s.append("<option value='" + i + "'>项目" + i + "</option>")
@@ -139,6 +140,17 @@
             select.on("click", function(e) {
                 S.log(e.target.get("value"));
             });
+
+
+            S.log(select.get("value"));
+
+            select.set("value", 18);
+
+            S.log(select.get("value"));
+
+
+            $("#nativeSelect")[0].selectedIndex = 5;
+            S.log($("#nativeSelect")[0].selectedIndex);
         });
     });
 </script>
