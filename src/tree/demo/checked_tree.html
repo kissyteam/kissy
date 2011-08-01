@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>KISSY Tree</title>
-<link href="assets/tree.css" rel="stylesheet"/>
+<title>KISSY Checked Tree</title>
+<link href="../assets/tree.css" rel="stylesheet"/>
 <style>
     .goog-tree-children {
         padding-left: 19px;
@@ -27,69 +27,35 @@
         color: highlighttext;
     }
 
+    .goog-tree-item-checked0 {
+        background: url(../assets/check0.gif) 0 -2px;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+    }
+
+    .goog-tree-item-checked1 {
+        background: url(../assets/check1.gif) 0 -2px;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+    }
+
+    .goog-tree-item-checked2 {
+        background: url(../assets/check2.gif) 0 -2px;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+    }
+
 
 </style>
 </head>
 <body>
 
 
-<h1>KISSY Tree</h1>
+<h1>KISSY Checked Tree</h1>
 
-<h2>设计说明</h2>
-<div style="height:200px;overflow: auto;border: 1px solid red;">
-    <ol>
-        <li>支持 <a href="http://www.w3.org/TR/wai-aria-practices/#TreeView" target="_blank">aria</a></li>
-        <li>重用组件框架</li>
-    </ol>
-
-    <h2>键盘操作指南</h2>
-    <h3>Preposition：tab 到树，自动选择根节点</h3>
-    <ol>
-        <li>
-            上下键在可视节点间深度遍历
-        </li>
-        <li>
-            左键
-            <ol>
-                <li>
-                    已展开节点：关闭节点
-                </li>
-                <li>
-                    已关闭节点: 移动到父亲节点
-                </li>
-            </ol>
-        </li>
-        <li>
-            右键
-            <ol>
-                <li>
-                    已展开节点：移动到该节点的第一个子节点
-                </li>
-                <li>
-                    已关闭节点: 无效
-                </li>
-            </ol>
-        </li>
-        <li>
-            enter : 触发 click 事件
-        </li>
-
-        <li>
-            home : 移动到根节点
-        </li>
-
-        <li>
-            end : 移动到前序遍历最后一个节点
-        </li>
-    </ol>
-
-
-    <h2>TODO</h2>
-    <ol>
-        <li>collapseAll , expandAll 接口增加</li>
-        <li>checked tree node 增加</li>
-    </ol>
-</div>
 
 <h2>demo</h2>
 
@@ -98,17 +64,12 @@
 <div id="treeContainer" style="width: 200px;">
 
 </div>
-
-<hr/>
-
-<a href="./demo/checked_tree.html" target="_blank">多选树</a>
-
-<script src="../../build/kissy.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script>
-    KISSY.Config.base = "../";
+    KISSY.Config.base = "../../";
     KISSY.use("tree", function(S, Tree) {
         var $ = S.all;
-        var tree = new Tree({
+        var tree = new Tree.CheckTree({
             content:"淘宝网",
             prefixCls:"goog-",
             expanded:true,
@@ -116,42 +77,42 @@
             render:"#treeContainer"
         });
 
-        var favorates = new Tree.Node({
+        var favorates = new Tree.CheckNode({
             prefixCls:"goog-",
             content:"收藏夹",
             tree:tree
         });
 
-        favorates.addChild(new Tree.Node({
+        favorates.addChild(new Tree.CheckNode({
             prefixCls:"goog-",
             content:"收藏的宝贝"
         }));
 
-        favorates.addChild(new Tree.Node({
+        favorates.addChild(new Tree.CheckNode({
             prefixCls:"goog-",
             content:"收藏的店铺"
         }));
 
         tree.addChild(favorates);
 
-        tree.addChild(new Tree.Node({
+        tree.addChild(new Tree.CheckNode({
             prefixCls:"goog-",
             content:"我要买"
         }));
 
 
-        var one = new Tree.Node({
+        var one = new Tree.CheckNode({
             prefixCls:"goog-",
             content:"我的淘宝",
             tree:tree
         });
 
-        one.addChild(new Tree.Node({
+        one.addChild(new Tree.CheckNode({
             prefixCls:"goog-",
             content:"已买到的宝贝"
         }));
 
-        one.addChild(new Tree.Node({
+        one.addChild(new Tree.CheckNode({
             prefixCls:"goog-",
             content:"已卖出的宝贝"
         }));

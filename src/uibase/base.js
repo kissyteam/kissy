@@ -330,7 +330,13 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 });
 
                 // 合并功能代码到主类，不覆盖
-                S.augment(C, ext, false);
+                for (var p in ext.prototype) {
+                    // 不覆盖主类，但是主类的父类还是覆盖吧
+                    if (!C.prototype.hasOwnProperty((p)) &&
+                        ext.prototype.hasOwnProperty(p)) {
+                        C.prototype[p] = ext.prototype[p];
+                    }
+                }
             });
         }
 

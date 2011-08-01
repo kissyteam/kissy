@@ -2,7 +2,7 @@
  * common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
+KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
     var $ = Node.all,
         LABEL_CLS = "tree-item-label",
         FILE_CLS = "tree-file-icon",
@@ -130,6 +130,10 @@ KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
             rowEl[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
         },
 
+        _uiSetTooltip:function(v) {
+            this.get("el").attr("title", v);
+        },
+
         getContentElement:function() {
             if (this.get("childrenEl")) {
                 return this.get("childrenEl");
@@ -149,15 +153,12 @@ KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
             ariaPosInSet:{},
             childrenEl:{},
             expandIconEl:{},
+            tooltip:{},
             iconEl:{},
             rowEl:{},
             selected:{},
-            expanded:{
-                value:false
-            },
-            depth:{
-                value:0
-            },
+            expanded:{},
+            depth:{},
             labelEl:{},
             content:{}
         }

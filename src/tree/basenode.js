@@ -2,7 +2,7 @@
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNodeRender) {
+KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         EXPAND_ICON_CLS = "tree-expand-icon",
         AbstractNode = UIBase.create(Component.ModelControl, {
@@ -138,6 +138,7 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
             _performInternal:function(e) {
                 var target = $(e.target);
                 var tree = this.get("tree");
+                tree.get("el")[0].focus();
                 if (target.hasClass(this.getCls(EXPAND_ICON_CLS))
                     || e.type == 'dblclick'
                     ) {
@@ -211,6 +212,7 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
                 });
             }
         }, {
+            DefaultRender:BaseNodeRender,
             ATTRS:{
                 /*事件代理*/
                 handleMouseEvents:{
@@ -255,14 +257,23 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
                 depth:{
                     value:0,
                     view:true
-                }
+                },
+                focusable:{value:false}
             },
 
-            DefaultRender:AbstractNodeRender
+            HTML_PARSER:{
+                expanded:function(el) {
+                    var children = el.one("." + this.getCls("tree-children"));
+                    if (!children) {
+                        return false;
+                    }
+                    return children.css("display") != "none";
+                }
+            }
         });
 
     return AbstractNode;
 
 }, {
-    requires:['node','uibase','component','./abstractnoderender']
+    requires:['node','uibase','component','./basenoderender']
 });
