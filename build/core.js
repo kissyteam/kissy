@@ -4111,7 +4111,9 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         // mouseenter/leave 不会冒泡，只选择最近一个
         target = DOM.closest(target, data.selector, delegateTarget);
         if (target) {
-            if (target !== relatedTarget && !DOM.contains(target, relatedTarget)) {
+            if (target !== relatedTarget &&
+                (!relatedTarget || !DOM.contains(target, relatedTarget))
+                ) {
                 return data.fn.call(data.scope || delegateTarget, event);
             }
         }
@@ -4195,7 +4197,10 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
                     }
 
                     // 在自身外边就触发
-                    if (parent !== self && !DOM.contains(self, parent)) {
+                    if (parent !== self &&
+                        // self==document , parent==null
+                        (!parent || !DOM.contains(self, parent))
+                        ) {
                         // handle event if we actually just moused on to a non sub-element
                         Event._handle(self, event);
                     }
@@ -7054,6 +7059,7 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Remove the script
                 if (head && script.parentNode) {
+                    script.src = "#";
                     head.removeChild(script);
                 }
 
