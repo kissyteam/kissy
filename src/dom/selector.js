@@ -21,44 +21,57 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {String|Array} selector
-     * @param {String|Array<HTMLElement>|NodeList} context find elements matching selector under context
+     * @param {String|Array<HTMLElement>|NodeList} contexts find elements matching selector under context
      * @return {Array} The array of found HTMLElement
      */
-    function query(selector, context) {
-        var ret,
+    function query(selector, contexts) {
+        var ret = [];
+        contexts = tuneContext(contexts);
+
+        each(contexts, function(c) {
+            push.apply(ret, queryByContexts(selector, c));
+        });
+
+        //必要时去重排序
+        if (S.isString(selector) && selector.indexOf(",") > -1 ||
+            contexts.length > 1) {
+            unique(ret);
+        }
+        // attach each method
+        ret.each = S.bind(each, undefined, ret);
+
+        return ret;
+    }
+
+    function queryByContexts(selector, context) {
+        var ret = [],
             sizzle = require("sizzle");
         // 如果选择器有 , 分开递归一部分一部分来
-        if (isString(selector) && selector.indexOf(",") != -1) {
+        if (isString(selector) && selector.indexOf(",") > -1) {
             ret = queryBySelectors(selector, context);
         }
         // 复杂了，交给 sizzle
         else if (isString(selector) && !REG_QUERY.exec(String(selector))) {
             ret = queryBySizzle(selector, context);
         }
-        // 自己处理处理多个 contex
+        // 简单选择器自己处理
         else {
-            ret = queryByContexts(selector, tuneContext(context));
+            ret = queryBySimple(selector, context);
         }
-
-        // attach each method
-        ret.each = function(fn, context) {
-            return each(ret, fn, context);
-        };
-
         return ret;
     }
 
     // 交给 sizzle 模块处理
     function queryBySizzle(selector, context) {
-        var ret,
+        var ret = [],
             sizzle = require("sizzle");
         if (sizzle) {
-            ret = sizzle(selector, context);
+            sizzle(selector, context, ret);
         } else {
             // 原生不支持
             error(selector);
         }
-        return ret || [];
+        return ret;
     }
 
     // 处理 selector 的每个部分
@@ -66,29 +79,14 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         var ret = [],
             selectors = selector.split(",");
         each(selectors, function(s) {
-            push.apply(ret, query(s, context));
+            push.apply(ret, queryByContexts(s, context));
         });
         // 多部分选择器可能得到重复结果
-        return unique(ret);
-    }
-
-    // 处理多个上下文情况
-    function queryByContexts(selector, context) {
-        var ret = [];
-        if (context.length > 1) {
-            each(context, function(c) {
-                push.apply(ret, query(selector, c));
-            });
-            // 多 context 可能得到同样结果
-            ret = unique(ret);
-        } else {
-            ret = queryInternal(selector, context[0]);
-        }
         return ret;
     }
 
     // 最简单情况了，单个选择器部分，单个上下文
-    function queryInternal(selector, context) {
+    function queryBySimple(selector, context) {
         var match,
             t,
             ret = [],
@@ -410,6 +408,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  * NOTES:
  *
  * 2011.08.02
+ *  - 利用 sizzle 重构选择器
  *  - 1.1.6 修正，原来 context 只支持 #id 以及 document
  *    1.2 context 支持任意，和 selector 格式一致
  *  - 简单选择器也和 jquery 保持一致 DOM.query("xx","yy") 支持

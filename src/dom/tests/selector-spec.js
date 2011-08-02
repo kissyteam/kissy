@@ -63,20 +63,39 @@ KISSY.use("dom", function(S, DOM) {
         });
     });
 
-    describe("selector context", function() {
+    describe("1.2 selector context", function() {
         var html = DOM.create(
-            "<div id='context-test-1' class='context-test'>" +
+            "<div><div id='context-test-1' class='context-test'>" +
+                "<div>" +
                 "<div class='context-test-3' id='context-test-2'></div>" +
                 "</div>" +
+                "</div>" +
+                "<div>" +
                 "<div class='context-test-3' id='context-test-4'></div>" +
+                "</div>" +
                 "<div class='context-test'>" +
                 "<div class='context-test'>" +
-                "<div class='context-test-3' id='context-test-5'>" +
+                "<div>" +
+                "<div class='context-test-3' id='context-test-5'></div>" +
                 "</div>" +
                 "</div>" +
-                "</div>");
+                "</div></div>");
 
         DOM.prepend(html, document.body);
+
+
+        it("should attach each properly", function() {
+            var c3 = S.query("div .context-test-3");
+            expect(c3.length).toBe(3);
+            var a = [];
+            // each 绑定正常
+            c3.each(function(v, i) {
+                a[i] = v;
+            });
+            expect(a.length).toBe(3);
+            expect(DOM.equals(a, c3));
+        });
+
         it("should support #id", function() {
             expect(S.query(".context-test-3", "#context-test-1").length).toBe(1);
 
@@ -90,6 +109,7 @@ KISSY.use("dom", function(S, DOM) {
 
             expect($(".context-test-3", "#context-test-1").attr("id")).toBe("context-test-2");
         });
+
 
         it("should support other string form selector and unique works", function() {
             expect(S.query(".context-test-3", ".context-test").length).toBe(2);
@@ -118,7 +138,7 @@ KISSY.use("dom", function(S, DOM) {
             expect(S.query(".context-test-3", ".context-test").length).toBe(2);
 
             /*jquery contrast test*/
-            var t=$(c3j, ".context-test");
+            var t = $(c3j, ".context-test");
             // 上下文不对第一个参数是节点集合时生效
             expect(t.length).toBe(3);
             expect($(".context-test-3", cj).length).toBe(2);
@@ -128,6 +148,31 @@ KISSY.use("dom", function(S, DOM) {
 
             expect(cj.find(".context-test-3").length).toBe(2);
             expect(cj.find(c3j).length).toBe(2);
+
+
+        });
+
+
+        it("should support other string form selector and unique works in sizzle", function() {
+            expect(S.query("div .context-test-3", "body .context-test").length).toBe(2);
+
+            expect($("div .context-test-3", "body .context-test").length).toBe(2);
+
+        });
+
+
+        it("should support node array form selector and unique works in sizzle", function() {
+            var c3 = S.query("div .context-test-3");
+            expect(c3.length).toBe(3);
+
+            var c = S.query("div .context-test");
+            expect(c.length).toBe(3);
+
+
+            expect(S.query(c3, "div .context-test").length).toBe(2);
+            expect(S.query("div .context-test-3", c).length).toBe(2);
+            expect(S.query(c3, c).length).toBe(2);
+            expect(S.query("div .context-test-3", "div .context-test").length).toBe(2);
 
 
         });
