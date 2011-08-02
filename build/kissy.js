@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 20:25
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 2 18:06
              */
             version: '1.20dev',
 
-            buildTime:'20110802180644',
+            buildTime:'20110802202513',
 
             /**
              * Returns a new object containing all of the properties of
@@ -4935,7 +4935,16 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         var sortOrder,
             t,
             hasDuplicate,
+            baseHasDuplicate = true;
+
+        // Here we check if the JavaScript engine is using some sort of
+// optimization where it does not always call our comparision
+// function. If that is the case, discard the hasDuplicate value.
+//   Thus far that includes Google Chrome.
+        [0, 0].sort(function() {
             baseHasDuplicate = false;
+            return 0;
+        });
 
         // 排序去重
         unique = t = function (elements) {
@@ -5139,7 +5148,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && sizzle) {
-                ret = sizzle._filter(filter, elems);
+                ret = sizzle.matches(filter, elems);
             }
             // filter 为空或不支持的 selector
             else {

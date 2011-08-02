@@ -170,7 +170,16 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         var sortOrder,
             t,
             hasDuplicate,
+            baseHasDuplicate = true;
+
+        // Here we check if the JavaScript engine is using some sort of
+// optimization where it does not always call our comparision
+// function. If that is the case, discard the hasDuplicate value.
+//   Thus far that includes Google Chrome.
+        [0, 0].sort(function() {
             baseHasDuplicate = false;
+            return 0;
+        });
 
         // 排序去重
         unique = t = function (elements) {
@@ -374,7 +383,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && sizzle) {
-                ret = sizzle._filter(filter, elems);
+                ret = sizzle.matches(filter, elems);
             }
             // filter 为空或不支持的 selector
             else {
