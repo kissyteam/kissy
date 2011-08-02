@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 22:28
+build time: Aug 2 22:48
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 2 22:28
              */
             version: '1.20dev',
 
-            buildTime:'20110802222835',
+            buildTime:'20110802224820',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2208,7 +2208,7 @@ build time: Aug 2 22:28
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
-(function(S) {
+(function(S, undefined) {
 
     var win = S.__HOST,
         doc = win['document'],
@@ -2239,19 +2239,20 @@ build time: Aug 2 22:28
     S.mix(S, {
 
 
-            /**
-             * A crude way of determining if an object is a window
-             */
-            isWindow: function(o) {
-                return S.type(o) === 'object'
-                    && 'setInterval' in o
-                    && 'document' in o
-                    && o.document.nodeType == 9;
-            },
+        /**
+         * A crude way of determining if an object is a window
+         */
+        isWindow: function(o) {
+            return S.type(o) === 'object'
+                && 'setInterval' in o
+                && 'document' in o
+                && o.document.nodeType == 9;
+        },
 
 
-            parseXML: function(data) {
-                var xml;
+        parseXML: function(data) {
+            var xml;
+            try {
                 // Standard
                 if (window.DOMParser) {
                     xml = new DOMParser().parseFromString(data, "text/xml");
@@ -2260,78 +2261,80 @@ build time: Aug 2 22:28
                     xml.async = "false";
                     xml.loadXML(data);
                 }
-                var root = xml.documentElement;
-                if (! root || ! root.nodeName || root.nodeName === "parsererror") {
-                    S.error("Invalid XML: " + data);
-                }
-                return xml;
-            },
-
-            /**
-             * Evalulates a script in a global context.
-             */
-            globalEval: function(data) {
-                if (data && RE_NOT_WHITE.test(data)) {
-                    // Inspired by code by Andrea Giammarchi
-                    // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                    var head = doc.getElementsByTagName('head')[0] || docElem,
-                        script = doc.createElement('script');
-
-                    // It works! All browsers support!
-                    script.text = data;
-
-                    // Use insertBefore instead of appendChild to circumvent an IE6 bug.
-                    // This arises when a base node is used.
-                    head.insertBefore(script, head.firstChild);
-                    head.removeChild(script);
-                }
-            },
-
-            /**
-             * Specify a function to execute when the DOM is fully loaded.
-             * @param fn {Function} A function to execute after the DOM is ready
-             * <code>
-             * KISSY.ready(function(S){ });
-             * </code>
-             * @return {KISSY}
-             */
-            ready: function(fn) {
-                // Attach the listeners
-                if (!readyBound) {
-                    _bindReady();
-                }
-
-                // If the DOM is already ready
-                if (isReady) {
-                    // Execute the function immediately
-                    fn.call(win, this);
-                } else {
-                    // Remember the function for later
-                    readyList.push(fn);
-                }
-
-                return this;
-            },
-
-            /**
-             * Executes the supplied callback when the item with the supplied id is found.
-             * @param id <String> The id of the element, or an array of ids to look for.
-             * @param fn <Function> What to execute when the element is found.
-             */
-            available: function(id, fn) {
-                id = (id + EMPTY).match(RE_IDSTR)[1];
-                if (!id || !S.isFunction(fn)) return;
-
-                var retryCount = 1,
-
-                    timer = S.later(function() {
-                        if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
-                            timer.cancel();
-                        }
-
-                    }, POLL_INTERVAL, true);
+            } catch(e) {
+                xml = undefined;
             }
-        });
+            if (!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
+                S.error("Invalid XML: " + data);
+            }
+            return xml;
+        },
+
+        /**
+         * Evalulates a script in a global context.
+         */
+        globalEval: function(data) {
+            if (data && RE_NOT_WHITE.test(data)) {
+                // Inspired by code by Andrea Giammarchi
+                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
+                var head = doc.getElementsByTagName('head')[0] || docElem,
+                    script = doc.createElement('script');
+
+                // It works! All browsers support!
+                script.text = data;
+
+                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
+                // This arises when a base node is used.
+                head.insertBefore(script, head.firstChild);
+                head.removeChild(script);
+            }
+        },
+
+        /**
+         * Specify a function to execute when the DOM is fully loaded.
+         * @param fn {Function} A function to execute after the DOM is ready
+         * <code>
+         * KISSY.ready(function(S){ });
+         * </code>
+         * @return {KISSY}
+         */
+        ready: function(fn) {
+            // Attach the listeners
+            if (!readyBound) {
+                _bindReady();
+            }
+
+            // If the DOM is already ready
+            if (isReady) {
+                // Execute the function immediately
+                fn.call(win, this);
+            } else {
+                // Remember the function for later
+                readyList.push(fn);
+            }
+
+            return this;
+        },
+
+        /**
+         * Executes the supplied callback when the item with the supplied id is found.
+         * @param id <String> The id of the element, or an array of ids to look for.
+         * @param fn <Function> What to execute when the element is found.
+         */
+        available: function(id, fn) {
+            id = (id + EMPTY).match(RE_IDSTR)[1];
+            if (!id || !S.isFunction(fn)) return;
+
+            var retryCount = 1,
+
+                timer = S.later(function() {
+                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                        timer.cancel();
+                    }
+
+                }, POLL_INTERVAL, true);
+        }
+    });
 
 
     /**

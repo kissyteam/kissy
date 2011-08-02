@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 22:28
+build time: Aug 2 22:48
 */
 KISSY.add("ua/base",function(){var g=navigator.userAgent,a="",l="",c,e={},b=function(i){var d=0;return parseFloat(i.replace(/\./g,function(){return d++===0?".":""}))};if((c=g.match(/AppleWebKit\/([\d.]*)/))&&c[1]){e[a="webkit"]=b(c[1]);if((c=g.match(/Chrome\/([\d.]*)/))&&c[1])e[l="chrome"]=b(c[1]);else if((c=g.match(/\/([\d.]*) Safari/))&&c[1])e[l="safari"]=b(c[1]);if(/ Mobile\//.test(g))e.mobile="apple";else if(c=g.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))e.mobile=c[0].toLowerCase()}else if((c=
 g.match(/Presto\/([\d.]*)/))&&c[1]){e[a="presto"]=b(c[1]);if((c=g.match(/Opera\/([\d.]*)/))&&c[1]){e[l="opera"]=b(c[1]);if((c=g.match(/Opera\/.* Version\/([\d.]*)/))&&c[1])e[l]=b(c[1]);if((c=g.match(/Opera Mini[^;]*/))&&c)e.mobile=c[0].toLowerCase();else if((c=g.match(/Opera Mobi[^;]*/))&&c)e.mobile=c[0]}}else if((c=g.match(/MSIE\s([^;]*)/))&&c[1]){e[a="trident"]=0.1;e[l="ie"]=b(c[1]);if((c=g.match(/Trident\/([\d.]*)/))&&c[1])e[a]=b(c[1])}else if(c=g.match(/Gecko/)){e[a="gecko"]=0.1;if((c=g.match(/rv:([\d.]*)/))&&
