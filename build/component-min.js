@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 KISSY.add("component/container",function(h,e,f,j){return e.create(f,{bindUI:function(){this.get("view").get("el").on("mousedown mouseup mouseover mouseout",this._handleChildMouseEvents,this)},_handleChildMouseEvents:function(d){var g=this.getOwnerControl(h.one(d.target)[0]);if(g)switch(d.type){case "mousedown":g._handleMouseDown(d);break;case "mouseup":g._handleMouseUp(d);break;case "mouseover":g._handleMouseOver(d);break;case "mouseout":g._handleMouseOut(d)}},getOwnerControl:function(d){for(var g=
 this.get("children"),a=g.length,b=this.get("view").get("el")[0];d&&d!==b;){for(var c=0;c<a;c++)if(g[c].get("el")[0]===d)return g[c];d=d.parentNode}return null},decorateInternal:function(d){this.set("el",d);this.decorateChildren(d)},decorateChildren:function(d){var g=this;d.children().each(function(a){var b=a.attr("class")||"",c=g.get("prefixCls");b=b.replace(RegExp("\\b"+c,"ig"),"");b=j.getUIByClass(b);g.addChild(new b({srcNode:a,prefixCls:c}))})}})},{requires:["uibase","./modelcontrol","./uistore"]});

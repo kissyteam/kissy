@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:27
 */
 KISSY.add("menubutton/menubutton",function(e,i,j,f,h,l,k){var c=j.all,d=i.create(f,{hideMenu:function(){this.get("menu")&&this.get("menu").hide()},showMenu:function(){var a=this.get("view"),b=a.get("el"),g=this.get("menu");if(!g.get("visible")){g.set("align",e.mix({node:b},this.get("menuAlign")));g.show();b.attr("aria-haspopup",g.get("el").attr("id"));a.set("collapsed",false)}},_reposition:function(){var a=this.get("menu"),b=this.get("el");a&&a.get("visible")&&a.set("align",e.mix({node:b},this.get("menuAlign")))},
 bindUI:function(){var a=this,b=this.get("menu");b.on("afterActiveItemChange",function(g){a.set("activeItem",g.newVal)});b.on("click",function(g){a.fire("click",{target:g.target})});b.on("hide",function(){a.get("view").set("collapsed",true)});c(window).on("resize",a._reposition,a)},_handleKeyEventInternal:function(a){var b=this.get("menu");if(a.keyCode==32){a.preventDefault();if(a.type!="keyup")return}else if(a.type!="keydown")return;if(b&&b.get("visible")){b=b._handleKeydown(a);if(a.keyCode==27){this.hideMenu();

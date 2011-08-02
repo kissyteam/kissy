@@ -3387,6 +3387,7 @@ KISSY.add('event/object', function(S, undefined) {
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -3421,12 +3422,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var Event = {
         _data:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.data.apply(DOM, args);
         },
         _removeData:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.removeData.apply(DOM, args);
         },
@@ -3681,7 +3682,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function batchForType(methodName, targets, types) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             S.each(types.split(SPACE), function(type) {
                 var args2 = S.clone(args);
                 args2.splice(0, 3, targets, type);
@@ -4416,9 +4417,9 @@ KISSY.add("event", function(S, Event, Target,Object) {
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
-    var AP = Array.prototype;
-
-    var isNodeList = DOM._isNodeList;
+    var AP = Array.prototype,
+        makeArray = S.makeArray,
+        isNodeList = DOM._isNodeList;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
@@ -4435,28 +4436,25 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return undefined;
         }
 
-
         else if (S.isString(html)) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment
-                AP.push.apply(this, S.makeArray(domNode.childNodes));
+                AP.push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
-            AP.push.apply(this, S.makeArray(html));
+            AP.push.apply(this, makeArray(html));
             return undefined;
         }
-
 
         else {
             // node, document, window
             domNode = html;
         }
-
 
         self[0] = domNode;
         self.length = 1;
@@ -4474,9 +4472,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         item: function(index) {
             if (S.isNumber(index)) {
                 if (index >= this.length) return null;
-                return new NodeList(this[index], undefined, undefined);
+                return new NodeList(this[index]);
             } else
-                return new NodeList(index, undefined, undefined);
+                return new NodeList(index);
         },
 
         add:function(selector, context, index) {
@@ -4484,8 +4482,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
                 index = context;
                 context = undefined;
             }
-            var list = S.makeArray(NodeList.all(selector, context)),
-                ret = new NodeList(this, undefined, undefined);
+            var list = NodeList.all(selector, context),
+                ret = new NodeList(this);
             if (index === undefined) {
                 AP.push.apply(ret, list);
             } else {
@@ -4497,7 +4495,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         },
 
         slice:function(start, end) {
-            return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            return new NodeList(AP.slice.call(this, start, end));
         },
 
         /**
@@ -4515,9 +4513,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         each: function(fn, context) {
             var self = this,len = self.length, i = 0, node;
 
-            for (node = new NodeList(self[0], undefined, undefined);
+            for (node = new NodeList(self[0]);
                  i < len && fn.call(context || node, node, i, this) !== false;
-                 node = new NodeList(self[++i], undefined, undefined)) {
+                 node = new NodeList(self[++i])) {
             }
 
             return this;
@@ -4533,7 +4531,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             if (this.length > 0) {
                 return NodeList.all(selector, this);
             }
-            return new NodeList(undefined, undefined, undefined);
+            return new NodeList();
         }
     });
 
@@ -4563,7 +4561,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             }
             return new NodeList(selector, undefined, context);
         }
-        return new NodeList(DOM.query(selector, context), undefined, undefined);
+        return new NodeList(DOM.query(selector, context));
     };
 
     NodeList.one = function(selector, context) {
@@ -4601,6 +4599,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
+        makeArray = S.makeArray,
         // DOM 添加到 NP 上的方法
         // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
@@ -4698,28 +4697,28 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(DOM_INCLUDES_NORM, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.unshift(this);
             return Event[k].apply(Event, args);
         }

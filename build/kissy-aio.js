@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 22:01
+build time: Aug 2 22:28
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 2 22:01
              */
             version: '1.20dev',
 
-            buildTime:'20110802220146',
+            buildTime:'20110802222835',
 
             /**
              * Returns a new object containing all of the properties of
@@ -5838,6 +5838,7 @@ KISSY.add('event/object', function(S, undefined) {
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -5872,12 +5873,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var Event = {
         _data:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.data.apply(DOM, args);
         },
         _removeData:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.removeData.apply(DOM, args);
         },
@@ -6132,7 +6133,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function batchForType(methodName, targets, types) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             S.each(types.split(SPACE), function(type) {
                 var args2 = S.clone(args);
                 args2.splice(0, 3, targets, type);
@@ -6867,9 +6868,9 @@ KISSY.add("event", function(S, Event, Target,Object) {
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
-    var AP = Array.prototype;
-
-    var isNodeList = DOM._isNodeList;
+    var AP = Array.prototype,
+        makeArray = S.makeArray,
+        isNodeList = DOM._isNodeList;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
@@ -6886,28 +6887,25 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return undefined;
         }
 
-
         else if (S.isString(html)) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === 11) { // fragment
-                AP.push.apply(this, S.makeArray(domNode.childNodes));
+                AP.push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
-            AP.push.apply(this, S.makeArray(html));
+            AP.push.apply(this, makeArray(html));
             return undefined;
         }
-
 
         else {
             // node, document, window
             domNode = html;
         }
-
 
         self[0] = domNode;
         self.length = 1;
@@ -6925,9 +6923,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         item: function(index) {
             if (S.isNumber(index)) {
                 if (index >= this.length) return null;
-                return new NodeList(this[index], undefined, undefined);
+                return new NodeList(this[index]);
             } else
-                return new NodeList(index, undefined, undefined);
+                return new NodeList(index);
         },
 
         add:function(selector, context, index) {
@@ -6935,8 +6933,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
                 index = context;
                 context = undefined;
             }
-            var list = S.makeArray(NodeList.all(selector, context)),
-                ret = new NodeList(this, undefined, undefined);
+            var list = NodeList.all(selector, context),
+                ret = new NodeList(this);
             if (index === undefined) {
                 AP.push.apply(ret, list);
             } else {
@@ -6948,7 +6946,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         },
 
         slice:function(start, end) {
-            return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            return new NodeList(AP.slice.call(this, start, end));
         },
 
         /**
@@ -6966,9 +6964,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         each: function(fn, context) {
             var self = this,len = self.length, i = 0, node;
 
-            for (node = new NodeList(self[0], undefined, undefined);
+            for (node = new NodeList(self[0]);
                  i < len && fn.call(context || node, node, i, this) !== false;
-                 node = new NodeList(self[++i], undefined, undefined)) {
+                 node = new NodeList(self[++i])) {
             }
 
             return this;
@@ -6984,7 +6982,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             if (this.length > 0) {
                 return NodeList.all(selector, this);
             }
-            return new NodeList(undefined, undefined, undefined);
+            return new NodeList();
         }
     });
 
@@ -7014,7 +7012,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             }
             return new NodeList(selector, undefined, context);
         }
-        return new NodeList(DOM.query(selector, context), undefined, undefined);
+        return new NodeList(DOM.query(selector, context));
     };
 
     NodeList.one = function(selector, context) {
@@ -7052,6 +7050,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
+        makeArray = S.makeArray,
         // DOM 添加到 NP 上的方法
         // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
@@ -7149,28 +7148,28 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(DOM_INCLUDES_NORM, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.unshift(this);
             return Event[k].apply(Event, args);
         }
@@ -10460,7 +10459,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 20:25
+build time: Aug 2 22:28
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -11885,7 +11884,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 /**
  * 数据延迟加载组件
@@ -12376,7 +12375,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:28
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12614,7 +12613,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 /**
  * @module   Flash 全局静态类
@@ -13125,7 +13124,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -14339,7 +14338,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:28
 */
 /**
  * resizable support for kissy
@@ -14504,7 +14503,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:28
 */
 /**
  * UIBase.Align
@@ -16512,7 +16511,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 /**
  * container can delegate event for its children
@@ -17207,7 +17206,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:28
 */
 /**
  * Switchable
@@ -17217,6 +17216,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     var DISPLAY = 'display',
         BLOCK = 'block',
+        makeArray = S.makeArray,
         NONE = 'none',
         EventTarget = Event.Target,
         FORWARD = 'forward',
@@ -17381,304 +17381,304 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     S.augment(Switchable, EventTarget, {
 
-            _initPlugins:function() {
-                // init plugins by Hierarchy
-                var self = this,
-                    pluginHost = self.constructor;
-                while (pluginHost) {
-                    S.each(pluginHost.Plugins, function(plugin) {
-                        if (plugin.init) {
-                            plugin.init(self);
-                        }
-                    });
-                    pluginHost = pluginHost.superclass ?
-                        pluginHost.superclass.constructor :
-                        null;
-                }
-            },
-
-            /**
-             * init switchable
-             */
-            _init: function() {
-                var self = this,
-                    cfg = self.config;
-
-                // parse markup
-                self._parseMarkup();
-
-                // bind triggers
-                if (cfg.hasTriggers) {
-                    self._bindTriggers();
-                }
-            },
-
-            /**
-             * 解析 markup, 获取 triggers, panels, content
-             */
-            _parseMarkup: function() {
-                var self = this,
-                    container = self.container,
-                    cfg = self.config,
-                    nav,
-                    content,
-                    triggers = [],
-                    panels = [],
-                    n;
-
-                switch (cfg.markupType) {
-                    case 0: // 默认结构
-                        nav = DOM.get(DOT + cfg.navCls, container);
-                        if (nav) {
-                            triggers = DOM.children(nav);
-                        }
-                        content = DOM.get(DOT + cfg.contentCls, container);
-                        panels = DOM.children(content);
-                        break;
-                    case 1: // 适度灵活
-                        triggers = DOM.query(DOT + cfg.triggerCls, container);
-                        panels = DOM.query(DOT + cfg.panelCls, container);
-                        break;
-                    case 2: // 完全自由
-                        triggers = cfg.triggers;
-                        panels = cfg.panels;
-                        break;
-                }
-
-
-                // get length
-                n = panels.length;
-                self.length = n / cfg.steps;
-
-                // 自动生成 triggers
-                if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
-                    triggers = self._generateTriggersMarkup(self.length);
-                }
-
-                // 将 triggers 和 panels 转换为普通数组
-                self.triggers = S.makeArray(triggers);
-                self.panels = S.makeArray(panels);
-
-                // get content
-                self.content = content || panels[0].parentNode;
-                self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
-            },
-
-            /**
-             * 自动生成 triggers 的 markup
-             */
-            _generateTriggersMarkup: function(len) {
-                var self = this,
-                    cfg = self.config,
-                    ul = DOM.create('<ul>'),
-                    li,
-                    i;
-
-                ul.className = cfg.navCls;
-                for (i = 0; i < len; i++) {
-                    li = DOM.create('<li>');
-                    if (i === self.activeIndex) {
-                        li.className = cfg.activeTriggerCls;
+        _initPlugins:function() {
+            // init plugins by Hierarchy
+            var self = this,
+                pluginHost = self.constructor;
+            while (pluginHost) {
+                S.each(pluginHost.Plugins, function(plugin) {
+                    if (plugin.init) {
+                        plugin.init(self);
                     }
-                    li.innerHTML = i + 1;
-                    ul.appendChild(li);
+                });
+                pluginHost = pluginHost.superclass ?
+                    pluginHost.superclass.constructor :
+                    null;
+            }
+        },
+
+        /**
+         * init switchable
+         */
+        _init: function() {
+            var self = this,
+                cfg = self.config;
+
+            // parse markup
+            self._parseMarkup();
+
+            // bind triggers
+            if (cfg.hasTriggers) {
+                self._bindTriggers();
+            }
+        },
+
+        /**
+         * 解析 markup, 获取 triggers, panels, content
+         */
+        _parseMarkup: function() {
+            var self = this,
+                container = self.container,
+                cfg = self.config,
+                nav,
+                content,
+                triggers = [],
+                panels = [],
+                n;
+
+            switch (cfg.markupType) {
+                case 0: // 默认结构
+                    nav = DOM.get(DOT + cfg.navCls, container);
+                    if (nav) {
+                        triggers = DOM.children(nav);
+                    }
+                    content = DOM.get(DOT + cfg.contentCls, container);
+                    panels = DOM.children(content);
+                    break;
+                case 1: // 适度灵活
+                    triggers = DOM.query(DOT + cfg.triggerCls, container);
+                    panels = DOM.query(DOT + cfg.panelCls, container);
+                    break;
+                case 2: // 完全自由
+                    triggers = cfg.triggers;
+                    panels = cfg.panels;
+                    break;
+            }
+
+
+            // get length
+            n = panels.length;
+            self.length = n / cfg.steps;
+
+            // 自动生成 triggers
+            if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
+                triggers = self._generateTriggersMarkup(self.length);
+            }
+
+            // 将 triggers 和 panels 转换为普通数组
+            self.triggers = makeArray(triggers);
+            self.panels = makeArray(panels);
+
+            // get content
+            self.content = content || panels[0].parentNode;
+            self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
+        },
+
+        /**
+         * 自动生成 triggers 的 markup
+         */
+        _generateTriggersMarkup: function(len) {
+            var self = this,
+                cfg = self.config,
+                ul = DOM.create('<ul>'),
+                li,
+                i;
+
+            ul.className = cfg.navCls;
+            for (i = 0; i < len; i++) {
+                li = DOM.create('<li>');
+                if (i === self.activeIndex) {
+                    li.className = cfg.activeTriggerCls;
                 }
+                li.innerHTML = i + 1;
+                ul.appendChild(li);
+            }
 
-                self.container.appendChild(ul);
-                return DOM.children(ul);
-            },
+            self.container.appendChild(ul);
+            return DOM.children(ul);
+        },
 
-            /**
-             * 给 triggers 添加事件
-             */
-            _bindTriggers: function() {
-                var self = this, cfg = self.config,
-                    triggers = self.triggers, trigger,
-                    i, len = triggers.length;
+        /**
+         * 给 triggers 添加事件
+         */
+        _bindTriggers: function() {
+            var self = this, cfg = self.config,
+                triggers = self.triggers, trigger,
+                i, len = triggers.length;
 
-                for (i = 0; i < len; i++) {
-                    (function(index) {
-                        trigger = triggers[index];
+            for (i = 0; i < len; i++) {
+                (function(index) {
+                    trigger = triggers[index];
 
-                        Event.on(trigger, 'click', function(e) {
-                            self._onFocusTrigger(index, e);
-                        });
-
-                        if (cfg.triggerType === 'mouse') {
-                            Event.on(trigger, 'mouseenter', function(e) {
-                                self._onMouseEnterTrigger(index, e);
-                            });
-                            Event.on(trigger, 'mouseleave', function() {
-                                self._onMouseLeaveTrigger(index);
-                            });
-                        }
-                    })(i);
-                }
-            },
-
-            /**
-             * click or tab 键激活 trigger 时触发的事件
-             */
-            _onFocusTrigger: function(index, e) {
-                var self = this;
-                // 重复点击
-                if (!self._triggerIsValid(index)) {
-                    return;
-                }
-                this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-                self.switchTo(index, undefined, getDomEvent(e));
-            },
-
-            /**
-             * 鼠标悬浮在 trigger 上时触发的事件
-             */
-            _onMouseEnterTrigger: function(index, e) {
-                var self = this;
-                if (!self._triggerIsValid(index)) {
-                    return;
-                }
-                var ev=getDomEvent(e);
-                // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
-                self.switchTimer = S.later(function() {
-                    self.switchTo(index, undefined, ev);
-                }, self.config.delay * 1000);
-            },
-
-            /**
-             * 鼠标移出 trigger 时触发的事件
-             */
-            _onMouseLeaveTrigger: function() {
-                this._cancelSwitchTimer();
-            },
-
-            /**
-             * 重复触发时的有效判断
-             */
-            _triggerIsValid: function(index) {
-                return this.activeIndex !== index;
-            },
-
-            /**
-             * 取消切换定时器
-             */
-            _cancelSwitchTimer: function() {
-                var self = this;
-                if (self.switchTimer) {
-                    self.switchTimer.cancel();
-                    self.switchTimer = undefined;
-                }
-            },
-
-            /**
-             * 切换操作，对外 api
-             * @param index 要切换的项
-             * @param direction 方向，用于 effect
-             * @param ev 引起该操作的事件
-             * @param callback 运行完回调，和绑定 switch 事件作用一样
-             */
-            switchTo: function(index, direction, ev, callback) {
-                var self = this,
-                    cfg = self.config,
-                    triggers = self.triggers,
-                    panels = self.panels,
-                    ingIndex = self.activeIndex,
-                    steps = cfg.steps,
-                    fromIndex = ingIndex * steps,
-                    toIndex = index * steps;
-
-                // 再次避免重复触发
-                if (!self._triggerIsValid(index)) {
-                    return self;
-                }
-                if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) {
-                    return self;
-                }
-
-
-                // switch active trigger
-                if (cfg.hasTriggers) {
-                    self._switchTrigger(ingIndex > -1 ?
-                        triggers[ingIndex] : null,
-                        triggers[index]);
-                }
-
-                // switch active panels
-                if (direction === undefined) {
-                    direction = index > ingIndex ? FORWARD : BACKWARD;
-                }
-
-                // switch view
-                self._switchView(
-                    ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
-                    panels.slice(toIndex, toIndex + steps),
-                    index,
-                    direction, ev, function() {
-                        callback && callback.call(self, index);
-                        // update activeIndex
-                        self.completedIndex = index
+                    Event.on(trigger, 'click', function(e) {
+                        self._onFocusTrigger(index, e);
                     });
 
-                self.activeIndex = index;
-
-                return self; // chain
-            },
-
-            /**
-             * 切换当前触点
-             */
-            _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-                var activeTriggerCls = this.config.activeTriggerCls;
-
-                if (fromTrigger) {
-                    DOM.removeClass(fromTrigger, activeTriggerCls);
-                }
-                DOM.addClass(toTrigger, activeTriggerCls);
-            },
-
-            /**
-             * 切换视图
-             */
-            _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
-                // 最简单的切换效果：直接隐藏/显示
-                if (fromPanels) {
-                    DOM.css(fromPanels, DISPLAY, NONE);
-                }
-                DOM.css(toPanels, DISPLAY, BLOCK);
-
-                // fire onSwitch events
-                this._fireOnSwitch(index, ev);
-                callback && callback.call(this);
-            },
-
-            /**
-             * 触发 switch 相关事件
-             */
-            _fireOnSwitch: function(index, ev) {
-                this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
-            },
-
-            /**
-             * 切换到上一视图
-             */
-            prev: function(ev) {
-                var self = this,
-                    activeIndex = self.activeIndex;
-                self.switchTo(activeIndex > 0 ?
-                    activeIndex - 1 :
-                    self.length - 1, BACKWARD, ev);
-            },
-
-            /**
-             * 切换到下一视图
-             */
-            next: function(ev) {
-                var self = this,
-                    activeIndex = self.activeIndex;
-                self.switchTo(activeIndex < self.length - 1 ?
-                    activeIndex + 1 :
-                    0, FORWARD, ev);
+                    if (cfg.triggerType === 'mouse') {
+                        Event.on(trigger, 'mouseenter', function(e) {
+                            self._onMouseEnterTrigger(index, e);
+                        });
+                        Event.on(trigger, 'mouseleave', function() {
+                            self._onMouseLeaveTrigger(index);
+                        });
+                    }
+                })(i);
             }
-        });
+        },
+
+        /**
+         * click or tab 键激活 trigger 时触发的事件
+         */
+        _onFocusTrigger: function(index, e) {
+            var self = this;
+            // 重复点击
+            if (!self._triggerIsValid(index)) {
+                return;
+            }
+            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
+            self.switchTo(index, undefined, getDomEvent(e));
+        },
+
+        /**
+         * 鼠标悬浮在 trigger 上时触发的事件
+         */
+        _onMouseEnterTrigger: function(index, e) {
+            var self = this;
+            if (!self._triggerIsValid(index)) {
+                return;
+            }
+            var ev = getDomEvent(e);
+            // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            self.switchTimer = S.later(function() {
+                self.switchTo(index, undefined, ev);
+            }, self.config.delay * 1000);
+        },
+
+        /**
+         * 鼠标移出 trigger 时触发的事件
+         */
+        _onMouseLeaveTrigger: function() {
+            this._cancelSwitchTimer();
+        },
+
+        /**
+         * 重复触发时的有效判断
+         */
+        _triggerIsValid: function(index) {
+            return this.activeIndex !== index;
+        },
+
+        /**
+         * 取消切换定时器
+         */
+        _cancelSwitchTimer: function() {
+            var self = this;
+            if (self.switchTimer) {
+                self.switchTimer.cancel();
+                self.switchTimer = undefined;
+            }
+        },
+
+        /**
+         * 切换操作，对外 api
+         * @param index 要切换的项
+         * @param direction 方向，用于 effect
+         * @param ev 引起该操作的事件
+         * @param callback 运行完回调，和绑定 switch 事件作用一样
+         */
+        switchTo: function(index, direction, ev, callback) {
+            var self = this,
+                cfg = self.config,
+                triggers = self.triggers,
+                panels = self.panels,
+                ingIndex = self.activeIndex,
+                steps = cfg.steps,
+                fromIndex = ingIndex * steps,
+                toIndex = index * steps;
+
+            // 再次避免重复触发
+            if (!self._triggerIsValid(index)) {
+                return self;
+            }
+            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) {
+                return self;
+            }
+
+
+            // switch active trigger
+            if (cfg.hasTriggers) {
+                self._switchTrigger(ingIndex > -1 ?
+                    triggers[ingIndex] : null,
+                    triggers[index]);
+            }
+
+            // switch active panels
+            if (direction === undefined) {
+                direction = index > ingIndex ? FORWARD : BACKWARD;
+            }
+
+            // switch view
+            self._switchView(
+                ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
+                panels.slice(toIndex, toIndex + steps),
+                index,
+                direction, ev, function() {
+                    callback && callback.call(self, index);
+                    // update activeIndex
+                    self.completedIndex = index
+                });
+
+            self.activeIndex = index;
+
+            return self; // chain
+        },
+
+        /**
+         * 切换当前触点
+         */
+        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+            var activeTriggerCls = this.config.activeTriggerCls;
+
+            if (fromTrigger) {
+                DOM.removeClass(fromTrigger, activeTriggerCls);
+            }
+            DOM.addClass(toTrigger, activeTriggerCls);
+        },
+
+        /**
+         * 切换视图
+         */
+        _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
+            // 最简单的切换效果：直接隐藏/显示
+            if (fromPanels) {
+                DOM.css(fromPanels, DISPLAY, NONE);
+            }
+            DOM.css(toPanels, DISPLAY, BLOCK);
+
+            // fire onSwitch events
+            this._fireOnSwitch(index, ev);
+            callback && callback.call(this);
+        },
+
+        /**
+         * 触发 switch 相关事件
+         */
+        _fireOnSwitch: function(index, ev) {
+            this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
+        },
+
+        /**
+         * 切换到上一视图
+         */
+        prev: function(ev) {
+            var self = this,
+                activeIndex = self.activeIndex;
+            self.switchTo(activeIndex > 0 ?
+                activeIndex - 1 :
+                self.length - 1, BACKWARD, ev);
+        },
+
+        /**
+         * 切换到下一视图
+         */
+        next: function(ev) {
+            var self = this,
+                activeIndex = self.activeIndex;
+            self.switchTo(activeIndex < self.length - 1 ?
+                activeIndex + 1 :
+                0, FORWARD, ev);
+        }
+    });
 
     return Switchable;
 
@@ -19803,7 +19803,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:28
 */
 /**
  * KISSY Overlay
@@ -20269,7 +20269,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:28
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -21448,7 +21448,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 /**
  * @fileoverview 图像放大区域
@@ -22073,7 +22073,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 /**
  * KISSY Calendar
@@ -23352,7 +23352,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:27
 */
 /**
  * deletable menuitem
@@ -24587,7 +24587,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 /**
  * Model and Control for button
@@ -24843,7 +24843,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:27
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25317,7 +25317,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:06
+build time: Aug 2 22:28
 */
 /**
  * @author  常胤 (lzlu.com)

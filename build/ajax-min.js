@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:27
 */
 KISSY.add("ajax/base",function(i,h,j,f){function c(e){e=i.mix(i.clone(r),e||{},undefined,undefined,true);if(e.crossDomain==null){var k=p.exec(e.url.toLowerCase());e.crossDomain=!!(k&&(k[1]!=n[1]||k[2]!=n[2]||(k[3]||(k[1]==="http:"?80:443))!=(n[3]||(n[1]==="http:"?80:443))))}if(e.processData&&e.data&&!i.isString(e.data))e.data=i.param(e.data,undefined,undefined,e.serializeArray);e.type=e.type.toUpperCase();e.hasContent=!q.test(e.type);if(!e.hasContent){if(e.data)e.url+=(/\?/.test(e.url)?"&":"?")+e.data;
 if(e.cache===false)e.url+=(/\?/.test(e.url)?"&":"?")+"_ksTS="+(i.now()+"_"+i.guid())}e.dataType=i.trim(e.dataType||"*").split(g);e.context=e.context||e;return e}function a(e,k){d.fire(e,{ajaxConfig:k.config,xhr:k})}function b(e){var k=this.config;e=e.type;this.timeoutTimer&&clearTimeout(this.timeoutTimer);k[e]&&k[e].call(k.context,this.responseData,this.statusText,this);a(e,this)}function d(e){if(e.url){e=c(e);var k=new f(e);a("start",k);var v=new (s[e.dataType[0]]||s["*"])(k);k.transport=v;e.contentType&&
