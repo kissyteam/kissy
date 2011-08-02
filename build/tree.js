@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 1 21:33
+build time: Aug 2 18:06
 */
 /**
  * abstraction of tree node ,root and other node will extend it

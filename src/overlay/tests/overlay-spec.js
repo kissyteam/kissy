@@ -28,14 +28,13 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
                 width:400
             });
 
+//           srcNode 情况下可以了，恰好只能 el
+//            it("渲染前取不到 el 元素", function() {
+//                expect(o.get("el")).toBeUndefined();
+//            });
 
-            it("渲染前取不到 el 元素", function() {
-                expect(o.get("el")).toBeUndefined();
-            });
 
-            runs(function() {
-                o.render();
-            });
+            o.render();
 
             it("渲染后可以取到元素", function() {
                 expect(o.get("el")[0].nodeType).toBe(1);

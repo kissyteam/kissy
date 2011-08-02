@@ -450,6 +450,7 @@
         /**
          * Converts object to a true array.
          * @param o {object|Array} array like object or array
+         * @return {Array}
          */
         makeArray: function(o) {
             if (o === null || o === undefined) return [];

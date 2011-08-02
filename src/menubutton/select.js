@@ -28,6 +28,16 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 self.set("selectedItem", e.target);
                 self.hideMenu();
             },
+            removeItems:function() {
+                Select.superclass.removeItems.apply(this, arguments);
+                this.set("selectedItem", null);
+            },
+            removeItem:function(c) {
+                Select.superclass.removeItem.apply(this, arguments);
+                if (c == this.get("selectedItem")) {
+                    this.set("selectedItem", null);
+                }
+            },
             _uiSetSelectedItem:function(v, ev) {
                 if (ev && ev.prevVal) {
                     ev.prevVal.set("selected", false);
@@ -88,6 +98,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 },
 
                 defaultCaption:{
+                    value:""
                 }
             }
         }
@@ -130,7 +141,11 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 + "' value='" + curValue + "'>").insertBefore(element);
 
             select.on("afterSelectedItemChange", function(e) {
-                input.val(e.newVal.get("value"));
+                if (e.newVal) {
+                    input.val(e.newVal.get("value"));
+                } else {
+                    input.val("");
+                }
             });
         }
         element.remove();

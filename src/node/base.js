@@ -119,7 +119,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         all:function(selector) {
             if (this.length > 0) {
-                return NodeList.all(selector, this[0]);
+                return NodeList.all(selector, this);
             }
             return new NodeList(undefined, undefined, undefined);
         }

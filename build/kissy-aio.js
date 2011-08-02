@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 1 10:25
+build time: Aug 2 18:06
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 1 10:25
              */
             version: '1.20dev',
 
-            buildTime:'20110801102556',
+            buildTime:'20110802180644',
 
             /**
              * Returns a new object containing all of the properties of
@@ -755,6 +755,7 @@ build time: Aug 1 10:25
         /**
          * Converts object to a true array.
          * @param o {object|Array} array like object or array
+         * @return {Array}
          */
         makeArray: function(o) {
             if (o === null || o === undefined) return [];
@@ -1963,10 +1964,9 @@ build time: Aug 1 10:25
          * @param {string} moduleName
          */
         require:function(moduleName) {
-            var self = this,
-                mods = self.Env.mods,
+            var mods = S.Env.mods,
                 mod = mods[moduleName],
-                re = self['onRequire'] && self['onRequire'](mod);
+                re = S['onRequire'] && S['onRequire'](mod);
             if (re !== undefined) {
                 return re;
             }
@@ -2129,8 +2129,8 @@ build time: Aug 1 10:25
      *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      */
     // notice: timestamp
-    var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-min)?\.js/i,
+    var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
+        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
         pagePath = S.__pagePath;
 
     function getBaseUrl(script) {
@@ -4765,13 +4765,20 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
 /**
  * @module  selector
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     var doc = document,
+        filter = S.filter,
+        require = S.require,
+        each = S.each,
+        isArray = S.isArray,
+        makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
+        push = Array.prototype.push,
         SPACE = ' ',
+        isString = S.isString,
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
@@ -4779,134 +4786,212 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {String|Array} selector
-     * @param {String|HTMLElement} context An #id string or a HTMLElement used as context
+     * @param {String|Array<HTMLElement>|NodeList} context find elements matching selector under context
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
-        var match, t,
-            ret = [],
-            id,
-            tag,
-            sizzle = S.require("sizzle"),
-            cls;
-        context = tuneContext(context);
-
-        // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
-        // 考虑 2/8 原则，仅支持以下选择器：
-        // #id
-        // tag
-        // .cls
-        // #id tag
-        // #id .cls
-        // tag.cls
-        // #id tag.cls
-        // 注 1：REG_QUERY 还会匹配 #id.cls
-        // 注 2：tag 可以为 * 字符
-        // 注 3: 支持 , 号分组
-        // 返回值为数组
-        // 选择器不支持时，抛出异常
-
-        // selector 为字符串是最常见的情况，优先考虑
-        // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (S.isString(selector)) {
-
-            if (selector.indexOf(",") != -1) {
-                var selectors = selector.split(",");
-                S.each(selectors, function(s) {
-                    ret.push.apply(ret, S.makeArray(query(s, context)));
-                });
-            } else {
-
-
-                selector = S.trim(selector);
-
-                // selector 为 #id 是最常见的情况，特殊优化处理
-                if (REG_ID.test(selector)) {
-                    t = getElementById(selector.slice(1), context);
-                    if (t) ret = [t]; // #id 无效时，返回空数组
-                }
-                // selector 为支持列表中的其它 6 种
-                else if ((match = REG_QUERY.exec(String(selector)))) {
-                    // 获取匹配出的信息
-                    id = match[1];
-                    tag = match[2];
-                    cls = match[3];
-
-                    if (context = (id ? getElementById(id, context) : context)) {
-                        // #id .cls | #id tag.cls | .cls | tag.cls
-                        if (cls) {
-                            if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
-                                ret = S.makeArray(getElementsByClassName(cls, tag, context));
-                            }
-                            // 处理 #id.cls
-                            else {
-                                t = getElementById(id, context);
-                                if (t && DOM.hasClass(t, cls)) {
-                                    ret = [t];
-                                }
-                            }
-                        }
-                        // #id tag | tag
-                        else if (tag) { // 排除空白字符串
-                            ret = getElementsByTagName(tag, context);
-                        }
-                    }
-                }
-                // 采用外部选择器
-                else if (sizzle) {
-                    ret = sizzle(selector, context);
-                }
-                // 依旧不支持，抛异常
-                else {
-                    error(selector);
-                }
-            }
+        var ret,
+            sizzle = require("sizzle");
+        // 如果选择器有 , 分开递归一部分一部分来
+        if (isString(selector) && selector.indexOf(",") != -1) {
+            ret = queryBySelectors(selector, context);
         }
-        // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || isNodeList(selector))) {
-            ret = selector;
+        // 复杂了，交给 sizzle
+        else if (isString(selector) && !REG_QUERY.exec(String(selector))) {
+            ret = queryBySizzle(selector, context);
         }
-        // 传入的 selector 是 Node 等非字符串对象，原样返回
-        else if (selector) {
-            ret = [selector];
-        }
-        // 传入的 selector 是其它值时，返回空数组
-
-        // 将 NodeList 转换为普通数组
-        if (isNodeList(ret)) {
-            ret = S.makeArray(ret);
+        // 自己处理处理多个 contex
+        else {
+            ret = queryByContexts(selector, tuneContext(context));
         }
 
         // attach each method
         ret.each = function(fn, context) {
-            return S.each(ret, fn, context);
+            return each(ret, fn, context);
         };
 
         return ret;
     }
 
+    // 交给 sizzle 模块处理
+    function queryBySizzle(selector, context) {
+        var ret,
+            sizzle = require("sizzle");
+        if (sizzle) {
+            ret = sizzle(selector, context);
+        } else {
+            // 原生不支持
+            error(selector);
+        }
+        return ret || [];
+    }
+
+    // 处理 selector 的每个部分
+    function queryBySelectors(selector, context) {
+        var ret = [],
+            selectors = selector.split(",");
+        each(selectors, function(s) {
+            push.apply(ret, query(s, context));
+        });
+        // 多部分选择器可能得到重复结果
+        return unique(ret);
+    }
+
+    // 处理多个上下文情况
+    function queryByContexts(selector, context) {
+        var ret = [];
+        if (context.length > 1) {
+            each(context, function(c) {
+                push.apply(ret, query(selector, c));
+            });
+            // 多 context 可能得到同样结果
+            ret = unique(ret);
+        } else {
+            ret = queryInternal(selector, context[0]);
+        }
+        return ret;
+    }
+
+    // 最简单情况了，单个选择器部分，单个上下文
+    function queryInternal(selector, context) {
+        var match,
+            t,
+            ret = [],
+            id,
+            tag,
+            cls;
+        if (isString(selector)) {
+            selector = S.trim(selector);
+            // selector 为 #id 是最常见的情况，特殊优化处理
+            if (REG_ID.test(selector)) {
+                t = getElementById(selector.slice(1), context);
+                if (t) {
+                    // #id 无效时，返回空数组
+                    ret = [t];
+                }
+            }
+            // selector 为支持列表中的其它 6 种
+            else if ((match = REG_QUERY.exec(selector))) {
+                // 获取匹配出的信息
+                id = match[1];
+                tag = match[2];
+                cls = match[3];
+                // 空白前只能有 id ，取出来作为 context
+                if (context = (id ? getElementById(id, context) : context)) {
+                    // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
+                    if (cls) {
+                        if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
+                            ret = [].concat(getElementsByClassName(cls, tag, context));
+                        }
+                        // 处理 #id.cls
+                        else {
+                            t = getElementById(id, context);
+                            if (t && DOM.hasClass(t, cls)) {
+                                ret = [t];
+                            }
+                        }
+                    }
+                    // #id tag | tag
+                    else if (tag) { // 排除空白字符串
+                        ret = getElementsByTagName(tag, context);
+                    }
+                }
+            }
+        }
+        // 传入的 selector 是 NodeList 或已是 Array
+        else if (selector && (isArray(selector) || isNodeList(selector))) {
+            // 只能包含在 context 里面
+            ret = filter(selector, function(s) {
+                return testByContext(s, context);
+            });
+        }
+        // 传入的 selector 是 HTMLNode 查看约束
+        // 否则 window/document，原样返回
+        else if (selector) {
+            if (testByContext(selector, context)) {
+                ret = [selector];
+            }
+        }
+        return ret;
+    }
+
+    function testByContext(element, context) {
+        if (!element) {
+            return false;
+        }
+        // 防止 element 节点还没添加到 document ，但是也可以获取到 query(element) => [element]
+        // document 的上下文一律放行
+
+        // context == doc 意味着没有提供第二个参数，到这里只是想单纯包装原生节点，则不检测
+        if (context == doc) {
+            return true;
+        }
+        // 节点受上下文约束
+        return DOM.__contains(context, element);
+    }
+
+    var unique;
+    (function() {
+        var sortOrder,
+            t,
+            hasDuplicate,
+            baseHasDuplicate = false;
+
+        // 排序去重
+        unique = t = function (elements) {
+            if (sortOrder) {
+                hasDuplicate = baseHasDuplicate;
+                elements.sort(sortOrder);
+
+                if (hasDuplicate) {
+                    for (var i = 1; i < elements.length; i++) {
+                        if (elements[i] === elements[ i - 1 ]) {
+                            elements.splice(i--, 1);
+                        }
+                    }
+                }
+            }
+            return elements;
+        };
+
+        // 貌似除了 ie 都有了...
+        if (doc.documentElement.compareDocumentPosition) {
+            sortOrder = t = function(a, b) {
+                if (a == b) {
+                    hasDuplicate = true;
+                    return 0;
+                }
+
+                if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
+                    return a.compareDocumentPosition ? -1 : 1;
+                }
+
+                return a.compareDocumentPosition(b) & 4 ? -1 : 1;
+            };
+
+        } else {
+            sortOrder = t = function(a, b) {
+                // The nodes are identical, we can exit early
+                if (a == b) {
+                    hasDuplicate = true;
+                    return 0;
+                    // Fallback to using sourceIndex (in IE) if it's available on both nodes
+                } else if (a.sourceIndex && b.sourceIndex) {
+                    return a.sourceIndex - b.sourceIndex;
+                }
+            };
+        }
+    })();
+
 
     // 调整 context 为合理值
     function tuneContext(context) {
-        // 1). context 为 undefined 是最常见的情况，优先考虑
+        // context 为 undefined 是最常见的情况，优先考虑
         if (context === undefined) {
-            context = doc;
+            return [doc];
         }
-        // 2). context 的第二使用场景是传入 #id
-        else if (S.isString(context) && REG_ID.test(context)) {
-            context = getElementById(context.slice(1), doc);
-            // 注：#id 可能无效，这时获取的 context 为 null
-        }
-        // 3). nodelist 取第一个元素
-        else if (S.isArray(context) || isNodeList(context)) {
-            context = context[0] || null;
-        }
-        // 4). context 还可以传入 HTMLElement, 此时无需处理
-        // 5). 经历 1 - 4, 如果 context 还不是 HTMLElement, 赋值为 null
-        else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
-            context = null;
-        }
-        return context;
+        // 其他直接使用 query
+        return query(context, undefined);
     }
 
     // query #id
@@ -4914,15 +4999,21 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return null;
         }
+        var doc = context;
         if (context.nodeType !== 9) {
-            context = context.ownerDocument;
+            doc = context.ownerDocument;
         }
-        return context.getElementById(id);
+        var el = doc.getElementById(id);
+        // 如果指定了 context node , 还要判断 id 是否处于 context 内
+        if (!testByContext(el, context)) {
+            return null;
+        }
+        return el;
     }
 
     // query tag
     function getElementsByTagName(tag, context) {
-        return context.getElementsByTagName(tag);
+        return context && makeArray(context.getElementsByTagName(tag)) || [];
     }
 
     (function() {
@@ -4936,14 +5027,13 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
             getElementsByTagName = function(tag, context) {
-                var ret = S.makeArray(context.getElementsByTagName(tag));
-
+                var ret = makeArray(context.getElementsByTagName(tag));
                 if (tag === ANY) {
-                    var t = [], i = 0, j = 0, node;
+                    var t = [], i = 0,node;
                     while ((node = ret[i++])) {
                         // Filter out possible comments
                         if (node.nodeType === 1) {
-                            t[j++] = node;
+                            t.push(node);
                         }
                     }
                     ret = t;
@@ -4955,37 +5045,51 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     // query .cls
     var getElementsByClassName = doc.getElementsByClassName ? function(cls, tag, context) {
-        var els = S.makeArray(context.getElementsByClassName(cls)),
-            ret = els, i = 0, j = 0, len = els.length, el;
+        // query("#id1 xx","#id2")
+        // #id2 内没有 #id1 , context 为 null , 这里防御下
+        if (!context) {
+            return [];
+        }
+        var els = makeArray(context.getElementsByClassName(cls)),
+            ret = els,
+            i = 0,
+            len = els.length,
+            el;
 
         if (tag && tag !== ANY) {
-            ret = [];
-            tag = tag.toUpperCase();
+            ret = makeArray();
             for (; i < len; ++i) {
                 el = els[i];
-                if (el.tagName === tag) {
-                    ret[j++] = el;
+                if (eqTagName(el, tag)) {
+                    ret.push(el);
                 }
             }
         }
         return ret;
     } : ( doc.querySelectorAll ? function(cls, tag, context) {
-        return context.querySelectorAll((tag ? tag : '') + '.' + cls);
+        // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
+        return context && makeArray(context.querySelectorAll((tag ? tag : '') + '.' + cls)) || [];
     } : function(cls, tag, context) {
-        var els = context.getElementsByTagName(tag || ANY),
-            ret = [], i = 0, j = 0, len = els.length, el, t;
-
-        cls = SPACE + cls + SPACE;
+        if (!context) {
+            return [];
+        }
+        var els = makeArray(context.getElementsByTagName(tag || ANY)),
+            ret = [],
+            i = 0,
+            len = els.length,
+            el;
         for (; i < len; ++i) {
             el = els[i];
-            t = el.className;
-            if (t && (SPACE + t + SPACE).indexOf(cls) > -1) {
-                ret[j++] = el;
+            if (DOM.hasClass(el, cls)) {
+                ret.push(el);
             }
         }
         return ret;
     });
 
+    function eqTagName(el, tagName) {
+        return el.nodeName.toLowerCase() == tagName.toLowerCase();
+    }
 
     // throw exception
     function error(msg) {
@@ -4994,63 +5098,80 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            query: query,
+        query: query,
 
-            get: function(selector, context) {
-                return query(selector, context)[0] || null;
-            },
+        get: function(selector, context) {
+            return query(selector, context)[0] || null;
+        },
 
-            /**
-             * Filters an array of elements to only include matches of a filter.
-             * @param filter selector or fn
-             */
-            filter: function(selector, filter, context) {
-                var elems = query(selector, context),
-                    sizzle = S.require("sizzle"),
-                    match, tag, cls, ret = [];
+        unique:unique,
 
-                // 默认仅支持最简单的 tag.cls 形式
-                if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
-                    tag = match[2];
-                    cls = match[3];
-                    filter = function(elem) {
-                        return !(
-                            (tag && elem.tagName.toLowerCase() !== tag.toLowerCase())
-                                || (cls && !DOM.hasClass(elem, cls))
-                            );
-                    }
+        /**
+         * Filters an array of elements to only include matches of a filter.
+         * @param filter selector or fn
+         */
+        filter: function(selector, filter, context) {
+            var elems = query(selector, context),
+                sizzle = require("sizzle"),
+                match,
+                tag,
+                cls,
+                ret = [];
+
+            // 默认仅支持最简单的 tag.cls 形式
+            if (isString(filter) &&
+                (match = REG_QUERY.exec(filter)) &&
+                !match[1]) {
+                tag = match[2];
+                cls = match[3];
+                filter = function(elem) {
+                    return !(
+                        (tag &&
+                            !eqTagName(elem, tag)
+                            )
+                            || (cls && !DOM.hasClass(elem, cls))
+                        );
                 }
-
-                if (S.isFunction(filter)) {
-                    ret = S.filter(elems, filter);
-                }
-                // 其它复杂 filter, 采用外部选择器
-                else if (filter && sizzle) {
-                    ret = sizzle._filter(selector, filter, context);
-                }
-                // filter 为空或不支持的 selector
-                else {
-                    error(filter);
-                }
-
-                return ret;
-            },
-
-            /**
-             * Returns true if the passed element(s) match the passed filter
-             */
-            test: function(selector, filter, context) {
-                var elems = query(selector, context);
-                return elems.length && (DOM.filter(elems, filter, context).length === elems.length);
             }
-        });
+
+            if (S.isFunction(filter)) {
+                ret = S.filter(elems, filter);
+            }
+            // 其它复杂 filter, 采用外部选择器
+            else if (filter && sizzle) {
+                ret = sizzle._filter(filter, elems);
+            }
+            // filter 为空或不支持的 selector
+            else {
+                error(filter);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Returns true if the passed element(s) match the passed filter
+         */
+        test: function(selector, filter, context) {
+            var elements = query(selector, context);
+            return elements.length && (DOM.filter(elements, filter, context).length === elements.length);
+        }
+    });
     return DOM;
 }, {
-        requires:["dom/base"]
-    });
+    requires:["dom/base"]
+});
 
 /**
  * NOTES:
+ *
+ * 2011.08.02
+ *  - 1.1.6 修正，原来 context 只支持 #id 以及 document
+ *    1.2 context 支持任意，和 selector 格式一致
+ *  - 简单选择器也和 jquery 保持一致 DOM.query("xx","yy") 支持
+ *    - context 不提供则为当前 document ，否则通过 query 递归取得
+ *    - 保证选择出来的节点（除了 document window）都是位于 context 范围内
+ *
  *
  * 2010.01
  *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
@@ -5091,6 +5212,20 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *
  * 2011.05
  *  - 承玉：恢复对简单分组支持
+ *
+ * Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
+ * 考虑 2/8 原则，仅支持以下选择器：
+ * #id
+ * tag
+ * .cls
+ * #id tag
+ * #id .cls
+ * tag.cls
+ * #id tag.cls
+ * 注 1：REG_QUERY 还会匹配 #id.cls
+ * 注 2：tag 可以为 * 字符
+ * 注 3: 支持 , 号分组
+ *
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
@@ -5289,96 +5424,99 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            closest:function(selector, filter, context) {
-                return nth(selector, filter, 'parentNode', function(elem) {
-                    return elem.nodeType != 11;
-                }, context, true);
-            },
+        closest:function(selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            }, context, true);
+        },
 
-            /**
-             * Gets the parent node of the first matched element.
-             */
-            parent: function(selector, filter, context) {
-                return nth(selector, filter, 'parentNode', function(elem) {
-                    return elem.nodeType != 11;
-                }, context);
-            },
+        /**
+         * Gets the parent node of the first matched element.
+         */
+        parent: function(selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            }, context);
+        },
 
-            /**
-             * Gets the following sibling of the first matched element.
-             */
-            next: function(selector, filter) {
-                return nth(selector, filter, 'nextSibling', undefined);
-            },
+        /**
+         * Gets the following sibling of the first matched element.
+         */
+        next: function(selector, filter) {
+            return nth(selector, filter, 'nextSibling', undefined);
+        },
 
-            /**
-             * Gets the preceding sibling of the first matched element.
-             */
-            prev: function(selector, filter) {
-                return nth(selector, filter, 'previousSibling', undefined);
-            },
+        /**
+         * Gets the preceding sibling of the first matched element.
+         */
+        prev: function(selector, filter) {
+            return nth(selector, filter, 'previousSibling', undefined);
+        },
 
-            /**
-             * Gets the siblings of the first matched element.
-             */
-            siblings: function(selector, filter) {
-                return getSiblings(selector, filter, true);
-            },
+        /**
+         * Gets the siblings of the first matched element.
+         */
+        siblings: function(selector, filter) {
+            return getSiblings(selector, filter, true);
+        },
 
-            /**
-             * Gets the children of the first matched element.
-             */
-            children: function(selector, filter) {
-                return getSiblings(selector, filter, undefined);
-            },
+        /**
+         * Gets the children of the first matched element.
+         */
+        children: function(selector, filter) {
+            return getSiblings(selector, filter, undefined);
+        },
 
-            /**
-             * Check to see if a DOM node is within another DOM node.
-             */
-            contains: document.documentElement.contains ?
-                function(a, b) {
-                    a = DOM.get(a);
-                    b = DOM.get(b);
-                    if (a.nodeType == 3) {
-                        return false;
-                    }
-                    var precondition;
-                    if (b.nodeType == 3) {
-                        b = b.parentNode;
-                        // a 和 b父亲相等也就是返回 true
-                        precondition = true;
-                    } else if (b.nodeType == 9) {
-                        // b === document
-                        // 没有任何元素能包含 document
-                        return false;
-                    } else {
-                        // a 和 b 相等返回 false
-                        precondition = a !== b;
-                    }
-                    // !a.contains => a===document
-                    // 注意原生 contains 判断时 a===b 也返回 true
-                    return precondition && (a.contains ? a.contains(b) : true);
-                } : (
-                document.documentElement.compareDocumentPosition ?
-                    function(a, b) {
-                        a = DOM.get(a);
-                        b = DOM.get(b);
-                        return !!(a.compareDocumentPosition(b) & 16);
-                    } :
-                    // it can not be true , pathetic browser
-                    0
-                ),
-
-            equals:function(n1, n2) {
-                n1 = DOM.query(n1);
-                n2 = DOM.query(n2);
-                if (n1.length != n2.length) return false;
-                for (var i = n1.length; i >= 0; i--) {
-                    if (n1[i] != n2[i]) return false;
+        __contains:document.documentElement.contains ?
+            function(a, b) {
+                if (a.nodeType == 3) {
+                    return false;
                 }
-                return true;
+                var precondition;
+                if (b.nodeType == 3) {
+                    b = b.parentNode;
+                    // a 和 b父亲相等也就是返回 true
+                    precondition = true;
+                } else if (b.nodeType == 9) {
+                    // b === document
+                    // 没有任何元素能包含 document
+                    return false;
+                } else {
+                    // a 和 b 相等返回 false
+                    precondition = a !== b;
+                }
+                // !a.contains => a===document
+                // 注意原生 contains 判断时 a===b 也返回 true
+                return precondition && (a.contains ? a.contains(b) : true);
+            } : (
+            document.documentElement.compareDocumentPosition ?
+                function(a, b) {
+                    return !!(a.compareDocumentPosition(b) & 16);
+                } :
+                // it can not be true , pathetic browser
+                0
+            ),
+
+        /**
+         * Check to see if a DOM node is within another DOM node.
+         */
+        contains:
+            function(a, b) {
+                a = DOM.get(a);
+                b = DOM.get(b);
+                return DOM.__contains(a, b);
+            },
+
+        equals:function(n1, n2) {
+            n1 = DOM.query(n1);
+            n2 = DOM.query(n2);
+            if (n1.length != n2.length) return false;
+            for (var i = n1.length; i >= 0; i--) {
+                if (n1[i] != n2[i]) return false;
             }
-        });
+            return true;
+        }
+    });
 
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn array ，为数组时返回多个
@@ -5472,8 +5610,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     return DOM;
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 
 /**
  * NOTES:
@@ -6832,7 +6970,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         all:function(selector) {
             if (this.length > 0) {
-                return NodeList.all(selector, this[0]);
+                return NodeList.all(selector, this);
             }
             return new NodeList(undefined, undefined, undefined);
         }
@@ -10310,7 +10448,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -11376,8 +11514,8 @@ KISSY.add('sizzle/impl', function(S) {
 
         return Sizzle.filter(later, tmpSet);
     };
-    Sizzle._filter = function(selector, filter,context) {
-        return Sizzle.matches(filter, S.require("dom/selector").query(selector,context));
+    Sizzle._filter = function(filter, elements) {
+        return Sizzle.matches(filter, elements);
     };
     return Sizzle;
 });
@@ -11390,7 +11528,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:05
 */
 /**
  * 数据延迟加载组件
@@ -11881,7 +12019,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12119,7 +12257,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:05
 */
 /**
  * @module   Flash 全局静态类
@@ -12630,7 +12768,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:05
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -13844,7 +13982,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 /**
  * resizable support for kissy
@@ -14009,7 +14147,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:36
+build time: Aug 2 18:06
 */
 /**
  * UIBase.Align
@@ -14744,7 +14882,13 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 });
 
                 // 合并功能代码到主类，不覆盖
-                S.augment(C, ext, false);
+                for (var p in ext.prototype) {
+                    // 不覆盖主类，但是主类的父类还是覆盖吧
+                    if (!C.prototype.hasOwnProperty((p)) &&
+                        ext.prototype.hasOwnProperty(p)) {
+                        C.prototype[p] = ext.prototype[p];
+                    }
+                }
             });
         }
 
@@ -16011,7 +16155,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:05
 */
 /**
  * container can delegate event for its children
@@ -16706,7 +16850,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 /**
  * Switchable
@@ -17702,10 +17846,10 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-            autoplay: false,
-            interval: 5, // 自动播放间隔时间
-            pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
-        });
+        autoplay: false,
+        interval: 5, // 自动播放间隔时间
+        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
+    });
 
     /**
      * 添加插件
@@ -17714,56 +17858,56 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
      */
     Switchable.Plugins.push({
 
-            name: 'autoplay',
+        name: 'autoplay',
 
-            init: function(host) {
+        init: function(host) {
 
-                var cfg = host.config,
-                    interval = cfg.interval * 1000,
-                    timer;
+            var cfg = host.config,
+                interval = cfg.interval * 1000,
+                timer;
 
-                if (!cfg.autoplay) return;
+            if (!cfg.autoplay) return;
 
-                // 鼠标悬停，停止自动播放
-                if (cfg.pauseOnHover) {
-                    Event.on(host.container, 'mouseenter', host.stop, host);
-                    Event.on(host.container, 'mouseleave', host.start, host);
-                }
-
-                function startAutoplay() {
-                    // 设置自动播放
-                    timer = S.later(function() {
-                        if (host.paused) return;
-                        // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                        host.switchTo(host.activeIndex < host.length - 1 ?
-                            host.activeIndex + 1 : 0,
-                            'forward');
-                    }, interval, true);
-                }
-
-                // go
-                startAutoplay();
-
-                // 添加 stop 方法，使得外部可以停止自动播放
-                host.stop = function() {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
-                    // paused 可以让外部知道 autoplay 的当前状态
-                    host.paused = true;
-                };
-
-                host.start = function() {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
-                    host.paused = false;
-                    startAutoplay();
-                };
+            function startAutoplay() {
+                // 设置自动播放
+                timer = S.later(function() {
+                    if (host.paused) return;
+                    // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                    host.switchTo(host.activeIndex < host.length - 1 ?
+                        host.activeIndex + 1 : 0,
+                        'forward');
+                }, interval, true);
             }
-        });
+
+            // go
+            startAutoplay();
+
+            // 添加 stop 方法，使得外部可以停止自动播放
+            host.stop = function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+                // paused 可以让外部知道 autoplay 的当前状态
+                host.paused = true;
+            };
+
+            host.start = function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+                host.paused = false;
+                startAutoplay();
+            };
+
+            // 鼠标悬停，停止自动播放
+            if (cfg.pauseOnHover) {
+                Event.on(host.container, 'mouseenter', host.stop, host);
+                Event.on(host.container, 'mouseleave', host.start, host);
+            }
+        }
+    });
     return Switchable;
 }, { requires:["event","./base"]});
 /**
@@ -19302,7 +19446,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 /**
  * KISSY Overlay
@@ -19768,7 +19912,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -20947,7 +21091,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:05
 */
 /**
  * @fileoverview 图像放大区域
@@ -21572,7 +21716,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:05
 */
 /**
  * KISSY Calendar
@@ -22851,7 +22995,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 /**
  * deletable menuitem
@@ -24086,7 +24230,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:34
+build time: Aug 2 18:05
 */
 /**
  * Model and Control for button
@@ -24342,7 +24486,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 1 10:12
+build time: Aug 2 18:06
 */
 /**
  * combination of menu and button ,similar to native select
@@ -24669,6 +24813,16 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 self.set("selectedItem", e.target);
                 self.hideMenu();
             },
+            removeItems:function() {
+                Select.superclass.removeItems.apply(this, arguments);
+                this.set("selectedItem", null);
+            },
+            removeItem:function(c) {
+                Select.superclass.removeItem.apply(this, arguments);
+                if (c == this.get("selectedItem")) {
+                    this.set("selectedItem", null);
+                }
+            },
             _uiSetSelectedItem:function(v, ev) {
                 if (ev && ev.prevVal) {
                     ev.prevVal.set("selected", false);
@@ -24729,6 +24883,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 },
 
                 defaultCaption:{
+                    value:""
                 }
             }
         }
@@ -24771,7 +24926,11 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 + "' value='" + curValue + "'>").insertBefore(element);
 
             select.on("afterSelectedItemChange", function(e) {
-                input.val(e.newVal.get("value"));
+                if (e.newVal) {
+                    input.val(e.newVal.get("value"));
+                } else {
+                    input.val("");
+                }
             });
         }
         element.remove();
@@ -24801,7 +24960,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:36
+build time: Aug 2 18:06
 */
 /**
  * @author  常胤 (lzlu.com)

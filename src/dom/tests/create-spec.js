@@ -6,6 +6,7 @@ KISSY.use("dom", function(S, DOM) {
     describe("create", function() {
 
         it("create should works", function() {
+
             var div = DOM.create('<div>'),
                 html = '',
                 tag = '';

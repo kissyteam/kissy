@@ -108,9 +108,8 @@
             }
         },
         require:function(moduleName) {
-            var self = this,
-                mod = mods[moduleName];
-            var re = self['onRequire'] && self['onRequire'](mod);
+            var mod = mods[moduleName];
+            var re = S['onRequire'] && S['onRequire'](mod);
             if (re !== undefined) return re;
             return mod && mod.value;
         },

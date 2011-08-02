@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 1 10:25
+build time: Aug 2 18:06
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 1 10:25
              */
             version: '1.20dev',
 
-            buildTime:'20110801102556',
+            buildTime:'20110802180644',
 
             /**
              * Returns a new object containing all of the properties of
@@ -755,6 +755,7 @@ build time: Aug 1 10:25
         /**
          * Converts object to a true array.
          * @param o {object|Array} array like object or array
+         * @return {Array}
          */
         makeArray: function(o) {
             if (o === null || o === undefined) return [];
@@ -1963,10 +1964,9 @@ build time: Aug 1 10:25
          * @param {string} moduleName
          */
         require:function(moduleName) {
-            var self = this,
-                mods = self.Env.mods,
+            var mods = S.Env.mods,
                 mod = mods[moduleName],
-                re = self['onRequire'] && self['onRequire'](mod);
+                re = S['onRequire'] && S['onRequire'](mod);
             if (re !== undefined) {
                 return re;
             }
@@ -2129,8 +2129,8 @@ build time: Aug 1 10:25
      *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      */
     // notice: timestamp
-    var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-min)?\.js/i,
+    var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
+        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
         pagePath = S.__pagePath;
 
     function getBaseUrl(script) {

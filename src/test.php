@@ -5,6 +5,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 ?>
 <html>
 <head>
+<script src="../build/kissy.js"></script>
 </head>
 <h1>KISSY 集成化测试</h1>
 <iframe id="test" src=''
@@ -17,7 +18,13 @@ header("Cache-Control:private, max-age=0, must-revalidate");
     var jasmine = {};
     jasmine.kissyNext = function(failedCount) {
         if (!failedCount) {
+
+            // event hash change ,ie8 error
             index++;
+            if ((KISSY.UA.ie == 8 || KISSY.UA.ie == 7) && tests[index].match(/event\//)) {
+                window.open(tests[index] + "?" + (+new Date()));
+                index++;
+            }
             if (tests[index]) {
                 document.getElementById("test").src = tests[index] + "?" + (+new Date());
             }

@@ -94,6 +94,9 @@
         <select name="decorateSelect" id="decorateSelect">
         </select>
     </label>
+
+    <button id="delAll">删除全部</button>
+
 </div>
 
 
@@ -151,6 +154,12 @@
 
             $("#nativeSelect")[0].selectedIndex = 5;
             S.log($("#nativeSelect")[0].selectedIndex);
+
+
+            $("#delAll").on("click", function() {
+                select.removeItems(true);
+                S.log(select.get("value"));
+            });
         });
     });
 </script>

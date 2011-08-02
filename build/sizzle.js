@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 2 18:06
 */
 /*!
  * Sizzle CSS Selector Engine - v1.0
@@ -1067,8 +1067,8 @@ KISSY.add('sizzle/impl', function(S) {
 
         return Sizzle.filter(later, tmpSet);
     };
-    Sizzle._filter = function(selector, filter,context) {
-        return Sizzle.matches(filter, S.require("dom/selector").query(selector,context));
+    Sizzle._filter = function(filter, elements) {
+        return Sizzle.matches(filter, elements);
     };
     return Sizzle;
 });

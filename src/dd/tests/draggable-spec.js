@@ -32,7 +32,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             waits(50);
             runs(function() {
                 var expected = 500;
-                if (ie == 7) expected += 2;
+                //if (ie == 7) expected += 2;
                 expect(drag.offset().top).toEqual(expected);
                 expect(drag.offset().left).toEqual(expected);
                 jasmine.simulate(document, "mouseup");
@@ -78,7 +78,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             waits(300);
             runs(function() {
                 var expected = 450;
-                if (ie == 7) expected += 2;
+                //if (ie == 7) expected += 2;
                 expect(drag.offset().top).toEqual(expected);
                 expect(drag.offset().left).toEqual(expected);
             });
@@ -126,7 +126,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             });
             runs(function() {
                 var expected = 400;
-                if (ie == 7) expected += 2;
+                //if (ie == 7) expected += 2;
                 expect(drag.offset().top).toEqual(expected);
                 expect(drag.offset().left).toEqual(expected);
             });

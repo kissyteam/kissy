@@ -8,96 +8,99 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            closest:function(selector, filter, context) {
-                return nth(selector, filter, 'parentNode', function(elem) {
-                    return elem.nodeType != 11;
-                }, context, true);
-            },
+        closest:function(selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            }, context, true);
+        },
 
-            /**
-             * Gets the parent node of the first matched element.
-             */
-            parent: function(selector, filter, context) {
-                return nth(selector, filter, 'parentNode', function(elem) {
-                    return elem.nodeType != 11;
-                }, context);
-            },
+        /**
+         * Gets the parent node of the first matched element.
+         */
+        parent: function(selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            }, context);
+        },
 
-            /**
-             * Gets the following sibling of the first matched element.
-             */
-            next: function(selector, filter) {
-                return nth(selector, filter, 'nextSibling', undefined);
-            },
+        /**
+         * Gets the following sibling of the first matched element.
+         */
+        next: function(selector, filter) {
+            return nth(selector, filter, 'nextSibling', undefined);
+        },
 
-            /**
-             * Gets the preceding sibling of the first matched element.
-             */
-            prev: function(selector, filter) {
-                return nth(selector, filter, 'previousSibling', undefined);
-            },
+        /**
+         * Gets the preceding sibling of the first matched element.
+         */
+        prev: function(selector, filter) {
+            return nth(selector, filter, 'previousSibling', undefined);
+        },
 
-            /**
-             * Gets the siblings of the first matched element.
-             */
-            siblings: function(selector, filter) {
-                return getSiblings(selector, filter, true);
-            },
+        /**
+         * Gets the siblings of the first matched element.
+         */
+        siblings: function(selector, filter) {
+            return getSiblings(selector, filter, true);
+        },
 
-            /**
-             * Gets the children of the first matched element.
-             */
-            children: function(selector, filter) {
-                return getSiblings(selector, filter, undefined);
-            },
+        /**
+         * Gets the children of the first matched element.
+         */
+        children: function(selector, filter) {
+            return getSiblings(selector, filter, undefined);
+        },
 
-            /**
-             * Check to see if a DOM node is within another DOM node.
-             */
-            contains: document.documentElement.contains ?
-                function(a, b) {
-                    a = DOM.get(a);
-                    b = DOM.get(b);
-                    if (a.nodeType == 3) {
-                        return false;
-                    }
-                    var precondition;
-                    if (b.nodeType == 3) {
-                        b = b.parentNode;
-                        // a 和 b父亲相等也就是返回 true
-                        precondition = true;
-                    } else if (b.nodeType == 9) {
-                        // b === document
-                        // 没有任何元素能包含 document
-                        return false;
-                    } else {
-                        // a 和 b 相等返回 false
-                        precondition = a !== b;
-                    }
-                    // !a.contains => a===document
-                    // 注意原生 contains 判断时 a===b 也返回 true
-                    return precondition && (a.contains ? a.contains(b) : true);
-                } : (
-                document.documentElement.compareDocumentPosition ?
-                    function(a, b) {
-                        a = DOM.get(a);
-                        b = DOM.get(b);
-                        return !!(a.compareDocumentPosition(b) & 16);
-                    } :
-                    // it can not be true , pathetic browser
-                    0
-                ),
-
-            equals:function(n1, n2) {
-                n1 = DOM.query(n1);
-                n2 = DOM.query(n2);
-                if (n1.length != n2.length) return false;
-                for (var i = n1.length; i >= 0; i--) {
-                    if (n1[i] != n2[i]) return false;
+        __contains:document.documentElement.contains ?
+            function(a, b) {
+                if (a.nodeType == 3) {
+                    return false;
                 }
-                return true;
+                var precondition;
+                if (b.nodeType == 3) {
+                    b = b.parentNode;
+                    // a 和 b父亲相等也就是返回 true
+                    precondition = true;
+                } else if (b.nodeType == 9) {
+                    // b === document
+                    // 没有任何元素能包含 document
+                    return false;
+                } else {
+                    // a 和 b 相等返回 false
+                    precondition = a !== b;
+                }
+                // !a.contains => a===document
+                // 注意原生 contains 判断时 a===b 也返回 true
+                return precondition && (a.contains ? a.contains(b) : true);
+            } : (
+            document.documentElement.compareDocumentPosition ?
+                function(a, b) {
+                    return !!(a.compareDocumentPosition(b) & 16);
+                } :
+                // it can not be true , pathetic browser
+                0
+            ),
+
+        /**
+         * Check to see if a DOM node is within another DOM node.
+         */
+        contains:
+            function(a, b) {
+                a = DOM.get(a);
+                b = DOM.get(b);
+                return DOM.__contains(a, b);
+            },
+
+        equals:function(n1, n2) {
+            n1 = DOM.query(n1);
+            n2 = DOM.query(n2);
+            if (n1.length != n2.length) return false;
+            for (var i = n1.length; i >= 0; i--) {
+                if (n1[i] != n2[i]) return false;
             }
-        });
+            return true;
+        }
+    });
 
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn array ，为数组时返回多个
@@ -191,8 +194,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     return DOM;
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 
 /**
  * NOTES:

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:34
+build time: Aug 2 18:05
 */
 /**
  * @module   anim
