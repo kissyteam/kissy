@@ -50,7 +50,7 @@ KISSY.use("dom", function(S, DOM) {
 
             expect(DOM.closest(t, ".test-parent")).toBe(DOM.get("#test-children"));
 
-            expect(DOM.closest(t, ".test-parent", "#test-children")).toBe(DOM.get("#test-children"));
+            expect(DOM.closest(t, ".test-parent", "#test-children")).toBe(null);
         });
 
 

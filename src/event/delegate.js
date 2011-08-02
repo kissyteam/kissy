@@ -107,6 +107,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
             if (target !== relatedTarget &&
                 (!relatedTarget || !DOM.contains(target, relatedTarget))
                 ) {
+                event.currentTarget = target;
                 return data.fn.call(data.scope || delegateTarget, event);
             }
         }

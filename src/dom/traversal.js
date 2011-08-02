@@ -105,8 +105,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn array ，为数组时返回多个
     // direction 可为 parentNode, nextSibling, previousSibling
-    // util : 到某个阶段不再查找直接返回
-    function nth(elem, filter, direction, extraFilter, until, includeSef) {
+    // context : 到某个阶段不再查找直接返回
+    function nth(elem, filter, direction, extraFilter, context, includeSef) {
         if (!(elem = DOM.get(elem))) {
             return null;
         }
@@ -119,7 +119,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (!elem) {
             return null;
         }
-        until = (until && DOM.get(until)) || null;
+        context = (context && DOM.get(context)) || null;
 
         if (filter === undefined) {
             // 默认取 1
@@ -138,7 +138,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             };
         }
 
-        do {
+        // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
+        while (elem && elem != context) {
             if (isElementNode(elem)
                 && testFilter(elem, filter)
                 && (!extraFilter || extraFilter(elem))) {
@@ -147,7 +148,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
                     break;
                 }
             }
-        } while (elem != until && (elem = elem[direction]));
+            elem = elem[direction];
+        }
 
         return isArray ? ret : ret[0] || null;
     }

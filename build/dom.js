@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:01
 */
 /**
  * @module  dom-attr
@@ -1871,7 +1871,16 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         var sortOrder,
             t,
             hasDuplicate,
+            baseHasDuplicate = true;
+
+        // Here we check if the JavaScript engine is using some sort of
+// optimization where it does not always call our comparision
+// function. If that is the case, discard the hasDuplicate value.
+//   Thus far that includes Google Chrome.
+        [0, 0].sort(function() {
             baseHasDuplicate = false;
+            return 0;
+        });
 
         // 排序去重
         unique = t = function (elements) {
@@ -2075,7 +2084,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
             // 其它复杂 filter, 采用外部选择器
             else if (filter && sizzle) {
-                ret = sizzle._filter(filter, elems);
+                ret = sizzle.matches(filter, elems);
             }
             // filter 为空或不支持的 selector
             else {
@@ -2804,8 +2813,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn array ，为数组时返回多个
     // direction 可为 parentNode, nextSibling, previousSibling
-    // util : 到某个阶段不再查找直接返回
-    function nth(elem, filter, direction, extraFilter, until, includeSef) {
+    // context : 到某个阶段不再查找直接返回
+    function nth(elem, filter, direction, extraFilter, context, includeSef) {
         if (!(elem = DOM.get(elem))) {
             return null;
         }
@@ -2818,7 +2827,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (!elem) {
             return null;
         }
-        until = (until && DOM.get(until)) || null;
+        context = (context && DOM.get(context)) || null;
 
         if (filter === undefined) {
             // 默认取 1
@@ -2837,7 +2846,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             };
         }
 
-        do {
+        // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
+        while (elem && elem != context) {
             if (isElementNode(elem)
                 && testFilter(elem, filter)
                 && (!extraFilter || extraFilter(elem))) {
@@ -2846,7 +2856,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
                     break;
                 }
             }
-        } while (elem != until && (elem = elem[direction]));
+            elem = elem[direction];
+        }
 
         return isArray ? ret : ret[0] || null;
     }

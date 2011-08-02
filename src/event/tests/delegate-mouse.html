@@ -4,7 +4,7 @@
 </head>
 <body>
 
-<div class='out' id='i4' style='width:300px;height:300px;border:1px solid green;'>
+<div class='inner' id='i4' style='width:300px;height:300px;border:1px solid green;'>
     i4
     <div class='inner' id='i3' style='width:200px;height:200px;border:1px solid red;margin:50px;'>
         #i3.inner
@@ -16,25 +16,13 @@
 <hr/>
 <div id='log'></div>
 <script src="../../../build/seed.js"></script>
-<script src="../../../build/ua.js"></script>
-<script src="../../../build/dom.js"></script>
-
-<script src="../base.js"></script>
-<script src="../object.js"></script>
-<script src="../target.js"></script>
-<script src="../focusin.js"></script>
-<script src="../mouseenter.js"></script>
-<script src="../delegate.js"></script>
-<script src="../valuechange.js"></script>
-<script src="../hashchange.js"></script>
-<script src="../../event.js"></script>
-
 <script>
     KISSY.__combines = {};
+    KISSY.Config.base = "../../";
     KISSY.use("node", function(S, Node) {
         var $ = Node.all;
-        $('#i4').delegate('mouseenter mouseleave', '.inner', function(e) {
-            $('#log').html(e.type + " : " + e.target.id);
+        $('#i4').delegate('mouseenter mouseleave click', '.inner', function(e) {
+            $('#log').append(e.type + " : " + e.currentTarget.id+"<br/>");
         });
     });
 </script>

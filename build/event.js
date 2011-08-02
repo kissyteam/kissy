@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 18:05
+build time: Aug 2 22:01
 */
 /**
  * @module  event
@@ -528,6 +528,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
             if (target !== relatedTarget &&
                 (!relatedTarget || !DOM.contains(target, relatedTarget))
                 ) {
+                event.currentTarget = target;
                 return data.fn.call(data.scope || delegateTarget, event);
             }
         }
