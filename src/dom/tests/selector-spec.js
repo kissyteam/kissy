@@ -41,6 +41,11 @@ KISSY.use("dom", function(S, DOM) {
             expect(S.query("#test-selector-2 s").length).toBe(1);
         });
 
+        it("support comma", function() {
+            expect(S.query("#test-selector-1 .test-selector , #test-selector-2 .test-selector").length)
+                .toBe(2);
+        });
+
 
         it("support #id .cls", function() {
             expect(S.get("#test-selector-1 .test-selector").tagName.toLowerCase()).toBe("div");
@@ -85,7 +90,7 @@ KISSY.use("dom", function(S, DOM) {
 
 
         it("should attach each properly", function() {
-            var c3 = S.query("div .context-test-3");
+            var c3 = S.query(".context-test-3");
             expect(c3.length).toBe(3);
             var a = [];
             // each 绑定正常
@@ -152,30 +157,30 @@ KISSY.use("dom", function(S, DOM) {
 
         });
 
+        if (S.require("sizzle")) {
 
-        it("should support other string form selector and unique works in sizzle", function() {
-            expect(S.query("div .context-test-3", "body .context-test").length).toBe(2);
+            it("should support other string form selector and unique works in sizzle", function() {
+                expect(S.query("div .context-test-3", "body .context-test").length).toBe(2);
 
-            expect($("div .context-test-3", "body .context-test").length).toBe(2);
+                expect($("div .context-test-3", "body .context-test").length).toBe(2);
 
-        });
-
-
-        it("should support node array form selector and unique works in sizzle", function() {
-            var c3 = S.query("div .context-test-3");
-            expect(c3.length).toBe(3);
-
-            var c = S.query("div .context-test");
-            expect(c.length).toBe(3);
+            });
 
 
-            expect(S.query(c3, "div .context-test").length).toBe(2);
-            expect(S.query("div .context-test-3", c).length).toBe(2);
-            expect(S.query(c3, c).length).toBe(2);
-            expect(S.query("div .context-test-3", "div .context-test").length).toBe(2);
+            it("should support node array form selector and unique works in sizzle", function() {
+                var c3 = S.query("div .context-test-3");
+                expect(c3.length).toBe(3);
+
+                var c = S.query("div .context-test");
+                expect(c.length).toBe(3);
 
 
-        });
+                expect(S.query(c3, "div .context-test").length).toBe(2);
+                expect(S.query("div .context-test-3", c).length).toBe(2);
+                expect(S.query(c3, c).length).toBe(2);
+                expect(S.query("div .context-test-3", "div .context-test").length).toBe(2);
+            });
+        }
     });
 
 });

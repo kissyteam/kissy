@@ -46,6 +46,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     function queryByContexts(selector, context) {
         var ret = [],
             sizzle = require("sizzle");
+        if (isString(selector)) {
+            selector = S.trim(selector);
+        }
         // 如果选择器有 , 分开递归一部分一部分来
         if (isString(selector) && selector.indexOf(",") > -1) {
             ret = queryBySelectors(selector, context);
@@ -94,7 +97,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             tag,
             cls;
         if (isString(selector)) {
-            selector = S.trim(selector);
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1), context);

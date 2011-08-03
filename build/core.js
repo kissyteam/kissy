@@ -271,6 +271,23 @@ KISSY.add('dom/base', function(S, undefined) {
     return {
 
         /**
+         * enumeration of dom node type
+         * @type Number
+         */
+        ELEMENT_NODE : 1,
+        ATTRIBUTE_NODE : 2,
+        TEXT_NODE:3,
+        CDATA_SECTION_NODE : 4,
+        ENTITY_REFERENCE_NODE: 5,
+        ENTITY_NODE : 6,
+        PROCESSING_INSTRUCTION_NODE :7,
+        COMMENT_NODE : 8,
+        DOCUMENT_NODE : 9,
+        DOCUMENT_TYPE_NODE : 10,
+        DOCUMENT_FRAGMENT_NODE : 11,
+        NOTATION_NODE : 12,
+
+        /**
          * 是不是 element node
          */
         _isElementNode: function(elem) {
@@ -288,7 +305,7 @@ KISSY.add('dom/base', function(S, undefined) {
                 elem :
                 nodeTypeIs(elem, 9) ?
                     elem.defaultView || elem.parentWindow :
-                    elem == undefined ?
+                    (elem === undefined || elem === null) ?
                         window : false;
         },
 
@@ -2335,12 +2352,12 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {String|Array} selector
-     * @param {String|Array<HTMLElement>|NodeList} contexts find elements matching selector under context
+     * @param {String|Array<HTMLElement>|NodeList} context find elements matching selector under context
      * @return {Array} The array of found HTMLElement
      */
-    function query(selector, contexts) {
+    function query(selector, context) {
         var ret = [];
-        contexts = tuneContext(contexts);
+        var contexts = tuneContext(context);
 
         each(contexts, function(c) {
             push.apply(ret, queryByContexts(selector, c));
@@ -2360,6 +2377,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     function queryByContexts(selector, context) {
         var ret = [],
             sizzle = require("sizzle");
+        if (isString(selector)) {
+            selector = S.trim(selector);
+        }
         // 如果选择器有 , 分开递归一部分一部分来
         if (isString(selector) && selector.indexOf(",") > -1) {
             ret = queryBySelectors(selector, context);
@@ -2408,7 +2428,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             tag,
             cls;
         if (isString(selector)) {
-            selector = S.trim(selector);
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1), context);
@@ -2418,29 +2437,33 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 }
             }
             // selector 为支持列表中的其它 6 种
-            else if ((match = REG_QUERY.exec(selector))) {
-                // 获取匹配出的信息
-                id = match[1];
-                tag = match[2];
-                cls = match[3];
-                // 空白前只能有 id ，取出来作为 context
-                if (context = (id ? getElementById(id, context) : context)) {
-                    // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
-                    if (cls) {
-                        if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
-                            ret = [].concat(getElementsByClassName(cls, tag, context));
-                        }
-                        // 处理 #id.cls
-                        else {
-                            t = getElementById(id, context);
-                            if (t && DOM.hasClass(t, cls)) {
-                                ret = [t];
+            else {
+                match = REG_QUERY.exec(selector);
+                if (match) {
+                    // 获取匹配出的信息
+                    id = match[1];
+                    tag = match[2];
+                    cls = match[3];
+                    // 空白前只能有 id ，取出来作为 context
+                    context = (id ? getElementById(id, context) : context);
+                    if (context) {
+                        // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
+                        if (cls) {
+                            if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
+                                ret = [].concat(getElementsByClassName(cls, tag, context));
+                            }
+                            // 处理 #id.cls
+                            else {
+                                t = getElementById(id, context);
+                                if (t && DOM.hasClass(t, cls)) {
+                                    ret = [t];
+                                }
                             }
                         }
-                    }
-                    // #id tag | tag
-                    else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(tag, context);
+                        // #id tag | tag
+                        else if (tag) { // 排除空白字符串
+                            ret = getElementsByTagName(tag, context);
+                        }
                     }
                 }
             }
@@ -2494,15 +2517,18 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         });
 
         // 排序去重
-        unique = t = function (elements) {
+        unique = function (elements) {
             if (sortOrder) {
                 hasDuplicate = baseHasDuplicate;
                 elements.sort(sortOrder);
 
                 if (hasDuplicate) {
-                    for (var i = 1; i < elements.length; i++) {
+                    var i = 1,len = elements.length;
+                    while (i < len) {
                         if (elements[i] === elements[ i - 1 ]) {
-                            elements.splice(i--, 1);
+                            elements.splice(i, 1);
+                        } else {
+                            i++;
                         }
                     }
                 }
@@ -2681,12 +2707,19 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {
-                    return !(
-                        (tag &&
-                            !eqTagName(elem, tag)
-                            )
-                            || (cls && !DOM.hasClass(elem, cls))
-                        );
+                    var tagRe = true,clsRe = true;
+
+                    // 指定 tag 才进行判断
+                    if (tag) {
+                        tagRe = eqTagName(elem, tag);
+                    }
+
+                    // 指定 cls 才进行判断
+                    if (cls) {
+                        clsRe = DOM.hasClass(elem, cls);
+                    }
+
+                    return clsRe && tagRe;
                 }
             }
 
@@ -4422,6 +4455,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
+     * @constructor
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,domNode;
@@ -4439,7 +4473,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
-            if (domNode.nodeType === 11) { // fragment
+            if (domNode.nodeType === DOM.DOCUMENT_FRAGMENT_NODE) { // fragment
                 AP.push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
@@ -4470,10 +4504,14 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         item: function(index) {
             if (S.isNumber(index)) {
-                if (index >= this.length) return null;
-                return new NodeList(this[index]);
-            } else
+                if (index >= this.length) {
+                    return null;
+                } else {
+                    return new NodeList(this[index]);
+                }
+            } else {
                 return new NodeList(index);
+            }
         },
 
         add:function(selector, context, index) {
@@ -4531,45 +4569,70 @@ KISSY.add("node/base", function(S, DOM, undefined) {
                 return NodeList.all(selector, this);
             }
             return new NodeList();
+        },
+
+        one:function(selector) {
+            var all = this.all(selector);
+            return all.length ? all.slice(0, 1) : null;
         }
     });
 
-    NodeList.prototype.one = function(selector) {
-        var all = this.all(selector);
-        return all.length ? all.slice(0, 1) : null;
-    };
+    S.mix(NodeList, {
 
-    // query api
-    NodeList.all = function(selector, context) {
-        // are we dealing with html string ?
-        // TextNode 仍需要自己 new Node
+        /**
+         * enumeration of dom node type
+         */
+        ELEMENT_NODE : DOM.ELEMENT_NODE,
+        ATTRIBUTE_NODE : DOM.ATTRIBUTE_NODE,
+        TEXT_NODE:DOM.TEXT_NODE,
+        CDATA_SECTION_NODE : DOM.CDATA_SECTION_NODE,
+        ENTITY_REFERENCE_NODE: DOM.ENTITY_REFERENCE_NODE,
+        ENTITY_NODE : DOM.ENTITY_NODE,
+        PROCESSING_INSTRUCTION_NODE :DOM.PROCESSING_INSTRUCTION_NODE,
+        COMMENT_NODE : DOM.COMMENT_NODE,
+        DOCUMENT_NODE : DOM.DOCUMENT_NODE,
+        DOCUMENT_TYPE_NODE : DOM.DOCUMENT_TYPE_NODE,
+        DOCUMENT_FRAGMENT_NODE : DOM.DOCUMENT_FRAGMENT_NODE,
+        NOTATION_NODE : DOM.NOTATION_NODE,
 
-        if (S.isString(selector)
-            && (selector = S.trim(selector))
-            && selector.length >= 3
-            && S.startsWith(selector, "<")
-            && S.endsWith(selector, ">")
-            ) {
-            if (context) {
-                if (context.getDOMNode) {
-                    context = context.getDOMNode();
+        /**
+         * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
+         * @param {String|HTMLElement[]|NodeList} selector html 字符串或 kissy 选择器格式参数
+         * @param {String|Array<HTMLElement>|NodeList} [context] 上下文定义
+         * @returns {NodeList} 节点列表对象
+         */
+        all:function(selector, context) {
+            // are we dealing with html string ?
+            // TextNode 仍需要自己 new Node
+
+            if (S.isString(selector)
+                && (selector = S.trim(selector))
+                && selector.length >= 3
+                && S.startsWith(selector, "<")
+                && S.endsWith(selector, ">")
+                ) {
+                if (context) {
+                    if (context.getDOMNode) {
+                        context = context.getDOMNode();
+                    }
+                    if (context.ownerDocument) {
+                        context = context.ownerDocument;
+                    }
                 }
-                if (context.ownerDocument) {
-                    context = context.ownerDocument;
-                }
+                return new NodeList(selector, undefined, context);
             }
-            return new NodeList(selector, undefined, context);
+            return new NodeList(DOM.query(selector, context));
+        },
+        one:function(selector, context) {
+            var all = NodeList.all(selector, context);
+            return all.length ? all.slice(0, 1) : null;
         }
-        return new NodeList(DOM.query(selector, context));
-    };
+    });
 
-    NodeList.one = function(selector, context) {
-        var all = NodeList.all(selector, context);
-        return all.length ? all.slice(0, 1) : null;
-    };
     if (1 > 2) {
-        NodeList.getDOMNodes();
+        DOM.getDOMNodes();
     }
+
     return NodeList;
 }, {
     requires:["dom"]
