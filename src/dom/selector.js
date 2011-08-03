@@ -21,12 +21,12 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {String|Array} selector
-     * @param {String|Array<HTMLElement>|NodeList} contexts find elements matching selector under context
+     * @param {String|Array<HTMLElement>|NodeList} context find elements matching selector under context
      * @return {Array} The array of found HTMLElement
      */
-    function query(selector, contexts) {
+    function query(selector, context) {
         var ret = [];
-        contexts = tuneContext(contexts);
+        var contexts = tuneContext(context);
 
         each(contexts, function(c) {
             push.apply(ret, queryByContexts(selector, c));
@@ -104,29 +104,33 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 }
             }
             // selector 为支持列表中的其它 6 种
-            else if ((match = REG_QUERY.exec(selector))) {
-                // 获取匹配出的信息
-                id = match[1];
-                tag = match[2];
-                cls = match[3];
-                // 空白前只能有 id ，取出来作为 context
-                if (context = (id ? getElementById(id, context) : context)) {
-                    // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
-                    if (cls) {
-                        if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
-                            ret = [].concat(getElementsByClassName(cls, tag, context));
-                        }
-                        // 处理 #id.cls
-                        else {
-                            t = getElementById(id, context);
-                            if (t && DOM.hasClass(t, cls)) {
-                                ret = [t];
+            else {
+                match = REG_QUERY.exec(selector);
+                if (match) {
+                    // 获取匹配出的信息
+                    id = match[1];
+                    tag = match[2];
+                    cls = match[3];
+                    // 空白前只能有 id ，取出来作为 context
+                    context = (id ? getElementById(id, context) : context);
+                    if (context) {
+                        // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
+                        if (cls) {
+                            if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
+                                ret = [].concat(getElementsByClassName(cls, tag, context));
+                            }
+                            // 处理 #id.cls
+                            else {
+                                t = getElementById(id, context);
+                                if (t && DOM.hasClass(t, cls)) {
+                                    ret = [t];
+                                }
                             }
                         }
-                    }
-                    // #id tag | tag
-                    else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(tag, context);
+                        // #id tag | tag
+                        else if (tag) { // 排除空白字符串
+                            ret = getElementsByTagName(tag, context);
+                        }
                     }
                 }
             }
@@ -180,15 +184,18 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         });
 
         // 排序去重
-        unique = t = function (elements) {
+        unique = function (elements) {
             if (sortOrder) {
                 hasDuplicate = baseHasDuplicate;
                 elements.sort(sortOrder);
 
                 if (hasDuplicate) {
-                    for (var i = 1; i < elements.length; i++) {
+                    var i = 1,len = elements.length;
+                    while (i < len) {
                         if (elements[i] === elements[ i - 1 ]) {
-                            elements.splice(i--, 1);
+                            elements.splice(i, 1);
+                        } else {
+                            i++;
                         }
                     }
                 }
