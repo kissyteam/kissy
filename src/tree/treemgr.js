@@ -42,38 +42,6 @@ KISSY.add("tree/treemgr", function(S) {
             delete this._allNodes[c.get("id")];
         },
 
-
-        __bindUI:function() {
-            var self = this,el = self.get("el");
-            el.on("mousedown mouseup mouseover mouseout dblclick",
-                self._handleChildMouseEvents, self);
-        },
-
-        _handleChildMouseEvents:function(e) {
-            var control = this._getOwnerNode(S.one(e.target)[0]);
-            if (control) {
-                // Child control identified; forward the event.
-                switch (e.type) {
-                    
-                    case "mousedown":
-                        control._handleMouseDown(e);
-                        break;
-                    case "mouseup":
-                        control._handleMouseUp(e);
-                        break;
-                    case "mouseover":
-                        control._handleMouseOver(e);
-                        break;
-                    case "mouseout":
-                        control._handleMouseOut(e);
-                        break;
-                    case "dblclick":
-                        control._handleDblClick(e);
-                        break;
-                }
-            }
-        },
-
         _handleKeyEventInternal:function(e) {
             var current = this.get("selectedItem");
             if (e.keyCode == 13) {
@@ -83,7 +51,8 @@ KISSY.add("tree/treemgr", function(S) {
             return current._keyNav(e);
         },
 
-        _getOwnerNode:function(node) {
+        // 重写 delegatechildren ，缓存加快从节点获取对象速度
+        getOwnerControl:function(node) {
             var self = this,
                 n,
                 elem = self.get("el")[0];

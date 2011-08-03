@@ -4,7 +4,7 @@
  */
 KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
     /*多继承*/
-    return UIBase.create(CheckNode, [TreeMgr], {
+    return UIBase.create(CheckNode, [TreeMgr,Component.DelegateChildren], {
     }, {
         DefaultRender:CheckTreeRender
     });

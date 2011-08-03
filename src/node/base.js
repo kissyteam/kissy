@@ -152,8 +152,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         /**
          * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
-         * @param {String|HTMLElement[]|NodeList} selector html 字符串或 kissy 选择器格式参数
-         * @param {String|Array<HTMLElement>|NodeList} [context] 上下文定义
+         * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>选择器</a>或节点列表
+         * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] 上下文定义
          * @returns {NodeList} 节点列表对象
          */
         all:function(selector, context) {

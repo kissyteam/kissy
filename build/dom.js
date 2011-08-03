@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 22:27
+build time: Aug 3 19:05
 */
 /**
  * @module  dom-attr
@@ -530,6 +530,23 @@ KISSY.add('dom/base', function(S, undefined) {
     return {
 
         /**
+         * enumeration of dom node type
+         * @type Number
+         */
+        ELEMENT_NODE : 1,
+        ATTRIBUTE_NODE : 2,
+        TEXT_NODE:3,
+        CDATA_SECTION_NODE : 4,
+        ENTITY_REFERENCE_NODE: 5,
+        ENTITY_NODE : 6,
+        PROCESSING_INSTRUCTION_NODE :7,
+        COMMENT_NODE : 8,
+        DOCUMENT_NODE : 9,
+        DOCUMENT_TYPE_NODE : 10,
+        DOCUMENT_FRAGMENT_NODE : 11,
+        NOTATION_NODE : 12,
+
+        /**
          * 是不是 element node
          */
         _isElementNode: function(elem) {
@@ -547,7 +564,7 @@ KISSY.add('dom/base', function(S, undefined) {
                 elem :
                 nodeTypeIs(elem, 9) ?
                     elem.defaultView || elem.parentWindow :
-                    elem == undefined ?
+                    (elem === undefined || elem === null) ?
                         window : false;
         },
 
@@ -597,7 +614,9 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
                                 break;
                             }
                         }
-                        if (ret) return true;
+                        if (ret) {
+                            return true;
+                        }
                     }
                 }, true);
             },
@@ -686,29 +705,31 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
         }
 
         var elems = DOM.query(selector),
-            i = 0,
             len = elems.length,
             tmp = value.split(REG_SPLIT),
             elem,
             ret;
 
         var classNames = [];
-        for (; i < tmp.length; i++) {
+        for (var i=0; i < tmp.length; i++) {
             var t = S.trim(tmp[i]);
             if (t) {
                 classNames.push(t);
             }
         }
-        i = 0;
-        for (; i < len; i++) {
+        for (i=0; i < len; i++) {
             elem = elems[i];
             if (DOM._isElementNode(elem)) {
                 ret = fn(elem, classNames, classNames.length);
-                if (ret !== undefined) return ret;
+                if (ret !== undefined) {
+                    return ret;
+                }
             }
         }
 
-        if (resultIsBool) return false;
+        if (resultIsBool) {
+            return false;
+        }
         return undefined;
     }
 
@@ -1726,40 +1747,56 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
-        var ret,
+        var ret = [];
+        var contexts = tuneContext(context);
+
+        each(contexts, function(c) {
+            push.apply(ret, queryByContexts(selector, c));
+        });
+
+        //必要时去重排序
+        if (S.isString(selector) && selector.indexOf(",") > -1 ||
+            contexts.length > 1) {
+            unique(ret);
+        }
+        // attach each method
+        ret.each = S.bind(each, undefined, ret);
+
+        return ret;
+    }
+
+    function queryByContexts(selector, context) {
+        var ret = [],
             sizzle = require("sizzle");
+        if (isString(selector)) {
+            selector = S.trim(selector);
+        }
         // 如果选择器有 , 分开递归一部分一部分来
-        if (isString(selector) && selector.indexOf(",") != -1) {
+        if (isString(selector) && selector.indexOf(",") > -1) {
             ret = queryBySelectors(selector, context);
         }
         // 复杂了，交给 sizzle
         else if (isString(selector) && !REG_QUERY.exec(String(selector))) {
             ret = queryBySizzle(selector, context);
         }
-        // 自己处理处理多个 contex
+        // 简单选择器自己处理
         else {
-            ret = queryByContexts(selector, tuneContext(context));
+            ret = queryBySimple(selector, context);
         }
-
-        // attach each method
-        ret.each = function(fn, context) {
-            return each(ret, fn, context);
-        };
-
         return ret;
     }
 
     // 交给 sizzle 模块处理
     function queryBySizzle(selector, context) {
-        var ret,
+        var ret = [],
             sizzle = require("sizzle");
         if (sizzle) {
-            ret = sizzle(selector, context);
+            sizzle(selector, context, ret);
         } else {
             // 原生不支持
             error(selector);
         }
-        return ret || [];
+        return ret;
     }
 
     // 处理 selector 的每个部分
@@ -1767,29 +1804,14 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         var ret = [],
             selectors = selector.split(",");
         each(selectors, function(s) {
-            push.apply(ret, query(s, context));
+            push.apply(ret, queryByContexts(s, context));
         });
         // 多部分选择器可能得到重复结果
-        return unique(ret);
-    }
-
-    // 处理多个上下文情况
-    function queryByContexts(selector, context) {
-        var ret = [];
-        if (context.length > 1) {
-            each(context, function(c) {
-                push.apply(ret, query(selector, c));
-            });
-            // 多 context 可能得到同样结果
-            ret = unique(ret);
-        } else {
-            ret = queryInternal(selector, context[0]);
-        }
         return ret;
     }
 
     // 最简单情况了，单个选择器部分，单个上下文
-    function queryInternal(selector, context) {
+    function queryBySimple(selector, context) {
         var match,
             t,
             ret = [],
@@ -1797,7 +1819,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             tag,
             cls;
         if (isString(selector)) {
-            selector = S.trim(selector);
             // selector 为 #id 是最常见的情况，特殊优化处理
             if (REG_ID.test(selector)) {
                 t = getElementById(selector.slice(1), context);
@@ -1807,29 +1828,33 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 }
             }
             // selector 为支持列表中的其它 6 种
-            else if ((match = REG_QUERY.exec(selector))) {
-                // 获取匹配出的信息
-                id = match[1];
-                tag = match[2];
-                cls = match[3];
-                // 空白前只能有 id ，取出来作为 context
-                if (context = (id ? getElementById(id, context) : context)) {
-                    // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
-                    if (cls) {
-                        if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
-                            ret = [].concat(getElementsByClassName(cls, tag, context));
-                        }
-                        // 处理 #id.cls
-                        else {
-                            t = getElementById(id, context);
-                            if (t && DOM.hasClass(t, cls)) {
-                                ret = [t];
+            else {
+                match = REG_QUERY.exec(selector);
+                if (match) {
+                    // 获取匹配出的信息
+                    id = match[1];
+                    tag = match[2];
+                    cls = match[3];
+                    // 空白前只能有 id ，取出来作为 context
+                    context = (id ? getElementById(id, context) : context);
+                    if (context) {
+                        // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
+                        if (cls) {
+                            if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
+                                ret = [].concat(getElementsByClassName(cls, tag, context));
+                            }
+                            // 处理 #id.cls
+                            else {
+                                t = getElementById(id, context);
+                                if (t && DOM.hasClass(t, cls)) {
+                                    ret = [t];
+                                }
                             }
                         }
-                    }
-                    // #id tag | tag
-                    else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(tag, context);
+                        // #id tag | tag
+                        else if (tag) { // 排除空白字符串
+                            ret = getElementsByTagName(tag, context);
+                        }
                     }
                 }
             }
@@ -1883,15 +1908,18 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         });
 
         // 排序去重
-        unique = t = function (elements) {
+        unique = function (elements) {
             if (sortOrder) {
                 hasDuplicate = baseHasDuplicate;
                 elements.sort(sortOrder);
 
                 if (hasDuplicate) {
-                    for (var i = 1; i < elements.length; i++) {
+                    var i = 1,len = elements.length;
+                    while (i < len) {
                         if (elements[i] === elements[ i - 1 ]) {
-                            elements.splice(i--, 1);
+                            elements.splice(i, 1);
+                        } else {
+                            i++;
                         }
                     }
                 }
@@ -2070,12 +2098,19 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {
-                    return !(
-                        (tag &&
-                            !eqTagName(elem, tag)
-                            )
-                            || (cls && !DOM.hasClass(elem, cls))
-                        );
+                    var tagRe = true,clsRe = true;
+
+                    // 指定 tag 才进行判断
+                    if (tag) {
+                        tagRe = eqTagName(elem, tag);
+                    }
+
+                    // 指定 cls 才进行判断
+                    if (cls) {
+                        clsRe = DOM.hasClass(elem, cls);
+                    }
+
+                    return clsRe && tagRe;
                 }
             }
 
@@ -2111,6 +2146,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  * NOTES:
  *
  * 2011.08.02
+ *  - 利用 sizzle 重构选择器
  *  - 1.1.6 修正，原来 context 只支持 #id 以及 document
  *    1.2 context 支持任意，和 selector 格式一致
  *  - 简单选择器也和 jquery 保持一致 DOM.query("xx","yy") 支持

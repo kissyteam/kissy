@@ -4,7 +4,7 @@
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all;
-    var MenuButton = UIBase.create(Button, {
+    var MenuButton = UIBase.create(Button, [Component.DecorateChild], {
 
         hideMenu:function() {
             this.get("menu") && this.get("menu").hide();
@@ -153,7 +153,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         },
 
         // 找到下面有 popupmenu class 的元素，装饰为 PopupMenu 返回
-        decorateInternal:function(el) {
+        decorateInternalX:function(el) {
             var self = this,
                 ui = "popupmenu",
                 prefixCls = self.get("prefixCls");
@@ -171,6 +171,14 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 });
                 self.set("menu", menu);
             }
+        },
+
+        decorateChildrenInternal:function(menu) {
+            var el = menu.get("el");
+            el.hide();
+            var docBody = S.one(el[0].ownerDocument.body);
+            docBody.prepend(el);
+            this.set("menu", menu);
         },
 
         destructor:function() {
@@ -194,6 +202,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                         adjustY:1
                     }
                 }
+            },
+            decorateChildCls:{
+                value:"popupmenu"
             },
             // 不关心选中元素 , 由 select 负责
             // selectedItem

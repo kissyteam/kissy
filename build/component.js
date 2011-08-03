@@ -1,23 +1,127 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 22:27
+build time: Aug 3 19:05
 */
 /**
  * container can delegate event for its children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
+KISSY.add("component/container", function(S, UIBase, MC, UIStore, DelegateChildren, DecorateChildren) {
+    /**
+     * 多继承，容器也是组件，具备代理儿子事件以及递归装饰儿子的功能
+     */
+    return UIBase.create(MC, [DelegateChildren,DecorateChildren]);
 
-    return UIBase.create(MC, {
-        bindUI:function() {
+}, {
+    requires:['uibase','./modelcontrol','./uistore','./delegatechildren','./decoratechildren']
+});/**
+ * decorate its children from one element
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/decoratechild", function(S, DecorateChildren) {
+    function DecorateChild() {
+
+    }
+
+    S.augment(DecorateChild, DecorateChildren, {
+        decorateInternal:function(element) {
             var self = this,
-                view = self.get("view"),
-                el = view.get("el");
-            el.on("mousedown mouseup mouseover mouseout", self._handleChildMouseEvents, self);
+                ui = self.get("decorateChildCls"),
+                prefixCls = self.get("prefixCls"),
+                child = element.one("." + self.getCls(ui)),
+                UI = self._findUIByClass(child);
+            self.set("el", element);
+            // 可以直接装饰
+            self.decorateChildrenInternal(new UI({
+                srcNode:child,
+                prefixCls:prefixCls
+            }));
+        }
+    });
+
+    return DecorateChild;
+}, {
+    requires:['./decoratechildren']
+});/**
+ * @fileOverview decorate function for children render from markup
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/decoratechildren", function(S, UIStore) {
+    function DecorateChildren() {
+
+    }
+
+    S.augment(DecorateChildren, {
+        decorateInternal:function(el) {
+            var self = this;
+            self.set("el", el);
+            self.decorateChildren(el);
+        },
+
+        /**
+         * 生成一个组件
+         * @param component
+         */
+        decorateChildrenInternal:function(component) {
+            this.addChild(component);
+        },
+
+        /**
+         * 得到适合装饰该节点的组件类
+         * @param c
+         */
+        _findUIByClass:function(c) {
+            var self = this,
+                cls = c.attr("class") || "",
+                prefixCls = self.get("prefixCls");
+            // 过滤掉特定前缀
+            cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+            var UI = UIStore.getUIByClass(cls);
+            if (!UI) {
+                S.log(c);
+                S.error("can not find ui " + cls + " from this markup");
+            }
+            return UI;
+        },
+
+        /**
+         * container 需要在装饰时对儿子特殊处理，递归装饰
+         */
+        decorateChildren:function(el) {
+            var self = this,children = el.children(),
+                prefixCls = self.get("prefixCls");
+            children.each(function(c) {
+                var UI = self._findUIByClass(c);
+                self.decorateChildrenInternal(new UI({
+                    srcNode:c,
+                    prefixCls:prefixCls
+                }));
+            });
+        }
+    });
+
+    return DecorateChildren;
+
+}, {
+    requires:['./uistore']
+});/**
+ * @fileOverview delegate events for children
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/delegatechildren", function(S) {
+    function DelegateChildren() {
+
+    }
+
+    S.augment(DelegateChildren, {
+        __bindUI:function() {
+            var self = this;
+            self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
+                self._handleChildMouseEvents, self);
         },
         _handleChildMouseEvents:function(e) {
-            var control = this.getOwnerControl(S.one(e.target)[0]);
+            var control = this.getOwnerControl(e.target);
             if (control) {
                 // Child control identified; forward the event.
                 switch (e.type) {
@@ -33,6 +137,11 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                     case "mouseout":
                         control._handleMouseOut(e);
                         break;
+                    case "dblclick":
+                        control._handleDblClick(e);
+                        break;
+                    default:
+                        S.error(e.type + " unhandled!");
                 }
             }
         },
@@ -41,7 +150,7 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
             var self = this,
                 children = self.get("children"),
                 len = children.length,
-                elem = this.get('view').get("el")[0];
+                elem = this.get("el")[0];
             while (node && node !== elem) {
                 for (var i = 0; i < len; i++) {
                     if (children[i].get("el")[0] === node) {
@@ -51,39 +160,10 @@ KISSY.add("component/container", function(S, UIBase, MC, UIStore) {
                 node = node.parentNode;
             }
             return null;
-        },
-
-        decorateInternal:function(el) {
-            var self = this;
-            self.set("el", el);
-            self.decorateChildren(el);
-        },
-        /**
-         * container 需要在装饰时对儿子特殊处理，递归装饰
-         */
-        decorateChildren:function(el) {
-            var self = this,children = el.children();
-            children.each(function(c) {
-                var cls = c.attr("class") || "",
-                    prefixCls = self.get("prefixCls");
-                // 过滤掉特定前缀
-                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-                var UI = UIStore.getUIByClass(cls);
-                if (!UI) {
-                    S.log(c);
-                    S.error("can not find ui " + cls + " from this markup");
-                }
-                self.addChild(new UI({
-                    srcNode:c,
-                    prefixCls:prefixCls
-                }));
-            });
         }
-
     });
 
-}, {
-    requires:['uibase','./modelcontrol','./uistore']
+    return DelegateChildren;
 });/**
  * model and control base class for kissy
  * @author yiminghe@gmail.com
@@ -683,13 +763,22 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
  * mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component", function(S, ModelControl, Render, Container, UIStore) {
+KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
     return {
         ModelControl:ModelControl,
         Render:Render,
         Container:Container,
-        UIStore:UIStore
+        UIStore:UIStore,
+        DelegateChildren:DelegateChildren,
+        DecorateChild:DecorateChild,
+        DecorateChildren:DecorateChildren
     };
 }, {
-    requires:['component/modelcontrol','component/render','component/container','component/uistore']
+    requires:['component/modelcontrol',
+        'component/render',
+        'component/container',
+        'component/uistore',
+        'component/delegatechildren',
+        'component/decoratechildren',
+        'component/decoratechild']
 });

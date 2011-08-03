@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 2 22:28
+build time: Aug 3 19:06
 */
 /**
  * UIBase.Align
@@ -419,7 +419,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         };
 
     function capitalFirst(s) {
-        s = s + '';
+        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
@@ -581,7 +581,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         render:{
             view:true,
             valueFn:function() {
-                return Node.one(document.body);
+                return Node.one("body");
             },
             setter:function(v) {
                 return Node.one(v);
@@ -723,8 +723,11 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         if (exts) {
             C.__ks_exts = exts;
 
+            // [ex1,ex2],扩展类前面的优先，ex1 定义的覆盖 ex2 定义的
             S.each(exts, function(ext) {
-                if (!ext)return;
+                if (!ext){
+                    return;
+                }
                 // 合并 ATTRS/HTML_PARSER 到主类
                 S.each([ATTRS, HTML_PARSER], function(K) {
                     if (ext[K]) {
@@ -749,7 +752,9 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         return C;
     };
     function deepMix(r, s) {
-        if (!s) return r;
+        if (!s) {
+            return r;
+        }
         for (var p in s) {
             // 如果属性是对象，接着递归进行
             if (S.isObject(s[p]) && S.isObject(r[p])) {
