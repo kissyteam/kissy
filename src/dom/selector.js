@@ -367,12 +367,19 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 tag = match[2];
                 cls = match[3];
                 filter = function(elem) {
-                    return !(
-                        (tag &&
-                            !eqTagName(elem, tag)
-                            )
-                            || (cls && !DOM.hasClass(elem, cls))
-                        );
+                    var tagRe = true,clsRe = true;
+
+                    // 指定 tag 才进行判断
+                    if (tag) {
+                        tagRe = eqTagName(elem, tag);
+                    }
+
+                    // 指定 cls 才进行判断
+                    if (cls) {
+                        clsRe = DOM.hasClass(elem, cls);
+                    }
+
+                    return clsRe && tagRe;
                 }
             }
 
