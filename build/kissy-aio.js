@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:16
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 3 19:06
              */
             version: '1.20dev',
 
-            buildTime:'20110803190620',
+            buildTime:'20110804181618',
 
             /**
              * Returns a new object containing all of the properties of
@@ -322,7 +322,9 @@ build time: Aug 3 19:06
         trim = String.prototype.trim,
         map = AP.map,
         EMPTY = '',
+        HEX_BASE = 16,
         CLONE_MARKER = '__~ks_cloned',
+        COMPARE_MARKER = '__~ks_compared',
         RE_TRIM = /^\s+|\s+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -372,7 +374,7 @@ build time: Aug 3 19:06
     function isValidParamValue(val) {
         var t = typeof val;
         // If the type of val is null, undefined, number, string, boolean, return true.
-        return val === null || (t !== 'object' && t !== 'function');
+        return nullOrUndefined(val) || (t !== 'object' && t !== 'function');
     }
 
     S.mix(S, {
@@ -383,10 +385,12 @@ build time: Aug 3 19:06
          * Determine the internal JavaScript [[Class]] of an object.
          */
         type: function(o) {
-            return o == null ?
+            return nullOrUndefined(o) ?
                 String(o) :
                 class2type[toString.call(o)] || 'object';
         },
+
+        isNullOrUndefined:nullOrUndefined,
 
         isNull: function(o) {
             return o === null;
@@ -424,10 +428,48 @@ build time: Aug 3 19:06
             return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
         },
 
+
+
+        /**
+         * 两个目标是否内容相同
+         *
+         * @param a 比较目标1
+         * @param b 比较目标2
+         * @param [mismatchKeys] internal use
+         * @param [mismatchValues] internal use
+         */
+        equals : function(a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+            // inspired by jasmine
+            mismatchKeys = mismatchKeys || [];
+            mismatchValues = mismatchValues || [];
+
+            if (a === b) {
+                return true;
+            }
+            if (a === undefined || a === null || b === undefined || b === null) {
+                // need type coercion
+                return nullOrUndefined(a) && nullOrUndefined(b);
+            }
+            if (a instanceof Date && b instanceof Date) {
+                return a.getTime() == b.getTime();
+            }
+            if (S.isString(a) && S.isString(b)) {
+                return (a == b);
+            }
+            if (S.isNumber(a) && S.isNumber(b)) {
+                return (a == b);
+            }
+            if (typeof a === "object" && typeof b === "object") {
+                return compareObjects(a, b, mismatchKeys, mismatchValues);
+            }
+            // Straight check
+            return (a === b);
+        },
+
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          */
-        clone: function(o, f, cloned) {
+        clone: function(o, f, /*internal use*/cloned) {
             var ret = o, isArray, k, stamp, marked = cloned || {};
 
             // array or plain object
@@ -439,17 +481,30 @@ build time: Aug 3 19:06
                 ) {
 
                 // avoid recursive clone
+                // 已经克隆过了，只要返回引用
+                //{x:t,y:t} => {x:t_clone,y:t_clone}
                 if (o[CLONE_MARKER]) {
-                    return marked[o[CLONE_MARKER]];
+                    // 对应的克隆后对象
+                    return marked[o[CLONE_MARKER]].r;
                 }
-                o[CLONE_MARKER] = (stamp = S.guid());
-                marked[stamp] = o;
 
-                // clone it
+                o[CLONE_MARKER] = (stamp = S.guid());
+
+                // 先把对象建立起来
                 if (isArray) {
                     ret = f ? S.filter(o, f) : o.concat();
                 } else {
                     ret = {};
+                }
+
+                marked[stamp] = {r:ret,o:o};
+
+                // clone it
+                if (isArray) {
+                    for (var i = 0; i < ret.length; i++) {
+                        ret[i] = S.clone(ret[i], f, marked);
+                    }
+                } else {
                     for (k in o) {
                         if (k !== CLONE_MARKER &&
                             o.hasOwnProperty(k) &&
@@ -461,12 +516,16 @@ build time: Aug 3 19:06
             }
 
             // clear marked
+            // 全部递归后一并清理
             if (!cloned) {
                 S.each(marked, function(v) {
+                    // 清理在源对象上做的标记
+                    v = v.o;
                     if (v[CLONE_MARKER]) {
                         try {
                             delete v[CLONE_MARKER];
                         } catch (e) {
+                            S.log(e);
                             v[CLONE_MARKER] = undefined;
                         }
                     }
@@ -482,10 +541,10 @@ build time: Aug 3 19:06
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? EMPTY : trim.call(str);
+                return nullOrUndefined(str) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return nullOrUndefined(str) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
             },
 
         /**
@@ -502,7 +561,7 @@ build time: Aug 3 19:06
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }
-                return (o[name] !== undefined) ? o[name] : EMPTY;
+                return (o[name] === undefined) ? EMPTY : o[name];
             });
         },
 
@@ -661,12 +720,14 @@ build time: Aug 3 19:06
          return arr.reduce(callback, initialValue);
          } : */function(arr, callback, initialValue) {
             var len = arr.length;
-            if (typeof callback !== "function")
-                throw new TypeError();
+            if (typeof callback !== "function") {
+                throw new TypeError("callback is not function!");
+            }
 
             // no value to return if no initial value and an empty array
-            if (len == 0 && arguments.length == 2)
-                throw new TypeError();
+            if (len === 0 && arguments.length == 2) {
+                throw new TypeError("arguments invalid");
+            }
 
             var k = 0;
             var accumulator;
@@ -681,8 +742,10 @@ build time: Aug 3 19:06
                     }
 
                     // if array contains no values, no initial value to return
-                    if (++k >= len)
+                    k += 1;
+                    if (k >= len) {
                         throw new TypeError();
+                    }
                 }
                 while (true);
             }
@@ -729,7 +792,7 @@ build time: Aug 3 19:06
          */
         fromUnicode:function(str) {
             return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
-                return  String.fromCharCode(parseInt(u, 16));
+                return  String.fromCharCode(parseInt(u, HEX_BASE));
             });
         },
         /**
@@ -758,8 +821,12 @@ build time: Aug 3 19:06
          * @return {Array}
          */
         makeArray: function(o) {
-            if (o === null || o === undefined) return [];
-            if (S.isArray(o)) return o;
+            if (nullOrUndefined(o)) {
+                return [];
+            }
+            if (S.isArray(o)) {
+                return o;
+            }
 
             // The strings and functions also have 'length'
             if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
@@ -783,10 +850,14 @@ build time: Aug 3 19:06
          * </code>
          */
         param: function(o, sep, eq, arr) {
-            if (!S.isPlainObject(o)) return EMPTY;
+            if (!S.isPlainObject(o)) {
+                return EMPTY;
+            }
             sep = sep || SEP;
             eq = eq || EQ;
-            if (S.isUndefined(arr)) arr = true;
+            if (S.isUndefined(arr)) {
+                arr = true;
+            }
             var buf = [], key, val;
             for (key in o) {
                 val = o[key];
@@ -839,7 +910,7 @@ build time: Aug 3 19:06
                 try {
                     val = decode(pair[1] || EMPTY);
                 } catch(e) {
-                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    S.log(e + "decodeURIComponent error : " + pair[1], "error");
                     val = pair[1] || EMPTY;
                 }
                 if (S.endsWith(key, "[]")) {
@@ -907,7 +978,7 @@ build time: Aug 3 19:06
         },
 
         startsWith:function(str, prefix) {
-            return str.lastIndexOf(prefix, 0) == 0;
+            return str.lastIndexOf(prefix, 0) === 0;
         },
 
         endsWith:function(str, suffix) {
@@ -940,7 +1011,51 @@ build time: Aug 3 19:06
             }
         });
 
-})(KISSY);
+    function nullOrUndefined(o) {
+        return S.isNull(o) || S.isUndefined(o);
+    }
+
+    function compareObjects(a, b, mismatchKeys, mismatchValues) {
+        // 两个比较过了，无需再比较，防止循环比较
+        if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
+            return true;
+        }
+        a[COMPARE_MARKER] = b;
+        b[COMPARE_MARKER] = a;
+        var hasKey = function(obj, keyName) {
+            return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
+        };
+        for (var property in b) {
+            if (!hasKey(a, property) && hasKey(b, property)) {
+                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+            }
+        }
+        for (property in a) {
+            if (!hasKey(b, property) && hasKey(a, property)) {
+                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+            }
+        }
+        for (property in b) {
+            if (property == COMPARE_MARKER) {
+                continue;
+            }
+            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                    + "' in expected, but was '" +
+                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            }
+        }
+        if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
+            mismatchValues.push("arrays were not the same length");
+        }
+        delete a[COMPARE_MARKER];
+        delete b[COMPARE_MARKER];
+        return (mismatchKeys.length === 0 && mismatchValues.length === 0);
+    }
+
+    S.isNullOrUndefined = nullOrUndefined;
+
+})(KISSY, undefined);
 /**
  * setup data structure for kissy loader
  * @author yiminghe@gmail.com
@@ -6379,7 +6494,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             var args = makeArray(arguments);
             S.each(types.split(SPACE), function(type) {
-                var args2 = S.clone(args);
+                var args2 = [].concat(args);
                 args2.splice(0, 3, targets, type);
                 Event[methodName].apply(Event, args2);
             });
@@ -10745,7 +10860,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12170,7 +12285,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * 数据延迟加载组件
@@ -12661,7 +12776,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:16
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -12899,7 +13014,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * @module   Flash 全局静态类
@@ -13410,7 +13525,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -14624,7 +14739,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * resizable support for kissy
@@ -14789,7 +14904,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:16
 */
 /**
  * UIBase.Align
@@ -15109,16 +15224,16 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         * @param {Element=} node 参照元素, 可取配置选项中的设置, 也可是一元素
-         * @param {Array.<string>} points 对齐方式
-         * @param {Array.<number>} offset 偏移
+         * @param {Element} [node] 参照元素, 可取配置选项中的设置, 也可是一元素
+         * @param {String[]} [points] 对齐方式
+         * @param {Number[]} [offset] 偏移
          */
         align: function(node, points, offset, overflow) {
             var self = this,
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
-            offset = S.clone(offset) || [0,0];
+            offset = offset && [].concat(offset) || [0,0];
             if (overflow.failX) {
                 flag.failX = 1;
             }
@@ -16802,7 +16917,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * container can delegate event for its children
@@ -16970,7 +17085,7 @@ KISSY.add("component/delegatechildren", function(S) {
  * @author yiminghe@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
+KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function(ev) {
@@ -16995,6 +17110,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
         var self = this,
             c = self.constructor,
             DefaultRender;
+
         while (c && !DefaultRender) {
             DefaultRender = c['DefaultRender'];
             c = c.superclass && c.superclass.constructor;
@@ -17459,10 +17575,12 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 allowTextSelection_:{
                     value:false
                 }
-            }
+            },
+
+            DefaultRender:Render
         });
 }, {
-    requires:['uibase','./uistore']
+    requires:['uibase','./uistore','./render']
 });
 /**
  *  Note:
@@ -17586,7 +17704,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, Del
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:16
 */
 /**
  * Switchable
@@ -20183,7 +20301,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * KISSY Overlay
@@ -20652,7 +20770,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:15
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -21831,7 +21949,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * @fileoverview 图像放大区域
@@ -22456,7 +22574,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * KISSY Calendar
@@ -23735,7 +23853,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * deletable menuitem
@@ -24961,7 +25079,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * Model and Control for button
@@ -25217,7 +25335,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:05
+build time: Aug 4 18:15
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25702,7 +25820,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:16
 */
 /**
  * @author  常胤 (lzlu.com)

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:16
 */
 KISSY.add("tree/basenode",function(f,e,c,g,i){var b=e.all,j=e.KeyCodes,k=c.create(g.ModelControl,[g.DecorateChild],{_keyNav:function(a){var d=true,h,l=this.get("children");switch(a.keyCode){case j.HOME:h=this.get("tree");break;case j.END:h=this.get("tree").getLastVisibleDescendant();break;case j.UP:h=this.getPreviousVisibleNode();break;case j.DOWN:h=this.getNextVisibleNode();break;case j.LEFT:if(this.get("expanded")&&l.length)this.set("expanded",false);else h=this.get("parent");break;case j.RIGHT:if(l.length)this.get("expanded")?
 l[0].select():this.set("expanded",true);break;default:d=false}h&&h.select();return d},getLastVisibleDescendant:function(){var a=this.get("children");if(!this.get("expanded")||!a.length)return this;return a[a.length-1].getLastVisibleDescendant()},getNextVisibleNode:function(){var a=this.get("children"),d=this.get("parent");if(this.get("expanded")&&a.length)return a[0];for(a=this.next();d&&!a;){a=d.next();d=d.get("parent")}return a},getPreviousVisibleNode:function(){var a=this.prev();return a=a?a.getLastVisibleDescendant():

@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
+KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function(ev) {
@@ -28,6 +28,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
         var self = this,
             c = self.constructor,
             DefaultRender;
+
         while (c && !DefaultRender) {
             DefaultRender = c['DefaultRender'];
             c = c.superclass && c.superclass.constructor;
@@ -492,10 +493,12 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 allowTextSelection_:{
                     value:false
                 }
-            }
+            },
+
+            DefaultRender:Render
         });
 }, {
-    requires:['uibase','./uistore']
+    requires:['uibase','./uistore','./render']
 });
 /**
  *  Note:

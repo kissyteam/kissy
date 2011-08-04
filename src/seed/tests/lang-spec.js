@@ -1,24 +1,24 @@
 describe('lang.js', function() {
     beforeEach(function() {
         this.addMatchers({
-                toBeAlmostEqual: function(expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-                },
+            toBeAlmostEqual: function(expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+            },
 
 
-                toBeEqual: function(expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-                },
+            toBeEqual: function(expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+            },
 
-                toBeArrayEq:function(expected) {
-                    var actual = this.actual;
-                    if (expected.length != actual.length) return false;
-                    for (var i = 0; i < expected.length; i++) {
-                        if (expected[i] != actual[i]) return false;
-                    }
-                    return true;
+            toBeArrayEq:function(expected) {
+                var actual = this.actual;
+                if (expected.length != actual.length) return false;
+                for (var i = 0; i < expected.length; i++) {
+                    if (expected[i] != actual[i]) return false;
                 }
-            });
+                return true;
+            }
+        });
     });
     var S = KISSY,
         host = S.__HOST,
@@ -71,7 +71,7 @@ describe('lang.js', function() {
         expect(S.param({foo:1, bar:[]})).toBe('foo=1');
         expect(S.param({foo:{}, bar:2})).toBe('bar=2');
         expect(S.param({foo:function() {
-            }, bar:2})).toBe('bar=2');
+        }, bar:2})).toBe('bar=2');
 
         expect(S.param({foo:undefined, bar:2})).toBe('foo=undefined&bar=2');
         expect(S.param({foo:null, bar:2})).toBe('foo=null&bar=2');
@@ -338,18 +338,26 @@ describe('lang.js', function() {
 
         // recursive clone
         var CLONE_MARKER = '__~ks_cloned',
-            Tom = {},
+            Tom = {
+                x:1
+            },
             Green = {
-                father: Tom
+                father: Tom,
+                x:1
             };
         Tom.son = Green;
 
         var Tom2 = S.clone(Tom);
         expect(Tom2.son).toEqual(Green);
+        expect(Tom2.son).not.toBe(Green);
+        Tom2.son.x = 2;
+        expect(Green.x).toBe(1);
+
         expect(Tom2[CLONE_MARKER]).toBeUndefined();
 
         var Green2 = S.clone(Green);
         expect(Green2.father).toEqual(Tom);
+        expect(Green2.father).not.toBe(Tom);
         expect(Green2[CLONE_MARKER]).toBeUndefined();
 
         // filter function
@@ -361,6 +369,39 @@ describe('lang.js', function() {
         expect(t6[0]).toBe(2);
         expect(t6[1]).toBe(4);
         expect(t6[2]).toBe(6);
+
+
+        // array of object
+        var t7 = [],
+            t20 = {x:6},
+            t21 = {x:7},
+            t22 = [t20,t21],
+            t8 = {x:1,z:t7,q:t22},
+            t9 = {y:1,z:t7,q:t22};
+        t7.push(t8, t9);
+        var t10 = S.clone(t7);
+        expect(t10).not.toBe(t7);
+        expect(t10).toEqual(t7);
+        expect(t10 === t7).toBe(false);
+
+
+        // 复制后仍是同一数组
+        expect(t10[0].z === t10).toBe(true);
+        expect(t10[0].z).toBe(t10);
+        expect(t10[0].z).not.toBe(t7);
+        expect(t10[0].z).toEqual(t7);
+
+        // 复制后仍是同一数组
+        expect(t10[1].q).toBe(t10[0].q);
+        expect(t10[1].q).not.toBe(t22);
+        expect(t10[1].q).toEqual(t22);
+
+        t10[0].x = 2;
+        t10[1].y = 2;
+        // 不改变原始数据
+        expect(t10.length).toBe(2);
+        expect(t8.x).toBe(1);
+        expect(t9.y).toBe(1);
     });
 
     it('S.trim', function() {
@@ -511,7 +552,7 @@ describe('lang.js', function() {
         }
 
         // consider context
-        S.bind(z, context,1, 2)(3);
+        S.bind(z, context, 1, 2)(3);
     });
 
     it('S.now', function() {

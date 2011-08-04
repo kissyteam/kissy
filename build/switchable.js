@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 3 19:06
+build time: Aug 4 18:16
 */
 /**
  * Switchable

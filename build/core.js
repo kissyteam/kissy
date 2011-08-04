@@ -3925,7 +3925,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             var args = makeArray(arguments);
             S.each(types.split(SPACE), function(type) {
-                var args2 = S.clone(args);
+                var args2 = [].concat(args);
                 args2.splice(0, 3, targets, type);
                 Event[methodName].apply(Event, args2);
             });
