@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:16
+build time: Aug 4 20:41
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 4 18:16
              */
             version: '1.20dev',
 
-            buildTime:'20110804181618',
+            buildTime:'20110804204108',
 
             /**
              * Returns a new object containing all of the properties of
@@ -469,70 +469,22 @@ build time: Aug 4 18:16
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          */
-        clone: function(o, f, /*internal use*/cloned) {
-            var ret = o, isArray, k, stamp, marked = cloned || {};
-
-            // array or plain object
-            if (o
-                && (
-                (isArray = S.isArray(o))
-                    || S.isPlainObject(o)
-                )
-                ) {
-
-                // avoid recursive clone
-                // 已经克隆过了，只要返回引用
-                //{x:t,y:t} => {x:t_clone,y:t_clone}
-                if (o[CLONE_MARKER]) {
-                    // 对应的克隆后对象
-                    return marked[o[CLONE_MARKER]].r;
-                }
-
-                o[CLONE_MARKER] = (stamp = S.guid());
-
-                // 先把对象建立起来
-                if (isArray) {
-                    ret = f ? S.filter(o, f) : o.concat();
-                } else {
-                    ret = {};
-                }
-
-                marked[stamp] = {r:ret,o:o};
-
-                // clone it
-                if (isArray) {
-                    for (var i = 0; i < ret.length; i++) {
-                        ret[i] = S.clone(ret[i], f, marked);
-                    }
-                } else {
-                    for (k in o) {
-                        if (k !== CLONE_MARKER &&
-                            o.hasOwnProperty(k) &&
-                            (!f || (f.call(o, o[k], k, o) !== false))) {
-                            ret[k] = S.clone(o[k], f, marked);
-                        }
+        clone: function(o, f) {
+            var marked = {},
+                ret = cloneInternal(o, f, marked);
+            S.each(marked, function(v) {
+                // 清理在源对象上做的标记
+                v = v.o;
+                if (v[CLONE_MARKER]) {
+                    try {
+                        delete v[CLONE_MARKER];
+                    } catch (e) {
+                        S.log(e);
+                        v[CLONE_MARKER] = undefined;
                     }
                 }
-            }
-
-            // clear marked
-            // 全部递归后一并清理
-            if (!cloned) {
-                S.each(marked, function(v) {
-                    // 清理在源对象上做的标记
-                    v = v.o;
-                    if (v[CLONE_MARKER]) {
-                        try {
-                            delete v[CLONE_MARKER];
-                        } catch (e) {
-                            S.log(e);
-                            v[CLONE_MARKER] = undefined;
-                        }
-                    }
-                });
-                marked = undefined;
-            }
-
+            });
+            marked = undefined;
             return ret;
         },
 
@@ -1013,6 +965,60 @@ build time: Aug 4 18:16
 
     function nullOrUndefined(o) {
         return S.isNull(o) || S.isUndefined(o);
+    }
+
+
+    function cloneInternal(o, f, marked) {
+        var ret = o, isArray, k, stamp;
+        // 引用类型要先记录
+        if (o &&
+            ((isArray = S.isArray(o)) ||
+                S.isPlainObject(o) ||
+                S.isDate(o) ||
+                S.isRegExp(o)
+                )) {
+            if (o[CLONE_MARKER]) {
+                // 对应的克隆后对象
+                return marked[o[CLONE_MARKER]].r;
+            }
+            // 做标记
+            o[CLONE_MARKER] = (stamp = S.guid());
+
+            // 先把对象建立起来
+            if (isArray) {
+                ret = f ? S.filter(o, f) : o.concat();
+            } else if (S.isDate(o)) {
+                ret = new Date(+o);
+            } else if (S.isRegExp(o)) {
+                ret = new RegExp(o);
+            } else {
+                ret = {};
+            }
+
+            // 存储源对象以及克隆后的对象
+            marked[stamp] = {r:ret,o:o};
+        }
+
+
+        // array or plain object need to be copied recursively
+        if (o && (isArray || S.isPlainObject(o))) {
+            // clone it
+            if (isArray) {
+                for (var i = 0; i < ret.length; i++) {
+                    ret[i] = cloneInternal(ret[i], f, marked);
+                }
+            } else {
+                for (k in o) {
+                    if (k !== CLONE_MARKER &&
+                        o.hasOwnProperty(k) &&
+                        (!f || (f.call(o, o[k], k, o) !== false))) {
+                        ret[k] = cloneInternal(o[k], f, marked);
+                    }
+                }
+            }
+        }
+
+        return ret;
     }
 
     function compareObjects(a, b, mismatchKeys, mismatchValues) {

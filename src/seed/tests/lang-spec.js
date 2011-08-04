@@ -318,6 +318,15 @@ describe('lang.js', function() {
         expect(S.clone('a')).toBe('a');
         expect(S.clone(fn)).toBe(fn);
 
+        var date=new Date();
+        expect(S.clone(date)).toEqual(date);
+        expect(S.clone(date)).not.toBe(date);
+
+        
+         var reg=/i/i;
+        expect(S.clone(reg)).toEqual(reg);
+        expect(S.clone(reg)).not.toBe(reg);
+
 
         // clone plain object
         var t = { a: 0, b: { b1: 1, b2: 'a' } };
