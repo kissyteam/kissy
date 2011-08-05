@@ -16,10 +16,12 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
 
         /**
          * 生成一个组件
-         * @param component
          */
-        decorateChildrenInternal:function(component) {
-            this.addChild(component);
+        decorateChildrenInternal:function(UI, c, prefixCls) {
+            this.addChild(new UI({
+                srcNode:c,
+                prefixCls:prefixCls
+            }));
         },
 
         /**
@@ -35,7 +37,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
             var UI = UIStore.getUIByClass(cls);
             if (!UI) {
                 S.log(c);
-                S.error("can not find ui " + cls + " from this markup");
+                S.log("can not find ui " + cls + " from this markup");
             }
             return UI;
         },
@@ -48,10 +50,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
                 prefixCls = self.get("prefixCls");
             children.each(function(c) {
                 var UI = self._findUIByClass(c);
-                self.decorateChildrenInternal(new UI({
-                    srcNode:c,
-                    prefixCls:prefixCls
-                }));
+                self.decorateChildrenInternal(UI, c, prefixCls);
             });
         }
     });

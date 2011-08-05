@@ -5,31 +5,46 @@
 KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
+        CHECK_CLS = "tree-item-checked",
         CHECK = 1,
         EMPTY = 0,
         EXPAND_ICON_CLS = "tree-expand-icon";
-    return UIBase.create(BaseNode, {
+
+    var CheckNode = UIBase.create(BaseNode, {
         _performInternal:function(e) {
             // 需要通知 tree 获得焦点
             this.get("tree").get("el")[0].focus();
-            var target = $(e.target);
-            var tree = this.get("tree");
-            if (target.hasClass(this.getCls(EXPAND_ICON_CLS))
-                || e.type == 'dblclick'
-                ) {
-                this.set("expanded", !this.get("expanded"));
-            } else {
-                var checkState = this.get("checkState");
-                if (checkState == CHECK) {
-                    checkState = EMPTY;
-                } else {
-                    checkState = CHECK;
+            var target = $(e.target),
+                view = this.get("view"),
+                tree = this.get("tree");
+
+            if (e.type == "dblclick") {
+                // 双击在 +- 号上无效
+                if (target.equals(view.get("expandIconEl"))) {
+                    return;
                 }
-                this.set("checkState", checkState);
-                tree.fire("click", {
-                    target:this
-                });
+                // 双击在 checkbox 上无效
+                if (target.equals(view.get("checkEl"))) {
+                    return;
+                }
+                // 双击在字或者图标上，切换 expand 装tai
+                this.set("expanded", !this.get("expanded"));
             }
+
+            // 点击在 +- 号，切换状态
+            if (target.equals(view.get("expandIconEl"))) {
+                this.set("expanded", !this.get("expanded"));
+                return;
+            }
+
+            // 单击任何其他地方都切换 check 状态
+            var checkState = this.get("checkState");
+            if (checkState == CHECK) {
+                checkState = EMPTY;
+            } else {
+                checkState = CHECK;
+            }
+            this.set("checkState", checkState);
         },
 
         _uiSetCheckState:function(s) {
@@ -60,7 +75,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
                     parent.set("checkState", CHECK);
                 }
                 // 儿子都没选，父亲也不选
-                else if (checkCount == 0) {
+                else if (checkCount === 0) {
                     parent.set("checkState", EMPTY);
                 }
                 // 有的儿子选了，有的没选，父亲部分选
@@ -80,11 +95,21 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
                 value:0
             }
         },
+        CHECK_CLS :CHECK_CLS,
         DefaultRender:CheckNodeRender,
         PARTIAL_CHECK:2,
         CHECK:1,
         EMPTY:0
     });
+
+    Component.UIStore.setUIByClass(CHECK_CLS, {
+        priority:20,
+        ui:CheckNode
+    });
+
+    return CheckNode;
+
+
 }, {
     requires:['node','uibase','component','./basenode','./checknoderender']
 });

@@ -5,6 +5,11 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = "inline-block";
     return UIBase.create(BaseNodeRender, {
+
+        renderUI:function() {
+            this.get("el").addClass(this.getCls(CHECK_CLS));
+        },
+
         createDom:function() {
             var expandIconEl = this.get("expandIconEl"),
                 checkEl = $("<div class='" + this.getCls(INLINE_BLOCK + " " + " "
@@ -22,7 +27,9 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
         ATTRS:{
             checkEl:{},
             checkState:{}
-        }
+        },
+
+        CHECK_CLS:CHECK_CLS
     });
 }, {
     requires:['node','uibase','component','./basenoderender']

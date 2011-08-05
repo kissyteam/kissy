@@ -3,7 +3,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
-    return {
+
+    /**
+     * @namespace
+     * @name Component
+     */
+    var Component = {
         ModelControl:ModelControl,
         Render:Render,
         Container:Container,
@@ -12,6 +17,8 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, Del
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
+
+    return Component;
 }, {
     requires:['component/modelcontrol',
         'component/render',

@@ -173,11 +173,14 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             }
         },
 
-        decorateChildrenInternal:function(menu) {
-            var el = menu.get("el");
+        decorateChildrenInternal:function(ui, el, cls) {
             el.hide();
             var docBody = S.one(el[0].ownerDocument.body);
             docBody.prepend(el);
+            var menu = new ui({
+                srcNode:el,
+                prefixCls:cls
+            });
             this.set("menu", menu);
         },
 

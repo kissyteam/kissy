@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * combination of menu and button ,similar to native select
@@ -178,11 +178,14 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             }
         },
 
-        decorateChildrenInternal:function(menu) {
-            var el = menu.get("el");
+        decorateChildrenInternal:function(ui, el, cls) {
             el.hide();
             var docBody = S.one(el[0].ownerDocument.body);
             docBody.prepend(el);
+            var menu = new ui({
+                srcNode:el,
+                prefixCls:cls
+            });
             this.set("menu", menu);
         },
 

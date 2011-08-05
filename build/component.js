@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * container can delegate event for its children
@@ -26,17 +26,22 @@ KISSY.add("component/decoratechild", function(S, DecorateChildren) {
 
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function(element) {
-            var self = this,
-                ui = self.get("decorateChildCls"),
-                prefixCls = self.get("prefixCls"),
-                child = element.one("." + self.getCls(ui)),
-                UI = self._findUIByClass(child);
+            var self = this;
             self.set("el", element);
-            // 可以直接装饰
-            self.decorateChildrenInternal(new UI({
-                srcNode:child,
-                prefixCls:prefixCls
-            }));
+            var ui = self.get("decorateChildCls"),
+                prefixCls = self.get("prefixCls"),
+                child = element.one("." + self.getCls(ui));
+            // 可以装饰?
+            if (child) {
+                var UI = self._findUIByClass(child);
+                if (UI) {
+                    // 可以直接装饰
+                    self.decorateChildrenInternal(UI, child, prefixCls);
+                } else {
+                    // 装饰其子节点集合
+                    self.decorateChildren(child);
+                }
+            }
         }
     });
 
@@ -61,10 +66,12 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
 
         /**
          * 生成一个组件
-         * @param component
          */
-        decorateChildrenInternal:function(component) {
-            this.addChild(component);
+        decorateChildrenInternal:function(UI, c, prefixCls) {
+            this.addChild(new UI({
+                srcNode:c,
+                prefixCls:prefixCls
+            }));
         },
 
         /**
@@ -80,7 +87,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
             var UI = UIStore.getUIByClass(cls);
             if (!UI) {
                 S.log(c);
-                S.error("can not find ui " + cls + " from this markup");
+                S.log("can not find ui " + cls + " from this markup");
             }
             return UI;
         },
@@ -93,10 +100,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
                 prefixCls = self.get("prefixCls");
             children.each(function(c) {
                 var UI = self._findUIByClass(c);
-                self.decorateChildrenInternal(new UI({
-                    srcNode:c,
-                    prefixCls:prefixCls
-                }));
+                self.decorateChildrenInternal(UI, c, prefixCls);
             });
         }
     });
@@ -227,11 +231,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
     }
 
     function capitalFirst(s) {
-        s = s + '';
+        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    return UIBase.create([UIBase.Box], {
+    /**
+     * model and control for component
+     * @constructor
+     * @memberOf Component
+     */
+    var ModelControl = UIBase.create([UIBase.Box], {
 
             getCls:UIStore.getCls,
 
@@ -642,7 +651,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
                 },
 
                 // 父组件
-                // Parent component to which events will be propagated. 
+                // Parent component to which events will be propagated.
                 parent:{
                 },
 
@@ -663,6 +672,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
 
             DefaultRender:Render
         });
+
+
+    return ModelControl;
 }, {
     requires:['uibase','./uistore','./render']
 });
@@ -722,7 +734,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
     });
 }, {
     requires:['uibase','./uistore']
-});KISSY.add("component/uistore", function() {
+});KISSY.add("component/uistore", function(S) {
     var uis = {
         // 不带前缀 prefixCls
         /*
@@ -750,7 +762,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
 
 
     function getCls(cls) {
-        var cs = cls.split(/\s+/);
+        var cs = S.trim(cls).split(/\s+/);
         for (var i = 0; i < cs.length; i++) {
             cs[i] = this.get("prefixCls") + cs[i];
         }
@@ -767,7 +779,12 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
-    return {
+
+    /**
+     * @namespace
+     * @name Component
+     */
+    var Component = {
         ModelControl:ModelControl,
         Render:Render,
         Container:Container,
@@ -776,6 +793,8 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, Del
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
+
+    return Component;
 }, {
     requires:['component/modelcontrol',
         'component/render',

@@ -1,294 +1,354 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:16
+build time: Aug 5 21:19
 */
 /**
- * abstraction of tree node ,root and other node will extend it
+ * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
-        KeyCodes = Node.KeyCodes,
-        EXPAND_ICON_CLS = "tree-expand-icon",
-        AbstractNode = UIBase.create(Component.ModelControl,
-            /*
-             * 可多继承从某个子节点开始装饰儿子组件
-             */
-            [Component.DecorateChild], {
-                _keyNav:function(e) {
-                    var processed = true,
-                        n,
-                        children = this.get("children"),
-                        keyCode = e.keyCode;
+        ITEM_CLS = BaseNodeRender.ITEM_CLS,
+        KeyCodes = Node.KeyCodes;
 
-                    // 顺序统统为前序遍历顺序
-                    switch (keyCode) {
-                        // home
-                        // 移到树的顶层节点
-                        case KeyCodes.HOME:
-                            n = this.get("tree");
-                            break;
 
-                        // end
-                        // 移到最后一个可视节点
-                        case KeyCodes.END:
-                            n = this.get("tree").getLastVisibleDescendant();
-                            break;
+    /**
+     * 基类树节点
+     * @name BaseNode
+     * @constructor
+     * @extends Component.ModelControl
+     * @borrows Component.DecorateChild.prototype
+     */
+    var BaseNode = UIBase.create(Component.ModelControl,
+        /*
+         * 可多继承从某个子节点开始装饰儿子组件
+         */
+        [Component.DecorateChild],
+        /**
+         * @lends BaseNode.prototype
+         */
+        {
+            _keyNav:function(e) {
+                var processed = true,
+                    n,
+                    children = this.get("children"),
+                    keyCode = e.keyCode;
 
-                        // 上
-                        // 当前节点的上一个兄弟节点的最后一个可显示节点
-                        case KeyCodes.UP:
-                            n = this.getPreviousVisibleNode();
-                            break;
+                // 顺序统统为前序遍历顺序
+                switch (keyCode) {
+                    // home
+                    // 移到树的顶层节点
+                    case KeyCodes.HOME:
+                        n = this.get("tree");
+                        break;
 
-                        // 下
-                        // 当前节点的下一个可显示节点
-                        case KeyCodes.DOWN:
-                            n = this.getNextVisibleNode();
-                            break;
+                    // end
+                    // 移到最后一个可视节点
+                    case KeyCodes.END:
+                        n = this.get("tree").getLastVisibleDescendant();
+                        break;
 
-                        // 左
-                        // 选择父节点或 collapse 当前节点
-                        case KeyCodes.LEFT:
-                            if (this.get("expanded") && children.length) {
-                                this.set("expanded", false);
+                    // 上
+                    // 当前节点的上一个兄弟节点的最后一个可显示节点
+                    case KeyCodes.UP:
+                        n = this.getPreviousVisibleNode();
+                        break;
+
+                    // 下
+                    // 当前节点的下一个可显示节点
+                    case KeyCodes.DOWN:
+                        n = this.getNextVisibleNode();
+                        break;
+
+                    // 左
+                    // 选择父节点或 collapse 当前节点
+                    case KeyCodes.LEFT:
+                        if (this.get("expanded") && children.length) {
+                            this.set("expanded", false);
+                        } else {
+                            n = this.get("parent");
+                        }
+                        break;
+
+                    // 右
+                    // expand 当前节点
+                    case KeyCodes.RIGHT:
+                        if (children.length) {
+                            if (!this.get("expanded")) {
+                                this.set("expanded", true);
                             } else {
-                                n = this.get("parent");
+                                children[0].select();
                             }
-                            break;
+                        }
+                        break;
 
-                        // 右
-                        // expand 当前节点
-                        case KeyCodes.RIGHT:
-                            if (children.length) {
-                                if (!this.get("expanded")) {
-                                    this.set("expanded", true);
-                                } else {
-                                    children[0].select();
-                                }
-                            }
-                            break;
+                    default:
+                        processed = false;
+                        break;
 
-                        default:
-                            processed = false;
-                            break;
+                }
+                if (n) {
+                    n.select();
+                }
+                return processed;
+            },
 
-                    }
-                    if (n) {
-                        n.select();
-                    }
-                    return processed;
-                },
+            getLastVisibleDescendant:function() {
+                var children = this.get("children");
+                // 没有展开或者根本没有儿子节点，可视的只有自己
+                if (!this.get("expanded") || !children.length) {
+                    return this;
+                }
+                // 可视的最后一个子孙
+                return children[children.length - 1].getLastVisibleDescendant();
+            },
 
-                getLastVisibleDescendant:function() {
-                    var children = this.get("children");
-                    // 没有展开或者根本没有儿子节点，可视的只有自己
-                    if (!this.get("expanded") || !children.length) {
-                        return this;
-                    }
-                    // 可视的最后一个子孙
-                    return children[children.length - 1].getLastVisibleDescendant();
-                },
+            getNextVisibleNode:function() {
+                var self = this,
+                    children = self.get("children"),
+                    parent = self.get("parent");
+                if (self.get("expanded") && children.length) {
+                    return children[0];
+                }
+                // 没有展开或者根本没有儿子节点
+                // 深度遍历的下一个
+                var n = this.next();
+                while (parent && !n) {
+                    n = parent.next();
+                    parent = parent.get("parent");
+                }
+                return n;
+            },
 
-                getNextVisibleNode:function() {
-                    var self = this,
-                        children = self.get("children"),
-                        parent = self.get("parent");
-                    if (self.get("expanded") && children.length) {
-                        return children[0];
-                    }
-                    // 没有展开或者根本没有儿子节点
-                    // 深度遍历的下一个
-                    var n = this.next();
-                    while (parent && !n) {
-                        n = parent.next();
-                        parent = parent.get("parent");
-                    }
-                    return n;
-                },
+            getPreviousVisibleNode:function() {
+                var prev = this.prev();
+                if (!prev) {
+                    prev = this.get("parent");
+                } else {
+                    prev = prev.getLastVisibleDescendant();
+                }
+                return prev;
+            },
 
-                getPreviousVisibleNode:function() {
-                    var prev = this.prev();
-                    if (!prev) {
-                        prev = this.get("parent");
-                    } else {
-                        prev = prev.getLastVisibleDescendant();
-                    }
-                    return prev;
-                },
+            next:function() {
+                var parent = this.get("parent");
+                if (!parent) {
+                    return null;
+                }
+                var siblings = parent.get('children');
+                var index = S.indexOf(this, siblings);
+                if (index == siblings.length - 1) {
+                    return null;
+                }
+                return siblings[index + 1];
+            },
 
-                next:function() {
-                    var parent = this.get("parent");
-                    if (!parent) {
-                        return null;
-                    }
-                    var siblings = parent.get('children');
-                    var index = S.indexOf(this, siblings);
-                    if (index == siblings.length - 1) {
-                        return null;
-                    }
-                    return siblings[index + 1];
-                },
+            prev:function() {
+                var parent = this.get("parent");
+                if (!parent) {
+                    return null;
+                }
+                var siblings = parent.get('children');
+                var index = S.indexOf(this, siblings);
+                if (index === 0) {
+                    return null;
+                }
+                return siblings[index - 1];
+            },
 
-                prev:function() {
-                    var parent = this.get("parent");
-                    if (!parent) {
-                        return null;
-                    }
-                    var siblings = parent.get('children');
-                    var index = S.indexOf(this, siblings);
-                    if (index === 0) {
-                        return null;
-                    }
-                    return siblings[index - 1];
-                },
+            /**
+             * 选中当前节点
+             * @public
+             */
+            select : function() {
+                this.get("tree").set("selectedItem", this);
+            },
 
-                select:function() {
-                    this.get("tree").set("selectedItem", this);
-                },
-
-                _performInternal:function(e) {
-                    var target = $(e.target);
-                    var tree = this.get("tree");
-                    tree.get("el")[0].focus();
-                    if (target.hasClass(this.getCls(EXPAND_ICON_CLS))
-                        || e.type == 'dblclick'
-                        ) {
+            _performInternal:function(e) {
+                var target = $(e.target),
+                    tree = this.get("tree"),
+                    view = this.get("view");
+                tree.get("el")[0].focus();
+                if (target.equals(view.get("expandIconEl"))) {
+                    // 忽略双击
+                    if (e.type != 'dblclick') {
                         this.set("expanded", !this.get("expanded"));
-                    } else {
-                        this.select();
-                        tree.fire("click", {
-                            target:this
-                        });
+                    }
+                } else if (e.type == 'dblclick') {
+                    this.set("expanded", !this.get("expanded"));
+                }
+                else {
+                    this.select();
+                    tree.fire("click", {
+                        target:this
+                    });
+                }
+            },
+
+            // 默认 addChild，这里需要设置 tree 属性
+            decorateChildrenInternal:function(ui, c, cls) {
+                this.addChild(new ui({
+                    srcNode:c,
+                    tree:this.get("tree"),
+                    prefixCls:cls
+                }));
+            },
+
+            addChild:function(c) {
+                var tree = this.get("tree");
+                c.set("tree", tree);
+                c.set("depth", this.get('depth') + 1);
+                BaseNode.superclass.addChild.call(this, c);
+                this._updateRecursive();
+                tree._register(c);
+                S.each(c.get("children"), function(cc) {
+                    tree._register(cc);
+                });
+            },
+
+            /*
+             每次添加/删除节点，都检查自己以及自己子孙 class
+             每次 expand/collapse，都检查
+             */
+            _computeClass:function(cause) {
+                var view = this.get("view");
+                view._computeClass(this.get('children'), this.get("parent"), cause);
+            },
+
+            _updateRecursive:function() {
+                var len = this.get('children').length;
+                this._computeClass("_updateRecursive");
+                S.each(this.get("children"), function(c, index) {
+                    c._computeClass("_updateRecursive_children");
+                    c.get("view").set("ariaPosInSet", index + 1);
+                    c.get("view").set("ariaSize", len);
+                });
+            },
+
+            removeChild:function(c) {
+                var tree = this.get("tree");
+                tree._unregister(c);
+                S.each(c.get("children"), function(cc) {
+                    tree._unregister(cc);
+                });
+                BaseNode.superclass.removeChild.apply(this, S.makeArray(arguments));
+                this._updateRecursive();
+            },
+
+            _uiSetExpanded:function(v) {
+                this._computeClass("expanded-" + v);
+                var tree = this.get("tree");
+                if (v) {
+                    tree.fire("expand", {
+                        target:this
+                    });
+                } else {
+                    tree.fire("collapse", {
+                        target:this
+                    });
+                }
+            },
+
+
+            expandAll:function() {
+                this.set("expanded", true);
+                S.each(this.get("children"), function(c) {
+                    c.set("expanded", true);
+                });
+            },
+
+            collapseAll:function() {
+                this.set("expanded", false);
+                S.each(this.get("children"), function(c) {
+                    c.set("expanded", false);
+                });
+            }
+        },
+
+        {
+            DefaultRender:BaseNodeRender,
+            ATTRS:{
+                /*事件代理*/
+                handleMouseEvents:{
+                    value:false
+                },
+                id:{
+                    getter:function() {
+                        var id = this.get("el").attr("id");
+                        if (!id) {
+                            this.get("el").attr("id", id = S.guid("tree-node"));
+                        }
+                        return id;
                     }
                 },
-
-
-                addChild:function(c) {
-                    var tree = this.get("tree");
-                    c.set("tree", tree);
-                    c.set("depth", this.get('depth') + 1);
-                    AbstractNode.superclass.addChild.call(this, c);
-                    this._updateRecursive();
-                    tree._register(c);
-                    S.each(c.get("children"), function(cc) {
-                        tree._register(cc);
-                    });
-                },
-
-                /*
-                 每次添加/删除节点，都检查自己以及自己子孙 class
-                 每次 expand/collapse，都检查
+                /**
+                 * 节点字内容
+                 * @type String
                  */
-                _computeClass:function(cause) {
-                    var view = this.get("view");
-                    view._computeClass(this.get('children'), this.get("parent"), cause);
+                content:{view:true},
+
+                /**
+                 * 强制指明该节点是否具备子孙，影响样式，不配置默认样式自动变化
+                 * @type Boolean
+                 */
+                isLeaf:{
+                    view:true
                 },
 
-                _updateRecursive:function() {
-                    var len = this.get('children').length;
-                    this._computeClass("_updateRecursive");
-                    S.each(this.get("children"), function(c, index) {
-                        c._computeClass("_updateRecursive_children");
-                        c.get("view").set("ariaPosInSet", index + 1);
-                        c.get("view").set("ariaSize", len);
-                    });
+                expandIconEl:{ view:true},
+                
+                iconEl:{ view:true},
+
+                /**
+                 * 是否选中
+                 * @type Boolean
+                 */
+                selected:{view:true},
+
+                expanded:{
+                    value:false,
+                    view:true
                 },
 
-                removeChild:function(c) {
-                    var tree = this.get("tree");
-                    tree._unregister(c);
-                    S.each(c.get("children"), function(cc) {
-                        tree._unregister(cc);
-                    });
-                    AbstractNode.superclass.removeChild.apply(this, S.makeArray(arguments));
-                    this._updateRecursive();
+                /**
+                 * html title
+                 * @type String
+                 */
+                tooltip:{view:true},
+                tree:{
                 },
 
-                _uiSetExpanded:function(v) {
-                    this._computeClass("expanded-" + v);
+                /**
+                 * depth of node
+                 */
+                depth:{
+                    value:0,
+                    view:true
                 },
-
-
-                expandAll:function() {
-                    this.set("expanded", true);
-                    S.each(this.get("children"), function(c) {
-                        c.set("expanded", true);
-                    });
-                },
-
-                collapseAll:function() {
-                    this.set("expanded", false);
-                    S.each(this.get("children"), function(c) {
-                        c.set("expanded", false);
-                    });
+                focusable:{value:false},
+                decorateChildCls:{
+                    value:"tree-children"
                 }
-            }, {
-                DefaultRender:BaseNodeRender,
-                ATTRS:{
-                    /*事件代理*/
-                    handleMouseEvents:{
-                        value:false
-                    },
-                    id:{
-                        getter:function() {
-                            var id = this.get("el").attr("id");
-                            if (!id) {
-                                this.get("el").attr("id", id = S.guid("tree-node"));
-                            }
-                            return id;
-                        }
-                    },
-                    /**
-                     * 节点字内容
-                     * @type String
-                     */
-                    content:{view:true},
-                    /**
-                     * 是否选中
-                     * @type Boolean
-                     */
-                    selected:{view:true},
+            },
 
-                    expanded:{
-                        value:false,
-                        view:true
-                    },
-
-                    /**
-                     * html title
-                     * @type String
-                     */
-                    tooltip:{view:true},
-                    tree:{
-                    },
-
-                    /**
-                     * depth of node
-                     */
-                    depth:{
-                        value:0,
-                        view:true
-                    },
-                    focusable:{value:false},
-                    decorateChildCls:{
-                        value:"tree-children"
+            HTML_PARSER:{
+                expanded:function(el) {
+                    var children = el.one("." + this.getCls("tree-children"));
+                    if (!children) {
+                        return false;
                     }
-                },
-
-                HTML_PARSER:{
-                    expanded:function(el) {
-                        var children = el.one("." + this.getCls("tree-children"));
-                        if (!children) {
-                            return false;
-                        }
-                        return children.css("display") != "none";
-                    }
+                    return children.css("display") != "none";
                 }
-            });
+            }
+        });
 
-    return AbstractNode;
+    Component.UIStore.setUIByClass(ITEM_CLS, {
+        priority:10,
+        ui:BaseNode
+    });
+
+    return BaseNode;
 
 }, {
     requires:['node','uibase','component','./basenoderender']
@@ -304,7 +364,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         FOLDER_EXPAND = FILE_EXPAND + "minus",
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
 
-
         INLINE_BLOCK = "inline-block",
         SELECTED_CLS = "tree-item-selected",
         ITEM_CLS = "tree-item",
@@ -317,75 +376,89 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         EXPAND_ICON_CLS = "tree-expand-icon",
         ICON_CLS = "tree-icon",
+
+        LEAF_CLS = "tree-item-leaf",
+
+        NOT_LEAF_CLS = "tree-item-folder",
+
         ROW_CLS = "tree-row";
 
-    return UIBase.create(Component.Render, {
+    var BaseNodeRender = UIBase.create(Component.Render, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(ITEM_CLS));
         },
 
-        _computeClass:function(children, parent, cause) {
-            // S.log("hi "+cause+": " + this.get("content"));
-            var expanded = this.get("expanded"),
+        _computeClass:function(children, parent
+                               //, cause
+            ) {
+            // S.log("hi " + cause + ": " + this.get("content"));
+            var self = this,
+                expanded = self.get("expanded"),
+                isLeaf = self.get("isLeaf"),
+
+                iconEl = self.get("iconEl"),
+                expandIconEl = self.get("expandIconEl"),
+
+                childrenEl = self.get("childrenEl"),
+
                 expand_cls = [INLINE_BLOCK,ICON_CLS,EXPAND_ICON_CLS,""].join(" "),
-                icon_cls = this.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
-                folder_cls = this.getCls(
+                icon_cls = self.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
+                folder_cls = self.getCls(
                     [INLINE_BLOCK,ICON_CLS,expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED,""].join(" ")),
                 last = !parent ||
-                    parent.get("children")[parent.get("children").length - 1].get("view") == this;
-            if (children.length) {
-                this.set("iconElCls", folder_cls);
+                    parent.get("children")[parent.get("children").length - 1].get("view") == self;
+            if (isLeaf === false || (isLeaf === undefined && children.length)) {
+                iconEl.attr("class", folder_cls);
                 if (expanded) {
                     expand_cls += FOLDER_EXPAND;
                 } else {
                     expand_cls += FOLDER_COLLAPSED;
                 }
-                this.set("expandIconElCls", this.getCls(S.substitute(expand_cls, {
+                expandIconEl.attr("class", self.getCls(S.substitute(expand_cls, {
                     "t":last ? "l" : "t"
                 })));
-            } else {
-                this.set("iconElCls", icon_cls);
-                this.set("expandIconElCls", this.getCls(S.substitute((expand_cls + FILE_EXPAND), {
+            } else
+            //if (isLeaf !== false && (isLeaf ==true || !children.length))
+            {
+                iconEl.attr("class", icon_cls);
+                expandIconEl.attr("class", self.getCls(S.substitute((expand_cls + FILE_EXPAND), {
                     "t":last ? "l" : "t"
                 })));
             }
-            this.set("childrenElCls", this.getCls(last ? CHILDREN_CLS_L : CHILDREN_CLS));
-        },
+            childrenEl && childrenEl.attr("class", self.getCls(last ? CHILDREN_CLS_L : CHILDREN_CLS));
 
-        _uiSetChildrenElCls:function(v) {
-            this.get("childrenEl") && this.get("childrenEl").attr("class", v);
-        },
-
-        _uiSetExpandIconElCls:function(v) {
-            this.get("expandIconEl").attr("class", v);
-        },
-
-        _uiSetIconElCls:function(v) {
-            this.get("iconEl").attr("class", v);
         },
 
         createDom:function() {
             var el = this.get("el"),
-                children = el.children();
-            var rowEl = $("<div class='" + this.getCls(ROW_CLS) + "'/>"),
-                id = S.guid('tree-item');
+                id,
+                rowEl,
+                labelEl = this.get("labelEl");
+
+
+            rowEl = $("<div class='" + this.getCls(ROW_CLS) + "'/>");
+            id = S.guid('tree-item');
+            this.set("rowEl", rowEl);
+
             var expandIconEl = $("<div/>")
                 .appendTo(rowEl);
             var iconEl = $("<div />")
                 .appendTo(rowEl);
-            var labelEl = $("<span id='" + id + "' class='" + this.getCls(LABEL_CLS) + "'/>")
-                .appendTo(rowEl);
-            if (children.length) {
-                labelEl.append(children);
+
+            if (!labelEl) {
+                labelEl = $("<span id='" + id + "' class='" + this.getCls(LABEL_CLS) + "'/>");
+                this.set("labelEl", labelEl);
             }
+            labelEl.appendTo(rowEl);
+
             el.attr({
                 "role":"treeitem",
                 "aria-labelledby":id
-            }).append(rowEl);
-            this.set("labelEl", labelEl);
+            }).prepend(rowEl);
+
             this.set("expandIconEl", expandIconEl);
             this.set("iconEl", iconEl);
-            this.set("rowEl", rowEl);
+
         },
 
         _uiSetExpanded:function(v) {
@@ -428,21 +501,21 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             this.get("el").attr("title", v);
         },
 
+        /**
+         * 内容容器节点，树节点都插到这里
+         */
         getContentElement:function() {
             if (this.get("childrenEl")) {
                 return this.get("childrenEl");
             }
-            var c = $("<div " + (!this.get("expanded") ? "style='display:none'" : "")
-                + " role='group'></div>")
+            var c = $("<div " + (this.get("expanded") ? "" : "style='display:none'")
+                + " role='group'><" + "/div>")
                 .appendTo(this.get("el"));
             this.set("childrenEl", c);
             return c;
         }
     }, {
         ATTRS:{
-            childrenElCls:{},
-            expandIconElCls:{},
-            iconElCls:{},
             ariaSize:{},
             ariaPosInSet:{},
             childrenEl:{},
@@ -454,9 +527,41 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             expanded:{},
             depth:{},
             labelEl:{},
-            content:{}
-        }
+            content:{},
+            isLeaf:{}
+        },
+
+        HTML_PARSER:{
+            childrenEl:function(el) {
+                return el.children("." + this.getCls(CHILDREN_CLS));
+            },
+            labelEl:function(el) {
+                return el.children("." + this.getCls(LABEL_CLS));
+            },
+            content:function(el) {
+                return el.children("." + this.getCls(LABEL_CLS)).html();
+            },
+            isLeaf:function(el) {
+                if (el.hasClass(this.getCls(LEAF_CLS))) {
+                    return true;
+                }
+                if (el.hasClass(this.getCls(NOT_LEAF_CLS))) {
+                    return false;
+                }
+            }
+        },
+
+        ITEM_CLS:ITEM_CLS
+
     });
+
+    if (1 > 2) {
+        BaseNodeRender._uiSetAriaPosInSet();
+        BaseNodeRender._uiSetDepth();
+        BaseNodeRender._uiSetAriaSize();
+    }
+
+    return BaseNodeRender;
 
 }, {
     requires:['node','uibase','component']
@@ -467,31 +572,46 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
+        CHECK_CLS = "tree-item-checked",
         CHECK = 1,
         EMPTY = 0,
         EXPAND_ICON_CLS = "tree-expand-icon";
-    return UIBase.create(BaseNode, {
+
+    var CheckNode = UIBase.create(BaseNode, {
         _performInternal:function(e) {
             // 需要通知 tree 获得焦点
             this.get("tree").get("el")[0].focus();
-            var target = $(e.target);
-            var tree = this.get("tree");
-            if (target.hasClass(this.getCls(EXPAND_ICON_CLS))
-                || e.type == 'dblclick'
-                ) {
-                this.set("expanded", !this.get("expanded"));
-            } else {
-                var checkState = this.get("checkState");
-                if (checkState == CHECK) {
-                    checkState = EMPTY;
-                } else {
-                    checkState = CHECK;
+            var target = $(e.target),
+                view = this.get("view"),
+                tree = this.get("tree");
+
+            if (e.type == "dblclick") {
+                // 双击在 +- 号上无效
+                if (target.equals(view.get("expandIconEl"))) {
+                    return;
                 }
-                this.set("checkState", checkState);
-                tree.fire("click", {
-                    target:this
-                });
+                // 双击在 checkbox 上无效
+                if (target.equals(view.get("checkEl"))) {
+                    return;
+                }
+                // 双击在字或者图标上，切换 expand 装tai
+                this.set("expanded", !this.get("expanded"));
             }
+
+            // 点击在 +- 号，切换状态
+            if (target.equals(view.get("expandIconEl"))) {
+                this.set("expanded", !this.get("expanded"));
+                return;
+            }
+
+            // 单击任何其他地方都切换 check 状态
+            var checkState = this.get("checkState");
+            if (checkState == CHECK) {
+                checkState = EMPTY;
+            } else {
+                checkState = CHECK;
+            }
+            this.set("checkState", checkState);
         },
 
         _uiSetCheckState:function(s) {
@@ -522,7 +642,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
                     parent.set("checkState", CHECK);
                 }
                 // 儿子都没选，父亲也不选
-                else if (checkCount == 0) {
+                else if (checkCount === 0) {
                     parent.set("checkState", EMPTY);
                 }
                 // 有的儿子选了，有的没选，父亲部分选
@@ -542,11 +662,21 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
                 value:0
             }
         },
+        CHECK_CLS :CHECK_CLS,
         DefaultRender:CheckNodeRender,
         PARTIAL_CHECK:2,
         CHECK:1,
         EMPTY:0
     });
+
+    Component.UIStore.setUIByClass(CHECK_CLS, {
+        priority:20,
+        ui:CheckNode
+    });
+
+    return CheckNode;
+
+
 }, {
     requires:['node','uibase','component','./basenode','./checknoderender']
 });KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
@@ -556,6 +686,11 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = "inline-block";
     return UIBase.create(BaseNodeRender, {
+
+        renderUI:function() {
+            this.get("el").addClass(this.getCls(CHECK_CLS));
+        },
+
         createDom:function() {
             var expandIconEl = this.get("expandIconEl"),
                 checkEl = $("<div class='" + this.getCls(INLINE_BLOCK + " " + " "
@@ -573,7 +708,9 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         ATTRS:{
             checkEl:{},
             checkState:{}
-        }
+        },
+
+        CHECK_CLS:CHECK_CLS
     });
 }, {
     requires:['node','uibase','component','./basenoderender']
@@ -582,11 +719,19 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
+    var CHECKED_TREE_CLS = CheckTreeRender.CHECKED_TREE_CLS;
     /*多继承*/
-    return UIBase.create(CheckNode, [TreeMgr,Component.DelegateChildren], {
+    var CheckTree = UIBase.create(CheckNode, [TreeMgr,Component.DelegateChildren], {
     }, {
         DefaultRender:CheckTreeRender
     });
+
+    Component.UIStore.setUIByClass(CHECKED_TREE_CLS, {
+        priority:40,
+        ui:CheckTree
+    });
+
+    return CheckTree;
 
 }, {
     requires:['uibase','component','./checknode','./checktreerender','./treemgr']
@@ -595,7 +740,14 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {
-    return UIBase.create(CheckNodeRender, [TreeMgrRender]);
+    var CHECKED_TREE_CLS="tree-root-checked";
+    return UIBase.create(CheckNodeRender, [TreeMgrRender],{
+        renderUI:function(){
+            this.get("el").addClass(this.getCls(CHECKED_TREE_CLS));
+        }
+    },{
+        CHECKED_TREE_CLS:CHECKED_TREE_CLS
+    });
 }, {
     requires:['uibase','component','./checknoderender','./treemgrrender']
 });/**
@@ -604,15 +756,27 @@ KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender
  * @refer http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
 KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
+
+    var TREE_CLS = TreeRender.TREE_CLS;
+
     /*多继承
      *1. 继承基节点（包括可装饰儿子节点功能）
      *2. 继承 mixin 树管理功能
      *3. 继承 mixin 儿子事件代理功能
      */
-    return UIBase.create(BaseNode, [TreeMgr,Component.DelegateChildren], {
+    var Tree = UIBase.create(BaseNode, [TreeMgr,Component.DelegateChildren], {
     }, {
         DefaultRender:TreeRender
     });
+
+
+    Component.UIStore.setUIByClass(TREE_CLS, {
+        priority:30,
+        ui:Tree
+    });
+
+
+    return Tree;
 
 }, {
     requires:['uibase','component','./basenode','./treerender','./treemgr']
@@ -623,8 +787,6 @@ KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, Tree
 KISSY.add("tree/treemgr", function(S) {
 
     function TreeMgr() {
-        /*加快从事件代理获取原事件节点*/
-        this._allNodes = {};
     }
 
     TreeMgr.ATTRS = {
@@ -645,6 +807,16 @@ KISSY.add("tree/treemgr", function(S) {
     };
 
     S.augment(TreeMgr, {
+        /*
+         加快从事件代理获取原事件节点
+         */
+        __getAllNodes:function() {
+            if (!this._allNodes) {
+                this._allNodes = {};
+            }
+            return this._allNodes;
+        },
+
         __renderUI:function() {
             // add 过那么一定调用过 checkIcon 了
             if (!this.get("children").length) {
@@ -653,11 +825,11 @@ KISSY.add("tree/treemgr", function(S) {
         },
 
         _register:function(c) {
-            this._allNodes[c.get("id")] = c;
+            this.__getAllNodes()[c.get("id")] = c;
         },
 
         _unregister:function(c) {
-            delete this._allNodes[c.get("id")];
+            delete this.__getAllNodes()[c.get("id")];
         },
 
         _handleKeyEventInternal:function(e) {
@@ -675,7 +847,7 @@ KISSY.add("tree/treemgr", function(S) {
                 n,
                 elem = self.get("el")[0];
             while (node && node !== elem) {
-                if (n = self._allNodes[node.id]) {
+                if (n = self.__getAllNodes()[node.id]) {
                     return n;
                 }
                 node = node.parentNode;
@@ -743,7 +915,10 @@ KISSY.add("tree/treemgrrender", function(S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, TreeMgrRender) {
-    return UIBase.create(BaseNodeRender, [TreeMgrRender]);
+    var TREE_CLS="tree-root";
+    return UIBase.create(BaseNodeRender, [TreeMgrRender],{},{
+        TREE_CLS:TREE_CLS
+    });
 }, {
     requires:['uibase','component','./basenoderender','./treemgrrender']
 });/**

@@ -61,11 +61,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
     }
 
     function capitalFirst(s) {
-        s = s + '';
+        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    return UIBase.create([UIBase.Box], {
+    /**
+     * model and control for component
+     * @constructor
+     * @memberOf Component
+     */
+    var ModelControl = UIBase.create([UIBase.Box], {
 
             getCls:UIStore.getCls,
 
@@ -476,7 +481,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
                 },
 
                 // 父组件
-                // Parent component to which events will be propagated. 
+                // Parent component to which events will be propagated.
                 parent:{
                 },
 
@@ -497,6 +502,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
 
             DefaultRender:Render
         });
+
+
+    return ModelControl;
 }, {
     requires:['uibase','./uistore','./render']
 });

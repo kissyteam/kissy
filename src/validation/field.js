@@ -25,7 +25,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 
         /**
          * field对象
-         * @name
          * @type HTMLElement
          */
 		self.el = el;
@@ -295,7 +294,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		/**
 		 * @description 给当前field对象增加一条验证规则
 		 * 如果Auth.Rule中存在直接增加
-		 * @name
 		 * @param {String} name 规则名称
 		 * @param {Object} argument 规则可配置
 		 */

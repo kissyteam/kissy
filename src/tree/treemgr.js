@@ -5,8 +5,6 @@
 KISSY.add("tree/treemgr", function(S) {
 
     function TreeMgr() {
-        /*加快从事件代理获取原事件节点*/
-        this._allNodes = {};
     }
 
     TreeMgr.ATTRS = {
@@ -27,6 +25,16 @@ KISSY.add("tree/treemgr", function(S) {
     };
 
     S.augment(TreeMgr, {
+        /*
+         加快从事件代理获取原事件节点
+         */
+        __getAllNodes:function() {
+            if (!this._allNodes) {
+                this._allNodes = {};
+            }
+            return this._allNodes;
+        },
+
         __renderUI:function() {
             // add 过那么一定调用过 checkIcon 了
             if (!this.get("children").length) {
@@ -35,11 +43,11 @@ KISSY.add("tree/treemgr", function(S) {
         },
 
         _register:function(c) {
-            this._allNodes[c.get("id")] = c;
+            this.__getAllNodes()[c.get("id")] = c;
         },
 
         _unregister:function(c) {
-            delete this._allNodes[c.get("id")];
+            delete this.__getAllNodes()[c.get("id")];
         },
 
         _handleKeyEventInternal:function(e) {
@@ -57,7 +65,7 @@ KISSY.add("tree/treemgr", function(S) {
                 n,
                 elem = self.get("el")[0];
             while (node && node !== elem) {
-                if (n = self._allNodes[node.id]) {
+                if (n = self.__getAllNodes()[node.id]) {
                     return n;
                 }
                 node = node.parentNode;

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 20:41
+build time: Aug 5 21:19
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 4 20:41
              */
             version: '1.20dev',
 
-            buildTime:'20110804204108',
+            buildTime:'20110805211925',
 
             /**
              * Returns a new object containing all of the properties of
@@ -10866,7 +10866,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:19
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12291,7 +12291,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * 数据延迟加载组件
@@ -12782,7 +12782,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:16
+build time: Aug 5 21:19
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13020,7 +13020,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * @module   Flash 全局静态类
@@ -13531,7 +13531,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -14745,7 +14745,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * resizable support for kissy
@@ -14910,7 +14910,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:16
+build time: Aug 5 21:19
 */
 /**
  * UIBase.Align
@@ -16923,7 +16923,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * container can delegate event for its children
@@ -16948,17 +16948,22 @@ KISSY.add("component/decoratechild", function(S, DecorateChildren) {
 
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function(element) {
-            var self = this,
-                ui = self.get("decorateChildCls"),
-                prefixCls = self.get("prefixCls"),
-                child = element.one("." + self.getCls(ui)),
-                UI = self._findUIByClass(child);
+            var self = this;
             self.set("el", element);
-            // 可以直接装饰
-            self.decorateChildrenInternal(new UI({
-                srcNode:child,
-                prefixCls:prefixCls
-            }));
+            var ui = self.get("decorateChildCls"),
+                prefixCls = self.get("prefixCls"),
+                child = element.one("." + self.getCls(ui));
+            // 可以装饰?
+            if (child) {
+                var UI = self._findUIByClass(child);
+                if (UI) {
+                    // 可以直接装饰
+                    self.decorateChildrenInternal(UI, child, prefixCls);
+                } else {
+                    // 装饰其子节点集合
+                    self.decorateChildren(child);
+                }
+            }
         }
     });
 
@@ -16983,10 +16988,12 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
 
         /**
          * 生成一个组件
-         * @param component
          */
-        decorateChildrenInternal:function(component) {
-            this.addChild(component);
+        decorateChildrenInternal:function(UI, c, prefixCls) {
+            this.addChild(new UI({
+                srcNode:c,
+                prefixCls:prefixCls
+            }));
         },
 
         /**
@@ -17002,7 +17009,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
             var UI = UIStore.getUIByClass(cls);
             if (!UI) {
                 S.log(c);
-                S.error("can not find ui " + cls + " from this markup");
+                S.log("can not find ui " + cls + " from this markup");
             }
             return UI;
         },
@@ -17015,10 +17022,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
                 prefixCls = self.get("prefixCls");
             children.each(function(c) {
                 var UI = self._findUIByClass(c);
-                self.decorateChildrenInternal(new UI({
-                    srcNode:c,
-                    prefixCls:prefixCls
-                }));
+                self.decorateChildrenInternal(UI, c, prefixCls);
             });
         }
     });
@@ -17149,11 +17153,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
     }
 
     function capitalFirst(s) {
-        s = s + '';
+        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    return UIBase.create([UIBase.Box], {
+    /**
+     * model and control for component
+     * @constructor
+     * @memberOf Component
+     */
+    var ModelControl = UIBase.create([UIBase.Box], {
 
             getCls:UIStore.getCls,
 
@@ -17564,7 +17573,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
                 },
 
                 // 父组件
-                // Parent component to which events will be propagated. 
+                // Parent component to which events will be propagated.
                 parent:{
                 },
 
@@ -17585,6 +17594,9 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
 
             DefaultRender:Render
         });
+
+
+    return ModelControl;
 }, {
     requires:['uibase','./uistore','./render']
 });
@@ -17644,7 +17656,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
     });
 }, {
     requires:['uibase','./uistore']
-});KISSY.add("component/uistore", function() {
+});KISSY.add("component/uistore", function(S) {
     var uis = {
         // 不带前缀 prefixCls
         /*
@@ -17672,7 +17684,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
 
 
     function getCls(cls) {
-        var cs = cls.split(/\s+/);
+        var cs = S.trim(cls).split(/\s+/);
         for (var i = 0; i < cs.length; i++) {
             cs[i] = this.get("prefixCls") + cs[i];
         }
@@ -17689,7 +17701,12 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
-    return {
+
+    /**
+     * @namespace
+     * @name Component
+     */
+    var Component = {
         ModelControl:ModelControl,
         Render:Render,
         Container:Container,
@@ -17698,6 +17715,8 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, Del
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
+
+    return Component;
 }, {
     requires:['component/modelcontrol',
         'component/render',
@@ -17710,7 +17729,7 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, Del
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:16
+build time: Aug 5 21:19
 */
 /**
  * Switchable
@@ -20307,7 +20326,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * KISSY Overlay
@@ -20776,7 +20795,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:19
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -21955,7 +21974,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * @fileoverview 图像放大区域
@@ -22580,7 +22599,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * KISSY Calendar
@@ -23859,7 +23878,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * deletable menuitem
@@ -24955,11 +24974,14 @@ KISSY.add(
                 },
 
                 // 默认 addChild，这里里面的元素需要放到 menu 属性中
-                decorateChildrenInternal:function(menu) {
-                    var el = menu.get("el");
+                decorateChildrenInternal:function(ui,el, cls) {
                     el.hide();
                     var docBody = S.one(el[0].ownerDocument.body);
                     docBody.prepend(el);
+                    var menu = new ui({
+                        srcNode:el,
+                        prefixCls:cls
+                    });
                     this.set("menu", menu);
                 },
 
@@ -25085,7 +25107,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * Model and Control for button
@@ -25341,7 +25363,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:15
+build time: Aug 5 21:18
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25518,11 +25540,14 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             }
         },
 
-        decorateChildrenInternal:function(menu) {
-            var el = menu.get("el");
+        decorateChildrenInternal:function(ui, el, cls) {
             el.hide();
             var docBody = S.one(el[0].ownerDocument.body);
             docBody.prepend(el);
+            var menu = new ui({
+                srcNode:el,
+                prefixCls:cls
+            });
             this.set("menu", menu);
         },
 
@@ -25826,7 +25851,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 4 18:16
+build time: Aug 5 21:19
 */
 /**
  * @author  常胤 (lzlu.com)
@@ -26102,7 +26127,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 
         /**
          * field对象
-         * @name
          * @type HTMLElement
          */
 		self.el = el;
@@ -26372,7 +26396,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		/**
 		 * @description 给当前field对象增加一条验证规则
 		 * 如果Auth.Rule中存在直接增加
-		 * @name
 		 * @param {String} name 规则名称
 		 * @param {Object} argument 规则可配置
 		 */

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>KISSY Decorated Simple Tree</title>
+<title>KISSY Decorated Check Tree</title>
 <link href="../assets/tree.css" rel="stylesheet"/>
 <style>
     .goog-tree-children {
@@ -27,7 +27,26 @@
         color: highlighttext;
     }
 
+    .goog-tree-item-checked0 {
+        background: url(../assets/check0.gif) 0 -2px;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+    }
 
+    .goog-tree-item-checked1 {
+        background: url(../assets/check1.gif) 0 -2px;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+    }
+
+    .goog-tree-item-checked2 {
+        background: url(../assets/check2.gif) 0 -2px;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+    }
 </style>
 </head>
 <body>
@@ -41,22 +60,22 @@
 <a href="javascript:void(0)" id="collapseAll">关闭全部</a>
 <div id="treeContainer" style="width: 200px;">
 
-    <div id='root' class="goog-tree-root">
+    <div id='root' class="goog-tree-root goog-tree-root-checked">
         <span class="goog-tree-item-label">淘宝网</span>
         <div class="goog-tree-children">
-            <div class="goog-tree-item">
+            <div class="goog-tree-item goog-tree-item-checked">
                 <span class="goog-tree-item-label">收藏夹</span>
                 <div class="goog-tree-children">
-                    <div class="goog-tree-item">
+                    <div class="goog-tree-item goog-tree-item-checked">
                         <span class="goog-tree-item-label">收藏的宝贝</span>
                     </div>
-                    <!-- 标记为强制 folder 样式 -->
-                    <div class="goog-tree-item goog-tree-item-folder">
+                    <div class="goog-tree-item goog-tree-item-checked">
                         <span class="goog-tree-item-label">收藏的店铺</span>
                     </div>
                 </div>
             </div>
-            <div class="goog-tree-item">
+
+            <div class="goog-tree-item goog-tree-item-checked">
                 <span class="goog-tree-item-label">我要买</span>
             </div>
         </div>
@@ -73,7 +92,7 @@
     KISSY.use("tree", function(S, Tree) {
         var $ = S.all;
 
-        var tree = new Tree({
+        var tree = new Tree.CheckTree({
             content:"淘宝网",
             prefixCls:"goog-",
             expanded:true,

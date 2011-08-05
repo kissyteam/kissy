@@ -9,17 +9,22 @@ KISSY.add("component/decoratechild", function(S, DecorateChildren) {
 
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function(element) {
-            var self = this,
-                ui = self.get("decorateChildCls"),
-                prefixCls = self.get("prefixCls"),
-                child = element.one("." + self.getCls(ui)),
-                UI = self._findUIByClass(child);
+            var self = this;
             self.set("el", element);
-            // 可以直接装饰
-            self.decorateChildrenInternal(new UI({
-                srcNode:child,
-                prefixCls:prefixCls
-            }));
+            var ui = self.get("decorateChildCls"),
+                prefixCls = self.get("prefixCls"),
+                child = element.one("." + self.getCls(ui));
+            // 可以装饰?
+            if (child) {
+                var UI = self._findUIByClass(child);
+                if (UI) {
+                    // 可以直接装饰
+                    self.decorateChildrenInternal(UI, child, prefixCls);
+                } else {
+                    // 装饰其子节点集合
+                    self.decorateChildren(child);
+                }
+            }
         }
     });
 

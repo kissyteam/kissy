@@ -189,11 +189,14 @@ KISSY.add(
                 },
 
                 // 默认 addChild，这里里面的元素需要放到 menu 属性中
-                decorateChildrenInternal:function(menu) {
-                    var el = menu.get("el");
+                decorateChildrenInternal:function(ui,el, cls) {
                     el.hide();
                     var docBody = S.one(el[0].ownerDocument.body);
                     docBody.prepend(el);
+                    var menu = new ui({
+                        srcNode:el,
+                        prefixCls:cls
+                    });
                     this.set("menu", menu);
                 },
 
