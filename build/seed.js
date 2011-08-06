@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:19
+build time: Aug 6 20:22
 */
 /*
  * @module kissy
@@ -87,7 +87,7 @@ build time: Aug 5 21:19
              */
             version: '1.20dev',
 
-            buildTime:'20110805211925',
+            buildTime:'20110806202252',
 
             /**
              * Returns a new object containing all of the properties of

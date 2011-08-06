@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 6 20:22
 */
 /**
  * @module   anim
@@ -10,6 +10,11 @@ build time: Aug 5 21:18
 KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     var EventTarget,
+        /**
+         * milliseconds in one second
+         * @constant
+         */
+            SECOND_UNIT = 1000,
         PROPS,
         CUSTOM_ATTRS,
         OPACITY,NONE,
@@ -92,11 +97,20 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
-        if (!(elem = DOM.get(elem))) return;
+        if (!(elem = DOM.get(elem))) {
+            return;
+        }
 
         // factory or constructor
         if (!(this instanceof Anim)) {
             return new Anim(elem, props, duration, easing, callback, nativeSupport);
+        }
+
+        /**
+         * 默认不启用原生动画，有些问题
+         */
+        if (nativeSupport === undefined) {
+            nativeSupport = false;
         }
 
         var self = this,
@@ -143,12 +157,16 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            if (duration) (config.duration = parseFloat(duration) || 1);
-            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
-            if (S.isFunction(callback)) config.complete = callback;
-            if (nativeSupport !== undefined) {
-                config.nativeSupport = nativeSupport;
+            if (duration) {
+                config.duration = parseFloat(duration) || 1;
             }
+            if (S.isString(easing) || S.isFunction(easing)) {
+                config.easing = easing;
+            }
+            if (S.isFunction(callback)) {
+                config.complete = callback;
+            }
+            config.nativeSupport = nativeSupport;
         }
 
         //如果设定了元素属性的动画，则不能启动 css3 transition
@@ -260,10 +278,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 source = {},
                 prop;
 
-            if (self.fire(EVENT_START) === false) return;
+            if (self.fire(EVENT_START) === false) {
+                return;
+            }
 
             self.stop(); // 先停止掉正在运行的动画
-            duration = config.duration * 1000;
+            duration = config.duration * SECOND_UNIT;
             self.duration = duration;
             if (self.transitionName) {
                 // some hack ,Weird but ff/chrome need a break
@@ -331,14 +351,16 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 tp = target[prop];
 
                 // 没有发生变化的，直接略过
-                if (eqAnimValue(prop, tp, sp)) continue;
+                if (eqAnimValue(prop, tp, sp)) {
+                    continue;
+                }
 
                 //S.log(prop);
                 //S.log(tp.v + " : " + sp.v + " : " + sp.u + " : " + tp.u);
 
                 // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
                 // 这时要把 sp 的单位调整为和 tp 的一致
-                if (tp.v == 0) {
+                if (tp.v === 0) {
                     tp.u = sp.u;
                 }
 
@@ -460,7 +482,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     });
 
     Anim.supportTransition = function() {
-        if (TRANSITION_NAME) return TRANSITION_NAME;
+        if (TRANSITION_NAME) {
+            return TRANSITION_NAME;
+        }
         var name = 'transition', transitionName;
         var el = document.documentElement;
         if (el.style[name] !== undefined) {

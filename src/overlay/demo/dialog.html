@@ -409,6 +409,7 @@
                         var el = overlay.get("el");
                         var ow = el.width();
                         var oh = el.height();
+                        var hasHeight = el[0].style.height;
 
                         overlay.on("afterVisibleChange", function(ev) {
                             var bo = b.offset(),
@@ -417,21 +418,23 @@
                                     bw = b.width(),
                                     bh = b.height();
                             var v = ev.newVal,el = overlay.get("el");
-                            el.stop(true);
+                            el.stop();
                             if (v) {
                                 el.width(bw);
                                 el.height(bh);
                                 el.offset(b.offset());
 
                                 var d = {
-                                    left:Math.max(($(window).width() - ow) / 2 + $(window).scrollLeft(),
-                                            $(window).scrollLeft()) + "px",
-                                    top:Math.max(($(window).height() - oh) / 2 + $(window).scrollTop(),
-                                            $(window).scrollTop()) + "px",
+                                    left:Math.max(($(window).width() - ow) / 2 + $(window).scrollLeft(), $(window).scrollLeft()) + "px",
+                                    top:Math.max(($(window).height() - oh) / 2 + $(window).scrollTop(), $(window).scrollTop()) + "px",
                                     width:ow + "px",
                                     height:oh + "px"
                                 };
-                                el.animate(d, 0.3);
+                                el.animate(d, 0.3, undefined, function() {
+                                    if (!hasHeight) {
+                                        el.css("height", "");
+                                    }
+                                }, false);
                             } else {
 
                                 el.css("visibility", "visible");
@@ -443,7 +446,7 @@
                                     height:bh + "px"
                                 }, 0.3, undefined, function() {
                                     el.css("visibility", "hidden");
-                                });
+                                }, false);
                             }
                         });
                     });
