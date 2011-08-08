@@ -1,13 +1,15 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 16:01
+build time: Aug 8 17:09
 */
 /**
  * KISSY Overlay
  * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
+
+    var $ = S.all;
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -29,7 +31,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         ATTRS:{
             elBefore:{
                 valueFn:function() {
-                    return S.one(this.get("render")[0].firstChild);
+                    return $("body").first();
                 }
             },
             // 是否支持焦点处理

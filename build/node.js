@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 16:01
+build time: Aug 8 17:09
 */
 /**
  * @module  anim-node-plugin
@@ -243,6 +243,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
             "filter",
+            "first",
             "parent",
             "closest",
             "next",

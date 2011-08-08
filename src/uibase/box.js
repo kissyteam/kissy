@@ -36,6 +36,11 @@ KISSY.add('uibase/box', function() {
             view:true
         },
 
+        // 渲染该组件的目的容器
+        render:{
+            view:true
+        },
+
         visibleMode:{
             view:true
         },

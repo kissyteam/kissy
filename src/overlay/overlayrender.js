@@ -4,6 +4,8 @@
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
+    var $ = S.all;
+
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -24,7 +26,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         ATTRS:{
             elBefore:{
                 valueFn:function() {
-                    return S.one(this.get("render")[0].firstChild);
+                    return $("body").first();
                 }
             },
             // 是否支持焦点处理

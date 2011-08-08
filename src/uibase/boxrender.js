@@ -4,6 +4,7 @@
  */
 KISSY.add('uibase/boxrender', function(S, Node) {
 
+    var $ = S.all;
 
     function Box() {
     }
@@ -12,7 +13,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         el: {
             //容器元素
             setter:function(v) {
-                return Node.one(v);
+                return $(v);
             }
         },
         elCls: {
@@ -37,6 +38,10 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         elBefore:{
             //插入到该元素前
             value:null
+        },
+        // 渲染该组件的目的容器
+        render:{
+            view:true
         },
         html: {
             sync:false
@@ -95,11 +100,14 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             var self = this;
             // 新建的节点才需要摆放定位
             if (self.__boxRenderNew) {
-                var render = self.get("render"),
+                var render = self.get("render") || $("body"),
                     el = self.get("el");
                 var elBefore = self.get("elBefore");
-                elBefore = elBefore && elBefore[0];
-                render[0].insertBefore(el[0], elBefore || null);
+                if (elBefore) {
+                    el.insertBefore(elBefore);
+                } else {
+                    $(render).append(el);
+                }
             }
         },
 

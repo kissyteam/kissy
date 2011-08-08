@@ -3049,7 +3049,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
-    var isElementNode = DOM._isElementNode,CONTAIN_MASK = 16;
+    var isElementNode = DOM._isElementNode,
+        CONTAIN_MASK = 16;
 
     S.mix(DOM, {
 
@@ -3066,6 +3067,24 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             return nth(selector, filter, 'parentNode', function(elem) {
                 return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
             }, context);
+        },
+
+        first:function(selector, filter) {
+            var elem = DOM.get(selector);
+            if (!elem || !elem.firstChild) {
+                return null;
+            }
+            return nth(elem.firstChild, filter, 'nextSibling',
+                undefined, undefined, true);
+        },
+
+        last:function(selector, filter) {
+            var elem = DOM.get(selector);
+            if (!elem || !elem.lastChild()) {
+                return null;
+            }
+            return nth(elem.lastChild, filter, 'previousSibling',
+                undefined, undefined, true);
         },
 
         /**
@@ -4958,6 +4977,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
             "filter",
+            "first",
             "parent",
             "closest",
             "next",

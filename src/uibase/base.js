@@ -170,16 +170,6 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         // dom 节点是否已经创建完毕
         created:{
             value:false
-        },
-        // 渲染该组件的目的容器
-        render:{
-            view:true,
-            valueFn:function() {
-                return Node.one("body");
-            },
-            setter:function(v) {
-                return Node.one(v);
-            }
         }
     };
 

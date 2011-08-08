@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 16:01
+build time: Aug 8 17:09
 */
 /**
  * @module  dom-attr
@@ -2782,7 +2782,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
-    var isElementNode = DOM._isElementNode,CONTAIN_MASK = 16;
+    var isElementNode = DOM._isElementNode,
+        CONTAIN_MASK = 16;
 
     S.mix(DOM, {
 
@@ -2799,6 +2800,24 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             return nth(selector, filter, 'parentNode', function(elem) {
                 return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
             }, context);
+        },
+
+        first:function(selector, filter) {
+            var elem = DOM.get(selector);
+            if (!elem || !elem.firstChild) {
+                return null;
+            }
+            return nth(elem.firstChild, filter, 'nextSibling',
+                undefined, undefined, true);
+        },
+
+        last:function(selector, filter) {
+            var elem = DOM.get(selector);
+            if (!elem || !elem.lastChild()) {
+                return null;
+            }
+            return nth(elem.lastChild, filter, 'previousSibling',
+                undefined, undefined, true);
         },
 
         /**
