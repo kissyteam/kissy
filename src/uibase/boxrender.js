@@ -16,40 +16,22 @@ KISSY.add('uibase/boxrender', function(S, Node) {
                 return $(v);
             }
         },
-        elCls: {
-            // 容器的 class
-        },
-        elStyle:{
-            //容器的行内样式
-        },
-        width: {
-            // 宽度
-        },
-        height: {
-            // 高度
-        },
+        elCls: {},
+        elStyle:{},
+        width: {},
+        height: {},
         elTagName:{
-            //生成标签名字
+            // 生成标签名字
             value:"div"
         },
-        elAttrs:{
-            //其他属性
-        },
-        elBefore:{
-            //插入到该元素前
-            value:null
-        },
-        // 渲染该组件的目的容器
-        render:{
-            view:true
-        },
+        elAttrs:{},
+        elBefore:{},
+        render:{},
         html: {
             sync:false
         },
         visible:{},
-        visibleMode:{
-            value:"display"
-        }
+        visibleMode:{}
     };
 
     Box.construct = constructEl;

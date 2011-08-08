@@ -5,7 +5,6 @@ KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender)
 
     return UIBase.create(OverlayRender, [
         require("stdmodrender"),
-        require("closerender"),
         AriaRender
     ]);
 }, {

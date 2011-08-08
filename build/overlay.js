@@ -1,15 +1,13 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 8 18:47
 */
 /**
  * KISSY Overlay
  * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
-
-    var $ = S.all;
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -20,27 +18,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("positionrender"),
         require("loadingrender"),
         UA['ie'] == 6 ? require("shimrender") : null,
+        require("closerender"),
         require("maskrender")
     ], {
-
         renderUI:function() {
             this.get("el").addClass(this.get("prefixCls") + "overlay");
-        }
-
-    }, {
-        ATTRS:{
-            elBefore:{
-                valueFn:function() {
-                    return $("body").first();
-                }
-            },
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            visibleMode:{
-                value:"visibility"
-            }
         }
     });
 }, {
@@ -253,17 +235,34 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("position"),
         require("loading"),
         require("align"),
+        require("close"),
         require("resize"),
         require("mask"),
         Effect
     ], {}, {
         ATTRS:{
+            elBefore:{
+                valueFn:function() {
+                    return S.all("body").first();
+                }
+            },
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+            closable:{
+                // overlay 默认没 X
+                value:false
+            },
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
             },
             allowTextSelection_:{
                 value:true
+            },
+            visibleMode:{
+                value:"visibility"
             }
         }
     });
@@ -280,7 +279,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
 
     return UIBase.create(OverlayRender, [
         require("stdmodrender"),
-        require("closerender"),
         AriaRender
     ]);
 }, {
@@ -289,7 +287,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
  * KISSY.Dialog
  * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -297,16 +295,21 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
     var Dialog = UIBase.create(Overlay, [
         require("stdmod"),
-        require("close"),
         require("drag"),
         require("constrain"),
         Aria
     ], {
         renderUI:function() {
             var self = this;
-            self.get("el").addClass(this.get("prefixCls")+"dialog");
+            self.get("el").addClass(this.get("prefixCls") + "dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
+        }
+    }, {
+        ATTRS:{
+            closable:{
+                value:true
+            }
         }
     });
 

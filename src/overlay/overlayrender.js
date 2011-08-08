@@ -4,8 +4,6 @@
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
-    var $ = S.all;
-
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -15,27 +13,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("positionrender"),
         require("loadingrender"),
         UA['ie'] == 6 ? require("shimrender") : null,
+        require("closerender"),
         require("maskrender")
     ], {
-
         renderUI:function() {
             this.get("el").addClass(this.get("prefixCls") + "overlay");
-        }
-
-    }, {
-        ATTRS:{
-            elBefore:{
-                valueFn:function() {
-                    return $("body").first();
-                }
-            },
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            visibleMode:{
-                value:"visibility"
-            }
         }
     });
 }, {

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:10
+build time: Aug 8 18:45
 */
 /**
  * UIBase.Align
@@ -779,22 +779,28 @@ KISSY.add('uibase/box', function() {
             view:true,
             sync:false
         },
+        // 宽度
         width:{
             view:true
         },
+        // 高度
         height:{
             view:true
         },
+        // 容器的 class
         elCls:{
             view:true
         },
+         // 容器的行内样式
         elStyle:{
             view:true
         },
+        // 其他属性
         elAttrs:{
             //其他属性
             view:true
         },
+        // 插入到该元素前
         elBefore:{
             view:true
         },
@@ -808,6 +814,7 @@ KISSY.add('uibase/box', function() {
         },
 
         visibleMode:{
+            value:"display",
             view:true
         },
         // 默认显示，但不触发事件
@@ -874,40 +881,22 @@ KISSY.add('uibase/boxrender', function(S, Node) {
                 return $(v);
             }
         },
-        elCls: {
-            // 容器的 class
-        },
-        elStyle:{
-            //容器的行内样式
-        },
-        width: {
-            // 宽度
-        },
-        height: {
-            // 高度
-        },
+        elCls: {},
+        elStyle:{},
+        width: {},
+        height: {},
         elTagName:{
-            //生成标签名字
+            // 生成标签名字
             value:"div"
         },
-        elAttrs:{
-            //其他属性
-        },
-        elBefore:{
-            //插入到该元素前
-            value:null
-        },
-        // 渲染该组件的目的容器
-        render:{
-            view:true
-        },
+        elAttrs:{},
+        elBefore:{},
+        render:{},
         html: {
             sync:false
         },
         visible:{},
-        visibleMode:{
-            value:"display"
-        }
+        visibleMode:{}
     };
 
     Box.construct = constructEl;
