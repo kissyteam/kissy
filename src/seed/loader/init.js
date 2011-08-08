@@ -19,8 +19,8 @@
      *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      */
     // notice: timestamp
-    var baseReg = /^(.*)(seed|kissy)(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-min)?\.js/i,
+    var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
+        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
         pagePath = S.__pagePath;
 
     function getBaseUrl(script) {

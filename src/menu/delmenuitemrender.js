@@ -36,7 +36,7 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         },
         HTML_PARSER:{
             delEl:function(el) {
-                return el.one("." + this.getCls(DEL_CLS));
+                return el.one(this.getCls(DEL_CLS));
             }
         },
         CLS:CLS,

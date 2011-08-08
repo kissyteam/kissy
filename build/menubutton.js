@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 29 11:56
+build time: Aug 5 21:18
 */
 /**
  * combination of menu and button ,similar to native select
@@ -9,7 +9,7 @@ build time: Jul 29 11:56
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all;
-    var MenuButton = UIBase.create(Button, {
+    var MenuButton = UIBase.create(Button, [Component.DecorateChild], {
 
         hideMenu:function() {
             this.get("menu") && this.get("menu").hide();
@@ -158,7 +158,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         },
 
         // 找到下面有 popupmenu class 的元素，装饰为 PopupMenu 返回
-        decorateInternal:function(el) {
+        decorateInternalX:function(el) {
             var self = this,
                 ui = "popupmenu",
                 prefixCls = self.get("prefixCls");
@@ -176,6 +176,17 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 });
                 self.set("menu", menu);
             }
+        },
+
+        decorateChildrenInternal:function(ui, el, cls) {
+            el.hide();
+            var docBody = S.one(el[0].ownerDocument.body);
+            docBody.prepend(el);
+            var menu = new ui({
+                srcNode:el,
+                prefixCls:cls
+            });
+            this.set("menu", menu);
         },
 
         destructor:function() {
@@ -199,6 +210,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                         adjustY:1
                     }
                 }
+            },
+            decorateChildCls:{
+                value:"popupmenu"
             },
             // 不关心选中元素 , 由 select 负责
             // selectedItem
@@ -315,7 +329,8 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
              *  on open menu.
              */
             _handleMenuShow:function() {
-                this.get("menu").set("highlightedItem", this.get("selectedItem") || this.get("menu").getChildAt(0));
+                this.get("menu").set("highlightedItem",
+                    this.get("selectedItem") || this.get("menu").getChildAt(0));
             },
             updateCaption_:function() {
                 var self = this;
@@ -327,35 +342,49 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 self.set("selectedItem", e.target);
                 self.hideMenu();
             },
+            removeItems:function() {
+                Select.superclass.removeItems.apply(this, arguments);
+                this.set("selectedItem", null);
+            },
+            removeItem:function(c) {
+                Select.superclass.removeItem.apply(this, arguments);
+                if (c == this.get("selectedItem")) {
+                    this.set("selectedItem", null);
+                }
+            },
             _uiSetSelectedItem:function(v, ev) {
                 if (ev && ev.prevVal) {
                     ev.prevVal.set("selected", false);
                 }
-                var self = this;
-                self.set("value", v && v.get("value"));
-                self.updateCaption_();
+                this.updateCaption_();
             },
             _uiSetDefaultCaption:function() {
                 this.updateCaption_();
-            },
-
-            _uiSetValue:function(v) {
-                var self = this;
-                var children = self.get("menu").get("children");
-                for (var i = 0; i < children.length; i++) {
-                    var item = children[i];
-                    if (item.get("value") == v) {
-                        self.set("selectedItem", item);
-                        return;
-                    }
-                }
-                self.set("selectedItem", null);
             }
         },
         {
             ATTRS:{
-                // @inheritedDoc  from button
-                // value :{}
+
+                // 也是 selectedItem 的一个视图
+                value :{
+                    getter:function() {
+                        var selectedItem = this.get("selectedItem");
+                        return selectedItem && selectedItem.get("value");
+                    },
+                    setter:function(v) {
+                        var self = this;
+                        var children = self.get("menu").get("children");
+                        for (var i = 0; i < children.length; i++) {
+                            var item = children[i];
+                            if (item.get("value") == v) {
+                                self.set("selectedItem", item);
+                                return;
+                            }
+                        }
+                        self.set("selectedItem", null);
+                        return null;
+                    }
+                },
 
 
                 // @inheritedDoc  from button
@@ -367,8 +396,13 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 // 只是 selectedItem 的一个视图，无状态
                 selectedIndex:{
                     setter:function(index) {
-                        var self = this;
-                        self.set("selectedItem", self.get("menu").getChildAt(index));
+                        var self = this,
+                            children = self.get("menu").get("children");
+                        if (index < 0 || index >= children.length) {
+                            // 和原生保持一致
+                            return -1;
+                        }
+                        self.set("selectedItem", children[index]);
                     },
 
                     getter:function() {
@@ -378,6 +412,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 },
 
                 defaultCaption:{
+                    value:""
                 }
             }
         }
@@ -420,7 +455,11 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 + "' value='" + curValue + "'>").insertBefore(element);
 
             select.on("afterSelectedItemChange", function(e) {
-                input.val(e.newVal.get("value"));
+                if (e.newVal) {
+                    input.val(e.newVal.get("value"));
+                } else {
+                    input.val("");
+                }
             });
         }
         element.remove();

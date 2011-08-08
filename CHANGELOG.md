@@ -16,12 +16,12 @@ History:
 ### v1.1.6 -> v1.2.0 (2011/06/08)
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
- - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）
- - [x] ajax 无论什么错误，出错后都会触发 error
- - [!] ajax 所有方法都返回模拟 xhr 对象，包含 abort 方法用于中断当前请求等
- - [!] ajax 请求地址的响应头如果设置了 content-type 为 json 或 xml ，回调的第一个参数自动为该格式，不需要手动 parse
- - [+] 增加 S.io.upload 方法，用于无刷新文件上传
 
+ - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
+ - [!] DOM.insertBefore/insertAfter 没有返回值
+ - [*] ie: dom opacity bug fix , border-width 数值归一化
+ - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
+ - [*] DOM.query(selector,context) context 可以为 Array<HTMLElement> HTMLNodeList 以及选择器字符串(限制同第一个参数 selector)
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
@@ -31,16 +31,19 @@ History:
  - [x] 修正 focusin/out 事件触发顺序,子元素先，父元素后
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
+ - [!] 字符串数组支持变化，例如 Event.on(['#xx','#yy'],...) 改写做 Event.on('#xx,#yy',...);
 
 
- - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
- - [!] DOM.insertBefore/insertAfter 没有返回值
- - [*] ie: dom opacity bug fix , border-width 数值归一化
- - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
+ - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）
+ - [x] ajax 无论什么错误，出错后都会触发 error
+ - [!] ajax 所有方法都返回模拟 xhr 对象，包含 abort 方法用于中断当前请求等
+ - [!] ajax 请求地址的响应头如果设置了 content-type 为 json 或 xml ，回调的第一个参数自动为该格式，不需要手动 parse
+ - [+] 增加 S.io.upload 方法，用于无刷新文件上传
 
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
  - [*] Node 与 NodeList 合一
+ - [!] NodeList.prototype.all(selector) 1.1.6为取得第一个元素的子孙中选符合 selector 的节点 , 1.2 改为取得所有元素的子孙符合 selector 的节点（经过去重和根据 DOM 树前序遍历顺序进行排序）
 
 
  - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
@@ -79,6 +82,7 @@ History:
 
  - [+] 增加 button 组件
 
+ - [+] 增加 tree 组件
 
  - [+] 增加 menubutton 组件
 

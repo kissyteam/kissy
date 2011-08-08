@@ -401,7 +401,56 @@
                                           src="http://img04.taobaocdn.com/tps/i4/T1QaObXfRoXXXXXXXX-130-130.jpg"/></div>
         <script>
             KISSY.use("dom,node,ua,event,overlay", function(S, DOM, Node, UA, Event, Overlay) {
-                var Dialog = Overlay.Dialog;
+                var Dialog = Overlay.Dialog,$ = S.all;
+
+                // 在 new overlay 后立即调用
+                var animCenter = function(b, overlay) {
+                    overlay.on("afterRenderUI", function() {
+                        var el = overlay.get("el");
+                        var ow = el.width();
+                        var oh = el.height();
+                        var hasHeight = el[0].style.height;
+
+                        overlay.on("afterVisibleChange", function(ev) {
+                            var bo = b.offset(),
+                                    bl = bo.left,
+                                    bt = bo.top,
+                                    bw = b.width(),
+                                    bh = b.height();
+                            var v = ev.newVal,el = overlay.get("el");
+                            el.stop();
+                            if (v) {
+                                el.width(bw);
+                                el.height(bh);
+                                el.offset(b.offset());
+
+                                var d = {
+                                    left:Math.max(($(window).width() - ow) / 2 + $(window).scrollLeft(), $(window).scrollLeft()) + "px",
+                                    top:Math.max(($(window).height() - oh) / 2 + $(window).scrollTop(), $(window).scrollTop()) + "px",
+                                    width:ow + "px",
+                                    height:oh + "px"
+                                };
+                                el.animate(d, 0.3, undefined, function() {
+                                    if (!hasHeight) {
+                                        el.css("height", "");
+                                    }
+                                }, false);
+                            } else {
+
+                                el.css("visibility", "visible");
+
+                                el.animate({
+                                    left:bl + "px",
+                                    top:bt + "px",
+                                    width:bw + "px",
+                                    height:bh + "px"
+                                }, 0.3, undefined, function() {
+                                    el.css("visibility", "hidden");
+                                }, false);
+                            }
+                        });
+                    });
+                };
 
                 S.ready(function(S) {
 
@@ -419,61 +468,13 @@
                     });
 
                     var b = Node.one("#btn18");
-                    var running;
+
+                    animCenter(b, dialog);
+
                     b.on("click", function() {
-                        if (running) return;
                         dialog.show();
                     });
-                    var ow,
-                            oh,
-                            bo = b.offset(),
-                            bl = bo.left,
-                            bt = bo.top,
-                            bw = b.width(),
-                            bh = b.height();
 
-                    dialog.on("afterSyncUI", function() {
-                        var el = dialog.get("el")
-                        ow = el.width();
-                        oh = el.height();
-
-                        dialog.on("afterVisibleChange", function(ev) {
-
-                            var v = ev.newVal,el = dialog.get("el");
-
-                            el.stop();
-                            running = true;
-                            if (v) {
-                                el.width(bw);
-                                el.height(bh);
-                                el.offset(b.offset());
-
-                                var d = {
-                                    left:(DOM.viewportWidth() - ow) / 2 + DOM.scrollLeft() + "px",
-                                    top:(DOM.viewportHeight() - oh) / 2 + DOM.scrollTop() + "px",
-                                    width:ow + "px",
-                                    height:oh + "px"
-                                };
-
-                                el.animate(d, 0.3, undefined, function() {
-                                    running = false;
-                                });
-                            } else {
-
-                                el.css("visibility", "visible");
-
-                                el.animate({
-                                    left:bl + "px",
-                                    top:bt + "px",
-                                    width:bw + "px",
-                                    height:bh + "px"
-                                }, 0.3, undefined, function() {
-                                    el.css("visibility", "hidden");
-                                    running = false;
-                                });
-                            }
-                        });
-                    });
                 });
             });
         </script>

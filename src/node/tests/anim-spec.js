@@ -34,6 +34,9 @@ KISSY.use("anim,node", function(S, Anim, Node) {
         transitionName += "Property";
     }
 
+    // node 上的动画都是用 js 模拟，比较稳定
+    transitionName="";
+
     describe("anim on node", function() {
 
         it("should attach node with slideup/down well", function() {

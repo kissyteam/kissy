@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 5 21:18
 */
 /**
  * deletable menuitem
@@ -91,7 +91,7 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         },
         HTML_PARSER:{
             delEl:function(el) {
-                return el.one("." + this.getCls(DEL_CLS));
+                return el.one(this.getCls(DEL_CLS));
             }
         },
         CLS:CLS,
@@ -918,7 +918,7 @@ KISSY.add(
         /**
          * Class representing a submenu that can be added as an item to other menus.
          */
-        var SubMenu = UIBase.create(MenuItem, {
+        var SubMenu = UIBase.create(MenuItem, [Component.DecorateChild], {
 
                 _onParentHide:function() {
                     this.get("menu") && this.get("menu").hide();
@@ -1096,25 +1096,16 @@ KISSY.add(
                     return menu && menu.containsElement(element);
                 },
 
-
-                decorateInternal:function(element) {
-                    var self = this,
-                        ui = "popupmenu",
-                        prefixCls = self.get("prefixCls");
-                    self.set("el", element);
-                    var child = element.one("." + self.getCls(ui));
-                    if (child) {
-                        // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
-                        child.hide();
-                        var docBody = S.one(element[0].ownerDocument.body);
-                        docBody.prepend(child);
-                        var UI = Component.UIStore.getUIByClass(ui);
-                        var menu = new UI({
-                            srcNode:child,
-                            prefixCls:prefixCls
-                        });
-                        self.set("menu", menu);
-                    }
+                // 默认 addChild，这里里面的元素需要放到 menu 属性中
+                decorateChildrenInternal:function(ui,el, cls) {
+                    el.hide();
+                    var docBody = S.one(el[0].ownerDocument.body);
+                    docBody.prepend(el);
+                    var menu = new ui({
+                        srcNode:el,
+                        prefixCls:cls
+                    });
+                    this.set("menu", menu);
                 },
 
                 destructor : function() {
@@ -1155,6 +1146,9 @@ KISSY.add(
                         setter:function(m) {
                             m.set("parent", this);
                         }
+                    },
+                    decorateChildCls:{
+                        value:"popupmenu"
                     }
                 },
 

@@ -2,7 +2,7 @@
  * 1.2 new testcases
  * @author  yiminghe@gmail.com
  **/
-KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
+KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
     var $ = Node.all;
     describe("ajax@1.2", function() {
 
@@ -87,7 +87,7 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
 
             var re = [];
             var xhr = io({
-                forceScript:true,
+                forceScript:!(UA.ie==6),
                 dataType:'jsonp',
                 url:'jsonp.php',
                 cache:false,
@@ -116,7 +116,7 @@ KISSY.use("json,ajax,node", function(S, JSON, io, Node) {
             var re = [],ok;
 
             var xhr = io({
-                forceScript:true,
+                forceScript:!(UA.ie==6),
                 url:'ajax.php',
                 cache:false,
                 success:function(data, status) {

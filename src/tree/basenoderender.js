@@ -2,14 +2,13 @@
  * common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
+KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
     var $ = Node.all,
         LABEL_CLS = "tree-item-label",
         FILE_CLS = "tree-file-icon",
         FILE_EXPAND = "tree-expand-icon-{t}",
         FOLDER_EXPAND = FILE_EXPAND + "minus",
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
-
 
         INLINE_BLOCK = "inline-block",
         SELECTED_CLS = "tree-item-selected",
@@ -23,75 +22,89 @@ KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
 
         EXPAND_ICON_CLS = "tree-expand-icon",
         ICON_CLS = "tree-icon",
+
+        LEAF_CLS = "tree-item-leaf",
+
+        NOT_LEAF_CLS = "tree-item-folder",
+
         ROW_CLS = "tree-row";
 
-    return UIBase.create(Component.Render, {
+    var BaseNodeRender = UIBase.create(Component.Render, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(ITEM_CLS));
         },
 
-        _computeClass:function(children, parent, cause) {
-            // S.log("hi "+cause+": " + this.get("content"));
-            var expanded = this.get("expanded"),
+        _computeClass:function(children, parent
+                               //, cause
+            ) {
+            // S.log("hi " + cause + ": " + this.get("content"));
+            var self = this,
+                expanded = self.get("expanded"),
+                isLeaf = self.get("isLeaf"),
+
+                iconEl = self.get("iconEl"),
+                expandIconEl = self.get("expandIconEl"),
+
+                childrenEl = self.get("childrenEl"),
+
                 expand_cls = [INLINE_BLOCK,ICON_CLS,EXPAND_ICON_CLS,""].join(" "),
-                icon_cls = this.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
-                folder_cls = this.getCls(
+                icon_cls = self.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
+                folder_cls = self.getCls(
                     [INLINE_BLOCK,ICON_CLS,expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED,""].join(" ")),
                 last = !parent ||
-                    parent.get("children")[parent.get("children").length - 1].get("view") == this;
-            if (children.length) {
-                this.set("iconElCls", folder_cls);
+                    parent.get("children")[parent.get("children").length - 1].get("view") == self;
+            if (isLeaf === false || (isLeaf === undefined && children.length)) {
+                iconEl.attr("class", folder_cls);
                 if (expanded) {
                     expand_cls += FOLDER_EXPAND;
                 } else {
                     expand_cls += FOLDER_COLLAPSED;
                 }
-                this.set("expandIconElCls", this.getCls(S.substitute(expand_cls, {
+                expandIconEl.attr("class", self.getCls(S.substitute(expand_cls, {
                     "t":last ? "l" : "t"
                 })));
-            } else {
-                this.set("iconElCls", icon_cls);
-                this.set("expandIconElCls", this.getCls(S.substitute((expand_cls + FILE_EXPAND), {
+            } else
+            //if (isLeaf !== false && (isLeaf ==true || !children.length))
+            {
+                iconEl.attr("class", icon_cls);
+                expandIconEl.attr("class", self.getCls(S.substitute((expand_cls + FILE_EXPAND), {
                     "t":last ? "l" : "t"
                 })));
             }
-            this.set("childrenElCls", this.getCls(last ? CHILDREN_CLS_L : CHILDREN_CLS));
-        },
+            childrenEl && childrenEl.attr("class", self.getCls(last ? CHILDREN_CLS_L : CHILDREN_CLS));
 
-        _uiSetChildrenElCls:function(v) {
-            this.get("childrenEl") && this.get("childrenEl").attr("class", v);
-        },
-
-        _uiSetExpandIconElCls:function(v) {
-            this.get("expandIconEl").attr("class", v);
-        },
-
-        _uiSetIconElCls:function(v) {
-            this.get("iconEl").attr("class", v);
         },
 
         createDom:function() {
             var el = this.get("el"),
-                children = el.children();
-            var rowEl = $("<div class='" + this.getCls(ROW_CLS) + "'/>"),
-                id = S.guid('tree-item');
+                id,
+                rowEl,
+                labelEl = this.get("labelEl");
+
+
+            rowEl = $("<div class='" + this.getCls(ROW_CLS) + "'/>");
+            id = S.guid('tree-item');
+            this.set("rowEl", rowEl);
+
             var expandIconEl = $("<div/>")
                 .appendTo(rowEl);
             var iconEl = $("<div />")
                 .appendTo(rowEl);
-            var labelEl = $("<span id='" + id + "' class='" + this.getCls(LABEL_CLS) + "'/>")
-                .appendTo(rowEl);
-            if (children.length) {
-                labelEl.append(children);
+
+            if (!labelEl) {
+                labelEl = $("<span id='" + id + "' class='" + this.getCls(LABEL_CLS) + "'/>");
+                this.set("labelEl", labelEl);
             }
+            labelEl.appendTo(rowEl);
+
             el.attr({
                 "role":"treeitem",
                 "aria-labelledby":id
-            }).append(rowEl);
-            this.set("labelEl", labelEl);
+            }).prepend(rowEl);
+
             this.set("expandIconEl", expandIconEl);
             this.set("iconEl", iconEl);
-            this.set("rowEl", rowEl);
+
         },
 
         _uiSetExpanded:function(v) {
@@ -130,38 +143,71 @@ KISSY.add("tree/abstractnoderender", function(S, Node, UIBase, Component) {
             rowEl[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
         },
 
+        _uiSetTooltip:function(v) {
+            this.get("el").attr("title", v);
+        },
+
+        /**
+         * 内容容器节点，树节点都插到这里
+         */
         getContentElement:function() {
             if (this.get("childrenEl")) {
                 return this.get("childrenEl");
             }
-            var c = $("<div " + (!this.get("expanded") ? "style='display:none'" : "")
-                + " role='group'></div>")
+            var c = $("<div " + (this.get("expanded") ? "" : "style='display:none'")
+                + " role='group'><" + "/div>")
                 .appendTo(this.get("el"));
             this.set("childrenEl", c);
             return c;
         }
     }, {
         ATTRS:{
-            childrenElCls:{},
-            expandIconElCls:{},
-            iconElCls:{},
             ariaSize:{},
             ariaPosInSet:{},
             childrenEl:{},
             expandIconEl:{},
+            tooltip:{},
             iconEl:{},
             rowEl:{},
             selected:{},
-            expanded:{
-                value:false
-            },
-            depth:{
-                value:0
-            },
+            expanded:{},
+            depth:{},
             labelEl:{},
-            content:{}
-        }
+            content:{},
+            isLeaf:{}
+        },
+
+        HTML_PARSER:{
+            childrenEl:function(el) {
+                return el.children("." + this.getCls(CHILDREN_CLS));
+            },
+            labelEl:function(el) {
+                return el.children("." + this.getCls(LABEL_CLS));
+            },
+            content:function(el) {
+                return el.children("." + this.getCls(LABEL_CLS)).html();
+            },
+            isLeaf:function(el) {
+                if (el.hasClass(this.getCls(LEAF_CLS))) {
+                    return true;
+                }
+                if (el.hasClass(this.getCls(NOT_LEAF_CLS))) {
+                    return false;
+                }
+            }
+        },
+
+        ITEM_CLS:ITEM_CLS
+
     });
+
+    if (1 > 2) {
+        BaseNodeRender._uiSetAriaPosInSet();
+        BaseNodeRender._uiSetDepth();
+        BaseNodeRender._uiSetAriaSize();
+    }
+
+    return BaseNodeRender;
 
 }, {
     requires:['node','uibase','component']

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:36
+build time: Aug 5 21:19
 */
 /**
  * @author  常胤 (lzlu.com)
@@ -277,7 +277,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 
         /**
          * field对象
-         * @name
          * @type HTMLElement
          */
 		self.el = el;
@@ -547,7 +546,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		/**
 		 * @description 给当前field对象增加一条验证规则
 		 * 如果Auth.Rule中存在直接增加
-		 * @name
 		 * @param {String} name 规则名称
 		 * @param {Object} argument 规则可配置
 		 */

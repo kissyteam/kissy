@@ -17,7 +17,9 @@
         trim = String.prototype.trim,
         map = AP.map,
         EMPTY = '',
+        HEX_BASE = 16,
         CLONE_MARKER = '__~ks_cloned',
+        COMPARE_MARKER = '__~ks_compared',
         RE_TRIM = /^\s+|\s+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -67,7 +69,7 @@
     function isValidParamValue(val) {
         var t = typeof val;
         // If the type of val is null, undefined, number, string, boolean, return true.
-        return val === null || (t !== 'object' && t !== 'function');
+        return nullOrUndefined(val) || (t !== 'object' && t !== 'function');
     }
 
     S.mix(S, {
@@ -78,10 +80,12 @@
          * Determine the internal JavaScript [[Class]] of an object.
          */
         type: function(o) {
-            return o == null ?
+            return nullOrUndefined(o) ?
                 String(o) :
                 class2type[toString.call(o)] || 'object';
         },
+
+        isNullOrUndefined:nullOrUndefined,
 
         isNull: function(o) {
             return o === null;
@@ -119,56 +123,63 @@
             return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
         },
 
+
+
+        /**
+         * 两个目标是否内容相同
+         *
+         * @param a 比较目标1
+         * @param b 比较目标2
+         * @param [mismatchKeys] internal use
+         * @param [mismatchValues] internal use
+         */
+        equals : function(a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+            // inspired by jasmine
+            mismatchKeys = mismatchKeys || [];
+            mismatchValues = mismatchValues || [];
+
+            if (a === b) {
+                return true;
+            }
+            if (a === undefined || a === null || b === undefined || b === null) {
+                // need type coercion
+                return nullOrUndefined(a) && nullOrUndefined(b);
+            }
+            if (a instanceof Date && b instanceof Date) {
+                return a.getTime() == b.getTime();
+            }
+            if (S.isString(a) && S.isString(b)) {
+                return (a == b);
+            }
+            if (S.isNumber(a) && S.isNumber(b)) {
+                return (a == b);
+            }
+            if (typeof a === "object" && typeof b === "object") {
+                return compareObjects(a, b, mismatchKeys, mismatchValues);
+            }
+            // Straight check
+            return (a === b);
+        },
+
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          */
-        clone: function(o, f, cloned) {
-            var ret = o, isArray, k, stamp, marked = cloned || {};
-
-            // array or plain object
-            if (o
-                && (
-                (isArray = S.isArray(o))
-                    || S.isPlainObject(o)
-                )
-                ) {
-
-                // avoid recursive clone
-                if (o[CLONE_MARKER]) {
-                    return marked[o[CLONE_MARKER]];
-                }
-                o[CLONE_MARKER] = (stamp = S.guid());
-                marked[stamp] = o;
-
-                // clone it
-                if (isArray) {
-                    ret = f ? S.filter(o, f) : o.concat();
-                } else {
-                    ret = {};
-                    for (k in o) {
-                        if (k !== CLONE_MARKER &&
-                            o.hasOwnProperty(k) &&
-                            (!f || (f.call(o, o[k], k, o) !== false))) {
-                            ret[k] = S.clone(o[k], f, marked);
-                        }
+        clone: function(o, f) {
+            var marked = {},
+                ret = cloneInternal(o, f, marked);
+            S.each(marked, function(v) {
+                // 清理在源对象上做的标记
+                v = v.o;
+                if (v[CLONE_MARKER]) {
+                    try {
+                        delete v[CLONE_MARKER];
+                    } catch (e) {
+                        S.log(e);
+                        v[CLONE_MARKER] = undefined;
                     }
                 }
-            }
-
-            // clear marked
-            if (!cloned) {
-                S.each(marked, function(v) {
-                    if (v[CLONE_MARKER]) {
-                        try {
-                            delete v[CLONE_MARKER];
-                        } catch (e) {
-                            v[CLONE_MARKER] = undefined;
-                        }
-                    }
-                });
-                marked = undefined;
-            }
-
+            });
+            marked = undefined;
             return ret;
         },
 
@@ -177,10 +188,10 @@
          */
         trim: trim ?
             function(str) {
-                return (str == undefined) ? EMPTY : trim.call(str);
+                return nullOrUndefined(str) ? EMPTY : trim.call(str);
             } :
             function(str) {
-                return (str == undefined) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return nullOrUndefined(str) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
             },
 
         /**
@@ -197,7 +208,7 @@
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }
-                return (o[name] !== undefined) ? o[name] : EMPTY;
+                return (o[name] === undefined) ? EMPTY : o[name];
             });
         },
 
@@ -356,12 +367,14 @@
          return arr.reduce(callback, initialValue);
          } : */function(arr, callback, initialValue) {
             var len = arr.length;
-            if (typeof callback !== "function")
-                throw new TypeError();
+            if (typeof callback !== "function") {
+                throw new TypeError("callback is not function!");
+            }
 
             // no value to return if no initial value and an empty array
-            if (len == 0 && arguments.length == 2)
-                throw new TypeError();
+            if (len === 0 && arguments.length == 2) {
+                throw new TypeError("arguments invalid");
+            }
 
             var k = 0;
             var accumulator;
@@ -376,8 +389,10 @@
                     }
 
                     // if array contains no values, no initial value to return
-                    if (++k >= len)
+                    k += 1;
+                    if (k >= len) {
                         throw new TypeError();
+                    }
                 }
                 while (true);
             }
@@ -424,7 +439,7 @@
          */
         fromUnicode:function(str) {
             return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
-                return  String.fromCharCode(parseInt(u, 16));
+                return  String.fromCharCode(parseInt(u, HEX_BASE));
             });
         },
         /**
@@ -450,10 +465,15 @@
         /**
          * Converts object to a true array.
          * @param o {object|Array} array like object or array
+         * @return {Array}
          */
         makeArray: function(o) {
-            if (o === null || o === undefined) return [];
-            if (S.isArray(o)) return o;
+            if (nullOrUndefined(o)) {
+                return [];
+            }
+            if (S.isArray(o)) {
+                return o;
+            }
 
             // The strings and functions also have 'length'
             if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
@@ -477,10 +497,14 @@
          * </code>
          */
         param: function(o, sep, eq, arr) {
-            if (!S.isPlainObject(o)) return EMPTY;
+            if (!S.isPlainObject(o)) {
+                return EMPTY;
+            }
             sep = sep || SEP;
             eq = eq || EQ;
-            if (S.isUndefined(arr)) arr = true;
+            if (S.isUndefined(arr)) {
+                arr = true;
+            }
             var buf = [], key, val;
             for (key in o) {
                 val = o[key];
@@ -533,7 +557,7 @@
                 try {
                     val = decode(pair[1] || EMPTY);
                 } catch(e) {
-                    S.log("decodeURIComponent error : " + pair[1], "error");
+                    S.log(e + "decodeURIComponent error : " + pair[1], "error");
                     val = pair[1] || EMPTY;
                 }
                 if (S.endsWith(key, "[]")) {
@@ -601,7 +625,7 @@
         },
 
         startsWith:function(str, prefix) {
-            return str.lastIndexOf(prefix, 0) == 0;
+            return str.lastIndexOf(prefix, 0) === 0;
         },
 
         endsWith:function(str, suffix) {
@@ -634,4 +658,102 @@
             }
         });
 
-})(KISSY);
+    function nullOrUndefined(o) {
+        return S.isNull(o) || S.isUndefined(o);
+    }
+
+
+    function cloneInternal(o, f, marked) {
+        var ret = o, isArray, k, stamp;
+        // 引用类型要先记录
+        if (o &&
+            ((isArray = S.isArray(o)) ||
+                S.isPlainObject(o) ||
+                S.isDate(o) ||
+                S.isRegExp(o)
+                )) {
+            if (o[CLONE_MARKER]) {
+                // 对应的克隆后对象
+                return marked[o[CLONE_MARKER]].r;
+            }
+            // 做标记
+            o[CLONE_MARKER] = (stamp = S.guid());
+
+            // 先把对象建立起来
+            if (isArray) {
+                ret = f ? S.filter(o, f) : o.concat();
+            } else if (S.isDate(o)) {
+                ret = new Date(+o);
+            } else if (S.isRegExp(o)) {
+                ret = new RegExp(o);
+            } else {
+                ret = {};
+            }
+
+            // 存储源对象以及克隆后的对象
+            marked[stamp] = {r:ret,o:o};
+        }
+
+
+        // array or plain object need to be copied recursively
+        if (o && (isArray || S.isPlainObject(o))) {
+            // clone it
+            if (isArray) {
+                for (var i = 0; i < ret.length; i++) {
+                    ret[i] = cloneInternal(ret[i], f, marked);
+                }
+            } else {
+                for (k in o) {
+                    if (k !== CLONE_MARKER &&
+                        o.hasOwnProperty(k) &&
+                        (!f || (f.call(o, o[k], k, o) !== false))) {
+                        ret[k] = cloneInternal(o[k], f, marked);
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    function compareObjects(a, b, mismatchKeys, mismatchValues) {
+        // 两个比较过了，无需再比较，防止循环比较
+        if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
+            return true;
+        }
+        a[COMPARE_MARKER] = b;
+        b[COMPARE_MARKER] = a;
+        var hasKey = function(obj, keyName) {
+            return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
+        };
+        for (var property in b) {
+            if (!hasKey(a, property) && hasKey(b, property)) {
+                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+            }
+        }
+        for (property in a) {
+            if (!hasKey(b, property) && hasKey(a, property)) {
+                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+            }
+        }
+        for (property in b) {
+            if (property == COMPARE_MARKER) {
+                continue;
+            }
+            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                    + "' in expected, but was '" +
+                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            }
+        }
+        if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
+            mismatchValues.push("arrays were not the same length");
+        }
+        delete a[COMPARE_MARKER];
+        delete b[COMPARE_MARKER];
+        return (mismatchKeys.length === 0 && mismatchValues.length === 0);
+    }
+
+    S.isNullOrUndefined = nullOrUndefined;
+
+})(KISSY, undefined);

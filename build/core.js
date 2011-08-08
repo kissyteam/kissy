@@ -16,6 +16,7 @@ D:\code\kissy_git\kissy\src\dom\selector.js
 D:\code\kissy_git\kissy\src\dom\style-ie.js
 D:\code\kissy_git\kissy\src\dom\traversal.js
 D:\code\kissy_git\kissy\src\dom.js
+D:\code\kissy_git\kissy\src\event\keycodes.js
 D:\code\kissy_git\kissy\src\event\object.js
 D:\code\kissy_git\kissy\src\event\base.js
 D:\code\kissy_git\kissy\src\event\target.js
@@ -271,6 +272,23 @@ KISSY.add('dom/base', function(S, undefined) {
     return {
 
         /**
+         * enumeration of dom node type
+         * @type Number
+         */
+        ELEMENT_NODE : 1,
+        ATTRIBUTE_NODE : 2,
+        TEXT_NODE:3,
+        CDATA_SECTION_NODE : 4,
+        ENTITY_REFERENCE_NODE: 5,
+        ENTITY_NODE : 6,
+        PROCESSING_INSTRUCTION_NODE :7,
+        COMMENT_NODE : 8,
+        DOCUMENT_NODE : 9,
+        DOCUMENT_TYPE_NODE : 10,
+        DOCUMENT_FRAGMENT_NODE : 11,
+        NOTATION_NODE : 12,
+
+        /**
          * 是不是 element node
          */
         _isElementNode: function(elem) {
@@ -288,7 +306,7 @@ KISSY.add('dom/base', function(S, undefined) {
                 elem :
                 nodeTypeIs(elem, 9) ?
                     elem.defaultView || elem.parentWindow :
-                    elem == undefined ?
+                    (elem === undefined || elem === null) ?
                         window : false;
         },
 
@@ -854,7 +872,9 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
                                 break;
                             }
                         }
-                        if (ret) return true;
+                        if (ret) {
+                            return true;
+                        }
                     }
                 }, true);
             },
@@ -943,29 +963,31 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
         }
 
         var elems = DOM.query(selector),
-            i = 0,
             len = elems.length,
             tmp = value.split(REG_SPLIT),
             elem,
             ret;
 
         var classNames = [];
-        for (; i < tmp.length; i++) {
+        for (var i=0; i < tmp.length; i++) {
             var t = S.trim(tmp[i]);
             if (t) {
                 classNames.push(t);
             }
         }
-        i = 0;
-        for (; i < len; i++) {
+        for (i=0; i < len; i++) {
             elem = elems[i];
             if (DOM._isElementNode(elem)) {
                 ret = fn(elem, classNames, classNames.length);
-                if (ret !== undefined) return ret;
+                if (ret !== undefined) {
+                    return ret;
+                }
             }
         }
 
-        if (resultIsBool) return false;
+        if (resultIsBool) {
+            return false;
+        }
         return undefined;
     }
 
@@ -2314,13 +2336,20 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
 /**
  * @module  selector
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     var doc = document,
+        filter = S.filter,
+        require = S.require,
+        each = S.each,
+        isArray = S.isArray,
+        makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
+        push = Array.prototype.push,
         SPACE = ' ',
+        isString = S.isString,
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
@@ -2328,64 +2357,105 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {String|Array} selector
-     * @param {String|HTMLElement} context An #id string or a HTMLElement used as context
+     * @param {String|Array<HTMLElement>|NodeList} context find elements matching selector under context
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
-        var match, t,
+        var ret = [];
+        var contexts = tuneContext(context);
+
+        each(contexts, function(c) {
+            push.apply(ret, queryByContexts(selector, c));
+        });
+
+        //必要时去重排序
+        if (S.isString(selector) && selector.indexOf(",") > -1 ||
+            contexts.length > 1) {
+            unique(ret);
+        }
+        // attach each method
+        ret.each = S.bind(each, undefined, ret);
+
+        return ret;
+    }
+
+    function queryByContexts(selector, context) {
+        var ret = [],
+            sizzle = require("sizzle");
+        if (isString(selector)) {
+            selector = S.trim(selector);
+        }
+        // 如果选择器有 , 分开递归一部分一部分来
+        if (isString(selector) && selector.indexOf(",") > -1) {
+            ret = queryBySelectors(selector, context);
+        }
+        // 复杂了，交给 sizzle
+        else if (isString(selector) && !REG_QUERY.exec(String(selector))) {
+            ret = queryBySizzle(selector, context);
+        }
+        // 简单选择器自己处理
+        else {
+            ret = queryBySimple(selector, context);
+        }
+        return ret;
+    }
+
+    // 交给 sizzle 模块处理
+    function queryBySizzle(selector, context) {
+        var ret = [],
+            sizzle = require("sizzle");
+        if (sizzle) {
+            sizzle(selector, context, ret);
+        } else {
+            // 原生不支持
+            error(selector);
+        }
+        return ret;
+    }
+
+    // 处理 selector 的每个部分
+    function queryBySelectors(selector, context) {
+        var ret = [],
+            selectors = selector.split(",");
+        each(selectors, function(s) {
+            push.apply(ret, queryByContexts(s, context));
+        });
+        // 多部分选择器可能得到重复结果
+        return ret;
+    }
+
+    // 最简单情况了，单个选择器部分，单个上下文
+    function queryBySimple(selector, context) {
+        var match,
+            t,
             ret = [],
             id,
             tag,
-            sizzle = S.require("sizzle"),
             cls;
-        context = tuneContext(context);
-
-        // Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
-        // 考虑 2/8 原则，仅支持以下选择器：
-        // #id
-        // tag
-        // .cls
-        // #id tag
-        // #id .cls
-        // tag.cls
-        // #id tag.cls
-        // 注 1：REG_QUERY 还会匹配 #id.cls
-        // 注 2：tag 可以为 * 字符
-        // 注 3: 支持 , 号分组
-        // 返回值为数组
-        // 选择器不支持时，抛出异常
-
-        // selector 为字符串是最常见的情况，优先考虑
-        // 注：空白字符串无需判断，运行下去自动能返回空数组
-        if (S.isString(selector)) {
-
-            if (selector.indexOf(",") != -1) {
-                var selectors = selector.split(",");
-                S.each(selectors, function(s) {
-                    ret.push.apply(ret, S.makeArray(query(s, context)));
-                });
-            } else {
-
-
-                selector = S.trim(selector);
-
-                // selector 为 #id 是最常见的情况，特殊优化处理
-                if (REG_ID.test(selector)) {
-                    t = getElementById(selector.slice(1), context);
-                    if (t) ret = [t]; // #id 无效时，返回空数组
+        if (isString(selector)) {
+            // selector 为 #id 是最常见的情况，特殊优化处理
+            if (REG_ID.test(selector)) {
+                t = getElementById(selector.slice(1), context);
+                if (t) {
+                    // #id 无效时，返回空数组
+                    ret = [t];
                 }
-                // selector 为支持列表中的其它 6 种
-                else if ((match = REG_QUERY.exec(String(selector)))) {
+            }
+            // selector 为支持列表中的其它 6 种
+            else {
+                match = REG_QUERY.exec(selector);
+                if (match) {
                     // 获取匹配出的信息
                     id = match[1];
                     tag = match[2];
                     cls = match[3];
-
-                    if (context = (id ? getElementById(id, context) : context)) {
-                        // #id .cls | #id tag.cls | .cls | tag.cls
+                    // 空白前只能有 id ，取出来作为 context
+                    context = (id ? getElementById(id, context) : context);
+                    if (context) {
+                        // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
                         if (cls) {
-                            if (!id || selector.indexOf(SPACE) !== -1) { // 排除 #id.cls
-                                ret = S.makeArray(getElementsByClassName(cls, tag, context));
+                            if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
+                                ret = [].concat(getElementsByClassName(cls, tag, context));
                             }
                             // 处理 #id.cls
                             else {
@@ -2401,61 +2471,114 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                         }
                     }
                 }
-                // 采用外部选择器
-                else if (sizzle) {
-                    ret = sizzle(selector, context);
-                }
-                // 依旧不支持，抛异常
-                else {
-                    error(selector);
-                }
             }
         }
         // 传入的 selector 是 NodeList 或已是 Array
-        else if (selector && (S.isArray(selector) || isNodeList(selector))) {
-            ret = selector;
+        else if (selector && (isArray(selector) || isNodeList(selector))) {
+            // 只能包含在 context 里面
+            ret = filter(selector, function(s) {
+                return testByContext(s, context);
+            });
         }
-        // 传入的 selector 是 Node 等非字符串对象，原样返回
+        // 传入的 selector 是 HTMLNode 查看约束
+        // 否则 window/document，原样返回
         else if (selector) {
-            ret = [selector];
+            if (testByContext(selector, context)) {
+                ret = [selector];
+            }
         }
-        // 传入的 selector 是其它值时，返回空数组
-
-        // 将 NodeList 转换为普通数组
-        if (isNodeList(ret)) {
-            ret = S.makeArray(ret);
-        }
-
-        // attach each method
-        ret.each = function(fn, context) {
-            return S.each(ret, fn, context);
-        };
-
         return ret;
     }
+
+    function testByContext(element, context) {
+        if (!element) {
+            return false;
+        }
+        // 防止 element 节点还没添加到 document ，但是也可以获取到 query(element) => [element]
+        // document 的上下文一律放行
+
+        // context == doc 意味着没有提供第二个参数，到这里只是想单纯包装原生节点，则不检测
+        if (context == doc) {
+            return true;
+        }
+        // 节点受上下文约束
+        return DOM.__contains(context, element);
+    }
+
+    var unique;
+    (function() {
+        var sortOrder,
+            t,
+            hasDuplicate,
+            baseHasDuplicate = true;
+
+        // Here we check if the JavaScript engine is using some sort of
+// optimization where it does not always call our comparision
+// function. If that is the case, discard the hasDuplicate value.
+//   Thus far that includes Google Chrome.
+        [0, 0].sort(function() {
+            baseHasDuplicate = false;
+            return 0;
+        });
+
+        // 排序去重
+        unique = function (elements) {
+            if (sortOrder) {
+                hasDuplicate = baseHasDuplicate;
+                elements.sort(sortOrder);
+
+                if (hasDuplicate) {
+                    var i = 1,len = elements.length;
+                    while (i < len) {
+                        if (elements[i] === elements[ i - 1 ]) {
+                            elements.splice(i, 1);
+                        } else {
+                            i++;
+                        }
+                    }
+                }
+            }
+            return elements;
+        };
+
+        // 貌似除了 ie 都有了...
+        if (doc.documentElement.compareDocumentPosition) {
+            sortOrder = t = function(a, b) {
+                if (a == b) {
+                    hasDuplicate = true;
+                    return 0;
+                }
+
+                if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
+                    return a.compareDocumentPosition ? -1 : 1;
+                }
+
+                return a.compareDocumentPosition(b) & 4 ? -1 : 1;
+            };
+
+        } else {
+            sortOrder = t = function(a, b) {
+                // The nodes are identical, we can exit early
+                if (a == b) {
+                    hasDuplicate = true;
+                    return 0;
+                    // Fallback to using sourceIndex (in IE) if it's available on both nodes
+                } else if (a.sourceIndex && b.sourceIndex) {
+                    return a.sourceIndex - b.sourceIndex;
+                }
+            };
+        }
+    })();
 
 
     // 调整 context 为合理值
     function tuneContext(context) {
-        // 1). context 为 undefined 是最常见的情况，优先考虑
+        // context 为 undefined 是最常见的情况，优先考虑
         if (context === undefined) {
-            context = doc;
+            return [doc];
         }
-        // 2). context 的第二使用场景是传入 #id
-        else if (S.isString(context) && REG_ID.test(context)) {
-            context = getElementById(context.slice(1), doc);
-            // 注：#id 可能无效，这时获取的 context 为 null
-        }
-        // 3). nodelist 取第一个元素
-        else if (S.isArray(context) || isNodeList(context)) {
-            context = context[0] || null;
-        }
-        // 4). context 还可以传入 HTMLElement, 此时无需处理
-        // 5). 经历 1 - 4, 如果 context 还不是 HTMLElement, 赋值为 null
-        else if (context && context.nodeType !== 1 && context.nodeType !== 9) {
-            context = null;
-        }
-        return context;
+        // 其他直接使用 query
+        return query(context, undefined);
     }
 
     // query #id
@@ -2463,15 +2586,21 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return null;
         }
+        var doc = context;
         if (context.nodeType !== 9) {
-            context = context.ownerDocument;
+            doc = context.ownerDocument;
         }
-        return context.getElementById(id);
+        var el = doc.getElementById(id);
+        // 如果指定了 context node , 还要判断 id 是否处于 context 内
+        if (!testByContext(el, context)) {
+            return null;
+        }
+        return el;
     }
 
     // query tag
     function getElementsByTagName(tag, context) {
-        return context.getElementsByTagName(tag);
+        return context && makeArray(context.getElementsByTagName(tag)) || [];
     }
 
     (function() {
@@ -2485,14 +2614,13 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
             getElementsByTagName = function(tag, context) {
-                var ret = S.makeArray(context.getElementsByTagName(tag));
-
+                var ret = makeArray(context.getElementsByTagName(tag));
                 if (tag === ANY) {
-                    var t = [], i = 0, j = 0, node;
+                    var t = [], i = 0,node;
                     while ((node = ret[i++])) {
                         // Filter out possible comments
                         if (node.nodeType === 1) {
-                            t[j++] = node;
+                            t.push(node);
                         }
                     }
                     ret = t;
@@ -2504,37 +2632,51 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     // query .cls
     var getElementsByClassName = doc.getElementsByClassName ? function(cls, tag, context) {
-        var els = S.makeArray(context.getElementsByClassName(cls)),
-            ret = els, i = 0, j = 0, len = els.length, el;
+        // query("#id1 xx","#id2")
+        // #id2 内没有 #id1 , context 为 null , 这里防御下
+        if (!context) {
+            return [];
+        }
+        var els = makeArray(context.getElementsByClassName(cls)),
+            ret = els,
+            i = 0,
+            len = els.length,
+            el;
 
         if (tag && tag !== ANY) {
-            ret = [];
-            tag = tag.toUpperCase();
+            ret = makeArray();
             for (; i < len; ++i) {
                 el = els[i];
-                if (el.tagName === tag) {
-                    ret[j++] = el;
+                if (eqTagName(el, tag)) {
+                    ret.push(el);
                 }
             }
         }
         return ret;
     } : ( doc.querySelectorAll ? function(cls, tag, context) {
-        return context.querySelectorAll((tag ? tag : '') + '.' + cls);
+        // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
+        return context && makeArray(context.querySelectorAll((tag ? tag : '') + '.' + cls)) || [];
     } : function(cls, tag, context) {
-        var els = context.getElementsByTagName(tag || ANY),
-            ret = [], i = 0, j = 0, len = els.length, el, t;
-
-        cls = SPACE + cls + SPACE;
+        if (!context) {
+            return [];
+        }
+        var els = makeArray(context.getElementsByTagName(tag || ANY)),
+            ret = [],
+            i = 0,
+            len = els.length,
+            el;
         for (; i < len; ++i) {
             el = els[i];
-            t = el.className;
-            if (t && (SPACE + t + SPACE).indexOf(cls) > -1) {
-                ret[j++] = el;
+            if (DOM.hasClass(el, cls)) {
+                ret.push(el);
             }
         }
         return ret;
     });
 
+    function eqTagName(el, tagName) {
+        return el.nodeName.toLowerCase() == tagName.toLowerCase();
+    }
 
     // throw exception
     function error(msg) {
@@ -2543,63 +2685,88 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            query: query,
+        query: query,
 
-            get: function(selector, context) {
-                return query(selector, context)[0] || null;
-            },
+        get: function(selector, context) {
+            return query(selector, context)[0] || null;
+        },
 
-            /**
-             * Filters an array of elements to only include matches of a filter.
-             * @param filter selector or fn
-             */
-            filter: function(selector, filter, context) {
-                var elems = query(selector, context),
-                    sizzle = S.require("sizzle"),
-                    match, tag, cls, ret = [];
+        unique:unique,
 
-                // 默认仅支持最简单的 tag.cls 形式
-                if (S.isString(filter) && (match = REG_QUERY.exec(filter)) && !match[1]) {
-                    tag = match[2];
-                    cls = match[3];
-                    filter = function(elem) {
-                        return !(
-                            (tag && elem.tagName.toLowerCase() !== tag.toLowerCase())
-                                || (cls && !DOM.hasClass(elem, cls))
-                            );
+        /**
+         * Filters an array of elements to only include matches of a filter.
+         * @param filter selector or fn
+         */
+        filter: function(selector, filter, context) {
+            var elems = query(selector, context),
+                sizzle = require("sizzle"),
+                match,
+                tag,
+                cls,
+                ret = [];
+
+            // 默认仅支持最简单的 tag.cls 形式
+            if (isString(filter) &&
+                (match = REG_QUERY.exec(filter)) &&
+                !match[1]) {
+                tag = match[2];
+                cls = match[3];
+                filter = function(elem) {
+                    var tagRe = true,clsRe = true;
+
+                    // 指定 tag 才进行判断
+                    if (tag) {
+                        tagRe = eqTagName(elem, tag);
                     }
-                }
 
-                if (S.isFunction(filter)) {
-                    ret = S.filter(elems, filter);
-                }
-                // 其它复杂 filter, 采用外部选择器
-                else if (filter && sizzle) {
-                    ret = sizzle._filter(selector, filter, context);
-                }
-                // filter 为空或不支持的 selector
-                else {
-                    error(filter);
-                }
+                    // 指定 cls 才进行判断
+                    if (cls) {
+                        clsRe = DOM.hasClass(elem, cls);
+                    }
 
-                return ret;
-            },
-
-            /**
-             * Returns true if the passed element(s) match the passed filter
-             */
-            test: function(selector, filter, context) {
-                var elems = query(selector, context);
-                return elems.length && (DOM.filter(elems, filter, context).length === elems.length);
+                    return clsRe && tagRe;
+                }
             }
-        });
+
+            if (S.isFunction(filter)) {
+                ret = S.filter(elems, filter);
+            }
+            // 其它复杂 filter, 采用外部选择器
+            else if (filter && sizzle) {
+                ret = sizzle.matches(filter, elems);
+            }
+            // filter 为空或不支持的 selector
+            else {
+                error(filter);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Returns true if the passed element(s) match the passed filter
+         */
+        test: function(selector, filter, context) {
+            var elements = query(selector, context);
+            return elements.length && (DOM.filter(elements, filter, context).length === elements.length);
+        }
+    });
     return DOM;
 }, {
-        requires:["dom/base"]
-    });
+    requires:["dom/base"]
+});
 
 /**
  * NOTES:
+ *
+ * 2011.08.02
+ *  - 利用 sizzle 重构选择器
+ *  - 1.1.6 修正，原来 context 只支持 #id 以及 document
+ *    1.2 context 支持任意，和 selector 格式一致
+ *  - 简单选择器也和 jquery 保持一致 DOM.query("xx","yy") 支持
+ *    - context 不提供则为当前 document ，否则通过 query 递归取得
+ *    - 保证选择出来的节点（除了 document window）都是位于 context 范围内
+ *
  *
  * 2010.01
  *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
@@ -2640,6 +2807,20 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *
  * 2011.05
  *  - 承玉：恢复对简单分组支持
+ *
+ * Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
+ * 考虑 2/8 原则，仅支持以下选择器：
+ * #id
+ * tag
+ * .cls
+ * #id tag
+ * #id .cls
+ * tag.cls
+ * #id tag.cls
+ * 注 1：REG_QUERY 还会匹配 #id.cls
+ * 注 2：tag 可以为 * 字符
+ * 注 3: 支持 , 号分组
+ *
  *
  * Bugs:
  *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
@@ -2838,102 +3019,105 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-            closest:function(selector, filter, context) {
-                return nth(selector, filter, 'parentNode', function(elem) {
-                    return elem.nodeType != 11;
-                }, context, true);
-            },
+        closest:function(selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            }, context, true);
+        },
 
-            /**
-             * Gets the parent node of the first matched element.
-             */
-            parent: function(selector, filter, context) {
-                return nth(selector, filter, 'parentNode', function(elem) {
-                    return elem.nodeType != 11;
-                }, context);
-            },
+        /**
+         * Gets the parent node of the first matched element.
+         */
+        parent: function(selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function(elem) {
+                return elem.nodeType != 11;
+            }, context);
+        },
 
-            /**
-             * Gets the following sibling of the first matched element.
-             */
-            next: function(selector, filter) {
-                return nth(selector, filter, 'nextSibling', undefined);
-            },
+        /**
+         * Gets the following sibling of the first matched element.
+         */
+        next: function(selector, filter) {
+            return nth(selector, filter, 'nextSibling', undefined);
+        },
 
-            /**
-             * Gets the preceding sibling of the first matched element.
-             */
-            prev: function(selector, filter) {
-                return nth(selector, filter, 'previousSibling', undefined);
-            },
+        /**
+         * Gets the preceding sibling of the first matched element.
+         */
+        prev: function(selector, filter) {
+            return nth(selector, filter, 'previousSibling', undefined);
+        },
 
-            /**
-             * Gets the siblings of the first matched element.
-             */
-            siblings: function(selector, filter) {
-                return getSiblings(selector, filter, true);
-            },
+        /**
+         * Gets the siblings of the first matched element.
+         */
+        siblings: function(selector, filter) {
+            return getSiblings(selector, filter, true);
+        },
 
-            /**
-             * Gets the children of the first matched element.
-             */
-            children: function(selector, filter) {
-                return getSiblings(selector, filter, undefined);
-            },
+        /**
+         * Gets the children of the first matched element.
+         */
+        children: function(selector, filter) {
+            return getSiblings(selector, filter, undefined);
+        },
 
-            /**
-             * Check to see if a DOM node is within another DOM node.
-             */
-            contains: document.documentElement.contains ?
-                function(a, b) {
-                    a = DOM.get(a);
-                    b = DOM.get(b);
-                    if (a.nodeType == 3) {
-                        return false;
-                    }
-                    var precondition;
-                    if (b.nodeType == 3) {
-                        b = b.parentNode;
-                        // a 和 b父亲相等也就是返回 true
-                        precondition = true;
-                    } else if (b.nodeType == 9) {
-                        // b === document
-                        // 没有任何元素能包含 document
-                        return false;
-                    } else {
-                        // a 和 b 相等返回 false
-                        precondition = a !== b;
-                    }
-                    // !a.contains => a===document
-                    // 注意原生 contains 判断时 a===b 也返回 true
-                    return precondition && (a.contains ? a.contains(b) : true);
-                } : (
-                document.documentElement.compareDocumentPosition ?
-                    function(a, b) {
-                        a = DOM.get(a);
-                        b = DOM.get(b);
-                        return !!(a.compareDocumentPosition(b) & 16);
-                    } :
-                    // it can not be true , pathetic browser
-                    0
-                ),
-
-            equals:function(n1, n2) {
-                n1 = DOM.query(n1);
-                n2 = DOM.query(n2);
-                if (n1.length != n2.length) return false;
-                for (var i = n1.length; i >= 0; i--) {
-                    if (n1[i] != n2[i]) return false;
+        __contains:document.documentElement.contains ?
+            function(a, b) {
+                if (a.nodeType == 3) {
+                    return false;
                 }
-                return true;
+                var precondition;
+                if (b.nodeType == 3) {
+                    b = b.parentNode;
+                    // a 和 b父亲相等也就是返回 true
+                    precondition = true;
+                } else if (b.nodeType == 9) {
+                    // b === document
+                    // 没有任何元素能包含 document
+                    return false;
+                } else {
+                    // a 和 b 相等返回 false
+                    precondition = a !== b;
+                }
+                // !a.contains => a===document
+                // 注意原生 contains 判断时 a===b 也返回 true
+                return precondition && (a.contains ? a.contains(b) : true);
+            } : (
+            document.documentElement.compareDocumentPosition ?
+                function(a, b) {
+                    return !!(a.compareDocumentPosition(b) & 16);
+                } :
+                // it can not be true , pathetic browser
+                0
+            ),
+
+        /**
+         * Check to see if a DOM node is within another DOM node.
+         */
+        contains:
+            function(a, b) {
+                a = DOM.get(a);
+                b = DOM.get(b);
+                return DOM.__contains(a, b);
+            },
+
+        equals:function(n1, n2) {
+            n1 = DOM.query(n1);
+            n2 = DOM.query(n2);
+            if (n1.length != n2.length) return false;
+            for (var i = n1.length; i >= 0; i--) {
+                if (n1[i] != n2[i]) return false;
             }
-        });
+            return true;
+        }
+    });
 
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn array ，为数组时返回多个
     // direction 可为 parentNode, nextSibling, previousSibling
-    // util : 到某个阶段不再查找直接返回
-    function nth(elem, filter, direction, extraFilter, until, includeSef) {
+    // context : 到某个阶段不再查找直接返回
+    function nth(elem, filter, direction, extraFilter, context, includeSef) {
         if (!(elem = DOM.get(elem))) {
             return null;
         }
@@ -2946,7 +3130,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (!elem) {
             return null;
         }
-        until = (until && DOM.get(until)) || null;
+        context = (context && DOM.get(context)) || null;
 
         if (filter === undefined) {
             // 默认取 1
@@ -2965,7 +3149,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             };
         }
 
-        do {
+        // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
+        while (elem && elem != context) {
             if (isElementNode(elem)
                 && testFilter(elem, filter)
                 && (!extraFilter || extraFilter(elem))) {
@@ -2974,7 +3159,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
                     break;
                 }
             }
-        } while (elem != until && (elem = elem[direction]));
+            elem = elem[direction];
+        }
 
         return isArray ? ret : ret[0] || null;
     }
@@ -3021,8 +3207,8 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
     return DOM;
 }, {
-        requires:["./base"]
-    });
+    requires:["./base"]
+});
 
 /**
  * NOTES:
@@ -3046,6 +3232,210 @@ KISSY.add("dom", function(S,DOM) {
         "dom/selector",
         "dom/style-ie",
         "dom/traversal"]
+});
+
+/**
+ * @fileOverview some keycodes definition and utils from closure-library
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("event/keycodes", function() {
+    var KeyCodes = {
+        MAC_ENTER: 3,
+        BACKSPACE: 8,
+        TAB: 9,
+        NUM_CENTER: 12,  // NUMLOCK on FF/Safari Mac
+        ENTER: 13,
+        SHIFT: 16,
+        CTRL: 17,
+        ALT: 18,
+        PAUSE: 19,
+        CAPS_LOCK: 20,
+        ESC: 27,
+        SPACE: 32,
+        PAGE_UP: 33,     // also NUM_NORTH_EAST
+        PAGE_DOWN: 34,   // also NUM_SOUTH_EAST
+        END: 35,         // also NUM_SOUTH_WEST
+        HOME: 36,        // also NUM_NORTH_WEST
+        LEFT: 37,        // also NUM_WEST
+        UP: 38,          // also NUM_NORTH
+        RIGHT: 39,       // also NUM_EAST
+        DOWN: 40,        // also NUM_SOUTH
+        PRINT_SCREEN: 44,
+        INSERT: 45,      // also NUM_INSERT
+        DELETE: 46,      // also NUM_DELETE
+        ZERO: 48,
+        ONE: 49,
+        TWO: 50,
+        THREE: 51,
+        FOUR: 52,
+        FIVE: 53,
+        SIX: 54,
+        SEVEN: 55,
+        EIGHT: 56,
+        NINE: 57,
+        QUESTION_MARK: 63, // needs localization
+        A: 65,
+        B: 66,
+        C: 67,
+        D: 68,
+        E: 69,
+        F: 70,
+        G: 71,
+        H: 72,
+        I: 73,
+        J: 74,
+        K: 75,
+        L: 76,
+        M: 77,
+        N: 78,
+        O: 79,
+        P: 80,
+        Q: 81,
+        R: 82,
+        S: 83,
+        T: 84,
+        U: 85,
+        V: 86,
+        W: 87,
+        X: 88,
+        Y: 89,
+        Z: 90,
+        META: 91, // WIN_KEY_LEFT
+        WIN_KEY_RIGHT: 92,
+        CONTEXT_MENU: 93,
+        NUM_ZERO: 96,
+        NUM_ONE: 97,
+        NUM_TWO: 98,
+        NUM_THREE: 99,
+        NUM_FOUR: 100,
+        NUM_FIVE: 101,
+        NUM_SIX: 102,
+        NUM_SEVEN: 103,
+        NUM_EIGHT: 104,
+        NUM_NINE: 105,
+        NUM_MULTIPLY: 106,
+        NUM_PLUS: 107,
+        NUM_MINUS: 109,
+        NUM_PERIOD: 110,
+        NUM_DIVISION: 111,
+        F1: 112,
+        F2: 113,
+        F3: 114,
+        F4: 115,
+        F5: 116,
+        F6: 117,
+        F7: 118,
+        F8: 119,
+        F9: 120,
+        F10: 121,
+        F11: 122,
+        F12: 123,
+        NUMLOCK: 144,
+        SEMICOLON: 186,            // needs localization
+        DASH: 189,                 // needs localization
+        EQUALS: 187,               // needs localization
+        COMMA: 188,                // needs localization
+        PERIOD: 190,               // needs localization
+        SLASH: 191,                // needs localization
+        APOSTROPHE: 192,           // needs localization
+        SINGLE_QUOTE: 222,         // needs localization
+        OPEN_SQUARE_BRACKET: 219,  // needs localization
+        BACKSLASH: 220,            // needs localization
+        CLOSE_SQUARE_BRACKET: 221, // needs localization
+        WIN_KEY: 224,
+        MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
+        WIN_IME: 229
+    };
+
+    KeyCodes.isTextModifyingKeyEvent = function(e) {
+        if (e.altKey && !e.ctrlKey ||
+            e.metaKey ||
+            // Function keys don't generate text
+            e.keyCode >= KeyCodes.F1 &&
+                e.keyCode <= KeyCodes.F12) {
+            return false;
+        }
+
+        // The following keys are quite harmless, even in combination with
+        // CTRL, ALT or SHIFT.
+        switch (e.keyCode) {
+            case KeyCodes.ALT:
+            case KeyCodes.CAPS_LOCK:
+            case KeyCodes.CONTEXT_MENU:
+            case KeyCodes.CTRL:
+            case KeyCodes.DOWN:
+            case KeyCodes.END:
+            case KeyCodes.ESC:
+            case KeyCodes.HOME:
+            case KeyCodes.INSERT:
+            case KeyCodes.LEFT:
+            case KeyCodes.MAC_FF_META:
+            case KeyCodes.META:
+            case KeyCodes.NUMLOCK:
+            case KeyCodes.NUM_CENTER:
+            case KeyCodes.PAGE_DOWN:
+            case KeyCodes.PAGE_UP:
+            case KeyCodes.PAUSE:
+            case KeyCodes.PHANTOM:
+            case KeyCodes.PRINT_SCREEN:
+            case KeyCodes.RIGHT:
+            case KeyCodes.SHIFT:
+            case KeyCodes.UP:
+            case KeyCodes.WIN_KEY:
+            case KeyCodes.WIN_KEY_RIGHT:
+                return false;
+            default:
+                return true;
+        }
+    };
+
+    KeyCodes.isCharacterKey = function(keyCode) {
+        if (keyCode >= KeyCodes.ZERO &&
+            keyCode <= KeyCodes.NINE) {
+            return true;
+        }
+
+        if (keyCode >= KeyCodes.NUM_ZERO &&
+            keyCode <= KeyCodes.NUM_MULTIPLY) {
+            return true;
+        }
+
+        if (keyCode >= KeyCodes.A &&
+            keyCode <= KeyCodes.Z) {
+            return true;
+        }
+
+        // Safari sends zero key code for non-latin characters.
+        if (goog.userAgent.WEBKIT && keyCode == 0) {
+            return true;
+        }
+
+        switch (keyCode) {
+            case KeyCodes.SPACE:
+            case KeyCodes.QUESTION_MARK:
+            case KeyCodes.NUM_PLUS:
+            case KeyCodes.NUM_MINUS:
+            case KeyCodes.NUM_PERIOD:
+            case KeyCodes.NUM_DIVISION:
+            case KeyCodes.SEMICOLON:
+            case KeyCodes.DASH:
+            case KeyCodes.EQUALS:
+            case KeyCodes.COMMA:
+            case KeyCodes.PERIOD:
+            case KeyCodes.SLASH:
+            case KeyCodes.APOSTROPHE:
+            case KeyCodes.SINGLE_QUOTE:
+            case KeyCodes.OPEN_SQUARE_BRACKET:
+            case KeyCodes.BACKSLASH:
+            case KeyCodes.CLOSE_SQUARE_BRACKET:
+                return true;
+            default:
+                return false;
+        }
+    };
+
+    return KeyCodes;
+
 });
 
 /**
@@ -3238,6 +3628,7 @@ KISSY.add('event/object', function(S, undefined) {
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -3272,12 +3663,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var Event = {
         _data:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.data.apply(DOM, args);
         },
         _removeData:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.removeData.apply(DOM, args);
         },
@@ -3532,9 +3923,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function batchForType(methodName, targets, types) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             S.each(types.split(SPACE), function(type) {
-                var args2 = S.clone(args);
+                var args2 = [].concat(args);
                 args2.splice(0, 3, targets, type);
                 Event[methodName].apply(Event, args2);
             });
@@ -3618,6 +4009,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         target[ eventType ]();
                     }
                 } catch (ieError) {
+                    S.log(ieError);
                 }
 
                 if (old) {
@@ -4111,7 +4503,10 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         // mouseenter/leave 不会冒泡，只选择最近一个
         target = DOM.closest(target, data.selector, delegateTarget);
         if (target) {
-            if (target !== relatedTarget && !DOM.contains(target, relatedTarget)) {
+            if (target !== relatedTarget &&
+                (!relatedTarget || !DOM.contains(target, relatedTarget))
+                ) {
+                event.currentTarget = target;
                 return data.fn.call(data.scope || delegateTarget, event);
             }
         }
@@ -4195,7 +4590,10 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
                     }
 
                     // 在自身外边就触发
-                    if (parent !== self && !DOM.contains(self, parent)) {
+                    if (parent !== self &&
+                        // self==document , parent==null
+                        (!parent || !DOM.contains(self, parent))
+                        ) {
                         // handle event if we actually just moused on to a non sub-element
                         Event._handle(self, event);
                     }
@@ -4239,12 +4637,14 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
  *    jQuery 也异常，需要进一步研究
  */
 
-KISSY.add("event", function(S, Event, Target,Object) {
+KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
+    Event.KeyCodes = KeyCodes;
     Event.Target = Target;
-    Event.Object=Object;
+    Event.Object = Object;
     return Event;
 }, {
     requires:[
+        "event/keycodes",
         "event/base",
         "event/target",
         "event/object",
@@ -4252,7 +4652,8 @@ KISSY.add("event", function(S, Event, Target,Object) {
         "event/hashchange",
         "event/valuechange",
         "event/delegate",
-        "event/mouseenter"]
+        "event/mouseenter"
+    ]
 });
 
 /**
@@ -4261,12 +4662,13 @@ KISSY.add("event", function(S, Event, Target,Object) {
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
-    var AP = Array.prototype;
-
-    var isNodeList = DOM._isNodeList;
+    var AP = Array.prototype,
+        makeArray = S.makeArray,
+        isNodeList = DOM._isNodeList;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
+     * @constructor
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,domNode;
@@ -4280,28 +4682,25 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return undefined;
         }
 
-
         else if (S.isString(html)) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
-            if (domNode.nodeType === 11) { // fragment
-                AP.push.apply(this, S.makeArray(domNode.childNodes));
+            if (domNode.nodeType === DOM.DOCUMENT_FRAGMENT_NODE) { // fragment
+                AP.push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
-            AP.push.apply(this, S.makeArray(html));
+            AP.push.apply(this, makeArray(html));
             return undefined;
         }
-
 
         else {
             // node, document, window
             domNode = html;
         }
-
 
         self[0] = domNode;
         self.length = 1;
@@ -4318,10 +4717,14 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         item: function(index) {
             if (S.isNumber(index)) {
-                if (index >= this.length) return null;
-                return new NodeList(this[index], undefined, undefined);
-            } else
-                return new NodeList(index, undefined, undefined);
+                if (index >= this.length) {
+                    return null;
+                } else {
+                    return new NodeList(this[index]);
+                }
+            } else {
+                return new NodeList(index);
+            }
         },
 
         add:function(selector, context, index) {
@@ -4329,8 +4732,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
                 index = context;
                 context = undefined;
             }
-            var list = S.makeArray(NodeList.all(selector, context)),
-                ret = new NodeList(this, undefined, undefined);
+            var list = NodeList.all(selector, context),
+                ret = new NodeList(this);
             if (index === undefined) {
                 AP.push.apply(ret, list);
             } else {
@@ -4342,7 +4745,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         },
 
         slice:function(start, end) {
-            return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            return new NodeList(AP.slice.call(this, start, end));
         },
 
         /**
@@ -4360,9 +4763,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         each: function(fn, context) {
             var self = this,len = self.length, i = 0, node;
 
-            for (node = new NodeList(self[0], undefined, undefined);
+            for (node = new NodeList(self[0]);
                  i < len && fn.call(context || node, node, i, this) !== false;
-                 node = new NodeList(self[++i], undefined, undefined)) {
+                 node = new NodeList(self[++i])) {
             }
 
             return this;
@@ -4376,48 +4779,73 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         all:function(selector) {
             if (this.length > 0) {
-                return NodeList.all(selector, this[0]);
+                return NodeList.all(selector, this);
             }
-            return new NodeList(undefined, undefined, undefined);
+            return new NodeList();
+        },
+
+        one:function(selector) {
+            var all = this.all(selector);
+            return all.length ? all.slice(0, 1) : null;
         }
     });
 
-    NodeList.prototype.one = function(selector) {
-        var all = this.all(selector);
-        return all.length ? all.slice(0, 1) : null;
-    };
+    S.mix(NodeList, {
 
-    // query api
-    NodeList.all = function(selector, context) {
-        // are we dealing with html string ?
-        // TextNode 仍需要自己 new Node
+        /**
+         * enumeration of dom node type
+         */
+        ELEMENT_NODE : DOM.ELEMENT_NODE,
+        ATTRIBUTE_NODE : DOM.ATTRIBUTE_NODE,
+        TEXT_NODE:DOM.TEXT_NODE,
+        CDATA_SECTION_NODE : DOM.CDATA_SECTION_NODE,
+        ENTITY_REFERENCE_NODE: DOM.ENTITY_REFERENCE_NODE,
+        ENTITY_NODE : DOM.ENTITY_NODE,
+        PROCESSING_INSTRUCTION_NODE :DOM.PROCESSING_INSTRUCTION_NODE,
+        COMMENT_NODE : DOM.COMMENT_NODE,
+        DOCUMENT_NODE : DOM.DOCUMENT_NODE,
+        DOCUMENT_TYPE_NODE : DOM.DOCUMENT_TYPE_NODE,
+        DOCUMENT_FRAGMENT_NODE : DOM.DOCUMENT_FRAGMENT_NODE,
+        NOTATION_NODE : DOM.NOTATION_NODE,
 
-        if (S.isString(selector)
-            && (selector = S.trim(selector))
-            && selector.length >= 3
-            && S.startsWith(selector, "<")
-            && S.endsWith(selector, ">")
-            ) {
-            if (context) {
-                if (context.getDOMNode) {
-                    context = context.getDOMNode();
+        /**
+         * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
+         * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>选择器</a>或节点列表
+         * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] 上下文定义
+         * @returns {NodeList} 节点列表对象
+         */
+        all:function(selector, context) {
+            // are we dealing with html string ?
+            // TextNode 仍需要自己 new Node
+
+            if (S.isString(selector)
+                && (selector = S.trim(selector))
+                && selector.length >= 3
+                && S.startsWith(selector, "<")
+                && S.endsWith(selector, ">")
+                ) {
+                if (context) {
+                    if (context.getDOMNode) {
+                        context = context.getDOMNode();
+                    }
+                    if (context.ownerDocument) {
+                        context = context.ownerDocument;
+                    }
                 }
-                if (context.ownerDocument) {
-                    context = context.ownerDocument;
-                }
+                return new NodeList(selector, undefined, context);
             }
-            return new NodeList(selector, undefined, context);
+            return new NodeList(DOM.query(selector, context));
+        },
+        one:function(selector, context) {
+            var all = NodeList.all(selector, context);
+            return all.length ? all.slice(0, 1) : null;
         }
-        return new NodeList(DOM.query(selector, context), undefined, undefined);
-    };
+    });
 
-    NodeList.one = function(selector, context) {
-        var all = NodeList.all(selector, context);
-        return all.length ? all.slice(0, 1) : null;
-    };
     if (1 > 2) {
-        NodeList.getDOMNodes();
+        DOM.getDOMNodes();
     }
+
     return NodeList;
 }, {
     requires:["dom"]
@@ -4446,6 +4874,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
+        makeArray = S.makeArray,
         // DOM 添加到 NP 上的方法
         // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
@@ -4512,19 +4941,21 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     function accessNorm(fn, self, args) {
         args.unshift(self);
         var ret = DOM[fn].apply(DOM, args);
-        if (ret === undefined)
+        if (ret === undefined) {
             return self;
-
+        }
         return ret;
     }
 
     function accessNormList(fn, self, args) {
         args.unshift(self);
         var ret = DOM[fn].apply(DOM, args);
-        if (ret === undefined)
+        if (ret === undefined) {
             return self;
-        else if (ret === null)
+        }
+        else if (ret === null) {
             return null;
+        }
         return new NodeList(ret);
     }
 
@@ -4543,28 +4974,28 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(DOM_INCLUDES_NORM, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.unshift(this);
             return Event[k].apply(Event, args);
         }
@@ -4911,6 +5342,11 @@ KISSY.add("anim/manager", function(S) {
 KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
     var EventTarget,
+        /**
+         * milliseconds in one second
+         * @constant
+         */
+            SECOND_UNIT = 1000,
         PROPS,
         CUSTOM_ATTRS,
         OPACITY,NONE,
@@ -4993,11 +5429,20 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
-        if (!(elem = DOM.get(elem))) return;
+        if (!(elem = DOM.get(elem))) {
+            return;
+        }
 
         // factory or constructor
         if (!(this instanceof Anim)) {
             return new Anim(elem, props, duration, easing, callback, nativeSupport);
+        }
+
+        /**
+         * 默认不启用原生动画，有些问题
+         */
+        if (nativeSupport === undefined) {
+            nativeSupport = false;
         }
 
         var self = this,
@@ -5044,12 +5489,16 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            if (duration) (config.duration = parseFloat(duration) || 1);
-            if (S.isString(easing) || S.isFunction(easing)) config.easing = easing;
-            if (S.isFunction(callback)) config.complete = callback;
-            if (nativeSupport !== undefined) {
-                config.nativeSupport = nativeSupport;
+            if (duration) {
+                config.duration = parseFloat(duration) || 1;
             }
+            if (S.isString(easing) || S.isFunction(easing)) {
+                config.easing = easing;
+            }
+            if (S.isFunction(callback)) {
+                config.complete = callback;
+            }
+            config.nativeSupport = nativeSupport;
         }
 
         //如果设定了元素属性的动画，则不能启动 css3 transition
@@ -5161,10 +5610,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 source = {},
                 prop;
 
-            if (self.fire(EVENT_START) === false) return;
+            if (self.fire(EVENT_START) === false) {
+                return;
+            }
 
             self.stop(); // 先停止掉正在运行的动画
-            duration = config.duration * 1000;
+            duration = config.duration * SECOND_UNIT;
             self.duration = duration;
             if (self.transitionName) {
                 // some hack ,Weird but ff/chrome need a break
@@ -5232,14 +5683,16 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 tp = target[prop];
 
                 // 没有发生变化的，直接略过
-                if (eqAnimValue(prop, tp, sp)) continue;
+                if (eqAnimValue(prop, tp, sp)) {
+                    continue;
+                }
 
                 //S.log(prop);
                 //S.log(tp.v + " : " + sp.v + " : " + sp.u + " : " + tp.u);
 
                 // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
                 // 这时要把 sp 的单位调整为和 tp 的一致
-                if (tp.v == 0) {
+                if (tp.v === 0) {
                     tp.u = sp.u;
                 }
 
@@ -5361,7 +5814,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     });
 
     Anim.supportTransition = function() {
-        if (TRANSITION_NAME) return TRANSITION_NAME;
+        if (TRANSITION_NAME) {
+            return TRANSITION_NAME;
+        }
         var name = 'transition', transitionName;
         var el = document.documentElement;
         if (el.style[name] !== undefined) {
@@ -5831,11 +6286,17 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
  *  - anim needs queue mechanism ?
  */
 
-KISSY.add("node", function(S, Node) {
+KISSY.add("node", function(S, Event, Node) {
+    Node.KeyCodes = Event.KeyCodes;
     return Node;
 }, {
-        requires:["node/base","node/attach","node/override","node/anim-plugin"]
-    });
+    requires:[
+        "event",
+        "node/base",
+        "node/attach",
+        "node/override",
+        "node/anim-plugin"]
+});
 
 /*
  http://www.JSON.org/json2.js
@@ -7054,6 +7515,7 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Remove the script
                 if (head && script.parentNode) {
+                    script.src = "#";
                     head.removeChild(script);
                 }
 

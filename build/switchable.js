@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 5 21:19
 */
 /**
  * Switchable
@@ -11,6 +11,7 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     var DISPLAY = 'display',
         BLOCK = 'block',
+        makeArray = S.makeArray,
         NONE = 'none',
         EventTarget = Event.Target,
         FORWARD = 'forward',
@@ -175,304 +176,304 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
     S.augment(Switchable, EventTarget, {
 
-            _initPlugins:function() {
-                // init plugins by Hierarchy
-                var self = this,
-                    pluginHost = self.constructor;
-                while (pluginHost) {
-                    S.each(pluginHost.Plugins, function(plugin) {
-                        if (plugin.init) {
-                            plugin.init(self);
-                        }
-                    });
-                    pluginHost = pluginHost.superclass ?
-                        pluginHost.superclass.constructor :
-                        null;
-                }
-            },
-
-            /**
-             * init switchable
-             */
-            _init: function() {
-                var self = this,
-                    cfg = self.config;
-
-                // parse markup
-                self._parseMarkup();
-
-                // bind triggers
-                if (cfg.hasTriggers) {
-                    self._bindTriggers();
-                }
-            },
-
-            /**
-             * 解析 markup, 获取 triggers, panels, content
-             */
-            _parseMarkup: function() {
-                var self = this,
-                    container = self.container,
-                    cfg = self.config,
-                    nav,
-                    content,
-                    triggers = [],
-                    panels = [],
-                    n;
-
-                switch (cfg.markupType) {
-                    case 0: // 默认结构
-                        nav = DOM.get(DOT + cfg.navCls, container);
-                        if (nav) {
-                            triggers = DOM.children(nav);
-                        }
-                        content = DOM.get(DOT + cfg.contentCls, container);
-                        panels = DOM.children(content);
-                        break;
-                    case 1: // 适度灵活
-                        triggers = DOM.query(DOT + cfg.triggerCls, container);
-                        panels = DOM.query(DOT + cfg.panelCls, container);
-                        break;
-                    case 2: // 完全自由
-                        triggers = cfg.triggers;
-                        panels = cfg.panels;
-                        break;
-                }
-
-
-                // get length
-                n = panels.length;
-                self.length = n / cfg.steps;
-
-                // 自动生成 triggers
-                if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
-                    triggers = self._generateTriggersMarkup(self.length);
-                }
-
-                // 将 triggers 和 panels 转换为普通数组
-                self.triggers = S.makeArray(triggers);
-                self.panels = S.makeArray(panels);
-
-                // get content
-                self.content = content || panels[0].parentNode;
-                self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
-            },
-
-            /**
-             * 自动生成 triggers 的 markup
-             */
-            _generateTriggersMarkup: function(len) {
-                var self = this,
-                    cfg = self.config,
-                    ul = DOM.create('<ul>'),
-                    li,
-                    i;
-
-                ul.className = cfg.navCls;
-                for (i = 0; i < len; i++) {
-                    li = DOM.create('<li>');
-                    if (i === self.activeIndex) {
-                        li.className = cfg.activeTriggerCls;
+        _initPlugins:function() {
+            // init plugins by Hierarchy
+            var self = this,
+                pluginHost = self.constructor;
+            while (pluginHost) {
+                S.each(pluginHost.Plugins, function(plugin) {
+                    if (plugin.init) {
+                        plugin.init(self);
                     }
-                    li.innerHTML = i + 1;
-                    ul.appendChild(li);
+                });
+                pluginHost = pluginHost.superclass ?
+                    pluginHost.superclass.constructor :
+                    null;
+            }
+        },
+
+        /**
+         * init switchable
+         */
+        _init: function() {
+            var self = this,
+                cfg = self.config;
+
+            // parse markup
+            self._parseMarkup();
+
+            // bind triggers
+            if (cfg.hasTriggers) {
+                self._bindTriggers();
+            }
+        },
+
+        /**
+         * 解析 markup, 获取 triggers, panels, content
+         */
+        _parseMarkup: function() {
+            var self = this,
+                container = self.container,
+                cfg = self.config,
+                nav,
+                content,
+                triggers = [],
+                panels = [],
+                n;
+
+            switch (cfg.markupType) {
+                case 0: // 默认结构
+                    nav = DOM.get(DOT + cfg.navCls, container);
+                    if (nav) {
+                        triggers = DOM.children(nav);
+                    }
+                    content = DOM.get(DOT + cfg.contentCls, container);
+                    panels = DOM.children(content);
+                    break;
+                case 1: // 适度灵活
+                    triggers = DOM.query(DOT + cfg.triggerCls, container);
+                    panels = DOM.query(DOT + cfg.panelCls, container);
+                    break;
+                case 2: // 完全自由
+                    triggers = cfg.triggers;
+                    panels = cfg.panels;
+                    break;
+            }
+
+
+            // get length
+            n = panels.length;
+            self.length = n / cfg.steps;
+
+            // 自动生成 triggers
+            if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
+                triggers = self._generateTriggersMarkup(self.length);
+            }
+
+            // 将 triggers 和 panels 转换为普通数组
+            self.triggers = makeArray(triggers);
+            self.panels = makeArray(panels);
+
+            // get content
+            self.content = content || panels[0].parentNode;
+            self.nav = nav || cfg.hasTriggers && triggers[0].parentNode;
+        },
+
+        /**
+         * 自动生成 triggers 的 markup
+         */
+        _generateTriggersMarkup: function(len) {
+            var self = this,
+                cfg = self.config,
+                ul = DOM.create('<ul>'),
+                li,
+                i;
+
+            ul.className = cfg.navCls;
+            for (i = 0; i < len; i++) {
+                li = DOM.create('<li>');
+                if (i === self.activeIndex) {
+                    li.className = cfg.activeTriggerCls;
                 }
+                li.innerHTML = i + 1;
+                ul.appendChild(li);
+            }
 
-                self.container.appendChild(ul);
-                return DOM.children(ul);
-            },
+            self.container.appendChild(ul);
+            return DOM.children(ul);
+        },
 
-            /**
-             * 给 triggers 添加事件
-             */
-            _bindTriggers: function() {
-                var self = this, cfg = self.config,
-                    triggers = self.triggers, trigger,
-                    i, len = triggers.length;
+        /**
+         * 给 triggers 添加事件
+         */
+        _bindTriggers: function() {
+            var self = this, cfg = self.config,
+                triggers = self.triggers, trigger,
+                i, len = triggers.length;
 
-                for (i = 0; i < len; i++) {
-                    (function(index) {
-                        trigger = triggers[index];
+            for (i = 0; i < len; i++) {
+                (function(index) {
+                    trigger = triggers[index];
 
-                        Event.on(trigger, 'click', function(e) {
-                            self._onFocusTrigger(index, e);
-                        });
-
-                        if (cfg.triggerType === 'mouse') {
-                            Event.on(trigger, 'mouseenter', function(e) {
-                                self._onMouseEnterTrigger(index, e);
-                            });
-                            Event.on(trigger, 'mouseleave', function() {
-                                self._onMouseLeaveTrigger(index);
-                            });
-                        }
-                    })(i);
-                }
-            },
-
-            /**
-             * click or tab 键激活 trigger 时触发的事件
-             */
-            _onFocusTrigger: function(index, e) {
-                var self = this;
-                // 重复点击
-                if (!self._triggerIsValid(index)) {
-                    return;
-                }
-                this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
-                self.switchTo(index, undefined, getDomEvent(e));
-            },
-
-            /**
-             * 鼠标悬浮在 trigger 上时触发的事件
-             */
-            _onMouseEnterTrigger: function(index, e) {
-                var self = this;
-                if (!self._triggerIsValid(index)) {
-                    return;
-                }
-                var ev=getDomEvent(e);
-                // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
-                self.switchTimer = S.later(function() {
-                    self.switchTo(index, undefined, ev);
-                }, self.config.delay * 1000);
-            },
-
-            /**
-             * 鼠标移出 trigger 时触发的事件
-             */
-            _onMouseLeaveTrigger: function() {
-                this._cancelSwitchTimer();
-            },
-
-            /**
-             * 重复触发时的有效判断
-             */
-            _triggerIsValid: function(index) {
-                return this.activeIndex !== index;
-            },
-
-            /**
-             * 取消切换定时器
-             */
-            _cancelSwitchTimer: function() {
-                var self = this;
-                if (self.switchTimer) {
-                    self.switchTimer.cancel();
-                    self.switchTimer = undefined;
-                }
-            },
-
-            /**
-             * 切换操作，对外 api
-             * @param index 要切换的项
-             * @param direction 方向，用于 effect
-             * @param ev 引起该操作的事件
-             * @param callback 运行完回调，和绑定 switch 事件作用一样
-             */
-            switchTo: function(index, direction, ev, callback) {
-                var self = this,
-                    cfg = self.config,
-                    triggers = self.triggers,
-                    panels = self.panels,
-                    ingIndex = self.activeIndex,
-                    steps = cfg.steps,
-                    fromIndex = ingIndex * steps,
-                    toIndex = index * steps;
-
-                // 再次避免重复触发
-                if (!self._triggerIsValid(index)) {
-                    return self;
-                }
-                if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) {
-                    return self;
-                }
-
-
-                // switch active trigger
-                if (cfg.hasTriggers) {
-                    self._switchTrigger(ingIndex > -1 ?
-                        triggers[ingIndex] : null,
-                        triggers[index]);
-                }
-
-                // switch active panels
-                if (direction === undefined) {
-                    direction = index > ingIndex ? FORWARD : BACKWARD;
-                }
-
-                // switch view
-                self._switchView(
-                    ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
-                    panels.slice(toIndex, toIndex + steps),
-                    index,
-                    direction, ev, function() {
-                        callback && callback.call(self, index);
-                        // update activeIndex
-                        self.completedIndex = index
+                    Event.on(trigger, 'click', function(e) {
+                        self._onFocusTrigger(index, e);
                     });
 
-                self.activeIndex = index;
-
-                return self; // chain
-            },
-
-            /**
-             * 切换当前触点
-             */
-            _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
-                var activeTriggerCls = this.config.activeTriggerCls;
-
-                if (fromTrigger) {
-                    DOM.removeClass(fromTrigger, activeTriggerCls);
-                }
-                DOM.addClass(toTrigger, activeTriggerCls);
-            },
-
-            /**
-             * 切换视图
-             */
-            _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
-                // 最简单的切换效果：直接隐藏/显示
-                if (fromPanels) {
-                    DOM.css(fromPanels, DISPLAY, NONE);
-                }
-                DOM.css(toPanels, DISPLAY, BLOCK);
-
-                // fire onSwitch events
-                this._fireOnSwitch(index, ev);
-                callback && callback.call(this);
-            },
-
-            /**
-             * 触发 switch 相关事件
-             */
-            _fireOnSwitch: function(index, ev) {
-                this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
-            },
-
-            /**
-             * 切换到上一视图
-             */
-            prev: function(ev) {
-                var self = this,
-                    activeIndex = self.activeIndex;
-                self.switchTo(activeIndex > 0 ?
-                    activeIndex - 1 :
-                    self.length - 1, BACKWARD, ev);
-            },
-
-            /**
-             * 切换到下一视图
-             */
-            next: function(ev) {
-                var self = this,
-                    activeIndex = self.activeIndex;
-                self.switchTo(activeIndex < self.length - 1 ?
-                    activeIndex + 1 :
-                    0, FORWARD, ev);
+                    if (cfg.triggerType === 'mouse') {
+                        Event.on(trigger, 'mouseenter', function(e) {
+                            self._onMouseEnterTrigger(index, e);
+                        });
+                        Event.on(trigger, 'mouseleave', function() {
+                            self._onMouseLeaveTrigger(index);
+                        });
+                    }
+                })(i);
             }
-        });
+        },
+
+        /**
+         * click or tab 键激活 trigger 时触发的事件
+         */
+        _onFocusTrigger: function(index, e) {
+            var self = this;
+            // 重复点击
+            if (!self._triggerIsValid(index)) {
+                return;
+            }
+            this._cancelSwitchTimer(); // 比如：先悬浮，再立刻点击，这时悬浮触发的切换可以取消掉。
+            self.switchTo(index, undefined, getDomEvent(e));
+        },
+
+        /**
+         * 鼠标悬浮在 trigger 上时触发的事件
+         */
+        _onMouseEnterTrigger: function(index, e) {
+            var self = this;
+            if (!self._triggerIsValid(index)) {
+                return;
+            }
+            var ev = getDomEvent(e);
+            // 重复悬浮。比如：已显示内容时，将鼠标快速滑出再滑进来，不必再次触发。
+            self.switchTimer = S.later(function() {
+                self.switchTo(index, undefined, ev);
+            }, self.config.delay * 1000);
+        },
+
+        /**
+         * 鼠标移出 trigger 时触发的事件
+         */
+        _onMouseLeaveTrigger: function() {
+            this._cancelSwitchTimer();
+        },
+
+        /**
+         * 重复触发时的有效判断
+         */
+        _triggerIsValid: function(index) {
+            return this.activeIndex !== index;
+        },
+
+        /**
+         * 取消切换定时器
+         */
+        _cancelSwitchTimer: function() {
+            var self = this;
+            if (self.switchTimer) {
+                self.switchTimer.cancel();
+                self.switchTimer = undefined;
+            }
+        },
+
+        /**
+         * 切换操作，对外 api
+         * @param index 要切换的项
+         * @param direction 方向，用于 effect
+         * @param ev 引起该操作的事件
+         * @param callback 运行完回调，和绑定 switch 事件作用一样
+         */
+        switchTo: function(index, direction, ev, callback) {
+            var self = this,
+                cfg = self.config,
+                triggers = self.triggers,
+                panels = self.panels,
+                ingIndex = self.activeIndex,
+                steps = cfg.steps,
+                fromIndex = ingIndex * steps,
+                toIndex = index * steps;
+
+            // 再次避免重复触发
+            if (!self._triggerIsValid(index)) {
+                return self;
+            }
+            if (self.fire(EVENT_BEFORE_SWITCH, {toIndex: index}) === false) {
+                return self;
+            }
+
+
+            // switch active trigger
+            if (cfg.hasTriggers) {
+                self._switchTrigger(ingIndex > -1 ?
+                    triggers[ingIndex] : null,
+                    triggers[index]);
+            }
+
+            // switch active panels
+            if (direction === undefined) {
+                direction = index > ingIndex ? FORWARD : BACKWARD;
+            }
+
+            // switch view
+            self._switchView(
+                ingIndex > -1 ? panels.slice(fromIndex, fromIndex + steps) : null,
+                panels.slice(toIndex, toIndex + steps),
+                index,
+                direction, ev, function() {
+                    callback && callback.call(self, index);
+                    // update activeIndex
+                    self.completedIndex = index
+                });
+
+            self.activeIndex = index;
+
+            return self; // chain
+        },
+
+        /**
+         * 切换当前触点
+         */
+        _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+            var activeTriggerCls = this.config.activeTriggerCls;
+
+            if (fromTrigger) {
+                DOM.removeClass(fromTrigger, activeTriggerCls);
+            }
+            DOM.addClass(toTrigger, activeTriggerCls);
+        },
+
+        /**
+         * 切换视图
+         */
+        _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
+            // 最简单的切换效果：直接隐藏/显示
+            if (fromPanels) {
+                DOM.css(fromPanels, DISPLAY, NONE);
+            }
+            DOM.css(toPanels, DISPLAY, BLOCK);
+
+            // fire onSwitch events
+            this._fireOnSwitch(index, ev);
+            callback && callback.call(this);
+        },
+
+        /**
+         * 触发 switch 相关事件
+         */
+        _fireOnSwitch: function(index, ev) {
+            this.fire(EVENT_SWITCH, S.mix(ev || {}, { currentIndex: index }));
+        },
+
+        /**
+         * 切换到上一视图
+         */
+        prev: function(ev) {
+            var self = this,
+                activeIndex = self.activeIndex;
+            self.switchTo(activeIndex > 0 ?
+                activeIndex - 1 :
+                self.length - 1, BACKWARD, ev);
+        },
+
+        /**
+         * 切换到下一视图
+         */
+        next: function(ev) {
+            var self = this,
+                activeIndex = self.activeIndex;
+            self.switchTo(activeIndex < self.length - 1 ?
+                activeIndex + 1 :
+                0, FORWARD, ev);
+        }
+    });
 
     return Switchable;
 
@@ -997,10 +998,10 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-            autoplay: false,
-            interval: 5, // 自动播放间隔时间
-            pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
-        });
+        autoplay: false,
+        interval: 5, // 自动播放间隔时间
+        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
+    });
 
     /**
      * 添加插件
@@ -1009,56 +1010,56 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
      */
     Switchable.Plugins.push({
 
-            name: 'autoplay',
+        name: 'autoplay',
 
-            init: function(host) {
+        init: function(host) {
 
-                var cfg = host.config,
-                    interval = cfg.interval * 1000,
-                    timer;
+            var cfg = host.config,
+                interval = cfg.interval * 1000,
+                timer;
 
-                if (!cfg.autoplay) return;
+            if (!cfg.autoplay) return;
 
-                // 鼠标悬停，停止自动播放
-                if (cfg.pauseOnHover) {
-                    Event.on(host.container, 'mouseenter', host.stop, host);
-                    Event.on(host.container, 'mouseleave', host.start, host);
-                }
-
-                function startAutoplay() {
-                    // 设置自动播放
-                    timer = S.later(function() {
-                        if (host.paused) return;
-                        // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
-                        host.switchTo(host.activeIndex < host.length - 1 ?
-                            host.activeIndex + 1 : 0,
-                            'forward');
-                    }, interval, true);
-                }
-
-                // go
-                startAutoplay();
-
-                // 添加 stop 方法，使得外部可以停止自动播放
-                host.stop = function() {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
-                    // paused 可以让外部知道 autoplay 的当前状态
-                    host.paused = true;
-                };
-
-                host.start = function() {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
-                    host.paused = false;
-                    startAutoplay();
-                };
+            function startAutoplay() {
+                // 设置自动播放
+                timer = S.later(function() {
+                    if (host.paused) return;
+                    // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                    host.switchTo(host.activeIndex < host.length - 1 ?
+                        host.activeIndex + 1 : 0,
+                        'forward');
+                }, interval, true);
             }
-        });
+
+            // go
+            startAutoplay();
+
+            // 添加 stop 方法，使得外部可以停止自动播放
+            host.stop = function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+                // paused 可以让外部知道 autoplay 的当前状态
+                host.paused = true;
+            };
+
+            host.start = function() {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+                host.paused = false;
+                startAutoplay();
+            };
+
+            // 鼠标悬停，停止自动播放
+            if (cfg.pauseOnHover) {
+                Event.on(host.container, 'mouseenter', host.stop, host);
+                Event.on(host.container, 'mouseleave', host.start, host);
+            }
+        }
+    });
     return Switchable;
 }, { requires:["event","./base"]});
 /**

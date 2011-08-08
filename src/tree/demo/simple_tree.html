@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Simple Tree</title>
+<link href="../assets/tree.css" rel="stylesheet"/>
+<style>
+    .goog-tree-children {
+        padding-left: 19px;
+    }
+
+    .goog-tree-lchildren {
+        padding-left: 19px;
+    }
+
+    .goog-tree-item-selected .goog-tree-item-label {
+        background: buttonface;
+        color: buttontext;
+    }
+
+    .goog-tree-item-focused {
+        outline: none;
+    }
+
+    .goog-tree-item-focused .goog-tree-item-selected .goog-tree-item-label {
+        background: highlight;
+        color: highlighttext;
+    }
+
+
+</style>
+</head>
+<body>
+
+
+<h1>KISSY Simple Tree</h1>
+
+<h2>demo</h2>
+
+<a href="javascript:void(0)" id="expandAll">展开全部</a>&nbsp;
+<a href="javascript:void(0)" id="collapseAll">关闭全部</a>
+<div id="treeContainer" style="width: 200px;">
+
+</div>
+
+<hr/>
+
+
+<script src="../../../build/kissy.js"></script>
+<script>
+    KISSY.Config.base = "../../";
+    KISSY.use("tree", function(S, Tree) {
+        var $ = S.all;
+        var tree = new Tree({
+            content:"淘宝网",
+            prefixCls:"goog-",
+            expanded:true,
+            // showRootNode:false,
+            render:"#treeContainer"
+        });
+
+        var favorates = new Tree.Node({
+            prefixCls:"goog-",
+            content:"收藏夹",
+            tree:tree
+        });
+
+        favorates.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"收藏的宝贝"
+        }));
+
+        favorates.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            // 即使没有儿子也强制指定为 folder 样式
+            isLeaf:false,
+            content:"收藏的店铺"
+        }));
+
+        tree.addChild(favorates);
+
+        tree.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"我要买"
+        }));
+
+
+        var one = new Tree.Node({
+            prefixCls:"goog-",
+            content:"我的淘宝",
+            tree:tree
+        });
+
+        one.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"已买到的宝贝"
+        }));
+
+        one.addChild(new Tree.Node({
+            prefixCls:"goog-",
+            content:"已卖出的宝贝"
+        }));
+
+        tree.addChild(one);
+
+        tree.render();
+
+
+        tree.on("expand", function(e) {
+            S.log("expand : " + e.target.get("content"));
+            S.log("expandIconEl");
+            S.log(e.target.get("expandIconEl"));
+            S.log("iconEl");
+            S.log(e.target.get("iconEl"));
+        });
+
+        tree.on("collapse", function(e) {
+            S.log("collapse : " + e.target.get("content"));
+        });
+
+        tree.on("click", function(e) {
+            S.log("action : " + e.target.get("content"));
+        });
+
+        $("#expandAll").on("click", function() {
+            tree.expandAll();
+        });
+
+        $("#collapseAll").on("click", function() {
+            tree.collapseAll();
+        });
+    });
+</script>
+</body>
+</html>

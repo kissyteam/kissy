@@ -33,10 +33,6 @@
 <script src="../override.js"></script>
 <script src="../anim-plugin.js"></script>
 <script src="../../node.js"></script>
-
-<script src="node-spec.js"></script>
-<script src="event-spec.js"></script>
-<script src="anim-spec.js"></script>
 </head>
 <body>
 <h1>KISSY Node Test Cases</h1>
@@ -68,6 +64,9 @@
         <button id="cb">click</button>
     </div>
 </textarea>
+<script src="node-spec.js"></script>
+<script src="event-spec.js"></script>
+<script src="anim-spec.js"></script>
 <script>
     KISSY.use("node", function(S, Node) {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

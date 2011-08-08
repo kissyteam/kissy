@@ -1,12 +1,29 @@
 /**
- * abstraction of tree node ,root and other node will extend it
+ * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNodeRender) {
+KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
-        EXPAND_ICON_CLS = "tree-expand-icon",
-        AbstractNode = UIBase.create(Component.ModelControl, {
+        ITEM_CLS = BaseNodeRender.ITEM_CLS,
+        KeyCodes = Node.KeyCodes;
 
+
+    /**
+     * 基类树节点
+     * @name BaseNode
+     * @constructor
+     * @extends Component.ModelControl
+     * @borrows Component.DecorateChild.prototype
+     */
+    var BaseNode = UIBase.create(Component.ModelControl,
+        /*
+         * 可多继承从某个子节点开始装饰儿子组件
+         */
+        [Component.DecorateChild],
+        /**
+         * @lends BaseNode.prototype
+         */
+        {
             _keyNav:function(e) {
                 var processed = true,
                     n,
@@ -17,31 +34,31 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
                 switch (keyCode) {
                     // home
                     // 移到树的顶层节点
-                    case 36:
+                    case KeyCodes.HOME:
                         n = this.get("tree");
                         break;
 
                     // end
                     // 移到最后一个可视节点
-                    case 35:
+                    case KeyCodes.END:
                         n = this.get("tree").getLastVisibleDescendant();
                         break;
 
                     // 上
                     // 当前节点的上一个兄弟节点的最后一个可显示节点
-                    case 38:
+                    case KeyCodes.UP:
                         n = this.getPreviousVisibleNode();
                         break;
 
                     // 下
                     // 当前节点的下一个可显示节点
-                    case 40:
+                    case KeyCodes.DOWN:
                         n = this.getNextVisibleNode();
                         break;
 
                     // 左
                     // 选择父节点或 collapse 当前节点
-                    case 37:
+                    case KeyCodes.LEFT:
                         if (this.get("expanded") && children.length) {
                             this.set("expanded", false);
                         } else {
@@ -51,7 +68,7 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
 
                     // 右
                     // expand 当前节点
-                    case 39:
+                    case KeyCodes.RIGHT:
                         if (children.length) {
                             if (!this.get("expanded")) {
                                 this.set("expanded", true);
@@ -111,7 +128,9 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
 
             next:function() {
                 var parent = this.get("parent");
-                if (!parent) return null;
+                if (!parent) {
+                    return null;
+                }
                 var siblings = parent.get('children');
                 var index = S.indexOf(this, siblings);
                 if (index == siblings.length - 1) {
@@ -122,27 +141,39 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
 
             prev:function() {
                 var parent = this.get("parent");
-                if (!parent) return null;
+                if (!parent) {
+                    return null;
+                }
                 var siblings = parent.get('children');
                 var index = S.indexOf(this, siblings);
-                if (index == 0) {
+                if (index === 0) {
                     return null;
                 }
                 return siblings[index - 1];
             },
 
-            select:function() {
+            /**
+             * 选中当前节点
+             * @public
+             */
+            select : function() {
                 this.get("tree").set("selectedItem", this);
             },
 
             _performInternal:function(e) {
-                var target = $(e.target);
-                var tree = this.get("tree");
-                if (target.hasClass(this.getCls(EXPAND_ICON_CLS))
-                    || e.type == 'dblclick'
-                    ) {
+                var target = $(e.target),
+                    tree = this.get("tree"),
+                    view = this.get("view");
+                tree.get("el")[0].focus();
+                if (target.equals(view.get("expandIconEl"))) {
+                    // 忽略双击
+                    if (e.type != 'dblclick') {
+                        this.set("expanded", !this.get("expanded"));
+                    }
+                } else if (e.type == 'dblclick') {
                     this.set("expanded", !this.get("expanded"));
-                } else {
+                }
+                else {
                     this.select();
                     tree.fire("click", {
                         target:this
@@ -150,12 +181,20 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
                 }
             },
 
+            // 默认 addChild，这里需要设置 tree 属性
+            decorateChildrenInternal:function(ui, c, cls) {
+                this.addChild(new ui({
+                    srcNode:c,
+                    tree:this.get("tree"),
+                    prefixCls:cls
+                }));
+            },
 
             addChild:function(c) {
                 var tree = this.get("tree");
                 c.set("tree", tree);
                 c.set("depth", this.get('depth') + 1);
-                AbstractNode.superclass.addChild.call(this, c);
+                BaseNode.superclass.addChild.call(this, c);
                 this._updateRecursive();
                 tree._register(c);
                 S.each(c.get("children"), function(cc) {
@@ -188,14 +227,42 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
                 S.each(c.get("children"), function(cc) {
                     tree._unregister(cc);
                 });
-                AbstractNode.superclass.removeChild.apply(this, S.makeArray(arguments));
+                BaseNode.superclass.removeChild.apply(this, S.makeArray(arguments));
                 this._updateRecursive();
             },
 
             _uiSetExpanded:function(v) {
                 this._computeClass("expanded-" + v);
+                var tree = this.get("tree");
+                if (v) {
+                    tree.fire("expand", {
+                        target:this
+                    });
+                } else {
+                    tree.fire("collapse", {
+                        target:this
+                    });
+                }
+            },
+
+
+            expandAll:function() {
+                this.set("expanded", true);
+                S.each(this.get("children"), function(c) {
+                    c.set("expanded", true);
+                });
+            },
+
+            collapseAll:function() {
+                this.set("expanded", false);
+                S.each(this.get("children"), function(c) {
+                    c.set("expanded", false);
+                });
             }
-        }, {
+        },
+
+        {
+            DefaultRender:BaseNodeRender,
             ATTRS:{
                 /*事件代理*/
                 handleMouseEvents:{
@@ -215,6 +282,19 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
                  * @type String
                  */
                 content:{view:true},
+
+                /**
+                 * 强制指明该节点是否具备子孙，影响样式，不配置默认样式自动变化
+                 * @type Boolean
+                 */
+                isLeaf:{
+                    view:true
+                },
+
+                expandIconEl:{ view:true},
+                
+                iconEl:{ view:true},
+
                 /**
                  * 是否选中
                  * @type Boolean
@@ -240,14 +320,31 @@ KISSY.add("tree/abstractnode", function(S, Node, UIBase, Component, AbstractNode
                 depth:{
                     value:0,
                     view:true
+                },
+                focusable:{value:false},
+                decorateChildCls:{
+                    value:"tree-children"
                 }
             },
 
-            DefaultRender:AbstractNodeRender
+            HTML_PARSER:{
+                expanded:function(el) {
+                    var children = el.one("." + this.getCls("tree-children"));
+                    if (!children) {
+                        return false;
+                    }
+                    return children.css("display") != "none";
+                }
+            }
         });
 
-    return AbstractNode;
+    Component.UIStore.setUIByClass(ITEM_CLS, {
+        priority:10,
+        ui:BaseNode
+    });
+
+    return BaseNode;
 
 }, {
-    requires:['node','uibase','component','./abstractnoderender']
+    requires:['node','uibase','component','./basenoderender']
 });

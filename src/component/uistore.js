@@ -1,4 +1,4 @@
-KISSY.add("component/uistore", function() {
+KISSY.add("component/uistore", function(S) {
     var uis = {
         // 不带前缀 prefixCls
         /*
@@ -26,7 +26,7 @@ KISSY.add("component/uistore", function() {
 
 
     function getCls(cls) {
-        var cs = cls.split(/\s+/);
+        var cs = S.trim(cls).split(/\s+/);
         for (var i = 0; i < cs.length; i++) {
             cs[i] = this.get("prefixCls") + cs[i];
         }

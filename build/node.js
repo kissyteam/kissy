@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Jul 28 15:35
+build time: Aug 5 21:18
 */
 /**
  * @module  anim-node-plugin
@@ -202,6 +202,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
+        makeArray = S.makeArray,
         // DOM 添加到 NP 上的方法
         // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
@@ -268,19 +269,21 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     function accessNorm(fn, self, args) {
         args.unshift(self);
         var ret = DOM[fn].apply(DOM, args);
-        if (ret === undefined)
+        if (ret === undefined) {
             return self;
-
+        }
         return ret;
     }
 
     function accessNormList(fn, self, args) {
         args.unshift(self);
         var ret = DOM[fn].apply(DOM, args);
-        if (ret === undefined)
+        if (ret === undefined) {
             return self;
-        else if (ret === null)
+        }
+        else if (ret === null) {
             return null;
+        }
         return new NodeList(ret);
     }
 
@@ -299,28 +302,28 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(DOM_INCLUDES_NORM, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.unshift(this);
             return Event[k].apply(Event, args);
         }
@@ -345,12 +348,13 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
-    var AP = Array.prototype;
-
-    var isNodeList = DOM._isNodeList;
+    var AP = Array.prototype,
+        makeArray = S.makeArray,
+        isNodeList = DOM._isNodeList;
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
+     * @constructor
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,domNode;
@@ -364,28 +368,25 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return undefined;
         }
 
-
         else if (S.isString(html)) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
-            if (domNode.nodeType === 11) { // fragment
-                AP.push.apply(this, S.makeArray(domNode.childNodes));
+            if (domNode.nodeType === DOM.DOCUMENT_FRAGMENT_NODE) { // fragment
+                AP.push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
-            AP.push.apply(this, S.makeArray(html));
+            AP.push.apply(this, makeArray(html));
             return undefined;
         }
-
 
         else {
             // node, document, window
             domNode = html;
         }
-
 
         self[0] = domNode;
         self.length = 1;
@@ -402,10 +403,14 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         item: function(index) {
             if (S.isNumber(index)) {
-                if (index >= this.length) return null;
-                return new NodeList(this[index], undefined, undefined);
-            } else
-                return new NodeList(index, undefined, undefined);
+                if (index >= this.length) {
+                    return null;
+                } else {
+                    return new NodeList(this[index]);
+                }
+            } else {
+                return new NodeList(index);
+            }
         },
 
         add:function(selector, context, index) {
@@ -413,8 +418,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
                 index = context;
                 context = undefined;
             }
-            var list = S.makeArray(NodeList.all(selector, context)),
-                ret = new NodeList(this, undefined, undefined);
+            var list = NodeList.all(selector, context),
+                ret = new NodeList(this);
             if (index === undefined) {
                 AP.push.apply(ret, list);
             } else {
@@ -426,7 +431,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         },
 
         slice:function(start, end) {
-            return new NodeList(AP.slice.call(this, start, end), undefined, undefined);
+            return new NodeList(AP.slice.call(this, start, end));
         },
 
         /**
@@ -444,9 +449,9 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         each: function(fn, context) {
             var self = this,len = self.length, i = 0, node;
 
-            for (node = new NodeList(self[0], undefined, undefined);
+            for (node = new NodeList(self[0]);
                  i < len && fn.call(context || node, node, i, this) !== false;
-                 node = new NodeList(self[++i], undefined, undefined)) {
+                 node = new NodeList(self[++i])) {
             }
 
             return this;
@@ -460,48 +465,73 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
         all:function(selector) {
             if (this.length > 0) {
-                return NodeList.all(selector, this[0]);
+                return NodeList.all(selector, this);
             }
-            return new NodeList(undefined, undefined, undefined);
+            return new NodeList();
+        },
+
+        one:function(selector) {
+            var all = this.all(selector);
+            return all.length ? all.slice(0, 1) : null;
         }
     });
 
-    NodeList.prototype.one = function(selector) {
-        var all = this.all(selector);
-        return all.length ? all.slice(0, 1) : null;
-    };
+    S.mix(NodeList, {
 
-    // query api
-    NodeList.all = function(selector, context) {
-        // are we dealing with html string ?
-        // TextNode 仍需要自己 new Node
+        /**
+         * enumeration of dom node type
+         */
+        ELEMENT_NODE : DOM.ELEMENT_NODE,
+        ATTRIBUTE_NODE : DOM.ATTRIBUTE_NODE,
+        TEXT_NODE:DOM.TEXT_NODE,
+        CDATA_SECTION_NODE : DOM.CDATA_SECTION_NODE,
+        ENTITY_REFERENCE_NODE: DOM.ENTITY_REFERENCE_NODE,
+        ENTITY_NODE : DOM.ENTITY_NODE,
+        PROCESSING_INSTRUCTION_NODE :DOM.PROCESSING_INSTRUCTION_NODE,
+        COMMENT_NODE : DOM.COMMENT_NODE,
+        DOCUMENT_NODE : DOM.DOCUMENT_NODE,
+        DOCUMENT_TYPE_NODE : DOM.DOCUMENT_TYPE_NODE,
+        DOCUMENT_FRAGMENT_NODE : DOM.DOCUMENT_FRAGMENT_NODE,
+        NOTATION_NODE : DOM.NOTATION_NODE,
 
-        if (S.isString(selector)
-            && (selector = S.trim(selector))
-            && selector.length >= 3
-            && S.startsWith(selector, "<")
-            && S.endsWith(selector, ">")
-            ) {
-            if (context) {
-                if (context.getDOMNode) {
-                    context = context.getDOMNode();
+        /**
+         * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
+         * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>选择器</a>或节点列表
+         * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] 上下文定义
+         * @returns {NodeList} 节点列表对象
+         */
+        all:function(selector, context) {
+            // are we dealing with html string ?
+            // TextNode 仍需要自己 new Node
+
+            if (S.isString(selector)
+                && (selector = S.trim(selector))
+                && selector.length >= 3
+                && S.startsWith(selector, "<")
+                && S.endsWith(selector, ">")
+                ) {
+                if (context) {
+                    if (context.getDOMNode) {
+                        context = context.getDOMNode();
+                    }
+                    if (context.ownerDocument) {
+                        context = context.ownerDocument;
+                    }
                 }
-                if (context.ownerDocument) {
-                    context = context.ownerDocument;
-                }
+                return new NodeList(selector, undefined, context);
             }
-            return new NodeList(selector, undefined, context);
+            return new NodeList(DOM.query(selector, context));
+        },
+        one:function(selector, context) {
+            var all = NodeList.all(selector, context);
+            return all.length ? all.slice(0, 1) : null;
         }
-        return new NodeList(DOM.query(selector, context), undefined, undefined);
-    };
+    });
 
-    NodeList.one = function(selector, context) {
-        var all = NodeList.all(selector, context);
-        return all.length ? all.slice(0, 1) : null;
-    };
     if (1 > 2) {
-        NodeList.getDOMNodes();
+        DOM.getDOMNodes();
     }
+
     return NodeList;
 }, {
     requires:["dom"]
@@ -559,8 +589,14 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
  * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
  * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
- */KISSY.add("node", function(S, Node) {
+ */KISSY.add("node", function(S, Event, Node) {
+    Node.KeyCodes = Event.KeyCodes;
     return Node;
 }, {
-        requires:["node/base","node/attach","node/override","node/anim-plugin"]
-    });
+    requires:[
+        "event",
+        "node/base",
+        "node/attach",
+        "node/override",
+        "node/anim-plugin"]
+});

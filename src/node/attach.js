@@ -5,6 +5,7 @@
 KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
+        makeArray = S.makeArray,
         // DOM 添加到 NP 上的方法
         // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
@@ -71,19 +72,21 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     function accessNorm(fn, self, args) {
         args.unshift(self);
         var ret = DOM[fn].apply(DOM, args);
-        if (ret === undefined)
+        if (ret === undefined) {
             return self;
-
+        }
         return ret;
     }
 
     function accessNormList(fn, self, args) {
         args.unshift(self);
         var ret = DOM[fn].apply(DOM, args);
-        if (ret === undefined)
+        if (ret === undefined) {
             return self;
-        else if (ret === null)
+        }
+        else if (ret === null) {
             return null;
+        }
         return new NodeList(ret);
     }
 
@@ -102,28 +105,28 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(DOM_INCLUDES_NORM, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
     S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.unshift(this);
             return Event[k].apply(Event, args);
         }

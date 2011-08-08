@@ -104,7 +104,10 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         // mouseenter/leave 不会冒泡，只选择最近一个
         target = DOM.closest(target, data.selector, delegateTarget);
         if (target) {
-            if (target !== relatedTarget && !DOM.contains(target, relatedTarget)) {
+            if (target !== relatedTarget &&
+                (!relatedTarget || !DOM.contains(target, relatedTarget))
+                ) {
+                event.currentTarget = target;
                 return data.fn.call(data.scope || delegateTarget, event);
             }
         }

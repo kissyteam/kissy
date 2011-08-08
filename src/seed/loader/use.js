@@ -68,10 +68,9 @@
          * @param {string} moduleName
          */
         require:function(moduleName) {
-            var self = this,
-                mods = self.Env.mods,
+            var mods = S.Env.mods,
                 mod = mods[moduleName],
-                re = self['onRequire'] && self['onRequire'](mod);
+                re = S['onRequire'] && S['onRequire'](mod);
             if (re !== undefined) {
                 return re;
             }

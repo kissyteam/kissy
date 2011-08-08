@@ -14,8 +14,6 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             SECOND = '2',
             SEP = '-',
 
-            result,
-
             // simulate mouse event on any element
             simulate = function(target, type, relatedTarget) {
                 if (typeof target === 'string') {
@@ -45,7 +43,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should execute in order.', function() {
                 var a = DOM.get('#link-a');
-
+                var result = [];
                 Event.on(a, 'click', function() {
                     result.push(FIRST);
                 });
@@ -88,7 +86,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should stop event\'s propagation.', function() {
                 var li_c = DOM.get('#li-c'), c1 = DOM.get('#link-c1'), c2 = DOM.get('#link-c2');
-
+                var result = [];
                 Event.on(c2, 'click', function(evt) {
                     evt.stopPropagation();
                 });
@@ -119,7 +117,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should stop event\'s propagation immediately.', function() {
                 var li_d = DOM.get('#li-d'),  d1 = DOM.get('#link-d1'), d2 = DOM.get('#link-d2');
-
+                var result = [];
                 Event.on(d1, 'click', function() {
                     result.push(FIRST);
                 });
@@ -162,7 +160,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should do nothing else to event\'s propagation if using "return false;".', function() {
                 var li_e = DOM.get('#li-e'), e1 = DOM.get('#link-e1'), e2 = DOM.get('#link-e2');
-
+                var result = [];
                 Event.on(e1, 'click', function() {
                     result.push(FIRST);
                 });
@@ -210,6 +208,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should remove the specified event handler function.', function() {
                 var f = DOM.get('#link-f');
+                var result = [];
 
                 function foo() {
                     result = HAPPENED;
@@ -230,7 +229,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should remove all the event handlers of the specified event type.', function() {
                 var g = DOM.get('#link-g');
-
+                var result = [];
                 Event.on(g, 'click', function() {
                     result.push(FIRST);
                 });
@@ -250,7 +249,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should reomve all the event handler of the specified element', function() {
                 var h = DOM.get('#link-h');
-
+                var result = [];
                 Event.on(h, 'click', function() {
                     result.push(FIRST);
                 });
@@ -334,7 +333,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             it('should trigger the focusin/focusout event on the proper element, ' +
                 'and support bubbling with correct order.', function() {
                 var ie = UA.ie,container = DOM.get('#test-focusin'), input = DOM.get('input', container);
-
+                var result = [];
                 // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
                 // so we should ignore the orders of the event
 
@@ -373,7 +372,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should trigger the focusin/focusout event and focus event in order.', function() {
                 var ie = UA.ie,input = DOM.get('#test-focusin-input');
-
+                var result = [];
                 Event.on(input, 'focusin focusout', function() {
                     result.push(FIRST);
                 });
@@ -434,6 +433,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             it('should guarantee separate event adding function keeps separate scope.', function() {
                 Event.on(doc, 'click', handler, {id: FIRST});
                 Event.on(doc, 'click', handler, {id: SECOND});
+                var result = [];
 
                 function handler() {
                     result.push(this.id);
@@ -445,6 +445,30 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
                 waits(0);
                 runs(function() {
                     expect(result[1]).not.toEqual(result[2]);
+                });
+            });
+
+
+            it('should guarantee separate event adding function keeps separate scope with multiple event.', function() {
+                Event.detach(doc);
+                var re = [];
+                Event.on(doc, 'click keydown', handler, {id: FIRST});
+                Event.on(doc, 'click keydown', handler, {id: SECOND});
+                function handler() {
+                    re.push(this.id);
+                }
+
+                // click the document twice
+                runs(function() {
+                    simulate(doc, 'click');
+                });
+                waits(10);
+                runs(function() {
+                    simulate(doc, 'keydown');
+                });
+                waits(10);
+                runs(function() {
+                    expect(re).toEqual([FIRST,SECOND,FIRST,SECOND]);
                 });
             });
         });

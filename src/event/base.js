@@ -5,6 +5,7 @@
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -39,12 +40,12 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var Event = {
         _data:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.data.apply(DOM, args);
         },
         _removeData:function(elem) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.removeData.apply(DOM, args);
         },
@@ -299,9 +300,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function batchForType(methodName, targets, types) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
-            var args = S.makeArray(arguments);
+            var args = makeArray(arguments);
             S.each(types.split(SPACE), function(type) {
-                var args2 = S.clone(args);
+                var args2 = [].concat(args);
                 args2.splice(0, 3, targets, type);
                 Event[methodName].apply(Event, args2);
             });
@@ -385,6 +386,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         target[ eventType ]();
                     }
                 } catch (ieError) {
+                    S.log(ieError);
                 }
 
                 if (old) {

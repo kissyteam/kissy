@@ -2,9 +2,11 @@
  * tree component for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('tree', function(S, Tree, TreeNode) {
+KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
     Tree.Node = TreeNode;
+    Tree.CheckNode = CheckNode;
+    Tree.CheckTree = CheckTree;
     return Tree;
 }, {
-    requires:["tree/tree","tree/node"]
+    requires:["tree/tree","tree/basenode","tree/checknode","tree/checktree"]
 });

@@ -1,9 +1,11 @@
-KISSY.add("event", function(S, Event, Target,Object) {
+KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
+    Event.KeyCodes = KeyCodes;
     Event.Target = Target;
-    Event.Object=Object;
+    Event.Object = Object;
     return Event;
 }, {
     requires:[
+        "event/keycodes",
         "event/base",
         "event/target",
         "event/object",
@@ -11,5 +13,6 @@ KISSY.add("event", function(S, Event, Target,Object) {
         "event/hashchange",
         "event/valuechange",
         "event/delegate",
-        "event/mouseenter"]
+        "event/mouseenter"
+    ]
 });

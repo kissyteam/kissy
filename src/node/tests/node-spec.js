@@ -302,8 +302,46 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(n.css("xx")).toBe('');
 
         });
+    });
+
+    describe("selector context", function() {
+        var html = $(
+            "<div id='context-test-1' class='context-test'>" +
+                "<div class='context-test-3' id='context-test-2'></div>" +
+                "</div>" +
+                "<div class='context-test-3' id='context-test-4'></div>" +
+                "<div class='context-test'>" +
+                "<div class='context-test'>" +
+                "<div class='context-test-3' id='context-test-5'>" +
+                "</div>" +
+                "</div>" +
+                "</div>").appendTo("body");
+
+        it("should support #id", function() {
+            expect($(".context-test-3", "#context-test-1").length).toBe(1);
+            expect($(".context-test-3").length).toBe(3);
+            expect($(".context-test-3", "#context-test-1").attr("id")).toBe("context-test-2");
+        });
+
+        it("should support other string form selector and unique works", function() {
+            expect($(".context-test-3", ".context-test").length).toBe(2);
+        });
 
 
+        it("should support node array form selector and unique works", function() {
+            var c3 = $(".context-test-3");
+            expect(c3.length).toBe(3);
+            var c = $(".context-test");
+            expect(c.length).toBe(3);
+            expect($(c3, ".context-test").length).toBe(2);
+            expect($(".context-test-3", c).length).toBe(2);
+            expect($(c3, c).length).toBe(2);
+            expect($(".context-test-3", ".context-test").length).toBe(2);
+
+            expect(c.all(".context-test-3").length).toBe(2);
+            expect(c.all(c3).length).toBe(2);
+
+        });
     });
 
 });

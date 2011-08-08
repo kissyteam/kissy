@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
+KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function(ev) {
@@ -28,6 +28,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
         var self = this,
             c = self.constructor,
             DefaultRender;
+
         while (c && !DefaultRender) {
             DefaultRender = c['DefaultRender'];
             c = c.superclass && c.superclass.constructor;
@@ -60,11 +61,16 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
     }
 
     function capitalFirst(s) {
-        s = s + '';
+        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    return UIBase.create([UIBase.Box], {
+    /**
+     * model and control for component
+     * @constructor
+     * @memberOf Component
+     */
+    var ModelControl = UIBase.create([UIBase.Box], {
 
             getCls:UIStore.getCls,
 
@@ -475,7 +481,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 },
 
                 // 父组件
-                // Parent component to which events will be propagated. 
+                // Parent component to which events will be propagated.
                 parent:{
                 },
 
@@ -492,10 +498,15 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore) {
                 allowTextSelection_:{
                     value:false
                 }
-            }
+            },
+
+            DefaultRender:Render
         });
+
+
+    return ModelControl;
 }, {
-    requires:['uibase','./uistore']
+    requires:['uibase','./uistore','./render']
 });
 /**
  *  Note:

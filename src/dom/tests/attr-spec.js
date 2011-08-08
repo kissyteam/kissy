@@ -106,7 +106,7 @@ KISSY.use("dom", function(S, DOM) {
                 //alert(a.href); // 在所有浏览器下，a.href 和 a['href'] 都返回绝对地址
                 //alert(a.getAttribute('href')); // ie7- 下，会返回绝对地址
                 expect(DOM.attr(a, 'href')).toBe('../kissy/');
-                expect(DOM.attr(img, 'src')).toBe('../../../docs/assets/logo.png');
+                expect(DOM.attr(img, 'src')).toBe('./logo.png');
 
                 // colspan / rowspan:
                 expect(DOM.attr(td, 'rowspan') + '').toBe('2');

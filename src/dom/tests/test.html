@@ -9,6 +9,10 @@
 <script src="../../../tools/third-party/jquery.js" charset="utf-8"></script>
 <script src="../../../build/seed.js" charset="utf-8"></script>
 <script src="../../../build/ua.js" charset="utf-8"></script>
+<!--<script src="../../../build/sizzle.js" charset="utf-8"></script>-->
+<!--<script>-->
+    <!--KISSY.use("sizzle");-->
+<!--</script>-->
 <script src="../data.js" charset="utf-8"></script>
 <script src="../attr.js" charset="utf-8"></script>
 <script src="../base.js" charset="utf-8"></script>
@@ -71,7 +75,7 @@
         </textarea>
     </p>
     <div id="test-div"></div>
-    <img id="test-img" src="../../../docs/assets/logo.png" alt="kissy"/>
+    <img id="test-img" src="./logo.png" alt="kissy"/>
     <table id="test-table" cellspacing="10">
         <tbody>
         <tr>
@@ -282,6 +286,8 @@ offset-spec end
 
 
 </div>
+<!-- selector 核心，首先测试 -->
+<script src="selector-spec.js"></script>
 <script src="attr-spec.js"></script>
 <script src="class-spec.js"></script>
 <script src="create-spec.js"></script>
@@ -291,7 +297,7 @@ offset-spec end
 <script src="scroll-spec.js"></script>
 <script src="style-spec.js"></script>
 <script src="traversal-spec.js"></script>
-<script src="selector-spec.js"></script>
+
 <script>
 
     window.onload = function() {
