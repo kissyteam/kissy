@@ -37,7 +37,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
             hashChange = ie < 8 ? function(hash) {
                 //debugger
-                var html = '<html><body>' + hash + '</body></html>',
+                var html = '<html><body>' + hash + '<' + '/body><' + '/html>',
                     doc = iframe.contentWindow.document;
                 try {
                     // 写入历史 hash
@@ -46,14 +46,16 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                     doc.close();
                     return true;
                 } catch (e) {
+                    S.log('doc write error : ');
+                    S.log(e);
                     return false;
                 }
-            } : function (hash) {
-                notifyHashChange(hash);
+            } : function () {
+                notifyHashChange();
             },
 
-            notifyHashChange = function (hash) {
-                S.log("hash changed : " + hash);
+            notifyHashChange = function () {
+                //S.log("hash changed : " + hash);
                 Event.fire(win, HASH_CHANGE);
             },
             setup = function () {
@@ -111,9 +113,9 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                         //或addHistory 调用
                         //只有 start 来通知应用程序
                     function start() {
-                        S.log('iframe start load..');
+                        //S.log('iframe start load..');
                         //debugger
-                        var c = S.trim(iframe.contentWindow.document.body.innerHTML);
+                        var c = S.trim(DOM.html(iframe.contentWindow.document.body));
                         var ch = getHash();
 
                         //后退时不等
@@ -123,7 +125,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                             // 使lasthash为iframe历史， 不然重新写iframe， 会导致最新状态（丢失前进状态）
                             lastHash = c;
                         }
-                        notifyHashChange(c);
+                        notifyHashChange();
                     }
                 }
             };

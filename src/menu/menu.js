@@ -2,8 +2,8 @@
  * menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
-
+KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
+    var KeyCodes = Event.KeyCodes;
     var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
@@ -66,7 +66,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
             var children = this.get("children"),len = children.length;
 
-            if (len == 0) {
+            if (len === 0) {
                 return undefined;
             }
 
@@ -75,24 +75,24 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             //自己处理了，不要向上处理，嵌套菜单情况
             switch (e.keyCode) {
                 // esc
-                case 27:
+                case KeyCodes.ESC:
                     // TODO
                     // focus 的话手动失去焦点
                     return undefined;
                     break;
 
                 // home
-                case 36:
+                case KeyCodes.HOME:
                     this.set("highlightedItem",
                         this._getNextEnabledHighlighted(0, 1));
                     break;
                 // end
-                case 35:
+                case KeyCodes.END:
                     this.set("highlightedItem",
                         this._getNextEnabledHighlighted(len - 1, -1));
                     break;
                 // up
-                case 38:
+                case KeyCodes.UP:
                     if (!highlightedItem) {
                         destIndex = len - 1;
                     } else {
@@ -103,7 +103,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                         this._getNextEnabledHighlighted(destIndex, -1));
                     break;
                 //down
-                case 40:
+                case KeyCodes.DOWN:
                     if (!highlightedItem) {
                         destIndex = 0;
                     } else {
@@ -164,14 +164,18 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
     });
 
     Component.UIStore.setUIByClass("menu", {
-        priority:10,
+        priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });
+
+    if (1 > 2) {
+        Menu._uiSetHighlightedItem();
+    }
 
     return Menu;
 
 }, {
-    requires:['uibase','component','./menurender','./submenu']
+    requires:['event','uibase','component','./menurender','./submenu']
 });
 
 /**

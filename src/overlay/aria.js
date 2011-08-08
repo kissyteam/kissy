@@ -2,7 +2,7 @@
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/aria", function() {
+KISSY.add("overlay/aria", function(S,Event) {
     function Aria() {
     }
 
@@ -18,7 +18,7 @@ KISSY.add("overlay/aria", function() {
             var self = this,el = self.get("el");
             if (self.get("aria")) {
                 el.on("keydown", function(e) {
-                    if (e.keyCode === 27) {
+                    if (e.keyCode === Event.KeyCodes.ESC) {
                         self.hide();
                         e.halt();
                     }
@@ -27,4 +27,6 @@ KISSY.add("overlay/aria", function() {
         }
     };
     return Aria;
+},{
+    requires:['event']
 });

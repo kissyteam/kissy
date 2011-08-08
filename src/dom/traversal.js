@@ -4,13 +4,13 @@
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
-    var isElementNode = DOM._isElementNode;
+    var isElementNode = DOM._isElementNode,CONTAIN_MASK = 16;
 
     S.mix(DOM, {
 
         closest:function(selector, filter, context) {
             return nth(selector, filter, 'parentNode', function(elem) {
-                return elem.nodeType != 11;
+                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
             }, context, true);
         },
 
@@ -19,7 +19,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
          */
         parent: function(selector, filter, context) {
             return nth(selector, filter, 'parentNode', function(elem) {
-                return elem.nodeType != 11;
+                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
             }, context);
         },
 
@@ -53,15 +53,15 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
         __contains:document.documentElement.contains ?
             function(a, b) {
-                if (a.nodeType == 3) {
+                if (a.nodeType == DOM.TEXT_NODE) {
                     return false;
                 }
                 var precondition;
-                if (b.nodeType == 3) {
+                if (b.nodeType == DOM.TEXT_NODE) {
                     b = b.parentNode;
                     // a 和 b父亲相等也就是返回 true
                     precondition = true;
-                } else if (b.nodeType == 9) {
+                } else if (b.nodeType == DOM.DOCUMENT_NODE) {
                     // b === document
                     // 没有任何元素能包含 document
                     return false;
@@ -75,7 +75,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             } : (
             document.documentElement.compareDocumentPosition ?
                 function(a, b) {
-                    return !!(a.compareDocumentPosition(b) & 16);
+                    return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :
                 // it can not be true , pathetic browser
                 0
@@ -94,9 +94,13 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         equals:function(n1, n2) {
             n1 = DOM.query(n1);
             n2 = DOM.query(n2);
-            if (n1.length != n2.length) return false;
+            if (n1.length != n2.length) {
+                return false;
+            }
             for (var i = n1.length; i >= 0; i--) {
-                if (n1[i] != n2[i]) return false;
+                if (n1[i] != n2[i]) {
+                    return false;
+                }
             }
             return true;
         }
@@ -155,7 +159,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
     }
 
     function testFilter(elem, filter) {
-        if (!filter) return true;
+        if (!filter) {
+            return true;
+        }
         if (S.isArray(filter)) {
             for (var i = 0; i < filter.length; i++) {
                 if (DOM.test(elem, filter[i])) {

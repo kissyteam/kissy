@@ -2,11 +2,10 @@
  * mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
+KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
 
     /**
-     * @namespace
-     * @name Component
+     * @exports Component as KISSY.Component
      */
     var Component = {
         ModelControl:ModelControl,
@@ -17,7 +16,9 @@ KISSY.add("component", function(S, ModelControl, Render, Container, UIStore, Del
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
-
+    if (1 > 2) {
+        Component.DecorateChildren;
+    }
     return Component;
 }, {
     requires:['component/modelcontrol',

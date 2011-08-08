@@ -3,7 +3,9 @@
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     S.mix(loader, {
         //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
         // 如果找不到，返回发送前那个脚本
@@ -31,7 +33,7 @@
             S.log("interactive src :" + src);
             //注意：模块名不包含后缀名以及参数，所以去除
             //系统模块去除系统路径
-            if (src.lastIndexOf(self.Config.base, 0) == 0) {
+            if (src.lastIndexOf(self.Config.base, 0) === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
 
@@ -40,7 +42,7 @@
             for (var p in packages) {
                 var p_path = packages[p].path;
                 if (packages.hasOwnProperty(p)
-                    && src.lastIndexOf(p_path, 0) == 0) {
+                    && src.lastIndexOf(p_path, 0) === 0) {
                     return utils.removePostfix(src.substring(p_path.length));
                 }
             }

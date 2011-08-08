@@ -10,7 +10,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
-    return UIBase.create(MenuRender, {
+    var FilterMenuRender = UIBase.create(MenuRender, {
         getContentElement:function() {
             return this.get("menuContent");
         },
@@ -69,6 +69,12 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             }
         }
     });
+
+    if (1 > 2) {
+        FilterMenuRender._uiSetLabel();
+    }
+
+    return FilterMenuRender;
 
 }, {
     requires:['node','uibase','./menurender']

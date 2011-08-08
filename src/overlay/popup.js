@@ -4,6 +4,8 @@
  */
 KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 
+    var POPUP_DELAY = 100;
+
     function Popup(container, config) {
         var self = this;
 
@@ -55,7 +57,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
-                }, 100);
+                }, POPUP_DELAY);
             };
 
             trigger.on('mouseenter', self.__mouseEnterPopup);
@@ -84,7 +86,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
             var self = this;
             self._hiddenTimer = S.later(function() {
                 self.hide();
-            }, 120);
+            }, POPUP_DELAY);
         },
 
         _clearHiddenTimer: function() {

@@ -36,6 +36,14 @@ KISSY.add("component/uistore", function(S) {
     return {
         getCls:getCls,
         getUIByClass:getUIByClass,
-        setUIByClass:setUIByClass
+        setUIByClass:setUIByClass,
+        PRIORITY:{
+            LEVEL1:10,
+            LEVEL2:20,
+            LEVEL3:30,
+            LEVEL4:40,
+            LEVEL5:50,
+            LEVEL6:60
+        }
     };
 });

@@ -3,7 +3,6 @@
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
-    var enc = encodeURIComponent;
     return {
         serialize:function(form) {
             form = DOM.get(form);

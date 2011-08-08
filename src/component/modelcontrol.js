@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
+KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function(ev) {
@@ -14,7 +14,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
 
     function wrapperViewGetter(attrName) {
         return function(v) {
-            return v !== undefined ? v : this.get("view") && this.get("view").get(attrName);
+            return v === undefined ? this.get("view") && this.get("view").get(attrName) : v;
         };
     }
 
@@ -68,7 +68,6 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
     /**
      * model and control for component
      * @constructor
-     * @memberOf Component
      */
     var ModelControl = UIBase.create([UIBase.Box], {
 
@@ -362,7 +361,7 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
             },
 
             _handleKeyEventInternal:function(ev) {
-                if (ev.keyCode == 13) {
+                if (ev.keyCode == Event.KeyCodes.ENTER) {
                     return this._performInternal(ev);
                 }
             },
@@ -503,10 +502,13 @@ KISSY.add("component/modelcontrol", function(S, UIBase, UIStore, Render) {
             DefaultRender:Render
         });
 
+    if (1 > 2) {
+        ModelControl._uiSetHandleMouseEvents();
+    }
 
     return ModelControl;
 }, {
-    requires:['uibase','./uistore','./render']
+    requires:['event','uibase','./uistore','./render']
 });
 /**
  *  Note:

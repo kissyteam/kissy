@@ -4,6 +4,7 @@
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all;
+    var KeyCodes = Node.KeyCodes;
     var MenuButton = UIBase.create(Button, [Component.DecorateChild], {
 
         hideMenu:function() {
@@ -64,7 +65,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             var menu = this.get("menu");
 
             // space 只在 keyup 时处理
-            if (e.keyCode == 32) {
+            if (e.keyCode == KeyCodes.SPACE) {
                 // Prevent page scrolling in Chrome.
                 e.preventDefault();
                 if (e.type != "keyup") {
@@ -77,7 +78,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             if (menu && menu.get("visible")) {
                 var handledByMenu = menu._handleKeydown(e);
                 // esc
-                if (e.keyCode == 27) {
+                if (e.keyCode == KeyCodes.ESC) {
                     this.hideMenu();
                     return true;
                 }
@@ -85,7 +86,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             }
 
             // Menu is closed, and the user hit the down/up/space key; open menu.
-            if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 32) {
+            if (e.keyCode == KeyCodes.SPACE ||
+                e.keyCode == KeyCodes.DOWN ||
+                e.keyCode == KeyCodes.UP) {
                 this.showMenu();
                 return true;
             }
@@ -152,27 +155,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             !v && this.hideMenu();
         },
 
-        // 找到下面有 popupmenu class 的元素，装饰为 PopupMenu 返回
-        decorateInternalX:function(el) {
-            var self = this,
-                ui = "popupmenu",
-                prefixCls = self.get("prefixCls");
-            self.set("el", el);
-            var menuItem = el.one("." + self.getCls(ui));
-            if (menuItem) {
-                // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
-                menuItem.hide();
-                var docBody = S.one(el[0].ownerDocument.body);
-                docBody.prepend(menuItem);
-                var UI = Component.UIStore.getUIByClass(ui);
-                var menu = new UI({
-                    srcNode:menuItem,
-                    prefixCls:prefixCls
-                });
-                self.set("menu", menu);
-            }
-        },
-
         decorateChildrenInternal:function(ui, el, cls) {
             el.hide();
             var docBody = S.one(el[0].ownerDocument.body);
@@ -219,6 +201,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         },
         DefaultRender:MenuButtonRender
     });
+
+    if (1 > 2) {
+        MenuButton.getItemAt();
+    }
 
     return MenuButton;
 }, {

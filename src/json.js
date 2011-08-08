@@ -8,7 +8,9 @@ KISSY.add('json', function (S, JSON) {
 
         parse: function(text) {
             // 当输入为 undefined / null / '' 时，返回 null
-            if (text == null || text === '') return null;
+            if (S.isNullOrUndefined(text) || text === '') {
+                return null;
+            }
             return JSON.parse(text);
         },
 

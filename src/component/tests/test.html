@@ -10,15 +10,26 @@
 
 </head>
 <body>
-<h1>KISSY.UIBase Test Cases</h1>
+<h1>KISSY Component Test Cases</h1>
 
 <script src="../../../build/kissy.js"></script>
+<script src="../../../build/uibase.js"></script>
+<script src="../modelcontrol.js"></script>
+<script src="../container.js"></script>
+<script src="../decoratechild.js"></script>
+<script src="../decoratechildren.js"></script>
+<script src="../delegatechildren.js"></script>
+<script src="../render.js"></script>
+<script src="../uistore.js"></script>
 <script>
     KISSY.Config.base = "../../";
 </script>
 <script src="component-spec.js"></script>
 <script>
-    KISSY.use("component", function() {
+    KISSY.log("after report");
+    KISSY.use("component", function(S, Component) {
+        S.log("report");
+        S.log(Component.DecorateChild);
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute(function() {
             if (parent && parent.jasmine.kissyNext) {

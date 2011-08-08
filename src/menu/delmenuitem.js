@@ -22,7 +22,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
         },
         _handleKeydown:function(e) {
             // d 键
-            if (e.keyCode == 68) {
+            if (e.keyCode === Node.KeyCodes.D) {
                 this.get("parent").removeChild(this, true);
                 this.get("parent").set("highlightedItem", null);
                 this.get("parent").fire("delete", {
@@ -42,7 +42,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
 
 
     Component.UIStore.setUIByClass(CLS, {
-        priority:40,
+        priority:Component.UIStore.PRIORITY.LEVEL4,
         ui:DelMenuItem
     });
     return DelMenuItem;

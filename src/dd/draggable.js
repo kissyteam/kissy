@@ -12,7 +12,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         this._init();
     }
 
-    Draggable.POINT = "point";
+    Draggable['POINT'] = "point";
     Draggable.INTERSECT = "intersect";
     Draggable.STRICT = "strict";
 
@@ -68,7 +68,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 handlers = self.get('handlers');
             self.set("dragNode", node);
 
-            if (handlers.length == 0) {
+            if (handlers.length === 0) {
                 handlers[0] = node;
             }
 
@@ -106,7 +106,9 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 if (hl.contains(t)
                     ||
                     //子区域内点击也可以启动
-                    hl[0] == t[0]) return true;
+                    hl[0] == t[0]) {
+                    return true;
+                }
             }
             return false;
         },
@@ -121,7 +123,9 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             var self = this,
                 t = new Node(ev.target);
 
-            if (!self._check(t)) return;
+            if (!self._check(t)) {
+                return;
+            }
             //chrome 阻止了 flash 点击？？
             //不组织的话chrome会选择
             //if (!UA.webkit) {
@@ -141,7 +145,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 mx = ev.pageX,
                 my = ev.pageY,
                 nxy = node.offset();
-            self.startMousePos = self.mousePos = {
+            self['startMousePos'] = self.mousePos = {
                 left:mx,
                 top:my
             };

@@ -41,6 +41,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
                     try {
                         delete window[ jsonpCallback ];
                     } catch(e) {
+                        S.log("delete window variable error : ");
+                        S.log(e);
                     }
                 } else if (response) {
                     // after io success handler called

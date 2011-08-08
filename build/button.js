@@ -1,13 +1,15 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 16:00
 */
 /**
  * Model and Control for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
+KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
+
+    var KeyCodes = Event.KeyCodes;
 
     var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
@@ -16,16 +18,16 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
         },
 
         _handleKeyEventInternal:function(e) {
-            if (e.keyCode == 13 &&
+            if (e.keyCode == KeyCodes.ENTER &&
                 e.type == "keydown" ||
-                e.keyCode == 32 &&
+                e.keyCode == KeyCodes.SPACE &&
                     e.type == "keyup") {
                 return this._performInternal(e);
             }
             // Return true for space keypress (even though the event is handled on keyup)
             // as preventDefault needs to be called up keypress to take effect in IE and
             // WebKit.
-            return e.keyCode == 32;
+            return e.keyCode == KeyCodes.SPACE;
         },
 
         /* button 的默认行为就是触发 click*/
@@ -54,14 +56,14 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
     return Button;
 
 }, {
-    requires:['uibase','component','./customrender']
+    requires:['event','uibase','component','./customrender']
 });/**
  * abstract view for button
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render,[UIBase.Contentbox.Render], {
+    var ButtonRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
@@ -84,11 +86,17 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
              * prefixCls:{}
              */
 
-            // aria-describledby support
+                // aria-describledby support
             describedby:{},
             tooltip:{}
         }
     });
+
+    if (1 > 2) {
+        ButtonRender._uiSetDescribedby();
+    }
+
+    return ButtonRender;
 }, {
     requires:['uibase','component']
 });/**
@@ -179,7 +187,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
         INNER_CLS = "inline-block custom-button-inner-box";
 
 
-    return UIBase.create(Css3Render, {
+    var CustomRender = UIBase.create(Css3Render, {
 
             __css_tag:"custom",
 
@@ -222,6 +230,12 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
             innerEL:{}
         }
     );
+
+    if (1 > 2) {
+        CustomRender.innerEL()
+    }
+
+    return CustomRender;
 }, {
     requires:['node','uibase','./css3render']
 });/**

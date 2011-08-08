@@ -4,6 +4,10 @@
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 
+    var OK_CODE = 200;
+    var MULTIPLE_CHOICES = 300;
+    var NOT_MODIFIED = 304;
+
     var // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
@@ -46,11 +50,11 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             dataType[0] = dataType[0] || "text";
 
             //获得合适的初始数据
-            if (dataType[0] == "text" && text != undefined) {
+            if (dataType[0] == "text" && text !== undefined) {
                 responseData = text;
             }
             // 有 xml 值才直接取，否则可能还要从 xml 转
-            else if (dataType[0] == "xml" && xml != undefined) {
+            else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
                 // 看能否从 text xml 转换到合适数据
@@ -88,22 +92,22 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
     function XhrObject(c) {
         S.mix(this, {
-                // 结构化数据，如 json
-                responseData:null,
-                config:c || {},
-                timeoutTimer:null,
-                responseText:null,
-                responseXML:null,
-                responseHeadersString:"",
-                responseHeaders:null,
-                requestHeaders:{},
-                readyState:0,
-                //internal state
-                state:0,
-                statusText:null,
-                status:0,
-                transport:null
-            });
+            // 结构化数据，如 json
+            responseData:null,
+            config:c || {},
+            timeoutTimer:null,
+            responseText:null,
+            responseXML:null,
+            responseHeadersString:"",
+            responseHeaders:null,
+            requestHeaders:{},
+            readyState:0,
+            //internal state
+            state:0,
+            statusText:null,
+            status:0,
+            transport:null
+        });
     }
 
     S.augment(XhrObject, Event.Target, {
@@ -166,9 +170,9 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
                 xhr.state = 2;
                 xhr.readyState = 4;
                 var isSuccess;
-                if (status >= 200 && status < 300 || status == 304) {
+                if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
 
-                    if (status == 304) {
+                    if (status == NOT_MODIFIED) {
                         statusText = "notmodified";
                         isSuccess = true;
                     } else {
@@ -203,5 +207,5 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
     return XhrObject;
 }, {
-        requires:["event"]
-    });
+    requires:["event"]
+});

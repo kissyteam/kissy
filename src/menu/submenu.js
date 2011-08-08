@@ -5,8 +5,10 @@
 KISSY.add(
     /* or precisely submenuitem */
     "menu/submenu",
-    function(S, UIBase, Component, MenuItem, SubMenuRender) {
+    function(S, Event, UIBase, Component, MenuItem, SubMenuRender) {
 
+        var KeyCodes = Event.KeyCodes,
+            MENU_DELAY = 300;
         /**
          * Class representing a submenu that can be added as an item to other menus.
          */
@@ -142,7 +144,7 @@ KISSY.add(
 
                     if (!hasKeyboardControl_) {
                         // right
-                        if (keyCode == 39) {
+                        if (keyCode == KeyCodes.RIGHT) {
                             this.showMenu();
                             var menuChildren = menu.get("children");
                             if (menuChildren[0]) {
@@ -156,7 +158,7 @@ KISSY.add(
                     // The menu has control and the key hasn't yet been handled, on left arrow
                     // we turn off key control.
                     // left
-                    else if (keyCode == 37) {
+                    else if (keyCode == KeyCodes.LEFT) {
                         this.hideMenu();
                         // 隐藏后，当前激活项重回
                         this.get("parent").set("activeItem", this);
@@ -189,7 +191,7 @@ KISSY.add(
                 },
 
                 // 默认 addChild，这里里面的元素需要放到 menu 属性中
-                decorateChildrenInternal:function(ui,el, cls) {
+                decorateChildrenInternal:function(ui, el, cls) {
                     el.hide();
                     var docBody = S.one(el[0].ownerDocument.body);
                     docBody.prepend(el);
@@ -225,7 +227,7 @@ KISSY.add(
                      * @type {number}
                      */
                     menuDelay:{
-                        value:300
+                        value:MENU_DELAY
                     },
                     /**
                      * whether destroy submenu when destroy itself ,reverse result
@@ -250,13 +252,13 @@ KISSY.add(
 
 
         Component.UIStore.setUIByClass("submenu", {
-            priority:20,
+            priority:Component.UIStore.PRIORITY.LEVEL2,
             ui:SubMenu
         });
 
         return SubMenu;
     }, {
-        requires:['uibase','component','./menuitem','./submenurender']
+        requires:['event','uibase','component','./menuitem','./submenurender']
     });
 
 /**

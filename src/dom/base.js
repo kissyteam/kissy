@@ -8,7 +8,7 @@ KISSY.add('dom/base', function(S, undefined) {
         return node && node.nodeType === val;
     }
 
-    return {
+    var DOM = {
 
         /**
          * enumeration of dom node type
@@ -61,5 +61,9 @@ KISSY.add('dom/base', function(S, undefined) {
             return o && !o.nodeType && o.item && !o.setTimeout;
         }
     };
+
+    DOM.TEXT_NODE = 3;
+
+    return DOM;
 
 });

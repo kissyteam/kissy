@@ -363,7 +363,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 // 比如：ie 下 border-width 默认为 medium
                 if (sp.u !== tp.u) {
                     //S.log(prop + " : " + sp.v + " : " + sp.u);
-                    //S.log(prop + " : " + tp.v + " : " + tp.u);
                     //S.log(tp.f);
                     sp.v = 0;
                     sp.u = tp.u;

@@ -2,7 +2,7 @@
  * mask extension for kissy
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/mask", function(S) {
+KISSY.add("uibase/mask", function() {
 
 
     function Mask() {
@@ -27,6 +27,10 @@ KISSY.add("uibase/mask", function(S) {
             }
         }
     };
+
+    if(1>2){
+        Mask._uiSetMask();
+    }
 
     return Mask;
 }, {requires:["ua"]});

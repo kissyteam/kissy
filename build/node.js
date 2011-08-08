@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 16:01
 */
 /**
  * @module  anim-node-plugin
@@ -418,7 +418,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
                 index = context;
                 context = undefined;
             }
-            var list = NodeList.all(selector, context),
+            var list = NodeList.all(selector, context).getDOMNodes(),
                 ret = new NodeList(this);
             if (index === undefined) {
                 AP.push.apply(ret, list);

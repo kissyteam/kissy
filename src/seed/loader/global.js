@@ -3,7 +3,9 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     S.mix(loader, {
         __mixMods: function(global) {
             var mods = this.Env.mods,
@@ -36,4 +38,4 @@
             mods[name] = mod;
         }
     });
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils);
+})(KISSY, KISSY.__loader);

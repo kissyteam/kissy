@@ -10,19 +10,13 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 
     /**
      * 基类树节点
-     * @name BaseNode
      * @constructor
-     * @extends Component.ModelControl
-     * @borrows Component.DecorateChild.prototype
      */
     var BaseNode = UIBase.create(Component.ModelControl,
         /*
          * 可多继承从某个子节点开始装饰儿子组件
          */
         [Component.DecorateChild],
-        /**
-         * @lends BaseNode.prototype
-         */
         {
             _keyNav:function(e) {
                 var processed = true,
@@ -292,7 +286,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 },
 
                 expandIconEl:{ view:true},
-                
+
                 iconEl:{ view:true},
 
                 /**

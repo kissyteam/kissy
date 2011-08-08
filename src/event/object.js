@@ -76,7 +76,7 @@ KISSY.add('event/object', function(S, undefined) {
 
             // add which for key events
             if (self.which === undefined) {
-                self.which = (self.charCode !== undefined) ? self.charCode : self.keyCode;
+                self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
             }
 
             // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)

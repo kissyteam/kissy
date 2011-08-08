@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 16:00
 */
 /**
  * @module  cookie
@@ -10,6 +10,7 @@ build time: Aug 5 21:18
 KISSY.add('cookie/base', function(S) {
 
     var doc = document,
+        MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
         decode = decodeURIComponent;
 
@@ -42,7 +43,7 @@ KISSY.add('cookie/base', function(S) {
             // 从当前时间开始，多少天后过期
             if (typeof date === 'number') {
                 date = new Date();
-                date.setTime(date.getTime() + expires * 86400000);
+                date.setTime(date.getTime() + expires * MILLISECONDS_OF_DAY);
             }
             // expiration date
             if (date instanceof Date) {

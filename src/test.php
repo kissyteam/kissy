@@ -14,7 +14,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 <script type="text/javascript">
     var index = 0;
     var tests = [];
-
+    var loc = window.location.href.replace(/test.php/, "");
     var jasmine = {};
     jasmine.kissyNext = function(failedCount) {
         if (!failedCount) {
@@ -22,7 +22,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
             // event hash change ,ie8 error
             index++;
             if ((KISSY.UA.ie == 8 || KISSY.UA.ie == 7) && tests[index].match(/event\//)) {
-                window.open(tests[index] + "?" + (+new Date()));
+                window.open(loc+tests[index] + "?" + (+new Date()));
                 index++;
             }
             if (tests[index]) {

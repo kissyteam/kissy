@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 6 20:22
+build time: Aug 8 16:02
 */
 /*
  * @module kissy
@@ -18,7 +18,9 @@ build time: Aug 6 20:22
              * @return {Object} the augmented object
              */
             mix: function(r, s, ov, wl, deep) {
-                if (!s || !r) return r;
+                if (!s || !r) {
+                    return r;
+                }
                 if (ov === undefined) {
                     ov = true;
                 }
@@ -87,7 +89,7 @@ build time: Aug 6 20:22
              */
             version: '1.20dev',
 
-            buildTime:'20110806202252',
+            buildTime:'20110808160201',
 
             /**
              * Returns a new object containing all of the properties of
@@ -144,7 +146,9 @@ build time: Aug 6 20:22
              * @return r {Object}
              */
             extend: function(r, s, px, sx) {
-                if (!s || !r) return r;
+                if (!s || !r) {
+                    return r;
+                }
 
                 var create = Object.create ?
                     function(proto, c) {
@@ -247,7 +251,9 @@ build time: Aug 6 20:22
                     len = S.__APP_INIT_METHODS.length;
 
                 S.mix(O, this, true, S.__APP_MEMBERS);
-                for (; i < len; i++) S[S.__APP_INIT_METHODS[i]].call(O);
+                for (; i < len; i++) {
+                    S[S.__APP_INIT_METHODS[i]].call(O);
+                }
 
                 S.mix(O, S.isFunction(sx) ? sx() : sx);
                 isStr && (host[name] = O);
@@ -258,7 +264,9 @@ build time: Aug 6 20:22
 
             config:function(c) {
                 for (var p in c) {
-                    if (this["_" + p]) this["_" + p](c[p]);
+                    if (this["_" + p]) {
+                        this["_" + p](c[p]);
+                    }
                 }
             },
 
@@ -302,7 +310,7 @@ build time: Aug 6 20:22
     S.__init();
     return S;
 
-})('KISSY');
+})('KISSY',undefined);
 /**
  * @module  lang
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
@@ -479,6 +487,7 @@ build time: Aug 6 20:22
                     try {
                         delete v[CLONE_MARKER];
                     } catch (e) {
+                        S.log("delete CLONE_MARKER error : ");
                         S.log(e);
                         v[CLONE_MARKER] = undefined;
                     }
@@ -1067,7 +1076,9 @@ build time: Aug 6 20:22
  * @author yiminghe@gmail.com
  */
 (function(S){
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     S.__loader={};
     S.__loaderUtils={};
     S.__loaderData={};
@@ -1076,7 +1087,9 @@ build time: Aug 6 20:22
  * @author yiminghe@gmail.com
  */
 (function(S,data) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     S.mix(data, {
         "LOADING" : 1,
         "LOADED" : 2,
@@ -1088,10 +1101,12 @@ build time: Aug 6 20:22
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if (S.use) return;
+    if (S.use) {
+        return;
+    }
     S.mix(utils, {
-        isWebKit:!!navigator.userAgent.match(/AppleWebKit/),
-        IE : !!navigator.userAgent.match(/MSIE/),
+        isWebKit:!!navigator['userAgent'].match(/AppleWebKit/),
+        IE : !!navigator['userAgent'].match(/MSIE/),
         isCss:function(url) {
             return /\.css(?:\?|$)/i.test(url);
         },
@@ -1190,17 +1205,20 @@ build time: Aug 6 20:22
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
-    if (S.use) return;
+    if (S.use) {
+        return;
+    }
     var isWebKit = utils.isWebKit,
+        CSS_POLL_INTERVAL = 100,
         /**
          * central poll for link node
          */
             timer = null,
 
         monitors = {
-        /**
-         * node.href:{node:node,callback:callback}
-         */
+            /**
+             * node.href:{node:node,callback:callback}
+             */
         };
 
     function startCssTimer() {
@@ -1251,7 +1269,7 @@ build time: Aug 6 20:22
             timer = null;
             S.log("end css polling");
         } else {
-            timer = setTimeout(ccsPoll, 100);
+            timer = setTimeout(ccsPoll, CSS_POLL_INTERVAL);
         }
     }
 
@@ -1318,7 +1336,10 @@ build time: Aug 6 20:22
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
+    var MILLISECONDS_OF_SECOND = 1000;
     var scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -1418,7 +1439,7 @@ build time: Aug 6 20:22
                     timer = S.later(function() {
                         timer = undefined;
                         error();
-                    }, (timeout || this.Config.timeout) * 1000);
+                    }, (timeout || this.Config.timeout) * MILLISECONDS_OF_SECOND);
                 }
             }
             head.insertBefore(node, head.firstChild);
@@ -1431,7 +1452,9 @@ build time: Aug 6 20:22
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils,data) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     var win = S.__HOST,
         IE = utils.IE,
         doc = win['document'],
@@ -1562,7 +1585,9 @@ build time: Aug 6 20:22
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
     S.mix(loader, {
         __buildPath: function(mod, base) {
             var self = this,
@@ -1598,7 +1623,9 @@ build time: Aug 6 20:22
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     S.mix(loader, {
         __mixMods: function(global) {
             var mods = this.Env.mods,
@@ -1631,12 +1658,14 @@ build time: Aug 6 20:22
             mods[name] = mod;
         }
     });
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
+})(KISSY, KISSY.__loader);/**
  * for ie ,find current executive script ,then infer module name
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     S.mix(loader, {
         //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
         // 如果找不到，返回发送前那个脚本
@@ -1664,7 +1693,7 @@ build time: Aug 6 20:22
             S.log("interactive src :" + src);
             //注意：模块名不包含后缀名以及参数，所以去除
             //系统模块去除系统路径
-            if (src.lastIndexOf(self.Config.base, 0) == 0) {
+            if (src.lastIndexOf(self.Config.base, 0) === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
 
@@ -1673,7 +1702,7 @@ build time: Aug 6 20:22
             for (var p in packages) {
                 var p_path = packages[p].path;
                 if (packages.hasOwnProperty(p)
-                    && src.lastIndexOf(p_path, 0) == 0) {
+                    && src.lastIndexOf(p_path, 0) === 0) {
                     return utils.removePostfix(src.substring(p_path.length));
                 }
             }
@@ -1688,7 +1717,9 @@ build time: Aug 6 20:22
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
     var win = S.__HOST,
         IE = utils.IE,
         doc = win['document'],
@@ -1813,7 +1844,9 @@ build time: Aug 6 20:22
  * @description: constant member and common method holder
  */
 (function(S, loader,data) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     var win = S.__HOST,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
@@ -1897,7 +1930,9 @@ build time: Aug 6 20:22
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
     var win = S.__HOST,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement;
@@ -1985,7 +2020,9 @@ build time: Aug 6 20:22
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader,data) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
     var win = S.__HOST,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
@@ -2020,7 +2057,9 @@ build time: Aug 6 20:22
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
     var win = S.__HOST,
         doc = win['document'],
         head = doc.getElementsByTagName('head')[0] || doc.documentElement,
@@ -2234,7 +2273,9 @@ build time: Aug 6 20:22
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
     S.mix(S, loader);
 
     /**
@@ -2383,6 +2424,8 @@ build time: Aug 6 20:22
                     xml.loadXML(data);
                 }
             } catch(e) {
+                S.log("parseXML error : ");
+                S.log(e);
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
@@ -2444,7 +2487,9 @@ build time: Aug 6 20:22
          */
         available: function(id, fn) {
             id = (id + EMPTY).match(RE_IDSTR)[1];
-            if (!id || !S.isFunction(fn)) return;
+            if (!id || !S.isFunction(fn)) {
+                return;
+            }
 
             var retryCount = 1,
 
@@ -2510,8 +2555,10 @@ build time: Aug 6 20:22
             var notframe = false;
 
             try {
-                notframe = win['frameElement'] == null;
+                notframe = (win['frameElement'] === null);
             } catch(e) {
+                S.log("frameElement error : ");
+                S.log(e);
             }
 
             if (doScroll && notframe) {
@@ -2521,7 +2568,9 @@ build time: Aug 6 20:22
                         doScroll('left');
                         fire();
                     } catch(ex) {
-                        setTimeout(readyScroll, 50);
+                        S.log("detect document ready : ");
+                        S.log(ex);
+                        setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 }
 
@@ -2566,7 +2615,7 @@ build time: Aug 6 20:22
  * @description: 为了和 1.1.7 及以前版本保持兼容，务实与创新，兼容与革新 ！
  * @author yiminghe@gmail.com
  */
-(function(S, undef) {
+(function(S) {
     S.config({
         combine:{
             core:['dom','ua','event','node','json','ajax','anim','base','cookie']

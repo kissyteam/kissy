@@ -3,17 +3,20 @@
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
-    if (S.use) return;
+    if (S.use) {
+        return;
+    }
     var isWebKit = utils.isWebKit,
+        CSS_POLL_INTERVAL = 100,
         /**
          * central poll for link node
          */
             timer = null,
 
         monitors = {
-        /**
-         * node.href:{node:node,callback:callback}
-         */
+            /**
+             * node.href:{node:node,callback:callback}
+             */
         };
 
     function startCssTimer() {
@@ -64,7 +67,7 @@
             timer = null;
             S.log("end css polling");
         } else {
-            timer = setTimeout(ccsPoll, 100);
+            timer = setTimeout(ccsPoll, CSS_POLL_INTERVAL);
         }
     }
 

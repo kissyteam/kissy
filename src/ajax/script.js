@@ -7,6 +7,8 @@ KISSY.add("ajax/script", function(S, io) {
 
     var doc = document;
 
+    var OK_CODE = 200,ERROR_CODE = 500;
+
     io.setupConfig({
         accepts:{
             script:"text/javascript, " +
@@ -101,11 +103,11 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Callback if not abort
                 if (!abort && event != "error") {
-                    xhrObj.callback(200, "success");
+                    xhrObj.callback(OK_CODE, "success");
                 }
                 // 非 ie<9 可以判断出来
                 else if (event == "error") {
-                    xhrObj.callback(500, "scripterror");
+                    xhrObj.callback(ERROR_CODE, "scripterror");
                 }
             }
         },

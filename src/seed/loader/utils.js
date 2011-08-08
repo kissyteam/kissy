@@ -3,10 +3,12 @@
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if (S.use) return;
+    if (S.use) {
+        return;
+    }
     S.mix(utils, {
-        isWebKit:!!navigator.userAgent.match(/AppleWebKit/),
-        IE : !!navigator.userAgent.match(/MSIE/),
+        isWebKit:!!navigator['userAgent'].match(/AppleWebKit/),
+        IE : !!navigator['userAgent'].match(/MSIE/),
         isCss:function(url) {
             return /\.css(?:\?|$)/i.test(url);
         },

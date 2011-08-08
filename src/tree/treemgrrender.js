@@ -17,7 +17,7 @@ KISSY.add("tree/treemgrrender", function(S) {
 
     S.augment(TreeMgrRender, {
         __renderUI:function() {
-            this.get("el").addClass(this.getCls("tree-root")).attr("role", "tree")[0].hideFocus = true;
+            this.get("el").addClass(this.getCls("tree-root")).attr("role", "tree")[0]['hideFocus'] = true;
             this.get("rowEl").addClass(this.getCls("tree-root-row"));
         },
 
@@ -29,6 +29,10 @@ KISSY.add("tree/treemgrrender", function(S) {
             this.get("el")[v ? "addClass" : "removeClass"](this.getCls(FOCUSED_CLS));
         }
     });
+
+    if (1 > 2) {
+        TreeMgrRender._uiSetShowRootNode();
+    }
 
     return TreeMgrRender;
 });

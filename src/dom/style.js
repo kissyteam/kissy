@@ -30,245 +30,250 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
 
-            _CUSTOM_STYLES: CUSTOM_STYLES,
+        _CUSTOM_STYLES: CUSTOM_STYLES,
 
-            _getComputedStyle: function(elem, name) {
-                var val = '', d = elem.ownerDocument;
+        _getComputedStyle: function(elem, name) {
+            var val = '', d = elem.ownerDocument;
 
-                if (elem[STYLE]) {
-                    val = d.defaultView.getComputedStyle(elem, null)[name];
+            if (elem[STYLE]) {
+                val = d.defaultView.getComputedStyle(elem, null)[name];
+            }
+            return val;
+        },
+
+        /**
+         * Gets or sets styles on the matches elements.
+         */
+        css: function(selector, name, val) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.css(selector, k, name[k]);
                 }
-                return val;
-            },
+                return;
+            }
 
-            /**
-             * Gets or sets styles on the matches elements.
-             */
-            css: function(selector, name, val) {
-                // suports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.css(selector, k, name[k]);
+            if (name.indexOf('-') > 0) {
+                // webkit 认识 camel-case, 其它内核只认识 cameCase
+                name = name.replace(RE_DASH, CAMELCASE_FN);
+            }
+
+            var name_str = name;
+
+            name = CUSTOM_STYLES[name] || name;
+
+            // getter
+            if (val === undefined) {
+                // supports css selector/Node/NodeList
+                var elem = DOM.get(selector), ret = '';
+
+                if (elem && elem[STYLE]) {
+                    ret = name.get ?
+                        name.get(elem, name_str) :
+                        elem[STYLE][name];
+
+                    // 有 get 的直接用自定义函数的返回值
+                    if (ret === '' && !name.get) {
+                        ret = fixComputedStyle(elem,
+                            name,
+                            DOM._getComputedStyle(elem, name));
                     }
+                }
+
+                return ret === undefined ? '' : ret;
+            }
+            // setter
+            else {
+                // normalize unsetting
+                if (val === null || val === EMPTY) {
+                    val = EMPTY;
+                }
+                // number values may need a unit
+                else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
+                    val += DEFAULT_UNIT;
+                }
+
+                // ignore negative width and height values
+                if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
                     return;
                 }
 
-                if (name.indexOf('-') > 0) {
-                    // webkit 认识 camel-case, 其它内核只认识 cameCase
-                    name = name.replace(RE_DASH, CAMELCASE_FN);
-                }
-
-                var name_str = name;
-
-                name = CUSTOM_STYLES[name] || name;
-
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var elem = DOM.get(selector), ret = '';
-
+                S.each(DOM.query(selector), function(elem) {
                     if (elem && elem[STYLE]) {
-                        ret = name.get ?
-                            name.get(elem, name_str) :
-                            elem[STYLE][name];
-
-                        // 有 get 的直接用自定义函数的返回值
-                        if (ret === '' && !name.get) {
-                            ret = fixComputedStyle(elem,
-                                name,
-                                DOM._getComputedStyle(elem, name));
-                        }
-                    }
-
-                    return ret === undefined ? '' : ret;
-                }
-                // setter
-                else {
-                    // normalize unsetting
-                    if (val === null || val === EMPTY) {
-                        val = EMPTY;
-                    }
-                    // number values may need a unit
-                    else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
-                        val += DEFAULT_UNIT;
-                    }
-
-                    // ignore negative width and height values
-                    if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
-                        return;
-                    }
-
-                    S.each(DOM.query(selector), function(elem) {
-                        if (elem && elem[STYLE]) {
-                            name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
-                            if (val === EMPTY) {
-                                if (!elem[STYLE].cssText)
-                                    elem.removeAttribute(STYLE);
-                            }
-                        }
-                    });
-                }
-            },
-
-            /**
-             * Get the current computed width for the first element in the set of matched elements or
-             * set the CSS width of each element in the set of matched elements.
-             */
-            width: function(selector, value) {
-                // getter
-                if (value === undefined) {
-                    return getWH(selector, WIDTH);
-                }
-                // setter
-                else {
-                    DOM.css(selector, WIDTH, value);
-                }
-            },
-
-            /**
-             * Get the current computed height for the first element in the set of matched elements or
-             * set the CSS height of each element in the set of matched elements.
-             */
-            height: function(selector, value) {
-                // getter
-                if (value === undefined) {
-                    return getWH(selector, HEIGHT);
-                }
-                // setter
-                else {
-                    DOM.css(selector, HEIGHT, value);
-                }
-            },
-
-            /**
-             * Show the matched elements.
-             */
-            show: function(selector) {
-
-                DOM.query(selector).each(function(elem) {
-                    if (!elem) return;
-
-                    elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
-
-                    // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
-                    if (DOM.css(elem, DISPLAY) === NONE) {
-                        var tagName = elem.tagName,
-                            old = defaultDisplay[tagName], tmp;
-
-                        if (!old) {
-                            tmp = doc.createElement(tagName);
-                            doc.body.appendChild(tmp);
-                            old = DOM.css(tmp, DISPLAY);
-                            DOM.remove(tmp);
-                            defaultDisplay[tagName] = old;
-                        }
-
-                        DOM.data(elem, DISPLAY, old);
-                        elem.style[DISPLAY] = old;
-                    }
-                });
-            },
-
-            /**
-             * Hide the matched elements.
-             */
-            hide: function(selector) {
-                DOM.query(selector).each(function(elem) {
-                    if (!elem) return;
-
-                    var style = elem.style, old = style[DISPLAY];
-                    if (old !== NONE) {
-                        if (old) {
-                            DOM.data(elem, DISPLAY, old);
-                        }
-                        style[DISPLAY] = NONE;
-                    }
-                });
-            },
-
-            /**
-             * Display or hide the matched elements.
-             */
-            toggle: function(selector) {
-                DOM.query(selector).each(function(elem) {
-                    if (elem) {
-                        if (DOM.css(elem, DISPLAY) === NONE) {
-                            DOM.show(elem);
-                        } else {
-                            DOM.hide(elem);
-                        }
-                    }
-                });
-            },
-
-            /**
-             * Creates a stylesheet from a text blob of rules.
-             * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
-             * @param {String} cssText The text containing the css rules
-             * @param {String} id An id to add to the stylesheet for later removal
-             */
-            addStyleSheet: function(refWin, cssText, id) {
-                if (S.isString(refWin)) {
-                    id = cssText;
-                    cssText = refWin;
-                    refWin = window;
-                }
-                refWin = DOM.get(refWin);
-                var win = DOM._getWin(refWin),doc = win.document;
-                var elem;
-
-                if (id && (id = id.replace('#', EMPTY))) {
-                    elem = DOM.get('#' + id, doc);
-                }
-
-                // 仅添加一次，不重复添加
-                if (elem) {
-                    return;
-                }
-
-                elem = DOM.create('<style>', { id: id }, doc);
-
-                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
-                DOM.get('head', doc).appendChild(elem);
-
-                if (elem.styleSheet) { // IE
-                    elem.styleSheet.cssText = cssText;
-                } else { // W3C
-                    elem.appendChild(doc.createTextNode(cssText));
-                }
-            },
-
-            unselectable:function(selector) {
-                DOM.query(selector).each(function(elem) {
-                    if (elem) {
-                        if (UA['gecko']) {
-                            elem.style['MozUserSelect'] = 'none';
-                        }
-                        else if (UA['webkit']) {
-                            elem.style['KhtmlUserSelect'] = 'none';
-                        } else {
-                            if (UA['ie'] || UA['opera']) {
-                                var e,i = 0,
-                                    els = elem.getElementsByTagName("*");
-                                elem.setAttribute("unselectable", 'on');
-                                while (( e = els[ i++ ] )) {
-                                    switch (e.tagName.toLowerCase()) {
-                                        case 'iframe' :
-                                        case 'textarea' :
-                                        case 'input' :
-                                        case 'select' :
-                                            /* Ignore the above tags */
-                                            break;
-                                        default :
-                                            e.setAttribute("unselectable", 'on');
-                                    }
-                                }
+                        name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
+                        if (val === EMPTY) {
+                            if (!elem[STYLE].cssText) {
+                                elem.removeAttribute(STYLE);
                             }
                         }
                     }
                 });
             }
-        });
+        },
+
+        /**
+         * Get the current computed width for the first element in the set of matched elements or
+         * set the CSS width of each element in the set of matched elements.
+         */
+        width: function(selector, value) {
+            // getter
+            if (value === undefined) {
+                return getWH(selector, WIDTH);
+            }
+            // setter
+            else {
+                DOM.css(selector, WIDTH, value);
+            }
+        },
+
+        /**
+         * Get the current computed height for the first element in the set of matched elements or
+         * set the CSS height of each element in the set of matched elements.
+         */
+        height: function(selector, value) {
+            // getter
+            if (value === undefined) {
+                return getWH(selector, HEIGHT);
+            }
+            // setter
+            else {
+                DOM.css(selector, HEIGHT, value);
+            }
+        },
+
+        /**
+         * Show the matched elements.
+         */
+        show: function(selector) {
+
+            DOM.query(selector).each(function(elem) {
+                if (!elem) {
+                    return;
+                }
+
+                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+
+                // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
+                if (DOM.css(elem, DISPLAY) === NONE) {
+                    var tagName = elem.tagName,
+                        old = defaultDisplay[tagName], tmp;
+
+                    if (!old) {
+                        tmp = doc.createElement(tagName);
+                        doc.body.appendChild(tmp);
+                        old = DOM.css(tmp, DISPLAY);
+                        DOM.remove(tmp);
+                        defaultDisplay[tagName] = old;
+                    }
+
+                    DOM.data(elem, DISPLAY, old);
+                    elem.style[DISPLAY] = old;
+                }
+            });
+        },
+
+        /**
+         * Hide the matched elements.
+         */
+        hide: function(selector) {
+            DOM.query(selector).each(function(elem) {
+                if (!elem) {
+                    return;
+                }
+
+                var style = elem.style, old = style[DISPLAY];
+                if (old !== NONE) {
+                    if (old) {
+                        DOM.data(elem, DISPLAY, old);
+                    }
+                    style[DISPLAY] = NONE;
+                }
+            });
+        },
+
+        /**
+         * Display or hide the matched elements.
+         */
+        toggle: function(selector) {
+            DOM.query(selector).each(function(elem) {
+                if (elem) {
+                    if (DOM.css(elem, DISPLAY) === NONE) {
+                        DOM.show(elem);
+                    } else {
+                        DOM.hide(elem);
+                    }
+                }
+            });
+        },
+
+        /**
+         * Creates a stylesheet from a text blob of rules.
+         * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+         * @param {String} cssText The text containing the css rules
+         * @param {String} id An id to add to the stylesheet for later removal
+         */
+        addStyleSheet: function(refWin, cssText, id) {
+            if (S.isString(refWin)) {
+                id = cssText;
+                cssText = refWin;
+                refWin = window;
+            }
+            refWin = DOM.get(refWin);
+            var win = DOM._getWin(refWin),doc = win.document;
+            var elem;
+
+            if (id && (id = id.replace('#', EMPTY))) {
+                elem = DOM.get('#' + id, doc);
+            }
+
+            // 仅添加一次，不重复添加
+            if (elem) {
+                return;
+            }
+
+            elem = DOM.create('<style>', { id: id }, doc);
+
+            // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
+            DOM.get('head', doc).appendChild(elem);
+
+            if (elem.styleSheet) { // IE
+                elem.styleSheet.cssText = cssText;
+            } else { // W3C
+                elem.appendChild(doc.createTextNode(cssText));
+            }
+        },
+
+        unselectable:function(selector) {
+            DOM.query(selector).each(function(elem) {
+                if (elem) {
+                    if (UA['gecko']) {
+                        elem.style['MozUserSelect'] = 'none';
+                    }
+                    else if (UA['webkit']) {
+                        elem.style['KhtmlUserSelect'] = 'none';
+                    } else {
+                        if (UA['ie'] || UA['opera']) {
+                            var e,i = 0,
+                                els = elem.getElementsByTagName("*");
+                            elem.setAttribute("unselectable", 'on');
+                            while (( e = els[ i++ ] )) {
+                                switch (e.tagName.toLowerCase()) {
+                                    case 'iframe' :
+                                    case 'textarea' :
+                                    case 'input' :
+                                    case 'select' :
+                                        /* Ignore the above tags */
+                                        break;
+                                    default :
+                                        e.setAttribute("unselectable", 'on');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
 
     // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
     if (docElem[STYLE][CSS_FLOAT] !== undefined) {
@@ -328,8 +333,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-        requires:["dom/base","ua"]
-    });
+    requires:["dom/base","ua"]
+});
 
 /**
  * NOTES:

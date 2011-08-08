@@ -57,6 +57,8 @@
                     xml.loadXML(data);
                 }
             } catch(e) {
+                S.log("parseXML error : ");
+                S.log(e);
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
@@ -118,7 +120,9 @@
          */
         available: function(id, fn) {
             id = (id + EMPTY).match(RE_IDSTR)[1];
-            if (!id || !S.isFunction(fn)) return;
+            if (!id || !S.isFunction(fn)) {
+                return;
+            }
 
             var retryCount = 1,
 
@@ -184,8 +188,10 @@
             var notframe = false;
 
             try {
-                notframe = win['frameElement'] == null;
+                notframe = (win['frameElement'] === null);
             } catch(e) {
+                S.log("frameElement error : ");
+                S.log(e);
             }
 
             if (doScroll && notframe) {
@@ -195,7 +201,9 @@
                         doScroll('left');
                         fire();
                     } catch(ex) {
-                        setTimeout(readyScroll, 50);
+                        S.log("detect document ready : ");
+                        S.log(ex);
+                        setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 }
 

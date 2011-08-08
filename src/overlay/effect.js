@@ -1,5 +1,5 @@
 KISSY.add("overlay/effect", function(S) {
-    var NONE = 'none';
+    var NONE = 'none',DURATION = 0.5;
     var effects = {fade:["Out","In"],slide:["Up","Down"]};
 
     function Effect() {
@@ -9,7 +9,7 @@ KISSY.add("overlay/effect", function(S) {
         effect:{
             value:{
                 effect:NONE,
-                duration:0.5,
+                duration:DURATION,
                 easing:'easeOut'
             },
             setter:function(v) {

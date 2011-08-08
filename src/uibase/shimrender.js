@@ -35,7 +35,12 @@ KISSY.add("uibase/shimrender", function(S, Node) {
             }
         }
     };
+
+    if (1 > 2) {
+        Shim._uiSetShim();
+    }
+
     return Shim;
 }, {
-        requires:['node']
-    });
+    requires:['node']
+});

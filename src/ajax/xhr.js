@@ -4,10 +4,19 @@
  */
 KISSY.add("ajax/xhr", function(S, io) {
 
+
+    var OK_CODE = 200,
+        NO_CONTENT_CODE = 204,
+        NOT_FOUND_CODE = 404,
+        NO_CONTENT_CODE2 = 1223;
+
+
     function createStandardXHR() {
         try {
             return new window.XMLHttpRequest();
         } catch(e) {
+            S.log("createStandardXHR error : ");
+            S.log(e);
         }
         return undefined;
     }
@@ -16,6 +25,8 @@ KISSY.add("ajax/xhr", function(S, io) {
         try {
             return new window.ActiveXObject("Microsoft.XMLHTTP");
         } catch(e) {
+            S.log("createActiveXHR error");
+            S.log(e);
         }
         return undefined;
     }
@@ -81,6 +92,8 @@ KISSY.add("ajax/xhr", function(S, io) {
                         xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
                     }
                 } catch(e) {
+                    S.log("setRequestHeader in xhr error : ");
+                    S.log(e);
                 }
 
                 xhr.send(c.hasContent && c.data || null);
@@ -135,6 +148,8 @@ KISSY.add("ajax/xhr", function(S, io) {
                             try {
                                 var statusText = xhr.statusText;
                             } catch(e) {
+                                S.log("xhr statustext error : ");
+                                S.log(e);
                                 // We normalize with Webkit giving an empty statusText
                                 statusText = "";
                             }
@@ -144,10 +159,10 @@ KISSY.add("ajax/xhr", function(S, io) {
                             // (success with no data won't get notified, that's the best we
                             // can do given current implementations)
                             if (!status && io.isLocal && !c.crossDomain) {
-                                status = xhrObj.responseText ? 200 : 404;
+                                status = xhrObj.responseText ? OK_CODE : NOT_FOUND_CODE;
                                 // IE - #1450: sometimes returns 1223 when it should be 204
-                            } else if (status === 1223) {
-                                status = 204;
+                            } else if (status === NO_CONTENT_CODE2) {
+                                status = NO_CONTENT_CODE;
                             }
 
                             xhrObj.callback(status, statusText);

@@ -5,13 +5,13 @@
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
-        '{prefixCls}menu-button-caption">{content}</div>' +
+        '{prefixCls}menu-button-caption">{content}<' + '/div>' +
         '<div class="{prefixCls}inline-block ' +
-        '{prefixCls}menu-button-dropdown">&nbsp;</div>',
+        '{prefixCls}menu-button-dropdown">&nbsp;<' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    return UIBase.create(Button.Render, {
+    var MenuButtonRender = UIBase.create(Button.Render, {
 
         createDom:function() {
             var innerEl = this.get("innerEl"),
@@ -55,6 +55,12 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             }
         }
     });
+
+    if (1 > 2) {
+        MenuButtonRender._uiSetCollapsed();
+    }
+
+    return MenuButtonRender;
 }, {
     requires:['uibase','button']
 });

@@ -3,7 +3,9 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
     var win = S.__HOST,
         IE = utils.IE,
         doc = win['document'],

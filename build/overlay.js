@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 16:01
 */
 /**
  * KISSY Overlay
@@ -67,14 +67,16 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 //    };
 
 
-    var KEY_TAB = 9;
+    var KEY_TAB = Node.KeyCodes.TAB;
 
     function _onKey(/*Normalized Event*/ evt) {
 
         var self = this,
             keyCode = evt.keyCode,
             firstFocusItem = self.get("el");
-        if (keyCode != KEY_TAB) return;
+        if (keyCode != KEY_TAB) {
+            return;
+        }
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -153,12 +155,12 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 
     return Aria;
 }, {
-        requires:["node"]
-    });/**
+    requires:["node"]
+});/**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/aria", function() {
+KISSY.add("overlay/aria", function(S,Event) {
     function Aria() {
     }
 
@@ -174,7 +176,7 @@ KISSY.add("overlay/aria", function() {
             var self = this,el = self.get("el");
             if (self.get("aria")) {
                 el.on("keydown", function(e) {
-                    if (e.keyCode === 27) {
+                    if (e.keyCode === Event.KeyCodes.ESC) {
                         self.hide();
                         e.halt();
                     }
@@ -183,8 +185,10 @@ KISSY.add("overlay/aria", function() {
         }
     };
     return Aria;
+},{
+    requires:['event']
 });KISSY.add("overlay/effect", function(S) {
-    var NONE = 'none';
+    var NONE = 'none',DURATION = 0.5;
     var effects = {fade:["Out","In"],slide:["Up","Down"]};
 
     function Effect() {
@@ -194,7 +198,7 @@ KISSY.add("overlay/aria", function() {
         effect:{
             value:{
                 effect:NONE,
-                duration:0.5,
+                duration:DURATION,
                 easing:'easeOut'
             },
             setter:function(v) {
@@ -324,6 +328,8 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
  */
 KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 
+    var POPUP_DELAY = 100;
+
     function Popup(container, config) {
         var self = this;
 
@@ -375,7 +381,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
-                }, 100);
+                }, POPUP_DELAY);
             };
 
             trigger.on('mouseenter', self.__mouseEnterPopup);
@@ -404,7 +410,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
             var self = this;
             self._hiddenTimer = S.later(function() {
                 self.hide();
-            }, 120);
+            }, POPUP_DELAY);
         },
 
         _clearHiddenTimer: function() {

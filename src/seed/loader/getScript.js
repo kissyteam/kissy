@@ -3,7 +3,10 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
-    if ("require" in this) return;
+    if ("require" in this) {
+        return;
+    }
+    var MILLISECONDS_OF_SECOND = 1000;
     var scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -103,7 +106,7 @@
                     timer = S.later(function() {
                         timer = undefined;
                         error();
-                    }, (timeout || this.Config.timeout) * 1000);
+                    }, (timeout || this.Config.timeout) * MILLISECONDS_OF_SECOND);
                 }
             }
             head.insertBefore(node, head.firstChild);

@@ -11,7 +11,7 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
     });
 
     Component.UIStore.setUIByClass(CHECKED_TREE_CLS, {
-        priority:40,
+        priority:Component.UIStore.PRIORITY.LEVEL4,
         ui:CheckTree
     });
 

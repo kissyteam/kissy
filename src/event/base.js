@@ -386,6 +386,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         target[ eventType ]();
                     }
                 } catch (ieError) {
+                    S.log("trigger action error : ");
                     S.log(ieError);
                 }
 

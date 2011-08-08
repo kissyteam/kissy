@@ -3,7 +3,9 @@
  * @author yiminghe@gmail.com
  */
 (function(S,data) {
-    if("require" in this) return;
+    if("require" in this) {
+        return;
+    }
     S.mix(data, {
         "LOADING" : 1,
         "LOADED" : 2,
