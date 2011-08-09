@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 18:58
 */
 /*
  * @module kissy
@@ -275,7 +275,7 @@ build time: Aug 9 18:39
              */
             version: '1.20dev',
 
-            buildTime:'20110809183952',
+            buildTime:'20110809185836',
 
             /**
              * Returns a new object containing all of the properties of
@@ -7908,7 +7908,9 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, self);
+            if (newNode) {
+                DOM[insertType](newNode, self);
+            }
             return self;
 
         };

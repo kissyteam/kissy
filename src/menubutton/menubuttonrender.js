@@ -28,7 +28,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         _uiSetContent:function(v) {
             var caption = this.get("el").one("." + this.getCls(CAPTION_CLS));
             caption.html("");
-            caption.append(v);
+            v && caption.append(v);
         },
 
         _uiSetCollapsed:function(v) {

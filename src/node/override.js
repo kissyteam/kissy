@@ -18,7 +18,9 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, self);
+            if (newNode) {
+                DOM[insertType](newNode, self);
+            }
             return self;
 
         };

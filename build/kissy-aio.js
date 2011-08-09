@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 18:58
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 9 18:39
              */
             version: '1.20dev',
 
-            buildTime:'20110809183952',
+            buildTime:'20110809185836',
 
             /**
              * Returns a new object containing all of the properties of
@@ -7722,7 +7722,9 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, self);
+            if (newNode) {
+                DOM[insertType](newNode, self);
+            }
             return self;
 
         };
@@ -25720,7 +25722,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 18:58
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25966,7 +25968,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         _uiSetContent:function(v) {
             var caption = this.get("el").one("." + this.getCls(CAPTION_CLS));
             caption.html("");
-            caption.append(v);
+            v && caption.append(v);
         },
 
         _uiSetCollapsed:function(v) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 18:58
 */
 /**
  * combination of menu and button ,similar to native select
@@ -247,7 +247,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         _uiSetContent:function(v) {
             var caption = this.get("el").one("." + this.getCls(CAPTION_CLS));
             caption.html("");
-            caption.append(v);
+            v && caption.append(v);
         },
 
         _uiSetCollapsed:function(v) {
