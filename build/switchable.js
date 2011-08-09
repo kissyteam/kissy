@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 /**
  * Switchable
@@ -2084,8 +2084,8 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
 KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
 
     var EVENT_BEFORE_SWITCH = 'beforeSwitch',
-        IMG_SRC = 'img-src',
-        AREA_DATA = 'area-data',
+        IMG_SRC = 'img',
+        AREA_DATA = 'textarea',
         FLAGS = { };
 
     FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
@@ -2108,9 +2108,12 @@ KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
             init: function(host) {
                 var DataLazyload = S.require("datalazyload"),
                     cfg = host.config,
-                    type = cfg.lazyDataType,
-                    flag = FLAGS[type];
-
+                    type, flag;
+                if (cfg.lazyDataType === 'img-src') cfg.lazyDataType = IMG_SRC;
+                if (cfg.lazyDataType === 'area-data') cfg.lazyDataType = AREA_DATA;
+                
+                type = cfg.lazyDataType;
+                flag = FLAGS[type];
                 // 没有延迟项
                 if (!DataLazyload || !type || !flag) {
                     return;

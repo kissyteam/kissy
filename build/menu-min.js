@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 KISSY.add("menu/delmenuitem",function(i,g,f,j,a,b){var h=g.all;i=b.CLS;var d=b.DEL_CLS;f=f.create(a,{_performInternal:function(c){if(h(c.target).hasClass(this.getCls(d))){this.get("parent").removeChild(this,true);this.get("parent").set("highlightedItem",null);this.get("parent").fire("delete",{target:this});return true}return a.prototype._performInternal.call(this,c)},_handleKeydown:function(c){if(c.keyCode===g.KeyCodes.D){this.get("parent").removeChild(this,true);this.get("parent").set("highlightedItem",
 null);this.get("parent").fire("delete",{target:this});return true}}},{ATTRS:{delTooltip:{view:true}},DefaultRender:b});j.UIStore.setUIByClass(i,{priority:j.UIStore.PRIORITY.LEVEL4,ui:f});return f},{requires:["node","uibase","component","./menuitem","./delmenuitemrender"]});

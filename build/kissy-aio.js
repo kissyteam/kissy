@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 9 18:11
              */
             version: '1.20dev',
 
-            buildTime:'20110809181126',
+            buildTime:'20110809183952',
 
             /**
              * Returns a new object containing all of the properties of
@@ -11077,7 +11077,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12502,7 +12502,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:38
 */
 /**
  * 数据延迟加载组件
@@ -12895,6 +12895,8 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         loadCustomLazyData: function(containers, type) {
             var self = this, area, imgs;
 
+            if (type === 'img-src') type = 'img';
+            
             // 支持数组
             if (!S.isArray(containers)) {
                 containers = [DOM.get(containers)];
@@ -12903,7 +12905,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
-                    case 'img-src':
+                    case 'img':
                         if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
@@ -13003,7 +13005,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13241,7 +13243,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 /**
  * @module   Flash 全局静态类
@@ -13752,7 +13754,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:38
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -14995,7 +14997,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 /**
  * resizable support for kissy
@@ -15169,7 +15171,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 /**
  * UIBase.Align
@@ -16294,7 +16296,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
         __renderUI:function() {
             var self = this,
                 closeBtn = self.get("closeBtn"),
-                el = self.get("contentEl");
+                el = self.get("el");
 
             if (!closeBtn && el) {
                 closeBtn = new Node("<a " +
@@ -17231,7 +17233,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:38
 */
 /**
  * container can delegate event for its children
@@ -18031,7 +18033,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 /**
  * Switchable
@@ -20114,8 +20116,8 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
 KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
 
     var EVENT_BEFORE_SWITCH = 'beforeSwitch',
-        IMG_SRC = 'img-src',
-        AREA_DATA = 'area-data',
+        IMG_SRC = 'img',
+        AREA_DATA = 'textarea',
         FLAGS = { };
 
     FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
@@ -20138,9 +20140,12 @@ KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
             init: function(host) {
                 var DataLazyload = S.require("datalazyload"),
                     cfg = host.config,
-                    type = cfg.lazyDataType,
-                    flag = FLAGS[type];
-
+                    type, flag;
+                if (cfg.lazyDataType === 'img-src') cfg.lazyDataType = IMG_SRC;
+                if (cfg.lazyDataType === 'area-data') cfg.lazyDataType = AREA_DATA;
+                
+                type = cfg.lazyDataType;
+                flag = FLAGS[type];
                 // 没有延迟项
                 if (!DataLazyload || !type || !flag) {
                     return;
@@ -20628,7 +20633,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 /**
  * KISSY Overlay
@@ -20644,7 +20649,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("contentboxrender"),
         require("positionrender"),
         require("loadingrender"),
-        UA['ie'] == 6 ? require("shimrender") : null,
+        UA['ie'] === 6 ? require("shimrender") : null,
         require("closerender"),
         require("maskrender")
     ], {
@@ -21108,7 +21113,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -21637,7 +21642,9 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                     if (self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    input.blur();
+                    try{
+                        input.blur();
+                    }catch(e){}
 
                     // 提交表单
                     self._submitForm();
@@ -22287,7 +22294,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 /**
  * @fileoverview 图像放大区域
@@ -22912,7 +22919,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:38
 */
 /**
  * KISSY Calendar
@@ -24191,7 +24198,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 /**
  * deletable menuitem
@@ -25443,7 +25450,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:38
 */
 /**
  * Model and Control for button
@@ -25713,7 +25720,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 /**
  * combination of menu and button ,similar to native select
@@ -26198,7 +26205,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 /**
  * @author  常胤 (lzlu.com)

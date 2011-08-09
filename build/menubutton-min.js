@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:10
+build time: Aug 9 18:39
 */
 KISSY.add("menubutton/menubutton",function(e,i,j,f,g,m,l){var c=j.all,d=j.KeyCodes,k=i.create(f,[l.DecorateChild],{hideMenu:function(){this.get("menu")&&this.get("menu").hide()},showMenu:function(){var a=this.get("view"),b=a.get("el"),h=this.get("menu");if(!h.get("visible")){h.set("align",e.mix({node:b},this.get("menuAlign")));h.show();b.attr("aria-haspopup",h.get("el").attr("id"));a.set("collapsed",false)}},_reposition:function(){var a=this.get("menu"),b=this.get("el");a&&a.get("visible")&&a.set("align",
 e.mix({node:b},this.get("menuAlign")))},bindUI:function(){var a=this,b=this.get("menu");b.on("afterActiveItemChange",function(h){a.set("activeItem",h.newVal)});b.on("click",function(h){a.fire("click",{target:h.target})});b.on("hide",function(){a.get("view").set("collapsed",true)});c(window).on("resize",a._reposition,a)},_handleKeyEventInternal:function(a){var b=this.get("menu");if(a.keyCode==d.SPACE){a.preventDefault();if(a.type!="keyup")return}else if(a.type!="keydown")return;if(b&&b.get("visible")){b=

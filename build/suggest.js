@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:11
+build time: Aug 9 18:39
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -530,7 +530,9 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                     if (self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    input.blur();
+                    try{
+                        input.blur();
+                    }catch(e){}
 
                     // 提交表单
                     self._submitForm();
