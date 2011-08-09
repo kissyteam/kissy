@@ -2,17 +2,13 @@
  * testcases for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
-    var DOM = S.DOM;
+KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
+    var DOM = S.DOM,$ = Node.all;
 
     beforeEach(function() {
         this.addMatchers({
             toBeEqual: function(expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-            },
-
-            toBeArrayEq:function(expected) {
-                var actual = this.actual;
             }
         });
     });
@@ -222,6 +218,65 @@ KISSY.use("ua,overlay,dd,resizable", function(S, UA, Overlay) {
 
             });
 
+        });
+
+        describe("方位能够自由指定", function() {
+
+            it("render works", function() {
+                var div = $("<div/>").appendTo("body");
+                var o = new Overlay({
+                    width:400,
+                    render:div,
+                    elCls:"popup",
+                    resize:{
+                        handlers:["t"]
+                    },
+                    content:"render by javascript"
+                });
+                o.render();
+                expect(div.first().equals(o.get("el"))).toBe(true);
+                o.destroy();
+                expect(div.children().length).toBe(0);
+                div.remove();
+            });
+
+
+            it("no render works", function() {
+                var div = $("<div/>").appendTo("body");
+                var o = new Overlay({
+                    width:400,
+                    elCls:"popup",
+                    resize:{
+                        handlers:["t"]
+                    },
+                    content:"render by javascript"
+                });
+                o.render();
+                expect(o.get("el").parent().equals($("body"))).toBe(true);
+                o.destroy();
+                div.remove();
+            });
+
+
+            it("elBefore works", function() {
+                var div = $("<div/>").appendTo("body");
+                var o = new Overlay({
+                    width:400,
+                    // 同时指定优先 elBefore
+                    elBefore:div,
+                    render:div,
+                    elCls:"popup",
+                    resize:{
+                        handlers:["t"]
+                    },
+                    content:"render by javascript"
+                });
+                o.render();
+                expect(o.get("el").next().equals(div)).toBe(true);
+                o.destroy();
+                expect(div.prev().equals(o.get("el").next())).toBe(false);
+                div.remove();
+            });
         });
 
 
