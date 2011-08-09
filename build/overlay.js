@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 20:30
 */
 /**
  * KISSY Overlay
@@ -241,11 +241,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         Effect
     ], {}, {
         ATTRS:{
-            elBefore:{
-                valueFn:function() {
-                    return S.all("body").first();
-                }
-            },
             // 是否支持焦点处理
             focusable:{
                 value:false

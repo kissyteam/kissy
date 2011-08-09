@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:58
+build time: Aug 9 20:36
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 9 18:58
              */
             version: '1.20dev',
 
-            buildTime:'20110809185836',
+            buildTime:'20110809203622',
 
             /**
              * Returns a new object containing all of the properties of
@@ -15173,7 +15173,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 20:30
 */
 /**
  * UIBase.Align
@@ -16124,13 +16124,17 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             var self = this;
             // 新建的节点才需要摆放定位
             if (self.__boxRenderNew) {
-                var render = self.get("render") || $("body"),
-                    el = self.get("el");
-                var elBefore = self.get("elBefore");
+                var render = self.get("render"),
+                    el = self.get("el"),
+                    elBefore = self.get("elBefore");
                 if (elBefore) {
                     el.insertBefore(elBefore);
-                } else {
-                    $(render).append(el);
+                }
+                else if (render) {
+                    el.appendTo(render);
+                }
+                else {
+                    el.appendTo("body");
                 }
             }
         },
@@ -20635,7 +20639,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 20:30
 */
 /**
  * KISSY Overlay
@@ -20875,11 +20879,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         Effect
     ], {}, {
         ATTRS:{
-            elBefore:{
-                valueFn:function() {
-                    return S.all("body").first();
-                }
-            },
             // 是否支持焦点处理
             focusable:{
                 value:false

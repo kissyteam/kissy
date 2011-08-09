@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 9 20:30
 */
 /**
  * UIBase.Align
@@ -952,13 +952,17 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             var self = this;
             // 新建的节点才需要摆放定位
             if (self.__boxRenderNew) {
-                var render = self.get("render") || $("body"),
-                    el = self.get("el");
-                var elBefore = self.get("elBefore");
+                var render = self.get("render"),
+                    el = self.get("el"),
+                    elBefore = self.get("elBefore");
                 if (elBefore) {
                     el.insertBefore(elBefore);
-                } else {
-                    $(render).append(el);
+                }
+                else if (render) {
+                    el.appendTo(render);
+                }
+                else {
+                    el.appendTo("body");
                 }
             }
         },
