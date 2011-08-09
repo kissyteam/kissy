@@ -14,6 +14,8 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/06/08)
+ - [*] switchable 中针对 datalazyload 的配置项 lazyDataType 值变更, 支持1) img 或 img-src, 2) textarea 或 area-data, 这对应于 Datalazyload.loadCustomLazyData 的 type 参数保持一致
+
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
 

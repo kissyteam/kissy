@@ -389,6 +389,8 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         loadCustomLazyData: function(containers, type) {
             var self = this, area, imgs;
 
+            if (type === 'img-src') type = 'img';
+            
             // 支持数组
             if (!S.isArray(containers)) {
                 containers = [DOM.get(containers)];
@@ -397,7 +399,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             // 遍历处理
             S.each(containers, function(container) {
                 switch (type) {
-                    case 'img-src':
+                    case 'img':
                         if (container.nodeName === 'IMG') { // 本身就是图片
                             imgs = [container];
                         } else {
