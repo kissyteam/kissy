@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 18:47
 */
 /**
  * KISSY Overlay
@@ -18,27 +18,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("positionrender"),
         require("loadingrender"),
         UA['ie'] == 6 ? require("shimrender") : null,
+        require("closerender"),
         require("maskrender")
     ], {
-
         renderUI:function() {
             this.get("el").addClass(this.get("prefixCls") + "overlay");
-        }
-
-    }, {
-        ATTRS:{
-            elBefore:{
-                valueFn:function() {
-                    return S.one(this.get("render")[0].firstChild);
-                }
-            },
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            visibleMode:{
-                value:"visibility"
-            }
         }
     });
 }, {
@@ -67,14 +51,16 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 //    };
 
 
-    var KEY_TAB = 9;
+    var KEY_TAB = Node.KeyCodes.TAB;
 
     function _onKey(/*Normalized Event*/ evt) {
 
         var self = this,
             keyCode = evt.keyCode,
             firstFocusItem = self.get("el");
-        if (keyCode != KEY_TAB) return;
+        if (keyCode != KEY_TAB) {
+            return;
+        }
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -153,12 +139,12 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 
     return Aria;
 }, {
-        requires:["node"]
-    });/**
+    requires:["node"]
+});/**
  * http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/aria", function() {
+KISSY.add("overlay/aria", function(S,Event) {
     function Aria() {
     }
 
@@ -174,7 +160,7 @@ KISSY.add("overlay/aria", function() {
             var self = this,el = self.get("el");
             if (self.get("aria")) {
                 el.on("keydown", function(e) {
-                    if (e.keyCode === 27) {
+                    if (e.keyCode === Event.KeyCodes.ESC) {
                         self.hide();
                         e.halt();
                     }
@@ -183,8 +169,10 @@ KISSY.add("overlay/aria", function() {
         }
     };
     return Aria;
+},{
+    requires:['event']
 });KISSY.add("overlay/effect", function(S) {
-    var NONE = 'none';
+    var NONE = 'none',DURATION = 0.5;
     var effects = {fade:["Out","In"],slide:["Up","Down"]};
 
     function Effect() {
@@ -194,7 +182,7 @@ KISSY.add("overlay/aria", function() {
         effect:{
             value:{
                 effect:NONE,
-                duration:0.5,
+                duration:DURATION,
                 easing:'easeOut'
             },
             setter:function(v) {
@@ -247,17 +235,34 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("position"),
         require("loading"),
         require("align"),
+        require("close"),
         require("resize"),
         require("mask"),
         Effect
     ], {}, {
         ATTRS:{
+            elBefore:{
+                valueFn:function() {
+                    return S.all("body").first();
+                }
+            },
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+            closable:{
+                // overlay 默认没 X
+                value:false
+            },
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
             },
             allowTextSelection_:{
                 value:true
+            },
+            visibleMode:{
+                value:"visibility"
             }
         }
     });
@@ -274,7 +279,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
 
     return UIBase.create(OverlayRender, [
         require("stdmodrender"),
-        require("closerender"),
         AriaRender
     ]);
 }, {
@@ -283,7 +287,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
  * KISSY.Dialog
  * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -291,16 +295,21 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
     var Dialog = UIBase.create(Overlay, [
         require("stdmod"),
-        require("close"),
         require("drag"),
         require("constrain"),
         Aria
     ], {
         renderUI:function() {
             var self = this;
-            self.get("el").addClass(this.get("prefixCls")+"dialog");
+            self.get("el").addClass(this.get("prefixCls") + "dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
+        }
+    }, {
+        ATTRS:{
+            closable:{
+                value:true
+            }
         }
     });
 
@@ -323,6 +332,8 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
  * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('overlay/popup', function(S, Overlay, undefined) {
+
+    var POPUP_DELAY = 100;
 
     function Popup(container, config) {
         var self = this;
@@ -375,7 +386,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
-                }, 100);
+                }, POPUP_DELAY);
             };
 
             trigger.on('mouseenter', self.__mouseEnterPopup);
@@ -404,7 +415,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
             var self = this;
             self._hiddenTimer = S.later(function() {
                 self.hide();
-            }, 120);
+            }, POPUP_DELAY);
         },
 
         _clearHiddenTimer: function() {

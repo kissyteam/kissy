@@ -6,7 +6,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
 
     var HIGHLIGHTED_CLS = "menuitem-highlight",
-        CONTENTBOX_CLS = "contentbox",
         SELECTED_CLS = "menuitem-selected",
         CHECKED_CLS = "menuitem-checked",
         ACTIVE_CLS = "menuitem-active",
@@ -27,11 +26,10 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    var MenuItemRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            var cls = self.getCls(CONTENTBOX_CLS);
             el.addClass(self.getCls(EL_CLS))
                 .attr("role", "menuitem");
             self.get("contentEl").addClass(self.getCls(CONTENT_CLS));
@@ -79,7 +77,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
         _uiSetActive:function(v) {
             var self = this,el = this.get("el");
-            el[v?'addClass':'removeClass'](self.getCls(ACTIVE_CLS))
+            el[v ? 'addClass' : 'removeClass'](self.getCls(ACTIVE_CLS))
                 .attr("aria-pressed", v);
         },
         containsElement:function(element) {
@@ -105,6 +103,12 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             }
         }
     });
+
+    if (1 > 2) {
+        MenuItemRender._uiSetSelectable()._uiSetChecked()._uiSetCheckable();
+    }
+
+    return MenuItemRender;
 }, {
     requires:['node','uibase','component']
 });

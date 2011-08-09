@@ -15,7 +15,9 @@ KISSY.add('dom/insertion', function(S, DOM) {
         newNodes = DOM.query(newNodes);
         refNodes = DOM.query(refNodes);
         var newNode = nl2frag(newNodes);
-        if (!newNode) return;
+        if (!newNode) {
+            return;
+        }
         var cloneNode;
         //fragment 一旦插入里面就空了，先复制下
         if (refNodes.length > 1) {

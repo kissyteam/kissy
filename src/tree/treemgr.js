@@ -2,7 +2,7 @@
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treemgr", function(S) {
+KISSY.add("tree/treemgr", function(S, Event) {
 
     function TreeMgr() {
     }
@@ -52,7 +52,7 @@ KISSY.add("tree/treemgr", function(S) {
 
         _handleKeyEventInternal:function(e) {
             var current = this.get("selectedItem");
-            if (e.keyCode == 13) {
+            if (e.keyCode == Event.KeyCodes.ENTER) {
                 // 传递给真正的单个子节点
                 return current._performInternal(e);
             }
@@ -95,4 +95,6 @@ KISSY.add("tree/treemgr", function(S) {
     });
 
     return TreeMgr;
+}, {
+    requires:['event']
 });

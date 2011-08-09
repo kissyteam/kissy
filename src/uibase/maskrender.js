@@ -16,7 +16,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
         mask = new Node("<div " +
             //"tabindex='-1' " +
             "class='" +
-            this.get("prefixCls") + "ext-mask'/>").prependTo(document.body);
+            this.get("prefixCls") + "ext-mask'/>").prependTo("body");
         mask.css({
                 "position":"absolute",
                 left:0,
@@ -80,7 +80,9 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 
         _maskExtHide:function() {
             num--;
-            if (num <= 0) num = 0;
+            if (num <= 0) {
+                num = 0;
+            }
             if (!num) {
                 mask && mask.css("display", "none");
                 iframe && iframe.css("display", "none");

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 17:09
 */
 /**
  * deletable menuitem
@@ -27,7 +27,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
         },
         _handleKeydown:function(e) {
             // d 键
-            if (e.keyCode == 68) {
+            if (e.keyCode === Node.KeyCodes.D) {
                 this.get("parent").removeChild(this, true);
                 this.get("parent").set("highlightedItem", null);
                 this.get("parent").fire("delete", {
@@ -47,7 +47,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
 
 
     Component.UIStore.setUIByClass(CLS, {
-        priority:40,
+        priority:Component.UIStore.PRIORITY.LEVEL4,
         ui:DelMenuItem
     });
     return DelMenuItem;
@@ -60,7 +60,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
 KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuItemRender) {
     var CLS = "menuitem-deletable",
         DEL_CLS = "menuitem-delete";
-    var DEL_TMPL = '<span class="{prefixCls}' + DEL_CLS + '" title="{tooltip}">X</span>';
+    var DEL_TMPL = '<span class="{prefixCls}' + DEL_CLS + '" title="{tooltip}">X<' + '/span>';
 
     function addDel(self) {
         self.get("contentEl").append(S.substitute(DEL_TMPL, {
@@ -69,7 +69,7 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         }));
     }
 
-    return UIBase.create(MenuItemRender, {
+    var DelMenuItemRender = UIBase.create(MenuItemRender, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(CLS))
         },
@@ -79,10 +79,10 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         _uiSetContent:function(v) {
             var self = this;
             MenuItemRender.prototype._uiSetContent.call(self, v);
-            addDel(this);
+            addDel(self);
         },
 
-        _uiSetDelTooltip:function(v) {
+        _uiSetDelTooltip:function() {
             this._uiSetContent(this.get("content"));
         }
     }, {
@@ -97,6 +97,11 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         CLS:CLS,
         DEL_CLS:DEL_CLS
     });
+
+    if (1 > 2) {
+        DelMenuItemRender._uiSetDelTooltip().delEl;
+    }
+    return DelMenuItemRender;
 
 }, {
     requires:['node','uibase','component','./menuitemrender']
@@ -114,7 +119,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    return UIBase.create(Menu, {
+    var FilterMenu = UIBase.create(Menu, {
             bindUI:function() {
                 var self = this,
                     view = self.get("view"),
@@ -227,7 +232,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             view.set("content", content.replace(strExp, function(m) {
-                                return "<span class='" + hit + "'>" + m + "</span>";
+                                return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
@@ -273,6 +278,11 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
         }
     );
 
+    if (1 > 2) {
+        FilterMenu._uiSetFilterStr();
+    }
+
+    return FilterMenu;
 }, {
     requires:['uibase','./menu','./filtermenurender']
 });/**
@@ -287,7 +297,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
-    return UIBase.create(MenuRender, {
+    var FilterMenuRender = UIBase.create(MenuRender, {
         getContentElement:function() {
             return this.get("menuContent");
         },
@@ -347,14 +357,20 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
         }
     });
 
+    if (1 > 2) {
+        FilterMenuRender._uiSetLabel();
+    }
+
+    return FilterMenuRender;
+
 }, {
     requires:['node','uibase','./menurender']
 });/**
  * menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
-
+KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
+    var KeyCodes = Event.KeyCodes;
     var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
@@ -417,7 +433,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
 
             var children = this.get("children"),len = children.length;
 
-            if (len == 0) {
+            if (len === 0) {
                 return undefined;
             }
 
@@ -426,24 +442,24 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
             //自己处理了，不要向上处理，嵌套菜单情况
             switch (e.keyCode) {
                 // esc
-                case 27:
+                case KeyCodes.ESC:
                     // TODO
                     // focus 的话手动失去焦点
                     return undefined;
                     break;
 
                 // home
-                case 36:
+                case KeyCodes.HOME:
                     this.set("highlightedItem",
                         this._getNextEnabledHighlighted(0, 1));
                     break;
                 // end
-                case 35:
+                case KeyCodes.END:
                     this.set("highlightedItem",
                         this._getNextEnabledHighlighted(len - 1, -1));
                     break;
                 // up
-                case 38:
+                case KeyCodes.UP:
                     if (!highlightedItem) {
                         destIndex = len - 1;
                     } else {
@@ -454,7 +470,7 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
                         this._getNextEnabledHighlighted(destIndex, -1));
                     break;
                 //down
-                case 40:
+                case KeyCodes.DOWN:
                     if (!highlightedItem) {
                         destIndex = 0;
                     } else {
@@ -515,14 +531,18 @@ KISSY.add("menu/menu", function(S, UIBase, Component, MenuRender) {
     });
 
     Component.UIStore.setUIByClass("menu", {
-        priority:10,
+        priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });
+
+    if (1 > 2) {
+        Menu._uiSetHighlightedItem();
+    }
 
     return Menu;
 
 }, {
-    requires:['uibase','component','./menurender','./submenu']
+    requires:['event','uibase','component','./menurender','./submenu']
 });
 
 /**
@@ -551,7 +571,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             this.get("parent").set("highlightedItem", undefined);
         },
 
-        _performInternal:function(e) {
+        _performInternal:function() {
             // 可选
             if (this.get("selectable")) {
                 this.set("selected", true);
@@ -652,7 +672,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
 
     var HIGHLIGHTED_CLS = "menuitem-highlight",
-        CONTENTBOX_CLS = "contentbox",
         SELECTED_CLS = "menuitem-selected",
         CHECKED_CLS = "menuitem-checked",
         ACTIVE_CLS = "menuitem-active",
@@ -673,11 +692,10 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    var MenuItemRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            var cls = self.getCls(CONTENTBOX_CLS);
             el.addClass(self.getCls(EL_CLS))
                 .attr("role", "menuitem");
             self.get("contentEl").addClass(self.getCls(CONTENT_CLS));
@@ -725,7 +743,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
         _uiSetActive:function(v) {
             var self = this,el = this.get("el");
-            el[v?'addClass':'removeClass'](self.getCls(ACTIVE_CLS))
+            el[v ? 'addClass' : 'removeClass'](self.getCls(ACTIVE_CLS))
                 .attr("aria-pressed", v);
         },
         containsElement:function(element) {
@@ -751,6 +769,12 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             }
         }
     });
+
+    if (1 > 2) {
+        MenuItemRender._uiSetSelectable()._uiSetChecked()._uiSetCheckable();
+    }
+
+    return MenuItemRender;
 }, {
     requires:['node','uibase','component']
 });/**
@@ -822,7 +846,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     });
 
     Component.UIStore.setUIByClass("popupmenu", {
-        priority:20,
+        priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:PopMenu
     });
 
@@ -873,7 +897,7 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     });
 
     Component.UIStore.setUIByClass("menuseparator", {
-        priority:20,
+        priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:Separator
     });
 
@@ -913,8 +937,10 @@ KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
 KISSY.add(
     /* or precisely submenuitem */
     "menu/submenu",
-    function(S, UIBase, Component, MenuItem, SubMenuRender) {
+    function(S, Event, UIBase, Component, MenuItem, SubMenuRender) {
 
+        var KeyCodes = Event.KeyCodes,
+            MENU_DELAY = 300;
         /**
          * Class representing a submenu that can be added as an item to other menus.
          */
@@ -1050,7 +1076,7 @@ KISSY.add(
 
                     if (!hasKeyboardControl_) {
                         // right
-                        if (keyCode == 39) {
+                        if (keyCode == KeyCodes.RIGHT) {
                             this.showMenu();
                             var menuChildren = menu.get("children");
                             if (menuChildren[0]) {
@@ -1064,7 +1090,7 @@ KISSY.add(
                     // The menu has control and the key hasn't yet been handled, on left arrow
                     // we turn off key control.
                     // left
-                    else if (keyCode == 37) {
+                    else if (keyCode == KeyCodes.LEFT) {
                         this.hideMenu();
                         // 隐藏后，当前激活项重回
                         this.get("parent").set("activeItem", this);
@@ -1097,7 +1123,7 @@ KISSY.add(
                 },
 
                 // 默认 addChild，这里里面的元素需要放到 menu 属性中
-                decorateChildrenInternal:function(ui,el, cls) {
+                decorateChildrenInternal:function(ui, el, cls) {
                     el.hide();
                     var docBody = S.one(el[0].ownerDocument.body);
                     docBody.prepend(el);
@@ -1133,7 +1159,7 @@ KISSY.add(
                      * @type {number}
                      */
                     menuDelay:{
-                        value:300
+                        value:MENU_DELAY
                     },
                     /**
                      * whether destroy submenu when destroy itself ,reverse result
@@ -1158,13 +1184,13 @@ KISSY.add(
 
 
         Component.UIStore.setUIByClass("submenu", {
-            priority:20,
+            priority:Component.UIStore.PRIORITY.LEVEL2,
             ui:SubMenu
         });
 
         return SubMenu;
     }, {
-        requires:['uibase','component','./menuitem','./submenurender']
+        requires:['event','uibase','component','./menuitem','./submenurender']
     });
 
 /**
@@ -1175,7 +1201,7 @@ KISSY.add(
  */
 KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         var SubMenuRender;
-        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►</span>';
+        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<'+'/span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function() {
                 var self = this,

@@ -31,5 +31,10 @@ KISSY.add("uibase/resize", function(S) {
 
         }
     };
+
+    if(1>2){
+       Resize._uiSetResize();
+    }
+
     return Resize;
 });

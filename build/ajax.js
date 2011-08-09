@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 17:08
 */
 /**
  * a scalable client io framework
@@ -9,199 +9,204 @@ build time: Aug 5 21:18
  */
 KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
-    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
-        rspace = /\s+/,
-        rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        mirror = function(s) {
-            return s;
-        },
-        rnoContent = /^(?:GET|HEAD)$/,
-        curLocation,
-        curLocationParts;
-
-
-    try {
-        curLocation = location.href;
-    } catch(e) {
-        // Use the href attribute of an A element
-        // since IE will modify it given document.location
-        curLocation = document.createElement("a");
-        curLocation.href = "";
-        curLocation = curLocation.href;
-    }
-
-    curLocationParts = rurl.exec(curLocation);
-
-    var isLocal = rlocalProtocol.test(curLocationParts[1]),
-        transports = {},
-        defaultConfig = {
-            // isLocal:isLocal,
-            type:"GET",
-            // only support utf-8 when post, encoding can not be changed actually
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            async:true,
-            // whether add []
-            serializeArray:true,
-            // whether param data
-            processData:true,
-            /*
-             url:"",
-             context:null,
-             timeout: 0,
-             data: null,
-
-             // 可取json | jsonp | script | xml | html | text | null | undefined
-             dataType: null,
-
-             username: null,
-             password: null,
-             cache: null,
-             mimeType:null,
-             headers: {},
-             xhrFields:{},
-             // jsonp script charset
-             scriptCharset:null,
-             crossdomain:false,
-             forceScript:false,
-             */
-
-            accepts: {
-                xml: "application/xml, text/xml",
-                html: "text/html",
-                text: "text/plain",
-                json: "application/json, text/javascript",
-                "*": "*/*"
+        var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
+            rspace = /\s+/,
+            rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+            mirror = function(s) {
+                return s;
             },
-            converters:{
-                text:{
-                    json:JSON.parse,
-                    html:mirror,
-                    text:mirror,
-                    xml:S.parseXML
-                }
-            },
-            contents:{
-                xml:/xml/,
-                html:/html/,
-                json:/json/
-            }
-        };
+            HTTP_PORT = 80,
+            HTTPS_PORT = 443,
+            rnoContent = /^(?:GET|HEAD)$/,
+            curLocation,
+            curLocationParts;
 
-    defaultConfig.converters.html = defaultConfig.converters.text;
-
-    function setUpConfig(c) {
-        // deep mix
-        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
-        if (c.crossDomain == null) {
-            var parts = rurl.exec(c.url.toLowerCase());
-            c.crossDomain = !!( parts &&
-                ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
-                    ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? 80 : 443 ) ) !=
-                        ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? 80 : 443 ) ) )
-                );
-        }
-
-        if (c.processData && c.data && !S.isString(c.data)) {
-            // 必须 encodeURIComponent 编码 utf-8
-            c.data = S.param(c.data, undefined, undefined, c.serializeArray);
-        }
-
-        c.type = c.type.toUpperCase();
-        c.hasContent = !rnoContent.test(c.type);
-
-        if (!c.hasContent) {
-            if (c.data) {
-                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
-            }
-            if (c.cache === false) {
-                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
-            }
-        }
-
-        // 数据类型处理链，一步步将前面的数据类型转化成最后一个
-        c.dataType = S.trim(c.dataType || "*").split(rspace);
-
-        c.context = c.context || c;
-        return c;
-    }
-
-    function fire(eventType, xhr) {
-        io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
-    }
-
-    function handleXhrEvent(e) {
-        var xhr = this,
-            c = xhr.config,
-            type = e.type;
-        if (this.timeoutTimer) {
-            clearTimeout(this.timeoutTimer);
-        }
-        if (c[type]) {
-            c[type].call(c.context, xhr.responseData, xhr.statusText, xhr);
-        }
-        fire(type, xhr);
-    }
-
-    function io(c) {
-        if (!c.url) {
-            return undefined;
-        }
-        c = setUpConfig(c);
-        var xhr = new XhrObject(c);
-        fire("start", xhr);
-        var transportContructor = transports[c.dataType[0]] || transports["*"],
-            transport = new transportContructor(xhr);
-        xhr.transport = transport;
-
-        if (c.contentType) {
-            xhr.setRequestHeader("Content-Type", c.contentType);
-        }
-        var dataType = c.dataType[0],
-            accepts = c.accepts;
-        // Set the Accepts header for the server, depending on the dataType
-        xhr.setRequestHeader(
-            "Accept",
-            dataType && accepts[dataType] ?
-                accepts[ dataType ] + (dataType !== "*" ? ", */*; q=0.01" : "" ) :
-                accepts[ "*" ]
-        );
-
-        // Check for headers option
-        for (var i in c.headers) {
-            xhr.setRequestHeader(i, c.headers[ i ]);
-        }
-
-        xhr.on("complete success error", handleXhrEvent);
-
-        xhr.readyState = 1;
-
-        fire("send", xhr);
-
-        // Timeout
-        if (c.async && c.timeout > 0) {
-            xhr.timeoutTimer = setTimeout(function() {
-                xhr.abort("timeout");
-            }, c.timeout);
-        }
 
         try {
-            xhr.state = 1;
-            transport.send();
-        } catch (e) {
-            // Propagate exception as error if not done
-            if (xhr.status < 2) {
-                xhr.callback(-1, e);
-                // Simply rethrow otherwise
-            } else {
-                S.error(e);
-            }
+            curLocation = location.href;
+        } catch(e) {
+            S.log("ajax/base get curLocation error : ");
+            S.log(e);
+            // Use the href attribute of an A element
+            // since IE will modify it given document.location
+            curLocation = document.createElement("a");
+            curLocation.href = "";
+            curLocation = curLocation.href;
         }
 
-        return xhr;
-    }
+        curLocationParts = rurl.exec(curLocation);
 
-    S.mix(io, Event.Target);
-    S.mix(io, {
+        var isLocal = rlocalProtocol.test(curLocationParts[1]),
+            transports = {},
+            defaultConfig = {
+                // isLocal:isLocal,
+                type:"GET",
+                // only support utf-8 when post, encoding can not be changed actually
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                async:true,
+                // whether add []
+                serializeArray:true,
+                // whether param data
+                processData:true,
+                /*
+                 url:"",
+                 context:null,
+                 timeout: 0,
+                 data: null,
+
+                 // 可取json | jsonp | script | xml | html | text | null | undefined
+                 dataType: null,
+
+                 username: null,
+                 password: null,
+                 cache: null,
+                 mimeType:null,
+                 headers: {},
+                 xhrFields:{},
+                 // jsonp script charset
+                 scriptCharset:null,
+                 crossdomain:false,
+                 forceScript:false,
+                 */
+
+                accepts: {
+                    xml: "application/xml, text/xml",
+                    html: "text/html",
+                    text: "text/plain",
+                    json: "application/json, text/javascript",
+                    "*": "*/*"
+                },
+                converters:{
+                    text:{
+                        json:JSON.parse,
+                        html:mirror,
+                        text:mirror,
+                        xml:S.parseXML
+                    }
+                },
+                contents:{
+                    xml:/xml/,
+                    html:/html/,
+                    json:/json/
+                }
+            };
+
+        defaultConfig.converters.html = defaultConfig.converters.text;
+
+        function setUpConfig(c) {
+            // deep mix
+            c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+            if (!S.isBoolean(c.crossDomain)) {
+                var parts = rurl.exec(c.url.toLowerCase());
+                c.crossDomain = !!( parts &&
+                    ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
+                        ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) )
+                            !=
+                            ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) ) )
+                    );
+            }
+
+            if (c.processData && c.data && !S.isString(c.data)) {
+                // 必须 encodeURIComponent 编码 utf-8
+                c.data = S.param(c.data, undefined, undefined, c.serializeArray);
+            }
+
+            c.type = c.type.toUpperCase();
+            c.hasContent = !rnoContent.test(c.type);
+
+            if (!c.hasContent) {
+                if (c.data) {
+                    c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
+                }
+                if (c.cache === false) {
+                    c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+                }
+            }
+
+            // 数据类型处理链，一步步将前面的数据类型转化成最后一个
+            c.dataType = S.trim(c.dataType || "*").split(rspace);
+
+            c.context = c.context || c;
+            return c;
+        }
+
+        function fire(eventType, xhr) {
+            io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
+        }
+
+        function handleXhrEvent(e) {
+            var xhr = this,
+                c = xhr.config,
+                type = e.type;
+            if (this.timeoutTimer) {
+                clearTimeout(this.timeoutTimer);
+            }
+            if (c[type]) {
+                c[type].call(c.context, xhr.responseData, xhr.statusText, xhr);
+            }
+            fire(type, xhr);
+        }
+
+        function io(c) {
+            if (!c.url) {
+                return undefined;
+            }
+            c = setUpConfig(c);
+            var xhr = new XhrObject(c);
+            fire("start", xhr);
+            var transportContructor = transports[c.dataType[0]] || transports["*"],
+                transport = new transportContructor(xhr);
+            xhr.transport = transport;
+
+            if (c.contentType) {
+                xhr.setRequestHeader("Content-Type", c.contentType);
+            }
+            var dataType = c.dataType[0],
+                accepts = c.accepts;
+            // Set the Accepts header for the server, depending on the dataType
+            xhr.setRequestHeader(
+                "Accept",
+                dataType && accepts[dataType] ?
+                    accepts[ dataType ] + (dataType === "*" ? "" : ", */*; q=0.01"  ) :
+                    accepts[ "*" ]
+            );
+
+            // Check for headers option
+            for (var i in c.headers) {
+                xhr.setRequestHeader(i, c.headers[ i ]);
+            }
+
+            xhr.on("complete success error", handleXhrEvent);
+
+            xhr.readyState = 1;
+
+            fire("send", xhr);
+
+            // Timeout
+            if (c.async && c.timeout > 0) {
+                xhr.timeoutTimer = setTimeout(function() {
+                    xhr.abort("timeout");
+                }, c.timeout);
+            }
+
+            try {
+                xhr.state = 1;
+                transport.send();
+            } catch (e) {
+                // Propagate exception as error if not done
+                if (xhr.status < 2) {
+                    xhr.callback(-1, e);
+                    // Simply rethrow otherwise
+                } else {
+                    S.error(e);
+                }
+            }
+
+            return xhr;
+        }
+
+        S.mix(io, Event.Target);
+        S.mix(io, {
             isLocal:isLocal,
             setupConfig:function(setting) {
                 S.mix(defaultConfig, setting, undefined, undefined, true);
@@ -218,8 +223,8 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         });
 
 
-    return io;
-},
+        return io;
+    },
     {
         requires:["json","event","./xhrobject"]
     });
@@ -238,7 +243,6 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
-    var enc = encodeURIComponent;
     return {
         serialize:function(form) {
             form = DOM.get(form);
@@ -306,6 +310,9 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
     var doc = document;
+
+    var OK_CODE = 200,ERROR_CODE = 500,BREATH_INTERVAL = 30;
+
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
         converters:{
@@ -388,7 +395,9 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
         },
 
-        _callback:function(event, abort) {
+        _callback:function(event
+                           //, abort
+            ) {
             //debugger
             var form = this.form,
                 xhr = this.xhr,
@@ -405,9 +414,9 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
                 var iframeDoc = iframe.contentWindow.document;
                 xhr.responseXML = iframeDoc;
                 xhr.responseText = DOM.text(iframeDoc.body);
-                xhr.callback(200, "success");
+                xhr.callback(OK_CODE, "success");
             } else if (eventType == 'error') {
-                xhr.callback(500, "error");
+                xhr.callback(ERROR_CODE, "error");
             }
 
             removeFieldsFromData(this.fields);
@@ -418,7 +427,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             setTimeout(function() {
                 // firefox will keep loading if not settimeout
                 DOM.remove(iframe);
-            }, 30);
+            }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
             xhr.iframe = null;
@@ -478,6 +487,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
                     try {
                         delete window[ jsonpCallback ];
                     } catch(e) {
+                        S.log("delete window variable error : ");
+                        S.log(e);
                     }
                 } else if (response) {
                     // after io success handler called
@@ -515,6 +526,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
 KISSY.add("ajax/script", function(S, io) {
 
     var doc = document;
+
+    var OK_CODE = 200,ERROR_CODE = 500;
 
     io.setupConfig({
         accepts:{
@@ -610,11 +623,11 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Callback if not abort
                 if (!abort && event != "error") {
-                    xhrObj.callback(200, "success");
+                    xhrObj.callback(OK_CODE, "success");
                 }
                 // 非 ie<9 可以判断出来
                 else if (event == "error") {
-                    xhrObj.callback(500, "scripterror");
+                    xhrObj.callback(ERROR_CODE, "scripterror");
                 }
             }
         },
@@ -636,10 +649,19 @@ KISSY.add("ajax/script", function(S, io) {
  */
 KISSY.add("ajax/xhr", function(S, io) {
 
+
+    var OK_CODE = 200,
+        NO_CONTENT_CODE = 204,
+        NOT_FOUND_CODE = 404,
+        NO_CONTENT_CODE2 = 1223;
+
+
     function createStandardXHR() {
         try {
             return new window.XMLHttpRequest();
         } catch(e) {
+            S.log("createStandardXHR error : ");
+            S.log(e);
         }
         return undefined;
     }
@@ -648,6 +670,8 @@ KISSY.add("ajax/xhr", function(S, io) {
         try {
             return new window.ActiveXObject("Microsoft.XMLHTTP");
         } catch(e) {
+            S.log("createActiveXHR error");
+            S.log(e);
         }
         return undefined;
     }
@@ -713,6 +737,8 @@ KISSY.add("ajax/xhr", function(S, io) {
                         xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
                     }
                 } catch(e) {
+                    S.log("setRequestHeader in xhr error : ");
+                    S.log(e);
                 }
 
                 xhr.send(c.hasContent && c.data || null);
@@ -767,6 +793,8 @@ KISSY.add("ajax/xhr", function(S, io) {
                             try {
                                 var statusText = xhr.statusText;
                             } catch(e) {
+                                S.log("xhr statustext error : ");
+                                S.log(e);
                                 // We normalize with Webkit giving an empty statusText
                                 statusText = "";
                             }
@@ -776,10 +804,10 @@ KISSY.add("ajax/xhr", function(S, io) {
                             // (success with no data won't get notified, that's the best we
                             // can do given current implementations)
                             if (!status && io.isLocal && !c.crossDomain) {
-                                status = xhrObj.responseText ? 200 : 404;
+                                status = xhrObj.responseText ? OK_CODE : NOT_FOUND_CODE;
                                 // IE - #1450: sometimes returns 1223 when it should be 204
-                            } else if (status === 1223) {
-                                status = 204;
+                            } else if (status === NO_CONTENT_CODE2) {
+                                status = NO_CONTENT_CODE;
                             }
 
                             xhrObj.callback(status, statusText);
@@ -811,6 +839,10 @@ KISSY.add("ajax/xhr", function(S, io) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
+
+    var OK_CODE = 200;
+    var MULTIPLE_CHOICES = 300;
+    var NOT_MODIFIED = 304;
 
     var // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
@@ -854,11 +886,11 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             dataType[0] = dataType[0] || "text";
 
             //获得合适的初始数据
-            if (dataType[0] == "text" && text != undefined) {
+            if (dataType[0] == "text" && text !== undefined) {
                 responseData = text;
             }
             // 有 xml 值才直接取，否则可能还要从 xml 转
-            else if (dataType[0] == "xml" && xml != undefined) {
+            else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
                 // 看能否从 text xml 转换到合适数据
@@ -896,22 +928,22 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
     function XhrObject(c) {
         S.mix(this, {
-                // 结构化数据，如 json
-                responseData:null,
-                config:c || {},
-                timeoutTimer:null,
-                responseText:null,
-                responseXML:null,
-                responseHeadersString:"",
-                responseHeaders:null,
-                requestHeaders:{},
-                readyState:0,
-                //internal state
-                state:0,
-                statusText:null,
-                status:0,
-                transport:null
-            });
+            // 结构化数据，如 json
+            responseData:null,
+            config:c || {},
+            timeoutTimer:null,
+            responseText:null,
+            responseXML:null,
+            responseHeadersString:"",
+            responseHeaders:null,
+            requestHeaders:{},
+            readyState:0,
+            //internal state
+            state:0,
+            statusText:null,
+            status:0,
+            transport:null
+        });
     }
 
     S.augment(XhrObject, Event.Target, {
@@ -974,9 +1006,9 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
                 xhr.state = 2;
                 xhr.readyState = 4;
                 var isSuccess;
-                if (status >= 200 && status < 300 || status == 304) {
+                if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
 
-                    if (status == 304) {
+                    if (status == NOT_MODIFIED) {
                         statusText = "notmodified";
                         isSuccess = true;
                     } else {
@@ -1011,8 +1043,8 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
     return XhrObject;
 }, {
-        requires:["event"]
-    });KISSY.add("ajax", function(S, io) {
+    requires:["event"]
+});KISSY.add("ajax", function(S, io) {
     var undef = undefined;
     // some shortcut
     S.mix(io, {

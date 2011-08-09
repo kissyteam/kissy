@@ -5,6 +5,9 @@
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
     var doc = document;
+
+    var OK_CODE = 200,ERROR_CODE = 500,BREATH_INTERVAL = 30;
+
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
         converters:{
@@ -87,7 +90,9 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
         },
 
-        _callback:function(event, abort) {
+        _callback:function(event
+                           //, abort
+            ) {
             //debugger
             var form = this.form,
                 xhr = this.xhr,
@@ -104,9 +109,9 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
                 var iframeDoc = iframe.contentWindow.document;
                 xhr.responseXML = iframeDoc;
                 xhr.responseText = DOM.text(iframeDoc.body);
-                xhr.callback(200, "success");
+                xhr.callback(OK_CODE, "success");
             } else if (eventType == 'error') {
-                xhr.callback(500, "error");
+                xhr.callback(ERROR_CODE, "error");
             }
 
             removeFieldsFromData(this.fields);
@@ -117,7 +122,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             setTimeout(function() {
                 // firefox will keep loading if not settimeout
                 DOM.remove(iframe);
-            }, 30);
+            }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
             xhr.iframe = null;

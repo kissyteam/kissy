@@ -5,7 +5,9 @@
  */
 KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
 
-    var win = window, doc = document,
+    var win = window,
+        DELAY = 0.1,
+        doc = document,
 
         IMG_SRC_DATA = 'data-ks-lazyload',
         AREA_DATA_CLS = 'ks-datalazyload',
@@ -191,10 +193,10 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, (resizeHandler = function() {
+            Event.on(win, RESIZE, function() {
                 self.threshold = self._getThreshold();
                 loader();
-            }));
+            });
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
             if (self._getItemsLength()) {
@@ -205,11 +207,13 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
 
             // 加载函数
             function loader() {
-                if (timer) return;
+                if (timer) {
+                    return;
+                }
                 timer = S.later(function() {
                     loadItems();
                     timer = null;
-                }, 100); // 0.1s 内，用户感觉流畅
+                }, DELAY); // 0.1s 内，用户感觉流畅
             }
 
             // 加载延迟项
@@ -359,8 +363,14 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             var diff = this.config.diff,
                 vh = DOM['viewportHeight']();
 
-            if (diff === DEFAULT) return 2 * vh; // diff 默认为当前视窗高度（两屏以外的才延迟加载）
-            else return vh + (+diff); // 将 diff 转换成数值
+            if (diff === DEFAULT) {
+                // diff 默认为当前视窗高度（两屏以外的才延迟加载）
+                return 2 * vh;
+            }
+            else {
+                // 将 diff 转换成数值
+                return vh + (+diff);
+            }
         },
 
         /**

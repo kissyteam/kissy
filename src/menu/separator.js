@@ -15,7 +15,7 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     });
 
     Component.UIStore.setUIByClass("menuseparator", {
-        priority:20,
+        priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:Separator
     });
 

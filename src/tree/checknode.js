@@ -7,8 +7,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         PARTIAL_CHECK = 2,
         CHECK_CLS = "tree-item-checked",
         CHECK = 1,
-        EMPTY = 0,
-        EXPAND_ICON_CLS = "tree-expand-icon";
+        EMPTY = 0;
 
     var CheckNode = UIBase.create(BaseNode, {
         _performInternal:function(e) {
@@ -97,19 +96,21 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         },
         CHECK_CLS :CHECK_CLS,
         DefaultRender:CheckNodeRender,
-        PARTIAL_CHECK:2,
-        CHECK:1,
-        EMPTY:0
+        PARTIAL_CHECK:PARTIAL_CHECK,
+        CHECK:CHECK,
+        EMPTY:EMPTY
     });
 
     Component.UIStore.setUIByClass(CHECK_CLS, {
-        priority:20,
+        priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:CheckNode
     });
 
+    if (1 > 2) {
+        Component.PARTIAL_CHECK = Component.CHECK = Component.EMPTY;
+    }
+
     return CheckNode;
-
-
 }, {
     requires:['node','uibase','component','./basenode','./checknoderender']
 });

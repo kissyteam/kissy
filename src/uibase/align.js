@@ -72,7 +72,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
             if (
             // clientWidth is zero for inline block elements in IE.
-                (!UA['ie'] || clientWidth != 0)
+                (!UA['ie'] || clientWidth !== 0)
             // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
             // && (!UA['webkit'] || clientHeight != 0 || el != body)
             // overflow 不为 visible 则可以限定其内元素
@@ -115,7 +115,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
     function isFailed(status) {
         for (var s in status) {
-            if (s.indexOf("fail") == 0) {
+            if (s.indexOf("fail") === 0) {
                 return true;
             }
         }

@@ -2,7 +2,9 @@
  * Model and Control for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
+KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
+
+    var KeyCodes = Event.KeyCodes;
 
     var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
@@ -11,16 +13,16 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
         },
 
         _handleKeyEventInternal:function(e) {
-            if (e.keyCode == 13 &&
+            if (e.keyCode == KeyCodes.ENTER &&
                 e.type == "keydown" ||
-                e.keyCode == 32 &&
+                e.keyCode == KeyCodes.SPACE &&
                     e.type == "keyup") {
                 return this._performInternal(e);
             }
             // Return true for space keypress (even though the event is handled on keyup)
             // as preventDefault needs to be called up keypress to take effect in IE and
             // WebKit.
-            return e.keyCode == 32;
+            return e.keyCode == KeyCodes.SPACE;
         },
 
         /* button 的默认行为就是触发 click*/
@@ -49,5 +51,5 @@ KISSY.add("button/base", function(S, UIBase, Component, CustomRender) {
     return Button;
 
 }, {
-    requires:['uibase','component','./customrender']
+    requires:['event','uibase','component','./customrender']
 });

@@ -17,14 +17,16 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 //    };
 
 
-    var KEY_TAB = 9;
+    var KEY_TAB = Node.KeyCodes.TAB;
 
     function _onKey(/*Normalized Event*/ evt) {
 
         var self = this,
             keyCode = evt.keyCode,
             firstFocusItem = self.get("el");
-        if (keyCode != KEY_TAB) return;
+        if (keyCode != KEY_TAB) {
+            return;
+        }
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -103,5 +105,5 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 
     return Aria;
 }, {
-        requires:["node"]
-    });
+    requires:["node"]
+});

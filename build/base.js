@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 17:08
 */
 /**
  * @module  Attribute
@@ -64,6 +64,25 @@ KISSY.add('base/attribute', function(S, undef) {
         },
 
         /**
+         * Configures a group of attributes, and sets initial values.
+         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+         * @param {Object} values An object with attribute name/value pairs, defining the initial values to apply.
+         *        Values defined in the cfgs argument will be over-written by values in this argument.
+         */
+        addAttrs: function(attrConfigs, values) {
+            var host = this;
+
+            S.each(attrConfigs, function(attrConfig, name) {
+                if (name in values) {
+                    attrConfig.value = values[name];
+                }
+                host.addAttr(name, attrConfig);
+            });
+
+            return host;
+        },
+
+        /**
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function(name) {
@@ -92,10 +111,14 @@ KISSY.add('base/attribute', function(S, undef) {
                 prevVal = host.get(name);
 
             // if no change, just return
-            if (prevVal === value) return;
+            if (prevVal === value) {
+                return;
+            }
 
             // check before event
-            if (false === host.__fireAttrChange('before', name, prevVal, value)) return;
+            if (false === host.__fireAttrChange('before', name, prevVal, value)) {
+                return;
+            }
 
             // set it
             host.__set(name, value);
@@ -155,7 +178,9 @@ KISSY.add('base/attribute', function(S, undef) {
                 host.__getDefAttrVal(name);
 
             // invoke getter for this attribute
-            if (getter) ret = getter.call(host, ret);
+            if (getter) {
+                ret = getter.call(host, ret);
+            }
 
             return ret;
         },
@@ -165,7 +190,9 @@ KISSY.add('base/attribute', function(S, undef) {
                 attrConfig = host.__attrs[name],
                 valFn, val;
 
-            if (!attrConfig) return;
+            if (!attrConfig) {
+                return;
+            }
 
             if ((valFn = attrConfig.valueFn)) {
                 val = valFn.call(host);
@@ -202,10 +229,13 @@ KISSY.add('base/attribute', function(S, undef) {
     });
 
     function capitalFirst(s) {
-        s = s + '';
+        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
+    if (1 > 2) {
+        Attribute.addAttrs();
+    }
     Attribute['__capitalFirst'] = capitalFirst;
 
     return Attribute;

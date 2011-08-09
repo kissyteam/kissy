@@ -4,6 +4,8 @@
  */
 KISSY.add("uibase/positionrender", function() {
 
+    var ZINDEX=9999;
+
     function Position() {
     }
 
@@ -21,7 +23,7 @@ KISSY.add("uibase/positionrender", function() {
             }
         },
         zIndex: {
-            value: 9999
+            value: ZINDEX
         }
     };
 

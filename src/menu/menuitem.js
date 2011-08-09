@@ -21,7 +21,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             this.get("parent").set("highlightedItem", undefined);
         },
 
-        _performInternal:function(e) {
+        _performInternal:function() {
             // 可选
             if (this.get("selectable")) {
                 this.set("selected", true);

@@ -2,7 +2,7 @@
  * loading mask support for overlay
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/loading", function(S) {
+KISSY.add("uibase/loading", function() {
 
     function Loading() {
     }

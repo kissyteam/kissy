@@ -5,6 +5,9 @@
 KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
+        RATE = [10,10],
+        ADJUST_DELAY = 100,
+        DIFF = [20,20],
         DESTRUCTORS = "__dd_scrolls";
 
     function Scroll() {
@@ -19,10 +22,10 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
             }
         },
         rate:{
-            value:[10,10]
+            value:RATE
         },
         diff:{
-            value:[20,20]
+            value:DIFF
         }
     };
 
@@ -83,7 +86,9 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
         unAttach:function(drag) {
             var tag = drag[TAG_DRAG];
-            if (!tag) return;
+            if (!tag) {
+                return;
+            }
             this[DESTRUCTORS][tag].fn();
             delete drag[TAG_DRAG];
             delete this[DESTRUCTORS][tag];
@@ -96,7 +101,9 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
         },
 
         attach:function(drag) {
-            if (drag[TAG_DRAG]) return;
+            if (drag[TAG_DRAG]) {
+                return;
+            }
 
             var self = this,
                 rate = self.get("rate"),
@@ -109,7 +116,9 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 timer = null;
 
             function dragging(ev) {
-                if (ev.fake) return;
+                if (ev.fake) {
+                    return;
+                }
                 var node = self.get("node");
                 event = ev;
                 dxy = S.clone(drag.mousePos);
@@ -182,7 +191,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 if (adjust) {
 
                     self.setScroll(node, scroll);
-                    timer = setTimeout(arguments.callee, 100);
+                    timer = setTimeout(arguments.callee, ADJUST_DELAY);
                     // 不希望更新相对值，特别对于相对 window 时，相对值如果不真正拖放触发的 drag，是不变的，
                     // 不会因为程序 scroll 而改变相对值
                     event.fake = true;

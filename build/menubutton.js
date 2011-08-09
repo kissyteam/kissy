@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:18
+build time: Aug 8 17:09
 */
 /**
  * combination of menu and button ,similar to native select
@@ -9,6 +9,7 @@ build time: Aug 5 21:18
  */
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all;
+    var KeyCodes = Node.KeyCodes;
     var MenuButton = UIBase.create(Button, [Component.DecorateChild], {
 
         hideMenu:function() {
@@ -69,7 +70,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             var menu = this.get("menu");
 
             // space 只在 keyup 时处理
-            if (e.keyCode == 32) {
+            if (e.keyCode == KeyCodes.SPACE) {
                 // Prevent page scrolling in Chrome.
                 e.preventDefault();
                 if (e.type != "keyup") {
@@ -82,7 +83,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             if (menu && menu.get("visible")) {
                 var handledByMenu = menu._handleKeydown(e);
                 // esc
-                if (e.keyCode == 27) {
+                if (e.keyCode == KeyCodes.ESC) {
                     this.hideMenu();
                     return true;
                 }
@@ -90,7 +91,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             }
 
             // Menu is closed, and the user hit the down/up/space key; open menu.
-            if (e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 32) {
+            if (e.keyCode == KeyCodes.SPACE ||
+                e.keyCode == KeyCodes.DOWN ||
+                e.keyCode == KeyCodes.UP) {
                 this.showMenu();
                 return true;
             }
@@ -157,27 +160,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             !v && this.hideMenu();
         },
 
-        // 找到下面有 popupmenu class 的元素，装饰为 PopupMenu 返回
-        decorateInternalX:function(el) {
-            var self = this,
-                ui = "popupmenu",
-                prefixCls = self.get("prefixCls");
-            self.set("el", el);
-            var menuItem = el.one("." + self.getCls(ui));
-            if (menuItem) {
-                // child 必须等 render 时才会获得对应的 class，之前先 display:none 不占用空间
-                menuItem.hide();
-                var docBody = S.one(el[0].ownerDocument.body);
-                docBody.prepend(menuItem);
-                var UI = Component.UIStore.getUIByClass(ui);
-                var menu = new UI({
-                    srcNode:menuItem,
-                    prefixCls:prefixCls
-                });
-                self.set("menu", menu);
-            }
-        },
-
         decorateChildrenInternal:function(ui, el, cls) {
             el.hide();
             var docBody = S.one(el[0].ownerDocument.body);
@@ -225,6 +207,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         DefaultRender:MenuButtonRender
     });
 
+    if (1 > 2) {
+        MenuButton.getItemAt();
+    }
+
     return MenuButton;
 }, {
     requires:["uibase","node","button","./menubuttonrender","menu","component"]
@@ -235,13 +221,13 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
 KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     var MENU_BUTTON_TMPL = '<div class="{prefixCls}inline-block ' +
-        '{prefixCls}menu-button-caption">{content}</div>' +
+        '{prefixCls}menu-button-caption">{content}<' + '/div>' +
         '<div class="{prefixCls}inline-block ' +
-        '{prefixCls}menu-button-dropdown">&nbsp;</div>',
+        '{prefixCls}menu-button-dropdown">&nbsp;<' + '/div>',
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    return UIBase.create(Button.Render, {
+    var MenuButtonRender = UIBase.create(Button.Render, {
 
         createDom:function() {
             var innerEl = this.get("innerEl"),
@@ -285,6 +271,12 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             }
         }
     });
+
+    if (1 > 2) {
+        MenuButtonRender._uiSetCollapsed();
+    }
+
+    return MenuButtonRender;
 }, {
     requires:['uibase','button']
 });/**
@@ -418,6 +410,9 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
         }
     );
 
+    if (1 > 2) {
+        Select._uiSetDefaultCaption();
+    }
 
     Select.decorate = function(element, cfg) {
         element = S.one(element);

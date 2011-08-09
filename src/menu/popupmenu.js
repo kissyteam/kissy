@@ -12,7 +12,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     });
 
     Component.UIStore.setUIByClass("popupmenu", {
-        priority:20,
+        priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:PopMenu
     });
 

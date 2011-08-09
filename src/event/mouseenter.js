@@ -41,7 +41,7 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
                     // assuming we've left the element since we most likely mousedover a xul element
                 } catch(e) {
-                    S.log("withinElement :" + e);
+                    S.log("withinElement error : " + e);
                 }
             }
 

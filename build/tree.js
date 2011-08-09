@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:19
+build time: Aug 8 17:09
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -15,19 +15,13 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 
     /**
      * 基类树节点
-     * @name BaseNode
      * @constructor
-     * @extends Component.ModelControl
-     * @borrows Component.DecorateChild.prototype
      */
     var BaseNode = UIBase.create(Component.ModelControl,
         /*
          * 可多继承从某个子节点开始装饰儿子组件
          */
         [Component.DecorateChild],
-        /**
-         * @lends BaseNode.prototype
-         */
         {
             _keyNav:function(e) {
                 var processed = true,
@@ -297,7 +291,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 },
 
                 expandIconEl:{ view:true},
-                
+
                 iconEl:{ view:true},
 
                 /**
@@ -574,8 +568,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         PARTIAL_CHECK = 2,
         CHECK_CLS = "tree-item-checked",
         CHECK = 1,
-        EMPTY = 0,
-        EXPAND_ICON_CLS = "tree-expand-icon";
+        EMPTY = 0;
 
     var CheckNode = UIBase.create(BaseNode, {
         _performInternal:function(e) {
@@ -664,19 +657,21 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         },
         CHECK_CLS :CHECK_CLS,
         DefaultRender:CheckNodeRender,
-        PARTIAL_CHECK:2,
-        CHECK:1,
-        EMPTY:0
+        PARTIAL_CHECK:PARTIAL_CHECK,
+        CHECK:CHECK,
+        EMPTY:EMPTY
     });
 
     Component.UIStore.setUIByClass(CHECK_CLS, {
-        priority:20,
+        priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:CheckNode
     });
 
+    if (1 > 2) {
+        Component.PARTIAL_CHECK = Component.CHECK = Component.EMPTY;
+    }
+
     return CheckNode;
-
-
 }, {
     requires:['node','uibase','component','./basenode','./checknoderender']
 });KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
@@ -727,7 +722,7 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
     });
 
     Component.UIStore.setUIByClass(CHECKED_TREE_CLS, {
-        priority:40,
+        priority:Component.UIStore.PRIORITY.LEVEL4,
         ui:CheckTree
     });
 
@@ -771,7 +766,7 @@ KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, Tree
 
 
     Component.UIStore.setUIByClass(TREE_CLS, {
-        priority:30,
+        priority:Component.UIStore.PRIORITY.LEVEL3,
         ui:Tree
     });
 
@@ -784,7 +779,7 @@ KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, Tree
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treemgr", function(S) {
+KISSY.add("tree/treemgr", function(S, Event) {
 
     function TreeMgr() {
     }
@@ -834,7 +829,7 @@ KISSY.add("tree/treemgr", function(S) {
 
         _handleKeyEventInternal:function(e) {
             var current = this.get("selectedItem");
-            if (e.keyCode == 13) {
+            if (e.keyCode == Event.KeyCodes.ENTER) {
                 // 传递给真正的单个子节点
                 return current._performInternal(e);
             }
@@ -877,6 +872,8 @@ KISSY.add("tree/treemgr", function(S) {
     });
 
     return TreeMgr;
+}, {
+    requires:['event']
 });/**
  * tree management utils render
  * @author yiminghe@gmail.com
@@ -896,7 +893,7 @@ KISSY.add("tree/treemgrrender", function(S) {
 
     S.augment(TreeMgrRender, {
         __renderUI:function() {
-            this.get("el").addClass(this.getCls("tree-root")).attr("role", "tree")[0].hideFocus = true;
+            this.get("el").addClass(this.getCls("tree-root")).attr("role", "tree")[0]['hideFocus'] = true;
             this.get("rowEl").addClass(this.getCls("tree-root-row"));
         },
 
@@ -908,6 +905,10 @@ KISSY.add("tree/treemgrrender", function(S) {
             this.get("el")[v ? "addClass" : "removeClass"](this.getCls(FOCUSED_CLS));
         }
     });
+
+    if (1 > 2) {
+        TreeMgrRender._uiSetShowRootNode();
+    }
 
     return TreeMgrRender;
 });/**

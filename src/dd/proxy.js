@@ -33,7 +33,9 @@ KISSY.add("dd/proxy", function(S, Node) {
 
     S.extend(Proxy, S.Base, {
         attach:function(drag) {
-            if (drag[DRAG_TAG]) return;
+            if (drag[DRAG_TAG]) {
+                return;
+            }
 
             var self = this;
 
@@ -80,7 +82,9 @@ KISSY.add("dd/proxy", function(S, Node) {
         },
         unAttach:function(drag) {
             var tag = drag[DRAG_TAG];
-            if (!tag) return;
+            if (!tag) {
+                return;
+            }
             this[DESTRUCTOR_ID][tag].fn();
             delete this[DESTRUCTOR_ID][tag];
             delete drag[DRAG_TAG];

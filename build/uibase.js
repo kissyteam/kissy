@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 5 21:19
+build time: Aug 8 18:45
 */
 /**
  * UIBase.Align
@@ -77,7 +77,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
             if (
             // clientWidth is zero for inline block elements in IE.
-                (!UA['ie'] || clientWidth != 0)
+                (!UA['ie'] || clientWidth !== 0)
             // on WEBKIT, body element can have clientHeight = 0 and scrollHeight > 0
             // && (!UA['webkit'] || clientHeight != 0 || el != body)
             // overflow 不为 visible 则可以限定其内元素
@@ -120,7 +120,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
     function isFailed(status) {
         for (var s in status) {
-            if (s.indexOf("fail") == 0) {
+            if (s.indexOf("fail") === 0) {
                 return true;
             }
         }
@@ -576,16 +576,6 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         // dom 节点是否已经创建完毕
         created:{
             value:false
-        },
-        // 渲染该组件的目的容器
-        render:{
-            view:true,
-            valueFn:function() {
-                return Node.one("body");
-            },
-            setter:function(v) {
-                return Node.one(v);
-            }
         }
     };
 
@@ -789,22 +779,28 @@ KISSY.add('uibase/box', function() {
             view:true,
             sync:false
         },
+        // 宽度
         width:{
             view:true
         },
+        // 高度
         height:{
             view:true
         },
+        // 容器的 class
         elCls:{
             view:true
         },
+         // 容器的行内样式
         elStyle:{
             view:true
         },
+        // 其他属性
         elAttrs:{
             //其他属性
             view:true
         },
+        // 插入到该元素前
         elBefore:{
             view:true
         },
@@ -812,7 +808,13 @@ KISSY.add('uibase/box', function() {
             view:true
         },
 
+        // 渲染该组件的目的容器
+        render:{
+            view:true
+        },
+
         visibleMode:{
+            value:"display",
             view:true
         },
         // 默认显示，但不触发事件
@@ -867,6 +869,7 @@ KISSY.add('uibase/box', function() {
  */
 KISSY.add('uibase/boxrender', function(S, Node) {
 
+    var $ = S.all;
 
     function Box() {
     }
@@ -875,39 +878,25 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         el: {
             //容器元素
             setter:function(v) {
-                return Node.one(v);
+                return $(v);
             }
         },
-        elCls: {
-            // 容器的 class
-        },
-        elStyle:{
-            //容器的行内样式
-        },
-        width: {
-            // 宽度
-        },
-        height: {
-            // 高度
-        },
+        elCls: {},
+        elStyle:{},
+        width: {},
+        height: {},
         elTagName:{
-            //生成标签名字
+            // 生成标签名字
             value:"div"
         },
-        elAttrs:{
-            //其他属性
-        },
-        elBefore:{
-            //插入到该元素前
-            value:null
-        },
+        elAttrs:{},
+        elBefore:{},
+        render:{},
         html: {
             sync:false
         },
         visible:{},
-        visibleMode:{
-            value:"display"
-        }
+        visibleMode:{}
     };
 
     Box.construct = constructEl;
@@ -958,11 +947,14 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             var self = this;
             // 新建的节点才需要摆放定位
             if (self.__boxRenderNew) {
-                var render = self.get("render"),
+                var render = self.get("render") || $("body"),
                     el = self.get("el");
                 var elBefore = self.get("elBefore");
-                elBefore = elBefore && elBefore[0];
-                render[0].insertBefore(el[0], elBefore || null);
+                if (elBefore) {
+                    el.insertBefore(elBefore);
+                } else {
+                    $(render).append(el);
+                }
             }
         },
 
@@ -1043,6 +1035,11 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         }
     };
 
+    if (1 > 2) {
+        Box._uiSetElAttrs()._uiSetElCls()._uiSetElStyle().
+            _uiSetWidth()._uiSetHeight()._uiSetHtml();
+    }
+
     return Box;
 }, {
     requires:['node']
@@ -1051,7 +1048,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
  * close extension for kissy dialog
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/close", function(S) {
+KISSY.add("uibase/close", function() {
     function Close() {
     }
 
@@ -1133,8 +1130,8 @@ KISSY.add("uibase/closerender", function(S, Node) {
                     "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
-                    "'>关闭</span>" +
-                    "</a>").appendTo(el);
+                    "'>关闭<" + "/span>" +
+                    "<"+"/a>").appendTo(el);
                 self.set("closeBtn", closeBtn);
             }
         },
@@ -1146,11 +1143,16 @@ KISSY.add("uibase/closerender", function(S, Node) {
             closeBtn && closeBtn.detach();
         }
     };
+
+    if (1 > 2) {
+        Close._uiSetClosable();
+    }
+
     return Close;
 
 }, {
-        requires:["node"]
-    });/**
+    requires:["node"]
+});/**
  * constrain extension for kissy
  * @author 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
@@ -1175,7 +1177,9 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
      */
     function _getConstrainRegion(constrain) {
         var ret;
-        if (!constrain) return ret;
+        if (!constrain) {
+            return ret;
+        }
         var el = this.get("el");
         if (constrain !== true) {
             constrain = Node.one(constrain);
@@ -1218,7 +1222,9 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
                 if (r === undefined) {
                     r = v;
                 }
-                if (!self.get("constrain")) return r;
+                if (!self.get("constrain")) {
+                    return r;
+                }
                 var _ConstrainExtRegion = _getConstrainRegion.call(
                     self, self.get("constrain"));
                 return Math.min(Math.max(r,
@@ -1230,7 +1236,9 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
                 if (r === undefined) {
                     r = v;
                 }
-                if (!self.get("constrain")) return r;
+                if (!self.get("constrain")) {
+                    return r;
+                }
                 var _ConstrainExtRegion = _getConstrainRegion.call(
                     self, self.get("constrain"));
                 return Math.min(Math.max(r,
@@ -1251,7 +1259,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
  * 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/contentbox", function(S) {
+KISSY.add("uibase/contentbox", function() {
 
     function ContentBox() {
     }
@@ -1367,6 +1375,10 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         c && contentEl.append(c);
     }
 
+    if (1 > 2) {
+        ContentBox._uiSetContentElCls()._uiSetContentElAttrs()._uiSetContentElStyle();
+    }
+
     return ContentBox;
 }, {
     requires:["node","./boxrender"]
@@ -1388,26 +1400,30 @@ KISSY.add("uibase/drag", function(S) {
     Drag.prototype = {
 
         _uiSetHandlers:function(v) {
-            if (v && v.length > 0 && this.__drag)
+            if (v && v.length > 0 && this.__drag) {
                 this.__drag.set("handlers", v);
+            }
         },
 
         __bindUI:function() {
             var Draggable = S.require("dd/draggable");
             var self = this,
                 el = self.get("el");
-            if (self.get("draggable") && Draggable)
+            if (self.get("draggable") && Draggable) {
                 self.__drag = new Draggable({
                     node:el,
                     handlers:self.get("handlers")
                 });
+            }
         },
 
         _uiSetDraggable:function(v) {
 
             var self = this,
                 d = self.__drag;
-            if (!d) return;
+            if (!d) {
+                return;
+            }
             if (v) {
                 d.detach("drag");
                 d.on("drag", self._dragExtAction, self);
@@ -1430,13 +1446,17 @@ KISSY.add("uibase/drag", function(S) {
 
     };
 
+    if(1>2){
+        Drag._uiSetDraggable();
+    }
+
     return Drag;
 
 });/**
  * loading mask support for overlay
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/loading", function(S) {
+KISSY.add("uibase/loading", function() {
 
     function Loading() {
     }
@@ -1497,7 +1517,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
  * mask extension for kissy
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/mask", function(S) {
+KISSY.add("uibase/mask", function() {
 
 
     function Mask() {
@@ -1523,6 +1543,10 @@ KISSY.add("uibase/mask", function(S) {
         }
     };
 
+    if(1>2){
+        Mask._uiSetMask();
+    }
+
     return Mask;
 }, {requires:["ua"]});/**
  * mask extension for kissy
@@ -1542,7 +1566,7 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
         mask = new Node("<div " +
             //"tabindex='-1' " +
             "class='" +
-            this.get("prefixCls") + "ext-mask'/>").prependTo(document.body);
+            this.get("prefixCls") + "ext-mask'/>").prependTo("body");
         mask.css({
                 "position":"absolute",
                 left:0,
@@ -1606,7 +1630,9 @@ KISSY.add("uibase/maskrender", function(S,UA,DOM,Node) {
 
         _maskExtHide:function() {
             num--;
-            if (num <= 0) num = 0;
+            if (num <= 0) {
+                num = 0;
+            }
             if (!num) {
                 mask && mask.css("display", "none");
                 iframe && iframe.css("display", "none");
@@ -1693,6 +1719,8 @@ KISSY.add("uibase/position", function(S) {
  */
 KISSY.add("uibase/positionrender", function() {
 
+    var ZINDEX=9999;
+
     function Position() {
     }
 
@@ -1710,7 +1738,7 @@ KISSY.add("uibase/positionrender", function() {
             }
         },
         zIndex: {
-            value: 9999
+            value: ZINDEX
         }
     };
 
@@ -1779,6 +1807,11 @@ KISSY.add("uibase/resize", function(S) {
 
         }
     };
+
+    if(1>2){
+       Resize._uiSetResize();
+    }
+
     return Resize;
 });/**
  * shim for ie6 ,require box-ext
@@ -1817,14 +1850,19 @@ KISSY.add("uibase/shimrender", function(S, Node) {
             }
         }
     };
+
+    if (1 > 2) {
+        Shim._uiSetShim();
+    }
+
     return Shim;
 }, {
-        requires:['node']
-    });/**
+    requires:['node']
+});/**
  * support standard mod for component
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/stdmod", function(S) {
+KISSY.add("uibase/stdmod", function() {
 
 
     function StdMod() {
@@ -1913,7 +1951,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
-            partEl = new Node("<div class='" + self.get("prefixCls") +CLS_PREFIX + part + "'/>")
+            partEl = new Node("<div class='" + self.get("prefixCls") + CLS_PREFIX + part + "'/>")
                 .appendTo(el);
             self.set(part, partEl);
         }
@@ -1958,6 +1996,12 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
             renderUI(this, "footer");
         }
     };
+
+    if (1 > 2) {
+        StdMod._uiSetHeaderStyle()._uiSetFooterStyle()
+            ._uiSetBodyStyle()
+            ._uiSetBodyContent()._uiSetHeaderContent()._uiSetFooterContent();
+    }
 
     return StdMod;
 

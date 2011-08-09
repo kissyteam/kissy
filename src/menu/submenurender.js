@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         var SubMenuRender;
-        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►</span>';
+        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<'+'/span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function() {
                 var self = this,

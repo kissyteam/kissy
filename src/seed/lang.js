@@ -174,6 +174,7 @@
                     try {
                         delete v[CLONE_MARKER];
                     } catch (e) {
+                        S.log("delete CLONE_MARKER error : ");
                         S.log(e);
                         v[CLONE_MARKER] = undefined;
                     }

@@ -1,7 +1,7 @@
 /**
  * @module anim-easing
  */
-KISSY.add('anim/easing', function(S) {
+KISSY.add('anim/easing', function() {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html

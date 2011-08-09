@@ -12,17 +12,34 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("position"),
         require("loading"),
         require("align"),
+        require("close"),
         require("resize"),
         require("mask"),
         Effect
     ], {}, {
         ATTRS:{
+            elBefore:{
+                valueFn:function() {
+                    return S.all("body").first();
+                }
+            },
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+            closable:{
+                // overlay 默认没 X
+                value:false
+            },
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
             },
             allowTextSelection_:{
                 value:true
+            },
+            visibleMode:{
+                value:"visibility"
             }
         }
     });

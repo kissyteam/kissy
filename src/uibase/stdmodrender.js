@@ -46,7 +46,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         var el = self.get("contentEl"),
             partEl = self.get(part);
         if (!partEl) {
-            partEl = new Node("<div class='" + self.get("prefixCls") +CLS_PREFIX + part + "'/>")
+            partEl = new Node("<div class='" + self.get("prefixCls") + CLS_PREFIX + part + "'/>")
                 .appendTo(el);
             self.set(part, partEl);
         }
@@ -91,6 +91,12 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
             renderUI(this, "footer");
         }
     };
+
+    if (1 > 2) {
+        StdMod._uiSetHeaderStyle()._uiSetFooterStyle()
+            ._uiSetBodyStyle()
+            ._uiSetBodyContent()._uiSetHeaderContent()._uiSetFooterContent();
+    }
 
     return StdMod;
 

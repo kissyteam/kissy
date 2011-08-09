@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 6 20:22
+build time: Aug 8 17:08
 */
 /**
  * @module   anim
@@ -368,7 +368,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
                 // 比如：ie 下 border-width 默认为 medium
                 if (sp.u !== tp.u) {
                     //S.log(prop + " : " + sp.v + " : " + sp.u);
-                    //S.log(prop + " : " + tp.v + " : " + tp.u);
                     //S.log(tp.f);
                     sp.v = 0;
                     sp.u = tp.u;
@@ -621,24 +620,25 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  */
 KISSY.add("anim/color", function(S, DOM, Anim) {
 
-    var KEYWORDS = {
-        "black":[0,0,0],
-        "silver":[192,192,192],
-        "gray":[128,128,128],
-        "white":[255,255,255],
-        "maroon":[128,0,0],
-        "red":[255,0,0],
-        "purple":[128,0,128],
-        "fuchsia":[255,0,255],
-        "green":[0,128,0],
-        "lime":[0,255,0],
-        "olive":[128,128,0],
-        "yellow":[255,255,0],
-        "navy":[0,0,128],
-        "blue":[0,0,255],
-        "teal":[0,128,128],
-        "aqua":[0,255,255]
-    };
+    var HEX_BASE = 16,
+        KEYWORDS = {
+            "black":[0,0,0],
+            "silver":[192,192,192],
+            "gray":[128,128,128],
+            "white":[255,255,255],
+            "maroon":[128,0,0],
+            "red":[255,0,0],
+            "purple":[128,0,128],
+            "fuchsia":[255,0,255],
+            "green":[0,128,0],
+            "lime":[0,255,0],
+            "olive":[128,128,0],
+            "yellow":[255,255,0],
+            "navy":[0,0,128],
+            "blue":[0,0,255],
+            "teal":[0,128,128],
+            "aqua":[0,255,255]
+        };
     var re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
         re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i;
 
@@ -672,16 +672,18 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         } else if (match = val.match(re_hex)) {
             for (var i = 1; i < match.length; i++) {
                 if (match[i].length < 2) {
-                    match[i] = match[i] + match[i];
+                    match[i] += match[i];
                 }
             }
             return [
-                parseInt(match[1], 16),
-                parseInt(match[2], 16),
-                parseInt(match[3], 16)
+                parseInt(match[1], HEX_BASE),
+                parseInt(match[2], HEX_BASE),
+                parseInt(match[3], HEX_BASE)
             ];
         }
-        if (KEYWORDS[val]) return KEYWORDS[val];
+        if (KEYWORDS[val]) {
+            return KEYWORDS[val];
+        }
         //transparent 或者 颜色字符串返回
         S.log("only allow rgb or hex color string : " + val, "warn");
         return [255,255,255];
@@ -721,11 +723,11 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         OPS[prop] = OPS['color'];
     });
 }, {
-        requires:["dom","./base"]
-    });/**
+    requires:["dom","./base"]
+});/**
  * @module anim-easing
  */
-KISSY.add('anim/easing', function(S) {
+KISSY.add('anim/easing', function() {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
@@ -934,20 +936,22 @@ KISSY.add('anim/easing', function(S) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
-    var tag = S.guid("anim-"),id = 1;
+    var tag = S.guid("anim-");
 
     function getKv(anim) {
         anim[tag] = anim[tag] || S.guid("anim-");
         return anim[tag];
     }
 
-    return {
+    var manager = {
         interval:20,
         runnings:{},
         timer:null,
         start:function(anim) {
             var kv = getKv(anim);
-            if (this.runnings[kv]) return;
+            if (this.runnings[kv]) {
+                return;
+            }
             this.runnings[kv] = anim;
             this.startTimer();
         },
@@ -1000,6 +1004,12 @@ KISSY.add("anim/manager", function(S) {
             return done;
         }
     };
+
+    if (1 > 2) {
+        manager.pause().resume();
+    }
+
+    return manager;
 });/**
  * special patch for animate scroll property of element
  * @author  yiminghe@gmail.com

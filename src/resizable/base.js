@@ -42,8 +42,9 @@ KISSY.add("resizable/base", function(S, Node, D, UIBase) {
     }
     function merge(a1, a2) {
         var a = [];
-        for (var i = 0; i < a1.length; i++)
+        for (var i = 0; i < a1.length; i++) {
             a[i] = a1[i] || a2[i];
+        }
         return a;
     }
 
@@ -56,8 +57,9 @@ KISSY.add("resizable/base", function(S, Node, D, UIBase) {
         renderUI:function() {
             var self = this,node = self.get("node");
             self.dds = {};
-            if (node.css("position") == "static")
+            if (node.css("position") == "static") {
                 node.css("position", "relative");
+            }
         },
         _uiSetHandlers:function(v) {
             var self = this,
@@ -103,23 +105,30 @@ KISSY.add("resizable/base", function(S, Node, D, UIBase) {
             var pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL);
             var attr = ["width","height","top","left"];
             for (var i = 0; i < attr.length; i++) {
-                if (pos[i])node.css(attr[i], pos[i]);
+                if (pos[i]) {
+                    node.css(attr[i], pos[i]);
+                }
             }
         },
 
         _getHanderC:function(dd) {
             var dds = this.dds;
             for (var d in dds) {
-                if (!dds.hasOwnProperty(d))return;
-                if (dds[d] == dd)
+                if (!dds.hasOwnProperty(d)) {
+                    return;
+                }
+                if (dds[d] == dd) {
                     return d;
+                }
             }
         },
         destructor:function() {
             var self = this,
                 dds = self.dds;
             for (var d in dds) {
-                if (!dds.hasOwnProperty(d))return;
+                if (!dds.hasOwnProperty(d)){
+                    return;
+                }
                 dds[d].destroy();
                 dds[d].get("node").remove();
                 delete dds[d];

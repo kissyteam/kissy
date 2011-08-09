@@ -2,7 +2,7 @@
  * support standard mod for component
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/stdmod", function(S) {
+KISSY.add("uibase/stdmod", function() {
 
 
     function StdMod() {

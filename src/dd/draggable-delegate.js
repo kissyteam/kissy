@@ -12,7 +12,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
             var self = this,
                 handlers = self.get('handlers'),
                 node = self.get('container');
-            if (handlers.length == 0) {
+            if (handlers.length === 0) {
                 handlers.push(self.get("selector"));
             }
             node.on('mousedown', self._handleMouseDown, self);
@@ -61,9 +61,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
             var self = this;
             var target = new Node(ev.target);
             var handler = target && this._getHandler(target);
-            if (!handler) return;
+            if (!handler) {
+                return;
+            }
             var node = this._getNode(handler);
-            if (!node) return;
+            if (!node) {
+                return;
+            }
             ev.preventDefault();
             self.set("node", node);
             self.set("dragNode", node);

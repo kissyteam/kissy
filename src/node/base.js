@@ -74,7 +74,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
                 index = context;
                 context = undefined;
             }
-            var list = NodeList.all(selector, context),
+            var list = NodeList.all(selector, context).getDOMNodes(),
                 ret = new NodeList(this);
             if (index === undefined) {
                 AP.push.apply(ret, list);

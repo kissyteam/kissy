@@ -33,6 +33,9 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
         transitionName += "Property";
     }
 
+    //强制不使用 native
+    transitionName='';
+
 
     describe("anim", function() {
 
@@ -120,7 +123,6 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
             test.scrollLeft = 500;
             var scrollLimit = test.scrollLeft;
             test.scrollLeft = 0;
-            S.log(scrollLimit);
             Anim(test, {
                     scrollLeft:scrollLimit
                 }, 2).run();

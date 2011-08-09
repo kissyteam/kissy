@@ -23,7 +23,9 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
      */
     function _getConstrainRegion(constrain) {
         var ret;
-        if (!constrain) return ret;
+        if (!constrain) {
+            return ret;
+        }
         var el = this.get("el");
         if (constrain !== true) {
             constrain = Node.one(constrain);
@@ -66,7 +68,9 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
                 if (r === undefined) {
                     r = v;
                 }
-                if (!self.get("constrain")) return r;
+                if (!self.get("constrain")) {
+                    return r;
+                }
                 var _ConstrainExtRegion = _getConstrainRegion.call(
                     self, self.get("constrain"));
                 return Math.min(Math.max(r,
@@ -78,7 +82,9 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
                 if (r === undefined) {
                     r = v;
                 }
-                if (!self.get("constrain")) return r;
+                if (!self.get("constrain")) {
+                    return r;
+                }
                 var _ConstrainExtRegion = _getConstrainRegion.call(
                     self, self.get("constrain"));
                 return Math.min(Math.max(r,

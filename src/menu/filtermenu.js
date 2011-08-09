@@ -12,7 +12,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    return UIBase.create(Menu, {
+    var FilterMenu = UIBase.create(Menu, {
             bindUI:function() {
                 var self = this,
                     view = self.get("view"),
@@ -125,7 +125,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             view.set("content", content.replace(strExp, function(m) {
-                                return "<span class='" + hit + "'>" + m + "</span>";
+                                return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
@@ -171,6 +171,11 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
         }
     );
 
+    if (1 > 2) {
+        FilterMenu._uiSetFilterStr();
+    }
+
+    return FilterMenu;
 }, {
     requires:['uibase','./menu','./filtermenurender']
 });
