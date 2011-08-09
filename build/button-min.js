@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:08
+build time: Aug 9 18:10
 */
 KISSY.add("button/base",function(f,d,e,b,a){var c=d.KeyCodes;f=e.create(b.ModelControl,[e.Contentbox],{bindUI:function(){this.get("el").on("keyup",this._handleKeyEventInternal,this)},_handleKeyEventInternal:function(g){if(g.keyCode==c.ENTER&&g.type=="keydown"||g.keyCode==c.SPACE&&g.type=="keyup")return this._performInternal(g);return g.keyCode==c.SPACE},_performInternal:function(){this.fire("click")}},{ATTRS:{value:{},describedby:{view:true},tooltip:{view:true}}});f.DefaultRender=a;return f},{requires:["event",
 "uibase","component","./customrender"]});KISSY.add("button/buttonrender",function(f,d,e){return d.create(e.Render,[d.Contentbox.Render],{renderUI:function(){this.get("el").attr("role","button")},_uiSetTooltip:function(b){this.get("el").attr("title",b)},_uiSetDescribedby:function(b){this.get("el").attr("aria-describedby",b)}},{ATTRS:{describedby:{},tooltip:{}}})},{requires:["uibase","component"]});

@@ -419,7 +419,8 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                      *  Keeping screen state and session state synchronized is an important task
                      *  Data Binding
                      */
-                    view:true
+                    view:true,
+                    value:true
                     /**
                      * In general data binding gets tricky
                      * because if you have to avoid cycles where a change to the control,
@@ -463,20 +464,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                     }
                 },
 
-                //转交给渲染层
-                //note1 : 兼容性考虑
-                //note2 : 调用者可以完全不需要接触渲染层
-                srcNode:{
-                    view:true
-                },
-
                 // 转交给渲染层
                 prefixCls:{
-                    view:true
-                },
-
-                render:{
-                    view:true
+                    view:true,
+                    value:"ks-"
                 },
 
                 // 父组件

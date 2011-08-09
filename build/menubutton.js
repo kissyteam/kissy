@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * combination of menu and button ,similar to native select
@@ -202,6 +202,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 setter:function(v) {
                     v.set("parent", this);
                 }
+            },
+            collapsed:{
+                value:true
             }
         },
         DefaultRender:MenuButtonRender
@@ -267,7 +270,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             activeItem:{
             },
             collapsed:{
-                value:true
             }
         }
     });

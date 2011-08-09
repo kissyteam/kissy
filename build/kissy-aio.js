@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:10
+build time: Aug 9 18:11
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 8 17:10
              */
             version: '1.20dev',
 
-            buildTime:'20110808171008',
+            buildTime:'20110809181126',
 
             /**
              * Returns a new object containing all of the properties of
@@ -11077,7 +11077,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:11
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12502,7 +12502,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * 数据延迟加载组件
@@ -13003,7 +13003,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:11
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13241,7 +13241,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * @module   Flash 全局静态类
@@ -13752,7 +13752,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -14995,7 +14995,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * resizable support for kissy
@@ -15169,7 +15169,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:10
+build time: Aug 9 18:11
 */
 /**
  * UIBase.Align
@@ -15947,22 +15947,28 @@ KISSY.add('uibase/box', function() {
             view:true,
             sync:false
         },
+        // 宽度
         width:{
             view:true
         },
+        // 高度
         height:{
             view:true
         },
+        // 容器的 class
         elCls:{
             view:true
         },
+        // 容器的行内样式
         elStyle:{
             view:true
         },
+        // 其他属性
         elAttrs:{
             //其他属性
             view:true
         },
+        // 插入到该元素前
         elBefore:{
             view:true
         },
@@ -15976,10 +15982,16 @@ KISSY.add('uibase/box', function() {
         },
 
         visibleMode:{
+            value:"display",
             view:true
         },
         // 默认显示，但不触发事件
         visible:{
+            view:true
+        },
+
+        // 从已存在节点开始渲染
+        srcNode:{
             view:true
         }
     };
@@ -16042,40 +16054,22 @@ KISSY.add('uibase/boxrender', function(S, Node) {
                 return $(v);
             }
         },
-        elCls: {
-            // 容器的 class
-        },
-        elStyle:{
-            //容器的行内样式
-        },
-        width: {
-            // 宽度
-        },
-        height: {
-            // 高度
-        },
+        elCls: {},
+        elStyle:{},
+        width: {},
+        height: {},
         elTagName:{
-            //生成标签名字
+            // 生成标签名字
             value:"div"
         },
-        elAttrs:{
-            //其他属性
-        },
-        elBefore:{
-            //插入到该元素前
-            value:null
-        },
-        // 渲染该组件的目的容器
-        render:{
-            view:true
-        },
+        elAttrs:{},
+        elBefore:{},
+        render:{},
         html: {
             sync:false
         },
         visible:{},
-        visibleMode:{
-            value:"display"
-        }
+        visibleMode:{}
     };
 
     Box.construct = constructEl;
@@ -17237,7 +17231,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * container can delegate event for its children
@@ -17825,7 +17819,8 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                      *  Keeping screen state and session state synchronized is an important task
                      *  Data Binding
                      */
-                    view:true
+                    view:true,
+                    value:true
                     /**
                      * In general data binding gets tricky
                      * because if you have to avoid cycles where a change to the control,
@@ -17869,20 +17864,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                     }
                 },
 
-                //转交给渲染层
-                //note1 : 兼容性考虑
-                //note2 : 调用者可以完全不需要接触渲染层
-                srcNode:{
-                    view:true
-                },
-
                 // 转交给渲染层
                 prefixCls:{
-                    view:true
-                },
-
-                render:{
-                    view:true
+                    view:true,
+                    value:"ks-"
                 },
 
                 // 父组件
@@ -17953,19 +17938,11 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             /**
              *  screen state
              */
-
-                //从 maskup 中渲染
-            srcNode:{},
-            prefixCls:{
-                value:"ks-"
-            },
-            focusable:{
-                value:true
-            },
+            prefixCls:{},
+            focusable:{},
             highlighted:{},
             focused:{},
             active:{},
-            render:{},
             //是否禁用
             disabled:{}
         }
@@ -18054,7 +18031,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:11
 */
 /**
  * Switchable
@@ -20651,15 +20628,13 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * KISSY Overlay
  * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
-
-    var $ = S.all;
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -20670,27 +20645,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("positionrender"),
         require("loadingrender"),
         UA['ie'] == 6 ? require("shimrender") : null,
+        require("closerender"),
         require("maskrender")
     ], {
-
         renderUI:function() {
             this.get("el").addClass(this.get("prefixCls") + "overlay");
-        }
-
-    }, {
-        ATTRS:{
-            elBefore:{
-                valueFn:function() {
-                    return $("body").first();
-                }
-            },
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            visibleMode:{
-                value:"visibility"
-            }
         }
     });
 }, {
@@ -20903,17 +20862,34 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
         require("position"),
         require("loading"),
         require("align"),
+        require("close"),
         require("resize"),
         require("mask"),
         Effect
     ], {}, {
         ATTRS:{
+            elBefore:{
+                valueFn:function() {
+                    return S.all("body").first();
+                }
+            },
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+            closable:{
+                // overlay 默认没 X
+                value:false
+            },
             // 是否绑定鼠标事件
             handleMouseEvents:{
                 value:false
             },
             allowTextSelection_:{
                 value:true
+            },
+            visibleMode:{
+                value:"visibility"
             }
         }
     });
@@ -20930,7 +20906,6 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
 
     return UIBase.create(OverlayRender, [
         require("stdmodrender"),
-        require("closerender"),
         AriaRender
     ]);
 }, {
@@ -20939,7 +20914,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
  * KISSY.Dialog
  * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
+KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -20947,16 +20922,21 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender,Aria) {
 
     var Dialog = UIBase.create(Overlay, [
         require("stdmod"),
-        require("close"),
         require("drag"),
         require("constrain"),
         Aria
     ], {
         renderUI:function() {
             var self = this;
-            self.get("el").addClass(this.get("prefixCls")+"dialog");
+            self.get("el").addClass(this.get("prefixCls") + "dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
+        }
+    }, {
+        ATTRS:{
+            closable:{
+                value:true
+            }
         }
     });
 
@@ -21128,7 +21108,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:11
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22307,7 +22287,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * @fileoverview 图像放大区域
@@ -22932,7 +22912,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:08
+build time: Aug 9 18:10
 */
 /**
  * KISSY Calendar
@@ -24211,7 +24191,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * deletable menuitem
@@ -24579,7 +24559,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  * menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
+KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
     var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
@@ -24726,6 +24706,14 @@ KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
+            // 普通菜单可聚焦
+            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+            focusable:{
+                value:true
+            },
+            visibleMode:{
+                value:"display"
+            },
             /**
              * 当前高亮的儿子菜单项
              */
@@ -24821,6 +24809,17 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     }, {
         ATTRS:{
 
+            /**
+             * 是否支持焦点处理
+             * @override
+             */
+            focusable:{
+                value:false
+            },
+
+            visibleMode:{
+                value:"display"
+            },
 
             /**
              * 是否绑定鼠标事件
@@ -24962,21 +24961,11 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            /**
-             * 是否支持焦点处理
-             * @override
-             */
-            focusable:{
-                value:false
-            },
             selected:{},
             // @inheritedDoc
             // content:{},
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
-            checked:{},
-            visibleMode:{
-                value:"display"
-            }
+            checked:{}
         }
     });
 
@@ -25029,15 +25018,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            // 普通菜单可聚焦
-            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-            focusable:{
-                value:true
-            },
-            activeItem:{},
-            visibleMode:{
-                value:"display"
-            }
+            activeItem:{}
         }
     });
 }, {
@@ -25052,6 +25033,15 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
         UIBase.Align
     ], {
     }, {
+        ATTRS:{
+            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+            focusable:{
+                value:false
+            },
+            visibleMode:{
+                value:"visibility"
+            }
+        },
         DefaultRender:PopupMenuRender
     });
 
@@ -25077,16 +25067,6 @@ KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
         renderUI:function() {
             this.get("el").addClass(this.getCls(CLS));
         }
-    }, {
-        ATTRS:{
-            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-            focusable:{
-                value:false
-            },
-            visibleMode:{
-                value:"visibility"
-            }
-        }
     });
 }, {
     requires:['ua','uibase','./menurender']
@@ -25099,6 +25079,13 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     var Separator = UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
+            focusable:{
+                value:false
+            },
+            // 分隔线禁用，不可以被键盘访问
+            disabled:{
+                value:true
+            },
             handleMouseEvents:{
                 value:false
             }
@@ -25125,16 +25112,6 @@ KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
     return UIBase.create(Component.Render, {
         createDom:function() {
             this.get("el").attr("role", "separator").addClass(this.getCls(CLS));
-        }
-    }, {
-        ATTRS:{
-            focusable:{
-                value:false
-            },
-            // 分隔线禁用，不可以被键盘访问
-            disabled:{
-                value:true
-            }
         }
     });
 
@@ -25466,7 +25443,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:08
+build time: Aug 9 18:10
 */
 /**
  * Model and Control for button
@@ -25736,7 +25713,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25937,6 +25914,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 setter:function(v) {
                     v.set("parent", this);
                 }
+            },
+            collapsed:{
+                value:true
             }
         },
         DefaultRender:MenuButtonRender
@@ -26002,7 +25982,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             activeItem:{
             },
             collapsed:{
-                value:true
             }
         }
     });
@@ -26219,7 +26198,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:10
+build time: Aug 9 18:11
 */
 /**
  * @author  常胤 (lzlu.com)

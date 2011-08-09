@@ -40,15 +40,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            // 普通菜单可聚焦
-            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-            focusable:{
-                value:true
-            },
-            activeItem:{},
-            visibleMode:{
-                value:"display"
-            }
+            activeItem:{}
         }
     });
 }, {

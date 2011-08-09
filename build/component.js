@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * container can delegate event for its children
@@ -589,7 +589,8 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                      *  Keeping screen state and session state synchronized is an important task
                      *  Data Binding
                      */
-                    view:true
+                    view:true,
+                    value:true
                     /**
                      * In general data binding gets tricky
                      * because if you have to avoid cycles where a change to the control,
@@ -633,20 +634,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                     }
                 },
 
-                //转交给渲染层
-                //note1 : 兼容性考虑
-                //note2 : 调用者可以完全不需要接触渲染层
-                srcNode:{
-                    view:true
-                },
-
                 // 转交给渲染层
                 prefixCls:{
-                    view:true
-                },
-
-                render:{
-                    view:true
+                    view:true,
+                    value:"ks-"
                 },
 
                 // 父组件
@@ -717,19 +708,11 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             /**
              *  screen state
              */
-
-                //从 maskup 中渲染
-            srcNode:{},
-            prefixCls:{
-                value:"ks-"
-            },
-            focusable:{
-                value:true
-            },
+            prefixCls:{},
+            focusable:{},
             highlighted:{},
             focused:{},
             active:{},
-            render:{},
             //是否禁用
             disabled:{}
         }

@@ -61,6 +61,17 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     }, {
         ATTRS:{
 
+            /**
+             * 是否支持焦点处理
+             * @override
+             */
+            focusable:{
+                value:false
+            },
+
+            visibleMode:{
+                value:"display"
+            },
 
             /**
              * 是否绑定鼠标事件

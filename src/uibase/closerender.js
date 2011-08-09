@@ -38,7 +38,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
         __renderUI:function() {
             var self = this,
                 closeBtn = self.get("closeBtn"),
-                el = self.get("contentEl");
+                el = self.get("el");
 
             if (!closeBtn && el) {
                 closeBtn = new Node("<a " +

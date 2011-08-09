@@ -2,7 +2,7 @@
  * menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
+KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
     var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
@@ -149,6 +149,14 @@ KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
+            // 普通菜单可聚焦
+            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+            focusable:{
+                value:true
+            },
+            visibleMode:{
+                value:"display"
+            },
             /**
              * 当前高亮的儿子菜单项
              */

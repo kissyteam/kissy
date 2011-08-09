@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:08
+build time: Aug 9 18:10
 */
 /**
  * Model and Control for button

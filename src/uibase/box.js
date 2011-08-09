@@ -25,7 +25,7 @@ KISSY.add('uibase/box', function() {
         elCls:{
             view:true
         },
-         // 容器的行内样式
+        // 容器的行内样式
         elStyle:{
             view:true
         },
@@ -53,6 +53,11 @@ KISSY.add('uibase/box', function() {
         },
         // 默认显示，但不触发事件
         visible:{
+            view:true
+        },
+
+        // 从已存在节点开始渲染
+        srcNode:{
             view:true
         }
     };

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 18:47
+build time: Aug 9 18:29
 */
 /**
  * KISSY Overlay
@@ -17,7 +17,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("contentboxrender"),
         require("positionrender"),
         require("loadingrender"),
-        UA['ie'] == 6 ? require("shimrender") : null,
+        UA['ie'] === 6 ? require("shimrender") : null,
         require("closerender"),
         require("maskrender")
     ], {

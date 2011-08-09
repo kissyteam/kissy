@@ -86,21 +86,11 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            /**
-             * 是否支持焦点处理
-             * @override
-             */
-            focusable:{
-                value:false
-            },
             selected:{},
             // @inheritedDoc
             // content:{},
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
-            checked:{},
-            visibleMode:{
-                value:"display"
-            }
+            checked:{}
         }
     });
 

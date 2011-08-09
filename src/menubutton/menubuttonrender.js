@@ -51,7 +51,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             activeItem:{
             },
             collapsed:{
-                value:true
             }
         }
     });

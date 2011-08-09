@@ -7,6 +7,13 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     var Separator = UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
+            focusable:{
+                value:false
+            },
+            // 分隔线禁用，不可以被键盘访问
+            disabled:{
+                value:true
+            },
             handleMouseEvents:{
                 value:false
             }

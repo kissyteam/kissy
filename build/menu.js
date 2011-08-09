@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 8 17:09
+build time: Aug 9 18:10
 */
 /**
  * deletable menuitem
@@ -369,7 +369,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  * menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
+KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
     var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
@@ -516,6 +516,14 @@ KISSY.add("menu/menu", function(S, Event,UIBase, Component, MenuRender) {
         }
     }, {
         ATTRS:{
+            // 普通菜单可聚焦
+            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+            focusable:{
+                value:true
+            },
+            visibleMode:{
+                value:"display"
+            },
             /**
              * 当前高亮的儿子菜单项
              */
@@ -611,6 +619,17 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     }, {
         ATTRS:{
 
+            /**
+             * 是否支持焦点处理
+             * @override
+             */
+            focusable:{
+                value:false
+            },
+
+            visibleMode:{
+                value:"display"
+            },
 
             /**
              * 是否绑定鼠标事件
@@ -752,21 +771,11 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            /**
-             * 是否支持焦点处理
-             * @override
-             */
-            focusable:{
-                value:false
-            },
             selected:{},
             // @inheritedDoc
             // content:{},
             // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
-            checked:{},
-            visibleMode:{
-                value:"display"
-            }
+            checked:{}
         }
     });
 
@@ -819,15 +828,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
         }
     }, {
         ATTRS:{
-            // 普通菜单可聚焦
-            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-            focusable:{
-                value:true
-            },
-            activeItem:{},
-            visibleMode:{
-                value:"display"
-            }
+            activeItem:{}
         }
     });
 }, {
@@ -842,6 +843,15 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
         UIBase.Align
     ], {
     }, {
+        ATTRS:{
+            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+            focusable:{
+                value:false
+            },
+            visibleMode:{
+                value:"visibility"
+            }
+        },
         DefaultRender:PopupMenuRender
     });
 
@@ -867,16 +877,6 @@ KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
         renderUI:function() {
             this.get("el").addClass(this.getCls(CLS));
         }
-    }, {
-        ATTRS:{
-            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-            focusable:{
-                value:false
-            },
-            visibleMode:{
-                value:"visibility"
-            }
-        }
     });
 }, {
     requires:['ua','uibase','./menurender']
@@ -889,6 +889,13 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
     var Separator = UIBase.create(Component.ModelControl, {
     }, {
         ATTRS:{
+            focusable:{
+                value:false
+            },
+            // 分隔线禁用，不可以被键盘访问
+            disabled:{
+                value:true
+            },
             handleMouseEvents:{
                 value:false
             }
@@ -915,16 +922,6 @@ KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
     return UIBase.create(Component.Render, {
         createDom:function() {
             this.get("el").attr("role", "separator").addClass(this.getCls(CLS));
-        }
-    }, {
-        ATTRS:{
-            focusable:{
-                value:false
-            },
-            // 分隔线禁用，不可以被键盘访问
-            disabled:{
-                value:true
-            }
         }
     });
 

@@ -8,6 +8,15 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
         UIBase.Align
     ], {
     }, {
+        ATTRS:{
+            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+            focusable:{
+                value:false
+            },
+            visibleMode:{
+                value:"visibility"
+            }
+        },
         DefaultRender:PopupMenuRender
     });
 

@@ -197,6 +197,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 setter:function(v) {
                     v.set("parent", this);
                 }
+            },
+            collapsed:{
+                value:true
             }
         },
         DefaultRender:MenuButtonRender

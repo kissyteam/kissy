@@ -12,7 +12,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         require("contentboxrender"),
         require("positionrender"),
         require("loadingrender"),
-        UA['ie'] == 6 ? require("shimrender") : null,
+        UA['ie'] === 6 ? require("shimrender") : null,
         require("closerender"),
         require("maskrender")
     ], {

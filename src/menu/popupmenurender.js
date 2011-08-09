@@ -11,16 +11,6 @@ KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
         renderUI:function() {
             this.get("el").addClass(this.getCls(CLS));
         }
-    }, {
-        ATTRS:{
-            // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-            focusable:{
-                value:false
-            },
-            visibleMode:{
-                value:"visibility"
-            }
-        }
     });
 }, {
     requires:['ua','uibase','./menurender']
