@@ -2038,10 +2038,12 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         _CUSTOM_STYLES: CUSTOM_STYLES,
 
         _getComputedStyle: function(elem, name) {
-            var val = '', d = elem.ownerDocument;
+            var val = '', computedStyle = {},d = elem.ownerDocument;
 
-            if (elem[STYLE]) {
-                val = d.defaultView.getComputedStyle(elem, null)[name];
+            if (elem[STYLE] &&
+                // https://github.com/kissyteam/kissy/issues/61
+                (computedStyle = d.defaultView.getComputedStyle(elem, null))) {
+                val = computedStyle[name];
             }
             return val;
         },
