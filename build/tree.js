@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -377,7 +377,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         ROW_CLS = "tree-row";
 
-    var BaseNodeRender = UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(ITEM_CLS));
         },
@@ -549,14 +549,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
     });
 
-    if (1 > 2) {
-        BaseNodeRender._uiSetAriaPosInSet();
-        BaseNodeRender._uiSetDepth();
-        BaseNodeRender._uiSetAriaSize();
-    }
-
-    return BaseNodeRender;
-
 }, {
     requires:['node','uibase','component']
 });/**
@@ -666,10 +658,6 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:CheckNode
     });
-
-    if (1 > 2) {
-        Component.PARTIAL_CHECK = Component.CHECK = Component.EMPTY;
-    }
 
     return CheckNode;
 }, {
@@ -905,10 +893,6 @@ KISSY.add("tree/treemgrrender", function(S) {
             this.get("el")[v ? "addClass" : "removeClass"](this.getCls(FOCUSED_CLS));
         }
     });
-
-    if (1 > 2) {
-        TreeMgrRender._uiSetShowRootNode();
-    }
 
     return TreeMgrRender;
 });/**

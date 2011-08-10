@@ -11,7 +11,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    var MenuButtonRender = UIBase.create(Button.Render, {
+    return UIBase.create(Button.Render, {
 
         createDom:function() {
             var innerEl = this.get("innerEl"),
@@ -54,12 +54,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             }
         }
     });
-
-    if (1 > 2) {
-        MenuButtonRender._uiSetCollapsed();
-    }
-
-    return MenuButtonRender;
 }, {
     requires:['uibase','button']
 });

@@ -184,10 +184,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         }
     });
 
-    if (1 > 2) {
-        DOM.getDOMNodes();
-    }
-
     return NodeList;
 }, {
     requires:["dom"]

@@ -9,7 +9,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
         INNER_CLS = "inline-block custom-button-inner-box";
 
 
-    var CustomRender = UIBase.create(Css3Render, {
+    return UIBase.create(Css3Render, {
 
             __css_tag:"custom",
 
@@ -52,12 +52,6 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
             innerEL:{}
         }
     );
-
-    if (1 > 2) {
-        CustomRender.innerEL()
-    }
-
-    return CustomRender;
 }, {
     requires:['node','uibase','./css3render']
 });

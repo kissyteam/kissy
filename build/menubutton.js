@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:58
+build time: Aug 10 13:15
 */
 /**
  * combination of menu and button ,similar to native select
@@ -10,7 +10,7 @@ build time: Aug 9 18:58
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all;
     var KeyCodes = Node.KeyCodes;
-    var MenuButton = UIBase.create(Button, [Component.DecorateChild], {
+    return UIBase.create(Button, [Component.DecorateChild], {
 
         hideMenu:function() {
             this.get("menu") && this.get("menu").hide();
@@ -209,12 +209,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         },
         DefaultRender:MenuButtonRender
     });
-
-    if (1 > 2) {
-        MenuButton.getItemAt();
-    }
-
-    return MenuButton;
 }, {
     requires:["uibase","node","button","./menubuttonrender","menu","component"]
 });/**
@@ -230,7 +224,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    var MenuButtonRender = UIBase.create(Button.Render, {
+    return UIBase.create(Button.Render, {
 
         createDom:function() {
             var innerEl = this.get("innerEl"),
@@ -273,12 +267,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             }
         }
     });
-
-    if (1 > 2) {
-        MenuButtonRender._uiSetCollapsed();
-    }
-
-    return MenuButtonRender;
 }, {
     requires:['uibase','button']
 });/**
@@ -411,10 +399,6 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
             }
         }
     );
-
-    if (1 > 2) {
-        Select._uiSetDefaultCaption();
-    }
 
     Select.decorate = function(element, cfg) {
         element = S.one(element);

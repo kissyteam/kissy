@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * @module  cookie

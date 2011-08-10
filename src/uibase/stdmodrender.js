@@ -92,12 +92,6 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         }
     };
 
-    if (1 > 2) {
-        StdMod._uiSetHeaderStyle()._uiSetFooterStyle()
-            ._uiSetBodyStyle()
-            ._uiSetBodyContent()._uiSetHeaderContent()._uiSetFooterContent();
-    }
-
     return StdMod;
 
 }, {

@@ -492,9 +492,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
             }
         });
-        if (1 > 2) {
-            DOM.removeProp().hasProp();
-        }
         return DOM;
     }, {
         requires:["./base","ua"]

@@ -40,10 +40,6 @@ KISSY.add("validation/define",function(){
 			ignore: 3
 		}
 	};
-
-    if(1>2){
-        Define.Config.defaultwarn();
-    }
 	
 
 	return Define

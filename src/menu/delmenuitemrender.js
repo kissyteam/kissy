@@ -14,7 +14,7 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         }));
     }
 
-    var DelMenuItemRender = UIBase.create(MenuItemRender, {
+    return UIBase.create(MenuItemRender, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(CLS))
         },
@@ -42,12 +42,6 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         CLS:CLS,
         DEL_CLS:DEL_CLS
     });
-
-    if (1 > 2) {
-        DelMenuItemRender._uiSetDelTooltip().delEl;
-    }
-    return DelMenuItemRender;
-
 }, {
     requires:['node','uibase','component','./menuitemrender']
 });

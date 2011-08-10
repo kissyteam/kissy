@@ -388,10 +388,6 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         }
     };
 
-    if (1 > 2) {
-        Align._uiSetAlign();
-    }
-
     return Align;
 }, {
     requires:["ua","dom","node"]

@@ -48,7 +48,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                     "<span class='" +
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
-                    "<"+"/a>").appendTo(el);
+                    "<" + "/a>").appendTo(el);
                 self.set("closeBtn", closeBtn);
             }
         },
@@ -60,10 +60,6 @@ KISSY.add("uibase/closerender", function(S, Node) {
             closeBtn && closeBtn.detach();
         }
     };
-
-    if (1 > 2) {
-        Close._uiSetClosable();
-    }
 
     return Close;
 

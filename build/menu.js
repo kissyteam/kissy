@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:15
 */
 /**
  * deletable menuitem
@@ -69,7 +69,7 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         }));
     }
 
-    var DelMenuItemRender = UIBase.create(MenuItemRender, {
+    return UIBase.create(MenuItemRender, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(CLS))
         },
@@ -97,12 +97,6 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         CLS:CLS,
         DEL_CLS:DEL_CLS
     });
-
-    if (1 > 2) {
-        DelMenuItemRender._uiSetDelTooltip().delEl;
-    }
-    return DelMenuItemRender;
-
 }, {
     requires:['node','uibase','component','./menuitemrender']
 });/**
@@ -119,7 +113,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = UIBase.create(Menu, {
+    return UIBase.create(Menu, {
             bindUI:function() {
                 var self = this,
                     view = self.get("view"),
@@ -277,12 +271,6 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             DefaultRender:FilterMenuRender
         }
     );
-
-    if (1 > 2) {
-        FilterMenu._uiSetFilterStr();
-    }
-
-    return FilterMenu;
 }, {
     requires:['uibase','./menu','./filtermenurender']
 });/**
@@ -297,7 +285,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
-    var FilterMenuRender = UIBase.create(MenuRender, {
+    return UIBase.create(MenuRender, {
         getContentElement:function() {
             return this.get("menuContent");
         },
@@ -356,12 +344,6 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             }
         }
     });
-
-    if (1 > 2) {
-        FilterMenuRender._uiSetLabel();
-    }
-
-    return FilterMenuRender;
 
 }, {
     requires:['node','uibase','./menurender']
@@ -542,11 +524,6 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });
-
-    if (1 > 2) {
-        Menu._uiSetHighlightedItem();
-    }
-
     return Menu;
 
 }, {
@@ -711,7 +688,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    var MenuItemRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
@@ -778,12 +755,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             checked:{}
         }
     });
-
-    if (1 > 2) {
-        MenuItemRender._uiSetSelectable()._uiSetChecked()._uiSetCheckable();
-    }
-
-    return MenuItemRender;
 }, {
     requires:['node','uibase','component']
 });/**

@@ -29,7 +29,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         ROW_CLS = "tree-row";
 
-    var BaseNodeRender = UIBase.create(Component.Render, {
+    return UIBase.create(Component.Render, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(ITEM_CLS));
         },
@@ -200,14 +200,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         ITEM_CLS:ITEM_CLS
 
     });
-
-    if (1 > 2) {
-        BaseNodeRender._uiSetAriaPosInSet();
-        BaseNodeRender._uiSetDepth();
-        BaseNodeRender._uiSetAriaSize();
-    }
-
-    return BaseNodeRender;
 
 }, {
     requires:['node','uibase','component']

@@ -174,11 +174,6 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         }
     };
 
-    if (1 > 2) {
-        Box._uiSetElAttrs()._uiSetElCls()._uiSetElStyle().
-            _uiSetWidth()._uiSetHeight()._uiSetHtml();
-    }
-
     return Box;
 }, {
     requires:['node']

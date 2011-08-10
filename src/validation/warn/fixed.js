@@ -70,10 +70,6 @@ KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
         };
     }
 
-    if (1 > 2) {
-       symbol.text1();
-    }
-
     return Fixed;
 
 }, { requires: ['dom',"event","../utils","../define"] });

@@ -30,9 +30,5 @@ KISSY.add("tree/treemgrrender", function(S) {
         }
     });
 
-    if (1 > 2) {
-        TreeMgrRender._uiSetShowRootNode();
-    }
-
     return TreeMgrRender;
 });

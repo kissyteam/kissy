@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 20:30
+build time: Aug 10 13:16
 */
 /**
  * UIBase.Align
@@ -393,10 +393,6 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         }
     };
 
-    if (1 > 2) {
-        Align._uiSetAlign();
-    }
-
     return Align;
 }, {
     requires:["ua","dom","node"]
@@ -423,8 +419,12 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    /*
+    /**
      * UIBase for class-based component
+     * @class
+     * @extends Base
+     * @name UIBase
+     * @namespace
      */
     function UIBase(config) {
         // 读取用户设置的属性值并设置到自身
@@ -579,116 +579,142 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         }
     };
 
-    S.extend(UIBase, Base, {
-
+    S.extend(UIBase, Base,
         /**
-         * 建立节点，先不放在 dom 树中，为了性能!
+         * @lends UIBase.prototype
          */
-        create:function() {
-            var self = this;
-            // 是否生成过节点
-            if (!self.get("created")) {
-                self._createDom();
-                self.fire('createDom');
-                callMethodByHierarchy(self, "createDom", "__createDom");
-                self.fire('afterCreateDom');
-                self.set("created", true);
-            }
-        },
+        {
 
-        render: function() {
-            var self = this;
-            // 是否已经渲染过
-            if (!self.get("rendered")) {
-                self.create();
-                self._renderUI();
-                // 实际上是 beforeRenderUI
-                self.fire('renderUI');
-                callMethodByHierarchy(self, "renderUI", "__renderUI");
-                self.fire('afterRenderUI');
-                self._bindUI();
-                // 实际上是 beforeBindUI
-                self.fire('bindUI');
-                callMethodByHierarchy(self, "bindUI", "__bindUI");
-                self.fire('afterBindUI');
-                self._syncUI();
-                // 实际上是 beforeSyncUI
-                self.fire('syncUI');
-                callMethodByHierarchy(self, "syncUI", "__syncUI");
-                self.fire('afterSyncUI');
-                self.set("rendered", true);
-            }
-        },
+            /**
+             * 建立节点，先不放在 dom 树中，为了性能!
+             */
+            create:function() {
+                var self = this;
+                // 是否生成过节点
+                if (!self.get("created")) {
+                    self._createDom();
+                    self.fire('createDom');
+                    callMethodByHierarchy(self, "createDom", "__createDom");
+                    self.fire('afterCreateDom');
+                    self.set("created", true);
+                }
+            },
 
-        /**
-         * 创建 dom 节点，但不放在 document 中
-         */
-        _createDom:noop,
+            /**
+             * 渲染组件到 dom 结构
+             */
+            render: function() {
+                var self = this;
+                // 是否已经渲染过
+                if (!self.get("rendered")) {
+                    self.create();
+                    self._renderUI();
+                    // 实际上是 beforeRenderUI
+                    self.fire('renderUI');
+                    callMethodByHierarchy(self, "renderUI", "__renderUI");
+                    self.fire('afterRenderUI');
+                    self._bindUI();
+                    // 实际上是 beforeBindUI
+                    self.fire('bindUI');
+                    callMethodByHierarchy(self, "bindUI", "__bindUI");
+                    self.fire('afterBindUI');
+                    self._syncUI();
+                    // 实际上是 beforeSyncUI
+                    self.fire('syncUI');
+                    callMethodByHierarchy(self, "syncUI", "__syncUI");
+                    self.fire('afterSyncUI');
+                    self.set("rendered", true);
+                }
+            },
 
-        /**
-         * 节点已经创建完毕，可以放在 document 中了
-         */
-        _renderUI: noop,
-        renderUI: noop,
+            /**
+             * 创建 dom 节点，但不放在 document 中
+             */
+            _createDom:noop,
 
-        /**
-         * 根据属性变化设置 UI
-         */
-        _bindUI: function() {
-            var self = this,
-                attrs = self.__attrs,
-                attr, m;
+            /**
+             * 节点已经创建完毕，可以放在 document 中了
+             */
+            _renderUI: noop,
 
-            for (attr in attrs) {
-                if (attrs.hasOwnProperty(attr)) {
-                    m = UI_SET + capitalFirst(attr);
-                    if (self[m]) {
-                        // 自动绑定事件到对应函数
-                        (function(attr, m) {
-                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
-                                self[m](ev.newVal, ev);
-                            });
-                        })(attr, m);
+            /**
+             * @protected
+             */
+            renderUI: noop,
+
+            /**
+             * 根据属性变化设置 UI
+             */
+            _bindUI: function() {
+                var self = this,
+                    attrs = self.__attrs,
+                    attr, m;
+
+                for (attr in attrs) {
+                    if (attrs.hasOwnProperty(attr)) {
+                        m = UI_SET + capitalFirst(attr);
+                        if (self[m]) {
+                            // 自动绑定事件到对应函数
+                            (function(attr, m) {
+                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                    self[m](ev.newVal, ev);
+                                });
+                            })(attr, m);
+                        }
                     }
                 }
-            }
-        },
-        bindUI: noop,
+            },
 
-        /**
-         * 根据当前（初始化）状态来设置 UI
-         */
-        _syncUI: function() {
-            var self = this,
-                attrs = self.__attrs;
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m]
-                        // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
-                        && attrs[a].sync !== false
-                        && self.get(a) !== undefined) {
-                        self[m](self.get(a));
+            /**
+             * @protected
+             */
+            bindUI: noop,
+
+            /**
+             * 根据当前（初始化）状态来设置 UI
+             */
+            _syncUI: function() {
+                var self = this,
+                    attrs = self.__attrs;
+                for (var a in attrs) {
+                    if (attrs.hasOwnProperty(a)) {
+                        var m = UI_SET + capitalFirst(a);
+                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if (self[m]
+                            // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
+                            && attrs[a].sync !== false
+                            && self.get(a) !== undefined) {
+                            self[m](self.get(a));
+                        }
                     }
                 }
-            }
-        },
-        syncUI: noop,
+            },
 
-        destroy: function() {
-            destroyHierarchy(this);
-            this.fire('destroy');
-            this.detach();
-        }
-    });
+            /**
+             * protected
+             */
+            syncUI: noop,
+
+
+            /**
+             * 销毁组件
+             */
+            destroy: function() {
+                destroyHierarchy(this);
+                this.fire('destroy');
+                this.detach();
+            }
+        });
 
     /**
      * 根据基类以及扩展类得到新类
-     * @param {function} base 基类
-     * @param exts 扩展类
+     * @name UIBase.create
+     * @static
+     * @param {Function} base 基类
+     * @param {Function[]} exts 扩展类
      * @param {Object} px 原型 mix 对象
      * @param {Object} sx 静态 mix 对象
+     * @returns {UIBase} 组合 后 的 新类
      */
     UIBase.create = function(base, exts, px, sx) {
         if (S.isArray(base)) {
@@ -715,7 +741,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
             // [ex1,ex2],扩展类前面的优先，ex1 定义的覆盖 ex2 定义的
             S.each(exts, function(ext) {
-                if (!ext){
+                if (!ext) {
                     return;
                 }
                 // 合并 ATTRS/HTML_PARSER 到主类
@@ -1044,11 +1070,6 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         }
     };
 
-    if (1 > 2) {
-        Box._uiSetElAttrs()._uiSetElCls()._uiSetElStyle().
-            _uiSetWidth()._uiSetHeight()._uiSetHtml();
-    }
-
     return Box;
 }, {
     requires:['node']
@@ -1140,7 +1161,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                     "<span class='" +
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
-                    "<"+"/a>").appendTo(el);
+                    "<" + "/a>").appendTo(el);
                 self.set("closeBtn", closeBtn);
             }
         },
@@ -1152,10 +1173,6 @@ KISSY.add("uibase/closerender", function(S, Node) {
             closeBtn && closeBtn.detach();
         }
     };
-
-    if (1 > 2) {
-        Close._uiSetClosable();
-    }
 
     return Close;
 
@@ -1384,10 +1401,6 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         c && contentEl.append(c);
     }
 
-    if (1 > 2) {
-        ContentBox._uiSetContentElCls()._uiSetContentElAttrs()._uiSetContentElStyle();
-    }
-
     return ContentBox;
 }, {
     requires:["node","./boxrender"]
@@ -1454,11 +1467,6 @@ KISSY.add("uibase/drag", function(S) {
         }
 
     };
-
-    if(1>2){
-        Drag._uiSetDraggable();
-    }
-
     return Drag;
 
 });/**
@@ -1552,9 +1560,6 @@ KISSY.add("uibase/mask", function() {
         }
     };
 
-    if(1>2){
-        Mask._uiSetMask();
-    }
 
     return Mask;
 }, {requires:["ua"]});/**
@@ -1817,9 +1822,6 @@ KISSY.add("uibase/resize", function(S) {
         }
     };
 
-    if(1>2){
-       Resize._uiSetResize();
-    }
 
     return Resize;
 });/**
@@ -1859,10 +1861,6 @@ KISSY.add("uibase/shimrender", function(S, Node) {
             }
         }
     };
-
-    if (1 > 2) {
-        Shim._uiSetShim();
-    }
 
     return Shim;
 }, {
@@ -2005,12 +2003,6 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
             renderUI(this, "footer");
         }
     };
-
-    if (1 > 2) {
-        StdMod._uiSetHeaderStyle()._uiSetFooterStyle()
-            ._uiSetBodyStyle()
-            ._uiSetBodyContent()._uiSetHeaderContent()._uiSetFooterContent();
-    }
 
     return StdMod;
 

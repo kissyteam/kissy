@@ -12,15 +12,16 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
                     panel,label,estate;
 
                 panel = DOM.create(self.template);
-                estate = DOM.get('.estate', panel),label = DOM.get('.label', panel);
+                estate = DOM.get('.estate', panel);
+                label = DOM.get('.label', panel);
                 tg.parentNode.appendChild(panel);
                 DOM.hide(panel);
 
                 S.mix(self, {
-                        panel: panel,
-                        estate: estate,
-                        label: label
-                    });
+                    panel: panel,
+                    estate: estate,
+                    label: label
+                });
 
                 self._bindEvent(self.el, self.event, function(ev) {
                     var result = self.fire("valid", {event:ev.type});
@@ -83,9 +84,6 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
         };
     }
 
-    if (1 > 2) {
-        Static.sidebd();
-    }
     return Static;
 
 }, { requires: ['dom',"event","../utils","../define"] });

@@ -5,9 +5,10 @@
 KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
 
     /**
-     * @exports Component as KISSY.Component
+     * @name Component
+     * @namespace
      */
-    var Component = {
+    return {
         ModelControl:ModelControl,
         Render:Render,
         Container:Container,
@@ -16,10 +17,6 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
-    if (1 > 2) {
-        Component.DecorateChildren;
-    }
-    return Component;
 }, {
     requires:['component/modelcontrol',
         'component/render',

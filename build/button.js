@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * Model and Control for button
@@ -63,7 +63,7 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    var ButtonRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+   return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
@@ -91,12 +91,6 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
             tooltip:{}
         }
     });
-
-    if (1 > 2) {
-        ButtonRender._uiSetDescribedby();
-    }
-
-    return ButtonRender;
 }, {
     requires:['uibase','component']
 });/**
@@ -187,7 +181,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
         INNER_CLS = "inline-block custom-button-inner-box";
 
 
-    var CustomRender = UIBase.create(Css3Render, {
+    return UIBase.create(Css3Render, {
 
             __css_tag:"custom",
 
@@ -230,12 +224,6 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
             innerEL:{}
         }
     );
-
-    if (1 > 2) {
-        CustomRender.innerEL()
-    }
-
-    return CustomRender;
 }, {
     requires:['node','uibase','./css3render']
 });/**

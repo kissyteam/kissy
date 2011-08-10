@@ -197,10 +197,6 @@ KISSY.add("validation/utils", function(S, undefined) {
 
         });
 
-    if (1 > 2) {
-        utils.getValue();
-    }
-
     return utils;
 
 });

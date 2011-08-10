@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 20:36
+build time: Aug 10 13:38
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 9 20:36
              */
             version: '1.20dev',
 
-            buildTime:'20110809203622',
+            buildTime:'20110810133850',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3447,9 +3447,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
             }
         });
-        if (1 > 2) {
-            DOM.removeProp().hasProp();
-        }
         return DOM;
     }, {
         requires:["./base","ua"]
@@ -6344,6 +6341,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         // { handler: eventHandler, events:  {type:[{scope:scope,fn:fn}]}  } }
         EVENT_GUID = 'ksEventTargetId' + S.now();
 
+    /**
+     * @name Event
+     * @namespace
+     */
     var Event = {
         _data:function(elem) {
             var args = makeArray(arguments);
@@ -6731,35 +6732,62 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 KISSY.add('event/target', function(S, Event) {
 
     /**
-     * EventTarget provides the implementation for any object to publish,
-     * subscribe and fire to custom events.
+     * 提供事件发布和订阅机制
+     * @name Target
+     * @memberOf Event
      */
-    return {
+    var Target =
+    /**
+     * @lends Event.Target
+     */
+    {
 
         isCustomEventTarget: true,
 
+        /**
+         * 触发事件
+         * @param {String} type 事件名
+         * @param {Object} eventData 事件附加信息对象
+         * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
+         */
         fire: function(type, eventData) {
             // no chain ,need data returned
             return Event.fire(this, type, eventData);
         },
 
+        /**
+         * 监听事件
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
         on: function(type, fn, scope) {
             Event.add(this, type, fn, scope);
             return this; // chain
         },
 
+        /**
+         * 取消监听事件
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
         detach: function(type, fn, scope) {
             Event.remove(this, type, fn, scope);
             return this; // chain
         }
     };
+
+    return Target;
 }, {
-        /*
-         实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-         否则会导致build打包文件 dom 和 dom-data 重复载入
-         */
-        requires:["./base"]
-    });
+    /*
+     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
+     否则会导致build打包文件 dom 和 dom-data 重复载入
+     */
+    requires:["./base"]
+});
 
 /**
  * NOTES:
@@ -7528,10 +7556,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         }
     });
 
-    if (1 > 2) {
-        DOM.getDOMNodes();
-    }
-
     return NodeList;
 }, {
     requires:["dom"]
@@ -7963,7 +7987,7 @@ KISSY.add("anim/manager", function(S) {
         return anim[tag];
     }
 
-    var manager = {
+    return {
         interval:20,
         runnings:{},
         timer:null,
@@ -8024,12 +8048,6 @@ KISSY.add("anim/manager", function(S) {
             return done;
         }
     };
-
-    if (1 > 2) {
-        manager.pause().resume();
-    }
-
-    return manager;
 });
 
 /**
@@ -10242,7 +10260,9 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Remove the script
                 if (head && script.parentNode) {
-                    script.src = "#";
+                    // ie 报错载入无效 js
+                    // 怎么 abort ??
+                    // script.src = "#";
                     head.removeChild(script);
                 }
 
@@ -10651,8 +10671,9 @@ KISSY.add("ajax", function(S, io) {
 KISSY.add('base/attribute', function(S, undef) {
 
     /**
-     * Attribute provides the implementation for any object
-     * to deal with its attribute in aop ways.
+     * 提供属性管理机制
+     * @name Attribute
+     * @class
      */
     function Attribute() {
         /**
@@ -10677,206 +10698,208 @@ KISSY.add('base/attribute', function(S, undef) {
         this.__attrVals = {};
     }
 
-    S.augment(Attribute, {
-
-        __getDefAttrs: function() {
-            return S.clone(this.__attrs);
-        },
-
+    S.augment(Attribute,
         /**
-         * Adds an attribute with the provided configuration to the host object.
-         * The config supports the following properties:
-         * {
-         *     value: 'the default value',
-         *     valueFn: function
-         *     setter: function
-         *     getter: function
-         * }
-         * @param {boolean} override whether override existing attribute config ,default true
+         * @lends Attribute.prototype
          */
-        addAttr: function(name, attrConfig, override) {
-            var host = this;
-            if (!host.__attrs[name]) {
-                host.__attrs[name] = S.clone(attrConfig || {});
-            } else {
-                S.mix(host.__attrs[name], attrConfig, override);
-            }
-            return host;
-        },
+        {
 
-        /**
-         * Configures a group of attributes, and sets initial values.
-         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-         * @param {Object} values An object with attribute name/value pairs, defining the initial values to apply.
-         *        Values defined in the cfgs argument will be over-written by values in this argument.
-         */
-        addAttrs: function(attrConfigs, values) {
-            var host = this;
+            __getDefAttrs: function() {
+                return S.clone(this.__attrs);
+            },
 
-            S.each(attrConfigs, function(attrConfig, name) {
-                if (name in values) {
-                    attrConfig.value = values[name];
+            /**
+             * Adds an attribute with the provided configuration to the host object.
+             * The config supports the following properties:
+             * {
+             *     value: 'the default value',
+             *     valueFn: function
+             *     setter: function
+             *     getter: function
+             * }
+             * @param {boolean} override whether override existing attribute config ,default true
+             */
+            addAttr: function(name, attrConfig, override) {
+                var host = this;
+                if (!host.__attrs[name]) {
+                    host.__attrs[name] = S.clone(attrConfig || {});
+                } else {
+                    S.mix(host.__attrs[name], attrConfig, override);
                 }
-                host.addAttr(name, attrConfig);
-            });
+                return host;
+            },
 
-            return host;
-        },
+            /**
+             * Configures a group of attributes, and sets initial values.
+             * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+             * @param {Object} values An object with attribute name/value pairs, defining the initial values to apply.
+             *        Values defined in the cfgs argument will be over-written by values in this argument.
+             */
+            addAttrs: function(attrConfigs, values) {
+                var host = this;
 
-        /**
-         * Checks if the given attribute has been added to the host.
-         */
-        hasAttr: function(name) {
-            return name && this.__attrs.hasOwnProperty(name);
-        },
+                S.each(attrConfigs, function(attrConfig, name) {
+                    if (name in values) {
+                        attrConfig.value = values[name];
+                    }
+                    host.addAttr(name, attrConfig);
+                });
 
-        /**
-         * Removes an attribute from the host object.
-         */
-        removeAttr: function(name) {
-            var host = this;
+                return host;
+            },
 
-            if (host.hasAttr(name)) {
-                delete host.__attrs[name];
-                delete host.__attrVals[name];
-            }
+            /**
+             * Checks if the given attribute has been added to the host.
+             */
+            hasAttr: function(name) {
+                return name && this.__attrs.hasOwnProperty(name);
+            },
 
-            return host;
-        },
+            /**
+             * Removes an attribute from the host object.
+             */
+            removeAttr: function(name) {
+                var host = this;
 
-        /**
-         * Sets the value of an attribute.
-         */
-        set: function(name, value) {
-            var host = this,
-                prevVal = host.get(name);
-
-            // if no change, just return
-            if (prevVal === value) {
-                return;
-            }
-
-            // check before event
-            if (false === host.__fireAttrChange('before', name, prevVal, value)) {
-                return;
-            }
-
-            // set it
-            host.__set(name, value);
-
-            // fire after event
-            host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
-
-            return host;
-        },
-
-        __fireAttrChange: function(when, name, prevVal, newVal) {
-            return this.fire(when + capitalFirst(name) + 'Change', {
-                attrName: name,
-                prevVal: prevVal,
-                newVal: newVal
-            });
-        },
-
-        /**
-         * internal use, no event involved, just set.
-         */
-        __set: function(name, value) {
-            var host = this,
-                setValue,
-                // if host does not have meta info corresponding to (name,value)
-                // then register on demand in order to collect all data meta info
-                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                // 因为属性在声明注册前可以直接设置值
-                attrConfig = host.__attrs[name] = host.__attrs[name] || {},
-                setter = attrConfig['setter'];
-
-            // if setter has effect
-            if (setter) {
-                setValue = setter.call(host, value);
-            }
-            if (setValue !== undef) {
-                value = setValue;
-            }
-
-            // finally set
-            host.__attrVals[name] = value;
-        },
-
-        /**
-         * Gets the current value of the attribute.
-         */
-        get: function(name) {
-            var host = this, attrConfig, getter, ret;
-
-            attrConfig = host.__attrs[name];
-            getter = attrConfig && attrConfig['getter'];
-
-            // get user-set value or default value
-            //user-set value takes privilege
-            ret = name in host.__attrVals ?
-                host.__attrVals[name] :
-                host.__getDefAttrVal(name);
-
-            // invoke getter for this attribute
-            if (getter) {
-                ret = getter.call(host, ret);
-            }
-
-            return ret;
-        },
-
-        __getDefAttrVal: function(name) {
-            var host = this,
-                attrConfig = host.__attrs[name],
-                valFn, val;
-
-            if (!attrConfig) {
-                return;
-            }
-
-            if ((valFn = attrConfig.valueFn)) {
-                val = valFn.call(host);
-                if (val !== undef) {
-                    attrConfig.value = val;
-                }
-                delete attrConfig.valueFn;
-            }
-
-            return attrConfig.value;
-        },
-
-        /**
-         * Resets the value of an attribute.
-         * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-         */
-        reset: function (name) {
-            var host = this;
-
-            if (host.hasAttr(name)) {
-                // if attribute does not have default value, then set to undefined.
-                return host.set(name, host.__getDefAttrVal(name));
-            }
-
-            // reset all
-            for (name in host.__attrs) {
                 if (host.hasAttr(name)) {
-                    host.reset(name);
+                    delete host.__attrs[name];
+                    delete host.__attrVals[name];
                 }
-            }
 
-            return host;
-        }
-    });
+                return host;
+            },
+
+            /**
+             * Sets the value of an attribute.
+             */
+            set: function(name, value) {
+                var host = this,
+                    prevVal = host.get(name);
+
+                // if no change, just return
+                if (prevVal === value) {
+                    return;
+                }
+
+                // check before event
+                if (false === host.__fireAttrChange('before', name, prevVal, value)) {
+                    return;
+                }
+
+                // set it
+                host.__set(name, value);
+
+                // fire after event
+                host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
+
+                return host;
+            },
+
+            __fireAttrChange: function(when, name, prevVal, newVal) {
+                return this.fire(when + capitalFirst(name) + 'Change', {
+                    attrName: name,
+                    prevVal: prevVal,
+                    newVal: newVal
+                });
+            },
+
+            /**
+             * internal use, no event involved, just set.
+             * @private
+             */
+            __set: function(name, value) {
+                var host = this,
+                    setValue,
+                    // if host does not have meta info corresponding to (name,value)
+                    // then register on demand in order to collect all data meta info
+                    // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                    // 因为属性在声明注册前可以直接设置值
+                    attrConfig = host.__attrs[name] = host.__attrs[name] || {},
+                    setter = attrConfig['setter'];
+
+                // if setter has effect
+                if (setter) {
+                    setValue = setter.call(host, value);
+                }
+                if (setValue !== undef) {
+                    value = setValue;
+                }
+
+                // finally set
+                host.__attrVals[name] = value;
+            },
+
+            /**
+             * Gets the current value of the attribute.
+             */
+            get: function(name) {
+                var host = this, attrConfig, getter, ret;
+
+                attrConfig = host.__attrs[name];
+                getter = attrConfig && attrConfig['getter'];
+
+                // get user-set value or default value
+                //user-set value takes privilege
+                ret = name in host.__attrVals ?
+                    host.__attrVals[name] :
+                    host.__getDefAttrVal(name);
+
+                // invoke getter for this attribute
+                if (getter) {
+                    ret = getter.call(host, ret);
+                }
+
+                return ret;
+            },
+
+            __getDefAttrVal: function(name) {
+                var host = this,
+                    attrConfig = host.__attrs[name],
+                    valFn, val;
+
+                if (!attrConfig) {
+                    return;
+                }
+
+                if ((valFn = attrConfig.valueFn)) {
+                    val = valFn.call(host);
+                    if (val !== undef) {
+                        attrConfig.value = val;
+                    }
+                    delete attrConfig.valueFn;
+                }
+
+                return attrConfig.value;
+            },
+
+            /**
+             * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+             * @param {String} name name of attribute
+             */
+            reset: function (name) {
+                var host = this;
+
+                if (host.hasAttr(name)) {
+                    // if attribute does not have default value, then set to undefined.
+                    return host.set(name, host.__getDefAttrVal(name));
+                }
+
+                // reset all
+                for (name in host.__attrs) {
+                    if (host.hasAttr(name)) {
+                        host.reset(name);
+                    }
+                }
+
+                return host;
+            }
+        });
 
     function capitalFirst(s) {
         s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    if (1 > 2) {
-        Attribute.addAttrs();
-    }
     Attribute['__capitalFirst'] = capitalFirst;
 
     return Attribute;
@@ -10888,8 +10911,12 @@ KISSY.add('base/attribute', function(S, undef) {
  */
 KISSY.add('base/base', function (S, Attribute, Event) {
 
-    /*
+    /**
      * Base for class-based component
+     * @name Base
+     * @extends Event.Target
+     * @extends Attribute
+     * @class
      */
     function Base(config) {
         Attribute.call(this);
@@ -10900,7 +10927,6 @@ KISSY.add('base/base', function (S, Attribute, Event) {
             addAttrs(this, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
-
         // initial
         initAttrs(this, config);
     }
@@ -10932,8 +10958,8 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-        requires:["./attribute","event"]
-    });
+    requires:["./attribute","event"]
+});
 
 KISSY.add("base", function(S, Base) {
     return Base;

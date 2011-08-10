@@ -85,10 +85,6 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         c && contentEl.append(c);
     }
 
-    if (1 > 2) {
-        ContentBox._uiSetContentElCls()._uiSetContentElAttrs()._uiSetContentElStyle();
-    }
-
     return ContentBox;
 }, {
     requires:["node","./boxrender"]

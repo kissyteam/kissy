@@ -26,7 +26,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    var MenuItemRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
@@ -93,12 +93,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             checked:{}
         }
     });
-
-    if (1 > 2) {
-        MenuItemRender._uiSetSelectable()._uiSetChecked()._uiSetCheckable();
-    }
-
-    return MenuItemRender;
 }, {
     requires:['node','uibase','component']
 });

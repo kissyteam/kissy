@@ -61,11 +61,6 @@ KISSY.add("uibase/drag", function(S) {
         }
 
     };
-
-    if(1>2){
-        Drag._uiSetDraggable();
-    }
-
     return Drag;
 
 });

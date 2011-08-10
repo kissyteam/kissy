@@ -4,7 +4,7 @@
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    var ButtonRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+   return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
@@ -32,12 +32,6 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
             tooltip:{}
         }
     });
-
-    if (1 > 2) {
-        ButtonRender._uiSetDescribedby();
-    }
-
-    return ButtonRender;
 }, {
     requires:['uibase','component']
 });

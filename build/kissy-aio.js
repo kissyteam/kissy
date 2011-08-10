@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 20:36
+build time: Aug 10 13:38
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 9 20:36
              */
             version: '1.20dev',
 
-            buildTime:'20110809203622',
+            buildTime:'20110810133850',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3447,9 +3447,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
             }
         });
-        if (1 > 2) {
-            DOM.removeProp().hasProp();
-        }
         return DOM;
     }, {
         requires:["./base","ua"]
@@ -6344,6 +6341,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         // { handler: eventHandler, events:  {type:[{scope:scope,fn:fn}]}  } }
         EVENT_GUID = 'ksEventTargetId' + S.now();
 
+    /**
+     * @name Event
+     * @namespace
+     */
     var Event = {
         _data:function(elem) {
             var args = makeArray(arguments);
@@ -6731,35 +6732,62 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 KISSY.add('event/target', function(S, Event) {
 
     /**
-     * EventTarget provides the implementation for any object to publish,
-     * subscribe and fire to custom events.
+     * 提供事件发布和订阅机制
+     * @name Target
+     * @memberOf Event
      */
-    return {
+    var Target =
+    /**
+     * @lends Event.Target
+     */
+    {
 
         isCustomEventTarget: true,
 
+        /**
+         * 触发事件
+         * @param {String} type 事件名
+         * @param {Object} eventData 事件附加信息对象
+         * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
+         */
         fire: function(type, eventData) {
             // no chain ,need data returned
             return Event.fire(this, type, eventData);
         },
 
+        /**
+         * 监听事件
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
         on: function(type, fn, scope) {
             Event.add(this, type, fn, scope);
             return this; // chain
         },
 
+        /**
+         * 取消监听事件
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
         detach: function(type, fn, scope) {
             Event.remove(this, type, fn, scope);
             return this; // chain
         }
     };
+
+    return Target;
 }, {
-        /*
-         实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-         否则会导致build打包文件 dom 和 dom-data 重复载入
-         */
-        requires:["./base"]
-    });
+    /*
+     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
+     否则会导致build打包文件 dom 和 dom-data 重复载入
+     */
+    requires:["./base"]
+});
 
 /**
  * NOTES:
@@ -7528,10 +7556,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         }
     });
 
-    if (1 > 2) {
-        DOM.getDOMNodes();
-    }
-
     return NodeList;
 }, {
     requires:["dom"]
@@ -7963,7 +7987,7 @@ KISSY.add("anim/manager", function(S) {
         return anim[tag];
     }
 
-    var manager = {
+    return {
         interval:20,
         runnings:{},
         timer:null,
@@ -8024,12 +8048,6 @@ KISSY.add("anim/manager", function(S) {
             return done;
         }
     };
-
-    if (1 > 2) {
-        manager.pause().resume();
-    }
-
-    return manager;
 });
 
 /**
@@ -10242,7 +10260,9 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Remove the script
                 if (head && script.parentNode) {
-                    script.src = "#";
+                    // ie 报错载入无效 js
+                    // 怎么 abort ??
+                    // script.src = "#";
                     head.removeChild(script);
                 }
 
@@ -10651,8 +10671,9 @@ KISSY.add("ajax", function(S, io) {
 KISSY.add('base/attribute', function(S, undef) {
 
     /**
-     * Attribute provides the implementation for any object
-     * to deal with its attribute in aop ways.
+     * 提供属性管理机制
+     * @name Attribute
+     * @class
      */
     function Attribute() {
         /**
@@ -10677,206 +10698,208 @@ KISSY.add('base/attribute', function(S, undef) {
         this.__attrVals = {};
     }
 
-    S.augment(Attribute, {
-
-        __getDefAttrs: function() {
-            return S.clone(this.__attrs);
-        },
-
+    S.augment(Attribute,
         /**
-         * Adds an attribute with the provided configuration to the host object.
-         * The config supports the following properties:
-         * {
-         *     value: 'the default value',
-         *     valueFn: function
-         *     setter: function
-         *     getter: function
-         * }
-         * @param {boolean} override whether override existing attribute config ,default true
+         * @lends Attribute.prototype
          */
-        addAttr: function(name, attrConfig, override) {
-            var host = this;
-            if (!host.__attrs[name]) {
-                host.__attrs[name] = S.clone(attrConfig || {});
-            } else {
-                S.mix(host.__attrs[name], attrConfig, override);
-            }
-            return host;
-        },
+        {
 
-        /**
-         * Configures a group of attributes, and sets initial values.
-         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-         * @param {Object} values An object with attribute name/value pairs, defining the initial values to apply.
-         *        Values defined in the cfgs argument will be over-written by values in this argument.
-         */
-        addAttrs: function(attrConfigs, values) {
-            var host = this;
+            __getDefAttrs: function() {
+                return S.clone(this.__attrs);
+            },
 
-            S.each(attrConfigs, function(attrConfig, name) {
-                if (name in values) {
-                    attrConfig.value = values[name];
+            /**
+             * Adds an attribute with the provided configuration to the host object.
+             * The config supports the following properties:
+             * {
+             *     value: 'the default value',
+             *     valueFn: function
+             *     setter: function
+             *     getter: function
+             * }
+             * @param {boolean} override whether override existing attribute config ,default true
+             */
+            addAttr: function(name, attrConfig, override) {
+                var host = this;
+                if (!host.__attrs[name]) {
+                    host.__attrs[name] = S.clone(attrConfig || {});
+                } else {
+                    S.mix(host.__attrs[name], attrConfig, override);
                 }
-                host.addAttr(name, attrConfig);
-            });
+                return host;
+            },
 
-            return host;
-        },
+            /**
+             * Configures a group of attributes, and sets initial values.
+             * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+             * @param {Object} values An object with attribute name/value pairs, defining the initial values to apply.
+             *        Values defined in the cfgs argument will be over-written by values in this argument.
+             */
+            addAttrs: function(attrConfigs, values) {
+                var host = this;
 
-        /**
-         * Checks if the given attribute has been added to the host.
-         */
-        hasAttr: function(name) {
-            return name && this.__attrs.hasOwnProperty(name);
-        },
+                S.each(attrConfigs, function(attrConfig, name) {
+                    if (name in values) {
+                        attrConfig.value = values[name];
+                    }
+                    host.addAttr(name, attrConfig);
+                });
 
-        /**
-         * Removes an attribute from the host object.
-         */
-        removeAttr: function(name) {
-            var host = this;
+                return host;
+            },
 
-            if (host.hasAttr(name)) {
-                delete host.__attrs[name];
-                delete host.__attrVals[name];
-            }
+            /**
+             * Checks if the given attribute has been added to the host.
+             */
+            hasAttr: function(name) {
+                return name && this.__attrs.hasOwnProperty(name);
+            },
 
-            return host;
-        },
+            /**
+             * Removes an attribute from the host object.
+             */
+            removeAttr: function(name) {
+                var host = this;
 
-        /**
-         * Sets the value of an attribute.
-         */
-        set: function(name, value) {
-            var host = this,
-                prevVal = host.get(name);
-
-            // if no change, just return
-            if (prevVal === value) {
-                return;
-            }
-
-            // check before event
-            if (false === host.__fireAttrChange('before', name, prevVal, value)) {
-                return;
-            }
-
-            // set it
-            host.__set(name, value);
-
-            // fire after event
-            host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
-
-            return host;
-        },
-
-        __fireAttrChange: function(when, name, prevVal, newVal) {
-            return this.fire(when + capitalFirst(name) + 'Change', {
-                attrName: name,
-                prevVal: prevVal,
-                newVal: newVal
-            });
-        },
-
-        /**
-         * internal use, no event involved, just set.
-         */
-        __set: function(name, value) {
-            var host = this,
-                setValue,
-                // if host does not have meta info corresponding to (name,value)
-                // then register on demand in order to collect all data meta info
-                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                // 因为属性在声明注册前可以直接设置值
-                attrConfig = host.__attrs[name] = host.__attrs[name] || {},
-                setter = attrConfig['setter'];
-
-            // if setter has effect
-            if (setter) {
-                setValue = setter.call(host, value);
-            }
-            if (setValue !== undef) {
-                value = setValue;
-            }
-
-            // finally set
-            host.__attrVals[name] = value;
-        },
-
-        /**
-         * Gets the current value of the attribute.
-         */
-        get: function(name) {
-            var host = this, attrConfig, getter, ret;
-
-            attrConfig = host.__attrs[name];
-            getter = attrConfig && attrConfig['getter'];
-
-            // get user-set value or default value
-            //user-set value takes privilege
-            ret = name in host.__attrVals ?
-                host.__attrVals[name] :
-                host.__getDefAttrVal(name);
-
-            // invoke getter for this attribute
-            if (getter) {
-                ret = getter.call(host, ret);
-            }
-
-            return ret;
-        },
-
-        __getDefAttrVal: function(name) {
-            var host = this,
-                attrConfig = host.__attrs[name],
-                valFn, val;
-
-            if (!attrConfig) {
-                return;
-            }
-
-            if ((valFn = attrConfig.valueFn)) {
-                val = valFn.call(host);
-                if (val !== undef) {
-                    attrConfig.value = val;
-                }
-                delete attrConfig.valueFn;
-            }
-
-            return attrConfig.value;
-        },
-
-        /**
-         * Resets the value of an attribute.
-         * @note just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-         */
-        reset: function (name) {
-            var host = this;
-
-            if (host.hasAttr(name)) {
-                // if attribute does not have default value, then set to undefined.
-                return host.set(name, host.__getDefAttrVal(name));
-            }
-
-            // reset all
-            for (name in host.__attrs) {
                 if (host.hasAttr(name)) {
-                    host.reset(name);
+                    delete host.__attrs[name];
+                    delete host.__attrVals[name];
                 }
-            }
 
-            return host;
-        }
-    });
+                return host;
+            },
+
+            /**
+             * Sets the value of an attribute.
+             */
+            set: function(name, value) {
+                var host = this,
+                    prevVal = host.get(name);
+
+                // if no change, just return
+                if (prevVal === value) {
+                    return;
+                }
+
+                // check before event
+                if (false === host.__fireAttrChange('before', name, prevVal, value)) {
+                    return;
+                }
+
+                // set it
+                host.__set(name, value);
+
+                // fire after event
+                host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
+
+                return host;
+            },
+
+            __fireAttrChange: function(when, name, prevVal, newVal) {
+                return this.fire(when + capitalFirst(name) + 'Change', {
+                    attrName: name,
+                    prevVal: prevVal,
+                    newVal: newVal
+                });
+            },
+
+            /**
+             * internal use, no event involved, just set.
+             * @private
+             */
+            __set: function(name, value) {
+                var host = this,
+                    setValue,
+                    // if host does not have meta info corresponding to (name,value)
+                    // then register on demand in order to collect all data meta info
+                    // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                    // 因为属性在声明注册前可以直接设置值
+                    attrConfig = host.__attrs[name] = host.__attrs[name] || {},
+                    setter = attrConfig['setter'];
+
+                // if setter has effect
+                if (setter) {
+                    setValue = setter.call(host, value);
+                }
+                if (setValue !== undef) {
+                    value = setValue;
+                }
+
+                // finally set
+                host.__attrVals[name] = value;
+            },
+
+            /**
+             * Gets the current value of the attribute.
+             */
+            get: function(name) {
+                var host = this, attrConfig, getter, ret;
+
+                attrConfig = host.__attrs[name];
+                getter = attrConfig && attrConfig['getter'];
+
+                // get user-set value or default value
+                //user-set value takes privilege
+                ret = name in host.__attrVals ?
+                    host.__attrVals[name] :
+                    host.__getDefAttrVal(name);
+
+                // invoke getter for this attribute
+                if (getter) {
+                    ret = getter.call(host, ret);
+                }
+
+                return ret;
+            },
+
+            __getDefAttrVal: function(name) {
+                var host = this,
+                    attrConfig = host.__attrs[name],
+                    valFn, val;
+
+                if (!attrConfig) {
+                    return;
+                }
+
+                if ((valFn = attrConfig.valueFn)) {
+                    val = valFn.call(host);
+                    if (val !== undef) {
+                        attrConfig.value = val;
+                    }
+                    delete attrConfig.valueFn;
+                }
+
+                return attrConfig.value;
+            },
+
+            /**
+             * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+             * @param {String} name name of attribute
+             */
+            reset: function (name) {
+                var host = this;
+
+                if (host.hasAttr(name)) {
+                    // if attribute does not have default value, then set to undefined.
+                    return host.set(name, host.__getDefAttrVal(name));
+                }
+
+                // reset all
+                for (name in host.__attrs) {
+                    if (host.hasAttr(name)) {
+                        host.reset(name);
+                    }
+                }
+
+                return host;
+            }
+        });
 
     function capitalFirst(s) {
         s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    if (1 > 2) {
-        Attribute.addAttrs();
-    }
     Attribute['__capitalFirst'] = capitalFirst;
 
     return Attribute;
@@ -10888,8 +10911,12 @@ KISSY.add('base/attribute', function(S, undef) {
  */
 KISSY.add('base/base', function (S, Attribute, Event) {
 
-    /*
+    /**
      * Base for class-based component
+     * @name Base
+     * @extends Event.Target
+     * @extends Attribute
+     * @class
      */
     function Base(config) {
         Attribute.call(this);
@@ -10900,7 +10927,6 @@ KISSY.add('base/base', function (S, Attribute, Event) {
             addAttrs(this, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
-
         // initial
         initAttrs(this, config);
     }
@@ -10932,8 +10958,8 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-        requires:["./attribute","event"]
-    });
+    requires:["./attribute","event"]
+});
 
 KISSY.add("base", function(S, Base) {
     return Base;
@@ -11079,7 +11105,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12504,7 +12530,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * 数据延迟加载组件
@@ -13007,7 +13033,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13245,7 +13271,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:15
 */
 /**
  * @module   Flash 全局静态类
@@ -14999,7 +15025,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 /**
  * resizable support for kissy
@@ -15173,7 +15199,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 20:30
+build time: Aug 10 13:16
 */
 /**
  * UIBase.Align
@@ -15565,10 +15591,6 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         }
     };
 
-    if (1 > 2) {
-        Align._uiSetAlign();
-    }
-
     return Align;
 }, {
     requires:["ua","dom","node"]
@@ -15595,8 +15617,12 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    /*
+    /**
      * UIBase for class-based component
+     * @class
+     * @extends Base
+     * @name UIBase
+     * @namespace
      */
     function UIBase(config) {
         // 读取用户设置的属性值并设置到自身
@@ -15751,116 +15777,142 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         }
     };
 
-    S.extend(UIBase, Base, {
-
+    S.extend(UIBase, Base,
         /**
-         * 建立节点，先不放在 dom 树中，为了性能!
+         * @lends UIBase.prototype
          */
-        create:function() {
-            var self = this;
-            // 是否生成过节点
-            if (!self.get("created")) {
-                self._createDom();
-                self.fire('createDom');
-                callMethodByHierarchy(self, "createDom", "__createDom");
-                self.fire('afterCreateDom');
-                self.set("created", true);
-            }
-        },
+        {
 
-        render: function() {
-            var self = this;
-            // 是否已经渲染过
-            if (!self.get("rendered")) {
-                self.create();
-                self._renderUI();
-                // 实际上是 beforeRenderUI
-                self.fire('renderUI');
-                callMethodByHierarchy(self, "renderUI", "__renderUI");
-                self.fire('afterRenderUI');
-                self._bindUI();
-                // 实际上是 beforeBindUI
-                self.fire('bindUI');
-                callMethodByHierarchy(self, "bindUI", "__bindUI");
-                self.fire('afterBindUI');
-                self._syncUI();
-                // 实际上是 beforeSyncUI
-                self.fire('syncUI');
-                callMethodByHierarchy(self, "syncUI", "__syncUI");
-                self.fire('afterSyncUI');
-                self.set("rendered", true);
-            }
-        },
+            /**
+             * 建立节点，先不放在 dom 树中，为了性能!
+             */
+            create:function() {
+                var self = this;
+                // 是否生成过节点
+                if (!self.get("created")) {
+                    self._createDom();
+                    self.fire('createDom');
+                    callMethodByHierarchy(self, "createDom", "__createDom");
+                    self.fire('afterCreateDom');
+                    self.set("created", true);
+                }
+            },
 
-        /**
-         * 创建 dom 节点，但不放在 document 中
-         */
-        _createDom:noop,
+            /**
+             * 渲染组件到 dom 结构
+             */
+            render: function() {
+                var self = this;
+                // 是否已经渲染过
+                if (!self.get("rendered")) {
+                    self.create();
+                    self._renderUI();
+                    // 实际上是 beforeRenderUI
+                    self.fire('renderUI');
+                    callMethodByHierarchy(self, "renderUI", "__renderUI");
+                    self.fire('afterRenderUI');
+                    self._bindUI();
+                    // 实际上是 beforeBindUI
+                    self.fire('bindUI');
+                    callMethodByHierarchy(self, "bindUI", "__bindUI");
+                    self.fire('afterBindUI');
+                    self._syncUI();
+                    // 实际上是 beforeSyncUI
+                    self.fire('syncUI');
+                    callMethodByHierarchy(self, "syncUI", "__syncUI");
+                    self.fire('afterSyncUI');
+                    self.set("rendered", true);
+                }
+            },
 
-        /**
-         * 节点已经创建完毕，可以放在 document 中了
-         */
-        _renderUI: noop,
-        renderUI: noop,
+            /**
+             * 创建 dom 节点，但不放在 document 中
+             */
+            _createDom:noop,
 
-        /**
-         * 根据属性变化设置 UI
-         */
-        _bindUI: function() {
-            var self = this,
-                attrs = self.__attrs,
-                attr, m;
+            /**
+             * 节点已经创建完毕，可以放在 document 中了
+             */
+            _renderUI: noop,
 
-            for (attr in attrs) {
-                if (attrs.hasOwnProperty(attr)) {
-                    m = UI_SET + capitalFirst(attr);
-                    if (self[m]) {
-                        // 自动绑定事件到对应函数
-                        (function(attr, m) {
-                            self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
-                                self[m](ev.newVal, ev);
-                            });
-                        })(attr, m);
+            /**
+             * @protected
+             */
+            renderUI: noop,
+
+            /**
+             * 根据属性变化设置 UI
+             */
+            _bindUI: function() {
+                var self = this,
+                    attrs = self.__attrs,
+                    attr, m;
+
+                for (attr in attrs) {
+                    if (attrs.hasOwnProperty(attr)) {
+                        m = UI_SET + capitalFirst(attr);
+                        if (self[m]) {
+                            // 自动绑定事件到对应函数
+                            (function(attr, m) {
+                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                                    self[m](ev.newVal, ev);
+                                });
+                            })(attr, m);
+                        }
                     }
                 }
-            }
-        },
-        bindUI: noop,
+            },
 
-        /**
-         * 根据当前（初始化）状态来设置 UI
-         */
-        _syncUI: function() {
-            var self = this,
-                attrs = self.__attrs;
-            for (var a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    var m = UI_SET + capitalFirst(a);
-                    //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                    if (self[m]
-                        // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
-                        && attrs[a].sync !== false
-                        && self.get(a) !== undefined) {
-                        self[m](self.get(a));
+            /**
+             * @protected
+             */
+            bindUI: noop,
+
+            /**
+             * 根据当前（初始化）状态来设置 UI
+             */
+            _syncUI: function() {
+                var self = this,
+                    attrs = self.__attrs;
+                for (var a in attrs) {
+                    if (attrs.hasOwnProperty(a)) {
+                        var m = UI_SET + capitalFirst(a);
+                        //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if (self[m]
+                            // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
+                            && attrs[a].sync !== false
+                            && self.get(a) !== undefined) {
+                            self[m](self.get(a));
+                        }
                     }
                 }
-            }
-        },
-        syncUI: noop,
+            },
 
-        destroy: function() {
-            destroyHierarchy(this);
-            this.fire('destroy');
-            this.detach();
-        }
-    });
+            /**
+             * protected
+             */
+            syncUI: noop,
+
+
+            /**
+             * 销毁组件
+             */
+            destroy: function() {
+                destroyHierarchy(this);
+                this.fire('destroy');
+                this.detach();
+            }
+        });
 
     /**
      * 根据基类以及扩展类得到新类
-     * @param {function} base 基类
-     * @param exts 扩展类
+     * @name UIBase.create
+     * @static
+     * @param {Function} base 基类
+     * @param {Function[]} exts 扩展类
      * @param {Object} px 原型 mix 对象
      * @param {Object} sx 静态 mix 对象
+     * @returns {UIBase} 组合 后 的 新类
      */
     UIBase.create = function(base, exts, px, sx) {
         if (S.isArray(base)) {
@@ -15887,7 +15939,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
             // [ex1,ex2],扩展类前面的优先，ex1 定义的覆盖 ex2 定义的
             S.each(exts, function(ext) {
-                if (!ext){
+                if (!ext) {
                     return;
                 }
                 // 合并 ATTRS/HTML_PARSER 到主类
@@ -16216,11 +16268,6 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         }
     };
 
-    if (1 > 2) {
-        Box._uiSetElAttrs()._uiSetElCls()._uiSetElStyle().
-            _uiSetWidth()._uiSetHeight()._uiSetHtml();
-    }
-
     return Box;
 }, {
     requires:['node']
@@ -16312,7 +16359,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                     "<span class='" +
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
-                    "<"+"/a>").appendTo(el);
+                    "<" + "/a>").appendTo(el);
                 self.set("closeBtn", closeBtn);
             }
         },
@@ -16324,10 +16371,6 @@ KISSY.add("uibase/closerender", function(S, Node) {
             closeBtn && closeBtn.detach();
         }
     };
-
-    if (1 > 2) {
-        Close._uiSetClosable();
-    }
 
     return Close;
 
@@ -16556,10 +16599,6 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
         c && contentEl.append(c);
     }
 
-    if (1 > 2) {
-        ContentBox._uiSetContentElCls()._uiSetContentElAttrs()._uiSetContentElStyle();
-    }
-
     return ContentBox;
 }, {
     requires:["node","./boxrender"]
@@ -16626,11 +16665,6 @@ KISSY.add("uibase/drag", function(S) {
         }
 
     };
-
-    if(1>2){
-        Drag._uiSetDraggable();
-    }
-
     return Drag;
 
 });/**
@@ -16724,9 +16758,6 @@ KISSY.add("uibase/mask", function() {
         }
     };
 
-    if(1>2){
-        Mask._uiSetMask();
-    }
 
     return Mask;
 }, {requires:["ua"]});/**
@@ -16989,9 +17020,6 @@ KISSY.add("uibase/resize", function(S) {
         }
     };
 
-    if(1>2){
-       Resize._uiSetResize();
-    }
 
     return Resize;
 });/**
@@ -17031,10 +17059,6 @@ KISSY.add("uibase/shimrender", function(S, Node) {
             }
         }
     };
-
-    if (1 > 2) {
-        Shim._uiSetShim();
-    }
 
     return Shim;
 }, {
@@ -17178,12 +17202,6 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         }
     };
 
-    if (1 > 2) {
-        StdMod._uiSetHeaderStyle()._uiSetFooterStyle()
-            ._uiSetBodyStyle()
-            ._uiSetBodyContent()._uiSetHeaderContent()._uiSetFooterContent();
-    }
-
     return StdMod;
 
 }, {
@@ -17239,7 +17257,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * container can delegate event for its children
@@ -17475,9 +17493,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
     /**
      * model and control for component
+     * @name ModelControl
      * @constructor
      */
-    var ModelControl = UIBase.create([UIBase.Box], {
+    return UIBase.create([UIBase.Box], {
 
             getCls:UIStore.getCls,
 
@@ -17900,12 +17919,6 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
             DefaultRender:Render
         });
-
-    if (1 > 2) {
-        ModelControl._uiSetHandleMouseEvents();
-    }
-
-    return ModelControl;
 }, {
     requires:['event','uibase','./uistore','./render']
 });
@@ -18012,9 +18025,10 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
 KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
 
     /**
-     * @exports Component as KISSY.Component
+     * @name Component
+     * @namespace
      */
-    var Component = {
+    return {
         ModelControl:ModelControl,
         Render:Render,
         Container:Container,
@@ -18023,10 +18037,6 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
-    if (1 > 2) {
-        Component.DecorateChildren;
-    }
-    return Component;
 }, {
     requires:['component/modelcontrol',
         'component/render',
@@ -18039,7 +18049,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 /**
  * Switchable
@@ -20639,7 +20649,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 20:30
+build time: Aug 10 13:15
 */
 /**
  * KISSY Overlay
@@ -21114,7 +21124,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22295,7 +22305,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:15
 */
 /**
  * @fileoverview 图像放大区域
@@ -22920,7 +22930,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * KISSY Calendar
@@ -24199,7 +24209,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:15
 */
 /**
  * deletable menuitem
@@ -24267,7 +24277,7 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         }));
     }
 
-    var DelMenuItemRender = UIBase.create(MenuItemRender, {
+    return UIBase.create(MenuItemRender, {
         renderUI:function() {
             this.get("el").addClass(this.getCls(CLS))
         },
@@ -24295,12 +24305,6 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
         CLS:CLS,
         DEL_CLS:DEL_CLS
     });
-
-    if (1 > 2) {
-        DelMenuItemRender._uiSetDelTooltip().delEl;
-    }
-    return DelMenuItemRender;
-
 }, {
     requires:['node','uibase','component','./menuitemrender']
 });/**
@@ -24317,7 +24321,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    var FilterMenu = UIBase.create(Menu, {
+    return UIBase.create(Menu, {
             bindUI:function() {
                 var self = this,
                     view = self.get("view"),
@@ -24475,12 +24479,6 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             DefaultRender:FilterMenuRender
         }
     );
-
-    if (1 > 2) {
-        FilterMenu._uiSetFilterStr();
-    }
-
-    return FilterMenu;
 }, {
     requires:['uibase','./menu','./filtermenurender']
 });/**
@@ -24495,7 +24493,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
         MENU_FILTER_LABEL = "menu-filter-label",
         MENU_CONTENT = "menu-content";
 
-    var FilterMenuRender = UIBase.create(MenuRender, {
+    return UIBase.create(MenuRender, {
         getContentElement:function() {
             return this.get("menuContent");
         },
@@ -24554,12 +24552,6 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
             }
         }
     });
-
-    if (1 > 2) {
-        FilterMenuRender._uiSetLabel();
-    }
-
-    return FilterMenuRender;
 
 }, {
     requires:['node','uibase','./menurender']
@@ -24740,11 +24732,6 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });
-
-    if (1 > 2) {
-        Menu._uiSetHighlightedItem();
-    }
-
     return Menu;
 
 }, {
@@ -24909,7 +24896,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    var MenuItemRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
@@ -24976,12 +24963,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             checked:{}
         }
     });
-
-    if (1 > 2) {
-        MenuItemRender._uiSetSelectable()._uiSetChecked()._uiSetCheckable();
-    }
-
-    return MenuItemRender;
 }, {
     requires:['node','uibase','component']
 });/**
@@ -25451,7 +25432,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * Model and Control for button
@@ -25513,7 +25494,7 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    var ButtonRender = UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+   return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
             this.get("el").attr("role", "button");
@@ -25541,12 +25522,6 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
             tooltip:{}
         }
     });
-
-    if (1 > 2) {
-        ButtonRender._uiSetDescribedby();
-    }
-
-    return ButtonRender;
 }, {
     requires:['uibase','component']
 });/**
@@ -25637,7 +25612,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
         INNER_CLS = "inline-block custom-button-inner-box";
 
 
-    var CustomRender = UIBase.create(Css3Render, {
+    return UIBase.create(Css3Render, {
 
             __css_tag:"custom",
 
@@ -25680,12 +25655,6 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
             innerEL:{}
         }
     );
-
-    if (1 > 2) {
-        CustomRender.innerEL()
-    }
-
-    return CustomRender;
 }, {
     requires:['node','uibase','./css3render']
 });/**
@@ -25721,7 +25690,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:58
+build time: Aug 10 13:15
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25730,7 +25699,7 @@ build time: Aug 9 18:58
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all;
     var KeyCodes = Node.KeyCodes;
-    var MenuButton = UIBase.create(Button, [Component.DecorateChild], {
+    return UIBase.create(Button, [Component.DecorateChild], {
 
         hideMenu:function() {
             this.get("menu") && this.get("menu").hide();
@@ -25929,12 +25898,6 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         },
         DefaultRender:MenuButtonRender
     });
-
-    if (1 > 2) {
-        MenuButton.getItemAt();
-    }
-
-    return MenuButton;
 }, {
     requires:["uibase","node","button","./menubuttonrender","menu","component"]
 });/**
@@ -25950,7 +25913,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         CAPTION_CLS = "menu-button-caption",
         COLLAPSE_CLS = "menu-button-open";
 
-    var MenuButtonRender = UIBase.create(Button.Render, {
+    return UIBase.create(Button.Render, {
 
         createDom:function() {
             var innerEl = this.get("innerEl"),
@@ -25993,12 +25956,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
             }
         }
     });
-
-    if (1 > 2) {
-        MenuButtonRender._uiSetCollapsed();
-    }
-
-    return MenuButtonRender;
 }, {
     requires:['uibase','button']
 });/**
@@ -26132,10 +26089,6 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
         }
     );
 
-    if (1 > 2) {
-        Select._uiSetDefaultCaption();
-    }
-
     Select.decorate = function(element, cfg) {
         element = S.one(element);
         var optionMenu = new Menu.PopupMenu(S.mix({
@@ -26206,7 +26159,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 /**
  * @author  常胤 (lzlu.com)
@@ -26392,9 +26345,6 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
             Warn: Warn,
             Rule: Rule
         });
-    if (1 > 2) {
-        Validation.Define();
-    }
 
 
     /**
@@ -26446,10 +26396,6 @@ KISSY.add("validation/define",function(){
 			ignore: 3
 		}
 	};
-
-    if(1>2){
-        Define.Config.defaultwarn();
-    }
 	
 
 	return Define
@@ -27401,10 +27347,6 @@ KISSY.add("validation/utils", function(S, undefined) {
 
         });
 
-    if (1 > 2) {
-        utils.getValue();
-    }
-
     return utils;
 
 });
@@ -27438,9 +27380,6 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
     //提示类基类，方便用户自己扩展
     Warn.BaseClass = BaseClass;
 
-    if (1 > 2) {
-        Warn.BaseClass();
-    }
     return Warn;
 
 }, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float",
@@ -27747,10 +27686,6 @@ KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
         };
     }
 
-    if (1 > 2) {
-       symbol.text1();
-    }
-
     return Fixed;
 
 }, { requires: ['dom',"event","../utils","../define"] });
@@ -27891,15 +27826,16 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
                     panel,label,estate;
 
                 panel = DOM.create(self.template);
-                estate = DOM.get('.estate', panel),label = DOM.get('.label', panel);
+                estate = DOM.get('.estate', panel);
+                label = DOM.get('.label', panel);
                 tg.parentNode.appendChild(panel);
                 DOM.hide(panel);
 
                 S.mix(self, {
-                        panel: panel,
-                        estate: estate,
-                        label: label
-                    });
+                    panel: panel,
+                    estate: estate,
+                    label: label
+                });
 
                 self._bindEvent(self.el, self.event, function(ev) {
                     var result = self.fire("valid", {event:ev.type});
@@ -27962,9 +27898,6 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
         };
     }
 
-    if (1 > 2) {
-        Static.sidebd();
-    }
     return Static;
 
 }, { requires: ['dom',"event","../utils","../define"] });

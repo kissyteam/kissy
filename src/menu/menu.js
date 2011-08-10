@@ -175,11 +175,6 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });
-
-    if (1 > 2) {
-        Menu._uiSetHighlightedItem();
-    }
-
     return Menu;
 
 }, {

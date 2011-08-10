@@ -94,7 +94,9 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Remove the script
                 if (head && script.parentNode) {
-                    script.src = "#";
+                    // ie 报错载入无效 js
+                    // 怎么 abort ??
+                    // script.src = "#";
                     head.removeChild(script);
                 }
 

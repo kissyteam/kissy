@@ -4,8 +4,12 @@
  */
 KISSY.add('base/base', function (S, Attribute, Event) {
 
-    /*
+    /**
      * Base for class-based component
+     * @name Base
+     * @extends Event.Target
+     * @extends Attribute
+     * @class
      */
     function Base(config) {
         Attribute.call(this);
@@ -16,7 +20,6 @@ KISSY.add('base/base', function (S, Attribute, Event) {
             addAttrs(this, c['ATTRS']);
             c = c.superclass ? c.superclass.constructor : null;
         }
-
         // initial
         initAttrs(this, config);
     }
@@ -48,5 +51,5 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-        requires:["./attribute","event"]
-    });
+    requires:["./attribute","event"]
+});

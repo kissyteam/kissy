@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:16
 */
 /**
  * @author  常胤 (lzlu.com)
@@ -187,9 +187,6 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
             Warn: Warn,
             Rule: Rule
         });
-    if (1 > 2) {
-        Validation.Define();
-    }
 
 
     /**
@@ -241,10 +238,6 @@ KISSY.add("validation/define",function(){
 			ignore: 3
 		}
 	};
-
-    if(1>2){
-        Define.Config.defaultwarn();
-    }
 	
 
 	return Define
@@ -1196,10 +1189,6 @@ KISSY.add("validation/utils", function(S, undefined) {
 
         });
 
-    if (1 > 2) {
-        utils.getValue();
-    }
-
     return utils;
 
 });
@@ -1233,9 +1222,6 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
     //提示类基类，方便用户自己扩展
     Warn.BaseClass = BaseClass;
 
-    if (1 > 2) {
-        Warn.BaseClass();
-    }
     return Warn;
 
 }, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float",
@@ -1542,10 +1528,6 @@ KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
         };
     }
 
-    if (1 > 2) {
-       symbol.text1();
-    }
-
     return Fixed;
 
 }, { requires: ['dom',"event","../utils","../define"] });
@@ -1686,15 +1668,16 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
                     panel,label,estate;
 
                 panel = DOM.create(self.template);
-                estate = DOM.get('.estate', panel),label = DOM.get('.label', panel);
+                estate = DOM.get('.estate', panel);
+                label = DOM.get('.label', panel);
                 tg.parentNode.appendChild(panel);
                 DOM.hide(panel);
 
                 S.mix(self, {
-                        panel: panel,
-                        estate: estate,
-                        label: label
-                    });
+                    panel: panel,
+                    estate: estate,
+                    label: label
+                });
 
                 self._bindEvent(self.el, self.event, function(ev) {
                     var result = self.fire("valid", {event:ev.type});
@@ -1757,9 +1740,6 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
         };
     }
 
-    if (1 > 2) {
-        Static.sidebd();
-    }
     return Static;
 
 }, { requires: ['dom',"event","../utils","../define"] });

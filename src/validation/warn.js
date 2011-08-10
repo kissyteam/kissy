@@ -16,9 +16,6 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
     //提示类基类，方便用户自己扩展
     Warn.BaseClass = BaseClass;
 
-    if (1 > 2) {
-        Warn.BaseClass();
-    }
     return Warn;
 
 }, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float",

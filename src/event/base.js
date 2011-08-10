@@ -38,6 +38,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         // { handler: eventHandler, events:  {type:[{scope:scope,fn:fn}]}  } }
         EVENT_GUID = 'ksEventTargetId' + S.now();
 
+    /**
+     * @name Event
+     * @namespace
+     */
     var Event = {
         _data:function(elem) {
             var args = makeArray(arguments);

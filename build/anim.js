@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * @module   anim
@@ -943,7 +943,7 @@ KISSY.add("anim/manager", function(S) {
         return anim[tag];
     }
 
-    var manager = {
+    return {
         interval:20,
         runnings:{},
         timer:null,
@@ -1004,12 +1004,6 @@ KISSY.add("anim/manager", function(S) {
             return done;
         }
     };
-
-    if (1 > 2) {
-        manager.pause().resume();
-    }
-
-    return manager;
 });/**
  * special patch for animate scroll property of element
  * @author  yiminghe@gmail.com

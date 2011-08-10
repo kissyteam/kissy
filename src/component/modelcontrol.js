@@ -67,9 +67,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
     /**
      * model and control for component
+     * @name ModelControl
      * @constructor
      */
-    var ModelControl = UIBase.create([UIBase.Box], {
+    return UIBase.create([UIBase.Box], {
 
             getCls:UIStore.getCls,
 
@@ -492,12 +493,6 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
             DefaultRender:Render
         });
-
-    if (1 > 2) {
-        ModelControl._uiSetHandleMouseEvents();
-    }
-
-    return ModelControl;
 }, {
     requires:['event','uibase','./uistore','./render']
 });

@@ -5,35 +5,62 @@
 KISSY.add('event/target', function(S, Event) {
 
     /**
-     * EventTarget provides the implementation for any object to publish,
-     * subscribe and fire to custom events.
+     * 提供事件发布和订阅机制
+     * @name Target
+     * @memberOf Event
      */
-    return {
+    var Target =
+    /**
+     * @lends Event.Target
+     */
+    {
 
         isCustomEventTarget: true,
 
+        /**
+         * 触发事件
+         * @param {String} type 事件名
+         * @param {Object} eventData 事件附加信息对象
+         * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
+         */
         fire: function(type, eventData) {
             // no chain ,need data returned
             return Event.fire(this, type, eventData);
         },
 
+        /**
+         * 监听事件
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
         on: function(type, fn, scope) {
             Event.add(this, type, fn, scope);
             return this; // chain
         },
 
+        /**
+         * 取消监听事件
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
         detach: function(type, fn, scope) {
             Event.remove(this, type, fn, scope);
             return this; // chain
         }
     };
+
+    return Target;
 }, {
-        /*
-         实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-         否则会导致build打包文件 dom 和 dom-data 重复载入
-         */
-        requires:["./base"]
-    });
+    /*
+     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
+     否则会导致build打包文件 dom 和 dom-data 重复载入
+     */
+    requires:["./base"]
+});
 
 /**
  * NOTES:

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:39
+build time: Aug 10 13:15
 */
 /**
  * @module  anim-node-plugin
@@ -529,10 +529,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         }
     });
 
-    if (1 > 2) {
-        DOM.getDOMNodes();
-    }
-
     return NodeList;
 }, {
     requires:["dom"]
@@ -573,7 +569,9 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
             if (S.isString(newNode)) {
                 newNode = DOM.create(newNode);
             }
-            DOM[insertType](newNode, self);
+            if (newNode) {
+                DOM[insertType](newNode, self);
+            }
             return self;
 
         };

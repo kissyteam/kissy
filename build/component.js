@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 9 18:38
+build time: Aug 10 13:15
 */
 /**
  * container can delegate event for its children
@@ -237,9 +237,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
     /**
      * model and control for component
+     * @name ModelControl
      * @constructor
      */
-    var ModelControl = UIBase.create([UIBase.Box], {
+    return UIBase.create([UIBase.Box], {
 
             getCls:UIStore.getCls,
 
@@ -662,12 +663,6 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
             DefaultRender:Render
         });
-
-    if (1 > 2) {
-        ModelControl._uiSetHandleMouseEvents();
-    }
-
-    return ModelControl;
 }, {
     requires:['event','uibase','./uistore','./render']
 });
@@ -774,9 +769,10 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
 KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
 
     /**
-     * @exports Component as KISSY.Component
+     * @name Component
+     * @namespace
      */
-    var Component = {
+    return {
         ModelControl:ModelControl,
         Render:Render,
         Container:Container,
@@ -785,10 +781,6 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
         DecorateChild:DecorateChild,
         DecorateChildren:DecorateChildren
     };
-    if (1 > 2) {
-        Component.DecorateChildren;
-    }
-    return Component;
 }, {
     requires:['component/modelcontrol',
         'component/render',

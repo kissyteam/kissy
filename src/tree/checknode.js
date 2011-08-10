@@ -106,10 +106,6 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         ui:CheckNode
     });
 
-    if (1 > 2) {
-        Component.PARTIAL_CHECK = Component.CHECK = Component.EMPTY;
-    }
-
     return CheckNode;
 }, {
     requires:['node','uibase','component','./basenode','./checknoderender']

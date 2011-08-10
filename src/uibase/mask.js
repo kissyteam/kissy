@@ -28,9 +28,6 @@ KISSY.add("uibase/mask", function() {
         }
     };
 
-    if(1>2){
-        Mask._uiSetMask();
-    }
 
     return Mask;
 }, {requires:["ua"]});

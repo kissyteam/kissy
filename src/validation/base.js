@@ -182,9 +182,6 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
             Warn: Warn,
             Rule: Rule
         });
-    if (1 > 2) {
-        Validation.Define();
-    }
 
 
     /**

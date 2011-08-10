@@ -104,10 +104,6 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
         }
     );
 
-    if (1 > 2) {
-        Select._uiSetDefaultCaption();
-    }
-
     Select.decorate = function(element, cfg) {
         element = S.one(element);
         var optionMenu = new Menu.PopupMenu(S.mix({
