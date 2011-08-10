@@ -11,9 +11,16 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
                 var self = this, tg = self.target,
                     panel,label,estate;
 
-                panel = DOM.create(self.template);
+                if(DOM.attr("data-messagebox")){
+                   panel = DOM.get(DOM.attr("data-messagebox"));
+                }else if(self.messagebox){
+                    panel = DOM.get(self.messagebox);
+                }else{
+                    panel = DOM.create(self.template);
+                    tg.parentNode.appendChild(panel);
+                }
                 estate = DOM.get('.estate', panel),label = DOM.get('.label', panel);
-                tg.parentNode.appendChild(panel);
+                if(!estate || !label) return;
                 DOM.hide(panel);
 
                 S.mix(self, {
@@ -21,13 +28,6 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
                         estate: estate,
                         label: label
                     });
-
-                self._bindEvent(self.el, self.event, function(ev) {
-                    var result = self.fire("valid", {event:ev.type});
-                    if (S.isArray(result) && result.length == 2) {
-                        self.showMessage(result[1], result[0], ev.type);
-                    }
-                })
             },
 
             showMessage: function(result, msg) {

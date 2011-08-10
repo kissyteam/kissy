@@ -66,7 +66,7 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
                 var self = this, cfg = self.config;
                 S.each(self.form.elements, function(el) {
                     var attr = DOM.attr(el, cfg.attrname);
-                    if (attr)self.add(el, Util.toJSON(attr));
+                    if (attr)self.add(el, Util.toJSON(attr.replace(/'/g, '"')));
                 });
             },
 
@@ -77,7 +77,6 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
              *     2.字段
              * @param {String|Element} field
              * @param {Object} config
-             * @return Validation实例
              */
             add: function(field, config) {
                 var self = this, fields = self.fields,
@@ -89,19 +88,12 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
                     return self;
                 }
 
-
                 //实例化Validation.Field后增加
-
-                //DOM.get(#field)
-                if (S.isString(field) && field.substr(0, 1) != "#") {
-                    field = "#" + field;
-                }
-
-                var el = DOM.get(field), id = DOM.attr(el, "id");
+                var el = DOM.get(field) || DOM.get("#"+field), id = DOM.attr(el, "id");
 
                 if (!el || el.form != self.form) {
                     Util.log("字段" + field + "不存在或不属于该form");
-                    return undefined;
+                    return ;
                 }
 
                 //给对应的field生成一个id
@@ -111,10 +103,6 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
                 }
 
                 fields.add(id, new Field(el, cfg));
-
-
-                //支持连写 ^^
-                return self;
             },
 
             /**

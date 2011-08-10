@@ -8,8 +8,7 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 		 * 规则对象
 		 */
 		return new function(){
-			var self = this,
-				store = new Util.storage();
+			var self = this, store = new Util.storage();
 			
 			/**
 			 * 增加规则
@@ -34,14 +33,11 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 			 */
 			self.get = function(name,param){
 				var r = store.get(name);
-			
 				if(!r){
-					//Util.log("规则'"+name+"'不存在");
 					return null;
 				}
 				
 				var fun = r.fun, tip = r.text;
-				
 				/**
 				 * 前台调用传参: [param1,param2..tips]
 				 * rule定义为: function(value,tips,param1,param2..)
@@ -71,7 +67,6 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 				return function(value){
 					return fun.apply(this,[value].concat(arg));
 				}	
-
 			};
 
 			/**

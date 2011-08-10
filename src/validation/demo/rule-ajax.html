@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
-	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
 	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
 <script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
 <link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
@@ -28,7 +28,18 @@
 
 	<li>
 		<label class="hd">姓名：</label>
-		<input class="text" type="text" name="url" id="url" data-valid="{length:[3,6,true],remote:['interface.txt']}"/>
+		<input class="text" type="text" name="url" id="url" data-valid="{length:[3,6,true],remote:[]}" autocomplete="off"/>
+	</li>
+
+    <style>
+        .juhua {
+            background: url('http://img03.taobaocdn.com/tps/i3/T1Oel6XdhbXXXXXXXX-16-16.gif') no-repeat 0 0;
+        }
+    </style>
+	<li>
+		<label class="hd">用户名：</label>
+        <p>可以配置所有KISSY.io的配置项，所以很容易做出菊花转动的效果</p>
+		<input class="text" type="text" name="url" id="user" autocomplete="off"/>
 	</li>
 	
 	<li>
@@ -39,21 +50,35 @@
 </form>
 
 <script>
-
-
-
 	KISSY.use("validation",function(S,Validation){
-
+            var $ = S.all;
 			var form = S.query("form")[0],
 			
 				check = new Validation(form,{
 					style: "under"
 				});
 
+            check.add("#user",{
+               remote: {
+                   url:'interface.txt',
+                   start:function(){
+                       $("#user").addClass("juhua");
+                   },
+                   complete:function(){
+                       //$("#user").removeClass("juhua");
+                   }
+               }
+            });
+
 			KISSY.Event.on(form,"submit",function(){
 				check.isValid();
 				return false;
 			});
+
+            S.io.on("send",function(){
+                $("#user").addClass("juhua");
+
+            });
 		
 	});
 

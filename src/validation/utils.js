@@ -10,6 +10,8 @@ KISSY.add("validation/utils", function(S, undefined) {
      */
     var utils = {
 
+        log: S.log,
+
         /**
          * 转化为JSON对象
          * @param {Object} str
@@ -19,7 +21,7 @@ KISSY.add("validation/utils", function(S, undefined) {
             try {
                 eval("var result=" + str);
             } catch(e) {
-                return null;
+                return {};
             }
             return result;
             //return S.JSON.parse(str);
@@ -60,7 +62,7 @@ KISSY.add("validation/utils", function(S, undefined) {
 
         /**
          * 获取字符串的长度
-         * @example getStrLen("a啊",true); //结果为3
+         * @example getStrLen('a啊',true); //结果为3
          * @param {Object} str
          * @param {Object} realLength
          * @return {number}
@@ -69,69 +71,6 @@ KISSY.add("validation/utils", function(S, undefined) {
             return realLength ? str.replace(/[^\x00-\xFF]/g, '**').length : str.length;
         },
 
-        /**
-         * 打印错误信息
-         * @param {Object} msg
-         */
-        log: S.log,
-
-        /**
-         * 获取form表单的值 checkbox,rado,select-multiple返回数组
-         * @param {Object} el
-         */
-        getValue: function(el) {
-            var eltype = S.DOM.attr(el, "type").toLowerCase(),
-                toarr = function(f) {
-                    return S.isArray(f) ? f : [f];
-                },
-                checkbox = function(el) {
-                    var val = [];
-                    S.each(el, function(item) {
-                        if (item.checked) val.push(item.value);
-                    });
-                },
-                radio = function(el) {
-                    var val = null;
-                    S.each(el, function(item) {
-                        if (item.checked) {
-                            val = item.value;
-                            return false;
-                        }
-                    });
-                    return null;
-                },
-                val,
-                select = function(el) {
-                    var val = [];
-                    S.each(el.options, function(item) {
-                        if (item.selected) val.push(item.value);
-                    });
-                    return val;
-                };
-
-            switch (eltype) {
-                case "text"    :
-                case "hidden":
-                case "textarea":
-                case "password":
-                    val = el.value;
-                    break;
-                case "select-one":
-                    val = el[el.selectedIndex].value;
-                    break;
-                case "radio":
-                    val = radio(toarr(el));
-                    break;
-                case "checkbox":
-                    val = checkbox(toarr(el));
-                    break;
-                case "select-multiple":
-                    val = select(el);
-                    break;
-            }
-
-            return val;
-        },
 
         /**
          * 简单的存储类
@@ -198,7 +137,7 @@ KISSY.add("validation/utils", function(S, undefined) {
         });
 
     if (1 > 2) {
-        utils.getValue();
+        utils.isEmpty();
     }
 
     return utils;
