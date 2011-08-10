@@ -6,16 +6,27 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
     var $ = Node.all;
     var CLS = DelMenuItemRender.CLS,
         DEL_CLS = DelMenuItemRender.DEL_CLS;
+
+    function del(self) {
+        var parent = self.get("parent");
+        if (parent.fire("beforeDelete", {
+            target:self
+        }) === false) {
+            return;
+        }
+        parent.removeChild(self, true);
+        parent.set("highlightedItem", null);
+        parent.fire("delete", {
+            target:self
+        });
+    }
+
     var DelMenuItem = UIBase.create(MenuItem, {
         _performInternal:function(e) {
             var target = $(e.target);
             // 点击了删除
             if (target.hasClass(this.getCls(DEL_CLS))) {
-                this.get("parent").removeChild(this, true);
-                this.get("parent").set("highlightedItem", null);
-                this.get("parent").fire("delete", {
-                    target:this
-                });
+                del(this);
                 return true;
             }
             return MenuItem.prototype._performInternal.call(this, e);
@@ -23,11 +34,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
         _handleKeydown:function(e) {
             // d 键
             if (e.keyCode === Node.KeyCodes.D) {
-                this.get("parent").removeChild(this, true);
-                this.get("parent").set("highlightedItem", null);
-                this.get("parent").fire("delete", {
-                    target:this
-                });
+                del(this);
                 return true;
             }
         }

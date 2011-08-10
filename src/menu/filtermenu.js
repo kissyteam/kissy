@@ -12,7 +12,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    return UIBase.create(Menu, {
+    var FilterMenu = UIBase.create(Menu, {
             bindUI:function() {
                 var self = this,
                     view = self.get("view"),
@@ -74,7 +74,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get("highlightedItem"),
-                                content = item && item.get("caption");
+                                content = item && item.get("content");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1
                                 && lastWord) {
@@ -110,13 +110,12 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
                 // 过滤所有子组件
                 S.each(children, function(c) {
-                    var content = c.get("caption"),
-                        view = c.get("view");
+                    var content = c.get("content");
                     if (!str) {
                         // 没有过滤条件
                         // 恢复原有内容
                         // 显示出来
-                        view.set("content", content);
+                        c.get("contentEl").html(content);
                         c.set("visible", true);
                     } else {
                         if (content.indexOf(str) > -1) {
@@ -124,7 +123,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            view.set("content", content.replace(strExp, function(m) {
+                            c.get("contentEl").html(content.replace(strExp, function(m) {
                                 return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
@@ -170,6 +169,13 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             DefaultRender:FilterMenuRender
         }
     );
+
+    Component.UIStore.setUIByClass("filtermenu", {
+        priority:Component.UIStore.PRIORITY.LEVEL2,
+        ui:FilterMenu
+    });
+
+    return FilterMenu;
 }, {
     requires:['uibase','./menu','./filtermenurender']
 });

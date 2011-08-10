@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 10 13:15
+build time: Aug 10 17:24
 */
 /**
  * deletable menuitem
@@ -11,16 +11,27 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
     var $ = Node.all;
     var CLS = DelMenuItemRender.CLS,
         DEL_CLS = DelMenuItemRender.DEL_CLS;
+
+    function del(self) {
+        var parent = self.get("parent");
+        if (parent.fire("beforeDelete", {
+            target:self
+        }) === false) {
+            return;
+        }
+        parent.removeChild(self, true);
+        parent.set("highlightedItem", null);
+        parent.fire("delete", {
+            target:self
+        });
+    }
+
     var DelMenuItem = UIBase.create(MenuItem, {
         _performInternal:function(e) {
             var target = $(e.target);
             // 点击了删除
             if (target.hasClass(this.getCls(DEL_CLS))) {
-                this.get("parent").removeChild(this, true);
-                this.get("parent").set("highlightedItem", null);
-                this.get("parent").fire("delete", {
-                    target:this
-                });
+                del(this);
                 return true;
             }
             return MenuItem.prototype._performInternal.call(this, e);
@@ -28,11 +39,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
         _handleKeydown:function(e) {
             // d 键
             if (e.keyCode === Node.KeyCodes.D) {
-                this.get("parent").removeChild(this, true);
-                this.get("parent").set("highlightedItem", null);
-                this.get("parent").fire("delete", {
-                    target:this
-                });
+                del(this);
                 return true;
             }
         }
@@ -113,7 +120,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             replace(/\x08/g, '\\x08');
     }
 
-    return UIBase.create(Menu, {
+    var FilterMenu = UIBase.create(Menu, {
             bindUI:function() {
                 var self = this,
                     view = self.get("view"),
@@ -175,7 +182,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get("highlightedItem"),
-                                content = item && item.get("caption");
+                                content = item && item.get("content");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1
                                 && lastWord) {
@@ -211,13 +218,12 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
                 // 过滤所有子组件
                 S.each(children, function(c) {
-                    var content = c.get("caption"),
-                        view = c.get("view");
+                    var content = c.get("content");
                     if (!str) {
                         // 没有过滤条件
                         // 恢复原有内容
                         // 显示出来
-                        view.set("content", content);
+                        c.get("contentEl").html(content);
                         c.set("visible", true);
                     } else {
                         if (content.indexOf(str) > -1) {
@@ -225,7 +231,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            view.set("content", content.replace(strExp, function(m) {
+                            c.get("contentEl").html(content.replace(strExp, function(m) {
                                 return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
@@ -271,6 +277,13 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
             DefaultRender:FilterMenuRender
         }
     );
+
+    Component.UIStore.setUIByClass("filtermenu", {
+        priority:Component.UIStore.PRIORITY.LEVEL2,
+        ui:FilterMenu
+    });
+
+    return FilterMenu;
 }, {
     requires:['uibase','./menu','./filtermenurender']
 });/**
@@ -624,16 +637,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 view:true
             },
 
-            caption:{
-                getter:function(v) {
-                    if (!v) {
-                        // 不使用 set ，会连锁
-                        this.__set("caption", v = this.get("content"));
-                    }
-                    return v;
-                }
-            },
-
             // @inheritedDoc
             // option.text
             // content:{},
@@ -653,7 +656,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     MenuItem.DefaultRender = MenuItemRender;
 
     Component.UIStore.setUIByClass("menuitem", {
-        priority:10,
+        priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:MenuItem
     });
 

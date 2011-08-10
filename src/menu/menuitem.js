@@ -89,16 +89,6 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                 view:true
             },
 
-            caption:{
-                getter:function(v) {
-                    if (!v) {
-                        // 不使用 set ，会连锁
-                        this.__set("caption", v = this.get("content"));
-                    }
-                    return v;
-                }
-            },
-
             // @inheritedDoc
             // option.text
             // content:{},
@@ -118,7 +108,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
     MenuItem.DefaultRender = MenuItemRender;
 
     Component.UIStore.setUIByClass("menuitem", {
-        priority:10,
+        priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:MenuItem
     });
 
