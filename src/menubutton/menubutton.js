@@ -5,7 +5,7 @@
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all;
     var KeyCodes = Node.KeyCodes;
-    return UIBase.create(Button, [Component.DecorateChild], {
+    var MenuButton = UIBase.create(Button, [Component.DecorateChild], {
 
         hideMenu:function() {
             this.get("menu") && this.get("menu").hide();
@@ -204,6 +204,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
         },
         DefaultRender:MenuButtonRender
     });
+    return MenuButton;
 }, {
     requires:["uibase","node","button","./menubuttonrender","menu","component"]
 });
