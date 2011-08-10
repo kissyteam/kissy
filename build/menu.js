@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 10 17:24
+build time: Aug 10 17:50
 */
 /**
  * deletable menuitem
@@ -110,7 +110,7 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
  *  menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -285,7 +285,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Menu, FilterMenuRender) {
 
     return FilterMenu;
 }, {
-    requires:['uibase','./menu','./filtermenurender']
+    requires:['uibase','component','./menu','./filtermenurender']
 });/**
  * filter menu render
  * 1.create filter input

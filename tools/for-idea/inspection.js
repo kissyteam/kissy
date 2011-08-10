@@ -23,19 +23,18 @@ var BaseNodeRender;
 BaseNodeRender._uiSetAriaPosInSet();
 BaseNodeRender._uiSetDepth();
 BaseNodeRender._uiSetAriaSize();
-var Component;
-Component.PARTIAL_CHECK = Component.CHECK = Component.EMPTY;
+x.PARTIAL_CHECK = x.CHECK = x.EMPTY;
 x._uiSetShowRootNode();
 x._uiSetAlign();
-var Box;
-Box._uiSetElAttrs()._uiSetElCls()._uiSetElStyle().
+
+x._uiSetElAttrs()._uiSetElCls()._uiSetElStyle().
     _uiSetWidth()._uiSetHeight()._uiSetHtml();
 x._uiSetClosable();
-var ContentBox;
-ContentBox._uiSetContentElCls()._uiSetContentElAttrs()._uiSetContentElStyle();
+
+x._uiSetContentElCls()._uiSetContentElAttrs()._uiSetContentElStyle();
 x._uiSetShim();
-var StdMod;
-StdMod._uiSetHeaderStyle()._uiSetFooterStyle()
+
+x._uiSetHeaderStyle()._uiSetFooterStyle()
     ._uiSetBodyStyle()
     ._uiSetBodyContent()._uiSetHeaderContent()._uiSetFooterContent();
 x.Define();
