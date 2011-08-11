@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 规则管理类
  * @author: 常胤 <lzlu.com>
  */
@@ -80,7 +80,7 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 				if(r){
 					return Util.format(template, r.name, r.text, r.fun.toString());
 				}else{
-					return Util.format("规则[{0}]不存在",name);
+					//return Util.format("规则[{0}]不存在",name);
 				}
 			};
 	
@@ -88,8 +88,3 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 
 	
 }, { requires: ['dom',"event","../utils"] });
-
-
-
-
-

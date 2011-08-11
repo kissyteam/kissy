@@ -2,61 +2,75 @@
  * 提示类：Static
  * @author: 常胤 <lzlu.com>
  */
-KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
-    var symbol = Define.Const.enumvalidsign;
+KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
+    var symbol = Define.Const.enumvalidsign,
+        $ = Node.all;
 
     function Static() {
         return {
-            init: function() {
-                var self = this, tg = self.target,
-                    panel,label,estate;
+            init: function(){
+                var self = this, tg = $(self.target), panel;
 
-                if(DOM.attr("data-messagebox")){
-                   panel = DOM.get(DOM.attr("data-messagebox"));
-                }else if(self.messagebox){
-                    panel = DOM.get(self.messagebox);
-                }else{
-                    panel = DOM.create(self.template);
-                    tg.parentNode.appendChild(panel);
+                //伪属性配置的id
+                if(tg.attr("data-message")) {
+                    panel = $(tg.attr("data-messagebox"));
                 }
-                estate = DOM.get('.estate', panel),label = DOM.get('.label', panel);
-                if(!estate || !label) return;
-                DOM.hide(panel);
+                //配置的id
+                else if(self.messagebox) {
+                    panel = $(self.messagebox);
+                }
+                //从模版创建
+                else {
+                    panel = Node(self.template).appendTo(tg.parent());
+                }
+                
+                if(panel) {
+                    self.panel = panel;
+                    self.estate = panel.one(".estate");
+                    self.label = panel.one(".label");
+                    if(!self.estate || !self.label) return;
+                    panel.hide();
+                }else{
+                    return;
+                }
 
-                S.mix(self, {
-                        panel: panel,
-                        estate: estate,
-                        label: label
-                    });
             },
 
             showMessage: function(result, msg) {
-                var self = this,
-                    panel = self.panel, estate = self.estate, label = self.label;
+                var self = this, tg = $(self.el),
+                    panel = self.panel, estate = self.estate, label = self.label,
+                    time = S.isNumber(self.anim)?self.anim:0.1;
 
                 if (self.invalidClass) {
                     if (result == symbol.ignore && result == symbol.ok) {
-                        DOM.removeClass(self.el, self.invalidClass);
+                        tg.removeClass(self.invalidClass);
                     } else {
-                        DOM.addClass(self.el, self.invalidClass);
+                        tg.addClass(self.invalidClass);
                     }
                 }
 
+                var display = panel.css("display")=="none"?false:true;
                 if (result == symbol.ignore) {
-                    DOM.hide(panel);
+                    display && panel.hide(time);
                 } else {
-                    var est = "error";
+                    estate.removeClass("ok tip error");
                     if (result == symbol.error) {
-                        est = "error";
+                        estate.addClass("error");
+                        label.html(msg);
+                        display || panel.show(time);
                     } else if (result == symbol.ok) {
-                        est = "ok";
+                        if(self.isok===false) {
+                            display && panel.hide(time);
+                        }else{
+                            display || panel.show(time);
+                            estate.addClass("ok");
+                            label.html(self.oktext?self.oktext:msg);
+                        }
                     } else if (result == symbol.hint) {
-                        est = "tip";
+                        estate.addClass("tip");
+                        label.html(msg);
+                        display || panel.show(time);
                     }
-                    DOM.removeClass(estate, "ok tip error");
-                    DOM.addClass(estate, est);
-                    DOM.html(label, msg);
-                    DOM.show(panel);
                 }
             },
 
@@ -65,22 +79,12 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
                     template: '<label class="valid-text"><span class="estate"><em class="label"></em></span></label>',
                     event: 'focus blur keyup'
                 },
-                siderr: {
-                    template: '<div class="valid-siderr"><p class="estate"><' + 's></s><span class="label"></span></p></div>',
-                    event: 'focus blur keyup'
-                },
                 under: {
                     template: '<div class="valid-under"><p class="estate"><span class="label"></span></p></div>',
                     event: 'focus blur keyup'
-                },
-                sidebd: {
-                    template: '<div class="valid-sidebd"><p class="estate"><span class="label"></span></p></div>',
-                    event: 'focus blur'
                 }
             }
-
-
-        };
+        }
     }
 
     if (1 > 2) {
@@ -88,5 +92,5 @@ KISSY.add("validation/warn/static", function(S, DOM, Event, Util, Define) {
     }
     return Static;
 
-}, { requires: ['dom',"event","../utils","../define"] });
+}, { requires: ['node',"../utils","../define"] });
 

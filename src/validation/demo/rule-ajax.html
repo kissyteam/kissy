@@ -28,7 +28,7 @@
 
 	<li>
 		<label class="hd">姓名：</label>
-		<input class="text" type="text" name="url" id="url" data-valid="{length:[3,6,true],remote:[]}" autocomplete="off"/>
+		<input class="text" type="text" name="url" id="url" data-valid="{length:[3,6,true],remote:['interface.txt']}" autocomplete="off"/>
 	</li>
 
     <style>
@@ -65,7 +65,7 @@
                        $("#user").addClass("juhua");
                    },
                    complete:function(){
-                       //$("#user").removeClass("juhua");
+                       $("#user").removeClass("juhua");
                    }
                }
             });
@@ -75,10 +75,6 @@
 				return false;
 			});
 
-            S.io.on("send",function(){
-                $("#user").addClass("juhua");
-
-            });
 		
 	});
 
