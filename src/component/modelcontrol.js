@@ -106,6 +106,8 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                 //then render my children
                 var children = self.get("children");
                 S.each(children, function(child) {
+                    // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
+                    self._initChild(child);
                     child.render();
                 });
             },
@@ -455,14 +457,7 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
                 //子组件
                 children:{
-                    value:[],
-                    setter:function(v) {
-                        var self = this;
-                        //自动给儿子组件加入父亲链
-                        S.each(v, function(c) {
-                            self._initChild(c);
-                        });
-                    }
+                    value:[]
                 },
 
                 // 转交给渲染层

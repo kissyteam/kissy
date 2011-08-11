@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 11 21:57
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 11 21:22
              */
             version: '1.20dev',
 
-            buildTime:'20110811212222',
+            buildTime:'20110811215707',
 
             /**
              * Returns a new object containing all of the properties of
@@ -17251,7 +17251,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 11 21:57
 */
 /**
  * container can delegate event for its children
@@ -17526,6 +17526,8 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                 //then render my children
                 var children = self.get("children");
                 S.each(children, function(child) {
+                    // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
+                    self._initChild(child);
                     child.render();
                 });
             },
@@ -17875,14 +17877,7 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
 
                 //子组件
                 children:{
-                    value:[],
-                    setter:function(v) {
-                        var self = this;
-                        //自动给儿子组件加入父亲链
-                        S.each(v, function(c) {
-                            self._initChild(c);
-                        });
-                    }
+                    value:[]
                 },
 
                 // 转交给渲染层
@@ -24203,7 +24198,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 11 21:31
 */
 /**
  * deletable menuitem
@@ -25175,7 +25170,10 @@ KISSY.add(
 
                 showMenu:function() {
                     var menu = this.get("menu");
-                    menu.set("align", S.mix({node:this.get("el")}, this.get("menuAlign")));
+                    menu.set("align", S.mix({
+                        node:this.get("el"),
+                        points:['tr','tl']
+                    }, this.get("menuAlign")));
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -25342,11 +25340,7 @@ KISSY.add(
                     externalSubMenu:{
                         value:false
                     },
-                    menuAlign:{
-                        value:{
-                            points:['tr','tl']
-                        }
-                    },
+                    menuAlign:{},
                     menu:{
                         setter:function(m) {
                             m.set("parent", this);
