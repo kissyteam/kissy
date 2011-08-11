@@ -70,7 +70,10 @@ KISSY.add(
 
                 showMenu:function() {
                     var menu = this.get("menu");
-                    menu.set("align", S.mix({node:this.get("el")}, this.get("menuAlign")));
+                    menu.set("align", S.mix({
+                        node:this.get("el"),
+                        points:['tr','tl']
+                    }, this.get("menuAlign")));
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -237,11 +240,7 @@ KISSY.add(
                     externalSubMenu:{
                         value:false
                     },
-                    menuAlign:{
-                        value:{
-                            points:['tr','tl']
-                        }
-                    },
+                    menuAlign:{},
                     menu:{
                         setter:function(m) {
                             m.set("parent", this);
