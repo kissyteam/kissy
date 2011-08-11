@@ -1,6 +1,6 @@
 /**
  * 扩展提示类：float
- * @author  常胤 <lzlu.com>
+ * @author: 常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 	var symbol = Define.Const.enumvalidsign;
@@ -24,14 +24,7 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 					panel: S.one(panel),
 					msg: S.one(msg)
 				});
-				
-				self._bindEvent(self.el,'focus keyup',function(ev){
-					var result = self.fire("valid",{event:ev.type});
-					if(S.isArray(result) && result.length==2){
-						self.showMessage(result[1],result[0],ev.type,ev.target);
-					}
-				});
-				
+
 				//绑定对象的focus,blur事件来显示隐藏消息面板
 				Event.on(self.el,"focus",function(ev){
 					if(DOM.hasClass(tg,self.invalidCls)){
@@ -79,6 +72,7 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 					DOM.hide(panel);
 				}
 			},
+            
 			style:{
 				"float":{
 					template: '<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><'+'s>◥◤</s></div>',

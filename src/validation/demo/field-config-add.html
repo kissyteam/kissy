@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
-	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
 	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
 <script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
 <link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
@@ -65,7 +65,11 @@
 			<input class="text" type="text" name="password" id="password"/>
 		</li>
 
-		
+		<li>
+			<label class="hd"></label>
+			<p><a href="" id="add">+ 增加一个字段</a> 通过编程的方式动态添加校验字段</p>
+		</li>
+
 		<li>
 			<button type="submit">提交</button>
 		</li>
@@ -76,6 +80,8 @@
 	<script>
 	
 		KISSY.use("validation",function(S,Validation){
+            var $=S.all;
+
 			var form = S.query("form")[0],
 			
 				check = new Validation(form,{
@@ -100,6 +106,22 @@
 				check.isValid();
 				return false;
 			});
+
+
+
+
+            $("#add").on("click",function(ev){
+                ev.halt();
+                var a = S.DOM.create('<input class="text" type="text" name="test" id="test"/>');
+                $(this).parent().parent().append (a);
+                $(this).parent().remove();
+				f1 = new Validation.Field(a,{
+					style: "under",
+					length:[6,30,true]
+				});
+            });
+
+
 			
 		});
 

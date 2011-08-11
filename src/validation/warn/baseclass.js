@@ -1,6 +1,6 @@
 /**
  * 扩展类基类
- * @author  常胤 <lzlu.com>
+ * @author: 常胤 <lzlu.com>
  */
 
 KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
@@ -64,9 +64,8 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
          * 显示出错信息
          * @param {Boolean} result
          * @param {String} msg
-         * @param  evttype
          */
-        showMessage: function(result, msg, evttype) {
+        showMessage: function(result, msg) {
             result = 1;
             msg = 1;
             evttype = 1;

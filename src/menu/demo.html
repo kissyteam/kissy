@@ -53,7 +53,10 @@
                 //view as a parameter
 
                 var sb = new Menu.PopupMenu({
-                    prefixCls:"goog-"
+                    prefixCls:"goog-",
+                    elStyle:{
+                        color:"red"
+                    }
                 });
                 sb.addChild(new Menu.Item({
                     prefixCls:"goog-",
@@ -68,11 +71,17 @@
 
                 if (true) {
                     var sb2 = new Menu.PopupMenu({
-                        prefixCls:"goog-"
-                    });
-                    sb2.addChild(new Menu.Item({
                         prefixCls:"goog-",
-                        content:"submenuitem11"}));
+                        children:[
+                            new Menu.Item({
+                                prefixCls:"goog-",
+                                content:"submenuitem141"})
+                        ],
+                        // bug elStyle 无效
+                        elStyle:{
+                            color:"red"
+                        }
+                    });
                     sb2.addChild(new Menu.Item({
                         prefixCls:"goog-",
                         content:"submenuitem22"}));

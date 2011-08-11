@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 10 13:16
+build time: Aug 11 21:22
 */
 /**
  * UIBase.Align
@@ -321,8 +321,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         * @param {Element} [node] 参照元素, 可取配置选项中的设置, 也可是一元素
-         * @param {String[]} [points] 对齐方式
+         * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
          */
         align: function(node, points, offset, overflow) {
@@ -998,6 +998,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
          * 通过 render 来重建原有的内容
          */
         __createDom:function() {
+
             var self = this,
                 el = self.get("el");
             if (!el) {
@@ -1024,6 +1025,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         },
 
         _uiSetElStyle:function(style) {
+
             this.get("el").css(style);
         },
 

@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
-	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
 	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
 <script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
 <link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
@@ -35,6 +35,12 @@
 	<li>
 		<label class="hd">姓名：</label>
 		<input class="text" type="text" name="username" id="username" data-valid="{trim:'姓名两端不能含有空格'}"/>
+	</li>
+
+	<li>
+		<label class="hd">姓名：</label>
+        <p>只要配置了伪属性data-valid="{}"，就认为该字段需要校验，并且默认增加了require=true的规则（必填）</p>
+		<input class="text" type="text" data-valid="{trim:'姓名两端不能含有空格'}"/>
 	</li>
 	
 	<li>

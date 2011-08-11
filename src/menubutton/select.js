@@ -2,12 +2,15 @@
  * manage a list of single-select options
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Option) {
+KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, Menu, Option) {
 
     var Select = UIBase.create(MenuButton, {
+            /**
+             * @protected
+             */
             bindUI:function() {
                 var self = this;
-                self.on("click", self.handleMenuClick, self);
+                self.on("click", self._handleMenuClick, self);
                 self.get("menu").on("show", self._handleMenuShow, self)
             },
             /**
@@ -18,16 +21,20 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 this.get("menu").set("highlightedItem",
                     this.get("selectedItem") || this.get("menu").getChildAt(0));
             },
-            updateCaption_:function() {
+            /**
+             * @private
+             */
+            _updateCaption:function() {
                 var self = this;
                 var item = self.get("selectedItem");
                 self.set("content", item ? item.get("content") : self.get("defaultCaption"));
             },
-            handleMenuClick:function(e) {
+            _handleMenuClick:function(e) {
                 var self = this;
                 self.set("selectedItem", e.target);
-                self.hideMenu();
+                self.set("collapsed", true);
             },
+
             removeItems:function() {
                 Select.superclass.removeItems.apply(this, arguments);
                 this.set("selectedItem", null);
@@ -42,10 +49,10 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
                 if (ev && ev.prevVal) {
                     ev.prevVal.set("selected", false);
                 }
-                this.updateCaption_();
+                this._updateCaption();
             },
             _uiSetDefaultCaption:function() {
-                this.updateCaption_();
+                this._updateCaption();
             }
         },
         {
@@ -106,9 +113,9 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
 
     Select.decorate = function(element, cfg) {
         element = S.one(element);
-        var optionMenu = new Menu.PopupMenu(S.mix({
-            prefixCls:cfg.prefixCls
-        }, cfg['menuCfg'])),
+        cfg.elBefore = element;
+        var select = new Select(cfg),
+            name,
             selectedItem,
             curValue = element.val(),
             options = element.all("option");
@@ -122,18 +129,11 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
             if (curValue == option.val()) {
                 selectedItem = item;
             }
-            optionMenu.addChild(item);
+            select.addItem(item);
         });
 
-        var select = new Select(S.mix({
-            selectedItem:selectedItem,
-            menu:optionMenu
-        }, cfg));
-
+        select.set("selectedItem", selectedItem);
         select.render();
-        select.get("el").insertBefore(element);
-
-        var name;
 
         if (name = element.attr("name")) {
             var input = new Node("<input type='hidden' name='" + name
@@ -151,10 +151,15 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, MenuButton, Menu, Optio
         return select;
     };
 
+    Component.UIStore.setUIByClass("select", {
+        priority:Component.UIStore.PRIORITY.LEVEL3,
+        ui:Select
+    });
+
     return Select;
 
 }, {
-    requires:['node','uibase','./menubutton','menu','./option']
+    requires:['node','uibase','component','./menubutton','menu','./option']
 });
 
 /**

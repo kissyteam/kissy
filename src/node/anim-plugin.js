@@ -83,10 +83,9 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     var self = this;
 
                     // 没有参数时，调用 DOM 中的对应方法
-                    if (DOM[k] && arguments.length === 0) {
+                    if (DOM[k] && !speed) {
                         DOM[k](self);
-                    }
-                    else {
+                    } else {
                         // 原生支持问题很多，默认不采用原生
                         if (nativeSupport === undefined) {
                             nativeSupport = false;

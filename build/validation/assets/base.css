@@ -11,7 +11,7 @@
 	.valid-under {
 		display:block;
 		margin-top:5px;
-		height:22px;
+		height:24px;
 	}
 	.valid-under .estate{
 		float:left;
@@ -65,6 +65,7 @@
 /* Modules:= 仿人人网 {{{ */
 	.valid-siderr{
 		display:inline-block;
+		_width:300px;_overflow:hidden;
 		height:25px;
 		margin-left:-4px;
 		vertical-align:middle;
@@ -118,6 +119,7 @@
 /* Modules:= side {{{ */
 	.valid-sidebd{
 		display:inline-block;
+		_width:300px;_overflow:hidden;
 		height:28px;
 		vertical-align:middle;
 	}
@@ -126,11 +128,12 @@
 		float:left;
 		height:28px;
 		padding-left:28px;
-		background-image:url(img/side.png);
+		background-image:url(img/side.gif);
 		background-repeat:no-repeat;
 		background-position:0 0;
 	}
 	.valid-sidebd .label{
+		_display:block;
 		display:block;
 		padding:0 5px;
 		height:26px;line-height:26px;

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 10 17:50
+build time: Aug 11 21:21
 */
 /**
  * deletable menuitem
@@ -967,12 +967,13 @@ KISSY.add(
                         return true;
                     }
                     this.clearTimers();
-                    this.showTimer_ = S.later(this.showMenu, this.get("menuDelay"), false, this);
+                    this.showTimer_ = S.later(this.showMenu,
+                        this.get("menuDelay"), false, this);
                 },
 
                 showMenu:function() {
                     var menu = this.get("menu");
-                    menu.set("align", {node:this.get("el"), points:['tr','tl']});
+                    menu.set("align", S.mix({node:this.get("el")}, this.get("menuAlign")));
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -1138,6 +1139,11 @@ KISSY.add(
                      */
                     externalSubMenu:{
                         value:false
+                    },
+                    menuAlign:{
+                        value:{
+                            points:['tr','tl']
+                        }
                     },
                     menu:{
                         setter:function(m) {

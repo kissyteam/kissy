@@ -1,23 +1,23 @@
-/**
+﻿/**
  * 增加常用校验规则
- * @author  常胤 <lzlu.com>
+ * @author: 常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 	
 	//自定义函数
 	Rule.add("func","校验失败。",function(value,text,fun){
 		var result = fun.call(this,value);
-		
+
 		if(result===false){
 			return text;
 		}
-		
+
 		if(!Util.isEmpty(result)){
 			return result;
 		}
 
 	});
-	
+
 	//正则校验
 	Rule.add("regex","校验失败。",function(value,text,reg){
 		if(!new RegExp(reg).test(value)){

@@ -1,6 +1,6 @@
 /**
  * 提示类管理类
- * @author  常胤 <lzlu.com>
+ * @author: 常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
@@ -9,8 +9,6 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
     return{
 
-
-
         /**
          * 扩展你的信息提示类
          * @param name 类名称
@@ -18,8 +16,8 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
          */
         extend : function(name, extfun) {
             var newwarn = function(target, config) {
-                newwarn.superclass.constructor.call(this, target, config);
-            },
+                    newwarn.superclass.constructor.call(this, target, config);
+                },
                 ext = S.isFunction(extfun) ? extfun() : extfun;
 
             //保存样式

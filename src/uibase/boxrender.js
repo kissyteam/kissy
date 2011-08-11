@@ -102,6 +102,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
          * 通过 render 来重建原有的内容
          */
         __createDom:function() {
+
             var self = this,
                 el = self.get("el");
             if (!el) {
@@ -128,6 +129,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         },
 
         _uiSetElStyle:function(style) {
+
             this.get("el").css(style);
         },
 

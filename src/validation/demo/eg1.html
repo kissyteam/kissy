@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
 	<script src="../../../build/kissy.js" charset="utf-8"></script>
 	
-	<link rel="stylesheet" type="text/css"  href="doc.css" /> 
+	<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js" charset="utf-8"></script>
 	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
 <script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
 <link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
@@ -40,26 +40,26 @@
 		
 		<li>
 			<label class="hd">密码：</label>
-			<input class="text" type="text" name="password" id="password" data-valid="{style:'sidebd',length:[6,30,true]}"/>
+			<input class="text" type="text" name="password" id="password" data-valid="{style:'under',length:[6,30,true]}"/>
 		</li>
 
 		<li>
 			<label class="hd">重复密码：</label>
-			<input class="text" type="text" name="password2" id="password2" data-valid="{style:'siderr',equalTo:['#password','两次密码不一致了']}"/>
+			<input class="text" type="text" name="password2" id="password2" data-valid="{style:'under',equalTo:['#password','两次密码不一致了']}"/>
 		</li>
 		
 		<li>
 			<label class="hd">昵称：</label>
-			<input class="text" type="text" name="nickname" id="nickname" data-valid="{style:'text',chinese:'昵称只能是中文'}"/>
+			<input class="text" type="text" name="nickname" id="nickname" data-valid="{style:'under',chinese:'昵称只能是中文'}"/>
 		</li>
 		
 		<li>
 			<label class="hd">个人主页：</label>
-			<input class="text" type="text" name="url" id="url" data-valid="{style:'float',url:'请输入正确的网址'}"/>
+			<input class="text" type="text" name="url" id="url" data-valid="{style:'under',url:'请输入正确的网址'}"/>
 		</li>
 		
 		<li>
-			<button type="submit">提交</button>
+			<button type="button" id="btn">提交</button>
 		</li>
 
 	</ul>
@@ -69,13 +69,12 @@
 	
 		KISSY.use("validation",function(S,Validation){
 
-			var form = new Validation('#J_form_eg1',{
-				required:[false]
+			var form1 = new Validation('#J_form_eg1',{
 			});
 
 
-			KISSY.Event.on('#J_form_eg1',"submit",function(){
-				form.isValid();
+			KISSY.Event.on('#btn',"click",function(){
+				form1.isValid();
 				return false;
 			});
 			

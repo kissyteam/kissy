@@ -49,21 +49,21 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 // Fix "XHTML"-style tags in all browsers
                 html = html.replace(rxhtmlTag, "<$1><" + "/$2>");
 
-                if ((m = RE_TAG.exec(html))
-                    && (k = m[1])
-                    && S.isFunction(creators[(k = k.toLowerCase())])) {
-                    tag = k;
+                if ((m = RE_TAG.exec(html)) && (k = m[1])) {
+                    tag = k.toLowerCase();
                 }
 
-                nodes = creators[tag](html, ownerDoc).childNodes;
+                nodes = (creators[tag] || creators[DIV])(html, ownerDoc).childNodes;
 
                 if (nodes.length === 1) {
                     // return single node, breaking parentNode ref from "fragment"
                     ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
                 }
-                else {
+                else if (nodes.length) {
                     // return multiple nodes as a fragment
                     ret = nl2frag(nodes, ownerDoc || doc);
+                } else {
+                    S.error(html + " : create node error");
                 }
             }
 
@@ -74,7 +74,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             div: function(html, ownerDoc) {
                 var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                 // html 为 <style></style> 时不行，必须有其他元素？
-                frag['innerHTML'] = "w<div>" + html + "<" + "/div>";
+                frag['innerHTML'] = "m<div>" + html + "<" + "/div>";
                 return frag.lastChild;
             }
         },
@@ -289,27 +289,18 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             })(creatorsMap[p]);
         }
 
-        if (ie) {
-            // IE 下不能单独添加 script 元素
-            creators.script = function(html, ownerDoc) {
-                var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
-                frag['innerHTML'] = '-' + html;
-                frag.removeChild(frag.firstChild);
+
+        // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
+        if (ie < 8) {
+            creators.tbody = function(html, ownerDoc) {
+                var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
+                    tbody = frag.children['tags']('tbody')[0];
+
+                if (frag.children.length > 1 && tbody && !RE_TBODY.test(html)) {
+                    tbody[PARENT_NODE].removeChild(tbody); // strip extraneous tbody
+                }
                 return frag;
             };
-
-            // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
-            if (ie < 8) {
-                creators.tbody = function(html, ownerDoc) {
-                    var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
-                        tbody = frag.children['tags']('tbody')[0];
-
-                    if (frag.children.length > 1 && tbody && !RE_TBODY.test(html)) {
-                        tbody[PARENT_NODE].removeChild(tbody); // strip extraneous tbody
-                    }
-                    return frag;
-                };
-            }
         }
 
         S.mix(creators, {

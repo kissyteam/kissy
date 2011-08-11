@@ -1,6 +1,6 @@
 /**
  * Validation默认配置和常量
- * @author  常胤 (lzlu.com)
+ * @author: 常胤 (lzlu.com)
  */
 
 KISSY.add("validation/define",function(){
@@ -40,7 +40,6 @@ KISSY.add("validation/define",function(){
 			ignore: 3
 		}
 	};
-	
 
 	return Define
 	

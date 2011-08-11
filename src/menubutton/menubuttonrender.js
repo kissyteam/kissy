@@ -13,6 +13,10 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     return UIBase.create(Button.Render, {
 
+        renderUI:function(){
+            this.get("el").addClass(this.getCls("menubutton"));
+        },
+
         createDom:function() {
             var innerEl = this.get("innerEl"),
                 html = S.substitute(MENU_BUTTON_TMPL, {

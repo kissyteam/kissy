@@ -316,8 +316,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         * @param {Element} [node] 参照元素, 可取配置选项中的设置, 也可是一元素
-         * @param {String[]} [points] 对齐方式
+         * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
          */
         align: function(node, points, offset, overflow) {
