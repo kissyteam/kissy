@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 16:24
+build time: Aug 12 16:56
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -597,6 +597,9 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
                 checkState = CHECK;
             }
             this.set("checkState", checkState);
+            tree.fire("click", {
+                target:this
+            });
         },
 
         _uiSetCheckState:function(s) {

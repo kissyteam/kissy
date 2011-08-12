@@ -44,6 +44,9 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
                 checkState = CHECK;
             }
             this.set("checkState", checkState);
+            tree.fire("click", {
+                target:this
+            });
         },
 
         _uiSetCheckState:function(s) {
