@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 12 16:24
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -558,7 +558,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
-        CHECK_CLS = "tree-item-checked",
+        CHECK_CLS = "tree-item-check",
         CHECK = 1,
         EMPTY = 0;
 
@@ -665,7 +665,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
 });KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",
-        CHECK_CLS = "tree-item-checked",
+        CHECK_CLS = "tree-item-check",
         ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
         INLINE_BLOCK = "inline-block";
     return UIBase.create(BaseNodeRender, {
@@ -684,7 +684,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         _uiSetCheckState:function(s) {
             var checkEl = this.get("checkEl");
             checkEl.removeClass(this.getCls(ALL_STATES_CLS))
-                .addClass(this.getCls(CHECK_CLS + s));
+                .addClass(this.getCls(CHECK_CLS + "ed" + s));
         }
 
     }, {
@@ -702,14 +702,14 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
-    var CHECKED_TREE_CLS = CheckTreeRender.CHECKED_TREE_CLS;
+    var CHECK_TREE_CLS = CheckTreeRender.CHECK_TREE_CLS;
     /*多继承*/
     var CheckTree = UIBase.create(CheckNode, [TreeMgr,Component.DelegateChildren], {
     }, {
         DefaultRender:CheckTreeRender
     });
 
-    Component.UIStore.setUIByClass(CHECKED_TREE_CLS, {
+    Component.UIStore.setUIByClass(CHECK_TREE_CLS, {
         priority:Component.UIStore.PRIORITY.LEVEL4,
         ui:CheckTree
     });
@@ -723,13 +723,13 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {
-    var CHECKED_TREE_CLS="tree-root-checked";
+    var CHECK_TREE_CLS="tree-root-check";
     return UIBase.create(CheckNodeRender, [TreeMgrRender],{
         renderUI:function(){
-            this.get("el").addClass(this.getCls(CHECKED_TREE_CLS));
+            this.get("el").addClass(this.getCls(CHECK_TREE_CLS));
         }
     },{
-        CHECKED_TREE_CLS:CHECKED_TREE_CLS
+        CHECK_TREE_CLS:CHECK_TREE_CLS
     });
 }, {
     requires:['uibase','component','./checknoderender','./treemgrrender']

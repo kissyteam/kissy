@@ -5,7 +5,7 @@
 KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
-        CHECK_CLS = "tree-item-checked",
+        CHECK_CLS = "tree-item-check",
         CHECK = 1,
         EMPTY = 0;
 
