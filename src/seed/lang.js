@@ -221,25 +221,27 @@
          * @param context {Object} (opt)
          */
         each: function(object, fn, context) {
-            var key,
-                val,
-                i = 0,
-                length = object && object.length,
-                isObj = length === undefined || S.type(object) === 'function';
-            context = context || host;
+            if (object) {
+                var key,
+                    val,
+                    i = 0,
+                    length = object && object.length,
+                    isObj = length === undefined || S.type(object) === 'function';
 
-            if (isObj) {
-                for (key in object) {
-                    if (fn.call(context, object[key], key, object) === false) {
-                        break;
+                context = context || host;
+
+                if (isObj) {
+                    for (key in object) {
+                        if (fn.call(context, object[key], key, object) === false) {
+                            break;
+                        }
+                    }
+                } else {
+                    for (val = object[0];
+                         i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
                     }
                 }
-            } else {
-                for (val = object[0];
-                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
-                }
             }
-
             return object;
         },
 

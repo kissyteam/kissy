@@ -74,13 +74,22 @@
         removePostfix:function (path) {
             return path.replace(/(-min)?\.js[^/]*$/i, "");
         },
-        //路径正则化，不能是相对地址
-        //相对地址则转换成相对页面的绝对地址
+        /**
+         * 路径正则化，不能是相对地址
+         * 相对地址则转换成相对页面的绝对地址
+         * 用途:
+         * 1. package path 相对地址则相对于当前页面获取绝对地址
+         * 2. kissy.js 相对引用如何获取.
+         */
         normalBasePath:function (path) {
             if (path.charAt(path.length - 1) != '/') {
                 path += "/";
             }
             path = S.trim(path);
+            /**
+             * 一定要正则化，防止出现 ../ 等相对路径
+             * 考虑本地路径
+             */
             if (!path.match(/^(http(s)?)|(file):/i)
                 && !startsWith(path, "/")) {
                 path = loader.__pagePath + path;

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:57
+build time: Aug 12 14:49
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 11 21:57
              */
             version: '1.20dev',
 
-            buildTime:'20110811215707',
+            buildTime:'20110812144902',
 
             /**
              * Returns a new object containing all of the properties of
@@ -534,25 +534,27 @@ build time: Aug 11 21:57
          * @param context {Object} (opt)
          */
         each: function(object, fn, context) {
-            var key,
-                val,
-                i = 0,
-                length = object && object.length,
-                isObj = length === undefined || S.type(object) === 'function';
-            context = context || host;
+            if (object) {
+                var key,
+                    val,
+                    i = 0,
+                    length = object && object.length,
+                    isObj = length === undefined || S.type(object) === 'function';
 
-            if (isObj) {
-                for (key in object) {
-                    if (fn.call(context, object[key], key, object) === false) {
-                        break;
+                context = context || host;
+
+                if (isObj) {
+                    for (key in object) {
+                        if (fn.call(context, object[key], key, object) === false) {
+                            break;
+                        }
+                    }
+                } else {
+                    for (val = object[0];
+                         i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
                     }
                 }
-            } else {
-                for (val = object[0];
-                     i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
-                }
             }
-
             return object;
         },
 
@@ -1172,13 +1174,22 @@ build time: Aug 11 21:57
         removePostfix:function (path) {
             return path.replace(/(-min)?\.js[^/]*$/i, "");
         },
-        //路径正则化，不能是相对地址
-        //相对地址则转换成相对页面的绝对地址
+        /**
+         * 路径正则化，不能是相对地址
+         * 相对地址则转换成相对页面的绝对地址
+         * 用途:
+         * 1. package path 相对地址则相对于当前页面获取绝对地址
+         * 2. kissy.js 相对引用如何获取.
+         */
         normalBasePath:function (path) {
             if (path.charAt(path.length - 1) != '/') {
                 path += "/";
             }
             path = S.trim(path);
+            /**
+             * 一定要正则化，防止出现 ../ 等相对路径
+             * 考虑本地路径
+             */
             if (!path.match(/^(http(s)?)|(file):/i)
                 && !startsWith(path, "/")) {
                 path = loader.__pagePath + path;
@@ -1843,8 +1854,8 @@ build time: Aug 11 21:57
  * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
  * @description: constant member and common method holder
  */
-(function(S, loader,data) {
-    if("require" in this) {
+(function(S, loader, data) {
+    if ("require" in this) {
         return;
     }
     var win = S.__HOST,
@@ -1855,11 +1866,11 @@ build time: Aug 11 21:57
 
     mix(loader, {
 
-        //当前页面所在的目录
-        // http://xx.com/y/z.htm
+        // 当前页面所在的目录
+        // http://xx.com/y/z.htm#!/f/g
         // ->
         // http://xx.com/y/
-        __pagePath:location.href.replace(/[^/]*$/i, ""),
+        __pagePath:location.href.replace(location.hash, "").replace(/[^/]*$/i, ""),
 
         //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
         __currentModule:null,
@@ -1885,7 +1896,7 @@ build time: Aug 11 21:57
     });
 
 
-})(KISSY, KISSY.__loader,KISSY.__loaderData);
+})(KISSY, KISSY.__loader, KISSY.__loaderData);
 
 /**
  * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
@@ -2290,10 +2301,9 @@ build time: Aug 11 21:57
      * @notice: custom combo rules, such as yui3:
      *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      */
-    // notice: timestamp
+        // notice: timestamp
     var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
-        pagePath = S.__pagePath;
+        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i;
 
     function getBaseUrl(script) {
         var src = script.src,
@@ -2324,14 +2334,6 @@ build time: Aug 11 21:57
                     }
                 });
             }
-        }
-        /**
-         * 一定要正则化，防止出现 ../ 等相对路径
-         * 考虑本地路径
-         */
-        if (!base.match(/^(http(s)?)|(file):/i)
-            && !S.startsWith(base, "/")) {
-            base = pagePath + base;
         }
         return base;
     }

@@ -3,8 +3,8 @@
  * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
  * @description: constant member and common method holder
  */
-(function(S, loader,data) {
-    if("require" in this) {
+(function(S, loader, data) {
+    if ("require" in this) {
         return;
     }
     var win = S.__HOST,
@@ -15,11 +15,11 @@
 
     mix(loader, {
 
-        //当前页面所在的目录
-        // http://xx.com/y/z.htm
+        // 当前页面所在的目录
+        // http://xx.com/y/z.htm#!/f/g
         // ->
         // http://xx.com/y/
-        __pagePath:location.href.replace(/[^/]*$/i, ""),
+        __pagePath:location.href.replace(location.hash, "").replace(/[^/]*$/i, ""),
 
         //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
         __currentModule:null,
@@ -45,7 +45,7 @@
     });
 
 
-})(KISSY, KISSY.__loader,KISSY.__loaderData);
+})(KISSY, KISSY.__loader, KISSY.__loaderData);
 
 /**
  * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:

@@ -20,10 +20,9 @@
      * @notice: custom combo rules, such as yui3:
      *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
      */
-    // notice: timestamp
+        // notice: timestamp
     var baseReg = /^(.*)(seed|kissy)(-aio)?(-min)?\.js[^/]*/i,
-        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i,
-        pagePath = S.__pagePath;
+        baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i;
 
     function getBaseUrl(script) {
         var src = script.src,
@@ -54,14 +53,6 @@
                     }
                 });
             }
-        }
-        /**
-         * 一定要正则化，防止出现 ../ 等相对路径
-         * 考虑本地路径
-         */
-        if (!base.match(/^(http(s)?)|(file):/i)
-            && !S.startsWith(base, "/")) {
-            base = pagePath + base;
         }
         return base;
     }
