@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 14:49
+build time: Aug 12 19:59
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 12 14:49
              */
             version: '1.20dev',
 
-            buildTime:'20110812144902',
+            buildTime:'20110812195912',
 
             /**
              * Returns a new object containing all of the properties of
@@ -11099,7 +11099,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 12 19:58
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12524,7 +12524,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * 数据延迟加载组件
@@ -13027,7 +13027,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 12 19:58
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13265,7 +13265,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * @module   Flash 全局静态类
@@ -13776,7 +13776,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -15019,7 +15019,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * resizable support for kissy
@@ -15193,7 +15193,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 12 19:59
 */
 /**
  * UIBase.Align
@@ -17253,7 +17253,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:57
+build time: Aug 12 19:58
 */
 /**
  * container can delegate event for its children
@@ -18040,7 +18040,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 12 19:58
 */
 /**
  * Switchable
@@ -20640,7 +20640,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * KISSY Overlay
@@ -21115,7 +21115,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 12 19:58
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22296,7 +22296,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * @fileoverview 图像放大区域
@@ -22921,7 +22921,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * KISSY Calendar
@@ -24200,7 +24200,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:31
+build time: Aug 12 19:58
 */
 /**
  * deletable menuitem
@@ -25431,7 +25431,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:57
 */
 /**
  * Model and Control for button
@@ -25689,7 +25689,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 19:58
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25932,7 +25932,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             DefaultRender:MenuButtonRender
         });
 
-    Component.UIStore.setUIByClass("menubutton", {
+    Component.UIStore.setUIByClass("menu-button", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:MenuButton
     });
@@ -25956,7 +25956,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
     return UIBase.create(Button.Render, {
 
         renderUI:function(){
-            this.get("el").addClass(this.getCls("menubutton"));
+            this.get("el").addClass(this.getCls("menu-button"));
         },
 
         createDom:function() {
@@ -26208,7 +26208,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:22
+build time: Aug 12 19:59
 */
 ﻿/**
  * @author: 常胤 (lzlu.com)
@@ -27504,82 +27504,6 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
     return BaseClass;
 
 }, { requires: ['dom',"event"]});/**
- * 扩展提示类：fixed
- * @author  常胤 <lzlu.com>
- */
-KISSY.add("validation/warn/fixed", function(S, DOM, Event, Util, Define) {
-    var symbol = Define.Const.enumvalidsign;
-
-    function Fixed() {
-        return {
-            init: function() {
-                var self = this, tg = self.target,
-                    panel,label,estate;
-
-                panel = DOM.attr(tg, "data=for");
-                estate = DOM.get('.estate', panel);
-                label = DOM.get('.label', panel);
-
-                S.mix(self, {
-                        panel: panel,
-                        estate: estate,
-                        label: label
-                    });
-
-                self._bindEvent(self.el, self.event, function(ev) {
-                    var result = self.fire("valid", {event:ev.type});
-                    if (S.isArray(result) && result.length == 2) {
-                        self.showMessage(result[1], result[0], ev.type);
-                    }
-                })
-            },
-
-            showMessage: function(result, msg) {
-                var self = this,
-                    panel = self.panel, estate = self.estate, label = self.label;
-
-                if (self.invalidClass) {
-                    if (result == symbol.ignore && result == symbol.ok) {
-                        DOM.removeClass(self.el, self.invalidClass);
-                    } else {
-                        DOM.addClass(self.el, self.invalidClass);
-                    }
-                }
-
-                if (result == symbol.ignore) {
-                    DOM.hide(panel);
-                } else {
-                    var est = "error";
-                    if (result == symbol.error) {
-                        est = "error";
-                    } else if (result == symbol.ok) {
-                        est = "ok";
-                    } else if (result == symbol.hint) {
-                        est = "tip";
-                    }
-                    DOM.removeClass(estate, "ok tip error");
-                    DOM.addClass(estate, est);
-                    DOM.html(label, msg);
-                    DOM.show(panel);
-                }
-            },
-
-            style: {
-                text1: {
-                    template: '<label class="valid-text"><span class="estate"><em class="label"></em></span></label>',
-                    event: 'focus blur keyup'
-                }
-            }
-
-
-        };
-    }
-
-    return Fixed;
-
-}, { requires: ['dom',"event","../utils","../define"] });
-
-/**
  * 扩展提示类：float
  * @author: 常胤 <lzlu.com>
  */
