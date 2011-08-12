@@ -239,7 +239,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             DefaultRender:MenuButtonRender
         });
 
-    Component.UIStore.setUIByClass("menubutton", {
+    Component.UIStore.setUIByClass("menu-button", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:MenuButton
     });

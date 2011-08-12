@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 11 21:21
+build time: Aug 12 14:52
 */
 /**
  * combination of menu and button ,similar to native select
@@ -244,7 +244,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
             DefaultRender:MenuButtonRender
         });
 
-    Component.UIStore.setUIByClass("menubutton", {
+    Component.UIStore.setUIByClass("menu-button", {
         priority:Component.UIStore.PRIORITY.LEVEL2,
         ui:MenuButton
     });
@@ -268,7 +268,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
     return UIBase.create(Button.Render, {
 
         renderUI:function(){
-            this.get("el").addClass(this.getCls("menubutton"));
+            this.get("el").addClass(this.getCls("menu-button"));
         },
 
         createDom:function() {

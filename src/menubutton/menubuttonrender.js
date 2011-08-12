@@ -14,7 +14,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
     return UIBase.create(Button.Render, {
 
         renderUI:function(){
-            this.get("el").addClass(this.getCls("menubutton"));
+            this.get("el").addClass(this.getCls("menu-button"));
         },
 
         createDom:function() {
