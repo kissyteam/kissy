@@ -1,3 +1,7 @@
+/**
+ * effect applied when overlay shows or hides
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("overlay/effect", function(S) {
     var NONE = 'none',DURATION = 0.5;
     var effects = {fade:["Out","In"],slide:["Up","Down"]};

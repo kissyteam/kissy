@@ -2,7 +2,7 @@
  * KISSY.Popup
  * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
-KISSY.add('overlay/popup', function(S, Overlay, undefined) {
+KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
     var POPUP_DELAY = 100;
 
@@ -129,9 +129,14 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
     });
 
 
+    Component.UIStore.setUIByClass("popup", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Popup
+    });
+
     return Popup;
 }, {
-    requires:[ "./overlay"]
+    requires:[ "component","./overlay"]
 });
 
 /**

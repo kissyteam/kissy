@@ -1,11 +1,11 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 13 22:54
 */
 /**
  * KISSY Overlay
- * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -20,11 +20,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         UA['ie'] === 6 ? require("shimrender") : null,
         require("closerender"),
         require("maskrender")
-    ], {
-        renderUI:function() {
-            this.get("el").addClass(this.get("prefixCls") + "overlay");
-        }
-    });
+    ]);
 }, {
     requires: ["ua","uibase","component"]
 });
@@ -171,7 +167,11 @@ KISSY.add("overlay/aria", function(S,Event) {
     return Aria;
 },{
     requires:['event']
-});KISSY.add("overlay/effect", function(S) {
+});/**
+ * effect applied when overlay shows or hides
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/effect", function(S) {
     var NONE = 'none',DURATION = 0.5;
     var effects = {fade:["Out","In"],slide:["Up","Down"]};
 
@@ -264,10 +264,20 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
 
     Overlay.DefaultRender = OverlayRender;
 
+
+    Component.UIStore.setUIByClass("overlay", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Overlay
+    });
+
     return Overlay;
 }, {
     requires:['uibase','component','./overlayrender','./effect']
-});KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
+});/**
+ * render for dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -282,7 +292,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
  * KISSY.Dialog
  * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -296,7 +306,6 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
     ], {
         renderUI:function() {
             var self = this;
-            self.get("el").addClass(this.get("prefixCls") + "dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
         }
@@ -310,10 +319,15 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
 
     Dialog.DefaultRender = DialogRender;
 
+    Component.UIStore.setUIByClass("dialog", {
+        priority:Component.UIStore.PRIORITY.LEVEL2,
+        ui:Dialog
+    });
+
     return Dialog;
 
 }, {
-    requires:[ "overlay/overlay","uibase",'overlay/dialogrender','./aria']
+    requires:[ "component","overlay/overlay","uibase",'overlay/dialogrender','./aria']
 });
 
 /**
@@ -326,7 +340,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
  * KISSY.Popup
  * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
-KISSY.add('overlay/popup', function(S, Overlay, undefined) {
+KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
     var POPUP_DELAY = 100;
 
@@ -453,9 +467,14 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
     });
 
 
+    Component.UIStore.setUIByClass("popup", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Popup
+    });
+
     return Popup;
 }, {
-    requires:[ "./overlay"]
+    requires:[ "component","./overlay"]
 });
 
 /**

@@ -41,6 +41,12 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
 
     Overlay.DefaultRender = OverlayRender;
 
+
+    Component.UIStore.setUIByClass("overlay", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Overlay
+    });
+
     return Overlay;
 }, {
     requires:['uibase','component','./overlayrender','./effect']

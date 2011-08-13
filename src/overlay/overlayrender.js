@@ -1,6 +1,6 @@
 /**
  * KISSY Overlay
- * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -15,11 +15,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         UA['ie'] === 6 ? require("shimrender") : null,
         require("closerender"),
         require("maskrender")
-    ], {
-        renderUI:function() {
-            this.get("el").addClass(this.get("prefixCls") + "overlay");
-        }
-    });
+    ]);
 }, {
     requires: ["ua","uibase","component"]
 });

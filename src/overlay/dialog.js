@@ -2,7 +2,7 @@
  * KISSY.Dialog
  * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -16,7 +16,6 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
     ], {
         renderUI:function() {
             var self = this;
-            self.get("el").addClass(this.get("prefixCls") + "dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
         }
@@ -30,10 +29,15 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
 
     Dialog.DefaultRender = DialogRender;
 
+    Component.UIStore.setUIByClass("dialog", {
+        priority:Component.UIStore.PRIORITY.LEVEL2,
+        ui:Dialog
+    });
+
     return Dialog;
 
 }, {
-    requires:[ "overlay/overlay","uibase",'overlay/dialogrender','./aria']
+    requires:[ "component","overlay/overlay","uibase",'overlay/dialogrender','./aria']
 });
 
 /**
