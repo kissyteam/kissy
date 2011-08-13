@@ -39,6 +39,8 @@
     <li>输入字后，再输入 ，或, 根据当前高亮项进行自动补全</li>
 </ol>
 
+
+<h2>自定义过滤策略（拼音支持）</h2>
 <div id="container">
 
 </div>
@@ -65,12 +67,29 @@
     KISSY.ready(function(S) {
         S.use("menu", function(S, Menu) {
             if (true)(function() {
-                var m1 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女鞋"});
-                var m4 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"女装女服"});
-                var m2 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"家居服务",
-                    elCls:"hasChildren"});
-                var m3 = new Menu.Item({ prefixCls:"goog-",  selectable:true,content:"手机",
-                    elCls:"hasChildren"});
+                var m1 = new Menu.Item({ prefixCls:"goog-",
+                    selectable:true,
+                    content:"女鞋",
+                    pinyin:"nx"
+                });
+                var m4 = new Menu.Item({
+                    prefixCls:"goog-",
+                    selectable:true,
+                    content:"女装女服",
+                    pinyin:"nznf"
+                });
+                var m2 = new Menu.Item({
+                    prefixCls:"goog-",
+                    selectable:true,content:"家居服务",
+                    elCls:"hasChildren",
+                    pinyin:"jjfw"
+                });
+                var m3 = new Menu.Item({
+                    prefixCls:"goog-",
+                    selectable:true,content:"手机",
+                    elCls:"hasChildren",
+                    pinyin:"sj"
+                });
                 var filterMenu = new Menu.FilterMenu({
                     render:"#container",
                     width:200,
@@ -84,6 +103,56 @@
                 filterMenu.addChild(m4);
                 filterMenu.render();
                 var selected = null;
+
+                var origFilterItems = filterMenu.filterItems;
+
+                /**
+                 * 自定义过滤策略，不自定义则是简单的内容 indexOf 查找
+                 * @param str
+                 */
+                filterMenu.filterItems = function(str) {
+                    var self = this,
+                            view = self.get("view"),
+                            _labelEl = view.get("labelEl"),
+                            filterInput = view.get("filterInput");
+
+                    // 有过滤条件提示隐藏，否则提示显示
+                    _labelEl[str ? "hide" : "show"]();
+
+                    var children = self.get("children");
+
+                    // 拼音
+                    if (/^[a-z\s]+$/i.test(str)) {
+
+                        // 过滤所有子组件
+                        S.each(children, function(c) {
+                            var pinyin = c.get("pinyin"),
+                                    content = c.get("content");
+
+                            var index;
+                            if ((index = pinyin.indexOf(str)) > -1) {
+                                // 如果符合过滤项
+                                // 显示
+                                c.show();
+                                content = content.substring(0, index) +
+
+                                        "<span class='" + "goog-menuitem-hit" + "'>" +
+                                        content.substring(index, index + str.length)
+                                        + "<" + "/span>"
+                                        + content.substring(index + str.length, content.length);
+
+                                // 匹配子串着重 wrap
+                                c.get("contentEl").html(content);
+                            } else {
+                                c.hide();
+                            }
+                        });
+
+                    } else {
+                        origFilterItems.call(this, str);
+                    }
+                };
+
                 filterMenu.on("click", function(e) {
                     if (selected != e.target) {
                         selected && selected.set("selected", false);

@@ -21,6 +21,11 @@
         padding: 5px;
         border: 1px solid white;
     }
+
+    .c2c-menuitem-delete{
+        padding-left: 20px;
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
@@ -99,6 +104,12 @@
 
 </div>
 
+<h2>可删除的下拉菜单</h2>
+
+<div id="selectDel">
+
+</div>
+
 
 <script src="../../../build/kissy.js"></script>
 <script>
@@ -115,21 +126,12 @@
         for (var i = 0; i < 20; i++) {
             s.append("<option value='" + i + "'>项目" + i + "</option>")
         }
-        KISSY.use("menubutton", function(S, MenuButton) {
+        KISSY.use("menubutton,menu", function(S, MenuButton, Menu) {
             var select = MenuButton.Select.decorate('#decorateSelect', {
                 prefixCls:"c2c-",
                 elCls:"custom-xx",
-                // 没法搞，通过 elCls 自己指定吧
-                // width
                 menuAlign:{
-                    points:["bl","tl"],
-                    offset:[0,-1],
-                    overflow:{
-                        failX:1,
-                        failY:1,
-                        adjustX:1,
-                        adjustY:1
-                    }
+                    offset:[0,-1]
                 },
                 menuCfg:{
                     width:82,
@@ -160,6 +162,42 @@
                 select.removeItems(true);
                 S.log(select.get("value"));
             });
+
+
+            var delSelect = new MenuButton.Select({
+                render:"#selectDel",
+                prefixCls:"c2c-",
+                menuAlign:{
+                    offset:[0,-1]
+                },
+                menuCfg:{
+                    width:150
+                },
+                defaultCaption:"常用项"
+            });
+
+            delSelect.addItem(new Menu.DelMenuItem({
+                content:"可以删除我",
+                prefixCls:"c2c-",
+                value:1
+            }));
+
+
+            delSelect.addItem(new Menu.DelMenuItem({
+                content:"可以删除你",
+                prefixCls:"c2c-",
+                value:2
+            }));
+
+            delSelect.get("menu").on("delete", function(e) {
+                S.log(e.target.get("content") + ":" + e.target.get("value") + "  " + "deleted");
+                if (!delSelect.get("menu").get("children").length) {
+                    delSelect.set("selectedItem", null);
+                }
+            });
+
+            delSelect.render();
+
         });
     });
 </script>

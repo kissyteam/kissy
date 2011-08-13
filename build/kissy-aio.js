@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:44
+build time: Aug 13 22:29
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 13 21:44
              */
             version: '1.20dev',
 
-            buildTime:'20110813214400',
+            buildTime:'20110813222909',
 
             /**
              * Returns a new object containing all of the properties of
@@ -25715,7 +25715,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 13 22:29
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25724,6 +25724,15 @@ build time: Aug 13 21:43
 KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonRender, Menu, Component) {
     var $ = Node.all,
         KeyCodes = Node.KeyCodes,
+        ALIGN = {
+            points:["bl","tl"],
+            overflow:{
+                failX:1,
+                failY:1,
+                adjustX:1,
+                adjustY:1
+            }
+        },
         MenuButton = UIBase.create(Button, [Component.DecorateChild], {
 
             /**
@@ -25744,9 +25753,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                     el = self.get("el"),
                     menu = self.get("menu");
                 if (!menu.get("visible")) {
-                    menu.set("align", S.mix({
+                    menu.set("align", S.merge({
                         node:el
-                    }, self.get("menuAlign")));
+                    }, ALIGN, self.get("menuAlign")));
                     menu.show();
                     el.attr("aria-haspopup", menu.get("el").attr("id"));
                 }
@@ -25929,15 +25938,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                     view:true
                 },
                 menuAlign:{
-                    value:{
-                        points:["bl","tl"],
-                        overflow:{
-                            failX:1,
-                            failY:1,
-                            adjustX:1,
-                            adjustY:1
-                        }
-                    }
+                    value:{}
                 },
                 menuCfg:{},
                 decorateChildCls:{
