@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:59
+build time: Aug 13 21:44
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 12 19:59
              */
             version: '1.20dev',
 
-            buildTime:'20110812195912',
+            buildTime:'20110813214400',
 
             /**
              * Returns a new object containing all of the properties of
@@ -11099,7 +11099,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12524,7 +12524,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * 数据延迟加载组件
@@ -13027,7 +13027,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13265,7 +13265,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * @module   Flash 全局静态类
@@ -13776,7 +13776,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -15019,7 +15019,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * resizable support for kissy
@@ -15193,7 +15193,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:59
+build time: Aug 13 21:43
 */
 /**
  * UIBase.Align
@@ -17253,7 +17253,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:42
 */
 /**
  * container can delegate event for its children
@@ -17427,492 +17427,531 @@ KISSY.add("component/delegatechildren", function(S) {
  */
 KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) {
 
-    function wrapperViewSetter(attrName) {
-        return function(ev) {
-            var value = ev.newVal;
-            this.get("view") && this.get("view").set(attrName, value);
-        };
-    }
-
-    function wrapperViewGetter(attrName) {
-        return function(v) {
-            return v === undefined ? this.get("view") && this.get("view").get(attrName) : v;
-        };
-    }
-
-
-    /**
-     * 不使用 valueFn
-     * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
-     */
-    function getDefaultView() {
-        // 逐层找默认渲染器
-        var self = this,
-            c = self.constructor,
-            DefaultRender;
-
-        while (c && !DefaultRender) {
-            DefaultRender = c['DefaultRender'];
-            c = c.superclass && c.superclass.constructor;
+        function wrapperViewSetter(attrName) {
+            return function(ev) {
+                var value = ev.newVal,self = this;
+                self.get("view") && self.get("view").set(attrName, value);
+            };
         }
-        if (DefaultRender) {
-            /**
-             * 将渲染层初始化所需要的属性，直接构造器设置过去
-             */
-            var attrs = self.__attrs,
-                // attrVals = self.__attrVals,
-                cfg = {};
-            for (var attrName in attrs) {
-                if (attrs.hasOwnProperty(attrName)) {
-                    var attrCfg = attrs[attrName],v;
-                    if (attrCfg.view) {
-                        // 只设置用户设置的值
-                        // 考虑 c 上的默认值
-                        if (
-                        // (v = attrVals[attrName])
-                            ( v = self.get(attrName) )
-                                !== undefined) {
-                            cfg[attrName] = v;
-                        }
-                    }
-                }
+
+        function wrapperViewGetter(attrName) {
+            return function(v) {
+                var self = this;
+                return v === undefined ?
+                    self.get("view") && self.get("view").get(attrName) :
+                    v;
+            };
+        }
+
+
+        function initChild(self, c, elBefore) {
+            // If this (parent) component doesn't have a DOM yet, call createDom now
+            // to make sure we render the child component's element into the correct
+            // parent element (otherwise render_ with a null first argument would
+            // render the child into the document body, which is almost certainly not
+            // what we want).
+            self.create();
+            var contentEl = self.getContentElement();
+            c.set("parent", self);
+            c.set("render", contentEl);
+            c.set("elBefore", elBefore);
+            // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
+            if (self.get("rendered")) {
+                c.render();
             }
-            return new DefaultRender(cfg);
+            // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
+            // 子组件和 parent 组件一起渲染
+            else {
+// 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
+                c.create();
+                contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0] || null);
+
+            }
         }
-        return 0;
-    }
 
-    function capitalFirst(s) {
-        s += '';
-        return s.charAt(0).toUpperCase() + s.substring(1);
-    }
+        /**
+         * 不使用 valueFn
+         * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
+         */
+        function getDefaultView() {
+            // 逐层找默认渲染器
+            var self = this,
+                c = self.constructor,
+                DefaultRender;
 
-    /**
-     * model and control for component
-     * @name ModelControl
-     * @constructor
-     */
-    return UIBase.create([UIBase.Box], {
-
-            getCls:UIStore.getCls,
-
-            initializer:function() {
+            while (c && !DefaultRender) {
+                DefaultRender = c['DefaultRender'];
+                c = c.superclass && c.superclass.constructor;
+            }
+            if (DefaultRender) {
                 /**
-                 * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
+                 * 将渲染层初始化所需要的属性，直接构造器设置过去
                  */
-                var self = this,
-                    attrs = self.__attrs;
+                var attrs = self.__attrs,
+                    cfg = {};
                 for (var attrName in attrs) {
                     if (attrs.hasOwnProperty(attrName)) {
-                        var attrCfg = attrs[attrName];
+                        var attrCfg = attrs[attrName],v;
                         if (attrCfg.view) {
-                            // setter 不应该有实际操作，仅用于正规化比较好
-                            // attrCfg.setter = wrapperViewSetter(attrName);
-                            self.on("after" + capitalFirst(attrName) + "Change",
-                                wrapperViewSetter(attrName));
-                            // 逻辑层读值直接从 view 层读
-                            // 那么如果存在默认值也设置在 view 层
-                            attrCfg.getter = wrapperViewGetter(attrName);
+                            // 只设置用户设置的值
+                            // 考虑 c 上的默认值
+                            if (( v = self.get(attrName) ) !== undefined) {
+                                cfg[attrName] = v;
+                            }
                         }
                     }
                 }
-
-            },
-
-            /**
-             * control 层的渲染 ui 就是 render view
-             */
-            renderUI:function() {
-                var self = this;
-                self.get("view").render();
-                //then render my children
-                var children = self.get("children");
-                S.each(children, function(child) {
-                    // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
-                    self._initChild(child);
-                    child.render();
-                });
-            },
-
-            /**
-             * 控制层的 createDom 实际上就是调用 view 层的 create 来创建真正的节点
-             */
-            createDom:function() {
-                var self = this;
-                var view = self.get("view") || getDefaultView.call(self);
-                if (!view) {
-                    S.error("no view for");
-                    S.error(self.constructor);
-                    return;
-                }
-                view.create();
-                if (!self.get("allowTextSelection_")) {
-                    view.get("el").unselectable();
-                }
-                self.set("view", view);
-            },
-
-            /**
-             * Returns the DOM element into which child components are to be rendered,
-             or null if the container itself hasn't been rendered yet.  Overrides
-             */
-            getContentElement:function() {
-                var view = this.get('view');
-                return view && view.getContentElement();
-            },
-
-
-
-            _initChild:function(c, elBefore) {
-                var self = this;
-                // If this (parent) component doesn't have a DOM yet, call createDom now
-                // to make sure we render the child component's element into the correct
-                // parent element (otherwise render_ with a null first argument would
-                // render the child into the document body, which is almost certainly not
-                // what we want).
-                self.create();
-                var contentEl = self.getContentElement();
-                c.set("parent", self);
-                c.set("render", contentEl);
-                c.set("elBefore", elBefore);
-                // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
-                if (this.get("rendered")) {
-                    c.render();
-                }
-                // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
-                // 子组件和 parent 组件一起渲染
-                else {
-                    // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-                    c.create();
-                    contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0] || null);
-
-                }
-            },
-
-            /**
-             *
-             * @param c  children to be added
-             * @param {int=} index  position to be inserted
-             */
-            addChild:function(c, index) {
-                var self = this,
-                    children = self.get("children"),
-                    elBefore = children[index];
-                if (index) {
-                    children.splice(index, 0, c);
-                } else {
-                    children.push(c);
-                }
-                self._initChild(c, elBefore);
-            },
-
-            removeChild:function(c, destroy) {
-                var children = this.get("children"),
-                    index = S.indexOf(c, children);
-                if (index != -1) {
-                    children.splice(index, 1);
-                }
-                if (destroy) {
-                    c.destroy();
-                }
-            },
-
-            removeChildren:function(destroy) {
-                var t = [];
-                S.each(this.get("children"), function(c) {
-                    t.push(c);
-                });
-                var self = this;
-                S.each(t, function(c) {
-                    self.removeChild(c, destroy);
-                });
-                this.set("children", []);
-            },
-
-            getChildAt:function(index) {
-                var children = this.get("children");
-                return children[index];
-            },
-
-            _uiSetHandleMouseEvents:function(v) {
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (v) {
-                    el.on("mouseenter", self._handleMouseEnter, self);
-                    el.on("mouseleave", self._handleMouseLeave, self);
-                    el.on("mousedown", self._handleMouseDown, self);
-                    el.on("mouseup", self._handleMouseUp, self);
-                    el.on("dblclick", self._handleDblClick, self);
-                } else {
-                    el.detach("mouseenter", self._handleMouseEnter, self);
-                    el.detach("mouseleave", self._handleMouseLeave, self);
-                    el.detach("mousedown", self._handleMouseDown, self);
-                    el.detach("mouseup", self._handleMouseUp, self);
-                    el.detach("dblclick", self._handleDblClick, self);
-                }
-            },
-
-            _handleDblClick:function(e) {
-                if (!this.get("disabled")) {
-                    this._performInternal(e);
-                }
-            },
-            isMouseEventWithinElement_:function(e, elem) {
-                var relatedTarget = e.relatedTarget;
-                relatedTarget = relatedTarget && S.one(relatedTarget)[0];
-                if (!relatedTarget) {
-                    return false;
-                }
-                // 在里面或等于自身都不算 mouseenter/leave
-                if (relatedTarget === elem[0] || elem.contains(relatedTarget)) {
-                    return true;
-                }
-            },
-            _handleMouseOver:function(e) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (!self.isMouseEventWithinElement_(e, el)) {
-                    self._handleMouseEnter(e);
-                }
-            },
-
-
-            _handleMouseOut:function(e) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                var self = this,
-                    view = self.get("view"),
-                    el = view.get("el");
-                if (!self.isMouseEventWithinElement_(e, el)) {
-                    self._handleMouseLeave(e);
-                }
-            },
-
-            /**
-             * root element handler for mouse enter
-             */
-            _handleMouseEnter:function() {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this.set("highlighted", true);
-            },
-            /**
-             * root element handler for mouse leave
-             */
-            _handleMouseLeave:function() {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                this.set("active", false);
-                this.set("highlighted", false);
-            },
-            /**
-             * root element handler for mouse down
-             * @param ev
-             */
-            _handleMouseDown:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                if (ev.which == 1 && this.get("activeable")) {
-                    this.set("active", true);
-                }
-                var el = this.getKeyEventTarget();
-                // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
-                if (ev.which == 1 && el.attr("tabindex") >= 0) {
-                    this.getKeyEventTarget()[0].focus();
-                }
-                // Cancel the default action unless the control
-                // allows text selection.
-                if (ev.which == 1 && !this.get("allowTextSelection_")) {
-                    // firefox 不会引起焦点转移
-                    ev.preventDefault();
-                }
-            },
-            /**
-             * whether component can receive focus
-             */
-            _uiSetFocusable:function(v) {
-                var self = this,
-                    el = self.getKeyEventTarget();
-                if (v) {
-                    el.on("focus", self._handleFocus, self);
-                    el.on("blur", self._handleBlur, self);
-                    el.on("keydown", self._handleKeydown, self);
-                } else {
-                    el.detach("focus", self._handleFocus, self);
-                    el.detach("blur", self._handleBlur, self);
-                    el.detach("keydown", self._handleKeydown, self);
-                }
-            },
-
-            /**
-             * 焦点所在元素即键盘事件处理元素
-             */
-            getKeyEventTarget:function() {
-                return this.get("view").getKeyEventTarget();
-            },
-            /**
-             * root element handler for mouse up
-             */
-            _handleMouseUp:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                // 左键
-                if (this.get("active") && ev.which == 1) {
-                    this._performInternal(ev);
-                    this.set("active", false);
-                }
-            },
-            /**
-             * root element handler for focus
-             */
-            _handleFocus:function() {
-                this.set("focused", true);
-            },
-            /**
-             * root element handler for blur
-             */
-            _handleBlur:function() {
-                this.set("focused", false);
-            },
-
-            _handleKeyEventInternal:function(ev) {
-                if (ev.keyCode == Event.KeyCodes.ENTER) {
-                    return this._performInternal(ev);
-                }
-            },
-            /**
-             * root element handler for keydown
-             * @param ev
-             */
-            _handleKeydown:function(ev) {
-                if (this.get("disabled")) {
-                    return true;
-                }
-                if (this._handleKeyEventInternal(ev)) {
-                    ev.halt();
-                    return true;
-                }
-            },
-
-            /**
-             * root element handler for click
-             */
-            _performInternal:function() {
-            },
-
-            destructor:function() {
-                var self = this;
-                var children = self.get("children");
-                S.each(children, function(child) {
-                    child.destroy();
-                });
-                var view = self.get("view");
-                if (view) {
-                    view.destroy();
-                }
+                return new DefaultRender(cfg);
             }
-        },
-        {
-            ATTRS:{
-                /**
-                 *  session state
-                 */
+            return 0;
+        }
 
-                    // 是否绑定鼠标事件
-                handleMouseEvents:{
-                    value:true
-                },
+        function getClsByHierarch(self) {
+            if (self.__componentClasses) {
+                return self.__componentClasses;
+            }
+            var constructor = self.constructor,re = [];
+            while (constructor && constructor != ModelControl) {
+                var cls = UIStore.getClsByUI(constructor);
+                if (cls) {
+                    re.push(cls);
+                }
+                constructor = constructor.superclass && constructor.superclass.constructor;
+            }
+            return self.__componentClasses = re.join(" ");
+        }
 
-                // 是否支持焦点处理
-                focusable:{
-                    /*
-                     *  observer synchronization , model 分成两类：
-                     *                view 负责监听 view 类 model 变化更新界面
-                     *                control 负责监听 control 类变化改变逻辑
-                     *  problem : Observer behavior is hard to understand and debug because it's implicit behavior.
-                     *
-                     *  Keeping screen state and session state synchronized is an important task
-                     *  Data Binding
-                     */
-                    view:true,
-                    value:true
+
+        function capitalFirst(s) {
+            return s.charAt(0).toUpperCase() + s.substring(1);
+        }
+
+        /**
+         * model and control for component
+         * @name ModelControl
+         * @constructor
+         */
+        var ModelControl = UIBase.create([UIBase.Box], {
+
+                getCls:UIStore.getCls,
+
+                initializer:function() {
                     /**
-                     * In general data binding gets tricky
-                     * because if you have to avoid cycles where a change to the control,
-                     * changes the record set, which updates the control,
-                     * which updates the record set....
-                     * The flow of usage helps avoid these -
-                     * we load from the session state to the screen when the screen is opened,
-                     * after that any changes to the screen state propagate back to the session state.
-                     * It's unusual for the session state to be updated directly once the screen is up.
-                     * As a result data binding might not be entirely bi-directional -
-                     * just confined to initial upload and
-                     * then propagating changes from the controls to the session state.
+                     * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                      */
-                    // sync
+                    var self = this,
+                        attrs = self.__attrs;
+                    for (var attrName in attrs) {
+                        if (attrs.hasOwnProperty(attrName)) {
+                            var attrCfg = attrs[attrName];
+                            if (attrCfg.view) {
+// setter 不应该有实际操作，仅用于正规化比较好
+// attrCfg.setter = wrapperViewSetter(attrName);
+                                self.on("after" + capitalFirst(attrName) + "Change",
+                                    wrapperViewSetter(attrName));
+// 逻辑层读值直接从 view 层读
+// 那么如果存在默认值也设置在 view 层
+// 逻辑层不要设置 getter
+                                attrCfg.getter = wrapperViewGetter(attrName);
+                            }
+                        }
+                    }
                 },
 
-                activeable:{
-                    value:true
+                /**
+                 * control 层的渲染 ui 就是 render view
+                 * finally，不能被 override
+                 */
+                renderUI:function() {
+                    var self = this;
+                    self.get("view").render();
+                    //then render my children
+                    var children = self.get("children");
+                    S.each(children, function(child) {
+                        // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
+                        initChild(self, child);
+                        child.render();
+                    });
                 },
 
-                focused:{
-                    view:true
-                },
-                active:{
-                    view:true
-                },
-
-                highlighted:{
-                    view:true
-                },
-
-                //子组件
-                children:{
-                    value:[]
-                },
-
-                // 转交给渲染层
-                prefixCls:{
-                    view:true,
-                    value:"ks-"
+                /**
+                 * 控制层的 createDom 实际上就是调用 view 层的 create 来创建真正的节点
+                 */
+                createDom:function() {
+                    var self = this;
+                    var view = self.get("view") || getDefaultView.call(self);
+                    if (!view) {
+                        S.error("no view for");
+                        S.error(self.constructor);
+                        return;
+                    }
+                    view.create();
+                    view._renderCls(getClsByHierarch(self));
+                    if (!self.get("allowTextSelection_")) {
+                        view.get("el").unselectable();
+                    }
+                    self.set("view", view);
                 },
 
-                // 父组件
-                // Parent component to which events will be propagated.
-                parent:{
+                /**
+                 * Returns the DOM element into which child components are to be rendered,
+                 or null if the container itself hasn't been rendered yet.  Overrides
+                 */
+                getContentElement:function() {
+                    var view = this.get('view');
+                    return view && view.getContentElement();
                 },
 
-                //渲染层
-                view:{
+                /**
+                 *
+                 * @param c  children to be added
+                 * @param {int=} index  position to be inserted
+                 */
+                addChild:function(c, index) {
+                    var self = this,
+                        children = self.get("children"),
+                        elBefore = children[index];
+                    if (index) {
+                        children.splice(index, 0, c);
+                    } else {
+                        children.push(c);
+                    }
+                    initChild(self, c, elBefore);
                 },
 
-                //是否禁用
-                disabled:{
-                    view:true
+                removeChild:function(c, destroy) {
+                    var children = this.get("children"),
+                        index = S.indexOf(c, children);
+                    if (index != -1) {
+                        children.splice(index, 1);
+                    }
+                    if (destroy) {
+                        c.destroy();
+                    }
                 },
 
-                // 是否允许 DOM 结构内的文字选定
-                allowTextSelection_:{
-                    value:false
+                removeChildren:function(destroy) {
+                    var self = this,
+                        t = [].concat(self.get("children"));
+                    S.each(t, function(c) {
+                        self.removeChild(c, destroy);
+                    });
+                    self.set("children", []);
+                },
+
+                getChildAt:function(index) {
+                    var children = this.get("children");
+                    return children[index];
+                },
+
+                _uiSetHandleMouseEvents:function(v) {
+                    var self = this,
+                        el = self.get("el");
+                    if (v) {
+                        el.on("mouseenter", self._handleMouseEnter, self);
+                        el.on("mouseleave", self._handleMouseLeave, self);
+                        el.on("mousedown", self._handleMouseDown, self);
+                        el.on("mouseup", self._handleMouseUp, self);
+                        el.on("dblclick", self._handleDblClick, self);
+                    } else {
+                        el.detach("mouseenter", self._handleMouseEnter, self);
+                        el.detach("mouseleave", self._handleMouseLeave, self);
+                        el.detach("mousedown", self._handleMouseDown, self);
+                        el.detach("mouseup", self._handleMouseUp, self);
+                        el.detach("dblclick", self._handleDblClick, self);
+                    }
+                },
+
+                _handleDblClick:function(e) {
+                    var self = this;
+                    if (!self.get("disabled")) {
+                        self._performInternal(e);
+                    }
+                },
+
+                _isMouseEventWithinElement:function(e, elem) {
+                    var relatedTarget = e.relatedTarget;
+                    if (!relatedTarget) {
+                        return false;
+                    }
+                    // 在里面或等于自身都不算 mouseenter/leave
+                    if (relatedTarget === elem[0]
+                        || elem.contains(relatedTarget)) {
+                        return true;
+                    }
+                },
+
+                _handleMouseOver:function(e) {
+                    var self = this,
+                        el = self.get("el");
+                    if (self.get("disabled")) {
+                        return true;
+                    }
+                    if (!self._isMouseEventWithinElement(e, el)) {
+                        self._handleMouseEnter(e);
+                    }
+                },
+
+
+                _handleMouseOut:function(e) {
+                    var self = this,
+                        el = self.get("el");
+                    if (self.get("disabled")) {
+                        return true;
+                    }
+                    if (!self._isMouseEventWithinElement(e, el)) {
+                        self._handleMouseLeave(e);
+                    }
+                },
+
+                /**
+                 * root element handler for mouse enter
+                 */
+                _handleMouseEnter:function() {
+                    var self = this;
+                    if (self.get("disabled")) {
+                        return true;
+                    }
+                    self.set("highlighted", true);
+                },
+
+                /**
+                 * root element handler for mouse leave
+                 */
+                _handleMouseLeave:function() {
+                    var self = this;
+                    if (self.get("disabled")) {
+                        return true;
+                    }
+                    self.set("active", false);
+                    self.set("highlighted", false);
+                },
+
+                /**
+                 * root element handler for mouse down
+                 * @param ev
+                 */
+                _handleMouseDown:function(ev) {
+                    var self = this;
+                    if (self.get("disabled")) {
+                        return true;
+                    }
+                    if (ev.which == 1 && self.get("activeable")) {
+                        self.set("active", true);
+                    }
+                    var el = self.getKeyEventTarget();
+                    // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
+                    if (ev.which == 1 && el.attr("tabindex") >= 0) {
+                        self.getKeyEventTarget()[0].focus();
+                    }
+                    // Cancel the default action unless the control
+                    // allows text selection.
+                    if (ev.which == 1 && !self.get("allowTextSelection_")) {
+                        // firefox 不会引起焦点转移
+                        ev.preventDefault();
+                    }
+                },
+
+                /**
+                 * whether component can receive focus
+                 */
+                _uiSetFocusable:function(v) {
+                    var self = this,
+                        el = self.getKeyEventTarget();
+                    if (v) {
+                        el.on("focus", self._handleFocus, self);
+                        el.on("blur", self._handleBlur, self);
+                        el.on("keydown", self._handleKeydown, self);
+                    } else {
+                        el.detach("focus", self._handleFocus, self);
+                        el.detach("blur", self._handleBlur, self);
+                        el.detach("keydown", self._handleKeydown, self);
+                    }
+                },
+
+                _uiSetFocused:function(v) {
+                    this._forwardSetAttrToView("focused", v);
+                },
+
+                _uiSetHighlighted:function(v) {
+                    this._forwardSetAttrToView("highlighted", v);
+                },
+
+                _forwardSetAttrToView:function(attrName, v) {
+                    var view = this.get("view");
+                    view["_set" + capitalFirst(attrName)].call(view, v, getClsByHierarch(this));
+                },
+
+
+                _uiSetDisabled:function(v) {
+                    this._forwardSetAttrToView("disabled", v);
+                },
+
+
+                _uiSetActive:function(v) {
+                    this._forwardSetAttrToView("active", v);
+                },
+
+                /**
+                 * 焦点所在元素即键盘事件处理元素
+                 */
+                getKeyEventTarget:function() {
+                    return this.get("view").getKeyEventTarget();
+                },
+                /**
+                 * root element handler for mouse up
+                 */
+                _handleMouseUp:function(ev) {
+                    var self = this;
+                    if (self.get("disabled")) {
+                        return true;
+                    }
+                    // 左键
+                    if (self.get("active") && ev.which == 1) {
+                        self._performInternal(ev);
+                        self.set("active", false);
+                    }
+                },
+                /**
+                 * root element handler for focus
+                 */
+                _handleFocus:function() {
+                    this.set("focused", true);
+                },
+                /**
+                 * root element handler for blur
+                 */
+                _handleBlur:function() {
+                    this.set("focused", false);
+                },
+
+                _handleKeyEventInternal:function(ev) {
+                    if (ev.keyCode == Event.KeyCodes.ENTER) {
+                        return this._performInternal(ev);
+                    }
+                },
+                /**
+                 * root element handler for keydown
+                 * @param ev
+                 */
+                _handleKeydown:function(ev) {
+                    var self = this;
+                    if (self.get("disabled")) {
+                        return true;
+                    }
+                    if (self._handleKeyEventInternal(ev)) {
+                        ev.halt();
+                        return true;
+                    }
+                },
+
+                /**
+                 * root element handler for click
+                 */
+                _performInternal:function() {
+                },
+
+                destructor:function() {
+                    var self = this,
+                        children = self.get("children");
+                    S.each(children, function(child) {
+                        child.destroy();
+                    });
+                    var view = self.get("view");
+                    if (view) {
+                        view.destroy();
+                    }
                 }
             },
+            {
+                ATTRS:{
+                    /**
+                     *  session state
+                     */
 
-            DefaultRender:Render
-        });
-}, {
-    requires:['event','uibase','./uistore','./render']
-});
+                        // 是否绑定鼠标事件
+                    handleMouseEvents:{
+                        value:true
+                    },
+
+                    // 是否支持焦点处理
+                    focusable:{
+                        /*
+                         *  observer synchronization , model 分成两类：
+                         *view 负责监听 view 类 model 变化更新界面
+                         *control 负责监听 control 类变化改变逻辑
+                         *  problem : Observer behavior is hard to understand and debug because it's implicit behavior.
+                         *
+                         *  Keeping screen state and session state synchronized is an important task
+                         *  Data Binding
+                         */
+                        view:true,
+                        value:true
+                        /**
+                         * In general data binding gets tricky
+                         * because if you have to avoid cycles where a change to the control,
+                         * changes the record set, which updates the control,
+                         * which updates the record set....
+                         * The flow of usage helps avoid these -
+                         * we load from the session state to the screen when the screen is opened,
+                         * after that any changes to the screen state propagate back to the session state.
+                         * It's unusual for the session state to be updated directly once the screen is up.
+                         * As a result data binding might not be entirely bi-directional -
+                         * just confined to initial upload and
+                         * then propagating changes from the controls to the session state.
+                         */
+                        // sync
+                    },
+
+                    activeable:{
+                        value:true
+                    },
+
+                    focused:{},
+
+                    active:{},
+
+                    highlighted:{},
+
+                    //子组件
+                    children:{
+                        value:[]
+                    },
+
+                    // 转交给渲染层
+                    prefixCls:{
+                        view:true,
+                        value:"ks-"
+                    },
+
+                    // 父组件
+                    // Parent component to which events will be propagated.
+                    parent:{
+                    },
+
+                    //渲染层
+                    view:{
+                    },
+
+                    //是否禁用
+                    disabled:{},
+
+                    // 是否允许 DOM 结构内的文字选定
+                    allowTextSelection_:{
+                        value:false
+                    }
+                },
+
+                DefaultRender:Render
+            });
+
+        return ModelControl;
+    },
+    {
+        requires:['event','uibase','./uistore','./render']
+    }
+)
+    ;
 /**
  *  Note:
  *  控制层元属性配置中 view 的作用
@@ -17924,7 +17963,24 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/render", function(S, UIBase, UIStore) {
+
+    function tagFunc(self, classes, tag) {
+        return self.getCls(classes.split(/\s+/).join(tag + " ") + tag);
+    }
+
     return UIBase.create([UIBase.Box.Render], {
+
+        _completeClasses:function(classes, tag) {
+            return tagFunc(this, classes, tag);
+        },
+
+        /**
+         * @protected
+         */
+        _renderCls:function(componentCls) {
+            var self = this;
+            self.get("el").addClass(self.getCls(componentCls));
+        },
 
         getCls:UIStore.getCls,
 
@@ -17936,6 +17992,9 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             return this.get("contentEl") || this.get("el");
         },
 
+        /**
+         * @protected
+         */
         _uiSetFocusable:function(v) {
             var el = this.getKeyEventTarget(),
                 tabindex = el.attr("tabindex");
@@ -17944,19 +18003,53 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             } else if (!(tabindex >= 0) && v) {
                 el.attr("tabindex", 0);
             }
+        },
+
+        /**
+         * @protected
+         */
+        _setHighlighted:function(v, componentCls) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-hover"));
+        },
+
+        /**
+         * @protected
+         */
+        _setDisabled:function(v, componentCls) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-disabled"))
+                //不能被 tab focus 到
+                //support aria
+                .attr({
+                    "tabindex": v ? -1 : 0,
+                    "aria-disabled": v
+                });
+
+        },
+        /**
+         * @protected
+         */
+        _setActive:function(v, componentCls) {
+            var self = this;
+            self.get("el")[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-active"))
+                .attr("aria-pressed", !!v);
+        },
+        /**
+         * @protected
+         */
+        _setFocused:function(v, componentCls) {
+            var self = this,el = self.get("el");
+            el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-focused"));
         }
+
     }, {
         ATTRS:{
             /**
              *  screen state
              */
             prefixCls:{},
-            focusable:{},
-            highlighted:{},
-            focused:{},
-            active:{},
-            //是否禁用
-            disabled:{}
+            focusable:{}
         }
     });
 }, {
@@ -17983,6 +18076,20 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         return ui;
     }
 
+    function getClsByUI(constructor) {
+        for (var u in uis) {
+            var ui = uis[u];
+            if (ui.ui == constructor) {
+                return u;
+            }
+        }
+        return 0;
+    }
+
+    function getClsByInstance(self) {
+        return getClsByUI(self.constructor);
+    }
+
     function setUIByClass(cls, uic) {
         uis[cls] = uic;
     }
@@ -17991,13 +18098,17 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
     function getCls(cls) {
         var cs = S.trim(cls).split(/\s+/);
         for (var i = 0; i < cs.length; i++) {
-            cs[i] = this.get("prefixCls") + cs[i];
+            if (cs[i]) {
+                cs[i] = this.get("prefixCls") + cs[i];
+            }
         }
         return cs.join(" ");
     }
 
     return {
         getCls:getCls,
+        getClsByUI:getClsByUI,
+        getClsByInstance:getClsByInstance,
         getUIByClass:getUIByClass,
         setUIByClass:setUIByClass,
         PRIORITY:{
@@ -18040,7 +18151,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * Switchable
@@ -20640,7 +20751,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * KISSY Overlay
@@ -21115,7 +21226,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22296,7 +22407,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * @fileoverview 图像放大区域
@@ -22921,7 +23032,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:42
 */
 /**
  * KISSY Calendar
@@ -24200,7 +24311,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * deletable menuitem
@@ -24276,9 +24387,6 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
     }
 
     return UIBase.create(MenuItemRender, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(CLS))
-        },
         createDom:function() {
             addDel(this);
         },
@@ -24784,7 +24892,16 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             return true;
         },
 
+        _uiSetChecked:function(v) {
+            this._forwardSetAttrToView("checked", v);
+        },
+
+        _uiSetSelected:function(v) {
+            this._forwardSetAttrToView("selected", v);
+        },
+
         _uiSetHighlighted:function(v) {
+            MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
             // 是否要滚动到当前菜单项
             if (v) {
                 var el = this.get("el"),
@@ -24843,12 +24960,8 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             // option.value
             value:{},
 
-            checked:{
-                view:true
-            },
-            selected:{
-                view:true
-            }
+            checked:{},
+            selected:{}
         }
     });
 
@@ -24868,15 +24981,8 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
  */
 KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
-
-    var HIGHLIGHTED_CLS = "menuitem-highlight",
-        SELECTED_CLS = "menuitem-selected",
-        CHECKED_CLS = "menuitem-checked",
-        ACTIVE_CLS = "menuitem-active",
-        CHECK_CLS = "menuitem-checkbox",
-        CONTENT_CLS = "menuitem-content",
-        EL_CLS = "menuitem",
-        DISABLED_CLS = "menuitem-disabled";
+    var CHECK_CLS = "menuitem-checkbox",
+        CONTENT_CLS = "menuitem-content";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
@@ -24894,41 +25000,35 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            el.addClass(self.getCls(EL_CLS))
-                .attr("role", "menuitem");
+            el.attr("role", "menuitem");
             self.get("contentEl").addClass(self.getCls(CONTENT_CLS));
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
         },
 
-        _uiSetDisabled:function(v) {
-            var self = this,el = self.get("el").attr("aria-disabled", !!v);
-            if (v) {
-                el.addClass(self.getCls(DISABLED_CLS));
-            } else {
-                el.removeClass(self.getCls(DISABLED_CLS));
-            }
+        _setHighlighted:function(v, componentCls) {
+            var self = this,
+                tag = "-highlight",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetHighlighted:function(v) {
-            var self = this,el = this.get("el");
-            if (v) {
-                el.addClass(self.getCls(HIGHLIGHTED_CLS));
-            } else {
-                el.removeClass(self.getCls(HIGHLIGHTED_CLS));
-            }
+        _setSelected:function(v, componentCls) {
+            var self = this,
+                tag = "-selected",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelected:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
-        },
-
-        _uiSetChecked:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? "addClass" : "removeClass"](self.getCls(CHECKED_CLS));
-            v && setUpCheckEl(self);
+        _setChecked:function(v, componentCls) {
+            var self = this,
+                tag = "-checked",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _uiSetSelectable:function(v) {
@@ -24936,14 +25036,12 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _uiSetCheckable:function(v) {
+            if (v) {
+                setUpCheckEl(this);
+            }
             this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
         },
 
-        _uiSetActive:function(v) {
-            var self = this,el = this.get("el");
-            el[v ? 'addClass' : 'removeClass'](self.getCls(ACTIVE_CLS))
-                .attr("aria-pressed", v);
-        },
         containsElement:function(element) {
             var el = this.get("el");
             return el[0] == element || el.contains(element);
@@ -24965,16 +25063,13 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
-    var CLS = "menu  menu-vertical";
-
     return UIBase.create(Component.Render, [
         UIBase.Contentbox.Render
     ], {
 
         renderUI:function() {
             var el = this.get("el");
-            el.addClass(this.getCls(CLS))
-                .attr("role", "menu")
+            el .attr("role", "menu")
                 .attr("aria-haspopup", true);
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menu"));
@@ -25042,15 +25137,10 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
-    var CLS = "popmenu";
     return UIBase.create(MenuRender, [
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
-    ], {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(CLS));
-        }
-    });
+    ]);
 }, {
     requires:['ua','uibase','./menurender']
 });/**
@@ -25091,10 +25181,9 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
  */
 KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
 
-    var CLS = "menuseparator";
     return UIBase.create(Component.Render, {
         createDom:function() {
-            this.get("el").attr("role", "separator").addClass(this.getCls(CLS));
+            this.get("el").attr("role", "separator");
         }
     });
 
@@ -25376,14 +25465,13 @@ KISSY.add(
  */
 KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         var SubMenuRender;
-        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<'+'/span>';
+        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function() {
                 var self = this,
                     el = self.get("el"),
                     contentEl = self.get("contentEl");
-                el.addClass(this.get("prefixCls") + "submenu")
-                    .attr("aria-haspopup", "true");
+                el.attr("aria-haspopup", "true");
                 contentEl.append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));
@@ -25431,7 +25519,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:57
+build time: Aug 13 21:42
 */
 /**
  * Model and Control for button
@@ -25483,6 +25571,12 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
 
     Button.DefaultRender = CustomRender;
 
+
+    Component.UIStore.setUIByClass("button", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Button
+    });
+
     return Button;
 
 }, {
@@ -25493,10 +25587,10 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-   return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
-            this.get("el").attr("role", "button");
+            this.get("el").addClass(this.getCls("inline-block")).attr("role", "button");
         },
         _uiSetTooltip:function(title) {
             this.get("el").attr("title", title);
@@ -25524,96 +25618,22 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
 }, {
     requires:['uibase','component']
 });/**
- * view : render button using div
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/css3render", function(S, UIBase, ButtonRender) {
-
-    function getCls(self, str) {
-        return S.substitute(str, {
-            tag:self.__css_tag
-        });
-    }
-
-    var CLS = "inline-block " + " {tag}-button",
-        FOCUS_CLS = "{tag}-button-focused",
-        HOVER_CLS = "{tag}-button-hover",
-        ACTIVE_CLS = "{tag}-button-active",
-        DISABLED_CLS = "{tag}-button-disabled";
-
-    return UIBase.create(ButtonRender, {
-
-        __css_tag:"css3",
-
-        renderUI:function() {
-            var self = this,
-                el = self.get("el");
-            el.addClass(getCls(self,
-                self.getCls(CLS)));
-        },
-
-        /**
-         * @override
-         */
-        _uiSetFocused:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](getCls(self,
-                self.getCls(FOCUS_CLS)));
-        },
-
-        /**
-         * @override
-         */
-        _uiSetHighlighted:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](getCls(self,
-                self.getCls(HOVER_CLS)));
-        },
-
-        /**
-         * 模拟原生 disabled 机制
-         * @param v
-         */
-        _uiSetDisabled:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? 'addClass' : 'removeClass'](getCls(self, self.getCls(DISABLED_CLS)))
-                //不能被 tab focus 到
-                //support aria
-                .attr({
-                    "tabindex": v ? -1 : 0,
-                    "aria-disabled": v
-                });
-
-        },
-
-        /**
-         * @override
-         */
-        _uiSetActive:function(v) {
-            var self = this;
-            self.get("el")[v ? 'addClass' : 'removeClass'](getCls(self,
-                self.getCls(ACTIVE_CLS)))
-                .attr("aria-pressed", !!v);
-        }
-
-    });
-
-}, {
-    requires:['uibase','./buttonrender']
-});/**
  * view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
+KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
+
     //双层 div 模拟圆角
+    var CLS = "custom-button",
+        CONTENT_CLS = "inline-block " + CLS + "-outer-box",
+        INNER_CLS = "inline-block " + CLS + "-inner-box";
 
-    var CONTENT_CLS = "inline-block custom-button-outer-box",
-        INNER_CLS = "inline-block custom-button-inner-box";
 
+    var CustomRender = UIBase.create(ButtonRender, {
 
-    return UIBase.create(Css3Render, {
-
-            __css_tag:"custom",
+            renderUI:function() {
+                this.get("el").addClass(this.getCls(CLS));
+            },
 
             /**
              *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
@@ -25645,6 +25665,30 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
                 var innerEl = this.get("innerEl");
                 innerEl.html("");
                 v && innerEl.append(v);
+            },
+
+            _setHighlighted:function(v) {
+                var self = this;
+                CustomRender.superclass._setHighlighted.apply(self, arguments);
+                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-hover"));
+            },
+
+            _setDisabled:function(v) {
+                var self = this;
+                CustomRender.superclass._setDisabled.apply(self, arguments);
+                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-disabled"));
+            },
+
+            _setActive:function(v) {
+                var self = this;
+                CustomRender.superclass._setActive.apply(self, arguments);
+                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-active"));
+            },
+
+            _setFocused:function(v) {
+                var self = this;
+                CustomRender.superclass._setFocused.apply(self, arguments);
+                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-focused"));
             }
         }, {
             /**
@@ -25654,28 +25698,10 @@ KISSY.add("button/customrender", function(S, Node, UIBase, Css3Render) {
             innerEL:{}
         }
     );
+
+    return CustomRender;
 }, {
-    requires:['node','uibase','./css3render']
-});/**
- * view: render button using native button
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/nativerender", function(S, UIBase, ButtonRender) {
-    return UIBase.create(ButtonRender, {
-        //使用原生 disabled 机制
-        _uiSetDisabled:function(v) {
-            this.get("el")[0].disabled = v;
-        }
-    }, {
-        ATTRS:{
-            //使用原生 button tag
-            elTagName:{
-                value:"button"
-            }
-        }
-    });
-}, {
-    requires:['uibase','./buttonrender']
+    requires:['node','uibase','./buttonrender']
 });/**
  * simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
@@ -25689,7 +25715,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25955,10 +25981,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     return UIBase.create(Button.Render, {
 
-        renderUI:function(){
-            this.get("el").addClass(this.getCls("menu-button"));
-        },
-
         createDom:function() {
             var innerEl = this.get("innerEl"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
@@ -25978,14 +26000,10 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         },
 
         _uiSetCollapsed:function(v) {
-            var el = this.get("el"),cls = this.getCls(COLLAPSE_CLS);
-            if (!v) {
-                el.addClass(cls);
-                el.attr("aria-expanded", true);
-            } else {
-                el.removeClass(cls);
-                el.attr("aria-expanded", false);
-            }
+            var self = this,
+                el = self.get("el"),
+                cls = self.getCls(COLLAPSE_CLS);
+            el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
         _uiSetActiveItem:function(v) {
@@ -26008,11 +26026,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
  */
 KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
     var MenuItem = Menu.Item;
-    var Option = UIBase.create(MenuItem, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls("option"));
-        }
-    }, {
+    var Option = UIBase.create(MenuItem, {}, {
         ATTRS:{
             selectable:{
                 value:true
@@ -26208,7 +26222,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:59
+build time: Aug 13 21:43
 */
 ﻿/**
  * @author: 常胤 (lzlu.com)

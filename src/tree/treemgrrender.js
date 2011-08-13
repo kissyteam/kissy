@@ -17,7 +17,7 @@ KISSY.add("tree/treemgrrender", function(S) {
 
     S.augment(TreeMgrRender, {
         __renderUI:function() {
-            this.get("el").addClass(this.getCls("tree-root")).attr("role", "tree")[0]['hideFocus'] = true;
+            this.get("el").attr("role", "tree")[0]['hideFocus'] = true;
             this.get("rowEl").addClass(this.getCls("tree-root-row"));
         },
 

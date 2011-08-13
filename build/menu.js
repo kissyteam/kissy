@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * deletable menuitem
@@ -77,9 +77,6 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
     }
 
     return UIBase.create(MenuItemRender, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(CLS))
-        },
         createDom:function() {
             addDel(this);
         },
@@ -585,7 +582,16 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             return true;
         },
 
+        _uiSetChecked:function(v) {
+            this._forwardSetAttrToView("checked", v);
+        },
+
+        _uiSetSelected:function(v) {
+            this._forwardSetAttrToView("selected", v);
+        },
+
         _uiSetHighlighted:function(v) {
+            MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
             // 是否要滚动到当前菜单项
             if (v) {
                 var el = this.get("el"),
@@ -644,12 +650,8 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             // option.value
             value:{},
 
-            checked:{
-                view:true
-            },
-            selected:{
-                view:true
-            }
+            checked:{},
+            selected:{}
         }
     });
 
@@ -669,15 +671,8 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
  */
 KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
-
-    var HIGHLIGHTED_CLS = "menuitem-highlight",
-        SELECTED_CLS = "menuitem-selected",
-        CHECKED_CLS = "menuitem-checked",
-        ACTIVE_CLS = "menuitem-active",
-        CHECK_CLS = "menuitem-checkbox",
-        CONTENT_CLS = "menuitem-content",
-        EL_CLS = "menuitem",
-        DISABLED_CLS = "menuitem-disabled";
+    var CHECK_CLS = "menuitem-checkbox",
+        CONTENT_CLS = "menuitem-content";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
@@ -695,41 +690,35 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            el.addClass(self.getCls(EL_CLS))
-                .attr("role", "menuitem");
+            el.attr("role", "menuitem");
             self.get("contentEl").addClass(self.getCls(CONTENT_CLS));
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
         },
 
-        _uiSetDisabled:function(v) {
-            var self = this,el = self.get("el").attr("aria-disabled", !!v);
-            if (v) {
-                el.addClass(self.getCls(DISABLED_CLS));
-            } else {
-                el.removeClass(self.getCls(DISABLED_CLS));
-            }
+        _setHighlighted:function(v, componentCls) {
+            var self = this,
+                tag = "-highlight",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetHighlighted:function(v) {
-            var self = this,el = this.get("el");
-            if (v) {
-                el.addClass(self.getCls(HIGHLIGHTED_CLS));
-            } else {
-                el.removeClass(self.getCls(HIGHLIGHTED_CLS));
-            }
+        _setSelected:function(v, componentCls) {
+            var self = this,
+                tag = "-selected",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelected:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
-        },
-
-        _uiSetChecked:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? "addClass" : "removeClass"](self.getCls(CHECKED_CLS));
-            v && setUpCheckEl(self);
+        _setChecked:function(v, componentCls) {
+            var self = this,
+                tag = "-checked",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _uiSetSelectable:function(v) {
@@ -737,14 +726,12 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _uiSetCheckable:function(v) {
+            if (v) {
+                setUpCheckEl(this);
+            }
             this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
         },
 
-        _uiSetActive:function(v) {
-            var self = this,el = this.get("el");
-            el[v ? 'addClass' : 'removeClass'](self.getCls(ACTIVE_CLS))
-                .attr("aria-pressed", v);
-        },
         containsElement:function(element) {
             var el = this.get("el");
             return el[0] == element || el.contains(element);
@@ -766,16 +753,13 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
-    var CLS = "menu  menu-vertical";
-
     return UIBase.create(Component.Render, [
         UIBase.Contentbox.Render
     ], {
 
         renderUI:function() {
             var el = this.get("el");
-            el.addClass(this.getCls(CLS))
-                .attr("role", "menu")
+            el .attr("role", "menu")
                 .attr("aria-haspopup", true);
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menu"));
@@ -843,15 +827,10 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
-    var CLS = "popmenu";
     return UIBase.create(MenuRender, [
         UIBase.Position.Render,
         UA['ie'] === 6 ? UIBase.Shim.Render : null
-    ], {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(CLS));
-        }
-    });
+    ]);
 }, {
     requires:['ua','uibase','./menurender']
 });/**
@@ -892,10 +871,9 @@ KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
  */
 KISSY.add("menu/separatorrender", function(S, UIBase, Component) {
 
-    var CLS = "menuseparator";
     return UIBase.create(Component.Render, {
         createDom:function() {
-            this.get("el").attr("role", "separator").addClass(this.getCls(CLS));
+            this.get("el").attr("role", "separator");
         }
     });
 
@@ -1177,14 +1155,13 @@ KISSY.add(
  */
 KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
         var SubMenuRender;
-        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<'+'/span>';
+        var ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
         SubMenuRender = UIBase.create(MenuItemRender, {
             renderUI:function() {
                 var self = this,
                     el = self.get("el"),
                     contentEl = self.get("contentEl");
-                el.addClass(this.get("prefixCls") + "submenu")
-                    .attr("aria-haspopup", "true");
+                el.attr("aria-haspopup", "true");
                 contentEl.append(S.substitute(ARROW_TMPL, {
                     prefixCls:this.get("prefixCls")
                 }));

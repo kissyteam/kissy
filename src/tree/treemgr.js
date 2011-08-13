@@ -63,9 +63,10 @@ KISSY.add("tree/treemgr", function(S, Event) {
         getOwnerControl:function(node) {
             var self = this,
                 n,
+                allNodes = self.__getAllNodes(),
                 elem = self.get("el")[0];
             while (node && node !== elem) {
-                if (n = self.__getAllNodes()[node.id]) {
+                if (n = allNodes[node.id]) {
                     return n;
                 }
                 node = node.parentNode;
@@ -84,12 +85,12 @@ KISSY.add("tree/treemgr", function(S, Event) {
 
 
         _uiSetFocused:function(v) {
-            if (v) {
-                // 得到焦点时没有选择节点
-                // 默认选择自己
-                if (!this.get("selectedItem")) {
-                    this.select();
-                }
+            var self = this;
+            self.constructor.superclass._uiSetFocused.call(self, v);
+            // 得到焦点时没有选择节点
+            // 默认选择自己
+            if (v && !self.get("selectedItem")) {
+                self.select();
             }
         }
     });

@@ -15,9 +15,6 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
     }
 
     return UIBase.create(MenuItemRender, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(CLS))
-        },
         createDom:function() {
             addDel(this);
         },

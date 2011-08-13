@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:58
+build time: Aug 13 21:43
 */
 /**
  * combination of menu and button ,similar to native select
@@ -267,10 +267,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     return UIBase.create(Button.Render, {
 
-        renderUI:function(){
-            this.get("el").addClass(this.getCls("menu-button"));
-        },
-
         createDom:function() {
             var innerEl = this.get("innerEl"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
@@ -290,14 +286,10 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         },
 
         _uiSetCollapsed:function(v) {
-            var el = this.get("el"),cls = this.getCls(COLLAPSE_CLS);
-            if (!v) {
-                el.addClass(cls);
-                el.attr("aria-expanded", true);
-            } else {
-                el.removeClass(cls);
-                el.attr("aria-expanded", false);
-            }
+            var self = this,
+                el = self.get("el"),
+                cls = self.getCls(COLLAPSE_CLS);
+            el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
         _uiSetActiveItem:function(v) {
@@ -320,11 +312,7 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
  */
 KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
     var MenuItem = Menu.Item;
-    var Option = UIBase.create(MenuItem, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls("option"));
-        }
-    }, {
+    var Option = UIBase.create(MenuItem, {}, {
         ATTRS:{
             selectable:{
                 value:true

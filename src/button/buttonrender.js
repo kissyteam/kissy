@@ -4,10 +4,10 @@
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-   return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
         renderUI:function() {
             //set wai-aria role
-            this.get("el").attr("role", "button");
+            this.get("el").addClass(this.getCls("inline-block")).attr("role", "button");
         },
         _uiSetTooltip:function(title) {
             this.get("el").attr("title", title);

@@ -29,3 +29,10 @@ KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, Tree
 }, {
     requires:['uibase','component','./basenode','./treerender','./treemgr']
 });
+
+/**
+ * note bug:
+ *
+ * 1. checked tree 根节点总是 selected ！
+ * 2. 根节点 hover 后取消不了了
+ **/

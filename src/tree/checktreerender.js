@@ -5,9 +5,6 @@
 KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {
     var CHECK_TREE_CLS="tree-root-check";
     return UIBase.create(CheckNodeRender, [TreeMgrRender],{
-        renderUI:function(){
-            this.get("el").addClass(this.getCls(CHECK_TREE_CLS));
-        }
     },{
         CHECK_TREE_CLS:CHECK_TREE_CLS
     });

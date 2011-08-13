@@ -13,10 +13,6 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
 
     return UIBase.create(Button.Render, {
 
-        renderUI:function(){
-            this.get("el").addClass(this.getCls("menu-button"));
-        },
-
         createDom:function() {
             var innerEl = this.get("innerEl"),
                 html = S.substitute(MENU_BUTTON_TMPL, {
@@ -36,14 +32,10 @@ KISSY.add("menubutton/menubuttonrender", function(S, UIBase, Button) {
         },
 
         _uiSetCollapsed:function(v) {
-            var el = this.get("el"),cls = this.getCls(COLLAPSE_CLS);
-            if (!v) {
-                el.addClass(cls);
-                el.attr("aria-expanded", true);
-            } else {
-                el.removeClass(cls);
-                el.attr("aria-expanded", false);
-            }
+            var self = this,
+                el = self.get("el"),
+                cls = self.getCls(COLLAPSE_CLS);
+            el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
         _uiSetActiveItem:function(v) {

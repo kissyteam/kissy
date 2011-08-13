@@ -17,6 +17,7 @@ x._uiSetLabel();
 x._uiSetSelectable()._uiSetChecked()._uiSetCheckable();
 x.getItemAt();
 x._uiSetCollapsed();
+x._uiSetActive();
 x._uiSetDefaultCaption();
 x.getDOMNodes();
 var BaseNodeRender;

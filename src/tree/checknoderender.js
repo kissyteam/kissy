@@ -6,10 +6,6 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
         INLINE_BLOCK = "inline-block";
     return UIBase.create(BaseNodeRender, {
 
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(CHECK_CLS));
-        },
-
         createDom:function() {
             var expandIconEl = this.get("expandIconEl"),
                 checkEl = $("<div class='" + this.getCls(INLINE_BLOCK + " " + " "

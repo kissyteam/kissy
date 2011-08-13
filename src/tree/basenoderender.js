@@ -11,7 +11,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
 
         INLINE_BLOCK = "inline-block",
-        SELECTED_CLS = "tree-item-selected",
         ITEM_CLS = "tree-item",
 
         FOLDER_ICON_EXPANED = "tree-expanded-folder-icon",
@@ -30,9 +29,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         ROW_CLS = "tree-row";
 
     return UIBase.create(Component.Render, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(ITEM_CLS));
-        },
 
         _computeClass:function(children, parent
                                //, cause
@@ -119,6 +115,14 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             this.get("el").attr("aria-expanded", v);
         },
 
+        _setSelected:function(v, classes) {
+            var self = this,
+                // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
+                // .selected .label {background:xx;}
+                rowEl = self.get("rowEl");
+            rowEl[v ? "addClass" : "removeClass"](self._completeClasses(classes, "-selected"));
+        },
+
         _uiSetContent:function(c) {
             this.get("labelEl").html(c);
         },
@@ -133,14 +137,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         _uiSetAriaPosInSet:function(v) {
             this.get("el").attr("aria-posinset", v);
-        },
-
-        _uiSetSelected:function(v) {
-            var self = this,
-                // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
-                // .selected .label {background:xx;}
-                rowEl = self.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
         },
 
         _uiSetTooltip:function(v) {
@@ -168,9 +164,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             expandIconEl:{},
             tooltip:{},
             iconEl:{},
-            rowEl:{},
-            selected:{},
             expanded:{},
+            rowEl:{},
             depth:{},
             labelEl:{},
             content:{},

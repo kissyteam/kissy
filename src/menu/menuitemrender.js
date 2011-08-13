@@ -4,15 +4,8 @@
  */
 KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
 
-
-    var HIGHLIGHTED_CLS = "menuitem-highlight",
-        SELECTED_CLS = "menuitem-selected",
-        CHECKED_CLS = "menuitem-checked",
-        ACTIVE_CLS = "menuitem-active",
-        CHECK_CLS = "menuitem-checkbox",
-        CONTENT_CLS = "menuitem-content",
-        EL_CLS = "menuitem",
-        DISABLED_CLS = "menuitem-disabled";
+    var CHECK_CLS = "menuitem-checkbox",
+        CONTENT_CLS = "menuitem-content";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
@@ -30,41 +23,35 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         renderUI:function() {
             var self = this,
                 el = self.get("el");
-            el.addClass(self.getCls(EL_CLS))
-                .attr("role", "menuitem");
+            el.attr("role", "menuitem");
             self.get("contentEl").addClass(self.getCls(CONTENT_CLS));
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
         },
 
-        _uiSetDisabled:function(v) {
-            var self = this,el = self.get("el").attr("aria-disabled", !!v);
-            if (v) {
-                el.addClass(self.getCls(DISABLED_CLS));
-            } else {
-                el.removeClass(self.getCls(DISABLED_CLS));
-            }
+        _setHighlighted:function(v, componentCls) {
+            var self = this,
+                tag = "-highlight",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetHighlighted:function(v) {
-            var self = this,el = this.get("el");
-            if (v) {
-                el.addClass(self.getCls(HIGHLIGHTED_CLS));
-            } else {
-                el.removeClass(self.getCls(HIGHLIGHTED_CLS));
-            }
+        _setSelected:function(v, componentCls) {
+            var self = this,
+                tag = "-selected",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelected:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
-        },
-
-        _uiSetChecked:function(v) {
-            var self = this,el = self.get("el");
-            el[v ? "addClass" : "removeClass"](self.getCls(CHECKED_CLS));
-            v && setUpCheckEl(self);
+        _setChecked:function(v, componentCls) {
+            var self = this,
+                tag = "-checked",
+                el = self.get("el"),
+                cls = self._completeClasses(componentCls, tag);
+            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _uiSetSelectable:function(v) {
@@ -72,14 +59,12 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         },
 
         _uiSetCheckable:function(v) {
+            if (v) {
+                setUpCheckEl(this);
+            }
             this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
         },
 
-        _uiSetActive:function(v) {
-            var self = this,el = this.get("el");
-            el[v ? 'addClass' : 'removeClass'](self.getCls(ACTIVE_CLS))
-                .attr("aria-pressed", v);
-        },
         containsElement:function(element) {
             var el = this.get("el");
             return el[0] == element || el.contains(element);

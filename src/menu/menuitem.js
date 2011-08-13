@@ -37,7 +37,16 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             return true;
         },
 
+        _uiSetChecked:function(v) {
+            this._forwardSetAttrToView("checked", v);
+        },
+
+        _uiSetSelected:function(v) {
+            this._forwardSetAttrToView("selected", v);
+        },
+
         _uiSetHighlighted:function(v) {
+            MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
             // 是否要滚动到当前菜单项
             if (v) {
                 var el = this.get("el"),
@@ -96,12 +105,8 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             // option.value
             value:{},
 
-            checked:{
-                view:true
-            },
-            selected:{
-                view:true
-            }
+            checked:{},
+            selected:{}
         }
     });
 

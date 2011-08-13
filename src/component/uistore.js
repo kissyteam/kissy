@@ -20,6 +20,20 @@ KISSY.add("component/uistore", function(S) {
         return ui;
     }
 
+    function getClsByUI(constructor) {
+        for (var u in uis) {
+            var ui = uis[u];
+            if (ui.ui == constructor) {
+                return u;
+            }
+        }
+        return 0;
+    }
+
+    function getClsByInstance(self) {
+        return getClsByUI(self.constructor);
+    }
+
     function setUIByClass(cls, uic) {
         uis[cls] = uic;
     }
@@ -28,13 +42,17 @@ KISSY.add("component/uistore", function(S) {
     function getCls(cls) {
         var cs = S.trim(cls).split(/\s+/);
         for (var i = 0; i < cs.length; i++) {
-            cs[i] = this.get("prefixCls") + cs[i];
+            if (cs[i]) {
+                cs[i] = this.get("prefixCls") + cs[i];
+            }
         }
         return cs.join(" ");
     }
 
     return {
         getCls:getCls,
+        getClsByUI:getClsByUI,
+        getClsByInstance:getClsByInstance,
         getUIByClass:getUIByClass,
         setUIByClass:setUIByClass,
         PRIORITY:{

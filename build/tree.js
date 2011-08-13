@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 12 19:59
+build time: Aug 13 21:43
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -58,7 +58,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                     // 左
                     // 选择父节点或 collapse 当前节点
                     case KeyCodes.LEFT:
-                        if (this.get("expanded") && children.length) {
+                        if (this.get("expanded") && (children.length || this.get("isLeaf") === false)) {
                             this.set("expanded", false);
                         } else {
                             n = this.get("parent");
@@ -68,7 +68,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                     // 右
                     // expand 当前节点
                     case KeyCodes.RIGHT:
-                        if (children.length) {
+                        if (children.length || this.get("isLeaf") === false) {
                             if (!this.get("expanded")) {
                                 this.set("expanded", true);
                             } else {
@@ -244,6 +244,10 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 }
             },
 
+            _uiSetSelected:function(v) {
+                this._forwardSetAttrToView("selected", v);
+            },
+
 
             expandAll:function() {
                 this.set("expanded", true);
@@ -298,7 +302,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                  * 是否选中
                  * @type Boolean
                  */
-                selected:{view:true},
+                selected:{},
 
                 expanded:{
                     value:false,
@@ -359,7 +363,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         FOLDER_COLLAPSED = FILE_EXPAND + "plus",
 
         INLINE_BLOCK = "inline-block",
-        SELECTED_CLS = "tree-item-selected",
         ITEM_CLS = "tree-item",
 
         FOLDER_ICON_EXPANED = "tree-expanded-folder-icon",
@@ -378,9 +381,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         ROW_CLS = "tree-row";
 
     return UIBase.create(Component.Render, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(ITEM_CLS));
-        },
 
         _computeClass:function(children, parent
                                //, cause
@@ -467,6 +467,14 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             this.get("el").attr("aria-expanded", v);
         },
 
+        _setSelected:function(v, classes) {
+            var self = this,
+                // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
+                // .selected .label {background:xx;}
+                rowEl = self.get("rowEl");
+            rowEl[v ? "addClass" : "removeClass"](self._completeClasses(classes, "-selected"));
+        },
+
         _uiSetContent:function(c) {
             this.get("labelEl").html(c);
         },
@@ -481,14 +489,6 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
         _uiSetAriaPosInSet:function(v) {
             this.get("el").attr("aria-posinset", v);
-        },
-
-        _uiSetSelected:function(v) {
-            var self = this,
-                // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
-                // .selected .label {background:xx;}
-                rowEl = self.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](self.getCls(SELECTED_CLS));
         },
 
         _uiSetTooltip:function(v) {
@@ -516,9 +516,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             expandIconEl:{},
             tooltip:{},
             iconEl:{},
-            rowEl:{},
-            selected:{},
             expanded:{},
+            rowEl:{},
             depth:{},
             labelEl:{},
             content:{},
@@ -673,10 +672,6 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
         INLINE_BLOCK = "inline-block";
     return UIBase.create(BaseNodeRender, {
 
-        renderUI:function() {
-            this.get("el").addClass(this.getCls(CHECK_CLS));
-        },
-
         createDom:function() {
             var expandIconEl = this.get("expandIconEl"),
                 checkEl = $("<div class='" + this.getCls(INLINE_BLOCK + " " + " "
@@ -728,9 +723,6 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
 KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {
     var CHECK_TREE_CLS="tree-root-check";
     return UIBase.create(CheckNodeRender, [TreeMgrRender],{
-        renderUI:function(){
-            this.get("el").addClass(this.getCls(CHECK_TREE_CLS));
-        }
     },{
         CHECK_TREE_CLS:CHECK_TREE_CLS
     });
@@ -766,7 +758,14 @@ KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, Tree
 
 }, {
     requires:['uibase','component','./basenode','./treerender','./treemgr']
-});/**
+});
+
+/**
+ * note bug:
+ *
+ * 1. checked tree 根节点总是 selected ！
+ * 2. 根节点 hover 后取消不了了
+ **//**
  * tree management utils
  * @author yiminghe@gmail.com
  */
@@ -831,9 +830,10 @@ KISSY.add("tree/treemgr", function(S, Event) {
         getOwnerControl:function(node) {
             var self = this,
                 n,
+                allNodes = self.__getAllNodes(),
                 elem = self.get("el")[0];
             while (node && node !== elem) {
-                if (n = self.__getAllNodes()[node.id]) {
+                if (n = allNodes[node.id]) {
                     return n;
                 }
                 node = node.parentNode;
@@ -852,12 +852,12 @@ KISSY.add("tree/treemgr", function(S, Event) {
 
 
         _uiSetFocused:function(v) {
-            if (v) {
-                // 得到焦点时没有选择节点
-                // 默认选择自己
-                if (!this.get("selectedItem")) {
-                    this.select();
-                }
+            var self = this;
+            self.constructor.superclass._uiSetFocused.call(self, v);
+            // 得到焦点时没有选择节点
+            // 默认选择自己
+            if (v && !self.get("selectedItem")) {
+                self.select();
             }
         }
     });
@@ -884,7 +884,7 @@ KISSY.add("tree/treemgrrender", function(S) {
 
     S.augment(TreeMgrRender, {
         __renderUI:function() {
-            this.get("el").addClass(this.getCls("tree-root")).attr("role", "tree")[0]['hideFocus'] = true;
+            this.get("el").attr("role", "tree")[0]['hideFocus'] = true;
             this.get("rowEl").addClass(this.getCls("tree-root-row"));
         },
 

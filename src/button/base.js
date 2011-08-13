@@ -48,6 +48,12 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
 
     Button.DefaultRender = CustomRender;
 
+
+    Component.UIStore.setUIByClass("button", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Button
+    });
+
     return Button;
 
 }, {

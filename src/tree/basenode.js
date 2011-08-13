@@ -53,7 +53,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                     // 左
                     // 选择父节点或 collapse 当前节点
                     case KeyCodes.LEFT:
-                        if (this.get("expanded") && children.length) {
+                        if (this.get("expanded") && (children.length || this.get("isLeaf") === false)) {
                             this.set("expanded", false);
                         } else {
                             n = this.get("parent");
@@ -63,7 +63,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                     // 右
                     // expand 当前节点
                     case KeyCodes.RIGHT:
-                        if (children.length) {
+                        if (children.length || this.get("isLeaf") === false) {
                             if (!this.get("expanded")) {
                                 this.set("expanded", true);
                             } else {
@@ -239,6 +239,10 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 }
             },
 
+            _uiSetSelected:function(v) {
+                this._forwardSetAttrToView("selected", v);
+            },
+
 
             expandAll:function() {
                 this.set("expanded", true);
@@ -293,7 +297,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                  * 是否选中
                  * @type Boolean
                  */
-                selected:{view:true},
+                selected:{},
 
                 expanded:{
                     value:false,

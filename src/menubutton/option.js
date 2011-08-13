@@ -4,11 +4,7 @@
  */
 KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
     var MenuItem = Menu.Item;
-    var Option = UIBase.create(MenuItem, {
-        renderUI:function() {
-            this.get("el").addClass(this.getCls("option"));
-        }
-    }, {
+    var Option = UIBase.create(MenuItem, {}, {
         ATTRS:{
             selectable:{
                 value:true
