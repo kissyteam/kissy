@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 22:29
+build time: Aug 15 10:04
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 13 22:29
              */
             version: '1.20dev',
 
-            buildTime:'20110813222909',
+            buildTime:'20110815100400',
 
             /**
              * Returns a new object containing all of the properties of
@@ -20751,11 +20751,11 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 13 22:54
 */
 /**
  * KISSY Overlay
- * @author  玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -20770,11 +20770,7 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
         UA['ie'] === 6 ? require("shimrender") : null,
         require("closerender"),
         require("maskrender")
-    ], {
-        renderUI:function() {
-            this.get("el").addClass(this.get("prefixCls") + "overlay");
-        }
-    });
+    ]);
 }, {
     requires: ["ua","uibase","component"]
 });
@@ -20921,7 +20917,11 @@ KISSY.add("overlay/aria", function(S,Event) {
     return Aria;
 },{
     requires:['event']
-});KISSY.add("overlay/effect", function(S) {
+});/**
+ * effect applied when overlay shows or hides
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/effect", function(S) {
     var NONE = 'none',DURATION = 0.5;
     var effects = {fade:["Out","In"],slide:["Up","Down"]};
 
@@ -21014,10 +21014,20 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
 
     Overlay.DefaultRender = OverlayRender;
 
+
+    Component.UIStore.setUIByClass("overlay", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Overlay
+    });
+
     return Overlay;
 }, {
     requires:['uibase','component','./overlayrender','./effect']
-});KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
+});/**
+ * render for dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -21032,7 +21042,7 @@ KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effec
  * KISSY.Dialog
  * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
@@ -21046,7 +21056,6 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
     ], {
         renderUI:function() {
             var self = this;
-            self.get("el").addClass(this.get("prefixCls") + "dialog");
             //设置值，drag-ext 绑定时用到
             self.set("handlers", [self.get("header")]);
         }
@@ -21060,10 +21069,15 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
 
     Dialog.DefaultRender = DialogRender;
 
+    Component.UIStore.setUIByClass("dialog", {
+        priority:Component.UIStore.PRIORITY.LEVEL2,
+        ui:Dialog
+    });
+
     return Dialog;
 
 }, {
-    requires:[ "overlay/overlay","uibase",'overlay/dialogrender','./aria']
+    requires:[ "component","overlay/overlay","uibase",'overlay/dialogrender','./aria']
 });
 
 /**
@@ -21076,7 +21090,7 @@ KISSY.add('overlay/dialog', function(S, Overlay, UIBase, DialogRender, Aria) {
  * KISSY.Popup
  * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
-KISSY.add('overlay/popup', function(S, Overlay, undefined) {
+KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
     var POPUP_DELAY = 100;
 
@@ -21203,9 +21217,14 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
     });
 
 
+    Component.UIStore.setUIByClass("popup", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Popup
+    });
+
     return Popup;
 }, {
-    requires:[ "./overlay"]
+    requires:[ "component","./overlay"]
 });
 
 /**
@@ -25715,7 +25734,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 22:29
+build time: Aug 15 10:03
 */
 /**
  * combination of menu and button ,similar to native select
@@ -25781,6 +25800,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 }
             },
 
+            /**
+             * 产生菜单时对菜单监听，只监听一次
+             * @protected
+             */
             __bindMenu:function() {
                 var self = this,
                     menu = this.get("menu");
@@ -26055,22 +26078,31 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             bindUI:function() {
                 var self = this;
                 self.on("click", self._handleMenuClick, self);
-                self.get("menu").on("show", self._handleMenuShow, self)
+            },
+
+
+            __bindMenu :function() {
+                var self = this,menu = self.get("menu");
+                Select.superclass.__bindMenu.call(self);
+                if (menu) {
+                    menu.on("show", self._handleMenuShow, self);
+                }
             },
             /**
              *  different from menubutton by highlighting the currently selected option
              *  on open menu.
              */
             _handleMenuShow:function() {
-                this.get("menu").set("highlightedItem",
-                    this.get("selectedItem") || this.get("menu").getChildAt(0));
+                var self = this;
+                self.get("menu").set("highlightedItem",
+                    self.get("selectedItem") || self.get("menu").getChildAt(0));
             },
             /**
              * @private
              */
             _updateCaption:function() {
-                var self = this;
-                var item = self.get("selectedItem");
+                var self = this,
+                    item = self.get("selectedItem");
                 self.set("content", item ? item.get("content") : self.get("defaultCaption"));
             },
             _handleMenuClick:function(e) {
@@ -26080,13 +26112,15 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             },
 
             removeItems:function() {
-                Select.superclass.removeItems.apply(this, arguments);
-                this.set("selectedItem", null);
+                var self = this;
+                Select.superclass.removeItems.apply(self, arguments);
+                self.set("selectedItem", null);
             },
             removeItem:function(c) {
-                Select.superclass.removeItem.apply(this, arguments);
-                if (c == this.get("selectedItem")) {
-                    this.set("selectedItem", null);
+                var self = this;
+                Select.superclass.removeItem.apply(self, arguments);
+                if (c == self.get("selectedItem")) {
+                    self.set("selectedItem", null);
                 }
             },
             _uiSetSelectedItem:function(v, ev) {

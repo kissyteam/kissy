@@ -62,6 +62,10 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 }
             },
 
+            /**
+             * 产生菜单时对菜单监听，只监听一次
+             * @protected
+             */
             __bindMenu:function() {
                 var self = this,
                     menu = this.get("menu");

@@ -11,22 +11,34 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             bindUI:function() {
                 var self = this;
                 self.on("click", self._handleMenuClick, self);
-                self.get("menu").on("show", self._handleMenuShow, self)
+            },
+
+
+            /**
+             * @protected
+             */
+            __bindMenu :function() {
+                var self = this,menu = self.get("menu");
+                Select.superclass.__bindMenu.call(self);
+                if (menu) {
+                    menu.on("show", self._handleMenuShow, self);
+                }
             },
             /**
              *  different from menubutton by highlighting the currently selected option
              *  on open menu.
              */
             _handleMenuShow:function() {
-                this.get("menu").set("highlightedItem",
-                    this.get("selectedItem") || this.get("menu").getChildAt(0));
+                var self = this;
+                self.get("menu").set("highlightedItem",
+                    self.get("selectedItem") || self.get("menu").getChildAt(0));
             },
             /**
              * @private
              */
             _updateCaption:function() {
-                var self = this;
-                var item = self.get("selectedItem");
+                var self = this,
+                    item = self.get("selectedItem");
                 self.set("content", item ? item.get("content") : self.get("defaultCaption"));
             },
             _handleMenuClick:function(e) {
@@ -36,13 +48,15 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             },
 
             removeItems:function() {
-                Select.superclass.removeItems.apply(this, arguments);
-                this.set("selectedItem", null);
+                var self = this;
+                Select.superclass.removeItems.apply(self, arguments);
+                self.set("selectedItem", null);
             },
             removeItem:function(c) {
-                Select.superclass.removeItem.apply(this, arguments);
-                if (c == this.get("selectedItem")) {
-                    this.set("selectedItem", null);
+                var self = this;
+                Select.superclass.removeItem.apply(self, arguments);
+                if (c == self.get("selectedItem")) {
+                    self.set("selectedItem", null);
                 }
             },
             _uiSetSelectedItem:function(v, ev) {
