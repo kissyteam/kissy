@@ -197,7 +197,9 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					if(require){
 						return self.label?make(symbol.hint,self.label):make(symbol.error,require);
 					}else{
-						if(Util.isEmpty(value)) return make(symbol.ignore,"");
+						if(Util.isEmpty(value)) {
+                            return make(symbol.ignore,"");
+                        }
 					}
 				}
 				//依赖校验已经处理了
@@ -236,13 +238,17 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					break;
 				case "select-multiple":
 					S.each(ele,function(el){
-						if(el.selected)val.push(el.value);
+						if(el.selected){
+                            val.push(el.value);
+                        }
 					});
 					break;
 				case "radio":
 				case "checkbox":
 					S.each(ele,function(el){
-						if(el.checked)val.push(el.value);
+						if(el.checked){
+                            val.push(el.value);
+                        }
 					});
 				    break;
                 default:
@@ -302,7 +308,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		isValid: function(){
 			var self = this, result = self._validateValue();
 			self.showMessage(result[1],result[0]);
-			return result[1]!=0;
+			return result[1]!==0;
 		}
 		
 	});

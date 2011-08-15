@@ -66,7 +66,9 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
                 var self = this, cfg = self.config;
                 S.each(self.form.elements, function(el) {
                     var attr = DOM.attr(el, cfg.attrname);
-                    if (attr)self.add(el, Util.toJSON(attr.replace(/'/g, '"')));
+                    if (attr){
+                        self.add(el, Util.toJSON(attr.replace(/'/g, '"')));
+                    }
                 });
             },
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 15 12:19
+build time: Aug 15 18:22
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 15 12:19
              */
             version: '1.20dev',
 
-            buildTime:'20110815121900',
+            buildTime:'20110815182213',
 
             /**
              * Returns a new object containing all of the properties of
@@ -26266,9 +26266,9 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 15 18:20
 */
-﻿/**
+/**
  * @author: 常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
@@ -26495,7 +26495,7 @@ KISSY.add("validation/define",function(){
 	return Define
 	
 });
-﻿/**
+/**
  * Validation.Field
  * @author: 常胤 <lzlu.com>
  */
@@ -26819,7 +26819,7 @@ KISSY.add("validation/rule", function(S, Util, Rule) {
 }, { requires: ["./utils", "./rule/base", "./rule/normal"] });
 
 
-﻿/**
+/**
  * 规则管理类
  * @author: 常胤 <lzlu.com>
  */
@@ -26908,7 +26908,7 @@ KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 		};
 
 	
-}, { requires: ['dom',"event","../utils"] });﻿/**
+}, { requires: ['dom',"event","../utils"] });/**
  * 增加常用校验规则
  * @author: 常胤 <lzlu.com>
  */

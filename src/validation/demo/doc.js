@@ -1,1 +1,1 @@
-﻿KISSY.Config.base = "../../";
+KISSY.Config.base = "../../";
