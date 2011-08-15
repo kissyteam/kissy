@@ -1,34 +1,94 @@
+<html>
+<head>
 <meta charset="utf-8"/>
+<link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<link href="../assets/menubutton.css" rel="stylesheet"/>
+<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../menu/assets/menu.css" rel="stylesheet"/>
+<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/assets/submenu.css" rel="stylesheet"/>
+<link href="../../menu/assets/c2c-ui.css" rel="stylesheet"/>
+</head>
+<body>
+
+<h1>原生与模拟的统一 api</h1>
+
 
 <select id="s1">
-    <option value="1">i</option>
-    <option value="3">d</option>
+    <option value="one">i</option>
+    <option value="three">d</option>
+</select>
+<button id="d1">清空</button>
+<hr/>
+
+<select id="s2">
+    <option value="one">i</option>
+    <option value="three">d</option>
 </select>
 
-<button id="d">清空</button>
+<button id="d2">清空</button>
 
 <script src="../../../build/kissy.js" charset="utf-8"></script>
 <script src="emulate.js"></script>
 <script>
     KISSY.ready(function(S) {
         var $ = S.all;
-        var s = MenuButton.Select.decorate("#s1");
-        s.addItem(new MenuButton.Option({
-            content:"j",
-            value:2
-        }));
 
-        s.on("click", function() {
-            S.log(s.get("selectedIndex"));
-            var item = s.get("selectedItem")
-            S.log(item.get("value"));
-            S.log(item.get("content"));
+        S.use("menubutton", function(S, MenuButton) {
+
+            var s1 = MenuButton.Select.decorate("#s1", {
+                prefixCls:"c2c-",
+                defaultCaption:"请选择",
+                menuCfg:{
+                    width:80
+                }
+            });
+            s1.addItem(new MenuButton.Option({
+                content:"j",
+                prefixCls:"c2c-",
+                value:"two"
+            }));
+
+            s1.on("click", function() {
+                S.log(s1.get("selectedIndex"));
+                var item = s1.get("selectedItem");
+                S.log(item.get("value"));
+                S.log(item.get("content"));
+            });
+
+            s1.removeItem(s1.get("selectedItem"), true);
+
+            $("#d1").on("click", function() {
+                s1.removeItems(true);
+            });
         });
 
-        s.removeItem(s.get("selectedItem"));
 
-        $("#d").on("click", function() {
-            s.removeItems(true);
-        });
+        (function() {
+
+            var s2 = MenuButton2.Select.decorate("#s2");
+            window.s2 = s2;
+            s2.addItem(new MenuButton2.Option({
+                content:"j",
+                value:"two"
+            }));
+
+            s2.on("click", function() {
+                S.log(s2.get("selectedIndex"));
+                var item = s2.get("selectedItem");
+                S.log(item.get("value"));
+                S.log(item.get("content"));
+            });
+
+            s2.removeItem(s2.get("selectedItem"), true);
+
+            $("#d2").on("click", function() {
+                s2.removeItems(true);
+            });
+        })();
+
     });
 </script>
+</body>
+</html>

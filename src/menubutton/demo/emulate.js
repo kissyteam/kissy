@@ -1,4 +1,4 @@
-var MenuButton = (function(S) {
+var MenuButton2 = (function(S) {
     var $ = S.all;
     var re = {
         _init:function() {
@@ -22,7 +22,7 @@ var MenuButton = (function(S) {
                     if (el.options.length <= value) {
                         value = el.options.length - 1;
                     }
-                    el.options[value].selected = 'selected';
+                    el.options[value].selected = true;
                 },
 
                 _get_selectedItem:function() {
@@ -66,7 +66,17 @@ var MenuButton = (function(S) {
                     el.options.add(option.o);
                 },
                 removeItem:function(option) {
-                    el.options.remove(option.o);
+                    var os = el.options,re = [];
+                    for (var i = 0; i < os.length; i++) {
+                        if (os[i] == option.o) {
+                        } else {
+                            re.push(os[i]);
+                        }
+                    }
+                    el.options.length = 0;
+                    S.each(re, function(r) {
+                        el.options.add(r)
+                    });
                 },
                 hide:function() {
                     $(el).hide();
