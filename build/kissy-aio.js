@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 15 21:02
+build time: Aug 15 21:53
 */
 /*
  * @module kissy
@@ -89,7 +89,7 @@ build time: Aug 15 21:02
              */
             version: '1.20dev',
 
-            buildTime:'20110815210253',
+            buildTime:'20110815215350',
 
             /**
              * Returns a new object containing all of the properties of
@@ -15202,7 +15202,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 15 21:53
 */
 /**
  * UIBase.Align
@@ -16936,7 +16936,7 @@ KISSY.add("uibase/position", function(S) {
  */
 KISSY.add("uibase/positionrender", function() {
 
-    var ZINDEX=9999;
+    var ZINDEX = 9999;
 
     function Position() {
     }
@@ -16945,6 +16945,9 @@ KISSY.add("uibase/positionrender", function() {
         x: {
             // 水平方向绝对位置
             valueFn:function() {
+                // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
+                // el 不在 dom 树中 offset 报错的
+                // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
                 return this.get("el") && this.get("el").offset().left;
             }
         },
@@ -16963,16 +16966,7 @@ KISSY.add("uibase/positionrender", function() {
     Position.prototype = {
 
         __renderUI:function() {
-            var el = this.get("el");
-            el.addClass(this.get("prefixCls") + "ext-position");
-            el.css({
-                visibility:"visible",
-                display: "",
-                left:-9999,
-                top:-9999,
-                bottom:"",
-                right:""
-            });
+            this.get("el").addClass(this.get("prefixCls") + "ext-position");
         },
 
         _uiSetZIndex:function(x) {

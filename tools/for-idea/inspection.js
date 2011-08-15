@@ -43,8 +43,19 @@ x.getValue();
 x.BaseClass();
 x.text1();
 x.sidebd();
+x._uiSetZIndex();
+x._uiSetX();
+x._uiSetY();
 
 function Attribute() {
 }
 
-function Base(){}
+function Base() {
+}
+
+/**
+ * @class
+ */
+function UIBase() {
+
+}
