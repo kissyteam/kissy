@@ -4,6 +4,11 @@
  */
 KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, Menu, Option) {
 
+    function getMenuChildren(self) {
+        return self.get("menu") && self.get("menu").get("children") || [];
+    }
+
+
     var Select = UIBase.create(MenuButton, {
             /**
              * @protected
@@ -80,7 +85,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
                     },
                     setter:function(v) {
                         var self = this;
-                        var children = self.get("menu").get("children");
+                        var children = getMenuChildren(self);
                         for (var i = 0; i < children.length; i++) {
                             var item = children[i];
                             if (item.get("value") == v) {
@@ -104,7 +109,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
                 selectedIndex:{
                     setter:function(index) {
                         var self = this,
-                            children = self.get("menu").get("children");
+                            children = getMenuChildren(self);
                         if (index < 0 || index >= children.length) {
                             // 和原生保持一致
                             return -1;
@@ -114,7 +119,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 
                     getter:function() {
                         return S.indexOf(this.get("selectedItem"),
-                            this.get("menu").get("children"));
+                            getMenuChildren(this));
                     }
                 },
 
