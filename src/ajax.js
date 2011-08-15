@@ -1,7 +1,14 @@
-KISSY.add("ajax", function(S, io) {
+KISSY.add("ajax", function(S, serializer, io) {
     var undef = undefined;
     // some shortcut
     S.mix(io, {
+
+        /**
+         * form 序列化
+         * @param formElement {HTMLFormElement} 将要序列化的 form 元素
+         */
+        serialize:serializer.serialize,
+
         get: function(url, data, callback, dataType, _t) {
             // data 参数可省略
             if (S.isFunction(data)) {

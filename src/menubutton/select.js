@@ -10,20 +10,13 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 
 
     var Select = UIBase.create(MenuButton, {
-            /**
-             * @protected
-             */
-            bindUI:function() {
-                var self = this;
-                self.on("click", self._handleMenuClick, self);
-            },
-
 
             /**
              * @protected
              */
             __bindMenu :function() {
-                var self = this,menu = self.get("menu");
+                var self = this,
+                    menu = self.get("menu");
                 Select.superclass.__bindMenu.call(self);
                 if (menu) {
                     menu.on("show", self._handleMenuShow, self);
@@ -50,6 +43,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
                 var self = this;
                 self.set("selectedItem", e.target);
                 self.set("collapsed", true);
+                Select.superclass._handleMenuClick.call(self, e);
             },
 
             removeItems:function() {

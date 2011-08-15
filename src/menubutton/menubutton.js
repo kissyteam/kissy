@@ -74,11 +74,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                         self.set("activeItem", ev.newVal);
                     });
 
-                    menu.on("click", function(e) {
-                        self.fire("click", {
-                            target:e.target
-                        });
-                    });
+                    menu.on("click", self._handleMenuClick, self);
 
                     //窗口改变大小，重新调整
                     $(window).on("resize", self._reposition, self);
@@ -87,6 +83,15 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                      */
                     self.__bindMenu = S.noop;
                 }
+            },
+
+            /**
+             * @protected
+             */
+            _handleMenuClick:function(e) {
+                this.fire("click", {
+                    target:e.target
+                });
             },
 
             /**
