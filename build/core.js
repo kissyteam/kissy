@@ -39,12 +39,12 @@ D:\code\kissy_git\kissy\src\node\anim-plugin.js
 D:\code\kissy_git\kissy\src\node.js
 D:\code\kissy_git\kissy\src\json\json2.js
 D:\code\kissy_git\kissy\src\json.js
+D:\code\kissy_git\kissy\src\ajax\form-serializer.js
 D:\code\kissy_git\kissy\src\ajax\xhrobject.js
 D:\code\kissy_git\kissy\src\ajax\base.js
 D:\code\kissy_git\kissy\src\ajax\xhr.js
 D:\code\kissy_git\kissy\src\ajax\script.js
 D:\code\kissy_git\kissy\src\ajax\jsonp.js
-D:\code\kissy_git\kissy\src\ajax\form-serializer.js
 D:\code\kissy_git\kissy\src\ajax\form.js
 D:\code\kissy_git\kissy\src\ajax\iframe-upload.js
 D:\code\kissy_git\kissy\src\ajax.js
@@ -6891,6 +6891,29 @@ KISSY.add('json', function (S, JSON) {
 });
 
 /**
+ * form data  serialization util
+ * @author  yiminghe@gmail.com
+ */
+KISSY.add("ajax/form-serializer", function(S, DOM) {
+    return {
+        serialize:function(form) {
+            form = DOM.get(form);
+            var data = {};
+            S.each(form.elements, function(e) {
+                var d = e.disabled;
+                //必须编码
+                if (!d) {
+                    data[e.name] = DOM.val(e);
+                }
+            });
+            return S.param(data, undefined, undefined, false);
+        }
+    };
+}, {
+        requires:['dom']
+    });
+
+/**
  * encapsulation of io object . as transaction object in yui3
  * @author yiminghe@gmail.com
  */
@@ -7737,29 +7760,6 @@ KISSY.add("ajax/jsonp", function(S, io) {
     requires:['./base']
 });
 
-/**
- * form data  serialization util
- * @author  yiminghe@gmail.com
- */
-KISSY.add("ajax/form-serializer", function(S, DOM) {
-    return {
-        serialize:function(form) {
-            form = DOM.get(form);
-            var data = {};
-            S.each(form.elements, function(e) {
-                var d = e.disabled;
-                //必须编码
-                if (!d) {
-                    data[e.name] = DOM.val(e);
-                }
-            });
-            return S.param(data, undefined, undefined, false);
-        }
-    };
-}, {
-        requires:['dom']
-    });
-
 KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
     io.on("start", function(e) {
@@ -7949,10 +7949,17 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     requires:["dom","event","./base"]
 });
 
-KISSY.add("ajax", function(S, io) {
+KISSY.add("ajax", function(S, serializer, io) {
     var undef = undefined;
     // some shortcut
     S.mix(io, {
+
+        /**
+         * form 序列化
+         * @param formElement {HTMLFormElement} 将要序列化的 form 元素
+         */
+        serialize:serializer.serialize,
+
         get: function(url, data, callback, dataType, _t) {
             // data 参数可省略
             if (S.isFunction(data)) {
@@ -8023,7 +8030,9 @@ KISSY.add("ajax", function(S, io) {
 
     return io;
 }, {
-    requires:["ajax/base",
+    requires:[
+        "ajax/form-serializer",
+        "ajax/base",
         "ajax/xhrobject",
         "ajax/xhr",
         "ajax/script",

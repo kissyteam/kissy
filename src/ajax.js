@@ -79,7 +79,9 @@ KISSY.add("ajax", function(S, serializer, io) {
 
     return io;
 }, {
-    requires:["ajax/base",
+    requires:[
+        "ajax/form-serializer",
+        "ajax/base",
         "ajax/xhrobject",
         "ajax/xhr",
         "ajax/script",
