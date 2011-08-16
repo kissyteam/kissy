@@ -1,9 +1,9 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 15 18:20
+build time: Aug 16 16:17
 */
-/**
+﻿/**
  * @author: 常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
@@ -71,7 +71,9 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
                 var self = this, cfg = self.config;
                 S.each(self.form.elements, function(el) {
                     var attr = DOM.attr(el, cfg.attrname);
-                    if (attr)self.add(el, Util.toJSON(attr.replace(/'/g, '"')));
+                    if (attr){
+                        self.add(el, Util.toJSON(attr.replace(/'/g, '"')));
+                    }
                 });
             },
 
@@ -230,7 +232,7 @@ KISSY.add("validation/define",function(){
 	return Define
 	
 });
-/**
+﻿/**
  * Validation.Field
  * @author: 常胤 <lzlu.com>
  */
@@ -429,7 +431,9 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					if(require){
 						return self.label?make(symbol.hint,self.label):make(symbol.error,require);
 					}else{
-						if(Util.isEmpty(value)) return make(symbol.ignore,"");
+						if(Util.isEmpty(value)) {
+                            return make(symbol.ignore,"");
+                        }
 					}
 				}
 				//依赖校验已经处理了
@@ -468,13 +472,17 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					break;
 				case "select-multiple":
 					S.each(ele,function(el){
-						if(el.selected)val.push(el.value);
+						if(el.selected){
+                            val.push(el.value);
+                        }
 					});
 					break;
 				case "radio":
 				case "checkbox":
 					S.each(ele,function(el){
-						if(el.checked)val.push(el.value);
+						if(el.checked){
+                            val.push(el.value);
+                        }
 					});
 				    break;
                 default:
@@ -534,7 +542,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		isValid: function(){
 			var self = this, result = self._validateValue();
 			self.showMessage(result[1],result[0]);
-			return result[1]!=0;
+			return result[1]!==0;
 		}
 		
 	});
