@@ -46,6 +46,7 @@ x.sidebd();
 x._uiSetZIndex();
 x._uiSetX();
 x._uiSetY();
+x.serialize();
 
 function Attribute() {
 }

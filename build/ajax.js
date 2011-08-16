@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:42
+build time: Aug 16 14:44
 */
 /**
  * a scalable client io framework
@@ -243,23 +243,58 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
+    var rselectTextarea = /^(?:select|textarea)/i,
+        rCRLF = /\r?\n/g,
+        rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
     return {
-        serialize:function(form) {
-            form = DOM.get(form);
-            var data = {};
-            S.each(form.elements, function(e) {
-                var d = e.disabled;
-                //必须编码
-                if (!d) {
-                    data[e.name] = DOM.val(e);
-                }
+        /**
+         * 序列化表单元素
+         * @param {String|HTMLElement[]|HTMLElement|Node} forms
+         */
+        serialize:function(forms) {
+            var elements = [],data = {};
+            DOM.query(forms).each(function(el) {
+                // form 取其表单元素集合
+                // 其他直接取自身
+                var subs = el.elements ? S.makeArray(el.elements) : [el];
+                elements.push.apply(elements, subs);
             });
+            // 对表单元素进行过滤，具备有效值的才保留
+            elements = S.filter(elements, function(el) {
+                // 有名字
+                return el.name &&
+                    // 不被禁用
+                    !el.disabled &&
+                    (
+                        // radio,checkbox 被选择了
+                        el.checked ||
+                            // select 或者 textarea
+                            rselectTextarea.test(el.nodeName) ||
+                            // input 类型
+                            rinput.test(el.type)
+                        );
+
+                // 这样子才取值
+            });
+            S.each(elements, function(el) {
+                var val = DOM.val(el);
+                // 字符串换行平台归一化
+                if (S.isArray(val)) {
+                    val = S.map(val, function(v) {
+                        return v.replace(rCRLF, "\r\n");
+                    });
+                } else {
+                    val = val.replace(rCRLF, "\r\n");
+                }
+                data[el.name] = val;
+            });
+            // 名值键值对序列化,数组元素名字前不加 []
             return S.param(data, undefined, undefined, false);
         }
     };
 }, {
-        requires:['dom']
-    });KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
+    requires:['dom']
+});KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
     io.on("start", function(e) {
         //debugger
@@ -1046,10 +1081,17 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
     return XhrObject;
 }, {
     requires:["event"]
-});KISSY.add("ajax", function(S, io) {
+});KISSY.add("ajax", function(S, serializer, io) {
     var undef = undefined;
     // some shortcut
     S.mix(io, {
+
+        /**
+         * form 序列化
+         * @param formElement {HTMLFormElement} 将要序列化的 form 元素
+         */
+        serialize:serializer.serialize,
+
         get: function(url, data, callback, dataType, _t) {
             // data 参数可省略
             if (S.isFunction(data)) {
@@ -1120,7 +1162,9 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
     return io;
 }, {
-    requires:["ajax/base",
+    requires:[
+        "ajax/form-serializer",
+        "ajax/base",
         "ajax/xhrobject",
         "ajax/xhr",
         "ajax/script",
