@@ -126,6 +126,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 
     Select.decorate = function(element, cfg) {
         element = S.one(element);
+        cfg = cfg || {};
         cfg.elBefore = element;
         var select = new Select(cfg),
             name,
