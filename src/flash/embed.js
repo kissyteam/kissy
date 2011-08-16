@@ -157,6 +157,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
          * @return {HTMLElement}  返回 SWF 的 HTML 元素(object/embed). 未注册时，返回 undefined
          */
         get: function(id) {
+			id = id.replace(ID_PRE, '');
             return Flash.swfs[id];
         },
 
