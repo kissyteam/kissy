@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 16 15:41
+build time: Aug 16 19:23
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 16 15:41
          */
         version: '1.20dev',
 
-        buildTime:'20110816154135',
+        buildTime:'20110816192324',
 
         /**
          * Returns a new object containing all of the properties of
@@ -13306,7 +13306,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 16 19:23
 */
 /**
  * @module   Flash 全局静态类
@@ -13484,6 +13484,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             salign: EMPTY,
             bgcolor: EMPTY,
             devicefont: EMPTY,
+			hasPriority:EMPTY,
             /////////////////////////	其他控制参数
             base: EMPTY,
             swliveconnect: EMPTY,
@@ -13523,13 +13524,15 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             // 合并配置信息
             config = S.merge(defaultConifg, config);
             config.attrs = S.merge(defaultConifg.attrs, config.attrs);
-
-			id = target.replace(ID_PRE, '');
+			
+			// 过滤 ID 前缀
+			id = pureId(target);
 
             // 1. target 元素未找到 则自行创建一个容器
             if (!(target = DOM.get(target))) {
 				target = DOM.create('<div id='+ id +'/>');
-				document.body.appendChild(target);
+				DOM.prepend(target,document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
+				//document.body.appendChild(target);
             }
 
 			nodeName = target.nodeName.toLowerCase();
@@ -13599,6 +13602,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
          * @return {HTMLElement}  返回 SWF 的 HTML 元素(object/embed). 未注册时，返回 undefined
          */
         get: function(id) {
+			id = pureId(id);
             return Flash.swfs[id];
         },
 
@@ -13801,6 +13805,10 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
 
 	function stringParam(key,value){
 		return '<param name="' + key + '" value="' + value + '" />';
+	}
+	
+	function pureId(o){
+		return S.isString(o) ? o.replace(ID_PRE, '') : o;
 	}
 
     return Flash;
@@ -26300,9 +26308,9 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 15 18:20
+build time: Aug 16 16:17
 */
-/**
+﻿/**
  * @author: 常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
@@ -26370,7 +26378,9 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
                 var self = this, cfg = self.config;
                 S.each(self.form.elements, function(el) {
                     var attr = DOM.attr(el, cfg.attrname);
-                    if (attr)self.add(el, Util.toJSON(attr.replace(/'/g, '"')));
+                    if (attr){
+                        self.add(el, Util.toJSON(attr.replace(/'/g, '"')));
+                    }
                 });
             },
 
@@ -26529,7 +26539,7 @@ KISSY.add("validation/define",function(){
 	return Define
 	
 });
-/**
+﻿/**
  * Validation.Field
  * @author: 常胤 <lzlu.com>
  */
@@ -26728,7 +26738,9 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					if(require){
 						return self.label?make(symbol.hint,self.label):make(symbol.error,require);
 					}else{
-						if(Util.isEmpty(value)) return make(symbol.ignore,"");
+						if(Util.isEmpty(value)) {
+                            return make(symbol.ignore,"");
+                        }
 					}
 				}
 				//依赖校验已经处理了
@@ -26767,13 +26779,17 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 					break;
 				case "select-multiple":
 					S.each(ele,function(el){
-						if(el.selected)val.push(el.value);
+						if(el.selected){
+                            val.push(el.value);
+                        }
 					});
 					break;
 				case "radio":
 				case "checkbox":
 					S.each(ele,function(el){
-						if(el.checked)val.push(el.value);
+						if(el.checked){
+                            val.push(el.value);
+                        }
 					});
 				    break;
                 default:
@@ -26833,7 +26849,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 		isValid: function(){
 			var self = this, result = self._validateValue();
 			self.showMessage(result[1],result[0]);
-			return result[1]!=0;
+			return result[1]!==0;
 		}
 		
 	});
