@@ -42,6 +42,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             salign: EMPTY,
             bgcolor: EMPTY,
             devicefont: EMPTY,
+			hasPriority:EMPTY,
             /////////////////////////	其他控制参数
             base: EMPTY,
             swliveconnect: EMPTY,
@@ -81,13 +82,15 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             // 合并配置信息
             config = S.merge(defaultConifg, config);
             config.attrs = S.merge(defaultConifg.attrs, config.attrs);
-
-			id = target.replace(ID_PRE, '');
+			
+			// 过滤 ID 前缀
+			id = pureId(target);
 
             // 1. target 元素未找到 则自行创建一个容器
             if (!(target = DOM.get(target))) {
 				target = DOM.create('<div id='+ id +'/>');
-				document.body.appendChild(target);
+				DOM.prepend(target,document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
+				//document.body.appendChild(target);
             }
 
 			nodeName = target.nodeName.toLowerCase();
@@ -157,6 +160,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
          * @return {HTMLElement}  返回 SWF 的 HTML 元素(object/embed). 未注册时，返回 undefined
          */
         get: function(id) {
+			id = pureId(id);
             return Flash.swfs[id];
         },
 
@@ -359,6 +363,10 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
 
 	function stringParam(key,value){
 		return '<param name="' + key + '" value="' + value + '" />';
+	}
+	
+	function pureId(o){
+		return S.isString(o) ? o.replace(ID_PRE, '') : o;
 	}
 
     return Flash;

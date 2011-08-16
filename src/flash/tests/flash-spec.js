@@ -37,7 +37,7 @@ KISSY.use("ua,flash,dom", function(S, UA, Flash, DOM) {
             it("should register flash", function() {
                 var swfId = "FP-Normal-S",
                     config = S.merge(defconfig, {version:'6'});
-                F.add("#" + swfId, config, function(data) {
+                F.add(DOM.get("#" + swfId), config, function(data) {
                     expect(data.status).toBeGreaterThan(0);
                     expect(RE_FLASH_TAGS.test(data.swf.nodeName)).toBeTruthy();
                     expect(data.id).toEqual(swfId);
@@ -45,6 +45,7 @@ KISSY.use("ua,flash,dom", function(S, UA, Flash, DOM) {
                     expect(F.contains(swfId)).toBeTruthy();
                     expect(F.length).toEqual(1);
                 });
+				
             });
             it("should embed flash", function() {
                 var container = "#FC-Normal-D",
