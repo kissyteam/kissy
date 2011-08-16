@@ -6929,16 +6929,14 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
                 // 这样子才取值
             });
             S.each(elements, function(el) {
-                var val = DOM.val(el);
+                var val = DOM.val(el),vs;
                 // 字符串换行平台归一化
-                if (S.isArray(val)) {
-                    val = S.map(val, function(v) {
-                        return v.replace(rCRLF, "\r\n");
-                    });
-                } else {
-                    val = val.replace(rCRLF, "\r\n");
-                }
-                data[el.name] = val;
+                val = S.map(S.makeArray(val), function(v) {
+                    return v.replace(rCRLF, "\r\n");
+                });
+                // 全部搞成数组，防止同名
+                vs = data[el.name] = data[el.name] || [];
+                vs.push.apply(vs, val);
             });
             // 名值键值对序列化,数组元素名字前不加 []
             return S.param(data, undefined, undefined, false);

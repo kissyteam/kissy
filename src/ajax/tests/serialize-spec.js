@@ -31,6 +31,8 @@ KISSY.use("node,ajax", function(S, Node, io) {
 
             expect(ret).toBe("a=1&b=2&c=3&d=4&e=5");
 
+            expect(io.serialize(form.all("input"))).toBe("a=1&b=2&c=3");
+
             form.remove();
         });
 
@@ -48,7 +50,7 @@ KISSY.use("node,ajax", function(S, Node, io) {
                 ' <option selected="selected">Multiple3</option>' +
                 '   </select>' +
                 '   <br/>' +
-                '  <input type="checkbox" name="check" value="check1" id="ch1"/>' +
+                '  <input type="checkbox" name="check" value="check1" checked="checked" id="ch1"/>' +
                 '<label for="ch1">check1</label>' +
                 ' <input type="checkbox" name="check" value="check2" checked="checked" id="ch2"/>' +
                 ' <label for="ch2">check2</label>' +
@@ -61,7 +63,7 @@ KISSY.use("node,ajax", function(S, Node, io) {
                 form = $(html).appendTo("body"),
                 ret = io.serialize(form);
 
-            expect(ret).toBe("single=Single&multiple=Multiple&multiple=Multiple3&check=check2&radio=radio1");
+            expect(ret).toBe("single=Single&multiple=Multiple&multiple=Multiple3&check=check1&check=check2&radio=radio1");
 
             form.remove();
 
