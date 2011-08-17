@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 17 12:06
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -13,7 +13,7 @@ KISSY.add("suggest", function(S, Sug) {
  * @module   suggest
  * @creator  玉伯<lifesinger@gmail.com>
  */
-KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
+KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 
     var win = window,
         EventTarget = Event.Target,
@@ -57,7 +57,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
         /**
          * Suggest 的默认配置
          */
-        defaultConfig = {
+            defaultConfig = {
             /**
              * 用户附加给悬浮提示层的 class
              *
@@ -160,7 +160,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
              * @param {Object} data 请求返回的数据
              * @return {HTMLElement | String} 渲染的内容,可选项要求由"li"标签包裹，并将用于表单提交的值存储在"li"元素的key属性上
              */
-			//contentRender:null
+            //contentRender:null
         };
 
     /**
@@ -327,6 +327,14 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             Event.on(input, 'keydown', function(ev) {
                 var keyCode = ev.keyCode;
                 //S.log('keydown ' + keyCode);
+
+                // home end 空阻止
+                if (keyCode == 35 || keyCode == 36) {
+                    if (!input.value) {
+                        ev.halt();
+                        return;
+                    }
+                }
 
                 // ESC 键，隐藏提示层并还原初始输入
                 if (keyCode === 27) {
@@ -530,9 +538,10 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                     if (self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    try{
+                    try {
                         input.blur();
-                    }catch(e){}
+                    } catch(e) {
+                    }
 
                     // 提交表单
                     self._submitForm();
@@ -754,7 +763,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
                 return;
             }
 
-            switch(self.config.dataType) {
+            switch (self.config.dataType) {
                 case 0:
                     if (self._dataCache[q] !== undefined) { // 1. 如果设置需要缓存标志 且已经有缓存数据时, 使用缓存中的
                         S.log('use cache');
@@ -825,14 +834,14 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 
             self.returnedData = data;
             if (self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
-            
+
             //渲染内容
-			if(!self.config.contentRenderer){
-				content = self._renderContent(data);
-			}else{
-				content = self.config.contentRenderer(data);
-			}
-			
+            if (!self.config.contentRenderer) {
+                content = self._renderContent(data);
+            } else {
+                content = self.config.contentRenderer(data);
+            }
+
             self._fillContainer(content);
 
             // fire event
@@ -848,11 +857,11 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
         },
         /**
          * 渲染内容
-         */		
-        _renderContent:function(data){           
+         */
+        _renderContent:function(data) {
             var self = this, formattedData,
                 content = EMPTY, i, len, list, li, key, itemData;
-                
+
 
             // 格式化数据
             formattedData = self._formatData(self.returnedData);
@@ -1016,8 +1025,8 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
             } else {
                 // 选中下/上一项
                 //newSelectedItem = DOM[down ? 'next' : 'prev'](self.selectedItem);
-				//如果选项被分散在多个ol中，不能直接next或prev获取 
-                newSelectedItem = items[S.indexOf(self.selectedItem,items)+(down ? 1 : -1)];
+                //如果选项被分散在多个ol中，不能直接next或prev获取
+                newSelectedItem = items[S.indexOf(self.selectedItem, items) + (down ? 1 : -1)];
                 // 已经到了最后/前一项时，归位到输入框，并还原输入值
                 if (!newSelectedItem) {
                     self.textInput.value = self.query;
@@ -1117,7 +1126,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA,undefined) {
 
     Suggest.version = 1.1;
     Suggest.callback = callback;
-    S.Suggest=Suggest;
+    S.Suggest = Suggest;
     return Suggest;
 
 }, { requires: ['dom','event','ua'] });
