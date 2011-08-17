@@ -44,7 +44,7 @@ KISSY.add('suggest', function(S, undefined) {
         /**
          * Suggest 的默认配置
          */
-        defaultConfig = {
+            defaultConfig = {
             /**
              * 用户附加给悬浮提示层的 class
              *
@@ -290,6 +290,14 @@ KISSY.add('suggest', function(S, undefined) {
                 var keyCode = ev.keyCode;
                 //S.log('keydown ' + keyCode);
 
+                // home end 空阻止
+                if (keyCode == 35 || keyCode == 36) {
+                    if (!input.value) {
+                        ev.halt();
+                        return;
+                    }
+                }
+
                 // ESC 键，隐藏提示层并还原初始输入
                 if (keyCode === 27) {
                     self.hide();
@@ -324,7 +332,7 @@ KISSY.add('suggest', function(S, undefined) {
                     // 如果是键盘选中某项后回车，触发 onItemSelect 事件
                     if (isDowningOrUping) {
                         if (input.value == self._getSelectedItemKey()) { // 确保值匹配
-                            if(self.fire(EVENT_ITEM_SELECT) === false) return;
+                            if (self.fire(EVENT_ITEM_SELECT) === false) return;
                         }
                     }
 
@@ -439,7 +447,7 @@ KISSY.add('suggest', function(S, undefined) {
             Event.on(content, 'mousedown', function(ev) {
                 var target = ev.target;
 
-               // 可能点击在 li 的子元素上
+                // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
                     target = DOM.parent(target, li);
                 }
@@ -461,13 +469,13 @@ KISSY.add('suggest', function(S, undefined) {
 
             Event.on(content, 'mouseup', function(ev) {
                 var target = ev.target;
-                if(ev.which > 2) return; // 非左键和中键点击
+                if (ev.which > 2) return; // 非左键和中键点击
 
                 // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
                     target = DOM.parent(target, li);
                 }
-                
+
                 // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
                 if (target != mouseDownItem) return;
 
@@ -476,12 +484,13 @@ KISSY.add('suggest', function(S, undefined) {
                     self._updateInputFromSelectItem(target);
 
                     // 触发选中事件
-                    if(self.fire(EVENT_ITEM_SELECT) === false) return;
+                    if (self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    try{
+                    try {
                         input.blur();
-                    }catch(e) {}
+                    } catch(e) {
+                    }
 
                     // 提交表单
                     self._submitForm();
@@ -502,7 +511,7 @@ KISSY.add('suggest', function(S, undefined) {
                 // 因此需要等待另一个输入框 focusin 触发后，再执行下面的逻辑
                 S.later(function() {
                     // 鼠标已移开 footer 区域
-                    if(mouseLeaveFooter) {
+                    if (mouseLeaveFooter) {
                         self.hide();
                     }
                     // 不是转移到另一个输入框，而是在 footer 非输入框处点击
@@ -536,7 +545,7 @@ KISSY.add('suggest', function(S, undefined) {
                 var form = self.textInput.form;
                 if (!form) return;
 
-                if(self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
+                if (self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
 
                 // 通过 js 提交表单时，不会触发 onsubmit 事件
                 // 需要 js 自己触发
@@ -593,17 +602,17 @@ KISSY.add('suggest', function(S, undefined) {
 
             DOM.addStyleSheet(
                 '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
-                + '.ks-suggest-shim{z-index:99998}'
-                + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
-                + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
-                + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
-                + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
-                + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
-                + '.ks-suggest-footer{padding:0 5px 5px}'
-                + '.ks-suggest-closebtn{float:right}'
-                + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
-                /* hacks */
-                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
+                    + '.ks-suggest-shim{z-index:99998}'
+                    + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
+                    + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
+                    + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
+                    + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
+                    + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
+                    + '.ks-suggest-footer{padding:0 5px 5px}'
+                    + '.ks-suggest-closebtn{float:right}'
+                    + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
+                    /* hacks */
+                    + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
                 STYLE_ID);
         },
 
@@ -626,7 +635,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         start: function() {
             var self = this;
-            if(self.fire(EVENT_BEFORE_START) === false) return;
+            if (self.fire(EVENT_BEFORE_START) === false) return;
 
             Suggest.focusInstance = self;
 
@@ -645,7 +654,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this;
 
             Suggest.focusInstance = undefined;
-            if(self._timer) self._timer.cancel();
+            if (self._timer) self._timer.cancel();
             self._isRunning = false;
         },
 
@@ -742,7 +751,7 @@ KISSY.add('suggest', function(S, undefined) {
             }
 
             self.queryParams = config.queryName + '=' + encodeURIComponent(self.query);
-            if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
+            if (self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
             self.dataScript.src = self.dataSource + '&' + self.queryParams;
@@ -756,11 +765,11 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this, formattedData,
                 content = EMPTY, i, len, list, li, key, itemData;
             //S.log('handle response');
-            
+
             if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致 bug：1. 缓存 key 值不对； 2. 过期数据导致的闪屏
 
             self.returnedData = data;
-            if(self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
+            if (self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
 
             // 格式化数据
             formattedData = self._formatData(self.returnedData);
@@ -860,7 +869,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this;
             self._fillContent(content || EMPTY);
             self._fillFooter(footer || EMPTY);
-            
+
             // bugfix: 更改容器内容时, 调整 shim 大小
             if (self.isVisible()) self._setShimRegion();
         },
@@ -1036,7 +1045,7 @@ KISSY.add('suggest', function(S, undefined) {
     Suggest.callback = callback;
     S.Suggest = Suggest;
 
-}, { requires: ['core'] } );
+}, { requires: ['core'] });
 
 
 /**
