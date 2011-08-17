@@ -2417,19 +2417,19 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 }
                 break;
 
-            case KEY_HOME:
-                if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, getDomEvent(e));
-                    e.halt();
-                }
-                break;
-            case KEY_END:
-                if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
-                    e.halt();
-                }
-
-                break;
+//            case KEY_HOME:
+//                if (no_modifier_pressed_flag) {
+//                    self.switchTo(0, undefined, getDomEvent(e));
+//                    e.halt();
+//                }
+//                break;
+//            case KEY_END:
+//                if (no_modifier_pressed_flag) {
+//                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
+//                    e.halt();
+//                }
+//
+//                break;
             case KEY_TAB:
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
