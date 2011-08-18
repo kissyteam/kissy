@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 18 17:13
+build time: Aug 18 17:39
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Aug 18 17:13
          */
         version: '1.20dev',
 
-        buildTime:'20110818171308',
+        buildTime:'20110818173923',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2163,8 +2163,7 @@ build time: Aug 18 17:13
                 modName = self._combine(mod.name),
                 packages = self.__packages || {},
                 pName = "",
-                p_def,
-                p_path;
+                p_def;
 
             for (var p in packages) {
                 if (packages.hasOwnProperty(p)
@@ -2182,8 +2181,7 @@ build time: Aug 18 17:13
                 // kissy 自身组件的事件戳后缀
                 mod.tag = encodeURIComponent(S.Config.tag || S.buildTime);
             }
-            mod.packagepath = (p_def && p_def.path) || self.Config.base;
-            return p_path;
+            return mod.packagepath = (p_def && p_def.path) || self.Config.base;
         },
         /**
          * compress 'from module' to 'to module'

@@ -112,11 +112,22 @@
             });
 
             var ok = false;
-            //debugger
             S.use("1.2/mod", function(S, Mod) {
                 ok = true;
                 runs(function() {
                     expect(Mod).toBe(2);
+                    var mod12;
+                    var scripts = document.getElementsByTagName("script");
+                    for (var i = 0; i < scripts.length; i++) {
+                        var script = scripts[i];
+                        if (script.src.indexOf("1.2/mod.js") > -1) {
+                            mod12 = script;
+                            break;
+                        }
+                    }
+
+                    expect(mod12.async).toBe(true);
+                    expect(mod12.charset).toBe("utf-8");
                     S.use("node", function(S, N) {
                         expect(N.one("#k12").css("width")).toBe('111px');
                     });
@@ -126,6 +137,7 @@
             waitsFor(function() {
                 return ok;
             }, "1.2/mod never loaded");
+
 
         });
     });

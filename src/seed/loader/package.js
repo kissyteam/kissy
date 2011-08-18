@@ -40,8 +40,7 @@
                 modName = self._combine(mod.name),
                 packages = self.__packages || {},
                 pName = "",
-                p_def,
-                p_path;
+                p_def;
 
             for (var p in packages) {
                 if (packages.hasOwnProperty(p)
@@ -59,8 +58,7 @@
                 // kissy 自身组件的事件戳后缀
                 mod.tag = encodeURIComponent(S.Config.tag || S.buildTime);
             }
-            mod.packagepath = (p_def && p_def.path) || self.Config.base;
-            return p_path;
+            return mod.packagepath = (p_def && p_def.path) || self.Config.base;
         },
         /**
          * compress 'from module' to 'to module'
