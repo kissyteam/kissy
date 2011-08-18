@@ -72,15 +72,16 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         },
 
         createDom:function() {
-            var el = this.get("el"),
+            var self=this,
+                el = self.get("el"),
                 id,
                 rowEl,
-                labelEl = this.get("labelEl");
+                labelEl = self.get("labelEl");
 
 
-            rowEl = $("<div class='" + this.getCls(ROW_CLS) + "'/>");
+            rowEl = $("<div class='" + self.getCls(ROW_CLS) + "'/>");
             id = S.guid('tree-item');
-            this.set("rowEl", rowEl);
+            self.set("rowEl", rowEl);
 
             var expandIconEl = $("<div/>")
                 .appendTo(rowEl);
@@ -88,8 +89,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 .appendTo(rowEl);
 
             if (!labelEl) {
-                labelEl = $("<span id='" + id + "' class='" + this.getCls(LABEL_CLS) + "'/>");
-                this.set("labelEl", labelEl);
+                labelEl = $("<span id='" + id + "' class='" + self.getCls(LABEL_CLS) + "'/>");
+                self.set("labelEl", labelEl);
             }
             labelEl.appendTo(rowEl);
 
@@ -98,13 +99,14 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 "aria-labelledby":id
             }).prepend(rowEl);
 
-            this.set("expandIconEl", expandIconEl);
-            this.set("iconEl", iconEl);
+            self.set("expandIconEl", expandIconEl);
+            self.set("iconEl", iconEl);
 
         },
 
         _uiSetExpanded:function(v) {
-            var childrenEl = this.get("childrenEl");
+            var self=this,
+                childrenEl = self.get("childrenEl");
             if (childrenEl) {
                 if (!v) {
                     childrenEl.hide();
@@ -144,16 +146,20 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
         },
 
         /**
-         * 内容容器节点，树节点都插到这里
+         * 内容容器节点，子树节点都插到这里
+         * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
+         * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
+         * @override
          */
         getContentElement:function() {
-            if (this.get("childrenEl")) {
-                return this.get("childrenEl");
+            var self=this;
+            if (self.get("childrenEl")) {
+                return self.get("childrenEl");
             }
-            var c = $("<div " + (this.get("expanded") ? "" : "style='display:none'")
+            var c = $("<div " + (self.get("expanded") ? "" : "style='display:none'")
                 + " role='group'><" + "/div>")
-                .appendTo(this.get("el"));
-            this.set("childrenEl", c);
+                .appendTo(self.get("el"));
+            self.set("childrenEl", c);
             return c;
         }
     }, {
@@ -183,10 +189,11 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 return el.children("." + this.getCls(LABEL_CLS)).html();
             },
             isLeaf:function(el) {
-                if (el.hasClass(this.getCls(LEAF_CLS))) {
+                var self=this;
+                if (el.hasClass(self.getCls(LEAF_CLS))) {
                     return true;
                 }
-                if (el.hasClass(this.getCls(NOT_LEAF_CLS))) {
+                if (el.hasClass(self.getCls(NOT_LEAF_CLS))) {
                     return false;
                 }
             }

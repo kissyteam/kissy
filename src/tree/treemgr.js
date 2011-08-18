@@ -29,16 +29,18 @@ KISSY.add("tree/treemgr", function(S, Event) {
          加快从事件代理获取原事件节点
          */
         __getAllNodes:function() {
-            if (!this._allNodes) {
-                this._allNodes = {};
+            var self=this;
+            if (!self._allNodes) {
+                self._allNodes = {};
             }
-            return this._allNodes;
+            return self._allNodes;
         },
 
         __renderUI:function() {
+             var self=this;
             // add 过那么一定调用过 checkIcon 了
-            if (!this.get("children").length) {
-                this._computeClass("root_renderUI");
+            if (!self.get("children").length) {
+                self._computeClass("root_renderUI");
             }
         },
 

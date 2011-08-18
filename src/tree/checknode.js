@@ -11,11 +11,12 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
 
     var CheckNode = UIBase.create(BaseNode, {
         _performInternal:function(e) {
+            var self=this;
             // 需要通知 tree 获得焦点
-            this.get("tree").get("el")[0].focus();
+            self.get("tree").get("el")[0].focus();
             var target = $(e.target),
-                view = this.get("view"),
-                tree = this.get("tree");
+                view = self.get("view"),
+                tree = self.get("tree");
 
             if (e.type == "dblclick") {
                 // 双击在 +- 号上无效
@@ -27,37 +28,38 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
                     return;
                 }
                 // 双击在字或者图标上，切换 expand 装tai
-                this.set("expanded", !this.get("expanded"));
+                self.set("expanded", !self.get("expanded"));
             }
 
             // 点击在 +- 号，切换状态
             if (target.equals(view.get("expandIconEl"))) {
-                this.set("expanded", !this.get("expanded"));
+                self.set("expanded", !self.get("expanded"));
                 return;
             }
 
             // 单击任何其他地方都切换 check 状态
-            var checkState = this.get("checkState");
+            var checkState = self.get("checkState");
             if (checkState == CHECK) {
                 checkState = EMPTY;
             } else {
                 checkState = CHECK;
             }
-            this.set("checkState", checkState);
+            self.set("checkState", checkState);
             tree.fire("click", {
-                target:this
+                target:self
             });
         },
 
         _uiSetCheckState:function(s) {
+            var self=this;
             if (s == CHECK || s == EMPTY) {
-                S.each(this.get("children"), function(c) {
+                S.each(self.get("children"), function(c) {
                     c.set("checkState", s);
                 });
             }
             // 每次状态变化都通知 parent 沿链检查，一层层向上通知
             // 效率不高，但是结构清晰
-            var parent = this.get("parent");
+            var parent = self.get("parent");
             if (parent) {
                 var checkCount = 0;
                 var cs = parent.get("children");

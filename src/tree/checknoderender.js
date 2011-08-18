@@ -7,16 +7,18 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
     return UIBase.create(BaseNodeRender, {
 
         createDom:function() {
-            var expandIconEl = this.get("expandIconEl"),
-                checkEl = $("<div class='" + this.getCls(INLINE_BLOCK + " " + " "
+            var self = this;
+            var expandIconEl = self.get("expandIconEl"),
+                checkEl = $("<div class='" + self.getCls(INLINE_BLOCK + " " + " "
                     + ICON_CLS) + "'/>").insertAfter(expandIconEl);
-            this.set("checkEl", checkEl);
+            self.set("checkEl", checkEl);
         },
 
         _uiSetCheckState:function(s) {
-            var checkEl = this.get("checkEl");
-            checkEl.removeClass(this.getCls(ALL_STATES_CLS))
-                .addClass(this.getCls(CHECK_CLS + "ed" + s));
+            var self = this;
+            var checkEl = self.get("checkEl");
+            checkEl.removeClass(self.getCls(ALL_STATES_CLS))
+                .addClass(self.getCls(CHECK_CLS + "ed" + s));
         }
 
     }, {
