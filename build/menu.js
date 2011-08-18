@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 18 13:03
 */
 /**
  * deletable menuitem
@@ -245,6 +245,18 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 self.set("el", el);
                 var menuContent = el.one("." + self.getCls("menu-content"));
                 self.decorateChildren(menuContent);
+            },
+
+            /**
+             * 重置状态，用于重用
+             */
+            reset:function() {
+                var self = this,
+                    view = self.get("view");
+                self.set("filterStr", "");
+                self.set("enteredItems", []);
+                var filterInput = view && view.get("filterInput");
+                filterInput && filterInput.val("");
             },
 
             destructor:function() {

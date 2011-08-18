@@ -142,6 +142,18 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 self.decorateChildren(menuContent);
             },
 
+            /**
+             * 重置状态，用于重用
+             */
+            reset:function() {
+                var self = this,
+                    view = self.get("view");
+                self.set("filterStr", "");
+                self.set("enteredItems", []);
+                var filterInput = view && view.get("filterInput");
+                filterInput && filterInput.val("");
+            },
+
             destructor:function() {
                 var view = this.get("view");
                 var filterInput = view && view.get("filterInput");

@@ -44,7 +44,7 @@
 <div id="container">
 
 </div>
-
+<button id="reset">reset</button>
 
 <h2>从已知元素生成</h2>
 
@@ -159,6 +159,11 @@
                         selected = e.target;
                         alert("selected : " + selected.get("content"));
                     }
+                });
+
+
+                S.all("#reset").on("click", function() {
+                    filterMenu.reset();
                 });
             })();
 
