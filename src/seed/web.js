@@ -242,4 +242,4 @@
         S.Config.debug = true;
     }
 
-})(KISSY);
+})(KISSY, undefined);
