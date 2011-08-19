@@ -80,10 +80,10 @@
         KISSY.use("suggest", function(S, Suggest) {
             S.ready(function(S) {
                 Suggest('#q22', 'http://suggest.taobao.com/sug', {
-                            autoFocus: true,
-                            resultFormat: '约%result%个宝贝',
-                            shim: false
-                        });
+                    autoFocus: true,
+                    resultFormat: '约%result%个宝贝',
+                    shim: false
+                });
             });
         });
     </script>
@@ -130,11 +130,11 @@
                 // http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10&callback=suggestCallback&keyword=n
                 var dataUrl = 'http://youa.baidu.com/suggest/se/s?cmd=suggest&type=kwd&max_count=10';
                 var sug = new Suggest('#q2', dataUrl, {
-                            containerCls: 'youa-suggest-container',
-                            charset: 'gbk',
-                            callbackFn: 'suggestCallback',
-                            queryName: 'keyword'
-                        });
+                    containerCls: 'youa-suggest-container',
+                    charset: 'gbk',
+                    callbackFn: 'suggestCallback',
+                    queryName: 'keyword'
+                });
 
                 // youa: suggestCallback({"err":"ok", "r":[{"key":"nike", "val":140000}, {"key":"nike鞋", "val":119000}, {"key":"nike板鞋", "val":44300}, {"key":"nike运动鞋", "val":115000}, {"key":"nike正品", "val":47400}, {"key":"nike包", "val":8300}, {"key":"nike篮球鞋", "val":18400}, {"key":"nike新款", "val":27600}, {"key":"nike 耐克", "val":140000}, {"key":"nike女鞋", "val":7850}], "num":10})
                 // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
@@ -182,12 +182,12 @@
                 // Baidu
                 var dataUrl = 'http://suggestion.baidu.com/su?p=3&cb=window.bdsug.sug';
                 var sug = new Suggest('#kw', dataUrl, {
-                            resultFormat: '',
-                            containerCls: 'bd-sug',
-                            charset: 'gb2312',
-                            queryName: 'wd',
-                            callbackFn: 'bdsug.sug'
-                        });
+                    resultFormat: '',
+                    containerCls: 'bd-sug',
+                    charset: 'gb2312',
+                    queryName: 'wd',
+                    callbackFn: 'bdsug.sug'
+                });
 
                 // baidu: window.bdsug.sug({q:"nike",p:true,s:["nike官网","妮可基德曼","妮可","妮可罗宾","妮可里奇","nike鞋","nike 官网","尼可","nike女","nike360"]});
                 // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
@@ -241,10 +241,10 @@
                 // Google
                 var dataUrl = 'http://clients1.google.com/complete/search?hl=en';
                 var sug = new Suggest('#gq', dataUrl, {
-                            resultFormat: '',
-                            containerCls: 'g-sug',
-                            callbackFn: 'google.ac.h'
-                        });
+                    resultFormat: '',
+                    containerCls: 'g-sug',
+                    callbackFn: 'google.ac.h'
+                });
 
                 // google: window.google.ac.h(["ni",[["牛博网","73,248 结果","0z"],["牛博网首页","12,200,617 结果","1z"],["你是准备替党说话 还是准备替老百姓说话","136,545 结果","2z"],["nike","117,000,000 结果","3"],["nikon","127,000,000 结果","4"],["nissan","135,000,000 结果","5"],["nine west","40,000,000 结果","6"],["nike鞋","3,380,000 结果","7"],["倪萍 再婚","36,400 结果","8"],["牛年祝福语","582,000 结果","9"]]])
                 // taobao: g_ks_suggest_callback({"result": [["nike 正品", "2170000"], ["nike 专柜 正品", "834000"], ["nike 短袖", "242000"], ["nike 板 鞋", "989000"], ["nike 女鞋", "253000"], ["nike 运动鞋", "550000"], ["nike 包", "295000"], ["nike 鞋", "3160000"], ["nike 单肩包", "38500"], ["nike 09", "786000"]]})
@@ -304,9 +304,9 @@
             };
 
             var _suggest = new Suggest('#qs', data, {
-                        autoFocus: true,
-                        resultFormat: ''
-                    });
+                autoFocus: true,
+                resultFormat: ''
+            });
         });
     </script>
 </div>
@@ -336,11 +336,12 @@
                 <li><a href="http://jianghu.taobao.com/square.htm">宝贝分享</a><b class="rc-lt"></b><b class="rc-rt"></b>
                 </li>
             </ul>
-            <div class="tsearch-panel clearfix">
+
+            <div class="tsearch-panel clearfix" style="clear:none;">
                 <form target="_top" name="search" action="http://s.taobao.com/search" id="J_TSearchForm">
                     <div class="tsearch-fields focus">
-                        <label for="q" class=""></label>
-                        <input type="text" accesskey="s" id="q" name="q" autofocus="true" autocomplete="off">
+                        <label for="q9" class=""></label>
+                        <input type="text" accesskey="s" id="q9" name="q" autofocus="true" autocomplete="off"/>
 
                         <b class="rc-lb"></b>
                         <b class="rc-lt"></b>
@@ -365,133 +366,134 @@
 
         </div>
     </div>
-    <script>
-        KISSY.use("dom,event,suggest,switchable,node", function(S, DOM, Event, Suggest, Switchable, Node) {
-            var q = '#q',
-                    sug = new Suggest(DOM.get(q), 'http://suggest.taobao.com/sug?code=utf-8&extras=1', {
-                                resultFormat: '约%result%个宝贝'
-                            }),
-                    fp = S,
-                    that = this,
-                    field = fp.one(q).parent(),
-                    qNode = new Node(fp.one(q)),
-                    tabs = DOM.query("#J_TSearchTabs li"),
-                    form = field.parent("form")[0];
-            fp.__fp_sug = sug;
-            DOM.addClass(form.parentNode, "ks-switchable-content");
-            DOM.addClass("#J_TSearchTabs", "ks-switchable-nav");
+</div>
+</div>
 
-            var tabPanelDiv = DOM.create("<div class='tab-panel'></div>");
+<script>
+    KISSY.use("dom,event,suggest,switchable,node", function(S, DOM, Event, Suggest, Switchable, Node) {
+        var q = '#q9',
+                sug = new Suggest(DOM.get(q), 'http://suggest.taobao.com/sug?code=utf-8&extras=1', {
+                    resultFormat: '约%result%个宝贝'
+                }),
+                fp = S,
+                that = this,
+                field = fp.one(q).parent(),
+                qNode = new Node(fp.one(q)),
+                tabs = DOM.query("#J_TSearchTabs li");
+        form = field.parent("form")[0];
+        fp.__fp_sug = sug;
+        DOM.addClass(form.parentNode, "ks-switchable-content");
+        DOM.addClass("#J_TSearchTabs", "ks-switchable-nav");
 
-            for (var i = 0; i < tabs.length; i++) {
-                form.parentNode.appendChild(tabPanelDiv.cloneNode(true));
-            }
-            DOM.get(".tab-panel", form.parentNode).appendChild(form);
+        var tabPanelDiv = DOM.create("<div class='tab-panel'></div>");
 
-            var tab_as = DOM.query("#J_TSearchTabs a"),
-                    tabpanels = DOM.query(".tab-panel", DOM.get("#J_TSearchTabs").parentNode),
-                    searchType = form["search_type"];
+        for (var i = 0; i < tabs.length; i++) {
+            form.parentNode.appendChild(tabPanelDiv.cloneNode(true));
+        }
+        DOM.get(".tab-panel", form.parentNode).appendChild(form);
 
-            var CURRENT = "current",
-                    SEARCH_TYPE_LIST = ["item", "mall", "shop", "auction", "taoba", "share"],
-                    SEARCH_TYPE_ACTION = {
-                        "item": function() {
-                            if (q.value === '') {
-                                form.action = 'http://list.taobao.com/browse/cat-0.htm';
-                            }
-                        },
-                        "mall": function() {
-                            form.action = 'http://list.tmall.com/search_product.htm';
-                        },
-                        "shop": function() {
-                            form.action = 'http://shopsearch.taobao.com/browse/shop_search.htm';
-                        },
-                        "auction": function() {
-                            // a - 拍卖 / b - 一口价
-                            form['atype'].value = 'a';
-                        },
-                        "taoba": function() {
-                            form.action = 'http://ba.taobao.com/index.htm';
-                        },
-                        "share": function() {
-                            form['tracelog'].value = 'msearch2fx';
-                            if (q.value === '') {
-                                form.action = 'http://jianghu.taobao.com/square.htm';
-                            } else {
-                                form['keyword'].value = q.value;
-                                form.action = 'http://fx.taobao.com/view/share_search.htm';
-                            }
+        var tab_as = DOM.query("#J_TSearchTabs a"),
+                tabpanels = DOM.query(".tab-panel", DOM.get("#J_TSearchTabs").parentNode),
+                searchType = form["search_type"];
+
+        var CURRENT = "current",
+                SEARCH_TYPE_LIST = ["item", "mall", "shop", "auction", "taoba", "share"],
+                SEARCH_TYPE_ACTION = {
+                    "item": function() {
+                        if (q.value === '') {
+                            form.action = 'http://list.taobao.com/browse/cat-0.htm';
                         }
                     },
-                    tabType = ['bb', 'sc', 'dp', 'pm', 'tb', 'fx'];
-
-            // util - tsearch tabs switch
-            var switchToTab = function(n) {
-
-                if (n == 1) {
-                    fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?area=b2c&code=utf-8&extras=1&callback=KISSY.Suggest.callback';
-                } else {
-                    fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?code=utf-8&extras=1&callback=KISSY.Suggest.callback';
-                }
-                fp.__fp_sug._dataCache = {};
-            };
-
-            // on input focus / blur
-            qNode.on("focus",
-                    function(ev) {
-                        DOM.addClass(field, "focus");
-                    }).on("blur", function(ev) {
-                        if (fp.trim(q.value) === '') {
-                            DOM.removeClass(field, "focus");
+                    "mall": function() {
+                        form.action = 'http://list.tmall.com/search_product.htm';
+                    },
+                    "shop": function() {
+                        form.action = 'http://shopsearch.taobao.com/browse/shop_search.htm';
+                    },
+                    "auction": function() {
+                        // a - 拍卖 / b - 一口价
+                        form['atype'].value = 'a';
+                    },
+                    "taoba": function() {
+                        form.action = 'http://ba.taobao.com/index.htm';
+                    },
+                    "share": function() {
+                        form['tracelog'].value = 'msearch2fx';
+                        if (q.value === '') {
+                            form.action = 'http://jianghu.taobao.com/square.htm';
+                        } else {
+                            form['keyword'].value = q.value;
+                            form.action = 'http://fx.taobao.com/view/share_search.htm';
                         }
-                    });
+                    }
+                },
+                tabType = ['bb', 'sc', 'dp', 'pm', 'tb', 'fx'];
 
+        // util - tsearch tabs switch
+        var switchToTab = function(n) {
 
-            Event.on(tab_as, "click", function(e) {
-                e.preventDefault();
-            });
-
-            var searchTab = new S.Tabs(DOM.get("#J_TSearchTabs").parentNode, {
-                        aria:true,
-                        activeTriggerCls:'current',
-                        triggerType:'click'
-                    });
-
-            searchTab.on("switch", function(ev) {
-                var n = ev.currentIndex;
-                tabpanels[n].appendChild(form);
-                switchToTab(n);
-                setTimeout(function() {
-                    tabs[n].focus();
-                }, 0);
-                searchType.value = SEARCH_TYPE_LIST[n];
-                if (fp.get('#J_monitorImg')) {
-                    var time = new Date().getTime();
-                    fp.get('#J_monitorImg').src = 'http://www.atpanel.com/jsclick?sysskjc=' + tabType[n] + '&t=' + time;
-                }
-            });
-
-            var btn = form.getElementsByTagName('button')[0],
-                    submitHandler = function() {
-                        if (fp.get('#J_monitorImg')) {
-                            fp.get('#J_monitorImg').src = 'http://www.atpanel.com/jsclick?sysskjc=ssan';
-                        }
-                        SEARCH_TYPE_ACTION[form['search_type'].value]();
-                    };
-
-            if (S.UA.ie <= 8) {
-                Event.on(btn, 'click', submitHandler);
+            if (n == 1) {
+                fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?area=b2c&code=utf-8&extras=1&callback=KISSY.Suggest.callback';
+            } else {
+                fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?code=utf-8&extras=1&callback=KISSY.Suggest.callback';
             }
-            Event.on(form, 'submit', submitHandler);
+            fp.__fp_sug._dataCache = {};
+        };
 
-            setTimeout(function() {
-                // 默认选中宝贝Tab
-                searchType.value = 'item';
-                switchToTab(0);
-            }, 0);
+        // on input focus / blur
+        qNode.on("focus",
+                function(ev) {
+                    DOM.addClass(field, "focus");
+                }).on("blur", function(ev) {
+                    if (fp.trim(q.value) === '') {
+                        DOM.removeClass(field, "focus");
+                    }
+                });
+
+
+        Event.on(tab_as, "click", function(e) {
+            e.preventDefault();
         });
-    </script>
-</div>
-</div>
+
+        var searchTab = new S.Tabs(DOM.get("#J_TSearchTabs").parentNode, {
+            aria:true,
+            activeTriggerCls:'current',
+            triggerType:'click'
+        });
+
+        searchTab.on("switch", function(ev) {
+            var n = ev.currentIndex;
+            tabpanels[n].appendChild(form);
+            switchToTab(n);
+            setTimeout(function() {
+                tabs[n].focus();
+            }, 0);
+            searchType.value = SEARCH_TYPE_LIST[n];
+            if (fp.get('#J_monitorImg')) {
+                var time = new Date().getTime();
+                fp.get('#J_monitorImg').src = 'http://www.atpanel.com/jsclick?sysskjc=' + tabType[n] + '&t=' + time;
+            }
+        });
+
+        var btn = form.getElementsByTagName('button')[0],
+                submitHandler = function() {
+                    if (fp.get('#J_monitorImg')) {
+                        fp.get('#J_monitorImg').src = 'http://www.atpanel.com/jsclick?sysskjc=ssan';
+                    }
+                    SEARCH_TYPE_ACTION[form['search_type'].value]();
+                };
+
+        if (S.UA.ie <= 8) {
+            Event.on(btn, 'click', submitHandler);
+        }
+        Event.on(form, 'submit', submitHandler);
+
+        setTimeout(function() {
+            // 默认选中宝贝Tab
+            searchType.value = 'item';
+            switchToTab(0);
+        }, 0);
+    });
+</script>
 </body>
 </html>

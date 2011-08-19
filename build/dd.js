@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 20:09
+build time: Aug 19 21:49
 */
 /**
  * dd support for kissy , dd objects central management module

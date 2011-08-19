@@ -34,7 +34,7 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
     }
 
     //强制不使用 native
-    transitionName='';
+    transitionName = '';
 
 
     describe("anim", function() {
@@ -49,15 +49,14 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
             var test1 = DOM.get("#test1");
             DOM.css(test1, {
-                    //'border-color':"#000",
-                    width:10,
-                    height:20,
-                    left:120,
-                    top:20,
-                    color:"#000"
-                });
+                //'border-color':"#000",
+                width:10,
+                height:20,
+                left:120,
+                top:20,
+                color:"#000"
+            });
             var initColor = normalizeColor(DOM.css(test1, "border-color"));
-
             var anim = Anim(
                 '#test1',
                 {
@@ -107,7 +106,8 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
                 if (transitionName) {
                     expect(DOM.css(test1, transitionName)).toBe("none");
                 }
-                expect(normalizeColor(DOM.css(test1, "border-color")))
+
+                expect(normalizeColor(DOM.style(test1, "border-color")))
                     .toBe("#999999");
                 expect(DOM.css(test1, "width")).toBe("100px");
                 expect(DOM.css(test1, "height")).toBe("50px");
@@ -124,8 +124,8 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
             var scrollLimit = test.scrollLeft;
             test.scrollLeft = 0;
             Anim(test, {
-                    scrollLeft:scrollLimit
-                }, 2).run();
+                scrollLeft:scrollLimit
+            }, 2).run();
             waits(100);
             runs(function() {
                 expect(test.scrollLeft).not.toBe(0);

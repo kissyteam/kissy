@@ -411,8 +411,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
         S.each(which, function(direction) {
-            val -= parseFloat(DOM._getComputedStyle(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM._getComputedStyle(elem, 'border' + direction + 'Width')) || 0;
+            val -= parseFloat(DOM.css(elem, 'padding' + direction)) || 0;
+            val -= parseFloat(DOM.css(elem, 'border' + direction + 'Width')) || 0;
         });
 
         return val;

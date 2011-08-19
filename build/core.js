@@ -2441,8 +2441,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
         S.each(which, function(direction) {
-            val -= parseFloat(DOM._getComputedStyle(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM._getComputedStyle(elem, 'border' + direction + 'Width')) || 0;
+            val -= parseFloat(DOM.css(elem, 'padding' + direction)) || 0;
+            val -= parseFloat(DOM.css(elem, 'border' + direction + 'Width')) || 0;
         });
 
         return val;
@@ -3066,7 +3066,8 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
 
         /**
          * border fix
-         * ie 不返回数值，只返回 thick? medium ...
+         * ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
+         * (default is "medium")
          */
         var IE8 = UA['ie'] == 8,
             BORDER_MAP = {
@@ -3076,17 +3077,20 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
         BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
         BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
         S.each(BORDERS, function(b) {
-            var name = "border" + b + "Width";
+            var name = "border" + b + "Width",
+                styleName = "border" + b + "Style";
             CUSTOM_STYLES[name] = {
                 get: function(elem, computed) {
-                    var currentStyle = computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE] : elem[STYLE],
-                        current = currentStyle[name] + "";
+                    // 只有需要计算样式的时候才转换，否则取原值
+                    var currentStyle = computed ? elem[CURRENT_STYLE] : 0,
+                        current = currentStyle && String(currentStyle[name]) || undefined;
                     // look up keywords if a border exists
-                    if (current.indexOf("px") < 0) {
-                        if (BORDER_MAP[current]) {
+                    if (current && current.indexOf("px") < 0) {
+                        // 边框没有隐藏
+                        if (BORDER_MAP[current] && currentStyle[styleName] !== "none") {
                             current = BORDER_MAP[current];
                         } else {
-                            // otherwise no border (default is "medium")
+                            // otherwise no border
                             current = 0;
                         }
                     }

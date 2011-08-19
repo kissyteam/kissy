@@ -19,9 +19,9 @@ header("Cache-Control:private, max-age=0, must-revalidate");
     jasmine.kissyNext = function(failedCount) {
         if (!failedCount) {
 
-            // event hash change ,ie8 error
+            // event hash change ,ie error
             index++;
-            if ((KISSY.UA.ie == 8 || KISSY.UA.ie == 7) && tests[index].match(/event\//)) {
+            if (KISSY.UA.ie && tests[index].match(/event\//)) {
                 window.open(loc+tests[index] + "?" + (+new Date()));
                 index++;
             }

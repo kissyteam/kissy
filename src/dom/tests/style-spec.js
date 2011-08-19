@@ -193,7 +193,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
         it("addStyleSheet works", function() {
-            var elem = DOM.create("<div class='addStyleSheet'>");
+            var elem = DOM.create("<div class='addStyleSheet'>12</div>");
             document.body.appendChild(elem);
             DOM.addStyleSheet(".addStyleSheet {width:100px}");
             expect(DOM.css(elem, "width")).toBe("100px");
