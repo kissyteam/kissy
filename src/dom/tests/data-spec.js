@@ -2,7 +2,7 @@
  * test cases for data sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,dom", function(S, UA,DOM) {
+KISSY.use("ua,dom", function(S, UA, DOM) {
 
     describe("DOM.data", function() {
         it("data should works", function() {
@@ -42,7 +42,9 @@ KISSY.use("ua,dom", function(S, UA,DOM) {
 
 
         it("removeData should works", function() {
-            var foo = document.body.appendChild(DOM.create("<div>"));
+            var foo = document.body.appendChild(DOM.create("<div><span></span><div>"));
+            var bar = DOM.get("span", foo);
+
             DOM.data(foo, 'data', 'val');
             DOM.removeData(foo, 'data');
             //  if data is removed ,then its value is undefined
@@ -58,7 +60,22 @@ KISSY.use("ua,dom", function(S, UA,DOM) {
 
             // 返回空对象
             expect(S.isEmptyObject(DOM.data(window))).toBe(true);
+
+
+            DOM.data(foo, "custom", "custom");
+            DOM.data(bar, "custom2", "custom2");
+
+            expect(DOM.data(foo, "custom")).toBe("custom");
+            expect(DOM.data(bar, "custom2")).toBe("custom2");
+
             DOM.remove(foo);
+
+            /**
+             * 2011-08-09
+             * 删除元素时，会把其下面的元素以及自身都 removeData
+             */
+            expect(DOM.data(foo, "custom")).toBe(undefined);
+            expect(DOM.data(bar, "custom2")).toBe(undefined);
         });
 
 

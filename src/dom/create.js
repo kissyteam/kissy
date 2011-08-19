@@ -107,9 +107,15 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
         /**
          * Remove the set of matched elements from the DOM.
+         * 不要使用 innerHTML='' 来清除元素，可能会造成内存泄露，要使用 DOM.remove()
          */
         remove: function(selector) {
             S.each(DOM.query(selector), function(el) {
+                if (el.nodeType == DOM.ELEMENT_NODE) {
+                    DOM.removeData(el.getElementsByTagName("*"));
+                    DOM.removeData(el);
+                }
+
                 if (el.parentNode) {
                     el.parentNode.removeChild(el);
                 }

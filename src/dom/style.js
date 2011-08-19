@@ -191,12 +191,10 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
          */
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
-                if (elem) {
-                    if (DOM.css(elem, DISPLAY) === NONE) {
-                        DOM.show(elem);
-                    } else {
-                        DOM.hide(elem);
-                    }
+                if (DOM.css(elem, DISPLAY) === NONE) {
+                    DOM.show(elem);
+                } else {
+                    DOM.hide(elem);
                 }
             });
         },
@@ -240,28 +238,26 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
         unselectable:function(selector) {
             DOM.query(selector).each(function(elem) {
-                if (elem) {
-                    if (UA['gecko']) {
-                        elem.style['MozUserSelect'] = 'none';
-                    }
-                    else if (UA['webkit']) {
-                        elem.style['KhtmlUserSelect'] = 'none';
-                    } else {
-                        if (UA['ie'] || UA['opera']) {
-                            var e,i = 0,
-                                els = elem.getElementsByTagName("*");
-                            elem.setAttribute("unselectable", 'on');
-                            while (( e = els[ i++ ] )) {
-                                switch (e.tagName.toLowerCase()) {
-                                    case 'iframe' :
-                                    case 'textarea' :
-                                    case 'input' :
-                                    case 'select' :
-                                        /* Ignore the above tags */
-                                        break;
-                                    default :
-                                        e.setAttribute("unselectable", 'on');
-                                }
+                if (UA['gecko']) {
+                    elem.style['MozUserSelect'] = 'none';
+                }
+                else if (UA['webkit']) {
+                    elem.style['KhtmlUserSelect'] = 'none';
+                } else {
+                    if (UA['ie'] || UA['opera']) {
+                        var e,i = 0,
+                            els = elem.getElementsByTagName("*");
+                        elem.setAttribute("unselectable", 'on');
+                        while (( e = els[ i++ ] )) {
+                            switch (e.tagName.toLowerCase()) {
+                                case 'iframe' :
+                                case 'textarea' :
+                                case 'input' :
+                                case 'select' :
+                                    /* Ignore the above tags */
+                                    break;
+                                default :
+                                    e.setAttribute("unselectable", 'on');
                             }
                         }
                     }

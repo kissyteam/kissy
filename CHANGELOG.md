@@ -14,9 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/06/08)
- - [*] switchable 中针对 datalazyload 的配置项 lazyDataType 值变更, 支持1) img 或 img-src, 2) textarea 或 area-data, 这对应于 Datalazyload.loadCustomLazyData 的 type 参数保持一致
-
- - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
+  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
 
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
@@ -41,6 +39,8 @@ History:
  - [!] ajax 所有方法都返回模拟 xhr 对象，包含 abort 方法用于中断当前请求等
  - [!] ajax 请求地址的响应头如果设置了 content-type 为 json 或 xml ，回调的第一个参数自动为该格式，不需要手动 parse
  - [+] 增加 S.io.upload 方法，用于无刷新文件上传
+ - [+] 增加 form 配置，可直接序列化 form 并发送 ajax 请求
+ - [+] 增加 S.io.serialize 方法，用于 form 徐泪花
 
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
@@ -55,11 +55,12 @@ History:
  - [x] bugfix anim 内存泄露
 
 
+
  - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
  - [x] Suggest fix: IE9 下无法更新数据
  - [x] Suggest fix: chrome 下光标鼠标移动问题
 
-
+ - [*] switchable 中针对 datalazyload 的配置项 lazyDataType 值变更, 支持1) img 或 img-src, 2) textarea 或 area-data, 这对应于 Datalazyload.loadCustomLazyData 的 type 参数保持一致
  - [*] Accordion 增加 aria 配置
  - [*] Carousel 增加 aria 配置
  - [*] Tabs 增加 aria 配置
