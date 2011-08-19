@@ -7,30 +7,33 @@ KISSY.use("dom", function(S, DOM) {
     describe("scroll", function() {
         beforeEach(function() {
             this.addMatchers({
-                    toBeAlmostEqual: function(expected) {
-                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-                    },
+                toBeAlmostEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                },
 
 
-                    toBeEqual: function(expected) {
-                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-                    },
+                toBeEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                },
 
-                    toBeArrayEq:function(expected) {
-                        var actual = this.actual;
-                        if (expected.length != actual.length) return false;
-                        for (var i = 0; i < expected.length; i++) {
-                            if (expected[i] != actual[i]) return false;
-                        }
-                        return true;
+                toBeArrayEq:function(expected) {
+                    var actual = this.actual;
+                    if (expected.length != actual.length) {
+                        return false;
                     }
-                });
+                    for (var i = 0; i < expected.length; i++) {
+                        if (expected[i] != actual[i]) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            });
         });
 
         var container = DOM.get('#scroll-container'),
             node = DOM.get('#scroll-el');
-
-        var container_border_width = parseInt(DOM.css(container, "border-width"));
+        var container_border_width = parseInt(DOM.css(container, "border-top-width"));
         var container_height = DOM.height(container);
         var node_height = node.offsetHeight;
 
@@ -50,12 +53,13 @@ KISSY.use("dom", function(S, DOM) {
         });
 
         it("scroll node to container manually works", function() {
-//            DOM.scrollTop(0);
-//            DOM.scrollTop(container, 0);
+
             DOM.scrollIntoView(node, container);
-            var scrollTop = Math.round(DOM.scrollTop());
-            var nt = Math.round(DOM.offset(node).top);
-            var ct = Math.round(DOM.offset(container).top);
+
+            var scrollTop = Math.round(DOM.scrollTop()),
+                nt = Math.round(DOM.offset(node).top),
+                ct = Math.round(DOM.offset(container).top);
+
             expect(scrollTop).toBeEqual(0);
             expect(nt - ct).toBeEqual(container_border_width);
 

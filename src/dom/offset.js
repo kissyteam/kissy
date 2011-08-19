@@ -111,8 +111,12 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
                 // elem 相对 container 元素的坐标
                 // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                l = diff.left + cl -
+                    (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
+
+                t = diff.top + ct -
+                    (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)),
+
                 r = l + ew,
                 b = t + eh,
 

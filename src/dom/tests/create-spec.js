@@ -63,6 +63,7 @@ KISSY.use("dom", function(S, DOM) {
                 .nodeName.toLowerCase()).toBe("style");
             DOM.append(d = DOM.create("<div class='styleie67'></div>"), document.body);
             DOM.append(style, document.getElementsByTagName("head")[0]);
+
             expect(DOM.css(d, "width")).toBe("99px");
         });
 

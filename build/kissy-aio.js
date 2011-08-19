@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:10
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 19 12:28
          */
         version: '1.20dev',
 
-        buildTime:'20110819122835',
+        buildTime:'20110819201010',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4421,8 +4421,12 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
                 // elem 相对 container 元素的坐标
                 // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
-                l = diff.left + cl - (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                t = diff.top + ct - (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0),
+                l = diff.left + cl -
+                    (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
+
+                t = diff.top + ct -
+                    (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)),
+
                 r = l + ew,
                 b = t + eh,
 
@@ -4648,7 +4652,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
 /**
  * @module  dom
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
@@ -4665,34 +4669,91 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         DISPLAY = 'display',
         NONE = 'none',
         PARSEINT = parseInt,
-        RE_LT = /^(?:left|top)/,
-        RE_NEED_UNIT = /^(?:width|height|top|left|right|bottom|margin|padding)/i,
+        RE_NUMPX = /^-?\d+(?:px)?$/i,
+        cssNumber = {
+            "fillOpacity": 1,
+            "fontWeight": 1,
+            "lineHeight": 1,
+            "opacity": 1,
+            "orphans": 1,
+            "widows": 1,
+            "zIndex": 1,
+            "zoom": 1
+        },
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function(all, letter) {
             return letter.toUpperCase();
         },
+        // 考虑 ie9 ...
+        rupper = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
-        CUSTOM_STYLES = { },
-        defaultDisplay = { };
+        CUSTOM_STYLES = {},
+        cssProps = {},
+        defaultDisplay = {};
+
+    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
+    if (docElem[STYLE][CSS_FLOAT] !== undefined) {
+        cssProps[FLOAT] = CSS_FLOAT;
+    }
+    else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
+        cssProps[FLOAT] = STYLE_FLOAT;
+    }
+
+    function camelCase(name) {
+        return name.replace(RE_DASH, CAMELCASE_FN);
+    }
 
     S.mix(DOM, {
 
         _CUSTOM_STYLES: CUSTOM_STYLES,
-
+        _cssProps:cssProps,
         _getComputedStyle: function(elem, name) {
-            var val = '', computedStyle = {},d = elem.ownerDocument;
+            var val = "",
+                computedStyle = {},
+                d = elem.ownerDocument;
 
-            if (elem[STYLE] &&
-                // https://github.com/kissyteam/kissy/issues/61
-                (computedStyle = d.defaultView.getComputedStyle(elem, null))) {
-                val = computedStyle[name];
+            name = name.replace(rupper, "-$1").toLowerCase();
+
+            // https://github.com/kissyteam/kissy/issues/61
+            if (computedStyle = d.defaultView.getComputedStyle(elem, null)) {
+                val = computedStyle.getPropertyValue(name) || computedStyle[name];
             }
+
+            // 还没有加入到 document，就取行内
+            if (val == "" && !DOM.__contains(d.documentElement, elem)) {
+                name = cssProps[name] || name;
+                val = elem[STYLE][name];
+            }
+
             return val;
         },
 
         /**
-         * Gets or sets styles on the matches elements.
+         *  Get and set the style property on a DOM Node
+         */
+        style:function(selector, name, val) {
+            // suports hash
+            if (S.isPlainObject(name)) {
+                for (var k in name) {
+                    DOM.style(selector, k, name[k]);
+                }
+                return;
+            }
+            if (val === undefined) {
+                var elem = DOM.get(selector);
+                if (elem) {
+                    return style(elem, name, val);
+                }
+            } else {
+                DOM.query(selector).each(function(elem) {
+                    style(elem, name, val);
+                });
+            }
+        },
+
+        /**
+         * (Gets computed style) or (sets styles) on the matches elements.
          */
         css: function(selector, name, val) {
             // suports hash
@@ -4703,91 +4764,23 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
 
-            if (name.indexOf('-') > 0) {
-                // webkit 认识 camel-case, 其它内核只认识 cameCase
-                name = name.replace(RE_DASH, CAMELCASE_FN);
-            }
-
-            var name_str = name;
-
-            name = CUSTOM_STYLES[name] || name;
-
+            name = camelCase(name);
+            var hook = CUSTOM_STYLES[name];
             // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
                 var elem = DOM.get(selector), ret = '';
 
-                if (elem && elem[STYLE]) {
-                    ret = name.get ?
-                        name.get(elem, name_str) :
-                        elem[STYLE][name];
-
-                    // 有 get 的直接用自定义函数的返回值
-                    if (ret === '' && !name.get) {
-                        ret = fixComputedStyle(elem,
-                            name,
-                            DOM._getComputedStyle(elem, name));
-                    }
+                // If a hook was provided get the computed value from there
+                if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
+                } else {
+                    ret = DOM._getComputedStyle(elem, name);
                 }
-
                 return ret === undefined ? '' : ret;
             }
             // setter
             else {
-                // normalize unsetting
-                if (val === null || val === EMPTY) {
-                    val = EMPTY;
-                }
-                // number values may need a unit
-                else if (!isNaN(new Number(val)) && RE_NEED_UNIT.test(name)) {
-                    val += DEFAULT_UNIT;
-                }
-
-                // ignore negative width and height values
-                if ((name === WIDTH || name === HEIGHT) && parseFloat(val) < 0) {
-                    return;
-                }
-
-                S.each(DOM.query(selector), function(elem) {
-                    if (elem && elem[STYLE]) {
-                        name.set ? name.set(elem, val) : (elem[STYLE][name] = val);
-                        if (val === EMPTY) {
-                            if (!elem[STYLE].cssText) {
-                                elem.removeAttribute(STYLE);
-                            }
-                        }
-                    }
-                });
-            }
-        },
-
-        /**
-         * Get the current computed width for the first element in the set of matched elements or
-         * set the CSS width of each element in the set of matched elements.
-         */
-        width: function(selector, value) {
-            // getter
-            if (value === undefined) {
-                return getWH(selector, WIDTH);
-            }
-            // setter
-            else {
-                DOM.css(selector, WIDTH, value);
-            }
-        },
-
-        /**
-         * Get the current computed height for the first element in the set of matched elements or
-         * set the CSS height of each element in the set of matched elements.
-         */
-        height: function(selector, value) {
-            // getter
-            if (value === undefined) {
-                return getWH(selector, HEIGHT);
-            }
-            // setter
-            else {
-                DOM.css(selector, HEIGHT, value);
+                DOM.style(selector, name, val);
             }
         },
 
@@ -4798,7 +4791,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
             DOM.query(selector).each(function(elem) {
 
-                elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+                elem[STYLE][DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
 
                 // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
                 if (DOM.css(elem, DISPLAY) === NONE) {
@@ -4814,7 +4807,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     }
 
                     DOM.data(elem, DISPLAY, old);
-                    elem.style[DISPLAY] = old;
+                    elem[STYLE][DISPLAY] = old;
                 }
             });
         },
@@ -4824,7 +4817,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
          */
         hide: function(selector) {
             DOM.query(selector).each(function(elem) {
-                var style = elem.style, old = style[DISPLAY];
+                var style = elem[STYLE], old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {
                         DOM.data(elem, DISPLAY, old);
@@ -4887,10 +4880,10 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         unselectable:function(selector) {
             DOM.query(selector).each(function(elem) {
                 if (UA['gecko']) {
-                    elem.style['MozUserSelect'] = 'none';
+                    elem[STYLE]['MozUserSelect'] = 'none';
                 }
                 else if (UA['webkit']) {
-                    elem.style['KhtmlUserSelect'] = 'none';
+                    elem[STYLE]['KhtmlUserSelect'] = 'none';
                 } else {
                     if (UA['ie'] || UA['opera']) {
                         var e,i = 0,
@@ -4914,16 +4907,153 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         }
     });
 
-    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
-    if (docElem[STYLE][CSS_FLOAT] !== undefined) {
-        CUSTOM_STYLES[FLOAT] = CSS_FLOAT;
-    }
-    else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
-        CUSTOM_STYLES[FLOAT] = STYLE_FLOAT;
+    /**
+     * name,width 简单转发
+     */
+    S.each([WIDTH,HEIGHT], function(name) {
+        DOM[name] = function(selector, val) {
+            var ret = DOM.css(selector, name, val);
+            if (ret) {
+                ret = parseFloat(ret);
+            }
+            return ret;
+        };
+    });
+
+
+    var cssShow = { position: "absolute", visibility: "hidden", display: "block" };
+
+    /**
+     * css height,width 永远都是计算值
+     */
+    S.each(["height", "width"], function(name) {
+        CUSTOM_STYLES[ name ] = {
+            get: function(elem, computed) {
+                var val;
+                if (computed) {
+                    if (elem.offsetWidth !== 0) {
+                        val = getWH(elem, name);
+                    } else {
+                        swap(elem, cssShow, function() {
+                            val = getWH(elem, name);
+                        });
+                    }
+                    return val + "px";
+                }
+            },
+            set: function(elem, value) {
+                if (RE_NUMPX.test(value)) {
+                    value = parseFloat(value);
+                    if (value >= 0) {
+                        return value + "px";
+                    }
+                } else {
+                    return value;
+                }
+            }
+        };
+    });
+
+    S.each(["left", "top"], function(name) {
+        CUSTOM_STYLES[ name ] = {
+            get: function(elem, computed) {
+                if (computed) {
+                    var val = DOM._getComputedStyle(elem, name),offset;
+
+                    // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
+                    //    比如：firefox 返回 0, webkit/ie 返回 auto
+                    // 2. style.left 设置为百分比时，返回值为百分比
+                    // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
+                    // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
+                    if (val === AUTO) {
+                        val = 0;
+                        if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
+                            offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
+
+                            // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
+                            if (isIE && document['documentMode'] != 9 || UA['opera']) {
+                                // 类似 offset ie 下的边框处理
+                                // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
+                                // 否则减去 borderTop 其实也是 clientTop
+                                offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                                    || 0;
+                            }
+
+                            val = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
+                        }
+                    }
+                    return val;
+                }
+            }
+        };
+    });
+
+
+    function swap(elem, options, callback) {
+        var old = {};
+
+        // Remember the old values, and insert the new ones
+        for (var name in options) {
+            old[ name ] = elem[STYLE][ name ];
+            elem[STYLE][ name ] = options[ name ];
+        }
+
+        callback.call(elem);
+
+        // Revert the old values
+        for (name in options) {
+            elem[STYLE][ name ] = old[ name ];
+        }
     }
 
-    function getWH(selector, name) {
-        var elem = DOM.get(selector);
+
+    function style(elem, name, val) {
+        var style;
+        if (elem.nodeType === 3 || elem.nodeType === 8 || !(style = elem[STYLE])) {
+            return undefined;
+        }
+        name = camelCase(name);
+        var ret,hook = CUSTOM_STYLES[name];
+        name = cssProps[name] || name;
+        // setter
+        if (val !== undefined) {
+            // normalize unsetting
+            if (val === null || val === EMPTY) {
+                val = EMPTY;
+            }
+            // number values may need a unit
+            else if (!isNaN(Number(val)) && !cssNumber[name]) {
+                val += DEFAULT_UNIT;
+            }
+            if (hook && hook.set) {
+                val = hook.set(elem, val);
+            }
+            if (val !== undefined) {
+                // ie 无效值报错
+                try {
+                    elem[STYLE][name] = val;
+                } catch(e) {
+                    S.log("css set error :" + e);
+                }
+            }
+            return undefined;
+        }
+        //getter
+        else {
+            // If a hook was provided get the non-computed value from there
+            if (hook && "get" in hook && (ret = hook.get(elem, false)) !== undefined) {
+
+            } else {
+                // Otherwise just get the value from the style object
+                ret = style[ name ];
+            }
+            return ret === undefined ? "" : ret;
+        }
+
+    }
+
+
+    function getWH(elem, name) {
         if (S.isWindow(elem)) {
             return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
         } else if (elem.nodeType == 9) {
@@ -4940,48 +5070,21 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         return val;
     }
 
-    // 修正 getComputedStyle 返回值的部分浏览器兼容性问题
-    function fixComputedStyle(elem, name, val) {
-        var offset, ret = val;
-
-        // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
-        //    比如：firefox 返回 0, webkit/ie 返回 auto
-        // 2. style.left 设置为百分比时，返回值为百分比
-        // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
-        // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
-        if (val === AUTO && RE_LT.test(name)) {
-            ret = 0;
-            if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
-                offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
-
-                // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                if (isIE && document['documentMode'] != 9 || UA['opera']) {
-                    // 类似 offset ie 下的边框处理
-                    // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
-                    // 否则减去 borderTop 其实也是 clientTop
-                    offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
-                        || 0;
-                }
-
-                ret = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
-            }
-        }
-
-        return ret;
-    }
-
     return DOM;
 }, {
     requires:["dom/base","ua"]
 });
 
 /**
+ *
+ * 2011-08-19
+ *  - 调整结构，减少耦合
+ *  - fix css("height") == auto
+ *
  * NOTES:
  *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
  *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
  *
- *  - 非 webkit 下，jQuery.css paddingLeft 返回 style 值， padding-left 返回 computedStyle 值，
- *    返回的值不同。KISSY 做了统一，更符合预期。
  *
  *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
  *
@@ -5505,172 +5608,168 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  */
 KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
 
-    var HUNDRED = 100;
+        var HUNDRED = 100;
 
-    // only for ie
-    if (!UA['ie']) {
-        return DOM;
-    }
+        // only for ie
+        if (!UA['ie']) {
+            return DOM;
+        }
 
-    var doc = document,
-        docElem = doc.documentElement,
-        OPACITY = 'opacity',
-        FILTER = 'filter',
-        FILTERS = 'filters',
-        CURRENT_STYLE = 'currentStyle',
-        RUNTIME_STYLE = 'runtimeStyle',
-        LEFT = 'left',
-        PX = 'px',
-        CUSTOM_STYLES = Style._CUSTOM_STYLES,
-        RE_NUMPX = /^-?\d+(?:px)?$/i,
-        RE_NUM = /^-?\d/,
-        RE_WH = /^(?:width|height)$/;
+        var doc = document,
+            docElem = doc.documentElement,
+            OPACITY = 'opacity',
+            STYLE = 'style',
+            FILTER = "filter",
+            CURRENT_STYLE = 'currentStyle',
+            RUNTIME_STYLE = 'runtimeStyle',
+            LEFT = 'left',
+            PX = 'px',
+            CUSTOM_STYLES = Style._CUSTOM_STYLES,
+            RE_NUMPX = /^-?\d+(?:px)?$/i,
+            RE_NUM = /^-?\d/,
+            ropacity = /opacity=([^)]*)/,
+            ralpha = /alpha\([^)]*\)/i;
 
-    // use alpha filter for IE opacity
-    try {
-        if (S.isNullOrUndefined(docElem.style[OPACITY]) && docElem[FILTERS]) {
+        // use alpha filter for IE opacity
+        try {
+            if (S.isNullOrUndefined(docElem.style[OPACITY])) {
 
-            CUSTOM_STYLES[OPACITY] = {
+                CUSTOM_STYLES[OPACITY] = {
 
-                get: function(elem) {
+                    get: function(elem, computed) {
+                        // 没有设置过 opacity 时会报错，这时返回 1 即可
+                        // 如果该节点没有添加到 dom ，取不到 filters 结构
+                        // val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
+                        return ropacity.test((
+                            computed && elem[CURRENT_STYLE] ?
+                                elem[CURRENT_STYLE][FILTER] :
+                                elem[STYLE][FILTER]) || "") ?
+                            ( parseFloat(RegExp.$1) / HUNDRED ) + "" :
+                            computed ? "1" : "";
+                    },
 
-                    var val = HUNDRED;
+                    set: function(elem, val) {
+                        val = parseFloat(val);
 
-                    try { // will error if no DXImageTransform
-                        val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
-                    }
-                    catch(e) {
-                        S.log("DXImageTransform.Microsoft.Alpha error : ");
-                        S.log(e);
-                        try {
-                            val = elem[FILTERS]('alpha')[OPACITY];
-                        } catch(ex) {
-                            S.log("filters alpha error : ");
-                            S.log(ex);
-                            // 没有设置过 opacity 时会报错，这时返回 1 即可
-                            //如果该节点没有添加到 dom ，取不到 filters 结构
+                        var style = elem[STYLE],
+                            currentStyle = elem[CURRENT_STYLE],
+                            opacity = isNaN(val) ? "" : "alpha(" + OPACITY + "=" + val * HUNDRED + ")",
+                            filter = currentStyle && currentStyle[FILTER] || style[FILTER] || "";
 
-                            var currentFilter = (elem.currentStyle || 0).filter || '';
-                            var m;
-                            if (m = currentFilter.match(/alpha\(opacity[=:]([^)]+)\)/)) {
-                                val = parseInt(S.trim(m[1]));
+                        // ie  has layout
+                        style.zoom = 1;
+
+                        // if setting opacity to 1, and no other filters exist - attempt to remove filter attribute
+                        if (val >= 1 && S.trim(filter.replace(ralpha, "")) === "") {
+
+                            // Setting style.filter to null, "" & " " still leave "filter:" in the cssText
+                            // if "filter:" is present at all, clearType is disabled, we want to avoid this
+                            // style.removeAttribute is IE Only, but so apparently is this code path...
+                            style.removeAttribute(FILTER);
+
+                            // if there there is no filter style applied in a css rule, we are done
+                            if (currentStyle && !currentStyle[FILTER]) {
+                                return;
                             }
+                        }
 
+                        // otherwise, set new filter values
+                        // 如果 >=1 就不设，就不能覆盖外部样式表定义的样式，一定要设
+                        style.filter = ralpha.test(filter) ?
+                            filter.replace(ralpha, opacity) :
+                            filter + ", " + opacity;
+                    }
+                };
+            }
+        }
+        catch(ex) {
+            S.log('IE filters ActiveX is disabled. ex = ' + ex);
+        }
+
+        /**
+         * border fix
+         * ie 不返回数值，只返回 thick? medium ...
+         */
+        var IE8 = UA['ie'] == 8,
+            BORDER_MAP = {
+            },
+            BORDERS = ["","Top","Left","Right","Bottom"];
+        BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
+        BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
+        BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
+        S.each(BORDERS, function(b) {
+            var name = "border" + b + "Width";
+            CUSTOM_STYLES[name] = {
+                get: function(elem, computed) {
+                    var currentStyle = computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE] : elem[STYLE],
+                        current = currentStyle[name] + "";
+                    // look up keywords if a border exists
+                    if (current.indexOf("px") < 0) {
+                        if (BORDER_MAP[current]) {
+                            current = BORDER_MAP[current];
+                        } else {
+                            // otherwise no border (default is "medium")
+                            current = 0;
                         }
                     }
-
-                    // 和其他浏览器保持一致，转换为字符串类型
-                    return val / HUNDRED + '';
-                },
-
-                set: function(elem, val) {
-                    var style = elem.style,
-                        currentFilter = (elem.currentStyle || 0).filter || '';
-
-                    // IE has trouble with opacity if it does not have layout
-                    // Force it by setting the zoom level
-                    style.zoom = 1;
-                    //S.log(currentFilter + " : "+val);
-                    // keep existed filters, and remove opacity filter
-                    if (currentFilter) {
-                        //出现 alpha(opacity:0), alpha(opacity=0) ?
-                        currentFilter = S.trim(currentFilter.replace(
-                            /alpha\(opacity[^=]*=[^)]+\),?/ig, ''));
-                    }
-
-                    if (currentFilter && val != 1) {
-                        currentFilter += ', ';
-                    }
-
-                    // Set the alpha filter to set the opacity when really needed
-                    style[FILTER] = currentFilter + (val === 1 ? '' : 'alpha(' + OPACITY + '=' + val * HUNDRED + ')' );
-                    //S.log( style[FILTER]);
+                    return current;
                 }
             };
-        }
-    }
-    catch(ex) {
-        S.log('IE filters ActiveX is disabled. ex = ' + ex);
-    }
+        });
 
-    /**
-     * border fix
-     * ie 不返回数值，只返回 thick? medium ...
-     */
-    var IE8 = UA['ie'] == 8,
-        BORDER_MAP = {
-        },
-        BORDERS = ["","Top","Left","Right","Bottom"],
-        BORDER_FIX = {
-            get: function(elem, property) {
-                var currentStyle = elem.currentStyle,
-                    current = currentStyle[property] + "";
-                // look up keywords if a border exists
-                if (current.indexOf("px") < 0) {
-                    if (BORDER_MAP[current]) {
-                        current = BORDER_MAP[current];
-                    } else {
-                        // otherwise no border (default is "medium")
-                        current = 0;
+        // getComputedStyle for IE
+        if (!(doc.defaultView || { }).getComputedStyle && docElem[CURRENT_STYLE]) {
+
+            DOM._getComputedStyle = function(elem, name) {
+                name = DOM._cssProps[name] || name;
+
+                var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
+
+                // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
+                // 一开始就处理了! CUSTOM_STYLE["height"],CUSTOM_STYLE["width"] ,cssHook 解决@2011-08-19
+                // 在 ie 下不对，需要直接用 offset 方式
+                // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
+
+                // From the awesome hack by Dean Edwards
+                // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
+                // If we're not dealing with a regular pixel number
+                // but a number that has a weird ending, we need to convert it to pixels
+                if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
+                    // Remember the original values
+                    var style = elem[STYLE],
+                        left = style[LEFT],
+                        rsLeft = elem[RUNTIME_STYLE] && elem[RUNTIME_STYLE][LEFT];
+
+                    // Put in the new values to get a computed value out
+                    if (rsLeft) {
+                        elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+                    }
+                    style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
+                    ret = style['pixelLeft'] + PX;
+
+                    // Revert the changed values
+                    style[LEFT] = left;
+                    if (rsLeft) {
+                        elem[RUNTIME_STYLE][LEFT] = rsLeft;
                     }
                 }
-                return current;
-            }
-        };
-    BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
-    BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
-    BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
-    S.each(BORDERS, function(b) {
-        CUSTOM_STYLES["border" + b + "Width"] = BORDER_FIX;
-    });
-
-    // getComputedStyle for IE
-    if (!(doc.defaultView || { }).getComputedStyle && docElem[CURRENT_STYLE]) {
-
-        DOM._getComputedStyle = function(elem, name) {
-            var style = elem.style,
-                ret = elem[CURRENT_STYLE][name];
-
-            // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-            // 在 ie 下不对，需要直接用 offset 方式
-            // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-            if (RE_WH.test(name)) {
-                ret = DOM[name](elem) + PX;
-            }
-            // From the awesome hack by Dean Edwards
-            // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
-            // If we're not dealing with a regular pixel number
-            // but a number that has a weird ending, we need to convert it to pixels
-            else if ((!RE_NUMPX.test(ret) && RE_NUM.test(ret))) {
-                // Remember the original values
-                var left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
-
-                // Put in the new values to get a computed value out
-                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-                style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
-                ret = style['pixelLeft'] + PX;
-
-                // Revert the changed values
-                style[LEFT] = left;
-                elem[RUNTIME_STYLE][LEFT] = rsLeft;
-            }
-
-            return ret;
+                return ret === "" ? "auto" : ret;
+            };
         }
+        return DOM;
+    },
+    {
+        requires:["./base","ua","./style"]
     }
-    return DOM;
-}, {
-    requires:["./base","ua","./style"]
-});
+)
+    ;
 /**
  * NOTES:
  * 承玉： 2011.05.19 opacity in ie
  *  - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
  *  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
  *
- *  - opacity 的实现，还可以用 progid:DXImageTransform.Microsoft.BasicImage(opacity=.2) 来实现，但考虑
- *    主流类库都是用 DXImageTransform.Microsoft.Alpha 来实现的，为了保证多类库混合使用时不会出现问题，kissy 里
- *    依旧采用 Alpha 来实现。
+ *  - opacity 的实现，参考自 jquery
  *
  */
 
@@ -7642,7 +7741,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             // anim override
 //            "show",
 //            "hide",
-            "toggle",
+//            "toggle",
             "scrollIntoView",
             "remove",
             "removeData",
@@ -7666,6 +7765,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "attr":1,
             "text":0,
             "css":1,
+            "style":1,
             "val":0,
             "prop":1,
             "offset":0,
@@ -8852,7 +8952,13 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         OVERFLOW = 'overflow',
         HIDDEN = 'hidden',
         OPCACITY = 'opacity',
-        HEIGHT = 'height', WIDTH = 'width',
+        HEIGHT = 'height',
+        SHOW = "show",
+        HIDE = "hide",
+        FADE = "fade",
+        SLIDE = "slide",
+        TOGGLE = "toggle",
+        WIDTH = 'width',
         FX = {
             show: [OVERFLOW, OPCACITY, HEIGHT, WIDTH],
             fade: [OPCACITY],
@@ -8910,39 +9016,38 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         };
 
         S.each({
-                show: ['show', 1],
-                hide: ['show', 0],
-                toggle: ['toggle'],
-                fadeIn: ['fade', 1],
-                fadeOut: ['fade', 0],
-                slideDown: ['slide', 1],
-                slideUp: ['slide', 0]
+                show: [SHOW, 1],
+                hide: [SHOW, 0],
+                fadeIn: [FADE, 1],
+                fadeOut: [FADE, 0],
+                slideDown: [SLIDE, 1],
+                slideUp: [SLIDE, 0]
             },
             function(v, k) {
-
                 P[k] = function(speed, callback, easing, nativeSupport) {
                     var self = this;
-
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && !speed) {
                         DOM[k](self);
                     } else {
                         S.each(self, function(elem) {
                             var anim = fx(elem, v[0], speed, callback,
-                                v[1], easing, nativeSupport);
+                                v[1], easing || 'easeOut', nativeSupport);
                             attachAnim(elem, anim);
                         });
                     }
                     return self;
                 };
             });
+
+        // toggle 提出来单独写，清晰点
+        P[TOGGLE] = function(speed) {
+            var self = this;
+            P[self.css(DISPLAY) === NONE ? SHOW : HIDE].apply(self, arguments);
+        };
     })(NLP);
 
     function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
-        if (which === 'toggle') {
-            visible = DOM.css(elem, DISPLAY) === NONE;
-            which = 'show';
-        }
 
         if (visible) {
             DOM.show(elem);
@@ -8991,7 +9096,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         });
 
         // 开始动画
-        return new Anim(elem, style, speed, easing || 'easeOut', function() {
+        return new Anim(elem, style, speed, easing, function() {
             // 如果是隐藏，需要设置 diaplay
             if (!visible) {
                 DOM.hide(elem);
@@ -11173,7 +11278,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:09
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12598,7 +12703,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:09
 */
 /**
  * 数据延迟加载组件
@@ -13101,7 +13206,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:09
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13339,7 +13444,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:09
 */
 /**
  * @module   Flash 全局静态类
@@ -13858,7 +13963,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:09
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -15101,7 +15206,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:09
 */
 /**
  * resizable support for kissy
@@ -15275,7 +15380,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:10
 */
 /**
  * UIBase.Align
@@ -17329,7 +17434,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:08
 */
 /**
  * container can delegate event for its children
@@ -18227,7 +18332,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:09
 */
 /**
  * Switchable
@@ -20831,7 +20936,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:09
 */
 /**
  * KISSY Overlay
@@ -21325,7 +21430,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:09
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22515,7 +22620,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:09
 */
 /**
  * @fileoverview 图像放大区域
@@ -23140,7 +23245,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:08
 */
 /**
  * KISSY Calendar
@@ -24419,7 +24524,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:09
 */
 /**
  * deletable menuitem
@@ -25639,7 +25744,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:08
 */
 /**
  * Model and Control for button
@@ -25835,7 +25940,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:09
 */
 /**
  * combination of menu and button ,similar to native select
@@ -26367,7 +26472,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:10
 */
 ﻿/**
  * @author: 常胤 (lzlu.com)

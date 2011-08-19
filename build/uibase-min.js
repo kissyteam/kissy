@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:28
+build time: Aug 19 20:10
 */
 KISSY.add("uibase/align",function(h,l,d,i){function q(a){var c=a.ownerDocument.body,g=d.css(a,"position"),k=g=="fixed"||g=="absolute";for(a=a.parentNode;a&&a!=c;a=a.parentNode){g=d.css(a,"position");k=k&&g=="static";if(d.css(a,"overflow")!="visible"&&(!k||g=="fixed"||g=="absolute"||g=="relative"))return a}return null}function b(a){for(var c in a)if(c.indexOf("fail")===0)return true;return false}function e(a){var c=a.offset,g=a.node,k=a.points,m,f=this.get("el");c=c||[0,0];m=f.offset();g=j(g,k[0]);
 k=j(f,k[1]);k=[k.left-g.left,k.top-g.top];m={left:m.left-k[0]+ +c[0],top:m.top-k[1]+ +c[1]};a:{c=m;m=this.get("el");f={};k={width:m[0].offsetWidth,height:m[0].offsetHeight};g=h.clone(k);if(!h.isEmptyObject(a.overflow)){f={left:0,right:Infinity,top:0,bottom:Infinity};for(var o=m[0];o=q(o);){var r=o.clientWidth;if(!l.ie||r!==0){var s=o.clientLeft,t=o.clientTop;r=d.offset(o);s={left:s,top:t};r.left+=s.left;r.top+=s.top;f.top=Math.max(f.top,r.top);f.right=Math.min(f.right,r.left+o.clientWidth);f.bottom=

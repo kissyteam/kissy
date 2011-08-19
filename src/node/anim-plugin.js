@@ -13,7 +13,13 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         OVERFLOW = 'overflow',
         HIDDEN = 'hidden',
         OPCACITY = 'opacity',
-        HEIGHT = 'height', WIDTH = 'width',
+        HEIGHT = 'height',
+        SHOW = "show",
+        HIDE = "hide",
+        FADE = "fade",
+        SLIDE = "slide",
+        TOGGLE = "toggle",
+        WIDTH = 'width',
         FX = {
             show: [OVERFLOW, OPCACITY, HEIGHT, WIDTH],
             fade: [OPCACITY],
@@ -71,39 +77,38 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         };
 
         S.each({
-                show: ['show', 1],
-                hide: ['show', 0],
-                toggle: ['toggle'],
-                fadeIn: ['fade', 1],
-                fadeOut: ['fade', 0],
-                slideDown: ['slide', 1],
-                slideUp: ['slide', 0]
+                show: [SHOW, 1],
+                hide: [SHOW, 0],
+                fadeIn: [FADE, 1],
+                fadeOut: [FADE, 0],
+                slideDown: [SLIDE, 1],
+                slideUp: [SLIDE, 0]
             },
             function(v, k) {
-
                 P[k] = function(speed, callback, easing, nativeSupport) {
                     var self = this;
-
                     // 没有参数时，调用 DOM 中的对应方法
                     if (DOM[k] && !speed) {
                         DOM[k](self);
                     } else {
                         S.each(self, function(elem) {
                             var anim = fx(elem, v[0], speed, callback,
-                                v[1], easing, nativeSupport);
+                                v[1], easing || 'easeOut', nativeSupport);
                             attachAnim(elem, anim);
                         });
                     }
                     return self;
                 };
             });
+
+        // toggle 提出来单独写，清晰点
+        P[TOGGLE] = function(speed) {
+            var self = this;
+            P[self.css(DISPLAY) === NONE ? SHOW : HIDE].apply(self, arguments);
+        };
     })(NLP);
 
     function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
-        if (which === 'toggle') {
-            visible = DOM.css(elem, DISPLAY) === NONE;
-            which = 'show';
-        }
 
         if (visible) {
             DOM.show(elem);
@@ -152,7 +157,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
         });
 
         // 开始动画
-        return new Anim(elem, style, speed, easing || 'easeOut', function() {
+        return new Anim(elem, style, speed, easing, function() {
             // 如果是隐藏，需要设置 diaplay
             if (!visible) {
                 DOM.hide(elem);

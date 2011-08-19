@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:09
 */
 KISSY.add("event/base",function(a,b,f,j){function p(c,h,o){if((o=a.trim(o))&&o.indexOf(w)>0){var t=e(arguments);a.each(o.split(w),function(x){var d=[].concat(t);d.splice(0,3,h,x);k[c].apply(k,d)});return true}return j}function g(c){return c&&c.nodeType!==3&&c.nodeType!==8}function m(c,h,o,t,x){var d=k.special[h]||{};if(!t.length&&(!d.setup||d.setup.call(c)===false))q(c,h,o);d.add&&d.add.call(c,x)}var n=document,e=a.makeArray,q=n.addEventListener?function(c,h,o,t){c.addEventListener&&c.addEventListener(h,
 o,!!t)}:function(c,h,o){c.attachEvent&&c.attachEvent("on"+h,o)},r=n.removeEventListener?function(c,h,o,t){c.removeEventListener&&c.removeEventListener(h,o,!!t)}:function(c,h,o){c.detachEvent&&c.detachEvent("on"+h,o)},w=" ",i="",l="trigger-none-"+a.now(),u="ksEventTargetId"+a.now(),k={_data:function(){var c=e(arguments);c.splice(1,0,u);return b.data.apply(b,c)},_removeData:function(){var c=e(arguments);c.splice(1,0,u);return b.removeData.apply(b,c)},special:{},add:function(c,h,o,t,x){if(p("add",c,

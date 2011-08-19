@@ -6,29 +6,33 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
     describe("style", function() {
         beforeEach(function() {
             this.addMatchers({
-                    toBeAlmostEqual: function(expected) {
-                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-                    },
+                toBeAlmostEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                },
 
 
-                    toBeEqual: function(expected) {
-                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-                    },
+                toBeEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                },
 
-                    toBeArrayEq:function(expected) {
-                        var actual = this.actual;
-                        if (expected.length != actual.length) return false;
-                        for (var i = 0; i < expected.length; i++) {
-                            if (expected[i] != actual[i]) return false;
-                        }
-                        return true;
+                toBeExactEqual: function(expected) {
+                    return Math.abs(parseFloat(this.actual) - parseFloat(expected)) < 1;
+                },
+
+                toBeArrayEq:function(expected) {
+                    var actual = this.actual;
+                    if (expected.length != actual.length) return false;
+                    for (var i = 0; i < expected.length; i++) {
+                        if (expected[i] != actual[i]) return false;
                     }
-                });
+                    return true;
+                }
+            });
         });
         it("css works", function() {
 
             var elem = DOM.create(' <div id="test-div" ' +
-                'style="padding-left: 2pt; ' +
+                'style="padding-left: 2px; ' +
                 'background: transparent; ' +
                 '' +
                 'float: left; ' +
@@ -39,19 +43,30 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             // getter
             expect(DOM.css(elem, 'float')).toBe('left');
 
+
             expect(DOM.css(elem, 'position')).toBe('static');
 
-            expect(DOM.css(elem, 'backgroundColor')).toBe('transparent');
+            if (UA.webkit) {
+                expect(DOM.css(elem, 'backgroundColor')).toBe('rgba(0, 0, 0, 0)');
+            } else {
+                expect(DOM.css(elem, 'backgroundColor')).toBe('transparent');
+            }
 
-            expect(DOM.css(elem, 'backgroundPosition')).toBe('0% 0%');
-            
+            // expect($(elem).css("backgroundPosition")).toBe('0% 0%');
+
+            if (UA.webkit) {
+                expect(DOM.css(elem, "backgroundPosition")).toBe('0% 0%');
+            } else {
+                expect(DOM.style(elem, 'backgroundPosition')).toBe('0% 0%');
+            }
+
             expect(DOM.css(elem, 'fontSize')).toBe('16px');
 
             expect(DOM.css(elem, 'border-right-width')).toBe('5px');
 
-            expect(DOM.css(elem, 'paddingLeft')).toBe('2pt');
+            expect(DOM.css(elem, 'paddingLeft')).toBe('2px');
 
-            expect(DOM.css(elem, 'padding-left')).toBe('2pt');
+            expect(DOM.css(elem, 'padding-left')).toBe('2px');
 
             expect(DOM.css(elem, 'padding-right')).toBe('0px');
 
@@ -68,23 +83,23 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
             DOM.css(elem, 'font-size', '100%');
 
-            expect(DOM.css(elem, 'font-size')).toBe('100%');
+            expect(DOM.css(elem, 'font-size')).toBe('16px');
 
             DOM.css(elem, 'opacity', '0.2');
 
-            expect(DOM.css(elem, 'opacity')).toBe('0.2');
+            expect(DOM.css(elem, 'opacity')).toBeExactEqual('0.2');
 
             DOM.css(elem, 'border', '2px dashed red');
 
-            expect(DOM.css(elem, 'borderWidth')).toBe('2px');
+            expect(DOM.css(elem, 'borderTopWidth')).toBe('2px');
 
 
             DOM.css(elem, {
-                    marginLeft: '20px',
-                    opacity: '0.8',
-                    border: '2px solid #ccc'
-                });
-            expect(DOM.css(elem, 'opacity')).toBe('0.8');
+                marginLeft: '20px',
+                opacity: '0.8',
+                border: '2px solid #ccc'
+            });
+            expect(DOM.css(elem, 'opacity')).toBeExactEqual('0.8');
 
             DOM.addStyleSheet(".shadow {\
                 background-color: #fff;\
@@ -184,5 +199,78 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             expect(DOM.css(elem, "width")).toBe("100px");
             DOM.remove(elem);
         });
+
+
+        it("float works inline or from stylehsheet", function() {
+
+            var tag = S.guid("float");
+            DOM.addStyleSheet("." + tag + " {float:left}")
+
+            var d = DOM.create("<div class='" + tag + "' style='float:right'><" + "/div>")
+            DOM.append(d, document.body);
+            expect(DOM.css(d, "float")).toBe("right");
+            expect(DOM.style(d, "float")).toBe("right");
+            DOM.css(d, "float", "");
+
+            expect(DOM.css(d, "float")).toBe("left");
+            expect(DOM.style(d, "float")).toBe("");
+        });
+
+
+        it("float works inline or from stylehsheet", function() {
+
+            var tag = S.guid("float");
+            DOM.addStyleSheet("." + tag + " {float:left}");
+
+            var d = DOM.create("<div class='" + tag + "' style='float:right'><" + "/div>")
+            DOM.append(d, document.body);
+            expect(DOM.css(d, "float")).toBe("right");
+            expect(DOM.style(d, "float")).toBe("right");
+            DOM.css(d, "float", "");
+
+            expect(DOM.css(d, "float")).toBe("left");
+            expect(DOM.style(d, "float")).toBe("");
+
+
+            DOM.css(d, "float", "right");
+
+            expect(DOM.css(d, "float")).toBe("right");
+            expect(DOM.style(d, "float")).toBe("right");
+
+            DOM.remove(d);
+        });
+
+
+        it("opacity works inline or from stylesheet", function() {
+            var tag = S.guid("opacity");
+            DOM.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }");
+
+            var d = DOM.create("<div class='" + tag + "' style='" +
+                "opacity:0.66;filter:Alpha(opacity=66); '>" +
+                "<" + "/div>");
+            DOM.append(d, document.body);
+            expect(DOM.css(d, "opacity")).toBeExactEqual("0.66");
+            expect(DOM.style(d, "opacity")).toBe("0.66");
+
+
+            DOM.css(d, "opacity", "");
+
+            //expect($(d).css("opacity")).toBe("0.55");
+
+            if (!(UA.ie < 9)) {
+                // ie filter 继承有问题
+                expect(DOM.css(d, "opacity")).toBeExactEqual("0.55");
+            }
+            expect(DOM.style(d, "opacity")).toBe("");
+
+
+            DOM.css(d, "opacity", 0.66);
+
+            expect(DOM.css(d, "opacity")).toBeExactEqual("0.66");
+            expect(DOM.style(d, "opacity")).toBe("0.66");
+            DOM.remove(d);
+        });
+
+
     });
 });

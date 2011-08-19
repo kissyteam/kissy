@@ -52,10 +52,10 @@ KISSY.use("dom", function(S, DOM) {
             runs(function() {
                 var win = iframe.contentWindow;
                 var inner = DOM.get("#test-inner", win.document);
-                var innerOffsetTop = DOM.offset(inner).top-DOM.scrollTop(win);
-                var iframeTop=DOM.offset(iframe).top;
-                var totalTop=DOM.offset(inner,undefined,window).top;
-                expect(innerOffsetTop+iframeTop).toBe(totalTop);
+                var innerOffsetTop = DOM.offset(inner).top - DOM.scrollTop(win);
+                var iframeTop = DOM.offset(iframe).top;
+                var totalTop = DOM.offset(inner, undefined, window).top;
+                expect(innerOffsetTop + iframeTop).toBe(totalTop);
             });
 
         })

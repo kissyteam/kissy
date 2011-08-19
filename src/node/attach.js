@@ -36,7 +36,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             // anim override
 //            "show",
 //            "hide",
-            "toggle",
+//            "toggle",
             "scrollIntoView",
             "remove",
             "removeData",
@@ -60,6 +60,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "attr":1,
             "text":0,
             "css":1,
+            "style":1,
             "val":0,
             "prop":1,
             "offset":0,

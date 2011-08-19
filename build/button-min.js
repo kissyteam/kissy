@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 12:27
+build time: Aug 19 20:08
 */
 KISSY.add("button/base",function(c,d,f,e,g){var a=d.KeyCodes;c=f.create(e.ModelControl,[f.Contentbox],{bindUI:function(){this.get("el").on("keyup",this._handleKeyEventInternal,this)},_handleKeyEventInternal:function(b){if(b.keyCode==a.ENTER&&b.type=="keydown"||b.keyCode==a.SPACE&&b.type=="keyup")return this._performInternal(b);return b.keyCode==a.SPACE},_performInternal:function(){this.fire("click")}},{ATTRS:{value:{},describedby:{view:true},tooltip:{view:true}}});c.DefaultRender=g;e.UIStore.setUIByClass("button",
 {priority:e.UIStore.PRIORITY.LEVEL1,ui:c});return c},{requires:["event","uibase","component","./customrender"]});KISSY.add("button/buttonrender",function(c,d,f){return d.create(f.Render,[d.Contentbox.Render],{renderUI:function(){this.get("el").addClass(this.getCls("inline-block")).attr("role","button")},_uiSetTooltip:function(e){this.get("el").attr("title",e)},_uiSetDescribedby:function(e){this.get("el").attr("aria-describedby",e)}},{ATTRS:{describedby:{},tooltip:{}}})},{requires:["uibase","component"]});
