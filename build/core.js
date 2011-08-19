@@ -546,9 +546,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         function getProp(elem, name) {
             name = propFix[ name ] || name;
             var hook = propHooks[ name ];
-            if (!elem) {
-                return undefined;
-            }
             if (hook && hook.get) {
                 return hook.get(elem, name);
 
@@ -586,15 +583,26 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         }
                     });
                 } else {
-                    var elem = elems[0];
-                    if (!elem) {
-                        return;
+                    if (elems.length) {
+                        return getProp(elems[0], name);
                     }
-                    return getProp(elem, name);
                 }
             },
+
+            /**
+             * 是否其中一个元素包含指定 property
+             * @param selector
+             * @param name
+             */
             hasProp:function(selector, name) {
-                return getProp(selector, name) !== undefined;
+                var elems = DOM.query(selector);
+                for (var i = 0; i < elems.length; i++) {
+                    var el = elems[i];
+                    if (getProp(el, name) !== undefined) {
+                        return true;
+                    }
+                }
+                return false;
             },
 
             /**
@@ -714,22 +722,36 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 });
             },
 
+            /**
+             * 是否其中一个元素包含指定属性
+             */
             hasAttr: oldIE ?
                 function(selector, name) {
                     name = name.toLowerCase();
-                    var el = DOM.get(selector);
+                    var elems = DOM.query(selector);
                     // from ppk :http://www.quirksmode.org/dom/w3c_core.html
                     // IE5-7 doesn't return the value of a style attribute.
                     // var $attr = el.attributes[name];
-                    var $attr = el.getAttributeNode(name);
-                    return !!( $attr && $attr.specified );
+                    for (var i = 0; i < elems.length; i++) {
+                        var el = elems[i];
+                        var $attr = el.getAttributeNode(name);
+                        if ($attr && $attr.specified) {
+                            return true;
+                        }
+                    }
+                    return false;
                 }
                 :
                 function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    //使用原生实现
-                    return el.hasAttribute(name);
+                    var elems = DOM.query(selector);
+                    for (var i = 0; i < elems.length; i++) {
+                        var el = elems[i];
+                        //使用原生实现
+                        if (el.hasAttribute(name)) {
+                            return true;
+                        }
+                    }
+                    return false;
                 },
 
             /**
@@ -1120,9 +1142,17 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
         /**
          * Remove the set of matched elements from the DOM.
+         * 不要使用 innerHTML='' 来清除元素，可能会造成内存泄露，要使用 DOM.remove()
+         * @param selector 选择器或元素集合
+         * @param {Boolean} keepData 删除元素时是否保留其上的数据，用于离线操作，提高性能
          */
-        remove: function(selector) {
+        remove: function(selector, keepData) {
             S.each(DOM.query(selector), function(el) {
+                if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
+                    DOM.removeData(el.getElementsByTagName("*"));
+                    DOM.removeData(el);
+                }
+
                 if (el.parentNode) {
                     el.parentNode.removeChild(el);
                 }
@@ -2145,9 +2175,6 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         show: function(selector) {
 
             DOM.query(selector).each(function(elem) {
-                if (!elem) {
-                    return;
-                }
 
                 elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
 
@@ -2175,10 +2202,6 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
          */
         hide: function(selector) {
             DOM.query(selector).each(function(elem) {
-                if (!elem) {
-                    return;
-                }
-
                 var style = elem.style, old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {
@@ -2194,12 +2217,10 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
          */
         toggle: function(selector) {
             DOM.query(selector).each(function(elem) {
-                if (elem) {
-                    if (DOM.css(elem, DISPLAY) === NONE) {
-                        DOM.show(elem);
-                    } else {
-                        DOM.hide(elem);
-                    }
+                if (DOM.css(elem, DISPLAY) === NONE) {
+                    DOM.show(elem);
+                } else {
+                    DOM.hide(elem);
                 }
             });
         },
@@ -2243,28 +2264,26 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
         unselectable:function(selector) {
             DOM.query(selector).each(function(elem) {
-                if (elem) {
-                    if (UA['gecko']) {
-                        elem.style['MozUserSelect'] = 'none';
-                    }
-                    else if (UA['webkit']) {
-                        elem.style['KhtmlUserSelect'] = 'none';
-                    } else {
-                        if (UA['ie'] || UA['opera']) {
-                            var e,i = 0,
-                                els = elem.getElementsByTagName("*");
-                            elem.setAttribute("unselectable", 'on');
-                            while (( e = els[ i++ ] )) {
-                                switch (e.tagName.toLowerCase()) {
-                                    case 'iframe' :
-                                    case 'textarea' :
-                                    case 'input' :
-                                    case 'select' :
-                                        /* Ignore the above tags */
-                                        break;
-                                    default :
-                                        e.setAttribute("unselectable", 'on');
-                                }
+                if (UA['gecko']) {
+                    elem.style['MozUserSelect'] = 'none';
+                }
+                else if (UA['webkit']) {
+                    elem.style['KhtmlUserSelect'] = 'none';
+                } else {
+                    if (UA['ie'] || UA['opera']) {
+                        var e,i = 0,
+                            els = elem.getElementsByTagName("*");
+                        elem.setAttribute("unselectable", 'on');
+                        while (( e = els[ i++ ] )) {
+                            switch (e.tagName.toLowerCase()) {
+                                case 'iframe' :
+                                case 'textarea' :
+                                case 'input' :
+                                case 'select' :
+                                    /* Ignore the above tags */
+                                    break;
+                                default :
+                                    e.setAttribute("unselectable", 'on');
                             }
                         }
                     }
@@ -6198,7 +6217,9 @@ KISSY.add("anim", function(S, Anim,Easing) {
 
 /**
  * @module  anim-node-plugin
- * @author  lifesinger@gmail.com, qiaohua@taobao.com
+ * @author  lifesinger@gmail.com,
+ *          qiaohua@taobao.com,
+ *          yiminghe@gmail.com
  */
 KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
@@ -6284,11 +6305,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     if (DOM[k] && !speed) {
                         DOM[k](self);
                     } else {
-                        // 原生支持问题很多，默认不采用原生
-                        if (nativeSupport === undefined) {
-                            nativeSupport = false;
-                        }
-                        S.each(this, function(elem) {
+                        S.each(self, function(elem) {
                             var anim = fx(elem, v[0], speed, callback,
                                 v[1], easing, nativeSupport);
                             attachAnim(elem, anim);
@@ -6301,22 +6318,29 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
     function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
         if (which === 'toggle') {
-            visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            visible = DOM.css(elem, DISPLAY) === NONE;
             which = 'show';
         }
 
         if (visible) {
-            DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+            DOM.show(elem);
         }
 
         // 根据不同类型设置初始 css 属性, 并设置动画参数
         var originalStyle = {}, style = {};
         S.each(FX[which], function(prop) {
+            /**
+             * 2011-08-19
+             * originalStyle 记录行内样式，防止外联样式干扰！
+             */
+            var elemStyle = elem.style;
             if (prop === OVERFLOW) {
-                originalStyle[OVERFLOW] = DOM.css(elem, OVERFLOW);
+                originalStyle[OVERFLOW] = elemStyle[OVERFLOW];
                 DOM.css(elem, OVERFLOW, HIDDEN);
             }
             else if (prop === OPCACITY) {
+                // 透明度特殊点
+                // TODO 仔细再看下
                 originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
                 style.opacity = visible ? 1 : 0;
                 if (visible) {
@@ -6324,17 +6348,20 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 }
             }
             else if (prop === HEIGHT) {
-                originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
+                originalStyle[HEIGHT] = elemStyle[HEIGHT];
                 //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
-                style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
-
+                style.height = (visible ?
+                    DOM.css(elem, HEIGHT) || elem.naturalHeight :
+                    0);
                 if (visible) {
                     DOM.css(elem, HEIGHT, 0);
                 }
             }
             else if (prop === WIDTH) {
-                originalStyle[WIDTH] = DOM.css(elem, WIDTH);
-                style.width = (visible ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                originalStyle[WIDTH] = elemStyle[WIDTH];
+                style.width = (visible ?
+                    DOM.css(elem, WIDTH) || elem.naturalWidth :
+                    0);
                 if (visible) {
                     DOM.css(elem, WIDTH, 0);
                 }
@@ -6343,34 +6370,26 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
         // 开始动画
         return new Anim(elem, style, speed, easing || 'easeOut', function() {
-            // 如果是隐藏, 需要还原一些 css 属性
+            // 如果是隐藏，需要设置 diaplay
             if (!visible) {
-                // 保留原有值
-                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
-                if (oldVal !== NONE) {
-                    if (oldVal) {
-                        DOM.data(elem, DISPLAY, oldVal);
-                    }
-                    currStyle[DISPLAY] = NONE;
-                }
-
-                // 还原样式
-                if (originalStyle[HEIGHT]) {
-                    DOM.css(elem, { height: originalStyle[HEIGHT] });
-                }
-                if (originalStyle[WIDTH]) {
-                    DOM.css(elem, { width: originalStyle[WIDTH] });
-                }
-                if (originalStyle[OPCACITY]) {
-                    DOM.css(elem, { opacity: originalStyle[OPCACITY] });
-                }
-                if (originalStyle[OVERFLOW]) {
-                    DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
-                }
-
+                DOM.hide(elem);
             }
 
-            if (callback && S.isFunction(callback)) {
+            // 还原样式
+            if (originalStyle[HEIGHT] !== undefined) {
+                DOM.css(elem, "height", originalStyle[HEIGHT]);
+            }
+            if (originalStyle[WIDTH] !== undefined) {
+                DOM.css(elem, "width", originalStyle[WIDTH]);
+            }
+            if (originalStyle[OPCACITY] !== undefined) {
+                DOM.css(elem, "opacity", originalStyle[OPCACITY]);
+            }
+            if (originalStyle[OVERFLOW] !== undefined) {
+                DOM.css(elem, "overflow", originalStyle[OVERFLOW]);
+            }
+
+            if (callback) {
                 callback();
             }
 

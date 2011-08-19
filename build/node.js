@@ -1,11 +1,13 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 10:51
+build time: Aug 19 12:28
 */
 /**
  * @module  anim-node-plugin
- * @author  lifesinger@gmail.com, qiaohua@taobao.com
+ * @author  lifesinger@gmail.com,
+ *          qiaohua@taobao.com,
+ *          yiminghe@gmail.com
  */
 KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
@@ -91,11 +93,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     if (DOM[k] && !speed) {
                         DOM[k](self);
                     } else {
-                        // 原生支持问题很多，默认不采用原生
-                        if (nativeSupport === undefined) {
-                            nativeSupport = false;
-                        }
-                        S.each(this, function(elem) {
+                        S.each(self, function(elem) {
                             var anim = fx(elem, v[0], speed, callback,
                                 v[1], easing, nativeSupport);
                             attachAnim(elem, anim);
@@ -108,22 +106,29 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
     function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
         if (which === 'toggle') {
-            visible = DOM.css(elem, DISPLAY) === NONE ? 1 : 0;
+            visible = DOM.css(elem, DISPLAY) === NONE;
             which = 'show';
         }
 
         if (visible) {
-            DOM.css(elem, DISPLAY, DOM.data(elem, DISPLAY) || '');
+            DOM.show(elem);
         }
 
         // 根据不同类型设置初始 css 属性, 并设置动画参数
         var originalStyle = {}, style = {};
         S.each(FX[which], function(prop) {
+            /**
+             * 2011-08-19
+             * originalStyle 记录行内样式，防止外联样式干扰！
+             */
+            var elemStyle = elem.style;
             if (prop === OVERFLOW) {
-                originalStyle[OVERFLOW] = DOM.css(elem, OVERFLOW);
+                originalStyle[OVERFLOW] = elemStyle[OVERFLOW];
                 DOM.css(elem, OVERFLOW, HIDDEN);
             }
             else if (prop === OPCACITY) {
+                // 透明度特殊点
+                // TODO 仔细再看下
                 originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
                 style.opacity = visible ? 1 : 0;
                 if (visible) {
@@ -131,17 +136,20 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 }
             }
             else if (prop === HEIGHT) {
-                originalStyle[HEIGHT] = DOM.css(elem, HEIGHT);
+                originalStyle[HEIGHT] = elemStyle[HEIGHT];
                 //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
-                style.height = (visible ? DOM.css(elem, HEIGHT) || elem.naturalHeight : 0);
-
+                style.height = (visible ?
+                    DOM.css(elem, HEIGHT) || elem.naturalHeight :
+                    0);
                 if (visible) {
                     DOM.css(elem, HEIGHT, 0);
                 }
             }
             else if (prop === WIDTH) {
-                originalStyle[WIDTH] = DOM.css(elem, WIDTH);
-                style.width = (visible ? DOM.css(elem, WIDTH) || elem.naturalWidth : 0);
+                originalStyle[WIDTH] = elemStyle[WIDTH];
+                style.width = (visible ?
+                    DOM.css(elem, WIDTH) || elem.naturalWidth :
+                    0);
                 if (visible) {
                     DOM.css(elem, WIDTH, 0);
                 }
@@ -150,34 +158,26 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
         // 开始动画
         return new Anim(elem, style, speed, easing || 'easeOut', function() {
-            // 如果是隐藏, 需要还原一些 css 属性
+            // 如果是隐藏，需要设置 diaplay
             if (!visible) {
-                // 保留原有值
-                var currStyle = elem.style, oldVal = currStyle[DISPLAY];
-                if (oldVal !== NONE) {
-                    if (oldVal) {
-                        DOM.data(elem, DISPLAY, oldVal);
-                    }
-                    currStyle[DISPLAY] = NONE;
-                }
-
-                // 还原样式
-                if (originalStyle[HEIGHT]) {
-                    DOM.css(elem, { height: originalStyle[HEIGHT] });
-                }
-                if (originalStyle[WIDTH]) {
-                    DOM.css(elem, { width: originalStyle[WIDTH] });
-                }
-                if (originalStyle[OPCACITY]) {
-                    DOM.css(elem, { opacity: originalStyle[OPCACITY] });
-                }
-                if (originalStyle[OVERFLOW]) {
-                    DOM.css(elem, { overflow: originalStyle[OVERFLOW] });
-                }
-
+                DOM.hide(elem);
             }
 
-            if (callback && S.isFunction(callback)) {
+            // 还原样式
+            if (originalStyle[HEIGHT] !== undefined) {
+                DOM.css(elem, "height", originalStyle[HEIGHT]);
+            }
+            if (originalStyle[WIDTH] !== undefined) {
+                DOM.css(elem, "width", originalStyle[WIDTH]);
+            }
+            if (originalStyle[OPCACITY] !== undefined) {
+                DOM.css(elem, "opacity", originalStyle[OPCACITY]);
+            }
+            if (originalStyle[OVERFLOW] !== undefined) {
+                DOM.css(elem, "overflow", originalStyle[OVERFLOW]);
+            }
+
+            if (callback) {
                 callback();
             }
 
