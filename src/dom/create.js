@@ -1,6 +1,6 @@
 /**
  * @module  dom-create
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
@@ -326,6 +326,11 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 });
 
 /**
+ * 2011-08
+ *  remove 需要对子孙节点以及自身清除 data
+ *  create 修改，支持 <style></style> ie 下直接创建
+ *  TODO: jquery clone ,clean 实现
+ *
  * TODO:
  *  - 研究 jQuery 的 buildFragment 和 clean
  *  - 增加 cache, 完善 test cases

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 21:49
+build time: Aug 19 22:01
 */
 KISSY.add("dom/attr",function(m,d,r,q){function u(k,f){f=A[f]||f;var g=B[f];return g&&g.get?g.get(k,f):k[f]}r=document.documentElement;var y=!r.hasAttribute,v=r.textContent===q?"innerText":"textContent",h=d._isElementNode,j=/^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,p=/^(?:button|input|object|select|textarea)$/i,s=/^a(?:rea)?$/i,i=/:|^on/,n=/\r/g,o={},t={val:1,css:1,html:1,text:1,data:1,width:1,height:1,offset:1},w=
 {tabindex:{get:function(k){var f=k.getAttributeNode("tabindex");return f&&f.specified?parseInt(f.value,10):p.test(k.nodeName)||s.test(k.nodeName)&&k.href?0:q}},style:{get:function(k){return k.style.cssText},set:function(k,f){k.style.cssText=f}}},A={tabindex:"tabIndex",readonly:"readOnly","for":"htmlFor","class":"className",maxlength:"maxLength",cellspacing:"cellSpacing",cellpadding:"cellPadding",rowspan:"rowSpan",colspan:"colSpan",usemap:"useMap",frameborder:"frameBorder",contenteditable:"contentEditable"},

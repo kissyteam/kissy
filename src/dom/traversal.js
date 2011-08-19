@@ -1,6 +1,6 @@
 /**
  * @module  dom-traversal
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
@@ -225,6 +225,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 });
 
 /**
+ * 2011-08
+ * - 添加 closest , first ,last 完全摆脱原生属性
+ *
  * NOTES:
  * - jquery does not return null ,it only returns empty array , but kissy does.
  *

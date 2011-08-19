@@ -261,7 +261,7 @@ KISSY.add("ua", function(S,UA) {
 
 /**
  * @module  dom
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/base', function(S, undefined) {
 
@@ -328,6 +328,11 @@ KISSY.add('dom/base', function(S, undefined) {
     return DOM;
 
 });
+
+/**
+ * 2011-08
+ *  - 添加键盘枚举值，方便依赖程序清晰
+ */
 
 /**
  * @module  dom-attr
@@ -1035,7 +1040,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
 
 /**
  * @module  dom-create
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
@@ -1361,6 +1366,11 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 });
 
 /**
+ * 2011-08
+ *  remove 需要对子孙节点以及自身清除 data
+ *  create 修改，支持 <style></style> ie 下直接创建
+ *  TODO: jquery clone ,clean 实现
+ *
  * TODO:
  *  - 研究 jQuery 的 buildFragment 和 clean
  *  - 增加 cache, 完善 test cases
@@ -1688,7 +1698,7 @@ KISSY.add('dom/insertion', function(S, DOM) {
 
 /**
  * @module  dom-offset
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
@@ -2982,7 +2992,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
 /**
  * @module  dom
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
 
@@ -3157,7 +3167,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
 
 /**
  * @module  dom-traversal
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
@@ -3382,6 +3392,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 });
 
 /**
+ * 2011-08
+ * - 添加 closest , first ,last 完全摆脱原生属性
+ *
  * NOTES:
  * - jquery does not return null ,it only returns empty array , but kissy does.
  *

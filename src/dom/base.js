@@ -1,6 +1,6 @@
 /**
  * @module  dom
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/base', function(S, undefined) {
 
@@ -67,3 +67,8 @@ KISSY.add('dom/base', function(S, undefined) {
     return DOM;
 
 });
+
+/**
+ * 2011-08
+ *  - 添加键盘枚举值，方便依赖程序清晰
+ */

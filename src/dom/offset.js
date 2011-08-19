@@ -1,6 +1,6 @@
 /**
  * @module  dom-offset
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
