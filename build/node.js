@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 22:26
+build time: Aug 19 23:01
 */
 /**
  * @module  anim-node-plugin
@@ -143,8 +143,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 originalStyle[HEIGHT] = elemStyle[HEIGHT];
                 //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
                 style.height = (visible ?
-                    DOM.css(elem, HEIGHT) || elem.naturalHeight :
-                    0);
+                    DOM.height(elem) || elem.naturalHeight :
+                    0) + "px";
                 if (visible) {
                     DOM.css(elem, HEIGHT, 0);
                 }
@@ -152,8 +152,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             else if (prop === WIDTH) {
                 originalStyle[WIDTH] = elemStyle[WIDTH];
                 style.width = (visible ?
-                    DOM.css(elem, WIDTH) || elem.naturalWidth :
-                    0);
+                    DOM.width(elem) || elem.naturalWidth :
+                    0) + "px";
                 if (visible) {
                     DOM.css(elem, WIDTH, 0);
                 }
