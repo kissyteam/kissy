@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 21:49
+build time: Aug 19 22:26
 */
 /**
  * @module  anim-node-plugin
@@ -132,9 +132,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 DOM.css(elem, OVERFLOW, HIDDEN);
             }
             else if (prop === OPCACITY) {
-                // 透明度特殊点
-                // TODO 仔细再看下
-                originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
+                // 取行内 opacity
+                originalStyle[OPCACITY] = DOM.style(elem, OPCACITY);
                 style.opacity = visible ? 1 : 0;
                 if (visible) {
                     DOM.css(elem, OPCACITY, 0);

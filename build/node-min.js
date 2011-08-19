@@ -1,9 +1,9 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 21:49
+build time: Aug 19 22:26
 */
-KISSY.add("node/anim-plugin",function(e,c,k,f,j){function m(h,w,p,l,i,q,u){i&&c.show(h);var n={},t={};e.each(y[w],function(v){var x=h.style;if(v===b){n[b]=x[b];c.css(h,b,d)}else if(v===g){n[g]=c.css(h,g);t.opacity=i?1:0;i&&c.css(h,g,0)}else if(v===o){n[o]=x[o];t.height=i?c.css(h,o)||h.naturalHeight:0;i&&c.css(h,o,0)}else if(v===r){n[r]=x[r];t.width=i?c.css(h,r)||h.naturalWidth:0;i&&c.css(h,r,0)}});return(new k(h,t,p,q,function(){i||c.hide(h);n[o]!==j&&c.css(h,"height",n[o]);n[r]!==j&&c.css(h,"width",
+KISSY.add("node/anim-plugin",function(e,c,k,f,j){function m(h,w,p,l,i,q,u){i&&c.show(h);var n={},t={};e.each(y[w],function(v){var x=h.style;if(v===b){n[b]=x[b];c.css(h,b,d)}else if(v===g){n[g]=c.style(h,g);t.opacity=i?1:0;i&&c.css(h,g,0)}else if(v===o){n[o]=x[o];t.height=i?c.css(h,o)||h.naturalHeight:0;i&&c.css(h,o,0)}else if(v===r){n[r]=x[r];t.width=i?c.css(h,r)||h.naturalWidth:0;i&&c.css(h,r,0)}});return(new k(h,t,p,q,function(){i||c.hide(h);n[o]!==j&&c.css(h,"height",n[o]);n[r]!==j&&c.css(h,"width",
 n[r]);n[g]!==j&&c.css(h,"opacity",n[g]);n[b]!==j&&c.css(h,"overflow",n[b]);l&&l()},u)).run()}var s=f.prototype,a="ksAnims"+e.now(),b="overflow",d="hidden",g="opacity",o="height",r="width",y={show:[b,g,o,r],fade:[g],slide:[b,o]};f.__ANIM_KEY=a;(function(h){function w(p,l){var i=c.data(p,a);i||c.data(p,a,i=[]);l.on("complete",function(){var q=c.data(p,a);if(q){var u=e.indexOf(l,q);u>=0&&q.splice(u,1);q.length||c.removeData(p,a)}});i.push(l)}h.animate=function(){var p=e.makeArray(arguments);e.each(this,
 function(l){var i=k.apply(j,[l].concat(p)).run();w(l,i)});return this};h.stop=function(p){e.each(this,function(l){var i=c.data(l,a);if(i){e.each(i,function(q){q.stop(p)});c.removeData(l,a)}});return this};e.each({show:["show",1],hide:["show",0],fadeIn:["fade",1],fadeOut:["fade",0],slideDown:["slide",1],slideUp:["slide",0]},function(p,l){h[l]=function(i,q,u,n){c[l]&&!i?c[l](this):e.each(this,function(t){var v=m(t,p[0],i,q,p[1],u||"easeOut",n);w(t,v)});return this}});h.toggle=function(){h[this.css("display")===
 "none"?"show":"hide"].apply(this,arguments)}})(s)},{requires:["dom","anim","./base"]});

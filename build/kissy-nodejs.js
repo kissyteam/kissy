@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 22:11
+build time: Aug 19 22:26
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Aug 19 22:11
          */
         version: '1.20dev',
 
-        buildTime:'20110819221106',
+        buildTime:'20110819222615',
 
         /**
          * Returns a new object containing all of the properties of
@@ -9268,9 +9268,8 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 DOM.css(elem, OVERFLOW, HIDDEN);
             }
             else if (prop === OPCACITY) {
-                // 透明度特殊点
-                // TODO 仔细再看下
-                originalStyle[OPCACITY] = DOM.css(elem, OPCACITY);
+                // 取行内 opacity
+                originalStyle[OPCACITY] = DOM.style(elem, OPCACITY);
                 style.opacity = visible ? 1 : 0;
                 if (visible) {
                     DOM.css(elem, OPCACITY, 0);
