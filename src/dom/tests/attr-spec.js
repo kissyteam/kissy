@@ -14,24 +14,24 @@ KISSY.use("dom", function(S, DOM) {
     describe("attr", function() {
         beforeEach(function() {
             this.addMatchers({
-                    toBeAlmostEqual: function(expected) {
-                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-                    },
+                toBeAlmostEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                },
 
 
-                    toBeEqual: function(expected) {
-                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-                    },
+                toBeEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                },
 
-                    toBeArrayEq:function(expected) {
-                        var actual = this.actual;
-                        if (expected.length != actual.length) return false;
-                        for (var i = 0; i < expected.length; i++) {
-                            if (expected[i] != actual[i]) return false;
-                        }
-                        return true;
+                toBeArrayEq:function(expected) {
+                    var actual = this.actual;
+                    if (expected.length != actual.length) return false;
+                    for (var i = 0; i < expected.length; i++) {
+                        if (expected[i] != actual[i]) return false;
                     }
-                });
+                    return true;
+                }
+            });
         });
 
         S.get = DOM.get;
@@ -68,7 +68,7 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(input, "readonly")).toBe("readonly");
                 // same with jquery , null changed to undefined
                 expect(DOM.attr(radio, 'checked')).toBe(undefined);
-                expect($(radio).attr( 'checked')).toBe(undefined);
+                expect($(radio).attr('checked')).toBe(undefined);
                 // standard browser returns null
                 // ie<8 return false , === radio.checked
                 // expect(radio.getAttribute("checked")).toBe(undefined);
@@ -143,7 +143,7 @@ KISSY.use("dom", function(S, DOM) {
             it("should handle checked attribute correctly", function() {
                 // 测试 checked 的 setter
                 var checkbox2 = S.get('#test-20100728-checkbox');
-
+                var body = document.body;
                 DOM.attr(checkbox2, 'checked', true);
                 expect(DOM.attr(checkbox2, 'checked')).toBe('checked');
                 expect(DOM.prop(checkbox2, 'checked')).toBe(true);
@@ -151,6 +151,18 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(checkbox2, 'checked')).toBe(undefined);
                 expect(DOM.prop(checkbox2, 'checked')).toBe(false);
                 expect(DOM.hasAttr(checkbox2, "checked")).toBe(false);
+
+                checkbox2.checked = true;
+                DOM.attr(checkbox2, "dd", "dd");
+                expect(DOM.hasAttr(checkbox2, "dd")).toBe(true);
+                expect(DOM.hasProp(checkbox2, "checked")).toBe(true);
+
+                /**
+                 * 2011-08-19 集合中，一个为true 都为true
+                 */
+                expect(DOM.hasAttr([body,checkbox2], "dd")).toBe(true);
+                expect(DOM.hasProp([body,checkbox2], "checked")).toBe(true);
+
             });
 
 

@@ -8287,6 +8287,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
              * @return {Number} 当前值
              */
             interpolate:function(source, target, pos) {
+                if(!((source + (target - source) * pos).toFixed)){
+                    debugger
+                }
                 return (source + (target - source) * pos).toFixed(3);
             },
 

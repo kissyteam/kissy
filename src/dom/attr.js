@@ -215,9 +215,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         function getProp(elem, name) {
             name = propFix[ name ] || name;
             var hook = propHooks[ name ];
-            if (!elem) {
-                return undefined;
-            }
             if (hook && hook.get) {
                 return hook.get(elem, name);
 
@@ -255,15 +252,26 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         }
                     });
                 } else {
-                    var elem = elems[0];
-                    if (!elem) {
-                        return;
+                    if (elems.length) {
+                        return getProp(elems[0], name);
                     }
-                    return getProp(elem, name);
                 }
             },
+
+            /**
+             * 是否其中一个元素包含指定 property
+             * @param selector
+             * @param name
+             */
             hasProp:function(selector, name) {
-                return getProp(selector, name) !== undefined;
+                var elems = DOM.query(selector);
+                for (var i = 0; i < elems.length; i++) {
+                    var el = elems[i];
+                    if (getProp(el, name) !== undefined) {
+                        return true;
+                    }
+                }
+                return false;
             },
 
             /**
@@ -383,22 +391,36 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 });
             },
 
+            /**
+             * 是否其中一个元素包含指定属性
+             */
             hasAttr: oldIE ?
                 function(selector, name) {
                     name = name.toLowerCase();
-                    var el = DOM.get(selector);
+                    var elems = DOM.query(selector);
                     // from ppk :http://www.quirksmode.org/dom/w3c_core.html
                     // IE5-7 doesn't return the value of a style attribute.
                     // var $attr = el.attributes[name];
-                    var $attr = el.getAttributeNode(name);
-                    return !!( $attr && $attr.specified );
+                    for (var i = 0; i < elems.length; i++) {
+                        var el = elems[i];
+                        var $attr = el.getAttributeNode(name);
+                        if ($attr && $attr.specified) {
+                            return true;
+                        }
+                    }
+                    return false;
                 }
                 :
                 function(selector, name) {
-                    name = name.toLowerCase();
-                    var el = DOM.get(selector);
-                    //使用原生实现
-                    return el.hasAttribute(name);
+                    var elems = DOM.query(selector);
+                    for (var i = 0; i < elems.length; i++) {
+                        var el = elems[i];
+                        //使用原生实现
+                        if (el.hasAttribute(name)) {
+                            return true;
+                        }
+                    }
+                    return false;
                 },
 
             /**

@@ -149,9 +149,6 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         show: function(selector) {
 
             DOM.query(selector).each(function(elem) {
-                if (!elem) {
-                    return;
-                }
 
                 elem.style[DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
 
@@ -179,10 +176,6 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
          */
         hide: function(selector) {
             DOM.query(selector).each(function(elem) {
-                if (!elem) {
-                    return;
-                }
-
                 var style = elem.style, old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {

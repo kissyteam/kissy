@@ -86,10 +86,6 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                     if (DOM[k] && !speed) {
                         DOM[k](self);
                     } else {
-                        // 原生支持问题很多，默认不采用原生
-                        if (nativeSupport === undefined) {
-                            nativeSupport = false;
-                        }
                         S.each(this, function(elem) {
                             var anim = fx(elem, v[0], speed, callback,
                                 v[1], easing, nativeSupport);
