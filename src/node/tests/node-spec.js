@@ -302,6 +302,15 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(n.css("xx")).toBe('');
 
         });
+
+
+        it("should end correctly", function() {
+            var html = $("<div id='end1'><div class='end2'></div><div class='end3'></div></div>").appendTo("body");
+            html.all(".end2").text("end2").end().all(".end3").text("end3").end().append("<div class='end4'></div>");
+            expect($("#end1 .end2").text()).toBe("end2");
+            expect($("#end1 .end3").text()).toBe("end3");
+            expect($("#end1 .end4").length).toBe(1);
+        });
     });
 
     describe("selector context", function() {
@@ -341,6 +350,10 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(c.all(".context-test-3").length).toBe(2);
             expect(c.all(c3).length).toBe(2);
 
+        });
+
+        runs(function() {
+            html.remove();
         });
     });
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 13 21:43
+build time: Aug 19 10:51
 */
 /**
  * @module  anim-node-plugin
@@ -402,11 +402,12 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
 
         item: function(index) {
+            var self = this;
             if (S.isNumber(index)) {
-                if (index >= this.length) {
+                if (index >= self.length) {
                     return null;
                 } else {
-                    return new NodeList(this[index]);
+                    return new NodeList(self[index]);
                 }
             } else {
                 return new NodeList(index);
@@ -450,7 +451,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             var self = this,len = self.length, i = 0, node;
 
             for (node = new NodeList(self[0]);
-                 i < len && fn.call(context || node, node, i, this) !== false;
+                 i < len && fn.call(context || node, node, i, self) !== false;
                  node = new NodeList(self[++i])) {
             }
 
@@ -463,16 +464,32 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return this[0];
         },
 
+        /**
+         * stack sub query
+         */
+        end:function() {
+            var self = this;
+            return self.__parent || self;
+        },
+
         all:function(selector) {
-            if (this.length > 0) {
-                return NodeList.all(selector, this);
+            var ret,self = this;
+            if (self.length > 0) {
+                ret = NodeList.all(selector, self);
+            } else {
+                ret = new NodeList();
             }
-            return new NodeList();
+            ret.__parent = self;
+            return ret;
         },
 
         one:function(selector) {
-            var all = this.all(selector);
-            return all.length ? all.slice(0, 1) : null;
+            var self = this,all = self.all(selector),
+                ret = all.length ? all.slice(0, 1) : null;
+            if (ret) {
+                ret.__parent = self;
+            }
+            return ret;
         }
     });
 
