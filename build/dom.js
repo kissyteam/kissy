@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 22:01
+build time: Aug 19 22:11
 */
 /**
  * @module  dom-attr
@@ -2332,7 +2332,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                         var style = elem[STYLE],
                             currentStyle = elem[CURRENT_STYLE],
                             opacity = isNaN(val) ? "" : "alpha(" + OPACITY + "=" + val * HUNDRED + ")",
-                            filter = currentStyle && currentStyle[FILTER] || style[FILTER] || "";
+                            filter = S.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || "");
 
                         // ie  has layout
                         style.zoom = 1;
@@ -2355,7 +2355,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                         // 如果 >=1 就不设，就不能覆盖外部样式表定义的样式，一定要设
                         style.filter = ralpha.test(filter) ?
                             filter.replace(ralpha, opacity) :
-                            filter + ", " + opacity;
+                            filter + (filter ? ", " : "") + opacity;
                     }
                 };
             }

@@ -438,7 +438,7 @@
             var node = document.createElement("div");
             node.innerHTML = '<div class="loading" style="width:600px;height:200px;"> '
                     + '<div class="mask"></div> '
-                    + '<i class="icon">加载中，请稍候…</i> '
+                    + '<i class="icon" style="position: absolute;left:200px;top:100px;">加载中，请稍候…</i> '
                     + '</div>';
             KISSY.use('ua,event,node,overlay', function(S, UA, Event, Node, O) {
                 var popup = new O.Popup({
@@ -446,7 +446,8 @@
                     width: 600,
                     height: 200,
                     elStyle:{
-                        position:UA.ie == 6 ? "absolute" : "fixed"
+                        position:UA.ie == 6 ? "absolute" : "fixed",
+                        background:"transparent"
                     },
                     align: {
                         points: ['cc', 'cc']

@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 22:00
+build time: Aug 19 22:11
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Aug 19 22:00
          */
         version: '1.20dev',
 
-        buildTime:'20110819220039',
+        buildTime:'20110819221106',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5849,7 +5849,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                         var style = elem[STYLE],
                             currentStyle = elem[CURRENT_STYLE],
                             opacity = isNaN(val) ? "" : "alpha(" + OPACITY + "=" + val * HUNDRED + ")",
-                            filter = currentStyle && currentStyle[FILTER] || style[FILTER] || "";
+                            filter = S.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || "");
 
                         // ie  has layout
                         style.zoom = 1;
@@ -5872,7 +5872,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                         // 如果 >=1 就不设，就不能覆盖外部样式表定义的样式，一定要设
                         style.filter = ralpha.test(filter) ?
                             filter.replace(ralpha, opacity) :
-                            filter + ", " + opacity;
+                            filter + (filter ? ", " : "") + opacity;
                     }
                 };
             }
