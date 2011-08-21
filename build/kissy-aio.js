@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 23:02
+build time: Aug 21 20:11
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 19 23:02
          */
         version: '1.20dev',
 
-        buildTime:'20110819230202',
+        buildTime:'20110821201100',
 
         /**
          * Returns a new object containing all of the properties of
@@ -25955,7 +25955,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 21:49
+build time: Aug 21 20:10
 */
 /**
  * combination of menu and button ,similar to native select
@@ -26432,6 +26432,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             var item = new Option({
                 content:option.text(),
                 prefixCls:cfg.prefixCls,
+                elCls:option.attr("class"),
                 value:option.val()
             });
             if (curValue == option.val()) {

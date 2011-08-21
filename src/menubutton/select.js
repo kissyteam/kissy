@@ -138,6 +138,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             var item = new Option({
                 content:option.text(),
                 prefixCls:cfg.prefixCls,
+                elCls:option.attr("class"),
                 value:option.val()
             });
             if (curValue == option.val()) {

@@ -22,10 +22,14 @@
         border: 1px solid white;
     }
 
-    .c2c-menuitem-delete{
+    .c2c-menuitem-delete {
         padding-left: 20px;
         cursor: pointer;
     }
+
+        /*.ks-option-even {*/
+        /*background:#d3d3d3;*/
+        /*}*/
 </style>
 </head>
 <body>
@@ -124,7 +128,7 @@
         var $ = S.all;
         var s = S.one("#decorateSelect");
         for (var i = 0; i < 20; i++) {
-            s.append("<option value='" + i + "'>项目" + i + "</option>")
+            s.append("<option value='" + i + "'  " + (i % 2 == 1 ? "class='ks-option-even'" : "") + "  >项目" + i + "</option>")
         }
         KISSY.use("menubutton,menu", function(S, MenuButton, Menu) {
             var select = MenuButton.Select.decorate('#decorateSelect', {
