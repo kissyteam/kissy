@@ -6,6 +6,10 @@ build file for kissy sync
 <project name="kissy-sync"
          default="sync"
          xmlns:ac="antlib:net.sf.antcontrib">
+    <property name="git.origin" value="origin"/>
+    <property name="git.remote" value="remote"/>
+    <property name="git.gh-pages" value="gh-pages"/>
+    <property name="git.master" value="master"/>
 
     <target name="sync">
         <input addproperty="git.commit.message">
