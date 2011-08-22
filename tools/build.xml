@@ -73,34 +73,34 @@
                     <arg line="/c git commit -am '${git.commit.message}'"/>
                 </exec>
 
-
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
-                </exec>
-
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git push ${git.origin} ${git.dev}:${git.master}"/>
-                </exec>
-
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git push ${git.origin} ${git.dev}:${git.gh-pages}"/>
-                </exec>
-
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
-                </exec>
-
-                <!--push master to gh-pages also-->
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git push ${git.remote} ${git.dev}:${git.master}"/>
-                </exec>
-
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git push ${git.remote} ${git.dev}:${git.gh-pages}"/>
-                </exec>
-
             </ac:then>
         </ac:if>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
+        </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.master}"/>
+        </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.gh-pages}"/>
+        </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
+        </exec>
+
+        <!--push master to gh-pages also-->
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.master}"/>
+        </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.gh-pages}"/>
+        </exec>
+
     </target>
 
     <target name="clean">
