@@ -348,7 +348,8 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                         C[K] = C[K] || {};
                         // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
                         // 但是值是对象的话会深度合并
-                        deepMix(C[K], ext[K]);
+                        // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
+                        S.mix(C[K], ext[K], undefined, undefined, true);
                     }
                 });
 
@@ -362,23 +363,8 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
                 }
             });
         }
-
         return C;
     };
-    function deepMix(r, s) {
-        if (!s) {
-            return r;
-        }
-        for (var p in s) {
-            // 如果属性是对象，接着递归进行
-            if (S.isObject(s[p]) && S.isObject(r[p])) {
-                deepMix(r[p], s[p]);
-            } else if (!(p in r)) {
-                r[p] = s[p];
-            }
-        }
-        return undefined;
-    }
 
     return UIBase;
 }, {
