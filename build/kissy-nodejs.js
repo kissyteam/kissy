@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 16:26
+build time: Aug 22 17:20
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Aug 22 16:26
          */
         version: '1.20dev',
 
-        buildTime:'20110822162643',
+        buildTime:'20110822172016',
 
         /**
          * Returns a new object containing all of the properties of
@@ -6777,18 +6777,20 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
         _clone:function(src, dest) {
             if (dest.nodeType !== DOM.ELEMENT_NODE &&
-                !DOM.hasData(src)) {
+                !Event._hasData(src)) {
                 return;
             }
-            var eventDesc = Event._data(src);
-            if (eventDesc) {
-                var events = eventDesc.events;
-                S.each(events, function(handlers, type) {
-                    S.each(handlers, function(handler) {
-                        Event.on(dest, type, handler.fn, handler.scope, handler.data);
-                    });
+            var eventDesc = Event._data(src),
+                events = eventDesc.events;
+            S.each(events, function(handlers, type) {
+                S.each(handlers, function(handler) {
+                    Event.on(dest, type, handler.fn, handler.scope, handler.data);
                 });
-            }
+            });
+        },
+
+        _hasData:function(elem) {
+            return !!DOM.hasData(elem, EVENT_GUID);
         },
 
         _data:function(elem) {

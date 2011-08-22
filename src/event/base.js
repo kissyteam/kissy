@@ -46,18 +46,20 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
         _clone:function(src, dest) {
             if (dest.nodeType !== DOM.ELEMENT_NODE &&
-                !DOM.hasData(src)) {
+                !Event._hasData(src)) {
                 return;
             }
-            var eventDesc = Event._data(src);
-            if (eventDesc) {
-                var events = eventDesc.events;
-                S.each(events, function(handlers, type) {
-                    S.each(handlers, function(handler) {
-                        Event.on(dest, type, handler.fn, handler.scope, handler.data);
-                    });
+            var eventDesc = Event._data(src),
+                events = eventDesc.events;
+            S.each(events, function(handlers, type) {
+                S.each(handlers, function(handler) {
+                    Event.on(dest, type, handler.fn, handler.scope, handler.data);
                 });
-            }
+            });
+        },
+
+        _hasData:function(elem) {
+            return !!DOM.hasData(elem, EVENT_GUID);
         },
 
         _data:function(elem) {
