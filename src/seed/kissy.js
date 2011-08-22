@@ -8,7 +8,7 @@
         meta = {
             /**
              * Copies all the properties of s to r.
-             * @param deep {boolean} whether recurse mix if encouter object
+             * @param deep {boolean} whether recursive mix if encounter object
              * @return {Object} the augmented object
              */
             mix: function(r, s, ov, wl, deep) {

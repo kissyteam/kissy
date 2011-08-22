@@ -51,6 +51,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "closest",
             "next",
             "prev",
+            "clone",
             "siblings",
             "children"
         ],

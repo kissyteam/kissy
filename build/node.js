@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 19 23:01
+build time: Aug 22 15:38
 */
 /**
  * @module  anim-node-plugin
@@ -251,6 +251,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "closest",
             "next",
             "prev",
+            "clone",
             "siblings",
             "children"
         ],

@@ -146,6 +146,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
+        __EXPANDO:EXPANDO,
+
         hasData:function(selector, name) {
             var ret = false;
             DOM.query(selector).each(function(elem) {
