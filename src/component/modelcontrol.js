@@ -188,9 +188,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                 addChild:function(c, index) {
                     var self = this,
                         children = self.get("children"),
-                        elBefore = children[index];
-                    if (index) {
+                        elBefore = null;
+                    if (index !== undefined) {
                         children.splice(index, 0, c);
+                        elBefore = children[index] || null;
                     } else {
                         children.push(c);
                     }

@@ -80,9 +80,9 @@
 <h1>装饰已有元素为菜单按钮</h1>
 <div class="goog-inline-block goog-custom-button" id="exist">
     淘宝网
-    <div class="goog-menu goog-popupmenu">
+    <div class="goog-menu goog-popupmenu goog-ext-position">
         <div class="goog-menuitem goog-submenu">我的淘宝
-            <div class="goog-menu goog-popupmenu">
+            <div class="goog-menu goog-popupmenu goog-ext-position">
                 <div class="goog-menuitem">已买到的宝贝</div>
                 <div class="goog-menuitem">已卖出的宝贝</div>
             </div>
@@ -107,10 +107,12 @@
         KISSY.use("menubutton,menu", function(S, MenuButton, Menu) {
             var $ = S.all;
             //return;
-            new MenuButton({
+            window.MenuButton = MenuButton;
+            window.menubutton = new MenuButton({
                 srcNode:"#exist",
                 prefixCls:"goog-"
-            }).render();
+            });
+            window.menubutton.render();
         });
     });
 </script>

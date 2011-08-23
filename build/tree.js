@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 11:34
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -760,7 +760,7 @@ KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, Tree
      *2. 继承 mixin 树管理功能
      *3. 继承 mixin 儿子事件代理功能
      */
-    var Tree = UIBase.create(BaseNode, [TreeMgr,Component.DelegateChildren], {
+    var Tree = UIBase.create(BaseNode, [Component.DelegateChildren,TreeMgr], {
     }, {
         DefaultRender:TreeRender
     });

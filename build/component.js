@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:37
+build time: Aug 23 11:33
 */
 /**
  * container can delegate event for its children
@@ -358,9 +358,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                 addChild:function(c, index) {
                     var self = this,
                         children = self.get("children"),
-                        elBefore = children[index];
-                    if (index) {
+                        elBefore = null;
+                    if (index !== undefined) {
                         children.splice(index, 0, c);
+                        elBefore = children[index] || null;
                     } else {
                         children.push(c);
                     }

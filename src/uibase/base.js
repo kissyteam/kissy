@@ -3,7 +3,7 @@
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add('uibase/base', function (S, Base, DOM, Node) {
+KISSY.add('uibase/base', function (S, Base, Node) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
@@ -335,32 +335,53 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         S.extend(C, base, px, sx);
 
         if (exts) {
+
             C.__ks_exts = exts;
 
-            // [ex1,ex2],扩展类前面的优先，ex1 定义的覆盖 ex2 定义的
-            S.each(exts, function(ext) {
-                if (!ext) {
-                    return;
-                }
-                // 合并 ATTRS/HTML_PARSER 到主类
-                S.each([ATTRS, HTML_PARSER], function(K) {
-                    if (ext[K]) {
-                        C[K] = C[K] || {};
-                        // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
-                        // 但是值是对象的话会深度合并
-                        // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
-                        S.mix(C[K], ext[K], undefined, undefined, true);
-                    }
-                });
+            var desc = {
+                // ATTRS:
+                // HMTL_PARSER:
+            },constructors = exts.concat(C);
 
-                // 合并功能代码到主类，不覆盖
-                for (var p in ext.prototype) {
-                    // 不覆盖主类，但是主类的父类还是覆盖吧
-                    if (!C.prototype.hasOwnProperty((p)) &&
-                        ext.prototype.hasOwnProperty(p)) {
-                        C.prototype[p] = ext.prototype[p];
+            // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+            // 主类最优先
+            S.each(constructors, function(ext) {
+                if (ext) {
+                    // 合并 ATTRS/HTML_PARSER 到主类
+                    S.each([ATTRS, HTML_PARSER], function(K) {
+                        if (ext[K]) {
+                            desc[K] = desc[K] || {};
+                            // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
+                            // 但是值是对象的话会深度合并
+                            // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
+                            S.mix(desc[K], ext[K], true, undefined, true);
+                        }
+                    });
+                }
+            });
+
+            S.each(desc, function(v, k) {
+                C[k] = v;
+            });
+
+            var prototype = {};
+
+            // 主类最优先
+            S.each(constructors, function(ext) {
+                if (ext) {
+                    var proto = ext.prototype;
+                    // 合并功能代码到主类，不覆盖
+                    for (var p in proto) {
+                        // 不覆盖主类，但是主类的父类还是覆盖吧
+                        if (proto.hasOwnProperty(p)) {
+                            prototype[p] = proto[p];
+                        }
                     }
                 }
+            });
+
+            S.each(prototype, function(v, k) {
+                C.prototype[k] = v;
             });
         }
         return C;
@@ -368,7 +389,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     return UIBase;
 }, {
-    requires:["base","dom","node"]
+    requires:["base","node"]
 });
 /**
  * render 和 create 区别

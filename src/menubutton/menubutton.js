@@ -204,7 +204,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
              * @private
              */
             decorateChildrenInternal:function(ui, el, cls) {
-                el.hide();
+                // 不能用 diaplay:none , menu 的隐藏是靠 visibility
+                // eg: menu.show(); menu.hide();
+                el.css("visibility", "hidden");
                 var docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new ui(S.mix({
