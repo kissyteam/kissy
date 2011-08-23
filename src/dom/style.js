@@ -89,10 +89,11 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
             if (val === undefined) {
-                var elem = DOM.get(selector);
+                var elem = DOM.get(selector),ret = '';
                 if (elem) {
-                    return style(elem, name, val);
+                    ret = style(elem, name, val);
                 }
+                return ret;
             } else {
                 DOM.query(selector).each(function(elem) {
                     style(elem, name, val);
@@ -118,11 +119,12 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             if (val === undefined) {
                 // supports css selector/Node/NodeList
                 var elem = DOM.get(selector), ret = '';
-
-                // If a hook was provided get the computed value from there
-                if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
-                } else {
-                    ret = DOM._getComputedStyle(elem, name);
+                if (elem) {
+                    // If a hook was provided get the computed value from there
+                    if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
+                    } else {
+                        ret = DOM._getComputedStyle(elem, name);
+                    }
                 }
                 return ret === undefined ? '' : ret;
             }

@@ -25,7 +25,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * Creates a new HTMLElement using the provided html string.
              */
             create: function(html, props, ownerDoc) {
-                if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+                if (nodeTypeIs(html, DOM.ELEMENT_NODE)
+                    || nodeTypeIs(html, DOM.TEXT_NODE)) {
                     return DOM.clone(html);
                 }
 
@@ -97,7 +98,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    S.each(DOM.query(selector), function(elem) {
+                    DOM.query(selector).each(function(elem) {
                         if (isElementNode(elem)) {
                             setHTML(elem, val, loadScripts, callback);
                         }
@@ -112,7 +113,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param {Boolean} keepData 删除元素时是否保留其上的数据，用于离线操作，提高性能
              */
             remove: function(selector, keepData) {
-                S.each(DOM.query(selector), function(el) {
+                DOM.query(selector).each(function(el) {
                     if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
                         // 清楚事件
                         var Event = S.require("event");
@@ -139,8 +140,13 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @returns 复制后的节点
              */
             clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
-                var elem = DOM.get(selector),
-                    clone = elem.cloneNode(deep);
+                var elem = DOM.get(selector);
+                
+                if (!elem) {
+                    return null;
+                }
+
+                var clone = elem.cloneNode(deep);
 
                 if (elem.nodeType == DOM.ELEMENT_NODE ||
                     elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {

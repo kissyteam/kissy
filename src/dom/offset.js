@@ -29,6 +29,25 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
+    // ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
+    function inDocument(elem) {
+        if (!elem) {
+            return 0;
+        }
+        var doc = elem.ownerDocument;
+        if (!doc) {
+            return 0;
+        }
+        var html = doc.documentElement;
+        if (html === elem) {
+            return true;
+        }
+        else if (DOM.__contains(html, elem)) {
+            return true;
+        }
+        return false;
+    }
+
     S.mix(DOM, {
 
 
@@ -38,19 +57,19 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *     is not in the ancestor frame chain of the element, we measure relative to
          *     the top-most window.
          */
-        offset: function(elem, val, relativeWin) {
-            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
-                return;
-            }
-
+        offset: function(selector, val, relativeWin) {
             // getter
             if (val === undefined) {
-                return getOffset(elem, relativeWin);
+                var elem = DOM.get(selector),ret;
+                if (elem) {
+                    ret = getOffset(elem, relativeWin);
+                }
+                return ret;
             }
-
             // setter
-            setOffset(elem, val);
+            DOM.query(selector).each(function(elem) {
+                setOffset(elem, val);
+            });
         },
 
         /**
@@ -60,7 +79,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *        http://yiminghe.javaeye.com/blog/390732
          */
         scrollIntoView: function(elem, container, top, hscroll) {
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
+            if (!(elem = DOM.get(elem))) {
                 return;
             }
 
@@ -163,36 +182,38 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
         DOM[method] = function(elem, v) {
             if (S.isNumber(elem)) {
-                arguments.callee(win, elem);
-                return;
+                return arguments.callee(win, elem);
             }
             elem = DOM.get(elem);
-            var ret = 0,
+            var ret,
                 w = getWin(elem),
                 d;
-
             if (w) {
                 if (v !== undefined) {
                     // 注意多 windw 情况，不能简单取 win
-                    var left = name == "Left" ? v : DOM.scrollLeft(w);
-                    var top = name == "Top" ? v : DOM.scrollTop(w);
+                    var left = name == "Left" ? v : DOM.scrollLeft(w),
+                        top = name == "Top" ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
+                } else {
+                    d = w[DOCUMENT];
+                    ret =
+                        //标准
+                        //chrome == body.scrollTop
+                        //firefox/ie9 == documentElement.scrollTop
+                        w[i ? 'pageYOffset' : 'pageXOffset']
+                            //ie6,7,8 standard mode
+                            || d[DOC_ELEMENT][method]
+                            //quirks mode
+                            || d[BODY][method];
                 }
-                d = w[DOCUMENT];
-                ret =
-                    //标准
-                    //chrome == body.scrollTop
-                    //firefox/ie9 == documentElement.scrollTop
-                    w[i ? 'pageYOffset' : 'pageXOffset']
-                        //ie6,7,8 standard mode
-                        || d[DOC_ELEMENT][method]
-                        //quirks mode
-                        || d[BODY][method]
-
-            } else if (isElementNode((elem = DOM.get(elem)))) {
-                ret = v === undefined ? elem[method] : elem[method] = v;
+            } else if (isElementNode(elem)) {
+                if (v !== undefined) {
+                    elem[method] = v
+                } else {
+                    ret = elem[method];
+                }
             }
-            return v === undefined ? ret : undefined;
+            return ret;
         }
     });
 

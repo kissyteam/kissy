@@ -26,19 +26,13 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
         first:function(selector, filter) {
             var elem = DOM.get(selector);
-            if (!elem || !elem.firstChild) {
-                return null;
-            }
-            return nth(elem.firstChild, filter, 'nextSibling',
+            return nth(elem && elem.firstChild, filter, 'nextSibling',
                 undefined, undefined, true);
         },
 
         last:function(selector, filter) {
             var elem = DOM.get(selector);
-            if (!elem || !elem.lastChild()) {
-                return null;
-            }
-            return nth(elem.lastChild, filter, 'previousSibling',
+            return nth(elem && elem.lastChild, filter, 'previousSibling',
                 undefined, undefined, true);
         },
 
@@ -107,7 +101,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             function(a, b) {
                 a = DOM.get(a);
                 b = DOM.get(b);
-                return DOM.__contains(a, b);
+                if (a && b) {
+                    return DOM.__contains(a, b);
+                }
             },
 
         equals:function(n1, n2) {

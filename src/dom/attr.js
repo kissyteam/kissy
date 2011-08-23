@@ -11,9 +11,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 'innerText' : 'textContent',
             EMPTY = '',
             isElementNode = DOM._isElementNode,
-            isTextNode = function(elem) {
-                return DOM._nodeTypeIs(elem, 3);
-            },
             rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
             rfocusable = /^(?:button|input|object|select|textarea)$/i,
             rclickable = /^a(?:rea)?$/i,
@@ -152,6 +149,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     }
                 }};
 
+        function isTextNode(elem) {
+            return DOM._nodeTypeIs(elem, DOM.TEXT_NODE);
+        }
+
         if (oldIE) {
 
             // get attribute value from attribute node for ie
@@ -244,7 +245,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 name = propFix[ name ] || name;
                 var hook = propHooks[ name ];
                 if (value !== undefined) {
-                    S.each(elems, function(elem) {
+                    elems.each(function(elem) {
                         if (hook && hook.set) {
                             hook.set(elem, value, name);
                         } else {
@@ -357,7 +358,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return ret === null ? undefined : ret;
                 } else {
                     // setter
-                    S.each(DOM.query(selector), function(el) {
+                    DOM.query(selector).each(function(el) {
                         // only set attributes on element nodes
                         if (!isElementNode(el)) {
                             return;
@@ -379,7 +380,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             removeAttr: function(selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
-                S.each(DOM.query(selector), function(el) {
+                DOM.query(selector).each(function(el) {
                     if (isElementNode(el)) {
                         var propName;
                         el.removeAttribute(name);
@@ -503,7 +504,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    S.each(DOM.query(selector), function(el) {
+                    DOM.query(selector).each(function(el) {
                         if (isElementNode(el)) {
                             el[TEXT] = val;
                         }
