@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 下拉框
  * @module    combobox
  * @creator    清羽<qingyu@taobao.com> & 博玉<boyu@taobao.com>

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 19:27
+build time: Aug 23 20:29
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 23 19:27
          */
         version: '1.20dev',
 
-        buildTime:'20110823192706',
+        buildTime:'20110823202938',
 
         /**
          * Returns a new object containing all of the properties of
@@ -26688,9 +26688,9 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:14
+build time: Aug 23 20:29
 */
-﻿/**
+/**
  * @author: 常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
@@ -26919,7 +26919,7 @@ KISSY.add("validation/define",function(){
 	return Define
 	
 });
-﻿/**
+/**
  * Validation.Field
  * @author: 常胤 <lzlu.com>
  */

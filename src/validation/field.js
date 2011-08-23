@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Validation.Field
  * @author: 常胤 <lzlu.com>
  */
