@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 17:20
+build time: Aug 23 12:14
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 22 17:20
          */
         version: '1.20dev',
 
-        buildTime:'20110822172016',
+        buildTime:'20110823121406',
 
         /**
          * Returns a new object containing all of the properties of
@@ -6590,7 +6590,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     var Event = {
 
         _clone:function(src, dest) {
-            if (dest.nodeType !== DOM.ELEMENT_NODE &&
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
                 !Event._hasData(src)) {
                 return;
             }
@@ -11438,7 +11438,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12863,7 +12863,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:37
+build time: Aug 23 12:13
 */
 /**
  * 数据延迟加载组件
@@ -13366,7 +13366,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13604,7 +13604,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * @module   Flash 全局静态类
@@ -14123,7 +14123,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:37
+build time: Aug 23 12:13
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -15366,7 +15366,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * resizable support for kissy
@@ -15540,7 +15540,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 16:26
+build time: Aug 23 12:14
 */
 /**
  * UIBase.Align
@@ -15944,7 +15944,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add('uibase/base', function (S, Base, DOM, Node) {
+KISSY.add('uibase/base', function (S, Base, Node) {
 
     var UI_SET = '_uiSet',
         SRC_NODE = 'srcNode',
@@ -16276,32 +16276,53 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
         S.extend(C, base, px, sx);
 
         if (exts) {
+
             C.__ks_exts = exts;
 
-            // [ex1,ex2],扩展类前面的优先，ex1 定义的覆盖 ex2 定义的
-            S.each(exts, function(ext) {
-                if (!ext) {
-                    return;
-                }
-                // 合并 ATTRS/HTML_PARSER 到主类
-                S.each([ATTRS, HTML_PARSER], function(K) {
-                    if (ext[K]) {
-                        C[K] = C[K] || {};
-                        // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
-                        // 但是值是对象的话会深度合并
-                        // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
-                        S.mix(C[K], ext[K], undefined, undefined, true);
-                    }
-                });
+            var desc = {
+                // ATTRS:
+                // HMTL_PARSER:
+            },constructors = exts.concat(C);
 
-                // 合并功能代码到主类，不覆盖
-                for (var p in ext.prototype) {
-                    // 不覆盖主类，但是主类的父类还是覆盖吧
-                    if (!C.prototype.hasOwnProperty((p)) &&
-                        ext.prototype.hasOwnProperty(p)) {
-                        C.prototype[p] = ext.prototype[p];
+            // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+            // 主类最优先
+            S.each(constructors, function(ext) {
+                if (ext) {
+                    // 合并 ATTRS/HTML_PARSER 到主类
+                    S.each([ATTRS, HTML_PARSER], function(K) {
+                        if (ext[K]) {
+                            desc[K] = desc[K] || {};
+                            // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
+                            // 但是值是对象的话会深度合并
+                            // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
+                            S.mix(desc[K], ext[K], true, undefined, true);
+                        }
+                    });
+                }
+            });
+
+            S.each(desc, function(v, k) {
+                C[k] = v;
+            });
+
+            var prototype = {};
+
+            // 主类最优先
+            S.each(constructors, function(ext) {
+                if (ext) {
+                    var proto = ext.prototype;
+                    // 合并功能代码到主类，不覆盖
+                    for (var p in proto) {
+                        // 不覆盖主类，但是主类的父类还是覆盖吧
+                        if (proto.hasOwnProperty(p)) {
+                            prototype[p] = proto[p];
+                        }
                     }
                 }
+            });
+
+            S.each(prototype, function(v, k) {
+                C.prototype[k] = v;
             });
         }
         return C;
@@ -16309,7 +16330,7 @@ KISSY.add('uibase/base', function (S, Base, DOM, Node) {
 
     return UIBase;
 }, {
-    requires:["base","dom","node"]
+    requires:["base","node"]
 });
 /**
  * render 和 create 区别
@@ -17580,7 +17601,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:37
+build time: Aug 23 12:13
 */
 /**
  * container can delegate event for its children
@@ -17937,9 +17958,10 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                 addChild:function(c, index) {
                     var self = this,
                         children = self.get("children"),
-                        elBefore = children[index];
-                    if (index) {
+                        elBefore = null;
+                    if (index !== undefined) {
                         children.splice(index, 0, c);
+                        elBefore = children[index] || null;
                     } else {
                         children.push(c);
                     }
@@ -18478,7 +18500,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * Switchable
@@ -21082,7 +21104,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * KISSY Overlay
@@ -21576,7 +21598,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22766,7 +22788,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * @fileoverview 图像放大区域
@@ -23391,7 +23413,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:37
+build time: Aug 23 12:12
 */
 /**
  * KISSY Calendar
@@ -24670,7 +24692,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * deletable menuitem
@@ -25701,8 +25723,9 @@ KISSY.add(
                  * @return {boolean} Whether the event was handled.
                  */
                 _handleKeydown:function(e) {
+                    var self = this;
 
-                    var menu = this.get("menu");
+                    var menu = self.get("menu");
 
                     var hasKeyboardControl_ = menu && menu.get("visible");
 
@@ -25711,7 +25734,7 @@ KISSY.add(
                     if (!hasKeyboardControl_) {
                         // right
                         if (keyCode == KeyCodes.RIGHT) {
-                            this.showMenu();
+                            self.showMenu();
                             var menuChildren = menu.get("children");
                             if (menuChildren[0]) {
                                 menu.set("highlightedItem", menuChildren[0]);
@@ -25725,9 +25748,9 @@ KISSY.add(
                     // we turn off key control.
                     // left
                     else if (keyCode == KeyCodes.LEFT) {
-                        this.hideMenu();
+                        self.hideMenu();
                         // 隐藏后，当前激活项重回
-                        this.get("parent").set("activeItem", this);
+                        self.get("parent").set("activeItem", self);
                     } else {
                         return undefined;
                     }
@@ -25740,14 +25763,15 @@ KISSY.add(
                  * accuracy when moving to submenus.
                  **/
                 _uiSetHighlighted:function(highlight, ev) {
-                    SubMenu.superclass._uiSetHighlighted.call(this, highlight, ev);
+                    var self = this;
+                    SubMenu.superclass._uiSetHighlighted.call(self, highlight, ev);
                     if (!highlight) {
-                        if (this.dismissTimer_) {
-                            this.dismissTimer_.cancel();
+                        if (self.dismissTimer_) {
+                            self.dismissTimer_.cancel();
                         }
-                        this.dismissTimer_ = S.later(this.hideMenu,
-                            this.get("menuDelay"),
-                            false, this);
+                        self.dismissTimer_ = S.later(self.hideMenu,
+                            self.get("menuDelay"),
+                            false, self);
                     }
                 },
 
@@ -25758,7 +25782,8 @@ KISSY.add(
 
                 // 默认 addChild，这里里面的元素需要放到 menu 属性中
                 decorateChildrenInternal:function(ui, el, cls) {
-                    el.hide();
+                    // 不能用 diaplay:none
+                    el.css("visibility", "hidden");
                     var docBody = S.one(el[0].ownerDocument.body);
                     docBody.prepend(el);
                     var menu = new ui({
@@ -25890,7 +25915,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:37
+build time: Aug 23 12:12
 */
 /**
  * Model and Control for button
@@ -26086,7 +26111,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * combination of menu and button ,similar to native select
@@ -26294,7 +26319,9 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
              * @private
              */
             decorateChildrenInternal:function(ui, el, cls) {
-                el.hide();
+                // 不能用 diaplay:none , menu 的隐藏是靠 visibility
+                // eg: menu.show(); menu.hide();
+                el.css("visibility", "hidden");
                 var docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new ui(S.mix({
@@ -26619,7 +26646,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:14
 */
 ﻿/**
  * @author: 常胤 (lzlu.com)

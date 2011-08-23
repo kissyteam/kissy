@@ -21,8 +21,8 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 
             // event hash change ,ie error
             index++;
-            if (KISSY.UA.ie && tests[index].match(/event\//)) {
-                window.open(loc+tests[index] + "?" + (+new Date()));
+            if ((KISSY.UA.ie || KISSY.UA.webkit) && tests[index].match(/event\//)) {
+                window.open(loc + tests[index] + "?" + (+new Date()));
                 index++;
             }
             if (tests[index]) {
@@ -49,7 +49,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 
     window.onload = function() {
         document.getElementById("test").src = tests[0] + "?" + (+new Date());
-    }
+    };
     document.writeln(tests.join("<br>"));
 </script>
 

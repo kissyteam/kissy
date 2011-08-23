@@ -44,6 +44,94 @@ KISSY.use("uibase", function(S, UIBase) {
             expect(z).toBe(1);
 
         });
+
+
+        describe("extension attr", function() {
+
+            it("does not override main attr,and previous extension takes precedence", function() {
+
+                function getter1() {
+                }
+
+                var x = function() {
+                };
+                x.ATTRS = {
+                    y:{
+                        value:1,
+                        getter:getter1
+                    }
+                };
+
+                var x3 = function() {
+                };
+                x3.ATTRS = {
+                    y:{
+                        value:4
+                    }
+                };
+
+                var x2 = UIBase.create([x,x3], {
+
+                }, {
+                    ATTRS:{
+                        y:{
+                            value:2
+                        },
+                        z:{
+                            value:9
+                        }
+                    }
+                });
+
+                var x2AttrsY = x2.ATTRS.y;
+
+                expect(x2.ATTRS.z.value).toBe(9);
+                expect(x2AttrsY.value).toBe(2);
+                expect(x2AttrsY.getter).toBe(getter1);
+
+
+            });
+
+        });
+
+
+        describe("extension method", function() {
+
+            it("should run by order before main", function() {
+                var ret = [];
+                var x = function() {
+                };
+
+                x.prototype = {
+                    __renderUI:function() {
+                        ret.push(1);
+                    }
+                };
+
+                var x3 = function() {
+                };
+
+                x3.prototype = {
+                    __renderUI:function() {
+                        ret.push(2);
+                    }
+                };
+
+                var x2 = UIBase.create([x,x3], {
+                    renderUI:function() {
+                        ret.push(3);
+                    }
+                });
+
+                new x2().render();
+
+                expect(ret).toEqual([1,2,3]);
+
+            });
+
+
+        });
+
     });
 
 });

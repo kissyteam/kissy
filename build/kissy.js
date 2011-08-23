@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 17:20
+build time: Aug 23 12:14
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 22 17:20
          */
         version: '1.20dev',
 
-        buildTime:'20110822172016',
+        buildTime:'20110823121406',
 
         /**
          * Returns a new object containing all of the properties of
@@ -6590,7 +6590,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     var Event = {
 
         _clone:function(src, dest) {
-            if (dest.nodeType !== DOM.ELEMENT_NODE &&
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
                 !Event._hasData(src)) {
                 return;
             }

@@ -4,6 +4,7 @@
  */
 KISSY.use("dom,anim", function(S, DOM, Anim) {
 
+
     function padding(s) {
         if (s.length == 1)
             return "0" + s;
@@ -38,6 +39,28 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
 
     describe("anim", function() {
+
+        beforeEach(function() {
+            this.addMatchers({
+                toBeAlmostEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                },
+
+
+                toBeEqual: function(expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                },
+
+                toBeArrayEq:function(expected) {
+                    var actual = this.actual;
+                    if (expected.length != actual.length) return false;
+                    for (var i = 0; i < expected.length; i++) {
+                        if (expected[i] != actual[i]) return false;
+                    }
+                    return true;
+                }
+            });
+        });
 
         it("setup", function() {
             var textarea = DOM.get("textarea");
@@ -109,8 +132,8 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
                 expect(normalizeColor(DOM.style(test1, "border-color")))
                     .toBe("#999999");
-                expect(DOM.css(test1, "width")).toBe("100px");
-                expect(DOM.css(test1, "height")).toBe("50px");
+                expect(parseInt(DOM.css(test1, "width"))).toBeEqual(100);
+                expect(parseInt(DOM.css(test1, "height"))).toBeEqual(50);
                 expect(DOM.css(test1, "left")).toBe("900px");
                 expect(DOM.css(test1, "top")).toBe("285px");
             });

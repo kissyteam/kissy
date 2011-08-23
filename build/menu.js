@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 22 15:38
+build time: Aug 23 12:13
 */
 /**
  * deletable menuitem
@@ -1032,8 +1032,9 @@ KISSY.add(
                  * @return {boolean} Whether the event was handled.
                  */
                 _handleKeydown:function(e) {
+                    var self = this;
 
-                    var menu = this.get("menu");
+                    var menu = self.get("menu");
 
                     var hasKeyboardControl_ = menu && menu.get("visible");
 
@@ -1042,7 +1043,7 @@ KISSY.add(
                     if (!hasKeyboardControl_) {
                         // right
                         if (keyCode == KeyCodes.RIGHT) {
-                            this.showMenu();
+                            self.showMenu();
                             var menuChildren = menu.get("children");
                             if (menuChildren[0]) {
                                 menu.set("highlightedItem", menuChildren[0]);
@@ -1056,9 +1057,9 @@ KISSY.add(
                     // we turn off key control.
                     // left
                     else if (keyCode == KeyCodes.LEFT) {
-                        this.hideMenu();
+                        self.hideMenu();
                         // 隐藏后，当前激活项重回
-                        this.get("parent").set("activeItem", this);
+                        self.get("parent").set("activeItem", self);
                     } else {
                         return undefined;
                     }
@@ -1071,14 +1072,15 @@ KISSY.add(
                  * accuracy when moving to submenus.
                  **/
                 _uiSetHighlighted:function(highlight, ev) {
-                    SubMenu.superclass._uiSetHighlighted.call(this, highlight, ev);
+                    var self = this;
+                    SubMenu.superclass._uiSetHighlighted.call(self, highlight, ev);
                     if (!highlight) {
-                        if (this.dismissTimer_) {
-                            this.dismissTimer_.cancel();
+                        if (self.dismissTimer_) {
+                            self.dismissTimer_.cancel();
                         }
-                        this.dismissTimer_ = S.later(this.hideMenu,
-                            this.get("menuDelay"),
-                            false, this);
+                        self.dismissTimer_ = S.later(self.hideMenu,
+                            self.get("menuDelay"),
+                            false, self);
                     }
                 },
 
@@ -1089,7 +1091,8 @@ KISSY.add(
 
                 // 默认 addChild，这里里面的元素需要放到 menu 属性中
                 decorateChildrenInternal:function(ui, el, cls) {
-                    el.hide();
+                    // 不能用 diaplay:none
+                    el.css("visibility", "hidden");
                     var docBody = S.one(el[0].ownerDocument.body);
                     docBody.prepend(el);
                     var menu = new ui({
