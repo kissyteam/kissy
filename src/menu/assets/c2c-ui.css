@@ -134,6 +134,8 @@
 /* State: hover. */
 .c2c-custom-button-hover .c2c-custom-button-outer-box,
 .c2c-custom-button-hover .c2c-custom-button-inner-box,
+.c2c-custom-button-focused .c2c-custom-button-outer-box,
+.c2c-custom-button-focused .c2c-custom-button-inner-box,
 .c2c-menu-buttonmenu-button-open .c2c-custom-button-outer-box,
 .c2c-menu-buttonmenu-button-open .c2c-custom-button-inner-box {
     border-color: #ffad33 !important; /* Hover border wins. */
@@ -266,7 +268,9 @@
     vertical-align: top;
 }
 
-.c2c-custom-button-hover .c2c-menu-button-dropdown, .c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown {
+.c2c-custom-button-hover .c2c-menu-button-dropdown,
+.c2c-custom-button-focused .c2c-menu-button-dropdown,
+.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown {
     background-position: -1px -23px;
 }
 
@@ -365,4 +369,5 @@
     right: 0;
     text-align: right;
 }
+
 /* menu item end */
