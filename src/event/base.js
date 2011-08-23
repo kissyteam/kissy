@@ -45,7 +45,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     var Event = {
 
         _clone:function(src, dest) {
-            if (dest.nodeType !== DOM.ELEMENT_NODE &&
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
                 !Event._hasData(src)) {
                 return;
             }

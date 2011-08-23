@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 11:34
+build time: Aug 23 12:13
 */
 /**
  * @module  event
@@ -50,7 +50,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     var Event = {
 
         _clone:function(src, dest) {
-            if (dest.nodeType !== DOM.ELEMENT_NODE &&
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
                 !Event._hasData(src)) {
                 return;
             }
