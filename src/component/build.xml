@@ -11,6 +11,10 @@
         <concat destfile="component-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${src.dir}" includes="*.js"/>
             <path location="../component.js"/>
+            <!-- remove bom for utf-8 -->
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

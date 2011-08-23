@@ -13,6 +13,9 @@
             <path location="base.js"/>
             <path location="autorender.js"/>
             <path location="../imagezoom.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

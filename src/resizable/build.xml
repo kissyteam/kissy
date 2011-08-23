@@ -11,6 +11,9 @@
         <concat destfile="resizable-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="base.js"/>
             <path path="../resizable.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

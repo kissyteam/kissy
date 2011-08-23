@@ -26,6 +26,9 @@
             <path location="tabs/base.js"/>
             <path location="tabs/aria.js"/>
             <path location="../switchable.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

@@ -11,6 +11,9 @@
         <concat destfile="json-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="json2.js"/>
             <path path="../json.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

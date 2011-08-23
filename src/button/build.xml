@@ -12,6 +12,9 @@
                      includes="*.js"
                     />
             <path location="../button.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

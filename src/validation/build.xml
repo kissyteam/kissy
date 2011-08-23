@@ -17,6 +17,9 @@
                 <include name="warn/*.js"/>
             </fileset>
             <path location="../validation.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

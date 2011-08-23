@@ -13,6 +13,9 @@
             <path location="page.js"/>
             <path location="time.js"/>
             <path location="../calendar.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

@@ -18,6 +18,9 @@
             <path path="dialog.js"/>
             <path path="popup.js"/>
             <path path="../overlay.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 
