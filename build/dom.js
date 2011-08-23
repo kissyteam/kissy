@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 19:11
+build time: Aug 23 19:26
 */
 /**
  * @module  dom-attr
@@ -921,7 +921,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              */
             clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
                 var elem = DOM.get(selector);
-                
+
                 if (!elem) {
                     return null;
                 }
@@ -957,14 +957,26 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         });
 
         function processAll(fn, elem, clone) {
-            var elemChildren = elem.getElementsByTagName("*"),
-                cloneChildren = clone.getElementsByTagName("*"),
-                cindex = 0;
-            while (elemChildren[cindex]) {
-                if (cloneChildren[cindex]) {
-                    fn(elemChildren[cindex], cloneChildren[cindex]);
+            if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                var eCs = elem.childNodes,
+                    cloneCs = clone.childNodes,
+                    fIndex = 0;
+                while (eCs[fIndex]) {
+                    if (cloneCs[fIndex]) {
+                        processAll(fn, eCs[fIndex], cloneCs[fIndex]);
+                    }
+                    fIndex++;
                 }
-                cindex++;
+            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
+                var elemChildren = elem.getElementsByTagName("*"),
+                    cloneChildren = clone.getElementsByTagName("*"),
+                    cIndex = 0;
+                while (elemChildren[cIndex]) {
+                    if (cloneChildren[cIndex]) {
+                        fn(elemChildren[cIndex], cloneChildren[cIndex]);
+                    }
+                    cIndex++;
+                }
             }
         }
 
