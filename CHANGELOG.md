@@ -23,6 +23,10 @@ History:
  - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
  - [*] DOM.query(selector,context) context 可以为 Array<HTMLElement> HTMLNodeList 以及选择器字符串(限制同第一个参数 selector)
  - [!] DOM.css 取计算值，而不是行内样式值。行内样式可通过 DOM.style 获取
+ - [+] 增加 DOM.clone
+ - [+] 增加 DOM.style
+ - [!] 禁止使用原生 cloneNode ，使用 DOM.clone ，也不要设置自定义属性，使用 DOM.data
+ - [*] DOM.remove 会自动清理当前节点以及子孙节点上注册的事件
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
