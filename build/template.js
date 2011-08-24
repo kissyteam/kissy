@@ -1,7 +1,7 @@
-/*
+﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 10:05
+build time: Aug 24 20:10
 */
 /**
  * @fileoverview KISSY Template Engine.

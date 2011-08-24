@@ -18,7 +18,7 @@
             <path path="scroll.js"/>
             <path location="../dd.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;" />
+                <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
         </concat>
     </target>

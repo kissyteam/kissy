@@ -15,6 +15,9 @@
             <path path="${kissy.build.dir}/cssreset.css"/>
             <path path="${kissy.build.dir}/cssgrids.css"/>
             <path path="${kissy.build.dir}/csscommon.css"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
         </concat>
     </target>
 

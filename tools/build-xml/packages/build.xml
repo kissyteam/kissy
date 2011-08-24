@@ -13,6 +13,7 @@
     <property name="component.name" value="packages"/>
     <property name="component.files" value="*.css, *.js"/>
     <property name="src.dir" value="${ant.file.packages.build}/../"/>
+    <property name="bom" value="&#xFEFF;"/>
 
     <import file="../../common.xml"/>
 
@@ -63,6 +64,9 @@
             <footer filtering="no" trimleading="yes">
                 KISSY.use('core');
             </footer>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
         </concat>
 
         <move tofile="${src.dir}/core-pkg.js"
@@ -73,6 +77,9 @@
                 encoding="${charset}" outputencoding="${charset}">
             <path path="${kissy.build.dir}/seed.js"/>
             <path path="${src.dir}/core-pkg.js"/>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
         </concat>
 
         <!-- kissy-aio: 所有文件 -->
@@ -97,6 +104,9 @@
             <path path="${kissy.build.dir}/button.js"/>
             <path path="${kissy.build.dir}/menubutton.js"/>
             <path path="${kissy.build.dir}/validation.js"/>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
         </concat>
     </target>
 
@@ -109,6 +119,9 @@
                 outputencoding="${charset}">
             <path location="${nodejs.patch.file}"/>
             <path location="${src.dir}/kissy-pkg.js"/>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
         </concat>
     </target>
 

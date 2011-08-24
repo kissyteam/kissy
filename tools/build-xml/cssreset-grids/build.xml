@@ -13,6 +13,9 @@
                 encoding="${charset}" outputencoding="${charset}">
             <path path="${kissy.build.dir}/cssreset.css"/>
             <path path="${kissy.build.dir}/cssgrids.css"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
         </concat>
     </target>
 
