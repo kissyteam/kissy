@@ -13,7 +13,7 @@
     <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
     <property name="version" value="1.20dev"/>
     <property name="charset" value="utf-8"/>
-    <property name="copyright.files" value="*.css, *.js"/>
+    <property name="copyright.files" value="**/*.css, **/*.js"/>
 
 
     <!-- 需要组件覆盖的属性 -->
@@ -138,7 +138,7 @@
                 <ac:if>
                     <not>
                         <contains string="${copyright.file.name}"
-                                  substring="-min.js"
+                                  substring="-min."
                                   casesensitive="false"/>
                     </not>
                     <then>

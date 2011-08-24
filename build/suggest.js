@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:10
+build time: Aug 24 20:24
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
