@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:13
+build time: Aug 24 10:04
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -676,7 +676,7 @@ KISSY.add("dd/proxy", function(S, Node) {
              @return {KISSY.Node} 替代节点
              */
             value:function(drag) {
-                return new Node(drag.get("node")[0].cloneNode(true));
+                return new Node(drag.get("node").clone(true));
                 //n.attr("id", S.guid("ks-dd-proxy"));
             }
         },

@@ -526,8 +526,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         var css,
             rules = {},
             i = PROPS.length,
-            v;
-        var el = elem.cloneNode(true);
+            v,
+            el = DOM.clone(elem, true);
 
         DOM.insertAfter(el, elem);
 

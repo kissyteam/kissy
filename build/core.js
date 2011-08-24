@@ -1761,15 +1761,15 @@ KISSY.add('dom/insertion', function(S, DOM) {
             return;
         }
         var newNode = nl2frag(newNodes),
-            cloneNode;
+            clonedNode;
         //fragment 一旦插入里面就空了，先复制下
         if (refNodes.length > 1) {
-            cloneNode = newNode.cloneNode(true);
+            clonedNode = DOM.clone(newNode, true);
         }
         for (var i = 0; i < refNodes.length; i++) {
             var refNode = refNodes[i];
             //refNodes 超过一个，clone
-            var node = i > 0 ? DOM.clone(cloneNode, true) : newNode;
+            var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
             fn(node, refNode);
         }
     }
@@ -6287,8 +6287,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         var css,
             rules = {},
             i = PROPS.length,
-            v;
-        var el = elem.cloneNode(true);
+            v,
+            el = DOM.clone(elem, true);
 
         DOM.insertAfter(el, elem);
 

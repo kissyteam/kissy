@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 20:37
+build time: Aug 24 10:05
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 23 20:37
          */
         version: '1.20dev',
 
-        buildTime:'20110823203732',
+        buildTime:'20110824100551',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4382,15 +4382,15 @@ KISSY.add('dom/insertion', function(S, DOM) {
             return;
         }
         var newNode = nl2frag(newNodes),
-            cloneNode;
+            clonedNode;
         //fragment 一旦插入里面就空了，先复制下
         if (refNodes.length > 1) {
-            cloneNode = newNode.cloneNode(true);
+            clonedNode = DOM.clone(newNode, true);
         }
         for (var i = 0; i < refNodes.length; i++) {
             var refNode = refNodes[i];
             //refNodes 超过一个，clone
-            var node = i > 0 ? DOM.clone(cloneNode, true) : newNode;
+            var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
             fn(node, refNode);
         }
     }
@@ -8908,8 +8908,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         var css,
             rules = {},
             i = PROPS.length,
-            v;
-        var el = elem.cloneNode(true);
+            v,
+            el = DOM.clone(elem, true);
 
         DOM.insertAfter(el, elem);
 

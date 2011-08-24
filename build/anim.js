@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:12
+build time: Aug 24 10:04
 */
 /**
  * @module   anim
@@ -531,8 +531,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         var css,
             rules = {},
             i = PROPS.length,
-            v;
-        var el = elem.cloneNode(true);
+            v,
+            el = DOM.clone(elem, true);
 
         DOM.insertAfter(el, elem);
 
