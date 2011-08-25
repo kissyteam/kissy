@@ -12,7 +12,7 @@
     <property name="copyright.files" value="*-min.css, *-min.js"/>
     <property name="component.name" value="packages"/>
     <property name="component.files" value="*.css, *.js"/>
-    <property name="src.dir" value="${ant.file.packages.build}/../"/>
+    <dirname property="src.dir" file="${ant.file.packages.build}"/>
     <property name="bom" value="&#xFEFF;"/>
 
     <import file="../../common.xml"/>
