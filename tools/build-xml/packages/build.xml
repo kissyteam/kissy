@@ -60,6 +60,7 @@
         -->
         <concat destfile="${src.dir}/core.tmp.js"
                 encoding="${charset}" outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">${bom}</header>
             <path path="${src.dir}/core-pkg.js"/>
             <footer filtering="no" trimleading="yes">
                 KISSY.use('core');
@@ -75,6 +76,7 @@
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="${src.dir}/kissy-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">${bom}</header>
             <path path="${kissy.build.dir}/seed.js"/>
             <path path="${src.dir}/core-pkg.js"/>
             <filterchain>
@@ -86,6 +88,7 @@
         <concat destfile="${src.dir}/kissy-aio-pkg.js"
                 encoding="${charset}"
                 outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">${bom}</header>
             <path path="${src.dir}/kissy-pkg.js"/>
             <path path="${kissy.build.dir}/sizzle.js"/>
             <path path="${kissy.build.dir}/datalazyload.js"/>
@@ -117,6 +120,7 @@
         <concat destfile="${src.dir}/kissy-nodejs-pkg.js"
                 encoding="${charset}"
                 outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">${bom}</header>
             <path location="${nodejs.patch.file}"/>
             <path location="${src.dir}/kissy-pkg.js"/>
             <filterchain>
