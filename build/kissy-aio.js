@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 15:18
+build time: Aug 25 16:21
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 25 15:18
          */
         version: '1.20dev',
 
-        buildTime:'20110825151808',
+        buildTime:'20110825162101',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5148,12 +5148,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop
-                                offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                                // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
+                                // ie<9 注意有时候 elem.offsetParent 为 null ...
+                                // 比如 DOM.append(DOM.create("<div class='position:absolute'></div>"),document.body)
+                                offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
                                     || 0;
                             }
-
                             val = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
                         }
+                        val += "px";
                     }
                     return val;
                 }
@@ -11480,7 +11483,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -12905,7 +12908,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:19
 */
 /**
  * 数据延迟加载组件
@@ -13408,7 +13411,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:25
+build time: Aug 25 16:20
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13646,7 +13649,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /**
  * @module   Flash 全局静态类
@@ -14165,7 +14168,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:19
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -15408,7 +15411,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /**
  * resizable support for kissy
@@ -15582,7 +15585,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:25
+build time: Aug 25 16:20
 */
 /**
  * UIBase.Align
@@ -17643,7 +17646,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:19
 */
 /**
  * container can delegate event for its children
@@ -18542,7 +18545,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /**
  * Switchable
@@ -21146,7 +21149,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /**
  * KISSY Overlay
@@ -21640,7 +21643,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22830,7 +22833,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /**
  * @fileoverview 图像放大区域
@@ -23455,7 +23458,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:19
 */
 /**
  * KISSY Calendar
@@ -24734,7 +24737,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /**
  * deletable menuitem
@@ -25957,7 +25960,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:19
 */
 /**
  * Model and Control for button
@@ -26153,7 +26156,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:24
+build time: Aug 25 16:20
 */
 /**
  * combination of menu and button ,similar to native select
@@ -26688,7 +26691,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:25
+build time: Aug 25 16:20
 */
 /**
  * @author: 常胤 (lzlu.com)

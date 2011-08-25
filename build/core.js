@@ -2527,12 +2527,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop
-                                offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                                // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
+                                // ie<9 注意有时候 elem.offsetParent 为 null ...
+                                // 比如 DOM.append(DOM.create("<div class='position:absolute'></div>"),document.body)
+                                offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
                                     || 0;
                             }
-
                             val = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
                         }
+                        val += "px";
                     }
                     return val;
                 }

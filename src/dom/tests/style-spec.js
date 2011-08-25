@@ -271,6 +271,13 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             DOM.remove(d);
         });
 
+        it("left works for auto in", function() {
+            var div = DOM.create("<div style='position:absolute;'></div>");
+            DOM.append(div, document.body);
+            expect(DOM.css(div, "left"))
+                .toBe((div.offsetLeft - document.documentElement.clientLeft) + "px");
+        });
+
 
     });
 });

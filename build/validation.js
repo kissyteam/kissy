@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 24 20:25
+build time: Aug 25 16:20
 */
 /**
  * @author: 常胤 (lzlu.com)
