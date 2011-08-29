@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:21
+build time: Aug 29 10:54
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 25 16:21
          */
         version: '1.20dev',
 
-        buildTime:'20110825162101',
+        buildTime:'20110829105400',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1102,7 +1102,7 @@ build time: Aug 25 16:21
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if (S.use) {
+    if ("require" in this) {
         return;
     }
     S.mix(utils, {
@@ -1215,7 +1215,7 @@ build time: Aug 25 16:21
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
-    if (S.use) {
+    if ("require" in this) {
         return;
     }
     var isWebKit = utils.isWebKit,
