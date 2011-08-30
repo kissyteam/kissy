@@ -89,6 +89,15 @@
 			<dd>
 				<input class="text" type="text" data-valid="{}"/>
 				<input class="text" type="text"  data-valid="{required:false}"/>
+				<select data-valid="{}">
+					<option>请选择</option>
+					<option value="1">a</option>
+				</select>
+				<select multiple data-valid="{}">
+					<option value="a">a</option>
+					<option value="b">b</option>
+					<option value="c">c</option>
+				</select>
 			</dd>
 			<dd>
 				<pre class='brush:javascript;'>
@@ -376,6 +385,7 @@
 		KISSY.use("validation",function(S,Validation){
 
 			var form = new Validation('#J_form',{
+				event: "blur",
 				style: 'under'
 			});
 			

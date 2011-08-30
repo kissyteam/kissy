@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Validation</title>
+	<link rel="stylesheet" type="text/css"  href="../../../../kissy-dpl/base/build/css/dpl-pkg.css" />
+	
+	
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+	<script type="text/javascript" src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+	<link type="text/css" rel="stylesheet" href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+		
+	
+	
+	<link href="http://a.tbcdn.cn/s/kissy/1.2.0/cssreset/reset-min.css" rel="stylesheet"/> 
+	<!--[if lt IE 8]>
+	<link href="http://a.tbcdn.cn/s/kissy/1.2.0/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+	<![endif]--> 
+	<!--[if gte IE 8]><!--> 
+	<link href="http://a.tbcdn.cn/s/kissy/1.2.0/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/> 
+	<!--<![endif]--> 
+	<script src="http://a.tbcdn.cn/s/kissy/1.2.0/??kissy-min.js,uibase-min.js,component-min.js,dd-min.js,overlay-min.js,editor/editor-all-pkg-min.js"></script> 
+
+
+<link rel="stylesheet" type="text/css"  href="doc.css" /> <script src="doc.js1" charset="utf-8"></script>
+</head>
+<body>
+ 
+
+<div id="viewdemo" class="doc" style="height:800px;">
+<form method="post" id="J_Form">
+
+	<div style="width: 90%; margin: 0 auto">
+
+		<label for="editor">Editor Instance 1:</label>
+
+		<textarea id="editor" tabindex="1" style="width:750px;height:350px;">
+
+			<p>测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+
+				测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
+
+				试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测
+
+				试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+
+				测试测试测试测试测试测试测试</p>
+
+		</textarea>
+		
+		
+		<div>
+			<!--搞个代理的文本框-->
+			<input type="hidden" id="proxy" value="?" />
+		</div>
+
+		
+		<button id="btn" style="padding:5px 10px;margin:10px 0;"> 验证 </button>
+
+	</div>
+
+</form>
+</div>
+
+	<script type="text/javascript"> 
+	KISSY.ready(function(S){
+		var editor = S.Editor("#editor",{
+		    "attachForm":true,
+		    "baseZIndex":10000,
+		    focus:false
+		}).use("font,color,justify,list,indent,separator,link,sourcearea,separator,undo");
+		
+		S.use("validation",function(S,Validation){
+			var form = new Validation('#J_Form',{
+				style:'under'
+			});
+			
+			f = new Validation.Field("#proxy",{
+				style:'under',
+				func:function(){
+					if(editor.getData().length<500){
+						return "不少于500个字符";
+					}
+				}	
+			});
+			
+			form.add(f);
+			
+			//编辑器市区焦点的时候验证
+			editor.on("blur",function(){
+				f.isValid();
+			});			
+			
+			S.all("#btn").on("click",function(e){
+				e.halt();
+				form.isValid();
+			});
+			
+		});
+	});
+
+</script> 
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

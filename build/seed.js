@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 30 16:26
+build time: Aug 30 18:04
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 30 16:26
          */
         version: '1.20dev',
 
-        buildTime:'20110830162606',
+        buildTime:'20110830180419',
 
         /**
          * Returns a new object containing all of the properties of
