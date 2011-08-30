@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 29 16:25
+build time: Aug 30 16:26
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 29 16:25
          */
         version: '1.20dev',
 
-        buildTime:'20110829162527',
+        buildTime:'20110830162606',
 
         /**
          * Returns a new object containing all of the properties of
@@ -15629,7 +15629,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Aug 30 16:25
 */
 /**
  * UIBase.Align
@@ -16742,7 +16742,7 @@ KISSY.add("uibase/close", function() {
                 closeBtn = self.get("view").get("closeBtn");
             closeBtn && closeBtn.on("click", function(ev) {
                 self[actions[self.get("closeAction")] || HIDE]();
-                ev.halt();
+                ev.preventDefault();
             });
         }
     };

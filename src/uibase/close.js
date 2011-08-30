@@ -29,7 +29,7 @@ KISSY.add("uibase/close", function() {
                 closeBtn = self.get("view").get("closeBtn");
             closeBtn && closeBtn.on("click", function(ev) {
                 self[actions[self.get("closeAction")] || HIDE]();
-                ev.halt();
+                ev.preventDefault();
             });
         }
     };
