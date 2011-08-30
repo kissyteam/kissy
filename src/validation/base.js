@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @author: 常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
@@ -84,7 +84,7 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
 
                 //直接增加Validation.Field实例
                 if (S.isObject(field) && field instanceof Field) {
-                    fields.add(field.id, field);
+                    fields.add(DOM.attr(field.el,"id"), field);
                     return self;
                 }
 

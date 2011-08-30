@@ -26,6 +26,7 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
                 
                 if(panel) {
                     self.panel = panel;
+					self.panelheight = panel.css("height");
                     self.estate = panel.one(".estate");
                     self.label = panel.one(".label");
                     if(!self.estate || !self.label) return;
@@ -49,27 +50,28 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
                     }
                 }
 
-                var display = panel.css("display")=="none"?false:true;
+                var display = panel.css("display")=="none"?false:true,
+					ph = self.panelheight;
                 if (result == symbol.ignore) {
-                    display && panel.hide(time);
+                    display && panel.slideUp(time);
                 } else {
                     estate.removeClass("ok tip error");
                     if (result == symbol.error) {
                         estate.addClass("error");
                         label.html(msg);
-                        display || panel.show(time);
+                        display || panel.height(ph).slideDown(time);
                     } else if (result == symbol.ok) {
                         if(self.isok===false) {
-                            display && panel.hide(time);
+                            display && panel.slideUp(time);
                         }else{
-                            display || panel.show(time);
+                            display || panel.height(ph).slideDown(time);
                             estate.addClass("ok");
                             label.html(self.oktext?self.oktext:msg);
                         }
                     } else if (result == symbol.hint) {
                         estate.addClass("tip");
                         label.html(msg);
-                        display || panel.show(time);
+                        display || panel.height(ph).slideDown(time);
                     }
                 }
             },

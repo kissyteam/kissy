@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Validation.Field
  * @author: 常胤 <lzlu.com>
  */
@@ -51,6 +51,7 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 			var self = this, 
 				cfg = S.merge(Field.Config,config||{});
 				
+			
 			S.mix(self,cfg,"label");
 			
 			//处理字段
@@ -147,9 +148,11 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 			}
 
 			insWarn = new clsWarn(self.el,cfg);
+			
 
+			
 			//绑定验证事件
-            insWarn._bindEvent(self.el, insWarn.event, function() {
+            insWarn._bindEvent(self.el, config.event||insWarn.event, function() {
                 var result = self._validateValue();
                 if (S.isArray(result) && result.length == 2) {
                     self.showMessage(result[1], result[0]);
@@ -231,11 +234,8 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
 			var self = this, ele = self.el,
 				val = [];
 			switch( DOM.attr(ele,"type") ){
-				case "select-one":
-					val = ele[ele.selectedIndex].value;
-					break;
 				case "select-multiple":
-					S.each(ele,function(el){
+					S.each(ele.options,function(el){
 						if(el.selected)val.push(el.value);
 					});
 					break;
@@ -248,7 +248,6 @@ KISSY.add("validation/field",function(S, DOM, Event, Util, Define, Rule, Remote,
                 default:
                     val = DOM.val(ele);
 			}
-			
 			return val;
 		},
 		
