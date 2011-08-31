@@ -55,7 +55,6 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         var container = this.get("container");
         var self = this;
         io(S.mix({
-            cache:false,
             data:{
                 from:container.all(".ks-waterfall").length
             },

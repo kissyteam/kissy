@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 31 20:26
+build time: Aug 31 20:37
 */
 /**
  * load content from remote async
@@ -60,7 +60,6 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         var container = this.get("container");
         var self = this;
         io(S.mix({
-            cache:false,
             data:{
                 from:container.all(".ks-waterfall").length
             },
