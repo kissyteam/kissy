@@ -33,7 +33,7 @@
         <div class="title">{{title}}</div>
     </div>
 </script>
-<div id='container' style="position: relative;">
+<div id='container' style="position: relative;padding: 10px;">
 
 </div>
 
@@ -41,9 +41,14 @@
     KISSY.use("waterfall", function(S, Waterfall) {
         var waterFall = new Waterfall.Async({
             container:"#container",
-            remote:{
-                url:"data.json",
-                dataType:"json"
+            remote:function() {
+                return {
+                    data:{
+                        from:S.all("#container .ks-waterfall").length
+                    },
+                    url:"data.json",
+                    dataType:"json"
+                };
             },
             minColCount:2,
             colWidth:200,

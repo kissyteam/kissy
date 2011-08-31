@@ -15,8 +15,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
 
     function timedChunk(items, process, context, callback) {
-        var todo = S.makeArray(items);
-        var stopper = {},timer;
+        var todo = S.makeArray(items),
+            stopper = {},
+            timer;
         if (todo.length > 0) {
             timer = setTimeout(function() {
                 var start = +new Date();
@@ -72,50 +73,55 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
     };
 
     function doResize() {
-        var self = this;
-        if (this._resizer) {
-            this._resizer.stop();
-            this._resizer = 0;
+        var self = this,
+            container = self.get("container");
+        if (self._resizer) {
+            self._resizer.stop();
+            self._resizer = 0;
         }
-        var container = this.get("container");
-        recalculate.call(this);
-        S.log("resize");
-        this._resizer = this.adjust(function() {
+        recalculate.call(self);
+        self._resizer = self.adjust(function() {
             self._resizer = 0;
         });
     }
 
     function onResize() {
-        if (this.__resizeTimer) {
-            this.__resizeTimer.cancel();
+        var self = this,
+            container = self.get("container"),
+            containerRegion = self._containerRegion;
+        // 宽度没变就没必要调整
+        if (container.width() === containerRegion.width) {
+            return
         }
-        this.__resizeTimer = S.later(doResize, RESIZE_DURATION, false, this);
+        if (self.__resizeTimer) {
+            self.__resizeTimer.cancel();
+        }
+        self.__resizeTimer = S.later(doResize, RESIZE_DURATION, false, self);
     }
 
     function recalculate() {
-        var container = this.get("container");
-        var containerWidth = this.get("container").width();
-        var containerRegion = this._containerRegion;
-        if (!containerRegion || containerWidth !== containerRegion.width) {
-            var cols = Math.max(parseInt(containerWidth / this.get("colWidth")),
-                this.get("minColCount"));
-            var curColHeights = this.get("curColHeights");
-            curColHeights.length = cols;
-            S.each(curColHeights, function(v, i) {
-                curColHeights[i] = 0;
-            });
-            this._containerRegion = S.mix({
-                width:containerWidth
-            }, container.offset());
-        }
+        var self = this,
+            container = self.get("container"),
+            containerWidth = container.width(),
+            curColHeights = self.get("curColHeights");
+        curColHeights.length = Math.max(parseInt(containerWidth / self.get("colWidth")),
+            self.get("minColCount"));
+        self._containerRegion = S.mix({
+            width:containerWidth
+        }, container.offset());
+        S.each(curColHeights, function(v, i) {
+            curColHeights[i] = 0;
+        });
     }
 
     function adjustItem(itemRaw) {
-        var item = $(itemRaw),
-            curColHeights = this.get("curColHeights"),
-            container = this.get("container"),
+        var self = this,
+            item = $(itemRaw),
+            curColHeights = self.get("curColHeights"),
+            container = self.get("container"),
             curColCount = curColHeights.length,
             dest = 0,
+            containerRegion = self._containerRegion,
             guard = Number.MAX_VALUE;
         for (var i = 0; i < curColCount; i++) {
             if (curColHeights[i] < guard) {
@@ -126,10 +132,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         if (!curColCount) {
             guard = 0;
         }
-        var containerRegion = this._containerRegion;
         item.css({
             position:"absolute",
-            left:dest * Math.max(containerRegion.width / curColCount, this.get("colWidth"))
+            left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
                 + containerRegion.left,
             top:guard + containerRegion.top
         });
@@ -142,28 +147,33 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
     S.extend(Intervein, Base, {
         _init:function() {
-            recalculate.call(this);
-            $(window).on("resize", onResize, this);
+            var self = this;
+            recalculate.call(self);
+            $(window).on("resize", onResize, self);
         },
 
         adjust:function(callback) {
-            var items = this.get("container").all(".ks-waterfall");
-            return timedChunk(items, adjustItem, this, callback);
+            S.log("waterfall:adjust");
+            var self = this,
+                items = self.get("container").all(".ks-waterfall");
+            return timedChunk(items, adjustItem, self, callback);
         },
 
         addItems:function(items, callback) {
+            var self = this;
             /* 正在缩放中，取消*/
-            if (this._resizer) {
+            if (self._resizer) {
                 return;
             }
-            return timedChunk(items, this.addItem, this, callback);
+            return timedChunk(items, self.addItem, self, callback);
         },
 
         addItem:function(itemRaw) {
-            var curColHeights = this.get("curColHeights"),
-                container = this.get("container"),
-                item = adjustItem.call(this, itemRaw),
-                effect = this.get("effect");
+            var self = this,
+                curColHeights = self.get("curColHeights"),
+                container = self.get("container"),
+                item = adjustItem.call(self, itemRaw),
+                effect = self.get("effect");
             if (!effect.effect) {
                 return;
             }
