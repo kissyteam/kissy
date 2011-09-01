@@ -133,8 +133,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 try {
                     delete elem[EXPANDO];
                 } catch(e) {
-                    S.log("delete expando error : ");
-                    S.log(e);
+                    //S.log("delete expando error : ");
+                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);

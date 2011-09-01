@@ -19,6 +19,13 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         if (self.__loading) {
             return;
         }
+        // 如果正在调整中，等会再看
+        // 调整中的高度不确定，现在不适合判断是否到了加载新数据的条件
+        if (self.isAdjusting()) {
+            // 恰好 __onScroll 是 buffered . :)
+            self.__onScroll();
+            return;
+        }
         var container = self.get("container"),
             colHeight = container.offset().top,
             diff = self.get("diff"),
@@ -27,8 +34,8 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         if (curColHeights.length) {
             colHeight += Math.min.apply(Math, curColHeights);
         }
-        // S.log(diff + " : " + $(window).scrollTop() + " : " + colHeight);
         // 动态载
+        // 最小高度(或被用户看到了)低于预加载线
         if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
@@ -44,10 +51,11 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         if (S.isFunction(remote)) {
             remote = remote();
         }
+        self.fire("loadStart");
         io(S.mix({
             success:function(d) {
                 if (d.end) {
-                    $(window).detach("scroll", onScroll, self);
+                    $(window).detach("scroll", self.__onScroll);
                 }
                 self.__loading = false;
                 var data = d.data,
@@ -59,6 +67,9 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
                     items.push($(html));
                 });
                 self.addItems(items);
+            },
+            complete:function() {
+                self.fire("loadEnd");
             }
         }, remote));
     }
@@ -81,7 +92,7 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
             Async.superclass._init.apply(self, arguments);
             self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self).fn;
             $(window).on("scroll", self.__onScroll);
-            loadData.call(self);
+            doScroll.call(self);
         },
 
         destroy:function() {

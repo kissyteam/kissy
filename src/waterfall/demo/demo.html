@@ -8,6 +8,7 @@
 <script src="../../waterfall.js"></script>
 <style>
     .ks-waterfall {
+        position: absolute;
         width: 192px;
         overflow: hidden;
         padding: 15px 15px 15px 4px;
@@ -20,7 +21,7 @@
     <button id="uninstall">卸载组件</button>
 </div>
 <script type="tpl" id="tpl">
-    <div class="ks-waterfall" data-id="{{id}}">
+    <div class="ks-waterfall">
 
         <img src="{{image_url}}"
 
@@ -35,7 +36,76 @@
 </script>
 <div id='container' style="position: relative;">
 
+    <!-- 首屏数据-->
+
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkKTL421/metal.jpg" width="192" height="113">
+        <div class="title">untitled</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkKMC9Ri/metal.jpg" width="192" height="288">
+        <div class="title">Southern Weddings Feature! « Jesi Haack Design Blog</div>
+    </div>
+    <div class="ks-waterfall" style="position: absolute;"><img src="http://pic.yupoo.com/ucdcn_v/BkKHQJBh/metal.jpg" width="192" height="239">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkKGzN7u/metal.jpg" width="192" height="249">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkKfc9SG/metal.jpg" width="192" height="257">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJXmdc7/metal.jpg" width="192" height="296">
+        <div class="title">biscodeja-vu:
+
+            always wanted to since a child
+        </div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJIaEeD/metal.jpg" width="192" height="251">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJGVlsA/metal.jpg" width="192" height="144">
+        <div class="title">hurst song architekten: lumbrein residence</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJEA3xX/metal.jpg" width="192" height="290">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJorU9p/metal.jpg" width="192" height="245">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJf5QLJ/metal.jpg" width="192" height="287">
+        <div class="title">第一站：Los Angeles - Feather - Enjoyable Life</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJe0z7H/metal.jpg" width="192" height="278">
+        <div class="title">阳朔·初见 - Feather -</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJdMwtn/metal.jpg" width="192" height="262">
+        <div class="title">limmynem:
+
+            Blow me away… ~ Amarelle
+        </div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJbzOT4/metal.jpg" width="192" height="262">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJ7LStw/metal.jpg" width="192" height="127">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJ6mL2x/metal.jpg" width="192" height="287">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJ6cubr/metal.jpg" width="192" height="153">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJ2anZz/metal.jpg" width="192" height="289">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkJ0c0Ir/metal.jpg" width="192" height="272">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://pic.yupoo.com/ucdcn_v/BkIX3dhg/metal.jpg" width="192" height="288">
+        <div class="title"></div>
+    </div>
 </div>
+
 
 <script>
     KISSY.use("waterfall", function(S, Waterfall) {

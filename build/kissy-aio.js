@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 17:19
+build time: Sep 1 19:10
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 1 17:19
          */
         version: '1.20dev',
 
-        buildTime:'20110901171955',
+        buildTime:'20110901191028',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4408,8 +4408,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 try {
                     delete elem[EXPANDO];
                 } catch(e) {
-                    S.log("delete expando error : ");
-                    S.log(e);
+                    //S.log("delete expando error : ");
+                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);
