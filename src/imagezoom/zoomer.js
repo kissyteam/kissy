@@ -218,8 +218,8 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
          * @private
          */
         _setLensOffset: function(ev) {
+            ev = ev || self.get('currentMouse');
             var self = this,
-                ev = ev || self.get('currentMouse'),
                 rl = self.get('imageLeft'), rt = self.get('imageTop'),
                 rw = self.get('imageWidth'), rh = self.get('imageHeight'),
                 w = self.get('width'), h = self.get('height'),
