@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 30 18:04
+build time: Sep 1 12:24
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 30 18:04
          */
         version: '1.20dev',
 
-        buildTime:'20110830180419',
+        buildTime:'20110901122359',
 
         /**
          * Returns a new object containing all of the properties of
@@ -899,7 +899,7 @@ build time: Aug 30 18:04
          * @param when {Number} the number of milliseconds to wait until the fn is executed.
          * @param periodic {Boolean} if true, executes continuously at supplied interval
          *        until canceled.
-         * @param o {Object} the context object.
+         * @param context {Object} the context object.
          * @param data [Array] that is provided to the function. This accepts either a single
          *        item or an array. If an array is provided, the function is executed with
          *        one parameter for each array item. If you need to pass a single array
@@ -907,13 +907,15 @@ build time: Aug 30 18:04
          * @return {Object} a timer object. Call the cancel() method on this object to stop
          *         the timer.
          */
-        later: function(fn, when, periodic, o, data) {
+        later: function(fn, when, periodic, context, data) {
             when = when || 0;
-            o = o || { };
-            var m = fn, d = S.makeArray(data), f, r;
+            var m = fn,
+                d = S.makeArray(data),
+                f,
+                r;
 
             if (S.isString(fn)) {
-                m = o[fn];
+                m = context[fn];
             }
 
             if (!m) {
@@ -921,7 +923,7 @@ build time: Aug 30 18:04
             }
 
             f = function() {
-                m.apply(o, d);
+                m.apply(context, d);
             };
 
             r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
@@ -946,6 +948,69 @@ build time: Aug 30 18:04
         endsWith:function(str, suffix) {
             var ind = str.length - suffix.length;
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
+        },
+
+        /*! Based on YUI3*/
+        /**
+         * Throttles a call to a method based on the time between calls.
+         * @param  {function} fn The function call to throttle.
+         * @param {object} context ontext fn to run
+         * @param {Number} ms The number of milliseconds to throttle the method call.
+         *              Passing a -1 will disable the throttle. Defaults to 150.
+         * @return {function} Returns a wrapped function that calls fn throttled.
+         */
+        throttle:function(fn, ms, context) {
+            ms = ms || 150;
+
+            if (ms === -1) {
+                return (function() {
+                    fn.apply(context || this, arguments);
+                });
+            }
+
+            var last = S.now();
+
+            return (function() {
+                var now = S.now();
+                if (now - last > ms) {
+                    last = now;
+                    fn.apply(context || this, arguments);
+                }
+            });
+        },
+
+        /**
+         * buffers a call between  a fixed time
+         * @param {function} fn
+         * @param {object} context
+         * @param {Number} ms
+         */
+        buffer:function(fn, ms, context) {
+            ms = ms || 150;
+
+            if (ms === -1) {
+                return (function() {
+                    fn.apply(context || this, arguments);
+                });
+            }
+            var bufferTimer = 0;
+
+            function f() {
+                ret.stop();
+                bufferTimer = S.later(fn, ms, false, context || this);
+            }
+
+            var ret = {
+                stop:function() {
+                    if (bufferTimer) {
+                        bufferTimer.cancel();
+                        bufferTimer = 0;
+                    }
+                },
+                fn:f
+            };
+
+            return ret;
         }
 
     });

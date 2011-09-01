@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 10:38
+build time: Sep 1 12:22
 */
 /**
  * load content from remote async
@@ -39,15 +39,6 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
             loadData.call(self);
         }
     }
-
-    function onScroll() {
-        var self = this;
-        if (self.__scrollTimer) {
-            self.__scrollTimer.cancel();
-        }
-        self.__scrollTimer = S.later(doScroll, SCROLL_TIMER, false, self);
-    }
-
 
     function loadData() {
         var self = this,
@@ -93,14 +84,15 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         _init:function() {
             var self = this;
             Async.superclass._init.apply(self, arguments);
-            $(window).on("scroll", onScroll, self);
+            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self).fn;
+            $(window).on("scroll", self.__onScroll);
             loadData.call(self);
         },
 
         destroy:function() {
             var self = this;
             Async.superclass.destroy.apply(self, arguments);
-            $(window).detach("scroll", onScroll, self);
+            $(window).detach("scroll", self.__onScroll);
         }
     });
 
@@ -184,7 +176,12 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
     function doResize() {
         var self = this,
-            container = self.get("container");
+            container = self.get("container"),
+            containerRegion = self._containerRegion;
+        // 宽度没变就没必要调整
+        if (container.width() === containerRegion.width) {
+            return
+        }
         if (self._resizer) {
             self._resizer.stop();
             self._resizer = 0;
@@ -193,20 +190,6 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         self._resizer = self.adjust(function() {
             self._resizer = 0;
         });
-    }
-
-    function onResize() {
-        var self = this,
-            container = self.get("container"),
-            containerRegion = self._containerRegion;
-        // 宽度没变就没必要调整
-        if (container.width() === containerRegion.width) {
-            return
-        }
-        if (self.__resizeTimer) {
-            self.__resizeTimer.cancel();
-        }
-        self.__resizeTimer = S.later(doResize, RESIZE_DURATION, false, self);
     }
 
     function recalculate() {
@@ -263,7 +246,8 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         _init:function() {
             var self = this;
             recalculate.call(self);
-            $(window).on("resize", onResize, self);
+            self.__onResize = S.buffer(doResize, RESIZE_DURATION,self).fn;
+            $(window).on("resize", self.__onResize);
         },
 
         adjust:function(callback) {
@@ -301,7 +285,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         },
 
         destroy:function() {
-            $(window).detach("resize", onResize, this);
+            $(window).detach("resize", this.__onResize);
         }
     });
 

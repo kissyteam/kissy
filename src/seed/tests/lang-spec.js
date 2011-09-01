@@ -318,12 +318,12 @@ describe('lang.js', function() {
         expect(S.clone('a')).toBe('a');
         expect(S.clone(fn)).toBe(fn);
 
-        var date=new Date();
+        var date = new Date();
         expect(S.clone(date)).toEqual(date);
         expect(S.clone(date)).not.toBe(date);
 
-        
-         var reg=/i/i;
+
+        var reg = /i/i;
         expect(S.clone(reg)).toEqual(reg);
         expect(S.clone(reg)).not.toBe(reg);
 
@@ -562,6 +562,58 @@ describe('lang.js', function() {
 
         // consider context
         S.bind(z, context, 1, 2)(3);
+    });
+
+
+    it("S.throttle", function() {
+        var i = 0,x = {};
+
+        function t() {
+            i++;
+            expect(x).toBe(this);
+        }
+
+        var z = S.throttle(t, 300, x);
+        z();
+        expect(i).toBe(0);
+        waits(300);
+        runs(function() {
+            z();
+            expect(i).toBe(1);
+            z();
+            expect(i).toBe(1);
+        });
+        waits(300);
+        runs(function() {
+            z();
+            expect(i).toBe(2);
+            z();
+            expect(i).toBe(2);
+        });
+    });
+
+
+    it("S.buffer", function() {
+        var i = 0,x = {};
+
+        function t() {
+            i++;
+            expect(x).toBe(this);
+        }
+
+        var z = S.buffer(t, 300, x).fn;
+        z();
+        expect(i).toBe(0);
+        z();
+        expect(i).toBe(0);
+        waits(300);
+        runs(function() {
+            expect(i).toBe(1);
+        });
+        waits(300);
+        runs(function() {
+            expect(i).toBe(1);
+        });
     });
 
     it('S.now', function() {

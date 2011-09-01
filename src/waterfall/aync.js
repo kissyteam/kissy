@@ -35,15 +35,6 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         }
     }
 
-    function onScroll() {
-        var self = this;
-        if (self.__scrollTimer) {
-            self.__scrollTimer.cancel();
-        }
-        self.__scrollTimer = S.later(doScroll, SCROLL_TIMER, false, self);
-    }
-
-
     function loadData() {
         var self = this,
             container = this.get("container");
@@ -88,14 +79,15 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         _init:function() {
             var self = this;
             Async.superclass._init.apply(self, arguments);
-            $(window).on("scroll", onScroll, self);
+            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self).fn;
+            $(window).on("scroll", self.__onScroll);
             loadData.call(self);
         },
 
         destroy:function() {
             var self = this;
             Async.superclass.destroy.apply(self, arguments);
-            $(window).detach("scroll", onScroll, self);
+            $(window).detach("scroll", self.__onScroll);
         }
     });
 

@@ -74,7 +74,12 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
     function doResize() {
         var self = this,
-            container = self.get("container");
+            container = self.get("container"),
+            containerRegion = self._containerRegion;
+        // 宽度没变就没必要调整
+        if (container.width() === containerRegion.width) {
+            return
+        }
         if (self._resizer) {
             self._resizer.stop();
             self._resizer = 0;
@@ -83,20 +88,6 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         self._resizer = self.adjust(function() {
             self._resizer = 0;
         });
-    }
-
-    function onResize() {
-        var self = this,
-            container = self.get("container"),
-            containerRegion = self._containerRegion;
-        // 宽度没变就没必要调整
-        if (container.width() === containerRegion.width) {
-            return
-        }
-        if (self.__resizeTimer) {
-            self.__resizeTimer.cancel();
-        }
-        self.__resizeTimer = S.later(doResize, RESIZE_DURATION, false, self);
     }
 
     function recalculate() {
@@ -153,7 +144,8 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         _init:function() {
             var self = this;
             recalculate.call(self);
-            $(window).on("resize", onResize, self);
+            self.__onResize = S.buffer(doResize, RESIZE_DURATION,self).fn;
+            $(window).on("resize", self.__onResize);
         },
 
         adjust:function(callback) {
@@ -191,7 +183,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         },
 
         destroy:function() {
-            $(window).detach("resize", onResize, this);
+            $(window).detach("resize", this.__onResize);
         }
     });
 

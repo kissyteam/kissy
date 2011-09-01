@@ -61,7 +61,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
         _init: function() {
             var self = this;
-            self._showShimMove = throttle(self._move, self, MOVE_DELAY);
+            self._showShimMove = S.throttle(self._move, MOVE_DELAY, self);
         },
 
         /*
@@ -283,34 +283,6 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
             Event.remove(doc, 'mouseup', self._end, self);
         }
     });
-
-
-    /**
-     * Throttles a call to a method based on the time between calls. from YUI
-     * @method throttle
-     * @for KISSY
-     * @param fn {function} The function call to throttle.
-     * @param ms {int} The number of milliseconds to throttle the method call. Defaults to 150
-     * @return {function} Returns a wrapped function that calls fn throttled.
-     * ! Based on work by Simon Willison: http://gist.github.com/292562
-     */
-    function throttle(fn, scope, ms) {
-
-        if (ms === -1) {
-            return (function() {
-                fn.apply(scope, arguments);
-            });
-        }
-
-        var last = S.now();
-        return (function() {
-            var now = S.now();
-            if (now - last > ms) {
-                last = now;
-                fn.apply(scope, arguments);
-            }
-        });
-    }
 
     function region(node) {
         var offset = node.offset();
