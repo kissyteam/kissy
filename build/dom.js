@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 21:13
+build time: Sep 1 21:20
 */
 /**
  * @module  dom-attr
@@ -2244,8 +2244,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 // 直接在 context 下的所有节点找
                 el = DOM.filter("*", "#" + id, context)[0] || null;
             }
+            // ie 特殊情况下以及指明在 context 下找了，不需要再判断
             // 如果指定了 context node , 还要判断 id 是否处于 context 内
-            if (!testByContext(el, context)) {
+            else if (!testByContext(el, context)) {
                 el = null;
             }
         } else {
