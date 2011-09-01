@@ -124,7 +124,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             guard = 0;
         }
         // 元素保持间隔不变，居中
-        var margin = (containerRegion.width - curColCount * self.get("colWidth")) / 2;
+        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
         item.css({
             //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
             //    + containerRegion.left,

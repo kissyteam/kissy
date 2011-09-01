@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 19:12
+build time: Sep 1 19:26
 */
 /**
  * load content from remote async
@@ -237,7 +237,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             guard = 0;
         }
         // 元素保持间隔不变，居中
-        var margin = (containerRegion.width - curColCount * self.get("colWidth")) / 2;
+        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
         item.css({
             //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
             //    + containerRegion.left,
