@@ -66,6 +66,18 @@ KISSY.use("dom", function(S, DOM) {
             expect(S.get("#test-selector-1 p.test-selector")).toBe(null);
             expect(S.get("#test-selector-2 p.test-selector").tagName.toLowerCase()).toBe("p");
         });
+
+
+        it("does not confuse name with id", function() {
+            var id = "id" + S.now();
+            var input = DOM.create("<input name='" + id + "'/>");
+            var div = DOM.create("<div id='" + id + "'></div>");
+            DOM.append(input, document.body);
+            DOM.append(div, document.body);
+
+            expect(DOM.get("#" + id).nodeName.toLowerCase()).toBe("div");
+
+        });
     });
 
     describe("1.2 selector context", function() {
