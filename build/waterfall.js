@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 31 21:53
+build time: Sep 1 10:38
 */
 /**
  * load content from remote async
@@ -216,9 +216,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             curColHeights = self.get("curColHeights");
         curColHeights.length = Math.max(parseInt(containerWidth / self.get("colWidth")),
             self.get("minColCount"));
-        self._containerRegion = S.mix({
+        self._containerRegion = {
             width:containerWidth
-        }, container.offset());
+        };
         S.each(curColHeights, function(v, i) {
             curColHeights[i] = 0;
         });
@@ -249,8 +249,8 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
             //    + containerRegion.left,
             // 元素间固定间隔好点
-            left:dest * self.get("colWidth") + containerRegion.left + margin,
-            top:guard + containerRegion.top
+            left:dest * self.get("colWidth") + margin,
+            top:guard
         });
         if (!container.contains(item)) {
             container.append(item);
@@ -270,7 +270,10 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             S.log("waterfall:adjust");
             var self = this,
                 items = self.get("container").all(".ks-waterfall");
-            return timedChunk(items, adjustItem, self, callback);
+            return timedChunk(items, adjustItem, self, function() {
+                self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
+                callback && callback.call(self);
+            });
         },
 
         addItems:function(items, callback) {
@@ -279,7 +282,10 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             if (self._resizer) {
                 return;
             }
-            return timedChunk(items, self.addItem, self, callback);
+            return timedChunk(items, self.addItem, self, function() {
+                self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
+                callback && callback.call(self);
+            });
         },
 
         addItem:function(itemRaw) {
