@@ -152,7 +152,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            if (duration) {
+            if (duration != null) {
                 config.duration = parseFloat(duration) || 1;
             }
             if (S.isString(easing) || S.isFunction(easing)) {
