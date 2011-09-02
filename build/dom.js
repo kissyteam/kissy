@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 21:20
+build time: Sep 2 15:52
 */
 /**
  * @module  dom-attr
@@ -2240,7 +2240,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (el && el.parentNode) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
-            if (el.id !== id) {
+            // 不能直接 el.id ，否则 input shadow form attribute
+            if (DOM.attr(el, "id") !== id) {
                 // 直接在 context 下的所有节点找
                 el = DOM.filter("*", "#" + id, context)[0] || null;
             }

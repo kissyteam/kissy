@@ -2954,7 +2954,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (el && el.parentNode) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
-            if (el.id !== id) {
+            // 不能直接 el.id ，否则 input shadow form attribute
+            if (DOM.attr(el, "id") !== id) {
                 // 直接在 context 下的所有节点找
                 el = DOM.filter("*", "#" + id, context)[0] || null;
             }
@@ -5979,7 +5980,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            if (duration) {
+            if (duration != null) {
                 config.duration = parseFloat(duration) || 1;
             }
             if (S.isString(easing) || S.isFunction(easing)) {
@@ -5992,7 +5993,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         }
 
         //如果设定了元素属性的动画，则不能启动 css3 transition
-        if (!S.isEmptyObject(getCustomAttrs(style))) {
+        if (config.nativeSupport && !S.isEmptyObject(getCustomAttrs(style))) {
             config.nativeSupport = false;
         }
         self.config = config;
@@ -6014,8 +6015,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         // register callback
         if (S.isFunction(callback)) {
             self.callback = callback;
-            //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
-            //self.on(EVENT_COMPLETE, callback);
         }
     }
 
