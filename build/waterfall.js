@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 12:22
+build time: Sep 1 19:26
 */
 /**
  * load content from remote async
@@ -24,6 +24,13 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         if (self.__loading) {
             return;
         }
+        // 如果正在调整中，等会再看
+        // 调整中的高度不确定，现在不适合判断是否到了加载新数据的条件
+        if (self.isAdjusting()) {
+            // 恰好 __onScroll 是 buffered . :)
+            self.__onScroll();
+            return;
+        }
         var container = self.get("container"),
             colHeight = container.offset().top,
             diff = self.get("diff"),
@@ -32,8 +39,8 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         if (curColHeights.length) {
             colHeight += Math.min.apply(Math, curColHeights);
         }
-        // S.log(diff + " : " + $(window).scrollTop() + " : " + colHeight);
         // 动态载
+        // 最小高度(或被用户看到了)低于预加载线
         if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
@@ -49,10 +56,11 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         if (S.isFunction(remote)) {
             remote = remote();
         }
+        self.fire("loadStart");
         io(S.mix({
             success:function(d) {
                 if (d.end) {
-                    $(window).detach("scroll", onScroll, self);
+                    $(window).detach("scroll", self.__onScroll);
                 }
                 self.__loading = false;
                 var data = d.data,
@@ -64,6 +72,9 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
                     items.push($(html));
                 });
                 self.addItems(items);
+            },
+            complete:function() {
+                self.fire("loadEnd");
             }
         }, remote));
     }
@@ -86,7 +97,7 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
             Async.superclass._init.apply(self, arguments);
             self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self).fn;
             $(window).on("scroll", self.__onScroll);
-            loadData.call(self);
+            doScroll.call(self);
         },
 
         destroy:function() {
@@ -135,7 +146,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                 }
             }, 25);
         } else {
-            callback && callback.call(context, items);
+            callback && S.later(callback, 0, false, context, [items]);
         }
 
         stopper.stop = function() {
@@ -159,37 +170,37 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                 return $(v);
             }
         },
+
+        /**
+         * @private
+         */
         curColHeights:{
             value:[]
         },
+
+
         minColCount:{
             value:1
         },
+
         effect:{
             value:{
                 effect:"fadeIn",
                 duration:1
             }
         },
+
         colWidth:{}
     };
 
     function doResize() {
         var self = this,
-            container = self.get("container"),
             containerRegion = self._containerRegion;
         // 宽度没变就没必要调整
-        if (container.width() === containerRegion.width) {
+        if (containerRegion && self.get("container").width() === containerRegion.width) {
             return
         }
-        if (self._resizer) {
-            self._resizer.stop();
-            self._resizer = 0;
-        }
-        recalculate.call(self);
-        self._resizer = self.adjust(function() {
-            self._resizer = 0;
-        });
+        self.adjust();
     }
 
     function recalculate() {
@@ -226,15 +237,15 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             guard = 0;
         }
         // 元素保持间隔不变，居中
-        var margin = (containerRegion.width - curColCount * self.get("colWidth")) / 2;
+        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
         item.css({
-            position:"absolute",
             //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
             //    + containerRegion.left,
             // 元素间固定间隔好点
             left:dest * self.get("colWidth") + margin,
             top:guard
         });
+        /*不在容器里，就加上*/
         if (!container.contains(item)) {
             container.append(item);
         }
@@ -243,36 +254,58 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
     }
 
     S.extend(Intervein, Base, {
+        isAdjusting:function() {
+            return !!this._adjuster;
+        },
         _init:function() {
             var self = this;
-            recalculate.call(self);
-            self.__onResize = S.buffer(doResize, RESIZE_DURATION,self).fn;
+            // 一开始就 adjust 一次，可以对已有静态数据处理
+            doResize.call(self);
+            self.__onResize = S.buffer(doResize, RESIZE_DURATION, self).fn;
             $(window).on("resize", self.__onResize);
         },
 
+        /**
+         * 调整所有的元素位置
+         * @param callback
+         */
         adjust:function(callback) {
             S.log("waterfall:adjust");
             var self = this,
                 items = self.get("container").all(".ks-waterfall");
-            return timedChunk(items, adjustItem, self, function() {
+            /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
+            /* 正在调整中，取消上次调整，开始这次调整 */
+            if (self.isAdjusting()) {
+                self._adjuster.stop();
+            }
+            /*计算容器宽度等信息*/
+            recalculate.call(self);
+            return self._adjuster = timedChunk(items, adjustItem, self, function() {
                 self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
+                self._adjuster = 0;
                 callback && callback.call(self);
             });
         },
 
         addItems:function(items, callback) {
             var self = this;
-            /* 正在缩放中，取消*/
-            if (self._resizer) {
-                return;
-            }
-            return timedChunk(items, self.addItem, self, function() {
-                self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
-                callback && callback.call(self);
-            });
+
+            /* 正在调整中，直接这次加，和调整的节点一起处理 */
+            /* 正在加，直接这次加，一起处理 */
+            self._adder = timedChunk(items,
+                self._addItem,
+                self,
+                function() {
+                    self.get("container").height(Math.max.apply(Math,
+                        self.get("curColHeights")));
+                    self._adder = 0;
+                    callback && callback.call(self);
+                });
+
+            return self._adder;
         },
 
-        addItem:function(itemRaw) {
+        _addItem:function(itemRaw) {
             var self = this,
                 curColHeights = self.get("curColHeights"),
                 container = self.get("container"),

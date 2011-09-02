@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 12:24
+build time: Sep 1 21:20
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 1 12:24
          */
         version: '1.20dev',
 
-        buildTime:'20110901122359',
+        buildTime:'20110901212045',
 
         /**
          * Returns a new object containing all of the properties of
@@ -504,6 +504,8 @@ build time: Sep 1 12:24
 (function(S, undefined) {
 
     var host = S.__HOST,
+        TRUE = true,
+        FALSE = false,
         OP = Object.prototype,
         toString = OP.toString,
         hasOwnProperty = OP.hasOwnProperty,
@@ -511,6 +513,8 @@ build time: Sep 1 12:24
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
+        every = AP.every,
+        some = AP.some,
         //reduce = AP.reduce,
         trim = String.prototype.trim,
         map = AP.map,
@@ -599,10 +603,10 @@ build time: Sep 1 12:24
         isEmptyObject: function(o) {
             for (var p in o) {
                 if (p !== undefined) {
-                    return false;
+                    return FALSE;
                 }
             }
-            return true;
+            return TRUE;
         },
 
         /**
@@ -637,7 +641,7 @@ build time: Sep 1 12:24
             mismatchValues = mismatchValues || [];
 
             if (a === b) {
-                return true;
+                return TRUE;
             }
             if (a === undefined || a === null || b === undefined || b === null) {
                 // need type coercion
@@ -730,13 +734,13 @@ build time: Sep 1 12:24
 
                 if (isObj) {
                     for (key in object) {
-                        if (fn.call(context, object[key], key, object) === false) {
+                        if (fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
                 } else {
                     for (val = object[0];
-                         i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                         i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
                     }
                 }
             }
@@ -895,7 +899,7 @@ build time: Sep 1 12:24
                         throw new TypeError();
                     }
                 }
-                while (true);
+                while (TRUE);
             }
 
             while (k < len) {
@@ -907,6 +911,35 @@ build time: Sep 1 12:24
 
             return accumulator;
         },
+
+        every:every ?
+            function(arr, fn, context) {
+                return every.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && !fn.call(context, arr[i], i, arr)) {
+                        return FALSE;
+                    }
+                }
+                return TRUE;
+            },
+
+        some:some ?
+            function(arr, fn, context) {
+                return some.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && fn.call(context, arr[i], i, arr)) {
+                        return TRUE;
+                    }
+                }
+                return FALSE;
+            },
+
 
         /**
          * it is not same with native bind
@@ -1004,7 +1037,7 @@ build time: Sep 1 12:24
             sep = sep || SEP;
             eq = eq || EQ;
             if (S.isUndefined(arr)) {
-                arr = true;
+                arr = TRUE;
             }
             var buf = [], key, val;
             for (key in o) {
@@ -1183,7 +1216,7 @@ build time: Sep 1 12:24
 
             function f() {
                 ret.stop();
-                bufferTimer = S.later(fn, ms, false, context || this);
+                bufferTimer = S.later(fn, ms, FALSE, context || this);
             }
 
             var ret = {
@@ -1272,7 +1305,7 @@ build time: Sep 1 12:24
                 for (k in o) {
                     if (k !== CLONE_MARKER &&
                         o.hasOwnProperty(k) &&
-                        (!f || (f.call(o, o[k], k, o) !== false))) {
+                        (!f || (f.call(o, o[k], k, o) !== FALSE))) {
                         ret[k] = cloneInternal(o[k], f, marked);
                     }
                 }
@@ -1285,7 +1318,7 @@ build time: Sep 1 12:24
     function compareObjects(a, b, mismatchKeys, mismatchValues) {
         // 两个比较过了，无需再比较，防止循环比较
         if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
-            return true;
+            return TRUE;
         }
         a[COMPARE_MARKER] = b;
         b[COMPARE_MARKER] = a;
@@ -4561,8 +4594,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 try {
                     delete elem[EXPANDO];
                 } catch(e) {
-                    S.log("delete expando error : ");
-                    S.log(e);
+                    //S.log("delete expando error : ");
+                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);
@@ -5819,14 +5852,26 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             return null;
         }
         var doc = context;
-        if (context.nodeType !== 9) {
+        if (context.nodeType !== DOM.DOCUMENT_NODE) {
             doc = context.ownerDocument;
         }
         var el = doc.getElementById(id);
-        // 如果指定了 context node , 还要判断 id 是否处于 context 内
-        if (!testByContext(el, context)) {
-            return null;
+        if (el && el.parentNode) {
+            // ie opera confuse name with id
+            // https://github.com/kissyteam/kissy/issues/67
+            if (el.id !== id) {
+                // 直接在 context 下的所有节点找
+                el = DOM.filter("*", "#" + id, context)[0] || null;
+            }
+            // ie 特殊情况下以及指明在 context 下找了，不需要再判断
+            // 如果指定了 context node , 还要判断 id 是否处于 context 内
+            else if (!testByContext(el, context)) {
+                el = null;
+            }
+        } else {
+            el = null;
         }
+
         return el;
     }
 
@@ -5934,29 +5979,36 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 sizzle = require("sizzle"),
                 match,
                 tag,
+                id,
                 cls,
                 ret = [];
 
-            // 默认仅支持最简单的 tag.cls 形式
+            // 默认仅支持最简单的 tag.cls 或 #id 形式
             if (isString(filter) &&
-                (match = REG_QUERY.exec(filter)) &&
-                !match[1]) {
+                (match = REG_QUERY.exec(filter))) {
+                id = match[1];
                 tag = match[2];
                 cls = match[3];
-                filter = function(elem) {
-                    var tagRe = true,clsRe = true;
+                if (!id) {
+                    filter = function(elem) {
+                        var tagRe = true,clsRe = true;
 
-                    // 指定 tag 才进行判断
-                    if (tag) {
-                        tagRe = eqTagName(elem, tag);
+                        // 指定 tag 才进行判断
+                        if (tag) {
+                            tagRe = eqTagName(elem, tag);
+                        }
+
+                        // 指定 cls 才进行判断
+                        if (cls) {
+                            clsRe = DOM.hasClass(elem, cls);
+                        }
+
+                        return clsRe && tagRe;
                     }
-
-                    // 指定 cls 才进行判断
-                    if (cls) {
-                        clsRe = DOM.hasClass(elem, cls);
-                    }
-
-                    return clsRe && tagRe;
+                } else if (id && !tag && !cls) {
+                    filter = function(elem) {
+                        return elem.id === id;
+                    };
                 }
             }
 

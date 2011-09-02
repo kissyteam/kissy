@@ -616,6 +616,32 @@ describe('lang.js', function() {
         });
     });
 
+
+    it("S.every", function() {
+        function isBigEnough(element, index, array) {
+            return (element >= 10);
+        }
+
+        var passed = S.every([12, 5, 8, 130, 44], isBigEnough);
+        expect(passed).toBe(false);
+        passed = S.every([12, 54, 18, 130, 44], isBigEnough);
+        expect(passed).toBe(true);
+    });
+
+
+    it("S.some", function() {
+        function isBigEnough(element, index, array) {
+            return (element >= 10);
+        }
+
+        var passed = S.some([2, 5, 8, 1, 4], isBigEnough);
+        // passed is false
+        expect(passed).toBe(false);
+        passed = S.some([12, 5, 8, 1, 4], isBigEnough);
+        // passed is true
+        expect(passed).toBe(true);
+    });
+
     it('S.now', function() {
         expect(S.type(S.now())).toBe('number');
     });

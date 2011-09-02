@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 29 16:25
+build time: Sep 1 21:20
 */
 /**
  * @module  dom-attr
@@ -1429,8 +1429,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 try {
                     delete elem[EXPANDO];
                 } catch(e) {
-                    S.log("delete expando error : ");
-                    S.log(e);
+                    //S.log("delete expando error : ");
+                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);
@@ -2233,14 +2233,26 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             return null;
         }
         var doc = context;
-        if (context.nodeType !== 9) {
+        if (context.nodeType !== DOM.DOCUMENT_NODE) {
             doc = context.ownerDocument;
         }
         var el = doc.getElementById(id);
-        // 如果指定了 context node , 还要判断 id 是否处于 context 内
-        if (!testByContext(el, context)) {
-            return null;
+        if (el && el.parentNode) {
+            // ie opera confuse name with id
+            // https://github.com/kissyteam/kissy/issues/67
+            if (el.id !== id) {
+                // 直接在 context 下的所有节点找
+                el = DOM.filter("*", "#" + id, context)[0] || null;
+            }
+            // ie 特殊情况下以及指明在 context 下找了，不需要再判断
+            // 如果指定了 context node , 还要判断 id 是否处于 context 内
+            else if (!testByContext(el, context)) {
+                el = null;
+            }
+        } else {
+            el = null;
         }
+
         return el;
     }
 
@@ -2348,29 +2360,36 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 sizzle = require("sizzle"),
                 match,
                 tag,
+                id,
                 cls,
                 ret = [];
 
-            // 默认仅支持最简单的 tag.cls 形式
+            // 默认仅支持最简单的 tag.cls 或 #id 形式
             if (isString(filter) &&
-                (match = REG_QUERY.exec(filter)) &&
-                !match[1]) {
+                (match = REG_QUERY.exec(filter))) {
+                id = match[1];
                 tag = match[2];
                 cls = match[3];
-                filter = function(elem) {
-                    var tagRe = true,clsRe = true;
+                if (!id) {
+                    filter = function(elem) {
+                        var tagRe = true,clsRe = true;
 
-                    // 指定 tag 才进行判断
-                    if (tag) {
-                        tagRe = eqTagName(elem, tag);
+                        // 指定 tag 才进行判断
+                        if (tag) {
+                            tagRe = eqTagName(elem, tag);
+                        }
+
+                        // 指定 cls 才进行判断
+                        if (cls) {
+                            clsRe = DOM.hasClass(elem, cls);
+                        }
+
+                        return clsRe && tagRe;
                     }
-
-                    // 指定 cls 才进行判断
-                    if (cls) {
-                        clsRe = DOM.hasClass(elem, cls);
-                    }
-
-                    return clsRe && tagRe;
+                } else if (id && !tag && !cls) {
+                    filter = function(elem) {
+                        return elem.id === id;
+                    };
                 }
             }
 
