@@ -90,7 +90,7 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         _init:function() {
             var self = this;
             Async.superclass._init.apply(self, arguments);
-            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self).fn;
+            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
             $(window).on("scroll", self.__onScroll);
             doScroll.call(self);
         },

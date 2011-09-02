@@ -601,7 +601,7 @@ describe('lang.js', function() {
             expect(x).toBe(this);
         }
 
-        var z = S.buffer(t, 300, x).fn;
+        var z = S.buffer(t, 300, x);
         z();
         expect(i).toBe(0);
         z();

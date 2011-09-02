@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 19:26
+build time: Sep 2 10:13
 */
 /**
  * load content from remote async
@@ -95,7 +95,7 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
         _init:function() {
             var self = this;
             Async.superclass._init.apply(self, arguments);
-            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self).fn;
+            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
             $(window).on("scroll", self.__onScroll);
             doScroll.call(self);
         },
@@ -261,7 +261,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             var self = this;
             // 一开始就 adjust 一次，可以对已有静态数据处理
             doResize.call(self);
-            self.__onResize = S.buffer(doResize, RESIZE_DURATION, self).fn;
+            self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
             $(window).on("resize", self.__onResize);
         },
 
