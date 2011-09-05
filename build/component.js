@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:19
+build time: Sep 5 18:54
 */
 /**
  * container can delegate event for its children
@@ -124,6 +124,7 @@ KISSY.add("component/delegatechildren", function(S) {
             self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
                 self._handleChildMouseEvents, self);
         },
+
         _handleChildMouseEvents:function(e) {
             var control = this.getOwnerControl(e.target);
             if (control) {
@@ -491,7 +492,7 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                     var el = self.getKeyEventTarget();
                     // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                     if (ev.which == 1 && el.attr("tabindex") >= 0) {
-                        self.getKeyEventTarget()[0].focus();
+                        el[0].focus();
                     }
                     // Cancel the default action unless the control
                     // allows text selection.

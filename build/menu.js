@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 18:54
 */
 /**
  * deletable menuitem
@@ -124,6 +124,14 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                     filterInput = view.get("filterInput");
                 /*监控键盘事件*/
                 filterInput.on("keyup", self.handleFilterEvent, self);
+            },
+
+            _handleMouseEnter:function() {
+                var self = this;
+                FilterMenu.superclass._handleMouseEnter.apply(self, arguments);
+                // 权益解决，filter input focus 后会滚动到牌聚焦处，select 则不会
+                // 如果 filtermenu 的菜单项被滚轮滚到后面，点击触发不了，会向前滚动到 filter input
+                self.getKeyEventTarget()[0].select();
             },
 
             handleFilterEvent:function() {
@@ -560,6 +568,9 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
+
+    var $ = S.all;
+
     var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
         _handleMouseEnter:function(e) {
@@ -605,17 +616,30 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         _uiSetHighlighted:function(v) {
             MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
             // 是否要滚动到当前菜单项
+            // 暂时只处理横向滚动
             if (v) {
                 var el = this.get("el"),
-                    p = this.get("parent").get("el"),
-                    y = el.offset().top,
+                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                    // 找不到就检测可视窗口
+                    p = el.parent(function(e) {
+                        return $(e).css("overflow") != "visible";
+                    }, this.get("parent").get("el").parent());
+
+                var y = el.offset().top,
                     h = el[0].offsetHeight,
-                    py = p.offset().top,
-                    ph = p[0].offsetHeight;
-                if (y - py >= ph) {
-                    p[0].scrollTop += y - py + h - ph;
-                } else if (y - py < 0) {
-                    p[0].scrollTop += y - py;
+                    py = p && p.offset().top || $(window).scrollTop(),
+                    ph = p && p[0].offsetHeight || $(window).height();
+                // 会有一个元素的误差？？
+                // 元素越过了下边界
+                if (y - py >= ph || Math.abs(y - py - ph) < h) {
+                    // 利用系统提供的滚动，效率高点？
+                    el[0].scrollIntoView(false);
+                    //p[0].scrollTop += y - py + h - ph;
+                }
+                // 元素越过了上边界
+                else if (y - py < 0) {
+                    el[0].scrollIntoView(true);
+                    //p[0].scrollTop += y - py;
                 }
             }
         },
@@ -664,6 +688,13 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
             checked:{},
             selected:{}
+        },
+
+        HTML_PARSER:{
+            selectable:function(el) {
+                var cls = this.getCls("menuitem-selectable");
+                return el.hasClass(cls);
+            }
         }
     });
 

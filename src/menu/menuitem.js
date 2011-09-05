@@ -3,6 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
+
+    var $ = S.all;
+
     var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
         _handleMouseEnter:function(e) {
@@ -48,21 +51,28 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         _uiSetHighlighted:function(v) {
             MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
             // 是否要滚动到当前菜单项
+            // 暂时只处理横向滚动
             if (v) {
                 var el = this.get("el"),
-                    p = this.get("parent").get("el"),
-                    y = el.offset().top,
+                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                    // 找不到就检测可视窗口
+                    p = el.parent(function(e) {
+                        return $(e).css("overflow") != "visible";
+                    }, this.get("parent").get("el").parent());
+
+                var y = el.offset().top,
                     h = el[0].offsetHeight,
-                    py = p.offset().top,
-                    ph = p[0].offsetHeight;
-                S.log(y - py);
-                S.log(ph);
-                // 会有一点误差？？
-                if (y - py >= ph || Math.abs(y - py - ph) < 5) {
+                    py = p && p.offset().top || $(window).scrollTop(),
+                    ph = p && p[0].offsetHeight || $(window).height();
+                // 会有一个元素的误差？？
+                // 元素越过了下边界
+                if (y - py >= ph || Math.abs(y - py - ph) < h) {
                     // 利用系统提供的滚动，效率高点？
                     el[0].scrollIntoView(false);
                     //p[0].scrollTop += y - py + h - ph;
-                } else if (y - py < 0) {
+                }
+                // 元素越过了上边界
+                else if (y - py < 0) {
                     el[0].scrollIntoView(true);
                     //p[0].scrollTop += y - py;
                 }
