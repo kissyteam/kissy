@@ -48,15 +48,24 @@
 
 <h2>从已知元素生成</h2>
 
-<div id="filterMenuExist">
-    <div class='goog-menu-filter'>
+<div id="filterMenuExist" style="height:150px;overflow: auto;">
+    <div class='goog-menu-filter' style="position: relative;">
         <div class="goog-menu-filter-label">from markup</div>
         <input autocomplete="off"/>
     </div>
     <div class="goog-menu-content">
-        <div class="goog-menuitem">女鞋</div>
-        <div class="goog-menuitem">家居服务</div>
-        <div class="goog-menuitem">手机</div>
+        <div class="goog-menuitem goog-menuitem-selectable">女鞋1</div>
+        <div class="goog-menuitem goog-menuitem-selectable">家居服务2</div>
+        <div class="goog-menuitem goog-menuitem-selectable">手机3</div>
+        <div class="goog-menuitem goog-menuitem-selectable">女鞋4</div>
+        <div class="goog-menuitem goog-menuitem-selectable">家居服务5</div>
+        <div class="goog-menuitem goog-menuitem-selectable">手机6</div>
+        <div class="goog-menuitem goog-menuitem-selectable">女鞋7</div>
+        <div class="goog-menuitem goog-menuitem-selectable">家居服务8</div>
+        <div class="goog-menuitem goog-menuitem-selectable">手机9</div>
+        <div class="goog-menuitem goog-menuitem-selectable">女鞋10</div>
+        <div class="goog-menuitem goog-menuitem-selectable">家居服务11</div>
+        <div class="goog-menuitem goog-menuitem-selectable">手机12</div>
     </div>
 </div>
 
@@ -86,7 +95,8 @@
                 });
                 var m3 = new Menu.Item({
                     prefixCls:"goog-",
-                    selectable:true,content:"手机",
+                    selectable:true,
+                    content:"手机",
                     elCls:"hasChildren",
                     pinyin:"sj"
                 });
@@ -167,14 +177,29 @@
                 });
             })();
 
-            /**
-             *  从 html 生成
-             */
-            new Menu.FilterMenu({
-                srcNode:'#filterMenuExist',
-                width:200,
-                prefixCls:"goog-"
-            }).render();
+            (function() {
+                /**
+                 *  从 html 生成
+                 */
+                var filterMenu = new Menu.FilterMenu({
+                    srcNode:'#filterMenuExist',
+                    width:200,
+                    prefixCls:"goog-"
+                });
+
+                filterMenu.render();
+
+                var selected = null;
+
+                filterMenu.on("click", function(e) {
+                    if (selected != e.target) {
+                        selected && selected.set("selected", false);
+                        selected = e.target;
+                        alert("selected : " + selected.get("content"));
+                    }
+                });
+
+            })();
 
         });
     });

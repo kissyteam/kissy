@@ -107,6 +107,13 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
             checked:{},
             selected:{}
+        },
+
+        HTML_PARSER:{
+            selectable:function(el) {
+                var cls = this.getCls("menuitem-selectable");
+                return el.hasClass(cls);
+            }
         }
     });
 
