@@ -254,13 +254,40 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     }
                 }
             });
-        }
+        },
+        innerWidth:0,
+        innerHeight:0,
+        outerWidth:0,
+        outerHeight:0,
+        width:0,
+        height:0
     });
 
-    /**
-     * name,width 简单转发
-     */
+    function capital(str) {
+        return str.charAt(0).toUpperCase() + str.substring(1);
+    }
+
+
     S.each([WIDTH,HEIGHT], function(name) {
+        DOM["inner" + capital(name)] = function(selector) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, "padding");
+            } else {
+                return null;
+            }
+        };
+
+
+        DOM["outer" + capital(name)] = function(selector) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, "padding");
+            } else {
+                return null;
+            }
+        };
+
         DOM[name] = function(selector, val) {
             var ret = DOM.css(selector, name, val);
             if (ret) {
@@ -406,7 +433,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
 
-    function getWH(elem, name) {
+    /**
+     * 得到元素的大小信息
+     * @param elem
+     * @param name
+     * @param {String} extra    "padding" : (css width) + padding
+     *                          "border" : (css width) + padding + border
+     *                          "margin" : (css width) + padding + border + margin
+     */
+    function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
             return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
         } else if (elem.nodeType == 9) {
@@ -415,10 +450,43 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
-        S.each(which, function(direction) {
-            val -= parseFloat(DOM.css(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM.css(elem, 'border' + direction + 'Width')) || 0;
-        });
+        if (val > 0) {
+            if (extra !== "border") {
+                S.each(which, function(w) {
+                    if (!extra) {
+                        val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                    }
+                    if (extra === "margin") {
+                        val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                    } else {
+                        val -= parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                    }
+                });
+            }
+
+            return val
+        }
+
+        // Fall back to computed then uncomputed css if necessary
+        val = DOM._getComputedStyle(elem, name);
+        if (val < 0 || S.isNullOrUndefined(val)) {
+            val = elem.style[ name ] || 0;
+        }
+        // Normalize "", auto, and prepare for extra
+        val = parseFloat(val) || 0;
+
+        // Add padding, border, margin
+        if (extra) {
+            S.each(which, function(w) {
+                val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                if (extra !== "padding") {
+                    val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                }
+                if (extra === "margin") {
+                    val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                }
+            });
+        }
 
         return val;
     }

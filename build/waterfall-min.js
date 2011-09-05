@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 2 10:13
+build time: Sep 5 21:30
 */
 KISSY.add("waterfall/async",function(e,l,n,m,o){function h(){h.superclass.constructor.apply(this,arguments)}function p(){if(!this.__loading)if(this.isAdjusting())this.__onScroll();else{var a=this.get("container").offset().top,b=this.get("diff"),c=this.get("curColHeights");if(c.length)a+=Math.min.apply(Math,c);b+g(window).scrollTop()+g(window).height()>a&&q.call(this)}}function q(){var a=this;this.get("container");a.__loading=true;var b=a.get("remote");if(e.isFunction(b))b=b();a.fire("loadStart");
 n(e.mix({success:function(c){c.end&&g(window).detach("scroll",a.__onScroll);a.__loading=false;c=c.data;var d=m(a.get("itemTpl")),f=[];e.each(c,function(j){j=d.render(j);f.push(g(j))});a.addItems(f)},complete:function(){a.fire("loadEnd")}},b))}var g=l.all;h.ATTRS={remote:{},diff:{getter:function(a){return a||0}},itemTpl:{}};e.extend(h,o,{_init:function(){h.superclass._init.apply(this,arguments);this.__onScroll=e.buffer(p,50,this);g(window).on("scroll",this.__onScroll);p.call(this)},destroy:function(){h.superclass.destroy.apply(this,

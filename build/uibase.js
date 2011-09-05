@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 30 16:25
+build time: Sep 5 21:30
 */
 /**
  * UIBase.Align
@@ -160,7 +160,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
     function positionAtCoordinate(absolutePos, alignCfg) {
         var self = this,el = self.get('el');
         var status = {};
-        var elSize = {width:el[0].offsetWidth,height:el[0].offsetHeight},
+        var elSize = {width:el.outerWidth(),height:el.outerHeight()},
             size = S.clone(elSize);
         if (!S.isEmptyObject(alignCfg.overflow)) {
             var viewport = getVisibleRectForElement(el[0]);
@@ -285,12 +285,12 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         if (node) {
             node = Node.one(node);
             offset = node.offset();
-            w = node[0].offsetWidth;
-            h = node[0].offsetHeight;
+            w = node.outerWidth();
+            h = node.outerHeight();
         } else {
             offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-            w = DOM['viewportWidth']();
-            h = DOM['viewportHeight']();
+            w = DOM.viewportWidth();
+            h = DOM.viewportHeight();
         }
 
         x = offset.left;
@@ -1220,8 +1220,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
             S.mix(ret, {
-                maxLeft: ret.left + constrain[0].offsetWidth - el[0].offsetWidth,
-                maxTop: ret.top + constrain[0].offsetHeight - el[0].offsetHeight
+                maxLeft: ret.left + constrain.outerWidth() - el.outerWidth(),
+                maxTop: ret.top + constrain.outerHeight() - el.outerHeight()
             });
         }
         // 没有指定 constrain, 表示受限于可视区域
@@ -1235,8 +1235,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             var vWidth = document.documentElement.clientWidth;
             ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
             S.mix(ret, {
-                maxLeft: ret.left + vWidth - el[0].offsetWidth,
-                maxTop: ret.top + DOM['viewportHeight']() - el[0].offsetHeight
+                maxLeft: ret.left + vWidth - el.outerWidth(),
+                maxTop: ret.top + DOM.viewportHeight() - el.outerHeight()
             });
         }
 

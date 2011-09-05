@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 12:23
+build time: Sep 5 21:29
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -293,9 +293,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
         var offset = node.offset();
         return {
             left:offset.left,
-            right:offset.left + node[0].offsetWidth,
+            right:offset.left + node.outerWidth(),
             top:offset.top,
-            bottom:offset.top + node[0].offsetHeight
+            bottom:offset.top + node.outerHeight()
         };
     }
 
@@ -1011,13 +1011,13 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
         getRegion:function(node) {
             if (isWin(node)) {
                 return {
-                    width:DOM['viewportWidth'](),
-                    height:DOM['viewportHeight']()
+                    width:DOM.viewportWidth(),
+                    height:DOM.viewportHeight()
                 };
             } else {
                 return {
-                    width:node[0].offsetWidth,
-                    height:node[0].offsetHeight
+                    width:node.outerWidth(),
+                    height:node.outerHeight()
                 };
             }
         },

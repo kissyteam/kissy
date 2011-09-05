@@ -39,13 +39,13 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
         getRegion:function(node) {
             if (isWin(node)) {
                 return {
-                    width:DOM['viewportWidth'](),
-                    height:DOM['viewportHeight']()
+                    width:DOM.viewportWidth(),
+                    height:DOM.viewportHeight()
                 };
             } else {
                 return {
-                    width:node[0].offsetWidth,
-                    height:node[0].offsetHeight
+                    width:node.outerWidth(),
+                    height:node.outerHeight()
                 };
             }
         },

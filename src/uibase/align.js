@@ -155,7 +155,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
     function positionAtCoordinate(absolutePos, alignCfg) {
         var self = this,el = self.get('el');
         var status = {};
-        var elSize = {width:el[0].offsetWidth,height:el[0].offsetHeight},
+        var elSize = {width:el.outerWidth(),height:el.outerHeight()},
             size = S.clone(elSize);
         if (!S.isEmptyObject(alignCfg.overflow)) {
             var viewport = getVisibleRectForElement(el[0]);
@@ -280,12 +280,12 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         if (node) {
             node = Node.one(node);
             offset = node.offset();
-            w = node[0].offsetWidth;
-            h = node[0].offsetHeight;
+            w = node.outerWidth();
+            h = node.outerHeight();
         } else {
             offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-            w = DOM['viewportWidth']();
-            h = DOM['viewportHeight']();
+            w = DOM.viewportWidth();
+            h = DOM.viewportHeight();
         }
 
         x = offset.left;

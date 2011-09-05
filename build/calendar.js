@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:19
+build time: Sep 5 21:29
 */
 /**
  * KISSY Calendar
@@ -230,7 +230,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             self.con.css('visibility', '');
             var _x = self.trigger.offset().left,
                 //KISSY得到DOM的width是innerWidth，这里期望得到outterWidth
-                height = self.trigger[0].offsetHeight || self.trigger.height(),
+                height = self.trigger.outerHeight() || self.trigger.height(),
                 _y = self.trigger.offset().top + height;
             self.con.css('left', _x.toString() + 'px');
             self.con.css('top', _y.toString() + 'px');

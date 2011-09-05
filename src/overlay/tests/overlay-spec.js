@@ -51,11 +51,11 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
                 expect(parseInt(o.get("el").css("left")))
                     .toBeEqual(Math.ceil((DOM.viewportWidth()
-                    - o.get("el")[0].offsetWidth) / 2));
+                    - o.get("el").outerWidth()) / 2));
 
                 expect(parseInt(o.get("el").css("top")))
                     .toBeEqual(Math.ceil((DOM.viewportHeight()
-                    - o.get("el")[0].offsetHeight) / 2));
+                    - o.get("el").outerHeight()) / 2));
 
             });
 
@@ -135,12 +135,12 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
                 expect(parseInt(o.get("el").css("left")))
                     .toBeEqual(Math.ceil((DOM.viewportWidth()
-                    - o.get("el")[0].offsetWidth) / 2));
+                    - o.get("el").outerWidth()) / 2));
 
 
                 expect(parseInt(o.get("el").css("top")))
                     .toBeEqual(Math.ceil((DOM.viewportHeight()
-                    - o.get("el")[0].offsetHeight) / 2));
+                    - o.get("el").outerHeight()) / 2));
 
             });
 
@@ -182,7 +182,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                 // ie9 测试不了
                 if (UA.ie == 9) return;
                 var h = o.get("el").one(".ke-resizehandler-t"),
-                    height = o.get("el")[0].offsetHeight;
+                    height = o.get("el").outerHeight();
                 var hxy = h.offset();
                 S.log(hxy);
 
@@ -210,7 +210,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                 });
 
                 runs(function() {
-                    var dheight = o.get("el")[0].offsetHeight;
+                    var dheight = o.get("el").outerHeight();
 
                     expect(dheight - height).toBeEqual(98);
                     expect(dheight - height).toBeEqual(98);
@@ -407,7 +407,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                 runs(function() {
                     var dxy = d.get("xy"),
                         width = 200,
-                        height = d.get("el")[0].offsetHeight;
+                        height = d.get("el").outerHeight();
 
                     expect(DOM.viewportWidth() - width).toBeEqual(dxy[0]);
                     expect(DOM.viewportHeight() - height).toBeEqual(dxy[1]);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 18:54
+build time: Sep 5 21:30
 */
 /**
  * deletable menuitem
@@ -615,32 +615,18 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
         _uiSetHighlighted:function(v) {
             MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
-            // 是否要滚动到当前菜单项
-            // 暂时只处理横向滚动
+            // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
                 var el = this.get("el"),
                     // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
-                    // 找不到就检测可视窗口
+                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function(e) {
                         return $(e).css("overflow") != "visible";
                     }, this.get("parent").get("el").parent());
-
-                var y = el.offset().top,
-                    h = el[0].offsetHeight,
-                    py = p && p.offset().top || $(window).scrollTop(),
-                    ph = p && p[0].offsetHeight || $(window).height();
-                // 会有一个元素的误差？？
-                // 元素越过了下边界
-                if (y - py >= ph || Math.abs(y - py - ph) < h) {
-                    // 利用系统提供的滚动，效率高点？
-                    el[0].scrollIntoView(false);
-                    //p[0].scrollTop += y - py + h - ph;
+                if (!p) {
+                    return;
                 }
-                // 元素越过了上边界
-                else if (y - py < 0) {
-                    el[0].scrollIntoView(true);
-                    //p[0].scrollTop += y - py;
-                }
+                el.scrollIntoView(p, undefined, undefined, true);
             }
         },
 
