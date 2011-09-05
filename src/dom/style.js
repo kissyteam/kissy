@@ -279,10 +279,10 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         };
 
 
-        DOM["outer" + capital(name)] = function(selector) {
+        DOM["outer" + capital(name)] = function(selector, includeMargin) {
             var el = DOM.get(selector);
             if (el) {
-                return getWH(el, name, "padding");
+                return getWH(el, name, includeMargin ? "margin" : "border");
             } else {
                 return null;
             }

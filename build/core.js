@@ -2020,7 +2020,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 ew = DOM.outerWidth(elem),
 
                 // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去容器的
                 l = diff.left + cl -
                     (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
 
@@ -2539,10 +2539,10 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         };
 
 
-        DOM["outer" + capital(name)] = function(selector) {
+        DOM["outer" + capital(name)] = function(selector, includeMargin) {
             var el = DOM.get(selector);
             if (el) {
-                return getWH(el, name, "padding");
+                return getWH(el, name, includeMargin ? "margin" : "border");
             } else {
                 return null;
             }
