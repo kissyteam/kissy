@@ -55,10 +55,16 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
                     h = el[0].offsetHeight,
                     py = p.offset().top,
                     ph = p[0].offsetHeight;
-                if (y - py >= ph) {
-                    p[0].scrollTop += y - py + h - ph;
+                S.log(y - py);
+                S.log(ph);
+                // 会有一点误差？？
+                if (y - py >= ph || Math.abs(y - py - ph) < 5) {
+                    // 利用系统提供的滚动，效率高点？
+                    el[0].scrollIntoView(false);
+                    //p[0].scrollTop += y - py + h - ph;
                 } else if (y - py < 0) {
-                    p[0].scrollTop += y - py;
+                    el[0].scrollIntoView(true);
+                    //p[0].scrollTop += y - py;
                 }
             }
         },
