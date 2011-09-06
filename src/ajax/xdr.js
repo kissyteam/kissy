@@ -23,9 +23,9 @@ KISSY.add("ajax/xdr", function(S, io) {
                     return;
                 }
                 init = true;
-                var o = '<object id="' + ID + '" ' +
-                    'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ' +
-                    ' width="0" height="0">' +
+                var o = '<object id="' + ID +
+                    '" type="application/x-shockwave-flash" data="' +
+                    uri + '" width="0" height="0">' +
                     '<param name="movie" value="' +
                     uri + '" />' +
                     '<param name="FlashVars" value="yid=' +
