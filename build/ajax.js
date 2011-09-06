@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:29
+build time: Sep 6 20:11
 */
 /**
  * a scalable client io framework
@@ -53,14 +53,13 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  context:null,
                  timeout: 0,
                  data: null,
-
                  // 可取json | jsonp | script | xml | html | text | null | undefined
                  dataType: null,
-
                  username: null,
                  password: null,
                  cache: null,
                  mimeType:null,
+                 xdr:{},
                  headers: {},
                  xhrFields:{},
                  // jsonp script charset
@@ -679,6 +678,152 @@ KISSY.add("ajax/script", function(S, io) {
 }, {
     requires:['./base','./xhr']
 });/**
+ * use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("ajax/xdr", function(S, io) {
+        var XhrTransport = io.getTransport("*");
+
+        if (!XhrTransport.allowCrossDomain) {
+
+            S.log("use flash xdr", "info");
+
+            var // current running request instances
+                maps = {},
+                ID = "io_swf",
+                // flash transporter
+                flash,
+                // whether create the flash transporter
+                init = false;
+
+            // create the flash transporter
+            function _swf(uri, _, uid) {
+                if (init) {
+                    return;
+                }
+                init = true;
+                var o = '<object id="' + ID + '" ' +
+                    'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ' +
+                    ' width="0" height="0">' +
+                    '<param name="movie" value="' +
+                    uri + '" />' +
+                    '<param name="FlashVars" value="yid=' +
+                    _ + '&uid=' +
+                    uid +
+                    '&host=KISSY.io" />' +
+                    '<param name="allowScriptAccess" value="always" />' +
+                    '</object>',
+                    c = document.createElement('div');
+                document.body.appendChild(c);
+                c.innerHTML = o;
+            }
+
+            var originalSend = XhrTransport.prototype.send;
+
+            // rewrite send to support flash xdr
+            S.augment(XhrTransport, {
+                send:function() {
+                    var self = this,
+                        xhrObj = self.xhrObj,
+                        c = xhrObj.config;
+                    if (!c.crossDomain) {
+                        return originalSend.call(self);
+                    }
+                    var xdr = c['xdr'] || {};
+                    // 不提供则使用 cdn 默认的 flash
+                    _swf(xdr.src || (S.Config.base + "ajax/io.swf"), 1, 1);
+                    // 简便起见，用轮训
+                    if (!flash) {
+                        S.log("detect xdr flash");
+                        setTimeout(function() {
+                            self.send();
+                        }, 200);
+                        return;
+                    }
+                    self._uid = S.guid();
+                    maps[self._uid] = self;
+
+                    // ie67 send 出错？
+                    flash.send(c.url, {
+                        id:self._uid,
+                        uid:self._uid,
+                        method:c.type,
+                        data:c.hasContent && c.data || {}
+                    });
+                },
+
+                abort:function() {
+                    flash.abort(this._uid);
+                },
+
+                _xdrResponse:function(e, o) {
+                    S.log(e);
+                    var self = this,
+                        ret,
+                        xhrObj = self.xhrObj;
+
+                    // need decodeURI to get real value from flash returned value
+                    xhrObj.responseText = decodeURI(o.c.responseText);
+
+                    switch (e) {
+                        case 'success':
+                            ret = { status: 200, statusText: "success" };
+                            delete maps[o.id];
+                            break;
+                        case 'abort':
+                            delete maps[o.id];
+                            break;
+                        case 'timeout':
+                        case 'transport error':
+                        case 'failure':
+                            delete maps[o.id];
+                            ret = { status: 500, statusText: e };
+                            break;
+                    }
+                    if (ret) {
+
+                        xhrObj.callback(ret.status, ret.statusText);
+                    }
+                }
+            });
+
+
+            /*called by flash*/
+            io['applyTo'] = function(_, cmd, args) {
+                S.log(cmd + " execute");
+                var cmds = cmd.split("."),
+                    func = S;
+                S.each(cmds, function(c) {
+                    func = func[c];
+                });
+                func.apply(null, args);
+            };
+
+            // when flash is loaded
+            io['xdrReady'] = function() {
+                flash = document.getElementById(ID);
+            };
+
+            /**
+             * when response is returned from server
+             * @param e response status
+             * @param o internal data
+             * @param c internal data
+             */
+            io['xdrResponse'] = function(e, o, c) {
+                var xhr = maps[o.uid];
+                xhr && xhr._xdrResponse(e, o, c);
+            };
+
+            // export io for flash to call
+            S.io = io;
+        }
+        return io;
+
+    }, {
+        requires:["./xhr"]
+    }
+);/**
  * ajax xhr transport class
  * @author yiminghe@gmail.com
  */
@@ -686,6 +831,8 @@ KISSY.add("ajax/xhr", function(S, io) {
 
 
     var OK_CODE = 200,
+        // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
+        _XDomainRequest = window['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223;
@@ -711,7 +858,10 @@ KISSY.add("ajax/xhr", function(S, io) {
         return undefined;
     }
 
-    io.xhr = window.ActiveXObject ? function() {
+    io.xhr = window.ActiveXObject ? function(crossDomain) {
+        if (crossDomain && _XDomainRequest) {
+            return new _XDomainRequest();
+        }
         // ie7 XMLHttpRequest 不能访问本地文件
         return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
@@ -721,13 +871,15 @@ KISSY.add("ajax/xhr", function(S, io) {
 
     if (detectXhr) {
 
-        if ("withCredentials" in detectXhr) {
+        if ("withCredentials" in detectXhr || _XDomainRequest) {
             allowCrossDomain = true;
         }
 
         function XhrTransport(xhrObj) {
             this.xhrObj = xhrObj;
         }
+
+        XhrTransport.allowCrossDomain = allowCrossDomain;
 
         S.augment(XhrTransport, {
             send:function() {
@@ -740,7 +892,7 @@ KISSY.add("ajax/xhr", function(S, io) {
                     return;
                 }
 
-                var xhr = io.xhr(),
+                var xhr = io.xhr(c.crossDomain),
                     xhrFields,
                     i;
 
@@ -767,9 +919,12 @@ KISSY.add("ajax/xhr", function(S, io) {
                     xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
                 }
                 try {
-
-                    for (i in xhrObj.requestHeaders) {
-                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                    // 跨域时，不能设，否则请求变成
+                    // OPTIONS /xhr/r.php HTTP/1.1
+                    if (!c.crossDomain) {
+                        for (i in xhrObj.requestHeaders) {
+                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                        }
                     }
                 } catch(e) {
                     S.log("setRequestHeader in xhr error : ");
@@ -781,8 +936,23 @@ KISSY.add("ajax/xhr", function(S, io) {
                 if (!c.async || xhr.readyState == 4) {
                     self._callback();
                 } else {
-                    xhr.onreadystatechange = function() {
-                        self._callback();
+                    // _XDomainRequest 单独的回调机制
+                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                        xhr.onload = function() {
+                            xhr.readyState = 4;
+                            xhr.status = 200;
+                            self._callback();
+                        };
+                        xhr.onerror = function() {
+                            xhr.readyState = 4;
+                            xhr.status = 500;
+                            self._callback();
+                        };
+                    } else {
+                        xhr.onreadystatechange = function() {
+
+                            self._callback();
+                        };
                     }
                 }
             },
@@ -804,6 +974,8 @@ KISSY.add("ajax/xhr", function(S, io) {
                     //abort or complete
                     if (abort || xhr.readyState == 4) {
                         xhr.onreadystatechange = S.noop;
+                        xhr.onload = S.noop;
+                        xhr.onerror = S.noop;
 
 
                         if (abort) {
@@ -813,7 +985,11 @@ KISSY.add("ajax/xhr", function(S, io) {
                             }
                         } else {
                             var status = xhr.status;
-                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+
+                            // _XDomainRequest 不能获取响应头
+                            if (xhr.getAllResponseHeaders) {
+                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+                            }
 
                             var xml = xhr.responseXML;
 
@@ -1165,6 +1341,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
         "ajax/base",
         "ajax/xhrobject",
         "ajax/xhr",
+        "ajax/xdr",
         "ajax/script",
         "ajax/jsonp",
         "ajax/form",

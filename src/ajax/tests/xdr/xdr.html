@@ -1,0 +1,63 @@
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/dom.js"></script>
+<script src="../../../../build/event.js"></script>
+<script src="../../../../build/anim.js"></script>
+<script src="../../../../build/node.js"></script>
+<script src="../../../../build/json.js"></script>
+<script type="text/javascript" src="../../base.js"></script>
+<script type="text/javascript" src="../../xhrobject.js"></script>
+<script type="text/javascript" src="../../iframe-upload.js"></script>
+<script type="text/javascript" src="../../form-serializer.js"></script>
+<script type="text/javascript" src="../../form.js"></script>
+<script type="text/javascript" src="../../jsonp.js"></script>
+<script type="text/javascript" src="../../script.js"></script>
+<script type="text/javascript" src="../../xhr.js"></script>
+<script type="text/javascript" src="../../../ajax.js"></script>
+<script>
+    KISSY.ready(function(S) {
+        S.io({
+            headers:{
+                // cross domain 设置 header ie 无效
+                // yiminghe:1
+            },
+            dataType:'json',
+            url:'http://yiminghe.daily.taobao.net/' +
+                    'kissy_git/kissy/src/ajax/tests/xdr/xdr.php',
+            xhrFields:{
+                // Cannot use wildcard in Access-Control-Allow-Origin
+                // when credentials flag is true.
+                //withCredentials:true
+            },
+            data:{
+                action:"x"
+            },
+            success:function(d, s, r) {
+                S.log("x : " + d.x);
+                S.log(r.getResponseHeader("X-Powered-By"));
+            }
+        });
+
+        S.io({
+            headers:{
+                // cross domain 设置 header ie 无效
+                // yiminghe:1
+            },
+            dataType:'json',
+            url:'http://yiminghe.daily.taobao.net/' +
+                    'kissy_git/kissy/src/ajax/tests/xdr/xdr.php',
+            xhrFields:{
+                // Cannot use wildcard in Access-Control-Allow-Origin
+                // when credentials flag is true.
+                // withCredentials:true
+            },
+            data:{
+                action:"y"
+            },
+            success:function(d, s, r) {
+                S.log("y : " + d.y);
+                S.log(r.getResponseHeader("X-Powered-By"));
+            }
+        });
+    });
+</script>

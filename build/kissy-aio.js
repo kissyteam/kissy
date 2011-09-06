@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 23:52
+build time: Sep 6 15:21
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 5 23:52
          */
         version: '1.20dev',
 
-        buildTime:'20110905235226',
+        buildTime:'20110906152138',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2661,7 +2661,7 @@ build time: Sep 5 23:52
                         doScroll('left');
                         fire();
                     } catch(ex) {
-                        S.log("detect document ready : " + ex);
+                        //S.log("detect document ready : " + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 }
@@ -10639,7 +10639,10 @@ KISSY.add("ajax/xhr", function(S, io) {
         return undefined;
     }
 
-    io.xhr = window.ActiveXObject ? function() {
+    io.xhr = window.ActiveXObject ? function(crossDomain) {
+        if (crossDomain && window['XDomainRequest']) {
+            return new window['XDomainRequest']();
+        }
         // ie7 XMLHttpRequest 不能访问本地文件
         return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
@@ -10649,7 +10652,7 @@ KISSY.add("ajax/xhr", function(S, io) {
 
     if (detectXhr) {
 
-        if ("withCredentials" in detectXhr) {
+        if ("withCredentials" in detectXhr || window['XDomainRequest']) {
             allowCrossDomain = true;
         }
 
@@ -10668,7 +10671,7 @@ KISSY.add("ajax/xhr", function(S, io) {
                     return;
                 }
 
-                var xhr = io.xhr(),
+                var xhr = io.xhr(c.crossDomain),
                     xhrFields,
                     i;
 

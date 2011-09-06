@@ -7923,7 +7923,10 @@ KISSY.add("ajax/xhr", function(S, io) {
         return undefined;
     }
 
-    io.xhr = window.ActiveXObject ? function() {
+    io.xhr = window.ActiveXObject ? function(crossDomain) {
+        if (crossDomain && window['XDomainRequest']) {
+            return new window['XDomainRequest']();
+        }
         // ie7 XMLHttpRequest 不能访问本地文件
         return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
@@ -7933,7 +7936,7 @@ KISSY.add("ajax/xhr", function(S, io) {
 
     if (detectXhr) {
 
-        if ("withCredentials" in detectXhr) {
+        if ("withCredentials" in detectXhr || window['XDomainRequest']) {
             allowCrossDomain = true;
         }
 
@@ -7952,7 +7955,7 @@ KISSY.add("ajax/xhr", function(S, io) {
                     return;
                 }
 
-                var xhr = io.xhr(),
+                var xhr = io.xhr(c.crossDomain),
                     xhrFields,
                     i;
 
