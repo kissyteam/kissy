@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 6 15:21
+build time: Sep 7 19:17
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 6 15:21
          */
         version: '1.20dev',
 
-        buildTime:'20110906152138',
+        buildTime:'20110907191720',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2758,6 +2758,7 @@ D:\code\kissy_git\kissy\src\json.js
 D:\code\kissy_git\kissy\src\ajax\form-serializer.js
 D:\code\kissy_git\kissy\src\ajax\xhrobject.js
 D:\code\kissy_git\kissy\src\ajax\base.js
+D:\code\kissy_git\kissy\src\ajax\xdr.js
 D:\code\kissy_git\kissy\src\ajax\xhr.js
 D:\code\kissy_git\kissy\src\ajax\script.js
 D:\code\kissy_git\kissy\src\ajax\jsonp.js
@@ -8634,7 +8635,8 @@ KISSY.add("anim/manager", function(S) {
  */
 KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
-    var EventTarget,
+    var EventTarget = Event.Target,
+        _isElementNode = DOM._isElementNode,
         /**
          * milliseconds in one second
          * @constant
@@ -8648,8 +8650,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         EVENT_COMPLETE,
         defaultConfig,
         TRANSITION_NAME;
-
-    EventTarget = Event.Target;
 
     //支持的有效的 css 分属性，数字则动画，否则直接设最终结果
     PROPS = (
@@ -8688,7 +8688,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'minHeight ' +
             'minWidth ' +
             'opacity ' +
-
             'outlineOffset ' +
             'outlineWidth ' +
             'paddingBottom ' +
@@ -8716,9 +8715,15 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         nativeSupport: true // 优先使用原生 css3 transition
     };
 
+
     /**
-     * Anim Class
-     * @constructor
+     * get a anim instance associate
+     * @param elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
+     * @param props
+     * @param duration
+     * @param easing
+     * @param callback
+     * @param nativeSupport
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
@@ -8823,40 +8828,49 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     Anim.PROPS = PROPS;
     Anim.CUSTOM_ATTRS = CUSTOM_ATTRS;
 
+    /**
+     * 数值插值函数
+     * @param {Number} source 源值
+     * @param {Number} target 目的值
+     * @param {Number} pos 当前位置，从 easing 得到 0~1
+     * @return {Number} 当前值
+     */
+    function interpolate(source, target, pos) {
+        return (source + (target - source) * pos).toFixed(3);
+    }
+
     // 不能插值的直接返回终值，没有动画插值过程
     function mirror(source, target) {
         source = null;
         return target;
     }
 
+    function normValueForAnim(val) {
+        var num = parseFloat(val),
+            unit = (val + '').replace(/^[-\d.]+/, '');
+        // 不能动画的量，插值直接设为最终，下次也不运行
+        if (isNaN(num)) {
+            return {v:unit,u:'',f:mirror};
+        }
+        return {v:num,u:unit,f:interpolate};
+    }
+
+
     /**
      * 相应属性的读取设置操作，需要转化为动画模块格式
      */
     Anim.PROP_OPS = {
         "*":{
+
             getter:function(elem, prop) {
-                var val = DOM.css(elem, prop),
-                    num = parseFloat(val),
-                    unit = (val + '').replace(/^[-\d.]+/, '');
-                // 不能动画的量，插值直接设为最终，下次也不运行
-                if (isNaN(num)) {
-                    return {v:unit,u:'',f:mirror};
-                }
-                return {v:num,u:unit,f:this.interpolate};
+                return normValueForAnim(DOM.css(elem, prop));
             },
+
             setter:function(elem, prop, val) {
                 return DOM.css(elem, prop, val);
             },
-            /**
-             * 数值插值函数
-             * @param {Number} source 源值
-             * @param {Number} target 目的值
-             * @param {Number} pos 当前位置，从 easing 得到 0~1
-             * @return {Number} 当前值
-             */
-            interpolate:function(source, target, pos) {
-                return (source + (target - source) * pos).toFixed(3);
-            },
+
+            interpolate:interpolate,
 
             eq:function(tp, sp) {
                 return tp.v == sp.v && tp.u == sp.u;
@@ -9007,11 +9021,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             }
 
             if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                self.stop();
                 // complete 事件只在动画到达最后一帧时才触发
-                if (b) {
-                    self._complete();
-                }
+                self.stop(b);
             }
         },
 
@@ -9155,25 +9166,45 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             rules = {},
             i = PROPS.length,
             v,
+            el;
+
+        // 是否是元素
+        // 这里支持 window
+        if (_isElementNode(elem)) {
             el = DOM.clone(elem, true);
 
-        DOM.insertAfter(el, elem);
+            DOM.insertAfter(el, elem);
 
-        css = el.style;
-        setAnimStyleText(el, style);
-        while (i--) {
-            var prop = PROPS[i];
-            // !important 只对行内样式得到计算当前真实值
-            if (v = css[prop]) {
-                rules[prop] = getAnimValue(el, prop);
+            css = el.style;
+
+            setAnimStyleText(el, style);
+
+            while (i--) {
+                var prop = PROPS[i];
+                // !important 只对行内样式得到计算当前真实值
+                if (v = css[prop]) {
+                    rules[prop] = getAnimValue(el, prop);
+                }
             }
+        } else {
+            el = elem;
         }
+
         //自定义属性混入
         var customAttrs = getCustomAttrs(style);
+
         for (var a in customAttrs) {
-            rules[a] = getAnimValue(el, a);
+            // 如果之前没有克隆，就直接取源值
+            rules[a] = el !== elem ?
+                getAnimValue(el, a) :
+                normValueForAnim(customAttrs[a]);
         }
-        DOM.remove(el);
+
+        // 如果之前没有克隆就没必要删除
+        if (el !== elem) {
+            DOM.remove(el);
+        }
+
         return rules;
     }
 
@@ -9183,6 +9214,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      * @param elem
      */
     function setAnimStyleText(elem, style) {
+
         if (UA['ie'] && style.indexOf(OPACITY) > -1) {
             var reg = /opacity\s*:\s*([^;]+)(;|$)/;
             var match = style.match(reg);
@@ -9192,11 +9224,15 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             //不要把它清除了
             //ie style.opacity 要能取！
         }
-        elem.style.cssText += ';' + style;
+
+        if (_isElementNode(elem)) {
+            elem.style.cssText += ';' + style;
+        }
+
         //设置自定义属性
         var attrs = getCustomAttrs(style);
         for (var a in attrs) {
-            elem[a] = attrs[a];
+            setAnimValue(elem, a, attrs[a]);
         }
     }
 
@@ -9226,6 +9262,14 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 });
 
 /**
+ *
+ *
+ *
+ * 2011-04
+ * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
+ * - 支持配置 scrollTop/scrollLeft
+ *
+ *
  * TODO:
  *  - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
  *  - opera nativeSupport 存在 bug ，浏览器自身 bug ?
@@ -9234,8 +9278,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  * NOTES:
  *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
  *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
- *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
- *  - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
+ *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
  */
 
 /**
@@ -9313,31 +9356,33 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         return [255,255,255];
     }
 
+    /**
+     * 根据颜色的数值表示，执行数组插值
+     * @param source {Array.<Number>} 颜色源值表示
+     * @param target {Array.<Number>} 颜色目的值表示
+     * @param pos {Number} 当前进度
+     * @return {String} 可设置css属性的格式值 : rgb
+     */
+    function interpolate(source, target, pos) {
+        var commonInterpolate = OPS["*"].interpolate;
+        return 'rgb(' + [
+            Math.floor(commonInterpolate(source[0], target[0], pos)),
+            Math.floor(commonInterpolate(source[1], target[1], pos)),
+            Math.floor(commonInterpolate(source[2], target[2], pos))
+        ].join(', ') + ')';
+    }
 
     OPS["color"] = {
         getter:function(elem, prop) {
             return {
                 v:numericColor(DOM.css(elem, prop)),
                 u:'',
-                f:this.interpolate
+                f:interpolate
             };
         },
+
         setter:OPS["*"].setter,
-        /**
-         * 根据颜色的数值表示，执行数组插值
-         * @param source {Array.<Number>} 颜色源值表示
-         * @param target {Array.<Number>} 颜色目的值表示
-         * @param pos {Number} 当前进度
-         * @return {String} 可设置css属性的格式值 : rgb
-         */
-        interpolate:function(source, target, pos) {
-            var interpolate = OPS["*"].interpolate;
-            return 'rgb(' + [
-                Math.floor(interpolate(source[0], target[0], pos)),
-                Math.floor(interpolate(source[1], target[1], pos)),
-                Math.floor(interpolate(source[2], target[2], pos))
-            ].join(', ') + ')';
-        },
+
         eq:function(tp, sp) {
             return (tp.v + "") == (sp.v + "");
         }
@@ -9364,15 +9409,15 @@ KISSY.add("anim/scroll", function(S, DOM, Anim) {
     // 不从 css  中读取，从元素属性中得到值
     OPS["scrollLeft"] = OPS["scrollTop"] = {
         getter:function(elem, prop) {
-
             return {
-                v:elem[prop],
+                v:DOM[prop](elem),
                 u:'',
                 f:OPS["*"].interpolate
             };
         },
         setter:function(elem, prop, val) {
-            elem[prop] = val;
+            // use dom to support window
+            DOM[prop](elem, val);
         }
     };
 }, {
@@ -10419,14 +10464,13 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  context:null,
                  timeout: 0,
                  data: null,
-
                  // 可取json | jsonp | script | xml | html | text | null | undefined
                  dataType: null,
-
                  username: null,
                  password: null,
                  cache: null,
                  mimeType:null,
+                 xdr:{},
                  headers: {},
                  xhrFields:{},
                  // jsonp script charset
@@ -10607,13 +10651,156 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  **/
 
 /**
+ * use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("ajax/xdr", function(S, io) {
+
+    var // current running request instances
+        maps = {},
+        ID = "io_swf",
+        // flash transporter
+        flash,
+        // whether create the flash transporter
+        init = false;
+
+    // create the flash transporter
+    function _swf(uri, _, uid) {
+        if (init) {
+            return;
+        }
+        init = true;
+        var o = '<object id="' + ID +
+            '" type="application/x-shockwave-flash" data="' +
+            uri + '" width="0" height="0">' +
+            '<param name="movie" value="' +
+            uri + '" />' +
+            '<param name="FlashVars" value="yid=' +
+            _ + '&uid=' +
+            uid +
+            '&host=KISSY.io" />' +
+            '<param name="allowScriptAccess" value="always" />' +
+            '</object>',
+            c = document.createElement('div');
+        document.body.appendChild(c);
+        c.innerHTML = o;
+    }
+
+    function XdrTransport(xhrObj) {
+        S.log("use flash xdr");
+        this.xhrObj = xhrObj;
+    }
+
+    S.augment(XdrTransport, {
+        // rewrite send to support flash xdr
+        send:function() {
+            var self = this,
+                xhrObj = self.xhrObj,
+                c = xhrObj.config;
+            var xdr = c['xdr'] || {};
+            // 不提供则使用 cdn 默认的 flash
+            _swf(xdr.src || (S.Config.base + "ajax/io.swf"), 1, 1);
+            // 简便起见，用轮训
+            if (!flash) {
+                // S.log("detect xdr flash");
+                setTimeout(function() {
+                    self.send();
+                }, 200);
+                return;
+            }
+            self._uid = S.guid();
+            maps[self._uid] = self;
+
+            // ie67 send 出错？
+            flash.send(c.url, {
+                id:self._uid,
+                uid:self._uid,
+                method:c.type,
+                data:c.hasContent && c.data || {}
+            });
+        },
+
+        abort:function() {
+            flash.abort(this._uid);
+        },
+
+        _xdrResponse:function(e, o) {
+            // S.log(e);
+            var self = this,
+                ret,
+                xhrObj = self.xhrObj;
+
+            // need decodeURI to get real value from flash returned value
+            xhrObj.responseText = decodeURI(o.c.responseText);
+
+            switch (e) {
+                case 'success':
+                    ret = { status: 200, statusText: "success" };
+                    delete maps[o.id];
+                    break;
+                case 'abort':
+                    delete maps[o.id];
+                    break;
+                case 'timeout':
+                case 'transport error':
+                case 'failure':
+                    delete maps[o.id];
+                    ret = { status: 500, statusText: e };
+                    break;
+            }
+            if (ret) {
+
+                xhrObj.callback(ret.status, ret.statusText);
+            }
+        }
+    });
+
+    /*called by flash*/
+    io['applyTo'] = function(_, cmd, args) {
+        // S.log(cmd + " execute");
+        var cmds = cmd.split("."),
+            func = S;
+        S.each(cmds, function(c) {
+            func = func[c];
+        });
+        func.apply(null, args);
+    };
+
+    // when flash is loaded
+    io['xdrReady'] = function() {
+        flash = document.getElementById(ID);
+    };
+
+    /**
+     * when response is returned from server
+     * @param e response status
+     * @param o internal data
+     * @param c internal data
+     */
+    io['xdrResponse'] = function(e, o, c) {
+        var xhr = maps[o.uid];
+        xhr && xhr._xdrResponse(e, o, c);
+    };
+
+    // export io for flash to call
+    S.io = io;
+
+    return XdrTransport;
+
+}, {
+    requires:["./base"]
+});
+
+/**
  * ajax xhr transport class
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhr", function(S, io) {
+KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
 
 
     var OK_CODE = 200,
+        // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
+        _XDomainRequest = window['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223;
@@ -10640,24 +10827,31 @@ KISSY.add("ajax/xhr", function(S, io) {
     }
 
     io.xhr = window.ActiveXObject ? function(crossDomain) {
-        if (crossDomain && window['XDomainRequest']) {
-            return new window['XDomainRequest']();
+        if (crossDomain && _XDomainRequest) {
+            return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
         return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
 
-    var detectXhr = io.xhr(),
-        allowCrossDomain = false;
+    var detectXhr = io.xhr();
 
     if (detectXhr) {
 
-        if ("withCredentials" in detectXhr || window['XDomainRequest']) {
-            allowCrossDomain = true;
-        }
-
         function XhrTransport(xhrObj) {
+            var c = xhrObj.config;
+            var xdrCfg = c['xdr'] || {};
+
+            /**
+             * ie>7 强制使用 flash xdr
+             */
+            if (!("withCredentials" in detectXhr) && (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
+                return new XdrTransport(xhrObj);
+            }
+
             this.xhrObj = xhrObj;
+
+            return undefined;
         }
 
         S.augment(XhrTransport, {
@@ -10665,11 +10859,6 @@ KISSY.add("ajax/xhr", function(S, io) {
                 var self = this,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
-
-                if (c.crossDomain && !allowCrossDomain) {
-                    S.error("do not allow crossdomain xhr !");
-                    return;
-                }
 
                 var xhr = io.xhr(c.crossDomain),
                     xhrFields,
@@ -10698,9 +10887,12 @@ KISSY.add("ajax/xhr", function(S, io) {
                     xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
                 }
                 try {
-
-                    for (i in xhrObj.requestHeaders) {
-                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                    // 跨域时，不能设，否则请求变成
+                    // OPTIONS /xhr/r.php HTTP/1.1
+                    if (!c.crossDomain) {
+                        for (i in xhrObj.requestHeaders) {
+                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                        }
                     }
                 } catch(e) {
                     S.log("setRequestHeader in xhr error : ");
@@ -10712,8 +10904,22 @@ KISSY.add("ajax/xhr", function(S, io) {
                 if (!c.async || xhr.readyState == 4) {
                     self._callback();
                 } else {
-                    xhr.onreadystatechange = function() {
-                        self._callback();
+                    // _XDomainRequest 单独的回调机制
+                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                        xhr.onload = function() {
+                            xhr.readyState = 4;
+                            xhr.status = 200;
+                            self._callback();
+                        };
+                        xhr.onerror = function() {
+                            xhr.readyState = 4;
+                            xhr.status = 500;
+                            self._callback();
+                        };
+                    } else {
+                        xhr.onreadystatechange = function() {
+                            self._callback();
+                        };
                     }
                 }
             },
@@ -10735,6 +10941,8 @@ KISSY.add("ajax/xhr", function(S, io) {
                     //abort or complete
                     if (abort || xhr.readyState == 4) {
                         xhr.onreadystatechange = S.noop;
+                        xhr.onload = S.noop;
+                        xhr.onerror = S.noop;
 
 
                         if (abort) {
@@ -10744,7 +10952,11 @@ KISSY.add("ajax/xhr", function(S, io) {
                             }
                         } else {
                             var status = xhr.status;
-                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+
+                            // _XDomainRequest 不能获取响应头
+                            if (xhr.getAllResponseHeaders) {
+                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+                            }
 
                             var xml = xhr.responseXML;
 
@@ -10795,7 +11007,7 @@ KISSY.add("ajax/xhr", function(S, io) {
         return io;
     }
 }, {
-    requires:["./base"]
+    requires:["./base","./xdr"]
 });
 
 /**
