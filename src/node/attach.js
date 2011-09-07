@@ -15,6 +15,10 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "scrollLeft",
             "height",
             "width",
+            "innerHeight",
+            "innerWidth",
+            "outerHeight",
+            "outerWidth",
             "addStyleSheet",
             // "append" will be overridden
             "appendTo",

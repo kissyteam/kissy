@@ -301,7 +301,7 @@ KISSY.use("dom", function(S, DOM) {
             });
         });
 
-        describe("form/name/button.event works for ie6/7", function() {
+        describe("form/name/button/event works for ie6/7", function() {
             it("get attribute from form correctly", function() {
                 var form = DOM.create("<form " +
                     " xx='zz' " +
@@ -313,8 +313,11 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(form, "onsubmit")).toBe("return false;");
                 expect(DOM.attr(form, "name")).toBe("form_name");
                 expect(DOM.attr(form, "title")).toBe("form_title");
+                // prevent input shadow
                 expect(DOM.attr(form, "xx")).toBe("zz");
-
+                DOM.attr(form, "xx", "qq");
+                expect(DOM.attr(form, "xx")).toBe("qq");
+                expect(DOM.val(DOM.first(form))).toBe("yy");
 
                 var button = DOM.create("<button value='xxx'>zzzz</button>");
                 expect(DOM.attr(button, "value")).toBe("xxx");

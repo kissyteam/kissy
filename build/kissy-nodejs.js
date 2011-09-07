@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 21:20
+build time: Sep 5 23:52
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 1 21:20
          */
         version: '1.20dev',
 
-        buildTime:'20110901212045',
+        buildTime:'20110905235226',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1215,21 +1215,18 @@ build time: Sep 1 21:20
             var bufferTimer = 0;
 
             function f() {
-                ret.stop();
+                f.stop();
                 bufferTimer = S.later(fn, ms, FALSE, context || this);
             }
 
-            var ret = {
-                stop:function() {
-                    if (bufferTimer) {
-                        bufferTimer.cancel();
-                        bufferTimer = 0;
-                    }
-                },
-                fn:f
+            f.stop = function() {
+                if (bufferTimer) {
+                    bufferTimer.cancel();
+                    bufferTimer = 0;
+                }
             };
 
-            return ret;
+            return f;
         }
 
     });
@@ -4817,24 +4814,24 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
-    // ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
-    function inDocument(elem) {
-        if (!elem) {
-            return 0;
-        }
-        var doc = elem.ownerDocument;
-        if (!doc) {
-            return 0;
-        }
-        var html = doc.documentElement;
-        if (html === elem) {
-            return true;
-        }
-        else if (DOM.__contains(html, elem)) {
-            return true;
-        }
-        return false;
-    }
+//    ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
+//    function inDocument(elem) {
+//        if (!elem) {
+//            return 0;
+//        }
+//        var doc = elem.ownerDocument;
+//        if (!doc) {
+//            return 0;
+//        }
+//        var html = doc.documentElement;
+//        if (html === elem) {
+//            return true;
+//        }
+//        else if (DOM.__contains(html, elem)) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     S.mix(DOM, {
 
@@ -4862,17 +4859,25 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
         /**
          * Makes elem visible in the container
+         * @param elem
+         * @param container
+         * @param top
+         * @param hscroll
+         * @param {Boolean} auto whether adjust element automatically
+         *                       (it only scrollIntoView when element is out of view)
          * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollIntoView: function(elem, container, top, hscroll) {
+        scrollIntoView: function(elem, container, top, hscroll, auto) {
             if (!(elem = DOM.get(elem))) {
                 return;
             }
 
-            hscroll = hscroll === undefined ? true : !!hscroll;
-            top = top === undefined ? true : !!top;
+            if (auto !== true) {
+                hscroll = hscroll === undefined ? true : !!hscroll;
+                top = top === undefined ? true : !!top;
+            }
 
             // default current window, use native for scrollIntoView(elem, top)
             if (!container ||
@@ -4903,8 +4908,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 },
 
                 // container 视窗的高宽
-                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+                ch = isWin ? DOM.viewportHeight(container) : container.clientHeight,
+                cw = isWin ? DOM.viewportWidth(container) : container.clientWidth,
 
                 // container 视窗相对 container 元素的坐标
                 cl = DOM[SCROLL_LEFT](container),
@@ -4913,11 +4918,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 cb = ct + ch,
 
                 // elem 的高宽
-                eh = elem.offsetHeight,
-                ew = elem.offsetWidth,
+                eh = DOM.outerHeight(elem),
+                ew = DOM.outerWidth(elem),
 
                 // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去容器的
                 l = diff.left + cl -
                     (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
 
@@ -4927,7 +4932,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 r = l + ew,
                 b = t + eh,
 
-                t2, l2;
+                t2,
+
+                l2;
 
             // 根据情况将 elem 定位到 container 视窗中
             // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
@@ -4949,9 +4956,13 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 }
             }
 
-            // go
-            DOM[SCROLL_TOP](container, t2);
-            DOM[SCROLL_LEFT](container, l2);
+            // if element is already in the container view ,then do nothing
+            if (t2 !== undefined) {
+                DOM[SCROLL_TOP](container, t2);
+            }
+            if (l2 !== undefined) {
+                DOM[SCROLL_LEFT](container, l2);
+            }
         },
         /**
          * for idea autocomplete
@@ -5405,13 +5416,40 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     }
                 }
             });
-        }
+        },
+        innerWidth:0,
+        innerHeight:0,
+        outerWidth:0,
+        outerHeight:0,
+        width:0,
+        height:0
     });
 
-    /**
-     * name,width 简单转发
-     */
+    function capital(str) {
+        return str.charAt(0).toUpperCase() + str.substring(1);
+    }
+
+
     S.each([WIDTH,HEIGHT], function(name) {
+        DOM["inner" + capital(name)] = function(selector) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, "padding");
+            } else {
+                return null;
+            }
+        };
+
+
+        DOM["outer" + capital(name)] = function(selector, includeMargin) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, includeMargin ? "margin" : "border");
+            } else {
+                return null;
+            }
+        };
+
         DOM[name] = function(selector, val) {
             var ret = DOM.css(selector, name, val);
             if (ret) {
@@ -5557,7 +5595,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
 
-    function getWH(elem, name) {
+    /**
+     * 得到元素的大小信息
+     * @param elem
+     * @param name
+     * @param {String} extra    "padding" : (css width) + padding
+     *                          "border" : (css width) + padding + border
+     *                          "margin" : (css width) + padding + border + margin
+     */
+    function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
             return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
         } else if (elem.nodeType == 9) {
@@ -5566,10 +5612,43 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
-        S.each(which, function(direction) {
-            val -= parseFloat(DOM.css(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM.css(elem, 'border' + direction + 'Width')) || 0;
-        });
+        if (val > 0) {
+            if (extra !== "border") {
+                S.each(which, function(w) {
+                    if (!extra) {
+                        val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                    }
+                    if (extra === "margin") {
+                        val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                    } else {
+                        val -= parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                    }
+                });
+            }
+
+            return val
+        }
+
+        // Fall back to computed then uncomputed css if necessary
+        val = DOM._getComputedStyle(elem, name);
+        if (val < 0 || S.isNullOrUndefined(val)) {
+            val = elem.style[ name ] || 0;
+        }
+        // Normalize "", auto, and prepare for extra
+        val = parseFloat(val) || 0;
+
+        // Add padding, border, margin
+        if (extra) {
+            S.each(which, function(w) {
+                val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                if (extra !== "padding") {
+                    val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                }
+                if (extra === "margin") {
+                    val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                }
+            });
+        }
 
         return val;
     }
@@ -5859,7 +5938,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (el && el.parentNode) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
-            if (el.id !== id) {
+            // 不能直接 el.id ，否则 input shadow form attribute
+            if (DOM.attr(el, "id") !== id) {
                 // 直接在 context 下的所有节点找
                 el = DOM.filter("*", "#" + id, context)[0] || null;
             }
@@ -8272,6 +8352,10 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "scrollLeft",
             "height",
             "width",
+            "innerHeight",
+            "innerWidth",
+            "outerHeight",
+            "outerWidth",
             "addStyleSheet",
             // "append" will be overridden
             "appendTo",
@@ -8884,7 +8968,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            if (duration) {
+            if (duration != null) {
                 config.duration = parseFloat(duration) || 1;
             }
             if (S.isString(easing) || S.isFunction(easing)) {
@@ -8897,7 +8981,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         }
 
         //如果设定了元素属性的动画，则不能启动 css3 transition
-        if (!S.isEmptyObject(getCustomAttrs(style))) {
+        if (config.nativeSupport && !S.isEmptyObject(getCustomAttrs(style))) {
             config.nativeSupport = false;
         }
         self.config = config;
@@ -8919,8 +9003,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         // register callback
         if (S.isFunction(callback)) {
             self.callback = callback;
-            //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
-            //self.on(EVENT_COMPLETE, callback);
         }
     }
 

@@ -148,7 +148,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             var self = this;
             // 一开始就 adjust 一次，可以对已有静态数据处理
             doResize.call(self);
-            self.__onResize = S.buffer(doResize, RESIZE_DURATION, self).fn;
+            self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
             $(window).on("resize", self.__onResize);
         },
 

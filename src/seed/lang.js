@@ -717,21 +717,18 @@
             var bufferTimer = 0;
 
             function f() {
-                ret.stop();
+                f.stop();
                 bufferTimer = S.later(fn, ms, FALSE, context || this);
             }
 
-            var ret = {
-                stop:function() {
-                    if (bufferTimer) {
-                        bufferTimer.cancel();
-                        bufferTimer = 0;
-                    }
-                },
-                fn:f
+            f.stop = function() {
+                if (bufferTimer) {
+                    bufferTimer.cancel();
+                    bufferTimer = 0;
+                }
             };
 
-            return ret;
+            return f;
         }
 
     });

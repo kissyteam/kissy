@@ -361,7 +361,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                vh = DOM['viewportHeight']();
+                vh = DOM.viewportHeight();
 
             if (diff === DEFAULT) {
                 // diff 默认为当前视窗高度（两屏以外的才延迟加载）

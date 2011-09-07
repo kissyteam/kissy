@@ -31,8 +31,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
             S.mix(ret, {
-                maxLeft: ret.left + constrain[0].offsetWidth - el[0].offsetWidth,
-                maxTop: ret.top + constrain[0].offsetHeight - el[0].offsetHeight
+                maxLeft: ret.left + constrain.outerWidth() - el.outerWidth(),
+                maxTop: ret.top + constrain.outerHeight() - el.outerHeight()
             });
         }
         // 没有指定 constrain, 表示受限于可视区域
@@ -46,8 +46,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             var vWidth = document.documentElement.clientWidth;
             ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
             S.mix(ret, {
-                maxLeft: ret.left + vWidth - el[0].offsetWidth,
-                maxTop: ret.top + DOM['viewportHeight']() - el[0].offsetHeight
+                maxLeft: ret.left + vWidth - el.outerWidth(),
+                maxTop: ret.top + DOM.viewportHeight() - el.outerHeight()
             });
         }
 

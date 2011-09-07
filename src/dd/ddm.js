@@ -288,9 +288,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
         var offset = node.offset();
         return {
             left:offset.left,
-            right:offset.left + node[0].offsetWidth,
+            right:offset.left + node.outerWidth(),
             top:offset.top,
-            bottom:offset.top + node[0].offsetHeight
+            bottom:offset.top + node.outerHeight()
         };
     }
 

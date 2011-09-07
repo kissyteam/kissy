@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 21:20
+build time: Sep 5 23:52
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 1 21:20
          */
         version: '1.20dev',
 
-        buildTime:'20110901212045',
+        buildTime:'20110905235226',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1029,21 +1029,18 @@ build time: Sep 1 21:20
             var bufferTimer = 0;
 
             function f() {
-                ret.stop();
+                f.stop();
                 bufferTimer = S.later(fn, ms, FALSE, context || this);
             }
 
-            var ret = {
-                stop:function() {
-                    if (bufferTimer) {
-                        bufferTimer.cancel();
-                        bufferTimer = 0;
-                    }
-                },
-                fn:f
+            f.stop = function() {
+                if (bufferTimer) {
+                    bufferTimer.cancel();
+                    bufferTimer = 0;
+                }
             };
 
-            return ret;
+            return f;
         }
 
     });
@@ -4631,24 +4628,24 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
-    // ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
-    function inDocument(elem) {
-        if (!elem) {
-            return 0;
-        }
-        var doc = elem.ownerDocument;
-        if (!doc) {
-            return 0;
-        }
-        var html = doc.documentElement;
-        if (html === elem) {
-            return true;
-        }
-        else if (DOM.__contains(html, elem)) {
-            return true;
-        }
-        return false;
-    }
+//    ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
+//    function inDocument(elem) {
+//        if (!elem) {
+//            return 0;
+//        }
+//        var doc = elem.ownerDocument;
+//        if (!doc) {
+//            return 0;
+//        }
+//        var html = doc.documentElement;
+//        if (html === elem) {
+//            return true;
+//        }
+//        else if (DOM.__contains(html, elem)) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     S.mix(DOM, {
 
@@ -4676,17 +4673,25 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
         /**
          * Makes elem visible in the container
+         * @param elem
+         * @param container
+         * @param top
+         * @param hscroll
+         * @param {Boolean} auto whether adjust element automatically
+         *                       (it only scrollIntoView when element is out of view)
          * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollIntoView: function(elem, container, top, hscroll) {
+        scrollIntoView: function(elem, container, top, hscroll, auto) {
             if (!(elem = DOM.get(elem))) {
                 return;
             }
 
-            hscroll = hscroll === undefined ? true : !!hscroll;
-            top = top === undefined ? true : !!top;
+            if (auto !== true) {
+                hscroll = hscroll === undefined ? true : !!hscroll;
+                top = top === undefined ? true : !!top;
+            }
 
             // default current window, use native for scrollIntoView(elem, top)
             if (!container ||
@@ -4717,8 +4722,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 },
 
                 // container 视窗的高宽
-                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+                ch = isWin ? DOM.viewportHeight(container) : container.clientHeight,
+                cw = isWin ? DOM.viewportWidth(container) : container.clientWidth,
 
                 // container 视窗相对 container 元素的坐标
                 cl = DOM[SCROLL_LEFT](container),
@@ -4727,11 +4732,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 cb = ct + ch,
 
                 // elem 的高宽
-                eh = elem.offsetHeight,
-                ew = elem.offsetWidth,
+                eh = DOM.outerHeight(elem),
+                ew = DOM.outerWidth(elem),
 
                 // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去容器的
                 l = diff.left + cl -
                     (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
 
@@ -4741,7 +4746,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 r = l + ew,
                 b = t + eh,
 
-                t2, l2;
+                t2,
+
+                l2;
 
             // 根据情况将 elem 定位到 container 视窗中
             // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
@@ -4763,9 +4770,13 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 }
             }
 
-            // go
-            DOM[SCROLL_TOP](container, t2);
-            DOM[SCROLL_LEFT](container, l2);
+            // if element is already in the container view ,then do nothing
+            if (t2 !== undefined) {
+                DOM[SCROLL_TOP](container, t2);
+            }
+            if (l2 !== undefined) {
+                DOM[SCROLL_LEFT](container, l2);
+            }
         },
         /**
          * for idea autocomplete
@@ -5219,13 +5230,40 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     }
                 }
             });
-        }
+        },
+        innerWidth:0,
+        innerHeight:0,
+        outerWidth:0,
+        outerHeight:0,
+        width:0,
+        height:0
     });
 
-    /**
-     * name,width 简单转发
-     */
+    function capital(str) {
+        return str.charAt(0).toUpperCase() + str.substring(1);
+    }
+
+
     S.each([WIDTH,HEIGHT], function(name) {
+        DOM["inner" + capital(name)] = function(selector) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, "padding");
+            } else {
+                return null;
+            }
+        };
+
+
+        DOM["outer" + capital(name)] = function(selector, includeMargin) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, includeMargin ? "margin" : "border");
+            } else {
+                return null;
+            }
+        };
+
         DOM[name] = function(selector, val) {
             var ret = DOM.css(selector, name, val);
             if (ret) {
@@ -5371,7 +5409,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
 
-    function getWH(elem, name) {
+    /**
+     * 得到元素的大小信息
+     * @param elem
+     * @param name
+     * @param {String} extra    "padding" : (css width) + padding
+     *                          "border" : (css width) + padding + border
+     *                          "margin" : (css width) + padding + border + margin
+     */
+    function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
             return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
         } else if (elem.nodeType == 9) {
@@ -5380,10 +5426,43 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
-        S.each(which, function(direction) {
-            val -= parseFloat(DOM.css(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM.css(elem, 'border' + direction + 'Width')) || 0;
-        });
+        if (val > 0) {
+            if (extra !== "border") {
+                S.each(which, function(w) {
+                    if (!extra) {
+                        val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                    }
+                    if (extra === "margin") {
+                        val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                    } else {
+                        val -= parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                    }
+                });
+            }
+
+            return val
+        }
+
+        // Fall back to computed then uncomputed css if necessary
+        val = DOM._getComputedStyle(elem, name);
+        if (val < 0 || S.isNullOrUndefined(val)) {
+            val = elem.style[ name ] || 0;
+        }
+        // Normalize "", auto, and prepare for extra
+        val = parseFloat(val) || 0;
+
+        // Add padding, border, margin
+        if (extra) {
+            S.each(which, function(w) {
+                val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                if (extra !== "padding") {
+                    val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                }
+                if (extra === "margin") {
+                    val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                }
+            });
+        }
 
         return val;
     }
@@ -5673,7 +5752,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (el && el.parentNode) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
-            if (el.id !== id) {
+            // 不能直接 el.id ，否则 input shadow form attribute
+            if (DOM.attr(el, "id") !== id) {
                 // 直接在 context 下的所有节点找
                 el = DOM.filter("*", "#" + id, context)[0] || null;
             }
@@ -8086,6 +8166,10 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "scrollLeft",
             "height",
             "width",
+            "innerHeight",
+            "innerWidth",
+            "outerHeight",
+            "outerWidth",
             "addStyleSheet",
             // "append" will be overridden
             "appendTo",
@@ -8698,7 +8782,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             config = S.merge(defaultConfig, duration);
         } else {
             config = S.clone(defaultConfig);
-            if (duration) {
+            if (duration != null) {
                 config.duration = parseFloat(duration) || 1;
             }
             if (S.isString(easing) || S.isFunction(easing)) {
@@ -8711,7 +8795,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         }
 
         //如果设定了元素属性的动画，则不能启动 css3 transition
-        if (!S.isEmptyObject(getCustomAttrs(style))) {
+        if (config.nativeSupport && !S.isEmptyObject(getCustomAttrs(style))) {
             config.nativeSupport = false;
         }
         self.config = config;
@@ -8733,8 +8817,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         // register callback
         if (S.isFunction(callback)) {
             self.callback = callback;
-            //不要这样注册了，常用方式(new 完就扔)会忘记 detach，造成内存不断增加
-            //self.on(EVENT_COMPLETE, callback);
         }
     }
 
@@ -11644,7 +11726,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -13069,7 +13151,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:19
+build time: Sep 5 21:29
 */
 /**
  * 数据延迟加载组件
@@ -13434,7 +13516,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                vh = DOM['viewportHeight']();
+                vh = DOM.viewportHeight();
 
             if (diff === DEFAULT) {
                 // diff 默认为当前视窗高度（两屏以外的才延迟加载）
@@ -13572,7 +13654,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -13810,7 +13892,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /**
  * @module   Flash 全局静态类
@@ -14329,7 +14411,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 1 12:23
+build time: Sep 5 21:29
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -14621,9 +14703,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
         var offset = node.offset();
         return {
             left:offset.left,
-            right:offset.left + node[0].offsetWidth,
+            right:offset.left + node.outerWidth(),
             top:offset.top,
-            bottom:offset.top + node[0].offsetHeight
+            bottom:offset.top + node.outerHeight()
         };
     }
 
@@ -15339,13 +15421,13 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
         getRegion:function(node) {
             if (isWin(node)) {
                 return {
-                    width:DOM['viewportWidth'](),
-                    height:DOM['viewportHeight']()
+                    width:DOM.viewportWidth(),
+                    height:DOM.viewportHeight()
                 };
             } else {
                 return {
-                    width:node[0].offsetWidth,
-                    height:node[0].offsetHeight
+                    width:node.outerWidth(),
+                    height:node.outerHeight()
                 };
             }
         },
@@ -15544,7 +15626,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /**
  * resizable support for kissy
@@ -15718,7 +15800,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 30 16:25
+build time: Sep 5 21:30
 */
 /**
  * UIBase.Align
@@ -15877,7 +15959,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
     function positionAtCoordinate(absolutePos, alignCfg) {
         var self = this,el = self.get('el');
         var status = {};
-        var elSize = {width:el[0].offsetWidth,height:el[0].offsetHeight},
+        var elSize = {width:el.outerWidth(),height:el.outerHeight()},
             size = S.clone(elSize);
         if (!S.isEmptyObject(alignCfg.overflow)) {
             var viewport = getVisibleRectForElement(el[0]);
@@ -16002,12 +16084,12 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         if (node) {
             node = Node.one(node);
             offset = node.offset();
-            w = node[0].offsetWidth;
-            h = node[0].offsetHeight;
+            w = node.outerWidth();
+            h = node.outerHeight();
         } else {
             offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-            w = DOM['viewportWidth']();
-            h = DOM['viewportHeight']();
+            w = DOM.viewportWidth();
+            h = DOM.viewportHeight();
         }
 
         x = offset.left;
@@ -16937,8 +17019,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
             S.mix(ret, {
-                maxLeft: ret.left + constrain[0].offsetWidth - el[0].offsetWidth,
-                maxTop: ret.top + constrain[0].offsetHeight - el[0].offsetHeight
+                maxLeft: ret.left + constrain.outerWidth() - el.outerWidth(),
+                maxTop: ret.top + constrain.outerHeight() - el.outerHeight()
             });
         }
         // 没有指定 constrain, 表示受限于可视区域
@@ -16952,8 +17034,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             var vWidth = document.documentElement.clientWidth;
             ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
             S.mix(ret, {
-                maxLeft: ret.left + vWidth - el[0].offsetWidth,
-                maxTop: ret.top + DOM['viewportHeight']() - el[0].offsetHeight
+                maxLeft: ret.left + vWidth - el.outerWidth(),
+                maxTop: ret.top + DOM.viewportHeight() - el.outerHeight()
             });
         }
 
@@ -17779,7 +17861,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:19
+build time: Sep 5 21:29
 */
 /**
  * container can delegate event for its children
@@ -17902,6 +17984,7 @@ KISSY.add("component/delegatechildren", function(S) {
             self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
                 self._handleChildMouseEvents, self);
         },
+
         _handleChildMouseEvents:function(e) {
             var control = this.getOwnerControl(e.target);
             if (control) {
@@ -18269,7 +18352,7 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                     var el = self.getKeyEventTarget();
                     // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                     if (ev.which == 1 && el.attr("tabindex") >= 0) {
-                        self.getKeyEventTarget()[0].focus();
+                        el[0].focus();
                     }
                     // Cancel the default action unless the control
                     // allows text selection.
@@ -18678,7 +18761,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:41
 */
 /**
  * Switchable
@@ -20265,11 +20348,11 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-            effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
-            duration: .5, // 动画的时长
-            easing: 'easeNone', // easing method
-            nativeAnim: true
-        });
+        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
+        duration: .5, // 动画的时长
+        easing: 'easeNone', // easing method
+        nativeAnim: undefined
+    });
 
     /**
      * 定义效果集
@@ -20303,9 +20386,9 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                 self.anim.stop();
                 // 防止上个未完，放在最下层
                 DOM.css(self.anim.fromEl, {
-                        zIndex: 1,
-                        opacity:0
-                    });
+                    zIndex: 1,
+                    opacity:0
+                });
                 // 把上个的 toEl 放在最上面，防止 self.anim.toEl == fromEL
                 // 压不住后面了
                 DOM.css(self.anim.toEl, "zIndex", 9);
@@ -20374,96 +20457,96 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
      */
     Switchable.Plugins.push({
 
-            name: 'effect',
+        name: 'effect',
 
-            /**
-             * 根据 effect, 调整初始状态
-             */
-            init: function(host) {
-                var cfg = host.config,
-                    effect = cfg.effect,
-                    panels = host.panels,
-                    content = host.content,
-                    steps = cfg.steps,
-                    activeIndex = host.activeIndex,
-                    len = panels.length;
+        /**
+         * 根据 effect, 调整初始状态
+         */
+        init: function(host) {
+            var cfg = host.config,
+                effect = cfg.effect,
+                panels = host.panels,
+                content = host.content,
+                steps = cfg.steps,
+                activeIndex = host.activeIndex,
+                len = panels.length;
 
-                // 1. 获取高宽
-                host.viewSize = [
-                    cfg.viewSize[0] || panels[0].offsetWidth * steps,
-                    cfg.viewSize[1] || panels[0].offsetHeight * steps
-                ];
-                // 注：所有 panel 的尺寸应该相同
-                // 最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
+            // 1. 获取高宽
+            host.viewSize = [
+                cfg.viewSize[0] || panels[0].offsetWidth * steps,
+                cfg.viewSize[1] || panels[0].offsetHeight * steps
+            ];
+            // 注：所有 panel 的尺寸应该相同
+            // 最好指定第一个 panel 的 width 和 height, 因为 Safari 下，图片未加载时，读取的 offsetHeight 等值会不对
 
-                // 2. 初始化 panels 样式
-                if (effect !== NONE) { // effect = scrollx, scrolly, fade
+            // 2. 初始化 panels 样式
+            if (effect !== NONE) { // effect = scrollx, scrolly, fade
 
-                    // 这些特效需要将 panels 都显示出来
-                    DOM.css(panels, DISPLAY, BLOCK);
+                // 这些特效需要将 panels 都显示出来
+                DOM.css(panels, DISPLAY, BLOCK);
 
-                    switch (effect) {
-                        // 如果是滚动效果
-                        case SCROLLX:
-                        case SCROLLY:
+                switch (effect) {
+                    // 如果是滚动效果
+                    case SCROLLX:
+                    case SCROLLY:
 
-                            // 设置定位信息，为滚动效果做铺垫
-                            DOM.css(content, POSITION, ABSOLUTE);
+                        // 设置定位信息，为滚动效果做铺垫
+                        DOM.css(content, POSITION, ABSOLUTE);
 
-                            // 注：content 的父级不一定是 container
-                            if (DOM.css(content.parentNode, POSITION) == "static") {
-                                DOM.css(content.parentNode, POSITION, RELATIVE);
-                            }
+                        // 注：content 的父级不一定是 container
+                        if (DOM.css(content.parentNode, POSITION) == "static") {
+                            DOM.css(content.parentNode, POSITION, RELATIVE);
+                        }
 
-                            // 水平排列
-                            if (effect === SCROLLX) {
-                                DOM.css(panels, FLOAT, LEFT);
-                                // 设置最大宽度，以保证有空间让 panels 水平排布
-                                DOM.width(content, host.viewSize[0] * (len / steps));
-                            }
-                            break;
+                        // 水平排列
+                        if (effect === SCROLLX) {
+                            DOM.css(panels, FLOAT, LEFT);
+                            // 设置最大宽度，以保证有空间让 panels 水平排布
+                            DOM.width(content, host.viewSize[0] * (len / steps));
+                        }
+                        break;
 
-                        // 如果是透明效果，则初始化透明
-                        case FADE:
-                            var min = activeIndex * steps,
-                                max = min + steps - 1,
-                                isActivePanel;
+                    // 如果是透明效果，则初始化透明
+                    case FADE:
+                        var min = activeIndex * steps,
+                            max = min + steps - 1,
+                            isActivePanel;
 
-                            S.each(panels, function(panel, i) {
-                                isActivePanel = i >= min && i <= max;
-                                DOM.css(panel, {
-                                        opacity: isActivePanel ? 1 : 0,
-                                        position: ABSOLUTE,
-                                        zIndex: isActivePanel ? 9 : 1
-                                    });
+                        S.each(panels, function(panel, i) {
+                            isActivePanel = i >= min && i <= max;
+                            DOM.css(panel, {
+                                opacity: isActivePanel ? 1 : 0,
+                                position: ABSOLUTE,
+                                zIndex: isActivePanel ? 9 : 1
                             });
-                            break;
-                    }
+                        });
+                        break;
                 }
-
-                // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
             }
-        });
+
+            // 3. 在 CSS 里，需要给 container 设定高宽和 overflow: hidden
+        }
+    });
 
     /**
      * 覆盖切换方法
      */
     S.augment(Switchable, {
 
-            _switchView: function(fromEls, toEls, index, direction, ev, callback) {
+        _switchView: function(fromEls, toEls, index, direction, ev, callback) {
 
-                var self = this,
-                    cfg = self.config,
-                    effect = cfg.effect,
-                    fn = S.isFunction(effect) ? effect : Effects[effect];
+            var self = this,
+                cfg = self.config,
+                effect = cfg.effect,
+                fn = S.isFunction(effect) ? effect : Effects[effect];
 
-                fn.call(self, fromEls, toEls, function() {
-                    self._fireOnSwitch(index, ev);
-                    callback && callback.call(self);
-                }, index, direction);
-            }
+            fn.call(self, fromEls, toEls, function() {
+                self._fireOnSwitch(index, ev);
+                callback && callback.call(self);
+            }, index, direction);
+        }
 
-        });
+    });
 
     return Switchable;
 
@@ -21282,7 +21365,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /**
  * KISSY Overlay
@@ -21776,7 +21859,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -22966,7 +23049,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /**
  * @fileoverview 图像放大区域
@@ -23591,7 +23674,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:19
+build time: Sep 5 21:29
 */
 /**
  * KISSY Calendar
@@ -23820,7 +23903,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             self.con.css('visibility', '');
             var _x = self.trigger.offset().left,
                 //KISSY得到DOM的width是innerWidth，这里期望得到outterWidth
-                height = self.trigger[0].offsetHeight || self.trigger.height(),
+                height = self.trigger.outerHeight() || self.trigger.height(),
                 _y = self.trigger.offset().top + height;
             self.con.css('left', _x.toString() + 'px');
             self.con.css('top', _y.toString() + 'px');
@@ -24870,7 +24953,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /**
  * deletable menuitem
@@ -24993,6 +25076,14 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                     filterInput = view.get("filterInput");
                 /*监控键盘事件*/
                 filterInput.on("keyup", self.handleFilterEvent, self);
+            },
+
+            _handleMouseEnter:function() {
+                var self = this;
+                FilterMenu.superclass._handleMouseEnter.apply(self, arguments);
+                // 权益解决，filter input focus 后会滚动到牌聚焦处，select 则不会
+                // 如果 filtermenu 的菜单项被滚轮滚到后面，点击触发不了，会向前滚动到 filter input
+                self.getKeyEventTarget()[0].select();
             },
 
             handleFilterEvent:function() {
@@ -25429,6 +25520,9 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
+
+    var $ = S.all;
+
     var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
         _handleMouseEnter:function(e) {
@@ -25473,19 +25567,18 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
         _uiSetHighlighted:function(v) {
             MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
-            // 是否要滚动到当前菜单项
+            // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
                 var el = this.get("el"),
-                    p = this.get("parent").get("el"),
-                    y = el.offset().top,
-                    h = el[0].offsetHeight,
-                    py = p.offset().top,
-                    ph = p[0].offsetHeight;
-                if (y - py >= ph) {
-                    p[0].scrollTop += y - py + h - ph;
-                } else if (y - py < 0) {
-                    p[0].scrollTop += y - py;
+                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                    p = el.parent(function(e) {
+                        return $(e).css("overflow") != "visible";
+                    }, this.get("parent").get("el").parent());
+                if (!p) {
+                    return;
                 }
+                el.scrollIntoView(p, undefined, undefined, true);
             }
         },
 
@@ -25533,6 +25626,13 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
             checked:{},
             selected:{}
+        },
+
+        HTML_PARSER:{
+            selectable:function(el) {
+                var cls = this.getCls("menuitem-selectable");
+                return el.hasClass(cls);
+            }
         }
     });
 
@@ -26093,7 +26193,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:19
+build time: Sep 5 21:29
 */
 /**
  * Model and Control for button
@@ -26289,7 +26389,7 @@ KISSY.add("button", function(S, Button, Render) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 25 16:20
+build time: Sep 5 21:30
 */
 /**
  * combination of menu and button ,similar to native select
@@ -26824,7 +26924,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 30 18:04
+build time: Sep 5 21:30
 */
 /**
  * @author: 常胤 (lzlu.com)
