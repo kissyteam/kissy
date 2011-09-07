@@ -1,7 +1,7 @@
-/*
+﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:14
+build time: Sep 5 23:52
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Aug 23 12:14
          */
         version: '1.20dev',
 
-        buildTime:'20110823121406',
+        buildTime:'20110905235226',
 
         /**
          * Returns a new object containing all of the properties of
@@ -318,6 +318,8 @@ build time: Aug 23 12:14
 (function(S, undefined) {
 
     var host = S.__HOST,
+        TRUE = true,
+        FALSE = false,
         OP = Object.prototype,
         toString = OP.toString,
         hasOwnProperty = OP.hasOwnProperty,
@@ -325,6 +327,8 @@ build time: Aug 23 12:14
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
+        every = AP.every,
+        some = AP.some,
         //reduce = AP.reduce,
         trim = String.prototype.trim,
         map = AP.map,
@@ -413,10 +417,10 @@ build time: Aug 23 12:14
         isEmptyObject: function(o) {
             for (var p in o) {
                 if (p !== undefined) {
-                    return false;
+                    return FALSE;
                 }
             }
-            return true;
+            return TRUE;
         },
 
         /**
@@ -451,7 +455,7 @@ build time: Aug 23 12:14
             mismatchValues = mismatchValues || [];
 
             if (a === b) {
-                return true;
+                return TRUE;
             }
             if (a === undefined || a === null || b === undefined || b === null) {
                 // need type coercion
@@ -544,13 +548,13 @@ build time: Aug 23 12:14
 
                 if (isObj) {
                     for (key in object) {
-                        if (fn.call(context, object[key], key, object) === false) {
+                        if (fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
                 } else {
                     for (val = object[0];
-                         i < length && fn.call(context, val, i, object) !== false; val = object[++i]) {
+                         i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
                     }
                 }
             }
@@ -709,7 +713,7 @@ build time: Aug 23 12:14
                         throw new TypeError();
                     }
                 }
-                while (true);
+                while (TRUE);
             }
 
             while (k < len) {
@@ -721,6 +725,35 @@ build time: Aug 23 12:14
 
             return accumulator;
         },
+
+        every:every ?
+            function(arr, fn, context) {
+                return every.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && !fn.call(context, arr[i], i, arr)) {
+                        return FALSE;
+                    }
+                }
+                return TRUE;
+            },
+
+        some:some ?
+            function(arr, fn, context) {
+                return some.call(arr, fn, context || this);
+            } :
+            function(arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && fn.call(context, arr[i], i, arr)) {
+                        return TRUE;
+                    }
+                }
+                return FALSE;
+            },
+
 
         /**
          * it is not same with native bind
@@ -818,7 +851,7 @@ build time: Aug 23 12:14
             sep = sep || SEP;
             eq = eq || EQ;
             if (S.isUndefined(arr)) {
-                arr = true;
+                arr = TRUE;
             }
             var buf = [], key, val;
             for (key in o) {
@@ -899,7 +932,7 @@ build time: Aug 23 12:14
          * @param when {Number} the number of milliseconds to wait until the fn is executed.
          * @param periodic {Boolean} if true, executes continuously at supplied interval
          *        until canceled.
-         * @param o {Object} the context object.
+         * @param context {Object} the context object.
          * @param data [Array] that is provided to the function. This accepts either a single
          *        item or an array. If an array is provided, the function is executed with
          *        one parameter for each array item. If you need to pass a single array
@@ -907,13 +940,15 @@ build time: Aug 23 12:14
          * @return {Object} a timer object. Call the cancel() method on this object to stop
          *         the timer.
          */
-        later: function(fn, when, periodic, o, data) {
+        later: function(fn, when, periodic, context, data) {
             when = when || 0;
-            o = o || { };
-            var m = fn, d = S.makeArray(data), f, r;
+            var m = fn,
+                d = S.makeArray(data),
+                f,
+                r;
 
             if (S.isString(fn)) {
-                m = o[fn];
+                m = context[fn];
             }
 
             if (!m) {
@@ -921,7 +956,7 @@ build time: Aug 23 12:14
             }
 
             f = function() {
-                m.apply(o, d);
+                m.apply(context, d);
             };
 
             r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
@@ -946,6 +981,66 @@ build time: Aug 23 12:14
         endsWith:function(str, suffix) {
             var ind = str.length - suffix.length;
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
+        },
+
+        /*! Based on YUI3*/
+        /**
+         * Throttles a call to a method based on the time between calls.
+         * @param  {function} fn The function call to throttle.
+         * @param {object} context ontext fn to run
+         * @param {Number} ms The number of milliseconds to throttle the method call.
+         *              Passing a -1 will disable the throttle. Defaults to 150.
+         * @return {function} Returns a wrapped function that calls fn throttled.
+         */
+        throttle:function(fn, ms, context) {
+            ms = ms || 150;
+
+            if (ms === -1) {
+                return (function() {
+                    fn.apply(context || this, arguments);
+                });
+            }
+
+            var last = S.now();
+
+            return (function() {
+                var now = S.now();
+                if (now - last > ms) {
+                    last = now;
+                    fn.apply(context || this, arguments);
+                }
+            });
+        },
+
+        /**
+         * buffers a call between  a fixed time
+         * @param {function} fn
+         * @param {object} context
+         * @param {Number} ms
+         */
+        buffer:function(fn, ms, context) {
+            ms = ms || 150;
+
+            if (ms === -1) {
+                return (function() {
+                    fn.apply(context || this, arguments);
+                });
+            }
+            var bufferTimer = 0;
+
+            function f() {
+                f.stop();
+                bufferTimer = S.later(fn, ms, FALSE, context || this);
+            }
+
+            f.stop = function() {
+                if (bufferTimer) {
+                    bufferTimer.cancel();
+                    bufferTimer = 0;
+                }
+            };
+
+            return f;
         }
 
     });
@@ -1021,7 +1116,7 @@ build time: Aug 23 12:14
                 for (k in o) {
                     if (k !== CLONE_MARKER &&
                         o.hasOwnProperty(k) &&
-                        (!f || (f.call(o, o[k], k, o) !== false))) {
+                        (!f || (f.call(o, o[k], k, o) !== FALSE))) {
                         ret[k] = cloneInternal(o[k], f, marked);
                     }
                 }
@@ -1034,7 +1129,7 @@ build time: Aug 23 12:14
     function compareObjects(a, b, mismatchKeys, mismatchValues) {
         // 两个比较过了，无需再比较，防止循环比较
         if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
-            return true;
+            return TRUE;
         }
         a[COMPARE_MARKER] = b;
         b[COMPARE_MARKER] = a;
@@ -1102,7 +1197,7 @@ build time: Aug 23 12:14
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if (S.use) {
+    if ("require" in this) {
         return;
     }
     S.mix(utils, {
@@ -1215,7 +1310,7 @@ build time: Aug 23 12:14
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
-    if (S.use) {
+    if ("require" in this) {
         return;
     }
     var isWebKit = utils.isWebKit,

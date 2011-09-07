@@ -13,6 +13,7 @@ KISSY.add("component/delegatechildren", function(S) {
             self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
                 self._handleChildMouseEvents, self);
         },
+
         _handleChildMouseEvents:function(e) {
             var control = this.getOwnerControl(e.target);
             if (control) {

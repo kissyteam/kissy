@@ -1,4 +1,4 @@
-﻿describe('selectable', function() {
+describe('selectable', function() {
 	var S = KISSY, D = S.DOM, E = S.Event,
 		tempList, VALUE_KEY = 'ks-data',
 		SELECTED_ITEM_CLS = 'selected';

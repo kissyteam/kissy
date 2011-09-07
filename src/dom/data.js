@@ -133,8 +133,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 try {
                     delete elem[EXPANDO];
                 } catch(e) {
-                    S.log("delete expando error : ");
-                    S.log(e);
+                    //S.log("delete expando error : ");
+                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);
@@ -148,15 +148,22 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
         __EXPANDO:EXPANDO,
 
+        /**
+         * whether any node has data
+         */
         hasData:function(selector, name) {
-            var ret = false;
-            DOM.query(selector).each(function(elem) {
+            var ret = false,elems = DOM.query(selector);
+            for (var i = 0; i < elems.length; i++) {
+                var elem = elems[i];
                 if (checkIsNode(elem)) {
-                    ret = ret || domOps.hasData(elem, name);
+                    ret = domOps.hasData(elem, name);
                 } else {
-                    ret = ret || objectOps.hasData(elem, name);
+                    ret = objectOps.hasData(elem, name);
                 }
-            });
+                if (ret) {
+                    return ret;
+                }
+            }
             return ret;
         },
 
@@ -177,7 +184,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 var elem = DOM.get(selector);
                 if (checkIsNode(elem)) {
                     return domOps.data(elem, name, data);
-                } else {
+                } else if (elem) {
                     return objectOps.data(elem, name, data);
                 }
             }

@@ -1,7 +1,7 @@
-/*
+﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:13
+build time: Sep 5 21:29
 */
 /**
  * 数据延迟加载组件
@@ -366,7 +366,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          */
         _getThreshold: function() {
             var diff = this.config.diff,
-                vh = DOM['viewportHeight']();
+                vh = DOM.viewportHeight();
 
             if (diff === DEFAULT) {
                 // diff 默认为当前视窗高度（两屏以外的才延迟加载）

@@ -3,7 +3,7 @@
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
-    if (S.use) {
+    if ("require" in this) {
         return;
     }
     var isWebKit = utils.isWebKit,

@@ -1,7 +1,7 @@
-/*
+﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:13
+build time: Sep 5 23:52
 */
 /**
  * @module  dom-attr
@@ -16,9 +16,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 'innerText' : 'textContent',
             EMPTY = '',
             isElementNode = DOM._isElementNode,
-            isTextNode = function(elem) {
-                return DOM._nodeTypeIs(elem, 3);
-            },
             rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
             rfocusable = /^(?:button|input|object|select|textarea)$/i,
             rclickable = /^a(?:rea)?$/i,
@@ -157,6 +154,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     }
                 }};
 
+        function isTextNode(elem) {
+            return DOM._nodeTypeIs(elem, DOM.TEXT_NODE);
+        }
+
         if (oldIE) {
 
             // get attribute value from attribute node for ie
@@ -175,6 +176,16 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     var ret = elem.getAttributeNode(name);
                     if (ret) {
                         ret.nodeValue = value;
+                    } else {
+                        try {
+                            var attr = elem.ownerDocument.createAttribute(name);
+                            attr.value = value;
+                            elem.setAttributeNode(attr);
+                        }
+                        catch (e) {
+                            // It's a real failure only if setAttribute also fails.
+                            return elem.setAttribute(name, value, 0);
+                        }
                     }
                 }
             };
@@ -249,7 +260,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 name = propFix[ name ] || name;
                 var hook = propHooks[ name ];
                 if (value !== undefined) {
-                    S.each(elems, function(elem) {
+                    elems.each(function(elem) {
                         if (hook && hook.set) {
                             hook.set(elem, value, name);
                         } else {
@@ -302,9 +313,39 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * Sets an attribute for the set of matched elements.
              */
             attr:function(selector, name, val, pass) {
+                /*
+                 Hazards From Caja Note:
+
+                 - In IE[67], el.setAttribute doesn't work for attributes like
+                 'class' or 'for'.  IE[67] expects you to set 'className' or
+                 'htmlFor'.  Caja use setAttributeNode solves this problem.
+
+                 - In IE[67], <input> elements can shadow attributes.  If el is a
+                 form that contains an <input> named x, then el.setAttribute(x, y)
+                 will set x's value rather than setting el's attribute.  Using
+                 setAttributeNode solves this problem.
+
+                 - In IE[67], the style attribute can only be modified by setting
+                 el.style.cssText.  Neither setAttribute nor setAttributeNode will
+                 work.  el.style.cssText isn't bullet-proof, since it can be
+                 shadowed by <input> elements.
+
+                 - In IE[67], you can never change the type of an <button> element.
+                 setAttribute('type') silently fails, but setAttributeNode
+                 throws an exception.  caja : the silent failure. KISSY throws error.
+
+                 - In IE[67], you can never change the type of an <input> element.
+                 setAttribute('type') throws an exception.  We want the exception.
+
+                 - In IE[67], setAttribute is case-sensitive, unless you pass 0 as a
+                 3rd argument.  setAttributeNode is case-insensitive.
+
+                 - Trying to set an invalid name like ":" is supposed to throw an
+                 error.  In IE[678] and Opera 10, it fails without an error.
+                 */
                 // suports hash
                 if (S.isPlainObject(name)) {
-                    pass = val; // 塌缩参数
+                    pass = val;
                     for (var k in name) {
                         DOM.attr(selector, k, name[k], pass);
                     }
@@ -362,14 +403,18 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return ret === null ? undefined : ret;
                 } else {
                     // setter
-                    S.each(DOM.query(selector), function(el) {
+                    DOM.query(selector).each(function(el) {
                         // only set attributes on element nodes
                         if (!isElementNode(el)) {
                             return;
                         }
-
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
+                        var normalizer = attrNormalizer;
+                        // browsers index elements by id/name on forms, give priority to attributes.
+                        if (el.nodeName.toLowerCase() == "form") {
+                            normalizer = attrNodeHook;
+                        }
+                        if (normalizer && normalizer.set) {
+                            normalizer.set(el, val, name);
                         } else {
                             // convert the value to a string (all browsers do this but IE)
                             el.setAttribute(name, EMPTY + val);
@@ -384,7 +429,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             removeAttr: function(selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
-                S.each(DOM.query(selector), function(el) {
+                DOM.query(selector).each(function(el) {
                     if (isElementNode(el)) {
                         var propName;
                         el.removeAttribute(name);
@@ -508,7 +553,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    S.each(DOM.query(selector), function(el) {
+                    DOM.query(selector).each(function(el) {
                         if (isElementNode(el)) {
                             el[TEXT] = val;
                         }
@@ -577,7 +622,7 @@ KISSY.add('dom/base', function(S, undefined) {
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return nodeTypeIs(elem, 1);
+            return nodeTypeIs(elem, DOM.ELEMENT_NODE);
         },
 
         /**
@@ -589,7 +634,7 @@ KISSY.add('dom/base', function(S, undefined) {
         _getWin: function(elem) {
             return (elem && ('scrollTo' in elem) && elem['document']) ?
                 elem :
-                nodeTypeIs(elem, 9) ?
+                nodeTypeIs(elem, DOM.DOCUMENT_NODE) ?
                     elem.defaultView || elem.parentWindow :
                     (elem === undefined || elem === null) ?
                         window : false;
@@ -607,8 +652,6 @@ KISSY.add('dom/base', function(S, undefined) {
             return o && !o.nodeType && o.item && !o.setTimeout;
         }
     };
-
-    DOM.TEXT_NODE = 3;
 
     return DOM;
 
@@ -806,7 +849,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * Creates a new HTMLElement using the provided html string.
              */
             create: function(html, props, ownerDoc) {
-                if (nodeTypeIs(html, 1) || nodeTypeIs(html, 3)) {
+                if (nodeTypeIs(html, DOM.ELEMENT_NODE)
+                    || nodeTypeIs(html, DOM.TEXT_NODE)) {
                     return DOM.clone(html);
                 }
 
@@ -878,7 +922,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    S.each(DOM.query(selector), function(elem) {
+                    DOM.query(selector).each(function(elem) {
                         if (isElementNode(elem)) {
                             setHTML(elem, val, loadScripts, callback);
                         }
@@ -893,7 +937,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param {Boolean} keepData 删除元素时是否保留其上的数据，用于离线操作，提高性能
              */
             remove: function(selector, keepData) {
-                S.each(DOM.query(selector), function(el) {
+                DOM.query(selector).each(function(el) {
                     if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
                         // 清楚事件
                         var Event = S.require("event");
@@ -920,8 +964,13 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @returns 复制后的节点
              */
             clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
-                var elem = DOM.get(selector),
-                    clone = elem.cloneNode(deep);
+                var elem = DOM.get(selector);
+
+                if (!elem) {
+                    return null;
+                }
+
+                var clone = elem.cloneNode(deep);
 
                 if (elem.nodeType == DOM.ELEMENT_NODE ||
                     elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
@@ -952,14 +1001,26 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         });
 
         function processAll(fn, elem, clone) {
-            var elemChildren = elem.getElementsByTagName("*"),
-                cloneChildren = clone.getElementsByTagName("*"),
-                cindex = 0;
-            while (elemChildren[cindex]) {
-                if (cloneChildren[cindex]) {
-                    fn(elemChildren[cindex], cloneChildren[cindex]);
+            if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                var eCs = elem.childNodes,
+                    cloneCs = clone.childNodes,
+                    fIndex = 0;
+                while (eCs[fIndex]) {
+                    if (cloneCs[fIndex]) {
+                        processAll(fn, eCs[fIndex], cloneCs[fIndex]);
+                    }
+                    fIndex++;
                 }
-                cindex++;
+            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
+                var elemChildren = elem.getElementsByTagName("*"),
+                    cloneChildren = clone.getElementsByTagName("*"),
+                    cIndex = 0;
+                while (elemChildren[cIndex]) {
+                    if (cloneChildren[cIndex]) {
+                        fn(elemChildren[cIndex], cloneChildren[cIndex]);
+                    }
+                    cIndex++;
+                }
             }
         }
 
@@ -1368,8 +1429,8 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 try {
                     delete elem[EXPANDO];
                 } catch(e) {
-                    S.log("delete expando error : ");
-                    S.log(e);
+                    //S.log("delete expando error : ");
+                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);
@@ -1383,15 +1444,22 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
         __EXPANDO:EXPANDO,
 
+        /**
+         * whether any node has data
+         */
         hasData:function(selector, name) {
-            var ret = false;
-            DOM.query(selector).each(function(elem) {
+            var ret = false,elems = DOM.query(selector);
+            for (var i = 0; i < elems.length; i++) {
+                var elem = elems[i];
                 if (checkIsNode(elem)) {
-                    ret = ret || domOps.hasData(elem, name);
+                    ret = domOps.hasData(elem, name);
                 } else {
-                    ret = ret || objectOps.hasData(elem, name);
+                    ret = objectOps.hasData(elem, name);
                 }
-            });
+                if (ret) {
+                    return ret;
+                }
+            }
             return ret;
         },
 
@@ -1412,7 +1480,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 var elem = DOM.get(selector);
                 if (checkIsNode(elem)) {
                     return domOps.data(elem, name, data);
-                } else {
+                } else if (elem) {
                     return objectOps.data(elem, name, data);
                 }
             }
@@ -1471,65 +1539,65 @@ KISSY.add('dom/insertion', function(S, DOM) {
     function insertion(newNodes, refNodes, fn) {
         newNodes = DOM.query(newNodes);
         refNodes = DOM.query(refNodes);
-        var newNode = nl2frag(newNodes);
-        if (!newNode) {
+        if (!newNodes.length || !refNodes.length) {
             return;
         }
-        var cloneNode;
+        var newNode = nl2frag(newNodes),
+            clonedNode;
         //fragment 一旦插入里面就空了，先复制下
         if (refNodes.length > 1) {
-            cloneNode = newNode.cloneNode(true);
+            clonedNode = DOM.clone(newNode, true);
         }
         for (var i = 0; i < refNodes.length; i++) {
             var refNode = refNodes[i];
             //refNodes 超过一个，clone
-            var node = i > 0 ? cloneNode.cloneNode(true) : newNode;
+            var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
             fn(node, refNode);
         }
     }
 
     S.mix(DOM, {
 
-            /**
-             * Inserts the new node as the previous sibling of the reference node.
-             */
-            insertBefore: function(newNodes, refNodes) {
-                insertion(newNodes, refNodes, function(newNode, refNode) {
-                    if (refNode[PARENT_NODE]) {
-                        refNode[PARENT_NODE].insertBefore(newNode, refNode);
-                    }
-                });
-            },
+        /**
+         * Inserts the new node as the previous sibling of the reference node.
+         */
+        insertBefore: function(newNodes, refNodes) {
+            insertion(newNodes, refNodes, function(newNode, refNode) {
+                if (refNode[PARENT_NODE]) {
+                    refNode[PARENT_NODE].insertBefore(newNode, refNode);
+                }
+            });
+        },
 
-            /**
-             * Inserts the new node as the next sibling of the reference node.
-             */
-            insertAfter: function(newNodes, refNodes) {
-                insertion(newNodes, refNodes, function(newNode, refNode) {
-                    if (refNode[PARENT_NODE]) {
-                        refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
-                    }
-                });
-            },
+        /**
+         * Inserts the new node as the next sibling of the reference node.
+         */
+        insertAfter: function(newNodes, refNodes) {
+            insertion(newNodes, refNodes, function(newNode, refNode) {
+                if (refNode[PARENT_NODE]) {
+                    refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
+                }
+            });
+        },
 
-            /**
-             * Inserts the new node as the last child.
-             */
-            appendTo: function(newNodes, parents) {
-                insertion(newNodes, parents, function(newNode, parent) {
-                    parent.appendChild(newNode);
-                });
-            },
+        /**
+         * Inserts the new node as the last child.
+         */
+        appendTo: function(newNodes, parents) {
+            insertion(newNodes, parents, function(newNode, parent) {
+                parent.appendChild(newNode);
+            });
+        },
 
-            /**
-             * Inserts the new node as the first child.
-             */
-            prependTo:function(newNodes, parents) {
-                insertion(newNodes, parents, function(newNode, parent) {
-                    parent.insertBefore(newNode, parent.firstChild);
-                });
-            }
-        });
+        /**
+         * Inserts the new node as the first child.
+         */
+        prependTo:function(newNodes, parents) {
+            insertion(newNodes, parents, function(newNode, parent) {
+                parent.insertBefore(newNode, parent.firstChild);
+            });
+        }
+    });
     var alias = {
         "prepend":"prependTo",
         "append":"appendTo",
@@ -1541,8 +1609,8 @@ KISSY.add('dom/insertion', function(S, DOM) {
     }
     return DOM;
 }, {
-        requires:["./create"]
-    });
+    requires:["./create"]
+});
 
 /**
  * 2011-05-25
@@ -1581,6 +1649,25 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
+//    ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
+//    function inDocument(elem) {
+//        if (!elem) {
+//            return 0;
+//        }
+//        var doc = elem.ownerDocument;
+//        if (!doc) {
+//            return 0;
+//        }
+//        var html = doc.documentElement;
+//        if (html === elem) {
+//            return true;
+//        }
+//        else if (DOM.__contains(html, elem)) {
+//            return true;
+//        }
+//        return false;
+//    }
+
     S.mix(DOM, {
 
 
@@ -1590,34 +1677,42 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *     is not in the ancestor frame chain of the element, we measure relative to
          *     the top-most window.
          */
-        offset: function(elem, val, relativeWin) {
-            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
-                return;
-            }
-
+        offset: function(selector, val, relativeWin) {
             // getter
             if (val === undefined) {
-                return getOffset(elem, relativeWin);
+                var elem = DOM.get(selector),ret;
+                if (elem) {
+                    ret = getOffset(elem, relativeWin);
+                }
+                return ret;
             }
-
             // setter
-            setOffset(elem, val);
+            DOM.query(selector).each(function(elem) {
+                setOffset(elem, val);
+            });
         },
 
         /**
          * Makes elem visible in the container
+         * @param elem
+         * @param container
+         * @param top
+         * @param hscroll
+         * @param {Boolean} auto whether adjust element automatically
+         *                       (it only scrollIntoView when element is out of view)
          * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollIntoView: function(elem, container, top, hscroll) {
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
+        scrollIntoView: function(elem, container, top, hscroll, auto) {
+            if (!(elem = DOM.get(elem))) {
                 return;
             }
 
-            hscroll = hscroll === undefined ? true : !!hscroll;
-            top = top === undefined ? true : !!top;
+            if (auto !== true) {
+                hscroll = hscroll === undefined ? true : !!hscroll;
+                top = top === undefined ? true : !!top;
+            }
 
             // default current window, use native for scrollIntoView(elem, top)
             if (!container ||
@@ -1648,8 +1743,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 },
 
                 // container 视窗的高宽
-                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+                ch = isWin ? DOM.viewportHeight(container) : container.clientHeight,
+                cw = isWin ? DOM.viewportWidth(container) : container.clientWidth,
 
                 // container 视窗相对 container 元素的坐标
                 cl = DOM[SCROLL_LEFT](container),
@@ -1658,11 +1753,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 cb = ct + ch,
 
                 // elem 的高宽
-                eh = elem.offsetHeight,
-                ew = elem.offsetWidth,
+                eh = DOM.outerHeight(elem),
+                ew = DOM.outerWidth(elem),
 
                 // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去容器的
                 l = diff.left + cl -
                     (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
 
@@ -1672,7 +1767,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 r = l + ew,
                 b = t + eh,
 
-                t2, l2;
+                t2,
+
+                l2;
 
             // 根据情况将 elem 定位到 container 视窗中
             // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
@@ -1694,9 +1791,13 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 }
             }
 
-            // go
-            DOM[SCROLL_TOP](container, t2);
-            DOM[SCROLL_LEFT](container, l2);
+            // if element is already in the container view ,then do nothing
+            if (t2 !== undefined) {
+                DOM[SCROLL_TOP](container, t2);
+            }
+            if (l2 !== undefined) {
+                DOM[SCROLL_LEFT](container, l2);
+            }
         },
         /**
          * for idea autocomplete
@@ -1715,36 +1816,38 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
         DOM[method] = function(elem, v) {
             if (S.isNumber(elem)) {
-                arguments.callee(win, elem);
-                return;
+                return arguments.callee(win, elem);
             }
             elem = DOM.get(elem);
-            var ret = 0,
+            var ret,
                 w = getWin(elem),
                 d;
-
             if (w) {
                 if (v !== undefined) {
                     // 注意多 windw 情况，不能简单取 win
-                    var left = name == "Left" ? v : DOM.scrollLeft(w);
-                    var top = name == "Top" ? v : DOM.scrollTop(w);
+                    var left = name == "Left" ? v : DOM.scrollLeft(w),
+                        top = name == "Top" ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
+                } else {
+                    d = w[DOCUMENT];
+                    ret =
+                        //标准
+                        //chrome == body.scrollTop
+                        //firefox/ie9 == documentElement.scrollTop
+                        w[i ? 'pageYOffset' : 'pageXOffset']
+                            //ie6,7,8 standard mode
+                            || d[DOC_ELEMENT][method]
+                            //quirks mode
+                            || d[BODY][method];
                 }
-                d = w[DOCUMENT];
-                ret =
-                    //标准
-                    //chrome == body.scrollTop
-                    //firefox/ie9 == documentElement.scrollTop
-                    w[i ? 'pageYOffset' : 'pageXOffset']
-                        //ie6,7,8 standard mode
-                        || d[DOC_ELEMENT][method]
-                        //quirks mode
-                        || d[BODY][method]
-
-            } else if (isElementNode((elem = DOM.get(elem)))) {
-                ret = v === undefined ? elem[method] : elem[method] = v;
+            } else if (isElementNode(elem)) {
+                if (v !== undefined) {
+                    elem[method] = v
+                } else {
+                    ret = elem[method];
+                }
             }
-            return v === undefined ? ret : undefined;
+            return ret;
         }
     });
 
@@ -2144,14 +2247,27 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             return null;
         }
         var doc = context;
-        if (context.nodeType !== 9) {
+        if (context.nodeType !== DOM.DOCUMENT_NODE) {
             doc = context.ownerDocument;
         }
         var el = doc.getElementById(id);
-        // 如果指定了 context node , 还要判断 id 是否处于 context 内
-        if (!testByContext(el, context)) {
-            return null;
+        if (el && el.parentNode) {
+            // ie opera confuse name with id
+            // https://github.com/kissyteam/kissy/issues/67
+            // 不能直接 el.id ，否则 input shadow form attribute
+            if (DOM.attr(el, "id") !== id) {
+                // 直接在 context 下的所有节点找
+                el = DOM.filter("*", "#" + id, context)[0] || null;
+            }
+            // ie 特殊情况下以及指明在 context 下找了，不需要再判断
+            // 如果指定了 context node , 还要判断 id 是否处于 context 内
+            else if (!testByContext(el, context)) {
+                el = null;
+            }
+        } else {
+            el = null;
         }
+
         return el;
     }
 
@@ -2259,29 +2375,36 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 sizzle = require("sizzle"),
                 match,
                 tag,
+                id,
                 cls,
                 ret = [];
 
-            // 默认仅支持最简单的 tag.cls 形式
+            // 默认仅支持最简单的 tag.cls 或 #id 形式
             if (isString(filter) &&
-                (match = REG_QUERY.exec(filter)) &&
-                !match[1]) {
+                (match = REG_QUERY.exec(filter))) {
+                id = match[1];
                 tag = match[2];
                 cls = match[3];
-                filter = function(elem) {
-                    var tagRe = true,clsRe = true;
+                if (!id) {
+                    filter = function(elem) {
+                        var tagRe = true,clsRe = true;
 
-                    // 指定 tag 才进行判断
-                    if (tag) {
-                        tagRe = eqTagName(elem, tag);
+                        // 指定 tag 才进行判断
+                        if (tag) {
+                            tagRe = eqTagName(elem, tag);
+                        }
+
+                        // 指定 cls 才进行判断
+                        if (cls) {
+                            clsRe = DOM.hasClass(elem, cls);
+                        }
+
+                        return clsRe && tagRe;
                     }
-
-                    // 指定 cls 才进行判断
-                    if (cls) {
-                        clsRe = DOM.hasClass(elem, cls);
-                    }
-
-                    return clsRe && tagRe;
+                } else if (id && !tag && !cls) {
+                    filter = function(elem) {
+                        return elem.id === id;
+                    };
                 }
             }
 
@@ -2560,8 +2683,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
     {
         requires:["./base","ua","./style"]
     }
-)
-    ;
+);
 /**
  * NOTES:
  * 承玉： 2011.05.19 opacity in ie
@@ -2662,10 +2784,11 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
             if (val === undefined) {
-                var elem = DOM.get(selector);
+                var elem = DOM.get(selector),ret = '';
                 if (elem) {
-                    return style(elem, name, val);
+                    ret = style(elem, name, val);
                 }
+                return ret;
             } else {
                 DOM.query(selector).each(function(elem) {
                     style(elem, name, val);
@@ -2691,11 +2814,12 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             if (val === undefined) {
                 // supports css selector/Node/NodeList
                 var elem = DOM.get(selector), ret = '';
-
-                // If a hook was provided get the computed value from there
-                if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
-                } else {
-                    ret = DOM._getComputedStyle(elem, name);
+                if (elem) {
+                    // If a hook was provided get the computed value from there
+                    if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
+                    } else {
+                        ret = DOM._getComputedStyle(elem, name);
+                    }
                 }
                 return ret === undefined ? '' : ret;
             }
@@ -2825,13 +2949,40 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     }
                 }
             });
-        }
+        },
+        innerWidth:0,
+        innerHeight:0,
+        outerWidth:0,
+        outerHeight:0,
+        width:0,
+        height:0
     });
 
-    /**
-     * name,width 简单转发
-     */
+    function capital(str) {
+        return str.charAt(0).toUpperCase() + str.substring(1);
+    }
+
+
     S.each([WIDTH,HEIGHT], function(name) {
+        DOM["inner" + capital(name)] = function(selector) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, "padding");
+            } else {
+                return null;
+            }
+        };
+
+
+        DOM["outer" + capital(name)] = function(selector, includeMargin) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, includeMargin ? "margin" : "border");
+            } else {
+                return null;
+            }
+        };
+
         DOM[name] = function(selector, val) {
             var ret = DOM.css(selector, name, val);
             if (ret) {
@@ -2896,12 +3047,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop
-                                offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                                // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
+                                // ie<9 注意有时候 elem.offsetParent 为 null ...
+                                // 比如 DOM.append(DOM.create("<div class='position:absolute'></div>"),document.body)
+                                offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
                                     || 0;
                             }
-
                             val = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
                         }
+                        val += "px";
                     }
                     return val;
                 }
@@ -2974,7 +3128,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
 
-    function getWH(elem, name) {
+    /**
+     * 得到元素的大小信息
+     * @param elem
+     * @param name
+     * @param {String} extra    "padding" : (css width) + padding
+     *                          "border" : (css width) + padding + border
+     *                          "margin" : (css width) + padding + border + margin
+     */
+    function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
             return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
         } else if (elem.nodeType == 9) {
@@ -2983,10 +3145,43 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
-        S.each(which, function(direction) {
-            val -= parseFloat(DOM.css(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM.css(elem, 'border' + direction + 'Width')) || 0;
-        });
+        if (val > 0) {
+            if (extra !== "border") {
+                S.each(which, function(w) {
+                    if (!extra) {
+                        val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                    }
+                    if (extra === "margin") {
+                        val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                    } else {
+                        val -= parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                    }
+                });
+            }
+
+            return val
+        }
+
+        // Fall back to computed then uncomputed css if necessary
+        val = DOM._getComputedStyle(elem, name);
+        if (val < 0 || S.isNullOrUndefined(val)) {
+            val = elem.style[ name ] || 0;
+        }
+        // Normalize "", auto, and prepare for extra
+        val = parseFloat(val) || 0;
+
+        // Add padding, border, margin
+        if (extra) {
+            S.each(which, function(w) {
+                val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                if (extra !== "padding") {
+                    val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                }
+                if (extra === "margin") {
+                    val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                }
+            });
+        }
 
         return val;
     }
@@ -3043,19 +3238,13 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 
         first:function(selector, filter) {
             var elem = DOM.get(selector);
-            if (!elem || !elem.firstChild) {
-                return null;
-            }
-            return nth(elem.firstChild, filter, 'nextSibling',
+            return nth(elem && elem.firstChild, filter, 'nextSibling',
                 undefined, undefined, true);
         },
 
         last:function(selector, filter) {
             var elem = DOM.get(selector);
-            if (!elem || !elem.lastChild()) {
-                return null;
-            }
-            return nth(elem.lastChild, filter, 'previousSibling',
+            return nth(elem && elem.lastChild, filter, 'previousSibling',
                 undefined, undefined, true);
         },
 
@@ -3124,7 +3313,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
             function(a, b) {
                 a = DOM.get(a);
                 b = DOM.get(b);
-                return DOM.__contains(a, b);
+                if (a && b) {
+                    return DOM.__contains(a, b);
+                }
             },
 
         equals:function(n1, n2) {

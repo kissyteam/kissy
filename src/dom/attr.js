@@ -11,9 +11,6 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 'innerText' : 'textContent',
             EMPTY = '',
             isElementNode = DOM._isElementNode,
-            isTextNode = function(elem) {
-                return DOM._nodeTypeIs(elem, 3);
-            },
             rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
             rfocusable = /^(?:button|input|object|select|textarea)$/i,
             rclickable = /^a(?:rea)?$/i,
@@ -152,6 +149,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     }
                 }};
 
+        function isTextNode(elem) {
+            return DOM._nodeTypeIs(elem, DOM.TEXT_NODE);
+        }
+
         if (oldIE) {
 
             // get attribute value from attribute node for ie
@@ -170,6 +171,16 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     var ret = elem.getAttributeNode(name);
                     if (ret) {
                         ret.nodeValue = value;
+                    } else {
+                        try {
+                            var attr = elem.ownerDocument.createAttribute(name);
+                            attr.value = value;
+                            elem.setAttributeNode(attr);
+                        }
+                        catch (e) {
+                            // It's a real failure only if setAttribute also fails.
+                            return elem.setAttribute(name, value, 0);
+                        }
                     }
                 }
             };
@@ -244,7 +255,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 name = propFix[ name ] || name;
                 var hook = propHooks[ name ];
                 if (value !== undefined) {
-                    S.each(elems, function(elem) {
+                    elems.each(function(elem) {
                         if (hook && hook.set) {
                             hook.set(elem, value, name);
                         } else {
@@ -297,9 +308,39 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * Sets an attribute for the set of matched elements.
              */
             attr:function(selector, name, val, pass) {
+                /*
+                 Hazards From Caja Note:
+
+                 - In IE[67], el.setAttribute doesn't work for attributes like
+                 'class' or 'for'.  IE[67] expects you to set 'className' or
+                 'htmlFor'.  Caja use setAttributeNode solves this problem.
+
+                 - In IE[67], <input> elements can shadow attributes.  If el is a
+                 form that contains an <input> named x, then el.setAttribute(x, y)
+                 will set x's value rather than setting el's attribute.  Using
+                 setAttributeNode solves this problem.
+
+                 - In IE[67], the style attribute can only be modified by setting
+                 el.style.cssText.  Neither setAttribute nor setAttributeNode will
+                 work.  el.style.cssText isn't bullet-proof, since it can be
+                 shadowed by <input> elements.
+
+                 - In IE[67], you can never change the type of an <button> element.
+                 setAttribute('type') silently fails, but setAttributeNode
+                 throws an exception.  caja : the silent failure. KISSY throws error.
+
+                 - In IE[67], you can never change the type of an <input> element.
+                 setAttribute('type') throws an exception.  We want the exception.
+
+                 - In IE[67], setAttribute is case-sensitive, unless you pass 0 as a
+                 3rd argument.  setAttributeNode is case-insensitive.
+
+                 - Trying to set an invalid name like ":" is supposed to throw an
+                 error.  In IE[678] and Opera 10, it fails without an error.
+                 */
                 // suports hash
                 if (S.isPlainObject(name)) {
-                    pass = val; // 塌缩参数
+                    pass = val;
                     for (var k in name) {
                         DOM.attr(selector, k, name[k], pass);
                     }
@@ -357,14 +398,18 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return ret === null ? undefined : ret;
                 } else {
                     // setter
-                    S.each(DOM.query(selector), function(el) {
+                    DOM.query(selector).each(function(el) {
                         // only set attributes on element nodes
                         if (!isElementNode(el)) {
                             return;
                         }
-
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
+                        var normalizer = attrNormalizer;
+                        // browsers index elements by id/name on forms, give priority to attributes.
+                        if (el.nodeName.toLowerCase() == "form") {
+                            normalizer = attrNodeHook;
+                        }
+                        if (normalizer && normalizer.set) {
+                            normalizer.set(el, val, name);
                         } else {
                             // convert the value to a string (all browsers do this but IE)
                             el.setAttribute(name, EMPTY + val);
@@ -379,7 +424,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             removeAttr: function(selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
-                S.each(DOM.query(selector), function(el) {
+                DOM.query(selector).each(function(el) {
                     if (isElementNode(el)) {
                         var propName;
                         el.removeAttribute(name);
@@ -503,7 +548,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    S.each(DOM.query(selector), function(el) {
+                    DOM.query(selector).each(function(el) {
                         if (isElementNode(el)) {
                             el[TEXT] = val;
                         }

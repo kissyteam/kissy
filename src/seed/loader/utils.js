@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if (S.use) {
+    if ("require" in this) {
         return;
     }
     S.mix(utils, {

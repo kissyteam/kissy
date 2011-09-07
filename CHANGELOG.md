@@ -14,8 +14,7 @@ Legend of version history:
 History:
 --------
 ### v1.1.6 -> v1.2.0 (2011/06/08)
-  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
-
+ - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
  - [!] DOM.insertBefore/insertAfter 没有返回值
@@ -23,6 +22,10 @@ History:
  - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
  - [*] DOM.query(selector,context) context 可以为 Array<HTMLElement> HTMLNodeList 以及选择器字符串(限制同第一个参数 selector)
  - [!] DOM.css 取计算值，而不是行内样式值。行内样式可通过 DOM.style 获取
+ - [+] 增加 DOM.clone
+ - [+] 增加 DOM.style
+ - [!] 禁止使用原生 cloneNode ，使用 DOM.clone ，也不要设置自定义属性，使用 DOM.data
+ - [*] DOM.remove 会自动清理当前节点以及子孙节点上注册的事件
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
@@ -41,7 +44,7 @@ History:
  - [!] ajax 请求地址的响应头如果设置了 content-type 为 json 或 xml ，回调的第一个参数自动为该格式，不需要手动 parse
  - [+] 增加 S.io.upload 方法，用于无刷新文件上传
  - [+] 增加 form 配置，可直接序列化 form 并发送 ajax 请求
- - [+] 增加 S.io.serialize 方法，用于 form 徐泪花
+ - [+] 增加 S.io.serialize 方法，用于 form 序列化
 
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
@@ -49,12 +52,10 @@ History:
  - [!] NodeList.prototype.all(selector) 1.1.6为取得第一个元素的子孙中选符合 selector 的节点 , 1.2 改为取得所有元素的子孙符合 selector 的节点（经过去重和根据 DOM 树前序遍历顺序进行排序）
 
 
- - [*] anim 使用 css3 时，解决源 style 和目的 style 不对应问题
  - [*] anim 提高性能，不重复 touch dom / css
  - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
  - [+] 增加 anim 单元测试
  - [x] bugfix anim 内存泄露
-
 
 
  - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
@@ -90,23 +91,17 @@ History:
 
  - [+] 增加 menubutton 组件
 
-
  - [+] 增加 menu 组件
-
 
  - [+] 增加 component 组件基类
 
-
  - [+] kissy-tools 增加 module-compiler 工具
-
 
  - [+] dd 支持 drop 以及基于委托的 drag&drop
  - [+] dd 增加单元测试
  - [+] dd 增加 portal 示例
 
-
  - [*] kissyteam 文档利用 sphinx 重新编写整理
-
 
  - [!] calendar 模块 use("calendar") 不会会默认加载基础css，需要的话可以静态引入或者user("calendar,calendar/assets/base.css") 载入
 

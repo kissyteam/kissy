@@ -388,7 +388,7 @@
         var tabPanelDiv = DOM.create("<div class='tab-panel'></div>");
 
         for (var i = 0; i < tabs.length; i++) {
-            form.parentNode.appendChild(tabPanelDiv.cloneNode(true));
+            form.parentNode.appendChild(DOM.clone(tabPanelDiv, true));
         }
         DOM.get(".tab-panel", form.parentNode).appendChild(form);
 

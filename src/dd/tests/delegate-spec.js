@@ -24,7 +24,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
                  * @param drag 当前拖对象
                  */
                 node:function(drag) {
-                    var n = S.one(drag.get("dragNode")[0].cloneNode(true));
+                    var n = S.one(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;

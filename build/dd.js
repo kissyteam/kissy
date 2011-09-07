@@ -1,7 +1,7 @@
-/*
+﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:13
+build time: Sep 5 21:29
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -66,7 +66,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
         _init: function() {
             var self = this;
-            self._showShimMove = throttle(self._move, self, MOVE_DELAY);
+            self._showShimMove = S.throttle(self._move, MOVE_DELAY, self);
         },
 
         /*
@@ -289,41 +289,13 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
         }
     });
 
-
-    /**
-     * Throttles a call to a method based on the time between calls. from YUI
-     * @method throttle
-     * @for KISSY
-     * @param fn {function} The function call to throttle.
-     * @param ms {int} The number of milliseconds to throttle the method call. Defaults to 150
-     * @return {function} Returns a wrapped function that calls fn throttled.
-     * ! Based on work by Simon Willison: http://gist.github.com/292562
-     */
-    function throttle(fn, scope, ms) {
-
-        if (ms === -1) {
-            return (function() {
-                fn.apply(scope, arguments);
-            });
-        }
-
-        var last = S.now();
-        return (function() {
-            var now = S.now();
-            if (now - last > ms) {
-                last = now;
-                fn.apply(scope, arguments);
-            }
-        });
-    }
-
     function region(node) {
         var offset = node.offset();
         return {
             left:offset.left,
-            right:offset.left + node[0].offsetWidth,
+            right:offset.left + node.outerWidth(),
             top:offset.top,
-            bottom:offset.top + node[0].offsetHeight
+            bottom:offset.top + node.outerHeight()
         };
     }
 
@@ -676,7 +648,7 @@ KISSY.add("dd/proxy", function(S, Node) {
              @return {KISSY.Node} 替代节点
              */
             value:function(drag) {
-                return new Node(drag.get("node")[0].cloneNode(true));
+                return new Node(drag.get("node").clone(true));
                 //n.attr("id", S.guid("ks-dd-proxy"));
             }
         },
@@ -1039,13 +1011,13 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
         getRegion:function(node) {
             if (isWin(node)) {
                 return {
-                    width:DOM['viewportWidth'](),
-                    height:DOM['viewportHeight']()
+                    width:DOM.viewportWidth(),
+                    height:DOM.viewportHeight()
                 };
             } else {
                 return {
-                    width:node[0].offsetWidth,
-                    height:node[0].offsetHeight
+                    width:node.outerWidth(),
+                    height:node.outerHeight()
                 };
             }
         },

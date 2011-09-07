@@ -85,7 +85,7 @@ KISSY.use("dom", function(S, DOM) {
             });
 
 
-            it('shoudl get cutom attribute correctly', function() {
+            it('should get cutom attribute correctly', function() {
                 // 对于非 mapping 属性：
                 // ie 下可以用 a.name 或 a['name'] 获取，其它浏览器下不能，即便有值也返回 undefined
                 //alert(a['data-test']);
@@ -178,6 +178,17 @@ KISSY.use("dom", function(S, DOM) {
                 DOM.attr(disabledTest, "disabled", false);
 
                 expect(DOM.attr(disabledTest, "disabled")).not.toBe(true);
+            });
+
+            it("should set/get correctly even encouter same input name", function() {
+                var d = DOM.create("<form >	\
+	        <input name='custom110829' id='custom110829' value='yy'/> \
+	    </form>");
+                DOM.append(d, document.body);
+                DOM.attr(d, "custom110829", "xx");
+                expect(DOM.attr(d, "custom110829")).toBe('xx');
+                expect(DOM.val("#custom110829")).toBe("yy");
+                DOM.remove(d);
             });
         });
 
@@ -290,7 +301,7 @@ KISSY.use("dom", function(S, DOM) {
             });
         });
 
-        describe("form/name/button.event works for ie6/7", function() {
+        describe("form/name/button/event works for ie6/7", function() {
             it("get attribute from form correctly", function() {
                 var form = DOM.create("<form " +
                     " xx='zz' " +
@@ -302,8 +313,11 @@ KISSY.use("dom", function(S, DOM) {
                 expect(DOM.attr(form, "onsubmit")).toBe("return false;");
                 expect(DOM.attr(form, "name")).toBe("form_name");
                 expect(DOM.attr(form, "title")).toBe("form_title");
+                // prevent input shadow
                 expect(DOM.attr(form, "xx")).toBe("zz");
-
+                DOM.attr(form, "xx", "qq");
+                expect(DOM.attr(form, "xx")).toBe("qq");
+                expect(DOM.val(DOM.first(form))).toBe("yy");
 
                 var button = DOM.create("<button value='xxx'>zzzz</button>");
                 expect(DOM.attr(button, "value")).toBe("xxx");

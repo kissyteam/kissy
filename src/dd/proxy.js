@@ -19,7 +19,7 @@ KISSY.add("dd/proxy", function(S, Node) {
              @return {KISSY.Node} 替代节点
              */
             value:function(drag) {
-                return new Node(drag.get("node")[0].cloneNode(true));
+                return new Node(drag.get("node").clone(true));
                 //n.attr("id", S.guid("ks-dd-proxy"));
             }
         },

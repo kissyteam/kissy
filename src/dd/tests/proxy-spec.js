@@ -18,7 +18,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             dragNode = drag.get("dragNode");
             new Proxy({
                 node:function(drag) {
-                    var n = new Node(drag.get("dragNode")[0].cloneNode(false));
+                    var n = new Node(drag.get("dragNode").clone(false));
                     n.css("opacity", 0.2);
                     return n;
                 }

@@ -11,6 +11,9 @@
         <concat destfile="sizzle-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="impl.js"/>
             <path path="../sizzle.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

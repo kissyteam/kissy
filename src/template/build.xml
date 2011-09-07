@@ -12,6 +12,9 @@
             <path path="template.js"/>
             <path path="template-node.js"/>
             <path path="../template.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

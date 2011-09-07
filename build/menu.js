@@ -1,7 +1,7 @@
-/*
+﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:13
+build time: Sep 5 21:30
 */
 /**
  * deletable menuitem
@@ -124,6 +124,14 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                     filterInput = view.get("filterInput");
                 /*监控键盘事件*/
                 filterInput.on("keyup", self.handleFilterEvent, self);
+            },
+
+            _handleMouseEnter:function() {
+                var self = this;
+                FilterMenu.superclass._handleMouseEnter.apply(self, arguments);
+                // 权益解决，filter input focus 后会滚动到牌聚焦处，select 则不会
+                // 如果 filtermenu 的菜单项被滚轮滚到后面，点击触发不了，会向前滚动到 filter input
+                self.getKeyEventTarget()[0].select();
             },
 
             handleFilterEvent:function() {
@@ -560,6 +568,9 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
+
+    var $ = S.all;
+
     var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
         _handleMouseEnter:function(e) {
@@ -604,19 +615,18 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
         _uiSetHighlighted:function(v) {
             MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
-            // 是否要滚动到当前菜单项
+            // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
                 var el = this.get("el"),
-                    p = this.get("parent").get("el"),
-                    y = el.offset().top,
-                    h = el[0].offsetHeight,
-                    py = p.offset().top,
-                    ph = p[0].offsetHeight;
-                if (y - py >= ph) {
-                    p[0].scrollTop += y - py + h - ph;
-                } else if (y - py < 0) {
-                    p[0].scrollTop += y - py;
+                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                    p = el.parent(function(e) {
+                        return $(e).css("overflow") != "visible";
+                    }, this.get("parent").get("el").parent());
+                if (!p) {
+                    return;
                 }
+                el.scrollIntoView(p, undefined, undefined, true);
             }
         },
 
@@ -664,6 +674,13 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
             checked:{},
             selected:{}
+        },
+
+        HTML_PARSER:{
+            selectable:function(el) {
+                var cls = this.getCls("menuitem-selectable");
+                return el.hasClass(cls);
+            }
         }
     });
 

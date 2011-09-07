@@ -4,7 +4,7 @@
     <property name="copyright.files" value="*-min.css, *-min.js"/>
     <property name="component.name" value="cssbase"/>
     <property name="component.files" value="cssbase-pkg.css"/>
-    <property name="src.dir" value="."/>
+     <dirname property="src.dir" file="${ant.file.cssbase.build}"/>
 
     <import file="../../common.xml"/>
 
@@ -15,6 +15,9 @@
             <path path="${kissy.build.dir}/cssreset.css"/>
             <path path="${kissy.build.dir}/cssgrids.css"/>
             <path path="${kissy.build.dir}/csscommon.css"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
         </concat>
     </target>
 

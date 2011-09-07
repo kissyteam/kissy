@@ -3,7 +3,7 @@
 #1.chmod 777 build.sh
 #2.chmod 777 ant/bin/ant
 ANT=../../kissy-tools/ant/bin/ant
-$ANT -buildfile run.xml build-all
+$ANT build-all
 done
 
 

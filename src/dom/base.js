@@ -31,7 +31,7 @@ KISSY.add('dom/base', function(S, undefined) {
          * 是不是 element node
          */
         _isElementNode: function(elem) {
-            return nodeTypeIs(elem, 1);
+            return nodeTypeIs(elem, DOM.ELEMENT_NODE);
         },
 
         /**
@@ -43,7 +43,7 @@ KISSY.add('dom/base', function(S, undefined) {
         _getWin: function(elem) {
             return (elem && ('scrollTo' in elem) && elem['document']) ?
                 elem :
-                nodeTypeIs(elem, 9) ?
+                nodeTypeIs(elem, DOM.DOCUMENT_NODE) ?
                     elem.defaultView || elem.parentWindow :
                     (elem === undefined || elem === null) ?
                         window : false;
@@ -61,8 +61,6 @@ KISSY.add('dom/base', function(S, undefined) {
             return o && !o.nodeType && o.item && !o.setTimeout;
         }
     };
-
-    DOM.TEXT_NODE = 3;
 
     return DOM;
 

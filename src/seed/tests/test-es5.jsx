@@ -1,4 +1,4 @@
-﻿var TheTest = File.openDialog('Select file', 'test-es5.js');
+var TheTest = File.openDialog('Select file', 'test-es5.js');
 Folder.current = TheTest.path;
 
 console = {

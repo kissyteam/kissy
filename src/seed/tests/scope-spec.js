@@ -1,4 +1,4 @@
-﻿describe('test scope and seed', function() {
+describe('test scope and seed', function() {
 
     var NATIVE_KISSY = { },
 

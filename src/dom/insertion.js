@@ -14,65 +14,65 @@ KISSY.add('dom/insertion', function(S, DOM) {
     function insertion(newNodes, refNodes, fn) {
         newNodes = DOM.query(newNodes);
         refNodes = DOM.query(refNodes);
-        var newNode = nl2frag(newNodes);
-        if (!newNode) {
+        if (!newNodes.length || !refNodes.length) {
             return;
         }
-        var cloneNode;
+        var newNode = nl2frag(newNodes),
+            clonedNode;
         //fragment 一旦插入里面就空了，先复制下
         if (refNodes.length > 1) {
-            cloneNode = newNode.cloneNode(true);
+            clonedNode = DOM.clone(newNode, true);
         }
         for (var i = 0; i < refNodes.length; i++) {
             var refNode = refNodes[i];
             //refNodes 超过一个，clone
-            var node = i > 0 ? cloneNode.cloneNode(true) : newNode;
+            var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
             fn(node, refNode);
         }
     }
 
     S.mix(DOM, {
 
-            /**
-             * Inserts the new node as the previous sibling of the reference node.
-             */
-            insertBefore: function(newNodes, refNodes) {
-                insertion(newNodes, refNodes, function(newNode, refNode) {
-                    if (refNode[PARENT_NODE]) {
-                        refNode[PARENT_NODE].insertBefore(newNode, refNode);
-                    }
-                });
-            },
+        /**
+         * Inserts the new node as the previous sibling of the reference node.
+         */
+        insertBefore: function(newNodes, refNodes) {
+            insertion(newNodes, refNodes, function(newNode, refNode) {
+                if (refNode[PARENT_NODE]) {
+                    refNode[PARENT_NODE].insertBefore(newNode, refNode);
+                }
+            });
+        },
 
-            /**
-             * Inserts the new node as the next sibling of the reference node.
-             */
-            insertAfter: function(newNodes, refNodes) {
-                insertion(newNodes, refNodes, function(newNode, refNode) {
-                    if (refNode[PARENT_NODE]) {
-                        refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
-                    }
-                });
-            },
+        /**
+         * Inserts the new node as the next sibling of the reference node.
+         */
+        insertAfter: function(newNodes, refNodes) {
+            insertion(newNodes, refNodes, function(newNode, refNode) {
+                if (refNode[PARENT_NODE]) {
+                    refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
+                }
+            });
+        },
 
-            /**
-             * Inserts the new node as the last child.
-             */
-            appendTo: function(newNodes, parents) {
-                insertion(newNodes, parents, function(newNode, parent) {
-                    parent.appendChild(newNode);
-                });
-            },
+        /**
+         * Inserts the new node as the last child.
+         */
+        appendTo: function(newNodes, parents) {
+            insertion(newNodes, parents, function(newNode, parent) {
+                parent.appendChild(newNode);
+            });
+        },
 
-            /**
-             * Inserts the new node as the first child.
-             */
-            prependTo:function(newNodes, parents) {
-                insertion(newNodes, parents, function(newNode, parent) {
-                    parent.insertBefore(newNode, parent.firstChild);
-                });
-            }
-        });
+        /**
+         * Inserts the new node as the first child.
+         */
+        prependTo:function(newNodes, parents) {
+            insertion(newNodes, parents, function(newNode, parent) {
+                parent.insertBefore(newNode, parent.firstChild);
+            });
+        }
+    });
     var alias = {
         "prepend":"prependTo",
         "append":"appendTo",
@@ -84,8 +84,8 @@ KISSY.add('dom/insertion', function(S, DOM) {
     }
     return DOM;
 }, {
-        requires:["./create"]
-    });
+    requires:["./create"]
+});
 
 /**
  * 2011-05-25

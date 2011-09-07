@@ -1,7 +1,7 @@
-/*
+﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Aug 23 12:13
+build time: Sep 5 21:30
 */
 /**
  * @module  anim-node-plugin
@@ -215,6 +215,10 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "scrollLeft",
             "height",
             "width",
+            "innerHeight",
+            "innerWidth",
+            "outerHeight",
+            "outerWidth",
             "addStyleSheet",
             // "append" will be overridden
             "appendTo",

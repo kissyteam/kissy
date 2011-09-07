@@ -4,7 +4,7 @@
     <property name="copyright.files" value="*-min.css, *-min.js"/>
     <property name="component.name" value="cssreset-grids"/>
     <property name="component.files" value="cssreset-grids-pkg.css"/>
-    <property name="src.dir" value="."/>
+     <dirname property="src.dir" file="${ant.file.cssreset-grids.build}"/>
 
     <import file="../../common.xml"/>
 
@@ -13,6 +13,9 @@
                 encoding="${charset}" outputencoding="${charset}">
             <path path="${kissy.build.dir}/cssreset.css"/>
             <path path="${kissy.build.dir}/cssgrids.css"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
         </concat>
     </target>
 

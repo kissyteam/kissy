@@ -33,6 +33,9 @@
 
             <path location="web.js"/>
             <path location="mods.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

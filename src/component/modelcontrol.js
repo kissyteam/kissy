@@ -321,7 +321,7 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                     var el = self.getKeyEventTarget();
                     // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                     if (ev.which == 1 && el.attr("tabindex") >= 0) {
-                        self.getKeyEventTarget()[0].focus();
+                        el[0].focus();
                     }
                     // Cancel the default action unless the control
                     // allows text selection.

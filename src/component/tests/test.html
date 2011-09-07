@@ -26,9 +26,7 @@
 </script>
 <script src="component-spec.js"></script>
 <script>
-    KISSY.log("after report");
     KISSY.use("component", function(S, Component) {
-        S.log("report");
         S.log(Component.DecorateChild);
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().execute(function() {

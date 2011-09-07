@@ -14,6 +14,9 @@
             <path location="ua.js"/>
             <path location="embed.js"/>
             <path location="../flash.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
         <copy file="express-install/expressInstall.swf" todir="${src.dir}"/>
     </target>

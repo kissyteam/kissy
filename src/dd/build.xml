@@ -17,6 +17,9 @@
             <path path="droppable-delegate.js"/>
             <path path="scroll.js"/>
             <path location="../dd.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
         </concat>
     </target>
 

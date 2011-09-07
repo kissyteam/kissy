@@ -11,6 +11,9 @@
         <concat destfile="ua-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="." includes="*.js"/>
             <path location="../ua.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

@@ -29,6 +29,25 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
+//    ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
+//    function inDocument(elem) {
+//        if (!elem) {
+//            return 0;
+//        }
+//        var doc = elem.ownerDocument;
+//        if (!doc) {
+//            return 0;
+//        }
+//        var html = doc.documentElement;
+//        if (html === elem) {
+//            return true;
+//        }
+//        else if (DOM.__contains(html, elem)) {
+//            return true;
+//        }
+//        return false;
+//    }
+
     S.mix(DOM, {
 
 
@@ -38,34 +57,42 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *     is not in the ancestor frame chain of the element, we measure relative to
          *     the top-most window.
          */
-        offset: function(elem, val, relativeWin) {
-            // ownerDocument 的判断可以保证 elem 没有游离在 document 之外（比如 fragment）
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
-                return;
-            }
-
+        offset: function(selector, val, relativeWin) {
             // getter
             if (val === undefined) {
-                return getOffset(elem, relativeWin);
+                var elem = DOM.get(selector),ret;
+                if (elem) {
+                    ret = getOffset(elem, relativeWin);
+                }
+                return ret;
             }
-
             // setter
-            setOffset(elem, val);
+            DOM.query(selector).each(function(elem) {
+                setOffset(elem, val);
+            });
         },
 
         /**
          * Makes elem visible in the container
+         * @param elem
+         * @param container
+         * @param top
+         * @param hscroll
+         * @param {Boolean} auto whether adjust element automatically
+         *                       (it only scrollIntoView when element is out of view)
          * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollIntoView: function(elem, container, top, hscroll) {
-            if (!(elem = DOM.get(elem)) || !elem[OWNER_DOCUMENT]) {
+        scrollIntoView: function(elem, container, top, hscroll, auto) {
+            if (!(elem = DOM.get(elem))) {
                 return;
             }
 
-            hscroll = hscroll === undefined ? true : !!hscroll;
-            top = top === undefined ? true : !!top;
+            if (auto !== true) {
+                hscroll = hscroll === undefined ? true : !!hscroll;
+                top = top === undefined ? true : !!top;
+            }
 
             // default current window, use native for scrollIntoView(elem, top)
             if (!container ||
@@ -96,8 +123,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 },
 
                 // container 视窗的高宽
-                ch = isWin ? DOM['viewportHeight'](container) : container.clientHeight,
-                cw = isWin ? DOM['viewportWidth'](container) : container.clientWidth,
+                ch = isWin ? DOM.viewportHeight(container) : container.clientHeight,
+                cw = isWin ? DOM.viewportWidth(container) : container.clientWidth,
 
                 // container 视窗相对 container 元素的坐标
                 cl = DOM[SCROLL_LEFT](container),
@@ -106,11 +133,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 cb = ct + ch,
 
                 // elem 的高宽
-                eh = elem.offsetHeight,
-                ew = elem.offsetWidth,
+                eh = DOM.outerHeight(elem),
+                ew = DOM.outerWidth(elem),
 
                 // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去一个
+                // 注：diff.left 含 border, cl 也含 border, 因此要减去容器的
                 l = diff.left + cl -
                     (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
 
@@ -120,7 +147,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 r = l + ew,
                 b = t + eh,
 
-                t2, l2;
+                t2,
+
+                l2;
 
             // 根据情况将 elem 定位到 container 视窗中
             // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
@@ -142,9 +171,13 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 }
             }
 
-            // go
-            DOM[SCROLL_TOP](container, t2);
-            DOM[SCROLL_LEFT](container, l2);
+            // if element is already in the container view ,then do nothing
+            if (t2 !== undefined) {
+                DOM[SCROLL_TOP](container, t2);
+            }
+            if (l2 !== undefined) {
+                DOM[SCROLL_LEFT](container, l2);
+            }
         },
         /**
          * for idea autocomplete
@@ -163,36 +196,38 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
         DOM[method] = function(elem, v) {
             if (S.isNumber(elem)) {
-                arguments.callee(win, elem);
-                return;
+                return arguments.callee(win, elem);
             }
             elem = DOM.get(elem);
-            var ret = 0,
+            var ret,
                 w = getWin(elem),
                 d;
-
             if (w) {
                 if (v !== undefined) {
                     // 注意多 windw 情况，不能简单取 win
-                    var left = name == "Left" ? v : DOM.scrollLeft(w);
-                    var top = name == "Top" ? v : DOM.scrollTop(w);
+                    var left = name == "Left" ? v : DOM.scrollLeft(w),
+                        top = name == "Top" ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
+                } else {
+                    d = w[DOCUMENT];
+                    ret =
+                        //标准
+                        //chrome == body.scrollTop
+                        //firefox/ie9 == documentElement.scrollTop
+                        w[i ? 'pageYOffset' : 'pageXOffset']
+                            //ie6,7,8 standard mode
+                            || d[DOC_ELEMENT][method]
+                            //quirks mode
+                            || d[BODY][method];
                 }
-                d = w[DOCUMENT];
-                ret =
-                    //标准
-                    //chrome == body.scrollTop
-                    //firefox/ie9 == documentElement.scrollTop
-                    w[i ? 'pageYOffset' : 'pageXOffset']
-                        //ie6,7,8 standard mode
-                        || d[DOC_ELEMENT][method]
-                        //quirks mode
-                        || d[BODY][method]
-
-            } else if (isElementNode((elem = DOM.get(elem)))) {
-                ret = v === undefined ? elem[method] : elem[method] = v;
+            } else if (isElementNode(elem)) {
+                if (v !== undefined) {
+                    elem[method] = v
+                } else {
+                    ret = elem[method];
+                }
             }
-            return v === undefined ? ret : undefined;
+            return ret;
         }
     });
 

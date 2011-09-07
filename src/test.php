@@ -21,9 +21,12 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 
             // event hash change ,ie error
             index++;
-            if ((KISSY.UA.ie || KISSY.UA.webkit) && tests[index].match(/event\//)) {
-                window.open(loc + tests[index] + "?" + (+new Date()));
-                index++;
+
+            if (tests[index]) {
+                if ((KISSY.UA.ie || KISSY.UA.webkit) && tests[index].match(/event\//)) {
+                    window.open(loc + tests[index] + "?" + (+new Date()));
+                    index++;
+                }
             }
             if (tests[index]) {
                 document.getElementById("test").src = tests[index] + "?" + (+new Date());

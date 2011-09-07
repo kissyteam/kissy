@@ -12,6 +12,9 @@
         <concat destfile="datalazyload-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path location="impl.js"/>
             <path location="../datalazyload.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;" />
+            </filterchain>
         </concat>
     </target>
 

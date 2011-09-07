@@ -2,10 +2,8 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.log("before report");
 KISSY.use("component", function(S, Component) {
-    S.log("reporting");
-    S.log(Component.DecorateChild);
+
     function invalidNode(n) {
         return n == null || n.nodeType == 11;
     }

@@ -89,10 +89,11 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
             if (val === undefined) {
-                var elem = DOM.get(selector);
+                var elem = DOM.get(selector),ret = '';
                 if (elem) {
-                    return style(elem, name, val);
+                    ret = style(elem, name, val);
                 }
+                return ret;
             } else {
                 DOM.query(selector).each(function(elem) {
                     style(elem, name, val);
@@ -118,11 +119,12 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             if (val === undefined) {
                 // supports css selector/Node/NodeList
                 var elem = DOM.get(selector), ret = '';
-
-                // If a hook was provided get the computed value from there
-                if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
-                } else {
-                    ret = DOM._getComputedStyle(elem, name);
+                if (elem) {
+                    // If a hook was provided get the computed value from there
+                    if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
+                    } else {
+                        ret = DOM._getComputedStyle(elem, name);
+                    }
                 }
                 return ret === undefined ? '' : ret;
             }
@@ -252,13 +254,40 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     }
                 }
             });
-        }
+        },
+        innerWidth:0,
+        innerHeight:0,
+        outerWidth:0,
+        outerHeight:0,
+        width:0,
+        height:0
     });
 
-    /**
-     * name,width 简单转发
-     */
+    function capital(str) {
+        return str.charAt(0).toUpperCase() + str.substring(1);
+    }
+
+
     S.each([WIDTH,HEIGHT], function(name) {
+        DOM["inner" + capital(name)] = function(selector) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, "padding");
+            } else {
+                return null;
+            }
+        };
+
+
+        DOM["outer" + capital(name)] = function(selector, includeMargin) {
+            var el = DOM.get(selector);
+            if (el) {
+                return getWH(el, name, includeMargin ? "margin" : "border");
+            } else {
+                return null;
+            }
+        };
+
         DOM[name] = function(selector, val) {
             var ret = DOM.css(selector, name, val);
             if (ret) {
@@ -323,12 +352,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop
-                                offset -= elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
+                                // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
+                                // ie<9 注意有时候 elem.offsetParent 为 null ...
+                                // 比如 DOM.append(DOM.create("<div class='position:absolute'></div>"),document.body)
+                                offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
                                     || 0;
                             }
-
                             val = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
                         }
+                        val += "px";
                     }
                     return val;
                 }
@@ -401,7 +433,15 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
 
-    function getWH(elem, name) {
+    /**
+     * 得到元素的大小信息
+     * @param elem
+     * @param name
+     * @param {String} extra    "padding" : (css width) + padding
+     *                          "border" : (css width) + padding + border
+     *                          "margin" : (css width) + padding + border + margin
+     */
+    function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
             return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
         } else if (elem.nodeType == 9) {
@@ -410,10 +450,43 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
-        S.each(which, function(direction) {
-            val -= parseFloat(DOM.css(elem, 'padding' + direction)) || 0;
-            val -= parseFloat(DOM.css(elem, 'border' + direction + 'Width')) || 0;
-        });
+        if (val > 0) {
+            if (extra !== "border") {
+                S.each(which, function(w) {
+                    if (!extra) {
+                        val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                    }
+                    if (extra === "margin") {
+                        val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                    } else {
+                        val -= parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                    }
+                });
+            }
+
+            return val
+        }
+
+        // Fall back to computed then uncomputed css if necessary
+        val = DOM._getComputedStyle(elem, name);
+        if (val < 0 || S.isNullOrUndefined(val)) {
+            val = elem.style[ name ] || 0;
+        }
+        // Normalize "", auto, and prepare for extra
+        val = parseFloat(val) || 0;
+
+        // Add padding, border, margin
+        if (extra) {
+            S.each(which, function(w) {
+                val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                if (extra !== "padding") {
+                    val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                }
+                if (extra === "margin") {
+                    val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                }
+            });
+        }
 
         return val;
     }

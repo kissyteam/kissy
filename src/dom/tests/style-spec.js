@@ -145,6 +145,38 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             DOM.remove(elem);
         });
 
+
+        it("inner/outer width/height works", function() {
+            var elem = DOM.create(' <div ' +
+                'style="' +
+                'position:absolute;' +
+                'margin:9px; ' +
+                'background: transparent; ' +
+                'padding:3px;' +
+                'border: 5px solid rgb(0,0,0);"><div ' +
+                'style="padding: 0;margin: 0;' +
+                'width:44px;height:44px;font-size:0;line-height:0;"></div>' +
+                '</div>');
+
+            document.body.appendChild(elem);
+
+            expect(Math.round(DOM.width(elem))).toBeEqual(44);
+            expect(Math.round(DOM.height(elem))).toBeEqual(44);
+
+            expect(Math.round(DOM.innerWidth(elem))).toBeEqual(44 + 3 * 2);
+            expect(Math.round(DOM.innerHeight(elem))).toBeEqual(44 + 3 * 2);
+
+            expect(Math.round(DOM.outerWidth(elem))).toBeEqual(44 + 3 * 2 + 5 * 2);
+            expect(Math.round(DOM.outerWidth(elem))).toBeEqual(44 + 3 * 2 + 5 * 2);
+
+
+            expect(Math.round(DOM.outerWidth(elem, true))).toBeEqual(44 + 3 * 2 + 5 * 2 + 9 * 2);
+            expect(Math.round(DOM.outerHeight(elem, true))).toBeEqual(44 + 3 * 2 + 5 * 2 + 9 * 2);
+
+            DOM.remove(elem);
+        });
+
+
         it("show/hide works", function() {
             var elem = DOM.create(' <div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
@@ -269,6 +301,13 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             expect(DOM.css(d, "opacity")).toBeExactEqual("0.66");
             expect(DOM.style(d, "opacity")).toBe("0.66");
             DOM.remove(d);
+        });
+
+        it("left works for auto in", function() {
+            var div = DOM.create("<div style='position:absolute;'></div>");
+            DOM.append(div, document.body);
+            expect(DOM.css(div, "left"))
+                .toBe((div.offsetLeft - document.documentElement.clientLeft) + "px");
         });
 
 

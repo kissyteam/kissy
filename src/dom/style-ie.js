@@ -161,8 +161,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
     {
         requires:["./base","ua","./style"]
     }
-)
-    ;
+);
 /**
  * NOTES:
  * 承玉： 2011.05.19 opacity in ie
