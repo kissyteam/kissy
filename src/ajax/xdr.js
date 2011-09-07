@@ -39,16 +39,18 @@ KISSY.add("ajax/xdr", function(S, io) {
                 c.innerHTML = o;
             }
 
-            var originalSend = XhrTransport.prototype.send;
+            function XdrTransport() {
+                XdrTransport.superclass.constructor.apply(this, arguments);
+            }
 
-            // rewrite send to support flash xdr
-            S.augment(XhrTransport, {
+            S.extend(XdrTransport, XhrTransport, {
+                // rewrite send to support flash xdr
                 send:function() {
                     var self = this,
                         xhrObj = self.xhrObj,
                         c = xhrObj.config;
                     if (!c.crossDomain) {
-                        return originalSend.call(self);
+                        return XdrTransport.superclass.send.call(self);
                     }
                     var xdr = c['xdr'] || {};
                     // 不提供则使用 cdn 默认的 flash
@@ -108,7 +110,6 @@ KISSY.add("ajax/xdr", function(S, io) {
                 }
             });
 
-
             /*called by flash*/
             io['applyTo'] = function(_, cmd, args) {
                 S.log(cmd + " execute");
@@ -135,6 +136,9 @@ KISSY.add("ajax/xdr", function(S, io) {
                 var xhr = maps[o.uid];
                 xhr && xhr._xdrResponse(e, o, c);
             };
+
+            // add xdr ability to xhr
+            io.setupTransport("*", XdrTransport);
 
             // export io for flash to call
             S.io = io;
