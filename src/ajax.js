@@ -84,7 +84,6 @@ KISSY.add("ajax", function(S, serializer, io) {
         "ajax/base",
         "ajax/xhrobject",
         "ajax/xhr",
-        "ajax/xdr",
         "ajax/script",
         "ajax/jsonp",
         "ajax/form",

@@ -29,7 +29,12 @@
                 xhrFields:{
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
-                    //withCredentials:true
+                    // firefox , chrome 携带 cookie
+                    withCredentials:true
+                },
+                xdr:{
+                    // 强制用 flash，ie 可携带cookie
+                    use:"flash"
                 },
                 data:{
                     action:"x"

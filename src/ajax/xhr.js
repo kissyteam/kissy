@@ -2,7 +2,7 @@
  * ajax xhr transport class
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhr", function(S, io) {
+KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
 
 
     var OK_CODE = 200,
@@ -41,31 +41,31 @@ KISSY.add("ajax/xhr", function(S, io) {
         return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
 
-    var detectXhr = io.xhr(),
-        allowCrossDomain = false;
+    var detectXhr = io.xhr();
 
     if (detectXhr) {
 
-        if ("withCredentials" in detectXhr || _XDomainRequest) {
-            allowCrossDomain = true;
-        }
-
         function XhrTransport(xhrObj) {
-            this.xhrObj = xhrObj;
-        }
+            var c = xhrObj.config;
+            var xdrCfg = c['xdr'] || {};
 
-        XhrTransport.allowCrossDomain = allowCrossDomain;
+            /**
+             * ie>7 强制使用 flash xdr
+             */
+            if (!("withCredentials" in detectXhr) && (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
+                return new XdrTransport(xhrObj);
+            }
+
+            this.xhrObj = xhrObj;
+
+            return undefined;
+        }
 
         S.augment(XhrTransport, {
             send:function() {
                 var self = this,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
-
-                if (c.crossDomain && !allowCrossDomain) {
-                    S.error("do not allow crossdomain xhr !");
-                    return;
-                }
 
                 var xhr = io.xhr(c.crossDomain),
                     xhrFields,
@@ -125,7 +125,6 @@ KISSY.add("ajax/xhr", function(S, io) {
                         };
                     } else {
                         xhr.onreadystatechange = function() {
-
                             self._callback();
                         };
                     }
@@ -215,7 +214,7 @@ KISSY.add("ajax/xhr", function(S, io) {
         return io;
     }
 }, {
-    requires:["./base"]
+    requires:["./base","./xdr"]
 });
 
 /**
