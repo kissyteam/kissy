@@ -349,6 +349,17 @@ KISSY.add('suggest', function(S, undefined) {
                     }
                     isDowningOrUping = false;
                 }
+
+                /*
+                 * fix 防止 chrome 下 键盘按键移动选中项后, 仍然触发 mousemove 事件
+                 */
+                if (S.UA['chrome']) {
+                    // 标志按键状态, 延迟后, 恢复没有按键
+                    if (self._keyTimer) self._keyTimer.cancel();
+                    self._keyTimer = S.later(function() {
+                        self._keyTimer = undefined;
+                    }, 500);
+                }
             });
 
             // reset pressingCount
@@ -428,6 +439,8 @@ KISSY.add('suggest', function(S, undefined) {
                 mouseDownItem, mouseLeaveFooter;
 
             Event.on(content, 'mousemove', function(ev) {
+                if (self._keyTimer) return;
+
                 var target = ev.target;
 
                 if (target.nodeName !== LI) {
