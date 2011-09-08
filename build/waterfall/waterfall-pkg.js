@@ -267,8 +267,6 @@ KISSY.add("waterfall", function(S, undefined) {
         }
     });
 
-
-    S.Waterfall = {};
-    S.Waterfall.Intervein = Intervein;
+    S.Waterfall = Intervein;
 
 });

@@ -121,7 +121,14 @@
         </move>
         <delete dir="${build.dir}/${component.name}/tmp"/>
     </target>
+
+    <target name="fix-cr-lf">
+        <fixcrlf srcdir="${build.dir}/${component.name}"
+                 tablength="4"
+                 includes="**/*.js,**/*.css"
+                 encoding="${charset}"/>
+    </target>
     
-    <target name="common.build" depends="prepare,compress,native2ascii,copyright">
+    <target name="common.build" depends="prepare,compress,native2ascii,copyright,fix-cr-lf">
     </target>
 </project>
