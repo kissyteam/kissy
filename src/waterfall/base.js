@@ -66,6 +66,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         },
 
 
+        /**
+         * 最小的列数
+         */
         minColCount:{
             value:1
         },
