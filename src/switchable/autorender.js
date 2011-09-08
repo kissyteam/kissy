@@ -27,4 +27,6 @@ KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
         });
     }
 
+},{
+    host:'switchable'
 });

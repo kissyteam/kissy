@@ -36,4 +36,6 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
     
     return Slide;
 
+},{
+    host:'switchable'
 });

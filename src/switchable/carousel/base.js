@@ -98,6 +98,8 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     S.Carousel = Carousel;
     return Carousel;
 
+},{
+    host:'switchable'
 });
 
 

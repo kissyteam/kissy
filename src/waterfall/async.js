@@ -99,4 +99,6 @@ KISSY.add("waterfall/async", function(S, undefined) {
     });
 
     S.Waterfall.Async = Async;
+}, {
+    host:'waterfall'
 });

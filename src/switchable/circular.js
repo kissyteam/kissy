@@ -129,6 +129,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             }
         });
 
+},{
+    host:'switchable'
 });
 
 /**

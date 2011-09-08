@@ -554,6 +554,8 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
         }
     };
 
+},{
+    host:'switchable'
 });/**
  * Accordion Widget
  * @creator  沉鱼<fool2fish@gmail.com>,yiminghe@gmail.com
@@ -624,6 +626,8 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
     S.Accordion=Accordion;
     return Accordion;
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -944,6 +948,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     }
 
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -1035,6 +1041,8 @@ Event=S.Event;
         }
     });
     return Switchable;
+},{
+    host:'switchable'
 });/**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -1064,6 +1072,8 @@ KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
         });
     }
 
+},{
+    host:'switchable'
 });
 /**
  * Carousel Widget
@@ -1165,6 +1175,8 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     S.Carousel = Carousel;
     return Carousel;
 
+},{
+    host:'switchable'
 });
 
 
@@ -1485,6 +1497,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
             }
         });
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -1747,6 +1761,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
     return Switchable;
 
+},{
+    host:'switchable'
 });
 /**
  * Switchable Circular Plugin
@@ -1879,6 +1895,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             }
         });
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -2007,6 +2025,8 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
 
     return Switchable;
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -2087,6 +2107,8 @@ KISSY.add('switchable/lazyload', function(S,DOM,Switchable) {
 
     return Switchable;
 
+},{
+    host:'switchable'
 });/**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -2125,6 +2147,8 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
     
     return Slide;
 
+},{
+    host:'switchable'
 });
 /**
  * aria support for slide
@@ -2220,6 +2244,8 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
         }
     }
 
+},{
+    host:'switchable'
 });
 /**
  2011-05-12 承玉：add support for aria & keydown
@@ -2255,6 +2281,8 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
     Tabs.Plugins = [];
     S.Tabs=Tabs;
     return Tabs;
+},{
+    host:'switchable'
 });/**
  * Tabs aria support
  * @creator yiminghe@gmail.com
@@ -2475,6 +2503,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     }
 
 
+},{
+    host:'switchable'
 });
 
 /**

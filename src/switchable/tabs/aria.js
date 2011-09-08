@@ -218,6 +218,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     }
 
 
+},{
+    host:'switchable'
 });
 
 /**

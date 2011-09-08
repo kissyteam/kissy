@@ -72,4 +72,6 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
         }
     };
 
+},{
+    host:'switchable'
 });

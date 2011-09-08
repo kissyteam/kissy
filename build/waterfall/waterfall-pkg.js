@@ -269,6 +269,8 @@ KISSY.add("waterfall", function(S, undefined) {
 
     S.Waterfall = Intervein;
 
+},{
+    requires:['template']
 });/**
  * load content from remote async
  * @author yiminghe@gmail.com
@@ -370,4 +372,6 @@ KISSY.add("waterfall/async", function(S, undefined) {
     });
 
     S.Waterfall.Async = Async;
+}, {
+    host:'waterfall'
 });
