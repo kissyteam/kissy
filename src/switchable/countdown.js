@@ -120,6 +120,8 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
 
     return Switchable;
 
+},{
+    host:'switchable'
 });
 
 /**

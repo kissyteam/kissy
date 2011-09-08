@@ -303,6 +303,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
             }
         });
 
+},{
+    host:'switchable'
 });
 
 /**

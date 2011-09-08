@@ -71,4 +71,6 @@ KISSY.add('switchable/lazyload', function(S,DOM,Switchable) {
 
     return Switchable;
 
+},{
+    host:'switchable'
 });

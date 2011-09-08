@@ -92,6 +92,8 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
         }
     }
 
+},{
+    host:'switchable'
 });
 /**
  2011-05-12 承玉：add support for aria & keydown

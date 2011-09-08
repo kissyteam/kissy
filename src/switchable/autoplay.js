@@ -74,4 +74,6 @@ Event=S.Event;
         }
     });
     return Switchable;
+},{
+    host:'switchable'
 });

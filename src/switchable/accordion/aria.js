@@ -307,6 +307,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     }
 
 
+},{
+    host:'switchable'
 });
 
 /**

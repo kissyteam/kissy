@@ -214,4 +214,6 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
     return Switchable;
 
+},{
+    host:'switchable'
 });

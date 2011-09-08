@@ -264,4 +264,6 @@ KISSY.add("waterfall", function(S, undefined) {
 
     S.Waterfall = Intervein;
 
+},{
+    requires:['template']
 });

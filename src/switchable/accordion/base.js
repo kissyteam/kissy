@@ -68,6 +68,8 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
     S.Accordion=Accordion;
     return Accordion;
 
+},{
+    host:'switchable'
 });
 
 /**

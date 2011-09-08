@@ -22,4 +22,6 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
     Tabs.Plugins = [];
     S.Tabs=Tabs;
     return Tabs;
+},{
+    host:'switchable'
 });
