@@ -2,7 +2,7 @@
  * 1.2 new testcases
  * @author  yiminghe@gmail.com
  **/
-KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
+KISSY.use("ua,json,ajax,node", function(S, UA, JSON, io, Node) {
     var $ = Node.all;
     describe("ajax@1.2", function() {
 
@@ -87,7 +87,7 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
 
             var re = [];
             var xhr = io({
-                forceScript:!(UA.ie==6),
+                forceScript:!(UA.ie == 6),
                 dataType:'jsonp',
                 url:'jsonp.php',
                 cache:false,
@@ -116,7 +116,7 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
             var re = [],ok;
 
             var xhr = io({
-                forceScript:!(UA.ie==6),
+                forceScript:!(UA.ie == 6),
                 url:'ajax.php',
                 cache:false,
                 success:function(data, status) {
@@ -186,6 +186,9 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
 
             var f = $('<form id="f" method="post" enctype="multipart/form-data">' +
                 //php need []
+                '<input name="test4[]" value="t6"/>' +
+                '<input name="test4[]" value="t7"/>' +
+                '<input name="test5" value="t8"/>' +
                 '<select name="test[]" multiple>' +
                 '<option value="t1" selected>v</option>' +
                 '<option value="t2" selected>v2</option>' +
@@ -195,12 +198,13 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
 
             var re = [],ok,d;
             var xhr = io({
-                url:'upload.php',
+                url:'form/upload.php',
                 form:"#" + f.prop("id"),
                 type:'post',
                 dataType:'json',
                 data:{
-                    "test2":["t2","t3"]
+                    "test2":["t2","t3"],
+                    "test3":"t4"
                 },
                 success:function(data) {
                     ok = true;
@@ -219,7 +223,10 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
 
             runs(function() {
                 expect(d.test + "").toBe(["t1","t2"] + "");
+                expect(d.test4 + "").toBe(["t6","t7"] + "");
                 expect(d.test2 + "").toBe(["t2","t3"] + "");
+                expect(d.test3 + "").toBe("t4");
+                expect(d.test5 + "").toBe("t8");
             });
         });
 
@@ -227,6 +234,9 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
         it("should works for common form", function() {
 
             var f = $('<form id="f2">' +
+                '<input name="test4[]" value="t6"/>' +
+                '<input name="test4[]" value="t7"/>' +
+                '<input name="test5" value="t8"/>' +
                 '<select name="test[]" multiple>' +
                 '<option value="t1" selected>v</option>' +
                 '<option value="t2" selected>v2</option>' +
@@ -235,12 +245,13 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
 
             var re = [],ok,d;
             var xhr = io({
-                url:'upload.php',
+                url:'form/upload.php',
                 form:"#" + f.prop("id"),
                 type:'post',
                 dataType:'json',
                 data:{
-                    "test2":["t2","t3"]
+                    "test2":["t2","t3"],
+                    "test3":"t4"
                 },
                 success:function(data) {
                     ok = true;
@@ -257,7 +268,10 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
 
             runs(function() {
                 expect(d.test + "").toBe(["t1","t2"] + "");
+                expect(d.test4 + "").toBe(["t6","t7"] + "");
                 expect(d.test2 + "").toBe(["t2","t3"] + "");
+                expect(d.test3 + "").toBe("t4");
+                expect(d.test5 + "").toBe("t8");
             });
         });
 
@@ -274,7 +288,7 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
             var re = [],ok,d;
 
             var xhr = io({
-                url:'upload.php',
+                url:'form/upload.php',
                 form:"#" + f.prop("id"),
                 type:'post',
                 dataType:'json',
@@ -321,7 +335,7 @@ KISSY.use("ua,json,ajax,node", function(S, UA,JSON, io, Node) {
             var re = [],ok,d;
 
             var xhr = io({
-                url:'upload.php',
+                url:'form/upload.php',
                 form:"#" + f.prop("id"),
                 type:'post',
                 dataType:'json',

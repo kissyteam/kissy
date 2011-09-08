@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 7 19:17
+build time: Sep 8 11:45
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 7 19:17
          */
         version: '1.20dev',
 
-        buildTime:'20110907191720',
+        buildTime:'20110908114457',
 
         /**
          * Returns a new object containing all of the properties of
@@ -11487,12 +11487,13 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
         data = S.unparam(data);
         var ret = [];
         for (var d in data) {
-            var vs = S.makeArray(data[d]);
+            var isArray = S.isArray(data[d]),
+                vs = S.makeArray(data[d]);
             // 数组和原生一样对待，创建多个同名输入域
             for (var i = 0; i < vs.length; i++) {
                 var e = doc.createElement("input");
                 e.type = 'hidden';
-                e.name = d + (serializeArray ? "[]" : "");
+                e.name = d + (isArray && serializeArray ? "[]" : "");
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);

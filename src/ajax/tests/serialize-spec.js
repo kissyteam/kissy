@@ -1,3 +1,7 @@
+/**
+ * test cases for form serialization
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("node,ajax", function(S, Node, io) {
     var $ = Node.all;
 

@@ -1,3 +1,7 @@
+/**
+ * test cases for cross domain ajax
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("ua,json,ajax,node", function(S, UA, JSON, io, Node) {
     describe("xdr", function() {
 
