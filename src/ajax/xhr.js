@@ -120,7 +120,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                     self._callback();
                 } else {
                     // _XDomainRequest 单独的回调机制
-                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                    if (isInstanceOfXDomainRequest(xhr)) {
                         xhr.onload = function() {
                             xhr.readyState = 4;
                             xhr.status = 200;

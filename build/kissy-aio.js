@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 8 15:01
+build time: Sep 8 15:11
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 8 15:01
          */
         version: '1.20dev',
 
-        buildTime:'20110908150121',
+        buildTime:'20110908151100',
 
         /**
          * Returns a new object containing all of the properties of
@@ -10913,7 +10913,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                     self._callback();
                 } else {
                     // _XDomainRequest 单独的回调机制
-                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                    if (isInstanceOfXDomainRequest(xhr)) {
                         xhr.onload = function() {
                             xhr.readyState = 4;
                             xhr.status = 200;

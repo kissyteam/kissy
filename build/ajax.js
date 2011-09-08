@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 8 15:01
+build time: Sep 8 15:10
 */
 /**
  * a scalable client io framework
@@ -939,7 +939,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                     self._callback();
                 } else {
                     // _XDomainRequest 单独的回调机制
-                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                    if (isInstanceOfXDomainRequest(xhr)) {
                         xhr.onload = function() {
                             xhr.readyState = 4;
                             xhr.status = 200;
