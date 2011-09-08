@@ -2,10 +2,12 @@
  * ajax xhr transport class
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhr", function(S, io) {
+KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
 
 
     var OK_CODE = 200,
+        // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
+        _XDomainRequest = window['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223;
@@ -31,22 +33,32 @@ KISSY.add("ajax/xhr", function(S, io) {
         return undefined;
     }
 
-    io.xhr = window.ActiveXObject ? function() {
+    io.xhr = window.ActiveXObject ? function(crossDomain) {
+        if (crossDomain && _XDomainRequest) {
+            return new _XDomainRequest();
+        }
         // ie7 XMLHttpRequest 不能访问本地文件
         return !io.isLocal && createStandardXHR() || createActiveXHR();
     } : createStandardXHR;
 
-    var detectXhr = io.xhr(),
-        allowCrossDomain = false;
+    var detectXhr = io.xhr();
 
     if (detectXhr) {
 
-        if ("withCredentials" in detectXhr) {
-            allowCrossDomain = true;
-        }
-
         function XhrTransport(xhrObj) {
+            var c = xhrObj.config;
+            var xdrCfg = c['xdr'] || {};
+
+            /**
+             * ie>7 强制使用 flash xdr
+             */
+            if (!("withCredentials" in detectXhr) && (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
+                return new XdrTransport(xhrObj);
+            }
+
             this.xhrObj = xhrObj;
+
+            return undefined;
         }
 
         S.augment(XhrTransport, {
@@ -55,12 +67,7 @@ KISSY.add("ajax/xhr", function(S, io) {
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
 
-                if (c.crossDomain && !allowCrossDomain) {
-                    S.error("do not allow crossdomain xhr !");
-                    return;
-                }
-
-                var xhr = io.xhr(),
+                var xhr = io.xhr(c.crossDomain),
                     xhrFields,
                     i;
 
@@ -87,9 +94,12 @@ KISSY.add("ajax/xhr", function(S, io) {
                     xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
                 }
                 try {
-
-                    for (i in xhrObj.requestHeaders) {
-                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                    // 跨域时，不能设，否则请求变成
+                    // OPTIONS /xhr/r.php HTTP/1.1
+                    if (!c.crossDomain) {
+                        for (i in xhrObj.requestHeaders) {
+                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                        }
                     }
                 } catch(e) {
                     S.log("setRequestHeader in xhr error : ");
@@ -101,8 +111,22 @@ KISSY.add("ajax/xhr", function(S, io) {
                 if (!c.async || xhr.readyState == 4) {
                     self._callback();
                 } else {
-                    xhr.onreadystatechange = function() {
-                        self._callback();
+                    // _XDomainRequest 单独的回调机制
+                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                        xhr.onload = function() {
+                            xhr.readyState = 4;
+                            xhr.status = 200;
+                            self._callback();
+                        };
+                        xhr.onerror = function() {
+                            xhr.readyState = 4;
+                            xhr.status = 500;
+                            self._callback();
+                        };
+                    } else {
+                        xhr.onreadystatechange = function() {
+                            self._callback();
+                        };
                     }
                 }
             },
@@ -124,6 +148,8 @@ KISSY.add("ajax/xhr", function(S, io) {
                     //abort or complete
                     if (abort || xhr.readyState == 4) {
                         xhr.onreadystatechange = S.noop;
+                        xhr.onload = S.noop;
+                        xhr.onerror = S.noop;
 
 
                         if (abort) {
@@ -133,7 +159,11 @@ KISSY.add("ajax/xhr", function(S, io) {
                             }
                         } else {
                             var status = xhr.status;
-                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+
+                            // _XDomainRequest 不能获取响应头
+                            if (xhr.getAllResponseHeaders) {
+                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+                            }
 
                             var xml = xhr.responseXML;
 
@@ -184,7 +214,7 @@ KISSY.add("ajax/xhr", function(S, io) {
         return io;
     }
 }, {
-    requires:["./base"]
+    requires:["./base","./xdr"]
 });
 
 /**

@@ -73,31 +73,33 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         return [255,255,255];
     }
 
+    /**
+     * 根据颜色的数值表示，执行数组插值
+     * @param source {Array.<Number>} 颜色源值表示
+     * @param target {Array.<Number>} 颜色目的值表示
+     * @param pos {Number} 当前进度
+     * @return {String} 可设置css属性的格式值 : rgb
+     */
+    function interpolate(source, target, pos) {
+        var commonInterpolate = OPS["*"].interpolate;
+        return 'rgb(' + [
+            Math.floor(commonInterpolate(source[0], target[0], pos)),
+            Math.floor(commonInterpolate(source[1], target[1], pos)),
+            Math.floor(commonInterpolate(source[2], target[2], pos))
+        ].join(', ') + ')';
+    }
 
     OPS["color"] = {
         getter:function(elem, prop) {
             return {
                 v:numericColor(DOM.css(elem, prop)),
                 u:'',
-                f:this.interpolate
+                f:interpolate
             };
         },
+
         setter:OPS["*"].setter,
-        /**
-         * 根据颜色的数值表示，执行数组插值
-         * @param source {Array.<Number>} 颜色源值表示
-         * @param target {Array.<Number>} 颜色目的值表示
-         * @param pos {Number} 当前进度
-         * @return {String} 可设置css属性的格式值 : rgb
-         */
-        interpolate:function(source, target, pos) {
-            var interpolate = OPS["*"].interpolate;
-            return 'rgb(' + [
-                Math.floor(interpolate(source[0], target[0], pos)),
-                Math.floor(interpolate(source[1], target[1], pos)),
-                Math.floor(interpolate(source[2], target[2], pos))
-            ].join(', ') + ')';
-        },
+
         eq:function(tp, sp) {
             return (tp.v + "") == (sp.v + "");
         }

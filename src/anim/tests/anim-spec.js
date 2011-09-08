@@ -159,5 +159,60 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
             });
 
         });
+
+
+        it("should animate scroll correctly for window", function() {
+            DOM.append(DOM.create("<div style='height:2000px'/>"), document.body);
+            DOM.scrollTop(window, 0);
+            var anim = Anim(window, {
+                scrollTop:100
+            }, 0.5).run();
+            waits(100);
+            runs(function() {
+                expect(DOM.scrollTop(window)).not.toBe(0);
+            });
+            waits(500);
+            runs(function() {
+                expect(DOM.scrollTop(window)).toBe(100);
+            });
+            runs(function() {
+                DOM.scrollTop(window, 0);
+                anim = Anim(window, {
+                    scrollTop:100
+                }, 0.5).run();
+            });
+
+
+            waits(100);
+            runs(function() {
+                expect(DOM.scrollTop(window)).not.toBe(0);
+                anim.stop();
+            });
+            waits(500);
+            runs(function() {
+                expect(DOM.scrollTop(window)).not.toBe(100);
+                expect(DOM.scrollTop(window)).not.toBe(0);
+            });
+
+
+            runs(function() {
+                DOM.scrollTop(window, 0);
+                anim = Anim(window, {
+                    scrollTop:100
+                }, 0.5).run();
+            });
+
+
+            waits(100);
+            runs(function() {
+                expect(DOM.scrollTop(window)).not.toBe(0);
+                anim.stop(true);
+            });
+            runs(function() {
+                expect(DOM.scrollTop(window)).toBe(100);
+                expect(DOM.scrollTop(window)).not.toBe(0);
+            });
+
+        });
     });
 });

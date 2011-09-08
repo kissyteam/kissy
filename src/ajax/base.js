@@ -48,14 +48,13 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  context:null,
                  timeout: 0,
                  data: null,
-
                  // 可取json | jsonp | script | xml | html | text | null | undefined
                  dataType: null,
-
                  username: null,
                  password: null,
                  cache: null,
                  mimeType:null,
+                 xdr:{},
                  headers: {},
                  xhrFields:{},
                  // jsonp script charset

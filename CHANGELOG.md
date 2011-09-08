@@ -26,6 +26,7 @@ History:
  - [+] 增加 DOM.style
  - [!] 禁止使用原生 cloneNode ，使用 DOM.clone ，也不要设置自定义属性，使用 DOM.data
  - [*] DOM.remove 会自动清理当前节点以及子孙节点上注册的事件
+ - [+] 增加 DOM.inner/outerWidth
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
@@ -45,6 +46,7 @@ History:
  - [+] 增加 S.io.upload 方法，用于无刷新文件上传
  - [+] 增加 form 配置，可直接序列化 form 并发送 ajax 请求
  - [+] 增加 S.io.serialize 方法，用于 form 序列化
+ - [+] 支持 cross domain ajax , ie67 使用 flash ，详见 xdr 配置
 
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
@@ -56,6 +58,7 @@ History:
  - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
  - [+] 增加 anim 单元测试
  - [x] bugfix anim 内存泄露
+ - [+] anim 支持 window scrollTop/Left 动画
 
 
  - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
@@ -92,6 +95,8 @@ History:
  - [+] 增加 menubutton 组件
 
  - [+] 增加 menu 组件
+
+ - [+] 增加 waterfall 组件
 
  - [+] 增加 component 组件基类
 
