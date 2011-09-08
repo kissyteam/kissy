@@ -11,7 +11,7 @@
  * @author attila@google.com (Attila Bodis)
  */
 
-.goog-custom-button {
+.goog-button {
   margin: 2px;
   border: 0;
   padding: 0;
@@ -27,20 +27,20 @@
 }
 
 /* Pseudo-rounded corners. */
-.goog-custom-button-outer-box,
-.goog-custom-button-inner-box {
+.goog-button-outer-box,
+.goog-button-inner-box {
   border-style: solid;
   border-color: #aaa;
   vertical-align: top;
 }
 
-.goog-custom-button-outer-box {
+.goog-button-outer-box {
   margin: 0;
   border-width: 1px 0;
   padding: 0;
 }
 
-.goog-custom-button-inner-box {
+.goog-button-inner-box {
   /* By default in FF2, block elements inside a moz-inline-box are stacked
    * horizontally next to each other.  This stops that weird behavior. */
   -moz-box-orient: vertical;
@@ -51,114 +51,114 @@
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .goog-custom-button-inner-box {
+* html .goog-button-inner-box {
   /* IE6 needs to have the box shifted to make the borders line up. */
   left: -1px;
 }
 /* Pre-IE7 BiDi fixes. */
-* html .goog-custom-button-rtl .goog-custom-button-outer-box {
+* html .goog-button-rtl .goog-button-outer-box {
   /* @noflip */ left: -1px;
 }
-* html .goog-custom-button-rtl .goog-custom-button-inner-box {
+* html .goog-button-rtl .goog-button-inner-box {
   /* @noflip */ right: auto;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .goog-custom-button-inner-box {
+*:first-child+html .goog-button-inner-box {
   /* IE7 needs to have the box shifted to make the borders line up. */
   left: -1px;
 }
 /* IE7 BiDi fix. */
-*:first-child+html .goog-custom-button-rtl .goog-custom-button-inner-box {
+*:first-child+html .goog-button-rtl .goog-button-inner-box {
   /* @noflip */ left: 1px;
 }
 
 /* Safari-only hacks. */
-::root .goog-custom-button,
-::root .goog-custom-button-outer-box {
+::root .goog-button,
+::root .goog-button-outer-box {
   /* Required to make pseudo-rounded corners work on Safari. */
   line-height: 0;
 }
 
-::root .goog-custom-button-inner-box {
+::root .goog-button-inner-box {
   /* Required to make pseudo-rounded corners work on Safari. */
   line-height: normal;
 }
 
 /* State: disabled. */
-.goog-custom-button-disabled {
+.goog-button-disabled {
   background-image: none !important;
   opacity: 0.3;
   -moz-opacity: 0.3;
   filter: alpha(opacity=30);
 }
 
-.goog-custom-button-disabled .goog-custom-button-outer-box,
-.goog-custom-button-disabled .goog-custom-button-inner-box {
+.goog-button-disabled .goog-button-outer-box,
+.goog-button-disabled .goog-button-inner-box {
   color: #333 !important;
   border-color: #999 !important;
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .goog-custom-button-disabled {
+* html .goog-button-disabled {
   margin: 2px 1px !important;
   padding: 0 1px !important;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .goog-custom-button-disabled {
+*:first-child+html .goog-button-disabled {
   margin: 2px 1px !important;
   padding: 0 1px !important;
 }
 
 /* State: hover. */
-.goog-custom-button-hover .goog-custom-button-outer-box,
-.goog-custom-button-hover .goog-custom-button-inner-box {
+.goog-button.goog-button-outer-box,
+.goog-button-hover .goog-button-inner-box {
   border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
 }
 
 /* State: active, checked. */
-.goog-custom-button-active,
-.goog-custom-button-checked {
+.goog-button-active,
+.goog-button-checked {
   background-color: #bbb;
   background-position: bottom left;
 }
 
 /* State: focused. */
-.goog-custom-button-focused .goog-custom-button-outer-box,
-.goog-custom-button-focused .goog-custom-button-inner-box {
+.goog-button-focused .goog-button-outer-box,
+.goog-button-focused .goog-button-inner-box {
   border-color: orange;
 }
 
 /* Pill (collapsed border) styles. */
-.goog-custom-button-collapse-right,
-.goog-custom-button-collapse-right .goog-custom-button-outer-box,
-.goog-custom-button-collapse-right .goog-custom-button-inner-box {
+.goog-button-collapse-right,
+.goog-button-collapse-right .goog-button-outer-box,
+.goog-button-collapse-right .goog-button-inner-box {
   margin-right: 0;
 }
 
-.goog-custom-button-collapse-left,
-.goog-custom-button-collapse-left .goog-custom-button-outer-box,
-.goog-custom-button-collapse-left .goog-custom-button-inner-box {
+.goog-button-collapse-left,
+.goog-button-collapse-left .goog-button-outer-box,
+.goog-button-collapse-left .goog-button-inner-box {
   margin-left: 0;
 }
 
-.goog-custom-button-collapse-left .goog-custom-button-inner-box  {
+.goog-button-collapse-left .goog-button-inner-box  {
   border-left: 1px solid #fff;
 }
 
-.goog-custom-button-collapse-left.goog-custom-button-checked
-.goog-custom-button-inner-box {
+.goog-button-collapse-left.goog-button-checked
+.goog-button-inner-box {
   border-left: 1px solid #ddd;
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .goog-custom-button-collapse-left .goog-custom-button-inner-box {
+* html .goog-button-collapse-left .goog-button-inner-box {
   left: 0;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .goog-custom-button-collapse-left
-.goog-custom-button-inner-box {
+*:first-child+html .goog-button-collapse-left
+.goog-button-inner-box {
   left: 0;
 }

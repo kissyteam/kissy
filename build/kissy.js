@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 7 19:17
+build time: Sep 8 19:25
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 7 19:17
          */
         version: '1.20dev',
 
-        buildTime:'20110907191720',
+        buildTime:'20110908192511',
 
         /**
          * Returns a new object containing all of the properties of
@@ -10661,6 +10661,7 @@ KISSY.add("ajax/xdr", function(S, io) {
         ID = "io_swf",
         // flash transporter
         flash,
+        doc = document,
         // whether create the flash transporter
         init = false;
 
@@ -10681,8 +10682,8 @@ KISSY.add("ajax/xdr", function(S, io) {
             '&host=KISSY.io" />' +
             '<param name="allowScriptAccess" value="always" />' +
             '</object>',
-            c = document.createElement('div');
-        document.body.appendChild(c);
+            c = doc.createElement('div');
+        doc.body.appendChild(c);
         c.innerHTML = o;
     }
 
@@ -10749,7 +10750,6 @@ KISSY.add("ajax/xdr", function(S, io) {
                     break;
             }
             if (ret) {
-
                 xhrObj.callback(ret.status, ret.statusText);
             }
         }
@@ -10768,7 +10768,7 @@ KISSY.add("ajax/xdr", function(S, io) {
 
     // when flash is loaded
     io['xdrReady'] = function() {
-        flash = document.getElementById(ID);
+        flash = doc.getElementById(ID);
     };
 
     /**
@@ -10810,8 +10810,8 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
         try {
             return new window.XMLHttpRequest();
         } catch(e) {
-            S.log("createStandardXHR error : ");
-            S.log(e);
+            S.log("createStandardXHR error");
+            //S.log(e);
         }
         return undefined;
     }
@@ -10821,9 +10821,13 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
             return new window.ActiveXObject("Microsoft.XMLHTTP");
         } catch(e) {
             S.log("createActiveXHR error");
-            S.log(e);
+            // S.log(e);
         }
         return undefined;
+    }
+
+    function isInstanceOfXDomainRequest(xhr) {
+        return _XDomainRequest && (xhr instanceof _XDomainRequest);
     }
 
     io.xhr = window.ActiveXObject ? function(crossDomain) {
@@ -10839,14 +10843,17 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
     if (detectXhr) {
 
         function XhrTransport(xhrObj) {
-            var c = xhrObj.config;
-            var xdrCfg = c['xdr'] || {};
+            var c = xhrObj.config,
+                xdrCfg = c['xdr'] || {};
 
-            /**
-             * ie>7 强制使用 flash xdr
-             */
-            if (!("withCredentials" in detectXhr) && (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
-                return new XdrTransport(xhrObj);
+            if (c.crossDomain) {
+                /**
+                 * ie>7 强制使用 flash xdr
+                 */
+                if (!("withCredentials" in detectXhr) &&
+                    (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
+                    return new XdrTransport(xhrObj);
+                }
             }
 
             this.xhrObj = xhrObj;
@@ -10856,6 +10863,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
 
         S.augment(XhrTransport, {
             send:function() {
+
                 var self = this,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
@@ -10905,7 +10913,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                     self._callback();
                 } else {
                     // _XDomainRequest 单独的回调机制
-                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                    if (isInstanceOfXDomainRequest(xhr)) {
                         xhr.onload = function() {
                             xhr.readyState = 4;
                             xhr.status = 200;
@@ -10940,10 +10948,15 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                         c = xhrObj.config;
                     //abort or complete
                     if (abort || xhr.readyState == 4) {
-                        xhr.onreadystatechange = S.noop;
-                        xhr.onload = S.noop;
-                        xhr.onerror = S.noop;
 
+                        // ie6 ActiveObject 设置不恰当属性导致出错
+                        if (isInstanceOfXDomainRequest(xhr)) {
+                            xhr.onerror = S.noop;
+                            xhr.onload = S.noop;
+                        } else {
+                            // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
+                            xhr.onreadystatechange = S.noop;
+                        }
 
                         if (abort) {
                             // 完成以后 abort 不要调用
@@ -10954,7 +10967,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                             var status = xhr.status;
 
                             // _XDomainRequest 不能获取响应头
-                            if (xhr.getAllResponseHeaders) {
+                            if (!isInstanceOfXDomainRequest(xhr)) {
                                 xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
                             }
 
@@ -10989,6 +11002,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                             }
 
                             xhrObj.callback(status, statusText);
+
                         }
                     }
                 } catch (firefoxAccessException) {
@@ -11186,8 +11200,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
                     try {
                         delete window[ jsonpCallback ];
                     } catch(e) {
-                        S.log("delete window variable error : ");
-                        S.log(e);
+                        //S.log("delete window variable error : ");
+                        //S.log(e);
                     }
                 } else if (response) {
                     // after io success handler called
@@ -11301,12 +11315,13 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
         data = S.unparam(data);
         var ret = [];
         for (var d in data) {
-            var vs = S.makeArray(data[d]);
+            var isArray = S.isArray(data[d]),
+                vs = S.makeArray(data[d]);
             // 数组和原生一样对待，创建多个同名输入域
             for (var i = 0; i < vs.length; i++) {
                 var e = doc.createElement("input");
                 e.type = 'hidden';
-                e.name = d + (serializeArray ? "[]" : "");
+                e.name = d + (isArray && serializeArray ? "[]" : "");
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);

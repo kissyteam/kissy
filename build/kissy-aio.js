@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 7 19:17
+build time: Sep 8 19:25
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 7 19:17
          */
         version: '1.20dev',
 
-        buildTime:'20110907191720',
+        buildTime:'20110908192511',
 
         /**
          * Returns a new object containing all of the properties of
@@ -10661,6 +10661,7 @@ KISSY.add("ajax/xdr", function(S, io) {
         ID = "io_swf",
         // flash transporter
         flash,
+        doc = document,
         // whether create the flash transporter
         init = false;
 
@@ -10681,8 +10682,8 @@ KISSY.add("ajax/xdr", function(S, io) {
             '&host=KISSY.io" />' +
             '<param name="allowScriptAccess" value="always" />' +
             '</object>',
-            c = document.createElement('div');
-        document.body.appendChild(c);
+            c = doc.createElement('div');
+        doc.body.appendChild(c);
         c.innerHTML = o;
     }
 
@@ -10749,7 +10750,6 @@ KISSY.add("ajax/xdr", function(S, io) {
                     break;
             }
             if (ret) {
-
                 xhrObj.callback(ret.status, ret.statusText);
             }
         }
@@ -10768,7 +10768,7 @@ KISSY.add("ajax/xdr", function(S, io) {
 
     // when flash is loaded
     io['xdrReady'] = function() {
-        flash = document.getElementById(ID);
+        flash = doc.getElementById(ID);
     };
 
     /**
@@ -10810,8 +10810,8 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
         try {
             return new window.XMLHttpRequest();
         } catch(e) {
-            S.log("createStandardXHR error : ");
-            S.log(e);
+            S.log("createStandardXHR error");
+            //S.log(e);
         }
         return undefined;
     }
@@ -10821,9 +10821,13 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
             return new window.ActiveXObject("Microsoft.XMLHTTP");
         } catch(e) {
             S.log("createActiveXHR error");
-            S.log(e);
+            // S.log(e);
         }
         return undefined;
+    }
+
+    function isInstanceOfXDomainRequest(xhr) {
+        return _XDomainRequest && (xhr instanceof _XDomainRequest);
     }
 
     io.xhr = window.ActiveXObject ? function(crossDomain) {
@@ -10839,14 +10843,17 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
     if (detectXhr) {
 
         function XhrTransport(xhrObj) {
-            var c = xhrObj.config;
-            var xdrCfg = c['xdr'] || {};
+            var c = xhrObj.config,
+                xdrCfg = c['xdr'] || {};
 
-            /**
-             * ie>7 强制使用 flash xdr
-             */
-            if (!("withCredentials" in detectXhr) && (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
-                return new XdrTransport(xhrObj);
+            if (c.crossDomain) {
+                /**
+                 * ie>7 强制使用 flash xdr
+                 */
+                if (!("withCredentials" in detectXhr) &&
+                    (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
+                    return new XdrTransport(xhrObj);
+                }
             }
 
             this.xhrObj = xhrObj;
@@ -10856,6 +10863,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
 
         S.augment(XhrTransport, {
             send:function() {
+
                 var self = this,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
@@ -10905,7 +10913,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                     self._callback();
                 } else {
                     // _XDomainRequest 单独的回调机制
-                    if (_XDomainRequest && (xhr instanceof _XDomainRequest)) {
+                    if (isInstanceOfXDomainRequest(xhr)) {
                         xhr.onload = function() {
                             xhr.readyState = 4;
                             xhr.status = 200;
@@ -10940,10 +10948,15 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                         c = xhrObj.config;
                     //abort or complete
                     if (abort || xhr.readyState == 4) {
-                        xhr.onreadystatechange = S.noop;
-                        xhr.onload = S.noop;
-                        xhr.onerror = S.noop;
 
+                        // ie6 ActiveObject 设置不恰当属性导致出错
+                        if (isInstanceOfXDomainRequest(xhr)) {
+                            xhr.onerror = S.noop;
+                            xhr.onload = S.noop;
+                        } else {
+                            // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
+                            xhr.onreadystatechange = S.noop;
+                        }
 
                         if (abort) {
                             // 完成以后 abort 不要调用
@@ -10954,7 +10967,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                             var status = xhr.status;
 
                             // _XDomainRequest 不能获取响应头
-                            if (xhr.getAllResponseHeaders) {
+                            if (!isInstanceOfXDomainRequest(xhr)) {
                                 xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
                             }
 
@@ -10989,6 +11002,7 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
                             }
 
                             xhrObj.callback(status, statusText);
+
                         }
                     }
                 } catch (firefoxAccessException) {
@@ -11186,8 +11200,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
                     try {
                         delete window[ jsonpCallback ];
                     } catch(e) {
-                        S.log("delete window variable error : ");
-                        S.log(e);
+                        //S.log("delete window variable error : ");
+                        //S.log(e);
                     }
                 } else if (response) {
                     // after io success handler called
@@ -11301,12 +11315,13 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
         data = S.unparam(data);
         var ret = [];
         for (var d in data) {
-            var vs = S.makeArray(data[d]);
+            var isArray = S.isArray(data[d]),
+                vs = S.makeArray(data[d]);
             // 数组和原生一样对待，创建多个同名输入域
             for (var i = 0; i < vs.length; i++) {
                 var e = doc.createElement("input");
                 e.type = 'hidden';
-                e.name = d + (serializeArray ? "[]" : "");
+                e.name = d + (isArray && serializeArray ? "[]" : "");
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);
@@ -25168,7 +25183,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:30
+build time: Sep 8 19:25
 */
 /**
  * deletable menuitem
@@ -25893,14 +25908,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             }
         },
 
-        _setHighlighted:function(v, componentCls) {
-            var self = this,
-                tag = "-highlight",
-                el = self.get("el"),
-                cls = self._completeClasses(componentCls, tag);
-            el[v ? 'addClass' : 'removeClass'](cls);
-        },
-
         _setSelected:function(v, componentCls) {
             var self = this,
                 tag = "-selected",
@@ -26408,7 +26415,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:29
+build time: Sep 8 19:25
 */
 /**
  * Model and Control for button
@@ -26416,47 +26423,46 @@ build time: Sep 5 21:29
  */
 KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
 
-    var KeyCodes = Event.KeyCodes;
+    var KeyCodes = Event.KeyCodes,
+        Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
-    var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
-
-        bindUI:function() {
-            this.get("el").on("keyup", this._handleKeyEventInternal, this);
-        },
-
-        _handleKeyEventInternal:function(e) {
-            if (e.keyCode == KeyCodes.ENTER &&
-                e.type == "keydown" ||
-                e.keyCode == KeyCodes.SPACE &&
-                    e.type == "keyup") {
-                return this._performInternal(e);
-            }
-            // Return true for space keypress (even though the event is handled on keyup)
-            // as preventDefault needs to be called up keypress to take effect in IE and
-            // WebKit.
-            return e.keyCode == KeyCodes.SPACE;
-        },
-
-        /* button 的默认行为就是触发 click*/
-        _performInternal:function() {
-            var self = this;
-            self.fire("click");
-        }
-    }, {
-        ATTRS:{
-            /**
-             * @inheritedDoc
-             * disabled:{}
-             */
-            value:{},
-            describedby:{
-                view:true
+            bindUI:function() {
+                this.get("el").on("keyup", this._handleKeyEventInternal, this);
             },
-            tooltip:{
-                view:true
+
+            _handleKeyEventInternal:function(e) {
+                if (e.keyCode == KeyCodes.ENTER &&
+                    e.type == "keydown" ||
+                    e.keyCode == KeyCodes.SPACE &&
+                        e.type == "keyup") {
+                    return this._performInternal(e);
+                }
+                // Return true for space keypress (even though the event is handled on keyup)
+                // as preventDefault needs to be called up keypress to take effect in IE and
+                // WebKit.
+                return e.keyCode == KeyCodes.SPACE;
+            },
+
+            /* button 的默认行为就是触发 click*/
+            _performInternal:function() {
+                var self = this;
+                self.fire("click");
             }
-        }
-    });
+        }, {
+            ATTRS:{
+                /**
+                 * @inheritedDoc
+                 * disabled:{}
+                 */
+                value:{},
+                describedby:{
+                    view:true
+                },
+                tooltip:{
+                    view:true
+                }
+            }
+        });
 
     Button.DefaultRender = CustomRender;
 
@@ -26476,10 +26482,11 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
-        renderUI:function() {
+    return UIBase.create(Component.Render, {
+        createDom:function() {
             //set wai-aria role
-            this.get("el").addClass(this.getCls("inline-block")).attr("role", "button");
+            this.get("el").attr("role", "button")
+                .addClass(this.getCls("inline-block button"));
         },
         _uiSetTooltip:function(title) {
             this.get("el").attr("title", title);
@@ -26513,35 +26520,32 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
 KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
 
     //双层 div 模拟圆角
-    var CLS = "custom-button",
-        CONTENT_CLS = "inline-block " + CLS + "-outer-box",
-        INNER_CLS = "inline-block " + CLS + "-inner-box";
+    var CONTENT_CLS = "button-outer-box",
+        INNER_CLS = "button-inner-box";
 
 
-    var CustomRender = UIBase.create(ButtonRender, {
-
-            renderUI:function() {
-                this.get("el").addClass(this.getCls(CLS));
-            },
+    return UIBase.create(ButtonRender, [UIBase.Contentbox.Render], {
 
             /**
-             *  modelcontrol 会在 create 后进行 unselectable，需要所有的节点创建工作放在 createDom 中
+             *  modelcontrol 会在 create 后进行 unselectable，
+             *  需要所有的节点创建工作放在 createDom 中
              */
             createDom:function() {
                 var self = this,
                     el = self.get("el"),
                     contentEl = self.get("contentEl"),
                     id = S.guid('ks-button-labelby');
+                el.attr("aria-labelledby", id);
                 //按钮的描述节点在最内层，其余都是装饰
                 contentEl.addClass(self.getCls(CONTENT_CLS));
-                var elChildren = S.makeArray(contentEl[0].childNodes);
-                var innerEl = new Node("<div id='" + id + "' " +
-                    "class='" + self.getCls(INNER_CLS) + "'/>").appendTo(contentEl);
+                var elChildren = S.makeArray(contentEl[0].childNodes),
+                    innerEl = new Node("<div id='" + id + "' " +
+                        "class='" + self.getCls(INNER_CLS) + "'/>")
+                        .appendTo(contentEl);
                 // content 由 contentboxrender 处理
                 for (var i = 0; i < elChildren.length; i++) {
                     innerEl.append(elChildren[i]);
                 }
-                el.attr("aria-labelledby", id);
                 self.set("innerEl", innerEl);
             },
 
@@ -26554,30 +26558,6 @@ KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
                 var innerEl = this.get("innerEl");
                 innerEl.html("");
                 v && innerEl.append(v);
-            },
-
-            _setHighlighted:function(v) {
-                var self = this;
-                CustomRender.superclass._setHighlighted.apply(self, arguments);
-                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-hover"));
-            },
-
-            _setDisabled:function(v) {
-                var self = this;
-                CustomRender.superclass._setDisabled.apply(self, arguments);
-                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-disabled"));
-            },
-
-            _setActive:function(v) {
-                var self = this;
-                CustomRender.superclass._setActive.apply(self, arguments);
-                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-active"));
-            },
-
-            _setFocused:function(v) {
-                var self = this;
-                CustomRender.superclass._setFocused.apply(self, arguments);
-                self.get("el")[v ? 'addClass' : 'removeClass'](self.getCls(CLS + "-focused"));
             }
         }, {
             /**
@@ -26587,8 +26567,6 @@ KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
             innerEL:{}
         }
     );
-
-    return CustomRender;
 }, {
     requires:['node','uibase','./buttonrender']
 });/**
