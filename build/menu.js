@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:30
+build time: Sep 8 19:25
 */
 /**
  * deletable menuitem
@@ -724,14 +724,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             if (!el.attr("id")) {
                 el.attr("id", S.guid("ks-menuitem"));
             }
-        },
-
-        _setHighlighted:function(v, componentCls) {
-            var self = this,
-                tag = "-highlight",
-                el = self.get("el"),
-                cls = self._completeClasses(componentCls, tag);
-            el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _setSelected:function(v, componentCls) {

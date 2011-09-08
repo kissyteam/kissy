@@ -25,7 +25,7 @@
 }
 
 /* custom button begin */
-.c2c-custom-button {
+.c2c-button {
     margin: 2px;
     border: 0;
     padding: 0;
@@ -40,24 +40,24 @@
 }
 
 /* Pseudo-rounded corners. */
-.c2c-custom-button-outer-box,
-.c2c-custom-button-inner-box {
+.c2c-button-outer-box,
+.c2c-button-inner-box {
     border-style: solid;
     border-color: #8ab6dd;
     vertical-align: top;
 }
 
-.c2c-custom-button-outer-box {
+.c2c-button-outer-box {
     margin: 0;
     border-width: 1px 0;
     padding: 0;
 }
 
-.c2c-menu-button-open .c2c-custom-button-outer-box {
+.c2c-menu-button-open .c2c-button-outer-box {
     /* border-bottom:none; */
 }
 
-.c2c-custom-button-inner-box {
+.c2c-button-inner-box {
     /* By default in FF2, block elements inside a moz-inline-box are stacked
 * horizontally next to each other.  This stops that weird behavior. */
     -moz-box-orient: vertical;
@@ -66,84 +66,84 @@
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .c2c-custom-button-inner-box {
+* html .c2c-button-inner-box {
     /* IE6 needs to have the box shifted to make the borders line up. */
     left: -1px;
 }
 
 /* Pre-IE7 BiDi fixes. */
-* html .c2c-custom-button-rtl .c2c-custom-button-outer-box {
+* html .c2c-button-rtl .c2c-button-outer-box {
     /* @noflip */
     left: -1px;
 }
 
-* html .c2c-custom-button-rtl .c2c-custom-button-inner-box {
+* html .c2c-button-rtl .c2c-button-inner-box {
     /* @noflip */
     right: auto;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .c2c-custom-button-inner-box {
+*:first-child+html .c2c-button-inner-box {
     /* IE7 needs to have the box shifted to make the borders line up. */
     left: -1px;
 }
 
 /* IE7 BiDi fix. */
-*:first-child+html .c2c-custom-button-rtl .c2c-custom-button-inner-box {
+*:first-child+html .c2c-button-rtl .c2c-button-inner-box {
     /* @noflip */
     left: 1px;
 }
 
 /* Safari-only hacks. */
-::root .c2c-custom-button,
-::root .c2c-custom-button-outer-box {
+::root .c2c-button,
+::root .c2c-button-outer-box {
     /* Required to make pseudo-rounded corners work on Safari. */
     line-height: 0;
 }
 
-::root .c2c-custom-button-inner-box {
+::root .c2c-button-inner-box {
     /* Required to make pseudo-rounded corners work on Safari. */
     line-height: normal;
 }
 
 /* State: disabled. */
-.c2c-custom-button-disabled {
+.c2c-button-disabled {
     background-image: none !important;
     opacity: 0.3;
     -moz-opacity: 0.3;
     filter: alpha(opacity = 30);
 }
 
-.c2c-custom-button-disabled .c2c-custom-button-outer-box,
-.c2c-custom-button-disabled .c2c-custom-button-inner-box {
+.c2c-button-disabled .c2c-button-outer-box,
+.c2c-button-disabled .c2c-button-inner-box {
     border-color: #999 !important;
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .c2c-custom-button-disabled {
+* html .c2c-button-disabled {
     margin: 2px 1px !important;
     padding: 0 1px !important;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .c2c-custom-button-disabled {
+*:first-child+html .c2c-button-disabled {
     margin: 2px 1px !important;
     padding: 0 1px !important;
 }
 
 /* State: hover. */
-.c2c-custom-button-hover .c2c-custom-button-outer-box,
-.c2c-custom-button-hover .c2c-custom-button-inner-box,
-.c2c-custom-button-focused .c2c-custom-button-outer-box,
-.c2c-custom-button-focused .c2c-custom-button-inner-box,
-.c2c-menu-buttonmenu-button-open .c2c-custom-button-outer-box,
-.c2c-menu-buttonmenu-button-open .c2c-custom-button-inner-box {
+.c2c-button-hover .c2c-button-outer-box,
+.c2c-button-hover .c2c-button-inner-box,
+.c2c-button-focused .c2c-button-outer-box,
+.c2c-button-focused .c2c-button-inner-box,
+.c2c-menu-buttonmenu-button-open .c2c-button-outer-box,
+.c2c-menu-buttonmenu-button-open .c2c-button-inner-box {
     border-color: #ffad33 !important; /* Hover border wins. */
 }
 
 /* State: active, checked. */
-.c2c-custom-button-active,
-.c2c-custom-button-checked {
+.c2c-button-active,
+.c2c-button-checked {
     /*
      background-color: #bbb;
      background-position: bottom left;
@@ -151,41 +151,41 @@
 }
 
 /* State: focused. */
-.c2c-custom-button-focused .c2c-custom-button-outer-box,
-.c2c-custom-button-focused .c2c-custom-button-inner-box {
+.c2c-button-focused .c2c-button-outer-box,
+.c2c-button-focused .c2c-button-inner-box {
     /*border-color: orange;*/
 }
 
 /* Pill (collapsed border) styles. */
-.c2c-custom-button-collapse-right,
-.c2c-custom-button-collapse-right .c2c-custom-button-outer-box,
-.c2c-custom-button-collapse-right .c2c-custom-button-inner-box {
+.c2c-button-collapse-right,
+.c2c-button-collapse-right .c2c-button-outer-box,
+.c2c-button-collapse-right .c2c-button-inner-box {
     margin-right: 0;
 }
 
-.c2c-custom-button-collapse-left,
-.c2c-custom-button-collapse-left .c2c-custom-button-outer-box,
-.c2c-custom-button-collapse-left .c2c-custom-button-inner-box {
+.c2c-button-collapse-left,
+.c2c-button-collapse-left .c2c-button-outer-box,
+.c2c-button-collapse-left .c2c-button-inner-box {
     margin-left: 0;
 }
 
-.c2c-custom-button-collapse-left .c2c-custom-button-inner-box {
+.c2c-button-collapse-left .c2c-button-inner-box {
     border-left: 1px solid #fff;
 }
 
-.c2c-custom-button-collapse-left.c2c-custom-button-checked
-.c2c-custom-button-inner-box {
+.c2c-button-collapse-left.c2c-button-checked
+.c2c-button-inner-box {
     border-left: 1px solid #ddd;
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
-* html .c2c-custom-button-collapse-left .c2c-custom-button-inner-box {
+* html .c2c-button-collapse-left .c2c-button-inner-box {
     left: 0;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
-*:first-child+html .c2c-custom-button-collapse-left
-.c2c-custom-button-inner-box {
+*:first-child+html .c2c-button-collapse-left
+.c2c-button-inner-box {
     left: 0;
 }
 
@@ -268,13 +268,13 @@
     vertical-align: top;
 }
 
-.c2c-custom-button-hover .c2c-menu-button-dropdown,
-.c2c-custom-button-focused .c2c-menu-button-dropdown,
+.c2c-button-hover .c2c-menu-button-dropdown,
+.c2c-button-focused .c2c-menu-button-dropdown,
 .c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown {
     background-position: -1px -23px;
 }
 
-.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown, .c2c-custom-button-hover .c2c-menu-button-dropdown {
+.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown, .c2c-button-hover .c2c-menu-button-dropdown {
     border-color: #ffad33;
 }
 

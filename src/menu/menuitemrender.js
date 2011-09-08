@@ -30,14 +30,6 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             }
         },
 
-        _setHighlighted:function(v, componentCls) {
-            var self = this,
-                tag = "-highlight",
-                el = self.get("el"),
-                cls = self._completeClasses(componentCls, tag);
-            el[v ? 'addClass' : 'removeClass'](cls);
-        },
-
         _setSelected:function(v, componentCls) {
             var self = this,
                 tag = "-selected",
