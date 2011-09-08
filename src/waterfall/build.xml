@@ -6,18 +6,10 @@
     <property file="build.properties"/>
     <property name="src.dir" location="."/>
 
-    <import file="../../tools/common.xml"/>
-
-
     <target name="concat">
-        <concat destfile="waterfall-pkg.js"
-                encoding="${charset}"
-                outputencoding="${charset}">
-            <path location="base.js"/>
-            <path location="aync.js"/>
-            <filterchain>
-                <deletecharacters chars="&#xFEFF;"/>
-            </filterchain>
+        <concat destfile="waterfall-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path path="base.js"/>
+            <path path="async.js"/>
         </concat>
     </target>
 
@@ -28,3 +20,4 @@
     <target name="build" depends="concat,common.build,clean">
     </target>
 </project>
+
