@@ -9,7 +9,7 @@
     <target name="concat">
         <concat destfile="waterfall-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="base.js"/>
-            <path path="async.js"/>
+            <path path="aync.js"/>
         </concat>
     </target>
 
