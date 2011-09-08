@@ -59,6 +59,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         },
 
         /**
+         * 列数,及每个列当前的高度值
          * @private
          */
         curColHeights:{
@@ -68,11 +69,16 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
         /**
          * 最小的列数
+         * @type Number
          */
         minColCount:{
             value:1
         },
 
+        /**
+         * 动画效果, fadeIn/slideDown/show
+         * @type String
+         */
         effect:{
             value:{
                 effect:"fadeIn",
@@ -80,6 +86,10 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }
         },
 
+        /**
+         * 列宽
+         * @type Number
+         */
         colWidth:{}
     };
 
@@ -117,12 +127,15 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             dest = 0,
             containerRegion = self._containerRegion,
             guard = Number.MAX_VALUE;
+
+        // 寻找哪列的高度最小, 最小的即是要插入新元素的那列
         for (var i = 0; i < curColCount; i++) {
             if (curColHeights[i] < guard) {
                 guard = curColHeights[i];
                 dest = i;
             }
         }
+        // 初始时, 没列, 所以这时 curColCount 为 0
         if (!curColCount) {
             guard = 0;
         }
@@ -144,6 +157,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
     }
 
     S.extend(Intervein, Base, {
+        /**
+         * @return {Boolean} 是否正在调整中
+         */
         isAdjusting:function() {
             return !!this._adjuster;
         },
@@ -151,6 +167,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             var self = this;
             // 一开始就 adjust 一次，可以对已有静态数据处理
             doResize.call(self);
+            // 窗口变化时, 重新计算各项位置
             self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
             $(window).on("resize", self.__onResize);
         },
