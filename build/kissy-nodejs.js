@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 8 19:25
+build time: Sep 8 22:37
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 8 19:25
          */
         version: '1.20dev',
 
-        buildTime:'20110908192511',
+        buildTime:'20110908223734',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1386,9 +1386,13 @@ build time: Sep 8 19:25
     if ("require" in this) {
         return;
     }
+    var ua=navigator.userAgent,doc=document;
     S.mix(utils, {
-        isWebKit:!!navigator['userAgent'].match(/AppleWebKit/),
-        IE : !!navigator['userAgent'].match(/MSIE/),
+        docHead:function(){
+          return doc.getElementsByTagName('head')[0] || doc.documentElement;
+        },
+        isWebKit:!!ua.match(/AppleWebKit/),
+        IE : !!ua.match(/MSIE/),
         isCss:function(url) {
             return /\.css(?:\?|$)/i.test(url);
         },
@@ -1618,11 +1622,7 @@ build time: Sep 8 19:25
                 startCssTimer();
             }
     });
-
-}
-
-    )
-    (KISSY, KISSY.__loaderUtils);/**
+})(KISSY, KISSY.__loaderUtils);/**
  * getScript support for css and js callback after load
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
@@ -1643,7 +1643,7 @@ build time: Sep 8 19:25
          */
         getStyle:function(url, success, charset) {
             var doc = document,
-                head = doc.head || doc.getElementsByTagName("head")[0],
+                head = utils.docHead(),
                 node = doc.createElement('link'),
                 config = success;
 
@@ -1742,19 +1742,16 @@ build time: Sep 8 19:25
  * add module definition
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils,data) {
-    if("require" in this) {
+(function(S, loader, utils, data) {
+    if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        IE = utils.IE,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+    var IE = utils.IE,
         ATTACHED = data.ATTACHED,
         mix = S.mix;
 
 
-    S.mix(loader, {
+    mix(loader, {
         /**
          * Registers a module.
          * @param name {String} module name
@@ -1871,7 +1868,7 @@ build time: Sep 8 19:25
         }
     });
 
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils,KISSY.__loaderData);/**
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * build full path from relative path and base path
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
@@ -1919,11 +1916,12 @@ build time: Sep 8 19:25
     }
     S.mix(loader, {
         __mixMods: function(global) {
-            var mods = this.Env.mods,
+            var self=this,
+                mods = self.Env.mods,
                 gMods = global.Env.mods,
                 name;
             for (name in gMods) {
-                this.__mixMod(mods, gMods, name, global);
+                self.__mixMod(mods, gMods, name, global);
             }
         },
 
@@ -2011,10 +2009,7 @@ build time: Sep 8 19:25
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        IE = utils.IE,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+    var IE = utils.IE,
         LOADING = data.LOADING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
@@ -2138,10 +2133,7 @@ build time: Sep 8 19:25
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        ATTACHED = data.ATTACHED,
+    var ATTACHED = data.ATTACHED,
         mix = S.mix;
 
     mix(loader, {
@@ -2224,9 +2216,6 @@ build time: Sep 8 19:25
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement;
 
     S.mix(loader, {
 
@@ -2311,13 +2300,10 @@ build time: Sep 8 19:25
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        LOADED = data.LOADED,
+    var LOADED = data.LOADED,
         mix = S.mix;
 
-    S.mix(loader, {
+    mix(loader, {
         //注册模块，将模块和定义 factory 关联起来
         __registerModule:function(name, def, config) {
             config = config || {};
@@ -2348,10 +2334,7 @@ build time: Sep 8 19:25
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        LOADED = data.LOADED,
+    var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
     S.mix(loader, {

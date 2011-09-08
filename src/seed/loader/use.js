@@ -6,10 +6,7 @@
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        LOADED = data.LOADED,
+    var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
     S.mix(loader, {

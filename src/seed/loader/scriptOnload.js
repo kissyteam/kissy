@@ -125,8 +125,4 @@
                 startCssTimer();
             }
     });
-
-}
-
-    )
-    (KISSY, KISSY.__loaderUtils);
+})(KISSY, KISSY.__loaderUtils);

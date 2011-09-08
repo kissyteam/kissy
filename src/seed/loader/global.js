@@ -8,11 +8,12 @@
     }
     S.mix(loader, {
         __mixMods: function(global) {
-            var mods = this.Env.mods,
+            var self=this,
+                mods = self.Env.mods,
                 gMods = global.Env.mods,
                 name;
             for (name in gMods) {
-                this.__mixMod(mods, gMods, name, global);
+                self.__mixMod(mods, gMods, name, global);
             }
         },
 
