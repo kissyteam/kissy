@@ -9,6 +9,7 @@ KISSY.add("ajax/xdr", function(S, io) {
         ID = "io_swf",
         // flash transporter
         flash,
+        doc = document,
         // whether create the flash transporter
         init = false;
 
@@ -29,8 +30,8 @@ KISSY.add("ajax/xdr", function(S, io) {
             '&host=KISSY.io" />' +
             '<param name="allowScriptAccess" value="always" />' +
             '</object>',
-            c = document.createElement('div');
-        document.body.appendChild(c);
+            c = doc.createElement('div');
+        doc.body.appendChild(c);
         c.innerHTML = o;
     }
 
@@ -97,7 +98,6 @@ KISSY.add("ajax/xdr", function(S, io) {
                     break;
             }
             if (ret) {
-
                 xhrObj.callback(ret.status, ret.statusText);
             }
         }
@@ -116,7 +116,7 @@ KISSY.add("ajax/xdr", function(S, io) {
 
     // when flash is loaded
     io['xdrReady'] = function() {
-        flash = document.getElementById(ID);
+        flash = doc.getElementById(ID);
     };
 
     /**
