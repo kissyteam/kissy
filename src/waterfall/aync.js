@@ -82,7 +82,7 @@ KISSY.add("waterfall/async", function(S, undefined) {
         itemTpl:{}
     };
 
-    S.extend(Async, S.Waterfall.Intervein, {
+    S.extend(Async, S.Waterfall, {
         _init:function() {
             var self = this;
             Async.superclass._init.apply(self, arguments);
