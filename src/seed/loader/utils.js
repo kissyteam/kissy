@@ -6,9 +6,13 @@
     if ("require" in this) {
         return;
     }
+    var ua=navigator.userAgent,doc=document;
     S.mix(utils, {
-        isWebKit:!!navigator['userAgent'].match(/AppleWebKit/),
-        IE : !!navigator['userAgent'].match(/MSIE/),
+        docHead:function(){
+          return doc.getElementsByTagName('head')[0] || doc.documentElement;
+        },
+        isWebKit:!!ua.match(/AppleWebKit/),
+        IE : !!ua.match(/MSIE/),
         isCss:function(url) {
             return /\.css(?:\?|$)/i.test(url);
         },

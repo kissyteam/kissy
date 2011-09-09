@@ -7,10 +7,7 @@
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        ATTACHED = data.ATTACHED,
+    var ATTACHED = data.ATTACHED,
         mix = S.mix;
 
     mix(loader, {

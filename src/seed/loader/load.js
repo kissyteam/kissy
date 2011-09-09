@@ -6,10 +6,7 @@
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        IE = utils.IE,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+    var IE = utils.IE,
         LOADING = data.LOADING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
