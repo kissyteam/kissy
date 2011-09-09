@@ -1,125 +1,16 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:30
+build time: Sep 9 15:40
 */
 /**
- * load content from remote async
- * @author yiminghe@gmail.com
- */
-KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
-
-    var $ = Node.all;
-
-    var SCROLL_TIMER = 50;
-
-    function Async() {
-        Async.superclass.constructor.apply(this, arguments);
-    }
-
-
-    function doScroll() {
-        var self = this;
-        S.log("waterfall:doScroll");
-        if (self.__loading) {
-            return;
-        }
-        // 如果正在调整中，等会再看
-        // 调整中的高度不确定，现在不适合判断是否到了加载新数据的条件
-        if (self.isAdjusting()) {
-            // 恰好 __onScroll 是 buffered . :)
-            self.__onScroll();
-            return;
-        }
-        var container = self.get("container"),
-            colHeight = container.offset().top,
-            diff = self.get("diff"),
-            curColHeights = self.get("curColHeights");
-        // 找到最小列高度
-        if (curColHeights.length) {
-            colHeight += Math.min.apply(Math, curColHeights);
-        }
-        // 动态载
-        // 最小高度(或被用户看到了)低于预加载线
-        if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
-            S.log("waterfall:loading");
-            loadData.call(self);
-        }
-    }
-
-    function loadData() {
-        var self = this,
-            container = this.get("container");
-
-        self.__loading = true;
-        var remote = self.get("remote");
-        if (S.isFunction(remote)) {
-            remote = remote();
-        }
-        self.fire("loadStart");
-        io(S.mix({
-            success:function(d) {
-                if (d.end) {
-                    $(window).detach("scroll", self.__onScroll);
-                }
-                self.__loading = false;
-                var data = d.data,
-                    template = Template(self.get("itemTpl")),
-                    items = [];
-
-                S.each(data, function(d) {
-                    var html = template.render(d);
-                    items.push($(html));
-                });
-                self.addItems(items);
-            },
-            complete:function() {
-                self.fire("loadEnd");
-            }
-        }, remote));
-    }
-
-    Async.ATTRS = {
-        remote:{},
-        diff:{
-            getter:function(v) {
-                return v || 0;
-                // 默认一屏内加载
-                //return $(window).height() / 4;
-            }
-        },
-        itemTpl:{}
-    };
-
-    S.extend(Async, Intervein, {
-        _init:function() {
-            var self = this;
-            Async.superclass._init.apply(self, arguments);
-            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
-            $(window).on("scroll", self.__onScroll);
-            doScroll.call(self);
-        },
-
-        destroy:function() {
-            var self = this;
-            Async.superclass.destroy.apply(self, arguments);
-            $(window).detach("scroll", self.__onScroll);
-        }
-    });
-
-    return Async;
-
-}, {
-    requires:['node','ajax','template','./base']
-});/**
  * intervein elements dynamically
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/base", function(S, Node, Base) {
 
-    var $ = Node.all;
-
-    var RESIZE_DURATION = 50;
+    var $ = Node.all,
+        RESIZE_DURATION = 50;
 
     function Intervein() {
         Intervein.superclass.constructor.apply(this, arguments);
@@ -249,7 +140,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         if (!container.contains(item)) {
             container.append(item);
         }
-        curColHeights[dest] += item.height();
+        curColHeights[dest] += item.outerHeight();
         return item;
     }
 
@@ -327,9 +218,105 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
 }, {
     requires:['node','base']
-});KISSY.add("waterfall", function(S, Intervein, Async) {
-    Intervein.Async = Async;
+});/**
+ * load content
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("waterfall/loader", function(S, Node, Intervein) {
+
+    var $ = Node.all,
+        SCROLL_TIMER = 50;
+
+    function Loader() {
+        Loader.superclass.constructor.apply(this, arguments);
+    }
+
+
+    function doScroll() {
+        var self = this;
+        S.log("waterfall:doScroll");
+        if (self.__loading) {
+            return;
+        }
+        // 如果正在调整中，等会再看
+        // 调整中的高度不确定，现在不适合判断是否到了加载新数据的条件
+        if (self.isAdjusting()) {
+            // 恰好 __onScroll 是 buffered . :)
+            self.__onScroll();
+            return;
+        }
+        var container = self.get("container"),
+            colHeight = container.offset().top,
+            diff = self.get("diff"),
+            curColHeights = self.get("curColHeights");
+        // 找到最小列高度
+        if (curColHeights.length) {
+            colHeight += Math.min.apply(Math, curColHeights);
+        }
+        // 动态载
+        // 最小高度(或被用户看到了)低于预加载线
+        if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
+            S.log("waterfall:loading");
+            loadData.call(self);
+        }
+    }
+
+    function loadData() {
+        var self = this,
+            container = this.get("container");
+
+        self.__loading = true;
+
+        var load = self.get("load");
+
+        load && load(success, end);
+
+        function success(items) {
+            self.__loading = false;
+            self.addItems(items);
+        }
+
+        function end() {
+            self.__loading = false;
+            $(window).detach("scroll", self.__onScroll);
+        }
+
+    }
+
+    Loader.ATTRS = {
+        diff:{
+            getter:function(v) {
+                return v || 0;
+                // 默认一屏内加载
+                //return $(window).height() / 4;
+            }
+        }
+    };
+
+
+    S.extend(Loader, Intervein, {
+        _init:function() {
+            var self = this;
+            Loader.superclass._init.apply(self, arguments);
+            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
+            $(window).on("scroll", self.__onScroll);
+            doScroll.call(self);
+        },
+
+        destroy:function() {
+            var self = this;
+            Loader.superclass.destroy.apply(self, arguments);
+            $(window).detach("scroll", self.__onScroll);
+        }
+    });
+
+    return Loader;
+
+}, {
+    requires:['node','./base']
+});KISSY.add("waterfall", function(S, Intervein, Loader) {
+    Intervein.Loader = Loader;
     return Intervein;
 }, {
-    requires:['waterfall/base','waterfall/async']
+    requires:['waterfall/base','waterfall/loader']
 });

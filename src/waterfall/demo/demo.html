@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <script src="../../../build/kissy.js"></script>
-<script src="../aync.js"></script>
+<script src="../loader.js"></script>
 <script src="../base.js"></script>
 <script src="../../waterfall.js"></script>
 <style>
@@ -108,21 +108,37 @@
 
 
 <script>
-    KISSY.use("waterfall", function(S, Waterfall) {
-        var waterFall = new Waterfall.Async({
+    KISSY.use("waterfall,ajax,template,node", function(S, Waterfall, io, Template, Node) {
+        var $ = Node.all;
+        var template = Template($("#tpl").html());
+        var waterFall = new Waterfall.Loader({
             container:"#container",
-            remote:function() {
-                return {
+            load:function(success, end) {
+                io({
                     data:{
                         from:S.all("#container .ks-waterfall").length
                     },
                     url:"data.json",
-                    dataType:"json"
-                };
+                    dataType:"json",
+                    success:function(d) {
+                        if (d.end) {
+                            end();
+                            return;
+                        }
+
+                        var data = d.data,
+                                items = [];
+
+                        S.each(data, function(d) {
+                            var html = template.render(d);
+                            items.push($(html));
+                        });
+                        success(items);
+                    }
+                });
             },
             minColCount:2,
-            colWidth:235,
-            itemTpl:S.all("#tpl").html()
+            colWidth:235
         });
 
         S.all("#uninstall").on("click", function() {

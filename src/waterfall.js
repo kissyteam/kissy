@@ -1,6 +1,6 @@
-KISSY.add("waterfall", function(S, Intervein, Async) {
-    Intervein.Async = Async;
+KISSY.add("waterfall", function(S, Intervein, Loader) {
+    Intervein.Loader = Loader;
     return Intervein;
 }, {
-    requires:['waterfall/base','waterfall/async']
+    requires:['waterfall/base','waterfall/loader']
 });
