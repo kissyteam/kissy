@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:30
+build time: Sep 9 14:12
 */
 /**
  * load content from remote async
@@ -249,7 +249,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         if (!container.contains(item)) {
             container.append(item);
         }
-        curColHeights[dest] += item.height();
+        curColHeights[dest] += item.outerHeight();
         return item;
     }
 
