@@ -12,15 +12,15 @@ KISSY.add("anim/scroll", function(S, DOM, Anim) {
     // 不从 css  中读取，从元素属性中得到值
     OPS["scrollLeft"] = OPS["scrollTop"] = {
         getter:function(elem, prop) {
-
             return {
-                v:elem[prop],
+                v:DOM[prop](elem),
                 u:'',
                 f:OPS["*"].interpolate
             };
         },
         setter:function(elem, prop, val) {
-            elem[prop] = val;
+            // use dom to support window
+            DOM[prop](elem, val);
         }
     };
 }, {

@@ -2,19 +2,16 @@
  * add module definition
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils,data) {
-    if("require" in this) {
+(function(S, loader, utils, data) {
+    if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        IE = utils.IE,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
+    var IE = utils.IE,
         ATTACHED = data.ATTACHED,
         mix = S.mix;
 
 
-    S.mix(loader, {
+    mix(loader, {
         /**
          * Registers a module.
          * @param name {String} module name
@@ -131,4 +128,4 @@
         }
     });
 
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils,KISSY.__loaderData);
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);

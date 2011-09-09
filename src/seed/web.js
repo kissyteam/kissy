@@ -201,7 +201,7 @@
                         doScroll('left');
                         fire();
                     } catch(ex) {
-                        S.log("detect document ready : " + ex);
+                        //S.log("detect document ready : " + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 }

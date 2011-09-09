@@ -19,7 +19,7 @@
          */
         getStyle:function(url, success, charset) {
             var doc = document,
-                head = doc.head || doc.getElementsByTagName("head")[0],
+                head = utils.docHead(),
                 node = doc.createElement('link'),
                 config = success;
 

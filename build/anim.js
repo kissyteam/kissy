@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:29
+build time: Sep 7 19:17
 */
 /**
  * @module   anim
@@ -9,7 +9,8 @@ build time: Sep 5 21:29
  */
 KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 
-    var EventTarget,
+    var EventTarget = Event.Target,
+        _isElementNode = DOM._isElementNode,
         /**
          * milliseconds in one second
          * @constant
@@ -23,8 +24,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         EVENT_COMPLETE,
         defaultConfig,
         TRANSITION_NAME;
-
-    EventTarget = Event.Target;
 
     //支持的有效的 css 分属性，数字则动画，否则直接设最终结果
     PROPS = (
@@ -63,7 +62,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             'minHeight ' +
             'minWidth ' +
             'opacity ' +
-
             'outlineOffset ' +
             'outlineWidth ' +
             'paddingBottom ' +
@@ -91,9 +89,15 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
         nativeSupport: true // 优先使用原生 css3 transition
     };
 
+
     /**
-     * Anim Class
-     * @constructor
+     * get a anim instance associate
+     * @param elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
+     * @param props
+     * @param duration
+     * @param easing
+     * @param callback
+     * @param nativeSupport
      */
     function Anim(elem, props, duration, easing, callback, nativeSupport) {
         // ignore non-exist element
@@ -198,40 +202,49 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
     Anim.PROPS = PROPS;
     Anim.CUSTOM_ATTRS = CUSTOM_ATTRS;
 
+    /**
+     * 数值插值函数
+     * @param {Number} source 源值
+     * @param {Number} target 目的值
+     * @param {Number} pos 当前位置，从 easing 得到 0~1
+     * @return {Number} 当前值
+     */
+    function interpolate(source, target, pos) {
+        return (source + (target - source) * pos).toFixed(3);
+    }
+
     // 不能插值的直接返回终值，没有动画插值过程
     function mirror(source, target) {
         source = null;
         return target;
     }
 
+    function normValueForAnim(val) {
+        var num = parseFloat(val),
+            unit = (val + '').replace(/^[-\d.]+/, '');
+        // 不能动画的量，插值直接设为最终，下次也不运行
+        if (isNaN(num)) {
+            return {v:unit,u:'',f:mirror};
+        }
+        return {v:num,u:unit,f:interpolate};
+    }
+
+
     /**
      * 相应属性的读取设置操作，需要转化为动画模块格式
      */
     Anim.PROP_OPS = {
         "*":{
+
             getter:function(elem, prop) {
-                var val = DOM.css(elem, prop),
-                    num = parseFloat(val),
-                    unit = (val + '').replace(/^[-\d.]+/, '');
-                // 不能动画的量，插值直接设为最终，下次也不运行
-                if (isNaN(num)) {
-                    return {v:unit,u:'',f:mirror};
-                }
-                return {v:num,u:unit,f:this.interpolate};
+                return normValueForAnim(DOM.css(elem, prop));
             },
+
             setter:function(elem, prop, val) {
                 return DOM.css(elem, prop, val);
             },
-            /**
-             * 数值插值函数
-             * @param {Number} source 源值
-             * @param {Number} target 目的值
-             * @param {Number} pos 当前位置，从 easing 得到 0~1
-             * @return {Number} 当前值
-             */
-            interpolate:function(source, target, pos) {
-                return (source + (target - source) * pos).toFixed(3);
-            },
+
+            interpolate:interpolate,
 
             eq:function(tp, sp) {
                 return tp.v == sp.v && tp.u == sp.u;
@@ -382,11 +395,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             }
 
             if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
-                self.stop();
                 // complete 事件只在动画到达最后一帧时才触发
-                if (b) {
-                    self._complete();
-                }
+                self.stop(b);
             }
         },
 
@@ -530,25 +540,45 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             rules = {},
             i = PROPS.length,
             v,
+            el;
+
+        // 是否是元素
+        // 这里支持 window
+        if (_isElementNode(elem)) {
             el = DOM.clone(elem, true);
 
-        DOM.insertAfter(el, elem);
+            DOM.insertAfter(el, elem);
 
-        css = el.style;
-        setAnimStyleText(el, style);
-        while (i--) {
-            var prop = PROPS[i];
-            // !important 只对行内样式得到计算当前真实值
-            if (v = css[prop]) {
-                rules[prop] = getAnimValue(el, prop);
+            css = el.style;
+
+            setAnimStyleText(el, style);
+
+            while (i--) {
+                var prop = PROPS[i];
+                // !important 只对行内样式得到计算当前真实值
+                if (v = css[prop]) {
+                    rules[prop] = getAnimValue(el, prop);
+                }
             }
+        } else {
+            el = elem;
         }
+
         //自定义属性混入
         var customAttrs = getCustomAttrs(style);
+
         for (var a in customAttrs) {
-            rules[a] = getAnimValue(el, a);
+            // 如果之前没有克隆，就直接取源值
+            rules[a] = el !== elem ?
+                getAnimValue(el, a) :
+                normValueForAnim(customAttrs[a]);
         }
-        DOM.remove(el);
+
+        // 如果之前没有克隆就没必要删除
+        if (el !== elem) {
+            DOM.remove(el);
+        }
+
         return rules;
     }
 
@@ -558,6 +588,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      * @param elem
      */
     function setAnimStyleText(elem, style) {
+
         if (UA['ie'] && style.indexOf(OPACITY) > -1) {
             var reg = /opacity\s*:\s*([^;]+)(;|$)/;
             var match = style.match(reg);
@@ -567,11 +598,15 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
             //不要把它清除了
             //ie style.opacity 要能取！
         }
-        elem.style.cssText += ';' + style;
+
+        if (_isElementNode(elem)) {
+            elem.style.cssText += ';' + style;
+        }
+
         //设置自定义属性
         var attrs = getCustomAttrs(style);
         for (var a in attrs) {
-            elem[a] = attrs[a];
+            setAnimValue(elem, a, attrs[a]);
         }
     }
 
@@ -601,6 +636,14 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
 });
 
 /**
+ *
+ *
+ *
+ * 2011-04
+ * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
+ * - 支持配置 scrollTop/scrollLeft
+ *
+ *
  * TODO:
  *  - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
  *  - opera nativeSupport 存在 bug ，浏览器自身 bug ?
@@ -609,8 +652,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  * NOTES:
  *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
  *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
- *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile
- *  - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
+ *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
  */
 /**
  * special patch for making color gradual change
@@ -687,31 +729,33 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         return [255,255,255];
     }
 
+    /**
+     * 根据颜色的数值表示，执行数组插值
+     * @param source {Array.<Number>} 颜色源值表示
+     * @param target {Array.<Number>} 颜色目的值表示
+     * @param pos {Number} 当前进度
+     * @return {String} 可设置css属性的格式值 : rgb
+     */
+    function interpolate(source, target, pos) {
+        var commonInterpolate = OPS["*"].interpolate;
+        return 'rgb(' + [
+            Math.floor(commonInterpolate(source[0], target[0], pos)),
+            Math.floor(commonInterpolate(source[1], target[1], pos)),
+            Math.floor(commonInterpolate(source[2], target[2], pos))
+        ].join(', ') + ')';
+    }
 
     OPS["color"] = {
         getter:function(elem, prop) {
             return {
                 v:numericColor(DOM.css(elem, prop)),
                 u:'',
-                f:this.interpolate
+                f:interpolate
             };
         },
+
         setter:OPS["*"].setter,
-        /**
-         * 根据颜色的数值表示，执行数组插值
-         * @param source {Array.<Number>} 颜色源值表示
-         * @param target {Array.<Number>} 颜色目的值表示
-         * @param pos {Number} 当前进度
-         * @return {String} 可设置css属性的格式值 : rgb
-         */
-        interpolate:function(source, target, pos) {
-            var interpolate = OPS["*"].interpolate;
-            return 'rgb(' + [
-                Math.floor(interpolate(source[0], target[0], pos)),
-                Math.floor(interpolate(source[1], target[1], pos)),
-                Math.floor(interpolate(source[2], target[2], pos))
-            ].join(', ') + ')';
-        },
+
         eq:function(tp, sp) {
             return (tp.v + "") == (sp.v + "");
         }
@@ -1016,15 +1060,15 @@ KISSY.add("anim/scroll", function(S, DOM, Anim) {
     // 不从 css  中读取，从元素属性中得到值
     OPS["scrollLeft"] = OPS["scrollTop"] = {
         getter:function(elem, prop) {
-
             return {
-                v:elem[prop],
+                v:DOM[prop](elem),
                 u:'',
                 f:OPS["*"].interpolate
             };
         },
         setter:function(elem, prop, val) {
-            elem[prop] = val;
+            // use dom to support window
+            DOM[prop](elem, val);
         }
     };
 }, {

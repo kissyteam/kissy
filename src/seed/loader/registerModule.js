@@ -6,13 +6,10 @@
     if ("require" in this) {
         return;
     }
-    var win = S.__HOST,
-        doc = win['document'],
-        head = doc.getElementsByTagName('head')[0] || doc.documentElement,
-        LOADED = data.LOADED,
+    var LOADED = data.LOADED,
         mix = S.mix;
 
-    S.mix(loader, {
+    mix(loader, {
         //注册模块，将模块和定义 factory 关联起来
         __registerModule:function(name, def, config) {
             config = config || {};

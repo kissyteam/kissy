@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy-min.js"></script>
+        <script src='http://assets.daily.taobao.net/s/kissy/1.2.0/??uibase-min.js,component-min.js,menu-min.js,menubutton-min.js'></script>
+        <link rel="stylesheet" href="http://docs.kissyui.com/docs/html/static/demo/menu/assets/c2c-ui.css" />
+        <style>
+            select {
+                width:100px;
+                height:20px;
+                display:block;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>menubutton test</h1>
+        <fieldset>
+            <legend>select num</legend>
+            <ul>
+                <li><label>从select中生成(个):</label><input type="text" value="1" id="fromSelect" /></li>
+        </fieldset> 
+        <div id="J_Timer" style="border:1px solid #eee"></div>
+        <div id="box">
+        </div>
+        <script type="text/javascript">
+            KISSY.ready(function(S){
+                var container = S.get('#box');
+                var timeBox = S.get('#J_Timer');
+                KISSY.use("menubutton", function(S, MenuButton) {
+                    S.Event.on('#fromSelect', 'blur', function(e) {
+                        container.innerHTML = '';
+                        var num = e.target.value;
+                        //create dom
+                        for(var j = 0; j < num; j++) {
+                            container.appendChild(S.DOM.create('<select class="J_SelectMenu"><option value="1">11111</option><option value="2">22222</option></select>'));
+                        }
+
+                        //begin timer
+                        var start = S.now();
+                        S.query('.J_SelectMenu', container).each(function(el) {
+                            // 调用 Select.decorate 接口替换已有的 select 元素
+                            var select = MenuButton.Select.decorate(el, {
+                                prefixCls:"c2c-",
+                                // 设置对齐方式, 与普通的 Align 大体一致
+                                menuAlign:{
+                                    points:["bl","tl"],
+                                    offset:[0,-1],
+                                    overflow:{
+                                        failX:1,
+                                        failY:1,
+                                        adjustX:1,
+                                        adjustY:1
+                                    }
+                                },
+                                // 该配置同菜单配置项
+                                menuCfg:{
+                                    width:82,
+                                    height:150,
+                                    elStyle:{
+                                        overflow:"auto",
+                                        overflowX:"hidden"
+                                    }
+                                }
+                            });
+                            select.on("click", function(e) {
+                                alert('当前值为: ' + select.get("value"));
+                            });
+                        });
+                        var end = S.now();
+                        timeBox.appendChild(S.DOM.create("<div>" + num + '个menubutton渲染时间(ms)：' + (end-start) + "</div>"));
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
