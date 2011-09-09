@@ -185,7 +185,7 @@ KISSY.add("waterfall", function(S, undefined) {
         if (!container.contains(item)) {
             container.append(item);
         }
-        curColHeights[dest] += item.height();
+        curColHeights[dest] += item[0].offsetHeight + parseInt(item.css('marginTop')) + parseInt(item.css('marginBottom'));
         return item;
     }
 

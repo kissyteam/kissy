@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<title>
-    Yan Sheng / Pinterest
-</title>
+<title>async demo</title>
 
 <link rel="icon" href="http://d3io1k5o0zdpqr.cloudfront.net/favicon.png" type="image/x-icon"/>
 <link rel="stylesheet" href="http://d3io1k5o0zdpqr.cloudfront.net/css/pinboard_ff825070.css?359aad" type="text/css" media="all"/>
@@ -90,46 +88,21 @@
 <script src="../../../build/ajax/ajax-pkg.js"></script>
 <script src="../base.js"></script>
 <script src="../async.js"></script>
-
 </head>
 
 <body>
 
 <div id="wrapper">
-
-<div id="article">
-<div id="ColumnContainer">
-
-<div class="pin ks-waterfall">
-    <a href="/pin/137944333/" class="image" style="height: 256px;">
-        <img style="height: 256px;" alt="原来的" src="http://d30opm7hsgivgh.cloudfront.net/upload/137944333_1p5MS51o_b.jpg"/>
-    </a>
+    <div id="article">
+        <div id="ColumnContainer"> </div>
+        <a id="BackToTop" href="#">Scroll to Top</a>
+        <div id="loadingPins"><img src="http://d3io1k5o0zdpqr.cloudfront.net/images/BouncingLoader.gif" alt="Pin Loader Image"/><span>Fetching pins&hellip;</span></div>
+    </div>
 </div>
-
-
-</div>
-<!-- #ColumnContainer -->
-
-<!-- Back to top link -->
-<a id="BackToTop" href="#">Scroll to Top</a>
-
-<!-- Paginator -->
-
-
-<!-- Infinite scroll loading indicator -->
-
-<div id="loadingPins"><img src="http://d3io1k5o0zdpqr.cloudfront.net/images/BouncingLoader.gif" alt="Pin Loader Image"/><span>Fetching pins&hellip;</span></div>
-
-
-</div>
-<!-- #article -->
-
-</div>
-<!-- #wrapper -->
 <script type="tpl" id="tpl">
     <div class="pin ks-waterfall" data-id="{{id}}">
-        <div<a href="#" class="image" style="height: {{image_height}}px;">
-            <img width="{{image_width}}" height="{{image_height}}" alt="{{title}}" src="{{image_url}}" />
+        <a href="#" class="image" style="height: {{image_height}}px;">
+            <img width="{{image_width}}" height="{{image_height}}" alt="{{title}}" src="http://farm{{farm}}.static.flickr.com/{{server}}/{{id}}_{{secret}}_t.jpg" />
         </a>
         <p class="description">{{title}}</p>
     </div>
@@ -141,10 +114,19 @@
             remote:function() {
                 return {
                     data:{
-                        from:S.all("#ColumnContainer .ks-waterfall").length
+                        'method': 'flickr.photos.search',
+                        'api_key': 'adc64702fd4f1be03cbeb99d2bef7cbf',
+                        'tags': 'green',
+                        'page': 1,
+                        'format': 'json',
+                        'api_sig': '72d4a585a14ce04bc1410136f8517ca4'
                     },
-                    url:"data.json",   // 换成html的, 这边接口是不是得变更下?
-                    dataType:"json"
+                    url: 'http://api.flickr.com/services/rest/',
+                    dataType: "jsonp",
+                    jsonp: "jsoncallback",
+                    success: function(d) {
+
+                    }
                 };
             },
             minColCount:2,
@@ -161,6 +143,5 @@
 
     });
 </script>
-
 </body>
 </html>
