@@ -4,9 +4,8 @@
  */
 KISSY.add("waterfall/base", function(S, Node, Base) {
 
-    var $ = Node.all;
-
-    var RESIZE_DURATION = 50;
+    var $ = Node.all,
+        RESIZE_DURATION = 50;
 
     function Intervein() {
         Intervein.superclass.constructor.apply(this, arguments);

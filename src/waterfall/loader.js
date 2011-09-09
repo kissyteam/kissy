@@ -1,15 +1,14 @@
 /**
- * load content from remote async
+ * load content
  * @author yiminghe@gmail.com
  */
-KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
+KISSY.add("waterfall/loader", function(S, Node, Intervein) {
 
-    var $ = Node.all;
+    var $ = Node.all,
+        SCROLL_TIMER = 50;
 
-    var SCROLL_TIMER = 50;
-
-    function Async() {
-        Async.superclass.constructor.apply(this, arguments);
+    function Loader() {
+        Loader.superclass.constructor.apply(this, arguments);
     }
 
 
@@ -47,49 +46,38 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
             container = this.get("container");
 
         self.__loading = true;
-        var remote = self.get("remote");
-        if (S.isFunction(remote)) {
-            remote = remote();
-        }
-        self.fire("loadStart");
-        io(S.mix({
-            success:function(d) {
-                if (d.end) {
-                    $(window).detach("scroll", self.__onScroll);
-                }
-                self.__loading = false;
-                var data = d.data,
-                    template = Template(self.get("itemTpl")),
-                    items = [];
 
-                S.each(data, function(d) {
-                    var html = template.render(d);
-                    items.push($(html));
-                });
-                self.addItems(items);
-            },
-            complete:function() {
-                self.fire("loadEnd");
-            }
-        }, remote));
+        var load = self.get("load");
+
+        load && load(success, end);
+
+        function success(items) {
+            self.__loading = false;
+            self.addItems(items);
+        }
+
+        function end() {
+            self.__loading = false;
+            $(window).detach("scroll", self.__onScroll);
+        }
+
     }
 
-    Async.ATTRS = {
-        remote:{},
+    Loader.ATTRS = {
         diff:{
             getter:function(v) {
                 return v || 0;
                 // 默认一屏内加载
                 //return $(window).height() / 4;
             }
-        },
-        itemTpl:{}
+        }
     };
 
-    S.extend(Async, Intervein, {
+
+    S.extend(Loader, Intervein, {
         _init:function() {
             var self = this;
-            Async.superclass._init.apply(self, arguments);
+            Loader.superclass._init.apply(self, arguments);
             self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
             $(window).on("scroll", self.__onScroll);
             doScroll.call(self);
@@ -97,13 +85,13 @@ KISSY.add("waterfall/async", function(S, Node, io, Template, Intervein) {
 
         destroy:function() {
             var self = this;
-            Async.superclass.destroy.apply(self, arguments);
+            Loader.superclass.destroy.apply(self, arguments);
             $(window).detach("scroll", self.__onScroll);
         }
     });
 
-    return Async;
+    return Loader;
 
 }, {
-    requires:['node','ajax','template','./base']
+    requires:['node','./base']
 });
