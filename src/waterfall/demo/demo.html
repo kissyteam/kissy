@@ -7,13 +7,16 @@
 <script src="../../../build/template/template-pkg.js"></script>
 <script src="../../../build/ajax/ajax-pkg.js"></script>
 <script src="../base.js"></script>
-<script src="../async.js"></script>
+<script src="../loader.js"></script>
 <style>
     .ks-waterfall {
         position: absolute;
         width: 192px;
         overflow: hidden;
-        padding: 15px 15px 15px 4px;
+        padding: 15px;
+        border: 2px solid #ddd;
+        margin-bottom: 20px;
+        text-align: center;
     }
 </style>
 </head>
@@ -21,7 +24,85 @@
 <h1 style="margin: 50px auto;text-align: center;">测试瀑布图效果</h1>
 
 <div id='container' style="position: relative;">
-    <div class="ks-waterfall">
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6072/6128820646_75d4f4f26d_m.jpg" width="192" height="113">
+        <div class="title">untitled</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6073/6128760690_1a440d382c_m.jpg" width="192" height="288">
+        <div class="title">Southern Weddings Feature! ? Jesi Haack Design Blog</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6067/6128732032_cb5f8b333a_m.jpg" width="192" height="239">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6089/6128421611_cac1c4b692_m.jpg" width="192" height="249">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6197/6129267012_3947cdc5d5_m.jpg" width="192" height="257">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6191/6128826187_6db718d081_m.jpg" width="192" height="296">
+        <div class="title">biscodeja-vu:
+
+            always wanted to since a child
+        </div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6209/6129463356_a1f5ded3a9_m.jpg" width="192" height="251">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6079/6124888544_bed1a4b55d_m.jpg" width="192" height="144">
+        <div class="title">hurst song architekten: lumbrein residence</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6081/6129611392_49ffddec14_m.jpg" width="192" height="290">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6185/6129587602_65cb8215c1_m.jpg" width="192" height="245">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6082/6129598160_0f516dc255_m.jpg" width="192" height="287">
+        <div class="title">第一站：Los Angeles - Feather - Enjoyable Life</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6184/6129637246_d8424dc7b9_m.jpg" width="192" height="278">
+        <div class="title">阳朔·初见 - Feather -</div>
+    </div>
+
+
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6072/6128820646_75d4f4f26d_m.jpg" width="192" height="113">
+        <div class="title">untitled</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6073/6128760690_1a440d382c_m.jpg" width="192" height="288">
+        <div class="title">Southern Weddings Feature! ? Jesi Haack Design Blog</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6067/6128732032_cb5f8b333a_m.jpg" width="192" height="239">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6089/6128421611_cac1c4b692_m.jpg" width="192" height="249">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6197/6129267012_3947cdc5d5_m.jpg" width="192" height="257">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6191/6128826187_6db718d081_m.jpg" width="192" height="296">
+        <div class="title">biscodeja-vu:
+
+            always wanted to since a child
+        </div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6209/6129463356_a1f5ded3a9_m.jpg" width="192" height="251">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6079/6124888544_bed1a4b55d_m.jpg" width="192" height="144">
+        <div class="title">hurst song architekten: lumbrein residence</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6081/6129611392_49ffddec14_m.jpg" width="192" height="290">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6185/6129587602_65cb8215c1_m.jpg" width="192" height="245">
+        <div class="title"></div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6082/6129598160_0f516dc255_m.jpg" width="192" height="287">
+        <div class="title">第一站：Los Angeles - Feather - Enjoyable Life</div>
+    </div>
+    <div class="ks-waterfall"><img src="http://farm7.static.flickr.com/6184/6129637246_d8424dc7b9_m.jpg" width="192" height="278">
+        <div class="title">阳朔·初见 - Feather -</div>
     </div>
 </div>
 

@@ -1,93 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>async demo</title>
+<title>loader demo</title>
 
-<link rel="icon" href="http://d3io1k5o0zdpqr.cloudfront.net/favicon.png" type="image/x-icon"/>
-<link rel="stylesheet" href="http://d3io1k5o0zdpqr.cloudfront.net/css/pinboard_ff825070.css?359aad" type="text/css" media="all"/>
-<!--[if gte IE 7]>
-<link rel="stylesheet" href="http://d3io1k5o0zdpqr.cloudfront.net/css/ie7-and-up_387feb.css" type="text/css" media="all"/>
-<![endif]-->
-
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-<style type="text/css" media="screen">
-    @media screen and (max-device-width: 480px) {
-        #introductionRight, .profilebox img {
-            display: none;
-        }
-
-        .profilebox {
-            top: 50px !important;
-        }
-
-        .pinOrigin {
-            width: 300px !important;
-            padding: 10px !important;
-            margin: 5px -10px -10px;
-        }
-
-        .pinOrigin p {
-            min-height: 28px;
-        }
-
-        .pinComments {
-            margin: 10px -10px -10px;
-            border-top: 1px solid #E7E7E7;
-        }
-
-        .pinComments div {
-            padding-left: 10px;
-            padding-right: 10px;
-            width: 300px !important;
-            border-top: 0 solid #E7E7E7;
-        }
-
-        .sortable li {
-            width: 320px !important;
-            margin-right: 0;
-            margin-bottom: 10px !important;
-        }
-
-        #boardIntroduction {
-            width: 300px !important;
-            padding: 10px !important;
-        }
-
-        #boardIntroFilters {
-            height: auto;
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
-        #article .feed {
-            display: none;
-        }
-
-        #recent_activity_holder {
-            width: 320px !important;
-        }
-
-        #recent_activity_holder .story {
-            overflow: hidden;
-        }
-
-        #recent_activity_holder .story img {
-            position: absolute;
-        }
-
-        .activity_details {
-            float: left !important;
-            width: 255px !important;
-            margin-left: 50px;
-        }
-    }
-</style>
+<link rel="stylesheet" href="demo.css" type="text/css" media="all"/>
 
 <script src="../../../build/kissy.js"></script>
 <script src="../../../build/template/template-pkg.js"></script>
 <script src="../../../build/ajax/ajax-pkg.js"></script>
 <script src="../base.js"></script>
-<script src="../async.js"></script>
+<script src="../loader.js"></script>
 </head>
 
 <body>
@@ -101,46 +23,62 @@
 </div>
 <script type="tpl" id="tpl">
     <div class="pin ks-waterfall" data-id="{{id}}">
-        <a href="#" class="image" style="height: {{image_height}}px;">
-            <img width="{{image_width}}" height="{{image_height}}" alt="{{title}}" src="http://farm{{farm}}.static.flickr.com/{{server}}/{{id}}_{{secret}}_t.jpg" />
+        <a href="#" class="image">
+            <img height="{{height}}" alt="{{title}}" src="http://farm{{farm}}.static.flickr.com/{{server}}/{{id}}_{{secret}}_m.jpg" />
         </a>
         <p class="description">{{title}}</p>
     </div>
 </script>
 <script>
     KISSY.use("waterfall", function(S) {
-        var waterFall = new S.Waterfall.Async({
+        var tpl = S.Template(S.one('#tpl').html()),
+            nextpage = 1,
+            waterfall = new S.Waterfall.Loader({
             container:"#ColumnContainer",
-            remote:function() {
-                return {
+            load:function(success, end) {
+                S.one('#loadingPins').show();
+                S.ajax({
                     data:{
                         'method': 'flickr.photos.search',
-                        'api_key': 'adc64702fd4f1be03cbeb99d2bef7cbf',
-                        'tags': 'green',
-                        'page': 1,
-                        'format': 'json',
-                        'api_sig': '72d4a585a14ce04bc1410136f8517ca4'
+                        'api_key': '6bd446e36ad8bb58d0bccf2f0d2cfed2',
+                        'tags': 'rose',
+                        'page': nextpage,
+                        'per_page': 10,
+                        'format': 'json'
                     },
                     url: 'http://api.flickr.com/services/rest/',
                     dataType: "jsonp",
                     jsonp: "jsoncallback",
                     success: function(d) {
-
+                        // 如果数据错误, 则立即结束
+                        if (d.stat !== 'ok') {
+                            alert('load data error!');
+                            end();
+                            return;
+                        }
+                        // 如果到最后一页了, 也结束加载
+                        nextpage = d.photos.page + 1;
+                        if (nextpage > d.photos.pages) {
+                            end();
+                            return;
+                        }
+                        // 拼装每页数据
+                        var items = [];
+                        S.each(d.photos.photo, function(item) {
+                            item.height = Math.round(Math.random()*(300 - 180) + 180); // fake height
+                            items.push(new S.Node(tpl.render(item)));
+                        });
+                        success(items);
+                    },
+                    complete: function() {
+                        S.one('#loadingPins').hide();
                     }
-                };
+                });
             },
             minColCount:2,
-            colWidth:235,
+            colWidth:228,
             itemTpl:S.one("#tpl").html()
         });
-
-        waterFall.on('loadStart', function() {
-            S.one('#loadingPins').show();
-        });
-        waterFall.on('loadEnd', function() {
-            S.one('#loadingPins').hide();
-        });
-
     });
 </script>
 </body>
