@@ -1408,7 +1408,7 @@ li:hover .delete_collabarator {display: block !important;}
 .feed a.story:hover {color: #fff; background-color: #30a7f1;}
 .feed a.story:hover strong {color: #fff;}
 .feed a.story:hover span {color: #f3f3f3;}
-.feed a span {float: none; width: auto; height: auto; margin: none; background: none;}
+.feed a span {float: none; width: auto; height: auto; margin: 0; background: none;}
 .feed .others {margin: 6px 0; overflow: hidden;}
 .feed .others .OneOfMany {float: left; margin: 1px 1px 0 0;}
 #article .feed {overflow: visible;}
