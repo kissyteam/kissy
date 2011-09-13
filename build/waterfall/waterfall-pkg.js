@@ -190,7 +190,7 @@ KISSY.add("waterfall", function(S, undefined) {
         if (!container.contains(item)) {
             container.append(item);
         }
-        curColHeights[dest] += item.height();
+        curColHeights[dest] += item[0].offsetHeight + parseInt(item.css('marginTop')) + parseInt(item.css('marginBottom'));
         return item;
     }
 
@@ -275,12 +275,12 @@ KISSY.add("waterfall", function(S, undefined) {
  * load content from remote async
  * @author yiminghe@gmail.com
  */
-KISSY.add("waterfall/async", function(S, undefined) {
+KISSY.add("waterfall/loader", function(S, undefined) {
 
     var SCROLL_TIMER = 50;
 
-    function Async() {
-        Async.superclass.constructor.apply(this, arguments);
+    function Loader() {
+        Loader.superclass.constructor.apply(this, arguments);
     }
 
 
@@ -307,7 +307,7 @@ KISSY.add("waterfall/async", function(S, undefined) {
         }
         // 动态载
         // 最小高度(或被用户看到了)低于预加载线
-        if (diff + S.DOM.scrollTop() + S.DOM.viewportHeight()/*S.one(window).scrollTop() + S.one(window).height()*/ > colHeight) {
+        if (diff + S.DOM.scrollTop() + S.DOM.viewportHeight() > colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
         }
@@ -316,49 +316,35 @@ KISSY.add("waterfall/async", function(S, undefined) {
     function loadData() {
         var self = this,
             container = this.get("container");
-
         self.__loading = true;
-        var remote = self.get("remote");
-        if (S.isFunction(remote)) {
-            remote = remote();
-        }
-        self.fire("loadStart");
-        S.ajax(S.mix({
-            success:function(d) {
-                if (d.end) {
-                    S.Event.remove(window, "scroll", self.__onScroll);
-                }
-                self.__loading = false;
-                var data = d.data,
-                    template = S.Template(self.get("itemTpl")),
-                    items = [];
 
-                S.each(data, function(d) {
-                    var html = template.render(d);
-                    items.push(new S.Node(html));
-                });
-                self.addItems(items);
-            },
-            complete:function() {
-                self.fire("loadEnd");
-            }
-        }, remote));
+        var load = self.get("load");
+
+        load && load(success, end);
+
+        function success(items) {
+            self.__loading = false;
+            self.addItems(items);
+        }
+
+        function end() {
+            self.__loading = false;
+            S.Event.remove(window, "scroll", self.__onScroll);
+        }
     }
 
-    Async.ATTRS = {
-        remote:{},
+    Loader.ATTRS = {
         diff:{
             getter:function(v) {
                 return v || 0;
             }
-        },
-        itemTpl:{}
+        }
     };
 
-    S.extend(Async, S.Waterfall, {
+    S.extend(Loader, S.Waterfall, {
         _init:function() {
             var self = this;
-            Async.superclass._init.apply(self, arguments);
+            Loader.superclass._init.apply(self, arguments);
             self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
             S.Event.on(window, "scroll", self.__onScroll);
             doScroll.call(self);
@@ -366,12 +352,12 @@ KISSY.add("waterfall/async", function(S, undefined) {
 
         destroy:function() {
             var self = this;
-            Async.superclass.destroy.apply(self, arguments);
+            Loader.superclass.destroy.apply(self, arguments);
             S.Event.remove(window, "scroll", self.__onScroll);
         }
     });
 
-    S.Waterfall.Async = Async;
+    S.Waterfall.Loader = Loader;
 }, {
     host:'waterfall'
 });
