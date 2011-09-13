@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 13 16:23
+build time: Sep 13 20:10
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 13 16:23
          */
         version: '1.20dev',
 
-        buildTime:'20110913162338',
+        buildTime:'20110913201040',
 
         /**
          * Returns a new object containing all of the properties of
@@ -352,10 +352,11 @@ build time: Sep 13 16:23
         reverseEntities = {},
         escapeReg,
         unEscapeReg;
-
-    for (var k in htmlEntities) {
-        reverseEntities[htmlEntities[k]] = k;
-    }
+    (function() {
+        for (var k in htmlEntities) {
+            reverseEntities[htmlEntities[k]] = k;
+        }
+    })();
 
     function getEscapeReg() {
         if (escapeReg) {
@@ -479,24 +480,29 @@ build time: Sep 13 16:23
 
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
+         * 稍微改改就和规范一样了 :)
+         * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
-        clone: function(o, f) {
-            var marked = {},
-                ret = cloneInternal(o, f, marked);
-            S.each(marked, function(v) {
+        clone: function(input, f) {
+            // Let memory be an association list of pairs of objects,
+            // initially empty. This is used to handle duplicate references.
+            // In each pair of objects, one is called the source object
+            // and the other the destination object.
+            var memory = {},
+                ret = cloneInternal(input, f, memory);
+            S.each(memory, function(v) {
                 // 清理在源对象上做的标记
-                v = v.o;
+                v = v.input;
                 if (v[CLONE_MARKER]) {
                     try {
                         delete v[CLONE_MARKER];
                     } catch (e) {
                         S.log("delete CLONE_MARKER error : ");
-                        S.log(e);
                         v[CLONE_MARKER] = undefined;
                     }
                 }
             });
-            marked = undefined;
+            memory = undefined;
             return ret;
         },
 
@@ -1026,7 +1032,7 @@ build time: Sep 13 16:23
                     fn.apply(context || this, arguments);
                 });
             }
-            var bufferTimer = 0;
+            var bufferTimer = null;
 
             function f() {
                 f.stop();
@@ -1073,57 +1079,64 @@ build time: Sep 13 16:23
     }
 
 
-    function cloneInternal(o, f, marked) {
-        var ret = o, isArray, k, stamp;
-        // 引用类型要先记录
-        if (o &&
-            ((isArray = S.isArray(o)) ||
-                S.isPlainObject(o) ||
-                S.isDate(o) ||
-                S.isRegExp(o)
-                )) {
-            if (o[CLONE_MARKER]) {
-                // 对应的克隆后对象
-                return marked[o[CLONE_MARKER]].r;
+    function cloneInternal(input, f, memory) {
+        var destination = input,
+            isArray,
+            isPlainObject,
+            k,
+            stamp;
+        if (!input) {
+            return destination;
+        }
+
+        // If input is the source object of a pair of objects in memory,
+        // then return the destination object in that pair of objects .
+        // and abort these steps.
+        if (input[CLONE_MARKER]) {
+            // 对应的克隆后对象
+            return memory[input[CLONE_MARKER]].destination;
+        } else if (typeof input === "object") {
+            // 引用类型要先记录
+            var constructor = input.constructor;
+            if (S.inArray(constructor, [Boolean,String,Number,Date,RegExp])) {
+                destination = new constructor(input.valueOf());
             }
+            // ImageData , File, Blob , FileList .. etc
+            else if (isArray = S.isArray(input)) {
+                destination = f ? S.filter(input, f) : input.concat();
+            } else if (isPlainObject = S.isPlainObject(input)) {
+                destination = {};
+            }
+            // Add a mapping from input (the source object)
+            // to output (the destination object) to memory.
             // 做标记
-            o[CLONE_MARKER] = (stamp = S.guid());
-
-            // 先把对象建立起来
-            if (isArray) {
-                ret = f ? S.filter(o, f) : o.concat();
-            } else if (S.isDate(o)) {
-                ret = new Date(+o);
-            } else if (S.isRegExp(o)) {
-                ret = new RegExp(o);
-            } else {
-                ret = {};
-            }
-
+            input[CLONE_MARKER] = (stamp = S.guid());
             // 存储源对象以及克隆后的对象
-            marked[stamp] = {r:ret,o:o};
+            memory[stamp] = {destination:destination,input:input};
         }
+        // If input is an Array object or an Object object,
+        // then, for each enumerable property in input, 
+        // add a new property to output having the same name, 
+        // and having a value created from invoking the internal structured cloning algorithm recursively 
+        // with the value of the property as the "input" argument and memory as the "memory" argument.
+        // The order of the properties in the input and output objects must be the same.
 
-
-        // array or plain object need to be copied recursively
-        if (o && (isArray || S.isPlainObject(o))) {
-            // clone it
-            if (isArray) {
-                for (var i = 0; i < ret.length; i++) {
-                    ret[i] = cloneInternal(ret[i], f, marked);
-                }
-            } else {
-                for (k in o) {
-                    if (k !== CLONE_MARKER &&
-                        o.hasOwnProperty(k) &&
-                        (!f || (f.call(o, o[k], k, o) !== FALSE))) {
-                        ret[k] = cloneInternal(o[k], f, marked);
-                    }
+        // clone it
+        if (isArray) {
+            for (var i = 0; i < destination.length; i++) {
+                destination[i] = cloneInternal(destination[i], f, memory);
+            }
+        } else if (isPlainObject) {
+            for (k in input) {
+                if (k !== CLONE_MARKER &&
+                    input.hasOwnProperty(k) &&
+                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                    destination[k] = cloneInternal(input[k], f, memory);
                 }
             }
         }
 
-        return ret;
+        return destination;
     }
 
     function compareObjects(a, b, mismatchKeys, mismatchValues) {
@@ -1163,8 +1176,6 @@ build time: Sep 13 16:23
         delete b[COMPARE_MARKER];
         return (mismatchKeys.length === 0 && mismatchValues.length === 0);
     }
-
-    S.isNullOrUndefined = nullOrUndefined;
 
 })(KISSY, undefined);
 /**
