@@ -25,6 +25,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         CLIENT = 'client',
         LEFT = 'left',
         TOP = 'top',
+        isNumber = S.isNumber,
         SCROLL_LEFT = SCROLL + 'Left',
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
@@ -195,7 +196,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         var method = SCROLL + name;
 
         DOM[method] = function(elem, v) {
-            if (S.isNumber(elem)) {
+            if (isNumber(elem)) {
                 return arguments.callee(win, elem);
             }
             elem = DOM.get(elem);
@@ -209,16 +210,19 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                         top = name == "Top" ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
                 } else {
-                    d = w[DOCUMENT];
-                    ret =
-                        //标准
-                        //chrome == body.scrollTop
-                        //firefox/ie9 == documentElement.scrollTop
-                        w[i ? 'pageYOffset' : 'pageXOffset']
-                            //ie6,7,8 standard mode
-                            || d[DOC_ELEMENT][method]
+                    //标准
+                    //chrome == body.scrollTop
+                    //firefox/ie9 == documentElement.scrollTop
+                    ret = w[ 'page' + (i ? 'Y' : 'X') + 'Offset'];
+                    if (!isNumber(ret)) {
+                        d = w[DOCUMENT];
+                        //ie6,7,8 standard mode
+                        ret = d[DOC_ELEMENT][method];
+                        if (!isNumber(ret)) {
                             //quirks mode
-                            || d[BODY][method];
+                            ret = d[BODY][method];
+                        }
+                    }
                 }
             } else if (isElementNode(elem)) {
                 if (v !== undefined) {
