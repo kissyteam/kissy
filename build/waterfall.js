@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 9 15:40
+build time: Sep 13 11:55
 */
 /**
  * intervein elements dynamically
@@ -140,7 +140,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         if (!container.contains(item)) {
             container.append(item);
         }
-        curColHeights[dest] += item.outerHeight();
+        curColHeights[dest] += item.outerHeight(true);
         return item;
     }
 

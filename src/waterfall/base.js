@@ -135,7 +135,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         if (!container.contains(item)) {
             container.append(item);
         }
-        curColHeights[dest] += item.outerHeight();
+        curColHeights[dest] += item.outerHeight(true);
         return item;
     }
 
