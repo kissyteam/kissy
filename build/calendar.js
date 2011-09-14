@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 14 12:31
+build time: Sep 14 12:37
 */
 /**
  * KISSY Calendar
@@ -162,7 +162,9 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 };
 
                 // bugfix by jayli - popup状态下，点击选择月份的option时日历层关闭
-                if (self.con.contains(target) && target[0].nodeName.toLowerCase() === 'option') {
+                if (self.con.contains(target) &&
+                    (target[0].nodeName.toLowerCase() === 'option' ||
+                        target[0].nodeName.toLowerCase() === 'select')) {
                     return;
                 }
 
