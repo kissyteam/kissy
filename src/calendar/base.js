@@ -156,10 +156,10 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                         && dot[1] < r[1].y;
                 };
 
-				// bugfix by jayli - popup状态下，点击选择月份的option时日历层关闭
-				if(self.con.contains(target) && target[0].tagName == 'OPTION'){
-					return;
-				}
+                // bugfix by jayli - popup状态下，点击选择月份的option时日历层关闭
+                if (self.con.contains(target) && target[0].nodeName.toLowerCase() === 'option') {
+                    return;
+                }
 
                 /*
                  if (!S.DOM.contains(Node.one('#' + self.C_Id), e.target)) {
