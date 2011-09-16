@@ -33,6 +33,14 @@ KISSY.add(function(S, Node) {
 
     S.extend(Tag, Node, {
 
+        isEndTag:function() {
+            return /^\//.test(this.nodeName);
+        },
+
+        isEmptyXmlTag:function() {
+            return /\/$/.test(this.nodeName);
+        },
+
         appendChild:function(node) {
             this.childNodes.push(node);
             refreshChildNodes(this);

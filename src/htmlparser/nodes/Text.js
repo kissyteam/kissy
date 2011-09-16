@@ -8,6 +8,7 @@ KISSY.add(function(S, Node) {
         Text.superclass.constructor.apply(this, arguments);
         this.nodeType = 3;
         this.nodeName = "#text";
+        this.closed = true;
     }
 
     S.extend(Text, Node);

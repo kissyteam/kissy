@@ -12,9 +12,15 @@ KISSY.add(function() {
         this.nodeName = null;
         this.previousSibling = null;
         this.nextSibling = null;
+        // whether has been closed by its end tag
+        this.closed = false;
+        this.closedStartPosition = -1;
+        this.closedEndPosition = -1;
     }
 
     Node.prototype = {
+
+
 
         toHtml:function() {
             if (this.page) {

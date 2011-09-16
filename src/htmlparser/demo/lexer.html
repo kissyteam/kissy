@@ -12,10 +12,13 @@
 
     KISSY.use("htmlparser", function(S, HtmlParser) {
         var Lexer = HtmlParser.Lexer;
-        var html = "<div id='z'><<a> ";
+        var html = "<div id='z\\''><<a> ";
         var lexer = new Lexer(html),node;
         while (node = lexer.nextNode()) {
             S.log(node.toString());
+            if (node.nodeType == 1) {
+                S.log("attribute:" + node.attributes.length);
+            }
         }
     });
 </script>
