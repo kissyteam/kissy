@@ -1,4 +1,8 @@
-KISSY.add(function(S, Node) {
+/**
+ * comment node (<!-- content -->)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(function(S, Tag) {
 
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
@@ -6,9 +10,9 @@ KISSY.add(function(S, Node) {
         this.nodeName = "#comment";
     }
 
-    S.extend(Comment, Node);
+    S.extend(Comment, Tag);
 
     return Comment;
 }, {
-    requires:['./Node']
+    requires:['./Tag']
 });

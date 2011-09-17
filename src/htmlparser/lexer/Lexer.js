@@ -12,6 +12,14 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
 
     Lexer.prototype = {
 
+        setPosition:function(p) {
+            this.cursor.position = p;
+        },
+
+        getPosition:function() {
+            return this.cursor.position;
+        },
+
         nextNode:function(quoteSmart) {
             var start ,
                 ch,

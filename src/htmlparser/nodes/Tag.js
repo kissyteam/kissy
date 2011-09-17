@@ -2,7 +2,7 @@
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Node) {
+KISSY.add(function(S, Node, TagScanner, Attribute) {
     function Tag(page, startPosition, endPosition, attributes) {
         Tag.superclass.constructor.apply(this, arguments);
         this.childNodes = [];
@@ -10,24 +10,41 @@ KISSY.add(function(S, Node) {
         this.lastChild = null;
         this.attributes = attributes || [];
         this.nodeType = 1;
+
+        // first attribute is actually nodeName
         if (this.attributes[0]) {
             this.nodeName = attributes[0].name;
+            // note :
+            // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
+            this.tagName = this.nodeName.replace(/\//, "");
+            attributes.splice(0, 1);
         }
+
+        // whether has been closed by its end tag
+        // !TODO how to set closed position correctly
+        this.closed = this.isEmptyXmlTag();
+        this.closedStartPosition = -1;
+        this.closedEndPosition = -1;
+        // scan it's innerHTMl to childNodes
+        this.scanner = TagScanner;
     }
 
     function refreshChildNodes(self) {
         var c = self.childNodes;
         self.firstChild = c[0];
         self.lastChild = c[c.length - 1];
-        if (c.length == 1) {
+        if (c.length >= 1) {
             c[0].nextSibling = c[0].nextSibling = null;
             c[0].parentNode = self;
-        } else {
+        }
+
+        if (c.length > 1) {
             for (var i = 0; i < c.length - 1; i++) {
                 c[i].nextSibling = c[i + 1];
                 c[i + 1].previousSibling = c[i];
                 c[i + 1].parentNode = self;
             }
+            c[c.length - 1].nextSibling = null
         }
     }
 
@@ -38,7 +55,8 @@ KISSY.add(function(S, Node) {
         },
 
         isEmptyXmlTag:function() {
-            return /\/$/.test(this.nodeName);
+            var attr = this.attributes[this.attributes.length - 1];
+            return !!(attr && /\/$/.test(attr.name));
         },
 
         appendChild:function(node) {
@@ -60,29 +78,38 @@ KISSY.add(function(S, Node) {
             refreshChildNodes(node.parentNode);
         },
 
-        getAttribute:function() {
-
+        getAttribute:function(name) {
+            var attr = findAttributeByName(this.attributes, name);
+            return attr && attr.value;
         },
-        setAttribute:function() {
-
+        setAttribute:function(name, value) {
+            var attr = findAttributeByName(this.attributes, name);
+            if (attr) {
+                attr.value = value;
+            } else {
+                this.attributes.push(new Attribute(name, '=', value, '"'));
+            }
         },
-        removeAttribute:function() {
-
-        },
-        getAttributeNode:function() {
-
-        },
-        setAttributeNode:function() {
-
-        },
-        removeAttributeNode:function() {
-
+        removeAttribute:function(name) {
+            var attr = findAttributeByName(this.attributes, name);
+            if (attr) {
+                var index = S.indexOf(attr, this.attributes);
+                this.attributes.splice(index, 1);
+            }
         }
     });
 
+    function findAttributeByName(attributes, name) {
+        for (var i = 0; i < attributes.length; i++) {
+            if (attributes[i].name == name) {
+                return attributes[i];
+            }
+        }
+        return null;
+    }
 
     return Tag;
 
 }, {
-    requires:['./Node']
+    requires:['./Node','../scanners/TagScanner','./Attribute']
 });

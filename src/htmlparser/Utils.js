@@ -1,3 +1,7 @@
+/**
+ * lang for html parser
+ * @author yiminghe@gmail.com
+ */
 KISSY.add(function() {
     return {
         isLetter:function(ch) {
