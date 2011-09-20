@@ -2,7 +2,7 @@
  * @fileoverview KISSY.Template DPL.
  * @author 文河<wenhe@taobao.com>
  */
-KISSY.add('template-dpl', function(S, undefined) {
+KISSY.add('template/dpl', function(S) {
 
     var T = S.Template,
         KS_TEMPL_STAT_PARAM = 'KS_TEMPL_STAT_PARAM';

@@ -27,3 +27,9 @@ KISSY.Template Changelog:
   * 自定义表达式支持多参数传递,定义为function的时候会将参数split为数组, 直接传递
     给表达式定义方法.
   * 利用上述特性,each现在支持{{#each obj as value index}}自定义变量名.
+
+2011-09-20 yiminghe@gmail.com
+   * code style change
+   * remove reg cache , ugly to see
+   * fix escape by escape
+   * * expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
