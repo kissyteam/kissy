@@ -576,14 +576,14 @@ describe('lang.js', function() {
         var z = S.throttle(t, 300, x);
         z();
         expect(i).toBe(0);
-        waits(300);
+        waits(500);
         runs(function() {
             z();
             expect(i).toBe(1);
             z();
             expect(i).toBe(1);
         });
-        waits(300);
+        waits(500);
         runs(function() {
             z();
             expect(i).toBe(2);
@@ -606,11 +606,11 @@ describe('lang.js', function() {
         expect(i).toBe(0);
         z();
         expect(i).toBe(0);
-        waits(300);
+        waits(500);
         runs(function() {
             expect(i).toBe(1);
         });
-        waits(300);
+        waits(500);
         runs(function() {
             expect(i).toBe(1);
         });

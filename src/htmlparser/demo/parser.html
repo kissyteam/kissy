@@ -12,8 +12,11 @@
 
     KISSY.use("htmlparser", function(S, HtmlParser) {
         var Parser = HtmlParser.Parser;
-        var html = "<div id='5'><span>1</span><a href=\"http://www.g.cn\">http://www.taobao.com</a></div>";
-        var parser = new Parser(html),node;
+        // valid html is fine
+        // var html = "<div id='5'><span>1</span><a href=\"http://www.g.cn\">http://www.taobao.com</a></div>";
+        var html = "<div id='5'><span>1<a href=\"http://www.g.cn\">http://www.taobao.com</div>",
+                parser = new Parser(html),
+                node;
         var nodes = parser.parse();
         S.log(nodes[0]);
     });

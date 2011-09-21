@@ -81,6 +81,7 @@ KISSY.add(function() {
                                         preStackItem.appendChild(currentStackItem);
                                     }
                                     tag = stack[index];
+                                    stack.length = index;
                                     node = null;
                                 }
 

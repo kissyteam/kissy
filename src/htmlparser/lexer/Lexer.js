@@ -468,6 +468,190 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
         },
 
         /**
+         * parse cdata such as code in script
+         * @param quoteSmart if set true end tag in quote (but not in comment mode) does not end current tag ( <script>x="<a>taobao</a>"</script> )
+         */
+        parseCDATA:function(quoteSmart) {
+            var start,
+                state,
+                done,
+                quote,
+                ch,
+                end,
+                comment,
+                mCursor = this.cursor,
+                mPage = this.page;
+
+            start = mCursor.getPosition();
+            state = 0;
+            done = false;
+            quote = '';
+            comment = false;
+
+            while (!done) {
+                ch = mPage.getChar(mCursor);
+                switch (state) {
+                    case 0: // prior to ETAGO
+                        switch (ch) {
+                            case -1:
+                                done = true;
+                                break;
+                            case '\'':
+                                if (quoteSmart && !comment) {
+                                    if ('' == quote) {
+                                        quote = '\''; // enter quoted state
+                                    } else if ('\'' == quote) {
+                                        quote = ''; // exit quoted state
+                                    }
+                                }
+                                break;
+                            case '"':
+                                if (quoteSmart && !comment) {
+                                    if ('' == quote) {
+                                        quote = '"'; // enter quoted state
+                                    } else if ('"' == quote) {
+                                        quote = ''; // exit quoted state
+                                    }
+                                }
+                                break;
+                            case '\\':
+                                if (quoteSmart) {
+                                    if ('' != quote) {
+                                        ch = mPage.getChar(mCursor); // try to consume escaped character
+                                        if (-1 == ch) {
+                                            done = true;
+                                        } else if ((ch != '\\') && (ch != quote)) {
+                                            // unconsume char if character was not an escapable char.
+                                            mPage.ungetChar(mCursor);
+                                        }
+                                    }
+                                }
+                                break;
+                            case '/':
+                                if (quoteSmart) {
+                                    if ('' == quote) {
+                                        // handle multiline and double slash comments (with a quote)
+                                        ch = mPage.getChar(mCursor);
+                                        if (-1 == ch) {
+                                            done = true;
+                                        } else if ('/' == ch) {
+                                            comment = true;
+                                        } else if ('*' == ch) {
+                                            do {
+                                                do
+                                                    ch = mPage.getChar(mCursor);
+                                                while ((-1 != ch) && ('*' != ch));
+                                                ch = mPage.getChar(mCursor);
+                                                if (ch == '*') {
+                                                    mPage.ungetChar(mCursor);
+                                                }
+                                            } while ((-1 != ch) && ('/' != ch));
+                                        }
+                                        else {
+                                            mPage.ungetChar(mCursor);
+                                        }
+                                    }
+                                }
+                                break;
+                            case '\n':
+                                comment = false;
+                                break;
+                            case '<':
+                                if (quoteSmart) {
+                                    if ('' == quote) {
+                                        state = 1;
+                                    }
+                                }
+                                else {
+                                    state = 1;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case 1: // <
+                        switch (ch) {
+                            case -1:
+                                done = true;
+                                break;
+                            case '/':
+                                state = 2;
+                                break;
+                            case '!':
+                                ch = mPage.getChar(mCursor);
+                                if (-1 == ch) {
+                                    done = true;
+                                } else if ('-' == ch) {
+                                    ch = mPage.getChar(mCursor);
+                                    if (-1 == ch) {
+                                        done = true;
+                                    } else if ('-' == ch) {
+                                        state = 3;
+                                    } else {
+                                        state = 0;
+                                    }
+                                }
+                                else
+                                    state = 0;
+                                break;
+                            default:
+                                state = 0;
+                                break;
+                        }
+                        break;
+                    case 2: // </
+                        comment = false;
+                        if (-1 == ch) {
+                            done = true;
+                        } else if (Utils.isLetter(ch)) {
+                            done = true;
+                            // back up to the start of ETAGO
+                            mPage.ungetChar(mCursor);
+                            mPage.ungetChar(mCursor);
+                            mPage.ungetChar(mCursor);
+                        } else {
+                            state = 0;
+                        }
+                        break;
+                    case 3: // <!
+                        comment = false;
+                        if (-1 == ch) {
+                            done = true;
+                        } else if ('-' == ch) {
+                            ch = mPage.getChar(mCursor);
+                            if (-1 == ch) {
+                                done = true;
+                            } else if ('-' == ch) {
+                                ch = mPage.getChar(mCursor);
+                                if (-1 == ch) {
+                                    done = true;
+                                } else if ('>' == ch) {
+                                    // <!----> <!-->
+                                    state = 0;
+                                } else {
+                                    // retreat twice , still begin to check -->
+                                    mPage.ungetChar(mCursor);
+                                    mPage.ungetChar(mCursor);
+                                }
+                            } else {
+                                // retreat once , still begin to check
+                                mPage.ungetChar(mCursor);
+                            }
+                        } else {
+                            // eat comment
+                        }
+                        break;
+                    default:
+                        throw new Error("unexpected " + state);
+                }
+            }
+            end = mCursor.getPosition();
+
+            return (this.makeString(start, end));
+        },
+
+        /**
          * Generate an single quoted attribute
          * @param attributes The list so far.
          * @param bookmarks The array of positions.
