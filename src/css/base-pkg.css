@@ -1,8 +1,3 @@
-﻿/*
-Copyright 2011, KISSY UI Library v1.20dev
-MIT Licensed
-build time: Sep 5 21:29
-*/
 /*
 KISSY CSS Reset
 理念：1. reset 的目的不是清除浏览器的默认样式，这仅是部分工作。清除和重置是紧密不可分的。
@@ -59,3 +54,53 @@ summary, time, mark, audio, video {
     padding: 0;
 }
 mark { background: #ff0; }
+/*
+双飞翼栅格布局 Flying Swing Grids Layout
+理念：简单质朴，语义化布局。
+维护：玉伯<lifesinger@gmail.com>, 正淳<ragecarrier@gmail.com>
+*/
+
+/* 居中 */
+#header, #content, #footer {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/** 布局基础样式 **/
+.col-main {
+    float: left;
+    width: 100%;
+    /* bug fix: 主栏没有内容时，在 Firefox 和 Chrome 等浏览器下，布局不对 */
+    min-height: 1px;
+}
+.col-sub, .col-extra {
+    float: left;
+    /*position: relative;  按需设置，仅在需要时添加 */
+}
+
+/** 清除浮动 **/
+.layout:after, .main-wrap:after, .col-sub:after, .col-extra:after {
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both;
+}
+.layout, .main-wrap, .col-sub, .col-extra {
+    *zoom: 1;
+}
+/*
+常用的通用样式 Common Style
+理念：少而精
+维护：玉伯<lifesinger@gmail.com>
+*/
+
+/* 隐藏 */
+.ks-hidden { display: none; }
+.ks-invisible { visibility: hidden; }
+
+/* 清除浮动 */
+.ks-clear:after { content: '\20'; display: block; height: 0; clear: both; }
+.ks-clear { *zoom: 1; }
+
+/* inline block */
+.ks-inline-block { display: inline-block; *display: inline; }
