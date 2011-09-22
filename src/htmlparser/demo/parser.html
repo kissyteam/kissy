@@ -14,9 +14,20 @@
         var Parser = HtmlParser.Parser;
         // valid html is fine
         // var html = "<div id='5'><span>1</span><a href=\"http://www.g.cn\">http://www.taobao.com</a></div>";
-        var html = "<div id='5'><span>1<a href=\"http://www.g.cn\">http://www.taobao.com</div>",
-                parser = new Parser(html),
+
+        // not valid html is fine too
+        // var html = "<div id='5'><span>1<a href=\"http://www.g.cn\">http://www.taobao.com</div>";
+
+        // valid script ok
+        // var html = "<div><script>var x='<a>b</a>';<\/script></div>";
+
+
+        // not valid script ok ,but truncated
+        var html = "<div><script>var x='<a>b</a>';</a><\/script></div>";
+
+        var parser = new Parser(html),
                 node;
+
         var nodes = parser.parse();
         S.log(nodes[0]);
     });

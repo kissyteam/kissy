@@ -482,7 +482,7 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
                 mCursor = this.cursor,
                 mPage = this.page;
 
-            start = mCursor.getPosition();
+            start = mCursor.position;
             state = 0;
             done = false;
             quote = '';
@@ -605,6 +605,8 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
                         if (-1 == ch) {
                             done = true;
                         } else if (Utils.isLetter(ch)) {
+                            // 严格 parser 遇到 </x lexer 立即结束
+                            // 浏览器实现更复杂点，可能 lexer 和 parser 混合了
                             done = true;
                             // back up to the start of ETAGO
                             mPage.ungetChar(mCursor);
@@ -646,9 +648,9 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
                         throw new Error("unexpected " + state);
                 }
             }
-            end = mCursor.getPosition();
+            end = mCursor.position;
 
-            return (this.makeString(start, end));
+            return this.makeString(start, end);
         },
 
         /**

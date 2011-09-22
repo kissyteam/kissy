@@ -2,7 +2,18 @@
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Node, TagScanner, Attribute) {
+KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute) {
+
+    var scanners = {
+        'style':QuoteCdataScanner,
+        'script':QuoteCdataScanner,
+        'textarea':TextareaScanner
+    };
+
+    function getScannerForTag(nodeName) {
+        return scanners[nodeName] || TagScanner;
+    }
+
     function Tag(page, startPosition, endPosition, attributes) {
         Tag.superclass.constructor.apply(this, arguments);
         this.childNodes = [];
@@ -13,7 +24,7 @@ KISSY.add(function(S, Node, TagScanner, Attribute) {
 
         // first attribute is actually nodeName
         if (this.attributes[0]) {
-            this.nodeName = attributes[0].name;
+            this.nodeName = attributes[0].name.toLowerCase();
             // note :
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
             this.tagName = this.nodeName.replace(/\//, "");
@@ -26,7 +37,7 @@ KISSY.add(function(S, Node, TagScanner, Attribute) {
         this.closedStartPosition = -1;
         this.closedEndPosition = -1;
         // scan it's innerHTMl to childNodes
-        this.scanner = TagScanner;
+        this.scanner = getScannerForTag(this.nodeName);
     }
 
     function refreshChildNodes(self) {
@@ -111,5 +122,9 @@ KISSY.add(function(S, Node, TagScanner, Attribute) {
     return Tag;
 
 }, {
-    requires:['./Node','../scanners/TagScanner','./Attribute']
+    requires:['./Node',
+        '../scanners/TagScanner',
+        '../scanners/QuoteCdataScanner',
+        '../scanners/TextareaScanner',
+        './Attribute']
 });
