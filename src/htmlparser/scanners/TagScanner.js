@@ -2,7 +2,7 @@
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add(function() {
+KISSY.add(function(S, dtd) {
     var scanner = {
         scan:function(tag, lexer, stack) {
             var node,i;
@@ -18,8 +18,11 @@ KISSY.add(function() {
                                 tag.closed = true;
                                 node = null;
                             }
-                            else if (!this.canHasNodeAsChild(tag, node)) {
-                                // can not be its child ,will terminate tag lately
+                            // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
+                            // perfection is better and more complicated :
+                            // <a>1<p>2</p>3</a> , move <a> inside => <a>1</a><p><a>2</a></p><a>3</a>
+                            else if (!node.isEndTag() && !this.canHasNodeAsChild(tag, node)) {
+                                // can not be it as child ,will terminate tag lately
                                 lexer.setPosition(node.startPosition);
                                 node = null;
                             } else if (!node.isEndTag()) {
@@ -121,12 +124,12 @@ KISSY.add(function() {
 
         /**
          * checked whether tag can include node as its child according to DTD
-         *
-         * !TODO check by ckeditor's xhtml dtd
          */
         canHasNodeAsChild:function(tag, node) {
-            return true;
+            return !! dtd[tag.tagName][node.nodeName];
         }
     };
     return scanner;
+}, {
+    requires:["../dtd"]
 });

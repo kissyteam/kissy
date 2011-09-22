@@ -95,6 +95,18 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
 
         });
 
+        it("works for non-valid nest tag soup", function() {
+            // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
+            // perfection is better and more complicated ?
+            // <a>1<p>2</p>3</a> , move <a> inside => <a>1</a><p><a>2</a></p><a>3</a>
+            var html = "<a>我<p>测试</p>一下</a>";
+            var parser = new Parser(html);
+            var nodes = parser.parse();
+            expect(nodes.length).toBe(3);
+            expect(nodes[0].nodeName).toBe("a");
+            expect(nodes[o].childNodes[0].toHtml()).toBe("我");
+        });
+
     });
 
 

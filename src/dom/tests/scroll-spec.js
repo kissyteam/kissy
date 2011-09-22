@@ -43,15 +43,6 @@ KISSY.use("dom", function(S, DOM) {
             DOM.scrollTop(container, 0);
         });
 
-        it("native scroll should works", function() {
-            DOM.scrollIntoView(node);
-            var scrollTop = Math.round(DOM.scrollTop());
-            var nt = Math.round(DOM.offset(node).top);
-            var ct = Math.round(DOM.offset(container).top);
-            expect(scrollTop).toBeEqual(nt);
-            expect(nt - ct).toBeEqual(container_border_width);
-        });
-
         it("scroll node to container manually works", function() {
 
             DOM.scrollIntoView(node, container);
@@ -70,6 +61,8 @@ KISSY.use("dom", function(S, DOM) {
             DOM.scrollIntoView(inner, iframe.contentWindow);
             var nt = Math.round(DOM.offset(inner).top);
             expect(nt).toBe(DOM.scrollTop(iframe.contentWindow));
+
+            DOM.hide(iframe);
         });
 
         it("scroll node to container at bottom", function() {
@@ -90,7 +83,11 @@ KISSY.use("dom", function(S, DOM) {
                 //  | |  | |
                 //  | ---- |
                 //  --------
-                expect(nt).toBe(ct + container_height - node_height + container_border_width);
+                expect(nt).toBe(ct +
+                    container_border_width +
+                    container_height -
+                    node_height);
+                DOM.scrollIntoView(container);
             });
         });
 
@@ -99,7 +96,10 @@ KISSY.use("dom", function(S, DOM) {
 //            DOM.scrollTop(container, 0);
             DOM.scrollIntoView(container);
             var ct = Math.round(DOM.offset(container).top);
-            expect(ct).toBeEqual(DOM.scrollTop());
+            expect(ct)
+                .toBeEqual(DOM.scrollTop() +
+                document.body.clientTop +
+                document.documentElement.clientTop);
         });
 
 

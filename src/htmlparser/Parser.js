@@ -6,14 +6,9 @@ KISSY.add(function(S, Cursor, Lexer) {
 
     function Iterator(lexer) {
         this.lexer = lexer;
-        this.cursor = new Cursor(0);
     }
 
     Iterator.prototype = {
-        hasMoreNodes:function() {
-            this.cursor.position = this.lexer.getPosition();
-            return this.lexer.page.getChar(this.cursor) != -1;
-        },
 
         nextNode:function() {
             var ret,
@@ -29,6 +24,8 @@ KISSY.add(function(S, Cursor, Lexer) {
                             stack = [];
                             ret = scanner.scan(ret, lexer, stack);
                         }
+                    } else {
+                        return this.nextNode();
                     }
                 }
             }
@@ -48,9 +45,10 @@ KISSY.add(function(S, Cursor, Lexer) {
 
         parse:function() {
             var ret = [],
+                n,
                 iter = this.elements();
-            while (iter.hasMoreNodes()) {
-                ret.push(iter.nextNode());
+            while (n = iter.nextNode()) {
+                ret.push(n);
             }
             return ret;
         }

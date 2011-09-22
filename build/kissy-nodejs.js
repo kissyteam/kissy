@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:55
+build time: Sep 22 19:37
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 22 13:55
          */
         version: '1.20dev',
 
-        buildTime:'20110922135515',
+        buildTime:'20110922193725',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4875,16 +4875,6 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 top = top === undefined ? true : !!top;
             }
 
-            // default current window, use native for scrollIntoView(elem, top)
-            if (!container ||
-                (container = DOM.get(container)) === win) {
-                // 注意：
-                // 1. Opera 不支持 top 参数
-                // 2. 当 container 已经在视窗中时，也会重新定位
-                elem.scrollIntoView(top);
-                return;
-            }
-
             // document 归一化到 window
             if (nodeTypeIs(container, 9)) {
                 container = getWin(container);
@@ -4892,72 +4882,96 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
             var isWin = !!getWin(container),
                 elemOffset = DOM.offset(elem),
-                containerOffset = isWin ? {
-                    left: DOM.scrollLeft(container),
-                    top: DOM.scrollTop(container) }
-                    : DOM.offset(container),
-
-                // elem 相对 container 视窗的坐标
-                diff = {
-                    left: elemOffset[LEFT] - containerOffset[LEFT],
-                    top: elemOffset[TOP] - containerOffset[TOP]
-                },
-
-                // container 视窗的高宽
-                ch = isWin ? DOM.viewportHeight(container) : container.clientHeight,
-                cw = isWin ? DOM.viewportWidth(container) : container.clientWidth,
-
-                // container 视窗相对 container 元素的坐标
-                cl = DOM[SCROLL_LEFT](container),
-                ct = DOM[SCROLL_TOP](container),
-                cr = cl + cw,
-                cb = ct + ch,
-
-                // elem 的高宽
                 eh = DOM.outerHeight(elem),
                 ew = DOM.outerWidth(elem),
+                containerOffset,
+                ch,
+                cw,
+                containerScroll,
+                diffTop,
+                diffBottom,
+                win,
+                winScroll,
+                ww,
+                wh;
 
-                // elem 相对 container 元素的坐标
-                // 注：diff.left 含 border, cl 也含 border, 因此要减去容器的
-                l = diff.left + cl -
-                    (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0)),
-
-                t = diff.top + ct -
-                    (isWin ? 0 : (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)),
-
-                r = l + ew,
-                b = t + eh,
-
-                t2,
-
-                l2;
-
-            // 根据情况将 elem 定位到 container 视窗中
-            // 1. 当 eh > ch 时，优先显示 elem 的顶部，对用户来说，这样更合理
-            // 2. 当 t < ct 时，elem 在 container 视窗上方，优先顶部对齐
-            // 3. 当 b > cb 时，elem 在 container 视窗下方，优先底部对齐
-            // 4. 其它情况下，elem 已经在 container 视窗中，无需任何操作
-            if (eh > ch || t < ct || top) {
-                t2 = t;
-            } else if (b > cb) {
-                t2 = b - ch;
+            if (isWin) {
+                win = container;
+                wh = DOM.height(win);
+                ww = DOM.width(win);
+                winScroll = {
+                    left:DOM.scrollLeft(win),
+                    top:DOM.scrollTop(win)
+                };
+                // elem 相对 container 可视视窗的距离
+                diffTop = {
+                    left: elemOffset[LEFT] - winScroll[LEFT],
+                    top: elemOffset[TOP] - winScroll[TOP]
+                };
+                diffBottom = {
+                    left:  elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
+                    top:elemOffset[TOP] + eh - (winScroll[TOP] + wh)
+                };
+                containerScroll = winScroll;
+            }
+            else {
+                containerOffset = DOM.offset(container);
+                ch = container.clientHeight;
+                cw = container.clientWidth;
+                containerScroll = {
+                    left:DOM.scrollLeft(container),
+                    top:DOM.scrollTop(container)
+                };
+                // elem 相对 container 可视视窗的距离
+                // 注意边框 , offset 是边框到根节点
+                diffTop = {
+                    left: elemOffset[LEFT] - containerOffset[LEFT] -
+                        (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                    top: elemOffset[TOP] - containerOffset[TOP] -
+                        (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)
+                };
+                diffBottom = {
+                    left:  elemOffset[LEFT] + ew -
+                        (containerOffset[LEFT] + cw +
+                            (PARSEINT(DOM.css(container, 'borderRightWidth')) || 0)) ,
+                    top:elemOffset[TOP] + eh -
+                        (containerOffset[TOP] + ch +
+                            (PARSEINT(DOM.css(container, 'borderBottomWidth')) || 0))
+                };
             }
 
-            // 水平方向与上面同理
-            if (hscroll) {
-                if (ew > cw || l < cl || top) {
-                    l2 = l;
-                } else if (r > cr) {
-                    l2 = r - cw;
+            if (diffTop.top < 0 || diffBottom.top > 0) {
+                // 强制向上
+                if (top === true) {
+                    DOM.scrollTop(container, containerScroll.top + diffTop.top);
+                } else if (top === false) {
+                    DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                } else {
+                    // 自动调整
+                    if (diffTop.top < 0) {
+                        DOM.scrollTop(container, containerScroll.top + diffTop.top);
+                    } else {
+                        DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                    }
                 }
             }
 
-            // if element is already in the container view ,then do nothing
-            if (t2 !== undefined) {
-                DOM[SCROLL_TOP](container, t2);
-            }
-            if (l2 !== undefined) {
-                DOM[SCROLL_LEFT](container, l2);
+            if (hscroll) {
+                if (diffTop.left < 0 || diffBottom.left > 0) {
+                    // 强制向上
+                    if (top === true) {
+                        DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                    } else if (top === false) {
+                        DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                    } else {
+                        // 自动调整
+                        if (diffTop.left < 0) {
+                            DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                        } else {
+                            DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                        }
+                    }
+                }
             }
         },
         /**
@@ -5115,7 +5129,6 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             var offset = currentWin == relativeWin ?
                 getPageOffset(currentEl) :
                 getClientPosition(currentEl);
-
             position.left += offset.left;
             position.top += offset.top;
         } while (currentWin && currentWin != relativeWin &&
@@ -10646,6 +10659,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                 /*
                  url:"",
                  context:null,
+                 // 单位秒!!
                  timeout: 0,
                  data: null,
                  // 可取json | jsonp | script | xml | html | text | null | undefined
@@ -10780,7 +10794,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             if (c.async && c.timeout > 0) {
                 xhr.timeoutTimer = setTimeout(function() {
                     xhr.abort("timeout");
-                }, c.timeout);
+                }, c.timeout * 1000);
             }
 
             try {

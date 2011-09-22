@@ -23,13 +23,16 @@
 
 
         // not valid script ok ,but truncated
-        var html = "<div><script>var x='<a>b</a>';</a><\/script></div>";
+        // var html = "<div><script>var x='<a>b</a>';</a><\/script></div>";
 
+        // invalid nest
+        var html = "<a>我<p>测试</p>一下</a>";
         var parser = new Parser(html),
                 node;
 
         var nodes = parser.parse();
-        S.log(nodes[0]);
+        S.log(nodes.length);
+        S.log(nodes);
     });
 </script>
 </body>
