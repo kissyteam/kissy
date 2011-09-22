@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 19:37
+build time: Sep 22 19:47
 */
 /**
  * @module  dom-attr
@@ -1710,13 +1710,21 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 return;
             }
 
+            if (container) {
+                container = DOM.get(container);
+            }
+
+            if (!container) {
+                container = elem.ownerDocument;
+            }
+
             if (auto !== true) {
                 hscroll = hscroll === undefined ? true : !!hscroll;
                 top = top === undefined ? true : !!top;
             }
 
             // document 归一化到 window
-            if (nodeTypeIs(container, 9)) {
+            if (nodeTypeIs(container, DOM.DOCUMENT_NODE)) {
                 container = getWin(container);
             }
 

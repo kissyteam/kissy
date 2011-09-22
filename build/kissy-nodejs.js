@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 19:37
+build time: Sep 22 19:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 22 19:37
          */
         version: '1.20dev',
 
-        buildTime:'20110922193725',
+        buildTime:'20110922194728',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4870,13 +4870,21 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 return;
             }
 
+            if (container) {
+                container = DOM.get(container);
+            }
+
+            if (!container) {
+                container = elem.ownerDocument;
+            }
+
             if (auto !== true) {
                 hscroll = hscroll === undefined ? true : !!hscroll;
                 top = top === undefined ? true : !!top;
             }
 
             // document 归一化到 window
-            if (nodeTypeIs(container, 9)) {
+            if (nodeTypeIs(container, DOM.DOCUMENT_NODE)) {
                 container = getWin(container);
             }
 
