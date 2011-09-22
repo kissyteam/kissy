@@ -1,10 +1,9 @@
 KISSY.use("htmlparser", function(S, HtmlParser) {
 
-    describe("lexer", function() {
+    describe("Lexer", function() {
 
 
         it("works", function() {
-
             var Lexer = HtmlParser.Lexer;
             var html = "<div id='z'><<a> ";
             var lexer = new Lexer(html),node;

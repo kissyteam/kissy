@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:30
+build time: Sep 22 13:54
 */
 KISSY.add("imagezoom/zoomer",function(j,m,g){function k(){var a;if((a=this.get("bigImageSrc"))&&this.get("preload"))(new Image).src=a;this._isInner=this.get("type")===r;e=new m(document.body)}function o(a,b){var c=a[0];c&&c.complete&&c.clientWidth?b():a.on("load",b)}var r="inner",l=/^.+\.(?:jpg|png|gif)$/i,d=Math.round,p=Math.min,e;k.ATTRS={width:{valueFn:function(){return this.get("imageWidth")}},height:{valueFn:function(){return this.get("imageHeight")}},elCls:{value:"ks-imagezoom-viewer"},elStyle:{value:{overflow:"hidden",
 position:"absolute"}},type:{value:"standard"},preload:{value:true},bigImageSrc:{setter:function(a){if(a&&l.test(a))return a;return this.get("bigImageSrc")},valueFn:function(){var a=this.get("imageNode");if(a)if((a=a.attr("data-ks-imagezoom"))&&l.test(a))return a;return g}},bigImageWidth:{valueFn:function(){var a=this.bigImage;return(a=a&&a.width())||800}},bigImageHeight:{valueFn:function(){var a=this.bigImage;return(a=a&&a.height())||800}},currentMouse:{value:g},lensClass:{value:"ks-imagezoom-lens"},

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:29
+build time: Sep 22 13:54
 */
 KISSY.add("component/container",function(k,j,e,c,d,f){return j.create(e,[d,f])},{requires:["uibase","./modelcontrol","./uistore","./delegatechildren","./decoratechildren"]});KISSY.add("component/decoratechild",function(k,j){function e(){}k.augment(e,j,{decorateInternal:function(c){this.set("el",c);var d=this.get("decorateChildCls"),f=this.get("prefixCls");if(c=c.one("."+this.getCls(d)))(d=this._findUIByClass(c))?this.decorateChildrenInternal(d,c,f):this.decorateChildren(c)}});return e},{requires:["./decoratechildren"]});
 KISSY.add("component/decoratechildren",function(k,j){function e(){}k.augment(e,{decorateInternal:function(c){this.set("el",c);this.decorateChildren(c)},decorateChildrenInternal:function(c,d,f){this.addChild(new c({srcNode:d,prefixCls:f}))},_findUIByClass:function(c){c=c.attr("class")||"";var d=this.get("prefixCls");c=c.replace(RegExp("\\b"+d,"ig"),"");return j.getUIByClass(c)},decorateChildren:function(c){var d=this;c=c.children();var f=d.get("prefixCls");c.each(function(h){var l=d._findUIByClass(h);

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 7 19:17
+build time: Sep 22 13:53
 */
 KISSY.add("anim/base",function(g,h,k,e,l,a,u){function r(b,c,d,f,p,q){if(b=h.get(b)){if(!(this instanceof r))return new r(b,c,d,f,p,q);if(q===u)q=false;var m=g.isPlainObject(d);c=c;this.domEl=b;if(g.isPlainObject(c))c=String(g.param(c,";")).replace(/=/g,":").replace(/%23/g,"#").replace(/([a-z])([A-Z])/g,"$1-$2").toLowerCase();var v=c;b=b;var t,o={},B=w.length,n;if(A(b)){n=h.clone(b,true);h.insertAfter(n,b);t=n.style;for(i(n,v);B--;){var z=w[B];if(t[z])o[z]=(s[z]||s["*"]).getter(n,z)}}else n=b;v=j(v);
 for(var x in v)o[x]=n!==b?(s[x]||s["*"]).getter(n,x):y(v[x]);n!==b&&h.remove(n);this.props=o;this.targetStyle=c;if(m)m=g.merge(F,d);else{m=g.clone(F);if(d!=null)m.duration=parseFloat(d)||1;if(g.isString(f)||g.isFunction(f))m.easing=f;if(g.isFunction(p))m.complete=p;m.nativeSupport=q}if(m.nativeSupport&&!g.isEmptyObject(j(c)))m.nativeSupport=false;this.config=m;if(m.nativeSupport&&I()&&g.isString(f=m.easing))if(/cubic-bezier\([\s\d.,]+\)/.test(f)||(f=e.NativeTimeFunction[f])){m.easing=f;this.transitionName=

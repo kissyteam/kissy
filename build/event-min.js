@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:30
+build time: Sep 22 13:54
 */
 KISSY.add("event/base",function(a,b,g,k){function p(c,f,l){if((l=a.trim(l))&&l.indexOf(x)>0){var r=e(arguments);a.each(l.split(x),function(v){var d=[].concat(r);d.splice(0,3,f,v);j[c].apply(j,d)});return true}return k}function h(c){return c&&c.nodeType!==3&&c.nodeType!==8}function n(c,f,l,r,v){var d=j.special[f]||{};if(!r.length&&(!d.setup||d.setup.call(c)===false))q(c,f,l);d.add&&d.add.call(c,v)}var o=document,e=a.makeArray,q=o.addEventListener?function(c,f,l,r){c.addEventListener&&c.addEventListener(f,
 l,!!r)}:function(c,f,l){c.attachEvent&&c.attachEvent("on"+f,l)},s=o.removeEventListener?function(c,f,l,r){c.removeEventListener&&c.removeEventListener(f,l,!!r)}:function(c,f,l){c.detachEvent&&c.detachEvent("on"+f,l)},x=" ",i="",m="trigger-none-"+a.now(),u="ksEventTargetId"+a.now(),j={_clone:function(c,f){if(!(f.nodeType!==b.ELEMENT_NODE||!j._hasData(c))){var l=j._data(c).events;a.each(l,function(r,v){a.each(r,function(d){j.on(f,v,d.fn,d.scope,d.data)})})}},_hasData:function(c){return!!b.hasData(c,

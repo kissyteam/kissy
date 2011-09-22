@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 8 15:10
+build time: Sep 22 13:53
 */
 KISSY.add("ajax/base",function(i,j,l,k){function b(h){h=i.mix(i.clone(u),h||{},undefined,undefined,true);if(!i.isBoolean(h.crossDomain)){var o=e.exec(h.url.toLowerCase());h.crossDomain=!!(o&&(o[1]!=r[1]||o[2]!=r[2]||(o[3]||(o[1]==="http:"?m:n))!=(r[3]||(r[1]==="http:"?m:n))))}if(h.processData&&h.data&&!i.isString(h.data))h.data=i.param(h.data,undefined,undefined,h.serializeArray);h.type=h.type.toUpperCase();h.hasContent=!q.test(h.type);if(!h.hasContent){if(h.data)h.url+=(/\?/.test(h.url)?"&":"?")+
 h.data;if(h.cache===false)h.url+=(/\?/.test(h.url)?"&":"?")+"_ksTS="+(i.now()+"_"+i.guid())}h.dataType=i.trim(h.dataType||"*").split(d);h.context=h.context||h;return h}function a(h,o){f.fire(h,{ajaxConfig:o.config,xhr:o})}function c(h){var o=this.config;h=h.type;this.timeoutTimer&&clearTimeout(this.timeoutTimer);o[h]&&o[h].call(o.context,this.responseData,this.statusText,this);a(h,this)}function f(h){if(h.url){h=b(h);var o=new k(h);a("start",o);var x=new (t[h.dataType[0]]||t["*"])(o);o.transport=
