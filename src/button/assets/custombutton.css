@@ -89,6 +89,7 @@
 .goog-button-disabled {
   background-image: none !important;
   opacity: 0.3;
+  cursor: default !important;
   -moz-opacity: 0.3;
   filter: alpha(opacity=30);
 }
@@ -134,31 +135,31 @@
 .goog-button-collapse-right,
 .goog-button-collapse-right .goog-button-outer-box,
 .goog-button-collapse-right .goog-button-inner-box {
-  margin-right: 0;
+  margin-right: 0 !important;
 }
 
 .goog-button-collapse-left,
 .goog-button-collapse-left .goog-button-outer-box,
 .goog-button-collapse-left .goog-button-inner-box {
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 
 .goog-button-collapse-left .goog-button-inner-box  {
-  border-left: 1px solid #fff;
+  border-left: 1px solid #fff !important;
 }
 
 .goog-button-collapse-left.goog-button-checked
 .goog-button-inner-box {
-  border-left: 1px solid #ddd;
+  border-left: 1px solid #ddd !important;
 }
 
 /* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
 * html .goog-button-collapse-left .goog-button-inner-box {
-  left: 0;
+  left: 0 !important;
 }
 
 /* IE7-only hack; ignored by all other browsers. */
 *:first-child+html .goog-button-collapse-left
 .goog-button-inner-box {
-  left: 0;
+  left: 0 !important;
 }

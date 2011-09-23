@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Sep 23 13:05
 */
 /**
  * combination of menu and button ,similar to native select
@@ -97,6 +97,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 this.fire("click", {
                     target:e.target
                 });
+                this.set("collapsed", true);
             },
 
             /**

@@ -92,6 +92,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 this.fire("click", {
                     target:e.target
                 });
+                this.set("collapsed", true);
             },
 
             /**

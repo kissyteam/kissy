@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:53
+build time: Sep 23 13:05
 */
 /**
  * Model and Control for button
@@ -46,6 +46,9 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
                 },
                 tooltip:{
                     view:true
+                },
+                collapseSide:{
+                    view:true
                 }
             }
         });
@@ -79,6 +82,16 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
         },
         _uiSetDescribedby:function(describedby) {
             this.get("el").attr("aria-describedby", describedby);
+        },
+
+        _uiSetCollapseSide:function(side) {
+            var self = this,
+                cls = self.getCls("button-collapse-"),
+                el = self.get("el");
+            el.removeClass(cls + "left " + cls + "right");
+            if (side) {
+                el.addClass(cls + side);
+            }
         }
     }, {
         ATTRS:{
@@ -94,7 +107,8 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
 
                 // aria-describledby support
             describedby:{},
-            tooltip:{}
+            tooltip:{},
+            collapseSide:{}
         }
     });
 }, {
@@ -156,12 +170,71 @@ KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
 }, {
     requires:['node','uibase','./buttonrender']
 });/**
+ * simple split button ,common usecase :button + menubutton
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("button/split", function(S) {
+
+    var handles = {
+        content:function(e) {
+            var first = this,t = e.target;
+            first.set("content", t.get("content"));
+            first.set("value", t.get("value"));
+        },
+        value:function(e) {
+            var first = this,t = e.target;
+            first.set("value", t.get("value"));
+        }
+    };
+
+    function Split() {
+        Split.superclass.constructor.apply(this, arguments);
+    }
+
+    Split.ATTRS = {
+        // 第一个组件按钮
+        first:{},
+        // 第二个组件
+        second:{},
+        // 第二个组件的见ring事件
+        eventType:{
+            value:"click"
+        },
+        eventHandler:{
+            // 或者 value
+            value:"content"
+        }
+    };
+
+    S.extend(Split, S.Base, {
+        render:function() {
+            var self = this,
+                eventType = self.get("eventType"),
+                eventHandler = handles[self.get("eventHandler")],
+                first = self.get("first"),
+                second = self.get("second");
+            first.set("collapseSide", "right");
+            second.set("collapseSide", "left");
+            first.render();
+            second.render();
+            if (eventType && eventHandler) {
+                second.on(eventType, eventHandler, first);
+            }
+        }
+    });
+
+    return Split;
+
+}, {
+    requires:['base']
+});/**
  * simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function(S, Button, Render) {
+KISSY.add("button", function(S, Button, Render, Split) {
     Button.Render = Render;
+    Button.Split = Split;
     return Button;
 }, {
-    requires:['button/base','button/customrender']
+    requires:['button/base','button/customrender','button/split']
 });

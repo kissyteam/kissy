@@ -41,6 +41,9 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
                 },
                 tooltip:{
                     view:true
+                },
+                collapseSide:{
+                    view:true
                 }
             }
         });
