@@ -113,7 +113,7 @@
 }
 
 /* State: hover. */
-.goog-button.goog-button-outer-box,
+.goog-button-hover .goog-button-outer-box,
 .goog-button-hover .goog-button-inner-box {
   border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
 }
