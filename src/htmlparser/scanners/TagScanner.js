@@ -6,7 +6,7 @@ KISSY.add(function(S, dtd) {
     var scanner = {
         scan:function(tag, lexer, stack) {
             var node,i;
-            if (tag.isEmptyXmlTag()) {
+            if (tag.isEmptyXmlTag) {
                 tag.closed = true;
             } else {
                 do{
@@ -30,7 +30,7 @@ KISSY.add(function(S, dtd) {
                                 var nodeScanner = node.scanner;
                                 if (nodeScanner) {
                                     if (nodeScanner === scanner) {
-                                        if (node.isEmptyXmlTag()) {
+                                        if (node.isEmptyXmlTag) {
                                             tag.appendChild(node);
                                         } else {
                                             stack.push(tag);

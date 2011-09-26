@@ -10,7 +10,14 @@ KISSY.add(function(S, Node) {
         this.nodeName = "#text";
     }
 
-    S.extend(Text, Node);
+    S.extend(Text, Node, {
+        writeHtml:function(writer, filter) {
+            var value = this.toHtml();
+            if (filter.onText(this) !== false) {
+                writer.text(value);
+            }
+        }
+    });
 
     return Text;
 }, {

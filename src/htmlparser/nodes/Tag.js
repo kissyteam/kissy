@@ -21,9 +21,9 @@ KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attr
         this.lastChild = null;
         this.attributes = attributes || [];
         this.nodeType = 1;
-
+        attributes = this.attributes;
         // first attribute is actually nodeName
-        if (this.attributes[0]) {
+        if (attributes[0]) {
             this.nodeName = attributes[0].name.toLowerCase();
             // note :
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
@@ -31,9 +31,15 @@ KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attr
             attributes.splice(0, 1);
         }
 
+        var lastAttr = attributes[attributes.length - 1];
+        this.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
+        if (this.isEmptyXmlTag) {
+            attributes.length = attributes.length - 1;
+        }
+
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
-        this.closed = this.isEmptyXmlTag();
+        this.closed = this.isEmptyXmlTag;
         this.closedStartPosition = -1;
         this.closedEndPosition = -1;
         // scan it's innerHTMl to childNodes
@@ -65,11 +71,6 @@ KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attr
             return /^\//.test(this.nodeName);
         },
 
-        isEmptyXmlTag:function() {
-            var attr = this.attributes[this.attributes.length - 1];
-            return !!(attr && /\/$/.test(attr.name));
-        },
-
         appendChild:function(node) {
             this.childNodes.push(node);
             refreshChildNodes(this);
@@ -93,6 +94,7 @@ KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attr
             var attr = findAttributeByName(this.attributes, name);
             return attr && attr.value;
         },
+
         setAttribute:function(name, value) {
             var attr = findAttributeByName(this.attributes, name);
             if (attr) {
@@ -101,13 +103,94 @@ KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attr
                 this.attributes.push(new Attribute(name, '=', value, '"'));
             }
         },
+
         removeAttribute:function(name) {
             var attr = findAttributeByName(this.attributes, name);
             if (attr) {
                 var index = S.indexOf(attr, this.attributes);
                 this.attributes.splice(index, 1);
             }
+        },
+
+        /**
+         * serialize tag to html string in writer
+         * @param writer
+         * @param filter
+         */
+        writeHtml:function(writer, filter) {
+            var el = this,
+                tmp,
+                attrName,
+                tagName = el.tagName;
+
+            // process its open tag
+            if (filter) {
+                // element filtered by its name directly
+                if (!(tagName = filter.onTagName(tagName))) {
+                    return;
+                }
+
+                el.tagName = tagName;
+
+                tmp = filter.onTag(el);
+
+                if (tmp === false) {
+                    return;
+                }
+
+                // replaced
+                if (tmp) {
+                    el = tmp;
+                }
+
+                // replaced by other type of node
+                if (el.nodeType !== 1) {
+                    el.writeHtml(writer, filter);
+                    return;
+                }
+
+                // preserve children but delete itself
+                if (!el.tagName) {
+                    S.each(el.childNodes, function(child) {
+                        child.writeHtml(writer, filter);
+                    });
+                    return;
+                }
+            }
+
+            writer.openTag(el);
+
+            // process its attributes
+            var attributes = el.attributes;
+            for (var i = 0; i < attributes.length; i++) {
+                var attr = attributes[i];
+                attrName = attr.name;
+                if (filter) {
+                    // filtered directly by name
+                    if (!(attrName = filter.onAttributeName(attrName))) {
+                        continue;
+                    }
+                    // filtered by value and node
+                    if (filter.onAttribute(attr) === false) {
+                        continue;
+                    }
+                }
+                writer.attribute(attr);
+            }
+
+            // close its open tag
+            writer.openTagClose(el);
+
+            if (!el.isEmptyXmlTag) {
+                // process its children recursively
+                S.each(el.childNodes, function(child) {
+                    child.writeHtml(writer, filter);
+                });
+                // process its close tag
+                writer.closeTag(el);
+            }
         }
+
     });
 
     function findAttributeByName(attributes, name) {

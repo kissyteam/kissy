@@ -98,6 +98,20 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
             return ret;
         },
 
+        /**
+         * different from text node : space does matter
+         * @param start
+         * @param end
+         */
+        makeCData:function(start, end) {
+            var ret = null,l;
+            l = end - start;
+            if (l > 0) {
+                ret = this.nodeFactory.createCDataNode(this.page, start, end);
+            }
+            return ret;
+        },
+
         makeTag:function(start, end, attributes) {
             var length,
                 ret;
@@ -121,6 +135,10 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
 
         createStringNode:function(page, start, end) {
             return new TextNode(page, start, end);
+        },
+
+        createCDataNode:function(){
+              
         },
 
         createCommentNode:function(page, start, end) {
