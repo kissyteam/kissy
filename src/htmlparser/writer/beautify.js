@@ -6,7 +6,7 @@ KISSY.add(function(S, BasicWriter) {
 
     function BeautifyWriter() {
         // tag in pre should not indent
-        // 
+        // space (\t\r\n ) in pre should not collapse
         this.inPre = false;
         this.indentChar = "\t";
         this.indentLevel = 0;
