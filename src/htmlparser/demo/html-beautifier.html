@@ -27,7 +27,10 @@
 
 <script src="../../../build/kissy.js"></script>
 <script>
-    if (KISSY.UA.ie && KISSY.UA.ie < 9) {
+    if (
+            false
+    // KISSY.UA.ie && KISSY.UA.ie < 9
+            ) {
         alert('no support for ie<9 now!');
         KISSY.all("#start").attr("disabled", true);
     } else {

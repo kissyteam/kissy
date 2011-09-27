@@ -13,7 +13,7 @@ KISSY.add("htmlparser/writer/basic", function(S) {
                 arg = args[i];
                 if (arg.length > 1) {
                     for (var j = 0; j < arg.length; j++) {
-                        o.push(arg[j]);
+                        o.push(arg.charAt(j));
                     }
                 } else {
                     o.push(arg);

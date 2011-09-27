@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 27 19:40
+build time: Sep 27 19:45
 */
 /**
  * parse html to a hierarchy dom tree
@@ -1785,7 +1785,7 @@ KISSY.add("htmlparser/scanners/TagScanner",function(S, dtd) {
                 arg = args[i];
                 if (arg.length > 1) {
                     for (var j = 0; j < arg.length; j++) {
-                        o.push(arg[j]);
+                        o.push(arg.charAt(j));
                     }
                 } else {
                     o.push(arg);
