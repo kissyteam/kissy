@@ -2,7 +2,7 @@
  * represent html source
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Index) {
+KISSY.add("htmlparser/lexer/Page",function(S, Index) {
     function Page(source) {
         this.source = source;
         this.lineIndex = new Index();

@@ -2,7 +2,7 @@
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute) {
+KISSY.add("htmlparser/nodes/Tag",function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute) {
 
     var scanners = {
         'style':QuoteCdataScanner,
@@ -28,15 +28,17 @@ KISSY.add(function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attr
             // note :
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
             this.tagName = this.nodeName.replace(/\//, "");
+            this.isEmptyXmlTag = /\/$/.test(this.nodeName);
             attributes.splice(0, 1);
         }
 
-        var lastAttr = attributes[attributes.length - 1];
-        this.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
-        if (this.isEmptyXmlTag) {
-            attributes.length = attributes.length - 1;
+        if (!this.isEmptyXmlTag) {
+            var lastAttr = attributes[attributes.length - 1];
+            this.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
+            if (this.isEmptyXmlTag) {
+                attributes.length = attributes.length - 1;
+            }
         }
-
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
         this.closed = this.isEmptyXmlTag;

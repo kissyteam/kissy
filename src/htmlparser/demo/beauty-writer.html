@@ -5,28 +5,38 @@
 <title>KISSY Html Beautifier</title>
 </head>
 <body>
+<h1 style="margin: 10px auto;text-align: center;"> KISSY Html Beautifier </h1>
+<div style="border: 1px solid red;" id="t">
+    <div style="border: 1px solid green;">
+        <label>前：
+            <textarea id="before" style="width:80%;height: 300px;">
+                &lt;div id="name">
+                <!--测试 comment-->
+                &lt;div>
+                &lt;div> test     &lt;span>
+                    test2     &lt;/span>      test3 &lt;/div>
+                &lt;/div>
+                &lt;/div>
+            </textarea>
+        </label>
+        <br/>
+        <button id="start">beautify</button>
+        <br/>
+        <label>后：
+            <textarea id="after" style="width:80%;height: 300px;"></textarea>
+        </label>
+    </div>
+</div>
 <script src="../../../build/kissy.js"></script>
-<label>前：
-    <textarea id="before" style="width:80%;height: 300px;">
-        <div id="name">
-            <!--测试 comment-->
-            <span>test</span>
-        </div>
-    </textarea>
-</label>
-<br/>
-<button id="start">beautify</button>
-<br/>
-<label>后：
-    <textarea id="after" style="width:80%;height: 300px;"></textarea>
-</label>
 <script>
-
     KISSY.Config.base = "../../";
 
     KISSY.use("htmlparser", function(S, HtmlParser) {
         var $ = S.all;
+        $("#after").val("");
         var start = $("#start");
+        window.dtd = S.require("htmlparser/dtd");
+        console.log(dtd);
         start.on("click", function() {
             var writer = new HtmlParser.BeautifyWriter(),
                     filter = new HtmlParser.Filter(),
@@ -36,19 +46,21 @@
             filter.addRules({
                 tags:{
                     $:function(el) {
-                        console.log(el.tagName);
+                        console.log("$:  " + el.tagName);
                     }
                 },
                 texts:function(v) {
-                    console.log(v);
+                    console.log("texts:  " + v);
                 },
                 comments:function(v) {
-                    console.log(v);
+                    console.log("comments:  " + v);
+                },
+                cdatas:function(v) {
+                    console.log("cdatas:  " + v);
                 }
             });
-
+            S.log(nodes);
             S.each(nodes, function(n) {
-                debugger
                 n.writeHtml(writer, filter);
             });
 

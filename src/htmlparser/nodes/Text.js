@@ -2,7 +2,7 @@
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Node) {
+KISSY.add("htmlparser/nodes/Text",function(S, Node) {
 
     function Text() {
         Text.superclass.constructor.apply(this, arguments);

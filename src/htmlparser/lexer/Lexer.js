@@ -2,7 +2,7 @@
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, CommentNode) {
+KISSY.add("htmlparser/lexer/Lexer",function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
 
     function Lexer(text) {
         this.page = new Page(text);
@@ -137,8 +137,8 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
             return new TextNode(page, start, end);
         },
 
-        createCDataNode:function(){
-              
+        createCDataNode:function(page, start, end) {
+            return new CData(page, start, end);
         },
 
         createCommentNode:function(page, start, end) {
@@ -668,7 +668,7 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
             }
             end = mCursor.position;
 
-            return this.makeString(start, end);
+            return this.makeCData(start, end);
         },
 
         /**
@@ -720,6 +720,7 @@ KISSY.add(function(S, Cursor, Page, TextNode, Utils, Attribute, TagNode, Comment
         './Cursor',
         './Page',
         '../nodes/Text',
+        '../nodes/CData',
         '../Utils',
         '../nodes/Attribute',
         '../nodes/Tag',

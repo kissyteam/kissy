@@ -2,7 +2,7 @@
  * filter dom tree to html string form ,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S) {
+KISSY.add("htmlparser/writer/filter", function(S) {
     function Filter() {
         // {priority: ?, value:?}
         this.tagNames = [];

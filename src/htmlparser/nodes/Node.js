@@ -2,7 +2,7 @@
  * abstract class for tag and text , comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S) {
+KISSY.add("htmlparser/nodes/Node",function(S) {
 
     function Node(page, startPosition, endPosition) {
         this.parentNode = null;

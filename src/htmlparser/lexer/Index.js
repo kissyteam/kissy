@@ -2,7 +2,7 @@
  * represent line index of each line
  * @author yiminghe@gmail.com
  */
-KISSY.add(function() {
+KISSY.add("htmlparser/lexer/Index",function() {
 
     function Index() {
         this.lineCursors = [];

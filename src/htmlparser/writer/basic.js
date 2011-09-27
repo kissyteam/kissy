@@ -1,4 +1,4 @@
-KISSY.add(function(S) {
+KISSY.add("htmlparser/writer/basic", function(S) {
     function BasicWriter() {
         this.output = [];
     }
@@ -6,8 +6,19 @@ KISSY.add(function(S) {
     BasicWriter.prototype = {
 
         append:function() {
-            var o = this.output;
-            o.push.apply(o, arguments);
+            var o = this.output,
+                args = (arguments),
+                arg;
+            for (var i = 0; i < args.length; i++) {
+                arg = args[i];
+                if (arg.length > 1) {
+                    for (var j = 0; j < arg.length; j++) {
+                        o.push(arg[j]);
+                    }
+                } else {
+                    o.push(arg);
+                }
+            }
             return this;
         },
 

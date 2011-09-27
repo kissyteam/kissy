@@ -2,13 +2,13 @@
  * format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, BasicWriter, dtd) {
+KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
 
     function BeautifyWriter() {
         BeautifyWriter.superclass.constructor.apply(this, arguments);
         // tag in pre should not indent
         // space (\t\r\n ) in pre should not collapse
-        this.inPre = false;
+        this.inPre = 0;
         this.indentChar = "\t";
         this.indentLevel = 0;
         // whether to indent on current line
@@ -24,11 +24,11 @@ KISSY.add(function(S, BasicWriter, dtd) {
         )) {
             this.setRules(e, {
                 // whether its tag/text children should indent
-                allowIndent : true,
-                breakBeforeOpen : true,
-                breakAfterOpen : true,
-                breakBeforeClose : !dtd[ e ][ '#' ],
-                breakAfterClose : true
+                allowIndent : 1,
+                breakBeforeOpen : 1,
+                breakAfterOpen : 1,
+                breakBeforeClose : 1,// !dtd[e]['#']
+                breakAfterClose : 1
             });
         }
 
@@ -38,12 +38,24 @@ KISSY.add(function(S, BasicWriter, dtd) {
 
         this.setRules('title', {
             allowIndent : 0,
+            breakBeforeClose:0,
             breakAfterOpen : 0
         });
 
         this.setRules('style', {
             allowIndent : 0,
-            breakBeforeClose : 1
+            breakBeforeOpen : 1,
+            breakAfterOpen : 1,
+            breakBeforeClose : 1,
+            breakAfterClose : 1
+        });
+
+        this.setRules('script', {
+            allowIndent : 0,
+            breakBeforeOpen : 1,
+            breakAfterOpen : 1,
+            breakBeforeClose : 1,
+            breakAfterClose : 1
         });
 
         // Disable indentation on <pre>.
@@ -62,7 +74,17 @@ KISSY.add(function(S, BasicWriter, dtd) {
         },
 
         lineBreak:function() {
-            if (!this.inPre && this.output.length) {
+            var o = this.output;
+            if (!this.inPre && o.length) {
+                // prevent adding more \n between tags :
+                // before : <div>\n<div>\n</div>\n</div> => <div>\n\t' '\n<div>
+                // now : <div>\n<div>\n</div>\n</div> => <div>\n<div> => indentation =><div>\n\t<div>
+                for (var j = o.length - 1; j >= 0; j--) {
+                    if (!(/[\r\n\t ]/.test(o[j]))) {
+                        break;
+                    }
+                }
+                o.length = j + 1;
                 this.append("\n");
             }
             // allow indentation if encounter next tag
@@ -77,6 +99,7 @@ KISSY.add(function(S, BasicWriter, dtd) {
         },
 
         openTag:function(el) {
+
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
             if (this.allowIndent) {
@@ -89,6 +112,7 @@ KISSY.add(function(S, BasicWriter, dtd) {
         },
 
         openTagClose:function(el) {
+
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
             if (el.isEmptyXmlTag) {
@@ -108,6 +132,7 @@ KISSY.add(function(S, BasicWriter, dtd) {
         },
 
         closeTag:function(el) {
+
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
 
@@ -135,6 +160,7 @@ KISSY.add(function(S, BasicWriter, dtd) {
         },
 
         text:function(text) {
+
             if (this.allowIndent) {
                 this.indentation();
             }

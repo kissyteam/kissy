@@ -24,6 +24,19 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             expect(nodes[2].toHtml()).toBe("<a>");
         });
 
+        it("works for <br/>",function(){
+             var Lexer = HtmlParser.Lexer;
+            var html = "<br/>";
+            var lexer = new Lexer(html),node;
+            var nodes = [];
+            while (node = lexer.nextNode()) {
+                nodes.push(node);
+            }
+            expect(nodes.length).toBe(1);
+            expect(nodes[0].tagName).toBe("br");
+            expect(nodes[0].isEmptyXmlTag).toBe(true);
+        });
+
     });
 
 

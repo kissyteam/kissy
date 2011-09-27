@@ -2,7 +2,7 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function(KY) {
+KISSY.add("htmlparser/dtd",function(KY) {
     /**
      * Holds and object representation of the HTML DTD to be used by the editor in
      * its internal operations.

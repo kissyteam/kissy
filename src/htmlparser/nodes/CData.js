@@ -2,10 +2,10 @@
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Text) {
+KISSY.add("htmlparser/nodes/CData",function(S, Text) {
 
     function CData() {
-        Text.superclass.constructor.apply(this, arguments);
+        CData.superclass.constructor.apply(this, arguments);
         this.nodeType = 4;
         this.nodeName = "#cdata";
     }

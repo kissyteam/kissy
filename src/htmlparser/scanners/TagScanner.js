@@ -2,7 +2,7 @@
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, dtd) {
+KISSY.add("htmlparser/scanners/TagScanner",function(S, dtd) {
     var scanner = {
         scan:function(tag, lexer, stack) {
             var node,i;
@@ -117,16 +117,19 @@ KISSY.add(function(S, dtd) {
                 } while (node);
 
                 tag.closed = true;
-
-                return tag;
             }
+
+            return tag;
         },
 
         /**
          * checked whether tag can include node as its child according to DTD
          */
         canHasNodeAsChild:function(tag, node) {
-            return !! dtd[tag.tagName][node.nodeName];
+            if (!dtd[tag.tagName]) {
+                S.error("dtd[" + tag.tagName + "] === undefined!")
+            }
+            return !! dtd[tag.tagName][node.tagName];
         }
     };
     return scanner;

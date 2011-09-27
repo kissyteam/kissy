@@ -2,7 +2,7 @@
  * lang for html parser
  * @author yiminghe@gmail.com
  */
-KISSY.add(function() {
+KISSY.add("htmlparser/Utils", function() {
     return {
         isLetter:function(ch) {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
