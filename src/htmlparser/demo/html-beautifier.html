@@ -31,8 +31,6 @@
         var $ = S.all;
         $("#after").val("");
         var start = $("#start");
-        window.dtd = S.require("htmlparser/dtd");
-        S.log(dtd);
         start.on("click", function() {
             var writer = new HtmlParser.BeautifyWriter(),
                     filter = new HtmlParser.Filter(),
