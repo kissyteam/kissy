@@ -32,7 +32,7 @@
         $("#after").val("");
         var start = $("#start");
         window.dtd = S.require("htmlparser/dtd");
-        console.log(dtd);
+        S.log(dtd);
         start.on("click", function() {
             var writer = new HtmlParser.BeautifyWriter(),
                     filter = new HtmlParser.Filter(),
@@ -42,17 +42,17 @@
             filter.addRules({
                 tags:{
                     $:function(el) {
-                        console.log("$:  " + el.tagName);
+                        S.log("$:  " + el.tagName);
                     }
                 },
                 texts:function(v) {
-                    console.log("texts:  " + v);
+                    S.log("texts:  " + v);
                 },
                 comments:function(v) {
-                    console.log("comments:  " + v);
+                    S.log("comments:  " + v);
                 },
                 cdatas:function(v) {
-                    console.log("cdatas:  " + v);
+                    S.log("cdatas:  " + v);
                 }
             });
             S.log(nodes);
