@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 19:47
+build time: Sep 27 19:39
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 22 19:47
          */
         version: '1.20dev',
 
-        buildTime:'20110922194728',
+        buildTime:'20110927193933',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1777,7 +1777,7 @@ build time: Sep 22 19:47
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if("require" in this) {
+    if ("require" in this) {
         return;
     }
     S.mix(loader, {
@@ -1803,11 +1803,16 @@ build time: Sep 22 19:47
                 //S.error("找不到 interactive 状态的 script");
             }
 
-            var src = re.src;
+            // src 必定是绝对路径
+            var src = utils.normalBasePath(re.src);
+            src = src.substring(0, src.length - 1);
             S.log("interactive src :" + src);
-            //注意：模块名不包含后缀名以及参数，所以去除
-            //系统模块去除系统路径
-            if (src.lastIndexOf(self.Config.base, 0) === 0) {
+            // 注意：模块名不包含后缀名以及参数，所以去除
+            // 系统模块去除系统路径
+            // 需要 base norm , 防止 base 被指定为相对路径
+            self.Config.base = utils.normalBasePath(self.Config.base);
+            if (src.lastIndexOf(self.Config.base, 0)
+                === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
 
@@ -26445,7 +26450,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:53
+build time: Sep 23 13:05
 */
 /**
  * Model and Control for button
@@ -26490,6 +26495,9 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
                 },
                 tooltip:{
                     view:true
+                },
+                collapseSide:{
+                    view:true
                 }
             }
         });
@@ -26523,6 +26531,16 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
         },
         _uiSetDescribedby:function(describedby) {
             this.get("el").attr("aria-describedby", describedby);
+        },
+
+        _uiSetCollapseSide:function(side) {
+            var self = this,
+                cls = self.getCls("button-collapse-"),
+                el = self.get("el");
+            el.removeClass(cls + "left " + cls + "right");
+            if (side) {
+                el.addClass(cls + side);
+            }
         }
     }, {
         ATTRS:{
@@ -26538,7 +26556,8 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
 
                 // aria-describledby support
             describedby:{},
-            tooltip:{}
+            tooltip:{},
+            collapseSide:{}
         }
     });
 }, {
@@ -26600,19 +26619,78 @@ KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
 }, {
     requires:['node','uibase','./buttonrender']
 });/**
+ * simple split button ,common usecase :button + menubutton
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("button/split", function(S) {
+
+    var handles = {
+        content:function(e) {
+            var first = this,t = e.target;
+            first.set("content", t.get("content"));
+            first.set("value", t.get("value"));
+        },
+        value:function(e) {
+            var first = this,t = e.target;
+            first.set("value", t.get("value"));
+        }
+    };
+
+    function Split() {
+        Split.superclass.constructor.apply(this, arguments);
+    }
+
+    Split.ATTRS = {
+        // 第一个组件按钮
+        first:{},
+        // 第二个组件
+        second:{},
+        // 第二个组件的见ring事件
+        eventType:{
+            value:"click"
+        },
+        eventHandler:{
+            // 或者 value
+            value:"content"
+        }
+    };
+
+    S.extend(Split, S.Base, {
+        render:function() {
+            var self = this,
+                eventType = self.get("eventType"),
+                eventHandler = handles[self.get("eventHandler")],
+                first = self.get("first"),
+                second = self.get("second");
+            first.set("collapseSide", "right");
+            second.set("collapseSide", "left");
+            first.render();
+            second.render();
+            if (eventType && eventHandler) {
+                second.on(eventType, eventHandler, first);
+            }
+        }
+    });
+
+    return Split;
+
+}, {
+    requires:['base']
+});/**
  * simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function(S, Button, Render) {
+KISSY.add("button", function(S, Button, Render, Split) {
     Button.Render = Render;
+    Button.Split = Split;
     return Button;
 }, {
-    requires:['button/base','button/customrender']
+    requires:['button/base','button/customrender','button/split']
 });
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Sep 23 13:05
 */
 /**
  * combination of menu and button ,similar to native select
@@ -26708,6 +26786,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
                 this.fire("click", {
                     target:e.target
                 });
+                this.set("collapsed", true);
             },
 
             /**

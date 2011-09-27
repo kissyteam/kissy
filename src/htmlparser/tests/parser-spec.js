@@ -104,7 +104,7 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             var nodes = parser.parse();
             expect(nodes.length).toBe(3);
             expect(nodes[0].nodeName).toBe("a");
-            expect(nodes[o].childNodes[0].toHtml()).toBe("我");
+            expect(nodes[0].childNodes[0].toHtml()).toBe("我");
         });
 
     });

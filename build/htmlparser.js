@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 27 19:04
+build time: Sep 27 19:40
 */
 /**
  * parse html to a hierarchy dom tree
@@ -2167,7 +2167,7 @@ KISSY.add("htmlparser/writer/filter", function(S) {
  * HtmlParser for KISSY (Editor)
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Lexer, Parser, BasicWriter, BeautifyWriter, Filter) {
+KISSY.add("htmlparser", function(S, Lexer, Parser, BasicWriter, BeautifyWriter, Filter) {
     return {
         Lexer:Lexer,
         Parser:Parser,

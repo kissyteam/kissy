@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 19:47
+build time: Sep 27 19:39
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 22 19:47
          */
         version: '1.20dev',
 
-        buildTime:'20110922194728',
+        buildTime:'20110927193933',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1777,7 +1777,7 @@ build time: Sep 22 19:47
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if("require" in this) {
+    if ("require" in this) {
         return;
     }
     S.mix(loader, {
@@ -1803,11 +1803,16 @@ build time: Sep 22 19:47
                 //S.error("找不到 interactive 状态的 script");
             }
 
-            var src = re.src;
+            // src 必定是绝对路径
+            var src = utils.normalBasePath(re.src);
+            src = src.substring(0, src.length - 1);
             S.log("interactive src :" + src);
-            //注意：模块名不包含后缀名以及参数，所以去除
-            //系统模块去除系统路径
-            if (src.lastIndexOf(self.Config.base, 0) === 0) {
+            // 注意：模块名不包含后缀名以及参数，所以去除
+            // 系统模块去除系统路径
+            // 需要 base norm , 防止 base 被指定为相对路径
+            self.Config.base = utils.normalBasePath(self.Config.base);
+            if (src.lastIndexOf(self.Config.base, 0)
+                === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
 

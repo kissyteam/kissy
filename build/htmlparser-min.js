@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 27 19:04
+build time: Sep 27 19:40
 */
 KISSY.add("htmlparser/Parser",function(k,n,j){function g(f){this.lexer=f}function c(f){this.lexer=new j(f)}g.prototype={nextNode:function(){var f,i,o,q=this.lexer;if(f=q.nextNode())if(f.nodeType==1)if(f.isEndTag())return this.nextNode();else if(o=f.scanner){i=[];f=o.scan(f,q,i)}return f}};c.prototype={elements:function(){return new g(this.lexer)},parse:function(){for(var f=[],i,o=this.elements();i=o.nextNode();)f.push(i);return f}};return c},{requires:["./lexer/Cursor","./lexer/Lexer"]});
 KISSY.add("htmlparser/Utils",function(){return{isLetter:function(k){return"a"<=k&&"z">=k||"A"<=k&&"Z">=k},isWhitespace:function(k){return/\s/.test(k)}}});
@@ -51,4 +51,4 @@ this.append(c)}});return g},{requires:["./basic","../dtd"]});
 KISSY.add("htmlparser/writer/filter",function(k){function n(){this.tagNames=[];this.attributeNames=[];this.tags=[];this.comments=[];this.texts=[];this.cdatas=[];this.attributes=[]}function j(c,f){for(var i=0;i<c.length;i++)k.each(c[i].value,function(o){f=f.replace(o[0],o[1])});return f}function g(c,f,i){for(var o=0;o<c.length;o++)if(c[o].value.apply(null,f)===false)return false;return i}n.prototype={addRules:function(c,f){f=f||10;for(var i in c){var o=this[i],q;a:{for(q=0;q<o.length;q++)if(o[q].priority>
 f){q=q;break a}q=o.length}o.splice(q,0,{value:c[i],priority:f})}},onTagName:function(c){return j(this.tagNames,c)},onAttributeName:function(c){return j(this.attributeNames,c)},onText:function(c){return g(this.texts,[c.toHtml(),c],c)},onCData:function(c){return g(this.cdatas,[c.toHtml(),c],c)},onAttribute:function(c,f){return g(this.attributes,[f,c],f)},onComment:function(c){return g(this.comments,[c.toHtml(),c],c)},onNode:function(c){var f=c.nodeType;if(f===1)return this.onTag(c);else if(f===3)return this.onText(c.toHtml(),
 c);else if(f===8)return this.onComment(c.toHtml(),c)},onTag:function(c){for(var f=["^",c.tagName,"$"],i=this.tags,o,q=0;q<f.length;q++)for(var s=f[q],a=0;a<i.length;a++){var d=i[a].value;if(d[s]){if((o=d[s](c))===false)return false;if(o&&o!=d)return this.onNode(o);if(!c.name)return c}}return c}};return n});
-KISSY.add(function(k,n,j,g,c,f){return{Lexer:n,Parser:j,BasicWriter:g,BeautifyWriter:c,Filter:f}},{requires:["htmlparser/lexer/Lexer","htmlparser/Parser","htmlparser/writer/basic","htmlparser/writer/beautify","htmlparser/writer/filter"]});
+KISSY.add("htmlparser",function(k,n,j,g,c,f){return{Lexer:n,Parser:j,BasicWriter:g,BeautifyWriter:c,Filter:f}},{requires:["htmlparser/lexer/Lexer","htmlparser/Parser","htmlparser/writer/basic","htmlparser/writer/beautify","htmlparser/writer/filter"]});

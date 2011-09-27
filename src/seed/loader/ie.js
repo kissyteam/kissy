@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if("require" in this) {
+    if ("require" in this) {
         return;
     }
     S.mix(loader, {
@@ -29,11 +29,16 @@
                 //S.error("找不到 interactive 状态的 script");
             }
 
-            var src = re.src;
+            // src 必定是绝对路径
+            var src = utils.normalBasePath(re.src);
+            src = src.substring(0, src.length - 1);
             S.log("interactive src :" + src);
-            //注意：模块名不包含后缀名以及参数，所以去除
-            //系统模块去除系统路径
-            if (src.lastIndexOf(self.Config.base, 0) === 0) {
+            // 注意：模块名不包含后缀名以及参数，所以去除
+            // 系统模块去除系统路径
+            // 需要 base norm , 防止 base 被指定为相对路径
+            self.Config.base = utils.normalBasePath(self.Config.base);
+            if (src.lastIndexOf(self.Config.base, 0)
+                === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
 
