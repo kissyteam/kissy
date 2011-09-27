@@ -2,11 +2,12 @@
  * HtmlParser for KISSY (Editor)
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Lexer, Parser, BasicWriter, Filter) {
+KISSY.add(function(S, Lexer, Parser, BasicWriter, BeautifyWriter, Filter) {
     return {
         Lexer:Lexer,
         Parser:Parser,
         BasicWriter:BasicWriter,
+        BeautifyWriter:BeautifyWriter,
         Filter:Filter
     };
 }, {
@@ -14,6 +15,7 @@ KISSY.add(function(S, Lexer, Parser, BasicWriter, Filter) {
         'htmlparser/lexer/Lexer',
         'htmlparser/Parser',
         'htmlparser/writer/basic',
+        'htmlparser/writer/beautify',
         'htmlparser/writer/filter'
     ]
 });

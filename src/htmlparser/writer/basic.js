@@ -5,32 +5,33 @@ KISSY.add(function(S) {
 
     BasicWriter.prototype = {
 
-        append:function(str) {
-            this.output.push(str);
+        append:function() {
+            var o = this.output;
+            o.push.apply(o, arguments);
             return this;
         },
 
         openTag:function(el) {
-            this.append("<").append(el.tagName);
+            this.append("<", el.tagName);
         },
 
         openTagClose:function(el) {
             if (el.isEmptyXmlTag) {
-                this.append(" ");
-                this.append("/");
+                this.append(" ", "/");
             }
             this.append(">");
         },
 
         closeTag:function(el) {
-            this.append("<\/").append(el.tagName).append(">");
+            this.append("<\/", el.tagName, ">");
         },
 
         attribute:function(attr) {
-            this.append(" ").append(attr.name)
-                .append("=\"")
-                .append(S.escapeHTML(attr.value || attr.name))
-                .append("\"");
+            this.append(" ",
+                attr.name,
+                "=\"",
+                S.escapeHTML(attr.value || attr.name),
+                "\"");
         },
 
         text:function(text) {
