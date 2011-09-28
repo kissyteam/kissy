@@ -451,6 +451,8 @@ KISSY.add('switchable', function(S) {
     S.Switchable = Switchable;
     return Switchable;
 
+},{
+    requires:['core']
 });
 
 /**
