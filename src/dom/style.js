@@ -106,7 +106,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 // IE and Opera will allow us to reuse the iframeDoc without re-writing the fake HTML
                 // document to it; WebKit & Firefox won't allow reusing the iframe document.
                 if (!defaultDisplayDetectIframeDoc || !defaultDisplayDetectIframe.createElement) {
-                    // ie6 need a breath , such as alert(8);
+                    // ie6 need a breath , such as alert(8) or setTimeout;
                     // 同时需要同步，所以无解
                     defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
                     defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
