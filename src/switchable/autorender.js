@@ -1,6 +1,6 @@
 /**
  * Switchable Autorender Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
 

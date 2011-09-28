@@ -1,6 +1,6 @@
 /**
  * Switchable
- * @creator  玉伯<lifesinger@gmail.com>,yiminghe@gmail.com
+ * @creator  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
