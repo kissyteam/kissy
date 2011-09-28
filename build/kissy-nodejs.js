@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 27 19:39
+build time: Sep 28 17:56
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 27 19:39
          */
         version: '1.20dev',
 
-        buildTime:'20110927193933',
+        buildTime:'20110928175601',
 
         /**
          * Returns a new object containing all of the properties of
@@ -5202,6 +5202,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         HEIGHT = 'height',
         AUTO = 'auto',
         DISPLAY = 'display',
+        OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
         PARSEINT = parseInt,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
@@ -5237,6 +5238,83 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     function camelCase(name) {
         return name.replace(RE_DASH, CAMELCASE_FN);
+    }
+
+    var defaultDisplayDetectIframe,
+        defaultDisplayDetectIframeDoc;
+
+    function isCustomDomain() {
+        if (!UA['ie']) {
+            return false;
+        }
+        var domain = doc.domain,
+            hostname = location.hostname;
+        return domain != hostname &&
+            domain != ( '[' + hostname + ']' );	// IPv6 IP support
+    }
+
+    // modified from jquery : bullet-proof method of getting default display
+    // fix domain problem in ie>6 , ie6 still access denied
+    function getDefaultDisplay(tagName) {
+        var body,
+            elem;
+        if (!defaultDisplay[ tagName ]) {
+            body = doc.body;
+            elem = doc.createElement(tagName);
+            DOM.prepend(elem, body);
+            var oldDisplay = DOM.css(elem, "display");
+            body.removeChild(elem);
+            // If the simple way fails,
+            // get element's real default display by attaching it to a temp iframe
+            if (oldDisplay === "none" || oldDisplay === "") {
+                // No iframe to use yet, so create it
+                if (!defaultDisplayDetectIframe) {
+                    defaultDisplayDetectIframe = doc.createElement("iframe");
+
+                    defaultDisplayDetectIframe.frameBorder =
+                        defaultDisplayDetectIframe.width =
+                            defaultDisplayDetectIframe.height = 0;
+
+                    DOM.prepend(defaultDisplayDetectIframe, body);
+
+                    if (isCustomDomain()) {
+                        defaultDisplayDetectIframe.src = 'javascript:void(function(){' + encodeURIComponent("" +
+                            "document.open();" +
+                            "document.domain='" +
+                            doc.domain
+                            + "';" +
+                            "document.close();") + "}())";
+                    }
+                } else {
+                    DOM.prepend(defaultDisplayDetectIframe, body);
+                }
+
+                // Create a cacheable copy of the iframe document on first call.
+                // IE and Opera will allow us to reuse the iframeDoc without re-writing the fake HTML
+                // document to it; WebKit & Firefox won't allow reusing the iframe document.
+                if (!defaultDisplayDetectIframeDoc || !defaultDisplayDetectIframe.createElement) {
+                    // ie6 need a breath , such as alert(8);
+                    // 同时需要同步，所以无解
+                    defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
+                    defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
+                        + "<html><body>");
+                    defaultDisplayDetectIframeDoc.close();
+                }
+
+                elem = defaultDisplayDetectIframeDoc.createElement(tagName);
+
+                defaultDisplayDetectIframeDoc.body.appendChild(elem);
+
+                oldDisplay = DOM.css(elem, "display");
+
+                body.removeChild(defaultDisplayDetectIframe);
+            }
+
+            // Store the correct default display
+            defaultDisplay[ tagName ] = oldDisplay;
+        }
+
+        return defaultDisplay[ tagName ];
     }
 
     S.mix(DOM, {
@@ -5328,22 +5406,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
             DOM.query(selector).each(function(elem) {
 
-                elem[STYLE][DISPLAY] = DOM.data(elem, DISPLAY) || EMPTY;
+                elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
 
                 // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
                 if (DOM.css(elem, DISPLAY) === NONE) {
-                    var tagName = elem.tagName,
-                        old = defaultDisplay[tagName], tmp;
-
-                    if (!old) {
-                        tmp = doc.createElement(tagName);
-                        doc.body.appendChild(tmp);
-                        old = DOM.css(tmp, DISPLAY);
-                        DOM.remove(tmp);
-                        defaultDisplay[tagName] = old;
-                    }
-
-                    DOM.data(elem, DISPLAY, old);
+                    var tagName = elem.tagName.toLowerCase(),
+                        old = getDefaultDisplay(tagName);
+                    DOM.data(elem, OLD_DISPLAY, old);
                     elem[STYLE][DISPLAY] = old;
                 }
             });
@@ -5357,7 +5426,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 var style = elem[STYLE], old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {
-                        DOM.data(elem, DISPLAY, old);
+                        DOM.data(elem, OLD_DISPLAY, old);
                     }
                     style[DISPLAY] = NONE;
                 }
