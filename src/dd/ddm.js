@@ -250,7 +250,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
                 //覆盖iframe上面即可
                 SHIM_ZINDEX
                 + ";" +
-                "'><" + "/div>").appendTo(doc.body);
+                "'><" + "/div>").prependTo(doc.body || doc.documentElement);
             //0.5 for debug
             self._shim.css("opacity", 0);
             self._activeShim = self._showShim;

@@ -55,7 +55,11 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  password: null,
                  cache: null,
                  mimeType:null,
-                 xdr:{},
+                 xdr:{
+                 subDomain:{
+                 proxy:'http://xx.t.com/proxy.html'
+                 }
+                 },
                  headers: {},
                  xhrFields:{},
                  // jsonp script charset
@@ -185,6 +189,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             }
 
             try {
+                // flag as sending
                 xhr.state = 1;
                 transport.send();
             } catch (e) {

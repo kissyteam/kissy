@@ -4,11 +4,10 @@
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 
-    var OK_CODE = 200;
-    var MULTIPLE_CHOICES = 300;
-    var NOT_MODIFIED = 304;
-
-    var // get individual response header from responseheader str
+    var OK_CODE = 200,
+        MULTIPLE_CHOICES = 300,
+        NOT_MODIFIED = 304,
+        // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(xhr) {

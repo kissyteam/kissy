@@ -4,6 +4,7 @@
  */
 KISSY.add("ajax/xhrbase", function(S, io) {
     var OK_CODE = 200,
+        win = window,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = window['XDomainRequest'],
         NO_CONTENT_CODE = 204,
@@ -13,31 +14,30 @@ KISSY.add("ajax/xhrbase", function(S, io) {
             proto:{}
         };
 
-    function createStandardXHR(refWin) {
+    function createStandardXHR(_, refWin) {
         try {
-            return new refWin['XMLHttpRequest']();
+            return new (refWin || win)['XMLHttpRequest']();
         } catch(e) {
             S.log("createStandardXHR error");
         }
         return undefined;
     }
 
-    function createActiveXHR(refWin) {
+    function createActiveXHR(_, refWin) {
         try {
-            return new refWin['ActiveXObject']("Microsoft.XMLHTTP");
+            return new (refWin || win)['ActiveXObject']("Microsoft.XMLHTTP");
         } catch(e) {
             S.log("createActiveXHR error");
         }
         return undefined;
     }
 
-    XhrBase.xhr = window.ActiveXObject ? function(crossDomain, refWin) {
+    XhrBase.xhr = win.ActiveXObject ? function(crossDomain, refWin) {
         if (crossDomain && _XDomainRequest) {
             return new _XDomainRequest();
         }
-        refWin = refWin || window;
         // ie7 XMLHttpRequest 不能访问本地文件
-        return !io.isLocal && createStandardXHR(refWin) || createActiveXHR(refWin);
+        return !io.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
 
     function isInstanceOfXDomainRequest(xhr) {
@@ -118,7 +118,6 @@ KISSY.add("ajax/xhrbase", function(S, io) {
         },
 
         _callback:function(event, abort) {
-
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occured
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)

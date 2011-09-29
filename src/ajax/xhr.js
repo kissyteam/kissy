@@ -30,11 +30,10 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
 
                 var parts = c.url.match(rurl);
 
-                if (getMainDomain(location.hostname) == getMainDomain(parts[1])) {
-
+                // 跨子域
+                if (getMainDomain(location.hostname) == getMainDomain(parts[2])) {
                     return new SubDomain(xhrObj);
                 }
-
 
                 /**
                  * ie>7 强制使用 flash xdr
@@ -56,18 +55,18 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
                 var self = this,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
-                self.xhr = io.xhr(c.crossDomain);
+                self.xhr = XhrBase.xhr(c.crossDomain);
                 self.sendInternal();
             }
 
         });
 
         io.setupTransport("*", XhrTransport);
-
-        return io;
     }
+
+    return io;
 }, {
-    requires:["./base",'./xhrbase','./SubDomain',"./xdr"]
+    requires:["./base",'./xhrbase','./subdomain',"./xdr"]
 });
 
 /**

@@ -2,7 +2,7 @@
  * use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xdr", function(S, io) {
+KISSY.add("ajax/xdr", function(S, io, DOM) {
 
     var // current running request instances
         maps = {},
@@ -31,7 +31,7 @@ KISSY.add("ajax/xdr", function(S, io) {
             '<param name="allowScriptAccess" value="always" />' +
             '</object>',
             c = doc.createElement('div');
-        doc.body.appendChild(c);
+        DOM.prepend(c, doc.body || doc.documentElement);
         c.innerHTML = o;
     }
 
@@ -136,5 +136,5 @@ KISSY.add("ajax/xdr", function(S, io) {
     return XdrTransport;
 
 }, {
-    requires:["./base"]
+    requires:["./base",'dom']
 });

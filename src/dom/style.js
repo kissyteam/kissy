@@ -72,7 +72,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var body,
             elem;
         if (!defaultDisplay[ tagName ]) {
-            body = doc.body;
+            body = doc.body || doc.documentElement;
             elem = doc.createElement(tagName);
             DOM.prepend(elem, body);
             var oldDisplay = DOM.css(elem, "display");

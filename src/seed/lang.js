@@ -677,8 +677,8 @@
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
         },
 
-        /*! Based on YUI3*/
         /**
+         * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
          * @param {object} context ontext fn to run
