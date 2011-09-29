@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:55
+build time: Sep 29 16:28
 */
 /**
  * intervein elements dynamically
@@ -234,6 +234,9 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
 
     function doScroll() {
         var self = this;
+        if (self.__pause) {
+            return;
+        }
         S.log("waterfall:doScroll");
         if (self.__loading) {
             return;
@@ -265,20 +268,19 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
         var self = this,
             container = this.get("container");
 
-        self.__loading = true;
+        self.__loading = 1;
 
         var load = self.get("load");
 
         load && load(success, end);
 
         function success(items) {
-            self.__loading = false;
+            self.__loading = 0;
             self.addItems(items);
         }
 
         function end() {
-            self.__loading = false;
-            $(window).detach("scroll", self.__onScroll);
+            self.end();
         }
 
     }
@@ -301,6 +303,19 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
             self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
             $(window).on("scroll", self.__onScroll);
             doScroll.call(self);
+        },
+
+        end:function() {
+            $(window).detach("scroll", this.__onScroll);
+        },
+
+
+        pause:function() {
+            this.__pause = 1;
+        },
+
+        resume:function() {
+            this.__pause = 0;
         },
 
         destroy:function() {
