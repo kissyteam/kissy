@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 28 17:56
+build time: Sep 29 16:12
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -274,7 +274,7 @@ build time: Sep 28 17:56
          */
         version: '1.20dev',
 
-        buildTime:'20110928175601',
+        buildTime:'20110929161232',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1175,8 +1175,8 @@ build time: Sep 28 17:56
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
         },
 
-        /*! Based on YUI3*/
         /**
+         * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
          * @param {object} context ontext fn to run
@@ -2943,6 +2943,8 @@ D:\code\kissy_git\kissy\src\json.js
 D:\code\kissy_git\kissy\src\ajax\form-serializer.js
 D:\code\kissy_git\kissy\src\ajax\xhrobject.js
 D:\code\kissy_git\kissy\src\ajax\base.js
+D:\code\kissy_git\kissy\src\ajax\xhrbase.js
+D:\code\kissy_git\kissy\src\ajax\subdomain.js
 D:\code\kissy_git\kissy\src\ajax\xdr.js
 D:\code\kissy_git\kissy\src\ajax\xhr.js
 D:\code\kissy_git\kissy\src\ajax\script.js
@@ -5259,7 +5261,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var body,
             elem;
         if (!defaultDisplay[ tagName ]) {
-            body = doc.body;
+            body = doc.body || doc.documentElement;
             elem = doc.createElement(tagName);
             DOM.prepend(elem, body);
             var oldDisplay = DOM.css(elem, "display");
@@ -5293,7 +5295,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 // IE and Opera will allow us to reuse the iframeDoc without re-writing the fake HTML
                 // document to it; WebKit & Firefox won't allow reusing the iframe document.
                 if (!defaultDisplayDetectIframeDoc || !defaultDisplayDetectIframe.createElement) {
-                    // ie6 need a breath , such as alert(8);
+                    // ie6 need a breath , such as alert(8) or setTimeout;
                     // 同时需要同步，所以无解
                     defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
                     defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
@@ -10487,11 +10489,10 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
 
-    var OK_CODE = 200;
-    var MULTIPLE_CHOICES = 300;
-    var NOT_MODIFIED = 304;
-
-    var // get individual response header from responseheader str
+    var OK_CODE = 200,
+        MULTIPLE_CHOICES = 300,
+        NOT_MODIFIED = 304,
+        // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(xhr) {
@@ -10750,7 +10751,11 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  password: null,
                  cache: null,
                  mimeType:null,
-                 xdr:{},
+                 xdr:{
+                 subDomain:{
+                 proxy:'http://xx.t.com/proxy.html'
+                 }
+                 },
                  headers: {},
                  xhrFields:{},
                  // jsonp script charset
@@ -10880,6 +10885,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             }
 
             try {
+                // flag as sending
                 xhr.state = 1;
                 transport.send();
             } catch (e) {
@@ -10931,10 +10937,295 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  **/
 
 /**
+ * base for xhr and subdomain
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("ajax/xhrbase", function(S, io) {
+    var OK_CODE = 200,
+        win = window,
+        // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
+        _XDomainRequest = win['XDomainRequest'],
+        NO_CONTENT_CODE = 204,
+        NOT_FOUND_CODE = 404,
+        NO_CONTENT_CODE2 = 1223,
+        XhrBase = {
+            proto:{}
+        };
+
+    function createStandardXHR(_, refWin) {
+        try {
+            return new (refWin || win)['XMLHttpRequest']();
+        } catch(e) {
+            S.log("createStandardXHR error");
+        }
+        return undefined;
+    }
+
+    function createActiveXHR(_, refWin) {
+        try {
+            return new (refWin || win)['ActiveXObject']("Microsoft.XMLHTTP");
+        } catch(e) {
+            S.log("createActiveXHR error");
+        }
+        return undefined;
+    }
+
+    XhrBase.xhr = win.ActiveXObject ? function(crossDomain, refWin) {
+        if (crossDomain && _XDomainRequest) {
+            return new _XDomainRequest();
+        }
+        // ie7 XMLHttpRequest 不能访问本地文件
+        return !io.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin);
+    } : createStandardXHR;
+
+    function isInstanceOfXDomainRequest(xhr) {
+        return _XDomainRequest && (xhr instanceof _XDomainRequest);
+    }
+
+    S.mix(XhrBase.proto, {
+        sendInternal:function() {
+
+            var self = this,
+                xhrObj = self.xhrObj,
+                c = xhrObj.config;
+
+            var xhr = self.xhr,
+                xhrFields,
+                i;
+
+            if (c['username']) {
+                xhr.open(c.type, c.url, c.async, c['username'], c.password)
+            } else {
+                xhr.open(c.type, c.url, c.async);
+            }
+
+            if (xhrFields = c['xhrFields']) {
+                for (i in xhrFields) {
+                    xhr[ i ] = xhrFields[ i ];
+                }
+            }
+
+            // Override mime type if supported
+            if (xhrObj.mimeType && xhr.overrideMimeType) {
+                xhr.overrideMimeType(xhrObj.mimeType);
+            }
+            // yui3 and jquery both have
+            if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
+                xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+            }
+            try {
+                // 跨域时，不能设，否则请求变成
+                // OPTIONS /xhr/r.php HTTP/1.1
+                if (!c.crossDomain) {
+                    for (i in xhrObj.requestHeaders) {
+                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                    }
+                }
+            } catch(e) {
+                S.log("setRequestHeader in xhr error : ");
+                S.log(e);
+            }
+
+            xhr.send(c.hasContent && c.data || null);
+
+            if (!c.async || xhr.readyState == 4) {
+                self._callback();
+            } else {
+                // _XDomainRequest 单独的回调机制
+                if (isInstanceOfXDomainRequest(xhr)) {
+                    xhr.onload = function() {
+                        xhr.readyState = 4;
+                        xhr.status = 200;
+                        self._callback();
+                    };
+                    xhr.onerror = function() {
+                        xhr.readyState = 4;
+                        xhr.status = 500;
+                        self._callback();
+                    };
+                } else {
+                    xhr.onreadystatechange = function() {
+                        self._callback();
+                    };
+                }
+            }
+        },
+        // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
+        abort:function() {
+            this._callback(0, 1);
+        },
+
+        _callback:function(event, abort) {
+            // Firefox throws exceptions when accessing properties
+            // of an xhr when a network error occured
+            // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+            try {
+                var self = this,
+                    xhr = self.xhr,
+                    xhrObj = self.xhrObj,
+                    c = xhrObj.config;
+                //abort or complete
+                if (abort || xhr.readyState == 4) {
+
+                    // ie6 ActiveObject 设置不恰当属性导致出错
+                    if (isInstanceOfXDomainRequest(xhr)) {
+                        xhr.onerror = S.noop;
+                        xhr.onload = S.noop;
+                    } else {
+                        // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
+                        xhr.onreadystatechange = S.noop;
+                    }
+
+                    if (abort) {
+                        // 完成以后 abort 不要调用
+                        if (xhr.readyState !== 4) {
+                            xhr.abort();
+                        }
+                    } else {
+                        var status = xhr.status;
+
+                        // _XDomainRequest 不能获取响应头
+                        if (!isInstanceOfXDomainRequest(xhr)) {
+                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+                        }
+
+                        var xml = xhr.responseXML;
+
+                        // Construct response list
+                        if (xml && xml.documentElement /* #4958 */) {
+                            xhrObj.responseXML = xml;
+                        }
+                        xhrObj.responseText = xhr.responseText;
+
+                        // Firefox throws an exception when accessing
+                        // statusText for faulty cross-domain requests
+                        try {
+                            var statusText = xhr.statusText;
+                        } catch(e) {
+                            S.log("xhr statustext error : ");
+                            S.log(e);
+                            // We normalize with Webkit giving an empty statusText
+                            statusText = "";
+                        }
+
+                        // Filter status for non standard behaviors
+                        // If the request is local and we have data: assume a success
+                        // (success with no data won't get notified, that's the best we
+                        // can do given current implementations)
+                        if (!status && io.isLocal && !c.crossDomain) {
+                            status = xhrObj.responseText ? OK_CODE : NOT_FOUND_CODE;
+                            // IE - #1450: sometimes returns 1223 when it should be 204
+                        } else if (status === NO_CONTENT_CODE2) {
+                            status = NO_CONTENT_CODE;
+                        }
+
+                        xhrObj.callback(status, statusText);
+
+                    }
+                }
+            } catch (firefoxAccessException) {
+                xhr.onreadystatechange = S.noop;
+                if (!abort) {
+                    xhrObj.callback(-1, firefoxAccessException);
+                }
+            }
+        }
+    });
+
+    return XhrBase;
+}, {
+    requires:['./base']
+});
+
+/**
+ * solve io between sub domains using proxy page
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
+
+    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
+
+    var PROXY_PAGE = "/sub_domain_proxy.html";
+
+    var doc = document;
+
+    var iframeMap = {
+        // hostname:{iframe: , ready:}
+    };
+
+    function SubDomain(xhrObj) {
+        var self = this,
+            c = xhrObj.config;
+        self.xhrObj = xhrObj;
+        var m = c.url.match(rurl);
+        self.__hostname = m[2];
+        self.__protocol = m[1];
+        c.crossDomain = false;
+    }
+
+
+    S.augment(SubDomain, XhrBase.proto, {
+        send:function() {
+            var self = this,
+                c = self.xhrObj.config,
+                hostname = self.__hostname,
+                iframe,
+                iframeDesc = iframeMap[hostname];
+
+            var proxy = PROXY_PAGE;
+
+            if (c['xdr'] && c['xdr']['subDomain'] && c['xdr']['subDomain'].proxy) {
+                proxy = c['xdr']['subDomain'].proxy;
+            }
+
+            if (iframeDesc && iframeDesc.ready) {
+                self.xhr = XhrBase.xhr(0, iframeDesc.iframe.contentWindow);
+                if (self.xhr) {
+                    self.sendInternal();
+                } else {
+                    S.error("document.domain not set correctly!");
+                }
+                return;
+            }
+            if (!iframeDesc) {
+                iframeDesc = iframeMap[hostname] = {};
+                iframe = iframeDesc.iframe = document.createElement("iframe");
+                DOM.css(iframe, {
+                    position:'absolute',
+                    left:'-9999px',
+                    top:'-9999px'
+                });
+                DOM.prepend(iframe, doc.body || doc.documentElement);
+                iframe.src = self.__protocol + "//" + hostname + proxy;
+            } else {
+                iframe = iframeDesc.iframe;
+            }
+
+            Event.on(iframe, "load", self._onLoad, self);
+
+        },
+
+        _onLoad:function() {
+            var self = this,
+                hostname = self.__hostname,
+                iframeDesc = iframeMap[hostname];
+            iframeDesc.ready = 1;
+            Event.detach(iframeDesc.iframe, "load", self._onLoad, self);
+            self.send();
+        }
+    });
+
+    return SubDomain;
+
+}, {
+    requires:['./xhrbase','event','dom']
+});
+
+/**
  * use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xdr", function(S, io) {
+KISSY.add("ajax/xdr", function(S, io, DOM) {
 
     var // current running request instances
         maps = {},
@@ -10963,7 +11254,7 @@ KISSY.add("ajax/xdr", function(S, io) {
             '<param name="allowScriptAccess" value="always" />' +
             '</object>',
             c = doc.createElement('div');
-        doc.body.appendChild(c);
+        DOM.prepend(c, doc.body || doc.documentElement);
         c.innerHTML = o;
     }
 
@@ -11068,65 +11359,48 @@ KISSY.add("ajax/xdr", function(S, io) {
     return XdrTransport;
 
 }, {
-    requires:["./base"]
+    requires:["./base",'dom']
 });
 
 /**
- * ajax xhr transport class
+ * ajax xhr transport class , route subdomain , xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
+KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
 
 
-    var OK_CODE = 200,
-        // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-        _XDomainRequest = window['XDomainRequest'],
-        NO_CONTENT_CODE = 204,
-        NOT_FOUND_CODE = 404,
-        NO_CONTENT_CODE2 = 1223;
+    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
 
+    var _XDomainRequest = window['XDomainRequest'];
 
-    function createStandardXHR() {
-        try {
-            return new window.XMLHttpRequest();
-        } catch(e) {
-            S.log("createStandardXHR error");
-            //S.log(e);
-        }
-        return undefined;
-    }
-
-    function createActiveXHR() {
-        try {
-            return new window.ActiveXObject("Microsoft.XMLHTTP");
-        } catch(e) {
-            S.log("createActiveXHR error");
-            // S.log(e);
-        }
-        return undefined;
-    }
-
-    function isInstanceOfXDomainRequest(xhr) {
-        return _XDomainRequest && (xhr instanceof _XDomainRequest);
-    }
-
-    io.xhr = window.ActiveXObject ? function(crossDomain) {
-        if (crossDomain && _XDomainRequest) {
-            return new _XDomainRequest();
-        }
-        // ie7 XMLHttpRequest 不能访问本地文件
-        return !io.isLocal && createStandardXHR() || createActiveXHR();
-    } : createStandardXHR;
-
-    var detectXhr = io.xhr();
+    var detectXhr = XhrBase.xhr();
 
     if (detectXhr) {
+
+        // slice last two pars
+        // xx.taobao.com => taobao.com
+        function getMainDomain(host) {
+            var t = host.split('.');
+            if (t.length < 2) {
+                return t.join(".");
+            } else {
+                return t.reverse().slice(0, 2).reverse().join('.');
+            }
+        }
 
         function XhrTransport(xhrObj) {
             var c = xhrObj.config,
                 xdrCfg = c['xdr'] || {};
 
             if (c.crossDomain) {
+
+                var parts = c.url.match(rurl);
+
+                // 跨子域
+                if (getMainDomain(location.hostname) == getMainDomain(parts[2])) {
+                    return new SubDomain(xhrObj);
+                }
+
                 /**
                  * ie>7 强制使用 flash xdr
                  */
@@ -11141,167 +11415,24 @@ KISSY.add("ajax/xhr", function(S, io, XdrTransport) {
             return undefined;
         }
 
-        S.augment(XhrTransport, {
-            send:function() {
+        S.augment(XhrTransport, XhrBase.proto, {
 
+            send:function() {
                 var self = this,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
-
-                var xhr = io.xhr(c.crossDomain),
-                    xhrFields,
-                    i;
-
-                self.xhr = xhr;
-
-                if (c['username']) {
-                    xhr.open(c.type, c.url, c.async, c['username'], c.password)
-                } else {
-                    xhr.open(c.type, c.url, c.async);
-                }
-
-                if (xhrFields = c['xhrFields']) {
-                    for (i in xhrFields) {
-                        xhr[ i ] = xhrFields[ i ];
-                    }
-                }
-
-                // Override mime type if supported
-                if (xhrObj.mimeType && xhr.overrideMimeType) {
-                    xhr.overrideMimeType(xhrObj.mimeType);
-                }
-                // yui3 and jquery both have
-                if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
-                    xhrObj.requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
-                }
-                try {
-                    // 跨域时，不能设，否则请求变成
-                    // OPTIONS /xhr/r.php HTTP/1.1
-                    if (!c.crossDomain) {
-                        for (i in xhrObj.requestHeaders) {
-                            xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
-                        }
-                    }
-                } catch(e) {
-                    S.log("setRequestHeader in xhr error : ");
-                    S.log(e);
-                }
-
-                xhr.send(c.hasContent && c.data || null);
-
-                if (!c.async || xhr.readyState == 4) {
-                    self._callback();
-                } else {
-                    // _XDomainRequest 单独的回调机制
-                    if (isInstanceOfXDomainRequest(xhr)) {
-                        xhr.onload = function() {
-                            xhr.readyState = 4;
-                            xhr.status = 200;
-                            self._callback();
-                        };
-                        xhr.onerror = function() {
-                            xhr.readyState = 4;
-                            xhr.status = 500;
-                            self._callback();
-                        };
-                    } else {
-                        xhr.onreadystatechange = function() {
-                            self._callback();
-                        };
-                    }
-                }
-            },
-            // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-            abort:function() {
-                this._callback(0, 1);
-            },
-
-            _callback:function(event, abort) {
-
-                // Firefox throws exceptions when accessing properties
-                // of an xhr when a network error occured
-                // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
-                try {
-                    var self = this,
-                        xhr = self.xhr,
-                        xhrObj = self.xhrObj,
-                        c = xhrObj.config;
-                    //abort or complete
-                    if (abort || xhr.readyState == 4) {
-
-                        // ie6 ActiveObject 设置不恰当属性导致出错
-                        if (isInstanceOfXDomainRequest(xhr)) {
-                            xhr.onerror = S.noop;
-                            xhr.onload = S.noop;
-                        } else {
-                            // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
-                            xhr.onreadystatechange = S.noop;
-                        }
-
-                        if (abort) {
-                            // 完成以后 abort 不要调用
-                            if (xhr.readyState !== 4) {
-                                xhr.abort();
-                            }
-                        } else {
-                            var status = xhr.status;
-
-                            // _XDomainRequest 不能获取响应头
-                            if (!isInstanceOfXDomainRequest(xhr)) {
-                                xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
-                            }
-
-                            var xml = xhr.responseXML;
-
-                            // Construct response list
-                            if (xml && xml.documentElement /* #4958 */) {
-                                xhrObj.responseXML = xml;
-                            }
-                            xhrObj.responseText = xhr.responseText;
-
-                            // Firefox throws an exception when accessing
-                            // statusText for faulty cross-domain requests
-                            try {
-                                var statusText = xhr.statusText;
-                            } catch(e) {
-                                S.log("xhr statustext error : ");
-                                S.log(e);
-                                // We normalize with Webkit giving an empty statusText
-                                statusText = "";
-                            }
-
-                            // Filter status for non standard behaviors
-                            // If the request is local and we have data: assume a success
-                            // (success with no data won't get notified, that's the best we
-                            // can do given current implementations)
-                            if (!status && io.isLocal && !c.crossDomain) {
-                                status = xhrObj.responseText ? OK_CODE : NOT_FOUND_CODE;
-                                // IE - #1450: sometimes returns 1223 when it should be 204
-                            } else if (status === NO_CONTENT_CODE2) {
-                                status = NO_CONTENT_CODE;
-                            }
-
-                            xhrObj.callback(status, statusText);
-
-                        }
-                    }
-                } catch (firefoxAccessException) {
-                    xhr.onreadystatechange = S.noop;
-                    if (!abort) {
-                        xhrObj.callback(-1, firefoxAccessException);
-                    }
-                }
+                self.xhr = XhrBase.xhr(c.crossDomain);
+                self.sendInternal();
             }
-
 
         });
 
         io.setupTransport("*", XhrTransport);
-
-        return io;
     }
+
+    return io;
 }, {
-    requires:["./base","./xdr"]
+    requires:["./base",'./xhrbase','./subdomain',"./xdr"]
 });
 
 /**

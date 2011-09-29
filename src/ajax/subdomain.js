@@ -41,7 +41,11 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
 
             if (iframeDesc && iframeDesc.ready) {
                 self.xhr = XhrBase.xhr(0, iframeDesc.iframe.contentWindow);
-                self.sendInternal();
+                if (self.xhr) {
+                    self.sendInternal();
+                } else {
+                    S.error("document.domain not set correctly!");
+                }
                 return;
             }
             if (!iframeDesc) {

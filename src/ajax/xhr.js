@@ -7,6 +7,8 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
 
+    var _XDomainRequest = window['XDomainRequest'];
+
     var detectXhr = XhrBase.xhr();
 
     if (detectXhr) {

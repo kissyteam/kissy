@@ -5,7 +5,7 @@
 KISSY.use("ua,json,ajax,node", function(S, UA, JSON, io, Node) {
     describe("xdr", function() {
 
-        it("should works", function() {
+        it("should works for any domain", function() {
             var v1,v2;
             io({
                 headers:{
@@ -62,6 +62,42 @@ KISSY.use("ua,json,ajax,node", function(S, UA, JSON, io, Node) {
                 return v2 === 1;
             }, 5000, "xdr should return!");
 
+
+        });
+
+
+        it("should works for subdomain", function() {
+            var ok = 0,ret = [];
+            document.domain = 'yiming.com';
+            io({
+                url:'http://yy.yiming.com/kissy_git/kissy/src/ajax/tests/ajax.php',
+                xdr:{
+                    subDomain:{
+                        proxy:"/kissy_git/kissy/src/ajax/tests/subdomain/proxy.html"
+                    }
+                },
+                success:function() {
+                    ret.push('s');
+                    //S.log("success");
+                },
+                error:function(d, s) {
+                    ret.push('e');
+                    //S.log(s || "error");
+                },
+                complete:function() {
+                    ret.push('c');
+                    ok=1;
+                    //S.log("complete");
+                }
+            });
+
+            waitsFor(function() {
+                return ok;
+            }, 10000);
+
+            runs(function() {
+                expect(ret).toEqual(['s','c']);
+            });
 
         });
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 28 17:56
+build time: Sep 29 16:12
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 28 17:56
          */
         version: '1.20dev',
 
-        buildTime:'20110928175601',
+        buildTime:'20110929161232',
 
         /**
          * Returns a new object containing all of the properties of
@@ -989,8 +989,8 @@ build time: Sep 28 17:56
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
         },
 
-        /*! Based on YUI3*/
         /**
+         * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
          * @param {object} context ontext fn to run
