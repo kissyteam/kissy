@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 29 16:12
+build time: Sep 29 19:08
 */
 /**
  * a scalable client io framework
@@ -910,7 +910,6 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
-
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
 

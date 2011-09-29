@@ -8467,7 +8467,6 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
  */
 KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
 
-
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
 
     var _XDomainRequest = window['XDomainRequest'];
