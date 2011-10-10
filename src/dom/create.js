@@ -173,6 +173,12 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 return clone;
             },
 
+            empty:function(selector) {
+                DOM.query(selector).each(function(el) {
+                    DOM.remove(el.childNodes);
+                });
+            },
+
             _nl2frag:nl2frag
         });
 
