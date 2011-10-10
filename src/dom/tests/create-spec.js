@@ -109,12 +109,23 @@ KISSY.use("dom", function(S, DOM) {
 
 
         it("remove should works", function() {
-
             var n;
             document.body.appendChild(n = DOM.create("<div class='test-remove'>"));
             expect(S.query(".test-remove").length).toBe(1);
             DOM.remove(n);
             expect(S.query(".test-remove").length).toBe(0);
+        });
+
+        it("empty should works", function() {
+            var n;
+            document.body.appendChild(n = DOM.create("<div class='test-empty'><div></div>x</div>"));
+            expect(n.childNodes.length).toBe(2);
+            var c = n.firstChild;
+            DOM.data(c, "x", "y");
+            expect(DOM.data(c, "x")).toBe("y");
+            DOM.empty(n);
+            expect(n.childNodes.length).toBe(0);
+            expect(DOM.data(c, "x")).toBe(undefined);
         });
 
     });
