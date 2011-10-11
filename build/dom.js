@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 28 17:55
+build time: Oct 11 18:18
 */
 /**
  * @module  dom-attr
@@ -995,6 +995,12 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     }
                 }
                 return clone;
+            },
+
+            empty:function(selector) {
+                DOM.query(selector).each(function(el) {
+                    DOM.remove(el.childNodes);
+                });
             },
 
             _nl2frag:nl2frag
@@ -2792,7 +2798,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         var body,
             elem;
         if (!defaultDisplay[ tagName ]) {
-            body = doc.body;
+            body = doc.body || doc.documentElement;
             elem = doc.createElement(tagName);
             DOM.prepend(elem, body);
             var oldDisplay = DOM.css(elem, "display");
@@ -2826,7 +2832,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 // IE and Opera will allow us to reuse the iframeDoc without re-writing the fake HTML
                 // document to it; WebKit & Firefox won't allow reusing the iframe document.
                 if (!defaultDisplayDetectIframeDoc || !defaultDisplayDetectIframe.createElement) {
-                    // ie6 need a breath , such as alert(8);
+                    // ie6 need a breath , such as alert(8) or setTimeout;
                     // 同时需要同步，所以无解
                     defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
                     defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )

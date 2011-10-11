@@ -59,7 +59,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         },
 
         _hasData:function(elem) {
-            return !!DOM.hasData(elem, EVENT_GUID);
+            return DOM.hasData(elem, EVENT_GUID);
         },
 
         _data:function(elem) {
@@ -304,6 +304,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 var isNativeEventTarget = !target.isCustomEventTarget;
                 // 自定义事件很简单，不需要冒泡，不需要默认事件处理
                 eventData = eventData || {};
+                // protect event type
                 eventData.type = eventType;
                 if (!isNativeEventTarget) {
                     var eventDesc = Event._data(target);

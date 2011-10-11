@@ -17,11 +17,6 @@ KISSY.add("event/submit", function(S, UA, Event, DOM) {
                 if (nodeName(el) === 'form') {
                     return false;
                 }
-                // already fixed
-                if (el.__submit__fix) {
-                    return;
-                }
-                el.__submit__fix = 1;
                 // lazy add submit for inside forms
                 // note event order : click/keypress -> submit
                 // keypoint : find the forms
@@ -33,7 +28,6 @@ KISSY.add("event/submit", function(S, UA, Event, DOM) {
                 if (nodeName(el) === 'form') {
                     return false;
                 }
-                el.__submit__fix = 0;
                 Event.remove(el, "click keypress", detector);
                 DOM.query("form", el).each(function(form) {
                     if (form.__submit__fix) {

@@ -45,5 +45,9 @@ KISSY.use("dom,event", function(S, DOM, Event) {
                 DOM.remove(div);
             });
         });
+
+        runs(function() {
+            DOM.remove(div);
+        });
     });
 });

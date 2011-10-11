@@ -30,6 +30,7 @@ History:
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
+ - [+] event 支持 submit change 冒泡绑定
  - [*] 自定义事件 listeners 放入对象自身保存，避免内存泄露
  - [+] event 增加 valuechange ,hashchange 事件兼容处理
  - [*] Event.detach = Event.remove
