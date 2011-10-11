@@ -25,13 +25,18 @@
 </style>
 </head>
 <body>
-<div id='t' style='border:10px solid red;width:100px;height:100px;'>
-    <label>
-        <input id='inp'/></label>
-    <label>
-        <input type='checkbox' id='checkb'/></label>
-    <br/>
-    <button id='r'>remove bubble</button>
+<div id='t'>
+    <form action="http://www.g.cn">
+        <label>
+            <input id='inp'/></label>
+        <br/>
+        <label>
+            <input type='checkbox' id='checkb'/></label>
+        <br/>
+        <input type="submit"/>
+        <br/>
+        <button id='r'>remove bubble</button>
+    </form>
 </div>
 <script>
     var S = KISSY;
@@ -48,6 +53,11 @@
 
         Event.on("#t", "change", function(e) {
             alert(e.target.type + " changed by bubble");
+        });
+
+        Event.on("#t", "submit", function(e) {
+            alert(e.target.nodeName + " submitted by bubble");
+            e.preventDefault();
         });
 
         Event.on("#r", "click", function() {
