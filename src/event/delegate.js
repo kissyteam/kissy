@@ -156,4 +156,6 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  *
  * mouseenter/leave delegate 特殊处理， mouseenter 没有冒泡的概念，只能替换为 mouseover/out
  *
+ * form submit 事件 ie<9 不会冒泡
+ *
  **/

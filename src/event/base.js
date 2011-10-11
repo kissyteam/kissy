@@ -372,13 +372,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             return ret;
         }
         var event = new EventObject(target);
+        event.target = target;
         S.mix(event, eventData);
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
         if (onlyHandlers) {
             event.stopPropagation();
             event.preventDefault();
         }
-        event.target = target;
         var cur = target,
             ontype = "on" + eventType;
         //bubble up dom tree

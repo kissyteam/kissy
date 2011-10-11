@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 29 19:08
+build time: Oct 11 15:01
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Sep 29 19:08
          */
         version: '1.20dev',
 
-        buildTime:'20110929190841',
+        buildTime:'20111011150138',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2740,6 +2740,7 @@ D:\code\kissy_git\kissy\src\event\hashchange.js
 D:\code\kissy_git\kissy\src\event\valuechange.js
 D:\code\kissy_git\kissy\src\event\delegate.js
 D:\code\kissy_git\kissy\src\event\mouseenter.js
+D:\code\kissy_git\kissy\src\event\submit.js
 D:\code\kissy_git\kissy\src\event.js
 D:\code\kissy_git\kissy\src\node\base.js
 D:\code\kissy_git\kissy\src\node\attach.js
@@ -3972,6 +3973,12 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     }
                 }
                 return clone;
+            },
+
+            empty:function(selector) {
+                DOM.query(selector).each(function(el) {
+                    DOM.remove(el.childNodes);
+                });
             },
 
             _nl2frag:nl2frag
@@ -7299,13 +7306,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             return ret;
         }
         var event = new EventObject(target);
+        event.target = target;
         S.mix(event, eventData);
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
         if (onlyHandlers) {
             event.stopPropagation();
             event.preventDefault();
         }
-        event.target = target;
         var cur = target,
             ontype = "on" + eventType;
         //bubble up dom tree
@@ -7920,6 +7927,8 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  *
  * mouseenter/leave delegate 特殊处理， mouseenter 没有冒泡的概念，只能替换为 mouseover/out
  *
+ * form submit 事件 ie<9 不会冒泡
+ *
  **/
 
 /**
@@ -8002,6 +8011,83 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
  *    jQuery 也异常，需要进一步研究
  */
 
+/**
+ * patch for ie<9 submit : does not bubble !
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("event/submit", function(S, UA, Event, DOM) {
+    var mode = document['documentMode'];
+    if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
+
+        function nodeName(n) {
+            return n.nodeName.toLowerCase();
+        }
+
+        Event.special['submit'] = {
+            setup: function() {
+                var el = this;
+                // form use native
+                if (nodeName(el) === 'form') {
+                    return false;
+                }
+                // already fixed
+                if (el.__submit__fix) {
+                    return;
+                }
+                el.__submit__fix = 1;
+                // lazy add submit for inside forms
+                // note event order : click/keypress -> submit
+                // keypoint : find the forms
+                Event.on(el, "click keypress", detector);
+            },
+            tearDown:function() {
+                var el = this;
+                // form use native
+                if (nodeName(el) === 'form') {
+                    return false;
+                }
+                el.__submit__fix = 0;
+                Event.remove(el, "click keypress", detector);
+                DOM.query("form", el).each(function(form) {
+                    if (form.__submit__fix) {
+                        form.__submit__fix = 0;
+                        Event.remove(form, "submit", submitBubble);
+                    }
+                });
+            }
+        };
+
+
+        function detector(e) {
+            var t = e.target,
+                tName = nodeName(t),
+                form = tName == "input" || tName == "button" ? t.form : null;
+
+            if (form && !form.__submit__fix) {
+                form.__submit__fix = 1;
+                Event.on(form, "submit", submitBubble);
+            }
+        }
+
+        function submitBubble(e) {
+            var form = this;
+            if (form.parentNode) {
+                // simulated bubble for submit
+                // fire from parentNode. if form.on("submit") , this logic is never run!
+                Event.fire(form.parentNode, "submit", e);
+            }
+        }
+
+
+    }
+
+}, {
+    requires:["ua","./base","dom"]
+});
+/**
+ * modified from jq ,fix submit in ie<9
+ **/
+
 KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
     Event.KeyCodes = KeyCodes;
     Event.Target = Target;
@@ -8017,7 +8103,8 @@ KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
         "event/hashchange",
         "event/valuechange",
         "event/delegate",
-        "event/mouseenter"
+        "event/mouseenter",
+        "event/submit"
     ]
 });
 
@@ -8290,6 +8377,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 //            "toggle",
             "scrollIntoView",
             "remove",
+            "empty",
             "removeData",
             "hasData",
             "unselectable"

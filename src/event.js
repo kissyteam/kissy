@@ -13,6 +13,7 @@ KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
         "event/hashchange",
         "event/valuechange",
         "event/delegate",
-        "event/mouseenter"
+        "event/mouseenter",
+        "event/submit"
     ]
 });
