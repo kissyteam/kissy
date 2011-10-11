@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:55
+build time: Oct 11 11:39
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -721,7 +721,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
 KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
     var CHECK_TREE_CLS = CheckTreeRender.CHECK_TREE_CLS;
     /*多继承*/
-    var CheckTree = UIBase.create(CheckNode, [TreeMgr,Component.DelegateChildren], {
+    var CheckTree = UIBase.create(CheckNode, [Component.DelegateChildren,TreeMgr], {
     }, {
         DefaultRender:CheckTreeRender
     });
