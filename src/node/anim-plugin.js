@@ -163,18 +163,10 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             }
 
             // 还原样式
-            if (originalStyle[HEIGHT] !== undefined) {
-                DOM.css(elem, "height", originalStyle[HEIGHT]);
-            }
-            if (originalStyle[WIDTH] !== undefined) {
-                DOM.css(elem, "width", originalStyle[WIDTH]);
-            }
-            if (originalStyle[OPCACITY] !== undefined) {
-                DOM.css(elem, "opacity", originalStyle[OPCACITY]);
-            }
-            if (originalStyle[OVERFLOW] !== undefined) {
-                DOM.css(elem, "overflow", originalStyle[OVERFLOW]);
-            }
+            DOM.css(elem, "height", originalStyle[HEIGHT]);
+            DOM.css(elem, "width", originalStyle[WIDTH]);
+            DOM.css(elem, "opacity", originalStyle[OPCACITY]);
+            DOM.css(elem, "overflow", originalStyle[OVERFLOW]);
 
             if (callback) {
                 callback();
