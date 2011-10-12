@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 11 18:19
+build time: Oct 12 10:48
 */
 /**
  * @module  event
@@ -10,6 +10,7 @@ build time: Oct 11 18:19
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        nodeName = DOM._nodeName,
         makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
@@ -406,7 +407,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         } while (cur && !event.isPropagationStopped);
 
         if (!event.isDefaultPrevented) {
-            if (!(eventType === "click" && target.nodeName.toLowerCase() == "a")) {
+            if (!(eventType === "click" && nodeName(target, "a"))) {
                 var old;
                 try {
                     if (ontype && target[ eventType ]) {
@@ -1404,16 +1405,12 @@ KISSY.add('event/object', function(S, undefined) {
 KISSY.add("event/submit", function(S, UA, Event, DOM) {
     var mode = document['documentMode'];
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
-
-        function nodeName(n) {
-            return n.nodeName.toLowerCase();
-        }
-
+        var nodeName = DOM._nodeName;
         Event.special['submit'] = {
             setup: function() {
                 var el = this;
                 // form use native
-                if (nodeName(el) === 'form') {
+                if (nodeName(el, "form")) {
                     return false;
                 }
                 // lazy add submit for inside forms
@@ -1424,7 +1421,7 @@ KISSY.add("event/submit", function(S, UA, Event, DOM) {
             tearDown:function() {
                 var el = this;
                 // form use native
-                if (nodeName(el) === 'form') {
+                if (nodeName(el, "form")) {
                     return false;
                 }
                 Event.remove(el, "click keypress", detector);
@@ -1440,8 +1437,7 @@ KISSY.add("event/submit", function(S, UA, Event, DOM) {
 
         function detector(e) {
             var t = e.target,
-                tName = nodeName(t),
-                form = tName == "input" || tName == "button" ? t.form : null;
+                form = nodeName(t, "input") || nodeName(t, "button") ? t.form : null;
 
             if (form && !form.__submit__fix) {
                 form.__submit__fix = 1;
@@ -1555,6 +1551,7 @@ KISSY.add('event/target', function(S, Event) {
  */
 KISSY.add('event/valuechange', function(S, Event, DOM) {
     var VALUE_CHANGE = "valuechange",
+        nodeName = DOM._nodeName,
         KEY = "event/valuechange",
         HISTORY_KEY = KEY + "/history",
         POLL_KEY = KEY + "/poll",
@@ -1613,10 +1610,9 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
 
     Event.special[VALUE_CHANGE] = {
         setup: function() {
-            var target = this,
-                nodeName = target.nodeName.toLowerCase();
-            if ("input" == nodeName
-                || "textarea" == nodeName) {
+            var target = this;
+            if (nodeName(target, "input")
+                || nodeName(target, "textarea")) {
                 monitor(target);
             }
         },

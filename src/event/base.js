@@ -5,6 +5,7 @@
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
     var doc = document,
+        nodeName = DOM._nodeName,
         makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
@@ -401,7 +402,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         } while (cur && !event.isPropagationStopped);
 
         if (!event.isDefaultPrevented) {
-            if (!(eventType === "click" && target.nodeName.toLowerCase() == "a")) {
+            if (!(eventType === "click" && nodeName(target, "a"))) {
                 var old;
                 try {
                     if (ontype && target[ eventType ]) {

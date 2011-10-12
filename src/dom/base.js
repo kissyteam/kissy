@@ -59,6 +59,10 @@ KISSY.add('dom/base', function(S, undefined) {
             // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
             // 注5: 考虑 iframe.contentWindow
             return o && !o.nodeType && o.item && !o.setTimeout;
+        },
+
+        _nodeName:function(e, name) {
+            return e && e.nodeName.toLowerCase() === name.toLowerCase();
         }
     };
 
