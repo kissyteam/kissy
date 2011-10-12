@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 12 10:48
+build time: Oct 12 20:02
 */
 /**
  * @module  dom-attr
@@ -2357,20 +2357,22 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return [];
         }
-        var els = makeArray(context.getElementsByClassName(cls)),
-            ret = els,
+        var els = context.getElementsByClassName(cls),
+            ret,
             i = 0,
             len = els.length,
             el;
 
         if (tag && tag !== ANY) {
-            ret = makeArray();
+            ret = [];
             for (; i < len; ++i) {
                 el = els[i];
                 if (nodeName(el, tag)) {
                     ret.push(el);
                 }
             }
+        } else {
+            ret = makeArray(els);
         }
         return ret;
     } : ( doc.querySelectorAll ? function(cls, tag, context) {
@@ -2380,7 +2382,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return [];
         }
-        var els = makeArray(context.getElementsByTagName(tag || ANY)),
+        var els = context.getElementsByTagName(tag || ANY),
             ret = [],
             i = 0,
             len = els.length,

@@ -3213,20 +3213,22 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return [];
         }
-        var els = makeArray(context.getElementsByClassName(cls)),
-            ret = els,
+        var els = context.getElementsByClassName(cls),
+            ret,
             i = 0,
             len = els.length,
             el;
 
         if (tag && tag !== ANY) {
-            ret = makeArray();
+            ret = [];
             for (; i < len; ++i) {
                 el = els[i];
                 if (nodeName(el, tag)) {
                     ret.push(el);
                 }
             }
+        } else {
+            ret = makeArray(els);
         }
         return ret;
     } : ( doc.querySelectorAll ? function(cls, tag, context) {
@@ -3236,7 +3238,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return [];
         }
-        var els = makeArray(context.getElementsByTagName(tag || ANY)),
+        var els = context.getElementsByTagName(tag || ANY),
             ret = [],
             i = 0,
             len = els.length,
@@ -7177,18 +7179,12 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
             }
 
             // 还原样式
-            if (originalStyle[HEIGHT] !== undefined) {
-                DOM.css(elem, "height", originalStyle[HEIGHT]);
-            }
-            if (originalStyle[WIDTH] !== undefined) {
-                DOM.css(elem, "width", originalStyle[WIDTH]);
-            }
-            if (originalStyle[OPCACITY] !== undefined) {
-                DOM.css(elem, "opacity", originalStyle[OPCACITY]);
-            }
-            if (originalStyle[OVERFLOW] !== undefined) {
-                DOM.css(elem, "overflow", originalStyle[OVERFLOW]);
-            }
+            DOM.css(elem, {
+                "height" : originalStyle[HEIGHT],
+                "width" : originalStyle[WIDTH],
+                "opacity" : originalStyle[OPCACITY],
+                "overflow" : originalStyle[OVERFLOW]
+            });
 
             if (callback) {
                 callback();
