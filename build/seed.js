@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 12 10:52
+build time: Oct 12 14:28
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Oct 12 10:52
          */
         version: '1.20dev',
 
-        buildTime:'20111012105244',
+        buildTime:'20111012142802',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1673,6 +1673,28 @@ build time: Oct 12 10:52
                 config = def;
                 def = name;
                 if (IE) {
+                    /*
+                     Kris Zyp
+                     2010年10月21日, 上午11时34分
+                     We actually had some discussions off-list, as it turns out the required
+                     technique is a little different than described in this thread. Briefly,
+                     to identify anonymous modules from scripts:
+                     * In non-IE browsers, the onload event is sufficient, it always fires
+                     immediately after the script is executed.
+                     * In IE, if the script is in the cache, it actually executes *during*
+                     the DOM insertion of the script tag, so you can keep track of which
+                     script is being requested in case define() is called during the DOM
+                     insertion.
+                     * In IE, if the script is not in the cache, when define() is called you
+                     can iterate through the script tags and the currently executing one will
+                     have a script.readyState == "interactive"
+                     See RequireJS source code if you need more hints.
+                     Anyway, the bottom line from a spec perspective is that it is
+                     implemented, it works, and it is possible. Hope that helps.
+                     Kris
+                     */
+                    // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                    // use onload to get module name is not right in ie
                     name = self.__findModuleNameByInteractive();
                     S.log("old_ie get modname by interactive : " + name);
                     self.__registerModule(name, def, config);
@@ -1688,7 +1710,6 @@ build time: Oct 12 10:52
                 return self;
             }
             S.log("invalid format for KISSY.add !", "error");
-            //S.error("invalid format for KISSY.add !");
             return self;
         }
     });
@@ -1797,6 +1818,9 @@ build time: Oct 12 10:52
                 }
             }
             if (!re) {
+                // sometimes when read module file from cache , interactive status is not triggered
+                // module code is executed right after inserting into dom
+                // i has to preserve module name before insert module script into dom , then get it back here
                 S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
                 S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
                 return self.__startLoadModuleName;
@@ -1804,9 +1828,11 @@ build time: Oct 12 10:52
             }
 
             // src 必定是绝对路径
+            // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
+            // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
             var src = utils.normalBasePath(re.src);
             src = src.substring(0, src.length - 1);
-            S.log("interactive src :" + src);
+            // S.log("interactive src :" + src);
             // 注意：模块名不包含后缀名以及参数，所以去除
             // 系统模块去除系统路径
             // 需要 base norm , 防止 base 被指定为相对路径
@@ -1815,7 +1841,6 @@ build time: Oct 12 10:52
                 === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
-
             var packages = self.__packages;
             //外部模块去除包路径，得到模块名
             for (var p in packages) {
@@ -1825,10 +1850,7 @@ build time: Oct 12 10:52
                     return utils.removePostfix(src.substring(p_path.length));
                 }
             }
-
-            S.log("interactive script not have package config ：" + src, "error");
-            //S.error("interactive 状态的 script 没有对应包 ：" + src);
-            return undefined;
+            S.log("interactive script does not have package config ：" + src, "error");
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**

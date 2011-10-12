@@ -108,6 +108,28 @@
                 config = def;
                 def = name;
                 if (IE) {
+                    /*
+                     Kris Zyp
+                     2010年10月21日, 上午11时34分
+                     We actually had some discussions off-list, as it turns out the required
+                     technique is a little different than described in this thread. Briefly,
+                     to identify anonymous modules from scripts:
+                     * In non-IE browsers, the onload event is sufficient, it always fires
+                     immediately after the script is executed.
+                     * In IE, if the script is in the cache, it actually executes *during*
+                     the DOM insertion of the script tag, so you can keep track of which
+                     script is being requested in case define() is called during the DOM
+                     insertion.
+                     * In IE, if the script is not in the cache, when define() is called you
+                     can iterate through the script tags and the currently executing one will
+                     have a script.readyState == "interactive"
+                     See RequireJS source code if you need more hints.
+                     Anyway, the bottom line from a spec perspective is that it is
+                     implemented, it works, and it is possible. Hope that helps.
+                     Kris
+                     */
+                    // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                    // use onload to get module name is not right in ie
                     name = self.__findModuleNameByInteractive();
                     S.log("old_ie get modname by interactive : " + name);
                     self.__registerModule(name, def, config);
@@ -123,7 +145,6 @@
                 return self;
             }
             S.log("invalid format for KISSY.add !", "error");
-            //S.error("invalid format for KISSY.add !");
             return self;
         }
     });
