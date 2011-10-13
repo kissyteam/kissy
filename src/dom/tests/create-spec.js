@@ -90,9 +90,9 @@ KISSY.use("dom", function(S, DOM) {
 
 
             // loadScripts
-            DOM.html(t, '<script>window.g_sethtml = 1;<\/script>', true);
+            DOM.html(t, '<script>window.g_sethtml = 1;<\/script>we', true);
 
-            DOM.html(t, '<script>window.g_sethtml2 = 1;<\/script>');
+            DOM.html(t, '<script>window.g_sethtml2 = 1;<\/script>we');
 
             waitsFor(function() {
                 return window.g_sethtml == 1;
@@ -105,7 +105,7 @@ KISSY.use("dom", function(S, DOM) {
                 expect(window.g_sethtml2).toBeUndefined();
 
                 // src js
-                DOM.html(t, '<script src="test-dom-create.js"><\/script>', true);
+                DOM.html(t, '<script src="test-dom-create.js"><\/script>we', true);
 
                 waitsFor(function() {
                     return window.g_testLoadScriptViaInnerHTML;

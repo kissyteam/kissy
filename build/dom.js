@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 13 20:36
+build time: Oct 13 21:12
 */
 /**
  * @module  dom-attr
@@ -1498,6 +1498,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
     var PARENT_NODE = 'parentNode',
         rformEls = /^(?:button|input|object|select|textarea)$/i,
         nodeName = DOM._nodeName,
+        makeArray = S.makeArray,
         _isElementNode = DOM._isElementNode,
         NEXT_SIBLING = 'nextSibling';
 
@@ -1512,14 +1513,15 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
     function fixChecked(ret) {
         for (var i = 0; i < ret.length; i++) {
             var el = ret[i];
-            if (nodeName(el, "input")) {
+            if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                fixChecked(el.childNodes);
+            } else if (nodeName(el, "input")) {
                 fixCheckedInternal(el);
             } else if (_isElementNode(el)) {
                 var cs = el.getElementsByTagName("input");
                 for (var j = 0; j < cs.length; j++) {
                     fixChecked(cs[j]);
                 }
-
             }
         }
     }
@@ -1542,7 +1544,9 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
         var ret = [];
         for (var i = 0; nodes[i]; i++) {
             var el = nodes[i],nodeName = el.nodeName.toLowerCase();
-            if (nodeName === "script" && isJs(el)) {
+            if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
+            } else if (nodeName === "script" && isJs(el)) {
                 if (scripts) {
                     scripts.push(el.parentNode ? el.parentNode.removeChild(el) : el);
                 }

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="gbk"/>
+<meta charset="utf-8"/>
 <title>InnerHTML and Script Tags</title>
 </head>
 <body>
@@ -20,7 +20,7 @@
     <li><a href="http://24ways.org/2005/have-your-dom-and-script-it-too">Have Your DOM and Script It Too</a></li>
 </ul>
 
-<script src="http://kissy.googlecode.com/svn/trunk/build/packages/ks-core-min.js"></script>
+<script src="../../../../build/kissy.js"></script>
 <script>
 
     var doc = document, bd = doc.body,
@@ -56,7 +56,7 @@
     DOM.html(t, 'html 6<script>alert("set innerHTML via KISSY.DOM.html()");<\/script>', true);
 
     // 所有浏览器都会执行
-    t.innerHTML = 'html 5<img src="http://lifesinger.org/blog/wp-content/uploads/avatar2009.png" onload="alert(\'set innerHTML via image onload\')" />';
+    t.innerHTML = 'html 5<img src="http://img03.taobaocdn.com/tps/i3/T1ogqgXfXeXXXXXXXX-168-42.png" onload="alert(\'set innerHTML via image onload\')" />';
 
 
     /////////////////////////////////////////////////
