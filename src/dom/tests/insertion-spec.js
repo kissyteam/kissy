@@ -38,5 +38,14 @@ KISSY.use("dom", function(S, DOM) {
             DOM.remove([foo,t]);
         });
 
+        it("consider checkbox/radio in ie6/7", function() {
+            var radio = DOM.create("<input />");
+            DOM.attr(radio, "type", "radio");
+            DOM.attr(radio, "checked", true);
+            DOM.append(radio, document.body);
+            expect(DOM.attr(radio, "checked")).toBe("checked");
+            DOM.remove(radio);
+        });
+
     });
 });

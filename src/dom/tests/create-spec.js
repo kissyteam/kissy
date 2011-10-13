@@ -92,10 +92,17 @@ KISSY.use("dom", function(S, DOM) {
             // loadScripts
             DOM.html(t, '<script>window.g_sethtml = 1;<\/script>', true);
 
+            DOM.html(t, '<script>window.g_sethtml2 = 1;<\/script>');
+
             waitsFor(function() {
                 return window.g_sethtml == 1;
             }, "inline script in dom.html should run", 1000);
+
+            waits(500);
+
+
             runs(function() {
+                expect(window.g_sethtml2).toBeUndefined();
 
                 // src js
                 DOM.html(t, '<script src="test-dom-create.js"><\/script>', true);
@@ -126,6 +133,14 @@ KISSY.use("dom", function(S, DOM) {
             DOM.empty(n);
             expect(n.childNodes.length).toBe(0);
             expect(DOM.data(c, "x")).toBe(undefined);
+        });
+
+        it("fix leadingWhiteSpaces in ie<9", function() {
+            var n = DOM.create(" <div></div>");
+            expect(n.nodeName.toLowerCase()).toBe("div");
+            DOM.html(n, " <span></span>");
+            expect(n.firstChild.nodeType).toBe(DOM.TEXT_NODE);
+            DOM.remove(n);
         });
 
     });

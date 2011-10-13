@@ -31,7 +31,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
         it("css works", function() {
 
-            var elem = DOM.create(' <div id="test-div" ' +
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2px; ' +
                 'background: transparent; ' +
                 '' +
@@ -130,7 +130,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
         it("width/height works", function() {
-            var elem = DOM.create(' <div id="test-div" ' +
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
                 '' +
@@ -147,7 +147,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
         it("inner/outer width/height works", function() {
-            var elem = DOM.create(' <div ' +
+            var elem = DOM.create('<div ' +
                 'style="' +
                 'position:absolute;' +
                 'margin:9px; ' +
@@ -181,7 +181,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             //document.domain = 'ali.com';
             DOM.addStyleSheet("div {display:none;}", "test-display-style");
 
-            var elem = DOM.create(' <div id="test-div" ' +
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
                 '' +
@@ -210,7 +210,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
         it("toggle works", function() {
-            var elem = DOM.create(' <div id="test-div" ' +
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
                 '' +

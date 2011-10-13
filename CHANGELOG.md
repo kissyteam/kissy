@@ -27,6 +27,11 @@ History:
  - [!] 禁止使用原生 cloneNode ，使用 DOM.clone ，也不要设置自定义属性，使用 DOM.data
  - [*] DOM.remove 会自动清理当前节点以及子孙节点上注册的事件
  - [+] 增加 DOM.inner/outerWidth
+ - [x] checkbox/radio append/insert 状态保持
+ - [x] html(" <span></span>") 前缀空白保留
+  - [+] append/insert 都可以指定是否执行脚本节点的代码
+
+  
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
@@ -38,6 +43,7 @@ History:
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
  - [!] 字符串数组支持变化，例如 Event.on(['#xx','#yy'],...) 改写做 Event.on('#xx,#yy',...);
+
 
 
  - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）
