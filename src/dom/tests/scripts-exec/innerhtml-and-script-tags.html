@@ -63,10 +63,10 @@
     // 二、src script 的执行
 
     // 所有浏览器都不会执行
-    t2.innerHTML = 'html 1<script src="innerhtml-and-script-tags.js"><\/script>';
+    t2.innerHTML = 'html 1<script src="innerhtml-and-script-tags2.js"><\/script>';
 
     // 所有浏览器都不会执行
-    t2.innerHTML = 'html 2<script defer src="innerhtml-and-script-tags.js"><\/script>';
+    t2.innerHTML = 'html 2<script defer src="innerhtml-and-script-tags3.js"><\/script>';
 
     // 所有浏览器都执行
     // 解析出 script src， 动态创建 script, 添加到 head 里，详见 KISSY.DOM.html 方法的实现
