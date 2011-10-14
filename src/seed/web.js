@@ -72,18 +72,10 @@
          */
         globalEval: function(data) {
             if (data && RE_NOT_WHITE.test(data)) {
-                // Inspired by code by Andrea Giammarchi
-                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || docElem,
-                    script = doc.createElement('script');
-
-                // It works! All browsers support!
-                script.text = data;
-
-                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
-                // This arises when a base node is used.
-                head.insertBefore(script, head.firstChild);
-                head.removeChild(script);
+                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                ( window.execScript || function(data) {
+                    window[ "eval" ].call(window, data);
+                } )(data);
             }
         },
 
@@ -140,7 +132,7 @@
      * Binds ready events.
      */
     function _bindReady() {
-        var doScroll = doc.documentElement.doScroll,
+        var doScroll = docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function() {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 13 21:13
+build time: Oct 14 10:39
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -88,7 +88,7 @@ build time: Oct 13 21:13
          */
         version: '1.20dev',
 
-        buildTime:'20111013211313',
+        buildTime:'20111014103947',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2553,18 +2553,10 @@ build time: Oct 13 21:13
          */
         globalEval: function(data) {
             if (data && RE_NOT_WHITE.test(data)) {
-                // Inspired by code by Andrea Giammarchi
-                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || docElem,
-                    script = doc.createElement('script');
-
-                // It works! All browsers support!
-                script.text = data;
-
-                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
-                // This arises when a base node is used.
-                head.insertBefore(script, head.firstChild);
-                head.removeChild(script);
+                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                ( window.execScript || function(data) {
+                    window[ "eval" ].call(window, data);
+                } )(data);
             }
         },
 
@@ -2621,7 +2613,7 @@ build time: Oct 13 21:13
      * Binds ready events.
      */
     function _bindReady() {
-        var doScroll = doc.documentElement.doScroll,
+        var doScroll = docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function() {
