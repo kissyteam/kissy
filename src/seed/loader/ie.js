@@ -35,8 +35,7 @@
             // src 必定是绝对路径
             // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
             // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
-            var src = utils.normalBasePath(re.src);
-            src = src.substring(0, src.length - 1);
+            var src = utils.absoluteFilePath(re.src);
             // S.log("interactive src :" + src);
             // 注意：模块名不包含后缀名以及参数，所以去除
             // 系统模块去除系统路径
