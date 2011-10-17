@@ -13,8 +13,9 @@ KISSY.add("waterfall/loader", function(S, undefined) {
 
     function doScroll() {
         var self = this;
+
         S.log("waterfall:doScroll");
-        if (self.__loading) {
+        if (self.__loading || self.__pause) {
             return;
         }
         // 如果正在调整中，等会再看
@@ -55,8 +56,7 @@ KISSY.add("waterfall/loader", function(S, undefined) {
         }
 
         function end() {
-            self.__loading = false;
-            S.Event.remove(window, "scroll", self.__onScroll);
+            self.end();
         }
     }
 
@@ -76,7 +76,17 @@ KISSY.add("waterfall/loader", function(S, undefined) {
             S.Event.on(window, "scroll", self.__onScroll);
             doScroll.call(self);
         },
+        end: function() {
+            this.__loading = false;
+            S.Event.remove(window, "scroll", this.__onScroll);
+        },
+        pause:function() {
+            this.__pause = 1;
+        },
 
+        resume:function() {
+            this.__pause = 0;
+        },
         destroy:function() {
             var self = this;
             Loader.superclass.destroy.apply(self, arguments);
