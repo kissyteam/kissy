@@ -4878,6 +4878,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         var POLL_INTERVAL = 50,
             doc = document,
             win = window,
+            IFRAME_TEMPLATE = "<html><title>" + (doc.title || "") +
+                " - {hash}</title><body>{hash}</body></html>",
             docMode = doc['documentMode'],
             getHash = function() {
                 // ie 返回 "" ，其他返回 "#"
@@ -4900,7 +4902,9 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
             hashChange = ie < 8 ? function(hash) {
                 //debugger
-                var html = '<html><body>' + hash + '<' + '/body><' + '/html>',
+                var html = S.substitute(IFRAME_TEMPLATE, {
+                    hash: hash
+                }),
                     doc = iframe.contentWindow.document;
                 try {
                     // 写入历史 hash
