@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 13 21:12
+build time: Oct 17 17:51
 */
 /**
  * @module  dom-attr
@@ -1297,6 +1297,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var objectOps = {
         hasData:function(ob, name) {
+            // 只判断当前窗口，iframe 窗口内数据直接放入全局变量
             if (ob == win) {
                 return objectOps.hasData(winDataCache, name);
             }

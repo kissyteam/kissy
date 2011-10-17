@@ -35,6 +35,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var objectOps = {
         hasData:function(ob, name) {
+            // 只判断当前窗口，iframe 窗口内数据直接放入全局变量
             if (ob == win) {
                 return objectOps.hasData(winDataCache, name);
             }

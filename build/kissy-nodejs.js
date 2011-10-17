@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 17 10:29
+build time: Oct 17 17:51
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -260,7 +260,8 @@ build time: Oct 17 10:29
     host = seed.__HOST || (seed.__HOST = host || {});
 
     // shortcut and meta for seed.
-    S = host[S] = meta.mix(seed, meta, false);
+    // override previous kissy
+    S = host[S] = meta.mix(seed, meta);
 
     S.mix(S, {
 
@@ -274,7 +275,7 @@ build time: Oct 17 10:29
          */
         version: '1.20dev',
 
-        buildTime:'20111017102910',
+        buildTime:'20111017175123',
 
         /**
          * Returns a new object containing all of the properties of
@@ -522,6 +523,7 @@ build time: Oct 17 10:29
         HEX_BASE = 16,
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
+        STAMP_MARKER = '__~ks_stamped',
         RE_TRIM = /^\s+|\s+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -576,6 +578,30 @@ build time: Oct 17 10:29
     }
 
     S.mix(S, {
+
+        /**
+         * stamp a object by guid
+         * @return guid associated with this object
+         */
+        stamp:function(o, readOnly) {
+            if (!o) {
+                return o
+            }
+            var guid = o[STAMP_MARKER];
+            if (guid) {
+                return guid;
+            }
+            if (!readOnly) {
+                try {
+                    guid = o[STAMP_MARKER] = S.guid(STAMP_MARKER);
+                }
+                catch(e) {
+                    guid = undefined;
+                }
+            }
+            return guid;
+        },
+
         noop:function() {
         },
 
@@ -1301,9 +1327,9 @@ build time: Oct 17 10:29
             memory[stamp] = {destination:destination,input:input};
         }
         // If input is an Array object or an Object object,
-        // then, for each enumerable property in input, 
-        // add a new property to output having the same name, 
-        // and having a value created from invoking the internal structured cloning algorithm recursively 
+        // then, for each enumerable property in input,
+        // add a new property to output having the same name,
+        // and having a value created from invoking the internal structured cloning algorithm recursively
         // with the value of the property as the "input" argument and memory as the "memory" argument.
         // The order of the properties in the input and output objects must be the same.
 
@@ -4486,6 +4512,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
     var objectOps = {
         hasData:function(ob, name) {
+            // 只判断当前窗口，iframe 窗口内数据直接放入全局变量
             if (ob == win) {
                 return objectOps.hasData(winDataCache, name);
             }
@@ -7162,15 +7189,11 @@ KISSY.add('event/object', function(S, undefined) {
          * on the current target.
          */
         stopImmediatePropagation: function() {
-            var e = this.originalEvent;
-
-            if (e.stopImmediatePropagation) {
-                e.stopImmediatePropagation();
-            } else {
-                this.stopPropagation();
-            }
-
-            this.isImmediatePropagationStopped = true;
+            var self = this;
+            self.isImmediatePropagationStopped = true;
+            // fixed 1.2
+            // call stopPropagation implicitly
+            self.stopPropagation();
         },
 
         /**
@@ -7240,11 +7263,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 }
             },
         SPACE = " ",
+        each = S.each,
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了
         Event_Triggered = "",
         TRIGGERED_NONE = "trigger-none-" + S.now(),
+        EVENT_SPECIAL = {},
         // 事件存储位置 key
         // { handler: eventHandler, events:  {type:[{scope:scope,fn:fn}]}  } }
         EVENT_GUID = 'ksEventTargetId' + S.now();
@@ -7262,8 +7287,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
             var eventDesc = Event._data(src),
                 events = eventDesc.events;
-            S.each(events, function(handlers, type) {
-                S.each(handlers, function(handler) {
+            each(events, function(handlers, type) {
+                each(handlers, function(handler) {
                     Event.on(dest, type, handler.fn, handler.scope, handler.data);
                 });
             });
@@ -7286,7 +7311,59 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         },
 
         // such as: { 'mouseenter' : { setup:fn ,tearDown:fn} }
-        special: { },
+        special: EVENT_SPECIAL,
+
+        // single type , single target , fixed native
+        __add:function(isNativeTarget, target, type, fn, scope, data) {
+            var eventDesc;
+
+            // 不是有效的 target 或 参数不对
+            if (!target ||
+                !S.isFunction(fn) ||
+                (isNativeTarget && !isValidTarget(target))) {
+                return;
+            }
+            // 获取事件描述
+            eventDesc = Event._data(target);
+            if (!eventDesc) {
+                Event._data(target, eventDesc = {});
+            }
+            //事件 listeners
+            var events = eventDesc.events = eventDesc.events || {},
+                handlers = events[type] = events[type] || [],
+                handleObj = {
+                    fn: fn,
+                    scope: scope,
+                    data:data
+                },
+                eventHandler = eventDesc.handler;
+            // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
+            if (!eventHandler) {
+                eventHandler = eventDesc.handler = function(event, data) {
+                    // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
+                    // 已经在 fire 中 bubble 过一次了
+                    if (event && event.type == Event_Triggered) {
+                        return;
+                    }
+                    var target = eventHandler.target;
+                    if (!event || !event.fixed) {
+                        event = new EventObject(target, event);
+                    }
+                    if (S.isPlainObject(data)) {
+                        S.mix(event, data);
+                    }
+                    return Event._handle(target, event);
+                };
+                eventHandler.target = target;
+            }
+            if (isNativeTarget) {
+                addDomEvent(target, type, eventHandler, handlers, handleObj);
+                //nullify to prevent memory leak in ie ?
+                target = null;
+            }
+            // 增加 listener
+            handlers.push(handleObj);
+        },
 
         /**
          * Adds an event listener.
@@ -7295,64 +7372,17 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
          * @param fn {Function} The event handler.
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
+        add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-        add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
             if (batchForType('add', targets, type, fn, scope, data)) {
                 return targets;
             }
 
             DOM.query(targets).each(function(target) {
-                var isNativeEventTarget = !target.isCustomEventTarget,
-                    eventDesc;
-
-                // 不是有效的 target 或 参数不对
-                if (!target ||
-                    !type ||
-                    !S.isFunction(fn) ||
-                    (isNativeEventTarget && !isValidTarget(target))) {
-                    return;
-                }
-                // 获取事件描述
-                eventDesc = Event._data(target);
-                if (!eventDesc) {
-                    Event._data(target, eventDesc = {});
-                }
-                //事件 listeners
-                var events = eventDesc.events = eventDesc.events || {},
-                    handlers = events[type] = events[type] || [],
-                    handleObj = {
-                        fn: fn,
-                        scope: scope,
-                        data:data
-                    },
-                    eventHandler = eventDesc.handler;
-                // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-                if (!eventHandler) {
-                    eventHandler = eventDesc.handler = function(event, data) {
-                        // 是经过 fire 手动调用而导致的，就不要再次触发了，已经在 fire 中 bubble 过一次了
-                        if (event && event.type == Event_Triggered) {
-                            return;
-                        }
-                        var target = eventHandler.target;
-                        if (!event || !event.fixed) {
-                            event = new EventObject(target, event);
-                        }
-                        if (S.isPlainObject(data)) {
-                            S.mix(event, data);
-                        }
-                        return Event._handle(target, event);
-                    };
-                    eventHandler.target = target;
-                }
-                if (isNativeEventTarget) {
-                    addDomEvent(target, type, eventHandler, handlers, handleObj);
-                    //nullify to prevent memory leak in ie ?
-                    target = null;
-                }
-                // 增加 listener
-                handlers.push(handleObj);
+                Event.__add(true, target, type, fn, scope, data);
             });
+
             return targets;
         },
 
@@ -7367,6 +7397,99 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             return eventDesc && eventDesc.events;
         },
 
+        // single target, single type, fixed native
+        __remove:function(isNativeTarget, target, type, fn, scope, data) {
+
+            if (
+                !target ||
+                    (isNativeTarget && !isValidTarget(target))
+                ) {
+                return;
+            }
+
+            var eventDesc = Event._data(target),
+                events = eventDesc && eventDesc.events,
+                handlers,
+                len,
+                i,
+                j,
+                t,
+                special = (isNativeTarget && EVENT_SPECIAL[type]) || { };
+
+            if (!events) {
+                return;
+            }
+
+            // remove all types of event
+            if (type === undefined) {
+                for (type in events) {
+                    Event.remove.call(Event, target, type);
+                }
+                return;
+            }
+
+            scope = scope || target;
+
+            if ((handlers = events[type])) {
+                len = handlers.length;
+                // 移除 fn
+                if (fn && len) {
+                    for (i = 0,j = 0,t = []; i < len; ++i) {
+                        var reserve = false,
+                            handler = handlers[i],
+                            handlerScope = handler.scope || target;
+                        if (fn !== handler.fn
+                            || scope !== handlerScope) {
+                            t[j++] = handler;
+                            reserve = true;
+                        } else if (data !== data2) {
+                            var data2 = handler.data;
+                            // undelgate 不能 remove 普通 on 的 handler
+                            // remove 不能 remove delegate 的 handler
+                            if (!data && data2
+                                || data2 && !data
+                                ) {
+                                t[j++] = handler;
+                                reserve = true;
+                            } else if (data && data2) {
+                                if (!data.equals || !data2.equals) {
+                                    S.error("no equals in data");
+                                } else if (!data2.equals(data)) {
+                                    t[j++] = handler;
+                                    reserve = true;
+                                }
+                            }
+                        }
+                        if (!reserve && special.remove) {
+                            special.remove.call(target, handler);
+                        }
+                    }
+                    events[type] = t;
+                    len = t.length;
+                }
+
+                // remove(el, type) or fn 已移除光
+                if (fn === undefined || len === 0) {
+                    // dom node need to detach handler from dom node
+                    if (isNativeTarget &&
+                        (!special['tearDown'] ||
+                            special['tearDown'].call(target) === false)) {
+                        simpleRemove(target, type, eventDesc.handler);
+                    }
+                    // remove target's single event description
+                    delete events[type];
+                }
+            }
+
+            // remove target's  all events description
+            if (S.isEmptyObject(events)) {
+                eventDesc.handler.target = null;
+                delete eventDesc.handler;
+                delete eventDesc.events;
+                Event._removeData(target);
+            }
+        },
+
         /**
          * Detach an event or set of events from an element.
          */
@@ -7374,90 +7497,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             if (batchForType('remove', targets, type, fn, scope)) {
                 return targets;
             }
-
             DOM.query(targets).each(function(target) {
-                var eventDesc = Event._data(target),
-                    events = eventDesc && eventDesc.events,
-                    listeners,
-                    len,
-                    i,
-                    j,
-                    t,
-                    isNativeEventTarget = !target.isCustomEventTarget,
-                    special = (isNativeEventTarget && Event.special[type]) || { };
-                if (!target ||
-                    (!isNativeEventTarget && !isValidTarget(target)) ||
-                    !events) {
-                    return;
-                }
-                // remove all types of event
-                if (type === undefined) {
-                    for (type in events) {
-                        Event.remove.call(Event, target, type);
-                    }
-                    return;
-                }
-
-                scope = scope || target;
-
-                if ((listeners = events[type])) {
-                    len = listeners.length;
-                    // 移除 fn
-                    if (fn && len) {
-                        for (i = 0,j = 0,t = []; i < len; ++i) {
-                            var reserve = false,
-                                listener = listeners[i],
-                                listenerScope = listener.scope || target;
-                            if (fn !== listener.fn
-                                || scope !== listenerScope) {
-                                t[j++] = listener;
-                                reserve = true;
-                            } else if (data !== data2) {
-                                var data2 = listener.data;
-                                // undelgate 不能 remove 普通 on 的 handler
-                                // remove 不能 remove delegate 的 handler
-                                if (!data && data2
-                                    || data2 && !data
-                                    ) {
-                                    t[j++] = listener;
-                                    reserve = true;
-                                } else if (data && data2) {
-                                    if (!data.equals || !data2.equals) {
-                                        S.error("no equals in data");
-                                    } else if (!data2.equals(data)) {
-                                        t[j++] = listener;
-                                        reserve = true;
-                                    }
-                                }
-                            }
-                            if (!reserve && special.remove) {
-                                special.remove.call(target, listener);
-                            }
-                        }
-                        events[type] = t;
-                        len = t.length;
-                    }
-
-                    // remove(el, type) or fn 已移除光
-                    if (fn === undefined || len === 0) {
-                        // dom node need to detach handler from dom node
-                        if (isNativeEventTarget &&
-                            (!special['tearDown'] ||
-                                special['tearDown'].call(target) === false)) {
-                            simpleRemove(target, type, eventDesc.handler);
-                        }
-                        // remove target's single event description
-                        delete events[type];
-                    }
-                }
-
-                // remove target's  all events description
-                if (S.isEmptyObject(events)) {
-                    eventDesc.handler.target = null;
-                    delete eventDesc.handler;
-                    delete eventDesc.events;
-                    Event._removeData(target);
-                }
+                Event.__remove(true, target, type, fn, scope, data);
             });
             return targets;
         },
@@ -7478,21 +7519,20 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 listener = listeners[i];
                 ret = listener.fn.call(listener.scope || target,
                     event, listener.data);
+
                 // 和 jQuery 逻辑保持一致
-
                 if (ret !== undefined) {
-
                     // 有一个 false，最终结果就是 false
                     // 否则等于最后一个返回值
                     if (gRet !== false) {
                         gRet = ret;
                     }
-
                     // return false 等价 preventDefault + stopProgation
                     if (ret === false) {
                         event.halt();
                     }
                 }
+
                 if (event.isImmediatePropagationStopped) {
                     break;
                 }
@@ -7503,37 +7543,21 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
         /**
          * fire event , simulate bubble in browser
+         * @return undefined
          */
-        fire:function(targets, eventType, eventData, onlyHandlers) {
-            if (batchForType("fire", targets, eventType, eventData)) {
-                return;
-            }
-
-            var ret;
-
-            DOM.query(targets).each(function(target) {
-                var isNativeEventTarget = !target.isCustomEventTarget;
-                // 自定义事件很简单，不需要冒泡，不需要默认事件处理
+        fire: function(targets, eventType, eventData, onlyHandlers) {
+            if (!batchForType("fire", targets, eventType, eventData, onlyHandlers)) {
+                // custom event firing moved to target.js
                 eventData = eventData || {};
                 // protect event type
                 eventData.type = eventType;
-                if (!isNativeEventTarget) {
-                    var eventDesc = Event._data(target);
-                    if (eventDesc && S.isFunction(eventDesc.handler)) {
-                        ret = eventDesc.handler(undefined, eventData);
-                    }
-                } else {
-                    var r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
-                    if (r !== undefined) {
-                        ret = r;
-                    }
-                }
-            });
-            return ret;
+                DOM.query(targets).each(function(target) {
+                    fireDOMEvent(target, eventType, eventData, onlyHandlers);
+                });
+            }
         },
-        _batchForType:batchForType,
-        _simpleAdd: simpleAdd,
-        _simpleRemove: simpleRemove
+
+        __batchForType:batchForType
     };
 
     // shorthand
@@ -7544,14 +7568,14 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         // on(target, 'click focus', fn)
         if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
             var args = makeArray(arguments);
-            S.each(types.split(SPACE), function(type) {
+            each(types.split(/\s+/), function(type) {
                 var args2 = [].concat(args);
                 args2.splice(0, 3, targets, type);
                 Event[methodName].apply(Event, args2);
             });
             return true;
         }
-        return undefined;
+        return 0;
     }
 
     function isValidTarget(target) {
@@ -7564,7 +7588,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
      * dom node need eventHandler attached to dom node
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
-        var special = Event.special[type] || {};
+        var special = EVENT_SPECIAL[type] || {};
         // 第一次注册该事件，dom 节点才需要注册 dom 事件
         if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
@@ -7579,30 +7603,24 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
      * fire dom event from bottom to up
      */
     function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
-        var ret;
         if (!isValidTarget(target)) {
-            return ret;
+            return;
         }
-        var event = new EventObject(target);
-        event.target = target;
+        var event = new EventObject(target, undefined, eventType);
         S.mix(event, eventData);
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
         if (onlyHandlers) {
-            event.stopPropagation();
-            event.preventDefault();
+            event.halt();
         }
         var cur = target,
             ontype = "on" + eventType;
+
         //bubble up dom tree
         do{
-            var handler = (Event._data(cur) || {}).handler;
             event.currentTarget = cur;
-            if (handler) {
-                handler.call(cur, event);
-            }
+            Event._handle(cur, event);
             // Trigger an inline bound script
             if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
-                ret = false;
                 event.preventDefault();
             }
             // Bubble up to document, then to window
@@ -7622,8 +7640,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                         if (old) {
                             target[ ontype ] = null;
                         }
+
                         // 记录当前 trigger 触发
                         Event_Triggered = eventType;
+
                         // 只触发默认事件，而不要执行绑定的用户回调
                         // 同步触发
                         target[ eventType ]();
@@ -7640,11 +7660,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 Event_Triggered = TRIGGERED_NONE;
             }
         }
-        return ret;
-    }
-
-    if (1 > 2) {
-        Event._simpleAdd()._simpleRemove();
     }
 
     return Event;
@@ -7663,9 +7678,51 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 /**
  * @module  EventTarget
- * @author  lifesinger@gmail.com , yiminghe@gmail.com
+ * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event) {
+KISSY.add('event/target', function(S, Event, EventObject) {
+    var KS_PUBLISH = "__~ks_publish",
+        KS_BUBBLE_TARGETS = "__~ks_bubble_targets",
+        ALL_EVENT = "*";
+
+    function getCustomEvent(self, type, eventData) {
+        if (eventData instanceof EventObject) {
+            // set currentTarget in the process of bubbling
+            eventData.currentTarget = self;
+            return eventData;
+        }
+        var ret,
+            customEvent = new EventObject(self, undefined, type);
+        if (S.isPlainObject(eventData)) {
+            S.mix(customEvent, eventData);
+        }
+        return customEvent
+    }
+
+    function getEventPublishObj(self) {
+        self[KS_PUBLISH] = self[KS_PUBLISH] || {};
+        return self[KS_PUBLISH];
+    }
+
+    function getBubbleTargetsObj(self) {
+        self[KS_BUBBLE_TARGETS] = self[KS_BUBBLE_TARGETS] || {};
+        return self[KS_BUBBLE_TARGETS];
+    }
+
+    function isBubblable(self, eventType) {
+        var publish = getEventPublishObj(self);
+        return publish[eventType] && publish[eventType].bubbles || publish[ALL_EVENT] && publish[ALL_EVENT].bubbles
+    }
+
+    function attach(method) {
+        return function(type, fn, scope) {
+            var self = this;
+            S.each(S.trim(type).split(/\s+/), function(t) {
+                Event["__" + method](false, self, t, fn, scope);
+            });
+            return self; // chain
+        };
+    }
 
     /**
      * 提供事件发布和订阅机制
@@ -7677,9 +7734,6 @@ KISSY.add('event/target', function(S, Event) {
      * @lends Event.Target
      */
     {
-
-        isCustomEventTarget: true,
-
         /**
          * 触发事件
          * @param {String} type 事件名
@@ -7687,8 +7741,66 @@ KISSY.add('event/target', function(S, Event) {
          * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
          */
         fire: function(type, eventData) {
-            // no chain ,need data returned
-            return Event.fire(this, type, eventData);
+            var self = this,
+                ret,
+                r2,
+                customEvent = getCustomEvent(self, type, eventData);
+            ret = Event._handle(self, customEvent);
+            if (!customEvent.isPropagationStopped && isBubblable(self, type)) {
+                r2 = self.bubble(type, customEvent);
+                // false 优先返回
+                if (r2 === false) {
+                    ret = r2;
+                }
+            }
+            return ret
+        },
+
+        /**
+         * defined event config
+         * @param type
+         * @param cfg
+         *        example { bubbles: true}
+         *        default bubbles: false
+         */
+        publish: function(type, cfg) {
+            var self = this,
+                publish = getEventPublishObj(self);
+            publish[type] = cfg;
+        },
+
+        /**
+         * bubble event to its targets
+         * @param type
+         * @param eventData
+         */
+        bubble: function(type, eventData) {
+            var self = this,
+                ret,
+                targets = getBubbleTargetsObj(self);
+            S.each(targets, function(t) {
+                var r2 = t.fire(type, eventData);
+                if (ret !== false) {
+                    ret = r2;
+                }
+            });
+            return ret;
+        },
+
+        /**
+         * add target which bubblable event bubbles towards
+         * @param target another EventTarget instance
+         */
+        addTarget: function(target) {
+            var self = this,
+                targets = getBubbleTargetsObj(self);
+            targets[S.stamp(target)] = target;
+        },
+
+        removeTarget:function(target) {
+            var self = this,
+                targets = getBubbleTargetsObj(self);
+            delete targets[S.stamp(target)];
         },
 
         /**
@@ -7698,10 +7810,7 @@ KISSY.add('event/target', function(S, Event) {
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on: function(type, fn, scope) {
-            Event.add(this, type, fn, scope);
-            return this; // chain
-        },
+        on: attach("add"),
 
         /**
          * 取消监听事件
@@ -7710,10 +7819,7 @@ KISSY.add('event/target', function(S, Event) {
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        detach: function(type, fn, scope) {
-            Event.remove(this, type, fn, scope);
-            return this; // chain
-        }
+        detach: attach("remove")
     };
 
     return Target;
@@ -7722,18 +7828,12 @@ KISSY.add('event/target', function(S, Event) {
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base"]
+    requires:["./base",'./object']
 });
-
 /**
- * NOTES:
- *
- *  2010.04
- *   - 初始设想 api: publish, fire, on, detach. 实际实现时发现，publish 不是必须
- *     的，on 时能自动 publish. api 简化为：触发/订阅/反订阅
- *
- *   - detach 命名是因为 removeEventListener 太长，remove 则太容易冲突
- */
+ *  2011-10-17
+ *    yiminghe: implement bubble for custom event
+ **/
 
 /**
  * @module  event-focusin
@@ -8056,7 +8156,7 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
-    var batchForType = Event._batchForType,
+    var batchForType = Event.__batchForType,
         delegateMap = {
             "focus":{
                 type:"focusin"
@@ -8080,10 +8180,6 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
-                // 自定义事件 delegate 无意义
-                if (target.isCustomEventTarget) {
-                    return;
-                }
                 var preType = type,handler = delegateHandler;
                 if (delegateMap[type]) {
                     type = delegateMap[preType].type;
@@ -8105,11 +8201,8 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
-                // 自定义事件 delegate 无意义
-                if (target.isCustomEventTarget) {
-                    return;
-                }
-                var preType = type,handler = delegateHandler;
+                var preType = type,
+                    handler = delegateHandler;
                 if (delegateMap[type]) {
                     type = delegateMap[preType].type;
                     handler = delegateMap[preType].handler || handler;
@@ -11918,7 +12011,6 @@ KISSY.add("ajax/jsonp", function(S, io) {
 KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
     io.on("start", function(e) {
-        //debugger
         var xhr = e.xhr,
             c = xhr.config;
         // serialize form if needed

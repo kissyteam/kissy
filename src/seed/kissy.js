@@ -69,7 +69,8 @@
     host = seed.__HOST || (seed.__HOST = host || {});
 
     // shortcut and meta for seed.
-    S = host[S] = meta.mix(seed, meta, false);
+    // override previous kissy
+    S = host[S] = meta.mix(seed, meta);
 
     S.mix(S, {
 

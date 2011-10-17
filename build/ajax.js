@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 29 19:08
+build time: Oct 17 17:51
 */
 /**
  * a scalable client io framework
@@ -300,7 +300,6 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
 });KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
     io.on("start", function(e) {
-        //debugger
         var xhr = e.xhr,
             c = xhr.config;
         // serialize form if needed
@@ -557,7 +556,8 @@ KISSY.add("ajax/jsonp", function(S, io) {
     return io;
 }, {
     requires:['./base']
-});/**
+});
+/**
  * script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
  * @author  yiminghe@gmail.com

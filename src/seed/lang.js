@@ -24,6 +24,7 @@
         HEX_BASE = 16,
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
+        STAMP_MARKER = '__~ks_stamped',
         RE_TRIM = /^\s+|\s+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -78,6 +79,30 @@
     }
 
     S.mix(S, {
+
+        /**
+         * stamp a object by guid
+         * @return guid associated with this object
+         */
+        stamp:function(o, readOnly) {
+            if (!o) {
+                return o
+            }
+            var guid = o[STAMP_MARKER];
+            if (guid) {
+                return guid;
+            }
+            if (!readOnly) {
+                try {
+                    guid = o[STAMP_MARKER] = S.guid(STAMP_MARKER);
+                }
+                catch(e) {
+                    guid = undefined;
+                }
+            }
+            return guid;
+        },
+
         noop:function() {
         },
 
@@ -803,9 +828,9 @@
             memory[stamp] = {destination:destination,input:input};
         }
         // If input is an Array object or an Object object,
-        // then, for each enumerable property in input, 
-        // add a new property to output having the same name, 
-        // and having a value created from invoking the internal structured cloning algorithm recursively 
+        // then, for each enumerable property in input,
+        // add a new property to output having the same name,
+        // and having a value created from invoking the internal structured cloning algorithm recursively
         // with the value of the property as the "input" argument and memory as the "memory" argument.
         // The order of the properties in the input and output objects must be the same.
 

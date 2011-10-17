@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
-    var batchForType = Event._batchForType,
+    var batchForType = Event.__batchForType,
         delegateMap = {
             "focus":{
                 type:"focusin"
@@ -27,10 +27,6 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
-                // 自定义事件 delegate 无意义
-                if (target.isCustomEventTarget) {
-                    return;
-                }
                 var preType = type,handler = delegateHandler;
                 if (delegateMap[type]) {
                     type = delegateMap[preType].type;
@@ -52,11 +48,8 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
-                // 自定义事件 delegate 无意义
-                if (target.isCustomEventTarget) {
-                    return;
-                }
-                var preType = type,handler = delegateHandler;
+                var preType = type,
+                    handler = delegateHandler;
                 if (delegateMap[type]) {
                     type = delegateMap[preType].type;
                     handler = delegateMap[preType].handler || handler;

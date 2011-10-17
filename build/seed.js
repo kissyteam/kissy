@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 17 10:29
+build time: Oct 17 17:51
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -74,7 +74,8 @@ build time: Oct 17 10:29
     host = seed.__HOST || (seed.__HOST = host || {});
 
     // shortcut and meta for seed.
-    S = host[S] = meta.mix(seed, meta, false);
+    // override previous kissy
+    S = host[S] = meta.mix(seed, meta);
 
     S.mix(S, {
 
@@ -88,7 +89,7 @@ build time: Oct 17 10:29
          */
         version: '1.20dev',
 
-        buildTime:'20111017102910',
+        buildTime:'20111017175123',
 
         /**
          * Returns a new object containing all of the properties of
@@ -336,6 +337,7 @@ build time: Oct 17 10:29
         HEX_BASE = 16,
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
+        STAMP_MARKER = '__~ks_stamped',
         RE_TRIM = /^\s+|\s+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -390,6 +392,30 @@ build time: Oct 17 10:29
     }
 
     S.mix(S, {
+
+        /**
+         * stamp a object by guid
+         * @return guid associated with this object
+         */
+        stamp:function(o, readOnly) {
+            if (!o) {
+                return o
+            }
+            var guid = o[STAMP_MARKER];
+            if (guid) {
+                return guid;
+            }
+            if (!readOnly) {
+                try {
+                    guid = o[STAMP_MARKER] = S.guid(STAMP_MARKER);
+                }
+                catch(e) {
+                    guid = undefined;
+                }
+            }
+            return guid;
+        },
+
         noop:function() {
         },
 
@@ -1115,9 +1141,9 @@ build time: Oct 17 10:29
             memory[stamp] = {destination:destination,input:input};
         }
         // If input is an Array object or an Object object,
-        // then, for each enumerable property in input, 
-        // add a new property to output having the same name, 
-        // and having a value created from invoking the internal structured cloning algorithm recursively 
+        // then, for each enumerable property in input,
+        // add a new property to output having the same name,
+        // and having a value created from invoking the internal structured cloning algorithm recursively
         // with the value of the property as the "input" argument and memory as the "memory" argument.
         // The order of the properties in the input and output objects must be the same.
 
