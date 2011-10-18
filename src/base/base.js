@@ -12,7 +12,6 @@ KISSY.add('base/base', function (S, Attribute, Event) {
      * @class
      */
     function Base(config) {
-        Attribute.call(this);
         var c = this.constructor;
 
         // define
@@ -29,7 +28,8 @@ KISSY.add('base/base', function (S, Attribute, Event) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
                 if (attrs.hasOwnProperty(attr)) {
-                    //父类后加，父类不覆盖子类的相同设置
+                    // 父类后加，父类不覆盖子类的相同设置
+                    // 属性对象会 merge   a: {y:{getter:fn}}, b:{y:{value:3}}, b extends a => b {y:{value:3}}
                     host.addAttr(attr, attrs[attr], false);
                 }
             }
@@ -40,7 +40,7 @@ KISSY.add('base/base', function (S, Attribute, Event) {
         if (config) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
-                    //用户设置会调用 setter 的，但不会触发属性变化事件
+                    //用户设置会调用 setter/validator 的，但不会触发属性变化事件
                     host.__set(attr, config[attr]);
                 }
 

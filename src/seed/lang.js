@@ -194,15 +194,17 @@
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          * 稍微改改就和规范一样了 :)
+         * @param input
+         * @param {Function} filter filter function
          * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
-        clone: function(input, f) {
+        clone: function(input, filter) {
             // Let memory be an association list of pairs of objects,
             // initially empty. This is used to handle duplicate references.
             // In each pair of objects, one is called the source object
             // and the other the destination object.
             var memory = {},
-                ret = cloneInternal(input, f, memory);
+                ret = cloneInternal(input, filter, memory);
             S.each(memory, function(v) {
                 // 清理在源对象上做的标记
                 v = v.input;

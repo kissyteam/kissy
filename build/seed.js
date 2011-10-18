@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 17 17:51
+build time: Oct 18 17:38
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Oct 17 17:51
          */
         version: '1.20dev',
 
-        buildTime:'20111017175123',
+        buildTime:'20111018173828',
 
         /**
          * Returns a new object containing all of the properties of
@@ -507,15 +507,17 @@ build time: Oct 17 17:51
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          * 稍微改改就和规范一样了 :)
+         * @param input
+         * @param {Function} filter filter function
          * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
-        clone: function(input, f) {
+        clone: function(input, filter) {
             // Let memory be an association list of pairs of objects,
             // initially empty. This is used to handle duplicate references.
             // In each pair of objects, one is called the source object
             // and the other the destination object.
             var memory = {},
-                ret = cloneInternal(input, f, memory);
+                ret = cloneInternal(input, filter, memory);
             S.each(memory, function(v) {
                 // 清理在源对象上做的标记
                 v = v.input;
