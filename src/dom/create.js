@@ -17,6 +17,11 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             rhtml = /<|&#?\w+;/,
             RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
+        // help compression
+        function getElementsByTagName(el, tag) {
+            return el.getElementsByTagName(tag);
+        }
+
         S.mix(DOM, {
 
             /**
@@ -145,12 +150,13 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 DOM.query(selector).each(function(el) {
                     if (!keepData && isElementNode(el)) {
                         // 清楚事件
-                        var Event = S.require("event");
+                        var Event = S.require("event"),
+                            elChildren = getElementsByTagName(el, "*");
                         if (Event) {
-                            Event.detach(el.getElementsByTagName("*"));
+                            Event.detach(elChildren);
                             Event.detach(el);
                         }
-                        DOM.removeData(el.getElementsByTagName("*"));
+                        DOM.removeData(elChildren);
                         DOM.removeData(el);
                     }
 
@@ -223,8 +229,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     fIndex++;
                 }
             } else if (isElementNode(elem)) {
-                var elemChildren = elem.getElementsByTagName("*"),
-                    cloneChildren = clone.getElementsByTagName("*"),
+                var elemChildren = getElementsByTagName(elem, "*"),
+                    cloneChildren = getElementsByTagName(clone, "*"),
                     cIndex = 0;
                 while (elemChildren[cIndex]) {
                     if (cloneChildren[cIndex]) {
