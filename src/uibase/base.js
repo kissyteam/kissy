@@ -13,7 +13,6 @@ KISSY.add('uibase/base', function (S, Base, Node) {
         };
 
     function capitalFirst(s) {
-        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
