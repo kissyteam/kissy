@@ -67,6 +67,9 @@ History:
  - [x] bugfix anim 内存泄露
  - [+] anim 支持 window scrollTop/Left 动画
 
+ - [+] base ATTRS 支持 validator 配置，返回 false ，不设置值
+ - [+] base set/get 支持 "x.y.z" 子属性设置，要求 x 为原生简单对象 : {y:{z:xx}}
+
 
  - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
  - [x] Suggest fix: IE9 下无法更新数据
