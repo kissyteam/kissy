@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:55
+build time: Oct 19 11:16
 */
 /**
  * UIBase.Align
@@ -1247,7 +1247,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
         __renderUI:function() {
             var self = this,
-                attrs = self.__getDefAttrs(),
+                attrs = self.getAttrs(),
                 xAttr = attrs["x"],
                 yAttr = attrs["y"],
                 oriXSetter = xAttr["setter"],

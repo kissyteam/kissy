@@ -1111,18 +1111,28 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             ie = UA['ie'],
             nodeTypeIs = DOM._nodeTypeIs,
             isElementNode = DOM._isElementNode,
+            isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
             DEFAULT_DIV = doc.createElement(DIV),
             rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
-            RE_TAG = /<(\w+)/,
+            RE_TAG = /<([\w:]+)/,
             rleadingWhitespace = /^\s+/,
+            lostLeadingWhitespace = ie && ie < 9,
             rhtml = /<|&#?\w+;/,
             RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
         // help compression
         function getElementsByTagName(el, tag) {
             return el.getElementsByTagName(tag);
+        }
+
+        function cleanData(els) {
+            var Event = S.require("event");
+            if (Event) {
+                Event.detach(els);
+            }
+            DOM.removeData(els);
         }
 
         S.mix(DOM, {
@@ -1137,7 +1147,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     return DOM.clone(html);
                 }
                 var ret = null;
-                if (!S.isString(html)) {
+                if (!isString(html)) {
                     return ret;
                 }
                 if (_trim === undefined) {
@@ -1179,7 +1189,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
                     holder = (creators[tag] || creators[DIV])(html, context);
                     // ie 把前缀空白吃掉了
-                    if (ie && ie < 9 && (whitespaceMatch = html.match(rleadingWhitespace))) {
+                    if (lostLeadingWhitespace && (whitespaceMatch = html.match(rleadingWhitespace))) {
                         holder.insertBefore(context.createTextNode(whitespaceMatch[0]), holder.firstChild);
                     }
                     nodes = holder.childNodes;
@@ -1221,7 +1231,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 }
                 // getter
                 if (val === undefined) {
-                    // only gets value on element nodes
+                    // only gets value on the first of element nodes
                     if (isElementNode(el)) {
                         return el['innerHTML'];
                     } else {
@@ -1230,15 +1240,38 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    if (S.isString(val)) {
-                        val = DOM.create(val, 0, el.ownerDocument, false);
-                    }
-                    els.each(function(elem) {
-                        if (isElementNode(elem)) {
-                            DOM.empty(elem);
-                            DOM.append(val, elem, loadScripts);
+
+                    var success = false;
+
+                    // faster
+                    if (isString(val) && ! val.match(/<(?:script|style)/i) &&
+                        (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
+                        !creatorsMap[ (val.match(RE_TAG) || ["",""])[1].toLowerCase() ]) {
+
+                        try {
+                            els.each(function(elem) {
+                                if (isElementNode(elem)) {
+                                    cleanData(getElementsByTagName(elem, "*"));
+                                    elem.innerHTML = val;
+                                }
+                            });
+                            success = true;
+                        } catch(e) {
                         }
-                    });
+
+                    }
+
+                    if (!success) {
+                        if (isString(val)) {
+                            val = DOM.create(val, 0, el.ownerDocument, false);
+                        }
+                        els.each(function(elem) {
+                            if (isElementNode(elem)) {
+                                DOM.empty(elem);
+                                DOM.append(val, elem, loadScripts);
+                            }
+                        });
+                    }
                     callback && callback();
                 }
             },
@@ -1252,15 +1285,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             remove: function(selector, keepData) {
                 DOM.query(selector).each(function(el) {
                     if (!keepData && isElementNode(el)) {
-                        // 清楚事件
-                        var Event = S.require("event"),
-                            elChildren = getElementsByTagName(el, "*");
-                        if (Event) {
-                            Event.detach(elChildren);
-                            Event.detach(el);
-                        }
-                        DOM.removeData(elChildren);
-                        DOM.removeData(el);
+                        // 清楚数据
+                        var elChildren = getElementsByTagName(el, "*");
+                        cleanData(elChildren);
+                        cleanData(el);
                     }
 
                     if (el.parentNode) {
@@ -1362,6 +1390,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
             // 事件要特殊点
             if (Event) {
+                // _removeData 不需要？刚克隆出来本来就没
                 Event._removeData(dest);
                 Event._clone(src, dest);
             }
@@ -1468,9 +1497,16 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
             creatorsMap = {
                 option: 'select',
+                optgroup:'select',
+                area:'map',
+                thead:'table',
                 td: 'tr',
+                th:'tr',
                 tr: 'tbody',
                 tbody: 'table',
+                tfoot:'table',
+                caption:'table',
+                colgroup:'table',
                 col: 'colgroup',
                 legend: 'fieldset' // ie 支持，但 gecko 不支持
             };
@@ -1497,9 +1533,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             };
         }
 
+        // fix table elements
         S.mix(creators, {
-            optgroup: creators.option, // gecko 支持，但 ie 不支持
-            th: creators.td,
             thead: creators.tbody,
             tfoot: creators.tbody,
             caption: creators.tbody,
