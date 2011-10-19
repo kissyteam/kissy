@@ -210,7 +210,20 @@ KISSY.add('base/attribute', function(S, undef) {
             /**
              * Sets the value of an attribute.
              */
-            set: function(name, value) {
+            set: function(name, value, opts) {
+
+                if (S.isPlainObject(name)) {
+                    var all = name;
+                    name = 0;
+                    opts = value;
+                    for (name in all) {
+                        this.set(name, all[name], opts);
+                    }
+                    return;
+                }
+
+
+                opts = opts || {};
                 var self = this,
                     dot = ".",
                     path,
@@ -243,10 +256,11 @@ KISSY.add('base/attribute', function(S, undef) {
                 }
 
                 // check before event
-                if (false === self.__fireAttrChange('before', name, prevVal, value, fullName)) {
-                    return false;
+                if (!opts['silent']) {
+                    if (false === self.__fireAttrChange('before', name, prevVal, value, fullName)) {
+                        return false;
+                    }
                 }
-
                 // set it
                 var ret = self.__set(name, value);
 
@@ -255,8 +269,9 @@ KISSY.add('base/attribute', function(S, undef) {
                 }
 
                 // fire after event
-                self.__fireAttrChange('after', name, prevVal, getAttrVals(self)[name], fullName);
-
+                if (!opts['silent']) {
+                    self.__fireAttrChange('after', name, prevVal, getAttrVals(self)[name], fullName);
+                }
                 return self;
             },
 
@@ -271,7 +286,7 @@ KISSY.add('base/attribute', function(S, undef) {
 
             /**
              * internal use, no event involved, just set.
-             * @private
+             * @protected overriden by mvc/model
              */
             __set: function(name, value) {
                 var self = this,
