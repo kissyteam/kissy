@@ -211,15 +211,16 @@ KISSY.add('base/attribute', function(S, undef) {
              * Sets the value of an attribute.
              */
             set: function(name, value, opts) {
-
+                var ret;
                 if (S.isPlainObject(name)) {
                     var all = name;
                     name = 0;
+                    ret = true;
                     opts = value;
                     for (name in all) {
-                        this.set(name, all[name], opts);
+                        ret = ret && this.set(name, all[name], opts);
                     }
-                    return;
+                    return !!ret;
                 }
 
 
@@ -262,7 +263,7 @@ KISSY.add('base/attribute', function(S, undef) {
                     }
                 }
                 // set it
-                var ret = self.__set(name, value);
+                ret = self.__set(name, value);
 
                 if (ret === false) {
                     return ret;
@@ -275,6 +276,10 @@ KISSY.add('base/attribute', function(S, undef) {
                 return self;
             },
 
+            /**
+             * fire attribute value change
+             * @protected overridden by mvc/model
+             */
             __fireAttrChange: function(when, name, prevVal, newVal, subAttrName) {
                 return this.fire(when + capitalFirst(name) + 'Change', {
                     attrName: name,

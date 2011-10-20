@@ -2,8 +2,9 @@
  * enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/model", function(S, Base, Sync) {
+KISSY.add("mvc/model", function(S, Base, mvc) {
 
+    var blacklist = ["idAttribute","clientId","urlRoot"];
 
     function Model() {
         var self = this;
@@ -20,19 +21,38 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
         /**
          * @Array mvc/collection collections this model belonged to
          */
-        self.__collections = {};
+        self.collections = {};
     }
 
     S.extend(Model, Base, {
 
         addToCollection:function(c) {
-            this.__collections[S.stamp(c)] = c;
+            this.collections[S.stamp(c)] = c;
             this.addTarget(c);
         },
 
         removeFromCollection:function(c) {
-            delete this.__collections[S.stamp(c)];
+            delete this.collections[S.stamp(c)];
             this.removeTarget(c);
+        },
+
+        getId:function() {
+            return this.get(this.get("idAttribute"));
+        },
+
+        url:function() {
+            var c,cv,collections = this.collections;
+            for (c in collections) {
+                if (collections.hasOwnProperty(c)) {
+                    cv = collections[c];
+                    break;
+                }
+            }
+            var base = cv && cv.url() || this.get("urlRoot");
+            if (this.isNew()) {
+                return base;
+            }
+            return base + (base.charAt(base.length - 1) == '/' ? '' : '/') + encodeURIComponent(this.getId());
         },
 
         /**
@@ -40,19 +60,34 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
          */
         __set:function() {
             this.__isModified = 1;
-            Model.superclass.__set.apply(this, arguments);
+            return Model.superclass.__set.apply(this, arguments);
+        },
+
+        /**
+         * @overridden
+         */
+        __fireAttrChange: function(when, name, prevVal, newVal, subAttrName) {
+            this.fire(when + "Change", {
+                attrName: name,
+                subAttrName:subAttrName,
+                prevVal: prevVal,
+                newVal: newVal
+            });
+            return  Model.superclass.__fireAttrChange.apply(this, arguments);
         },
 
         /**
          *  action,opts,callback
          */
-        sync:Sync,
+        sync:function() {
+            mvc.sync.apply(null, arguments);
+        },
 
         /**
          * whether it is newly created
          */
         isNew:function() {
-            return !this.get(this.get("idAttribute"));
+            return !this.getId();
         },
 
         /**
@@ -65,27 +100,24 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
         /**
          * destroy this model
          * @param opts
-         * @param callback
          */
-        destroy:function(opts, callback) {
+        destroy:function(opts) {
             var self = this;
-            if (S.isFunction(opts)) {
-                opts = {};
-                callback = opts;
-            }
 
             function f(err) {
 
                 if (!err) {
-                    var lists = self.__collections;
+                    var lists = self.collections;
                     for (var l in lists) {
                         lists[l].remove(self, opts);
                         self.removeFromCollection(lists[l]);
                     }
+                    opts.success();
+                } else {
+                    opts.error(err);
                 }
-
-                if (callback) {
-                    callback(err);
+                if (opts.complete) {
+                    opts.complete(err);
                 }
 
             }
@@ -102,14 +134,10 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
         /**
          * call sycn to load
          * @param opts
-         * @param callback
          */
-        load:function(opts, callback) {
+        load:function(opts) {
             var self = this;
-            if (S.isFunction(opts)) {
-                opts = {};
-                callback = opts;
-            }
+            opts = opts || {};
 
             self.sync('read', opts, function(resp, err) {
                 if (!err) {
@@ -117,9 +145,12 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
                         self.set(self.parse(resp), opts);
                     }
                     self.__isModified = 0;
+                    opts.success(resp, err);
+                } else {
+                    opts.error(resp, err);
                 }
-                if (callback) {
-                    callback(resp, err);
+                if (opts.complete) {
+                    opts.complete(resp, err);
                 }
             });
 
@@ -134,30 +165,30 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
             return resp;
         },
 
-        save:function(opts, callback) {
+        save:function(opts) {
             var self = this;
-            if (S.isFunction(opts)) {
-                opts = {};
-                callback = opts;
-            }
             self.sync(self.isNew() ? 'create' : 'update', opts, function(resp, err) {
                 if (!err) {
                     if (resp) {
                         self.set(self.parse(resp), opts);
                     }
                     self.__isModified = 0;
+                    opts.success(resp, err);
+                } else {
+                    opts.error(resp, err);
                 }
-                if (callback) {
-                    callback(resp, err);
+                if (opts.complete) {
+                    opts.complete(resp, err);
                 }
             });
             return self;
         },
 
-        toJson:function() {
+        toJSON:function() {
             var ret = this.getAttrVals();
-            delete ret.idAttribute;
-            delete ret.clientId;
+            S.each(blacklist, function(b) {
+                delete ret[b];
+            });
             return ret;
         }
 
@@ -171,6 +202,9 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
                 valueFn:function() {
                     return S.guid("mvc-client");
                 }
+            },
+            urlRoot:{
+                value:""
             }
         }
     });
@@ -178,5 +212,5 @@ KISSY.add("mvc/model", function(S, Base, Sync) {
     return Model;
 
 }, {
-    requires:['base','./sync']
+    requires:['base','./base']
 });

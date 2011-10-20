@@ -90,6 +90,7 @@ History:
  - [*] KISSY.param/unparam 增加数组处理选项
  - [+] KISSY.getScript 支持 css 载入后调用回调
  - [+] KISSY.getScript 支持除了 ie < 9外的 error 立即回调
+ - [+] 增加 KISSY.throttle/buffer/stamp/every/some/filter/map/bind/escapeHTML/unEscapeHTML/startsWidth/endsWidth
 
 
  - [x] Loader 初步重构，拆分文件
