@@ -2,7 +2,7 @@
  * collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
+KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -18,34 +18,49 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
         return i;
     }
 
-    function Collection(models) {
-        this.models = [];
-        if (models) {
-            this.reset(models, {
-                silent:1
-            });
-        }
+    function Collection() {
+        Collection.superclass.constructor.apply(this, arguments);
     }
 
-    S.augment(Collection, Event.Target, {
+    Collection.ATTRS = {
+        model:{
+            value:Model
+        },
+        models:{
+            /**
+             * normalize model list
+             * @param models
+             */
+            setter:function(models) {
+                var prev = this.get("models");
+                this.remove(prev, {silent:1});
+                this.add(models, {silent:1});
+                return this.get("models");
+            },
+            value:[]
+        },
+        url:{value:S.noop()},
+        comparator:{}
+    };
 
+    S.extend(Collection, Base, {
         sort:function() {
-            var comparator = this.comparator;
+            var comparator = this.get("comparator");
             if (comparator) {
-                this.models.sort(function(a, b) {
+                this.get("models").sort(function(a, b) {
                     return comparator(a) - comparator(b);
                 });
             }
         },
 
         toJSON:function() {
-            return S.map(this.models, function(m) {
+            return S.map(this.get("models"), function(m) {
                 return m.toJSON();
             });
         },
 
         pluck:function(attrName) {
-            return S.map(this.models, function(m) {
+            return S.map(this.get("models"), function(m) {
                 return m.get(attrName)
             });
         },
@@ -56,9 +71,6 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
 
         parse:function(resp) {
             return resp;
-        },
-
-        url:function() {
         },
 
         /**
@@ -95,9 +107,10 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
 
         _normModel:function(model) {
             var ret = true;
-            if (!model instanceof Model) {
-                var data = model;
-                model = new (this.model)();
+            if (!(model instanceof Model)) {
+                var data = model,
+                    modelConstructor = this.get("model");
+                model = new modelConstructor();
                 ret = model.set(data, {
                     silent:1
                 });
@@ -108,23 +121,14 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
         load:function(opts) {
             var self = this;
             opts = opts || {};
-            self.sync('read', opts, function(resp, err) {
-                if (!err) {
-                    if (resp) {
-                        self.reset(self.parse(resp), opts);
-                    }
-                    if (opts.success) {
-                        opts.success(resp, err);
-                    }
-                } else {
-                    if (opts.error) {
-                        opts.error(resp, err);
-                    }
+            var success = opts.success;
+            opts.success = function(resp) {
+                if (resp) {
+                    self.set("models", self.parse(resp), opts);
                 }
-                if (opts.complete) {
-                    opts.complete(resp, err);
-                }
-            });
+                success && success.apply(this, arguments);
+            };
+            self.sync('read', opts);
             return self;
         },
 
@@ -133,6 +137,7 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
             opts = opts || {};
             model = this._normModel(model);
             if (model) {
+                model.addToCollection(self);
                 var success = opts.success;
                 opts.success = function() {
                     self.add(model, opts);
@@ -143,31 +148,15 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
             return model;
         },
 
-        reset:function(models, opts) {
-            models = models || [];
-            opts = opts || {};
-            this.remove(this.models, {silent:1});
-            this.add(models, {silent:1});
-            if (!opts['silent']) {
-                this.fire("reset");
-            }
-        },
-
-        comparator:null,
-
-        model:null,
-
         _add:function(model, opts) {
-            if (!model instanceof Model) {
-                model = this._normModel(model)
-            }
+            model = this._normModel(model);
             if (model) {
                 opts = opts || {};
-                var index = findModelIndex(this.models, model, this.comparator);
-                this.models.splice(index, 0, model);
+                var index = findModelIndex(this.get("models"), model, this.get("comparator"));
+                this.get("models").splice(index, 0, model);
                 model.addToCollection(this);
                 if (!opts['silent']) {
-                    this.fire("add", function() {
+                    this.fire("add", {
                         model:model
                     });
                 }
@@ -175,23 +164,29 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
             return model;
         },
 
+        /**
+         * not call model.destroy ,maybe model belongs to multiple collections
+         * @private
+         * @param model
+         * @param opts
+         */
         _remove:function(model, opts) {
             opts = opts || {};
-            var index = S.indexOf(this.models, model);
+            var index = S.indexOf(model, this.get("models"));
             if (index != -1) {
-                this.models.splice(index, 1);
+                this.get("models").splice(index, 1);
             }
             model.removeFromCollection(this);
             if (!opts['silent']) {
-                this.fire("remove", function() {
+                this.fire("remove", {
                     model:model
                 });
             }
         },
 
-        get:function(id) {
-            for (var i = 0; i < this.models.length; i++) {
-                var model = this.models[i];
+        getById:function(id) {
+            for (var i = 0; i < this.get("models").length; i++) {
+                var model = this.get("models")[i];
                 if (model.getId() === id) {
                     return model;
                 }
@@ -200,8 +195,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
         },
 
         getByCid:function(cid) {
-            for (var i = 0; i < this.models.length; i++) {
-                var model = this.models[i];
+            for (var i = 0; i < this.get("models").length; i++) {
+                var model = this.get("models")[i];
                 if (model.get("clientId") === cid) {
                     return model;
                 }
@@ -214,5 +209,5 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc) {
     return Collection;
 
 }, {
-    requires:['event','./model','./base']
+    requires:['event','./model','./base','base']
 });

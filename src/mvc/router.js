@@ -1,4 +1,8 @@
-KISSY.add('mvc/router', function(S, Event) {
+/**
+ * simple hash router to get path parameter and query parameter
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('mvc/router', function(S, Event, Base) {
     var queryReg = /\?(.*)/;
     var escapeRegExp = /[-[\]{}()+?.,\\^$|#\s]/g;
     var grammar = /(:([\w\d]+))|(\*([\w\d]+))/g;
@@ -9,7 +13,7 @@ KISSY.add('mvc/router', function(S, Event) {
         var m,
             ret = {};
         if (m = path.match(queryReg)) {
-            var queryStr = m[1];
+            var queryStr = S.unEscapeHTML(m[1]);
             return S.unparam(queryStr);
         }
         return ret;
@@ -20,21 +24,23 @@ KISSY.add('mvc/router', function(S, Event) {
         var fullPath = path;
         path = fullPath.replace(queryReg, "");
         S.each(routeRegs, function(desc) {
+            //debugger
             var reg = desc.reg,
                 paramNames = desc.paramNames,
                 m,
                 name = desc.name,
                 callback = desc.callback;
             if (m = path.match(reg)) {
+                //debugger
+                // match all result item shift out
                 m.shift();
                 var params = {};
                 S.each(m, function(sm, i) {
                     params[paramNames[i]] = sm;
                 });
                 var query = getQuery(fullPath);
-                m.push(query);
-                callback.apply(self, m);
-                this.fire(name, {
+                callback.apply(self, [params,query]);
+                self.fire(name, {
                     params:params,
                     query:query
                 });
@@ -53,18 +59,21 @@ KISSY.add('mvc/router', function(S, Event) {
         var name = str,
             paramNames = [];
         // escape keyword from regexp
-        str = str.replace(escapeRegExp, function(m) {
-            return "\\" + m;
-        });
-        str.replace(grammar, function(m, g1, g2, g3, g4) {
-            // :name
-            if (g2) {
-                return "([^/]+)";
-            } else if (g4) {
-                return "(.*)";
-            }
-            paramNames.push(g2 || g4);
-        });
+        str = str.replace(escapeRegExp,
+            function(m) {
+                return "\\" + m;
+            }).replace(grammar, function(m, g1, g2, g3, g4) {
+                paramNames.push(g2 || g4);
+                // :name
+                if (g2) {
+                    return "([^/]+)";
+                }
+                // *name
+                else if (g4) {
+                    return "(.*)";
+                }
+
+            });
         return {
             name:name,
             paramNames:paramNames,
@@ -81,22 +90,38 @@ KISSY.add('mvc/router', function(S, Event) {
         }
     }
 
-    function Router(routes) {
+    function Router() {
+        Router.superclass.constructor.apply(this, arguments);
         this.__routerMap = {};
-        if (this['routes']) {
-            this.addRoutes(this['routes']);
-        }
-        if (routes) {
-            this.addRoutes(routes);
-        }
+        this.on("afterRoutesChange", this._afterRoutesChange, this);
+        this._afterRoutesChange({
+            newVal:this.get("routes")
+        });
     }
+
+
+    Router.ATTRS = {
+        /**
+         * {
+         * path:callback
+         * }
+         */
+        routes:{
+
+        }
+    };
 
     function hashChange() {
         matchRoute(this, loc.hash.replace(hashPrefix, ""), this.__routerMap);
     }
 
 
-    S.augment(Router, Event.Target, {
+    S.extend(Router, Base, {
+
+        _afterRoutesChange:function(e) {
+            this.__routerMap = {};
+            this.addRoutes(e.newVal);
+        },
         /**
          *
          * @param routes
@@ -105,7 +130,7 @@ KISSY.add('mvc/router', function(S, Event) {
          *         }
          */
         addRoutes:function(routes) {
-            var self;
+            var self = this;
             S.each(routes, function(callback, name) {
                 self.__routerMap[name] = transformRouterReg(name, normFn(self, callback));
             });
@@ -120,6 +145,8 @@ KISSY.add('mvc/router', function(S, Event) {
         }
     });
 
+    return Router;
+
 }, {
-    requires:['event']
+    requires:['event','base']
 });

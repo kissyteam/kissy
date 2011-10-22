@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 19 11:16
+build time: Oct 22 16:00
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Oct 19 11:16
          */
         version: '1.20dev',
 
-        buildTime:'20111019111636',
+        buildTime:'20111022160007',
 
         /**
          * Returns a new object containing all of the properties of
@@ -12358,7 +12358,24 @@ KISSY.add('base/attribute', function(S, undef) {
             /**
              * Sets the value of an attribute.
              */
-            set: function(name, value) {
+            set: function(name, value, opts) {
+                var ret;
+                if (S.isPlainObject(name)) {
+                    var all = name;
+                    name = 0;
+                    ret = true;
+                    opts = value;
+                    for (name in all) {
+                        ret = this.set(name, all[name], opts);
+                        if (ret === false) {
+                            return ret;
+                        }
+                    }
+                    return ret;
+                }
+
+
+                opts = opts || {};
                 var self = this,
                     dot = ".",
                     path,
@@ -12391,23 +12408,29 @@ KISSY.add('base/attribute', function(S, undef) {
                 }
 
                 // check before event
-                if (false === self.__fireAttrChange('before', name, prevVal, value, fullName)) {
-                    return false;
+                if (!opts['silent']) {
+                    if (false === self.__fireAttrChange('before', name, prevVal, value, fullName)) {
+                        return false;
+                    }
                 }
-
                 // set it
-                var ret = self.__set(name, value);
+                ret = self.__set(name, value);
 
                 if (ret === false) {
                     return ret;
                 }
 
                 // fire after event
-                self.__fireAttrChange('after', name, prevVal, getAttrVals(self)[name], fullName);
-
+                if (!opts['silent']) {
+                    self.__fireAttrChange('after', name, prevVal, getAttrVals(self)[name], fullName);
+                }
                 return self;
             },
 
+            /**
+             * fire attribute value change
+             * @protected overridden by mvc/model
+             */
             __fireAttrChange: function(when, name, prevVal, newVal, subAttrName) {
                 return this.fire(when + capitalFirst(name) + 'Change', {
                     attrName: name,
@@ -12419,7 +12442,7 @@ KISSY.add('base/attribute', function(S, undef) {
 
             /**
              * internal use, no event involved, just set.
-             * @private
+             * @protected overriden by mvc/model
              */
             __set: function(name, value) {
                 var self = this,

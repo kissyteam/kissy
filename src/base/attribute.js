@@ -49,6 +49,7 @@ KISSY.add('base/attribute', function(S, undef) {
          attrName: {
          getter: function,
          setter: function,
+         // 注意：只能是普通对象以及系统内置类型，而不能是 new Xx()，否则用 valueFn 替代
          value: v, // default value
          valueFn: function
          }
@@ -218,9 +219,12 @@ KISSY.add('base/attribute', function(S, undef) {
                     ret = true;
                     opts = value;
                     for (name in all) {
-                        ret = ret && this.set(name, all[name], opts);
+                        ret = this.set(name, all[name], opts);
+                        if (ret === false) {
+                            return ret;
+                        }
                     }
-                    return !!ret;
+                    return ret;
                 }
 
 

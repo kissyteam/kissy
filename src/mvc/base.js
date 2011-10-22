@@ -2,7 +2,7 @@
  * mvc base
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/sync", function(S, sync) {
+KISSY.add("mvc/base", function(S, sync) {
     return {
         sync:sync
     };

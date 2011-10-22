@@ -4,7 +4,7 @@
  */
 KISSY.add("mvc/model", function(S, Base, mvc) {
 
-    var blacklist = ["idAttribute","clientId","urlRoot"];
+    var blacklist = ["idAttribute","clientId","urlRoot","url"];
 
     function Model() {
         var self = this;
@@ -40,20 +40,6 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             return this.get(this.get("idAttribute"));
         },
 
-        url:function() {
-            var c,cv,collections = this.collections;
-            for (c in collections) {
-                if (collections.hasOwnProperty(c)) {
-                    cv = collections[c];
-                    break;
-                }
-            }
-            var base = cv && cv.url() || this.get("urlRoot");
-            if (this.isNew()) {
-                return base;
-            }
-            return base + (base.charAt(base.length - 1) == '/' ? '' : '/') + encodeURIComponent(this.getId());
-        },
 
         /**
          * @override
@@ -80,7 +66,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
          *  action,opts,callback
          */
         sync:function() {
-            mvc.sync.apply(null, arguments);
+            mvc.sync.apply(this, arguments);
         },
 
         /**
@@ -94,7 +80,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
          * whether has been modified since last save
          */
         isModified:function() {
-            return this.isNew() || this.__isModified;
+            return !!(this.isNew() || this.__isModified);
         },
 
         /**
@@ -103,29 +89,23 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
          */
         destroy:function(opts) {
             var self = this;
-
-            function f(err) {
-
-                if (!err) {
-                    var lists = self.collections;
-                    for (var l in lists) {
-                        lists[l].remove(self, opts);
-                        self.removeFromCollection(lists[l]);
-                    }
-                    opts.success();
-                } else {
-                    opts.error(err);
+            opts = opts || {};
+            var success = opts.success;
+            opts.success = function(resp) {
+                var lists = self.collections;
+                if (resp) {
+                    self.set(resp, opts);
                 }
-                if (opts.complete) {
-                    opts.complete(err);
+                for (var l in lists) {
+                    lists[l].remove(self, opts);
+                    self.removeFromCollection(lists[l]);
                 }
-
-            }
-
+                success && success.apply(this, arguments);
+            };
             if (opts['delete']) {
-                self.sync('delete', opts, f);
+                self.sync('delete', opts);
             } else {
-                f();
+                opts.success();
             }
 
             return self;
@@ -138,22 +118,15 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         load:function(opts) {
             var self = this;
             opts = opts || {};
-
-            self.sync('read', opts, function(resp, err) {
-                if (!err) {
-                    if (resp) {
-                        self.set(self.parse(resp), opts);
-                    }
-                    self.__isModified = 0;
-                    opts.success(resp, err);
-                } else {
-                    opts.error(resp, err);
+            var success = opts.success;
+            opts.success = function(resp) {
+                if (resp) {
+                    self.set(self.parse(resp), opts);
                 }
-                if (opts.complete) {
-                    opts.complete(resp, err);
-                }
-            });
-
+                self.__isModified = 0;
+                success && success.apply(this, arguments);
+            };
+            self.sync('read', opts);
             return self;
         },
 
@@ -167,20 +140,15 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
 
         save:function(opts) {
             var self = this;
-            self.sync(self.isNew() ? 'create' : 'update', opts, function(resp, err) {
-                if (!err) {
-                    if (resp) {
-                        self.set(self.parse(resp), opts);
-                    }
-                    self.__isModified = 0;
-                    opts.success(resp, err);
-                } else {
-                    opts.error(resp, err);
+            var success = opts.success;
+            opts.success = function(resp) {
+                if (resp) {
+                    self.set(self.parse(resp), opts);
                 }
-                if (opts.complete) {
-                    opts.complete(resp, err);
-                }
-            });
+                self.__isModified = 0;
+                success && success.apply(this, arguments);
+            };
+            self.sync(self.isNew() ? 'create' : 'update', opts);
             return self;
         },
 
@@ -197,17 +165,49 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             idAttribute:{
                 value:'id'
             },
-
             clientId:{
                 valueFn:function() {
                     return S.guid("mvc-client");
                 }
+            },
+            url:{
+                value:url
             },
             urlRoot:{
                 value:""
             }
         }
     });
+
+    function getUrl(o) {
+        var u;
+        if (o && (u = o.get("url"))) {
+            if (S.isString(u)) {
+                return u;
+            }
+            return u.call(o);
+        }
+        return u;
+    }
+
+    function url() {
+        var c,
+            cv,
+            collections = this.collections;
+        for (c in collections) {
+            if (collections.hasOwnProperty(c)) {
+                cv = collections[c];
+                break;
+            }
+        }
+        var base = getUrl(cv) || this.get("urlRoot");
+        if (this.isNew()) {
+            return base;
+        }
+        base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
+        return base + encodeURIComponent(this.getId()) + "/";
+    }
+
 
     return Model;
 
