@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+    .note {
+        border: 1px solid red;
+    }
+</style>
+</head>
+<body>
+
+<h1 style="width:400px;margin: 10px auto;">KISSY NoteBook</h1>
+
+<div id="list">
+    <!--笔记列表容器-->
+    <div class="dataList">
+
+    </div>
+
+    <div>
+        Recent Changed/Created/Deleted Note @ <span class="statistic"></span>
+    </div>
+
+</div>
+
+<!--编辑笔记界面容器-->
+<div id="edit" style="display:none">
+</div>
+
+
+<!-- 单个笔记的模板 -->
+<script type="template" id="noteTpl">
+    <p>{{title}} : {{time}}</p>
+</script>
+
+<!--笔记列表的模板-->
+<script type="template" id="listTpl">
+    <button class="newNote">new</button>
+    {{#each list as l}}
+    <div id='{{l.id}}' class='note'>
+        <p>{{l.title}} @ {{l.time}}</p>
+        <button class="edit">edit/view</button>
+        <button class="delete">delete</button>
+    </div>
+    {{/each}}
+</script>
+
+<!--编辑笔记界面的模板-->
+<script type="template" id="detailTpl">
+    <p>title：<input class='title' value='{{title}}'/></p>
+    <p>content:<textarea style="width:200px;height:200px;" class="content">{{content}}</textarea></p>
+    <button class="submit">submit</button>
+</script>
+
+
+<script
+src = "../../build/kissy.js" ></script>
+<script src="model.js"></script>
+<script src="sync.js"></script>
+<script src="base.js"></script>
+<script src="collection.js"></script>
+<script src="router.js"></script>
+<script src="view.js"></script>
+<script src="../mvc.js"></script>
+<script src="demo/note.js"></script>
+</body>
+</html>

@@ -19,7 +19,6 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         return ret;
     }
 
-
     function matchRoute(self, path, routeRegs) {
         var fullPath = path;
         path = fullPath.replace(queryReg, "");

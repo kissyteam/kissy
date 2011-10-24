@@ -12,10 +12,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         /**
          * should bubble to its collections
          */
-        self.publish("beforeChange", {
-            bubbles:1
-        });
-        self.publish("afterChange", {
+        self.publish("*Change", {
             bubbles:1
         });
         /**
@@ -47,19 +44,6 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         __set:function() {
             this.__isModified = 1;
             return Model.superclass.__set.apply(this, arguments);
-        },
-
-        /**
-         * @overridden
-         */
-        __fireAttrChange: function(when, name, prevVal, newVal, subAttrName) {
-            this.fire(when + "Change", {
-                attrName: name,
-                subAttrName:subAttrName,
-                prevVal: prevVal,
-                newVal: newVal
-            });
-            return  Model.superclass.__fireAttrChange.apply(this, arguments);
         },
 
         /**
@@ -140,6 +124,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
 
         save:function(opts) {
             var self = this;
+            opts = opts || {};
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
@@ -207,7 +192,6 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
         return base + encodeURIComponent(this.getId()) + "/";
     }
-
 
     return Model;
 

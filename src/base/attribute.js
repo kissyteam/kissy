@@ -22,6 +22,21 @@ KISSY.add('base/attribute', function(S, undef) {
         return method;
     }
 
+
+    /**
+     * fire attribute value change
+     */
+    function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
+        attrName = attrName || name;
+        return self.fire(when + capitalFirst(name) + 'Change', {
+            attrName: attrName,
+            subAttrName:subAttrName,
+            prevVal: prevVal,
+            newVal: newVal
+        });
+    }
+
+
     /**
      *
      * @param obj
@@ -107,6 +122,67 @@ KISSY.add('base/attribute', function(S, undef) {
             }
         }
         return s;
+    }
+
+    function setInternal(self, name, value, opts, attrs) {
+        var ret;
+        opts = opts || {};
+        var dot = ".",
+            path,
+            subVal,
+            prevVal,
+            fullName = name;
+
+        if (name.indexOf(dot) !== -1) {
+            path = name.split(dot);
+            name = path.shift();
+        }
+
+        prevVal = self.get(name);
+
+        if (path) {
+            subVal = getValueByPath(prevVal, path);
+        }
+
+        // if no change, just return
+        if (!path && prevVal === value) {
+            return undefined;
+        } else if (path && subVal === value) {
+            return undefined;
+        }
+
+        if (path) {
+            var tmp = S.clone(prevVal);
+            setValueByPath(tmp, path, value);
+            value = tmp;
+        }
+
+        // check before event
+        if (!opts['silent']) {
+            if (false === __fireAttrChange(self, 'before', name, prevVal, value, fullName)) {
+                return false;
+            }
+        }
+        // set it
+        ret = self.__set(name, value);
+
+        if (ret === false) {
+            return ret;
+        }
+
+        // fire after event
+        if (!opts['silent']) {
+            __fireAttrChange(self, 'after', name, prevVal, getAttrVals(self)[name], fullName);
+            if (!attrs) {
+                __fireAttrChange(self, '', '*', prevVal, getAttrVals(self)[name], fullName, name);
+            } else {
+                attrs.push({
+                    attrName:name,
+                    subAttrName:fullName
+                });
+            }
+        }
+        return self;
     }
 
     /**
@@ -212,85 +288,34 @@ KISSY.add('base/attribute', function(S, undef) {
              * Sets the value of an attribute.
              */
             set: function(name, value, opts) {
-                var ret;
+                var ret,self = this;
                 if (S.isPlainObject(name)) {
                     var all = name;
                     name = 0;
                     ret = true;
                     opts = value;
+                    var attrs = [];
                     for (name in all) {
-                        ret = this.set(name, all[name], opts);
+                        ret = setInternal(self, name, all[name], opts, attrs);
                         if (ret === false) {
-                            return ret;
+                            break;
                         }
                     }
-                    return ret;
-                }
-
-
-                opts = opts || {};
-                var self = this,
-                    dot = ".",
-                    path,
-                    subVal,
-                    prevVal,
-                    fullName = name;
-
-                if (name.indexOf(dot) !== -1) {
-                    path = name.split(dot);
-                    name = path.shift();
-                }
-
-                prevVal = self.get(name);
-
-                if (path) {
-                    subVal = getValueByPath(prevVal, path);
-                }
-
-                // if no change, just return
-                if (!path && prevVal === value) {
-                    return;
-                } else if (path && subVal === value) {
-                    return;
-                }
-
-                if (path) {
-                    var tmp = S.clone(prevVal);
-                    setValueByPath(tmp, path, value);
-                    value = tmp;
-                }
-
-                // check before event
-                if (!opts['silent']) {
-                    if (false === self.__fireAttrChange('before', name, prevVal, value, fullName)) {
-                        return false;
+                    var attrNames = [],
+                        subAttrNames = [];
+                    for (var i = 0; i < attrs.length; i++) {
+                        attrNames.push(attrs[i].attrName);
+                        subAttrNames.push(attrs[i].subAttrName);
                     }
-                }
-                // set it
-                ret = self.__set(name, value);
-
-                if (ret === false) {
+                    if (attrNames.length) {
+                        __fireAttrChange(self, '', '*', undefined, undefined, subAttrNames, attrNames);
+                    }
                     return ret;
                 }
 
-                // fire after event
-                if (!opts['silent']) {
-                    self.__fireAttrChange('after', name, prevVal, getAttrVals(self)[name], fullName);
-                }
-                return self;
-            },
+                return setInternal(self, name, value, opts);
 
-            /**
-             * fire attribute value change
-             * @protected overridden by mvc/model
-             */
-            __fireAttrChange: function(when, name, prevVal, newVal, subAttrName) {
-                return this.fire(when + capitalFirst(name) + 'Change', {
-                    attrName: name,
-                    subAttrName:subAttrName,
-                    prevVal: prevVal,
-                    newVal: newVal
-                });
+
             },
 
             /**

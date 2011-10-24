@@ -11,10 +11,10 @@ KISSY.use("node,mvc", function(S, Node, MVC) {
         it("create works", function() {
 
             var v = new View({
-                container:"<span />"
+                el:"<span />"
             });
 
-            expect(v.get("container")[0].nodeName.toLowerCase()).toBe("span");
+            expect(v.get("el")[0].nodeName.toLowerCase()).toBe("span");
 
         });
 
@@ -37,7 +37,7 @@ KISSY.use("node,mvc", function(S, Node, MVC) {
                 });
 
 
-            var c = v.get("container");
+            var c = v.get("el");
 
             c.html("<span class='x'>1</span><span class='y'>2</span>").appendTo("body");
 

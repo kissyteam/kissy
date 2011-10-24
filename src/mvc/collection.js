@@ -20,6 +20,9 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
 
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);
+        this.on("afterModelsChange", function() {
+            this.fire("reset");
+        });
     }
 
     Collection.ATTRS = {
@@ -85,7 +88,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             var self = this,
                 ret = true;
             if (S.isArray(model)) {
-                S.each(model, function(m) {
+                var orig = [].concat(model);
+                S.each(orig, function(m) {
                     ret = ret && self._add(m, opts);
                 });
             } else {
@@ -97,10 +101,11 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         remove:function(model, opts) {
             var self = this;
             if (S.isArray(model)) {
-                S.each(model, function(m) {
+                var orig = [].concat(model);
+                S.each(orig, function(m) {
                     self._remove(m, opts);
                 });
-            } else {
+            } else if (model) {
                 self._remove(model, opts);
             }
         },
@@ -175,8 +180,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             var index = S.indexOf(model, this.get("models"));
             if (index != -1) {
                 this.get("models").splice(index, 1);
+                model.removeFromCollection(this);
             }
-            model.removeFromCollection(this);
             if (!opts['silent']) {
                 this.fire("remove", {
                     model:model
@@ -185,8 +190,9 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         },
 
         getById:function(id) {
-            for (var i = 0; i < this.get("models").length; i++) {
-                var model = this.get("models")[i];
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
                 if (model.getId() === id) {
                     return model;
                 }
@@ -195,8 +201,9 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         },
 
         getByCid:function(cid) {
-            for (var i = 0; i < this.get("models").length; i++) {
-                var model = this.get("models")[i];
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
                 if (model.get("clientId") === cid) {
                     return model;
                 }

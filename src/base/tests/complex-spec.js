@@ -118,6 +118,29 @@ KISSY.use("base", function(S, Base) {
             expect(ret).toEqual([4,3,4,4]);
         });
 
+        it("should fire *Change once for set({})", function() {
+            function a() {
+                a.superclass.constructor.apply(this, S.makeArray(arguments));
+            }
+
+            S.extend(a, Base);
+
+            var aa = new a({y:{}}),ok = 0;
+            aa.on("*Change", function(e) {
+                expect(e.attrName).toEqual(["x","y"]);
+                expect(e.subAttrName).toEqual(["x","y.z"]);
+                ok ++;
+            });
+            aa.set({
+                x:1,
+                "y.z":1
+            });
+
+            expect(aa.get("x")).toBe(1);
+            expect(aa.get("y.z")).toBe(1);
+            expect(ok).toBe(1);
+        });
+
 
     });
 });

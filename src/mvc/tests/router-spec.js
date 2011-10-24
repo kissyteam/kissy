@@ -10,7 +10,6 @@ KISSY.use('mvc', function(S, MVC) {
 
         it("works", function() {
 
-            location.hash = "";
 
             var ok = 0,
                 ok2 = 0;
@@ -20,13 +19,13 @@ KISSY.use('mvc', function(S, MVC) {
                         expect(paths.path).toBe("what/item");
                         expect(query.item1).toBe("1");
                         expect(query.item2).toBe("2");
-                        ok = 1;
+                        ok ++;
                     },
                     "/detail/:id":function(paths, query) {
                         expect(paths.id).toBe("9999");
                         expect(query.item1).toBe("1");
                         expect(query.item2).toBe("2");
-                        ok2 = 1;
+                        ok2 ++;
                     }
                 }
             });
@@ -35,13 +34,17 @@ KISSY.use('mvc', function(S, MVC) {
 
             r.navigate("/list/what/item?item1=1&item2=2");
 
-            setTimeout(function() {
+            waits(1000);
 
+            runs(function() {
                 r.navigate("/detail/9999?item1=1&item2=2");
-            }, 1000);
+            });
 
-            waitsFor(function() {
-                return ok && ok2;
+            waits(4000);
+
+            runs(function() {
+                expect(ok).toBe(1);
+                expect(ok2).toBe(1);
             });
         });
     });

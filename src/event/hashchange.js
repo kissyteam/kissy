@@ -26,7 +26,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             },
             timer,
 
-            lastHash = getHash(),
+            lastHash,
 
             poll = function () {
                 var hash = getHash();
@@ -148,6 +148,9 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 if (this !== win) {
                     return;
                 }
+                // 第一次启动 hashchange 时取一下，不能类库载入后立即取
+                // 防止类库嵌入后，手动修改过 hash，
+                lastHash = getHash();
                 // 不用注册 dom 事件
                 setup();
             },

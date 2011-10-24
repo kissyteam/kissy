@@ -1,5 +1,5 @@
 /**
- * view for kissy mvc : event delegation,container generator
+ * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/view", function(S, Node, Base) {
@@ -24,13 +24,11 @@ KISSY.add("mvc/view", function(S, Node, Base) {
     }
 
     View.ATTRS = {
-        container:{
-            valueFn:function() {
-                return $("<div />");
-            },
-            setter:function(s) {
+        el:{
+            getter:function(s) {
                 if (S.isString(s)) {
                     s = $(s);
+                    this.__set("el", s);
                 }
                 return s;
             }
@@ -60,23 +58,23 @@ KISSY.add("mvc/view", function(S, Node, Base) {
         },
 
         _removeEvents:function(events) {
-            var container = this.get("container");
+            var el = this.get("el");
             for (var selector in events) {
                 var event = events[selector];
                 for (var type in event) {
-                    var callback = event[type];
-                    container.undelegate(type, selector, callback, this);
+                    var callback = normFn(this, event[type]);
+                    el.undelegate(type, selector, callback, this);
                 }
             }
         },
 
         _addEvents:function(events) {
-            var container = this.get("container");
+            var el = this.get("el");
             for (var selector in events) {
                 var event = events[selector];
                 for (var type in event) {
-                    var callback = event[type];
-                    container.delegate(type, selector, callback, this);
+                    var callback = normFn(this, event[type]);
+                    el.delegate(type, selector, callback, this);
                 }
             }
         },
@@ -87,8 +85,8 @@ KISSY.add("mvc/view", function(S, Node, Base) {
             return this;
         },
 
-        remove:function() {
-            this.get("container").remove();
+        destroy:function() {
+            this.get("el").remove();
         }
 
     });

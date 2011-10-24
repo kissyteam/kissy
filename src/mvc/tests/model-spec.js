@@ -64,6 +64,7 @@ KISSY.use("mvc", function(S, MVC) {
                 expect(model.get("x")).toBe(5);
             });
 
+
             runs(function() {
                 model.save({
                     success:function() {
@@ -122,21 +123,17 @@ KISSY.use("mvc", function(S, MVC) {
 
         describe("events", function() {
 
-            it("should fire afterChange/beforeChange", function() {
+            it("should fire *Change", function() {
                 var model = new Model();
-                var beforeChange = [],
-                    afterChange = [];
-                model.on("beforeChange", function(e) {
-                    beforeChange.push(e.attrName);
-                });
-                model.on("afterChange", function(e) {
+                var afterChange = [];
+
+                model.on("*Change", function(e) {
                     afterChange.push(e.attrName);
                 });
                 expect(model.isNew()).toBe(true);
                 expect(model.isModified()).toBe(true);
                 model.set("x", 1);
                 model.set("y", 1);
-                expect(beforeChange).toEqual(["x","y"]);
                 expect(afterChange).toEqual(["x","y"]);
             });
 
