@@ -25,6 +25,7 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
         return -1;
     }
 
+    var STORE;
     /*
      覆盖全局的同步函数
      */
@@ -32,7 +33,7 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
         S.log(method);
         var self = this;
         var index;
-        var store = window.localStorage ? window.localStorage.getItem(KEY) || [] : [];
+        var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
         if (S.isString(store)) {
             store = S.JSON.parse(store);
         }
@@ -76,6 +77,8 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
         if (method != 'read' && window.localStorage) {
             window.localStorage.setItem(KEY, S.JSON.stringify(store));
         }
+
+        STORE = store;
 
         if (error) {
             if (options.error) {
