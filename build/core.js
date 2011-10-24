@@ -3376,6 +3376,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
             // 默认仅支持最简单的 tag.cls 或 #id 形式
             if (isString(filter) &&
+                (filter = S.trim(filter)) &&
                 (match = REG_QUERY.exec(filter))) {
                 id = match[1];
                 tag = match[2];
@@ -5126,6 +5127,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 if (this !== win) {
                     return;
                 }
+                // 第一次启动 hashchange 时取一下，不能类库载入后立即取
+                // 防止类库嵌入后，手动修改过 hash，
                 lastHash = getHash();
                 // 不用注册 dom 事件
                 setup();
