@@ -13,7 +13,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
      * @constructor
      */
     function NodeList(html, props, ownerDocument) {
-        var self = this,domNode;
+        var self = this,
+            domNode;
 
         if (!(self instanceof NodeList)) {
             return new NodeList(html, props, ownerDocument);
@@ -104,14 +105,14 @@ KISSY.add("node/base", function(S, DOM, undefined) {
          * @param context An optional context to apply the function with Default context is the current NodeList instance
          */
         each: function(fn, context) {
-            var self = this,len = self.length, i = 0, node;
+            var self = this;
 
-            for (node = new NodeList(self[0]);
-                 i < len && fn.call(context || node, node, i, self) !== false;
-                 node = new NodeList(self[++i])) {
-            }
+            S.each(self, function(n, i) {
+                n = new NodeList(n);
+                return fn.call(context || n, n, i, self);
+            });
 
-            return this;
+            return self;
         },
         /**
          * Retrieves the DOMNode.
