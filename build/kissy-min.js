@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 24 18:48
+build time: Oct 25 15:18
 */
 (function(a,d){var o=this,h={mix:function(b,c,f,j,n){if(!c||!b)return b;if(f===d)f=true;var k,l,m;if(j&&(m=j.length))for(k=0;k<m;k++){l=j[k];l in c&&g(l,b,c,f,n)}else for(l in c)g(l,b,c,f,n);return b}},g=function(b,c,f,j,n){if(j||!(b in c)){var k=c[b],l=f[b];if(k!==l)if(n&&l&&(a.isArray(l)||a.isPlainObject(l))){f=k&&(a.isArray(k)||a.isPlainObject(k))?k:a.isArray(l)?[]:{};c[b]=a.mix(f,l,j,d,true)}else if(l!==d)c[b]=f[b]}},e=o&&o[a]||{},i=0;o=e.__HOST||(e.__HOST=o||{});a=o[a]=h.mix(e,h);a.mix(a,{__APP_MEMBERS:["namespace"],
 __APP_INIT_METHODS:["__init"],version:"1.20dev",buildTime:"20111022160007",merge:function(){var b={},c,f=arguments.length;for(c=0;c<f;c++)a.mix(b,arguments[c]);return b},augment:function(){var b=a.makeArray(arguments),c=b.length-2,f=b[0],j=b[c],n=b[c+1],k=1;if(!a.isArray(n)){j=n;n=d;c++}if(!a.isBoolean(j)){j=d;c++}for(;k<c;k++)a.mix(f.prototype,b[k].prototype||b[k],j,n);return f},extend:function(b,c,f,j){if(!c||!b)return b;var n=Object.create?function(m,v){return Object.create(m,{constructor:{value:v}})}:

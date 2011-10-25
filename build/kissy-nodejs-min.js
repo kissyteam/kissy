@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 24 18:48
+build time: Oct 25 15:18
 */
 (function(){var a=require("jsdom").jsdom;document=a("<html><head></head><body></body></html>");window=document.createWindow();location=window.location;navigator=window.navigator;KISSY={__HOST:window};exports.KISSY=window.KISSY=KISSY})();
 (function(a){function e(d){for(var g=0;g<d.length;g++)if(d[g].match(/\/$/))d[g]+="index";return d}function n(d,g){if(!g)return g;if(a.isArray(g)){for(var b=0;b<g.length;b++)g[b]=n(d,g[b]);return g}if(g.lastIndexOf("../",0)==0||g.lastIndexOf("./",0)==0){b="";var c;if((c=d.lastIndexOf("/"))!=-1)b=d.substring(0,c+1);return i.normalize(b+g)}else return g.indexOf("./")!=-1||g.indexOf("../")!=-1?i.normalize(g):g}var i=require("path");a.Env={};a.Env.mods={};var h=a.Env.mods;(function(d,g){for(var b in g)if(g.hasOwnProperty(b))d[b]=

@@ -18,9 +18,6 @@
         // The functions to execute on DOM ready.
         readyList = [],
 
-        // Has the ready events already been bound?
-        readyBound = false,
-
         // The number of poll times.
         POLL_RETRYS = 500,
 
@@ -88,10 +85,6 @@
          * @return {KISSY}
          */
         ready: function(fn) {
-            // Attach the listeners
-            if (!readyBound) {
-                _bindReady();
-            }
 
             // If the DOM is already ready
             if (isReady) {
@@ -138,9 +131,6 @@
             fire = function() {
                 _fireReady();
             };
-
-        // Set to true once it runs
-        readyBound = true;
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
@@ -232,5 +222,13 @@
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
+
+    /**
+     * bind on start
+     * in case when you bind but the DOMContentLoaded has triggered
+     * then you has to wait onload
+     * worst case no callback at all
+     */
+    _bindReady();
 
 })(KISSY, undefined);
