@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 22 18:37
+build time: Oct 25 11:49
 */
 /**
  * mvc base
@@ -35,6 +35,9 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
 
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);
+        this.on("afterModelsChange", function() {
+            this.fire("reset");
+        });
     }
 
     Collection.ATTRS = {
@@ -100,7 +103,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             var self = this,
                 ret = true;
             if (S.isArray(model)) {
-                S.each(model, function(m) {
+                var orig = [].concat(model);
+                S.each(orig, function(m) {
                     ret = ret && self._add(m, opts);
                 });
             } else {
@@ -112,12 +116,17 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         remove:function(model, opts) {
             var self = this;
             if (S.isArray(model)) {
-                S.each(model, function(m) {
+                var orig = [].concat(model);
+                S.each(orig, function(m) {
                     self._remove(m, opts);
                 });
-            } else {
+            } else if (model) {
                 self._remove(model, opts);
             }
+        },
+
+        at:function(i) {
+            return this.get("models")[i];
         },
 
         _normModel:function(model) {
@@ -190,8 +199,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             var index = S.indexOf(model, this.get("models"));
             if (index != -1) {
                 this.get("models").splice(index, 1);
+                model.removeFromCollection(this);
             }
-            model.removeFromCollection(this);
             if (!opts['silent']) {
                 this.fire("remove", {
                     model:model
@@ -200,8 +209,9 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         },
 
         getById:function(id) {
-            for (var i = 0; i < this.get("models").length; i++) {
-                var model = this.get("models")[i];
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
                 if (model.getId() === id) {
                     return model;
                 }
@@ -210,8 +220,9 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         },
 
         getByCid:function(cid) {
-            for (var i = 0; i < this.get("models").length; i++) {
-                var model = this.get("models")[i];
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
                 if (model.get("clientId") === cid) {
                     return model;
                 }
@@ -239,10 +250,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         /**
          * should bubble to its collections
          */
-        self.publish("beforeChange", {
-            bubbles:1
-        });
-        self.publish("afterChange", {
+        self.publish("*Change", {
             bubbles:1
         });
         /**
@@ -274,19 +282,6 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         __set:function() {
             this.__isModified = 1;
             return Model.superclass.__set.apply(this, arguments);
-        },
-
-        /**
-         * @overridden
-         */
-        __fireAttrChange: function(when, name, prevVal, newVal, subAttrName) {
-            this.fire(when + "Change", {
-                attrName: name,
-                subAttrName:subAttrName,
-                prevVal: prevVal,
-                newVal: newVal
-            });
-            return  Model.superclass.__fireAttrChange.apply(this, arguments);
         },
 
         /**
@@ -327,9 +322,10 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                     lists[l].remove(self, opts);
                     self.removeFromCollection(lists[l]);
                 }
+                self.fire("destroy");
                 success && success.apply(this, arguments);
             };
-            if (opts['delete']) {
+            if (!self.isNew() && opts['delete']) {
                 self.sync('delete', opts);
             } else {
                 opts.success();
@@ -367,6 +363,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
 
         save:function(opts) {
             var self = this;
+            opts = opts || {};
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
@@ -435,7 +432,6 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         return base + encodeURIComponent(this.getId()) + "/";
     }
 
-
     return Model;
 
 }, {
@@ -460,7 +456,6 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         }
         return ret;
     }
-
 
     function matchRoute(self, path, routeRegs) {
         var fullPath = path;
@@ -629,7 +624,7 @@ KISSY.add("mvc/sync", function(S, io) {
 }, {
     requires:['ajax']
 });/**
- * view for kissy mvc : event delegation,container generator
+ * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/view", function(S, Node, Base) {
@@ -654,13 +649,12 @@ KISSY.add("mvc/view", function(S, Node, Base) {
     }
 
     View.ATTRS = {
-        container:{
-            valueFn:function() {
-                return $("<div />");
-            },
-            setter:function(s) {
+        el:{
+            value:"<div />",
+            getter:function(s) {
                 if (S.isString(s)) {
                     s = $(s);
+                    this.__set("el", s);
                 }
                 return s;
             }
@@ -690,23 +684,23 @@ KISSY.add("mvc/view", function(S, Node, Base) {
         },
 
         _removeEvents:function(events) {
-            var container = this.get("container");
+            var el = this.get("el");
             for (var selector in events) {
                 var event = events[selector];
                 for (var type in event) {
-                    var callback = event[type];
-                    container.undelegate(type, selector, callback, this);
+                    var callback = normFn(this, event[type]);
+                    el.undelegate(type, selector, callback, this);
                 }
             }
         },
 
         _addEvents:function(events) {
-            var container = this.get("container");
+            var el = this.get("el");
             for (var selector in events) {
                 var event = events[selector];
                 for (var type in event) {
-                    var callback = event[type];
-                    container.delegate(type, selector, callback, this);
+                    var callback = normFn(this, event[type]);
+                    el.delegate(type, selector, callback, this);
                 }
             }
         },
@@ -717,8 +711,8 @@ KISSY.add("mvc/view", function(S, Node, Base) {
             return this;
         },
 
-        remove:function() {
-            this.get("container").remove();
+        destroy:function() {
+            this.get("el").remove();
         }
 
     });

@@ -25,6 +25,7 @@ KISSY.add("mvc/view", function(S, Node, Base) {
 
     View.ATTRS = {
         el:{
+            value:"<div />",
             getter:function(s) {
                 if (S.isString(s)) {
                     s = $(s);

@@ -84,9 +84,10 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                     lists[l].remove(self, opts);
                     self.removeFromCollection(lists[l]);
                 }
+                self.fire("destroy");
                 success && success.apply(this, arguments);
             };
-            if (opts['delete']) {
+            if (!self.isNew() && opts['delete']) {
                 self.sync('delete', opts);
             } else {
                 opts.success();

@@ -156,7 +156,12 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
      单个笔记view
      */
     function NoteView() {
-        NoteView.superclass.constructor.apply(this, arguments);
+        var self = this;
+        NoteView.superclass.constructor.apply(self, arguments);
+        // 任何属性发生变化就重新渲染，简化处理
+        self.get("note").on("*Change", self.render, self);
+        // 模型销毁时，销毁 view
+        self.get("note").on("destroy", self.destroy, self);
     }
 
     S.extend(NoteView, View, {
@@ -164,8 +169,17 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
          * 根据模板以及数据渲染单个笔记
          */
         render:function() {
-            this.get("el").addClass("note");
-            this.get("el").html(noteTpl.render(this.get("note").getId()));
+            var self = this;
+            self.get("el").addClass("note");
+            self.get("el").html(noteTpl.render(self.get("note").toJSON()));
+            return self;
+        },
+
+        /**
+         * 销毁单个笔记view
+         */
+        destroy:function() {
+            this.get("el").remove();
         }
     });
 
@@ -188,12 +202,10 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
                 content:el.one(".content").val()
             });
             /**
-             * 保存，并通知对应的 collection ，collection 通知 collection view加入
+             * 通知外部模块
              */
-            note.save({
-                success:function() {
-                    router.navigate("/");
-                }
+            this.fire("submit", {
+                note:note
             });
         },
         /**
@@ -230,42 +242,46 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
         NoteCollectionView.superclass.constructor.apply(this, arguments);
 
         var self = this,
+            statistic,
+            dataList,
             el = self.get("el");
 
-        self.dataList = el.one(".dataList");
-        self.statistic = el.one(".statistic");
+        dataList = self.dataList = el.one(".dataList");
+        statistic = self.statistic = el.one(".statistic");
         var notes = this.get("notes");
 
         /**
          * 监控笔记集合（包括各个笔记）的所有变化
          */
         notes.on("*Change", function(e) {
-            self.statistic.html(e.target.get("title"));
+            statistic.html(e.target.get("title"));
         });
         notes.on("add remove", function(e) {
-            self.statistic.html(e.model.get("title"));
+            statistic.html(e.model.get("title"));
         });
 
         /**
-         * 集合删除时，同步到 dom
+         * 集合添加时，同步到 dom
          */
         notes.on("add", function(e) {
-            self.dataList.appendChild(new NoteView({
-                model:e.model
+            dataList.append(new NoteView({
+                note:e.model
             }).render().get("el"))
-        });
-
-        notes.on("remove", function(e) {
-            $("#" + e.model.get("id")).remove();
         });
 
         /**
          * 设置整体时，同步到 dom
          */
-        notes.on("reset", function(e) {
-            self.dataList.html(listTpl.render({list:notes.toJSON()}));
-            var models = notes.get("models");
-            self.statistic.html(models && models[0] && models[models.length - 1].get("title") || "");
+        notes.on("reset", function() {
+            dataList.html(listTpl.render({list:notes.toJSON()}));
+            var list = dataList.all(".note");
+            list.each(function(l, i) {
+                // 初始化 NoteView ，修改时该 note 时局部更新
+                new NoteView({
+                    note:notes.at(i),
+                    el:l
+                })
+            });
         });
     }
 
@@ -322,26 +338,50 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
      * 应用 router
      */
     function NoteRouter() {
-        NoteRouter.superclass.constructor.apply(this, arguments);
-        this.notesView = new NoteCollectionView({
+        var self = this;
+        NoteRouter.superclass.constructor.apply(self, arguments);
+        self.notesView = new NoteCollectionView({
             notes:new NoteCollection()
         });
-        this.editView = new NoteEditView();
+        self.editView = new NoteEditView();
+        // 初始载入全部笔记
+        self.notesView.get("notes").load();
+        self.editView.on("submit", self._onEditSubmit, self);
     }
 
 
     S.extend(NoteRouter, Router, {
 
+        _onEditSubmit:function(e) {
+            var note = e.note,
+                self = this,
+                notes = self.notesView.get("notes");
+            if (note.isNew()) {
+                // 新建
+                notes.create(note, {
+                    success:function() {
+                        self.navigate("/");
+                    }
+                });
+            } else {
+                var exits = notes.getById(note.getId());
+                exits.set(note.toJSON());
+                // 修改
+                exits.save({
+                    success:function() {
+                        self.navigate("/");
+                    }
+                });
+            }
+        },
+
         /**
-         * 初始载入笔记列表
+         * 展示笔记列表
          */
         index:function() {
             var self = this;
-            self.notesView.get("notes").load({
-                success:function() {
-                    self.editView.get("el").hide();
-                    self.notesView.get("el").show();
-                }});
+            self.editView.get("el").hide();
+            self.notesView.get("el").show();
         },
 
         /**
@@ -352,15 +392,17 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
                 id = paths.id,
                 note = new NoteModel({
                     id:id
-                });
-
+                }),
+                editView = self.editView;
+            // 载入笔记的其他信息
+            // 没的话可以直接 note=notes.getById(id)
             note.load({
                 success:function() {
                     self.notesView.get("el").hide();
-                    self.editView.set("note", note);
+                    editView.set("note", note);
                     /*根据note模型，重新渲染编辑界面*/
-                    self.editView.render();
-                    self.editView.get("el").show();
+                    editView.render();
+                    editView.get("el").show();
                 }
             });
 
@@ -370,12 +412,12 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
          * 新键笔记，弹出编辑界面
          */
         newNote:function() {
-            var self = this;
+            var self = this,
+                editView = self.editView;
             self.notesView.get("el").hide();
-            self.editView.set("note", new NoteModel());
+            editView.set("note", new NoteModel());
             /*根据note模型，重新渲染编辑界面*/
-            self.editView.render();
-            self.editView.get("el").show();
+            editView.render().get("el").show();
         }
 
     }, {

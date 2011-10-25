@@ -110,6 +110,10 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             }
         },
 
+        at:function(i) {
+            return this.get("models")[i];
+        },
+
         _normModel:function(model) {
             var ret = true;
             if (!(model instanceof Model)) {
