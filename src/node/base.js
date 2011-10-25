@@ -151,23 +151,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
     });
 
     S.mix(NodeList, {
-
-        /**
-         * enumeration of dom node type
-         */
-        ELEMENT_NODE : DOM.ELEMENT_NODE,
-        ATTRIBUTE_NODE : DOM.ATTRIBUTE_NODE,
-        TEXT_NODE:DOM.TEXT_NODE,
-        CDATA_SECTION_NODE : DOM.CDATA_SECTION_NODE,
-        ENTITY_REFERENCE_NODE: DOM.ENTITY_REFERENCE_NODE,
-        ENTITY_NODE : DOM.ENTITY_NODE,
-        PROCESSING_INSTRUCTION_NODE :DOM.PROCESSING_INSTRUCTION_NODE,
-        COMMENT_NODE : DOM.COMMENT_NODE,
-        DOCUMENT_NODE : DOM.DOCUMENT_NODE,
-        DOCUMENT_TYPE_NODE : DOM.DOCUMENT_TYPE_NODE,
-        DOCUMENT_FRAGMENT_NODE : DOM.DOCUMENT_FRAGMENT_NODE,
-        NOTATION_NODE : DOM.NOTATION_NODE,
-
         /**
          * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
          * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>选择器</a>或节点列表
@@ -201,6 +184,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return all.length ? all.slice(0, 1) : null;
         }
     });
+
+    S.mix(NodeList, DOM._NODE_TYPE);
 
     return NodeList;
 }, {

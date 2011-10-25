@@ -8,8 +8,8 @@ KISSY.add('dom/base', function(S, undefined) {
         return node && node.nodeType === val;
     }
 
-    var DOM = {
 
+    var NODE_TYPE = {
         /**
          * enumeration of dom node type
          * @type Number
@@ -25,7 +25,12 @@ KISSY.add('dom/base', function(S, undefined) {
         DOCUMENT_NODE : 9,
         DOCUMENT_TYPE_NODE : 10,
         DOCUMENT_FRAGMENT_NODE : 11,
-        NOTATION_NODE : 12,
+        NOTATION_NODE : 12
+    };
+    var DOM = {
+
+        _NODE_TYPE:NODE_TYPE,
+
 
         /**
          * 是不是 element node
@@ -65,6 +70,8 @@ KISSY.add('dom/base', function(S, undefined) {
             return e && e.nodeName.toLowerCase() === name.toLowerCase();
         }
     };
+
+    S.mix(DOM, NODE_TYPE);
 
     return DOM;
 
