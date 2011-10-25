@@ -56,6 +56,8 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
             case 'create':
                 var data = self.toJSON();
                 data.id = S.guid("note");
+                // 更新当前内存对象
+                self.setId(data.id);
                 store.push(data);
                 break;
             case 'delete':
@@ -170,7 +172,8 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
          */
         render:function() {
             var self = this;
-            self.get("el").addClass("note");
+            // dom 节点添加标志 , dom 代理事件需要
+            self.get("el").addClass("note").attr("id", self.get("note").getId());
             self.get("el").html(noteTpl.render(self.get("note").toJSON()));
             return self;
         },
@@ -305,9 +308,14 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
          */
         deleteNode:function(e) {
             var notes = this.get("notes");
-            notes.getById($(e.currentTarget).parent("div").attr("id")).destroy({
-                "delete":1
-            });
+            // 找到对应的模型销毁->触发 view 的销毁
+            notes.getById(
+                $(e.currentTarget)
+                    .parent("div")
+                    .attr("id"))
+                .destroy({
+                    "delete":1
+                });
         }
     }, {
         ATTRS:{

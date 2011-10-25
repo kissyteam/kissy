@@ -37,6 +37,9 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             return this.get(this.get("idAttribute"));
         },
 
+        setId:function(id) {
+            return this.set(this.get("idAttribute"), id);
+        },
 
         /**
          * @override
