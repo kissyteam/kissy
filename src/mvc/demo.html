@@ -12,7 +12,7 @@
 
 <h1 style="width:400px;margin: 10px auto;">KISSY NoteBook</h1>
 
-<div id="list">
+<div id="list" style="display:none">
     <!--笔记列表容器-->
     <div class="dataList">
 
@@ -28,10 +28,14 @@
 <div id="edit" style="display:none">
 </div>
 
+<div id="loading">
+    <h2 style="width:300px;margin: 100px auto;">Loading ...</h2>
+</div>
+
 
 <!-- 单个笔记的模板 -->
 <script type="template" id="noteTpl">
-    <p>{{title}} @ {{time}}</p>
+    <p>{{note.title}} @ {{note.time}}</p>
     <button class="edit">edit/view</button>
     <button class="delete">delete</button>
 </script>
@@ -39,6 +43,7 @@
 <!--笔记列表的模板-->
 <script type="template" id="listTpl">
     <button class="newNote">new</button>
+    <button class="refreshNote">refresh</button>
     {{#each list as l}}
     <div id='{{l.id}}' class='note'>
         <p>{{l.title}} @ {{l.time}}</p>
@@ -50,21 +55,21 @@
 
 <!--编辑笔记界面的模板-->
 <script type="template" id="detailTpl">
-    <p>title：<input class='title' value='{{title}}'/></p>
-    <p>content:<textarea style="width:200px;height:200px;" class="content">{{content}}</textarea></p>
+    <p>title：<input class='title' value='{{note.title}}'/></p>
+    <p>content:<textarea style="width:200px;height:200px;" class="content">{{note.content}}</textarea></p>
     <button class="submit">submit</button>
 </script>
 
 
 <script
-src = "../../build/kissy.js?x=9993427" ></script>
-<script src="model.js?x=9993427"></script>
-<script src="sync.js?x=9993427"></script>
-<script src="base.js?x=9993427"></script>
-<script src="collection.js?x=9993427"></script>
-<script src="router.js?x=9993427"></script>
-<script src="view.js?x=9993427"></script>
-<script src="../mvc.js?x=9993427"></script>
-<script src="demo/note.js?x=9993427"></script>
+src = "../../build/kissy.js?x=201110261144" ></script>
+<script src="model.js?x=201110261144"></script>
+<script src="sync.js?x=201110261144"></script>
+<script src="base.js?x=201110261144"></script>
+<script src="collection.js?x=201110261144"></script>
+<script src="router.js?x=201110261144"></script>
+<script src="view.js?x=201110261144"></script>
+<script src="../mvc.js?x=201110261144"></script>
+<script src="demo/note.js?x=201110261144"></script>
 </body>
 </html>

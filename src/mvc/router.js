@@ -9,6 +9,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
     var hashPrefix = /^#/;
     var loc = location;
 
+    function getHash() {
+        return loc.hash.replace(hashPrefix, "");
+    }
+
     function getQuery(path) {
         var m,
             ret = {};
@@ -111,7 +115,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
     };
 
     function hashChange() {
-        matchRoute(this, loc.hash.replace(hashPrefix, ""), this.__routerMap);
+        matchRoute(this, getHash(), this.__routerMap);
     }
 
 
@@ -135,12 +139,27 @@ KISSY.add('mvc/router', function(S, Event, Base) {
             });
         },
 
-        navigate:function(path) {
+        navigate:function(path, opts) {
             loc.hash = path;
+            opts = opts || {};
+            if (opts.triggerRoute && getHash() == path) {
+                hashChange.call(this);
+            }
         },
 
-        start:function() {
-            Event.on(window, "hashchange", hashChange, this);
+        start:function(opts) {
+            var self = this;
+            opts = opts || {};
+            // prevent hashChange trigger on start
+            setTimeout(function() {
+                Event.on(window, "hashchange", hashChange, self);
+                // check initial hash on start
+                // in case server does not render initial state correctly
+                if (opts.triggerRoute) {
+                    hashChange.call(self);
+                }
+                opts.success && opts.success();
+            }, 100);
         }
     });
 

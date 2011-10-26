@@ -32,69 +32,73 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
     MVC.sync = function(method, options) {
         S.log(method);
         var self = this;
-        var index;
-        var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
-        if (S.isString(store)) {
-            store = S.JSON.parse(store);
-        }
 
-        var ret,id,error;
-        switch (method) {
-            case 'read':
-                if (isModel(self)) {
-                    ret = store[findById(store, self.get("id"))];
-                    if (!ret) {
-                        error = 'not found';
-                    }
-                } else {
-                    ret = [];
-                    for (var i in store) {
-                        ret.push(store[i]);
-                    }
-                }
-                break;
-            case 'create':
-                var data = self.toJSON();
-                data.id = S.guid("note");
-                // 更新当前内存对象
-                self.setId(data.id);
-                store.push(data);
-                break;
-            case 'delete':
-                id = self.get("id");
-                index = findById(store, id);
-                if (index > -1) {
-                    store.splice(index, 1);
-                }
-                break;
-            case 'update':
-                id = self.get("id");
-                index = findById(store, id);
-                if (index > -1) {
-                    store[index] = self.toJSON();
-                }
-                break;
-        }
-
-        if (method != 'read' && window.localStorage) {
-            window.localStorage.setItem(KEY, S.JSON.stringify(store));
-        }
-
-        STORE = store;
-
-        if (error) {
-            if (options.error) {
-                options.error(null, error);
+        // 模拟异步请求
+        setTimeout(function() {
+            var index;
+            var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
+            if (S.isString(store)) {
+                store = S.JSON.parse(store);
             }
-        }
 
-        else if (options.success) {
-            options.success(ret);
-        }
+            var ret,id,error;
+            switch (method) {
+                case 'read':
+                    if (isModel(self)) {
+                        ret = store[findById(store, self.get("id"))];
+                        if (!ret) {
+                            error = 'not found';
+                        }
+                    } else {
+                        ret = [];
+                        for (var i in store) {
+                            ret.push(store[i]);
+                        }
+                    }
+                    break;
+                case 'create':
+                    ret = self.toJSON();
+                    ret.id = S.guid("note");
+                    ret.time = new Date().toLocaleTimeString();
+                    store.push(ret);
+                    break;
+                case 'delete':
+                    id = self.get("id");
+                    index = findById(store, id);
+                    if (index > -1) {
+                        store.splice(index, 1);
+                    }
+                    break;
+                case 'update':
+                    id = self.get("id");
+                    index = findById(store, id);
+                    if (index > -1) {
+                        store[index] = self.toJSON();
+                    }
+                    break;
+            }
 
-        if (options.complete) {
-            options.complete(ret, error);
-        }
+            if (method != 'read' && window.localStorage) {
+                window.localStorage.setItem(KEY, S.JSON.stringify(store));
+            }
+
+            STORE = store;
+
+            if (error) {
+                if (options.error) {
+                    options.error(null, error);
+                }
+            }
+
+            else if (options.success) {
+                options.success(ret);
+            }
+
+            if (options.complete) {
+                options.complete(ret, error);
+            }
+        }, 500);
+
     };
 
 
@@ -115,28 +119,7 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
         NoteModel.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(NoteModel, Model, {}, {
-        /**
-         * 声明模型属性，必须声明默认值，否则 KISSY Template 不能渲染
-         */
-        ATTRS:{
-            title:{
-                value:""
-            },
-            content:{
-                value:""
-            },
-            id:{
-                value:""
-            },
-            time:{
-                valueFn:function() {
-                    return new Date().toLocaleString();
-                }
-            }
-
-        }
-    });
+    S.extend(NoteModel, Model);
 
     /*
      笔记列表模型
@@ -174,7 +157,8 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
             var self = this;
             // dom 节点添加标志 , dom 代理事件需要
             self.get("el").addClass("note").attr("id", self.get("note").getId());
-            self.get("el").html(noteTpl.render(self.get("note").toJSON()));
+            self.get("el").html(noteTpl.render({
+                note:self.get("note").toJSON()}));
             return self;
         },
 
@@ -215,7 +199,9 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
          * 很据已有笔记和模板渲染编辑界面
          */
         render:function() {
-            this.get("el").html(detailTpl.render(this.get("note").toJSON()));
+            this.get("el").html(detailTpl.render({
+                note:this.get("note").toJSON()
+            }));
             return this;
         }
     }, {
@@ -297,6 +283,13 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
         },
 
         /**
+         * 刷新笔记列表
+         */
+        refreshNote:function() {
+            this.get("notes").load();
+        },
+
+        /**
          * 编辑笔记，更改url，由router处理
          */
         editNote:function(e) {
@@ -335,6 +328,9 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
                     },
                     ".delete":{
                         click:"deleteNode"
+                    },
+                    ".refreshNote":{
+                        click:"refreshNote"
                     }
                 }
             }
@@ -368,7 +364,7 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
                 // 新建
                 notes.create(note, {
                     success:function() {
-                        self.navigate("/");
+                        self.navigate("");
                     }
                 });
             } else {
@@ -377,7 +373,7 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
                 // 修改
                 exits.save({
                     success:function() {
-                        self.navigate("/");
+                        self.navigate("");
                     }
                 });
             }
@@ -435,27 +431,24 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
              */
             routes:{
                 value:{
-                    '/':"index",
+                    '':"index",
                     '/edit/:id':"editNote",
                     '/new/':"newNote"
                 }
             }
         }
     });
-
-    // 复原 hash
-    location.hash = '!';
     var router = new NoteRouter();
-    // 防止多次触发 hashchange
-    setTimeout(function() {
-        /**
-         * 启动 app router
-         */
-
-        router.start();
-        // 首先载入笔记列表
-        router.navigate("/");
-    }, 100);
+    /**
+     * 启动 app router
+     */
+    router.start({
+        // 触发当前地址对应的 route 操作
+        triggerRoute:1,
+        success:function() {
+            $('#loading').hide();
+        }
+    });
 
 });
 
