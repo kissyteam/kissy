@@ -13,6 +13,10 @@ Legend of version history:
 
 History:
 --------
+
+### Happy 2nd Anniversary (2011/10/26)
+ - [!] Still Alive
+
 ### v1.1.6 -> v1.2.0 (2011/06/08)
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
