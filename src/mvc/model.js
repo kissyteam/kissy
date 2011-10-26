@@ -4,7 +4,11 @@
  */
 KISSY.add("mvc/model", function(S, Base, mvc) {
 
-    var blacklist = ["idAttribute","clientId","urlRoot","url"];
+    var blacklist = ["idAttribute",
+        "clientId",
+        "urlRoot",
+        "url",
+        "sync"];
 
     function Model() {
         var self = this;
@@ -50,13 +54,6 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         },
 
         /**
-         *  action,opts,callback
-         */
-        sync:function() {
-            mvc.sync.apply(this, arguments);
-        },
-
-        /**
          * whether it is newly created
          */
         isNew:function() {
@@ -91,7 +88,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 success && success.apply(this, arguments);
             };
             if (!self.isNew() && opts['delete']) {
-                self.sync('delete', opts);
+                self.get("sync").call(self,'delete', opts);
             } else {
                 opts.success();
             }
@@ -114,7 +111,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.sync('read', opts);
+            self.get("sync").call(self,'read', opts);
             return self;
         },
 
@@ -137,7 +134,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.sync(self.isNew() ? 'create' : 'update', opts);
+            self.get("sync").call(self,self.isNew() ? 'create' : 'update', opts);
             return self;
         },
 
@@ -164,6 +161,9 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             },
             urlRoot:{
                 value:""
+            },
+            sync:{
+                value:sync
             }
         }
     });
@@ -177,6 +177,11 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             return u.call(o);
         }
         return u;
+    }
+
+
+    function sync() {
+        mvc.sync.apply(this, arguments);
     }
 
     function url() {

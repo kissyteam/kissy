@@ -30,9 +30,12 @@ KISSY.use('mvc', function(S, MVC) {
                 }
             });
 
-            r.start();
+            r.start({
+                success:function() {
+                    r.navigate("/list/what/item?item1=1&item2=2");
+                }
+            });
 
-            r.navigate("/list/what/item?item1=1&item2=2");
 
             waits(1000);
 

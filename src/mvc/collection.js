@@ -43,7 +43,12 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             value:[]
         },
         url:{value:S.noop()},
-        comparator:{}
+        comparator:{},
+        sync:{
+            value:function() {
+                mvc.sync.apply(this, arguments);
+            }
+        }
     };
 
     S.extend(Collection, Base, {
@@ -67,11 +72,6 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
                 return m.get(attrName)
             });
         },
-
-        sync:function() {
-            mvc.sync.apply(this, arguments);
-        },
-
         parse:function(resp) {
             return resp;
         },
@@ -137,7 +137,7 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
                 }
                 success && success.apply(this, arguments);
             };
-            self.sync('read', opts);
+            self.get("sync").call(self, 'read', opts);
             return self;
         },
 
