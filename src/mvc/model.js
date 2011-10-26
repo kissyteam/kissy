@@ -4,11 +4,14 @@
  */
 KISSY.add("mvc/model", function(S, Base, mvc) {
 
-    var blacklist = ["idAttribute",
+    var blacklist = [
+        "idAttribute",
         "clientId",
         "urlRoot",
         "url",
-        "sync"];
+        "parse",
+        "sync"
+    ];
 
     function Model() {
         var self = this;
@@ -109,7 +112,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.parse(resp), opts);
+                    self.set(self.get("parse").call(self, resp), opts);
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
@@ -118,21 +121,13 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             return self;
         },
 
-        /**
-         * parse json from server to get attr/value pairs
-         * @param resp
-         */
-        parse:function(resp) {
-            return resp;
-        },
-
         save:function(opts) {
             var self = this;
             opts = opts || {};
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.parse(resp), opts);
+                    self.set(self.get("parse").call(self, resp), opts);
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
@@ -167,6 +162,15 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             },
             sync:{
                 value:sync
+            },
+            parse:{
+                /**
+                 * parse json from server to get attr/value pairs
+                 * @param resp
+                 */
+                value:function(resp) {
+                    return resp;
+                }
             }
         }
     });
