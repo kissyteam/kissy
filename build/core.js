@@ -274,8 +274,8 @@ KISSY.add('dom/base', function(S, undefined) {
         return node && node.nodeType === val;
     }
 
-    var DOM = {
 
+    var NODE_TYPE = {
         /**
          * enumeration of dom node type
          * @type Number
@@ -291,7 +291,12 @@ KISSY.add('dom/base', function(S, undefined) {
         DOCUMENT_NODE : 9,
         DOCUMENT_TYPE_NODE : 10,
         DOCUMENT_FRAGMENT_NODE : 11,
-        NOTATION_NODE : 12,
+        NOTATION_NODE : 12
+    };
+    var DOM = {
+
+        _NODE_TYPE:NODE_TYPE,
+
 
         /**
          * 是不是 element node
@@ -331,6 +336,8 @@ KISSY.add('dom/base', function(S, undefined) {
             return e && e.nodeName.toLowerCase() === name.toLowerCase();
         }
     };
+
+    S.mix(DOM, NODE_TYPE);
 
     return DOM;
 
@@ -4609,6 +4616,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
             for (; i < len; ++i) {
                 listener = listeners[i];
+                // 传入附件参数data，目前用于委托
                 ret = listener.fn.call(listener.scope || target,
                     event, listener.data);
 
@@ -5338,6 +5346,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     // mouseenter/leave 特殊处理
     function mouseHandler(event, data) {
         var delegateTarget = this,
+            ret,
             target = event.target,
             relatedTarget = event.relatedTarget;
         // 恢复为用户想要的 mouseenter/leave 类型
@@ -5348,35 +5357,35 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
             if (target !== relatedTarget &&
                 (!relatedTarget || !DOM.contains(target, relatedTarget))
                 ) {
+                var currentTarget = event.currentTarget;
                 event.currentTarget = target;
-                return data.fn.call(data.scope || delegateTarget, event);
+                ret = data.fn.call(data.scope || delegateTarget, event);
+                event.currentTarget = currentTarget;
             }
         }
-        return undefined;
+        return ret;
     }
 
 
     function invokes(invokeds, event, data) {
-        var delegateTarget = this,
-            gret;
+        var self = this;
         if (invokeds) {
+            // 保护 currentTarget
+            // 否则 fire 影响 delegated listener 之后正常的 listener 事件
+            var currentTarget = event.currentTarget;
             for (var i = 0; i < invokeds.length; i++) {
                 event.currentTarget = invokeds[i];
-                var ret = data.fn.call(data.scope || delegateTarget, event);
-                if (ret === false ||
-                    event.isPropagationStopped ||
-                    event.isImmediatePropagationStopped) {
-                    if (ret === false) {
-                        gret = ret;
-                    }
-                    if (event.isPropagationStopped ||
-                        event.isImmediatePropagationStopped) {
-                        break;
-                    }
+                var ret = data.fn.call(data.scope || self, event);
+                // delegate 的 handler 操作事件和根元素本身操作事件效果一致
+                if (ret === false) {
+                    event.halt();
+                }
+                if (event.isPropagationStopped) {
+                    break;
                 }
             }
+            event.currentTarget = currentTarget;
         }
-        return gret;
     }
 
     return Event;
@@ -5687,7 +5696,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
      * @constructor
      */
     function NodeList(html, props, ownerDocument) {
-        var self = this,domNode;
+        var self = this,
+            domNode;
 
         if (!(self instanceof NodeList)) {
             return new NodeList(html, props, ownerDocument);
@@ -5778,14 +5788,14 @@ KISSY.add("node/base", function(S, DOM, undefined) {
          * @param context An optional context to apply the function with Default context is the current NodeList instance
          */
         each: function(fn, context) {
-            var self = this,len = self.length, i = 0, node;
+            var self = this;
 
-            for (node = new NodeList(self[0]);
-                 i < len && fn.call(context || node, node, i, self) !== false;
-                 node = new NodeList(self[++i])) {
-            }
+            S.each(self, function(n, i) {
+                n = new NodeList(n);
+                return fn.call(context || n, n, i, self);
+            });
 
-            return this;
+            return self;
         },
         /**
          * Retrieves the DOMNode.
@@ -5824,23 +5834,6 @@ KISSY.add("node/base", function(S, DOM, undefined) {
     });
 
     S.mix(NodeList, {
-
-        /**
-         * enumeration of dom node type
-         */
-        ELEMENT_NODE : DOM.ELEMENT_NODE,
-        ATTRIBUTE_NODE : DOM.ATTRIBUTE_NODE,
-        TEXT_NODE:DOM.TEXT_NODE,
-        CDATA_SECTION_NODE : DOM.CDATA_SECTION_NODE,
-        ENTITY_REFERENCE_NODE: DOM.ENTITY_REFERENCE_NODE,
-        ENTITY_NODE : DOM.ENTITY_NODE,
-        PROCESSING_INSTRUCTION_NODE :DOM.PROCESSING_INSTRUCTION_NODE,
-        COMMENT_NODE : DOM.COMMENT_NODE,
-        DOCUMENT_NODE : DOM.DOCUMENT_NODE,
-        DOCUMENT_TYPE_NODE : DOM.DOCUMENT_TYPE_NODE,
-        DOCUMENT_FRAGMENT_NODE : DOM.DOCUMENT_FRAGMENT_NODE,
-        NOTATION_NODE : DOM.NOTATION_NODE,
-
         /**
          * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
          * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>选择器</a>或节点列表
@@ -5874,6 +5867,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return all.length ? all.slice(0, 1) : null;
         }
     });
+
+    S.mix(NodeList, DOM._NODE_TYPE);
 
     return NodeList;
 }, {
@@ -9558,11 +9553,17 @@ KISSY.add('base/attribute', function(S, undef) {
 
         // fire after event
         if (!opts['silent']) {
-            __fireAttrChange(self, 'after', name, prevVal, getAttrVals(self)[name], fullName);
+            value = getAttrVals(self)[name];
+            __fireAttrChange(self, 'after', name, prevVal, value, fullName);
             if (!attrs) {
-                __fireAttrChange(self, '', '*', prevVal, getAttrVals(self)[name], fullName, name);
+                __fireAttrChange(self,
+                    '', '*',
+                    [prevVal], [value],
+                    [fullName], [name]);
             } else {
                 attrs.push({
+                    prevVal:prevVal,
+                    newVal:value,
                     attrName:name,
                     subAttrName:fullName
                 });
@@ -9637,14 +9638,11 @@ KISSY.add('base/attribute', function(S, undef) {
              */
             addAttrs: function(attrConfigs, initialValues) {
                 var self = this;
-
                 S.each(attrConfigs, function(attrConfig, name) {
                     self.addAttr(name, attrConfig);
                 });
                 if (initialValues) {
-                    for (var k in initialValues) {
-                        self.set(k, initialValues[k]);
-                    }
+                    self.set(initialValues);
                 }
                 return self;
             },
@@ -9688,13 +9686,23 @@ KISSY.add('base/attribute', function(S, undef) {
                         }
                     }
                     var attrNames = [],
+                        prevVals = [],
+                        newVals = [],
                         subAttrNames = [];
-                    for (var i = 0; i < attrs.length; i++) {
-                        attrNames.push(attrs[i].attrName);
-                        subAttrNames.push(attrs[i].subAttrName);
-                    }
+                    S.each(attrs, function(attr) {
+                        prevVals.push(attr.prevVal);
+                        newVals.push(attr.newVal);
+                        attrNames.push(attr.attrName);
+                        subAttrNames.push(attr.subAttrName);
+                    });
                     if (attrNames.length) {
-                        __fireAttrChange(self, '', '*', undefined, undefined, subAttrNames, attrNames);
+                        __fireAttrChange(self,
+                            '',
+                            '*',
+                            prevVals,
+                            newVals,
+                            subAttrNames,
+                            attrNames);
                     }
                     return ret;
                 }
@@ -9806,26 +9814,30 @@ KISSY.add('base/attribute', function(S, undef) {
              * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
              * @param {String} name name of attribute
              */
-            reset: function (name) {
+            reset: function (name, opts) {
                 var self = this;
 
-                if (name) {
+                if (S.isString(name)) {
                     if (self.hasAttr(name)) {
                         // if attribute does not have default value, then set to undefined.
-                        return self.set(name, self.__getDefAttrVal(name));
+                        return self.set(name, self.__getDefAttrVal(name), opts);
                     }
                     else {
                         return self;
                     }
                 }
 
-                var attrs = getAttrs(self);
+                opts = name;
+
+                var attrs = getAttrs(self),
+                    values = {};
 
                 // reset all
                 for (name in attrs) {
-                    self.reset(name);
+                    values[name] = self.__getDefAttrVal(name);
                 }
 
+                self.set(values, opts);
                 return self;
             }
         });

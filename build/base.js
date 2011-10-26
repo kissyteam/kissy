@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 24 18:48
+build time: Oct 26 16:44
 */
 /**
  * @module  Attribute
@@ -177,11 +177,17 @@ KISSY.add('base/attribute', function(S, undef) {
 
         // fire after event
         if (!opts['silent']) {
-            __fireAttrChange(self, 'after', name, prevVal, getAttrVals(self)[name], fullName);
+            value = getAttrVals(self)[name];
+            __fireAttrChange(self, 'after', name, prevVal, value, fullName);
             if (!attrs) {
-                __fireAttrChange(self, '', '*', prevVal, getAttrVals(self)[name], fullName, name);
+                __fireAttrChange(self,
+                    '', '*',
+                    [prevVal], [value],
+                    [fullName], [name]);
             } else {
                 attrs.push({
+                    prevVal:prevVal,
+                    newVal:value,
                     attrName:name,
                     subAttrName:fullName
                 });
@@ -256,14 +262,11 @@ KISSY.add('base/attribute', function(S, undef) {
              */
             addAttrs: function(attrConfigs, initialValues) {
                 var self = this;
-
                 S.each(attrConfigs, function(attrConfig, name) {
                     self.addAttr(name, attrConfig);
                 });
                 if (initialValues) {
-                    for (var k in initialValues) {
-                        self.set(k, initialValues[k]);
-                    }
+                    self.set(initialValues);
                 }
                 return self;
             },
@@ -307,13 +310,23 @@ KISSY.add('base/attribute', function(S, undef) {
                         }
                     }
                     var attrNames = [],
+                        prevVals = [],
+                        newVals = [],
                         subAttrNames = [];
-                    for (var i = 0; i < attrs.length; i++) {
-                        attrNames.push(attrs[i].attrName);
-                        subAttrNames.push(attrs[i].subAttrName);
-                    }
+                    S.each(attrs, function(attr) {
+                        prevVals.push(attr.prevVal);
+                        newVals.push(attr.newVal);
+                        attrNames.push(attr.attrName);
+                        subAttrNames.push(attr.subAttrName);
+                    });
                     if (attrNames.length) {
-                        __fireAttrChange(self, '', '*', undefined, undefined, subAttrNames, attrNames);
+                        __fireAttrChange(self,
+                            '',
+                            '*',
+                            prevVals,
+                            newVals,
+                            subAttrNames,
+                            attrNames);
                     }
                     return ret;
                 }
@@ -425,26 +438,30 @@ KISSY.add('base/attribute', function(S, undef) {
              * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
              * @param {String} name name of attribute
              */
-            reset: function (name) {
+            reset: function (name, opts) {
                 var self = this;
 
-                if (name) {
+                if (S.isString(name)) {
                     if (self.hasAttr(name)) {
                         // if attribute does not have default value, then set to undefined.
-                        return self.set(name, self.__getDefAttrVal(name));
+                        return self.set(name, self.__getDefAttrVal(name), opts);
                     }
                     else {
                         return self;
                     }
                 }
 
-                var attrs = getAttrs(self);
+                opts = name;
+
+                var attrs = getAttrs(self),
+                    values = {};
 
                 // reset all
                 for (name in attrs) {
-                    self.reset(name);
+                    values[name] = self.__getDefAttrVal(name);
                 }
 
+                self.set(values, opts);
                 return self;
             }
         });

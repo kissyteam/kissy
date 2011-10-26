@@ -125,20 +125,43 @@ KISSY.use("base", function(S, Base) {
 
             S.extend(a, Base);
 
-            var aa = new a({y:{}}),ok = 0;
+            var aa = new a({x:1,y:{z:1}}),
+                ok = 0,
+                afterAttrChange = {};
+
             aa.on("*Change", function(e) {
+                expect(e.newVal).toEqual([11,{z:22}]);
+                expect(e.prevVal).toEqual([1,{z:1}]);
                 expect(e.attrName).toEqual(["x","y"]);
                 expect(e.subAttrName).toEqual(["x","y.z"]);
                 ok ++;
             });
-            aa.set({
-                x:1,
-                "y.z":1
+            aa.on("afterXChange", function(e) {
+                expect(e.attrName).toBe("x");
+                expect(e.newVal).toBe(11);
+                expect(e.prevVal).toBe(1);
+                expect(e.subAttrName).toBe("x");
+                afterAttrChange.x = 1;
+            });
+            aa.on("afterYChange", function(e) {
+                expect(e.attrName).toBe("y");
+                expect(e.newVal).toEqual({z:22});
+                expect(e.prevVal).toEqual({z:1});
+                expect(e.subAttrName).toBe("y.z");
+                afterAttrChange.y = 1;
             });
 
-            expect(aa.get("x")).toBe(1);
-            expect(aa.get("y.z")).toBe(1);
+            aa.set({
+                x:11,
+                "y.z":22
+            });
+
+            expect(aa.get("x")).toBe(11);
+            expect(aa.get("y.z")).toBe(22);
             expect(ok).toBe(1);
+
+            expect(afterAttrChange.x).toBe(1);
+            expect(afterAttrChange.y).toBe(1);
         });
 
 
