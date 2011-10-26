@@ -138,7 +138,7 @@ KISSY.use("mvc", function(S, MVC) {
             });
 
             it("can capture change from its model", function() {
-                var c = new Collection(),called=0;
+                var c = new Collection(),called = 0;
                 var m = c.add({
                     "x":1,
                     "y":1
@@ -146,12 +146,12 @@ KISSY.use("mvc", function(S, MVC) {
 
                 c.on("*Change", function(e) {
                     expect(e.target).toBe(m);
-                    expect(e.prevVal).toBe(1);
-                    expect(e.attrName).toBe("x");
-                    called=1;
+                    expect(e.prevVal).toEqual([1]);
+                    expect(e.attrName).toEqual(["x"]);
+                    called = 1;
                 });
 
-                m.set("x",2);
+                m.set("x", 2);
 
             });
 

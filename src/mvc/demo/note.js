@@ -243,7 +243,9 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
          * 监控笔记集合（包括各个笔记）的所有变化
          */
         notes.on("*Change", function(e) {
-            statistic.html(e.target.get("title"));
+            if (e.target instanceof Model) {
+                statistic.html(e.target.get("title"));
+            }
         });
         notes.on("add remove", function(e) {
             statistic.html(e.model.get("title"));
@@ -261,7 +263,7 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
         /**
          * 设置整体时，同步到 dom
          */
-        notes.on("reset", function() {
+        notes.on("afterModelsChange", function() {
             dataList.html(listTpl.render({list:notes.toJSON()}));
             var list = dataList.all(".note");
             list.each(function(l, i) {

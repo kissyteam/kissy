@@ -128,7 +128,7 @@ KISSY.use("mvc", function(S, MVC) {
                 var afterChange = [];
 
                 model.on("*Change", function(e) {
-                    afterChange.push(e.attrName);
+                    afterChange.push.apply(afterChange, e.attrName);
                 });
                 expect(model.isNew()).toBe(true);
                 expect(model.isModified()).toBe(true);

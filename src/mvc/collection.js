@@ -20,9 +20,6 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
 
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);
-        this.on("afterModelsChange", function() {
-            this.fire("reset");
-        });
     }
 
     Collection.ATTRS = {
@@ -69,12 +66,6 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         toJSON:function() {
             return S.map(this.get("models"), function(m) {
                 return m.toJSON();
-            });
-        },
-
-        pluck:function(attrName) {
-            return S.map(this.get("models"), function(m) {
-                return m.get(attrName)
             });
         },
 
