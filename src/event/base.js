@@ -284,6 +284,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
             for (; i < len; ++i) {
                 listener = listeners[i];
+                // 传入附件参数data，目前用于委托
                 ret = listener.fn.call(listener.scope || target,
                     event, listener.data);
 

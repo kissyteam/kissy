@@ -90,6 +90,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     // mouseenter/leave 特殊处理
     function mouseHandler(event, data) {
         var delegateTarget = this,
+            ret,
             target = event.target,
             relatedTarget = event.relatedTarget;
         // 恢复为用户想要的 mouseenter/leave 类型
@@ -100,35 +101,35 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
             if (target !== relatedTarget &&
                 (!relatedTarget || !DOM.contains(target, relatedTarget))
                 ) {
+                var currentTarget = event.currentTarget;
                 event.currentTarget = target;
-                return data.fn.call(data.scope || delegateTarget, event);
+                ret = data.fn.call(data.scope || delegateTarget, event);
+                event.currentTarget = currentTarget;
             }
         }
-        return undefined;
+        return ret;
     }
 
 
     function invokes(invokeds, event, data) {
-        var delegateTarget = this,
-            gret;
+        var self = this;
         if (invokeds) {
+            // 保护 currentTarget
+            // 否则 fire 影响 delegated listener 之后正常的 listener 事件
+            var currentTarget = event.currentTarget;
             for (var i = 0; i < invokeds.length; i++) {
                 event.currentTarget = invokeds[i];
-                var ret = data.fn.call(data.scope || delegateTarget, event);
-                if (ret === false ||
-                    event.isPropagationStopped ||
-                    event.isImmediatePropagationStopped) {
-                    if (ret === false) {
-                        gret = ret;
-                    }
-                    if (event.isPropagationStopped ||
-                        event.isImmediatePropagationStopped) {
-                        break;
-                    }
+                var ret = data.fn.call(data.scope || self, event);
+                // delegate 的 handler 操作事件和根元素本身操作事件效果一致
+                if (ret === false) {
+                    event.halt();
+                }
+                if (event.isPropagationStopped) {
+                    break;
                 }
             }
+            event.currentTarget = currentTarget;
         }
-        return gret;
     }
 
     return Event;
