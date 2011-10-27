@@ -202,9 +202,11 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             }
         }
         var base = getUrl(cv) || this.get("urlRoot");
+
         if (this.isNew()) {
             return base;
         }
+
         base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
         return base + encodeURIComponent(this.getId()) + "/";
     }

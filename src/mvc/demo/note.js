@@ -2,7 +2,7 @@
  * simple demo to show how to use kissy mvc
  * @author yiminghe@gmail.com
  */
-KISSY.use("mvc,template", function(S, MVC, Template) {
+KISSY.use("mvc,template,json", function(S, MVC, Template, JSON) {
 
     var Model = MVC.Model,
         $ = S.all,
@@ -31,13 +31,12 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
      */
     MVC.sync = function(self, method, options) {
         S.log(method);
-
         // 模拟异步请求
         setTimeout(function() {
             var index;
             var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
             if (S.isString(store)) {
-                store = S.JSON.parse(store);
+                store = JSON.parse(store);
             }
 
             var ret,id,error;
@@ -195,7 +194,7 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
             });
         },
         /**
-         * 很据已有笔记和模板渲染编辑界面
+         * 根据已有笔记和模板渲染编辑界面
          */
         render:function() {
             this.get("el").html(detailTpl.render({
@@ -208,7 +207,6 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
             /**
              * 覆盖默认属性
              */
-
             el:{
                 value:'#edit'
             },
