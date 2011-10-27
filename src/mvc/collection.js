@@ -130,7 +130,7 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
                 }
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, 'read', opts);
+            self.get("sync").call(self, self,'read', opts);
             return self;
         },
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 27 13:08
+build time: Oct 27 14:29
 */
 /**
  * mvc base
@@ -145,7 +145,7 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
                 }
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, 'read', opts);
+            self.get("sync").call(self, self,'read', opts);
             return self;
         },
 
@@ -322,7 +322,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 success && success.apply(this, arguments);
             };
             if (!self.isNew() && opts['delete']) {
-                self.get("sync").call(self, 'delete', opts);
+                self.get("sync").call(self, self, 'delete', opts);
             } else {
                 opts.success();
                 if (opts.complete) {
@@ -348,7 +348,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, 'read', opts);
+            self.get("sync").call(self, self, 'read', opts);
             return self;
         },
 
@@ -363,7 +363,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, self.isNew() ? 'create' : 'update', opts);
+            self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
             return self;
         },
 
@@ -538,26 +538,31 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         }
     }
 
+    function _afterRoutesChange(e) {
+        this.addRoutes(e.newVal);
+    }
+
     function Router() {
-        Router.superclass.constructor.apply(this, arguments);
+        var self = this;
+        Router.superclass.constructor.apply(self, arguments);
+        self.__routerMap = {};
+        self.on("afterRoutesChange", _afterRoutesChange, self);
+        _afterRoutesChange.call(self, {newVal:self.get("routes")});
     }
 
     Router.ATTRS = {
         /**
-         * {
-         * path:callback
-         * }
+         * @example
+         *   {
+         *     path:callback
+         *   }
          */
-        routes:{
-            setter:function(v) {
-                this.__routerMap = {};
-                this.addRoutes(v);
-            }
-        }
+        routes:{}
     };
 
     function hashChange() {
-        matchRoute(this, getHash(), this.__routerMap);
+        var self = this;
+        matchRoute(self, getHash(), self.__routerMap);
     }
 
     S.extend(Router, Base, {
@@ -615,7 +620,7 @@ KISSY.add("mvc/sync", function(S, io) {
         'read'  : 'GET'
     };
 
-    function sync(method, options) {
+    function sync(self, method, options) {
         var type = methodMap[method],
             ioParam = S.merge({
                 type:type,
@@ -626,11 +631,13 @@ KISSY.add("mvc/sync", function(S, io) {
         data['_method'] = method;
 
         if (!ioParam.url) {
-            ioParam.url = S.isString(this.get("url")) ? this.get("url") : this.get("url").call(this);
+            ioParam.url = S.isString(self.get("url")) ?
+                self.get("url") :
+                self.get("url").call(self);
         }
 
         if (method == 'create' || method == 'update') {
-            data.model = this.toJSON();
+            data.model = self.toJSON();
         }
 
         return io(ioParam);

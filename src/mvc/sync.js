@@ -10,7 +10,7 @@ KISSY.add("mvc/sync", function(S, io) {
         'read'  : 'GET'
     };
 
-    function sync(method, options) {
+    function sync(self, method, options) {
         var type = methodMap[method],
             ioParam = S.merge({
                 type:type,
@@ -21,11 +21,13 @@ KISSY.add("mvc/sync", function(S, io) {
         data['_method'] = method;
 
         if (!ioParam.url) {
-            ioParam.url = S.isString(this.get("url")) ? this.get("url") : this.get("url").call(this);
+            ioParam.url = S.isString(self.get("url")) ?
+                self.get("url") :
+                self.get("url").call(self);
         }
 
         if (method == 'create' || method == 'update') {
-            data.model = this.toJSON();
+            data.model = self.toJSON();
         }
 
         return io(ioParam);

@@ -92,26 +92,31 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         }
     }
 
+    function _afterRoutesChange(e) {
+        this.addRoutes(e.newVal);
+    }
+
     function Router() {
-        Router.superclass.constructor.apply(this, arguments);
+        var self = this;
+        Router.superclass.constructor.apply(self, arguments);
+        self.__routerMap = {};
+        self.on("afterRoutesChange", _afterRoutesChange, self);
+        _afterRoutesChange.call(self, {newVal:self.get("routes")});
     }
 
     Router.ATTRS = {
         /**
-         * {
-         * path:callback
-         * }
+         * @example
+         *   {
+         *     path:callback
+         *   }
          */
-        routes:{
-            setter:function(v) {
-                this.__routerMap = {};
-                this.addRoutes(v);
-            }
-        }
+        routes:{}
     };
 
     function hashChange() {
-        matchRoute(this, getHash(), this.__routerMap);
+        var self = this;
+        matchRoute(self, getHash(), self.__routerMap);
     }
 
     S.extend(Router, Base, {

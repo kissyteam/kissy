@@ -29,9 +29,8 @@ KISSY.use("mvc,template", function(S, MVC, Template) {
     /*
      覆盖全局的同步函数
      */
-    MVC.sync = function(method, options) {
+    MVC.sync = function(self, method, options) {
         S.log(method);
-        var self = this;
 
         // 模拟异步请求
         setTimeout(function() {

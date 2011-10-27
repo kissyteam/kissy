@@ -91,7 +91,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 success && success.apply(this, arguments);
             };
             if (!self.isNew() && opts['delete']) {
-                self.get("sync").call(self, 'delete', opts);
+                self.get("sync").call(self, self, 'delete', opts);
             } else {
                 opts.success();
                 if (opts.complete) {
@@ -117,7 +117,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, 'read', opts);
+            self.get("sync").call(self, self, 'read', opts);
             return self;
         },
 
@@ -132,7 +132,7 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, self.isNew() ? 'create' : 'update', opts);
+            self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
             return self;
         },
 
