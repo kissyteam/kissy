@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 27 14:29
+build time: Oct 27 14:30
 */
 /**
  * mvc base
@@ -539,13 +539,14 @@ KISSY.add('mvc/router', function(S, Event, Base) {
     }
 
     function _afterRoutesChange(e) {
-        this.addRoutes(e.newVal);
+        var self = this;
+        self.__routerMap = {};
+        self.addRoutes(e.newVal);
     }
 
     function Router() {
         var self = this;
         Router.superclass.constructor.apply(self, arguments);
-        self.__routerMap = {};
         self.on("afterRoutesChange", _afterRoutesChange, self);
         _afterRoutesChange.call(self, {newVal:self.get("routes")});
     }
