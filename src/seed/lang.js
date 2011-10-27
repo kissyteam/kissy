@@ -32,15 +32,21 @@
         EQ = '=',
         // [[Class]] -> type pairs
         class2type = {},
+        // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
             '&amp;': '&',
             '&gt;': '>',
             '&lt;': '<',
-            '&quot;': '"'
+            '&#x60;':'`',
+            '&#x2F;':'/',
+            '&quot;': '"',
+            '&#x27;':"'"
         },
         reverseEntities = {},
         escapeReg,
-        unEscapeReg;
+        unEscapeReg,
+        // - # $ ^ * ( ) + [ ] { } | \ , . ?
+        escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function() {
         for (var k in htmlEntities) {
             reverseEntities[htmlEntities[k]] = k;
@@ -520,6 +526,10 @@
             return str.replace(getEscapeReg(), function(m) {
                 return reverseEntities[m];
             });
+        },
+
+        escapeRegExp:function(str) {
+            return str.replace(escapeRegExp, '\\$&');
         },
 
         /**

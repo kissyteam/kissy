@@ -25,7 +25,6 @@ KISSY.add("mvc/sync", function(S, io) {
         }
 
         if (method == 'create' || method == 'update') {
-            ioParam.contentType = 'application/x-www-form-urlencoded';
             data.model = this.toJSON();
         }
 

@@ -3,11 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function(S, Event, Base) {
-    var queryReg = /\?(.*)/;
-    var escapeRegExp = /[-[\]{}()+?.,\\^$|#\s]/g;
-    var grammar = /(:([\w\d]+))|(\*([\w\d]+))/g;
-    var hashPrefix = /^#/;
-    var loc = location;
+    var queryReg = /\?(.*)/,
+        grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
+        hashPrefix = /^#/,
+        loc = location;
 
     function getHash() {
         return loc.hash.replace(hashPrefix, "");
@@ -27,14 +26,12 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         var fullPath = path;
         path = fullPath.replace(queryReg, "");
         S.each(routeRegs, function(desc) {
-            //debugger
             var reg = desc.reg,
                 paramNames = desc.paramNames,
                 m,
                 name = desc.name,
                 callback = desc.callback;
             if (m = path.match(reg)) {
-                //debugger
                 // match all result item shift out
                 m.shift();
                 var params = {};
@@ -43,10 +40,13 @@ KISSY.add('mvc/router', function(S, Event, Base) {
                 });
                 var query = getQuery(fullPath);
                 callback.apply(self, [params,query]);
-                self.fire(name, {
-                    params:params,
+                var arg = {
+                    name:name,
+                    paths:params,
                     query:query
-                });
+                };
+                self.fire('route:' + name, arg);
+                self.fire('route', arg);
                 return false;
             }
         });
@@ -62,21 +62,20 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         var name = str,
             paramNames = [];
         // escape keyword from regexp
-        str = str.replace(escapeRegExp,
-            function(m) {
-                return "\\" + m;
-            }).replace(grammar, function(m, g1, g2, g3, g4) {
-                paramNames.push(g2 || g4);
-                // :name
-                if (g2) {
-                    return "([^/]+)";
-                }
-                // *name
-                else if (g4) {
-                    return "(.*)";
-                }
+        str = S.escapeRegExp(str);
 
-            });
+        str = str.replace(grammar, function(m, g1, g2, g3, g4) {
+            paramNames.push(g2 || g4);
+            // :name
+            if (g2) {
+                return "([^/]+)";
+            }
+            // *name
+            else if (g4) {
+                return "(.*)";
+            }
+        });
+
         return {
             name:name,
             paramNames:paramNames,
@@ -95,13 +94,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
     function Router() {
         Router.superclass.constructor.apply(this, arguments);
-        this.__routerMap = {};
-        this.on("afterRoutesChange", this._afterRoutesChange, this);
-        this._afterRoutesChange({
-            newVal:this.get("routes")
-        });
     }
-
 
     Router.ATTRS = {
         /**
@@ -110,7 +103,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
          * }
          */
         routes:{
-
+            setter:function(v) {
+                this.__routerMap = {};
+                this.addRoutes(v);
+            }
         }
     };
 
@@ -118,13 +114,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         matchRoute(this, getHash(), this.__routerMap);
     }
 
-
     S.extend(Router, Base, {
-
-        _afterRoutesChange:function(e) {
-            this.__routerMap = {};
-            this.addRoutes(e.newVal);
-        },
         /**
          *
          * @param routes

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 26 11:43
+build time: Oct 27 13:08
 */
 /**
  * mvc base
@@ -35,9 +35,6 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
 
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);
-        this.on("afterModelsChange", function() {
-            this.fire("reset");
-        });
     }
 
     Collection.ATTRS = {
@@ -58,7 +55,17 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             value:[]
         },
         url:{value:S.noop()},
-        comparator:{}
+        comparator:{},
+        sync:{
+            value:function() {
+                mvc.sync.apply(this, arguments);
+            }
+        },
+        parse:{
+            value:function(resp) {
+                return resp;
+            }
+        }
     };
 
     S.extend(Collection, Base, {
@@ -75,20 +82,6 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             return S.map(this.get("models"), function(m) {
                 return m.toJSON();
             });
-        },
-
-        pluck:function(attrName) {
-            return S.map(this.get("models"), function(m) {
-                return m.get(attrName)
-            });
-        },
-
-        sync:function() {
-            mvc.sync.apply(this, arguments);
-        },
-
-        parse:function(resp) {
-            return resp;
         },
 
         /**
@@ -148,11 +141,11 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set("models", self.parse(resp), opts);
+                    self.set("models", self.get("parse").call(self, resp), opts);
                 }
                 success && success.apply(this, arguments);
             };
-            self.sync('read', opts);
+            self.get("sync").call(self, 'read', opts);
             return self;
         },
 
@@ -242,7 +235,14 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
  */
 KISSY.add("mvc/model", function(S, Base, mvc) {
 
-    var blacklist = ["idAttribute","clientId","urlRoot","url"];
+    var blacklist = [
+        "idAttribute",
+        "clientId",
+        "urlRoot",
+        "url",
+        "parse",
+        "sync"
+    ];
 
     function Model() {
         var self = this;
@@ -288,13 +288,6 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         },
 
         /**
-         *  action,opts,callback
-         */
-        sync:function() {
-            mvc.sync.apply(this, arguments);
-        },
-
-        /**
          * whether it is newly created
          */
         isNew:function() {
@@ -329,9 +322,12 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
                 success && success.apply(this, arguments);
             };
             if (!self.isNew() && opts['delete']) {
-                self.sync('delete', opts);
+                self.get("sync").call(self, 'delete', opts);
             } else {
                 opts.success();
+                if (opts.complete) {
+                    opts.complete();
+                }
             }
 
             return self;
@@ -347,21 +343,13 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.parse(resp), opts);
+                    self.set(self.get("parse").call(self, resp), opts);
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.sync('read', opts);
+            self.get("sync").call(self, 'read', opts);
             return self;
-        },
-
-        /**
-         * parse json from server to get attr/value pairs
-         * @param resp
-         */
-        parse:function(resp) {
-            return resp;
         },
 
         save:function(opts) {
@@ -370,12 +358,12 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.parse(resp), opts);
+                    self.set(self.get("parse").call(self, resp), opts);
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
             };
-            self.sync(self.isNew() ? 'create' : 'update', opts);
+            self.get("sync").call(self, self.isNew() ? 'create' : 'update', opts);
             return self;
         },
 
@@ -402,6 +390,18 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             },
             urlRoot:{
                 value:""
+            },
+            sync:{
+                value:sync
+            },
+            parse:{
+                /**
+                 * parse json from server to get attr/value pairs
+                 * @param resp
+                 */
+                value:function(resp) {
+                    return resp;
+                }
             }
         }
     });
@@ -415,6 +415,11 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             return u.call(o);
         }
         return u;
+    }
+
+
+    function sync() {
+        mvc.sync.apply(this, arguments);
     }
 
     function url() {
@@ -444,11 +449,10 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function(S, Event, Base) {
-    var queryReg = /\?(.*)/;
-    var escapeRegExp = /[-[\]{}()+?.,\\^$|#\s]/g;
-    var grammar = /(:([\w\d]+))|(\*([\w\d]+))/g;
-    var hashPrefix = /^#/;
-    var loc = location;
+    var queryReg = /\?(.*)/,
+        grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
+        hashPrefix = /^#/,
+        loc = location;
 
     function getHash() {
         return loc.hash.replace(hashPrefix, "");
@@ -468,14 +472,12 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         var fullPath = path;
         path = fullPath.replace(queryReg, "");
         S.each(routeRegs, function(desc) {
-            //debugger
             var reg = desc.reg,
                 paramNames = desc.paramNames,
                 m,
                 name = desc.name,
                 callback = desc.callback;
             if (m = path.match(reg)) {
-                //debugger
                 // match all result item shift out
                 m.shift();
                 var params = {};
@@ -484,10 +486,13 @@ KISSY.add('mvc/router', function(S, Event, Base) {
                 });
                 var query = getQuery(fullPath);
                 callback.apply(self, [params,query]);
-                self.fire(name, {
-                    params:params,
+                var arg = {
+                    name:name,
+                    paths:params,
                     query:query
-                });
+                };
+                self.fire('route:' + name, arg);
+                self.fire('route', arg);
                 return false;
             }
         });
@@ -503,21 +508,20 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         var name = str,
             paramNames = [];
         // escape keyword from regexp
-        str = str.replace(escapeRegExp,
-            function(m) {
-                return "\\" + m;
-            }).replace(grammar, function(m, g1, g2, g3, g4) {
-                paramNames.push(g2 || g4);
-                // :name
-                if (g2) {
-                    return "([^/]+)";
-                }
-                // *name
-                else if (g4) {
-                    return "(.*)";
-                }
+        str = S.escapeRegExp(str);
 
-            });
+        str = str.replace(grammar, function(m, g1, g2, g3, g4) {
+            paramNames.push(g2 || g4);
+            // :name
+            if (g2) {
+                return "([^/]+)";
+            }
+            // *name
+            else if (g4) {
+                return "(.*)";
+            }
+        });
+
         return {
             name:name,
             paramNames:paramNames,
@@ -536,13 +540,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
     function Router() {
         Router.superclass.constructor.apply(this, arguments);
-        this.__routerMap = {};
-        this.on("afterRoutesChange", this._afterRoutesChange, this);
-        this._afterRoutesChange({
-            newVal:this.get("routes")
-        });
     }
-
 
     Router.ATTRS = {
         /**
@@ -551,7 +549,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
          * }
          */
         routes:{
-
+            setter:function(v) {
+                this.__routerMap = {};
+                this.addRoutes(v);
+            }
         }
     };
 
@@ -559,13 +560,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         matchRoute(this, getHash(), this.__routerMap);
     }
 
-
     S.extend(Router, Base, {
-
-        _afterRoutesChange:function(e) {
-            this.__routerMap = {};
-            this.addRoutes(e.newVal);
-        },
         /**
          *
          * @param routes
@@ -635,7 +630,6 @@ KISSY.add("mvc/sync", function(S, io) {
         }
 
         if (method == 'create' || method == 'update') {
-            ioParam.contentType = 'application/x-www-form-urlencoded';
             data.model = this.toJSON();
         }
 

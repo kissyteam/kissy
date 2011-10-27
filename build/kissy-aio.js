@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 22 16:00
+build time: Oct 27 13:08
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Oct 22 16:00
          */
         version: '1.20dev',
 
-        buildTime:'20111022160007',
+        buildTime:'20111027130816',
 
         /**
          * Returns a new object containing all of the properties of
@@ -345,15 +345,21 @@ build time: Oct 22 16:00
         EQ = '=',
         // [[Class]] -> type pairs
         class2type = {},
+        // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
             '&amp;': '&',
             '&gt;': '>',
             '&lt;': '<',
-            '&quot;': '"'
+            '&#x60;':'`',
+            '&#x2F;':'/',
+            '&quot;': '"',
+            '&#x27;':"'"
         },
         reverseEntities = {},
         escapeReg,
-        unEscapeReg;
+        unEscapeReg,
+        // - # $ ^ * ( ) + [ ] { } | \ , . ?
+        escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function() {
         for (var k in htmlEntities) {
             reverseEntities[htmlEntities[k]] = k;
@@ -833,6 +839,10 @@ build time: Oct 22 16:00
             return str.replace(getEscapeReg(), function(m) {
                 return reverseEntities[m];
             });
+        },
+
+        escapeRegExp:function(str) {
+            return str.replace(escapeRegExp, '\\$&');
         },
 
         /**
@@ -2536,9 +2546,6 @@ build time: Oct 22 16:00
         // The functions to execute on DOM ready.
         readyList = [],
 
-        // Has the ready events already been bound?
-        readyBound = false,
-
         // The number of poll times.
         POLL_RETRYS = 500,
 
@@ -2606,10 +2613,6 @@ build time: Oct 22 16:00
          * @return {KISSY}
          */
         ready: function(fn) {
-            // Attach the listeners
-            if (!readyBound) {
-                _bindReady();
-            }
 
             // If the DOM is already ready
             if (isReady) {
@@ -2656,9 +2659,6 @@ build time: Oct 22 16:00
             fire = function() {
                 _fireReady();
             };
-
-        // Set to true once it runs
-        readyBound = true;
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
@@ -2750,6 +2750,14 @@ build time: Oct 22 16:00
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
+
+    /**
+     * bind on start
+     * in case when you bind but the DOMContentLoaded has triggered
+     * then you has to wait onload
+     * worst case no callback at all
+     */
+    _bindReady();
 
 })(KISSY, undefined);
 /**
