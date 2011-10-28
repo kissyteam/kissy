@@ -1,5 +1,10 @@
-KISSY.add(function(S, mvc, Template, NoteView) {
-    var tmpl = Template($("#listTpl").html());
+/**
+ * 笔记列表视图
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(function(S, Node,mvc, Template, NoteView) {
+    var $=Node.all,
+        tmpl = Template($("#listTpl").html());
 
     /**
      * 笔记列表View
@@ -119,5 +124,5 @@ KISSY.add(function(S, mvc, Template, NoteView) {
     return NotesView;
 
 }, {
-    requires:['mvc','template','./NoteView']
+    requires:['node','mvc','template','./NoteView']
 });

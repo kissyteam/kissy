@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 27 14:30
+build time: Oct 28 11:29
 */
 /**
  * mvc base
@@ -54,7 +54,7 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             },
             value:[]
         },
-        url:{value:S.noop()},
+        url:{value:S.noop},
         comparator:{},
         sync:{
             value:function() {
@@ -433,9 +433,11 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             }
         }
         var base = getUrl(cv) || this.get("urlRoot");
+
         if (this.isNew()) {
             return base;
         }
+
         base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
         return base + encodeURIComponent(this.getId()) + "/";
     }

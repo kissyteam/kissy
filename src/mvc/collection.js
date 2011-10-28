@@ -39,7 +39,7 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             },
             value:[]
         },
-        url:{value:S.noop()},
+        url:{value:S.noop},
         comparator:{},
         sync:{
             value:function() {
