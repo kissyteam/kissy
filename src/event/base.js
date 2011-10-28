@@ -325,7 +325,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
         },
 
-        __batchForType:batchForType
+        __batchForType:batchForType,
+        __simpleAdd:simpleAdd,
+        __simpleRemove:simpleRemove
     };
 
     // shorthand

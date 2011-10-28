@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 28 11:59
+build time: Oct 28 16:14
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Oct 28 11:59
          */
         version: '1.20dev',
 
-        buildTime:'20111028115904',
+        buildTime:'20111028161452',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2801,6 +2801,7 @@ D:\code\kissy_git\kissy\src\event\delegate.js
 D:\code\kissy_git\kissy\src\event\mouseenter.js
 D:\code\kissy_git\kissy\src\event\submit.js
 D:\code\kissy_git\kissy\src\event\change.js
+D:\code\kissy_git\kissy\src\event\mousewheel.js
 D:\code\kissy_git\kissy\src\event.js
 D:\code\kissy_git\kissy\src\node\base.js
 D:\code\kissy_git\kissy\src\node\attach.js
@@ -6937,7 +6938,7 @@ KISSY.add('event/object', function(S, undefined) {
             'eventPhase fromElement handler keyCode layerX layerY metaKey ' +
             'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
-            'target toElement view wheelDelta which').split(' ');
+            'target toElement view wheelDelta which axis').split(' ');
 
     /**
      * KISSY's event system normalizes the event object according to
@@ -7431,7 +7432,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
         },
 
-        __batchForType:batchForType
+        __batchForType:batchForType,
+        __simpleAdd:simpleAdd,
+        __simpleRemove:simpleRemove
     };
 
     // shorthand
@@ -8434,6 +8437,95 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
     requires:["ua","./base","dom"]
 });
 
+/**
+ * normalize mousewheel in gecko
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("event/mousewheel", function(S, Event, UA) {
+
+    var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
+        mousewheelHandler = "mousewheelHandler";
+
+    function handler(e) {
+        var eventDesc = Event._data(this),
+            eventHandler = eventDesc.handler,
+            deltaX,
+            deltaY,
+            delta,
+            detail = e.detail;
+
+        if (e.wheelDelta) {
+            delta = e.wheelDelta / 120;
+        }
+        if (e.detail) {
+            // press control e.detail == 1 else e.detail == 3
+            delta = -(detail % 3 == 0 ? detail / 3 : detail);
+        }
+
+        // Gecko
+        if (e.axis !== undefined && e.axis === e['HORIZONTAL_AXIS']) {
+            deltaY = 0;
+            deltaX = -1 * delta;
+        }
+
+        // Webkit
+        if (e['wheelDeltaY'] !== undefined) {
+            deltaY = e['wheelDeltaY'] / 120;
+        }
+        if (e['wheelDeltaX'] !== undefined) {
+            deltaX = -1 * e['wheelDeltaX'] / 120;
+        }
+
+        return eventHandler(e, {
+            deltaY:deltaY,
+            delta:delta,
+            deltaX:deltaX,
+            type:'mousewheel'
+        });
+    }
+
+    Event.special['mousewheel'] = {
+        setup: function() {
+            var el = this,
+                mousewheelHandler,
+                eventDesc = Event._data(el);
+            // solve this in ie
+            mousewheelHandler = eventDesc[mousewheelHandler] = S.bind(handler, el);
+            Event.__simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
+        },
+        tearDown:function() {
+            var el = this,
+                mousewheelHandler,
+                eventDesc = Event._data(el);
+            mousewheelHandler = eventDesc[mousewheelHandler];
+            Event.__simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
+            delete eventDesc[mousewheelHandler];
+        }
+    };
+
+}, {
+    requires:['./base','ua','./object']
+});
+
+/**
+ note:
+ not perfect in osx : accelerated scroll
+ refer:
+ https://github.com/brandonaaron/jquery-mousewheel/blob/master/jquery.mousewheel.js
+ http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/
+ http://www.switchonthecode.com/tutorials/javascript-tutorial-the-scroll-wheel
+ http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers/5542105#5542105
+ http://www.javascriptkit.com/javatutors/onmousewheel.shtml
+ http://www.adomas.org/javascript-mouse-wheel/
+ http://plugins.jquery.com/project/mousewheel
+ http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
+ http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
+ **/
+
+/**
+ * KISSY Scalable Event Framework
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
     Event.KeyCodes = KeyCodes;
     Event.Target = Target;
@@ -8451,7 +8543,8 @@ KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
         "event/delegate",
         "event/mouseenter",
         "event/submit",
-        "event/change"
+        "event/change",
+        "event/mousewheel"
     ]
 });
 
