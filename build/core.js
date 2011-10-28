@@ -5689,9 +5689,14 @@ KISSY.add("event/mousewheel", function(S, Event, UA) {
         }
 
         // Gecko
-        if (e.axis !== undefined && e.axis === e['HORIZONTAL_AXIS']) {
-            deltaY = 0;
-            deltaX = -1 * delta;
+        if (e.axis !== undefined) {
+            if (e.axis === e['HORIZONTAL_AXIS']) {
+                deltaY = 0;
+                deltaX = -1 * delta;
+            } else if (e.axis === e['VERTICAL_AXIS']) {
+                deltaX = 0;
+                deltaY = delta;
+            }
         }
 
         // Webkit
