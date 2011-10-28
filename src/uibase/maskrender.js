@@ -8,6 +8,8 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
      * 多 position 共享一个遮罩
      */
     var mask,
+        ie6 = (UA['ie'] === 6),
+        px = "px",
         $ = Node.all,
         win = $(window),
         doc = $(document),
@@ -15,11 +17,11 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
         num = 0;
 
     function docWidth() {
-        return  doc.width() + "px";
+        return  ie6 ? (doc.width() + px) : "100%";
     }
 
     function docHeight() {
-        return doc.height() + "px";
+        return ie6 ? (doc.height() + px) : "100%";
     }
 
     function initMask() {
@@ -29,13 +31,13 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             this.get("prefixCls") + "ext-mask'/>")
             .prependTo("body");
         mask.css({
-            "position":"absolute",
+            "position":"fixed", // mask 不会撑大 docWidth
             left:0,
             top:0,
             width: docWidth(),
             "height": docHeight()
         });
-        if (UA['ie'] == 6) {
+        if (ie6) {
             //ie6 下最好和 mask 平行
             iframe = $("<" + "iframe " +
                 //"tabindex='-1' " +
@@ -90,7 +92,9 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             if (num == 1) {
                 mask.css(display);
                 iframe && iframe.css(display);
-                win.on("resize", resizeMask);
+                if (ie6) {
+                    win.on("resize", resizeMask);
+                }
             }
         },
 
@@ -105,7 +109,9 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                 };
                 mask && mask.css(display);
                 iframe && iframe.css(display);
-                win.detach("resize", resizeMask);
+                if (ie6) {
+                    win.detach("resize", resizeMask);
+                }
             }
         },
 
