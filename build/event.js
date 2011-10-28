@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 28 16:20
+build time: Oct 28 16:31
 */
 /**
  * @module  event
@@ -1254,6 +1254,11 @@ KISSY.add("event/mousewheel", function(S, Event, UA) {
         }
         if (e['wheelDeltaX'] !== undefined) {
             deltaX = -1 * e['wheelDeltaX'] / 120;
+        }
+
+        // 默认 deltaY ( ie )
+        if (!deltaX && !deltaY) {
+            deltaY = delta;
         }
 
         return eventHandler(e, {

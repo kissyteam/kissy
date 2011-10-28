@@ -42,6 +42,11 @@ KISSY.add("event/mousewheel", function(S, Event, UA) {
             deltaX = -1 * e['wheelDeltaX'] / 120;
         }
 
+        // 默认 deltaY ( ie )
+        if (!deltaX && !deltaY) {
+            deltaY = delta;
+        }
+
         return eventHandler(e, {
             deltaY:deltaY,
             delta:delta,
