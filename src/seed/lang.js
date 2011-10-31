@@ -519,7 +519,8 @@
         },
         /**
          * escape string to html
-         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @refer   http://yiminghe.javaeye.com/blog/788929
+         *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */
         escapeHTML:function(str) {
