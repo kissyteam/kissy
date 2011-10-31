@@ -368,4 +368,6 @@
         S.Config.debug = true;
     }
 
+    S._bindReady();
+
 })(KISSY);

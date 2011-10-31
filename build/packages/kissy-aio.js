@@ -1062,7 +1062,7 @@ build time: ${build.time}
             if (!mod) {
                 //默认js名字
                 var componentJsName = self.Config['componentJsName'] || function(m) {
-                    return m + '-pkg-min.js?t=20110621170235';
+                    return m + '-pkg-min.js?t=20111031181335';
                 },  js = S.isFunction(componentJsName) ?
                     componentJsName(modName) : componentJsName;
                 mod = {
@@ -1075,7 +1075,7 @@ build time: ${build.time}
 
             if (hasCss) {
                 var componentCssName = self.Config['componentCssName'] || function(m) {
-                    return m + '-min.css?t=20110621170235';
+                    return m + '-min.css?t=20111031181335';
                 },  css = S.isFunction(componentCssName) ?
                     componentCssName(modName) :
                     componentCssName;
@@ -10968,6 +10968,8 @@ KISSY.add('switchable', function(S) {
     S.Switchable = Switchable;
     return Switchable;
 
+},{
+    requires:['core']
 });
 
 /**
@@ -11071,6 +11073,8 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
         }
     };
 
+},{
+    host:'switchable'
 });/**
  * Accordion Widget
  * @creator  沉鱼<fool2fish@gmail.com>,yiminghe@gmail.com
@@ -11141,6 +11145,8 @@ KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
     S.Accordion=Accordion;
     return Accordion;
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -11461,6 +11467,8 @@ KISSY.add('switchable/accordion/aria', function(S, Aria, Accordion) {
     }
 
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -11552,6 +11560,8 @@ Event=S.Event;
         }
     });
     return Switchable;
+},{
+    host:'switchable'
 });/**
  * Switchable Autorender Plugin
  * @creator  玉伯<lifesinger@gmail.com>
@@ -11581,6 +11591,8 @@ KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
         });
     }
 
+},{
+    host:'switchable'
 });
 /**
  * Carousel Widget
@@ -11682,6 +11694,8 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     S.Carousel = Carousel;
     return Carousel;
 
+},{
+    host:'switchable'
 });
 
 
@@ -12002,6 +12016,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
             }
         });
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -12264,6 +12280,8 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
 
     return Switchable;
 
+},{
+    host:'switchable'
 });
 /**
  * Switchable Circular Plugin
@@ -12396,6 +12414,8 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
             }
         });
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -12524,6 +12544,8 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
 
     return Switchable;
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -12604,6 +12626,8 @@ KISSY.add('switchable/lazyload', function(S,DOM,Switchable) {
 
     return Switchable;
 
+},{
+    host:'switchable'
 });/**
  * Tabs Widget
  * @creator  玉伯<lifesinger@gmail.com>
@@ -12642,6 +12666,8 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
     
     return Slide;
 
+},{
+    host:'switchable'
 });
 /**
  * aria support for slide
@@ -12668,7 +12694,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
 //    var KEY_ESCAPE = 27;
 
     S.mix(Slide.Config, {
-            aria:true
+            aria:false
         });
 
     var DOM_EVENT = {originalEvent:{target:1}};
@@ -12737,6 +12763,8 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
         }
     }
 
+},{
+    host:'switchable'
 });
 /**
  2011-05-12 承玉：add support for aria & keydown
@@ -12772,6 +12800,8 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
     Tabs.Plugins = [];
     S.Tabs=Tabs;
     return Tabs;
+},{
+    host:'switchable'
 });/**
  * Tabs aria support
  * @creator yiminghe@gmail.com
@@ -12934,19 +12964,19 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
                 }
                 break;
 
-            case KEY_HOME:
-                if (no_modifier_pressed_flag) {
-                    self.switchTo(0, undefined, getDomEvent(e));
-                    e.halt();
-                }
-                break;
-            case KEY_END:
-                if (no_modifier_pressed_flag) {
-                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
-                    e.halt();
-                }
-
-                break;
+//            case KEY_HOME:
+//                if (no_modifier_pressed_flag) {
+//                    self.switchTo(0, undefined, getDomEvent(e));
+//                    e.halt();
+//                }
+//                break;
+//            case KEY_END:
+//                if (no_modifier_pressed_flag) {
+//                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
+//                    e.halt();
+//                }
+//
+//                break;
             case KEY_TAB:
                 if (e.ctrlKey && !e.altKey) {
                     e.halt();
@@ -12992,6 +13022,8 @@ KISSY.add('switchable/tabs/aria', function(S, Aria, Tabs) {
     }
 
 
+},{
+    host:'switchable'
 });
 
 /**
@@ -13118,15 +13150,16 @@ KISSY.add('dialog', function(S) {
 
 
 /**
- * Created by IntelliJ IDEA.
- * User: qiaohua
- * Date: 11-5-16
- * Time: 下午1:44
- * To change this template use File | Settings | File Templates.
+ * KISSY Popup
+ * @author: 玉伯<lifesinger@gmail.com>, 承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/popup', function(S, undefined) {
     function Popup(container, config) {
         var self = this;
+
+        //if (!(self instanceof Popup)) {
+        //    return new Popup(container, config);
+        //}
 
         // 支持 Popup(config)
         if (S.isUndefined(config)) {
@@ -13259,7 +13292,7 @@ KISSY.add('suggest', function(S, undefined) {
 
     var DOM = S.DOM, Event = S.Event,
         win = window, doc = document, bd, head = S.get('head'),
-        ie = S.UA.ie, ie6 = (ie === 6),
+        ie = S.UA.ie, ie6 = (ie === 6), ie9 = (ie >= 9),
 
         CALLBACK_FN = 'KISSY.Suggest.callback', // 约定的全局回调函数
         PREFIX = 'ks-suggest-',
@@ -13296,7 +13329,7 @@ KISSY.add('suggest', function(S, undefined) {
         /**
          * Suggest 的默认配置
          */
-        defaultConfig = {
+            defaultConfig = {
             /**
              * 用户附加给悬浮提示层的 class
              *
@@ -13542,6 +13575,14 @@ KISSY.add('suggest', function(S, undefined) {
                 var keyCode = ev.keyCode;
                 //S.log('keydown ' + keyCode);
 
+                // home end 空阻止
+                if (keyCode == 35 || keyCode == 36) {
+                    if (!input.value) {
+                        ev.halt();
+                        return;
+                    }
+                }
+
                 // ESC 键，隐藏提示层并还原初始输入
                 if (keyCode === 27) {
                     self.hide();
@@ -13576,7 +13617,7 @@ KISSY.add('suggest', function(S, undefined) {
                     // 如果是键盘选中某项后回车，触发 onItemSelect 事件
                     if (isDowningOrUping) {
                         if (input.value == self._getSelectedItemKey()) { // 确保值匹配
-                            if(self.fire(EVENT_ITEM_SELECT) === false) return;
+                            if (self.fire(EVENT_ITEM_SELECT) === false) return;
                         }
                     }
 
@@ -13691,7 +13732,7 @@ KISSY.add('suggest', function(S, undefined) {
             Event.on(content, 'mousedown', function(ev) {
                 var target = ev.target;
 
-               // 可能点击在 li 的子元素上
+                // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
                     target = DOM.parent(target, li);
                 }
@@ -13713,13 +13754,13 @@ KISSY.add('suggest', function(S, undefined) {
 
             Event.on(content, 'mouseup', function(ev) {
                 var target = ev.target;
-                if(ev.which > 2) return; // 非左键和中键点击
+                if (ev.which > 2) return; // 非左键和中键点击
 
                 // 可能点击在 li 的子元素上
                 if (target.nodeName !== LI) {
                     target = DOM.parent(target, li);
                 }
-                
+
                 // 在提示层 A 项处按下鼠标，移动到 B 处释放，不触发 onItemSelect
                 if (target != mouseDownItem) return;
 
@@ -13728,10 +13769,13 @@ KISSY.add('suggest', function(S, undefined) {
                     self._updateInputFromSelectItem(target);
 
                     // 触发选中事件
-                    if(self.fire(EVENT_ITEM_SELECT) === false) return;
+                    if (self.fire(EVENT_ITEM_SELECT) === false) return;
 
                     // 提交表单前，先隐藏提示层并停止计时器
-                    input.blur();
+                    try {
+                        input.blur();
+                    } catch(e) {
+                    }
 
                     // 提交表单
                     self._submitForm();
@@ -13752,7 +13796,7 @@ KISSY.add('suggest', function(S, undefined) {
                 // 因此需要等待另一个输入框 focusin 触发后，再执行下面的逻辑
                 S.later(function() {
                     // 鼠标已移开 footer 区域
-                    if(mouseLeaveFooter) {
+                    if (mouseLeaveFooter) {
                         self.hide();
                     }
                     // 不是转移到另一个输入框，而是在 footer 非输入框处点击
@@ -13786,7 +13830,7 @@ KISSY.add('suggest', function(S, undefined) {
                 var form = self.textInput.form;
                 if (!form) return;
 
-                if(self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
+                if (self.fire(EVENT_BEFORE_SUBMIT, { form: form }) === false) return;
 
                 // 通过 js 提交表单时，不会触发 onsubmit 事件
                 // 需要 js 自己触发
@@ -13843,17 +13887,17 @@ KISSY.add('suggest', function(S, undefined) {
 
             DOM.addStyleSheet(
                 '.ks-suggest-container{background:white;border:1px solid #999;z-index:99999}'
-                + '.ks-suggest-shim{z-index:99998}'
-                + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
-                + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
-                + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
-                + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
-                + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
-                + '.ks-suggest-footer{padding:0 5px 5px}'
-                + '.ks-suggest-closebtn{float:right}'
-                + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
-                /* hacks */
-                + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
+                    + '.ks-suggest-shim{z-index:99998}'
+                    + '.ks-suggest-container li{color:#404040;padding:1px 0 2px;font-size:12px;line-height:18px;float:left;width:100%}'
+                    + '.ks-suggest-container .ks-selected{background-color:#39F;cursor:default}'
+                    + '.ks-suggest-key{float:left;text-align:left;padding-left:5px}'
+                    + '.ks-suggest-result{float:right;text-align:right;padding-right:5px;color:green}'
+                    + '.ks-suggest-container .ks-selected span{color:#FFF;cursor:default}'
+                    + '.ks-suggest-footer{padding:0 5px 5px}'
+                    + '.ks-suggest-closebtn{float:right}'
+                    + '.ks-suggest-container li,.ks-suggest-footer{overflow:hidden;zoom:1;clear:both}'
+                    /* hacks */
+                    + '.ks-suggest-container{*margin-left:2px;_margin-left:-2px;_margin-top:-3px}',
                 STYLE_ID);
         },
 
@@ -13876,7 +13920,7 @@ KISSY.add('suggest', function(S, undefined) {
          */
         start: function() {
             var self = this;
-            if(self.fire(EVENT_BEFORE_START) === false) return;
+            if (self.fire(EVENT_BEFORE_START) === false) return;
 
             Suggest.focusInstance = self;
 
@@ -13895,7 +13939,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this;
 
             Suggest.focusInstance = undefined;
-            if(self._timer) self._timer.cancel();
+            if (self._timer) self._timer.cancel();
             self._isRunning = false;
         },
 
@@ -13969,7 +14013,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this, config = self.config, script;
             //S.log('request data via script');
 
-            if (!ie) self.dataScript = undefined; // IE不需要重新创建 script 元素
+            if (!ie || ie9) self.dataScript = undefined; // IE不需要重新创建 script 元素
 
             if (!self.dataScript) {
                 script = doc.createElement('script');
@@ -13979,7 +14023,7 @@ KISSY.add('suggest', function(S, undefined) {
                 head.insertBefore(script, head.firstChild);
                 self.dataScript = script;
 
-                if (!ie) {
+                if (!ie || ie9) {
                     var t = S.now();
                     self._latestScriptTime = t;
                     DOM.attr(script, DATA_TIME, t);
@@ -13992,7 +14036,7 @@ KISSY.add('suggest', function(S, undefined) {
             }
 
             self.queryParams = config.queryName + '=' + encodeURIComponent(self.query);
-            if(self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
+            if (self.fire(EVENT_BEFORE_DATA_REQUEST) === false) return;
 
             // 注意：没必要加时间戳，是否缓存由服务器返回的Header头控制
             self.dataScript.src = self.dataSource + '&' + self.queryParams;
@@ -14006,11 +14050,11 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this, formattedData,
                 content = EMPTY, i, len, list, li, key, itemData;
             //S.log('handle response');
-            
+
             if (self._scriptDataIsOut) return; // 抛弃过期数据，否则会导致 bug：1. 缓存 key 值不对； 2. 过期数据导致的闪屏
 
             self.returnedData = data;
-            if(self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
+            if (self.fire(EVENT_DATA_RETURN, { data: data }) === false) return;
 
             // 格式化数据
             formattedData = self._formatData(self.returnedData);
@@ -14110,7 +14154,7 @@ KISSY.add('suggest', function(S, undefined) {
             var self = this;
             self._fillContent(content || EMPTY);
             self._fillFooter(footer || EMPTY);
-            
+
             // bugfix: 更改容器内容时, 调整 shim 大小
             if (self.isVisible()) self._setShimRegion();
         },
@@ -14286,7 +14330,7 @@ KISSY.add('suggest', function(S, undefined) {
     Suggest.callback = callback;
     S.Suggest = Suggest;
 
-}, { requires: ['core'] } );
+}, { requires: ['core'] });
 
 
 /**
@@ -14297,7 +14341,7 @@ KISSY.add('suggest', function(S, undefined) {
  * 一、数据处理很 core，但相对来说是简单的，由 requestData + handleResponse + formatData 等辅助方法组成
  * 需要注意两点：
  *  a. IE 中，改变 script.src, 会自动取消掉之前的请求，并发送新请求。非 IE 中，必须新创建 script 才行。这是
- *     requestData 方法中存在两种处理方式的原因。
+ *     requestData 方法中存在两种处理方式的原因。  --- IE9 中修改 src 不会发送新请求(qiaohua)
  *  b. 当网速很慢，数据返回时，用户的输入可能已改变，已经有请求发送出去，需要抛弃过期数据。目前采用加 data-time
  *     的解决方案。更好的解决方案是，调整 API，使得返回的数据中，带有 query 值。
  *
@@ -15331,13 +15375,13 @@ KISSY.add('calendar', function(S, undefined) {
 
     S.augment(Calendar, {
 
-		/**
-		 * 日历构造函数
-		 * @method 	_init
-		 * @param { string }	selector
-		 * @param { string }	config
-		 * @private
-		 */
+        /**
+         * 日历构造函数
+         * @method     _init
+         * @param { string }    selector
+         * @param { string }    config
+         * @private
+         */
         _init: function(selector, config) {
             var self = this,con = S.one(selector);
             self.id = self.C_Id = self._stamp(con);
@@ -15354,7 +15398,7 @@ KISSY.add('calendar', function(S, undefined) {
                 self.trigger = con;
                 self.con = S.Node('<div></div>');
                 S.one('body').append(self.con);
-				self.C_Id = self._stamp(self.con);
+                self.C_Id = self._stamp(self.con);
                 self.con.css({
                     'top':'0px',
                     'position':'absolute',
@@ -15365,7 +15409,8 @@ KISSY.add('calendar', function(S, undefined) {
 
             //创建事件中心
             //事件中心已经和Calendar合并
-            var EventFactory = function(){};
+            var EventFactory = function() {
+            };
             S.augment(EventFactory, S.EventTarget);
             var eventCenter = new EventFactory();
             S.mix(self, eventCenter);
@@ -15410,24 +15455,24 @@ KISSY.add('calendar', function(S, undefined) {
 
         },
 
-		/**
-		 * 用以给容器打上id的标记,容器有id则返回
-		 * @method _stamp
-		 * @param { Kissy-Node }
-		 * @return { string }
-		 * @private
-		 */
-		_stamp: function(el){
-			if(el.attr('id') === undefined || el.attr('id')===''){
-				el.attr('id','K_'+S.now());
-			}
-			return el.attr('id');
-		},
+        /**
+         * 用以给容器打上id的标记,容器有id则返回
+         * @method _stamp
+         * @param { Kissy-Node }
+            * @return { string }
+         * @private
+         */
+        _stamp: function(el) {
+            if (el.attr('id') === undefined || el.attr('id') === '') {
+                el.attr('id', 'K_' + S.now());
+            }
+            return el.attr('id');
+        },
 
         /**
          * 计算d天的前几天或者后几天，返回date
-		 * @method _showdate
-		 * @private
+         * @method _showdate
+         * @private
          */
         _showdate: function(n, d) {
             var uom = new Date(d - 0 + n * 86400000);
@@ -15437,14 +15482,14 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 创建日历外框的事件
-		 * @method _buildEvent
-		 * @private
+         * @method _buildEvent
+         * @private
          */
         _buildEvent: function() {
             var self = this;
-            if (!self.popup){
-				return this;
-			}
+            if (!self.popup) {
+                return this;
+            }
             //点击空白
             //flush event
             for (var i = 0; i < self.EV.length; i++) {
@@ -15456,39 +15501,47 @@ KISSY.add('calendar', function(S, undefined) {
                 //TODO e.target是裸的节点，这句不得不加，虽然在逻辑上并无特殊语义
                 e.target = S.Node(e.target);
                 //点击到日历上
-                if (e.target.attr('id') === self.C_Id){
-					return;
-				}
-                if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev')) && 
-                    e.target[0].tagName === 'A'){
-					return;
-				}
+                if (e.target.attr('id') === self.C_Id) {
+                    return;
+                }
+                if ((e.target.hasClass('ks-next') || e.target.hasClass('ks-prev')) &&
+                    e.target[0].tagName === 'A') {
+                    return;
+                }
                 //点击在trigger上
-                if (e.target.attr('id') == self.id){
-					return;
-				}
+                if (e.target.attr('id') == self.id) {
+                    return;
+                }
 
-				if(self.con.css('visibility') == 'hidden') return ;
-				var inRegion = function(dot,r){
-					if(dot[0]> r[0].x && dot[0]<r[1].x && dot[1] > r[0].y && dot[1] < r[1].y){
-						return true;
-					}else{
-						return false;
-					}
-				};
+                if (self.con.css('visibility') == 'hidden') return;
+                var inRegion = function(dot, r) {
+                    if (dot[0] > r[0].x && dot[0] < r[1].x && dot[1] > r[0].y && dot[1] < r[1].y) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
 
-				/*
-                if (!S.DOM.contains(S.one('#' + self.C_Id), e.target)) {
-				*/
-				if(!inRegion([e.pageX,e.pageY],[
-								{
-									x:self.con.offset().left,
-									y:self.con.offset().top
-								},
-								{
-									x:self.con.offset().left + self.con.width(),
-									y:self.con.offset().top + self.con.height()
-								}])){
+                // bugfix by jayli - popup状态下，点击选择月份的option时日历层关闭
+                if (self.con.contains(e.target) &&
+                    (e.target[0].nodeName.toLowerCase() === 'option' ||
+                        e.target[0].nodeName.toLowerCase() === 'select')) {
+                    return;
+                }
+
+                /*
+                 if (!S.DOM.contains(S.one('#' + self.C_Id), e.target)) {
+                 */
+                if (!inRegion([e.pageX,e.pageY], [
+                    {
+                        x:self.con.offset().left,
+                        y:self.con.offset().top
+                    },
+                    {
+                        x:self.con.offset().left + self.con.width(),
+                        y:self.con.offset().top + self.con.height()
+                    }
+                ])) {
                     self.hide();
                 }
             });
@@ -15523,10 +15576,10 @@ KISSY.add('calendar', function(S, undefined) {
             return this;
         },
 
-		/**
-		 * 改变日历是否显示的状态
-		 * @mathod toggle
-		 */
+        /**
+         * 改变日历是否显示的状态
+         * @mathod toggle
+         */
         toggle: function() {
             var self = this;
             if (self.con.css('visibility') == 'hidden') {
@@ -15538,7 +15591,7 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 显示日历
-		 * @method show
+         * @method show
          */
         show: function() {
             var self = this;
@@ -15554,7 +15607,7 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 隐藏日历
-		 * @method hide
+         * @method hide
          */
         hide: function() {
             var self = this;
@@ -15564,8 +15617,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 创建参数列表
-		 * @method _buildParam
-		 * @private
+         * @method _buildParam
+         * @private
          */
         _buildParam: function(o) {
             var self = this;
@@ -15579,7 +15632,7 @@ KISSY.add('calendar', function(S, undefined) {
                 self[key] = (v === undefined || v === null) ? def : v;
             }
 
-			//这种处理方式不错
+            //这种处理方式不错
             S.each({
                 date:        new Date(),
                 startDay:    0,
@@ -15595,15 +15648,15 @@ KISSY.add('calendar', function(S, undefined) {
                 triggerType: ['click']
             }, setParam);
 
-			// 支持用户传进来一个string
-			if(typeof o.triggerType === 'string'){
-				o.triggerType = [o.triggerType];
-			}
+            // 支持用户传进来一个string
+            if (typeof o.triggerType === 'string') {
+                o.triggerType = [o.triggerType];
+            }
 
             setParam(self.date, 'selected');
-            if(o.startDay){
-				self.startDay = (7 - o.startDay) % 7;
-			}
+            if (o.startDay) {
+                self.startDay = (7 - o.startDay) % 7;
+            }
 
             if (o.range !== undefined && o.range !== null) {
                 var s = self._showdate(1, new Date(o.range.start.getFullYear() + '/' + (o.range.start.getMonth() + 1) + '/' + (o.range.start.getDate())));
@@ -15624,8 +15677,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 过滤参数列表
-		 * @method _parseParam
-		 * @private
+         * @method _parseParam
+         * @private
          */
         _parseParam: function(o) {
             var self = this,i;
@@ -15641,8 +15694,8 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 模板函数
-		 * @method _templetShow
-		 * @private
+         * @method _templetShow
+         * @private
          */
         _templetShow: function(templet, data) {
             var str_in,value_s,i,m,value,par;
@@ -15667,12 +15720,12 @@ KISSY.add('calendar', function(S, undefined) {
 
         /**
          * 处理日期
-		 * @method _handleDate
-		 * @private
+         * @method _handleDate
+         * @private
          */
         _handleDate: function() {
             var self = this,
-            date = self.date;
+                date = self.date;
             self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
             self.day = date.getDate();//几号
             self.month = date.getMonth();//月份
@@ -15766,7 +15819,7 @@ KISSY.add('calendar', function(S, undefined) {
     });
 
     S.Calendar = Calendar;
-}, { requires: ['core'] } );
+}, { requires: ['core'] });
 
 /**
  * 2010-09-09 by lijing00333@163.com - 拔赤
