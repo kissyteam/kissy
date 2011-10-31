@@ -156,6 +156,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
              */
             _handleBlur:function(e) {
                 MenuButton.superclass._handleBlur.call(this, e);
+                // such as : click the document
                 this.set("collapsed", true);
             },
 

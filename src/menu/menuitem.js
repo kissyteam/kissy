@@ -66,7 +66,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         },
 
         containsElement:function(element) {
-            return this.get('view').containsElement(element);
+            return this.get('view') && this.get('view').containsElement(element);
         }
 
     }, {

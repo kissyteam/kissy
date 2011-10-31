@@ -129,7 +129,6 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
             });
         },
 
-
         containsElement:function(element) {
             if (this.get("view").containsElement(element)) {
                 return true;
