@@ -8,42 +8,72 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             ie = UA['ie'],
             nodeTypeIs = DOM._nodeTypeIs,
             isElementNode = DOM._isElementNode,
+            isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
             DEFAULT_DIV = doc.createElement(DIV),
             rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
-            RE_TAG = /<(\w+)/,
-            // Ref: http://jmrware.com/articles/2010/jqueryregex/jQueryRegexes.html#note_05
-            RE_SCRIPT = /<script([^>]*)>([^<]*(?:(?!<\/script>)<[^<]*)*)<\/script>/ig,
-            RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/,
-            RE_SCRIPT_SRC = /\ssrc=(['"])(.*?)\1/i,
-            RE_SCRIPT_CHARSET = /\scharset=(['"])(.*?)\1/i;
+            RE_TAG = /<([\w:]+)/,
+            rleadingWhitespace = /^\s+/,
+            lostLeadingWhitespace = ie && ie < 9,
+            rhtml = /<|&#?\w+;/,
+            RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
+
+        // help compression
+        function getElementsByTagName(el, tag) {
+            return el.getElementsByTagName(tag);
+        }
+
+        function cleanData(els) {
+            var Event = S.require("event");
+            if (Event) {
+                Event.detach(els);
+            }
+            DOM.removeData(els);
+        }
 
         S.mix(DOM, {
 
             /**
              * Creates a new HTMLElement using the provided html string.
              */
-            create: function(html, props, ownerDoc) {
-                if (nodeTypeIs(html, DOM.ELEMENT_NODE)
+            create: function(html, props, ownerDoc, _trim/*internal*/) {
+
+                if (isElementNode(html)
                     || nodeTypeIs(html, DOM.TEXT_NODE)) {
                     return DOM.clone(html);
                 }
-
-                if (!(html = S.trim(html))) {
-                    return null;
+                var ret = null;
+                if (!isString(html)) {
+                    return ret;
+                }
+                if (_trim === undefined) {
+                    _trim = true;
                 }
 
-                var ret = null,
-                    creators = DOM._creators,
+                if (_trim) {
+                    html = S.trim(html);
+                }
+
+                if (!html) {
+                    return ret;
+                }
+
+                var creators = DOM._creators,
+                    holder,
+                    whitespaceMatch,
+                    context = ownerDoc || doc,
                     m,
                     tag = DIV,
                     k,
                     nodes;
 
+                if (!rhtml.test(html)) {
+                    ret = context.createTextNode(html);
+                }
                 // 简单 tag, 比如 DOM.create('<p>')
-                if ((m = RE_SIMPLE_TAG.exec(html))) {
-                    ret = (ownerDoc || doc).createElement(m[1]);
+                else if ((m = RE_SIMPLE_TAG.exec(html))) {
+                    ret = context.createElement(m[1]);
                 }
                 // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
                 else {
@@ -54,7 +84,12 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                         tag = k.toLowerCase();
                     }
 
-                    nodes = (creators[tag] || creators[DIV])(html, ownerDoc).childNodes;
+                    holder = (creators[tag] || creators[DIV])(html, context);
+                    // ie 把前缀空白吃掉了
+                    if (lostLeadingWhitespace && (whitespaceMatch = html.match(rleadingWhitespace))) {
+                        holder.insertBefore(context.createTextNode(whitespaceMatch[0]), holder.firstChild);
+                    }
+                    nodes = holder.childNodes;
 
                     if (nodes.length === 1) {
                         // return single node, breaking parentNode ref from "fragment"
@@ -62,7 +97,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     }
                     else if (nodes.length) {
                         // return multiple nodes as a fragment
-                        ret = nl2frag(nodes, ownerDoc || doc);
+                        ret = nl2frag(nodes, context);
                     } else {
                         S.error(html + " : create node error");
                     }
@@ -73,7 +108,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
             _creators: {
                 div: function(html, ownerDoc) {
-                    var frag = ownerDoc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+                    var frag = ownerDoc && ownerDoc != doc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                     // html 为 <style></style> 时不行，必须有其他元素？
                     frag['innerHTML'] = "m<div>" + html + "<" + "/div>";
                     return frag.lastChild;
@@ -86,23 +121,55 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
              */
             html: function(selector, val, loadScripts, callback) {
+                // supports css selector/Node/NodeList
+                var els = DOM.query(selector),el = els[0];
+                if (!el) {
+                    return
+                }
                 // getter
                 if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-
-                    // only gets value on element nodes
+                    // only gets value on the first of element nodes
                     if (isElementNode(el)) {
                         return el['innerHTML'];
+                    } else {
+                        return null;
                     }
                 }
                 // setter
                 else {
-                    DOM.query(selector).each(function(elem) {
-                        if (isElementNode(elem)) {
-                            setHTML(elem, val, loadScripts, callback);
+
+                    var success = false;
+
+                    // faster
+                    if (isString(val) && ! val.match(/<(?:script|style)/i) &&
+                        (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
+                        !creatorsMap[ (val.match(RE_TAG) || ["",""])[1].toLowerCase() ]) {
+
+                        try {
+                            els.each(function(elem) {
+                                if (isElementNode(elem)) {
+                                    cleanData(getElementsByTagName(elem, "*"));
+                                    elem.innerHTML = val;
+                                }
+                            });
+                            success = true;
+                        } catch(e) {
                         }
-                    });
+
+                    }
+
+                    if (!success) {
+                        if (isString(val)) {
+                            val = DOM.create(val, 0, el.ownerDocument, false);
+                        }
+                        els.each(function(elem) {
+                            if (isElementNode(elem)) {
+                                DOM.empty(elem);
+                                DOM.append(val, elem, loadScripts);
+                            }
+                        });
+                    }
+                    callback && callback();
                 }
             },
 
@@ -114,15 +181,11 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              */
             remove: function(selector, keepData) {
                 DOM.query(selector).each(function(el) {
-                    if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
-                        // 清楚事件
-                        var Event = S.require("event");
-                        if (Event) {
-                            Event.detach(el.getElementsByTagName("*"));
-                            Event.detach(el);
-                        }
-                        DOM.removeData(el.getElementsByTagName("*"));
-                        DOM.removeData(el);
+                    if (!keepData && isElementNode(el)) {
+                        // 清楚数据
+                        var elChildren = getElementsByTagName(el, "*");
+                        cleanData(elChildren);
+                        cleanData(el);
                     }
 
                     if (el.parentNode) {
@@ -148,14 +211,14 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
                 var clone = elem.cloneNode(deep);
 
-                if (elem.nodeType == DOM.ELEMENT_NODE ||
-                    elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                if (isElementNode(elem) ||
+                    nodeTypeIs(elem, DOM.DOCUMENT_FRAGMENT_NODE)) {
                     // IE copies events bound via attachEvent when using cloneNode.
                     // Calling detachEvent on the clone will also remove the events
                     // from the original. In order to get around this, we use some
                     // proprietary methods to clear the events. Thanks to MooTools
                     // guys for this hotness.
-                    if (elem.nodeType == DOM.ELEMENT_NODE) {
+                    if (isElementNode(elem)) {
                         fixAttributes(elem, clone);
                     }
 
@@ -173,11 +236,17 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 return clone;
             },
 
+            empty:function(selector) {
+                DOM.query(selector).each(function(el) {
+                    DOM.remove(el.childNodes);
+                });
+            },
+
             _nl2frag:nl2frag
         });
 
         function processAll(fn, elem, clone) {
-            if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (nodeTypeIs(elem, DOM.DOCUMENT_FRAGMENT_NODE)) {
                 var eCs = elem.childNodes,
                     cloneCs = clone.childNodes,
                     fIndex = 0;
@@ -187,9 +256,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     }
                     fIndex++;
                 }
-            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
-                var elemChildren = elem.getElementsByTagName("*"),
-                    cloneChildren = clone.getElementsByTagName("*"),
+            } else if (isElementNode(elem)) {
+                var elemChildren = getElementsByTagName(elem, "*"),
+                    cloneChildren = getElementsByTagName(clone, "*"),
                     cIndex = 0;
                 while (elemChildren[cIndex]) {
                     if (cloneChildren[cIndex]) {
@@ -205,7 +274,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
         function cloneWidthDataAndEvent(src, dest) {
             var Event = S.require('event');
 
-            if (dest.nodeType !== DOM.ELEMENT_NODE && !DOM.hasData(src)) {
+            if (isElementNode(dest) && !DOM.hasData(src)) {
                 return;
             }
 
@@ -218,6 +287,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
             // 事件要特殊点
             if (Event) {
+                // _removeData 不需要？刚克隆出来本来就没
                 Event._removeData(dest);
                 Event._clone(src, dest);
             }
@@ -238,22 +308,23 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 dest.mergeAttributes(src);
             }
 
-            var nodeName = dest.nodeName.toLowerCase();
+            var nodeName = dest.nodeName.toLowerCase(),
+                srcChilds = src.childNodes;
 
             // IE6-8 fail to clone children inside object elements that use
             // the proprietary classid attribute value (rather than the type
             // attribute) to identify the type of content to display
             if (nodeName === "object" && !dest.childNodes.length) {
-                S.each(src.childNodes, function(c) {
-                    dest.appendChild(c);
-                });
+                for (var i = 0; i < srcChilds.length; i++) {
+                    dest.appendChild(srcChilds[i].cloneNode(true));
+                }
                 // dest.outerHTML = src.outerHTML;
             } else if (nodeName === "input" && (src.type === "checkbox" || src.type === "radio")) {
                 // IE6-8 fails to persist the checked state of a cloned checkbox
                 // or radio button. Worse, IE6-7 fail to give the cloned element
                 // a checked appearance if the defaultChecked value isn't also set
                 if (src.checked) {
-                    dest.defaultChecked = dest.checked = src.checked;
+                    dest['defaultChecked'] = dest.checked = src.checked;
                 }
 
                 // IE6-7 get confused and end up setting the value of a cloned
@@ -285,10 +356,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     DOM.attr(elem, props, true);
                 }
                 // document fragment
-                else if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
-                    S.each(elem.childNodes, function(child) {
-                        DOM.attr(child, props, true);
-                    });
+                else if (nodeTypeIs(elem, DOM.DOCUMENT_FRAGMENT_NODE)) {
+                    DOM.attr(elem.childNodes, props, true);
                 }
             }
             return elem;
@@ -303,11 +372,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 && nodes[0]) {
                 ownerDoc = ownerDoc || nodes[0].ownerDocument;
                 ret = ownerDoc.createDocumentFragment();
-
-                if (nodes.item) { // convert live list to static array
-                    nodes = S.makeArray(nodes);
-                }
-
+                nodes = S.makeArray(nodes);
                 for (i = 0,len = nodes.length; i < len; i++) {
                     ret.appendChild(nodes[i]);
                 }
@@ -318,137 +383,61 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             return ret;
         }
 
-
-        // 直接通过 innerHTML 设置 html
-        function setHTMLSimple(elem, html) {
-            html = (html + '').replace(RE_SCRIPT, ''); // 过滤掉所有 script
-            try {
-                elem['innerHTML'] = html;
-            }
-            catch(ex) {
-                S.log("set innerHTML error : ");
-                S.log(ex);
-                // remove any remaining nodes
-                while (elem.firstChild) {
-                    elem.removeChild(elem.firstChild);
-                }
-                // html == '' 时，无需再 appendChild
-                if (html) {
-                    elem.appendChild(DOM.create(html));
-                }
-            }
-        }
-
-        /**
-         * Update the innerHTML of this element, optionally searching for and processing scripts.
-         * @refer http://www.sencha.com/deploy/dev/docs/source/Element-more.html#method-Ext.Element-update
-         *        http://lifesinger.googlecode.com/svn/trunk/lab/2010/innerhtml-and-script-tags.html
-         */
-        function setHTML(elem, html, loadScripts, callback) {
-            if (!loadScripts) {
-                setHTMLSimple(elem, html);
-                S.isFunction(callback) && callback();
-                return;
-            }
-
-            var id = S.guid('ks-tmp-'),
-                re_script = new RegExp(RE_SCRIPT); // 防止
-
-            html += '<span id="' + id + '"><' + '/span>';
-
-            // 确保脚本执行时，相关联的 DOM 元素已经准备好
-            // 不依赖于浏览器特性，正则表达式自己分析
-            S.available(id, function() {
-                var hd = DOM.get('head'),
-                    match,
-                    attrs,
-                    srcMatch,
-                    charsetMatch,
-                    t,
-                    s,
-                    text;
-
-                re_script['lastIndex'] = 0;
-                while ((match = re_script.exec(html))) {
-                    attrs = match[1];
-                    srcMatch = attrs ? attrs.match(RE_SCRIPT_SRC) : false;
-                    // script via src
-                    if (srcMatch && srcMatch[2]) {
-                        s = doc.createElement('script');
-                        s.src = srcMatch[2];
-                        // set charset
-                        if ((charsetMatch = attrs.match(RE_SCRIPT_CHARSET)) && charsetMatch[2]) {
-                            s.charset = charsetMatch[2];
-                        }
-                        s.async = true; // make sure async in gecko
-                        hd.appendChild(s);
-                    }
-                    // inline script
-                    else if ((text = match[2]) && text.length > 0) {
-                        // sync , 同步
-                        S.globalEval(text);
-                    }
-                }
-
-                // 删除探测节点
-                (t = doc.getElementById(id)) && DOM.remove(t);
-
-                // 回调
-                S.isFunction(callback) && callback();
-            });
-
-            setHTMLSimple(elem, html);
-        }
-
         // only for gecko and ie
         // 2010-10-22: 发现 chrome 也与 gecko 的处理一致了
-        if (ie || UA['gecko'] || UA['webkit']) {
-            // 定义 creators, 处理浏览器兼容
-            var creators = DOM._creators,
-                create = DOM.create,
-                TABLE_OPEN = '<table>',
-                TABLE_CLOSE = '<' + '/table>',
-                RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
-                creatorsMap = {
-                    option: 'select',
-                    td: 'tr',
-                    tr: 'tbody',
-                    tbody: 'table',
-                    col: 'colgroup',
-                    legend: 'fieldset' // ie 支持，但 gecko 不支持
-                };
+        //if (ie || UA['gecko'] || UA['webkit']) {
+        // 定义 creators, 处理浏览器兼容
+        var creators = DOM._creators,
+            create = DOM.create,
+            TABLE_OPEN = '<table>',
+            TABLE_CLOSE = '<' + '/table>',
+            RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
+            creatorsMap = {
+                option: 'select',
+                optgroup:'select',
+                area:'map',
+                thead:'table',
+                td: 'tr',
+                th:'tr',
+                tr: 'tbody',
+                tbody: 'table',
+                tfoot:'table',
+                caption:'table',
+                colgroup:'table',
+                col: 'colgroup',
+                legend: 'fieldset' // ie 支持，但 gecko 不支持
+            };
 
-            for (var p in creatorsMap) {
-                (function(tag) {
-                    creators[p] = function(html, ownerDoc) {
-                        return create('<' + tag + '>' + html + '<' + '/' + tag + '>', null, ownerDoc);
-                    }
-                })(creatorsMap[p]);
-            }
-
-
-            // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
-            if (ie < 8) {
-                creators.tbody = function(html, ownerDoc) {
-                    var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
-                        tbody = frag.children['tags']('tbody')[0];
-
-                    if (frag.children.length > 1 && tbody && !RE_TBODY.test(html)) {
-                        tbody[PARENT_NODE].removeChild(tbody); // strip extraneous tbody
-                    }
-                    return frag;
-                };
-            }
-
-            S.mix(creators, {
-                optgroup: creators.option, // gecko 支持，但 ie 不支持
-                th: creators.td,
-                thead: creators.tbody,
-                tfoot: creators.tbody,
-                caption: creators.tbody,
-                colgroup: creators.tbody
-            });
+        for (var p in creatorsMap) {
+            (function(tag) {
+                creators[p] = function(html, ownerDoc) {
+                    return create('<' + tag + '>' + html + '<' + '/' + tag + '>', null, ownerDoc);
+                }
+            })(creatorsMap[p]);
         }
+
+
+        // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
+        if (ie < 8) {
+            creators.tbody = function(html, ownerDoc) {
+                var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
+                    tbody = frag.children['tags']('tbody')[0];
+
+                if (frag.children.length > 1 && tbody && !RE_TBODY.test(html)) {
+                    tbody[PARENT_NODE].removeChild(tbody); // strip extraneous tbody
+                }
+                return frag;
+            };
+        }
+
+        // fix table elements
+        S.mix(creators, {
+            thead: creators.tbody,
+            tfoot: creators.tbody,
+            caption: creators.tbody,
+            colgroup: creators.tbody
+        });
+        //}
         return DOM;
     },
     {
@@ -456,6 +445,9 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
     });
 
 /**
+ * 2011-10-13
+ * empty , html refactor
+ *
  * 2011-08-22
  * clone 实现，参考 jq
  *

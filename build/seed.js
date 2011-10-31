@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 8 22:37
+build time: Oct 31 11:04
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -74,7 +74,8 @@ build time: Sep 8 22:37
     host = seed.__HOST || (seed.__HOST = host || {});
 
     // shortcut and meta for seed.
-    S = host[S] = meta.mix(seed, meta, false);
+    // override previous kissy
+    S = host[S] = meta.mix(seed, meta);
 
     S.mix(S, {
 
@@ -88,7 +89,7 @@ build time: Sep 8 22:37
          */
         version: '1.20dev',
 
-        buildTime:'20110908223734',
+        buildTime:'20111031110455',
 
         /**
          * Returns a new object containing all of the properties of
@@ -336,6 +337,7 @@ build time: Sep 8 22:37
         HEX_BASE = 16,
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
+        STAMP_MARKER = '__~ks_stamped',
         RE_TRIM = /^\s+|\s+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
@@ -343,19 +345,26 @@ build time: Sep 8 22:37
         EQ = '=',
         // [[Class]] -> type pairs
         class2type = {},
+        // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
             '&amp;': '&',
             '&gt;': '>',
             '&lt;': '<',
-            '&quot;': '"'
+            '&#x60;':'`',
+            '&#x2F;':'/',
+            '&quot;': '"',
+            '&#x27;':"'"
         },
         reverseEntities = {},
         escapeReg,
-        unEscapeReg;
-
-    for (var k in htmlEntities) {
-        reverseEntities[htmlEntities[k]] = k;
-    }
+        unEscapeReg,
+        // - # $ ^ * ( ) + [ ] { } | \ , . ?
+        escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
+    (function() {
+        for (var k in htmlEntities) {
+            reverseEntities[htmlEntities[k]] = k;
+        }
+    })();
 
     function getEscapeReg() {
         if (escapeReg) {
@@ -389,6 +398,30 @@ build time: Sep 8 22:37
     }
 
     S.mix(S, {
+
+        /**
+         * stamp a object by guid
+         * @return guid associated with this object
+         */
+        stamp:function(o, readOnly) {
+            if (!o) {
+                return o
+            }
+            var guid = o[STAMP_MARKER];
+            if (guid) {
+                return guid;
+            }
+            if (!readOnly) {
+                try {
+                    guid = o[STAMP_MARKER] = S.guid(STAMP_MARKER);
+                }
+                catch(e) {
+                    guid = undefined;
+                }
+            }
+            return guid;
+        },
+
         noop:function() {
         },
 
@@ -479,24 +512,31 @@ build time: Sep 8 22:37
 
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
+         * 稍微改改就和规范一样了 :)
+         * @param input
+         * @param {Function} filter filter function
+         * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
-        clone: function(o, f) {
-            var marked = {},
-                ret = cloneInternal(o, f, marked);
-            S.each(marked, function(v) {
+        clone: function(input, filter) {
+            // Let memory be an association list of pairs of objects,
+            // initially empty. This is used to handle duplicate references.
+            // In each pair of objects, one is called the source object
+            // and the other the destination object.
+            var memory = {},
+                ret = cloneInternal(input, filter, memory);
+            S.each(memory, function(v) {
                 // 清理在源对象上做的标记
-                v = v.o;
+                v = v.input;
                 if (v[CLONE_MARKER]) {
                     try {
                         delete v[CLONE_MARKER];
                     } catch (e) {
                         S.log("delete CLONE_MARKER error : ");
-                        S.log(e);
                         v[CLONE_MARKER] = undefined;
                     }
                 }
             });
-            marked = undefined;
+            memory = undefined;
             return ret;
         },
 
@@ -801,6 +841,10 @@ build time: Sep 8 22:37
             });
         },
 
+        escapeRegExp:function(str) {
+            return str.replace(escapeRegExp, '\\$&');
+        },
+
         /**
          * unescape html to string
          * @param str {string} html2text
@@ -983,8 +1027,8 @@ build time: Sep 8 22:37
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
         },
 
-        /*! Based on YUI3*/
         /**
+         * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
          * @param {object} context ontext fn to run
@@ -1026,7 +1070,7 @@ build time: Sep 8 22:37
                     fn.apply(context || this, arguments);
                 });
             }
-            var bufferTimer = 0;
+            var bufferTimer = null;
 
             function f() {
                 f.stop();
@@ -1073,57 +1117,64 @@ build time: Sep 8 22:37
     }
 
 
-    function cloneInternal(o, f, marked) {
-        var ret = o, isArray, k, stamp;
-        // 引用类型要先记录
-        if (o &&
-            ((isArray = S.isArray(o)) ||
-                S.isPlainObject(o) ||
-                S.isDate(o) ||
-                S.isRegExp(o)
-                )) {
-            if (o[CLONE_MARKER]) {
-                // 对应的克隆后对象
-                return marked[o[CLONE_MARKER]].r;
+    function cloneInternal(input, f, memory) {
+        var destination = input,
+            isArray,
+            isPlainObject,
+            k,
+            stamp;
+        if (!input) {
+            return destination;
+        }
+
+        // If input is the source object of a pair of objects in memory,
+        // then return the destination object in that pair of objects .
+        // and abort these steps.
+        if (input[CLONE_MARKER]) {
+            // 对应的克隆后对象
+            return memory[input[CLONE_MARKER]].destination;
+        } else if (typeof input === "object") {
+            // 引用类型要先记录
+            var constructor = input.constructor;
+            if (S.inArray(constructor, [Boolean,String,Number,Date,RegExp])) {
+                destination = new constructor(input.valueOf());
             }
+            // ImageData , File, Blob , FileList .. etc
+            else if (isArray = S.isArray(input)) {
+                destination = f ? S.filter(input, f) : input.concat();
+            } else if (isPlainObject = S.isPlainObject(input)) {
+                destination = {};
+            }
+            // Add a mapping from input (the source object)
+            // to output (the destination object) to memory.
             // 做标记
-            o[CLONE_MARKER] = (stamp = S.guid());
-
-            // 先把对象建立起来
-            if (isArray) {
-                ret = f ? S.filter(o, f) : o.concat();
-            } else if (S.isDate(o)) {
-                ret = new Date(+o);
-            } else if (S.isRegExp(o)) {
-                ret = new RegExp(o);
-            } else {
-                ret = {};
-            }
-
+            input[CLONE_MARKER] = (stamp = S.guid());
             // 存储源对象以及克隆后的对象
-            marked[stamp] = {r:ret,o:o};
+            memory[stamp] = {destination:destination,input:input};
         }
+        // If input is an Array object or an Object object,
+        // then, for each enumerable property in input,
+        // add a new property to output having the same name,
+        // and having a value created from invoking the internal structured cloning algorithm recursively
+        // with the value of the property as the "input" argument and memory as the "memory" argument.
+        // The order of the properties in the input and output objects must be the same.
 
-
-        // array or plain object need to be copied recursively
-        if (o && (isArray || S.isPlainObject(o))) {
-            // clone it
-            if (isArray) {
-                for (var i = 0; i < ret.length; i++) {
-                    ret[i] = cloneInternal(ret[i], f, marked);
-                }
-            } else {
-                for (k in o) {
-                    if (k !== CLONE_MARKER &&
-                        o.hasOwnProperty(k) &&
-                        (!f || (f.call(o, o[k], k, o) !== FALSE))) {
-                        ret[k] = cloneInternal(o[k], f, marked);
-                    }
+        // clone it
+        if (isArray) {
+            for (var i = 0; i < destination.length; i++) {
+                destination[i] = cloneInternal(destination[i], f, memory);
+            }
+        } else if (isPlainObject) {
+            for (k in input) {
+                if (k !== CLONE_MARKER &&
+                    input.hasOwnProperty(k) &&
+                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                    destination[k] = cloneInternal(input[k], f, memory);
                 }
             }
         }
 
-        return ret;
+        return destination;
     }
 
     function compareObjects(a, b, mismatchKeys, mismatchValues) {
@@ -1164,8 +1215,6 @@ build time: Sep 8 22:37
         return (mismatchKeys.length === 0 && mismatchValues.length === 0);
     }
 
-    S.isNullOrUndefined = nullOrUndefined;
-
 })(KISSY, undefined);
 /**
  * setup data structure for kissy loader
@@ -1200,10 +1249,10 @@ build time: Sep 8 22:37
     if ("require" in this) {
         return;
     }
-    var ua=navigator.userAgent,doc=document;
+    var ua = navigator.userAgent,doc = document;
     S.mix(utils, {
-        docHead:function(){
-          return doc.getElementsByTagName('head')[0] || doc.documentElement;
+        docHead:function() {
+            return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
         isWebKit:!!ua.match(/AppleWebKit/),
         IE : !!ua.match(/MSIE/),
@@ -1276,14 +1325,16 @@ build time: Sep 8 22:37
          * 路径正则化，不能是相对地址
          * 相对地址则转换成相对页面的绝对地址
          * 用途:
-         * 1. package path 相对地址则相对于当前页面获取绝对地址
-         * 2. kissy.js 相对引用如何获取.
+         * package path 相对地址则相对于当前页面获取绝对地址
          */
         normalBasePath:function (path) {
-            if (path.charAt(path.length - 1) != '/') {
+            path = S.trim(path);
+
+            // path 为空时，不能变成 "/"
+            if (path && path.charAt(path.length - 1) != '/') {
                 path += "/";
             }
-            path = S.trim(path);
+
             /**
              * 一定要正则化，防止出现 ../ 等相对路径
              * 考虑本地路径
@@ -1293,6 +1344,15 @@ build time: Sep 8 22:37
                 path = loader.__pagePath + path;
             }
             return normalizePath(path);
+        },
+
+        /**
+         * 相对路径文件名转换为绝对路径
+         * @param path
+         */
+        absoluteFilePath:function(path) {
+            path = utils.normalBasePath(path);
+            return path.substring(0, path.length - 1);
         },
 
         //http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -1662,6 +1722,28 @@ build time: Sep 8 22:37
                 config = def;
                 def = name;
                 if (IE) {
+                    /*
+                     Kris Zyp
+                     2010年10月21日, 上午11时34分
+                     We actually had some discussions off-list, as it turns out the required
+                     technique is a little different than described in this thread. Briefly,
+                     to identify anonymous modules from scripts:
+                     * In non-IE browsers, the onload event is sufficient, it always fires
+                     immediately after the script is executed.
+                     * In IE, if the script is in the cache, it actually executes *during*
+                     the DOM insertion of the script tag, so you can keep track of which
+                     script is being requested in case define() is called during the DOM
+                     insertion.
+                     * In IE, if the script is not in the cache, when define() is called you
+                     can iterate through the script tags and the currently executing one will
+                     have a script.readyState == "interactive"
+                     See RequireJS source code if you need more hints.
+                     Anyway, the bottom line from a spec perspective is that it is
+                     implemented, it works, and it is possible. Hope that helps.
+                     Kris
+                     */
+                    // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                    // use onload to get module name is not right in ie
                     name = self.__findModuleNameByInteractive();
                     S.log("old_ie get modname by interactive : " + name);
                     self.__registerModule(name, def, config);
@@ -1677,7 +1759,6 @@ build time: Sep 8 22:37
                 return self;
             }
             S.log("invalid format for KISSY.add !", "error");
-            //S.error("invalid format for KISSY.add !");
             return self;
         }
     });
@@ -1766,7 +1847,7 @@ build time: Sep 8 22:37
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if("require" in this) {
+    if ("require" in this) {
         return;
     }
     S.mix(loader, {
@@ -1786,20 +1867,28 @@ build time: Sep 8 22:37
                 }
             }
             if (!re) {
+                // sometimes when read module file from cache , interactive status is not triggered
+                // module code is executed right after inserting into dom
+                // i has to preserve module name before insert module script into dom , then get it back here
                 S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
                 S.log("old_ie get modname from cache : " + self.__startLoadModuleName);
                 return self.__startLoadModuleName;
                 //S.error("找不到 interactive 状态的 script");
             }
 
-            var src = re.src;
-            S.log("interactive src :" + src);
-            //注意：模块名不包含后缀名以及参数，所以去除
-            //系统模块去除系统路径
-            if (src.lastIndexOf(self.Config.base, 0) === 0) {
+            // src 必定是绝对路径
+            // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
+            // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
+            var src = utils.absoluteFilePath(re.src);
+            // S.log("interactive src :" + src);
+            // 注意：模块名不包含后缀名以及参数，所以去除
+            // 系统模块去除系统路径
+            // 需要 base norm , 防止 base 被指定为相对路径
+            self.Config.base = utils.normalBasePath(self.Config.base);
+            if (src.lastIndexOf(self.Config.base, 0)
+                === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
-
             var packages = self.__packages;
             //外部模块去除包路径，得到模块名
             for (var p in packages) {
@@ -1809,10 +1898,7 @@ build time: Sep 8 22:37
                     return utils.removePostfix(src.substring(p_path.length));
                 }
             }
-
-            S.log("interactive script not have package config ：" + src, "error");
-            //S.error("interactive 状态的 script 没有对应包 ：" + src);
-            return undefined;
+            S.log("interactive script does not have package config ：" + src, "error");
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
@@ -2380,14 +2466,13 @@ build time: Sep 8 22:37
         baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i;
 
     function getBaseUrl(script) {
-        var src = script.src,
+        var src = utils.absoluteFilePath(script.src),
             prefix = script.getAttribute('data-combo-prefix') || '??',
             sep = script.getAttribute('data-combo-sep') || ',',
             parts = src.split(sep),
             base,
             part0 = parts[0],
             index = part0.indexOf(prefix);
-
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
@@ -2461,9 +2546,6 @@ build time: Sep 8 22:37
         // The functions to execute on DOM ready.
         readyList = [],
 
-        // Has the ready events already been bound?
-        readyBound = false,
-
         // The number of poll times.
         POLL_RETRYS = 500,
 
@@ -2515,18 +2597,10 @@ build time: Sep 8 22:37
          */
         globalEval: function(data) {
             if (data && RE_NOT_WHITE.test(data)) {
-                // Inspired by code by Andrea Giammarchi
-                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || docElem,
-                    script = doc.createElement('script');
-
-                // It works! All browsers support!
-                script.text = data;
-
-                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
-                // This arises when a base node is used.
-                head.insertBefore(script, head.firstChild);
-                head.removeChild(script);
+                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                ( window.execScript || function(data) {
+                    window[ "eval" ].call(window, data);
+                } )(data);
             }
         },
 
@@ -2539,10 +2613,6 @@ build time: Sep 8 22:37
          * @return {KISSY}
          */
         ready: function(fn) {
-            // Attach the listeners
-            if (!readyBound) {
-                _bindReady();
-            }
 
             // If the DOM is already ready
             if (isReady) {
@@ -2583,15 +2653,12 @@ build time: Sep 8 22:37
      * Binds ready events.
      */
     function _bindReady() {
-        var doScroll = doc.documentElement.doScroll,
+        var doScroll = docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function() {
                 _fireReady();
             };
-
-        // Set to true once it runs
-        readyBound = true;
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
@@ -2683,6 +2750,14 @@ build time: Sep 8 22:37
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
+
+    /**
+     * bind on start
+     * in case when you bind but the DOMContentLoaded has triggered
+     * then you has to wait onload
+     * worst case no callback at all
+     */
+    _bindReady();
 
 })(KISSY, undefined);
 /**

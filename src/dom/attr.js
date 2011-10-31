@@ -10,6 +10,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             TEXT = docElement.textContent === undefined ?
                 'innerText' : 'textContent',
             EMPTY = '',
+            nodeName = DOM._nodeName,
             isElementNode = DOM._isElementNode,
             rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
             rfocusable = /^(?:button|input|object|select|textarea)$/i,
@@ -383,7 +384,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     }
 
                     // browsers index elements by id/name on forms, give priority to attributes.
-                    if (el.nodeName.toLowerCase() == "form") {
+                    if (nodeName(el, "form")) {
                         attrNormalizer = attrNodeHook;
                     }
                     if (attrNormalizer && attrNormalizer.get) {
@@ -405,7 +406,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         }
                         var normalizer = attrNormalizer;
                         // browsers index elements by id/name on forms, give priority to attributes.
-                        if (el.nodeName.toLowerCase() == "form") {
+                        if (nodeName(el, "form")) {
                             normalizer = attrNodeHook;
                         }
                         if (normalizer && normalizer.set) {

@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/delegate", function(S, DOM, Event) {
-    var batchForType = Event._batchForType,
+    var batchForType = Event.__batchForType,
         delegateMap = {
             "focus":{
                 type:"focusin"
@@ -27,10 +27,6 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
-                // 自定义事件 delegate 无意义
-                if (target.isCustomEventTarget) {
-                    return;
-                }
                 var preType = type,handler = delegateHandler;
                 if (delegateMap[type]) {
                     type = delegateMap[preType].type;
@@ -52,11 +48,8 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
-                // 自定义事件 delegate 无意义
-                if (target.isCustomEventTarget) {
-                    return;
-                }
-                var preType = type,handler = delegateHandler;
+                var preType = type,
+                    handler = delegateHandler;
                 if (delegateMap[type]) {
                     type = delegateMap[preType].type;
                     handler = delegateMap[preType].handler || handler;
@@ -97,6 +90,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     // mouseenter/leave 特殊处理
     function mouseHandler(event, data) {
         var delegateTarget = this,
+            ret,
             target = event.target,
             relatedTarget = event.relatedTarget;
         // 恢复为用户想要的 mouseenter/leave 类型
@@ -107,35 +101,35 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
             if (target !== relatedTarget &&
                 (!relatedTarget || !DOM.contains(target, relatedTarget))
                 ) {
+                var currentTarget = event.currentTarget;
                 event.currentTarget = target;
-                return data.fn.call(data.scope || delegateTarget, event);
+                ret = data.fn.call(data.scope || delegateTarget, event);
+                event.currentTarget = currentTarget;
             }
         }
-        return undefined;
+        return ret;
     }
 
 
     function invokes(invokeds, event, data) {
-        var delegateTarget = this,
-            gret;
+        var self = this;
         if (invokeds) {
+            // 保护 currentTarget
+            // 否则 fire 影响 delegated listener 之后正常的 listener 事件
+            var currentTarget = event.currentTarget;
             for (var i = 0; i < invokeds.length; i++) {
                 event.currentTarget = invokeds[i];
-                var ret = data.fn.call(data.scope || delegateTarget, event);
-                if (ret === false ||
-                    event.isPropagationStopped ||
-                    event.isImmediatePropagationStopped) {
-                    if (ret === false) {
-                        gret = ret;
-                    }
-                    if (event.isPropagationStopped ||
-                        event.isImmediatePropagationStopped) {
-                        break;
-                    }
+                var ret = data.fn.call(data.scope || self, event);
+                // delegate 的 handler 操作事件和根元素本身操作事件效果一致
+                if (ret === false) {
+                    event.halt();
+                }
+                if (event.isPropagationStopped) {
+                    break;
                 }
             }
+            event.currentTarget = currentTarget;
         }
-        return gret;
     }
 
     return Event;
@@ -155,5 +149,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
  *   2.2 当 Event.fire("focusin"),直接执行 focusin 对应的 handlers 数组，但不会真正聚焦
  *
  * mouseenter/leave delegate 特殊处理， mouseenter 没有冒泡的概念，只能替换为 mouseover/out
+ *
+ * form submit 事件 ie<9 不会冒泡
  *
  **/

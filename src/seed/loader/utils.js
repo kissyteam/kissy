@@ -6,10 +6,10 @@
     if ("require" in this) {
         return;
     }
-    var ua=navigator.userAgent,doc=document;
+    var ua = navigator.userAgent,doc = document;
     S.mix(utils, {
-        docHead:function(){
-          return doc.getElementsByTagName('head')[0] || doc.documentElement;
+        docHead:function() {
+            return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
         isWebKit:!!ua.match(/AppleWebKit/),
         IE : !!ua.match(/MSIE/),
@@ -82,14 +82,16 @@
          * 路径正则化，不能是相对地址
          * 相对地址则转换成相对页面的绝对地址
          * 用途:
-         * 1. package path 相对地址则相对于当前页面获取绝对地址
-         * 2. kissy.js 相对引用如何获取.
+         * package path 相对地址则相对于当前页面获取绝对地址
          */
         normalBasePath:function (path) {
-            if (path.charAt(path.length - 1) != '/') {
+            path = S.trim(path);
+
+            // path 为空时，不能变成 "/"
+            if (path && path.charAt(path.length - 1) != '/') {
                 path += "/";
             }
-            path = S.trim(path);
+
             /**
              * 一定要正则化，防止出现 ../ 等相对路径
              * 考虑本地路径
@@ -99,6 +101,15 @@
                 path = loader.__pagePath + path;
             }
             return normalizePath(path);
+        },
+
+        /**
+         * 相对路径文件名转换为绝对路径
+         * @param path
+         */
+        absoluteFilePath:function(path) {
+            path = utils.normalBasePath(path);
+            return path.substring(0, path.length - 1);
         },
 
         //http://wiki.commonjs.org/wiki/Packages/Mappings/A

@@ -1,7 +1,7 @@
 /**
  * 提示补全组件
  * @module   suggest
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator lifesinger@gmail.com
  */
 KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 

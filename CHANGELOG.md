@@ -13,6 +13,10 @@ Legend of version history:
 
 History:
 --------
+
+### Happy 2nd Anniversary (2011/10/26)
+ - [!] Still Alive
+
 ### v1.1.6 -> v1.2.0 (2011/06/08)
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
@@ -27,9 +31,15 @@ History:
  - [!] 禁止使用原生 cloneNode ，使用 DOM.clone ，也不要设置自定义属性，使用 DOM.data
  - [*] DOM.remove 会自动清理当前节点以及子孙节点上注册的事件
  - [+] 增加 DOM.inner/outerWidth
+ - [x] checkbox/radio append/insert 状态保持
+ - [x] html(" <span></span>") 前缀空白保留
+  - [+] append/insert 都可以指定是否执行脚本节点的代码
+
+  
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
+ - [+] event 支持 submit change 冒泡绑定
  - [*] 自定义事件 listeners 放入对象自身保存，避免内存泄露
  - [+] event 增加 valuechange ,hashchange 事件兼容处理
  - [*] Event.detach = Event.remove
@@ -37,6 +47,7 @@ History:
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
  - [!] 字符串数组支持变化，例如 Event.on(['#xx','#yy'],...) 改写做 Event.on('#xx,#yy',...);
+
 
 
  - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）
@@ -60,6 +71,9 @@ History:
  - [x] bugfix anim 内存泄露
  - [+] anim 支持 window scrollTop/Left 动画
 
+ - [+] base ATTRS 支持 validator 配置，返回 false ，不设置值
+ - [+] base set/get 支持 "x.y.z" 子属性设置，要求 x 为原生简单对象 : {y:{z:xx}}
+
 
  - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
  - [x] Suggest fix: IE9 下无法更新数据
@@ -80,6 +94,7 @@ History:
  - [*] KISSY.param/unparam 增加数组处理选项
  - [+] KISSY.getScript 支持 css 载入后调用回调
  - [+] KISSY.getScript 支持除了 ie < 9外的 error 立即回调
+ - [+] 增加 KISSY.throttle/buffer/stamp/every/some/filter/map/bind/escapeHTML/unEscapeHTML/startsWidth/endsWidth
 
 
  - [x] Loader 初步重构，拆分文件

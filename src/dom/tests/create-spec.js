@@ -90,15 +90,22 @@ KISSY.use("dom", function(S, DOM) {
 
 
             // loadScripts
-            DOM.html(t, '<script>window.g_sethtml = 1;<\/script>', true);
+            DOM.html(t, '<script>window.g_sethtml = 1;<\/script>we', true);
+
+            DOM.html(t, '<script>window.g_sethtml2 = 1;<\/script>we');
 
             waitsFor(function() {
                 return window.g_sethtml == 1;
             }, "inline script in dom.html should run", 1000);
+
+            waits(500);
+
+
             runs(function() {
+                expect(window.g_sethtml2).toBeUndefined();
 
                 // src js
-                DOM.html(t, '<script src="test-dom-create.js"><\/script>', true);
+                DOM.html(t, '<script src="test-dom-create.js"><\/script>we', true);
 
                 waitsFor(function() {
                     return window.g_testLoadScriptViaInnerHTML;
@@ -109,12 +116,31 @@ KISSY.use("dom", function(S, DOM) {
 
 
         it("remove should works", function() {
-
             var n;
             document.body.appendChild(n = DOM.create("<div class='test-remove'>"));
             expect(S.query(".test-remove").length).toBe(1);
             DOM.remove(n);
             expect(S.query(".test-remove").length).toBe(0);
+        });
+
+        it("empty should works", function() {
+            var n;
+            document.body.appendChild(n = DOM.create("<div class='test-empty'><div></div>x</div>"));
+            expect(n.childNodes.length).toBe(2);
+            var c = n.firstChild;
+            DOM.data(c, "x", "y");
+            expect(DOM.data(c, "x")).toBe("y");
+            DOM.empty(n);
+            expect(n.childNodes.length).toBe(0);
+            expect(DOM.data(c, "x")).toBe(undefined);
+        });
+
+        it("fix leadingWhiteSpaces in ie<9", function() {
+            var n = DOM.create(" <div></div>");
+            expect(n.nodeName.toLowerCase()).toBe("div");
+            DOM.html(n, " <span></span>");
+            expect(n.firstChild.nodeType).toBe(DOM.TEXT_NODE);
+            DOM.remove(n);
         });
 
     });

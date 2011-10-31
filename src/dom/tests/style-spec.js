@@ -31,7 +31,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
         it("css works", function() {
 
-            var elem = DOM.create(' <div id="test-div" ' +
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2px; ' +
                 'background: transparent; ' +
                 '' +
@@ -130,7 +130,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
         it("width/height works", function() {
-            var elem = DOM.create(' <div id="test-div" ' +
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
                 '' +
@@ -147,7 +147,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
         it("inner/outer width/height works", function() {
-            var elem = DOM.create(' <div ' +
+            var elem = DOM.create('<div ' +
                 'style="' +
                 'position:absolute;' +
                 'margin:9px; ' +
@@ -178,7 +178,10 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
         it("show/hide works", function() {
-            var elem = DOM.create(' <div id="test-div" ' +
+            //document.domain = 'ali.com';
+            DOM.addStyleSheet("div {display:none;}", "test-display-style");
+
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
                 '' +
@@ -187,23 +190,27 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             document.body.appendChild(elem);
 
             DOM.css(elem, 'display', 'none');
-            DOM.show(elem);
-            expect(DOM.css(elem, 'display')).not.toBe('none');
+            try {
+                DOM.show(elem);
+                expect(DOM.css(elem, 'display')).toBe('block');
 
-            DOM.removeAttr(elem, 'style');
+                DOM.removeAttr(elem, 'style');
 
-            DOM.hide(elem);
+                DOM.hide(elem);
 
-            expect(DOM.css(elem, 'display')).toBe('none');
+                expect(DOM.css(elem, 'display')).toBe('none');
 
-            DOM.removeAttr(elem, 'style');
+                DOM.removeAttr(elem, 'style');
 
-            DOM.remove(elem);
+                DOM.remove(elem);
+            } finally {
+                DOM.remove("#test-display-style");
+            }
         });
 
 
         it("toggle works", function() {
-            var elem = DOM.create(' <div id="test-div" ' +
+            var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
                 '' +

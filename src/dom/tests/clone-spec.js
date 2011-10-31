@@ -42,7 +42,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
         }
 
         it("works with data and event", function() {
-            var div = DOM.create("<div><"+"/div>");
+            var div = DOM.create("<div><" + "/div>");
             DOM.append(div, "body");
             var x = {x:1};
             DOM.data(div, "web", x);
@@ -89,7 +89,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
 
 
         it("works with data and event when deep", function() {
-            var div = DOM.create("<div><span><"+"/span><"+"/div>");
+            var div = DOM.create("<div><span><" + "/span><" + "/div>");
             var span = DOM.get("span", div);
             DOM.append(div, "body");
             var x = {x:1};

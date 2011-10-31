@@ -1,6 +1,6 @@
 /**
  * Switchable Autoplay Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
 

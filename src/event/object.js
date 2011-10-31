@@ -10,7 +10,7 @@ KISSY.add('event/object', function(S, undefined) {
             'eventPhase fromElement handler keyCode layerX layerY metaKey ' +
             'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
-            'target toElement view wheelDelta which').split(' ');
+            'target toElement view wheelDelta which axis').split(' ');
 
     /**
      * KISSY's event system normalizes the event object according to
@@ -135,15 +135,11 @@ KISSY.add('event/object', function(S, undefined) {
          * on the current target.
          */
         stopImmediatePropagation: function() {
-            var e = this.originalEvent;
-
-            if (e.stopImmediatePropagation) {
-                e.stopImmediatePropagation();
-            } else {
-                this.stopPropagation();
-            }
-
-            this.isImmediatePropagationStopped = true;
+            var self = this;
+            self.isImmediatePropagationStopped = true;
+            // fixed 1.2
+            // call stopPropagation implicitly
+            self.stopPropagation();
         },
 
         /**

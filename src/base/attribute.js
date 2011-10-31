@@ -4,32 +4,199 @@
  */
 KISSY.add('base/attribute', function(S, undef) {
 
+    // atomic flag
+    Attribute.INVALID = {};
+
+    var INVALID = Attribute.INVALID;
+
     /**
-     * 提供属性管理机制
-     * @name Attribute
-     * @class
+     *
+     * @param host
+     * @param method
+     * @return method if fn or host[method]
      */
-    function Attribute() {
+    function normalFn(host, method) {
+        if (S.isString(method)) {
+            return host[method];
+        }
+        return method;
+    }
+
+
+    /**
+     * fire attribute value change
+     */
+    function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
+        attrName = attrName || name;
+        return self.fire(when + capitalFirst(name) + 'Change', {
+            attrName: attrName,
+            subAttrName:subAttrName,
+            prevVal: prevVal,
+            newVal: newVal
+        });
+    }
+
+
+    /**
+     *
+     * @param obj
+     * @param name
+     * @param create
+     * @return non-empty property value of obj
+     */
+    function ensureNonEmpty(obj, name, create) {
+        var ret = obj[name] || {};
+        if (create) {
+            obj[name] = ret;
+        }
+        return ret;
+    }
+
+    /**
+     *
+     * @param self
+     * @return non-empty attr config holder
+     */
+    function getAttrs(self) {
         /**
          * attribute meta information
          {
          attrName: {
          getter: function,
          setter: function,
+         // 注意：只能是普通对象以及系统内置类型，而不能是 new Xx()，否则用 valueFn 替代
          value: v, // default value
          valueFn: function
          }
          }
          */
-        this.__attrs = {};
+        return ensureNonEmpty(self, "__attrs", true);
+    }
 
+    /**
+     *
+     * @param self
+     * @return non-empty attr value holder
+     */
+    function getAttrVals(self) {
         /**
          * attribute value
          {
          attrName: attrVal
          }
          */
-        this.__attrVals = {};
+        return ensureNonEmpty(self, "__attrVals", true);
+    }
+
+    /**
+     * o, [x,y,z] => o[x][y][z]
+     * @param o
+     * @param path
+     */
+    function getValueByPath(o, path) {
+        for (var i = 0,len = path.length;
+             o != undef && i < len;
+             i++) {
+            o = o[path[i]];
+        }
+        return o;
+    }
+
+    /**
+     * o, [x,y,z], val => o[x][y][z]=val
+     * @param o
+     * @param path
+     * @param val
+     */
+    function setValueByPath(o, path, val) {
+        var rlen = path.length - 1,
+            s = o;
+        if (rlen >= 0) {
+            for (var i = 0; i < rlen; i++) {
+                o = o[path[i]];
+            }
+            if (o != undef) {
+                o[path[i]] = val;
+            } else {
+                s = undef;
+            }
+        }
+        return s;
+    }
+
+    function setInternal(self, name, value, opts, attrs) {
+        var ret;
+        opts = opts || {};
+        var dot = ".",
+            path,
+            subVal,
+            prevVal,
+            fullName = name;
+
+        if (name.indexOf(dot) !== -1) {
+            path = name.split(dot);
+            name = path.shift();
+        }
+
+        prevVal = self.get(name);
+
+        if (path) {
+            subVal = getValueByPath(prevVal, path);
+        }
+
+        // if no change, just return
+        if (!path && prevVal === value) {
+            return undefined;
+        } else if (path && subVal === value) {
+            return undefined;
+        }
+
+        if (path) {
+            var tmp = S.clone(prevVal);
+            setValueByPath(tmp, path, value);
+            value = tmp;
+        }
+
+        // check before event
+        if (!opts['silent']) {
+            if (false === __fireAttrChange(self, 'before', name, prevVal, value, fullName)) {
+                return false;
+            }
+        }
+        // set it
+        ret = self.__set(name, value);
+
+        if (ret === false) {
+            return ret;
+        }
+
+        // fire after event
+        if (!opts['silent']) {
+            value = getAttrVals(self)[name];
+            __fireAttrChange(self, 'after', name, prevVal, value, fullName);
+            if (!attrs) {
+                __fireAttrChange(self,
+                    '', '*',
+                    [prevVal], [value],
+                    [fullName], [name]);
+            } else {
+                attrs.push({
+                    prevVal:prevVal,
+                    newVal:value,
+                    attrName:name,
+                    subAttrName:fullName
+                });
+            }
+        }
+        return self;
+    }
+
+    /**
+     * 提供属性管理机制
+     * @name Attribute
+     * @class
+     */
+    function Attribute() {
     }
 
     S.augment(Attribute,
@@ -38,169 +205,225 @@ KISSY.add('base/attribute', function(S, undef) {
          */
         {
 
-            __getDefAttrs: function() {
-                return S.clone(this.__attrs);
+            /**
+             * @return un-cloned attr config collections
+             */
+            getAttrs: function() {
+                return getAttrs(this);
+            },
+
+            /**
+             * @return un-cloned attr value collections
+             */
+            getAttrVals:function() {
+                var self = this,
+                    o = {},
+                    a,
+                    attrs = getAttrs(self);
+                for (a in attrs) {
+                    o[a] = self.get(a);
+                }
+                return o;
             },
 
             /**
              * Adds an attribute with the provided configuration to the host object.
-             * The config supports the following properties:
+             * @param {String} name attrName
+             * @param {Object} attrConfig The config supports the following properties:
              * {
-             *     value: 'the default value',
-             *     valueFn: function
+             *     value: 'the default value', // 最好不要使用自定义类生成的对象，这时使用 valueFn
+             *     valueFn: function //
              *     setter: function
              *     getter: function
              * }
              * @param {boolean} override whether override existing attribute config ,default true
              */
             addAttr: function(name, attrConfig, override) {
-                var host = this;
-                if (!host.__attrs[name]) {
-                    host.__attrs[name] = S.clone(attrConfig || {});
+                var self = this,
+                    attrs = getAttrs(self),
+                    cfg = S.clone(attrConfig);
+                if (!attrs[name]) {
+                    attrs[name] = cfg;
                 } else {
-                    S.mix(host.__attrs[name], attrConfig, override);
+                    S.mix(attrs[name], cfg, override);
                 }
-                return host;
+                return self;
             },
 
             /**
              * Configures a group of attributes, and sets initial values.
              * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-             * @param {Object} values An object with attribute name/value pairs, defining the initial values to apply.
-             *        Values defined in the cfgs argument will be over-written by values in this argument.
+             * @param {Object} initialValues user defined initial values
              */
-            addAttrs: function(attrConfigs, values) {
-                var host = this;
-
+            addAttrs: function(attrConfigs, initialValues) {
+                var self = this;
                 S.each(attrConfigs, function(attrConfig, name) {
-                    if (name in values) {
-                        attrConfig.value = values[name];
-                    }
-                    host.addAttr(name, attrConfig);
+                    self.addAttr(name, attrConfig);
                 });
-
-                return host;
+                if (initialValues) {
+                    self.set(initialValues);
+                }
+                return self;
             },
 
             /**
              * Checks if the given attribute has been added to the host.
              */
             hasAttr: function(name) {
-                return name && this.__attrs.hasOwnProperty(name);
+                return name && getAttrs(this).hasOwnProperty(name);
             },
 
             /**
              * Removes an attribute from the host object.
              */
             removeAttr: function(name) {
-                var host = this;
+                var self = this;
 
-                if (host.hasAttr(name)) {
-                    delete host.__attrs[name];
-                    delete host.__attrVals[name];
+                if (self.hasAttr(name)) {
+                    delete getAttrs(self)[name];
+                    delete getAttrVals(self)[name];
                 }
 
-                return host;
+                return self;
             },
 
             /**
              * Sets the value of an attribute.
              */
-            set: function(name, value) {
-                var host = this,
-                    prevVal = host.get(name);
-
-                // if no change, just return
-                if (prevVal === value) {
-                    return;
+            set: function(name, value, opts) {
+                var ret,self = this;
+                if (S.isPlainObject(name)) {
+                    var all = name;
+                    name = 0;
+                    ret = true;
+                    opts = value;
+                    var attrs = [];
+                    for (name in all) {
+                        ret = setInternal(self, name, all[name], opts, attrs);
+                        if (ret === false) {
+                            break;
+                        }
+                    }
+                    var attrNames = [],
+                        prevVals = [],
+                        newVals = [],
+                        subAttrNames = [];
+                    S.each(attrs, function(attr) {
+                        prevVals.push(attr.prevVal);
+                        newVals.push(attr.newVal);
+                        attrNames.push(attr.attrName);
+                        subAttrNames.push(attr.subAttrName);
+                    });
+                    if (attrNames.length) {
+                        __fireAttrChange(self,
+                            '',
+                            '*',
+                            prevVals,
+                            newVals,
+                            subAttrNames,
+                            attrNames);
+                    }
+                    return ret;
                 }
 
-                // check before event
-                if (false === host.__fireAttrChange('before', name, prevVal, value)) {
-                    return;
-                }
+                return setInternal(self, name, value, opts);
 
-                // set it
-                host.__set(name, value);
 
-                // fire after event
-                host.__fireAttrChange('after', name, prevVal, host.__attrVals[name]);
-
-                return host;
-            },
-
-            __fireAttrChange: function(when, name, prevVal, newVal) {
-                return this.fire(when + capitalFirst(name) + 'Change', {
-                    attrName: name,
-                    prevVal: prevVal,
-                    newVal: newVal
-                });
             },
 
             /**
              * internal use, no event involved, just set.
-             * @private
+             * @protected overriden by mvc/model
              */
             __set: function(name, value) {
-                var host = this,
+                var self = this,
                     setValue,
                     // if host does not have meta info corresponding to (name,value)
                     // then register on demand in order to collect all data meta info
                     // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
                     // 因为属性在声明注册前可以直接设置值
-                    attrConfig = host.__attrs[name] = host.__attrs[name] || {},
+                    attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+                    validator = attrConfig['validator'],
                     setter = attrConfig['setter'];
 
-                // if setter has effect
-                if (setter) {
-                    setValue = setter.call(host, value);
+                // validator check
+                if (validator = normalFn(self, validator)) {
+                    if (!validator.call(self, value, name)) {
+                        return false;
+                    }
                 }
+
+                // if setter has effect
+                if (setter = normalFn(self, setter)) {
+                    setValue = setter.call(self, value, name);
+                }
+
+                if (setValue === INVALID) {
+                    return false;
+                }
+
                 if (setValue !== undef) {
                     value = setValue;
                 }
 
                 // finally set
-                host.__attrVals[name] = value;
+                getAttrVals(self)[name] = value;
             },
 
             /**
              * Gets the current value of the attribute.
              */
             get: function(name) {
-                var host = this, attrConfig, getter, ret;
+                var self = this,
+                    dot = ".",
+                    path,
+                    attrConfig,
+                    getter, ret;
 
-                attrConfig = host.__attrs[name];
-                getter = attrConfig && attrConfig['getter'];
+                if (name.indexOf(dot) !== -1) {
+                    path = name.split(dot);
+                    name = path.shift();
+                }
+
+                attrConfig = ensureNonEmpty(getAttrs(self), name);
+                getter = attrConfig['getter'];
 
                 // get user-set value or default value
                 //user-set value takes privilege
-                ret = name in host.__attrVals ?
-                    host.__attrVals[name] :
-                    host.__getDefAttrVal(name);
+                ret = name in getAttrVals(self) ?
+                    getAttrVals(self)[name] :
+                    self.__getDefAttrVal(name);
 
                 // invoke getter for this attribute
-                if (getter) {
-                    ret = getter.call(host, ret);
+                if (getter = normalFn(self, getter)) {
+                    ret = getter.call(self, ret, name);
+                }
+
+                if (path) {
+                    ret = getValueByPath(ret, path);
                 }
 
                 return ret;
             },
 
+            /**
+             * get default attribute value from valueFn/value
+             * @private
+             * @param name
+             */
             __getDefAttrVal: function(name) {
-                var host = this,
-                    attrConfig = host.__attrs[name],
-                    valFn, val;
+                var self = this,
+                    attrConfig = ensureNonEmpty(getAttrs(self), name),
+                    valFn,
+                    val;
 
-                if (!attrConfig) {
-                    return;
-                }
-
-                if ((valFn = attrConfig.valueFn)) {
-                    val = valFn.call(host);
+                if ((valFn = normalFn(self, attrConfig.valueFn))) {
+                    val = valFn.call(self);
                     if (val !== undef) {
                         attrConfig.value = val;
                     }
                     delete attrConfig.valueFn;
+                    getAttrs(self)[name] = attrConfig;
                 }
 
                 return attrConfig.value;
@@ -210,27 +433,35 @@ KISSY.add('base/attribute', function(S, undef) {
              * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
              * @param {String} name name of attribute
              */
-            reset: function (name) {
-                var host = this;
+            reset: function (name, opts) {
+                var self = this;
 
-                if (host.hasAttr(name)) {
-                    // if attribute does not have default value, then set to undefined.
-                    return host.set(name, host.__getDefAttrVal(name));
-                }
-
-                // reset all
-                for (name in host.__attrs) {
-                    if (host.hasAttr(name)) {
-                        host.reset(name);
+                if (S.isString(name)) {
+                    if (self.hasAttr(name)) {
+                        // if attribute does not have default value, then set to undefined.
+                        return self.set(name, self.__getDefAttrVal(name), opts);
+                    }
+                    else {
+                        return self;
                     }
                 }
 
-                return host;
+                opts = name;
+
+                var attrs = getAttrs(self),
+                    values = {};
+
+                // reset all
+                for (name in attrs) {
+                    values[name] = self.__getDefAttrVal(name);
+                }
+
+                self.set(values, opts);
+                return self;
             }
         });
 
     function capitalFirst(s) {
-        s += '';
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
@@ -238,3 +469,9 @@ KISSY.add('base/attribute', function(S, undef) {
 
     return Attribute;
 });
+
+/**
+ *  2011-10-18
+ *    get/set sub attribute value ,set("x.y",val) x 最好为 {} ，不要是 new Clz() 出来的
+ *    add validator
+ */

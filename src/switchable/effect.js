@@ -1,6 +1,6 @@
 /**
  * Switchable Effect Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefined) {
 

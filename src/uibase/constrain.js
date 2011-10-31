@@ -58,7 +58,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
         __renderUI:function() {
             var self = this,
-                attrs = self.__getDefAttrs(),
+                attrs = self.getAttrs(),
                 xAttr = attrs["x"],
                 yAttr = attrs["y"],
                 oriXSetter = xAttr["setter"],

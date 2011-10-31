@@ -65,6 +65,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
 
         it("should invoke dom method correctly on nodelist", function() {
+
             var nl = S.all(".test-div");
 
             //chain

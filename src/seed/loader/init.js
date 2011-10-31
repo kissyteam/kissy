@@ -25,14 +25,13 @@
         baseTestReg = /(seed|kissy)(-aio)?(-min)?\.js/i;
 
     function getBaseUrl(script) {
-        var src = script.src,
+        var src = utils.absoluteFilePath(script.src),
             prefix = script.getAttribute('data-combo-prefix') || '??',
             sep = script.getAttribute('data-combo-sep') || ',',
             parts = src.split(sep),
             base,
             part0 = parts[0],
             index = part0.indexOf(prefix);
-
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');

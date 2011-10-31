@@ -18,9 +18,6 @@
         // The functions to execute on DOM ready.
         readyList = [],
 
-        // Has the ready events already been bound?
-        readyBound = false,
-
         // The number of poll times.
         POLL_RETRYS = 500,
 
@@ -72,18 +69,10 @@
          */
         globalEval: function(data) {
             if (data && RE_NOT_WHITE.test(data)) {
-                // Inspired by code by Andrea Giammarchi
-                // http://webreflection.blogspot.com/2007/08/global-scope-evaluation-and-dom.html
-                var head = doc.getElementsByTagName('head')[0] || docElem,
-                    script = doc.createElement('script');
-
-                // It works! All browsers support!
-                script.text = data;
-
-                // Use insertBefore instead of appendChild to circumvent an IE6 bug.
-                // This arises when a base node is used.
-                head.insertBefore(script, head.firstChild);
-                head.removeChild(script);
+                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                ( window.execScript || function(data) {
+                    window[ "eval" ].call(window, data);
+                } )(data);
             }
         },
 
@@ -96,10 +85,6 @@
          * @return {KISSY}
          */
         ready: function(fn) {
-            // Attach the listeners
-            if (!readyBound) {
-                _bindReady();
-            }
 
             // If the DOM is already ready
             if (isReady) {
@@ -140,15 +125,12 @@
      * Binds ready events.
      */
     function _bindReady() {
-        var doScroll = doc.documentElement.doScroll,
+        var doScroll = docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function() {
                 _fireReady();
             };
-
-        // Set to true once it runs
-        readyBound = true;
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
@@ -240,5 +222,13 @@
     if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
         S.Config.debug = true;
     }
+
+    /**
+     * bind on start
+     * in case when you bind but the DOMContentLoaded has triggered
+     * then you has to wait onload
+     * worst case no callback at all
+     */
+    _bindReady();
 
 })(KISSY, undefined);

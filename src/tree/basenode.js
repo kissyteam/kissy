@@ -230,7 +230,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
             },
 
             _uiSetExpanded:function(v) {
-                var self = this,tree = self.get("tree");
+                var self = this,
+                    tree = self.get("tree");
                 self._computeClass("expanded-" + v);
                 if (v) {
                     tree.fire("expand", {
@@ -252,7 +253,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 var self = this;
                 self.set("expanded", true);
                 S.each(self.get("children"), function(c) {
-                    c.set("expanded", true);
+                    c.expandAll();
                 });
             },
 
@@ -260,7 +261,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 var self = this;
                 self.set("expanded", false);
                 S.each(self.get("children"), function(c) {
-                    c.set("expanded", false);
+                    c.collapseAll();
                 });
             }
         },

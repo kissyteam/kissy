@@ -15,6 +15,16 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
         },
         _uiSetDescribedby:function(describedby) {
             this.get("el").attr("aria-describedby", describedby);
+        },
+
+        _uiSetCollapseSide:function(side) {
+            var self = this,
+                cls = self.getCls("button-collapse-"),
+                el = self.get("el");
+            el.removeClass(cls + "left " + cls + "right");
+            if (side) {
+                el.addClass(cls + side);
+            }
         }
     }, {
         ATTRS:{
@@ -30,7 +40,8 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
 
                 // aria-describledby support
             describedby:{},
-            tooltip:{}
+            tooltip:{},
+            collapseSide:{}
         }
     });
 }, {

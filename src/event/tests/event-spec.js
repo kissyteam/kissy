@@ -352,9 +352,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
                 waits(0);
                 runs(function() {
                     // guarantee bubble
-                    if (!ie) {
-                        expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
-                    }
+                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
                 });
 
                 // blur the input element
@@ -364,9 +362,22 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
                 });
                 waits(0);
                 runs(function() {
-                    if (!ie) {
-                        expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
-                    }
+                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
+                });
+
+
+                runs(function() {
+                    Event.remove(container);
+                    result = [];
+                    input.focus();
+                });
+                waits(0);
+                runs(function() {
+                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner"].join(SEP));
+                });
+
+                runs(function() {
+                    Event.remove(input);
                 });
             });
 

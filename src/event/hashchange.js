@@ -15,6 +15,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         var POLL_INTERVAL = 50,
             doc = document,
             win = window,
+            IFRAME_TEMPLATE = "<html><title>" + (doc.title || "") +
+                " - {hash}</title><body>{hash}</body></html>",
             docMode = doc['documentMode'],
             getHash = function() {
                 // ie 返回 "" ，其他返回 "#"
@@ -24,7 +26,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             },
             timer,
 
-            lastHash = getHash(),
+            lastHash,
 
             poll = function () {
                 var hash = getHash();
@@ -37,7 +39,9 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
             hashChange = ie < 8 ? function(hash) {
                 //debugger
-                var html = '<html><body>' + hash + '<' + '/body><' + '/html>',
+                var html = S.substitute(IFRAME_TEMPLATE, {
+                    hash: hash
+                }),
                     doc = iframe.contentWindow.document;
                 try {
                     // 写入历史 hash
@@ -144,6 +148,9 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 if (this !== win) {
                     return;
                 }
+                // 第一次启动 hashchange 时取一下，不能类库载入后立即取
+                // 防止类库嵌入后，手动修改过 hash，
+                lastHash = getHash();
                 // 不用注册 dom 事件
                 setup();
             },

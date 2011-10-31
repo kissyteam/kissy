@@ -11,6 +11,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         isArray = S.isArray,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
+        nodeName = DOM._nodeName,
         push = Array.prototype.push,
         SPACE = ' ',
         isString = S.isString,
@@ -124,7 +125,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                             // 处理 #id.cls
                             else {
                                 t = getElementById(id, context);
-                                if (t && DOM.hasClass(t, cls)) {
+                                if (t && hasClass(t, cls)) {
                                     ret = [t];
                                 }
                             }
@@ -314,20 +315,22 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return [];
         }
-        var els = makeArray(context.getElementsByClassName(cls)),
-            ret = els,
+        var els = context.getElementsByClassName(cls),
+            ret,
             i = 0,
             len = els.length,
             el;
 
         if (tag && tag !== ANY) {
-            ret = makeArray();
+            ret = [];
             for (; i < len; ++i) {
                 el = els[i];
-                if (eqTagName(el, tag)) {
+                if (nodeName(el, tag)) {
                     ret.push(el);
                 }
             }
+        } else {
+            ret = makeArray(els);
         }
         return ret;
     } : ( doc.querySelectorAll ? function(cls, tag, context) {
@@ -337,22 +340,22 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (!context) {
             return [];
         }
-        var els = makeArray(context.getElementsByTagName(tag || ANY)),
+        var els = context.getElementsByTagName(tag || ANY),
             ret = [],
             i = 0,
             len = els.length,
             el;
         for (; i < len; ++i) {
             el = els[i];
-            if (DOM.hasClass(el, cls)) {
+            if (hasClass(el, cls)) {
                 ret.push(el);
             }
         }
         return ret;
     });
 
-    function eqTagName(el, tagName) {
-        return el.nodeName.toLowerCase() == tagName.toLowerCase();
+    function hasClass(el, cls) {
+        return DOM.__hasClass(el, cls);
     }
 
     // throw exception
@@ -385,6 +388,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
             // 默认仅支持最简单的 tag.cls 或 #id 形式
             if (isString(filter) &&
+                (filter = S.trim(filter)) &&
                 (match = REG_QUERY.exec(filter))) {
                 id = match[1];
                 tag = match[2];
@@ -395,12 +399,12 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
                         // 指定 tag 才进行判断
                         if (tag) {
-                            tagRe = eqTagName(elem, tag);
+                            tagRe = nodeName(elem, tag);
                         }
 
                         // 指定 cls 才进行判断
                         if (cls) {
-                            clsRe = DOM.hasClass(elem, cls);
+                            clsRe = hasClass(elem, cls);
                         }
 
                         return clsRe && tagRe;
@@ -437,7 +441,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     });
     return DOM;
 }, {
-    requires:["dom/base"]
+    requires:["./base"]
 });
 
 /**

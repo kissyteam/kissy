@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 5 21:29
+build time: Sep 22 13:54
 */
 KISSY.add("dd/ddm",function(k,l,m,g,h){function d(){d.superclass.constructor.apply(this,arguments);this._init()}function a(c){var f=c.offset();return{left:f.left,right:f.left+c.outerWidth(),top:f.top,bottom:f.top+c.outerHeight()}}function b(c,f){return c.left<=f.left&&c.right>=f.left&&c.top<=f.top&&c.bottom>=f.top}function e(c){if(c.top>=c.bottom||c.left>=c.right)return 0;return(c.right-c.left)*(c.bottom-c.top)}function i(c,f){return{left:Math.max(c.left,f.left),right:Math.min(c.right,f.right),top:Math.max(c.top,
 f.top),bottom:Math.min(c.bottom,f.bottom)}}var j=document;d.ATTRS={prefixCls:{value:"ks-dd-"},bufferTime:{value:200},activeDrag:{},activeDrop:{},drops:{value:[]}};k.extend(d,h,{_regDrop:function(c){this.get("drops").push(c)},_unregDrop:function(c){c=k.indexOf(c,this.get("drops"));c!=-1&&this.get("drops").splice(c,1)},_init:function(){this._showShimMove=k.throttle(this._move,30,this)},_move:function(c){var f=this.get("activeDrag");if(f){c.preventDefault();f._move(c);this._notifyDropsMove(c)}},_notifyDropsMove:function(c){var f=

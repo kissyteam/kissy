@@ -1,7 +1,7 @@
 /**
  * 数据延迟加载组件
  * @module   datalazyload
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator lifesinger@gmail.com
  */
 KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
 

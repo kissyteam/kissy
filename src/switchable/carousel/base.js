@@ -1,6 +1,6 @@
 /**
  * Carousel Widget
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefined) {
 

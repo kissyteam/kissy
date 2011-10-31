@@ -1,3 +1,7 @@
+/**
+ * KISSY Scalable Event Framework
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
     Event.KeyCodes = KeyCodes;
     Event.Target = Target;
@@ -13,6 +17,9 @@ KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
         "event/hashchange",
         "event/valuechange",
         "event/delegate",
-        "event/mouseenter"
+        "event/mouseenter",
+        "event/submit",
+        "event/change",
+        "event/mousewheel"
     ]
 });

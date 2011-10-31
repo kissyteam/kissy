@@ -46,6 +46,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                 /*
                  url:"",
                  context:null,
+                 // 单位秒!!
                  timeout: 0,
                  data: null,
                  // 可取json | jsonp | script | xml | html | text | null | undefined
@@ -54,7 +55,11 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  password: null,
                  cache: null,
                  mimeType:null,
-                 xdr:{},
+                 xdr:{
+                 subDomain:{
+                 proxy:'http://xx.t.com/proxy.html'
+                 }
+                 },
                  headers: {},
                  xhrFields:{},
                  // jsonp script charset
@@ -180,10 +185,11 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             if (c.async && c.timeout > 0) {
                 xhr.timeoutTimer = setTimeout(function() {
                     xhr.abort("timeout");
-                }, c.timeout);
+                }, c.timeout * 1000);
             }
 
             try {
+                // flag as sending
                 xhr.state = 1;
                 transport.send();
             } catch (e) {

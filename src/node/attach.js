@@ -43,6 +43,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 //            "toggle",
             "scrollIntoView",
             "remove",
+            "empty",
             "removeData",
             "hasData",
             "unselectable"
