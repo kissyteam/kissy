@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 19 11:16
+build time: Oct 31 11:05
 */
 /**
  * @module  dom-attr
@@ -600,8 +600,8 @@ KISSY.add('dom/base', function(S, undefined) {
         return node && node.nodeType === val;
     }
 
-    var DOM = {
 
+    var NODE_TYPE = {
         /**
          * enumeration of dom node type
          * @type Number
@@ -617,7 +617,12 @@ KISSY.add('dom/base', function(S, undefined) {
         DOCUMENT_NODE : 9,
         DOCUMENT_TYPE_NODE : 10,
         DOCUMENT_FRAGMENT_NODE : 11,
-        NOTATION_NODE : 12,
+        NOTATION_NODE : 12
+    };
+    var DOM = {
+
+        _NODE_TYPE:NODE_TYPE,
+
 
         /**
          * 是不是 element node
@@ -657,6 +662,8 @@ KISSY.add('dom/base', function(S, undefined) {
             return e && e.nodeName.toLowerCase() === name.toLowerCase();
         }
     };
+
+    S.mix(DOM, NODE_TYPE);
 
     return DOM;
 
@@ -1378,7 +1385,13 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                     objectOps.removeData(ob, undefined);
                 }
             } else {
-                delete ob[EXPANDO];
+                try {
+                    // ob maybe window in iframe
+                    // ie will throw error
+                    delete ob[EXPANDO];
+                } catch(e) {
+                    ob[EXPANDO] = null;
+                }
             }
         }
     };
@@ -2520,6 +2533,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
             // 默认仅支持最简单的 tag.cls 或 #id 形式
             if (isString(filter) &&
+                (filter = S.trim(filter)) &&
                 (match = REG_QUERY.exec(filter))) {
                 id = match[1];
                 tag = match[2];

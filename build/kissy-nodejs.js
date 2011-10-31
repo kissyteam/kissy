@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 28 16:31
+build time: Oct 31 11:04
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Oct 28 16:31
          */
         version: '1.20dev',
 
-        buildTime:'20111028163153',
+        buildTime:'20111031110455',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4611,7 +4611,13 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                     objectOps.removeData(ob, undefined);
                 }
             } else {
-                delete ob[EXPANDO];
+                try {
+                    // ob maybe window in iframe
+                    // ie will throw error
+                    delete ob[EXPANDO];
+                } catch(e) {
+                    ob[EXPANDO] = null;
+                }
             }
         }
     };

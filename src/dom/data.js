@@ -75,7 +75,13 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                     objectOps.removeData(ob, undefined);
                 }
             } else {
-                delete ob[EXPANDO];
+                try {
+                    // ob maybe window in iframe
+                    // ie will throw error
+                    delete ob[EXPANDO];
+                } catch(e) {
+                    ob[EXPANDO] = null;
+                }
             }
         }
     };
