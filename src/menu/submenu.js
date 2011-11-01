@@ -7,7 +7,19 @@ KISSY.add(
     "menu/submenu",
     function(S, Event, UIBase, Component, MenuItem, SubMenuRender) {
 
+
+        
+
+        function _onDocClick(e) {
+            var menu = this.get("menu");
+            // only hide this menu, if click outside this menu and this menu's submenus
+            if (!menu.containsElement(e.target)) {
+                menu.hide();
+            }
+        }
+
         var KeyCodes = Event.KeyCodes,
+            doc = document,
             MENU_DELAY = 300;
         /**
          * Class representing a submenu that can be added as an item to other menus.
@@ -40,6 +52,13 @@ KISSY.add(
                             });
                         });
 
+                        // if not bind doc click for parent menu
+                        // if already bind, then if parent menu hide, menu will hide too
+                        if (!parentMenu.__bindDocClickToHide) {
+                            Event.on(doc, "click", _onDocClick, self);
+                            menu.__bindDocClickToHide = 1;
+                        }
+
                         // 通知父级菜单
                         menu.on("afterActiveItemChange", function(ev) {
                             parentMenu.set("activeItem", ev.newVal);
@@ -54,6 +73,8 @@ KISSY.add(
                     // 保险点用 beforeHighlightedItemChange
                     menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
                 },
+
+
 
                 /**
                  * @inheritDoc
@@ -215,6 +236,8 @@ KISSY.add(
                         menu = this.get("menu");
 
                     self.clearTimers();
+
+                    Event.remove(doc, "click", _onDocClick, self);
 
                     //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
                     if (parentMenu) {

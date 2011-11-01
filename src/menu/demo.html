@@ -36,7 +36,12 @@
 
 <h2>known issue</h2>
 <ol>
-    <li>点击文档不能关闭子菜单</li>
+    <li>
+        <del>点击文档不能关闭子菜单</del>
+    </li>
+    <li>
+        <del>鼠标脱离菜单，菜单自动隐藏（需配置）</del>
+    </li>
 </ol>
 <script src="../../build/kissy.js"></script>
 <script>
@@ -55,6 +60,10 @@
 
                 var sb = new Menu.PopupMenu({
                     prefixCls:"goog-",
+                    // boolean，是否鼠标脱离菜单后自动隐藏
+                    autoHideOnMouseLeave:true,
+                    // ms，鼠标脱离菜单多长时间后自动隐藏
+                    autoHideDelay:300,
                     elStyle:{
                         color:"red"
                     }
@@ -73,6 +82,10 @@
                 if (true) {
                     var sb2 = new Menu.PopupMenu({
                         prefixCls:"goog-",
+                        // boolean，是否鼠标脱离菜单后自动隐藏
+                        autoHideOnMouseLeave:true,
+                        // ms，鼠标脱离菜单多长时间后自动隐藏
+                        autoHideDelay:300,
                         children:[
                             new Menu.Item({
                                 prefixCls:"goog-",
