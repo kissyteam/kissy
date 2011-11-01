@@ -238,7 +238,8 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
             // get length
             n = panels.length;
-            self.length = n / cfg.steps;
+            // fix self.length 不为整数的情况, 会导致之后的判断 非0, by qiaohua 20111101
+            self.length = Math.ceil(n / cfg.steps);
 
             // 自动生成 triggers
             if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
