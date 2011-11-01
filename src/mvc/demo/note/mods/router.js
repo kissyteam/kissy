@@ -30,7 +30,7 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
                 // 新建
                 notes.create(note, {
                     success:function() {
-                        self.navigate("");
+                        mvc.Router.navigate("");
                     }
                 });
             } else {
@@ -39,7 +39,7 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
                 // 修改
                 exits.save({
                     success:function() {
-                        self.navigate("");
+                        mvc.Router.navigate("");
                     }
                 });
             }

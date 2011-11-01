@@ -5,8 +5,26 @@
 KISSY.add('mvc/router', function(S, Event, Base) {
     var queryReg = /\?(.*)/,
         grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
-        hashPrefix = /^#/,
-        loc = location;
+        hashPrefix = /^#(?:!)?/,
+        loc = location,
+        // all registered route instance
+        allRoutes = [],
+        __routerMap = "__routerMap";
+
+
+    function findFirstCaptureGroupIndex(regStr) {
+        var r;
+        for (var i = 0; i < regStr.length; i++) {
+            r = regStr.charAt(i);
+            // skip escaped reg meta char
+            if (r == "\\") {
+                i++;
+            } else if (r == "(") {
+                return i;
+            }
+        }
+        throw new Error("impossible to not to get capture group in kissy mvc route");
+    }
 
     function getHash() {
         return loc.hash.replace(hashPrefix, "");
@@ -22,41 +40,123 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         return ret;
     }
 
-    function matchRoute(self, path, routeRegs) {
-        var fullPath = path;
+
+    /**
+     * match url with route intelligently (always get optimal result)
+     */
+    function matchRoute(path) {
+        var fullPath = path,
+            query,
+            arg,
+            finalRoute = 0,
+            finalMatchLength = -1,
+            finalRegStr = "",
+            finalFirstCaptureGroupIndex = -1,
+            finalCallback = 0,
+            finalRouteName = "",
+            finalParam = 0;
+
         path = fullPath.replace(queryReg, "");
-        S.each(routeRegs, function(desc) {
-            var reg = desc.reg,
-                paramNames = desc.paramNames,
-                m,
-                name = desc.name,
-                callback = desc.callback;
-            if (m = path.match(reg)) {
-                // match all result item shift out
-                m.shift();
-                var params = {};
-                S.each(m, function(sm, i) {
-                    params[paramNames[i]] = sm;
-                });
-                var query = getQuery(fullPath);
-                callback.apply(self, [params,query]);
-                var arg = {
-                    name:name,
-                    paths:params,
-                    query:query
-                };
-                self.fire('route:' + name, arg);
-                self.fire('route', arg);
+
+        // user input : /xx/yy/zz
+        S.each(allRoutes, function(route) {
+            var routeRegs = route[__routerMap],
+                // match exactly
+                exactlyMatch = 0;
+            S.each(routeRegs, function(desc) {
+                    var reg = desc.reg,
+                        regStr = desc.regStr,
+                        paramNames = desc.paramNames,
+                        firstCaptureGroupIndex = -1,
+                        m,
+                        name = desc.name,
+                        callback = desc.callback;
+                    if (m = path.match(reg)) {
+                        // match all result item shift out
+                        m.shift();
+
+                        function genParam() {
+                            var params = {};
+                            S.each(m, function(sm, i) {
+                                params[paramNames[i]] = sm;
+                            });
+                            return params;
+                        }
+
+                        function upToFinal() {
+                            finalRegStr = regStr;
+                            finalFirstCaptureGroupIndex = firstCaptureGroupIndex;
+                            finalCallback = callback;
+                            finalParam = genParam();
+                            finalRoute = route;
+                            finalRouteName = name;
+                            finalMatchLength = m.length;
+                        }
+
+                        // route: /xx/yy/zz
+                        if (!m.length) {
+
+                            upToFinal();
+                            exactlyMatch = 1;
+                            return false;
+
+                        } else {
+
+                            firstCaptureGroupIndex = findFirstCaptureGroupIndex(regStr);
+
+                            // final route : /*
+                            // now route : /xx/*
+                            if (firstCaptureGroupIndex > finalFirstCaptureGroupIndex) {
+                                upToFinal();
+                            }
+
+                            // final route : /xx/:id/:id
+                            // now route :  /xx/:id/zz
+                            else if (
+                                firstCaptureGroupIndex == finalFirstCaptureGroupIndex &&
+                                    finalMatchLength >= m.length
+                                ) {
+                                if (m.length < finalMatchLength) {
+                                    upToFinal()
+                                } else if (regStr.length > finalRegStr.length) {
+                                    upToFinal();
+                                }
+                            }
+
+                            // first route has priority
+                            else if (!finalRoute) {
+                                upToFinal();
+                            }
+                        }
+
+                    }
+                }
+            );
+
+            if (exactlyMatch) {
                 return false;
             }
         });
+
+
+        if (finalParam) {
+            query = getQuery(fullPath);
+            finalCallback.apply(finalRoute, [finalParam,query]);
+            arg = {
+                name:name,
+                paths:finalParam,
+                query:query
+            };
+            finalRoute.fire('route:' + name, arg);
+            finalRoute.fire('route', arg);
+        }
     }
 
     /**
      * transform route declaration to router reg
      * @param str
      *         /search/:q
-     *         /user/*
+     *         /user/*path
      */
     function transformRouterReg(str, callback) {
         var name = str,
@@ -80,6 +180,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
             name:name,
             paramNames:paramNames,
             reg:new RegExp("^" + str + "$"),
+            regStr:str,
             callback:callback
         }
     }
@@ -94,7 +195,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
     function _afterRoutesChange(e) {
         var self = this;
-        self.__routerMap = {};
+        self[__routerMap] = {};
         self.addRoutes(e.newVal);
     }
 
@@ -103,6 +204,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         Router.superclass.constructor.apply(self, arguments);
         self.on("afterRoutesChange", _afterRoutesChange, self);
         _afterRoutesChange.call(self, {newVal:self.get("routes")});
+        allRoutes.push(self);
     }
 
     Router.ATTRS = {
@@ -116,8 +218,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
     };
 
     function hashChange() {
-        var self = this;
-        matchRoute(self, getHash(), self.__routerMap);
+        matchRoute(getHash());
     }
 
     S.extend(Router, Base, {
@@ -131,28 +232,26 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         addRoutes:function(routes) {
             var self = this;
             S.each(routes, function(callback, name) {
-                self.__routerMap[name] = transformRouterReg(name, normFn(self, callback));
+                self[__routerMap][name] = transformRouterReg(name, normFn(self, callback));
             });
-        },
-
+        }
+    }, {
         navigate:function(path, opts) {
-            loc.hash = path;
+            loc.hash = "!" + path;
             opts = opts || {};
             if (opts.triggerRoute && getHash() == path) {
-                hashChange.call(this);
+                hashChange();
             }
         },
-
         start:function(opts) {
-            var self = this;
             opts = opts || {};
             // prevent hashChange trigger on start
             setTimeout(function() {
-                Event.on(window, "hashchange", hashChange, self);
+                Event.on(window, "hashchange", hashChange);
                 // check initial hash on start
                 // in case server does not render initial state correctly
                 if (opts.triggerRoute) {
-                    hashChange.call(self);
+                    hashChange();
                 }
                 opts.success && opts.success();
             }, 100);

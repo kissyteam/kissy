@@ -63,7 +63,7 @@ KISSY.add(function(S, Node,mvc, Template, NoteView) {
          * 新加笔记，更改url，由router处理
          */
         newNote:function() {
-            this.get("router").navigate("/new/");
+            mvc.Router.navigate("/new/");
         },
 
         /**
@@ -77,7 +77,7 @@ KISSY.add(function(S, Node,mvc, Template, NoteView) {
          * 编辑笔记，更改url，由router处理
          */
         editNote:function(e) {
-            this.get("router").navigate("/edit/" + $(e.currentTarget).parent("div").attr("id"));
+            mvc.Router.navigate("/edit/" + $(e.currentTarget).parent("div").attr("id"));
         },
 
         /**

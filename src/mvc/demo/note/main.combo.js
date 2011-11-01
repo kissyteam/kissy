@@ -58,11 +58,11 @@ KISSY.add("note/mods/NotesView", function(S, Node, mvc, Template, NoteView) {
     })
   }
   S.extend(NotesView, mvc.View, {newNote:function() {
-    this.get("router").navigate("/new/")
+    mvc.Router.navigate("/new/")
   }, refreshNote:function() {
     this.get("notes").load()
   }, editNote:function(e) {
-    this.get("router").navigate("/edit/" + $(e.currentTarget).parent("div").attr("id"))
+    mvc.Router.navigate("/edit/" + $(e.currentTarget).parent("div").attr("id"))
   }, deleteNode:function(e) {
     var notes = this.get("notes");
     notes.getById($(e.currentTarget).parent("div").attr("id")).destroy({"delete":1})
@@ -116,13 +116,13 @@ KISSY.add("note/mods/router", function(S, mvc, NotesView, EditView, NotesCollect
     var note = e.note, self = this, notes = self.notesView.get("notes");
     if(note.isNew()) {
       notes.create(note, {success:function() {
-        self.navigate("")
+        mvc.Router.navigate("")
       }})
     }else {
       var exits = notes.getById(note.getId());
       exits.set(note.toJSON());
       exits.save({success:function() {
-        self.navigate("")
+        mvc.Router.navigate("")
       }})
     }
   }, index:function() {
@@ -225,11 +225,11 @@ KISSY.add("note/mods/sync", function(S, mvc) {
   return sync
 }, {requires:["mvc"]});
 
-KISSY.add("note/main", function(S, Node, NoteRouter) {
-  var router = new NoteRouter;
-  router.start({triggerRoute:1, success:function() {
+KISSY.add("note/main", function(S, Node, NoteRouter, Sy, MVC) {
+  new NoteRouter;
+  MVC.Router.start({triggerRoute:1, success:function() {
     Node.all("#loading").hide()
   }})
-}, {requires:["node", "./mods/router", "./mods/sync"]});
+}, {requires:["node", "./mods/router", "./mods/sync", "mvc"]});
 
 
