@@ -12,9 +12,14 @@ KISSY.use('mvc', function(S, MVC) {
 
 
             var ok = 0,
+                ok3 = 0,
                 ok2 = 0;
             var r = new Router({
                 routes:{
+                    "/*path":function(paths) {
+                        expect(paths.path).toBe("haha/hah2/hah3");
+                        ok3++;
+                    },
                     "/list/*path":function(paths, query) {
                         expect(paths.path).toBe("what/item");
                         expect(query.item1).toBe("1");
@@ -27,27 +32,34 @@ KISSY.use('mvc', function(S, MVC) {
                         expect(query.item2).toBe("2");
                         ok2 ++;
                     }
+
                 }
             });
 
-            r.start({
+            Router.start({
                 success:function() {
-                    r.navigate("/list/what/item?item1=1&item2=2");
+                    Router.navigate("/list/what/item?item1=1&item2=2");
                 }
             });
-
 
             waits(1000);
 
             runs(function() {
-                r.navigate("/detail/9999?item1=1&item2=2");
+                Router.navigate("/detail/9999?item1=1&item2=2");
             });
 
-            waits(4000);
+            waits(1000);
+
+            runs(function() {
+                Router.navigate("/haha/hah2/hah3");
+            });
+
+            waits(1000);
 
             runs(function() {
                 expect(ok).toBe(1);
                 expect(ok2).toBe(1);
+                expect(ok3).toBe(1);
             });
         });
     });

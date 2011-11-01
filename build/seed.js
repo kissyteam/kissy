@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 31 11:04
+build time: Nov 1 20:44
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Oct 31 11:04
          */
         version: '1.20dev',
 
-        buildTime:'20111031110455',
+        buildTime:'20111101204409',
 
         /**
          * Returns a new object containing all of the properties of
@@ -832,7 +832,8 @@ build time: Oct 31 11:04
         },
         /**
          * escape string to html
-         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @refer   http://yiminghe.javaeye.com/blog/788929
+         *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */
         escapeHTML:function(str) {

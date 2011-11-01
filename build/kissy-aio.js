@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 31 11:04
+build time: Nov 1 20:44
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Oct 31 11:04
          */
         version: '1.20dev',
 
-        buildTime:'20111031110455',
+        buildTime:'20111101204409',
 
         /**
          * Returns a new object containing all of the properties of
@@ -832,7 +832,8 @@ build time: Oct 31 11:04
         },
         /**
          * escape string to html
-         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @refer   http://yiminghe.javaeye.com/blog/788929
+         *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */
         escapeHTML:function(str) {
@@ -4798,7 +4799,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         isElementNode = DOM._isElementNode,
         nodeTypeIs = DOM._nodeTypeIs,
         getWin = DOM._getWin,
-        isStrict = doc.compatMode === 'CSS1Compat',
+        CSS1Compat = "CSS1Compat",
+        compatMode = "compatMode",
+        isStrict = doc[compatMode] === CSS1Compat,
         MAX = Math.max,
         PARSEINT = parseInt,
         POSITION = 'position',
@@ -5061,15 +5064,23 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
         DOM[VIEWPORT + name] = function(refWin) {
             refWin = DOM.get(refWin);
-            var prop = 'inner' + name,
-                w = getWin(refWin),
-                d = w[DOCUMENT];
-            return (prop in w) ?
-                // 标准 = documentElement.clientHeight
-                w[prop] :
-                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
-                // ie quirks body.clientHeight: 在 body 上？
-                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
+            var prop = CLIENT + name,
+                win = getWin(refWin),
+                doc = win[DOCUMENT],
+                body = doc[BODY],
+                documentElement = doc[DOC_ELEMENT],
+                documentElementProp = documentElement[prop];
+            // 标准模式取 documentElement
+            // backcompat 取 body
+            return doc[compatMode] === CSS1Compat
+                && documentElementProp ||
+                body && body[ prop ] || documentElementProp;
+//            return (prop in w) ?
+//                // 标准 = documentElement.clientHeight
+//                w[prop] :
+//                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
+//                // ie quirks body.clientHeight: 在 body 上？
+//                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
 
@@ -26205,7 +26216,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Oct 31 21:53
 */
 /**
  * deletable menuitem
@@ -26712,7 +26723,6 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
             });
         },
 
-
         containsElement:function(element) {
             if (this.get("view").containsElement(element)) {
                 return true;
@@ -26835,7 +26845,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         },
 
         containsElement:function(element) {
-            return this.get('view').containsElement(element);
+            return this.get('view') && this.get('view').containsElement(element);
         }
 
     }, {
@@ -27021,10 +27031,81 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
+
+    function getParentMenu(self) {
+        var subMenuItem = self.get("parent"),
+            parentMenu;
+        if (subMenuItem) {
+            if (subMenuItem.get("menu") === self) {
+                parentMenu = subMenuItem.get("parent");
+            }
+        }
+        if (parentMenu.get(autoHideOnMouseLeave)) {
+            return parentMenu;
+        }
+        return 0;
+    }
+
+    function getOldestMenu(self) {
+        var pre = self,now = self;
+        while (now) {
+            pre = now;
+            now = getParentMenu(pre);
+            if (!now) {
+                break;
+            }
+        }
+        return pre;
+    }
+
+    var autoHideOnMouseLeave = "autoHideOnMouseLeave";
+
+    function clearOwn(self) {
+        var l;
+        if (l = self._leaveHideTimer) {
+            clearTimeout(l);
+            self._leaveHideTimer = 0;
+        }
+    }
+
     var PopMenu = UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
+        _clearLeaveHideTimers:function() {
+            var self = this,i,item,menu;
+            if (!self.get(autoHideOnMouseLeave)) {
+                return;
+            }
+            clearOwn(self);
+            var cs = self.get("children");
+            for (i = 0; i < cs.length; i++) {
+                item = cs[i];
+                if ((menu = item.get("menu")) &&
+                    menu.get(autoHideOnMouseLeave)) {
+                    menu._clearLeaveHideTimers();
+                }
+            }
+        },
+        _handleMouseLeave:function() {
+            var self = this;
+            if (!self.get(autoHideOnMouseLeave)) {
+                return;
+            }
+            self._leaveHideTimer = setTimeout(function() {
+                // only hide ancestor is enough , it will listen to its ancestor's hide event to hide
+                getOldestMenu(self).hide();
+            }, self.get("autoHideDelay"));
+        },
+
+        _handleMouseEnter:function() {
+            var self = this,parent = getParentMenu(self);
+            if (parent) {
+                parent._clearLeaveHideTimers();
+            } else {
+                self._clearLeaveHideTimers();
+            }
+        }
     }, {
         ATTRS:{
             // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
@@ -27033,6 +27114,10 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             },
             visibleMode:{
                 value:"visibility"
+            },
+            autoHideOnMouseLeave:{},
+            autoHideDelay:{
+                value:100
             }
         },
         DefaultRender:PopupMenuRender
@@ -27113,7 +27198,19 @@ KISSY.add(
     "menu/submenu",
     function(S, Event, UIBase, Component, MenuItem, SubMenuRender) {
 
+
+        
+
+        function _onDocClick(e) {
+            var menu = this.get("menu");
+            // only hide this menu, if click outside this menu and this menu's submenus
+            if (!menu.containsElement(e.target)) {
+                menu.hide();
+            }
+        }
+
         var KeyCodes = Event.KeyCodes,
+            doc = document,
             MENU_DELAY = 300;
         /**
          * Class representing a submenu that can be added as an item to other menus.
@@ -27146,6 +27243,13 @@ KISSY.add(
                             });
                         });
 
+                        // if not bind doc click for parent menu
+                        // if already bind, then if parent menu hide, menu will hide too
+                        if (!parentMenu.__bindDocClickToHide) {
+                            Event.on(doc, "click", _onDocClick, self);
+                            menu.__bindDocClickToHide = 1;
+                        }
+
                         // 通知父级菜单
                         menu.on("afterActiveItemChange", function(ev) {
                             parentMenu.set("activeItem", ev.newVal);
@@ -27160,6 +27264,8 @@ KISSY.add(
                     // 保险点用 beforeHighlightedItemChange
                     menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
                 },
+
+
 
                 /**
                  * @inheritDoc
@@ -27321,6 +27427,8 @@ KISSY.add(
                         menu = this.get("menu");
 
                     self.clearTimers();
+
+                    Event.remove(doc, "click", _onDocClick, self);
 
                     //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
                     if (parentMenu) {
