@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 31 11:04
+build time: Nov 1 20:44
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Oct 31 11:04
          */
         version: '1.20dev',
 
-        buildTime:'20111031110455',
+        buildTime:'20111101204409',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1018,7 +1018,8 @@ build time: Oct 31 11:04
         },
         /**
          * escape string to html
-         * @refer http://yiminghe.javaeye.com/blog/788929
+         * @refer   http://yiminghe.javaeye.com/blog/788929
+         *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */
         escapeHTML:function(str) {
@@ -4984,7 +4985,9 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         isElementNode = DOM._isElementNode,
         nodeTypeIs = DOM._nodeTypeIs,
         getWin = DOM._getWin,
-        isStrict = doc.compatMode === 'CSS1Compat',
+        CSS1Compat = "CSS1Compat",
+        compatMode = "compatMode",
+        isStrict = doc[compatMode] === CSS1Compat,
         MAX = Math.max,
         PARSEINT = parseInt,
         POSITION = 'position',
@@ -5247,15 +5250,23 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
         DOM[VIEWPORT + name] = function(refWin) {
             refWin = DOM.get(refWin);
-            var prop = 'inner' + name,
-                w = getWin(refWin),
-                d = w[DOCUMENT];
-            return (prop in w) ?
-                // 标准 = documentElement.clientHeight
-                w[prop] :
-                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
-                // ie quirks body.clientHeight: 在 body 上？
-                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
+            var prop = CLIENT + name,
+                win = getWin(refWin),
+                doc = win[DOCUMENT],
+                body = doc[BODY],
+                documentElement = doc[DOC_ELEMENT],
+                documentElementProp = documentElement[prop];
+            // 标准模式取 documentElement
+            // backcompat 取 body
+            return doc[compatMode] === CSS1Compat
+                && documentElementProp ||
+                body && body[ prop ] || documentElementProp;
+//            return (prop in w) ?
+//                // 标准 = documentElement.clientHeight
+//                w[prop] :
+//                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
+//                // ie quirks body.clientHeight: 在 body 上？
+//                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
 
