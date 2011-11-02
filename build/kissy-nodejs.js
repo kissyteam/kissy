@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 1 21:21
+build time: Nov 2 15:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 1 21:21
          */
         version: '1.20dev',
 
-        buildTime:'20111101212127',
+        buildTime:'20111102154754',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4211,9 +4211,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 else {
 
                     var success = false;
+                    val += "";
 
                     // faster
-                    if (isString(val) && ! val.match(/<(?:script|style)/i) &&
+                    if (! val.match(/<(?:script|style)/i) &&
                         (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
                         !creatorsMap[ (val.match(RE_TAG) || ["",""])[1].toLowerCase() ]) {
 
@@ -4231,9 +4232,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     }
 
                     if (!success) {
-                        if (isString(val)) {
-                            val = DOM.create(val, 0, el.ownerDocument, false);
-                        }
+                        val = DOM.create(val, 0, el.ownerDocument, false);
                         els.each(function(elem) {
                             if (isElementNode(elem)) {
                                 DOM.empty(elem);
@@ -8441,7 +8440,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
                     // assuming we've left the element since we most likely mousedover a xul element
                 } catch(e) {
-                    S.log("withinElement error : " + e);
+                    S.log("withinElement error : ", "error");
+                    S.log(e, "error");
                 }
             }
 

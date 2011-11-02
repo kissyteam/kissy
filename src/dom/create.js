@@ -139,9 +139,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 else {
 
                     var success = false;
+                    val += "";
 
                     // faster
-                    if (isString(val) && ! val.match(/<(?:script|style)/i) &&
+                    if (! val.match(/<(?:script|style)/i) &&
                         (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
                         !creatorsMap[ (val.match(RE_TAG) || ["",""])[1].toLowerCase() ]) {
 
@@ -159,9 +160,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     }
 
                     if (!success) {
-                        if (isString(val)) {
-                            val = DOM.create(val, 0, el.ownerDocument, false);
-                        }
+                        val = DOM.create(val, 0, el.ownerDocument, false);
                         els.each(function(elem) {
                             if (isElementNode(elem)) {
                                 DOM.empty(elem);

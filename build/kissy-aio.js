@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 1 21:21
+build time: Nov 2 15:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 1 21:21
          */
         version: '1.20dev',
 
-        buildTime:'20111101212127',
+        buildTime:'20111102154754',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4025,9 +4025,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 else {
 
                     var success = false;
+                    val += "";
 
                     // faster
-                    if (isString(val) && ! val.match(/<(?:script|style)/i) &&
+                    if (! val.match(/<(?:script|style)/i) &&
                         (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
                         !creatorsMap[ (val.match(RE_TAG) || ["",""])[1].toLowerCase() ]) {
 
@@ -4045,9 +4046,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     }
 
                     if (!success) {
-                        if (isString(val)) {
-                            val = DOM.create(val, 0, el.ownerDocument, false);
-                        }
+                        val = DOM.create(val, 0, el.ownerDocument, false);
                         els.each(function(elem) {
                             if (isElementNode(elem)) {
                                 DOM.empty(elem);
@@ -8255,7 +8254,8 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
                     // assuming we've left the element since we most likely mousedover a xul element
                 } catch(e) {
-                    S.log("withinElement error : " + e);
+                    S.log("withinElement error : ", "error");
+                    S.log(e, "error");
                 }
             }
 
@@ -26224,7 +26224,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 31 21:53
+build time: Nov 2 15:13
 */
 /**
  * deletable menuitem
@@ -27048,7 +27048,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
                 parentMenu = subMenuItem.get("parent");
             }
         }
-        if (parentMenu.get(autoHideOnMouseLeave)) {
+        if (parentMenu && parentMenu.get(autoHideOnMouseLeave)) {
             return parentMenu;
         }
         return 0;
@@ -27113,6 +27113,16 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             } else {
                 self._clearLeaveHideTimers();
             }
+        },
+
+        /**
+         *  suppose it has focus (as a context menu),
+         *  then it must hide when click document
+         */
+        _handleBlur:function() {
+            var self = this;
+            PopMenu.superclass._handleBlur.apply(self, arguments);
+            self.hide();
         }
     }, {
         ATTRS:{
@@ -27207,12 +27217,17 @@ KISSY.add(
     function(S, Event, UIBase, Component, MenuItem, SubMenuRender) {
 
 
-        
-
         function _onDocClick(e) {
-            var menu = this.get("menu");
+            var self = this,
+                menu = self.get("menu"),
+                target = e.target,
+                el = self.get("el");
             // only hide this menu, if click outside this menu and this menu's submenus
-            if (!menu.containsElement(e.target)) {
+            if (
+                ! el.contains(target) &&
+                    el[0] !== target &&
+                    ! menu.containsElement(target)
+                ) {
                 menu.hide();
             }
         }
@@ -27280,20 +27295,22 @@ KISSY.add(
                  * Sets a timer to show the submenu
                  **/
                 _handleMouseEnter:function(e) {
-                    if (SubMenu.superclass._handleMouseEnter.call(this, e)) {
+                    var self = this;
+                    if (SubMenu.superclass._handleMouseEnter.call(self, e)) {
                         return true;
                     }
-                    this.clearTimers();
-                    this.showTimer_ = S.later(this.showMenu,
-                        this.get("menuDelay"), false, this);
+                    self.clearTimers();
+                    self.showTimer_ = S.later(self.showMenu,
+                        this.get("menuDelay"), false, self);
                 },
 
                 showMenu:function() {
-                    var menu = this.get("menu");
+                    var self = this;
+                    var menu = self.get("menu");
                     menu.set("align", S.mix({
-                        node:this.get("el"),
+                        node:self.get("el"),
                         points:['tr','tl']
-                    }, this.get("menuAlign")));
+                    }, self.get("menuAlign")));
                     menu.render();
                     /**
                      * If activation of your menuitem produces a popup menu,
@@ -27301,7 +27318,7 @@ KISSY.add(
                      to allow the assistive technology to follow the menu hierarchy
                      and assist the user in determining context during menu navigation.
                      */
-                    this.get("el").attr("aria-haspopup",
+                    self.get("el").attr("aria-haspopup",
                         menu.get("el").attr("id"));
                     menu.show();
                 },
@@ -27311,13 +27328,14 @@ KISSY.add(
                  * Clears the show and hide timers for the sub menu.
                  */
                 clearTimers : function() {
-                    if (this.dismissTimer_) {
-                        this.dismissTimer_.cancel();
-                        this.dismissTimer_ = null;
+                    var self = this;
+                    if (self.dismissTimer_) {
+                        self.dismissTimer_.cancel();
+                        self.dismissTimer_ = null;
                     }
-                    if (this.showTimer_) {
-                        this.showTimer_.cancel();
-                        this.showTimer_ = null;
+                    if (self.showTimer_) {
+                        self.showTimer_.cancel();
+                        self.showTimer_ = null;
                     }
                 },
 
@@ -27345,7 +27363,7 @@ KISSY.add(
                 },
 
                 // click ，立即显示
-                _performInternal:function() {
+                _performInternal:function(e) {
                     this.clearTimers();
                     this.showMenu();
                 },
