@@ -126,11 +126,14 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set("models", self.get("parse").call(self, resp), opts);
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set("models", v, opts);
+                    }
                 }
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, self,'read', opts);
+            self.get("sync").call(self, self, 'read', opts);
             return self;
         },
 
