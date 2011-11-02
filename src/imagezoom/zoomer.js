@@ -167,6 +167,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             self.loading();
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
+                S.log([bigImage[0].complete,  bigImage.width()]);
                 self.unloading();
                 self._setLensSize();
 
@@ -218,9 +219,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
          * @private
          */
         _setLensOffset: function(ev) {
+            var self = this;
+
             ev = ev || self.get('currentMouse');
-            var self = this,
-                rl = self.get('imageLeft'), rt = self.get('imageTop'),
+            var rl = self.get('imageLeft'), rt = self.get('imageTop'),
                 rw = self.get('imageWidth'), rh = self.get('imageHeight'),
                 w = self.get('width'), h = self.get('height'),
                 lensWidth = self.get('lensWidth'), lensHeight = self.get('lensHeight'),
@@ -370,12 +372,19 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
     }
     function imgOnLoad(img, callback) {
         var imgElem = img[0];
+        // 浏览器缓存时, complete 为 true
         if ((imgElem && imgElem.complete && imgElem.clientWidth)) {
             callback();
             return;
         }
         // 1) 图尚未加载完毕，等待 onload 时再初始化 2) 多图切换时需要绑定load事件来更新相关信息
-        img.on('load', callback);
+/*        img.on('load', function() {
+            setTimeout(callback, 100);
+        });*/
+
+        imgElem.onLoad = function() {
+            setTimeout(callback, 100);
+        }
     }
 
     Zoomer.__imgOnLoad = imgOnLoad;
