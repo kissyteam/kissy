@@ -22,6 +22,10 @@ KISSY.add('anim/easing', function() {
 
         Easing = {
 
+            swing:function(t) {
+                return ( -Math.cos(t * PI) / 2 ) + 0.5;
+            },
+
             /**
              * Uniform speed between points.
              */
