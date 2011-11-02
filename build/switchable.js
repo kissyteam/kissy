@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 2 16:30
 */
 /**
  * Switchable
- * @creator  玉伯<lifesinger@gmail.com>,yiminghe@gmail.com
+ * @creator  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
@@ -243,7 +243,8 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
 
             // get length
             n = panels.length;
-            self.length = n / cfg.steps;
+            // fix self.length 不为整数的情况, 会导致之后的判断 非0, by qiaohua 20111101
+            self.length = Math.ceil(n / cfg.steps);
 
             // 自动生成 triggers
             if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
@@ -989,7 +990,7 @@ KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) 
  **/
 /**
  * Switchable Autoplay Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
 
@@ -1066,7 +1067,7 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
  承玉：2011.06.02 review switchable
  *//**
  * Switchable Autorender Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
 
@@ -1094,7 +1095,7 @@ KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
 }, { requires:["dom","json","switchable/base"]});
 /**
  * Carousel Widget
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefined) {
 
@@ -1563,7 +1564,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
  </ul>
  **//**
  * Switchable Effect Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefined) {
 
@@ -1796,7 +1797,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
  */
 /**
  * Switchable Circular Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
 
@@ -2079,7 +2080,7 @@ KISSY.add('switchable/countdown', function(S, DOM, Event, Anim, Switchable, unde
  * 承玉：2011.06.02 review switchable
  *//**
  * Switchable Lazyload Plugin
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
 
@@ -2166,7 +2167,7 @@ KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
  * 承玉：2011.06.02 review switchable
  *//**
  * Tabs Widget
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/slide/base', function(S, Switchable) {
 
@@ -2314,7 +2315,7 @@ KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
  </ul>
  **//**
  * Tabs Widget
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/tabs/base', function(S, Switchable) {
     function Tabs(container, config) {
