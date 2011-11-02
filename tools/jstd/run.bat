@@ -1,3 +1,3 @@
-java -jar JsTestDriver-1.2.2.jar --tests all
+java -jar JsTestDriver-1.3.3d.jar --tests all
 pause
 exit
