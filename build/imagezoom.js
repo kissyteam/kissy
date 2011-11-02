@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 2 16:28
 */
 /**
  * @fileoverview 图像放大区域
@@ -172,6 +172,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
             self.loading();
             // 大图加载完毕后更新显示区域
             imgOnLoad(bigImage, function() {
+                S.log([bigImage[0].complete,  bigImage.width()]);
                 self.unloading();
                 self._setLensSize();
 
@@ -223,9 +224,10 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
          * @private
          */
         _setLensOffset: function(ev) {
-            var self = this,
-                ev = ev || self.get('currentMouse'),
-                rl = self.get('imageLeft'), rt = self.get('imageTop'),
+            var self = this;
+
+            ev = ev || self.get('currentMouse');
+            var rl = self.get('imageLeft'), rt = self.get('imageTop'),
                 rw = self.get('imageWidth'), rh = self.get('imageHeight'),
                 w = self.get('width'), h = self.get('height'),
                 lensWidth = self.get('lensWidth'), lensHeight = self.get('lensHeight'),
@@ -375,12 +377,19 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
     }
     function imgOnLoad(img, callback) {
         var imgElem = img[0];
+        // 浏览器缓存时, complete 为 true
         if ((imgElem && imgElem.complete && imgElem.clientWidth)) {
             callback();
             return;
         }
         // 1) 图尚未加载完毕，等待 onload 时再初始化 2) 多图切换时需要绑定load事件来更新相关信息
-        img.on('load', callback);
+/*        img.on('load', function() {
+            setTimeout(callback, 100);
+        });*/
+
+        imgElem.onLoad = function() {
+            setTimeout(callback, 100);
+        }
     }
 
     Zoomer.__imgOnLoad = imgOnLoad;
@@ -587,7 +596,7 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
 
 /**
  * auto render
- * @author  玉伯<lifesinger@gmail.com>
+ * @author  lifesinger@gmail.com
  */
 KISSY.add('imagezoom/autorender', function(S, DOM, JSON, ImageZoom) {
 
