@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 28 16:31
+build time: Nov 1 21:21
 */
 /**
  * @module  event
@@ -121,8 +121,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     if (!event || !event.fixed) {
                         event = new EventObject(target, event);
                     }
+                    var type = event.type;
                     if (S.isPlainObject(data)) {
                         S.mix(event, data);
+                    }
+                    // protect type
+                    if (type) {
+                        event.type = type;
                     }
                     return Event._handle(target, event);
                 };
@@ -383,6 +388,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         }
         var event = new EventObject(target, undefined, eventType);
         S.mix(event, eventData);
+        // protect type
+        event.type = eventType;
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
         if (onlyHandlers) {
             event.halt();
@@ -1562,11 +1569,12 @@ KISSY.add('event/target', function(S, Event, EventObject) {
             eventData.currentTarget = self;
             return eventData;
         }
-        var ret,
-            customEvent = new EventObject(self, undefined, type);
+        var customEvent = new EventObject(self, undefined, type);
         if (S.isPlainObject(eventData)) {
             S.mix(customEvent, eventData);
         }
+        // protect type
+        customEvent.type = type;
         return customEvent
     }
 
@@ -1681,17 +1689,17 @@ KISSY.add('event/target', function(S, Event, EventObject) {
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on: attach("add"),
-
-        /**
-         * 取消监听事件
-         * @param {String} type 事件名
-         * @param {Function} fn 事件处理器
-         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-         * @returns 当前实例
-         */
-        detach: attach("remove")
+        on: attach("add")
     };
+
+    /**
+     * 取消监听事件
+     * @param {String} type 事件名
+     * @param {Function} fn 事件处理器
+     * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+     * @returns 当前实例
+     */
+    Target.detach = attach("remove");
 
     return Target;
 }, {

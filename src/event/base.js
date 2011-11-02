@@ -116,8 +116,13 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     if (!event || !event.fixed) {
                         event = new EventObject(target, event);
                     }
+                    var type = event.type;
                     if (S.isPlainObject(data)) {
                         S.mix(event, data);
+                    }
+                    // protect type
+                    if (type) {
+                        event.type = type;
                     }
                     return Event._handle(target, event);
                 };
@@ -378,6 +383,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         }
         var event = new EventObject(target, undefined, eventType);
         S.mix(event, eventData);
+        // protect type
+        event.type = eventType;
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
         if (onlyHandlers) {
             event.halt();

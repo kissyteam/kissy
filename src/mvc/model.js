@@ -112,7 +112,10 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.get("parse").call(self, resp), opts);
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set(v, opts);
+                    }
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
@@ -127,7 +130,10 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.get("parse").call(self, resp), opts);
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set(v, opts);
+                    }
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);

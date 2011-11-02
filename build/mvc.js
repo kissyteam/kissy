@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 1 19:57
+build time: Nov 2 11:31
 */
 /**
  * mvc base
@@ -141,11 +141,14 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set("models", self.get("parse").call(self, resp), opts);
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set("models", v, opts);
+                    }
                 }
                 success && success.apply(this, arguments);
             };
-            self.get("sync").call(self, self,'read', opts);
+            self.get("sync").call(self, self, 'read', opts);
             return self;
         },
 
@@ -343,7 +346,10 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.get("parse").call(self, resp), opts);
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set(v, opts);
+                    }
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
@@ -358,7 +364,10 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
             var success = opts.success;
             opts.success = function(resp) {
                 if (resp) {
-                    self.set(self.get("parse").call(self, resp), opts);
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set(v, opts);
+                    }
                 }
                 self.__isModified = 0;
                 success && success.apply(this, arguments);
