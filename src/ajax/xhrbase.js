@@ -18,7 +18,7 @@ KISSY.add("ajax/xhrbase", function(S, io) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch(e) {
-            S.log("createStandardXHR error");
+            //S.log("createStandardXHR error");
         }
         return undefined;
     }

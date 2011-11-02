@@ -2175,7 +2175,7 @@ jasmine.WaitsBlock = function(env, timeout, spec) {
 jasmine.util.inherit(jasmine.WaitsBlock, jasmine.Block);
 
 jasmine.WaitsBlock.prototype.execute = function (onComplete) {
-    this.env.reporter.log('>> Jasmine waiting for ' + this.timeout + ' ms...');
+    //this.env.reporter.log('>> Jasmine waiting for ' + this.timeout + ' ms...');
     this.env.setTimeout(function () {
         onComplete();
     }, this.timeout);
@@ -2203,7 +2203,7 @@ jasmine.util.inherit(jasmine.WaitsForBlock, jasmine.Block);
 jasmine.WaitsForBlock.TIMEOUT_INCREMENT = 10;
 
 jasmine.WaitsForBlock.prototype.execute = function(onComplete) {
-    this.env.reporter.log('>> Jasmine waiting for ' + (this.message || 'something to happen'));
+    //this.env.reporter.log('>> Jasmine waiting for ' + (this.message || 'something to happen'));
     var latchFunctionResult;
     try {
         latchFunctionResult = this.latchFunction.apply(this.spec);

@@ -56,16 +56,6 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     var defaultDisplayDetectIframe,
         defaultDisplayDetectIframeDoc;
 
-    function isCustomDomain() {
-        if (!UA['ie']) {
-            return false;
-        }
-        var domain = doc.domain,
-            hostname = location.hostname;
-        return domain != hostname &&
-            domain != ( '[' + hostname + ']' );	// IPv6 IP support
-    }
-
     // modified from jquery : bullet-proof method of getting default display
     // fix domain problem in ie>6 , ie6 still access denied
     function getDefaultDisplay(tagName) {
@@ -89,14 +79,9 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                             defaultDisplayDetectIframe.height = 0;
 
                     DOM.prepend(defaultDisplayDetectIframe, body);
-
-                    if (isCustomDomain()) {
-                        defaultDisplayDetectIframe.src = 'javascript:void(function(){' + encodeURIComponent("" +
-                            "document.open();" +
-                            "document.domain='" +
-                            doc.domain
-                            + "';" +
-                            "document.close();") + "}())";
+                    var iframeSrc;
+                    if (iframeSrc = DOM._genEmptyIframeSrc()) {
+                        defaultDisplayDetectIframe.src = iframeSrc;
                     }
                 } else {
                     DOM.prepend(defaultDisplayDetectIframe, body);
@@ -106,12 +91,23 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 // IE and Opera will allow us to reuse the iframeDoc without re-writing the fake HTML
                 // document to it; WebKit & Firefox won't allow reusing the iframe document.
                 if (!defaultDisplayDetectIframeDoc || !defaultDisplayDetectIframe.createElement) {
-                    // ie6 need a breath , such as alert(8) or setTimeout;
-                    // 同时需要同步，所以无解
-                    defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
-                    defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
-                        + "<html><body>");
-                    defaultDisplayDetectIframeDoc.close();
+
+                    try {
+                        defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
+                        defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
+                            + "<html><head>" +
+                            (UA['ie'] && DOM._isCustomDomain() ?
+                                "<script>document.domain = '" +
+                                    doc.domain
+                                    + "';</script>" : "")
+                            +
+                            "</head><body>");
+                        defaultDisplayDetectIframeDoc.close();
+                    } catch(e) {
+                        // ie6 need a breath , such as alert(8) or setTimeout;
+                        // 同时需要同步，所以无解，勉强返回
+                        return "block";
+                    }
                 }
 
                 elem = defaultDisplayDetectIframeDoc.createElement(tagName);

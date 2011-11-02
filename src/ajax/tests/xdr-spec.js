@@ -69,9 +69,9 @@ KISSY.use("ua,json,ajax,node", function(S, UA, JSON, io, Node) {
         it("should works for subdomain", function() {
             return;
             var ok = 0,ret = [];
-            document.domain = 'yiming.com';
+            document.domain = 'ali.com';
             io({
-                url:'http://yy.yiming.com/kissy_git/kissy/src/ajax/tests/ajax.php',
+                url:'http://taobao.ali.com/kissy_git/kissy/src/ajax/tests/ajax.php',
                 xdr:{
                     subDomain:{
                         proxy:"/kissy_git/kissy/src/ajax/tests/subdomain/proxy.html"

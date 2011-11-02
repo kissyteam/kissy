@@ -12,6 +12,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
         scrolling="no"
         style="width:100%;height:600px;border:1px solid red;"></iframe>
 <script type="text/javascript">
+    // document.domain='ali.com';
     var index = 0;
     var tests = [];
     var loc = window.location.href.replace(/test.php/, "");
@@ -23,7 +24,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
             index++;
 
             if (tests[index]) {
-                if ((KISSY.UA.ie || KISSY.UA.webkit) && tests[index].match(/event\//)) {
+                if ((true || KISSY.UA.ie || KISSY.UA.webkit) && tests[index].match(/event\//)) {
                     window.open(loc + tests[index] + "?" + (+new Date()));
                     index++;
                 }

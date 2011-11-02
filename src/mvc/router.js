@@ -5,8 +5,6 @@
 KISSY.add('mvc/router', function(S, Event, Base) {
     var queryReg = /\?(.*)/,
         grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
-        hashPrefix = /^#(?:!)?/,
-        loc = location,
         // all registered route instance
         allRoutes = [],
         __routerMap = "__routerMap";
@@ -27,15 +25,18 @@ KISSY.add('mvc/router', function(S, Event, Base) {
     }
 
     function getHash() {
-        return loc.hash.replace(hashPrefix, "");
+        // 不能 location.hash
+        // http://xx.com/#yy?z=1
+        // ie6 => location.hash = #yy
+        // 其他浏览器 => location.hash = #yy?z=1
+        return location.href.replace(/^[^#]*#?!?(.*)$/, '$1');
     }
 
     function getQuery(path) {
         var m,
             ret = {};
         if (m = path.match(queryReg)) {
-            var queryStr = S.unEscapeHTML(m[1]);
-            return S.unparam(queryStr);
+            return S.unparam(m[1]);
         }
         return ret;
     }
@@ -57,7 +58,6 @@ KISSY.add('mvc/router', function(S, Event, Base) {
             finalParam = 0;
 
         path = fullPath.replace(queryReg, "");
-
         // user input : /xx/yy/zz
         S.each(allRoutes, function(route) {
             var routeRegs = route[__routerMap],
@@ -237,7 +237,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         }
     }, {
         navigate:function(path, opts) {
-            loc.hash = "!" + path;
+            location.hash = "!" + path;
             opts = opts || {};
             if (opts.triggerRoute && getHash() == path) {
                 hashChange();

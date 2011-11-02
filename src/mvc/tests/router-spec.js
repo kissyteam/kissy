@@ -1,4 +1,4 @@
-KISSY.use('mvc', function(S, MVC) {
+KISSY.use('mvc,event', function(S, MVC, Event) {
 
     var Model = MVC.Model,
         Collection = MVC.Collection,
@@ -11,9 +11,12 @@ KISSY.use('mvc', function(S, MVC) {
         it("works", function() {
 
 
+            //document.domain='ali.com';
+
             var ok = 0,
                 ok3 = 0,
                 ok2 = 0;
+
             var r = new Router({
                 routes:{
                     "/*path":function(paths) {
@@ -43,6 +46,13 @@ KISSY.use('mvc', function(S, MVC) {
             });
 
             waits(1000);
+
+            runs(function() {
+                Router.navigate("/list/what/item?item1=1&item2=2");
+            });
+
+            waits(1000);
+
 
             runs(function() {
                 Router.navigate("/detail/9999?item1=1&item2=2");

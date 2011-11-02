@@ -2,7 +2,7 @@
  * @module  dom
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/base', function(S, undefined) {
+KISSY.add('dom/base', function(S, UA, undefined) {
 
     function nodeTypeIs(node, val) {
         return node && node.nodeType === val;
@@ -28,6 +28,26 @@ KISSY.add('dom/base', function(S, undefined) {
         NOTATION_NODE : 12
     };
     var DOM = {
+
+        _isCustomDomain :function (win) {
+            win = win || window;
+            var domain = win.document.domain,
+                hostname = win.location.hostname;
+            return domain != hostname &&
+                domain != ( '[' + hostname + ']' );	// IPv6 IP support
+        },
+
+        _genEmptyIframeSrc:function(win) {
+            win = win || window;
+            if (UA['ie'] && DOM._isCustomDomain(win)) {
+                return  'javascript:void(function(){' + encodeURIComponent("" +
+                    "document.open();" +
+                    "document.domain='" +
+                    win.document.domain
+                    + "';" +
+                    "document.close();") + "}())";
+            }
+        },
 
         _NODE_TYPE:NODE_TYPE,
 
@@ -75,6 +95,8 @@ KISSY.add('dom/base', function(S, undefined) {
 
     return DOM;
 
+}, {
+    requires:['ua']
 });
 
 /**
