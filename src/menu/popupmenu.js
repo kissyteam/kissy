@@ -12,7 +12,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
                 parentMenu = subMenuItem.get("parent");
             }
         }
-        if (parentMenu.get(autoHideOnMouseLeave)) {
+        if (parentMenu && parentMenu.get(autoHideOnMouseLeave)) {
             return parentMenu;
         }
         return 0;
@@ -77,6 +77,16 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             } else {
                 self._clearLeaveHideTimers();
             }
+        },
+
+        /**
+         *  suppose it has focus (as a context menu),
+         *  then it must hide when click document
+         */
+        _handleBlur:function() {
+            var self = this;
+            PopMenu.superclass._handleBlur.apply(self, arguments);
+            self.hide();
         }
     }, {
         ATTRS:{
