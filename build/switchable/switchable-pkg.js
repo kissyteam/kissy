@@ -230,7 +230,8 @@ KISSY.add('switchable', function(S) {
 
                 // get length
                 n = panels.length;
-                self.length = n / cfg.steps;
+                // fix self.length is not a integer bug by qiaohua at 20111102
+                self.length = Math.ceil(n / cfg.steps);
 
                 // 自动生成 triggers
                 if (cfg.hasTriggers && n > 0 && triggers.length === 0) {
