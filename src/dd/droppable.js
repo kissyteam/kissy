@@ -5,8 +5,9 @@
 KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
     function Droppable() {
-        Droppable.superclass.constructor.apply(this, arguments);
-        this._init();
+        var self = this;
+        Droppable.superclass.constructor.apply(self, arguments);
+        self._init();
     }
 
     Droppable.ATTRS = {
@@ -16,9 +17,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         node: {
             setter:function(v) {
                 if (v) {
-                    var n = Node.one(v);
-                    n.addClass(DDM.get("prefixCls") + "drop");
-                    return n;
+                    return Node.one(v).addClass(DDM.get("prefixCls") + "drop");
                 }
             }
         }
@@ -26,60 +25,61 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
     };
 
     S.extend(Droppable, Base, {
-            /**
-             * 用于被 droppable-delegate override
-             */
-            getNodeFromTarget:function(ev, dragNode, proxyNode) {
-                var node=this.get("node"),
-                    domNode = node[0];
-                // 排除当前拖放和代理节点
-                return domNode == dragNode || domNode == proxyNode
-                    ? null : node;
-            },
-            _init:function() {
-                DDM._regDrop(this);
-            },
-            _handleOut:function() {
-                var activeDrag = DDM.get("activeDrag");
-
-                this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
-                var ret = {
-                    drop:this,
+        /**
+         * 用于被 droppable-delegate override
+         */
+        getNodeFromTarget:function(ev, dragNode, proxyNode) {
+            var node = this.get("node"),
+                domNode = node[0];
+            // 排除当前拖放和代理节点
+            return domNode == dragNode || domNode == proxyNode
+                ? null : node;
+        },
+        _init:function() {
+            DDM._regDrop(this);
+        },
+        _handleOut:function() {
+            var self = this,
+                activeDrag = DDM.get("activeDrag"),
+                ret = {
+                    drop:self,
                     drag:activeDrag
                 };
-                this.fire("dropexit", ret);
-                DDM.fire("dropexit", ret);
-                activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
-                activeDrag.fire("dragexit", ret);
-                DDM.fire("dragexit", ret);
-            },
-            _handleOver:function(ev) {
-                var oldDrop = DDM.get("activeDrop");
-                DDM.set("activeDrop", this);
-                var activeDrag = DDM.get("activeDrag");
-                this.get("node").addClass(DDM.get("prefixCls") + "drop-over");
-                var evt = S.mix({
-                        drag:activeDrag,
-                        drop:this
-                    }, ev);
-                if (this != oldDrop) {
-                    activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
-                    //第一次先触发 dropenter,dragenter
-                    activeDrag.fire("dragenter", evt);
-                    this.fire("dropenter", evt);
-                    DDM.fire("dragenter", evt);
-                    DDM.fire("dropenter", evt);
-                } else {
-                    activeDrag.fire("dragover", evt);
-                    this.fire("dropover", evt);
-                    DDM.fire("dragover", evt);
-                    DDM.fire("dropover", evt);
-                }
-            },
-            destroy:function() {
-                DDM._unregDrop(this);
+            self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+            self.fire("dropexit", ret);
+            DDM.fire("dropexit", ret);
+            activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+            activeDrag.fire("dragexit", ret);
+            DDM.fire("dragexit", ret);
+        },
+        _handleOver:function(ev) {
+            var self = this,
+                oldDrop = DDM.get("activeDrop");
+            DDM.set("activeDrop", this);
+            var activeDrag = DDM.get("activeDrag");
+            self.get("node").addClass(DDM.get("prefixCls") + "drop-over");
+            var evt = S.mix({
+                drag:activeDrag,
+                drop:this
+            }, ev);
+            if (self != oldDrop) {
+                activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
+                //第一次先触发 dropenter,dragenter
+                activeDrag.fire("dragenter", evt);
+                this.fire("dropenter", evt);
+                DDM.fire("dragenter", evt);
+                DDM.fire("dropenter", evt);
+            } else {
+                activeDrag.fire("dragover", evt);
+                self.fire("dropover", evt);
+                DDM.fire("dragover", evt);
+                DDM.fire("dropover", evt);
             }
-        });
+        },
+        destroy:function() {
+            DDM._unregDrop(this);
+        }
+    });
 
     return Droppable;
 

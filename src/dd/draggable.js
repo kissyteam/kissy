@@ -158,13 +158,12 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 left:mx - nxy.left,
                 top:my - nxy.top
             };
-            self.set("diff", self._diff);
         },
 
         _move: function(ev) {
             var self = this,
                 ret,
-                diff = self.get("diff"),
+                diff = self._diff,
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
             self.mousePos = {

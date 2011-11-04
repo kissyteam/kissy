@@ -90,17 +90,17 @@
          * stamp a object by guid
          * @return guid associated with this object
          */
-        stamp:function(o, readOnly) {
+        stamp:function(o, readOnly, marker) {
             if (!o) {
                 return o
             }
-            var guid = o[STAMP_MARKER];
+            marker = marker || STAMP_MARKER;
+            var guid = o[marker];
             if (guid) {
                 return guid;
-            }
-            if (!readOnly) {
+            } else if (!readOnly) {
                 try {
-                    guid = o[STAMP_MARKER] = S.guid(STAMP_MARKER);
+                    guid = o[marker] = S.guid(marker);
                 }
                 catch(e) {
                     guid = undefined;

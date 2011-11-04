@@ -14,55 +14,53 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
              * @param ev
              */
             getNodeFromTarget:function(ev, dragNode, proxyNode) {
-
                 var pointer = {
                     left:ev.pageX,
                     top:ev.pageY
-                };
+                },
+                    self = this,
+                    container = self.get("container"),
+                    selector = self.get("selector"),
+                    allNodes = container.all(selector),
+                    ret = 0;
 
-                var container = this.get("container"),
-                    selector = this.get("selector");
-
-                var allNodes = container.all(selector);
-                //S.log("start ***********************");
-                for (var i = 0; i < allNodes.length; i++) {
-                    var domNode = allNodes[i],
-                        n = new Node(domNode);
+                allNodes.each(function(n) {
+                    var domNode = n[0];
                     // 排除当前拖放的元素以及代理节点
                     if (domNode == proxyNode || domNode == dragNode) {
-                        continue;
+                        return;
                     }
-                    //S.log(n.attr("class"));
                     if (DDM.inRegion(DDM.region(n), pointer)) {
-                        this.set("lastNode", this.get("node"));
-                        this.set("node", n);
-                        //S.log("end ***********************");
-                        return n;
+                        self.set("lastNode", self.get("node"));
+                        self.set("node", ret = n);
+                        return false;
                     }
-                }
-                //S.log("end ***********************");
-                return null;
+                });
+                return ret;
             },
 
             _handleOut:function() {
-                DroppableDelegate.superclass._handleOut.call(this);
-                this.set("node", null);
-                this.set("lastNode", null);
+                var self = this;
+                DroppableDelegate.superclass._handleOut.apply(self, arguments);
+                self.set("node", 0);
+                self.set("lastNode", 0);
             },
 
             _handleOver:function(ev) {
-                var oldDrop = DDM.get("activeDrop");
-                DDM.set("activeDrop", this);
-                var activeDrag = DDM.get("activeDrag");
-                this.get("node").addClass(DDM.get("prefixCls") + "drop-over");
-                var evt = S.mix({
+                var self = this,
+                    activeDrag = DDM.get("activeDrag"),
+                    oldDrop = DDM.get("activeDrop"),
+                    evt = S.mix({
                         drag:activeDrag,
-                        drop:this
-                    }, ev);
-                var node = this.get("node"),
-                    lastNode = this.get("lastNode");
+                        drop:self
+                    }, ev),
+                    node = self.get("node"),
+                    lastNode = self.get("lastNode");
 
-                if (this != oldDrop
+                DDM.set("activeDrop", self);
+                node.addClass(DDM.get("prefixCls") + "drop-over");
+
+                if (self != oldDrop
                     || !lastNode
                     || (lastNode && lastNode[0] !== node[0])
                     ) {
@@ -70,21 +68,20 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
                      * 两个可 drop 节点相邻，先通知上次的离开
                      */
                     if (lastNode) {
-                        this.set("node", lastNode);
-                        DroppableDelegate.superclass._handleOut.call(this);
+                        self.set("node", lastNode);
+                        DroppableDelegate.superclass._handleOut.apply(self, arguments);
                     }
                     /**
                      * 再通知这次的进入
                      */
-                    this.set("node", node);
+                    self.set("node", node);
                     activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
                     //第一次先触发 dropenter,dragenter
                     activeDrag.fire("dragenter", evt);
-                    this.fire("dropenter", evt);
+                    self.fire("dropenter", evt);
                     DDM.fire("dragenter", evt);
                     DDM.fire("dropenter", evt);
                 } else {
-
                     activeDrag.fire("dragover", evt);
                     this.fire("dropover", evt);
                     DDM.fire("dragover", evt);
@@ -94,18 +91,24 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
         },
         {
             ATTRS:{
+
                 /**
-                 * 上一个成为放目标的节点
+                 * 继承自 Drappable ，当前正在委托的放节点目标
+                 * note:{}
+                 */
+
+                /**
+                 * 上一个成为放目标的委托节点
                  */
                 lastNode:{
-                }
-                ,
+                },
+
                 /**
                  * 放目标节点选择器
                  */
                 selector:{
-                }
-                ,
+                },
+
                 /**
                  * 放目标所在区域
                  */
@@ -119,5 +122,5 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
 
     return DroppableDelegate;
 }, {
-        requires:['./ddm','./droppable','dom','node']
-    });
+    requires:['./ddm','./droppable','dom','node']
+});

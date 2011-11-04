@@ -10,11 +10,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
     S.extend(Delegate, Draggable, {
             _init:function() {
                 var self = this,
-                    handlers = self.get('handlers'),
                     node = self.get('container');
-                if (handlers.length === 0) {
-                    handlers.push(self.get("selector"));
-                }
                 node.on('mousedown', self._handleMouseDown, self);
             },
 
@@ -24,18 +20,22 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
              */
             _getHandler:function(target) {
                 var self = this,
-                    node = this.get("container"),
+                    ret,
+                    node = self.get("container"),
                     handlers = self.get('handlers');
-
                 while (target && target[0] !== node[0]) {
-                    for (var i = 0; i < handlers.length; i++) {
-                        var h = handlers[i];
-                        if (DOM.test(target[0], h, node[0])) {
-                            return target;
+                    S.each(handlers, function(h) {
+                        if (DOM.test(target[0], h)) {
+                            ret = target;
+                            return false;
                         }
+                    });
+                    if (ret) {
+                        break;
                     }
                     target = target.parent();
                 }
+                return ret;
             },
 
             /**
@@ -43,13 +43,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
              * @param h
              */
             _getNode:function(h) {
-                var node = this.get("container"),sel = this.get("selector");
-                while (h && h[0] != node[0]) {
-                    if (DOM.test(h[0], sel, node[0])) {
-                        return h;
-                    }
-                    h = h.parent();
-                }
+                return h.closest(this.get("selector"), this.get("container"));
             },
 
             /**
@@ -58,17 +52,25 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
              * @param ev
              */
             _handleMouseDown:function(ev) {
-                var self = this;
-                var target = new Node(ev.target);
-                var handler = target && this._getHandler(target);
-                if (!handler) {
-                    return;
+                var self = this,
+                    handler,
+                    handlers = self.get("handlers"),
+                    target = new Node(ev.target);
+                // 不需要像 Draggble 一样，判断 target 是否在 handler 内
+                // 委托时，直接从 target 开始往上找 handler
+                if (handlers.length) {
+                    handler = self._getHandler(target);
+                } else {
+                    handler = target;
                 }
-                var node = this._getNode(handler);
+                var node = handler && self._getNode(handler);
                 if (!node) {
                     return;
                 }
+
                 ev.preventDefault();
+
+                // 找到 handler 确定 委托的 node ，就算成功了
                 self.set("node", node);
                 self.set("dragNode", node);
                 self._prepare(ev);
@@ -76,7 +78,8 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
 
             destroy:function() {
                 var self = this;
-                self.get("container").detach('mousedown',
+                self.get("container")
+                    .detach('mousedown',
                     self._handleMouseDown,
                     self);
                 self.detach();
@@ -105,10 +108,8 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                  **/
                 handlers:{
                     value:[],
-                    // 覆盖父类的 getter ，这里不返回节点
-                    getter:function(vs) {
-                        return vs;
-                    }
+                    // 覆盖父类的 getter ，这里 normalize 成节点
+                    getter:0
                 }
 
             }

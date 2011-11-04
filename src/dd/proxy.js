@@ -4,12 +4,14 @@
  */
 KISSY.add("dd/proxy", function(S, Node) {
     var DESTRUCTOR_ID = "__proxy_destructors",
-        DRAG_TAG = "__proxy_id",
+        stamp = S.stamp,
+        MARKER = S.guid("__dd_proxy"),
         PROXY_ATTR = "__proxy";
 
     function Proxy() {
-        Proxy.superclass.constructor.apply(this, arguments);
-        this[DESTRUCTOR_ID] = {};
+        var self = this;
+        Proxy.superclass.constructor.apply(self, arguments);
+        self[DESTRUCTOR_ID] = {};
     }
 
     Proxy.ATTRS = {
@@ -20,7 +22,6 @@ KISSY.add("dd/proxy", function(S, Node) {
              */
             value:function(drag) {
                 return new Node(drag.get("node").clone(true));
-                //n.attr("id", S.guid("ks-dd-proxy"));
             }
         },
         destroyOnEnd:{
@@ -33,15 +34,19 @@ KISSY.add("dd/proxy", function(S, Node) {
 
     S.extend(Proxy, S.Base, {
         attach:function(drag) {
-            if (drag[DRAG_TAG]) {
+
+            var self = this,
+                tag;
+
+            if (tag = stamp(drag, 1, MARKER) &&
+                self[DESTRUCTOR_ID][tag]
+                ) {
                 return;
             }
 
-            var self = this;
-
             function start() {
-                var node = self.get("node");
-                var dragNode = drag.get("node");
+                var node = self.get("node"),
+                    dragNode = drag.get("node");
 
                 if (!self[PROXY_ATTR] && S.isFunction(node)) {
                     node = node(drag);
@@ -49,11 +54,12 @@ KISSY.add("dd/proxy", function(S, Node) {
                     node.css("position", "absolute");
                     self[PROXY_ATTR] = node;
                 }
-                dragNode.parent().append(self[PROXY_ATTR]);
-                self[PROXY_ATTR].show();
-                self[PROXY_ATTR].offset(dragNode.offset());
+                dragNode.parent()
+                    .append(node);
+                node.show();
+                node.offset(dragNode.offset());
                 drag.set("dragNode", dragNode);
-                drag.set("node", self[PROXY_ATTR]);
+                drag.set("node", node);
             }
 
             function end() {
@@ -62,7 +68,7 @@ KISSY.add("dd/proxy", function(S, Node) {
                 node.hide();
                 if (self.get("destroyOnEnd")) {
                     node.remove();
-                    self[PROXY_ATTR] = null;
+                    self[PROXY_ATTR] = 0;
                 }
                 drag.set("node", drag.get("dragNode"));
             }
@@ -70,7 +76,7 @@ KISSY.add("dd/proxy", function(S, Node) {
             drag.on("dragstart", start);
             drag.on("dragend", end);
 
-            var tag = drag[DRAG_TAG] = S.guid("dd-proxyid-");
+            tag = stamp(drag, 0, MARKER);
 
             self[DESTRUCTOR_ID][tag] = {
                 drag:drag,
@@ -81,22 +87,24 @@ KISSY.add("dd/proxy", function(S, Node) {
             };
         },
         unAttach:function(drag) {
-            var tag = drag[DRAG_TAG];
-            if (!tag) {
-                return;
+            var self = this,
+                tag = stamp(drag, 1, MARKER),
+                destructors = self[DESTRUCTOR_ID];
+            if (tag && destructors[tag]) {
+                destructors[tag].fn();
+                delete destructors[tag];
             }
-            this[DESTRUCTOR_ID][tag].fn();
-            delete this[DESTRUCTOR_ID][tag];
-            delete drag[DRAG_TAG];
         },
 
         destroy:function() {
-            var node = this.get("node");
+            var self = this,
+                node = self.get("node"),
+                destructors = self[DESTRUCTOR_ID];
             if (node && !S.isFunction(node)) {
                 node.remove();
             }
-            for (var d in this[DESTRUCTOR_ID]) {
-                this.unAttach(this[DESTRUCTOR_ID][d].drag);
+            for (var d in destructors) {
+                this.unAttach(destructors[d].drag);
             }
         }
     });
