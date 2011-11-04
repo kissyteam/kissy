@@ -1,6 +1,6 @@
 /**
  * dd support for kissy , dd objects central management module
- * @author  承玉<yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 

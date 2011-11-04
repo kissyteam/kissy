@@ -14,15 +14,21 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
         require("constrain"),
         Aria
     ], {
-        renderUI:function() {
-            var self = this;
-            //设置值，drag-ext 绑定时用到
-            self.set("handlers", [self.get("header")]);
-        }
     }, {
         ATTRS:{
             closable:{
                 value:true
+            },
+            handlers:{
+                valueFn:function() {
+                    var self = this;
+                    return [
+                        // 运行时取得拖放头
+                        function() {
+                            return self.get("view").get("header");
+                        }
+                    ];
+                }
             }
         }
     });

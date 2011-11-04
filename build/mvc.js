@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 2 21:58
+build time: Nov 4 10:47
 */
 /**
  * mvc base
@@ -486,8 +486,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         // http://xx.com/#yy?z=1
         // ie6 => location.hash = #yy
         // 其他浏览器 => location.hash = #yy?z=1
-        var url = location.href;
-        return '#' + url.replace(/^[^#]*#?(.*)$/, '$1');
+        return location.href.replace(/^[^#]*#?!?(.*)$/, '$1');
     }
 
     function getQuery(path) {
@@ -516,7 +515,6 @@ KISSY.add('mvc/router', function(S, Event, Base) {
             finalParam = 0;
 
         path = fullPath.replace(queryReg, "");
-
         // user input : /xx/yy/zz
         S.each(allRoutes, function(route) {
             var routeRegs = route[__routerMap],

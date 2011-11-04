@@ -1,15 +1,18 @@
 /**
  * dd support for kissy, drag for dd
- * @author  承玉<yiminghe@gmail.com>
+ * @author  yiminghe@gmail.com
  */
 KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
+
+    var each = S.each;
 
     /*
      拖放纯功能类
      */
     function Draggable() {
-        Draggable.superclass.constructor.apply(this, arguments);
-        this._init();
+        var self = this;
+        Draggable.superclass.constructor.apply(self, arguments);
+        self._init();
     }
 
     Draggable['POINT'] = "point";
@@ -41,7 +44,30 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
          * handler 数组，注意暂时必须在 node 里面
          */
         handlers:{
-            value:[]
+            value:[],
+            getter:function(vs) {
+                var self = this,
+                    cursor = self.get("cursor");
+                if (!vs.length) {
+                    vs[0] = self.get("node");
+                }
+                each(vs, function(v, i) {
+                    if (S.isFunction(v)) {
+                        v = v.call(self);
+                    }
+                    if (S.isString(v) || v.nodeType) {
+                        v = Node.one(v);
+                    }
+                    //ie 不能在其内开始选择区域
+                    v.unselectable();
+                    if (cursor) {
+                        v.css('cursor', cursor);
+                    }
+                    vs[i] = v;
+                });
+                self.__set("handlers", vs);
+                return vs;
+            }
         },
         cursor:{
             value:"move"
@@ -64,23 +90,8 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
         _init: function() {
             var self = this,
-                node = self.get('node'),
-                handlers = self.get('handlers');
+                node = self.get('node');
             self.set("dragNode", node);
-
-            if (handlers.length === 0) {
-                handlers[0] = node;
-            }
-
-            for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i];
-                hl = Node.one(hl);
-                //ie 不能在其内开始选择区域
-                hl.unselectable();
-                if (self.get("cursor")) {
-                    hl.css('cursor', self.get("cursor"));
-                }
-            }
             node.on('mousedown', self._handleMouseDown, self);
         },
 
@@ -88,29 +99,24 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             var self = this,
                 node = self.get('dragNode'),
                 handlers = self.get('handlers');
-            for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i];
-                if (hl.css("cursor") == self.get("cursor")) {
-                    hl.css("cursor", "auto");
-                }
-            }
+            each(handlers, function(handler) {
+                handler.css("cursor", "auto");
+            });
             node.detach('mousedown', self._handleMouseDown, self);
             self.detach();
         },
 
         _check: function(t) {
-            var handlers = this.get('handlers');
-
-            for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i];
-                if (hl.contains(t)
-                    ||
-                    //子区域内点击也可以启动
-                    hl[0] == t[0]) {
-                    return true;
+            var handlers = this.get('handlers'),ret = 0;
+            each(handlers, function(handler) {
+                //子区域内点击也可以启动
+                if (handler.contains(t) ||
+                    handler[0] == t[0]) {
+                    ret = 1;
+                    return false;
                 }
-            }
-            return false;
+            });
+            return ret;
         },
 
         /**
@@ -128,10 +134,8 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             }
             //chrome 阻止了 flash 点击？？
             //不组织的话chrome会选择
-            //if (!UA.webkit) {
             //firefox 默认会拖动对象地址
             ev.preventDefault();
-            //}
             self._prepare(ev);
 
         },
@@ -159,6 +163,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
         _move: function(ev) {
             var self = this,
+                ret,
                 diff = self.get("diff"),
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
@@ -166,7 +171,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 left:ev.pageX,
                 top:ev.pageY
             };
-            var ret = {
+            ret = {
                 left:left,
                 top:top,
                 pageX:ev.pageX,
@@ -178,27 +183,28 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         },
 
         _end: function() {
-            this.fire("dragend", {
-                drag:this
+            var self = this;
+            self.fire("dragend", {
+                drag:self
             });
             DDM.fire("dragend", {
-                drag:this
+                drag:self
             });
         },
 
         _start: function() {
-            this.fire("dragstart", {
-                drag:this
+            var self = this;
+            self.fire("dragstart", {
+                drag:self
             });
             DDM.fire("dragstart", {
-                drag:this
+                drag:self
             });
         }
     });
 
     return Draggable;
 
-},
-{
+}, {
     requires:["ua","node","base","./ddm"]
 });
