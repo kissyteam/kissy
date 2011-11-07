@@ -9,10 +9,10 @@
     }
 
     #leftCol, #rightCol {
-        width: 350px;
+
         margin: 0 50px;
         float: left;
-        height: 500px;
+
         border: 1px solid red;
     }
 
@@ -48,26 +48,34 @@
 <body>
 <h1> portal demo</h1>
 <p>
-    方框通过拖动 header 可以在两列内互相交换位置
+    拖动 header 调整组件与布局栏的位置
 </p>
 
 <div id="cols">
 
-    <div id="leftCol" class="col">
+    <div id="leftCol" class="col" style=" width: 350px;height: 500px;">
+
+        <div class="header">
+            draggble col 1
+        </div>
 
         <div class="component">
             <div class="header">
-                header 1
+                draggble component 1
             </div>
         </div>
 
     </div>
 
-    <div id="rightCol" class="col">
+    <div id="rightCol" class="col" style=" width: 350px;height: 500px;">
+
+        <div class="header">
+            draggble col 2
+        </div>
 
         <div class="component">
             <div class="header">
-                header 2
+                draggble component 2
             </div>
         </div>
 
@@ -76,65 +84,70 @@
 </div>
 
 
-<script src="../../../build/kissy.js"></script>
-<script src="../ddm.js"></script>
-<script src="../draggable.js"></script>
-<script src="../droppable.js"></script>
-<script src="../proxy.js"></script>
-<script src="../draggable-delegate.js"></script>
-<script src="../droppable-delegate.js"></script>
-<script src="../scroll.js"></script>
-<script src="../../dd.js"></script>
+<script src="../../../build/kissy.js?t=99"></script>
+<script src="../ddm.js?t=99"></script>
+<script src="../draggable.js?t=99"></script>
+<script src="../droppable.js?t=99"></script>
+<script src="../proxy.js?t=99"></script>
+<script src="../draggable-delegate.js?t=99"></script>
+<script src="../droppable-delegate.js?t=99"></script>
+<script src="../scroll.js?t=99"></script>
+<script src="../../dd.js?t=99"></script>
 <script>
 
     KISSY.use("dd,node", function(S, DD, Node) {
-        Node.one("#cols").unselectable();
+
+
         var DDM = DD.DDM,
+                $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 DroppableDelegate = DD.DroppableDelegate,
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable,
                 Scroll = DD.Scroll,
                 Proxy = DD.Proxy;
+        $("#cols").unselectable();
 
         var proxy = new Proxy({
-                    /**
-                     * 如何产生替代节点
-                     * @param drag 当前拖对象
-                     */
-                    node:function(drag) {
-                        var n = S.one(drag.get("dragNode").clone(true));
-                        n.attr("id", S.guid("ks-dd-proxy"));
-                        n.css("opacity", 0.2);
-                        return n;
-                    },
-                    destroyOnEnd:true
-                });
+            /**
+             * 如何产生替代节点
+             * @param drag 当前拖对象
+             */
+            node:function(drag) {
+                var n = S.one(drag.get("dragNode").clone(true));
+                n.attr("id", S.guid("ks-dd-proxy"));
+                n.css("opacity", 0.2);
+                return n;
+            },
+            destroyOnEnd:true
+        });
 
         var dragDelegate = new DraggableDelegate({
-                    container:"#cols",
-                    handlers:['.header'],
-                    selector:'.component'
-                });
+            container:"#cols",
+            handlers:['.header'],
+            selector:function(el) {
+                el = $(el);
+                return el.hasClass('col') || el.hasClass('component');
+            }
+        });
 
         proxy.attach(dragDelegate);
-
 
         /**
          * 一列也为可拖放节点，防止空列无法拖入
          */
         new DroppableDelegate({
-                    container:"#cols",
-                    selector:'.col'
-                });
+            container:"#cols",
+            selector:'.col'
+        });
 
         /**
          * 单个 component 为可拖放节点
          */
         new DroppableDelegate({
-                    container:"#cols",
-                    selector:'.component'
-                });
+            container:"#cols",
+            selector:'.component'
+        });
 
         var p;
         /**
@@ -163,41 +176,67 @@
             var drop = ev.drop;
             var dragNode = drag.get("dragNode"),
                     dropNode = drop.get("node");
-            //S.log("current drop node :"+dropNode.attr("class"));
-            if (dropNode.hasClass("col")) {
-                var nodes = dropNode.all(".component");
-                // 只有一个并且是 proxy 或自身
-                if (nodes.length == 1 && nodes[0] == drag.get("node")[0]) {
-                    // 只有一个并且是自身，不处理
-                    if (nodes[0] == drag.get("dragNode")[0]) {
-                        return;
+
+
+            if (dragNode.hasClass("component")) {
+
+                if (dropNode.hasClass("col")) {
+                    var nodes = dropNode.all(".component");
+
+                    if (nodes.length) {
+
+                        if (nodes.length == 1 &&
+
+                                ( nodes[0] === drag.get("node")[0] &&
+                                        nodes[0] !== drag.get("dragNode")[0])
+
+                                ) {
+                            // 只有 proxy
+                        } else {
+                            return;
+                        }
+                    }
+
+                    // S.log("添加到列");
+
+                    //空列
+                    dropNode.append(dragNode);
+                } else {
+
+                    // 纵轴中线位置
+                    var middleDropY = (dropNode.offset().top * 2 + dropNode.height()) / 2;
+
+                    //当前鼠标位置
+                    if (ev.pageY > middleDropY) {
+                        var next = dropNode.next();
+                        if (next && next[0] == dragNode) {
+                        } else {
+                            dragNode.insertAfter(dropNode);
+                        }
                     } else {
-                        // 是 proxy ，可以添加到该列
+                        var prev = dropNode.prev();
+                        if (prev && prev[0] == dragNode) {
+                        } else {
+                            dragNode.insertBefore(dropNode);
+                        }
                     }
                 }
-                // 还有其他
-                else if (nodes.length) {
-                    return;
-                }
+            }
+            // 列之间拖动
+            else if (dropNode.hasClass("col")) {
 
-                // S.log("添加到列");
-
-                //空列
-                dropNode.append(dragNode);
-            } else {
-
-                // 纵轴中线位置
-                var middleDropY = (dropNode.offset().top * 2 + dropNode.height()) / 2;
+                // 横轴中线位置
+                var middleDropX = (dropNode.offset().left * 2 + dropNode.width()) / 2;
 
                 //当前鼠标位置
-                if (ev.pageY > middleDropY) {
-                    var next = dropNode.next();
+                if (ev.pageX > middleDropX) {
+                    next = dropNode.next();
                     if (next && next[0] == dragNode) {
                     } else {
                         dragNode.insertAfter(dropNode);
                     }
                 } else {
-                    var prev = dropNode.prev();
+                    prev = dropNode.prev();
                     if (prev && prev[0] == dragNode) {
                     } else {
                         dragNode.insertBefore(dropNode);

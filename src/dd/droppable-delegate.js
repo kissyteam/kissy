@@ -3,8 +3,19 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
+
+    function dragStart() {
+        var self = this,
+            container = self.get("container"),
+            selector = self.get("selector");
+        self.__allNodes = container.all(selector);
+    }
+
     function DroppableDelegate() {
-        DroppableDelegate.superclass.constructor.apply(this, arguments);
+        var self = this;
+        DroppableDelegate.superclass.constructor.apply(self, arguments);
+        // 提高性能，拖放开始时缓存代理节点
+        DDM.on("dragstart", dragStart, self);
     }
 
     S.extend(DroppableDelegate, Droppable, {
@@ -19,10 +30,9 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
                     top:ev.pageY
                 },
                     self = this,
-                    container = self.get("container"),
-                    selector = self.get("selector"),
-                    allNodes = container.all(selector),
-                    ret = 0;
+                    allNodes = self.__allNodes,
+                    ret = 0,
+                    vArea = Number.MAX_VALUE;
 
                 allNodes.each(function(n) {
                     var domNode = n[0];
@@ -31,11 +41,20 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
                         return;
                     }
                     if (DDM.inRegion(DDM.region(n), pointer)) {
-                        self.set("lastNode", self.get("node"));
-                        self.set("node", ret = n);
-                        return false;
+                        // 找到面积最小的那个
+                        var a = DDM.area(DDM.region(n));
+                        if (a < vArea) {
+                            vArea = a;
+                            ret = n;
+                        }
                     }
                 });
+
+                if (ret) {
+                    self.set("lastNode", self.get("node"));
+                    self.set("node", ret);
+                }
+
                 return ret;
             },
 
@@ -48,44 +67,25 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
 
             _handleOver:function(ev) {
                 var self = this,
-                    activeDrag = DDM.get("activeDrag"),
-                    oldDrop = DDM.get("activeDrop"),
-                    evt = S.mix({
-                        drag:activeDrag,
-                        drop:self
-                    }, ev),
                     node = self.get("node"),
+                    superOut = DroppableDelegate.superclass._handleOut,
+                    superOver = DroppableDelegate.superclass._handleOver,
+                    superEnter = DroppableDelegate.superclass._handleEnter,
                     lastNode = self.get("lastNode");
 
-                DDM.set("activeDrop", self);
-                node.addClass(DDM.get("prefixCls") + "drop-over");
-
-                if (self != oldDrop
-                    || !lastNode
-                    || (lastNode && lastNode[0] !== node[0])
-                    ) {
+                if (lastNode[0] !== node[0]) {
                     /**
-                     * 两个可 drop 节点相邻，先通知上次的离开
+                     * 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
                      */
-                    if (lastNode) {
-                        self.set("node", lastNode);
-                        DroppableDelegate.superclass._handleOut.apply(self, arguments);
-                    }
+                    self.set("node", lastNode);
+                    superOut.apply(self, arguments);
                     /**
                      * 再通知这次的进入
                      */
                     self.set("node", node);
-                    activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
-                    //第一次先触发 dropenter,dragenter
-                    activeDrag.fire("dragenter", evt);
-                    self.fire("dropenter", evt);
-                    DDM.fire("dragenter", evt);
-                    DDM.fire("dropenter", evt);
+                    superEnter.call(self, ev);
                 } else {
-                    activeDrag.fire("dragover", evt);
-                    this.fire("dropover", evt);
-                    DDM.fire("dragover", evt);
-                    DDM.fire("dropover", evt);
+                    superOver.call(self, ev);
                 }
             }
         },

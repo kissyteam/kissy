@@ -17,7 +17,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         node: {
             setter:function(v) {
                 if (v) {
-                    return Node.one(v).addClass(DDM.get("prefixCls") + "drop");
+                    return Node.one(v);
                 }
             }
         }
@@ -35,47 +35,54 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             return domNode == dragNode || domNode == proxyNode
                 ? null : node;
         },
+
         _init:function() {
             DDM._regDrop(this);
         },
+
+        __getCustomEvt:function(ev) {
+            return S.mix({
+                drag:DDM.get("activeDrag"),
+                drop:this
+            }, ev);
+        },
+
         _handleOut:function() {
             var self = this,
-                activeDrag = DDM.get("activeDrag"),
-                ret = {
-                    drop:self,
-                    drag:activeDrag
-                };
+                ret = self.__getCustomEvt();
             self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
             self.fire("dropexit", ret);
             DDM.fire("dropexit", ret);
-            activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
-            activeDrag.fire("dragexit", ret);
             DDM.fire("dragexit", ret);
         },
+
+        _handleEnter:function(ev) {
+            var self = this,
+                e = self.__getCustomEvt(ev);
+            e.drag._handleEnter(e);
+            self.get("node").addClass(DDM.get("prefixCls") + "drop-over");
+            this.fire("dropenter", e);
+            DDM.fire("dragenter", e);
+            DDM.fire("dropenter", e);
+        },
+
+
         _handleOver:function(ev) {
             var self = this,
-                oldDrop = DDM.get("activeDrop");
-            DDM.set("activeDrop", this);
-            var activeDrag = DDM.get("activeDrag");
-            self.get("node").addClass(DDM.get("prefixCls") + "drop-over");
-            var evt = S.mix({
-                drag:activeDrag,
-                drop:this
-            }, ev);
-            if (self != oldDrop) {
-                activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
-                //第一次先触发 dropenter,dragenter
-                activeDrag.fire("dragenter", evt);
-                this.fire("dropenter", evt);
-                DDM.fire("dragenter", evt);
-                DDM.fire("dropenter", evt);
-            } else {
-                activeDrag.fire("dragover", evt);
-                self.fire("dropover", evt);
-                DDM.fire("dragover", evt);
-                DDM.fire("dropover", evt);
-            }
+                e = self.__getCustomEvt(ev);
+            e.drag._handleOver(e);
+            self.fire("dropover", e);
+            DDM.fire("dragover", e);
+            DDM.fire("dropover", e);
         },
+
+        _end:function() {
+            var self = this,
+                ret = self.__getCustomEvt();
+            self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+            self.fire('drophit', ret);
+        },
+
         destroy:function() {
             DDM._unregDrop(this);
         }

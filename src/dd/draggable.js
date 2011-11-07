@@ -182,23 +182,53 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         },
 
         _end: function() {
-            var self = this;
+            var self = this,activeDrop;
+            self.get("dragNode").removeClass(DDM.get("prefixCls") + "dragging");
+            self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+            if (activeDrop = DDM.get("activeDrop")) {
+                self.fire('dragdrophit', {
+                    drag:self,
+                    drop:activeDrop
+                });
+            } else {
+                self.fire('dragdropmiss', {
+                    drag:self
+                });
+            }
             self.fire("dragend", {
-                drag:self
-            });
-            DDM.fire("dragend", {
                 drag:self
             });
         },
 
+        _handleOut:function() {
+            var self = this;
+            self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+            self.fire("dragexit", {
+                drag:self,
+                drop:DDM.get("activeDrop")
+            });
+        },
+
+        _handleEnter:function(e) {
+            var self = this;
+            self.get("node").addClass(DDM.get("prefixCls") + "drag-over");
+            //第一次先触发 dropenter,dragenter
+            self.fire("dragenter", e);
+        },
+
+
+        _handleOver:function(e) {
+            this.fire("dragover", e);
+        },
+
+
         _start: function() {
             var self = this;
+            self.get("dragNode").addClass(DDM.get("prefixCls") + "dragging");
             self.fire("dragstart", {
                 drag:self
             });
-            DDM.fire("dragstart", {
-                drag:self
-            });
+
         }
     });
 
