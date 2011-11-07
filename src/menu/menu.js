@@ -4,6 +4,12 @@
  */
 KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
+
+
+    function onMenuHide() {
+        this.set("highlightedItem", undefined);
+    }
+
     var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
@@ -124,9 +130,7 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
             /**
              * 隐藏后，去掉高亮与当前
              */
-            self.on("hide", function() {
-                self.set("highlightedItem", undefined);
-            });
+            self.on("hide", onMenuHide, self);
         },
 
         containsElement:function(element) {

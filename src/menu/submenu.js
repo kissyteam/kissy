@@ -20,6 +20,8 @@ KISSY.add(
                     ! menu.containsElement(target)
                 ) {
                 menu.hide();
+                // submenuitem should also hide
+                self.get("parent").set("highlightedItem", null);
             }
         }
 
@@ -154,7 +156,7 @@ KISSY.add(
                 },
 
                 // click ，立即显示
-                _performInternal:function(e) {
+                _performInternal:function() {
                     this.clearTimers();
                     this.showMenu();
                 },

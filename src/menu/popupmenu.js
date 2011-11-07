@@ -7,11 +7,14 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
             parentMenu;
-        if (subMenuItem) {
-            if (subMenuItem.get("menu") === self) {
-                parentMenu = subMenuItem.get("parent");
-            }
+        if (subMenuItem && subMenuItem.get("menu") === self) {
+            parentMenu = subMenuItem.get("parent");
         }
+        return parentMenu;
+    }
+
+    function getAutoHideParentMenu(self) {
+        var parentMenu = getParentMenu(self);
         if (parentMenu && parentMenu.get(autoHideOnMouseLeave)) {
             return parentMenu;
         }
@@ -22,7 +25,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
         var pre = self,now = self;
         while (now) {
             pre = now;
-            now = getParentMenu(pre);
+            now = getAutoHideParentMenu(pre);
             if (!now) {
                 break;
             }
@@ -49,10 +52,12 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
+            // 清除自身
             clearOwn(self);
             var cs = self.get("children");
             for (i = 0; i < cs.length; i++) {
                 item = cs[i];
+                // 递归清除子菜单
                 if ((menu = item.get("menu")) &&
                     menu.get(autoHideOnMouseLeave)) {
                     menu._clearLeaveHideTimers();
@@ -66,18 +71,25 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             }
             self._leaveHideTimer = setTimeout(function() {
                 // only hide ancestor is enough , it will listen to its ancestor's hide event to hide
-                getOldestMenu(self).hide();
+                var oldMenu = getOldestMenu(self);
+                oldMenu.hide();
+                var parentMenu = getParentMenu(oldMenu);
+                if (parentMenu) {
+                    parentMenu.set("highlightedItem", null);
+                }
             }, self.get("autoHideDelay"));
         },
 
         _handleMouseEnter:function() {
-            var self = this,parent = getParentMenu(self);
+            var self = this,
+                parent = getAutoHideParentMenu(self);
             if (parent) {
                 parent._clearLeaveHideTimers();
             } else {
                 self._clearLeaveHideTimers();
             }
         },
+
 
         /**
          *  suppose it has focus (as a context menu),
