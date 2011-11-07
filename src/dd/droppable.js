@@ -32,7 +32,8 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             var node = this.get("node"),
                 domNode = node[0];
             // 排除当前拖放和代理节点
-            return domNode == dragNode || domNode == proxyNode
+            return domNode == dragNode ||
+                domNode == proxyNode
                 ? null : node;
         },
 

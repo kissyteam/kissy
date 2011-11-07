@@ -34,10 +34,10 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
                     ret = 0,
                     vArea = Number.MAX_VALUE;
 
-                allNodes.each(function(n) {
+                allNodes && allNodes.each(function(n) {
                     var domNode = n[0];
                     // 排除当前拖放的元素以及代理节点
-                    if (domNode == proxyNode || domNode == dragNode) {
+                    if (domNode === proxyNode || domNode === dragNode) {
                         return;
                     }
                     if (DDM.inRegion(DDM.region(n), pointer)) {
