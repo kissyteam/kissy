@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 8 11:52
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -203,8 +203,10 @@ KISSY.add('template/base', function(S) {
          * @param {String} o extent tag object.
          */
         addStatement: function(statement, o) {
-            if (S.isString(statement) && S.isObject(o)) {
+            if (S.isString(statement)) {
                 Statements[statement] = o;
+            } else {
+                S.mix(Statements, statement);
             }
         }
 

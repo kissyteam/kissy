@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 2 21:58
+build time: Nov 8 11:53
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 2 21:58
          */
         version: '1.20dev',
 
-        buildTime:'20111102215805',
+        buildTime:'20111108115316',
 
         /**
          * Returns a new object containing all of the properties of
@@ -403,17 +403,17 @@ build time: Nov 2 21:58
          * stamp a object by guid
          * @return guid associated with this object
          */
-        stamp:function(o, readOnly) {
+        stamp:function(o, readOnly, marker) {
             if (!o) {
                 return o
             }
-            var guid = o[STAMP_MARKER];
+            marker = marker || STAMP_MARKER;
+            var guid = o[marker];
             if (guid) {
                 return guid;
-            }
-            if (!readOnly) {
+            } else if (!readOnly) {
                 try {
-                    guid = o[STAMP_MARKER] = S.guid(STAMP_MARKER);
+                    guid = o[marker] = S.guid(marker);
                 }
                 catch(e) {
                     guid = undefined;

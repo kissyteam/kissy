@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 2 21:58
+build time: Nov 8 11:53
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 2 21:58
          */
         version: '1.20dev',
 
-        buildTime:'20111102215805',
+        buildTime:'20111108115316',
 
         /**
          * Returns a new object containing all of the properties of
@@ -403,17 +403,17 @@ build time: Nov 2 21:58
          * stamp a object by guid
          * @return guid associated with this object
          */
-        stamp:function(o, readOnly) {
+        stamp:function(o, readOnly, marker) {
             if (!o) {
                 return o
             }
-            var guid = o[STAMP_MARKER];
+            marker = marker || STAMP_MARKER;
+            var guid = o[marker];
             if (guid) {
                 return guid;
-            }
-            if (!readOnly) {
+            } else if (!readOnly) {
                 try {
-                    guid = o[STAMP_MARKER] = S.guid(STAMP_MARKER);
+                    guid = o[marker] = S.guid(marker);
                 }
                 catch(e) {
                     guid = undefined;
@@ -2846,6 +2846,10 @@ KISSY.add('ua/base', function() {
     var ua = navigator.userAgent,
         EMPTY = '', MOBILE = 'mobile',
         core = EMPTY, shell = EMPTY, m,
+        IE_DETECT_RANGE = [6, 9], v, end,
+        VERSION_PLACEHOLDER = '{{version}}',
+        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><s></s><![endif]-->',
+        div = document.createElement('div'), s,
         o = {
             // browser core type
             //webkit: 0,
@@ -2872,84 +2876,112 @@ KISSY.add('ua/base', function() {
             }));
         };
 
-    // WebKit
-    if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
-        o[core = 'webkit'] = numberify(m[1]);
+    // try to use IE-Conditional-Comment detect IE more accurately
+    // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
+    div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
+    s = div.getElementsByTagName('s');
 
-        // Chrome
-        if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
-            o[shell = 'chrome'] = numberify(m[1]);
-        }
-        // Safari
-        else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
-            o[shell = 'safari'] = numberify(m[1]);
+    if (s.length > 0) {
+
+        shell = 'ie';
+        o[core = 'trident'] = 0.1; // Trident detected, look for revision
+
+        // Get the Trident's accurate version
+        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+            o[core] = numberify(m[1]);
         }
 
-        // Apple Mobile
-        if (/ Mobile\//.test(ua)) {
-            o[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
-        }
-        // Other WebKit Mobile Browsers
-        else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-            o[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
-        }
-    }
-    // NOT WebKit
-    else {
-        // Presto
-        // ref: http://www.useragentstring.com/pages/useragentstring.php
-        if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
-            o[core = 'presto'] = numberify(m[1]);
-            
-            // Opera
-            if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
-                o[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
-
-                if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
-                    o[shell] = numberify(m[1]);
-                }
-
-                // Opera Mini
-                if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                    o[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
-                }
-                // Opera Mobile
-                // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
-                    o[MOBILE] = m[0];
-                }
+        // Detect the accurate version
+        // 注意：
+        //  o.shell = ie, 表示外壳是 ie
+        //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+        //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
+        //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+        for (v = IE_DETECT_RANGE[0],end = IE_DETECT_RANGE[1]; v <= end; v++) {
+            div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
+            if (s.length > 0) {
+                o[shell] = v;
+                break;
             }
-            
-        // NOT WebKit or Presto
-        } else {
-            // MSIE
-            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                o[core = 'trident'] = 0.1; // Trident detected, look for revision
-                // 注意：
-                //  o.shell = ie, 表示外壳是 ie
-                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
-                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
-                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-                o[shell = 'ie'] = numberify(m[1]);
+        }
 
-                // Get the Trident's accurate version
-                if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-                    o[core] = numberify(m[1]);
+    } else {
+
+        // WebKit
+        if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+            o[core = 'webkit'] = numberify(m[1]);
+
+            // Chrome
+            if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+                o[shell = 'chrome'] = numberify(m[1]);
+            }
+            // Safari
+            else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+                o[shell = 'safari'] = numberify(m[1]);
+            }
+
+            // Apple Mobile
+            if (/ Mobile\//.test(ua)) {
+                o[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
+            }
+            // Other WebKit Mobile Browsers
+            else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+                o[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+            }
+        }
+        // NOT WebKit
+        else {
+            // Presto
+            // ref: http://www.useragentstring.com/pages/useragentstring.php
+            if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
+                o[core = 'presto'] = numberify(m[1]);
+
+                // Opera
+                if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
+                    o[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
+
+                    if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+                        o[shell] = numberify(m[1]);
+                    }
+
+                    // Opera Mini
+                    if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
+                        o[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                    }
+                    // Opera Mobile
+                    // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                    // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
+                    else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                        o[MOBILE] = m[0];
+                    }
                 }
 
-            // NOT WebKit, Presto or IE
+                // NOT WebKit or Presto
             } else {
-                // Gecko
-                if ((m = ua.match(/Gecko/))) {
-                    o[core = 'gecko'] = 0.1; // Gecko detected, look for revision
-                    if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                // MSIE
+                // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
+                if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+                    o[core = 'trident'] = 0.1; // Trident detected, look for revision
+                    o[shell = 'ie'] = numberify(m[1]);
+
+                    // Get the Trident's accurate version
+                    if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
                         o[core] = numberify(m[1]);
                     }
 
-                    // Firefox
-                    if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                        o[shell = 'firefox'] = numberify(m[1]);
+                    // NOT WebKit, Presto or IE
+                } else {
+                    // Gecko
+                    if ((m = ua.match(/Gecko/))) {
+                        o[core = 'gecko'] = 0.1; // Gecko detected, look for revision
+                        if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                            o[core] = numberify(m[1]);
+                        }
+
+                        // Firefox
+                        if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                            o[shell = 'firefox'] = numberify(m[1]);
+                        }
                     }
                 }
             }
@@ -2964,6 +2996,9 @@ KISSY.add('ua/base', function() {
 
 /**
  * NOTES:
+ *
+ * 2011.11.08
+ *  - ie < 10 使用条件注释判断内核，更精确 by gonghaocn@gmail.com
  *
  * 2010.03
  *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
@@ -14950,7 +14985,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 8 11:52
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -15152,8 +15187,10 @@ KISSY.add('template/base', function(S) {
          * @param {String} o extent tag object.
          */
         addStatement: function(statement, o) {
-            if (S.isString(statement) && S.isObject(o)) {
+            if (S.isString(statement)) {
                 Statements[statement] = o;
+            } else {
+                S.mix(Statements, statement);
             }
         }
 
@@ -15710,11 +15747,11 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 4 17:09
 */
 /**
  * dd support for kissy , dd objects central management module
- * @author  承玉<yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
@@ -15964,7 +16001,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
                 //覆盖iframe上面即可
                 SHIM_ZINDEX
                 + ";" +
-                "'><" + "/div>").appendTo(doc.body);
+                "'><" + "/div>").prependTo(doc.body || doc.documentElement);
             //0.5 for debug
             self._shim.css("opacity", 0);
             self._activeShim = self._showShim;
@@ -16049,16 +16086,19 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 });
 /**
  * dd support for kissy, drag for dd
- * @author  承玉<yiminghe@gmail.com>
+ * @author  yiminghe@gmail.com
  */
 KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
+
+    var each = S.each;
 
     /*
      拖放纯功能类
      */
     function Draggable() {
-        Draggable.superclass.constructor.apply(this, arguments);
-        this._init();
+        var self = this;
+        Draggable.superclass.constructor.apply(self, arguments);
+        self._init();
     }
 
     Draggable['POINT'] = "point";
@@ -16090,7 +16130,30 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
          * handler 数组，注意暂时必须在 node 里面
          */
         handlers:{
-            value:[]
+            value:[],
+            getter:function(vs) {
+                var self = this,
+                    cursor = self.get("cursor");
+                if (!vs.length) {
+                    vs[0] = self.get("node");
+                }
+                each(vs, function(v, i) {
+                    if (S.isFunction(v)) {
+                        v = v.call(self);
+                    }
+                    if (S.isString(v) || v.nodeType) {
+                        v = Node.one(v);
+                    }
+                    //ie 不能在其内开始选择区域
+                    v.unselectable();
+                    if (cursor) {
+                        v.css('cursor', cursor);
+                    }
+                    vs[i] = v;
+                });
+                self.__set("handlers", vs);
+                return vs;
+            }
         },
         cursor:{
             value:"move"
@@ -16113,23 +16176,8 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
         _init: function() {
             var self = this,
-                node = self.get('node'),
-                handlers = self.get('handlers');
+                node = self.get('node');
             self.set("dragNode", node);
-
-            if (handlers.length === 0) {
-                handlers[0] = node;
-            }
-
-            for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i];
-                hl = Node.one(hl);
-                //ie 不能在其内开始选择区域
-                hl.unselectable();
-                if (self.get("cursor")) {
-                    hl.css('cursor', self.get("cursor"));
-                }
-            }
             node.on('mousedown', self._handleMouseDown, self);
         },
 
@@ -16137,29 +16185,24 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             var self = this,
                 node = self.get('dragNode'),
                 handlers = self.get('handlers');
-            for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i];
-                if (hl.css("cursor") == self.get("cursor")) {
-                    hl.css("cursor", "auto");
-                }
-            }
+            each(handlers, function(handler) {
+                handler.css("cursor", "auto");
+            });
             node.detach('mousedown', self._handleMouseDown, self);
             self.detach();
         },
 
         _check: function(t) {
-            var handlers = this.get('handlers');
-
-            for (var i = 0; i < handlers.length; i++) {
-                var hl = handlers[i];
-                if (hl.contains(t)
-                    ||
-                    //子区域内点击也可以启动
-                    hl[0] == t[0]) {
-                    return true;
+            var handlers = this.get('handlers'),ret = 0;
+            each(handlers, function(handler) {
+                //子区域内点击也可以启动
+                if (handler.contains(t) ||
+                    handler[0] == t[0]) {
+                    ret = 1;
+                    return false;
                 }
-            }
-            return false;
+            });
+            return ret;
         },
 
         /**
@@ -16177,10 +16220,8 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             }
             //chrome 阻止了 flash 点击？？
             //不组织的话chrome会选择
-            //if (!UA.webkit) {
             //firefox 默认会拖动对象地址
             ev.preventDefault();
-            //}
             self._prepare(ev);
 
         },
@@ -16203,19 +16244,19 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 left:mx - nxy.left,
                 top:my - nxy.top
             };
-            self.set("diff", self._diff);
         },
 
         _move: function(ev) {
             var self = this,
-                diff = self.get("diff"),
+                ret,
+                diff = self._diff,
                 left = ev.pageX - diff.left,
                 top = ev.pageY - diff.top;
             self.mousePos = {
                 left:ev.pageX,
                 top:ev.pageY
             };
-            var ret = {
+            ret = {
                 left:left,
                 top:top,
                 pageX:ev.pageX,
@@ -16227,28 +16268,29 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         },
 
         _end: function() {
-            this.fire("dragend", {
-                drag:this
+            var self = this;
+            self.fire("dragend", {
+                drag:self
             });
             DDM.fire("dragend", {
-                drag:this
+                drag:self
             });
         },
 
         _start: function() {
-            this.fire("dragstart", {
-                drag:this
+            var self = this;
+            self.fire("dragstart", {
+                drag:self
             });
             DDM.fire("dragstart", {
-                drag:this
+                drag:self
             });
         }
     });
 
     return Draggable;
 
-},
-{
+}, {
     requires:["ua","node","base","./ddm"]
 });
 /**
@@ -16258,8 +16300,9 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
 
     function Droppable() {
-        Droppable.superclass.constructor.apply(this, arguments);
-        this._init();
+        var self = this;
+        Droppable.superclass.constructor.apply(self, arguments);
+        self._init();
     }
 
     Droppable.ATTRS = {
@@ -16269,9 +16312,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         node: {
             setter:function(v) {
                 if (v) {
-                    var n = Node.one(v);
-                    n.addClass(DDM.get("prefixCls") + "drop");
-                    return n;
+                    return Node.one(v).addClass(DDM.get("prefixCls") + "drop");
                 }
             }
         }
@@ -16279,60 +16320,61 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
     };
 
     S.extend(Droppable, Base, {
-            /**
-             * 用于被 droppable-delegate override
-             */
-            getNodeFromTarget:function(ev, dragNode, proxyNode) {
-                var node=this.get("node"),
-                    domNode = node[0];
-                // 排除当前拖放和代理节点
-                return domNode == dragNode || domNode == proxyNode
-                    ? null : node;
-            },
-            _init:function() {
-                DDM._regDrop(this);
-            },
-            _handleOut:function() {
-                var activeDrag = DDM.get("activeDrag");
-
-                this.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
-                var ret = {
-                    drop:this,
+        /**
+         * 用于被 droppable-delegate override
+         */
+        getNodeFromTarget:function(ev, dragNode, proxyNode) {
+            var node = this.get("node"),
+                domNode = node[0];
+            // 排除当前拖放和代理节点
+            return domNode == dragNode || domNode == proxyNode
+                ? null : node;
+        },
+        _init:function() {
+            DDM._regDrop(this);
+        },
+        _handleOut:function() {
+            var self = this,
+                activeDrag = DDM.get("activeDrag"),
+                ret = {
+                    drop:self,
                     drag:activeDrag
                 };
-                this.fire("dropexit", ret);
-                DDM.fire("dropexit", ret);
-                activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
-                activeDrag.fire("dragexit", ret);
-                DDM.fire("dragexit", ret);
-            },
-            _handleOver:function(ev) {
-                var oldDrop = DDM.get("activeDrop");
-                DDM.set("activeDrop", this);
-                var activeDrag = DDM.get("activeDrag");
-                this.get("node").addClass(DDM.get("prefixCls") + "drop-over");
-                var evt = S.mix({
-                        drag:activeDrag,
-                        drop:this
-                    }, ev);
-                if (this != oldDrop) {
-                    activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
-                    //第一次先触发 dropenter,dragenter
-                    activeDrag.fire("dragenter", evt);
-                    this.fire("dropenter", evt);
-                    DDM.fire("dragenter", evt);
-                    DDM.fire("dropenter", evt);
-                } else {
-                    activeDrag.fire("dragover", evt);
-                    this.fire("dropover", evt);
-                    DDM.fire("dragover", evt);
-                    DDM.fire("dropover", evt);
-                }
-            },
-            destroy:function() {
-                DDM._unregDrop(this);
+            self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+            self.fire("dropexit", ret);
+            DDM.fire("dropexit", ret);
+            activeDrag.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+            activeDrag.fire("dragexit", ret);
+            DDM.fire("dragexit", ret);
+        },
+        _handleOver:function(ev) {
+            var self = this,
+                oldDrop = DDM.get("activeDrop");
+            DDM.set("activeDrop", this);
+            var activeDrag = DDM.get("activeDrag");
+            self.get("node").addClass(DDM.get("prefixCls") + "drop-over");
+            var evt = S.mix({
+                drag:activeDrag,
+                drop:this
+            }, ev);
+            if (self != oldDrop) {
+                activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
+                //第一次先触发 dropenter,dragenter
+                activeDrag.fire("dragenter", evt);
+                this.fire("dropenter", evt);
+                DDM.fire("dragenter", evt);
+                DDM.fire("dropenter", evt);
+            } else {
+                activeDrag.fire("dragover", evt);
+                self.fire("dropover", evt);
+                DDM.fire("dragover", evt);
+                DDM.fire("dropover", evt);
             }
-        });
+        },
+        destroy:function() {
+            DDM._unregDrop(this);
+        }
+    });
 
     return Droppable;
 
@@ -16342,12 +16384,14 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
  */
 KISSY.add("dd/proxy", function(S, Node) {
     var DESTRUCTOR_ID = "__proxy_destructors",
-        DRAG_TAG = "__proxy_id",
+        stamp = S.stamp,
+        MARKER = S.guid("__dd_proxy"),
         PROXY_ATTR = "__proxy";
 
     function Proxy() {
-        Proxy.superclass.constructor.apply(this, arguments);
-        this[DESTRUCTOR_ID] = {};
+        var self = this;
+        Proxy.superclass.constructor.apply(self, arguments);
+        self[DESTRUCTOR_ID] = {};
     }
 
     Proxy.ATTRS = {
@@ -16358,7 +16402,6 @@ KISSY.add("dd/proxy", function(S, Node) {
              */
             value:function(drag) {
                 return new Node(drag.get("node").clone(true));
-                //n.attr("id", S.guid("ks-dd-proxy"));
             }
         },
         destroyOnEnd:{
@@ -16371,15 +16414,19 @@ KISSY.add("dd/proxy", function(S, Node) {
 
     S.extend(Proxy, S.Base, {
         attach:function(drag) {
-            if (drag[DRAG_TAG]) {
+
+            var self = this,
+                tag;
+
+            if (tag = stamp(drag, 1, MARKER) &&
+                self[DESTRUCTOR_ID][tag]
+                ) {
                 return;
             }
 
-            var self = this;
-
             function start() {
-                var node = self.get("node");
-                var dragNode = drag.get("node");
+                var node = self.get("node"),
+                    dragNode = drag.get("node");
 
                 if (!self[PROXY_ATTR] && S.isFunction(node)) {
                     node = node(drag);
@@ -16387,11 +16434,12 @@ KISSY.add("dd/proxy", function(S, Node) {
                     node.css("position", "absolute");
                     self[PROXY_ATTR] = node;
                 }
-                dragNode.parent().append(self[PROXY_ATTR]);
-                self[PROXY_ATTR].show();
-                self[PROXY_ATTR].offset(dragNode.offset());
+                dragNode.parent()
+                    .append(node);
+                node.show();
+                node.offset(dragNode.offset());
                 drag.set("dragNode", dragNode);
-                drag.set("node", self[PROXY_ATTR]);
+                drag.set("node", node);
             }
 
             function end() {
@@ -16400,7 +16448,7 @@ KISSY.add("dd/proxy", function(S, Node) {
                 node.hide();
                 if (self.get("destroyOnEnd")) {
                     node.remove();
-                    self[PROXY_ATTR] = null;
+                    self[PROXY_ATTR] = 0;
                 }
                 drag.set("node", drag.get("dragNode"));
             }
@@ -16408,7 +16456,7 @@ KISSY.add("dd/proxy", function(S, Node) {
             drag.on("dragstart", start);
             drag.on("dragend", end);
 
-            var tag = drag[DRAG_TAG] = S.guid("dd-proxyid-");
+            tag = stamp(drag, 0, MARKER);
 
             self[DESTRUCTOR_ID][tag] = {
                 drag:drag,
@@ -16419,22 +16467,24 @@ KISSY.add("dd/proxy", function(S, Node) {
             };
         },
         unAttach:function(drag) {
-            var tag = drag[DRAG_TAG];
-            if (!tag) {
-                return;
+            var self = this,
+                tag = stamp(drag, 1, MARKER),
+                destructors = self[DESTRUCTOR_ID];
+            if (tag && destructors[tag]) {
+                destructors[tag].fn();
+                delete destructors[tag];
             }
-            this[DESTRUCTOR_ID][tag].fn();
-            delete this[DESTRUCTOR_ID][tag];
-            delete drag[DRAG_TAG];
         },
 
         destroy:function() {
-            var node = this.get("node");
+            var self = this,
+                node = self.get("node"),
+                destructors = self[DESTRUCTOR_ID];
             if (node && !S.isFunction(node)) {
                 node.remove();
             }
-            for (var d in this[DESTRUCTOR_ID]) {
-                this.unAttach(this[DESTRUCTOR_ID][d].drag);
+            for (var d in destructors) {
+                this.unAttach(destructors[d].drag);
             }
         }
     });
@@ -16446,113 +16496,118 @@ KISSY.add("dd/proxy", function(S, Node) {
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM,Node) {
+KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
     function Delegate() {
         Delegate.superclass.constructor.apply(this, arguments);
     }
 
     S.extend(Delegate, Draggable, {
-        _init:function() {
-            var self = this,
-                handlers = self.get('handlers'),
-                node = self.get('container');
-            if (handlers.length === 0) {
-                handlers.push(self.get("selector"));
-            }
-            node.on('mousedown', self._handleMouseDown, self);
-        },
-
-        /**
-         * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
-         * @param target
-         */
-        _getHandler:function(target) {
-            var self = this,
-                node = this.get("container"),
-                handlers = self.get('handlers');
-
-            while (target && target[0] !== node[0]) {
-                for (var i = 0; i < handlers.length; i++) {
-                    var h = handlers[i];
-                    if (DOM.test(target[0], h, node[0])) {
-                        return target;
-                    }
-                }
-                target = target.parent();
-            }
-        },
-
-        /**
-         * 找到真正应该移动的节点，对应 selector 属性选择器字符串
-         * @param h
-         */
-        _getNode:function(h) {
-            var node = this.get("container"),sel = this.get("selector");
-            while (h && h[0] != node[0]) {
-                if (DOM.test(h[0], sel, node[0])) {
-                    return h;
-                }
-                h = h.parent();
-            }
-        },
-
-        /**
-         * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-         *
-         * @param ev
-         */
-        _handleMouseDown:function(ev) {
-            var self = this;
-            var target = new Node(ev.target);
-            var handler = target && this._getHandler(target);
-            if (!handler) {
-                return;
-            }
-            var node = this._getNode(handler);
-            if (!node) {
-                return;
-            }
-            ev.preventDefault();
-            self.set("node", node);
-            self.set("dragNode", node);
-            self._prepare(ev);
-        },
-
-        destroy:function() {
-            var self = this;
-            self.get("container").detach('mousedown',
-                self._handleMouseDown,
-                self);
-            self.detach();
-        }
-    },
-    {
-        ATTRS:{
-            /**
-             * 用于委托的父容器
-             */
-            container:{
-                setter:function(v) {
-                    return Node.one(v);
-                }
+            _init:function() {
+                var self = this,
+                    node = self.get('container');
+                node.on('mousedown', self._handleMouseDown, self);
             },
 
             /**
-             * 实际拖放的节点选择器，一般用 tag.cls
+             * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
+             * @param target
              */
-            selector:{
-            }
+            _getHandler:function(target) {
+                var self = this,
+                    ret,
+                    node = self.get("container"),
+                    handlers = self.get('handlers');
+                while (target && target[0] !== node[0]) {
+                    S.each(handlers, function(h) {
+                        if (DOM.test(target[0], h)) {
+                            ret = target;
+                            return false;
+                        }
+                    });
+                    if (ret) {
+                        break;
+                    }
+                    target = target.parent();
+                }
+                return ret;
+            },
 
-        /**
-         * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
-         * 不设则为 [ selector ]
-         *
-         * handlers:{
-         *  value:[]
-         * }
-         */
-        }
-    });
+            /**
+             * 找到真正应该移动的节点，对应 selector 属性选择器字符串
+             * @param h
+             */
+            _getNode:function(h) {
+                return h.closest(this.get("selector"), this.get("container"));
+            },
+
+            /**
+             * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
+             *
+             * @param ev
+             */
+            _handleMouseDown:function(ev) {
+                var self = this,
+                    handler,
+                    handlers = self.get("handlers"),
+                    target = new Node(ev.target);
+                // 不需要像 Draggble 一样，判断 target 是否在 handler 内
+                // 委托时，直接从 target 开始往上找 handler
+                if (handlers.length) {
+                    handler = self._getHandler(target);
+                } else {
+                    handler = target;
+                }
+                var node = handler && self._getNode(handler);
+                if (!node) {
+                    return;
+                }
+
+                ev.preventDefault();
+
+                // 找到 handler 确定 委托的 node ，就算成功了
+                self.set("node", node);
+                self.set("dragNode", node);
+                self._prepare(ev);
+            },
+
+            destroy:function() {
+                var self = this;
+                self.get("container")
+                    .detach('mousedown',
+                    self._handleMouseDown,
+                    self);
+                self.detach();
+            }
+        },
+        {
+            ATTRS:{
+                /**
+                 * 用于委托的父容器
+                 */
+                container:{
+                    setter:function(v) {
+                        return Node.one(v);
+                    }
+                },
+
+                /**
+                 * 实际拖放的节点选择器，一般用 tag.cls
+                 */
+                selector:{
+                },
+
+                /**
+                 * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
+                 * 不设则为 [ selector ]
+                 **/
+                handlers:{
+                    value:[],
+                    // 覆盖父类的 getter ，这里 normalize 成节点
+                    getter:0
+                }
+
+            }
+        });
 
     return Delegate;
 }, {
@@ -16573,55 +16628,53 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
              * @param ev
              */
             getNodeFromTarget:function(ev, dragNode, proxyNode) {
-
                 var pointer = {
                     left:ev.pageX,
                     top:ev.pageY
-                };
+                },
+                    self = this,
+                    container = self.get("container"),
+                    selector = self.get("selector"),
+                    allNodes = container.all(selector),
+                    ret = 0;
 
-                var container = this.get("container"),
-                    selector = this.get("selector");
-
-                var allNodes = container.all(selector);
-                //S.log("start ***********************");
-                for (var i = 0; i < allNodes.length; i++) {
-                    var domNode = allNodes[i],
-                        n = new Node(domNode);
+                allNodes.each(function(n) {
+                    var domNode = n[0];
                     // 排除当前拖放的元素以及代理节点
                     if (domNode == proxyNode || domNode == dragNode) {
-                        continue;
+                        return;
                     }
-                    //S.log(n.attr("class"));
                     if (DDM.inRegion(DDM.region(n), pointer)) {
-                        this.set("lastNode", this.get("node"));
-                        this.set("node", n);
-                        //S.log("end ***********************");
-                        return n;
+                        self.set("lastNode", self.get("node"));
+                        self.set("node", ret = n);
+                        return false;
                     }
-                }
-                //S.log("end ***********************");
-                return null;
+                });
+                return ret;
             },
 
             _handleOut:function() {
-                DroppableDelegate.superclass._handleOut.call(this);
-                this.set("node", null);
-                this.set("lastNode", null);
+                var self = this;
+                DroppableDelegate.superclass._handleOut.apply(self, arguments);
+                self.set("node", 0);
+                self.set("lastNode", 0);
             },
 
             _handleOver:function(ev) {
-                var oldDrop = DDM.get("activeDrop");
-                DDM.set("activeDrop", this);
-                var activeDrag = DDM.get("activeDrag");
-                this.get("node").addClass(DDM.get("prefixCls") + "drop-over");
-                var evt = S.mix({
+                var self = this,
+                    activeDrag = DDM.get("activeDrag"),
+                    oldDrop = DDM.get("activeDrop"),
+                    evt = S.mix({
                         drag:activeDrag,
-                        drop:this
-                    }, ev);
-                var node = this.get("node"),
-                    lastNode = this.get("lastNode");
+                        drop:self
+                    }, ev),
+                    node = self.get("node"),
+                    lastNode = self.get("lastNode");
 
-                if (this != oldDrop
+                DDM.set("activeDrop", self);
+                node.addClass(DDM.get("prefixCls") + "drop-over");
+
+                if (self != oldDrop
                     || !lastNode
                     || (lastNode && lastNode[0] !== node[0])
                     ) {
@@ -16629,21 +16682,20 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
                      * 两个可 drop 节点相邻，先通知上次的离开
                      */
                     if (lastNode) {
-                        this.set("node", lastNode);
-                        DroppableDelegate.superclass._handleOut.call(this);
+                        self.set("node", lastNode);
+                        DroppableDelegate.superclass._handleOut.apply(self, arguments);
                     }
                     /**
                      * 再通知这次的进入
                      */
-                    this.set("node", node);
+                    self.set("node", node);
                     activeDrag.get("node").addClass(DDM.get("prefixCls") + "drag-over");
                     //第一次先触发 dropenter,dragenter
                     activeDrag.fire("dragenter", evt);
-                    this.fire("dropenter", evt);
+                    self.fire("dropenter", evt);
                     DDM.fire("dragenter", evt);
                     DDM.fire("dropenter", evt);
                 } else {
-
                     activeDrag.fire("dragover", evt);
                     this.fire("dropover", evt);
                     DDM.fire("dragover", evt);
@@ -16653,18 +16705,24 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
         },
         {
             ATTRS:{
+
                 /**
-                 * 上一个成为放目标的节点
+                 * 继承自 Drappable ，当前正在委托的放节点目标
+                 * note:{}
+                 */
+
+                /**
+                 * 上一个成为放目标的委托节点
                  */
                 lastNode:{
-                }
-                ,
+                },
+
                 /**
                  * 放目标节点选择器
                  */
                 selector:{
-                }
-                ,
+                },
+
                 /**
                  * 放目标所在区域
                  */
@@ -16678,27 +16736,33 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
 
     return DroppableDelegate;
 }, {
-        requires:['./ddm','./droppable','dom','node']
-    });/**
+    requires:['./ddm','./droppable','dom','node']
+});/**
  * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
 KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
+        stamp = S.stamp,
         RATE = [10,10],
         ADJUST_DELAY = 100,
         DIFF = [20,20],
         DESTRUCTORS = "__dd_scrolls";
 
     function Scroll() {
-        Scroll.superclass.constructor.apply(this, arguments);
-        this[DESTRUCTORS] = {};
+        var self = this;
+        Scroll.superclass.constructor.apply(self, arguments);
+        self[DESTRUCTORS] = {};
     }
 
     Scroll.ATTRS = {
         node:{
-            setter:function(v) {
+            // value:window：不行，默认值一定是简单对象
+            valueFn : function() {
+                return Node.one(window);
+            },
+            setter : function(v) {
                 return Node.one(v);
             }
         },
@@ -16711,14 +16775,12 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
     };
 
 
-    function isWin(node) {
-        return !node || node == window;
-    }
+    var isWin = S.isWindow;
 
     S.extend(Scroll, Base, {
 
         getRegion:function(node) {
-            if (isWin(node)) {
+            if (isWin(node[0])) {
                 return {
                     width:DOM.viewportWidth(),
                     height:DOM.viewportHeight()
@@ -16732,7 +16794,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
         },
 
         getOffset:function(node) {
-            if (isWin(node)) {
+            if (isWin(node[0])) {
                 return {
                     left:DOM.scrollLeft(),
                     top:DOM.scrollTop()
@@ -16743,63 +16805,62 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
         },
 
         getScroll:function(node) {
-            if (isWin(node)) {
-                return {
-                    left:DOM.scrollLeft(),
-                    top:DOM.scrollTop()
-                };
-            } else {
-                return {
-                    left:node[0].scrollLeft,
-                    top:node[0].scrollTop
-                };
-            }
+            return {
+                left:node.scrollLeft(),
+                top:node.scrollTop()
+            };
         },
 
         setScroll:function(node, r) {
-            if (isWin(node)) {
-                window.scrollTo(r.left, r.top);
-            } else {
-                node[0].scrollLeft = r.left;
-                node[0].scrollTop = r.top;
-            }
+            node.scrollLeft(r.left);
+            node.scrollTop(r.top);
         },
 
         unAttach:function(drag) {
-            var tag = drag[TAG_DRAG];
-            if (!tag) {
+            var tag,
+                destructors = this[DESTRUCTORS];
+            if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
+                !destructors[tag]
+                ) {
                 return;
             }
-            this[DESTRUCTORS][tag].fn();
-            delete drag[TAG_DRAG];
-            delete this[DESTRUCTORS][tag];
+            destructors[tag].fn();
+            delete destructors[tag];
         },
 
         destroy:function() {
-            for (var d in this[DESTRUCTORS]) {
-                this.unAttach(this[DESTRUCTORS][d].drag);
+            var self = this,
+                destructors = self[DESTRUCTORS];
+            for (var d in destructors) {
+                self.unAttach(destructors[d].drag);
             }
         },
 
         attach:function(drag) {
-            if (drag[TAG_DRAG]) {
+            var self = this,
+                tag = stamp(drag, 0, TAG_DRAG),
+                destructors = self[DESTRUCTORS];
+            if (destructors[tag]) {
                 return;
             }
 
-            var self = this,
-                rate = self.get("rate"),
-                diff = self.get("diff"),
+            var rate = self.get("rate"),
+                diff = self.get('diff'),
                 event,
                 /*
-                 目前相对 container 的便宜，container 为 window 时，相对于 viewport
+                 目前相对 container 的偏移，container 为 window 时，相对于 viewport
                  */
                 dxy,
                 timer = null;
 
             function dragging(ev) {
+                // 给调用者的事件，框架不需要处理
+                // fake 也表示该事件不是因为 mouseover 产生的
                 if (ev.fake) {
                     return;
                 }
+                // S.log("dragging");
+                // 更新当前鼠标相对于拖节点的相对位置
                 var node = self.get("node");
                 event = ev;
                 dxy = S.clone(drag.mousePos);
@@ -16807,41 +16868,39 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 dxy.left -= offset.left;
                 dxy.top -= offset.top;
                 if (!timer) {
-                    startScroll();
+                    checkAndScroll();
                 }
             }
 
-            function dragend() {
+            function dragEnd() {
                 clearTimeout(timer);
                 timer = null;
             }
 
             drag.on("drag", dragging);
 
-            drag.on("dragend", dragend);
+            drag.on("dragend", dragEnd);
 
-            var tag = drag[TAG_DRAG] = S.guid(TAG_DRAG);
-            self[DESTRUCTORS][tag] = {
+            destructors[tag] = {
                 drag:drag,
                 fn:function() {
                     drag.detach("drag", dragging);
-                    drag.detach("dragend", dragend);
+                    drag.detach("dragend", dragEnd);
                 }
             };
 
 
-            function startScroll() {
+            function checkAndScroll() {
                 //S.log("******* scroll");
                 var node = self.get("node"),
                     r = self.getRegion(node),
                     nw = r.width,
                     nh = r.height,
                     scroll = self.getScroll(node),
-                    origin = S.clone(scroll);
+                    origin = S.clone(scroll),
+                    diffY = dxy.top - nh,
+                    adjust = false;
 
-                var diffY = dxy.top - nh;
-                //S.log(diffY);
-                var adjust = false;
                 if (diffY >= -diff[1]) {
                     scroll.top += rate[1];
                     adjust = true;
@@ -16870,19 +16929,21 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
                 }
 
                 if (adjust) {
-
                     self.setScroll(node, scroll);
-                    timer = setTimeout(arguments.callee, ADJUST_DELAY);
+                    timer = setTimeout(checkAndScroll, ADJUST_DELAY);
                     // 不希望更新相对值，特别对于相对 window 时，相对值如果不真正拖放触发的 drag，是不变的，
                     // 不会因为程序 scroll 而改变相对值
+
+                    // 调整事件，不需要 scroll 监控，达到预期结果：元素随容器的持续不断滚动而自动调整位置.
                     event.fake = true;
-                    if (isWin(node)) {
+                    if (isWin(node[0])) {
                         // 当使 window 自动滚动时，也要使得拖放物体相对文档位置随 scroll 改变
                         // 而相对 node 容器时，只需 node 容器滚动，拖动物体相对文档位置不需要改变
                         scroll = self.getScroll(node);
                         event.left += scroll.left - origin.left;
                         event.top += scroll.top - origin.top;
                     }
+                    // 容器滚动了，元素也要重新设置 left,top
                     drag.fire("drag", event);
                 } else {
                     timer = null;
@@ -26296,7 +26357,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 2 15:13
+build time: Nov 7 12:10
 */
 /**
  * deletable menuitem
@@ -26678,6 +26739,12 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  */
 KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
+
+
+    function onMenuHide() {
+        this.set("highlightedItem", undefined);
+    }
+
     var Menu = UIBase.create(Component.Container, {
         _uiSetHighlightedItem:function(v, ev) {
             var pre = ev && ev.prevVal;
@@ -26798,9 +26865,7 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
             /**
              * 隐藏后，去掉高亮与当前
              */
-            self.on("hide", function() {
-                self.set("highlightedItem", undefined);
-            });
+            self.on("hide", onMenuHide, self);
         },
 
         containsElement:function(element) {
@@ -27115,11 +27180,14 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
             parentMenu;
-        if (subMenuItem) {
-            if (subMenuItem.get("menu") === self) {
-                parentMenu = subMenuItem.get("parent");
-            }
+        if (subMenuItem && subMenuItem.get("menu") === self) {
+            parentMenu = subMenuItem.get("parent");
         }
+        return parentMenu;
+    }
+
+    function getAutoHideParentMenu(self) {
+        var parentMenu = getParentMenu(self);
         if (parentMenu && parentMenu.get(autoHideOnMouseLeave)) {
             return parentMenu;
         }
@@ -27130,7 +27198,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
         var pre = self,now = self;
         while (now) {
             pre = now;
-            now = getParentMenu(pre);
+            now = getAutoHideParentMenu(pre);
             if (!now) {
                 break;
             }
@@ -27157,10 +27225,12 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
+            // 清除自身
             clearOwn(self);
             var cs = self.get("children");
             for (i = 0; i < cs.length; i++) {
                 item = cs[i];
+                // 递归清除子菜单
                 if ((menu = item.get("menu")) &&
                     menu.get(autoHideOnMouseLeave)) {
                     menu._clearLeaveHideTimers();
@@ -27174,18 +27244,25 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             }
             self._leaveHideTimer = setTimeout(function() {
                 // only hide ancestor is enough , it will listen to its ancestor's hide event to hide
-                getOldestMenu(self).hide();
+                var oldMenu = getOldestMenu(self);
+                oldMenu.hide();
+                var parentMenu = getParentMenu(oldMenu);
+                if (parentMenu) {
+                    parentMenu.set("highlightedItem", null);
+                }
             }, self.get("autoHideDelay"));
         },
 
         _handleMouseEnter:function() {
-            var self = this,parent = getParentMenu(self);
+            var self = this,
+                parent = getAutoHideParentMenu(self);
             if (parent) {
                 parent._clearLeaveHideTimers();
             } else {
                 self._clearLeaveHideTimers();
             }
         },
+
 
         /**
          *  suppose it has focus (as a context menu),
@@ -27301,6 +27378,8 @@ KISSY.add(
                     ! menu.containsElement(target)
                 ) {
                 menu.hide();
+                // submenuitem should also hide
+                self.get("parent").set("highlightedItem", null);
             }
         }
 
@@ -27435,7 +27514,7 @@ KISSY.add(
                 },
 
                 // click ，立即显示
-                _performInternal:function(e) {
+                _performInternal:function() {
                     this.clearTimers();
                     this.showMenu();
                 },

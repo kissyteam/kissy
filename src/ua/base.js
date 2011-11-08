@@ -43,7 +43,7 @@ KISSY.add('ua/base', function() {
     s = div.getElementsByTagName('s');
 
     if (s.length > 0) {
-        
+
         shell = 'ie';
         o[core = 'trident'] = 0.1; // Trident detected, look for revision
 
@@ -58,7 +58,7 @@ KISSY.add('ua/base', function() {
         //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
         //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
         //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-        for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
+        for (v = IE_DETECT_RANGE[0],end = IE_DETECT_RANGE[1]; v <= end; v++) {
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
             if (s.length > 0) {
                 o[shell] = v;
@@ -112,12 +112,12 @@ KISSY.add('ua/base', function() {
                     // Opera Mobile
                     // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
                     // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                    else if ((m = ua.match(/Opera Mobi[^;]*/)) && m){
+                    else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
                         o[MOBILE] = m[0];
                     }
                 }
 
-            // NOT WebKit or Presto
+                // NOT WebKit or Presto
             } else {
                 // MSIE
                 // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
@@ -130,7 +130,7 @@ KISSY.add('ua/base', function() {
                         o[core] = numberify(m[1]);
                     }
 
-                // NOT WebKit, Presto or IE
+                    // NOT WebKit, Presto or IE
                 } else {
                     // Gecko
                     if ((m = ua.match(/Gecko/))) {
@@ -157,6 +157,9 @@ KISSY.add('ua/base', function() {
 
 /**
  * NOTES:
+ *
+ * 2011.11.08
+ *  - ie < 10 使用条件注释判断内核，更精确 by gonghaocn@gmail.com
  *
  * 2010.03
  *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
