@@ -3,9 +3,11 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
+
     if ("require" in this) {
         return;
     }
+
     var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
@@ -24,10 +26,6 @@
 
             var self = this,
                 fired;
-            //如果 use 指定了 global
-            if (cfg.global) {
-                self.__mixMods(cfg.global);
-            }
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
@@ -40,7 +38,8 @@
             S.each(modNames, function(modName) {
                 // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function() {
-                    if (!fired && self.__isAttached(modNames)) {
+                    if (!fired &&
+                        self.__isAttached(modNames)) {
                         fired = true;
                         var mods = self.__getModules(modNames);
                         callback && callback.apply(self, mods);
@@ -54,6 +53,7 @@
         __getModules:function(modNames) {
             var self = this,
                 mods = [self];
+
             S.each(modNames, function(modName) {
                 if (!utils.isCss(modName)) {
                     mods.push(self.require(modName));
@@ -67,34 +67,36 @@
          * @param {string} moduleName
          */
         require:function(moduleName) {
-            var mods = S.Env.mods,
+            var self = this,
+                mods = self.Env.mods,
                 mod = mods[moduleName],
-                re = S['onRequire'] && S['onRequire'](mod);
+                re = self['onRequire'] && self['onRequire'](mod);
             if (re !== undefined) {
                 return re;
             }
             return mod && mod.value;
         },
 
-        //加载指定模块名模块，如果不存在定义默认定义为内部模块
+        // 加载指定模块名模块，如果不存在定义默认定义为内部模块
         __attachModByName: function(modName, callback, cfg) {
-
             var self = this,
-                mods = self.Env.mods,
-                mod = mods[modName];
+                mods = self.Env.mods;
+
+            var mod = mods[modName];
             //没有模块定义
             if (!mod) {
                 // 默认 js/css 名字
                 // 不指定 .js 默认为 js
                 // 指定为 css 载入 .css
-                var componentJsName = self.Config['componentJsName'] || function(m) {
-                    var suffix = "js";
-                    if (/(.+)\.(js|css)$/i.test(m)) {
-                        suffix = RegExp.$2;
-                        m = RegExp.$1;
-                    }
-                    return m + '-min.' + suffix;
-                },  path = S.isFunction(componentJsName) ?
+                var componentJsName = self.Config['componentJsName'] ||
+                    function(m) {
+                        var suffix = "js",match;
+                        if (match = m.match(/(.+)\.(js|css)$/i)) {
+                            suffix = match[2];
+                            m = match[1];
+                        }
+                        return m + '-min.' + suffix;
+                    },  path = S.isFunction(componentJsName) ?
                     //一个模块合并到了了另一个模块文件中去
                     componentJsName(self._combine(modName))
                     : componentJsName;
@@ -108,6 +110,10 @@
             mod.name = modName;
             if (mod && mod.status === ATTACHED) {
                 return;
+            }
+            // 先从 global 里取
+            if (cfg.global) {
+                self.__mixMod(modName, cfg.global);
             }
 
             self.__attach(mod, callback, cfg);
@@ -144,7 +150,6 @@
                 mod['requires'] = mod['requires'] || [];
 
                 var newRequires = mod['requires'];
-                //var    optimize = [];
 
                 //本模块下载成功后串行下载 require
                 S.each(newRequires, function(r, i, newRequires) {
@@ -160,18 +165,7 @@
                         //新增的依赖项
                         self.__attachModByName(r, fn, cfg);
                     }
-                    /**
-                     * 依赖项需要重新下载，最好和被依赖者一起 use
-                     */
-//                    if (!inA && (!rMod || rMod.status < LOADED)) {
-//                        optimize.push(r);
-//                    }
                 });
-
-//                if (optimize.length != 0) {
-//                    optimize.unshift(mod.name);
-//                    S.log(optimize + " : better to be used together", "warn");
-//                }
 
                 fn();
             }, cfg);
@@ -179,7 +173,8 @@
             var attached = false;
 
             function fn() {
-                if (!attached && self.__isAttached(mod['requires'])) {
+                if (!attached &&
+                    self.__isAttached(mod['requires'])) {
 
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
@@ -194,15 +189,15 @@
 
         __attachMod: function(mod) {
             var self = this,
-                defs = mod.fns;
+                fns = mod.fns;
 
-            if (defs) {
-                S.each(defs, function(def) {
+            if (fns) {
+                S.each(fns, function(fn) {
                     var value;
-                    if (S.isFunction(def)) {
-                        value = def.apply(self, self.__getModules(mod['requires']));
+                    if (S.isFunction(fn)) {
+                        value = fn.apply(self, self.__getModules(mod['requires']));
                     } else {
-                        value = def;
+                        value = fn;
                     }
                     mod.value = mod.value || value;
                 });

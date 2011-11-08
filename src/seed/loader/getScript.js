@@ -6,8 +6,8 @@
     if ("require" in this) {
         return;
     }
-    var MILLISECONDS_OF_SECOND = 1000;
-    var scriptOnload = utils.scriptOnload;
+    var MILLISECONDS_OF_SECOND = 1000,
+        scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
 

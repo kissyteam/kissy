@@ -63,9 +63,9 @@
     S.__initLoader = function() {
         var self = this;
         self.Env.mods = self.Env.mods || {}; // all added mods
-        self.Env._loadQueue = {}; // information for loading and loaded mods
     };
 
+    S.Env._loadQueue = {}; // information for loading and loaded mods
     S.__initLoader();
 
     (function() {

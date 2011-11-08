@@ -11,7 +11,10 @@
             var self = this,
                 Config = self.Config;
 
+            base = base || Config.base;
+
             build("fullpath", "path");
+
             if (mod["cssfullpath"] !== data.LOADED) {
                 build("cssfullpath", "csspath");
             }
@@ -20,7 +23,7 @@
                 if (!mod[fullpath] && mod[path]) {
                     //如果是 ./ 或 ../ 则相对当前模块路径
                     mod[path] = utils.normalDepModuleName(mod.name, mod[path]);
-                    mod[fullpath] = (base || Config.base) + mod[path];
+                    mod[fullpath] = base + mod[path];
                 }
                 // debug 模式下，加载非 min 版
                 if (mod[fullpath] && Config.debug) {

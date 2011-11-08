@@ -21,19 +21,21 @@
             var self = this,
                 url = mod['fullpath'],
                 isCss = utils.isCss(url),
-                //这个是全局的，防止多实例对同一模块的重复下载
-                loadQueque = self.Env._loadQueue,
-                node = loadQueque[url],
-                ret;
+                // 这个是全局的，防止多实例对同一模块的重复下载
+                loadQueque = S.Env._loadQueue,
+                status = loadQueque[url],
+                node = status;
 
             mod.status = mod.status || 0;
 
             // 可能已经由其它模块触发加载
-            if (mod.status < LOADING && node) {
-                mod.status = node.nodeName ? LOADING : LOADED;
+            if (mod.status < LOADING && status) {
+                // 该模块是否已经载入到 global ?
+                mod.status = status === LOADED ? LOADED : LOADING;
             }
 
-            // 加载 css, 仅发出请求，不做任何其它处理
+            // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
+            // 仅发出请求，不做任何其它处理
             if (S.isString(mod["cssfullpath"])) {
                 S.getScript(mod["cssfullpath"]);
                 mod["cssfullpath"] = mod.csspath = LOADED;
@@ -45,7 +47,7 @@
                     self.__startLoadModuleName = mod.name;
                     self.__startLoadTime = Number(+new Date());
                 }
-                ret = S.getScript(url, {
+                node = S.getScript(url, {
                     success: function() {
                         if (isCss) {
 
@@ -58,6 +60,7 @@
                                     self.__currentModule.config);
                                 self.__currentModule = null;
                             }
+                            // 模块载入后，如果需要也要混入对应 global 上模块定义
                             mixGlobal();
                             if (mod.fns && mod.fns.length > 0) {
 
@@ -77,20 +80,26 @@
                     charset: mod.charset
                 });
 
-                loadQueque[url] = ret;
+                loadQueque[url] = node;
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
             else if (mod.status === LOADING) {
-                utils.scriptOnload(node, _scriptOnComplete);
+                utils.scriptOnload(node, function() {
+                    // 模块载入后，如果需要也要混入对应 global 上模块定义
+                    mixGlobal();
+                    _scriptOnComplete();
+                });
             }
             // 是内嵌代码，或者已经 loaded
             else {
+                // 也要混入对应 global 上模块定义
+                mixGlobal();
                 callback();
             }
 
             function _modError() {
-                S.log(mod.name + ' is not loaded! , can not find module in path : ' + mod['fullpath'], 'error');
+                S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
                 mod.status = ERROR;
             }
 
@@ -99,13 +108,13 @@
                 // 需要同步到 instance 上去
                 // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
                 if (cfg.global) {
-                    self.__mixMod(self.Env.mods, cfg.global.Env.mods,
-                        mod.name, cfg.global);
+                    self.__mixMod(mod.name, cfg.global);
                 }
             }
 
             function _scriptOnComplete() {
                 loadQueque[url] = LOADED;
+
                 if (mod.status !== ERROR) {
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次

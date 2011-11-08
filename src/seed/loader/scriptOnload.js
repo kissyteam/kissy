@@ -6,8 +6,7 @@
     if ("require" in this) {
         return;
     }
-    var isWebKit = utils.isWebKit,
-        CSS_POLL_INTERVAL = 100,
+    var CSS_POLL_INTERVAL = 30,
         /**
          * central poll for link node
          */
@@ -15,62 +14,59 @@
 
         monitors = {
             /**
-             * node.href:{node:node,callback:callback}
+             * node.id:[callback]
              */
         };
 
     function startCssTimer() {
         if (!timer) {
             S.log("start css polling");
-            ccsPoll();
+            cssPoll();
         }
     }
 
     // single thread is ok
-    function ccsPoll() {
-        var stop = true;
+    function cssPoll() {
         for (var url in monitors) {
-            var d = monitors[url],
-                node = d.node,
-                callbacks = d.callbacks,
-                loaded = false;
-            if (isWebKit) {
+            var callbacks = monitors[url],
+                node = callbacks.node,
+                loaded = 0;
+            if (utils.isWebKit) {
                 if (node['sheet']) {
                     S.log("webkit loaded : " + url);
-                    loaded = true;
+                    loaded = 1;
                 }
             } else if (node['sheet']) {
                 try {
-                    if (node['sheet'].cssRules) {
-                        S.log('firefox  ' + node['sheet'].cssRules + ' loaded : ' + url);
-                        loaded = true;
+                    var cssRules;
+                    if (cssRules = node['sheet'].cssRules) {
+                        S.log('firefox  ' + cssRules + ' loaded : ' + url);
+                        loaded = 1;
                     }
                 } catch(ex) {
-                    S.log('firefox  ' + ex.name + ' ' + url);
-                    if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
+                    // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
+                    // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
+                    if (ex.code === 1000) {
                         S.log('firefox  ' + ex.name + ' loaded : ' + url);
-                        loaded = true;
+                        loaded = 1;
                     }
                 }
             }
 
             if (loaded) {
-                S.each(callbacks, function(callback) {
-                    callback.call(node);
-                });
+                for (var i = 0; i < callbacks.length; i++) {
+                    callbacks[i].call(node);
+                }
                 delete monitors[url];
-            } else {
-                stop = false;
             }
         }
-        if (stop) {
+        if (S.isEmptyObject(monitors)) {
             timer = 0;
             S.log("end css polling");
         } else {
-            timer = setTimeout(ccsPoll, CSS_POLL_INTERVAL);
+            timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
     }
-
 
     S.mix(utils, {
         scriptOnload:document.addEventListener ?
@@ -97,7 +93,14 @@
 
         /**
          * monitor css onload across browsers
-         * @refer http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+         * 暂时不考虑如何判断失败，如 404 等
+         * @refer
+         *  - firefox 不可行（结论4错误）：
+         *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+         *  - 全浏览器兼容
+         *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+         *  - 其他
+         *    - http://www.zachleat.com/web/load-css-dynamically/
          */
         styleOnload:window.attachEvent ?
             // ie/opera
@@ -114,15 +117,10 @@
             // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
             // 暂时不考虑如何判断失败，如 404 等
             function(node, callback) {
-                var k = node.href;
-                if (monitors[k]) {
-                    monitors[k].callbacks.push(callback);
-                } else {
-                    monitors[k] = {
-                        node:node,
-                        callbacks:[callback]
-                    };
-                }
+                var href = node.href,arr;
+                arr = monitors[href] = monitors[href] || [];
+                arr.node = node;
+                arr.push(callback);
                 startCssTimer();
             }
     });

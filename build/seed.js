@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 8 11:53
+build time: Nov 8 17:43
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 8 11:53
          */
         version: '1.20dev',
 
-        buildTime:'20111108115316',
+        buildTime:'20111108174349',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1232,17 +1232,20 @@ build time: Nov 8 11:53
  * status constants
  * @author yiminghe@gmail.com
  */
-(function(S,data) {
-    if("require" in this) {
+(function(S, data) {
+    if ("require" in this) {
         return;
     }
+    // 脚本(loadQueue)/模块(mod) 公用状态
     S.mix(data, {
+        "INIT":0,
         "LOADING" : 1,
         "LOADED" : 2,
         "ERROR" : 3,
+        // 模块特有
         "ATTACHED" : 4
     });
-})(KISSY,KISSY.__loaderData);/**
+})(KISSY, KISSY.__loaderData);/**
  * utils for kissy loader
  * @author yiminghe@gmail.com
  */
@@ -1378,71 +1381,67 @@ build time: Nov 8 11:53
     if ("require" in this) {
         return;
     }
-    var isWebKit = utils.isWebKit,
-        CSS_POLL_INTERVAL = 100,
+    var CSS_POLL_INTERVAL = 30,
         /**
          * central poll for link node
          */
-            timer = null,
+            timer = 0,
 
         monitors = {
             /**
-             * node.href:{node:node,callback:callback}
+             * node.id:[callback]
              */
         };
 
     function startCssTimer() {
         if (!timer) {
             S.log("start css polling");
-            ccsPoll();
+            cssPoll();
         }
     }
 
     // single thread is ok
-    function ccsPoll() {
-        var stop = true;
+    function cssPoll() {
         for (var url in monitors) {
-            var d = monitors[url],
-                node = d.node,
-                callbacks = d.callbacks,
-                loaded = false;
-            if (isWebKit) {
+            var callbacks = monitors[url],
+                node = callbacks.node,
+                loaded = 0;
+            if (utils.isWebKit) {
                 if (node['sheet']) {
                     S.log("webkit loaded : " + url);
-                    loaded = true;
+                    loaded = 1;
                 }
             } else if (node['sheet']) {
                 try {
-                    if (node['sheet'].cssRules) {
-                        S.log('firefox  ' + node['sheet'].cssRules + ' loaded : ' + url);
-                        loaded = true;
+                    var cssRules;
+                    if (cssRules = node['sheet'].cssRules) {
+                        S.log('firefox  ' + cssRules + ' loaded : ' + url);
+                        loaded = 1;
                     }
                 } catch(ex) {
-                    S.log('firefox  ' + ex.name + ' ' + url);
-                    if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
+                    // S.log('firefox  ' + ex.name + ' ' + ex.code + ' ' + url);
+                    // if (ex.name === 'NS_ERROR_DOM_SECURITY_ERR') {
+                    if (ex.code === 1000) {
                         S.log('firefox  ' + ex.name + ' loaded : ' + url);
-                        loaded = true;
+                        loaded = 1;
                     }
                 }
             }
 
             if (loaded) {
-                S.each(callbacks, function(callback) {
-                    callback.call(node);
-                });
+                for (var i = 0; i < callbacks.length; i++) {
+                    callbacks[i].call(node);
+                }
                 delete monitors[url];
-            } else {
-                stop = false;
             }
         }
-        if (stop) {
-            timer = null;
+        if (S.isEmptyObject(monitors)) {
+            timer = 0;
             S.log("end css polling");
         } else {
-            timer = setTimeout(ccsPoll, CSS_POLL_INTERVAL);
+            timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
     }
-
 
     S.mix(utils, {
         scriptOnload:document.addEventListener ?
@@ -1469,9 +1468,17 @@ build time: Nov 8 11:53
 
         /**
          * monitor css onload across browsers
+         * 暂时不考虑如何判断失败，如 404 等
+         * @refer
+         *  - firefox 不可行（结论4错误）：
+         *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+         *  - 全浏览器兼容
+         *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+         *  - 其他
+         *    - http://www.zachleat.com/web/load-css-dynamically/
          */
         styleOnload:window.attachEvent ?
-            //ie/opera
+            // ie/opera
             function(node, callback) {
                 // whether to detach using function wrapper?
                 function t() {
@@ -1482,18 +1489,13 @@ build time: Nov 8 11:53
 
                 node.attachEvent('onload', t);
             } :
-            //refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-            //暂时不考虑如何判断失败，如 404 等
+            // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+            // 暂时不考虑如何判断失败，如 404 等
             function(node, callback) {
-                var k = node.href;
-                if (monitors[k]) {
-                    monitors[k].callbacks.push(callback);
-                } else {
-                    monitors[k] = {
-                        node:node,
-                        callbacks:[callback]
-                    };
-                }
+                var href = node.href,arr;
+                arr = monitors[href] = monitors[href] || [];
+                arr.node = node;
+                arr.push(callback);
                 startCssTimer();
             }
     });
@@ -1505,8 +1507,8 @@ build time: Nov 8 11:53
     if ("require" in this) {
         return;
     }
-    var MILLISECONDS_OF_SECOND = 1000;
-    var scriptOnload = utils.scriptOnload;
+    var MILLISECONDS_OF_SECOND = 1000,
+        scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
 
@@ -1777,7 +1779,10 @@ build time: Nov 8 11:53
             var self = this,
                 Config = self.Config;
 
+            base = base || Config.base;
+
             build("fullpath", "path");
+
             if (mod["cssfullpath"] !== data.LOADED) {
                 build("cssfullpath", "csspath");
             }
@@ -1786,7 +1791,7 @@ build time: Nov 8 11:53
                 if (!mod[fullpath] && mod[path]) {
                     //如果是 ./ 或 ../ 则相对当前模块路径
                     mod[path] = utils.normalDepModuleName(mod.name, mod[path]);
-                    mod[fullpath] = (base || Config.base) + mod[path];
+                    mod[fullpath] = base + mod[path];
                 }
                 // debug 模式下，加载非 min 版
                 if (mod[fullpath] && Config.debug) {
@@ -1807,38 +1812,35 @@ build time: Nov 8 11:53
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
-    if("require" in this) {
+    if ("require" in this) {
         return;
     }
     S.mix(loader, {
-        __mixMods: function(global) {
-            var self=this,
+
+        // 按需从 global 迁移模块定义到当前 loader 实例，并根据 global 设置 fullpath
+        __mixMod: function(name, global) {
+            // 从 __mixMods 调用过来时，可能本实例没有该模块的数据结构
+            var self = this,
                 mods = self.Env.mods,
                 gMods = global.Env.mods,
-                name;
-            for (name in gMods) {
-                self.__mixMod(mods, gMods, name, global);
-            }
-        },
-
-        __mixMod: function(mods, gMods, name, global) {
-            var mod = mods[name] || {},
+                mod = mods[name] || {},
                 status = mod.status;
 
-            S.mix(mod, S.clone(gMods[name]));
+            if (gMods[name]) {
 
-            // status 属于实例，当有值时，不能被覆盖。
-            // 1. 只有没有初始值时，才从 global 上继承
-            // 2. 初始值为 0 时，也从 global 上继承
-            // 其他都保存自己的状态
-            if (status) {
-                mod.status = status;
+                S.mix(mod, S.clone(gMods[name]));
+
+                // status 属于实例，当有值时，不能被覆盖。
+                // 1. 只有没有初始值时，才从 global 上继承
+                // 2. 初始值为 0 时，也从 global 上继承
+                // 其他都保存自己的状态
+                if (status) {
+                    mod.status = status;
+                }
             }
 
-            // 来自 global 的 mod, path 应该基于 global
-            if (global) {
-                this.__buildPath(mod, global.Config.base);
-            }
+            // 来自 global 的 mod, path 也应该基于 global
+            self.__buildPath(mod, global.Config.base);
 
             mods[name] = mod;
         }
@@ -1925,19 +1927,21 @@ build time: Nov 8 11:53
             var self = this,
                 url = mod['fullpath'],
                 isCss = utils.isCss(url),
-                //这个是全局的，防止多实例对同一模块的重复下载
-                loadQueque = self.Env._loadQueue,
-                node = loadQueque[url],
-                ret;
+                // 这个是全局的，防止多实例对同一模块的重复下载
+                loadQueque = S.Env._loadQueue,
+                status = loadQueque[url],
+                node = status;
 
             mod.status = mod.status || 0;
 
             // 可能已经由其它模块触发加载
-            if (mod.status < LOADING && node) {
-                mod.status = node.nodeName ? LOADING : LOADED;
+            if (mod.status < LOADING && status) {
+                // 该模块是否已经载入到 global ?
+                mod.status = status === LOADED ? LOADED : LOADING;
             }
 
-            // 加载 css, 仅发出请求，不做任何其它处理
+            // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
+            // 仅发出请求，不做任何其它处理
             if (S.isString(mod["cssfullpath"])) {
                 S.getScript(mod["cssfullpath"]);
                 mod["cssfullpath"] = mod.csspath = LOADED;
@@ -1949,7 +1953,7 @@ build time: Nov 8 11:53
                     self.__startLoadModuleName = mod.name;
                     self.__startLoadTime = Number(+new Date());
                 }
-                ret = S.getScript(url, {
+                node = S.getScript(url, {
                     success: function() {
                         if (isCss) {
 
@@ -1962,6 +1966,7 @@ build time: Nov 8 11:53
                                     self.__currentModule.config);
                                 self.__currentModule = null;
                             }
+                            // 模块载入后，如果需要也要混入对应 global 上模块定义
                             mixGlobal();
                             if (mod.fns && mod.fns.length > 0) {
 
@@ -1981,20 +1986,26 @@ build time: Nov 8 11:53
                     charset: mod.charset
                 });
 
-                loadQueque[url] = ret;
+                loadQueque[url] = node;
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
             else if (mod.status === LOADING) {
-                utils.scriptOnload(node, _scriptOnComplete);
+                utils.scriptOnload(node, function() {
+                    // 模块载入后，如果需要也要混入对应 global 上模块定义
+                    mixGlobal();
+                    _scriptOnComplete();
+                });
             }
             // 是内嵌代码，或者已经 loaded
             else {
+                // 也要混入对应 global 上模块定义
+                mixGlobal();
                 callback();
             }
 
             function _modError() {
-                S.log(mod.name + ' is not loaded! , can not find module in path : ' + mod['fullpath'], 'error');
+                S.log(mod.name + ' is not loaded! can not find module in path : ' + mod['fullpath'], 'error');
                 mod.status = ERROR;
             }
 
@@ -2003,13 +2014,13 @@ build time: Nov 8 11:53
                 // 需要同步到 instance 上去
                 // 注意：要求 mod 对应的文件里，仅修改该 mod 信息
                 if (cfg.global) {
-                    self.__mixMod(self.Env.mods, cfg.global.Env.mods,
-                        mod.name, cfg.global);
+                    self.__mixMod(mod.name, cfg.global);
                 }
             }
 
             function _scriptOnComplete() {
                 loadQueque[url] = LOADED;
+
                 if (mod.status !== ERROR) {
 
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
@@ -2232,9 +2243,11 @@ build time: Nov 8 11:53
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
+
     if ("require" in this) {
         return;
     }
+
     var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
@@ -2253,10 +2266,6 @@ build time: Nov 8 11:53
 
             var self = this,
                 fired;
-            //如果 use 指定了 global
-            if (cfg.global) {
-                self.__mixMods(cfg.global);
-            }
 
             // 已经全部 attached, 直接执行回调即可
             if (self.__isAttached(modNames)) {
@@ -2269,7 +2278,8 @@ build time: Nov 8 11:53
             S.each(modNames, function(modName) {
                 // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function() {
-                    if (!fired && self.__isAttached(modNames)) {
+                    if (!fired &&
+                        self.__isAttached(modNames)) {
                         fired = true;
                         var mods = self.__getModules(modNames);
                         callback && callback.apply(self, mods);
@@ -2283,6 +2293,7 @@ build time: Nov 8 11:53
         __getModules:function(modNames) {
             var self = this,
                 mods = [self];
+
             S.each(modNames, function(modName) {
                 if (!utils.isCss(modName)) {
                     mods.push(self.require(modName));
@@ -2296,34 +2307,36 @@ build time: Nov 8 11:53
          * @param {string} moduleName
          */
         require:function(moduleName) {
-            var mods = S.Env.mods,
+            var self = this,
+                mods = self.Env.mods,
                 mod = mods[moduleName],
-                re = S['onRequire'] && S['onRequire'](mod);
+                re = self['onRequire'] && self['onRequire'](mod);
             if (re !== undefined) {
                 return re;
             }
             return mod && mod.value;
         },
 
-        //加载指定模块名模块，如果不存在定义默认定义为内部模块
+        // 加载指定模块名模块，如果不存在定义默认定义为内部模块
         __attachModByName: function(modName, callback, cfg) {
-
             var self = this,
-                mods = self.Env.mods,
-                mod = mods[modName];
+                mods = self.Env.mods;
+
+            var mod = mods[modName];
             //没有模块定义
             if (!mod) {
                 // 默认 js/css 名字
                 // 不指定 .js 默认为 js
                 // 指定为 css 载入 .css
-                var componentJsName = self.Config['componentJsName'] || function(m) {
-                    var suffix = "js";
-                    if (/(.+)\.(js|css)$/i.test(m)) {
-                        suffix = RegExp.$2;
-                        m = RegExp.$1;
-                    }
-                    return m + '-min.' + suffix;
-                },  path = S.isFunction(componentJsName) ?
+                var componentJsName = self.Config['componentJsName'] ||
+                    function(m) {
+                        var suffix = "js",match;
+                        if (match = m.match(/(.+)\.(js|css)$/i)) {
+                            suffix = match[2];
+                            m = match[1];
+                        }
+                        return m + '-min.' + suffix;
+                    },  path = S.isFunction(componentJsName) ?
                     //一个模块合并到了了另一个模块文件中去
                     componentJsName(self._combine(modName))
                     : componentJsName;
@@ -2337,6 +2350,10 @@ build time: Nov 8 11:53
             mod.name = modName;
             if (mod && mod.status === ATTACHED) {
                 return;
+            }
+            // 先从 global 里取
+            if (cfg.global) {
+                self.__mixMod(modName, cfg.global);
             }
 
             self.__attach(mod, callback, cfg);
@@ -2373,7 +2390,6 @@ build time: Nov 8 11:53
                 mod['requires'] = mod['requires'] || [];
 
                 var newRequires = mod['requires'];
-                //var    optimize = [];
 
                 //本模块下载成功后串行下载 require
                 S.each(newRequires, function(r, i, newRequires) {
@@ -2389,18 +2405,7 @@ build time: Nov 8 11:53
                         //新增的依赖项
                         self.__attachModByName(r, fn, cfg);
                     }
-                    /**
-                     * 依赖项需要重新下载，最好和被依赖者一起 use
-                     */
-//                    if (!inA && (!rMod || rMod.status < LOADED)) {
-//                        optimize.push(r);
-//                    }
                 });
-
-//                if (optimize.length != 0) {
-//                    optimize.unshift(mod.name);
-//                    S.log(optimize + " : better to be used together", "warn");
-//                }
 
                 fn();
             }, cfg);
@@ -2408,7 +2413,8 @@ build time: Nov 8 11:53
             var attached = false;
 
             function fn() {
-                if (!attached && self.__isAttached(mod['requires'])) {
+                if (!attached &&
+                    self.__isAttached(mod['requires'])) {
 
                     if (mod.status === LOADED) {
                         self.__attachMod(mod);
@@ -2423,15 +2429,15 @@ build time: Nov 8 11:53
 
         __attachMod: function(mod) {
             var self = this,
-                defs = mod.fns;
+                fns = mod.fns;
 
-            if (defs) {
-                S.each(defs, function(def) {
+            if (fns) {
+                S.each(fns, function(fn) {
                     var value;
-                    if (S.isFunction(def)) {
-                        value = def.apply(self, self.__getModules(mod['requires']));
+                    if (S.isFunction(fn)) {
+                        value = fn.apply(self, self.__getModules(mod['requires']));
                     } else {
-                        value = def;
+                        value = fn;
                     }
                     mod.value = mod.value || value;
                 });
@@ -2505,9 +2511,9 @@ build time: Nov 8 11:53
     S.__initLoader = function() {
         var self = this;
         self.Env.mods = self.Env.mods || {}; // all added mods
-        self.Env._loadQueue = {}; // information for loading and loaded mods
     };
 
+    S.Env._loadQueue = {}; // information for loading and loaded mods
     S.__initLoader();
 
     (function() {

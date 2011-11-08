@@ -3070,7 +3070,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     var doc = document,
         filter = S.filter,
-        require = S.require,
+        require = function(selector) {
+            return S.require(selector);
+        },
         each = S.each,
         isArray = S.isArray,
         makeArray = S.makeArray,
