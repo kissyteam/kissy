@@ -11,7 +11,7 @@
         /**
          * central poll for link node
          */
-            timer = null,
+            timer = 0,
 
         monitors = {
             /**
@@ -64,7 +64,7 @@
             }
         }
         if (stop) {
-            timer = null;
+            timer = 0;
             S.log("end css polling");
         } else {
             timer = setTimeout(ccsPoll, CSS_POLL_INTERVAL);
@@ -97,9 +97,10 @@
 
         /**
          * monitor css onload across browsers
+         * @refer http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
          */
         styleOnload:window.attachEvent ?
-            //ie/opera
+            // ie/opera
             function(node, callback) {
                 // whether to detach using function wrapper?
                 function t() {
@@ -110,8 +111,8 @@
 
                 node.attachEvent('onload', t);
             } :
-            //refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-            //暂时不考虑如何判断失败，如 404 等
+            // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+            // 暂时不考虑如何判断失败，如 404 等
             function(node, callback) {
                 var k = node.href;
                 if (monitors[k]) {
