@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 9 19:53
+build time: Nov 9 22:50
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 9 19:53
          */
         version: '1.20dev',
 
-        buildTime:'20111109195339',
+        buildTime:'20111109225023',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3543,9 +3543,14 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return;
                 }
 
+                // attr functions
+                if (pass && attrFn[name]) {
+                    return DOM[name](selector, val);
+                }
+
+                // scrollLeft
                 name = name.toLowerCase();
 
-                // attr functions
                 if (pass && attrFn[name]) {
                     return DOM[name](selector, val);
                 }
@@ -9312,33 +9317,30 @@ KISSY.add('anim/easing', function() {
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
-    var tag = S.guid("anim-");
-
-    function getKv(anim) {
-        anim[tag] = anim[tag] || S.guid("anim-");
-        return anim[tag];
-    }
+    var stamp = S.stamp;
 
     return {
         interval:15,
         runnings:{},
         timer:null,
         start:function(anim) {
-            var kv = getKv(anim);
-            if (this.runnings[kv]) {
+            var self = this,
+                kv = stamp(anim);
+            if (self.runnings[kv]) {
                 return;
             }
-            this.runnings[kv] = anim;
-            this.startTimer();
+            self.runnings[kv] = anim;
+            self.startTimer();
         },
         stop:function(anim) {
             this.notRun(anim);
         },
         notRun:function(anim) {
-            var kv = getKv(anim);
-            delete this.runnings[kv];
-            if (S.isEmptyObject(this.runnings)) {
-                this.stopTimer();
+            var self = this,
+                kv = stamp(anim);
+            delete self.runnings[kv];
+            if (S.isEmptyObject(self.runnings)) {
+                self.stopTimer();
             }
         },
         pause:function(anim) {
@@ -9351,9 +9353,8 @@ KISSY.add("anim/manager", function(S) {
             var self = this;
             if (!self.timer) {
                 self.timer = setTimeout(function() {
-                    //S.log("running : " + (id++));
                     if (!self.runFrames()) {
-                        self.timer = null;
+                        self.timer = 0;
                         self.startTimer();
                     } else {
                         self.stopTimer();
@@ -9362,18 +9363,20 @@ KISSY.add("anim/manager", function(S) {
             }
         },
         stopTimer:function() {
-            var t = this.timer;
+            var self = this,
+                t = self.timer;
             if (t) {
                 clearTimeout(t);
-                this.timer = null;
-                //S.log("timer stop");
+                self.timer = 0;
             }
         },
         runFrames:function() {
-            var done = true,runnings = this.runnings;
+            var self = this,
+                done = 1,
+                runnings = self.runnings;
             for (var r in runnings) {
                 if (runnings.hasOwnProperty(r)) {
-                    done = false;
+                    done = 0;
                     runnings[r]._frame();
                 }
             }
@@ -9386,7 +9389,7 @@ KISSY.add("anim/manager", function(S) {
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function(S, DOM) {
+KISSY.add("anim/fx", function(S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -9399,7 +9402,7 @@ KISSY.add("anim/fx", function(S, DOM) {
     S.augment(Fx, {
 
         load:function(cfg) {
-            var self;
+            var self = this;
             S.mix(self, cfg);
             self.startTime = S.now();
             self.pos = 0;
@@ -9430,19 +9433,37 @@ KISSY.add("anim/fx", function(S, DOM) {
          * @return {Number} 当前值
          */
         interpolate:function (from, to, pos) {
-            return (from + (to - from) * pos).toFixed(3);
+            // 默认只对数字进行 easing
+            if (S.isNumber(from) &&
+                S.isNumber(to)) {
+                return (from + (to - from) * pos).toFixed(3);
+            } else {
+                return undefined;
+            }
         },
 
         update:function() {
             var self = this,
                 prop = self.prop,
                 elem = self.elem,
-                val = self.interpolate(self.from,
-                    self.to, self.pos) + self.unit;
-            if (isAttr(elem, prop)) {
-                DOM.attr(elem, prop, val);
+                from = self.from,
+                to = self.to,
+                val = self.interpolate(from, to, self.pos);
+
+            if (val === undefined) {
+                // 插值出错，直接设置为最终值
+                if (!self.finished) {
+                    self.finished = 1;
+                    DOM.css(elem, prop, to);
+                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                }
             } else {
-                DOM.css(self.elem, self.prop, val);
+                val += self.unit;
+                if (isAttr(elem, prop)) {
+                    DOM.attr(elem, prop, val, 1);
+                } else {
+                    DOM.css(elem, prop, val);
+                }
             }
         },
 
@@ -9454,7 +9475,7 @@ KISSY.add("anim/fx", function(S, DOM) {
                 prop = self.prop,
                 elem = self.elem;
             if (isAttr(elem, prop)) {
-                return DOM.attr(elem, prop);
+                return DOM.attr(elem, prop, undefined, 1);
             }
             var parsed,
                 r = DOM.css(elem, prop);
@@ -9468,8 +9489,9 @@ KISSY.add("anim/fx", function(S, DOM) {
     });
 
     function isAttr(elem, prop) {
-        if (DOM.attr(elem, prop) != null &&
-            (!elem.style || elem.style[ prop ] == null)) {
+        // support scrollTop/Left now!
+        if ((!elem.style || elem.style[ prop ] == null) &&
+            DOM.attr(elem, prop, undefined, 1) != null) {
             return 1;
         }
         return 0;
@@ -9512,12 +9534,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                 "borderBottomWidth",
                 "borderLeftWidth",
                 'borderRightWidth',
-                'borderSpacing',
+                // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
             "borderBottom":["borderBottomWidth"],
             "borderLeft":["borderLeftWidth"],
             borderTop:["borderTopWidth"],
+            borderRight:["borderRightWidth"],
             font:[
                 'fontSize',
                 'fontWeight'
@@ -9553,7 +9576,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
      * @param callback
      */
     function Anim(elem, props, duration, easing, callback) {
-        var self = this;
+        var self = this,config;
 
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) {
@@ -9576,7 +9599,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
          * 驼峰属性名
          */
         for (var prop in props) {
-            var camelProp = camelCase(prop.toLowerCase());
+            var camelProp = camelCase(S.trim(prop));
             if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];
@@ -9586,20 +9609,27 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
         /**
          * animation config
          */
-        if (!S.isPlainObject(duration)) {
-            duration = {
-                duration:parseFloat(config.duration) || undefined,
+        if (S.isPlainObject(duration)) {
+            config = duration;
+        } else {
+            config = {
+                duration:parseFloat(duration) || undefined,
                 easing:easing,
                 complete:callback
             };
         }
 
-        var config = S.merge(defaultConfig, duration);
+        config = S.merge(defaultConfig, config);
 
         config.duration *= 1000;
         self.config = config;
-        self.elem = elem;
-        self.props = self.props;
+        // domEl deprecated!
+        self.elem = self['domEl'] = elem;
+        self.props = props;
+
+        // 实例属性
+        self._backupProps = {};
+        self._fxs = {};
 
         // register callback
         if (config.complete) {
@@ -9608,10 +9638,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
     }
 
     S.augment(Anim, Event.Target, {
-
-        _backupProps:{},
-
-        _fxs:{},
 
         /**
          * @type {boolean} 是否在运行
@@ -9638,13 +9664,22 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
 
             // 分离 easing
             S.each(props, function(val, prop) {
+                if (!props.hasOwnProperty(prop)) {
+                    return;
+                }
+                var easing;
                 if (S.isArray(val)) {
-                    propEasings[prop] = val[1];
+                    easing = propEasings[prop] = val[1];
                     props[prop] = val[0];
                 } else {
-                    propEasings[prop] = config.easing;
+                    easing = propEasings[prop] = config.easing;
                 }
+                if (S.isString(easing)) {
+                    easing = propEasings[prop] = Easing[easing];
+                }
+                propEasings[prop] = easing || Easing.easeNone;
             });
+
 
             // 扩展分属性
             S.each(SHORT_HANDS, function(shortHands, p) {
@@ -9656,7 +9691,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                     S.each(shortHands, function(sh) {
                         // 得到原始分属性之前值
                         origin[sh] = DOM.css(elem, sh);
-                        propEasings[sh] = propEasings[prop];
+                        propEasings[sh] = propEasings[p];
                     });
                     DOM.css(elem, p, val);
                     for (sh in origin) {
@@ -9665,20 +9700,27 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                         // 还原
                         DOM.css(elem, sh, origin[sh]);
                     }
+                    // 删除复合属性
+                    delete props[p];
                 }
             });
 
             // 取得单位，并对单个属性构建 Fx 对象
             for (prop in props) {
-                var val = props[prop],
+                if (!props.hasOwnProperty(prop)) {
+                    continue;
+                }
+
+                var val = S.trim(props[prop]),
                     propCfg = {
                         elem:elem,
                         prop:prop,
-                        easing:Easing[propEasings[prop]] || Easing.easeNone
+                        duration:config.duration,
+                        easing:propEasings[prop]
                     },
                     fx = Fx.getFx(propCfg),
                     to = val,
-                    unit,
+                    unit = "",
                     from = fx.cur(),
                     parts = val.match(rfxnum);
 
@@ -9737,19 +9779,20 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
         },
 
         _frame:function() {
+
             var self = this,
                 prop,
-                end = 0,
+                end = 1,
                 fxs = self._fxs;
 
             for (prop in fxs) {
-                if (fxs[prop].frame()) {
-                    delete fxs[prop];
+                if (fxs.hasOwnProperty(prop)) {
+                    end &= fxs[prop].frame();
                 }
             }
 
             if ((self.fire("step") === false) ||
-                (end = S.isEmptyObject(fxs))) {
+                end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self.stop(end);
             }
@@ -9769,6 +9812,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
 
             if (finish) {
                 for (prop in fxs) {
+                    if (!fxs.hasOwnProperty(prop)) {
+                        continue;
+                    }
                     fxs[prop].frame(1);
                 }
                 self.fire("complete");
@@ -9797,7 +9843,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
 
 /**
  * 2011-11
- * - 抛弃 emile，优化性能，只对需要的属性进行动画
+ * - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
  *
  * 2011-04
  * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
@@ -9845,6 +9891,8 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
+        re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
+
         re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
 
         SHORT_HANDS = Anim.SHORT_HANDS,
@@ -9860,6 +9908,13 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
         ];
 
     SHORT_HANDS['background'] = ['backgroundColor'];
+
+    SHORT_HANDS['borderColor'] = [
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    ];
 
     SHORT_HANDS['border'].push(
         'borderBottomColor',
@@ -9886,7 +9941,7 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
-        val = val.toLowerCase();
+        val = (val + "");
         var match;
         if (match = val.match(re_RGB)) {
             return [
@@ -9894,7 +9949,16 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
                 parseInt(match[2]),
                 parseInt(match[3])
             ];
-        } else if (match = val.match(re_hex)) {
+        }
+        else if (match = val.match(re_RGBA)) {
+            return [
+                parseInt(match[1]),
+                parseInt(match[2]),
+                parseInt(match[3]),
+                parseInt(match[4])
+            ];
+        }
+        else if (match = val.match(re_hex)) {
             for (var i = 1; i < match.length; i++) {
                 if (match[i].length < 2) {
                     match[i] += match[i];
@@ -9906,9 +9970,10 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
                 parseInt(match[3], HEX_BASE)
             ];
         }
-        if (KEYWORDS[val]) {
+        if (KEYWORDS[val = val.toLowerCase()]) {
             return KEYWORDS[val];
         }
+
         //transparent 或者 颜色字符串返回
         S.log("only allow rgb or hex color string : " + val, "warn");
         return [255,255,255];
@@ -9923,17 +9988,33 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
         load:function() {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
-            self.from = numericColor(self.from);
-            self.to = numericColor(self.to);
+            if (self.from) {
+                self.from = numericColor(self.from);
+            }
+            if (self.to) {
+                self.to = numericColor(self.to);
+            }
         },
 
         interpolate:function (from, to, pos) {
             var interpolate = ColorFx.superclass.interpolate;
-            return 'rgb(' + [
-                floor(interpolate(from[0], to[0], pos)),
-                floor(interpolate(from[1], to[1], pos)),
-                floor(interpolate(from[2], to[2], pos))
-            ].join(', ') + ')';
+            if (from.length == 3 && to.length == 3) {
+                return 'rgb(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos))
+                ].join(', ') + ')';
+            } else if (from.length == 4 || to.length == 4) {
+                return 'rgba(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos)),
+                    // 透明度默认 1
+                    floor(interpolate(from[3] || 1, to[3] || 1, pos))
+                ].join(', ') + ')';
+            } else {
+                S.log("anim/color unknown value : " + from);
+            }
         }
 
     });

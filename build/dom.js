@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 9 19:58
+build time: Nov 9 22:32
 */
 /**
  * @module  dom-attr
@@ -359,9 +359,12 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return;
                 }
 
-                name = name.toLowerCase();
-
                 // attr functions
+                if (pass && attrFn[name]) {
+                    return DOM[name](selector, val);
+                }
+                // scrollLeft
+                name = name.toLowerCase();
                 if (pass && attrFn[name]) {
                     return DOM[name](selector, val);
                 }

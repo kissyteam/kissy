@@ -3,33 +3,30 @@
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
-    var tag = S.guid("anim-");
-
-    function getKv(anim) {
-        anim[tag] = anim[tag] || S.guid("anim-");
-        return anim[tag];
-    }
+    var stamp = S.stamp;
 
     return {
         interval:15,
         runnings:{},
         timer:null,
         start:function(anim) {
-            var kv = getKv(anim);
-            if (this.runnings[kv]) {
+            var self = this,
+                kv = stamp(anim);
+            if (self.runnings[kv]) {
                 return;
             }
-            this.runnings[kv] = anim;
-            this.startTimer();
+            self.runnings[kv] = anim;
+            self.startTimer();
         },
         stop:function(anim) {
             this.notRun(anim);
         },
         notRun:function(anim) {
-            var kv = getKv(anim);
-            delete this.runnings[kv];
-            if (S.isEmptyObject(this.runnings)) {
-                this.stopTimer();
+            var self = this,
+                kv = stamp(anim);
+            delete self.runnings[kv];
+            if (S.isEmptyObject(self.runnings)) {
+                self.stopTimer();
             }
         },
         pause:function(anim) {
@@ -42,9 +39,8 @@ KISSY.add("anim/manager", function(S) {
             var self = this;
             if (!self.timer) {
                 self.timer = setTimeout(function() {
-                    //S.log("running : " + (id++));
                     if (!self.runFrames()) {
-                        self.timer = null;
+                        self.timer = 0;
                         self.startTimer();
                     } else {
                         self.stopTimer();
@@ -53,18 +49,20 @@ KISSY.add("anim/manager", function(S) {
             }
         },
         stopTimer:function() {
-            var t = this.timer;
+            var self = this,
+                t = self.timer;
             if (t) {
                 clearTimeout(t);
-                this.timer = null;
-                //S.log("timer stop");
+                self.timer = 0;
             }
         },
         runFrames:function() {
-            var done = true,runnings = this.runnings;
+            var self = this,
+                done = 1,
+                runnings = self.runnings;
             for (var r in runnings) {
                 if (runnings.hasOwnProperty(r)) {
-                    done = false;
+                    done = 0;
                     runnings[r]._frame();
                 }
             }

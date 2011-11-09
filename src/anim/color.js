@@ -28,6 +28,8 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
+        re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
+
         re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
 
         SHORT_HANDS = Anim.SHORT_HANDS,
@@ -43,6 +45,13 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
         ];
 
     SHORT_HANDS['background'] = ['backgroundColor'];
+
+    SHORT_HANDS['borderColor'] = [
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    ];
 
     SHORT_HANDS['border'].push(
         'borderBottomColor',
@@ -69,7 +78,7 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
-        val = val.toLowerCase();
+        val = (val + "");
         var match;
         if (match = val.match(re_RGB)) {
             return [
@@ -77,7 +86,16 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
                 parseInt(match[2]),
                 parseInt(match[3])
             ];
-        } else if (match = val.match(re_hex)) {
+        }
+        else if (match = val.match(re_RGBA)) {
+            return [
+                parseInt(match[1]),
+                parseInt(match[2]),
+                parseInt(match[3]),
+                parseInt(match[4])
+            ];
+        }
+        else if (match = val.match(re_hex)) {
             for (var i = 1; i < match.length; i++) {
                 if (match[i].length < 2) {
                     match[i] += match[i];
@@ -89,9 +107,10 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
                 parseInt(match[3], HEX_BASE)
             ];
         }
-        if (KEYWORDS[val]) {
+        if (KEYWORDS[val = val.toLowerCase()]) {
             return KEYWORDS[val];
         }
+
         //transparent 或者 颜色字符串返回
         S.log("only allow rgb or hex color string : " + val, "warn");
         return [255,255,255];
@@ -106,17 +125,33 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
         load:function() {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
-            self.from = numericColor(self.from);
-            self.to = numericColor(self.to);
+            if (self.from) {
+                self.from = numericColor(self.from);
+            }
+            if (self.to) {
+                self.to = numericColor(self.to);
+            }
         },
 
         interpolate:function (from, to, pos) {
             var interpolate = ColorFx.superclass.interpolate;
-            return 'rgb(' + [
-                floor(interpolate(from[0], to[0], pos)),
-                floor(interpolate(from[1], to[1], pos)),
-                floor(interpolate(from[2], to[2], pos))
-            ].join(', ') + ')';
+            if (from.length == 3 && to.length == 3) {
+                return 'rgb(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos))
+                ].join(', ') + ')';
+            } else if (from.length == 4 || to.length == 4) {
+                return 'rgba(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos)),
+                    // 透明度默认 1
+                    floor(interpolate(from[3] || 1, to[3] || 1, pos))
+                ].join(', ') + ')';
+            } else {
+                S.log("anim/color unknown value : " + from);
+            }
         }
 
     });

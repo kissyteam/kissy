@@ -28,14 +28,14 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
     /**
      * test for css anim native support
-     */
-    var transitionName = Anim.supportTransition();
-    if (transitionName) {
-        transitionName += "Property";
-    }
 
-    //强制不使用 native
-    transitionName = '';
+     var transitionName = Anim.supportTransition();
+     if (transitionName) {
+     transitionName += "Property";
+     }
+     */
+        //强制不使用 native
+    var transitionName = '';
 
 
     describe("anim", function() {

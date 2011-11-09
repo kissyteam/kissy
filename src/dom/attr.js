@@ -354,9 +354,14 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return;
                 }
 
+                // attr functions
+                if (pass && attrFn[name]) {
+                    return DOM[name](selector, val);
+                }
+
+                // scrollLeft
                 name = name.toLowerCase();
 
-                // attr functions
                 if (pass && attrFn[name]) {
                     return DOM[name](selector, val);
                 }

@@ -2,7 +2,7 @@
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function(S, DOM) {
+KISSY.add("anim/fx", function(S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -46,19 +46,37 @@ KISSY.add("anim/fx", function(S, DOM) {
          * @return {Number} 当前值
          */
         interpolate:function (from, to, pos) {
-            return (from + (to - from) * pos).toFixed(3);
+            // 默认只对数字进行 easing
+            if (S.isNumber(from) &&
+                S.isNumber(to)) {
+                return (from + (to - from) * pos).toFixed(3);
+            } else {
+                return undefined;
+            }
         },
 
         update:function() {
             var self = this,
                 prop = self.prop,
                 elem = self.elem,
-                val = self.interpolate(self.from,
-                    self.to, self.pos) + self.unit;
-            if (isAttr(elem, prop)) {
-                DOM.attr(elem, prop, val);
+                from = self.from,
+                to = self.to,
+                val = self.interpolate(from, to, self.pos);
+
+            if (val === undefined) {
+                // 插值出错，直接设置为最终值
+                if (!self.finished) {
+                    self.finished = 1;
+                    DOM.css(elem, prop, to);
+                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                }
             } else {
-                DOM.css(self.elem, self.prop, val);
+                val += self.unit;
+                if (isAttr(elem, prop)) {
+                    DOM.attr(elem, prop, val, 1);
+                } else {
+                    DOM.css(elem, prop, val);
+                }
             }
         },
 
@@ -70,7 +88,7 @@ KISSY.add("anim/fx", function(S, DOM) {
                 prop = self.prop,
                 elem = self.elem;
             if (isAttr(elem, prop)) {
-                return DOM.attr(elem, prop);
+                return DOM.attr(elem, prop, undefined, 1);
             }
             var parsed,
                 r = DOM.css(elem, prop);
@@ -84,8 +102,9 @@ KISSY.add("anim/fx", function(S, DOM) {
     });
 
     function isAttr(elem, prop) {
-        if (DOM.attr(elem, prop) != null &&
-            (!elem.style || elem.style[ prop ] == null)) {
+        // support scrollTop/Left now!
+        if ((!elem.style || elem.style[ prop ] == null) &&
+            DOM.attr(elem, prop, undefined, 1) != null) {
             return 1;
         }
         return 0;

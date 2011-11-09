@@ -12,7 +12,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                 "borderBottomWidth",
                 "borderLeftWidth",
                 'borderRightWidth',
-                'borderSpacing',
+                // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
             "borderBottom":["borderBottomWidth"],
@@ -77,7 +77,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
          * 驼峰属性名
          */
         for (var prop in props) {
-            var camelProp = camelCase(S.trim(prop.toLowerCase()));
+            var camelProp = camelCase(S.trim(prop));
             if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];
@@ -105,6 +105,10 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
         self.elem = self['domEl'] = elem;
         self.props = props;
 
+        // 实例属性
+        self._backupProps = {};
+        self._fxs = {};
+
         // register callback
         if (config.complete) {
             self.on("complete", config.complete);
@@ -112,10 +116,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
     }
 
     S.augment(Anim, Event.Target, {
-
-        _backupProps:{},
-
-        _fxs:{},
 
         /**
          * @type {boolean} 是否在运行
@@ -158,6 +158,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                 propEasings[prop] = easing || Easing.easeNone;
             });
 
+
             // 扩展分属性
             S.each(SHORT_HANDS, function(shortHands, p) {
                 var sh,
@@ -168,7 +169,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                     S.each(shortHands, function(sh) {
                         // 得到原始分属性之前值
                         origin[sh] = DOM.css(elem, sh);
-                        propEasings[sh] = propEasings[prop];
+                        propEasings[sh] = propEasings[p];
                     });
                     DOM.css(elem, p, val);
                     for (sh in origin) {
@@ -177,6 +178,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                         // 还原
                         DOM.css(elem, sh, origin[sh]);
                     }
+                    // 删除复合属性
+                    delete props[p];
                 }
             });
 
@@ -185,6 +188,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                 if (!props.hasOwnProperty(prop)) {
                     continue;
                 }
+
                 var val = S.trim(props[prop]),
                     propCfg = {
                         elem:elem,
@@ -194,7 +198,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
                     },
                     fx = Fx.getFx(propCfg),
                     to = val,
-                    unit,
+                    unit = "",
                     from = fx.cur(),
                     parts = val.match(rfxnum);
 
@@ -256,18 +260,17 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
 
             var self = this,
                 prop,
-                end = 0,
+                end = 1,
                 fxs = self._fxs;
 
             for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop) &&
-                    fxs[prop].frame()) {
-                    delete fxs[prop];
+                if (fxs.hasOwnProperty(prop)) {
+                    end &= fxs[prop].frame();
                 }
             }
 
             if ((self.fire("step") === false) ||
-                (end = S.isEmptyObject(fxs))) {
+                end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self.stop(end);
             }
@@ -318,7 +321,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
 
 /**
  * 2011-11
- * - 抛弃 emile，优化性能，只对需要的属性进行动画
+ * - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
  *
  * 2011-04
  * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
