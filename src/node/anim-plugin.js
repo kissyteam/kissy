@@ -1,8 +1,9 @@
 /**
  * @module  anim-node-plugin
- * @author  lifesinger@gmail.com,
+ * @author  yiminghe@gmail.com,
+ *          lifesinger@gmail.com,
  *          qiaohua@taobao.com,
- *          yiminghe@gmail.com
+ *
  */
 KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
@@ -139,7 +140,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
                 style.height = (visible ?
                     DOM.height(elem) || elem.naturalHeight :
-                    0) + "px";
+                    0);
                 if (visible) {
                     DOM.css(elem, HEIGHT, 0);
                 }
@@ -148,7 +149,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 originalStyle[WIDTH] = elemStyle[WIDTH];
                 style.width = (visible ?
                     DOM.width(elem) || elem.naturalWidth :
-                    0) + "px";
+                    0);
                 if (visible) {
                     DOM.css(elem, WIDTH, 0);
                 }

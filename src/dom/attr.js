@@ -1,6 +1,6 @@
 /**
  * @module  dom-attr
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
@@ -27,7 +27,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 data: 1,
                 width: 1,
                 height: 1,
-                offset: 1
+                offset: 1,
+                scrollTop:1,
+                scrollLeft:1
             },
             attrHooks = {
                 // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/

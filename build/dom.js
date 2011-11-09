@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 2 15:47
+build time: Nov 9 19:58
 */
 /**
  * @module  dom-attr
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
@@ -32,7 +32,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 data: 1,
                 width: 1,
                 height: 1,
-                offset: 1
+                offset: 1,
+                scrollTop:1,
+                scrollLeft:1
             },
             attrHooks = {
                 // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
@@ -592,9 +594,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
  */
 /**
  * @module  dom
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('dom/base', function(S, undefined) {
+KISSY.add('dom/base', function(S, UA, undefined) {
 
     function nodeTypeIs(node, val) {
         return node && node.nodeType === val;
@@ -620,6 +622,26 @@ KISSY.add('dom/base', function(S, undefined) {
         NOTATION_NODE : 12
     };
     var DOM = {
+
+        _isCustomDomain :function (win) {
+            win = win || window;
+            var domain = win.document.domain,
+                hostname = win.location.hostname;
+            return domain != hostname &&
+                domain != ( '[' + hostname + ']' );	// IPv6 IP support
+        },
+
+        _genEmptyIframeSrc:function(win) {
+            win = win || window;
+            if (UA['ie'] && DOM._isCustomDomain(win)) {
+                return  'javascript:void(function(){' + encodeURIComponent("" +
+                    "document.open();" +
+                    "document.domain='" +
+                    win.document.domain
+                    + "';" +
+                    "document.close();") + "}())";
+            }
+        },
 
         _NODE_TYPE:NODE_TYPE,
 
@@ -667,6 +689,8 @@ KISSY.add('dom/base', function(S, undefined) {
 
     return DOM;
 
+}, {
+    requires:['ua']
 });
 
 /**
@@ -1545,7 +1569,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
  *  - 分层 ，节点和普通对象分开粗合理
  **//**
  * @module  dom-insertion
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/insertion', function(S, UA, DOM) {
 
@@ -1972,6 +1996,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 d;
             if (w) {
                 if (v !== undefined) {
+                    v = parseFloat(v);
                     // 注意多 windw 情况，不能简单取 win
                     var left = name == "Left" ? v : DOM.scrollLeft(w),
                         top = name == "Top" ? v : DOM.scrollTop(w);
@@ -1993,7 +2018,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 }
             } else if (isElementNode(elem)) {
                 if (v !== undefined) {
-                    elem[method] = v
+                    elem[method] = parseFloat(v)
                 } else {
                     ret = elem[method];
                 }
@@ -2160,7 +2185,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     var doc = document,
         filter = S.filter,
-        require = S.require,
+        require = function(selector) {
+            return S.require(selector);
+        },
         each = S.each,
         isArray = S.isArray,
         makeArray = S.makeArray,
@@ -2857,7 +2884,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
  */
 /**
  * @module  dom
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
@@ -2913,16 +2940,6 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     var defaultDisplayDetectIframe,
         defaultDisplayDetectIframeDoc;
 
-    function isCustomDomain() {
-        if (!UA['ie']) {
-            return false;
-        }
-        var domain = doc.domain,
-            hostname = location.hostname;
-        return domain != hostname &&
-            domain != ( '[' + hostname + ']' );	// IPv6 IP support
-    }
-
     // modified from jquery : bullet-proof method of getting default display
     // fix domain problem in ie>6 , ie6 still access denied
     function getDefaultDisplay(tagName) {
@@ -2946,14 +2963,9 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                             defaultDisplayDetectIframe.height = 0;
 
                     DOM.prepend(defaultDisplayDetectIframe, body);
-
-                    if (isCustomDomain()) {
-                        defaultDisplayDetectIframe.src = 'javascript:void(function(){' + encodeURIComponent("" +
-                            "document.open();" +
-                            "document.domain='" +
-                            doc.domain
-                            + "';" +
-                            "document.close();") + "}())";
+                    var iframeSrc;
+                    if (iframeSrc = DOM._genEmptyIframeSrc()) {
+                        defaultDisplayDetectIframe.src = iframeSrc;
                     }
                 } else {
                     DOM.prepend(defaultDisplayDetectIframe, body);
@@ -2963,12 +2975,23 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 // IE and Opera will allow us to reuse the iframeDoc without re-writing the fake HTML
                 // document to it; WebKit & Firefox won't allow reusing the iframe document.
                 if (!defaultDisplayDetectIframeDoc || !defaultDisplayDetectIframe.createElement) {
-                    // ie6 need a breath , such as alert(8) or setTimeout;
-                    // 同时需要同步，所以无解
-                    defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
-                    defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
-                        + "<html><body>");
-                    defaultDisplayDetectIframeDoc.close();
+
+                    try {
+                        defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
+                        defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
+                            + "<html><head>" +
+                            (UA['ie'] && DOM._isCustomDomain() ?
+                                "<script>document.domain = '" +
+                                    doc.domain
+                                    + "';</script>" : "")
+                            +
+                            "</head><body>");
+                        defaultDisplayDetectIframeDoc.close();
+                    } catch(e) {
+                        // ie6 need a breath , such as alert(8) or setTimeout;
+                        // 同时需要同步，所以无解，勉强返回
+                        return "block";
+                    }
                 }
 
                 elem = defaultDisplayDetectIframeDoc.createElement(tagName);
@@ -2988,7 +3011,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
     S.mix(DOM, {
-
+        _camelCase:camelCase,
+        _cssNumber:cssNumber,
         _CUSTOM_STYLES: CUSTOM_STYLES,
         _cssProps:cssProps,
         _getComputedStyle: function(elem, name) {

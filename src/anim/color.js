@@ -2,9 +2,12 @@
  * special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function(S, DOM, Anim) {
+KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
+
+        floor = Math.floor,
+
         KEYWORDS = {
             "black":[0,0,0],
             "silver":[192,192,192],
@@ -22,26 +25,47 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
             "blue":[0,0,255],
             "teal":[0,128,128],
             "aqua":[0,255,255]
-        };
-    var re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
-        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i;
+        },
+        re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
+        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
 
-    //颜色 css 属性
-    var colors = ('backgroundColor ' +
-        'borderBottomColor ' +
-        'borderLeftColor ' +
-        'borderRightColor ' +
-        'borderTopColor ' +
-        'color ' +
-        'outlineColor').split(' ');
+        SHORT_HANDS = Anim.SHORT_HANDS,
 
-    var OPS = Anim.PROP_OPS,
-        PROPS = Anim.PROPS;
+        COLORS = [
+            'backgroundColor' ,
+            'borderBottomColor' ,
+            'borderLeftColor' ,
+            'borderRightColor' ,
+            'borderTopColor' ,
+            'color' ,
+            'outlineColor'
+        ];
 
-    //添加到支持集
-    PROPS.push.apply(PROPS, colors);
+    SHORT_HANDS['background'] = ['backgroundColor'];
 
+    SHORT_HANDS['border'].push(
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    );
+
+    SHORT_HANDS['borderBottom'].push(
+        'borderBottomColor'
+    );
+
+    SHORT_HANDS['borderLeft'].push(
+        'borderLeftColor'
+    );
+
+    SHORT_HANDS['borderRight'].push(
+        'borderRightColor'
+    );
+
+    SHORT_HANDS['borderTop'].push(
+        'borderTopColor'
+    );
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
@@ -73,41 +97,42 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         return [255,255,255];
     }
 
-    /**
-     * 根据颜色的数值表示，执行数组插值
-     * @param source {Array.<Number>} 颜色源值表示
-     * @param target {Array.<Number>} 颜色目的值表示
-     * @param pos {Number} 当前进度
-     * @return {String} 可设置css属性的格式值 : rgb
-     */
-    function interpolate(source, target, pos) {
-        var commonInterpolate = OPS["*"].interpolate;
-        return 'rgb(' + [
-            Math.floor(commonInterpolate(source[0], target[0], pos)),
-            Math.floor(commonInterpolate(source[1], target[1], pos)),
-            Math.floor(commonInterpolate(source[2], target[2], pos))
-        ].join(', ') + ')';
+    function ColorFx() {
+        ColorFx.superclass.constructor.apply(this, arguments);
     }
 
-    OPS["color"] = {
-        getter:function(elem, prop) {
-            return {
-                v:numericColor(DOM.css(elem, prop)),
-                u:'',
-                f:interpolate
-            };
+    S.extend(ColorFx, Fx, {
+
+        load:function() {
+            var self = this;
+            ColorFx.superclass.load.apply(self, arguments);
+            self.from = numericColor(self.from);
+            self.to = numericColor(self.to);
         },
 
-        setter:OPS["*"].setter,
-
-        eq:function(tp, sp) {
-            return (tp.v + "") == (sp.v + "");
+        interpolate:function (from, to, pos) {
+            var interpolate = ColorFx.superclass.interpolate;
+            return 'rgb(' + [
+                floor(interpolate(from[0], to[0], pos)),
+                floor(interpolate(from[1], to[1], pos)),
+                floor(interpolate(from[2], to[2], pos))
+            ].join(', ') + ')';
         }
-    };
 
-    S.each(colors, function(prop) {
-        OPS[prop] = OPS['color'];
     });
+
+    S.each(COLORS, function(color) {
+        Fx.Factories[color] = ColorFx;
+    });
+
+    return ColorFx;
+
 }, {
-    requires:["dom","./base"]
+    requires:["dom","./base","./fx"]
 });
+
+/**
+ * TODO
+ * 支持 hsla
+ *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
+ **/

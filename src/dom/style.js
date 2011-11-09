@@ -1,6 +1,6 @@
 /**
  * @module  dom
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
@@ -127,7 +127,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
     S.mix(DOM, {
-
+        _camelCase:camelCase,
+        _cssNumber:cssNumber,
         _CUSTOM_STYLES: CUSTOM_STYLES,
         _cssProps:cssProps,
         _getComputedStyle: function(elem, name) {

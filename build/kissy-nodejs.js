@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 8 17:43
+build time: Nov 9 19:53
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 8 17:43
          */
         version: '1.20dev',
 
-        buildTime:'20111108174349',
+        buildTime:'20111109195339',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3001,9 +3001,9 @@ D:\code\kissy_git\kissy\src\node\attach.js
 D:\code\kissy_git\kissy\src\node\override.js
 D:\code\kissy_git\kissy\src\anim\easing.js
 D:\code\kissy_git\kissy\src\anim\manager.js
+D:\code\kissy_git\kissy\src\anim\fx.js
 D:\code\kissy_git\kissy\src\anim\base.js
 D:\code\kissy_git\kissy\src\anim\color.js
-D:\code\kissy_git\kissy\src\anim\scroll.js
 D:\code\kissy_git\kissy\src\anim.js
 D:\code\kissy_git\kissy\src\node\anim-plugin.js
 D:\code\kissy_git\kissy\src\node.js
@@ -3269,7 +3269,7 @@ KISSY.add("ua", function(S,UA) {
 
 /**
  * @module  dom
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/base', function(S, UA, undefined) {
 
@@ -3375,7 +3375,7 @@ KISSY.add('dom/base', function(S, UA, undefined) {
 
 /**
  * @module  dom-attr
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
@@ -3402,7 +3402,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 data: 1,
                 width: 1,
                 height: 1,
-                offset: 1
+                offset: 1,
+                scrollTop:1,
+                scrollLeft:1
             },
             attrHooks = {
                 // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
@@ -4837,7 +4839,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 
 /**
  * @module  dom-insertion
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/insertion', function(S, UA, DOM) {
 
@@ -5265,6 +5267,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 d;
             if (w) {
                 if (v !== undefined) {
+                    v = parseFloat(v);
                     // 注意多 windw 情况，不能简单取 win
                     var left = name == "Left" ? v : DOM.scrollLeft(w),
                         top = name == "Top" ? v : DOM.scrollTop(w);
@@ -5286,7 +5289,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 }
             } else if (isElementNode(elem)) {
                 if (v !== undefined) {
-                    elem[method] = v
+                    elem[method] = parseFloat(v)
                 } else {
                     ret = elem[method];
                 }
@@ -5448,7 +5451,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
 /**
  * @module  dom
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
@@ -5575,7 +5578,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
     S.mix(DOM, {
-
+        _camelCase:camelCase,
+        _cssNumber:cssNumber,
         _CUSTOM_STYLES: CUSTOM_STYLES,
         _cssProps:cssProps,
         _getComputedStyle: function(elem, name) {
@@ -7370,7 +7374,7 @@ KISSY.add('event/object', function(S, undefined) {
 
 /**
  * @module  event
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
@@ -8872,7 +8876,7 @@ KISSY.add("event", function(S, KeyCodes, Event, Target, Object) {
 
 /**
  * definition for node and nodelist
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
 
@@ -9502,7 +9506,7 @@ KISSY.add("anim/manager", function(S) {
     }
 
     return {
-        interval:20,
+        interval:15,
         runnings:{},
         timer:null,
         start:function(anim) {
@@ -9556,7 +9560,7 @@ KISSY.add("anim/manager", function(S) {
             for (var r in runnings) {
                 if (runnings.hasOwnProperty(r)) {
                     done = false;
-                    runnings[r]._runFrame();
+                    runnings[r]._frame();
                 }
             }
             return done;
@@ -9565,90 +9569,165 @@ KISSY.add("anim/manager", function(S) {
 });
 
 /**
- * @module   anim
- * @author   lifesinger@gmail.com,yiminghe@gmail.com
+ * animate on single property
+ * @author yiminghe@gmail.com
  */
-KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
+KISSY.add("anim/fx", function(S, DOM) {
 
-    var EventTarget = Event.Target,
-        _isElementNode = DOM._isElementNode,
+    /**
+     * basic animation about single css property or element attribute
+     * @param cfg
+     */
+    function Fx(cfg) {
+        this.load(cfg);
+    }
+
+    S.augment(Fx, {
+
+        load:function(cfg) {
+            var self;
+            S.mix(self, cfg);
+            self.startTime = S.now();
+            self.pos = 0;
+            self.unit = self.unit || "";
+        },
+
+        frame:function(end) {
+            var self = this,
+                endFlag = 0,
+                elapsedTime,
+                t = S.now();
+            if (end || t >= self.duration + self.startTime) {
+                self.pos = 1;
+                endFlag = 1;
+            } else {
+                elapsedTime = t - self.startTime;
+                self.pos = self.easing(elapsedTime / self.duration);
+            }
+            self.update();
+            return endFlag;
+        },
+
         /**
-         * milliseconds in one second
-         * @constant
+         * 数值插值函数
+         * @param {Number} from 源值
+         * @param {Number} to 目的值
+         * @param {Number} pos 当前位置，从 easing 得到 0~1
+         * @return {Number} 当前值
          */
-            SECOND_UNIT = 1000,
-        PROPS,
-        CUSTOM_ATTRS,
-        OPACITY,NONE,
-        EVENT_START,
-        EVENT_STEP,
-        EVENT_COMPLETE,
-        defaultConfig,
-        TRANSITION_NAME;
+        interpolate:function (from, to, pos) {
+            return (from + (to - from) * pos).toFixed(3);
+        },
 
-    //支持的有效的 css 分属性，数字则动画，否则直接设最终结果
-    PROPS = (
+        update:function() {
+            var self = this,
+                prop = self.prop,
+                elem = self.elem,
+                val = self.interpolate(self.from,
+                    self.to, self.pos) + self.unit;
+            if (isAttr(elem, prop)) {
+                DOM.attr(elem, prop, val);
+            } else {
+                DOM.css(self.elem, self.prop, val);
+            }
+        },
 
-        'borderBottomWidth ' +
-            'borderBottomStyle ' +
+        /**
+         * current value
+         */
+        cur:function() {
+            var self = this,
+                prop = self.prop,
+                elem = self.elem;
+            if (isAttr(elem, prop)) {
+                return DOM.attr(elem, prop);
+            }
+            var parsed,
+                r = DOM.css(elem, prop);
+            // Empty strings, null, undefined and "auto" are converted to 0,
+            // complex values such as "rotate(1rad)" are returned as is,
+            // simple values such as "10px" are parsed to Float.
+            return isNaN(parsed = parseFloat(r)) ?
+                !r || r === "auto" ? 0 : r
+                : parsed;
+        }
+    });
 
-            'borderLeftWidth ' +
-            'borderLeftStyle ' +
-            // 同 font
-            //'borderColor ' +
+    function isAttr(elem, prop) {
+        if (DOM.attr(elem, prop) != null &&
+            (!elem.style || elem.style[ prop ] == null)) {
+            return 1;
+        }
+        return 0;
+    }
 
-            'borderRightWidth ' +
-            'borderRightStyle ' +
-            'borderSpacing ' +
+    Fx.Factories = {};
 
-            'borderTopWidth ' +
-            'borderTopStyle ' +
-            'bottom ' +
-
-            // shorthand 属性去掉，取分解属性
-            //'font ' +
-            'fontFamily ' +
-            'fontSize ' +
-            'fontWeight ' +
-            'height ' +
-            'left ' +
-            'letterSpacing ' +
-            'lineHeight ' +
-            'marginBottom ' +
-            'marginLeft ' +
-            'marginRight ' +
-            'marginTop ' +
-            'maxHeight ' +
-            'maxWidth ' +
-            'minHeight ' +
-            'minWidth ' +
-            'opacity ' +
-            'outlineOffset ' +
-            'outlineWidth ' +
-            'paddingBottom ' +
-            'paddingLeft ' +
-            'paddingRight ' +
-            'paddingTop ' +
-            'right ' +
-            'textIndent ' +
-            'top ' +
-            'width ' +
-            'wordSpacing ' +
-            'zIndex').split(' ');
-
-    //支持的元素属性
-    CUSTOM_ATTRS = [];
-
-    OPACITY = 'opacity';
-    NONE = 'none';
-    EVENT_START = 'start';
-    EVENT_STEP = 'step';
-    EVENT_COMPLETE = 'complete';
-    defaultConfig = {
-        duration: 1,
-        easing: 'easeNone',
-        nativeSupport: true // 优先使用原生 css3 transition
+    Fx.getFx = function(cfg) {
+        var Constructor = Fx.Factories[cfg.prop] || Fx;
+        return new Constructor(cfg);
     };
+
+    return Fx;
+
+}, {
+    requires:['dom']
+});
+/**
+ * TODO
+ * 支持 transform ,ie 使用 matrix
+ *  - http://shawphy.com/2011/01/transformation-matrix-in-front-end.html
+ *  - http://www.cnblogs.com/winter-cn/archive/2010/12/29/1919266.html
+ *  - 标准：http://www.zenelements.com/blog/css3-transform/
+ *  - ie: http://www.useragentman.com/IETransformsTranslator/
+ *  - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
+ *  - jq 插件: http://plugins.jquery.com/project/2d-transform
+ **/
+
+/**
+ * animation framework for KISSY
+ * @author   yiminghe@gmail.com,lifesinger@gmail.com
+ */
+KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
+
+    var camelCase = DOM._camelCase,
+        _isElementNode = DOM._isElementNode,
+        // shorthand css properties
+        SHORT_HANDS = {
+            border:[
+                "borderBottomWidth",
+                "borderLeftWidth",
+                'borderRightWidth',
+                'borderSpacing',
+                'borderTopWidth'
+            ],
+            "borderBottom":["borderBottomWidth"],
+            "borderLeft":["borderLeftWidth"],
+            borderTop:["borderTopWidth"],
+            font:[
+                'fontSize',
+                'fontWeight'
+            ],
+            margin:[
+                'marginBottom',
+                'marginLeft',
+                'marginRight',
+                'marginTop'
+            ],
+            padding:[
+                'paddingBottom',
+                'paddingLeft',
+                'paddingRight',
+                'paddingTop'
+            ]
+        },
+        defaultConfig = {
+            duration: 1,
+            easing: 'easeNone'
+        },
+        rfxnum = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
+
+    Anim.SHORT_HANDS = SHORT_HANDS;
 
 
     /**
@@ -9658,547 +9737,253 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
      * @param duration
      * @param easing
      * @param callback
-     * @param nativeSupport
      */
-    function Anim(elem, props, duration, easing, callback, nativeSupport) {
+    function Anim(elem, props, duration, easing, callback) {
+        var self = this;
+
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) {
             return;
         }
 
         // factory or constructor
-        if (!(this instanceof Anim)) {
-            return new Anim(elem, props, duration, easing, callback, nativeSupport);
+        if (!(self instanceof Anim)) {
+            return new Anim(elem, props, duration, easing, callback);
         }
-
-        /**
-         * 默认不启用原生动画，有些问题
-         */
-        if (nativeSupport === undefined) {
-            nativeSupport = false;
-        }
-
-        var self = this,
-            isConfig = S.isPlainObject(duration),
-            style = props,
-            config;
-
-        /**
-         * the related dom element
-         */
-        self.domEl = elem;
 
         /**
          * the transition properties
-         * 可以是 "width: 200px; color: #ccc" 字符串形式
-         * 也可以是 { width: '200px', color: '#ccc' } 对象形式
          */
-        if (S.isPlainObject(style)) {
-            style = String(S.param(style, ';'))
-                .replace(/=/g, ':')
-                .replace(/%23/g, '#')// 还原颜色值中的 #
-                //注意：这里自定义属性也被 - 了，后面从字符串中取值时需要考虑
-                .replace(/([a-z])([A-Z])/g, '$1-$2')
-                .toLowerCase(); // backgroundColor => background-color
+        if (S.isString(props)) {
+            props = S.unparam(props, ";", ":");
         }
 
-        //正则化，并且将shorthand属性分解成各个属性统一单独处理
-        //border:1px solid #fff =>
-        //borderLeftWidth:1px
-        //borderLeftColor:#fff
-        self.props = normalize(style, elem);
-        // normalize 后：
-        // props = {
-        //          width: { v: 200, unit: 'px', f: interpolate }
-        //          color: { v: '#ccc', unit: '', f: color }
-        //         }
-
-        self.targetStyle = style;
+        /**
+         * 驼峰属性名
+         */
+        for (var prop in props) {
+            var camelProp = camelCase(prop.toLowerCase());
+            if (prop != camelProp) {
+                props[camelProp] = props[prop];
+                delete props[prop];
+            }
+        }
 
         /**
          * animation config
          */
-        if (isConfig) {
-            config = S.merge(defaultConfig, duration);
-        } else {
-            config = S.clone(defaultConfig);
-            if (duration != null) {
-                config.duration = parseFloat(duration) || 1;
-            }
-            if (S.isString(easing) || S.isFunction(easing)) {
-                config.easing = easing;
-            }
-            if (S.isFunction(callback)) {
-                config.complete = callback;
-            }
-            config.nativeSupport = nativeSupport;
+        if (!S.isPlainObject(duration)) {
+            duration = {
+                duration:parseFloat(config.duration) || undefined,
+                easing:easing,
+                complete:callback
+            };
         }
 
-        //如果设定了元素属性的动画，则不能启动 css3 transition
-        if (config.nativeSupport && !S.isEmptyObject(getCustomAttrs(style))) {
-            config.nativeSupport = false;
-        }
+        var config = S.merge(defaultConfig, duration);
+
+        config.duration *= 1000;
         self.config = config;
-
-        /**
-         * detect browser native animation(CSS3 transition) support
-         */
-        if (config.nativeSupport
-            && getNativeTransitionName()
-            && S.isString((easing = config.easing))) {
-            // 当 easing 是支持的字串时，才激活 native transition
-            if (/cubic-bezier\([\s\d.,]+\)/.test(easing) ||
-                (easing = Easing.NativeTimeFunction[easing])) {
-                config.easing = easing;
-                self.transitionName = getNativeTransitionName();
-            }
-        }
+        self.elem = elem;
+        self.props = self.props;
 
         // register callback
-        if (S.isFunction(callback)) {
-            self.callback = callback;
+        if (config.complete) {
+            self.on("complete", config.complete);
         }
     }
 
-    Anim.PROPS = PROPS;
-    Anim.CUSTOM_ATTRS = CUSTOM_ATTRS;
+    S.augment(Anim, Event.Target, {
 
-    /**
-     * 数值插值函数
-     * @param {Number} source 源值
-     * @param {Number} target 目的值
-     * @param {Number} pos 当前位置，从 easing 得到 0~1
-     * @return {Number} 当前值
-     */
-    function interpolate(source, target, pos) {
-        return (source + (target - source) * pos).toFixed(3);
-    }
+        _backupProps:{},
 
-    // 不能插值的直接返回终值，没有动画插值过程
-    function mirror(source, target) {
-        source = null;
-        return target;
-    }
+        _fxs:{},
 
-    function normValueForAnim(val) {
-        var num = parseFloat(val),
-            unit = (val + '').replace(/^[-\d.]+/, '');
-        // 不能动画的量，插值直接设为最终，下次也不运行
-        if (isNaN(num)) {
-            return {v:unit,u:'',f:mirror};
-        }
-        return {v:num,u:unit,f:interpolate};
-    }
-
-
-    /**
-     * 相应属性的读取设置操作，需要转化为动画模块格式
-     */
-    Anim.PROP_OPS = {
-        "*":{
-
-            getter:function(elem, prop) {
-                return normValueForAnim(DOM.css(elem, prop));
-            },
-
-            setter:function(elem, prop, val) {
-                return DOM.css(elem, prop, val);
-            },
-
-            interpolate:interpolate,
-
-            eq:function(tp, sp) {
-                return tp.v == sp.v && tp.u == sp.u;
-            }
-        }
-    };
-
-    var PROP_OPS = Anim.PROP_OPS;
-
-
-    S.augment(Anim, EventTarget, {
         /**
          * @type {boolean} 是否在运行
          */
         isRunning:false,
-        /**
-         * 动画开始到现在逝去的时间
-         */
-        elapsedTime:0,
-        /**
-         * 动画开始的时间
-         */
-        start:0,
-        /**
-         * 动画结束的时间
-         */
-        finish:0,
-        /**
-         * 动画持续时间，不间断的话 = finish-start
-         */
-        duration:0,
 
+        /**
+         * 开始动画
+         */
         run: function() {
 
             var self = this,
+                _backupProps = self._backupProps,
+                elem = self.elem,
+                prop,
+                propEasings = {},
+                fxs = self._fxs,
                 config = self.config,
-                elem = self.domEl,
-                duration, easing,
-                start,
-                finish,
-                target = self.props,
-                source = {},
-                prop;
+                props = self.props;
 
-            if (self.fire(EVENT_START) === false) {
+            if (self.fire("start") === false) {
                 return;
             }
 
-            self.stop(); // 先停止掉正在运行的动画
-            duration = config.duration * SECOND_UNIT;
-            self.duration = duration;
-            if (self.transitionName) {
-                // some hack ,Weird but ff/chrome need a break
-                setTimeout(function() {
-                    self._nativeRun();
-                }, 10);
-            } else {
-                for (prop in target) {
-                    source[prop] = getAnimValue(elem, prop);
+            // 分离 easing
+            S.each(props, function(val, prop) {
+                if (S.isArray(val)) {
+                    propEasings[prop] = val[1];
+                    props[prop] = val[0];
+                } else {
+                    propEasings[prop] = config.easing;
+                }
+            });
+
+            // 扩展分属性
+            S.each(SHORT_HANDS, function(shortHands, p) {
+                var sh,
+                    origin,
+                    val;
+                if (val = props[p]) {
+                    origin = {};
+                    S.each(shortHands, function(sh) {
+                        // 得到原始分属性之前值
+                        origin[sh] = DOM.css(elem, sh);
+                        propEasings[sh] = propEasings[prop];
+                    });
+                    DOM.css(elem, p, val);
+                    for (sh in origin) {
+                        // 得到期待的分属性最后值
+                        props[sh] = DOM.css(elem, sh);
+                        // 还原
+                        DOM.css(elem, sh, origin[sh]);
+                    }
+                }
+            });
+
+            // 取得单位，并对单个属性构建 Fx 对象
+            for (prop in props) {
+                var val = props[prop],
+                    propCfg = {
+                        elem:elem,
+                        prop:prop,
+                        easing:Easing[propEasings[prop]] || Easing.easeNone
+                    },
+                    fx = Fx.getFx(propCfg),
+                    to = val,
+                    unit,
+                    from = fx.cur(),
+                    parts = val.match(rfxnum);
+
+                if (parts) {
+                    to = parseFloat(parts[2]);
+                    unit = parts[3];
+
+                    // 有单位但单位不是 px
+                    if (unit && unit !== "px") {
+                        DOM.css(elem, prop, val);
+                        from = (to / fx.cur()) * from;
+                        DOM.css(elem, prop, from + unit);
+                    }
+
+                    // 相对
+                    if (parts[1]) {
+                        to = ( (parts[ 1 ] === "-=" ? -1 : 1) * to ) + from;
+                    }
                 }
 
-                self.source = source;
-
-                start = S.now();
-                finish = start + duration;
-                easing = config.easing;
-
-                if (S.isString(easing)) {
-                    easing = Easing[easing] || Easing.easeNone;
-                }
-
-
-                self.start = start;
-                self.finish = finish;
-                self.easing = easing;
-
-                AM.start(self);
+                propCfg.from = from;
+                propCfg.to = to;
+                propCfg.unit = unit;
+                fx.load(propCfg);
+                fxs[prop] = fx;
             }
+
+            if (_isElementNode(elem) &&
+                (props.width || props.height)) {
+                // Make sure that nothing sneaks out
+                // Record all 3 overflow attributes because IE does not
+                // change the overflow attribute when overflowX and
+                // overflowY are set to the same value
+                S.mix(_backupProps, {
+                    overflow:DOM.css(elem, "overflow"),
+                    "overflow-x":DOM.css(elem, "overflowX"),
+                    "overflow-y":DOM.css(elem, "overflowY")
+                });
+                DOM.css(elem, "overflow", "hidden");
+                // inline element should has layout/inline-block
+                if (DOM.css(elem, "display") === "inline" &&
+                    DOM.css(elem, "float") === "none") {
+                    if (UA['ie']) {
+                        DOM.css(elem, "zoom", 1);
+                    } else {
+                        DOM.css(elem, "display", "inline-block");
+                    }
+                }
+            }
+
+            AM.start(self);
 
             self.isRunning = true;
 
             return self;
         },
 
-        _complete:function() {
-            var self = this;
-            self.fire(EVENT_COMPLETE);
-            self.callback && self.callback();
-        },
-
-        _runFrame:function() {
-
+        _frame:function() {
             var self = this,
-                elem = self.domEl,
-                finish = self.finish,
-                start = self.start,
-                duration = self.duration,
-                time = S.now(),
-                source = self.source,
-                easing = self.easing,
-                target = self.props,
                 prop,
-                elapsedTime;
-            elapsedTime = time - start;
-            var t = time > finish ? 1 : elapsedTime / duration,
-                sp, tp, b;
+                end = 0,
+                fxs = self._fxs;
 
-            self.elapsedTime = elapsedTime;
-
-            //S.log("********************************  _runFrame");
-
-            for (prop in target) {
-
-                sp = source[prop];
-                tp = target[prop];
-
-                // 没有发生变化的，直接略过
-                if (eqAnimValue(prop, tp, sp)) {
-                    continue;
-                }
-
-                //S.log(prop);
-                //S.log(tp.v + " : " + sp.v + " : " + sp.u + " : " + tp.u);
-
-                // 比如 sp = { v: 0, u: 'pt'} ( width: 0 时，默认单位是 pt )
-                // 这时要把 sp 的单位调整为和 tp 的一致
-                if (tp.v === 0) {
-                    tp.u = sp.u;
-                }
-
-                // 单位不一样时，以 tp.u 的为主，同时 sp 从 0 开始
-                // 比如：ie 下 border-width 默认为 medium
-                if (sp.u !== tp.u) {
-                    //S.log(prop + " : " + sp.v + " : " + sp.u);
-                    //S.log(tp.f);
-                    sp.v = 0;
-                    sp.u = tp.u;
-                }
-
-                setAnimValue(elem, prop, tp.f(sp.v, tp.v, easing(t)) + tp.u);
-                /**
-                 * 不能动画的量，直接设成最终值，下次不用动画，设置 dom 了
-                 */
-                if (tp.f == mirror) {
-                    sp.v = tp.v;
-                    sp.u = tp.u;
+            for (prop in fxs) {
+                if (fxs[prop].frame()) {
+                    delete fxs[prop];
                 }
             }
 
-            if ((self.fire(EVENT_STEP) === false) || (b = time > finish)) {
+            if ((self.fire("step") === false) ||
+                (end = S.isEmptyObject(fxs))) {
                 // complete 事件只在动画到达最后一帧时才触发
-                self.stop(b);
+                self.stop(end);
             }
-        },
-
-        _nativeRun: function() {
-            var self = this,
-                config = self.config,
-                elem = self.domEl,
-                duration = self.duration,
-                easing = config.easing,
-                prefix = self.transitionName,
-                transition = {};
-
-            // using CSS transition process
-            transition[prefix + 'Property'] = 'all';
-            transition[prefix + 'Duration'] = duration + 'ms';
-            transition[prefix + 'TimingFunction'] = easing;
-
-            // set the CSS transition style
-            DOM.css(elem, transition);
-
-            // set the final style value (need some hack for opera)
-            setTimeout(function() {
-                setToFinal(elem,
-                    // target,
-                    self.targetStyle);
-            }, 0);
-
-            // after duration time, fire the stop function
-            S.later(function() {
-                self.stop(true);
-            }, duration);
         },
 
         stop: function(finish) {
-            var self = this;
+            var self = this,
+                _backupProps,
+                prop,
+                fxs = self._fxs,
+                elem = self.elem;
+
             // already stopped
             if (!self.isRunning) {
                 return;
             }
 
-            if (self.transitionName) {
-                self._nativeStop(finish);
-            } else {
-                // 直接设置到最终样式
-                if (finish) {
-                    setToFinal(self.domEl,
-                        //self.props,
-                        self.targetStyle);
-                    self._complete();
+            if (finish) {
+                for (prop in fxs) {
+                    fxs[prop].frame(1);
                 }
-                AM.stop(self);
+                self.fire("complete");
             }
+
+            // 恢复 overflow
+            if (!S.isEmptyObject(_backupProps = self._backupProps)) {
+                DOM.css(elem, _backupProps);
+            }
+
+            self._backupProps = {};
+            self._fxs = {};
+
+            AM.stop(self);
 
             self.isRunning = false;
 
             return self;
-        },
-
-        _nativeStop: function(finish) {
-            var self = this,
-                elem = self.domEl,
-                props = self.props,
-                prop;
-
-            // handle for the CSS transition
-            if (finish) {
-                // CSS transition value remove should come first
-                self._clearNativeProperty();
-                self._complete();
-            } else {
-                // if want to stop the CSS transition, should set the current computed style value to the final CSS value
-                for (prop in props) {
-                    DOM.css(elem, prop, DOM._getComputedStyle(elem, prop));
-                }
-                // CSS transition value remove should come last
-                self._clearNativeProperty();
-            }
-        },
-
-        _clearNativeProperty:function() {
-            var transition = {},
-                self = this,
-                elem = self.domEl,
-                prefix = self.transitionName;
-            transition[prefix + 'Property'] = NONE;
-            transition[prefix + 'Duration'] = "";
-            transition[prefix + 'TimingFunction'] = "";
-            DOM.css(elem, transition);
         }
     });
 
-    Anim.supportTransition = function() {
-        if (TRANSITION_NAME) {
-            return TRANSITION_NAME;
-        }
-        var name = 'transition', transitionName;
-        var el = document.documentElement;
-        if (el.style[name] !== undefined) {
-            transitionName = name;
-        } else {
-            S.each(['Webkit', 'Moz', 'O'], function(item) {
-                if (el.style[(name = item + 'Transition')] !== undefined) {
-                    transitionName = name;
-                    return false;
-                }
-            });
-        }
-        TRANSITION_NAME = transitionName;
-        return transitionName;
-    };
-
-
-    var getNativeTransitionName = Anim.supportTransition;
-
-    function setToFinal(elem, style) {
-        setAnimStyleText(elem, style);
-    }
-
-    function getAnimValue(el, prop) {
-        return (PROP_OPS[prop] || PROP_OPS["*"]).getter(el, prop);
-    }
-
-
-    function setAnimValue(el, prop, v) {
-        return (PROP_OPS[prop] || PROP_OPS["*"]).setter(el, prop, v);
-    }
-
-    function eqAnimValue(prop, tp, sp) {
-        var propSpecial = PROP_OPS[prop];
-        if (propSpecial && propSpecial.eq) {
-            return propSpecial.eq(tp, sp);
-        }
-        return PROP_OPS["*"].eq(tp, sp);
-    }
-
-    /**
-     * 建一个尽量相同的 dom 节点在相同的位置（不单行内，获得相同的 css 选择器样式定义），从中取值
-     */
-    function normalize(style, elem) {
-        var css,
-            rules = {},
-            i = PROPS.length,
-            v,
-            el;
-
-        // 是否是元素
-        // 这里支持 window
-        if (_isElementNode(elem)) {
-            el = DOM.clone(elem, true);
-
-            DOM.insertAfter(el, elem);
-
-            css = el.style;
-
-            setAnimStyleText(el, style);
-
-            while (i--) {
-                var prop = PROPS[i];
-                // !important 只对行内样式得到计算当前真实值
-                if (v = css[prop]) {
-                    rules[prop] = getAnimValue(el, prop);
-                }
-            }
-        } else {
-            el = elem;
-        }
-
-        //自定义属性混入
-        var customAttrs = getCustomAttrs(style);
-
-        for (var a in customAttrs) {
-            // 如果之前没有克隆，就直接取源值
-            rules[a] = el !== elem ?
-                getAnimValue(el, a) :
-                normValueForAnim(customAttrs[a]);
-        }
-
-        // 如果之前没有克隆就没必要删除
-        if (el !== elem) {
-            DOM.remove(el);
-        }
-
-        return rules;
-    }
-
-    /**
-     * 直接设置 cssText 以及属性字符串，注意 ie 的 opacity
-     * @param style
-     * @param elem
-     */
-    function setAnimStyleText(elem, style) {
-
-        if (UA['ie'] && style.indexOf(OPACITY) > -1) {
-            var reg = /opacity\s*:\s*([^;]+)(;|$)/;
-            var match = style.match(reg);
-            if (match) {
-                DOM.css(elem, OPACITY, parseFloat(match[1]));
-            }
-            //不要把它清除了
-            //ie style.opacity 要能取！
-        }
-
-        if (_isElementNode(elem)) {
-            elem.style.cssText += ';' + style;
-        }
-
-        //设置自定义属性
-        var attrs = getCustomAttrs(style);
-        for (var a in attrs) {
-            setAnimValue(elem, a, attrs[a]);
-        }
-    }
-
-    /**
-     * 从自定义属性和样式字符串中解出属性值
-     * @param style
-     */
-    function getCustomAttrs(style) {
-
-        var ret = {};
-        for (var i = 0; i < CUSTOM_ATTRS.length; i++) {
-            var attr = CUSTOM_ATTRS[i]
-                .replace(/([a-z])([A-Z])/g, '$1-$2')
-                .toLowerCase();
-            var reg = new RegExp(attr + "\\s*:([^;]+)(;|$)");
-            var m = style.match(reg);
-            if (m) {
-                ret[CUSTOM_ATTRS[i]] = S.trim(m[1]);
-            }
-        }
-        return ret;
-    }
-
     return Anim;
 }, {
-    requires:["dom","event","./easing","ua","./manager"]
+    requires:["dom","event","./easing","ua","./manager","./fx"]
 });
 
 /**
- *
- *
+ * 2011-11
+ * - 抛弃 emile，优化性能，只对需要的属性进行动画
  *
  * 2011-04
  * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
@@ -10220,9 +10005,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, undefined) {
  * special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function(S, DOM, Anim) {
+KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
+
+        floor = Math.floor,
+
         KEYWORDS = {
             "black":[0,0,0],
             "silver":[192,192,192],
@@ -10240,26 +10028,47 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
             "blue":[0,0,255],
             "teal":[0,128,128],
             "aqua":[0,255,255]
-        };
-    var re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
-        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i;
+        },
+        re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
+        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
 
-    //颜色 css 属性
-    var colors = ('backgroundColor ' +
-        'borderBottomColor ' +
-        'borderLeftColor ' +
-        'borderRightColor ' +
-        'borderTopColor ' +
-        'color ' +
-        'outlineColor').split(' ');
+        SHORT_HANDS = Anim.SHORT_HANDS,
 
-    var OPS = Anim.PROP_OPS,
-        PROPS = Anim.PROPS;
+        COLORS = [
+            'backgroundColor' ,
+            'borderBottomColor' ,
+            'borderLeftColor' ,
+            'borderRightColor' ,
+            'borderTopColor' ,
+            'color' ,
+            'outlineColor'
+        ];
 
-    //添加到支持集
-    PROPS.push.apply(PROPS, colors);
+    SHORT_HANDS['background'] = ['backgroundColor'];
 
+    SHORT_HANDS['border'].push(
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    );
+
+    SHORT_HANDS['borderBottom'].push(
+        'borderBottomColor'
+    );
+
+    SHORT_HANDS['borderLeft'].push(
+        'borderLeftColor'
+    );
+
+    SHORT_HANDS['borderRight'].push(
+        'borderRightColor'
+    );
+
+    SHORT_HANDS['borderTop'].push(
+        'borderTopColor'
+    );
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
@@ -10291,86 +10100,59 @@ KISSY.add("anim/color", function(S, DOM, Anim) {
         return [255,255,255];
     }
 
-    /**
-     * 根据颜色的数值表示，执行数组插值
-     * @param source {Array.<Number>} 颜色源值表示
-     * @param target {Array.<Number>} 颜色目的值表示
-     * @param pos {Number} 当前进度
-     * @return {String} 可设置css属性的格式值 : rgb
-     */
-    function interpolate(source, target, pos) {
-        var commonInterpolate = OPS["*"].interpolate;
-        return 'rgb(' + [
-            Math.floor(commonInterpolate(source[0], target[0], pos)),
-            Math.floor(commonInterpolate(source[1], target[1], pos)),
-            Math.floor(commonInterpolate(source[2], target[2], pos))
-        ].join(', ') + ')';
+    function ColorFx() {
+        ColorFx.superclass.constructor.apply(this, arguments);
     }
 
-    OPS["color"] = {
-        getter:function(elem, prop) {
-            return {
-                v:numericColor(DOM.css(elem, prop)),
-                u:'',
-                f:interpolate
-            };
+    S.extend(ColorFx, Fx, {
+
+        load:function() {
+            var self = this;
+            ColorFx.superclass.load.apply(self, arguments);
+            self.from = numericColor(self.from);
+            self.to = numericColor(self.to);
         },
 
-        setter:OPS["*"].setter,
-
-        eq:function(tp, sp) {
-            return (tp.v + "") == (sp.v + "");
+        interpolate:function (from, to, pos) {
+            var interpolate = ColorFx.superclass.interpolate;
+            return 'rgb(' + [
+                floor(interpolate(from[0], to[0], pos)),
+                floor(interpolate(from[1], to[1], pos)),
+                floor(interpolate(from[2], to[2], pos))
+            ].join(', ') + ')';
         }
-    };
 
-    S.each(colors, function(prop) {
-        OPS[prop] = OPS['color'];
     });
+
+    S.each(COLORS, function(color) {
+        Fx.Factories[color] = ColorFx;
+    });
+
+    return ColorFx;
+
 }, {
-    requires:["dom","./base"]
+    requires:["dom","./base","./fx"]
 });
 
 /**
- * special patch for animate scroll property of element
- * @author  yiminghe@gmail.com
- */
-KISSY.add("anim/scroll", function(S, DOM, Anim) {
-
-    var OPS = Anim.PROP_OPS;
-
-    //添加到支持集
-    Anim.CUSTOM_ATTRS.push("scrollLeft", "scrollTop");
-
-    // 不从 css  中读取，从元素属性中得到值
-    OPS["scrollLeft"] = OPS["scrollTop"] = {
-        getter:function(elem, prop) {
-            return {
-                v:DOM[prop](elem),
-                u:'',
-                f:OPS["*"].interpolate
-            };
-        },
-        setter:function(elem, prop, val) {
-            // use dom to support window
-            DOM[prop](elem, val);
-        }
-    };
-}, {
-    requires:["dom","./base"]
-});
+ * TODO
+ * 支持 hsla
+ *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
+ **/
 
 KISSY.add("anim", function(S, Anim,Easing) {
     Anim.Easing=Easing;
     return Anim;
 }, {
-    requires:["anim/base","anim/easing","anim/color","anim/scroll"]
+    requires:["anim/base","anim/easing","anim/color"]
 });
 
 /**
  * @module  anim-node-plugin
- * @author  lifesinger@gmail.com,
+ * @author  yiminghe@gmail.com,
+ *          lifesinger@gmail.com,
  *          qiaohua@taobao.com,
- *          yiminghe@gmail.com
+ *
  */
 KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
 
@@ -10507,7 +10289,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
                 style.height = (visible ?
                     DOM.height(elem) || elem.naturalHeight :
-                    0) + "px";
+                    0);
                 if (visible) {
                     DOM.css(elem, HEIGHT, 0);
                 }
@@ -10516,7 +10298,7 @@ KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
                 originalStyle[WIDTH] = elemStyle[WIDTH];
                 style.width = (visible ?
                     DOM.width(elem) || elem.naturalWidth :
-                    0) + "px";
+                    0);
                 if (visible) {
                     DOM.css(elem, WIDTH, 0);
                 }

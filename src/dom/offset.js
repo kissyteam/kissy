@@ -229,6 +229,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 d;
             if (w) {
                 if (v !== undefined) {
+                    v = parseFloat(v);
                     // 注意多 windw 情况，不能简单取 win
                     var left = name == "Left" ? v : DOM.scrollLeft(w),
                         top = name == "Top" ? v : DOM.scrollTop(w);
@@ -250,7 +251,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 }
             } else if (isElementNode(elem)) {
                 if (v !== undefined) {
-                    elem[method] = v
+                    elem[method] = parseFloat(v)
                 } else {
                     ret = elem[method];
                 }

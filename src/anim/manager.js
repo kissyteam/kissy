@@ -11,7 +11,7 @@ KISSY.add("anim/manager", function(S) {
     }
 
     return {
-        interval:20,
+        interval:15,
         runnings:{},
         timer:null,
         start:function(anim) {
@@ -65,7 +65,7 @@ KISSY.add("anim/manager", function(S) {
             for (var r in runnings) {
                 if (runnings.hasOwnProperty(r)) {
                     done = false;
-                    runnings[r]._runFrame();
+                    runnings[r]._frame();
                 }
             }
             return done;
