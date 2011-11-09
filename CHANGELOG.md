@@ -65,11 +65,9 @@ History:
  - [!] NodeList.prototype.all(selector) 1.1.6为取得第一个元素的子孙中选符合 selector 的节点 , 1.2 改为取得所有元素的子孙符合 selector 的节点（经过去重和根据 DOM 树前序遍历顺序进行排序）
 
 
- - [*] anim 提高性能，不重复 touch dom / css
- - [+] anim 重构，支持 scrollLeft ,scrollTop 配置
+ - [*] anim 完全重写，提高性能，不重复 touch dom / css
+ - [+] anim 支持 scrollLeft,scrollTop （包括 window）
  - [+] 增加 anim 单元测试
- - [x] bugfix anim 内存泄露
- - [+] anim 支持 window scrollTop/Left 动画
 
  - [+] base ATTRS 支持 validator 配置，返回 false ，不设置值
  - [+] base set/get 支持 "x.y.z" 子属性设置，要求 x 为原生简单对象 : {y:{z:xx}}
