@@ -3,8 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/effect", function(S) {
-    var NONE = 'none',DURATION = 0.5;
-    var effects = {fade:["Out","In"],slide:["Up","Down"]};
+    var NONE = 'none',
+        DURATION = 0.5,
+        effects = {fade:["Out","In"],slide:["Up","Down"]},
+        displays = ['block','none'];
 
     function Effect() {
     }
@@ -36,13 +38,22 @@ KISSY.add("overlay/effect", function(S) {
                     return;
                 }
                 var v = ev.newVal,
+                    index = Number(v),
                     el = self.get("el");
-                el.stop(true);
-                el.css("visibility", "visible");
-                var m = effect + effects[effect][Number(v)];
+
+                // 队列中的也要移去
+                el.stop(1, 1);
+                el.css({
+                    "visibility": "visible",
+                    "display":displays[index]
+                });
+
+                var m = effect + effects[effect][index];
                 el[m](self.get("effect").duration, function() {
-                    el.css("display", "block");
-                    el.css("visibility", v ? "visible" : "hidden");
+                    el.css({
+                        "display": displays[0],
+                        "visibility": v ? "visible" : "hidden"
+                    });
                 }, self.get("effect").easing, false);
 
             });

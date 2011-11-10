@@ -145,7 +145,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             fxs = self._fxs,
             props = self.props;
 
+        // 进入该函数即代表执行（q[0] 已经是 ...）
+        saveRunning(self);
+
         if (self.fire("start") === false) {
+            // no need to invoke complete
+            self.stop(0);
             return;
         }
 
@@ -155,13 +160,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 val = props[prop];
                 // 直接结束
                 if (val == "hide" && hidden || val == 'show' && !hidden) {
+                    // need to invoke complete
                     self.stop(1);
                     return;
                 }
             }
         }
-
-        saveRunning(self);
 
         // 分离 easing
         S.each(props, function(val, prop) {

@@ -8,6 +8,7 @@ KISSY.add("anim/queue", function(S, DOM) {
         queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
         /*默认队列*/
         queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        // 当前队列是否有动画正在执行
         processing = "...";
 
     function getQueue(elem, name, readOnly) {

@@ -396,6 +396,13 @@ KISSY.use("dom,anim,node", function(S, DOM, Anim, Node) {
             });
         });
 
-
+        it("sync running with queue", function() {
+            test.slideDown();
+            test.slideUp(0.2);
+            waits(500);
+            runs(function() {
+                expect(test.css("display")).toBe("none");
+            });
+        });
     });
 });

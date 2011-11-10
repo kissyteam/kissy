@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 10 20:41
+build time: Nov 10 21:46
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 10 20:41
          */
         version: '1.20dev',
 
-        buildTime:'20111110204116',
+        buildTime:'20111110214610',
 
         /**
          * Returns a new object containing all of the properties of
@@ -9531,6 +9531,7 @@ KISSY.add("anim/queue", function(S, DOM) {
         queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
         /*默认队列*/
         queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        // 当前队列是否有动画正在执行
         processing = "...";
 
     function getQueue(elem, name, readOnly) {
@@ -9769,7 +9770,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             fxs = self._fxs,
             props = self.props;
 
+        // 进入该函数即代表执行（q[0] 已经是 ...）
+        saveRunning(self);
+
         if (self.fire("start") === false) {
+            // no need to invoke complete
+            self.stop(0);
             return;
         }
 
@@ -9779,13 +9785,12 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 val = props[prop];
                 // 直接结束
                 if (val == "hide" && hidden || val == 'show' && !hidden) {
+                    // need to invoke complete
                     self.stop(1);
                     return;
                 }
             }
         }
-
-        saveRunning(self);
 
         // 分离 easing
         S.each(props, function(val, prop) {
@@ -10111,6 +10116,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 /**
  * 2011-11
  * - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
+ * - 添加 stop/stopQueue/isRunning，支持队列管理
  *
  * 2011-04
  * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
@@ -10403,6 +10409,9 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
     requires:["dom","anim","./base"]
 });
 /**
+ * 2011-11-10
+ *  - 重写，逻辑放到 Anim 模块，这边只进行转发
+ *
  * 2011-05-17
  *  - 承玉：添加 stop ，随时停止动画
  *
@@ -22801,7 +22810,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 10 21:44
 */
 /**
  * KISSY Overlay
@@ -22972,8 +22981,10 @@ KISSY.add("overlay/aria", function(S,Event) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/effect", function(S) {
-    var NONE = 'none',DURATION = 0.5;
-    var effects = {fade:["Out","In"],slide:["Up","Down"]};
+    var NONE = 'none',
+        DURATION = 0.5,
+        effects = {fade:["Out","In"],slide:["Up","Down"]},
+        displays = ['block','none'];
 
     function Effect() {
     }
@@ -23005,13 +23016,22 @@ KISSY.add("overlay/effect", function(S) {
                     return;
                 }
                 var v = ev.newVal,
+                    index = Number(v),
                     el = self.get("el");
-                el.stop(true);
-                el.css("visibility", "visible");
-                var m = effect + effects[effect][Number(v)];
+
+                // 队列中的也要移去
+                el.stop(1, 1);
+                el.css({
+                    "visibility": "visible",
+                    "display":displays[index]
+                });
+
+                var m = effect + effects[effect][index];
                 el[m](self.get("effect").duration, function() {
-                    el.css("display", "block");
-                    el.css("visibility", v ? "visible" : "hidden");
+                    el.css({
+                        "display": displays[0],
+                        "visibility": v ? "visible" : "hidden"
+                    });
                 }, self.get("effect").easing, false);
 
             });
@@ -23104,15 +23124,21 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
         require("constrain"),
         Aria
     ], {
-        renderUI:function() {
-            var self = this;
-            //设置值，drag-ext 绑定时用到
-            self.set("handlers", [self.get("header")]);
-        }
     }, {
         ATTRS:{
             closable:{
                 value:true
+            },
+            handlers:{
+                valueFn:function() {
+                    var self = this;
+                    return [
+                        // 运行时取得拖放头
+                        function() {
+                            return self.get("view").get("header");
+                        }
+                    ];
+                }
             }
         }
     });
