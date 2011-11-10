@@ -487,6 +487,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 /**
  * 2011-11
  * - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
+ * - 添加 stop/stopQueue/isRunning，支持队列管理
  *
  * 2011-04
  * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？

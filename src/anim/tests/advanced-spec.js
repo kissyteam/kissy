@@ -1,3 +1,7 @@
+/**
+ * anim advanced usage tc ( queue management)
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("dom,anim,node", function(S, DOM, Anim, Node) {
     var $ = Node.all;
     var ANIM_KEY = Anim.Q.queueCollectionKey;
