@@ -62,11 +62,6 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
             });
         });
 
-        it("setup", function() {
-            var textarea = DOM.get("textarea");
-            DOM.append(DOM.create(DOM.val(textarea)), "body");
-            DOM.hide(textarea);
-        });
 
         it("should start and end anim properly", function() {
 
@@ -97,7 +92,7 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
                     'padding': '30px 0',
                     'color': '#FF3333'
                 },
-                2
+                0.5
             );
 
             anim.run();
@@ -124,7 +119,7 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
             });
 
-            waits(2500);
+            waits(800);
             runs(function() {
                 if (transitionName) {
                     expect(DOM.css(test1, transitionName)).toBe("none");
@@ -148,12 +143,12 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
             test.scrollLeft = 0;
             Anim(test, {
                 scrollLeft:scrollLimit
-            }, 2).run();
+            }, 0.5).run();
             waits(100);
             runs(function() {
                 expect(test.scrollLeft).not.toBe(0);
             });
-            waits(2000);
+            waits(800);
             runs(function() {
                 expect(test.scrollLeft).toBe(scrollLimit);
             });

@@ -51,19 +51,27 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
             });
             return self;
         },
-        toggle:function(speed) {
+        isRunning:function() {
             var self = this;
-            self[self.css("display") === "none" ? "show" : "hide"].apply(self, arguments);
+            for (var i = 0; i < self.length; i++) {
+                if (Anim.isRunning(self[i])) {
+                    return 1;
+                }
+            }
+            return 0;
         }
     });
 
     S.each({
             show: getFxs("show", 3),
             hide: getFxs("hide", 3),
+            toggle:getFxs("toggle", 3),
             fadeIn: getFxs("show", 3, 2),
             fadeOut: getFxs("hide", 3, 2),
+            fadeToggle:getFxs("toggle", 3, 2),
             slideDown: getFxs("show", 1),
-            slideUp: getFxs("hide", 1)
+            slideUp: getFxs("hide", 1),
+            slideToggle:getFxs("toggle", 1)
         },
         function(v, k) {
             Node.prototype[k] = function(speed, callback, easing) {

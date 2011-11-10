@@ -155,11 +155,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 val = props[prop];
                 // 直接结束
                 if (val == "hide" && hidden || val == 'show' && !hidden) {
-                    self.fire("complete");
+                    self.stop(1);
                     return;
                 }
             }
         }
+
+        saveRunning(self);
 
         // 分离 easing
         S.each(props, function(val, prop) {
@@ -185,9 +187,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             var sh,
                 origin,
                 val;
-            if (!props) {
-                debugger
-            }
             if (val = props[p]) {
                 origin = {};
                 S.each(shortHands, function(sh) {
@@ -227,12 +226,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             // hide/show/toggle : special treat!
             if (S.inArray(val, specialVals)) {
+                _backupProps[prop] = DOM.style(elem, prop);
                 if (val == "toggle") {
                     val = hidden ? "show" : "hide";
                 }
                 if (val == "hide") {
                     to = 0;
-                    from = _backupProps[prop] = fx.cur();
+                    from = fx.cur();
                     // 执行完后隐藏
                     _backupProps.display = 'none';
                 } else {
@@ -317,9 +317,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
          * 开始动画
          */
         run: function() {
-            var self = this,queueName = self.config.queue;
+            var self = this,
+                queueName = self.config.queue;
 
-            saveRunning(self);
             if (queueName === false) {
                 runInternal.call(self);
             } else {
@@ -360,7 +360,6 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // already stopped
             if (!self.isRunning()) {
                 // 从自己的队列中移除
-                removeRunning(self);
                 if (queueName !== false) {
                     Q.remove(self);
                 }
@@ -431,9 +430,14 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         if (clearQueue) {
             Q.removeQueues(elem);
         }
-        var allRunning = DOM.data(elem, runningKey);
-        for (var anim in allRunning) {
-            anim.stop(end);
+        var allRunning = DOM.data(elem, runningKey),anims = [];
+        for (var k in allRunning) {
+            var anim = allRunning[k];
+            anims.push(anim);
+        }
+        // can not stop in for/in , stop will modified allRunning too
+        for (var i = 0; i < anims.length; i++) {
+            anims[i].stop(end);
         }
     };
 
@@ -446,15 +450,32 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      */
     Anim.stopQueue = function(elem, queueName, end, clearQueue) {
         if (clearQueue && queueName !== false) {
-            Q.removeQueue(queueName);
+            Q.removeQueue(elem, queueName);
         }
-        var allRunning = DOM.data(elem, runningKey);
-        for (var anim in allRunning) {
+        var allRunning = DOM.data(elem, runningKey),anims = [];
+        for (var k in allRunning) {
+            var anim = allRunning[k];
             if (anim.config.queue == queueName) {
-                anim.stop(end);
+                anims.push(anim);
             }
         }
+
+        // can not stop in for/in , stop will modified allRunning too
+        for (var i = 0; i < anims.length; i++) {
+            anims[i].stop(end);
+        }
     };
+
+    /**
+     * whether elem is running anim
+     * @param elem
+     */
+    Anim.isRunning = function(elem) {
+        var allRunning = DOM.data(elem, runningKey);
+        return allRunning && !S.isEmptyObject(allRunning);
+    };
+
+    Anim.Q = Q;
 
     if (SHORT_HANDS) {
     }

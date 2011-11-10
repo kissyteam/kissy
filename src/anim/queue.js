@@ -5,19 +5,19 @@
 KISSY.add("anim/queue", function(S, DOM) {
 
     var /*队列集合容器*/
-        keyCollection = S.guid("ks-queue-" + S.now() + "-"),
+        queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
         /*默认队列*/
-        key = S.guid("ks-queue-" + S.now() + "-"),
+        queueKey = S.guid("ks-queue-" + S.now() + "-"),
         processing = "...";
 
     function getQueue(elem, name, readOnly) {
-        name = name || key;
+        name = name || queueKey;
 
         var qu,
-            quCollection = DOM.data(elem, keyCollection);
+            quCollection = DOM.data(elem, queueCollectionKey);
 
         if (!quCollection && !readOnly) {
-            DOM.data(elem, keyCollection, quCollection = {});
+            DOM.data(elem, queueCollectionKey, quCollection = {});
         }
 
         if (quCollection) {
@@ -31,17 +31,19 @@ KISSY.add("anim/queue", function(S, DOM) {
     }
 
     function removeQueue(elem, name) {
-        name = name || key;
-        var quCollection = DOM.data(elem, keyCollection);
+        name = name || queueKey;
+        var quCollection = DOM.data(elem, queueCollectionKey);
         if (quCollection) {
             delete quCollection[name];
         }
         if (S.isEmptyObject(quCollection)) {
-            DOM.removeData(elem, keyCollection);
+            DOM.removeData(elem, queueCollectionKey);
         }
     }
 
     var q = {
+
+        queueCollectionKey:queueCollectionKey,
 
         queue:function(anim) {
             var elem = anim.elem,
@@ -67,17 +69,10 @@ KISSY.add("anim/queue", function(S, DOM) {
         },
 
         removeQueues:function(elem) {
-            DOM.removeData(elem, keyCollection);
+            DOM.removeData(elem, queueCollectionKey);
         },
 
         removeQueue:removeQueue,
-
-        /**
-         * get collection of queues
-         */
-        getQueues:function(elem) {
-            return DOM.data(elem, keyCollection);
-        },
 
         dequeue:function(anim) {
             var elem = anim.elem,
