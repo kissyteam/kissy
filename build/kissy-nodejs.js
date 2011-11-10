@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 9 22:50
+build time: Nov 10 20:41
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 9 22:50
          */
         version: '1.20dev',
 
-        buildTime:'20111109225023',
+        buildTime:'20111110204116',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3002,10 +3002,11 @@ D:\code\kissy_git\kissy\src\node\override.js
 D:\code\kissy_git\kissy\src\anim\easing.js
 D:\code\kissy_git\kissy\src\anim\manager.js
 D:\code\kissy_git\kissy\src\anim\fx.js
+D:\code\kissy_git\kissy\src\anim\queue.js
 D:\code\kissy_git\kissy\src\anim\base.js
 D:\code\kissy_git\kissy\src\anim\color.js
 D:\code\kissy_git\kissy\src\anim.js
-D:\code\kissy_git\kissy\src\node\anim-plugin.js
+D:\code\kissy_git\kissy\src\node\anim.js
 D:\code\kissy_git\kissy\src\node.js
 D:\code\kissy_git\kissy\src\json\json2.js
 D:\code\kissy_git\kissy\src\json.js
@@ -9707,13 +9708,115 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
  **/
 
 /**
+ * queue of anim objects
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("anim/queue", function(S, DOM) {
+
+    var /*队列集合容器*/
+        queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
+        /*默认队列*/
+        queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        processing = "...";
+
+    function getQueue(elem, name, readOnly) {
+        name = name || queueKey;
+
+        var qu,
+            quCollection = DOM.data(elem, queueCollectionKey);
+
+        if (!quCollection && !readOnly) {
+            DOM.data(elem, queueCollectionKey, quCollection = {});
+        }
+
+        if (quCollection) {
+            qu = quCollection[name];
+            if (!qu && !readOnly) {
+                qu = quCollection[name] = [];
+            }
+        }
+
+        return qu;
+    }
+
+    function removeQueue(elem, name) {
+        name = name || queueKey;
+        var quCollection = DOM.data(elem, queueCollectionKey);
+        if (quCollection) {
+            delete quCollection[name];
+        }
+        if (S.isEmptyObject(quCollection)) {
+            DOM.removeData(elem, queueCollectionKey);
+        }
+    }
+
+    var q = {
+
+        queueCollectionKey:queueCollectionKey,
+
+        queue:function(anim) {
+            var elem = anim.elem,
+                name = anim.config.queue,
+                qu = getQueue(elem, name);
+            qu.push(anim);
+            if (qu[0] !== processing) {
+                q.dequeue(anim);
+            }
+            return qu;
+        },
+
+        remove:function(anim) {
+            var elem = anim.elem,
+                name = anim.config.queue,
+                qu = getQueue(elem, name, 1),index;
+            if (qu) {
+                index = S.indexOf(anim, qu);
+                if (index > -1) {
+                    qu.splice(index, 1);
+                }
+            }
+        },
+
+        removeQueues:function(elem) {
+            DOM.removeData(elem, queueCollectionKey);
+        },
+
+        removeQueue:removeQueue,
+
+        dequeue:function(anim) {
+            var elem = anim.elem,
+                name = anim.config.queue,
+                qu = getQueue(elem, name, 1),
+                nextAnim = qu && qu.shift();
+
+            if (nextAnim == processing) {
+                nextAnim = qu.shift();
+            }
+
+            if (nextAnim) {
+                qu.unshift(processing);
+                nextAnim._runInternal();
+            } else {
+                // remove queue data
+                removeQueue(elem, name);
+            }
+        }
+
+    };
+    return q;
+}, {
+    requires:['dom']
+});
+
+/**
  * animation framework for KISSY
  * @author   yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
+KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         _isElementNode = DOM._isElementNode,
+        specialVals = ["hide","show","toggle"],
         // shorthand css properties
         SHORT_HANDS = {
             border:[
@@ -9779,6 +9882,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
          */
         if (S.isString(props)) {
             props = S.unparam(props, ";", ":");
+        } else {
+            // clone to prevent collision within multiple instance
+            props = S.clone(props);
         }
 
         /**
@@ -9796,7 +9902,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
          * animation config
          */
         if (S.isPlainObject(duration)) {
-            config = duration;
+            config = S.clone(duration);
         } else {
             config = {
                 duration:parseFloat(duration) || undefined,
@@ -9806,9 +9912,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
         }
 
         config = S.merge(defaultConfig, config);
-
-        config.duration *= 1000;
         self.config = config;
+        config.duration *= 1000;
+
         // domEl deprecated!
         self.elem = self['domEl'] = elem;
         self.props = props;
@@ -9818,148 +9924,218 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
         self._fxs = {};
 
         // register callback
+        self.on("complete", onComplete);
+    }
+
+
+    function onComplete() {
+        var self = this,
+            _backupProps = self._backupProps,
+            config = self.config;
+
+        // only recover after complete anim
+        if (!S.isEmptyObject(_backupProps = self._backupProps)) {
+            DOM.css(self.elem, _backupProps);
+        }
+
         if (config.complete) {
-            self.on("complete", config.complete);
+            config.complete.call(self);
         }
     }
+
+    function runInternal() {
+        var self = this,
+            config = self.config,
+            _backupProps = self._backupProps,
+            elem = self.elem,
+            hidden,
+            val,
+            prop,
+            specialEasing = (config['specialEasing'] || {}),
+            fxs = self._fxs,
+            props = self.props;
+
+        if (self.fire("start") === false) {
+            return;
+        }
+
+        if (_isElementNode(elem)) {
+            hidden = DOM.css(elem, "display") == "none";
+            for (prop in props) {
+                val = props[prop];
+                // 直接结束
+                if (val == "hide" && hidden || val == 'show' && !hidden) {
+                    self.stop(1);
+                    return;
+                }
+            }
+        }
+
+        saveRunning(self);
+
+        // 分离 easing
+        S.each(props, function(val, prop) {
+            if (!props.hasOwnProperty(prop)) {
+                return;
+            }
+            var easing;
+            if (S.isArray(val)) {
+                easing = specialEasing[prop] = val[1];
+                props[prop] = val[0];
+            } else {
+                easing = specialEasing[prop] = (specialEasing[prop] || config.easing);
+            }
+            if (S.isString(easing)) {
+                easing = specialEasing[prop] = Easing[easing];
+            }
+            specialEasing[prop] = easing || Easing.easeNone;
+        });
+
+
+        // 扩展分属性
+        S.each(SHORT_HANDS, function(shortHands, p) {
+            var sh,
+                origin,
+                val;
+            if (val = props[p]) {
+                origin = {};
+                S.each(shortHands, function(sh) {
+                    // 得到原始分属性之前值
+                    origin[sh] = DOM.css(elem, sh);
+                    specialEasing[sh] = specialEasing[p];
+                });
+                DOM.css(elem, p, val);
+                for (sh in origin) {
+                    // 得到期待的分属性最后值
+                    props[sh] = DOM.css(elem, sh);
+                    // 还原
+                    DOM.css(elem, sh, origin[sh]);
+                }
+                // 删除复合属性
+                delete props[p];
+            }
+        });
+
+        // 取得单位，并对单个属性构建 Fx 对象
+        for (prop in props) {
+            if (!props.hasOwnProperty(prop)) {
+                continue;
+            }
+
+            val = S.trim(props[prop]);
+
+            var to,
+                from,
+                propCfg = {
+                    elem:elem,
+                    prop:prop,
+                    duration:config.duration,
+                    easing:specialEasing[prop]
+                },
+                fx = Fx.getFx(propCfg);
+
+            // hide/show/toggle : special treat!
+            if (S.inArray(val, specialVals)) {
+                _backupProps[prop] = DOM.style(elem, prop);
+                if (val == "toggle") {
+                    val = hidden ? "show" : "hide";
+                }
+                if (val == "hide") {
+                    to = 0;
+                    from = fx.cur();
+                    // 执行完后隐藏
+                    _backupProps.display = 'none';
+                } else {
+                    DOM.show(elem);
+                    from = 0;
+                    to = fx.cur();
+                }
+                val = to;
+            } else {
+                to = val;
+                from = fx.cur();
+            }
+
+            val += "";
+
+            var unit = "",
+                parts = val.match(rfxnum);
+
+            if (parts) {
+                to = parseFloat(parts[2]);
+                unit = parts[3];
+
+                // 有单位但单位不是 px
+                if (unit && unit !== "px") {
+                    DOM.css(elem, prop, val);
+                    from = (to / fx.cur()) * from;
+                    DOM.css(elem, prop, from + unit);
+                }
+
+                // 相对
+                if (parts[1]) {
+                    to = ( (parts[ 1 ] === "-=" ? -1 : 1) * to ) + from;
+                }
+            }
+
+            propCfg.from = from;
+            propCfg.to = to;
+            propCfg.unit = unit;
+            fx.load(propCfg);
+            fxs[prop] = fx;
+        }
+
+        if (_isElementNode(elem) &&
+            (props.width || props.height)) {
+            // Make sure that nothing sneaks out
+            // Record all 3 overflow attributes because IE does not
+            // change the overflow attribute when overflowX and
+            // overflowY are set to the same value
+            S.mix(_backupProps, {
+                overflow:DOM.css(elem, "overflow"),
+                "overflow-x":DOM.css(elem, "overflowX"),
+                "overflow-y":DOM.css(elem, "overflowY")
+            });
+            DOM.css(elem, "overflow", "hidden");
+            // inline element should has layout/inline-block
+            if (DOM.css(elem, "display") === "inline" &&
+                DOM.css(elem, "float") === "none") {
+                if (UA['ie']) {
+                    DOM.css(elem, "zoom", 1);
+                } else {
+                    DOM.css(elem, "display", "inline-block");
+                }
+            }
+        }
+
+        AM.start(self);
+    }
+
 
     S.augment(Anim, Event.Target, {
 
         /**
          * @type {boolean} 是否在运行
          */
-        isRunning:false,
+        isRunning:function() {
+            return isRunning(this);
+        },
+
+        _runInternal:runInternal,
 
         /**
          * 开始动画
          */
         run: function() {
-
             var self = this,
-                _backupProps = self._backupProps,
-                elem = self.elem,
-                prop,
-                propEasings = {},
-                fxs = self._fxs,
-                config = self.config,
-                props = self.props;
+                queueName = self.config.queue;
 
-            if (self.fire("start") === false) {
-                return;
+            if (queueName === false) {
+                runInternal.call(self);
+            } else {
+                // 当前动画对象加入队列
+                Q.queue(self);
             }
-
-            // 分离 easing
-            S.each(props, function(val, prop) {
-                if (!props.hasOwnProperty(prop)) {
-                    return;
-                }
-                var easing;
-                if (S.isArray(val)) {
-                    easing = propEasings[prop] = val[1];
-                    props[prop] = val[0];
-                } else {
-                    easing = propEasings[prop] = config.easing;
-                }
-                if (S.isString(easing)) {
-                    easing = propEasings[prop] = Easing[easing];
-                }
-                propEasings[prop] = easing || Easing.easeNone;
-            });
-
-
-            // 扩展分属性
-            S.each(SHORT_HANDS, function(shortHands, p) {
-                var sh,
-                    origin,
-                    val;
-                if (val = props[p]) {
-                    origin = {};
-                    S.each(shortHands, function(sh) {
-                        // 得到原始分属性之前值
-                        origin[sh] = DOM.css(elem, sh);
-                        propEasings[sh] = propEasings[p];
-                    });
-                    DOM.css(elem, p, val);
-                    for (sh in origin) {
-                        // 得到期待的分属性最后值
-                        props[sh] = DOM.css(elem, sh);
-                        // 还原
-                        DOM.css(elem, sh, origin[sh]);
-                    }
-                    // 删除复合属性
-                    delete props[p];
-                }
-            });
-
-            // 取得单位，并对单个属性构建 Fx 对象
-            for (prop in props) {
-                if (!props.hasOwnProperty(prop)) {
-                    continue;
-                }
-
-                var val = S.trim(props[prop]),
-                    propCfg = {
-                        elem:elem,
-                        prop:prop,
-                        duration:config.duration,
-                        easing:propEasings[prop]
-                    },
-                    fx = Fx.getFx(propCfg),
-                    to = val,
-                    unit = "",
-                    from = fx.cur(),
-                    parts = val.match(rfxnum);
-
-                if (parts) {
-                    to = parseFloat(parts[2]);
-                    unit = parts[3];
-
-                    // 有单位但单位不是 px
-                    if (unit && unit !== "px") {
-                        DOM.css(elem, prop, val);
-                        from = (to / fx.cur()) * from;
-                        DOM.css(elem, prop, from + unit);
-                    }
-
-                    // 相对
-                    if (parts[1]) {
-                        to = ( (parts[ 1 ] === "-=" ? -1 : 1) * to ) + from;
-                    }
-                }
-
-                propCfg.from = from;
-                propCfg.to = to;
-                propCfg.unit = unit;
-                fx.load(propCfg);
-                fxs[prop] = fx;
-            }
-
-            if (_isElementNode(elem) &&
-                (props.width || props.height)) {
-                // Make sure that nothing sneaks out
-                // Record all 3 overflow attributes because IE does not
-                // change the overflow attribute when overflowX and
-                // overflowY are set to the same value
-                S.mix(_backupProps, {
-                    overflow:DOM.css(elem, "overflow"),
-                    "overflow-x":DOM.css(elem, "overflowX"),
-                    "overflow-y":DOM.css(elem, "overflowY")
-                });
-                DOM.css(elem, "overflow", "hidden");
-                // inline element should has layout/inline-block
-                if (DOM.css(elem, "display") === "inline" &&
-                    DOM.css(elem, "float") === "none") {
-                    if (UA['ie']) {
-                        DOM.css(elem, "zoom", 1);
-                    } else {
-                        DOM.css(elem, "display", "inline-block");
-                    }
-                }
-            }
-
-            AM.start(self);
-
-            self.isRunning = true;
 
             return self;
         },
@@ -9986,45 +10162,136 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx) {
 
         stop: function(finish) {
             var self = this,
-                _backupProps,
+                config = self.config,
+                queueName = config.queue,
                 prop,
-                fxs = self._fxs,
-                elem = self.elem;
+                fxs = self._fxs;
 
             // already stopped
-            if (!self.isRunning) {
+            if (!self.isRunning()) {
+                // 从自己的队列中移除
+                if (queueName !== false) {
+                    Q.remove(self);
+                }
                 return;
             }
 
             if (finish) {
                 for (prop in fxs) {
-                    if (!fxs.hasOwnProperty(prop)) {
-                        continue;
+                    if (fxs.hasOwnProperty(prop)) {
+                        fxs[prop].frame(1);
                     }
-                    fxs[prop].frame(1);
                 }
                 self.fire("complete");
             }
 
-            // 恢复 overflow
-            if (!S.isEmptyObject(_backupProps = self._backupProps)) {
-                DOM.css(elem, _backupProps);
-            }
-
-            self._backupProps = {};
-            self._fxs = {};
-
             AM.stop(self);
 
-            self.isRunning = false;
+            removeRunning(self);
+
+            if (queueName !== false) {
+                // notify next anim to run in the same queue
+                Q.dequeue(self);
+            }
 
             return self;
         }
     });
 
+    var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
+
+    function saveRunning(anim) {
+        var elem = anim.elem,
+            allRunning = DOM.data(elem, runningKey);
+        if (!allRunning) {
+            DOM.data(elem, runningKey, allRunning = {});
+        }
+        allRunning[S.stamp(anim)] = anim;
+    }
+
+    function removeRunning(anim) {
+        var elem = anim.elem,
+            allRunning = DOM.data(elem, runningKey);
+        if (allRunning) {
+            delete allRunning[S.stamp(anim)];
+            if (S.isEmptyObject(allRunning)) {
+                DOM.removeData(elem, runningKey);
+            }
+        }
+    }
+
+    function isRunning(anim) {
+        var elem = anim.elem,
+            allRunning = DOM.data(elem, runningKey);
+        if (allRunning) {
+            return !!allRunning[S.stamp(anim)];
+        }
+        return 0;
+    }
+
+    /**
+     * stop all the anims currently running
+     * @param elem element which anim belongs to
+     * @param end
+     * @param clearQueue
+     */
+    Anim.stop = function(elem, end, clearQueue) {
+        // first stop first anim in queues
+        if (clearQueue) {
+            Q.removeQueues(elem);
+        }
+        var allRunning = DOM.data(elem, runningKey),anims = [];
+        for (var k in allRunning) {
+            var anim = allRunning[k];
+            anims.push(anim);
+        }
+        // can not stop in for/in , stop will modified allRunning too
+        for (var i = 0; i < anims.length; i++) {
+            anims[i].stop(end);
+        }
+    };
+
+    /**
+     *
+     * @param elem element which anim belongs to
+     * @param queueName queue'name if set to false only remove
+     * @param end
+     * @param clearQueue
+     */
+    Anim.stopQueue = function(elem, queueName, end, clearQueue) {
+        if (clearQueue && queueName !== false) {
+            Q.removeQueue(elem, queueName);
+        }
+        var allRunning = DOM.data(elem, runningKey),anims = [];
+        for (var k in allRunning) {
+            var anim = allRunning[k];
+            if (anim.config.queue == queueName) {
+                anims.push(anim);
+            }
+        }
+
+        // can not stop in for/in , stop will modified allRunning too
+        for (var i = 0; i < anims.length; i++) {
+            anims[i].stop(end);
+        }
+    };
+
+    /**
+     * whether elem is running anim
+     * @param elem
+     */
+    Anim.isRunning = function(elem) {
+        var allRunning = DOM.data(elem, runningKey);
+        return allRunning && !S.isEmptyObject(allRunning);
+    };
+
+    Anim.Q = Q;
+
+    if (SHORT_HANDS) {
+    }
     return Anim;
 }, {
-    requires:["dom","event","./easing","ua","./manager","./fx"]
+    requires:["dom","event","./easing","ua","./manager","./fx","./queue"]
 });
 
 /**
@@ -10235,178 +10502,88 @@ KISSY.add("anim", function(S, Anim,Easing) {
  *          qiaohua@taobao.com,
  *
  */
-KISSY.add('node/anim-plugin', function(S, DOM, Anim, N, undefined) {
+KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
 
-    var NLP = N.prototype,
-        ANIM_KEY = "ksAnims" + S.now(),
-        DISPLAY = 'display',
-        NONE = 'none',
-        OVERFLOW = 'overflow',
-        HIDDEN = 'hidden',
-        OPCACITY = 'opacity',
-        HEIGHT = 'height',
-        SHOW = "show",
-        HIDE = "hide",
-        FADE = "fade",
-        SLIDE = "slide",
-        TOGGLE = "toggle",
-        WIDTH = 'width',
-        FX = {
-            show: [OVERFLOW, OPCACITY, HEIGHT, WIDTH],
-            fade: [OPCACITY],
-            slide: [OVERFLOW, HEIGHT]
-        };
+    var FX = [
+        // height animations
+        [ "height", "marginTop", "marginBottom", "paddingTop", "paddingBottom" ],
+        // width animations
+        [ "width", "marginLeft", "marginRight", "paddingLeft", "paddingRight" ],
+        // opacity animations
+        [ "opacity" ]
+    ];
 
-    N.__ANIM_KEY = ANIM_KEY;
-
-    (function(P) {
-
-        function attachAnim(elem, anim) {
-            var anims = DOM.data(elem, ANIM_KEY);
-            if (!anims) {
-                DOM.data(elem, ANIM_KEY, anims = []);
-            }
-            anim.on("complete", function() {
-                var anims = DOM.data(elem, ANIM_KEY);
-                if (anims) {
-                    // 结束后从关联的动画队列中删除当前动画
-                    var index = S.indexOf(anim, anims);
-                    if (index >= 0) {
-                        anims.splice(index, 1);
-                    }
-                    if (!anims.length) {
-                        DOM.removeData(elem, ANIM_KEY);
-                    }
-                }
-            });
-            // 当前节点的所有动画队列
-            anims.push(anim);
+    function getFxs(type, num, from) {
+        var ret = [],
+            obj = {};
+        for (var i = from || 0; i < num; i++) {
+            ret.push.apply(ret, FX[i]);
         }
+        for (i = 0; i < ret.length; i++) {
+            obj[ret[i]] = type;
+        }
+        return obj;
+    }
 
-        P.animate = function() {
+    S.augment(Node, {
+        animate:function() {
             var self = this,
                 args = S.makeArray(arguments);
             S.each(self, function(elem) {
-                var anim = Anim.apply(undefined, [elem].concat(args)).run();
-                attachAnim(elem, anim);
+                Anim.apply(undefined, [elem].concat(args)).run();
             });
             return self;
-        };
-
-        P.stop = function(finish) {
+        },
+        stop:function(end, clearQueue) {
             var self = this;
             S.each(self, function(elem) {
-                var anims = DOM.data(elem, ANIM_KEY);
-                if (anims) {
-                    S.each(anims, function(anim) {
-                        anim.stop(finish);
-                    });
-                    DOM.removeData(elem, ANIM_KEY);
-                }
+                Anim.stop(elem, end, clearQueue);
             });
             return self;
-        };
-
-        S.each({
-                show: [SHOW, 1],
-                hide: [SHOW, 0],
-                fadeIn: [FADE, 1],
-                fadeOut: [FADE, 0],
-                slideDown: [SLIDE, 1],
-                slideUp: [SLIDE, 0]
-            },
-            function(v, k) {
-                P[k] = function(speed, callback, easing, nativeSupport) {
-                    var self = this;
-                    // 没有参数时，调用 DOM 中的对应方法
-                    if (DOM[k] && !speed) {
-                        DOM[k](self);
-                    } else {
-                        S.each(self, function(elem) {
-                            var anim = fx(elem, v[0], speed, callback,
-                                v[1], easing || 'easeOut', nativeSupport);
-                            attachAnim(elem, anim);
-                        });
-                    }
-                    return self;
-                };
-            });
-
-        // toggle 提出来单独写，清晰点
-        P[TOGGLE] = function(speed) {
+        },
+        stopQueue:function(queueName, end, clearQueue) {
             var self = this;
-            P[self.css(DISPLAY) === NONE ? SHOW : HIDE].apply(self, arguments);
-        };
-    })(NLP);
-
-    function fx(elem, which, speed, callback, visible, easing, nativeSupport) {
-
-        if (visible) {
-            DOM.show(elem);
-        }
-
-        // 根据不同类型设置初始 css 属性, 并设置动画参数
-        var originalStyle = {}, style = {};
-        S.each(FX[which], function(prop) {
-            /**
-             * 2011-08-19
-             * originalStyle 记录行内样式，防止外联样式干扰！
-             */
-            var elemStyle = elem.style;
-            if (prop === OVERFLOW) {
-                originalStyle[OVERFLOW] = elemStyle[OVERFLOW];
-                DOM.css(elem, OVERFLOW, HIDDEN);
-            }
-            else if (prop === OPCACITY) {
-                // 取行内 opacity
-                originalStyle[OPCACITY] = DOM.style(elem, OPCACITY);
-                style.opacity = visible ? 1 : 0;
-                if (visible) {
-                    DOM.css(elem, OPCACITY, 0);
-                }
-            }
-            else if (prop === HEIGHT) {
-                originalStyle[HEIGHT] = elemStyle[HEIGHT];
-                //http://arunprasad.wordpress.com/2008/08/26/naturalwidth-and-naturalheight-for-image-element-in-internet-explorer/
-                style.height = (visible ?
-                    DOM.height(elem) || elem.naturalHeight :
-                    0);
-                if (visible) {
-                    DOM.css(elem, HEIGHT, 0);
-                }
-            }
-            else if (prop === WIDTH) {
-                originalStyle[WIDTH] = elemStyle[WIDTH];
-                style.width = (visible ?
-                    DOM.width(elem) || elem.naturalWidth :
-                    0);
-                if (visible) {
-                    DOM.css(elem, WIDTH, 0);
-                }
-            }
-        });
-
-        // 开始动画
-        return new Anim(elem, style, speed, easing, function() {
-            // 如果是隐藏，需要设置 diaplay
-            if (!visible) {
-                DOM.hide(elem);
-            }
-
-            // 还原样式
-            DOM.css(elem, {
-                "height" : originalStyle[HEIGHT],
-                "width" : originalStyle[WIDTH],
-                "opacity" : originalStyle[OPCACITY],
-                "overflow" : originalStyle[OVERFLOW]
+            S.each(self, function(elem) {
+                Anim.stopQueue(elem, queueName, end, clearQueue);
             });
-
-            if (callback) {
-                callback();
+            return self;
+        },
+        isRunning:function() {
+            var self = this;
+            for (var i = 0; i < self.length; i++) {
+                if (Anim.isRunning(self[i])) {
+                    return 1;
+                }
             }
+            return 0;
+        }
+    });
 
-        }, nativeSupport).run();
-    }
+    S.each({
+            show: getFxs("show", 3),
+            hide: getFxs("hide", 3),
+            toggle:getFxs("toggle", 3),
+            fadeIn: getFxs("show", 3, 2),
+            fadeOut: getFxs("hide", 3, 2),
+            fadeToggle:getFxs("toggle", 3, 2),
+            slideDown: getFxs("show", 1),
+            slideUp: getFxs("hide", 1),
+            slideToggle:getFxs("toggle", 1)
+        },
+        function(v, k) {
+            Node.prototype[k] = function(speed, callback, easing) {
+                var self = this;
+                // 没有参数时，调用 DOM 中的对应方法
+                if (DOM[k] && !speed) {
+                    DOM[k](self);
+                } else {
+                    S.each(self, function(elem) {
+                        Anim(elem, v, speed, easing || 'easeOut', callback).run();
+                    });
+                }
+                return self;
+            };
+        });
 
 }, {
     requires:["dom","anim","./base"]
@@ -10428,7 +10605,7 @@ KISSY.add("node", function(S, Event, Node) {
         "node/base",
         "node/attach",
         "node/override",
-        "node/anim-plugin"]
+        "node/anim"]
 });
 
 /*
