@@ -7,5 +7,5 @@ KISSY.add("node", function(S, Event, Node) {
         "node/base",
         "node/attach",
         "node/override",
-        "node/anim-plugin"]
+        "node/anim"]
 });
