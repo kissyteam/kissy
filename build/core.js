@@ -6962,7 +6962,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    function onComplete() {
+    function onComplete(e) {
         var self = this,
             _backupProps = self._backupProps,
             config = self.config;
@@ -6973,7 +6973,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         if (config.complete) {
-            config.complete.call(self);
+            config.complete.call(self, e);
         }
     }
 

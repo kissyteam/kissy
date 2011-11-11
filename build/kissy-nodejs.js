@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 11 11:39
+build time: Nov 11 15:11
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 11 11:39
          */
         version: '1.20dev',
 
-        buildTime:'20111111113928',
+        buildTime:'20111111151152',
 
         /**
          * Returns a new object containing all of the properties of
@@ -9929,7 +9929,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    function onComplete() {
+    function onComplete(e) {
         var self = this,
             _backupProps = self._backupProps,
             config = self.config;
@@ -9940,7 +9940,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         if (config.complete) {
-            config.complete.call(self);
+            config.complete.call(self, e);
         }
     }
 
