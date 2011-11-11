@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 10 20:22
+build time: Nov 11 11:39
 */
 /**
  * @module  anim-node-plugin
@@ -42,17 +42,10 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
             });
             return self;
         },
-        stop:function(end, clearQueue) {
+        stop:function(end, clearQueue, queue) {
             var self = this;
             S.each(self, function(elem) {
-                Anim.stop(elem, end, clearQueue);
-            });
-            return self;
-        },
-        stopQueue:function(queueName, end, clearQueue) {
-            var self = this;
-            S.each(self, function(elem) {
-                Anim.stopQueue(elem, queueName, end, clearQueue);
+                Anim.stop(elem, end, clearQueue, queue);
             });
             return self;
         },
@@ -97,6 +90,9 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
     requires:["dom","anim","./base"]
 });
 /**
+ * 2011-11-10
+ *  - 重写，逻辑放到 Anim 模块，这边只进行转发
+ *
  * 2011-05-17
  *  - 承玉：添加 stop ，随时停止动画
  *

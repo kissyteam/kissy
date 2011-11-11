@@ -7273,19 +7273,26 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param end
      * @param clearQueue
      */
-    Anim.stop = function(elem, end, clearQueue) {
+    Anim.stop = function(elem, end, clearQueue, queueName) {
+        if (
+        // default queue
+            queueName === null ||
+                // name of specified queue
+                S.isString(queueName) ||
+                // anims not belong to any queue
+                queueName === false
+            ) {
+            return stopQueue.apply(undefined, arguments);
+        }
         // first stop first anim in queues
         if (clearQueue) {
             Q.removeQueues(elem);
         }
-        var allRunning = DOM.data(elem, runningKey),anims = [];
-        for (var k in allRunning) {
-            var anim = allRunning[k];
-            anims.push(anim);
-        }
-        // can not stop in for/in , stop will modified allRunning too
-        for (var i = 0; i < anims.length; i++) {
-            anims[i].stop(end);
+        var allRunning = DOM.data(elem, runningKey),
+            // can not stop in for/in , stop will modified allRunning too
+            anims = S.merge(allRunning);
+        for (var k in anims) {
+            anims[k].stop(end);
         }
     };
 
@@ -7296,29 +7303,25 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param end
      * @param clearQueue
      */
-    Anim.stopQueue = function(elem, queueName, end, clearQueue) {
+    function stopQueue(elem, end, clearQueue, queueName) {
         if (clearQueue && queueName !== false) {
             Q.removeQueue(elem, queueName);
         }
-        var allRunning = DOM.data(elem, runningKey),anims = [];
-        for (var k in allRunning) {
-            var anim = allRunning[k];
+        var allRunning = DOM.data(elem, runningKey),
+            anims = S.merge(allRunning);
+        for (var k in anims) {
+            var anim = anims[k];
             if (anim.config.queue == queueName) {
-                anims.push(anim);
+                anim.stop(end);
             }
         }
-
-        // can not stop in for/in , stop will modified allRunning too
-        for (var i = 0; i < anims.length; i++) {
-            anims[i].stop(end);
-        }
-    };
+    }
 
     /**
      * whether elem is running anim
      * @param elem
      */
-    Anim.isRunning = function(elem) {
+    Anim['isRunning'] = function(elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
     };
@@ -7573,17 +7576,10 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
             });
             return self;
         },
-        stop:function(end, clearQueue) {
+        stop:function(end, clearQueue, queue) {
             var self = this;
             S.each(self, function(elem) {
-                Anim.stop(elem, end, clearQueue);
-            });
-            return self;
-        },
-        stopQueue:function(queueName, end, clearQueue) {
-            var self = this;
-            S.each(self, function(elem) {
-                Anim.stopQueue(elem, queueName, end, clearQueue);
+                Anim.stop(elem, end, clearQueue, queue);
             });
             return self;
         },

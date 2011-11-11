@@ -187,7 +187,7 @@ KISSY.use("dom,anim,node", function(S, DOM, Anim, Node) {
             waits(100);
 
             runs(function() {
-                test.stopQueue("now", 0, 1);
+                test.stop(0, 1, "now");
                 expect(test.width()).not.toBe(width);
                 expect(test.height()).not.toBe(height);
             });
@@ -199,11 +199,8 @@ KISSY.use("dom,anim,node", function(S, DOM, Anim, Node) {
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
                 expect(anims).toBe(undefined);
-
                 expect(test.width()).not.toBe(300);
                 expect(test.height()).toBe(300);
-
-
             });
         });
 
@@ -243,7 +240,7 @@ KISSY.use("dom,anim,node", function(S, DOM, Anim, Node) {
             waits(100);
 
             runs(function() {
-                test.stopQueue("now");
+                test.stop(0, 0, "now");
                 expect(width2 = test.width()).not.toBe(width);
                 expect(test.height()).not.toBe(height);
             });

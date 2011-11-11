@@ -37,17 +37,10 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
             });
             return self;
         },
-        stop:function(end, clearQueue) {
+        stop:function(end, clearQueue, queue) {
             var self = this;
             S.each(self, function(elem) {
-                Anim.stop(elem, end, clearQueue);
-            });
-            return self;
-        },
-        stopQueue:function(queueName, end, clearQueue) {
-            var self = this;
-            S.each(self, function(elem) {
-                Anim.stopQueue(elem, queueName, end, clearQueue);
+                Anim.stop(elem, end, clearQueue, queue);
             });
             return self;
         },
