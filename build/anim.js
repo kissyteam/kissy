@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 11 11:39
+build time: Nov 14 18:14
 */
 /**
  * animation framework for KISSY
@@ -123,7 +123,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    function onComplete() {
+    function onComplete(e) {
         var self = this,
             _backupProps = self._backupProps,
             config = self.config;
@@ -134,7 +134,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         if (config.complete) {
-            config.complete.call(self);
+            config.complete.call(self, e);
         }
     }
 

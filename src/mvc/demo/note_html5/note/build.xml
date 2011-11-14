@@ -1,0 +1,116 @@
+<!--
+build example for kissy loader
+@author yiminghe@gmail.com
+-->
+<project name="mvc.demo.note_html5.build" default="build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+
+    <!--入口文件模块所在目录-->
+    <dirname property="current.dir" file="${ant.file.mvc.demo.note_html5.build}"/>
+    <property name="page.dir" location="${current.dir}"/>
+    <property name="page.dir.tmp" location="${current.dir}/tmp/"/>
+    <property name="assets.dir" location="${current.dir}/../"/>
+    <!--项目文件编码-->
+    <property name="charset" value="utf-8"/>
+    <!--bom utf-8-->
+    <property name="bom" value="&#xFEFF;"/>
+
+    <!-- kissy tools 项目源码目录 -->
+    <!-- 注意：请用 kissy tools 中的 ant 运行此 xml -->
+    <property name="ks.tools" value="../../../../../../kissy-tools"/>
+    <!--第三方工具-->
+    <property name="yui.compiler" value="${ks.tools}\yuicompressor\yuicompressor.jar"/>
+    <property name="module.compiler" value="${ks.tools}\module-compiler\module-compiler.jar"/>
+    <property name="closure.compiler" value="${ks.tools}\closure-compiler\compiler.jar"/>
+
+    <!-- js 构建-->
+    <target name='jsrun' depends="native2ascii">
+    </target>
+
+
+    <!--js  依赖打包-->
+    <target name='combo'>
+        <ac:for param="page">
+            <!--入口模块文件所在目录的所有模块循环处理-->
+            <path>
+                <fileset dir="${page.dir}" includes="*.js" excludes="*.combo.js,*-min.js"/>
+            </path>
+            <sequential>
+                <ac:var name="var.modname" unset="true"/>
+                <basename property="var.modname" file="@{page}" suffix=".js"/>
+                <echo>
+                    build ${var.modname} in @{page}
+                </echo>
+                <java classname="com.taobao.f2e.Main">
+
+                    <arg value="-requires"/>
+                    <!-- 入口模块 -->
+                    <arg value="note/${var.modname}"/>
+                    <arg value="-baseUrls"/>
+                    <arg value="${assets.dir}"/>
+                    <arg value="-encodings"/>
+                    <arg value="${charset}"/>
+                    <arg value="-outputEncoding"/>
+                    <arg value="${charset}"/>
+                    <arg value="-output"/>
+                    <arg value="${var.modname}.combo.js"/>
+                    <classpath>
+                        <pathelement path="${module.compiler}"/>
+                        <pathelement path="${java.class.path}"/>
+                    </classpath>
+                </java>
+
+            </sequential>
+        </ac:for>
+
+    </target>
+
+    <!--换行符统一处理-->
+    <target name="crlf" depends="combo">
+        <fixcrlf includes="*.combo.js"
+                 srcdir="${page.dir}"
+                 encoding="${charset}"
+                 eol="crlf">
+        </fixcrlf>
+    </target>
+
+    <!-- js ASCII 化 -->
+    <target name="native2ascii" depends="minify">
+        <mkdir dir="${page.dir.tmp}"/>
+        <move todir="${page.dir.tmp}">
+            <fileset dir="${page.dir}" includes="*-min.js"/>
+        </move>
+        <native2ascii encoding="${charset}"
+                      src="${page.dir.tmp}"
+                      dest="${page.dir}"
+                      includes="*.js"/>
+        <delete dir="${page.dir.tmp}"/>
+    </target>
+
+    <!--js 压缩-->
+    <target name="minify" depends="crlf">
+        <apply executable="java"
+               verbose="true"
+               dest="${page.dir}"
+               failonerror="true"
+               parallel="false"
+                >
+            <fileset dir="${page.dir}"
+                     includes="**/*.combo.js"
+                    />
+            <arg line="-jar"/>
+            <arg path="${closure.compiler}"/>
+            <arg line="--charset ${charset}"/>
+            <arg value="--warning_level"/>
+            <arg value="QUIET"/>
+            <arg value="--js"/>
+            <srcfile/>
+            <arg value="--js_output_file"/>
+            <targetfile/>
+            <mapper type="regexp" from="^(.*)\.combo\.js$" to="\1-min.js"/>
+        </apply>
+    </target>
+
+    <!--项目(js,css)构建-->
+    <target name="build" depends="jsrun"/>
+
+</project>

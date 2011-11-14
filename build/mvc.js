@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 4 10:47
+build time: Nov 14 18:16
 */
 /**
  * mvc base
@@ -456,20 +456,28 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
 }, {
     requires:['base','./base']
 });/**
- * simple hash router to get path parameter and query parameter
+ * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function(S, Event, Base) {
     var queryReg = /\?(.*)/,
+        each = S.each,
+        // take a breath to avoid duplicate hashchange
+        BREATH_INTERVAL = 100,
         grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
         // all registered route instance
         allRoutes = [],
+        win = window,
+        location = win.location,
+        history = win.history ,
+        supportNativeHistory = !!(history && history['pushState']),
         __routerMap = "__routerMap";
 
-
     function findFirstCaptureGroupIndex(regStr) {
-        var r;
-        for (var i = 0; i < regStr.length; i++) {
+        var r,i;
+        for (i = 0;
+             i < regStr.length;
+             i++) {
             r = regStr.charAt(i);
             // skip escaped reg meta char
             if (r == "\\") {
@@ -489,6 +497,78 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         return location.href.replace(/^[^#]*#?!?(.*)$/, '$1');
     }
 
+    /**
+     * get url fragment and dispatch
+     */
+    function getFragment() {
+        if (Router.nativeHistory && supportNativeHistory) {
+            return location.pathname.substr(Router.urlRoot.length) + location.search;
+        } else {
+            return getHash();
+        }
+    }
+
+    /**
+     * slash ------------- start
+     */
+
+    /**
+     * whether string end with slash
+     * @param str
+     */
+    function endWithSlash(str) {
+        return S.endsWith(str, "/");
+    }
+
+    function startWithSlash(str) {
+        return S.startsWith(str, "/");
+    }
+
+    function removeEndSlash(str) {
+        if (endWithSlash(str)) {
+            str = str.substring(0, str.length - 1);
+        }
+        return str;
+    }
+
+    function removeStartSlash(str) {
+        if (startWithSlash(str)) {
+            str = str.substring(1);
+        }
+        return str;
+    }
+
+    function addEndSlash(str) {
+        return removeEndSlash(str) + "/";
+    }
+
+    function addStartSlash(str) {
+        return "/" + removeStartSlash(str);
+    }
+
+    function equalsIgnoreSlash(str1, str2) {
+        str1 = removeEndSlash(str1);
+        str2 = removeEndSlash(str2);
+        return str1 == str2;
+    }
+
+    /**
+     * slash ------------------  end
+     */
+
+    /**
+     * get full path from fragment for html history
+     * @param fragment
+     */
+    function getFullPath(fragment) {
+        return location.protocol + "//" + location.host +
+            removeEndSlash(Router.urlRoot) + addStartSlash(fragment)
+    }
+
+    /**
+     * get query object from query string
+     * @param path
+     */
     function getQuery(path) {
         var m,
             ret = {};
@@ -498,12 +578,12 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         return ret;
     }
 
-
     /**
      * match url with route intelligently (always get optimal result)
      */
-    function matchRoute(path) {
-        var fullPath = path,
+    function dispatch() {
+        var path = getFragment(),
+            fullPath = path,
             query,
             arg,
             finalRoute = 0,
@@ -516,11 +596,11 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
         path = fullPath.replace(queryReg, "");
         // user input : /xx/yy/zz
-        S.each(allRoutes, function(route) {
+        each(allRoutes, function(route) {
             var routeRegs = route[__routerMap],
                 // match exactly
                 exactlyMatch = 0;
-            S.each(routeRegs, function(desc) {
+            each(routeRegs, function(desc) {
                     var reg = desc.reg,
                         regStr = desc.regStr,
                         paramNames = desc.paramNames,
@@ -534,7 +614,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
                         function genParam() {
                             var params = {};
-                            S.each(m, function(sm, i) {
+                            each(m, function(sm, i) {
                                 params[paramNames[i]] = sm;
                             });
                             return params;
@@ -642,6 +722,11 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         }
     }
 
+    /**
+     * normalize function by self
+     * @param self
+     * @param callback
+     */
     function normFn(self, callback) {
         if (S.isFunction(callback)) {
             return callback;
@@ -674,10 +759,6 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         routes:{}
     };
 
-    function hashChange() {
-        matchRoute(getHash());
-    }
-
     S.extend(Router, Base, {
         /**
          *
@@ -688,30 +769,88 @@ KISSY.add('mvc/router', function(S, Event, Base) {
          */
         addRoutes:function(routes) {
             var self = this;
-            S.each(routes, function(callback, name) {
+            each(routes, function(callback, name) {
                 self[__routerMap][name] = transformRouterReg(name, normFn(self, callback));
             });
         }
     }, {
         navigate:function(path, opts) {
-            location.hash = "!" + path;
-            opts = opts || {};
-            if (opts.triggerRoute && getHash() == path) {
-                hashChange();
+            if (getFragment() !== path) {
+                if (Router.nativeHistory && supportNativeHistory) {
+                    history['pushState']({}, "", getFullPath(path));
+                    // pushState does not fire popstate event (unlike hashchange)
+                    // so popstate is not statechange
+                    // fire manually
+                    dispatch();
+                } else {
+                    location.hash = "!" + path;
+                }
+            } else if (opts && opts.triggerRoute) {
+                dispatch();
             }
         },
         start:function(opts) {
             opts = opts || {};
+
+            opts.urlRoot = opts.urlRoot || "";
+
+            var urlRoot,
+                nativeHistory = opts.nativeHistory,
+                locPath = location.pathname,
+                hash = getFragment(),
+                hashIsValid = location.hash.match(/#!.+/);
+
+            urlRoot = Router.urlRoot = opts.urlRoot;
+            Router.nativeHistory = nativeHistory;
+
+            if (nativeHistory) {
+
+                if (supportNativeHistory) {
+                    // http://x.com/#!/x/y
+                    // =>
+                    // http://x.com/x/y
+                    // =>
+                    // process without refresh page and add history entry
+                    if (hashIsValid) {
+                        if (equalsIgnoreSlash(locPath, urlRoot)) {
+                            // put hash to path
+                            history['replaceState']({}, "", getFullPath(hash));
+                            opts.triggerRoute = 1;
+                        } else {
+                            S.error("location path must be same with urlRoot!");
+                        }
+                    }
+                }
+                // http://x.com/x/y
+                // =>
+                // http://x.com/#!/x/y
+                // =>
+                // refresh page without add history entry
+                else if (!equalsIgnoreSlash(locPath, urlRoot)) {
+                    location.replace(addEndSlash(urlRoot) + "#!" + hash);
+                    return;
+                }
+
+            }
+
             // prevent hashChange trigger on start
             setTimeout(function() {
-                Event.on(window, "hashchange", hashChange);
+                if (nativeHistory && supportNativeHistory) {
+                    Event.on(win, 'popstate', dispatch);
+                } else {
+                    Event.on(win, "hashchange", dispatch);
+                    opts.triggerRoute = 1;
+                }
+
                 // check initial hash on start
                 // in case server does not render initial state correctly
+                // when monitor hashchange ,client must be responsible for dispatching and rendering.
                 if (opts.triggerRoute) {
-                    hashChange();
+                    dispatch();
                 }
                 opts.success && opts.success();
-            }, 100);
+
+            }, BREATH_INTERVAL);
         }
     });
 
@@ -719,7 +858,13 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
 }, {
     requires:['event','base']
-});/**
+});
+
+/**
+ * refer :
+ * http://www.w3.org/TR/html5/history.html
+ * http://documentcloud.github.com/backbone/
+ **//**
  * default sync for model
  * @author yiminghe@gmail.com
  */
