@@ -24,8 +24,8 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             expect(nodes[2].toHtml()).toBe("<a>");
         });
 
-        it("works for <br/>",function(){
-             var Lexer = HtmlParser.Lexer;
+        it("works for <br/>", function() {
+            var Lexer = HtmlParser.Lexer;
             var html = "<br/>";
             var lexer = new Lexer(html),node;
             var nodes = [];
@@ -35,6 +35,10 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             expect(nodes.length).toBe(1);
             expect(nodes[0].tagName).toBe("br");
             expect(nodes[0].isEmptyXmlTag).toBe(true);
+        });
+
+        it("works when encouter invalid attribute value", function() {
+
         });
 
     });

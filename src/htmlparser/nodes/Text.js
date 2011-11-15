@@ -2,7 +2,7 @@
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Text",function(S, Node) {
+KISSY.add("htmlparser/nodes/Text", function(S, Node) {
 
     function Text() {
         Text.superclass.constructor.apply(this, arguments);
@@ -13,7 +13,7 @@ KISSY.add("htmlparser/nodes/Text",function(S, Node) {
     S.extend(Text, Node, {
         writeHtml:function(writer, filter) {
             var value = this.toHtml();
-            if (filter.onText(this) !== false) {
+            if (!filter || filter.onText(this) !== false) {
                 writer.text(value);
             }
         }

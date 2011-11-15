@@ -40,6 +40,7 @@ KISSY.use("dom", function(S, DOM) {
 
         it("closest works", function() {
             var t = DOM.get('#test-parent4');
+
             // return itself
             expect(DOM.closest(t, "a")).toBe(t);
 

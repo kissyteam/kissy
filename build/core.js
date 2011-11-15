@@ -774,13 +774,31 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 if (pass && attrFn[name]) {
                     return DOM[name](selector, val);
                 }
+                var els = DOM.query(selector);
+                if (val === undefined) {
+                    return DOM.__attr(els[0], name);
+                } else {
+                    els.each(function(el) {
+                        DOM.__attr(el, name, val);
+                    });
+                }
+            },
 
+            __attr:function(el, name, val) {
+                if (!isElementNode(el)) {
+                    return;
+                }
                 // custom attrs
                 name = attrFix[name] || name;
 
-                var attrNormalizer;
+                var attrNormalizer,
+                    ret;
 
-                if (rboolean.test(name)) {
+                // browsers index elements by id/name on forms, give priority to attributes.
+                if (nodeName(el, "form")) {
+                    attrNormalizer = attrNodeHook;
+                }
+                else if (rboolean.test(name)) {
                     attrNormalizer = boolHook;
                 }
                 // only old ie?
@@ -792,46 +810,25 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                 // getter
                 if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-                    // only get attributes on element nodes
-                    if (!isElementNode(el)) {
-                        return;
-                    }
 
-                    // browsers index elements by id/name on forms, give priority to attributes.
-                    if (nodeName(el, "form")) {
-                        attrNormalizer = attrNodeHook;
-                    }
                     if (attrNormalizer && attrNormalizer.get) {
                         return attrNormalizer.get(el, name);
                     }
 
-                    var ret = el.getAttribute(name);
+                    ret = el.getAttribute(name);
 
                     // standard browser non-existing attribute return null
                     // ie<8 will return undefined , because it return property
                     // so norm to undefined
                     return ret === null ? undefined : ret;
                 } else {
-                    // setter
-                    DOM.query(selector).each(function(el) {
-                        // only set attributes on element nodes
-                        if (!isElementNode(el)) {
-                            return;
-                        }
-                        var normalizer = attrNormalizer;
-                        // browsers index elements by id/name on forms, give priority to attributes.
-                        if (nodeName(el, "form")) {
-                            normalizer = attrNodeHook;
-                        }
-                        if (normalizer && normalizer.set) {
-                            normalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
-                        }
-                    });
+
+                    if (attrNormalizer && attrNormalizer.set) {
+                        attrNormalizer.set(el, val, name);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
+                    }
                 }
             },
 
@@ -3083,14 +3080,14 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         require = function(selector) {
             return S.require(selector);
         },
-        each = S.each,
         isArray = S.isArray,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
         nodeName = DOM._nodeName,
         push = Array.prototype.push,
         SPACE = ' ',
-        isString = S.isString,
+        COMMA = ',',
+        trim = S.trim,
         ANY = '*',
         REG_ID = /^#[\w-]+$/,
         REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
@@ -3102,41 +3099,65 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
-        var ret = [];
-        var contexts = tuneContext(context);
+        var ret,
+            i,
+            isSelectorString = typeof selector === 'string',
+            // optimize common usage
+            contexts = context === undefined ? [doc] : tuneContext(context);
 
-        each(contexts, function(c) {
-            push.apply(ret, queryByContexts(selector, c));
-        });
+        if (isSelectorString) {
+            selector = trim(selector);
+            if (contexts.length == 1 && selector) {
+                ret = quickFindBySelectorStr(selector, contexts[0]);
+            }
+        }
+        if (!ret) {
+            ret = [];
+            if (selector) {
+                for (i = 0; i < contexts.length; i++) {
+                    push.apply(ret, queryByContexts(selector, contexts[i]));
+                }
 
-        //必要时去重排序
-        if (S.isString(selector) && selector.indexOf(",") > -1 ||
-            contexts.length > 1) {
-            unique(ret);
+                //必要时去重排序
+                if (ret.length > 1 &&
+                    // multiple contexts
+                    (contexts.length > 1 ||
+                        (isSelectorString &&
+                            // multiple selector
+                            selector.indexOf(COMMA) > -1))) {
+                    unique(ret);
+                }
+            }
         }
         // attach each method
-        ret.each = S.bind(each, undefined, ret);
+        ret.each = function(f) {
+            var self = this,el,i;
+            for (i = 0; i < self.length; i++) {
+                el = self[i];
+                if (f(el, i) === false) {
+                    break;
+                }
+            }
+        };
 
         return ret;
     }
 
     function queryByContexts(selector, context) {
         var ret = [],
-            sizzle = require("sizzle");
-        if (isString(selector)) {
-            selector = S.trim(selector);
+            isSelectorString = typeof selector === 'string';
+        if (isSelectorString && selector.match(REG_QUERY) ||
+            !isSelectorString) {
+            // 简单选择器自己处理
+            ret = queryBySimple(selector, context);
         }
         // 如果选择器有 , 分开递归一部分一部分来
-        if (isString(selector) && selector.indexOf(",") > -1) {
+        else if (isSelectorString && selector.indexOf(COMMA) > -1) {
             ret = queryBySelectors(selector, context);
         }
-        // 复杂了，交给 sizzle
-        else if (isString(selector) && !REG_QUERY.exec(String(selector))) {
-            ret = queryBySizzle(selector, context);
-        }
-        // 简单选择器自己处理
         else {
-            ret = queryBySimple(selector, context);
+            // 复杂了，交给 sizzle
+            ret = queryBySizzle(selector, context);
         }
         return ret;
     }
@@ -3157,62 +3178,68 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     // 处理 selector 的每个部分
     function queryBySelectors(selector, context) {
         var ret = [],
-            selectors = selector.split(",");
-        each(selectors, function(s) {
-            push.apply(ret, queryByContexts(s, context));
-        });
+            i,
+            selectors = selector.split(/\s*,\s*/);
+        for (i = 0; i < selectors.length; i++) {
+            push.apply(ret, queryByContexts(selectors[i], context));
+        }
         // 多部分选择器可能得到重复结果
+        return ret;
+    }
+
+    function quickFindBySelectorStr(selector, context) {
+        var ret,t,match,id,tag,cls;
+        // selector 为 #id 是最常见的情况，特殊优化处理
+        if (REG_ID.test(selector)) {
+            t = getElementById(selector.slice(1), context);
+            if (t) {
+                // #id 无效时，返回空数组
+                ret = [t];
+            } else {
+                ret = [];
+            }
+        }
+        // selector 为支持列表中的其它 6 种
+        else {
+            match = REG_QUERY.exec(selector);
+            if (match) {
+                // 获取匹配出的信息
+                id = match[1];
+                tag = match[2];
+                cls = match[3];
+                // 空白前只能有 id ，取出来作为 context
+                context = (id ? getElementById(id, context) : context);
+                if (context) {
+                    // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
+                    if (cls) {
+                        if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
+                            ret = [].concat(getElementsByClassName(cls, tag, context));
+                        }
+                        // 处理 #id.cls
+                        else {
+                            t = getElementById(id, context);
+                            if (t && hasClass(t, cls)) {
+                                ret = [t];
+                            }
+                        }
+                    }
+                    // #id tag | tag
+                    else if (tag) { // 排除空白字符串
+                        ret = getElementsByTagName(tag, context);
+                    }
+                }
+                ret = ret || [];
+            }
+        }
         return ret;
     }
 
     // 最简单情况了，单个选择器部分，单个上下文
     function queryBySimple(selector, context) {
-        var match,
-            t,
-            ret = [],
-            id,
-            tag,
-            cls;
-        if (isString(selector)) {
-            // selector 为 #id 是最常见的情况，特殊优化处理
-            if (REG_ID.test(selector)) {
-                t = getElementById(selector.slice(1), context);
-                if (t) {
-                    // #id 无效时，返回空数组
-                    ret = [t];
-                }
-            }
-            // selector 为支持列表中的其它 6 种
-            else {
-                match = REG_QUERY.exec(selector);
-                if (match) {
-                    // 获取匹配出的信息
-                    id = match[1];
-                    tag = match[2];
-                    cls = match[3];
-                    // 空白前只能有 id ，取出来作为 context
-                    context = (id ? getElementById(id, context) : context);
-                    if (context) {
-                        // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
-                        if (cls) {
-                            if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
-                                ret = [].concat(getElementsByClassName(cls, tag, context));
-                            }
-                            // 处理 #id.cls
-                            else {
-                                t = getElementById(id, context);
-                                if (t && hasClass(t, cls)) {
-                                    ret = [t];
-                                }
-                            }
-                        }
-                        // #id tag | tag
-                        else if (tag) { // 排除空白字符串
-                            ret = getElementsByTagName(tag, context);
-                        }
-                    }
-                }
-            }
+        var ret,
+            isSelectorString = typeof selector === 'string';
+        if (isSelectorString) {
+            ret = quickFindBySelectorStr(selector, context) || [];
         }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (isArray(selector) || isNodeList(selector))) {
@@ -3223,10 +3250,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         }
         // 传入的 selector 是 HTMLNode 查看约束
         // 否则 window/document，原样返回
-        else if (selector) {
-            if (testByContext(selector, context)) {
-                ret = [selector];
-            }
+        else if (selector && testByContext(selector, context)) {
+            ret = [selector];
         }
         return ret;
     }
@@ -3324,21 +3349,22 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     // query #id
     function getElementById(id, context) {
-        if (!context) {
-            return null;
-        }
-        var doc = context;
+        var doc = context,
+            el;
         if (context.nodeType !== DOM.DOCUMENT_NODE) {
             doc = context.ownerDocument;
         }
-        var el = doc.getElementById(id);
-        if (el && el.parentNode) {
+        el = doc.getElementById(id);
+        if (el && el.id === id) {
+            // optimize for common usage
+        }
+        else if (el && el.parentNode) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
             // 不能直接 el.id ，否则 input shadow form attribute
-            if (DOM.attr(el, "id") !== id) {
+            if (DOM.__attr(el, "id") !== id) {
                 // 直接在 context 下的所有节点找
-                el = DOM.filter("*", "#" + id, context)[0] || null;
+                el = DOM.filter(ANY, "#" + id, context)[0] || null;
             }
             // ie 特殊情况下以及指明在 context 下找了，不需要再判断
             // 如果指定了 context node , 还要判断 id 是否处于 context 内
@@ -3348,7 +3374,6 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         } else {
             el = null;
         }
-
         return el;
     }
 
@@ -3463,8 +3488,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 ret = [];
 
             // 默认仅支持最简单的 tag.cls 或 #id 形式
-            if (isString(filter) &&
-                (filter = S.trim(filter)) &&
+            if (typeof filter === 'string' &&
+                (filter = trim(filter)) &&
                 (match = REG_QUERY.exec(filter))) {
                 id = match[1];
                 tag = match[2];
@@ -3487,7 +3512,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                     }
                 } else if (id && !tag && !cls) {
                     filter = function(elem) {
-                        return elem.id === id;
+                        return DOM.__attr(elem, "id") === id;
                     };
                 }
             }
@@ -4241,7 +4266,7 @@ KISSY.add('event/object', function(S, undefined) {
     var doc = document,
         props = ('altKey attrChange attrName bubbles button cancelable ' +
             'charCode clientX clientY ctrlKey currentTarget data detail ' +
-            'eventPhase fromElement handler keyCode layerX layerY metaKey ' +
+            'eventPhase fromElement handler keyCode metaKey ' +
             'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
             'target toElement view wheelDelta which axis').split(' ');

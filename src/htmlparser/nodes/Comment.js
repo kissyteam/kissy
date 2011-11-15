@@ -2,7 +2,7 @@
  * comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Comment",function(S, Tag) {
+KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
 
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
@@ -13,7 +13,7 @@ KISSY.add("htmlparser/nodes/Comment",function(S, Tag) {
     S.extend(Comment, Tag, {
         writeHtml:function(writer, filter) {
             var value = this.toHtml();
-            if (filter.onComment(this) !== false) {
+            if (!filter || filter.onComment(this) !== false) {
                 writer.comment(value);
             }
         }

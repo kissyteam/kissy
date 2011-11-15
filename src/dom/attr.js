@@ -365,13 +365,31 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 if (pass && attrFn[name]) {
                     return DOM[name](selector, val);
                 }
+                var els = DOM.query(selector);
+                if (val === undefined) {
+                    return DOM.__attr(els[0], name);
+                } else {
+                    els.each(function(el) {
+                        DOM.__attr(el, name, val);
+                    });
+                }
+            },
 
+            __attr:function(el, name, val) {
+                if (!isElementNode(el)) {
+                    return;
+                }
                 // custom attrs
                 name = attrFix[name] || name;
 
-                var attrNormalizer;
+                var attrNormalizer,
+                    ret;
 
-                if (rboolean.test(name)) {
+                // browsers index elements by id/name on forms, give priority to attributes.
+                if (nodeName(el, "form")) {
+                    attrNormalizer = attrNodeHook;
+                }
+                else if (rboolean.test(name)) {
                     attrNormalizer = boolHook;
                 }
                 // only old ie?
@@ -383,46 +401,25 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
                 // getter
                 if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
-                    // only get attributes on element nodes
-                    if (!isElementNode(el)) {
-                        return;
-                    }
 
-                    // browsers index elements by id/name on forms, give priority to attributes.
-                    if (nodeName(el, "form")) {
-                        attrNormalizer = attrNodeHook;
-                    }
                     if (attrNormalizer && attrNormalizer.get) {
                         return attrNormalizer.get(el, name);
                     }
 
-                    var ret = el.getAttribute(name);
+                    ret = el.getAttribute(name);
 
                     // standard browser non-existing attribute return null
                     // ie<8 will return undefined , because it return property
                     // so norm to undefined
                     return ret === null ? undefined : ret;
                 } else {
-                    // setter
-                    DOM.query(selector).each(function(el) {
-                        // only set attributes on element nodes
-                        if (!isElementNode(el)) {
-                            return;
-                        }
-                        var normalizer = attrNormalizer;
-                        // browsers index elements by id/name on forms, give priority to attributes.
-                        if (nodeName(el, "form")) {
-                            normalizer = attrNodeHook;
-                        }
-                        if (normalizer && normalizer.set) {
-                            normalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
-                        }
-                    });
+
+                    if (attrNormalizer && attrNormalizer.set) {
+                        attrNormalizer.set(el, val, name);
+                    } else {
+                        // convert the value to a string (all browsers do this but IE)
+                        el.setAttribute(name, EMPTY + val);
+                    }
                 }
             },
 
