@@ -2,7 +2,7 @@
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Tag",function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute) {
+KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute, Dtd) {
 
     var scanners = {
         'style':QuoteCdataScanner,
@@ -15,37 +15,42 @@ KISSY.add("htmlparser/nodes/Tag",function(S, Node, TagScanner, QuoteCdataScanner
     }
 
     function Tag(page, startPosition, endPosition, attributes) {
-        Tag.superclass.constructor.apply(this, arguments);
-        this.childNodes = [];
-        this.firstChild = null;
-        this.lastChild = null;
-        this.attributes = attributes || [];
-        this.nodeType = 1;
-        attributes = this.attributes;
+        var self = this;
+        Tag.superclass.constructor.apply(self, arguments);
+        self.childNodes = [];
+        self.firstChild = null;
+        self.lastChild = null;
+        self.attributes = attributes || [];
+        self.nodeType = 1;
+        attributes = self.attributes;
         // first attribute is actually nodeName
         if (attributes[0]) {
-            this.nodeName = attributes[0].name.toLowerCase();
+            self.nodeName = attributes[0].name.toLowerCase();
             // note :
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
-            this.tagName = this.nodeName.replace(/\//, "");
-            this.isEmptyXmlTag = /\/$/.test(this.nodeName);
+            self.tagName = self.nodeName.replace(/\//, "");
+            // <br> <img> <input> , just recognize them immediately
+            self.isEmptyXmlTag = !!(Dtd.$empty[self.nodeName]);
+            if (!self.isEmptyXmlTag) {
+                self.isEmptyXmlTag = /\/$/.test(self.nodeName);
+            }
             attributes.splice(0, 1);
         }
 
-        if (!this.isEmptyXmlTag) {
+        if (!self.isEmptyXmlTag) {
             var lastAttr = attributes[attributes.length - 1];
-            this.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
-            if (this.isEmptyXmlTag) {
+            self.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
+            if (self.isEmptyXmlTag) {
                 attributes.length = attributes.length - 1;
             }
         }
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
-        this.closed = this.isEmptyXmlTag;
-        this.closedStartPosition = -1;
-        this.closedEndPosition = -1;
+        self['closed'] = self.isEmptyXmlTag;
+        self['closedStartPosition'] = -1;
+        self['closedEndPosition'] = -1;
         // scan it's innerHTMl to childNodes
-        this.scanner = getScannerForTag(this.nodeName);
+        self.scanner = getScannerForTag(self.nodeName);
     }
 
     function refreshChildNodes(self) {
@@ -211,5 +216,6 @@ KISSY.add("htmlparser/nodes/Tag",function(S, Node, TagScanner, QuoteCdataScanner
         '../scanners/TagScanner',
         '../scanners/QuoteCdataScanner',
         '../scanners/TextareaScanner',
-        './Attribute']
+        './Attribute',
+        '../dtd']
 });

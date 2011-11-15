@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 27 19:45
+build time: Nov 15 11:35
 */
 /**
  * parse html to a hierarchy dom tree
@@ -1360,7 +1360,7 @@ KISSY.add("htmlparser/nodes/Node",function(S) {
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Tag",function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute) {
+KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute, Dtd) {
 
     var scanners = {
         'style':QuoteCdataScanner,
@@ -1373,37 +1373,42 @@ KISSY.add("htmlparser/nodes/Tag",function(S, Node, TagScanner, QuoteCdataScanner
     }
 
     function Tag(page, startPosition, endPosition, attributes) {
-        Tag.superclass.constructor.apply(this, arguments);
-        this.childNodes = [];
-        this.firstChild = null;
-        this.lastChild = null;
-        this.attributes = attributes || [];
-        this.nodeType = 1;
-        attributes = this.attributes;
+        var self = this;
+        Tag.superclass.constructor.apply(self, arguments);
+        self.childNodes = [];
+        self.firstChild = null;
+        self.lastChild = null;
+        self.attributes = attributes || [];
+        self.nodeType = 1;
+        attributes = self.attributes;
         // first attribute is actually nodeName
         if (attributes[0]) {
-            this.nodeName = attributes[0].name.toLowerCase();
+            self.nodeName = attributes[0].name.toLowerCase();
             // note :
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
-            this.tagName = this.nodeName.replace(/\//, "");
-            this.isEmptyXmlTag = /\/$/.test(this.nodeName);
+            self.tagName = self.nodeName.replace(/\//, "");
+            // <br> <img> <input> , just recognize them immediately
+            self.isEmptyXmlTag = !!(Dtd.$empty[self.nodeName]);
+            if (!self.isEmptyXmlTag) {
+                self.isEmptyXmlTag = /\/$/.test(self.nodeName);
+            }
             attributes.splice(0, 1);
         }
 
-        if (!this.isEmptyXmlTag) {
+        if (!self.isEmptyXmlTag) {
             var lastAttr = attributes[attributes.length - 1];
-            this.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
-            if (this.isEmptyXmlTag) {
+            self.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
+            if (self.isEmptyXmlTag) {
                 attributes.length = attributes.length - 1;
             }
         }
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
-        this.closed = this.isEmptyXmlTag;
-        this.closedStartPosition = -1;
-        this.closedEndPosition = -1;
+        self['closed'] = self.isEmptyXmlTag;
+        self['closedStartPosition'] = -1;
+        self['closedEndPosition'] = -1;
         // scan it's innerHTMl to childNodes
-        this.scanner = getScannerForTag(this.nodeName);
+        self.scanner = getScannerForTag(self.nodeName);
     }
 
     function refreshChildNodes(self) {
@@ -1569,7 +1574,8 @@ KISSY.add("htmlparser/nodes/Tag",function(S, Node, TagScanner, QuoteCdataScanner
         '../scanners/TagScanner',
         '../scanners/QuoteCdataScanner',
         '../scanners/TextareaScanner',
-        './Attribute']
+        './Attribute',
+        '../dtd']
 });/**
  * dom text node
  * @author yiminghe@gmail.com
@@ -1629,7 +1635,7 @@ KISSY.add("htmlparser/nodes/Text",function(S, Node) {
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TagScanner",function(S, dtd) {
+KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
     var scanner = {
         scan:function(tag, lexer, stack) {
             var node,i;
@@ -1717,8 +1723,17 @@ KISSY.add("htmlparser/scanners/TagScanner",function(S, dtd) {
 
                             }
                         } else {
-                            // no tag , just simply add
-                            tag.appendChild(node);
+                            if (
+                            // not text node , it can nest of course
+                                node.nodeType != 3 ||
+                                    // tag can nest text node
+                                    this.canHasNodeAsChild(tag, node)) {
+                                tag.appendChild(node);
+                            } else {
+                                // <br> a
+                                lexer.setPosition(node.startPosition);
+                                node = null;
+                            }
                         }
                     }
 
@@ -1756,7 +1771,11 @@ KISSY.add("htmlparser/scanners/TagScanner",function(S, dtd) {
             if (!dtd[tag.tagName]) {
                 S.error("dtd[" + tag.tagName + "] === undefined!")
             }
-            return !! dtd[tag.tagName][node.tagName];
+            var nodeName = node.nodeName;
+            if (node.nodeType == 3) {
+                nodeName = '#';
+            }
+            return !! dtd[tag.tagName][nodeName];
         }
     };
     return scanner;
@@ -2187,4 +2206,7 @@ KISSY.add("htmlparser", function(S, Lexer, Parser, BasicWriter, BeautifyWriter, 
 
 /**
  * 参考 http://htmlparser.sourceforge.net/
+ *
+ * TODO
+ *  - http://blogs.msdn.com/b/ie/archive/2010/09/13/interoperable-html-parsing-in-ie9.aspx
  **/
