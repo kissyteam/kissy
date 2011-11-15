@@ -112,9 +112,13 @@
         S.ready(function(S) {
             var r = new Resizable({
                 node:"#t",
-                minHeight:10,
-                autoRender:true,
-                handlers:["b","t","r","l","tr","tl","br","bl"]
+                handlers:["b","t","r","l","tr","tl","br","bl"],
+
+                // optional configs
+                minHeight:50,
+                minWidth:50,
+                maxHeight:500,
+                maxWidth:500
             });
             Node.one("#destroy").on("click", function() {
                 r.destroy();
