@@ -1,10 +1,10 @@
 KISSY.use("htmlparser", function(S, HtmlParser) {
-
+    var Lexer = HtmlParser.Lexer;
     describe("Lexer", function() {
 
 
         it("works", function() {
-            var Lexer = HtmlParser.Lexer;
+
             var html = "<div id='z'><<a> ";
             var lexer = new Lexer(html),node;
             var nodes = [];
@@ -25,7 +25,6 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
         });
 
         it("works for <br/>", function() {
-            var Lexer = HtmlParser.Lexer;
             var html = "<br/>";
             var lexer = new Lexer(html),node;
             var nodes = [];
@@ -37,8 +36,21 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             expect(nodes[0].isEmptyXmlTag).toBe(true);
         });
 
-        it("works when encouter invalid attribute value", function() {
-
+        it("works when encounter invalid attribute value", function() {
+            var html = '<a href="http://g.cn/"">1</a>';
+            var lexer = new Lexer(html),node;
+            var nodes = [];
+            while (node = lexer.nextNode()) {
+                nodes.push(node);
+            }
+            node = nodes[0];
+            expect(nodes.length).toBe(3);
+            var attributes = node.attributes;
+            expect(attributes.length).toBe(2);
+            expect(attributes[0].name).toBe('href');
+            expect(attributes[0].value).toBe('http://g.cn/');
+            expect(attributes[1].name).toBe('"');
+            expect(attributes[1].value).toBeUndefined();
         });
 
     });
