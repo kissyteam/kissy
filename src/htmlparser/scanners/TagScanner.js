@@ -15,7 +15,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                         if (node.nodeType === 1) {
                             // normal end tag
                             if (node.isEndTag() && node.tagName == tag.tagName) {
-                                tag.closed = true;
+                                tag['closed'] = true;
                                 node = null;
                             }
                             // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
@@ -76,11 +76,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                 if (index != -1) {
                                     // <div><span> <a> </div>
                                     // tag==a
-                                    tag.closed = true;
+                                    tag['closed'] = true;
                                     stack[stack.length - 1].appendChild(tag);
                                     for (i = stack.length - 1; i > index; i--) {
                                         var currentStackItem = stack[i],preStackItem = stack[i - 1];
-                                        currentStackItem.closed = true;
+                                        currentStackItem['closed'] = true;
                                         preStackItem.appendChild(currentStackItem);
                                     }
                                     tag = stack[index];
@@ -90,17 +90,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
 
                             }
                         } else {
-                            if (
-                            // not text node , it can nest of course
-                                node.nodeType != 3 ||
-                                    // tag can nest text node
-                                    this.canHasNodeAsChild(tag, node)) {
-                                tag.appendChild(node);
-                            } else {
-                                // <br> a
-                                lexer.setPosition(node.startPosition);
-                                node = null;
-                            }
+                            tag.appendChild(node);
                         }
                     }
 
@@ -112,7 +102,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                 // fake recursion
                                 if (node.scanner === scanner) {
                                     stack.length = stack.length - 1;
-                                    tag.closed = true;
+                                    tag['closed'] = true;
                                     node.appendChild(tag);
                                     tag = node;
                                 } else {
@@ -125,7 +115,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                     }
                 } while (node);
 
-                tag.closed = true;
+                tag['closed'] = true;
             }
 
             return tag;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 15 11:35
+build time: Nov 16 11:31
 */
 /**
  * parse html to a hierarchy dom tree
@@ -1301,7 +1301,7 @@ KISSY.add("htmlparser/nodes/CData",function(S, Text) {
  * comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Comment",function(S, Tag) {
+KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
 
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
@@ -1312,7 +1312,7 @@ KISSY.add("htmlparser/nodes/Comment",function(S, Tag) {
     S.extend(Comment, Tag, {
         writeHtml:function(writer, filter) {
             var value = this.toHtml();
-            if (filter.onComment(this) !== false) {
+            if (!filter || filter.onComment(this) !== false) {
                 writer.comment(value);
             }
         }
@@ -1580,7 +1580,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Text",function(S, Node) {
+KISSY.add("htmlparser/nodes/Text", function(S, Node) {
 
     function Text() {
         Text.superclass.constructor.apply(this, arguments);
@@ -1591,7 +1591,7 @@ KISSY.add("htmlparser/nodes/Text",function(S, Node) {
     S.extend(Text, Node, {
         writeHtml:function(writer, filter) {
             var value = this.toHtml();
-            if (filter.onText(this) !== false) {
+            if (!filter || filter.onText(this) !== false) {
                 writer.text(value);
             }
         }
@@ -1648,7 +1648,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                         if (node.nodeType === 1) {
                             // normal end tag
                             if (node.isEndTag() && node.tagName == tag.tagName) {
-                                tag.closed = true;
+                                tag['closed'] = true;
                                 node = null;
                             }
                             // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
@@ -1709,11 +1709,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                 if (index != -1) {
                                     // <div><span> <a> </div>
                                     // tag==a
-                                    tag.closed = true;
+                                    tag['closed'] = true;
                                     stack[stack.length - 1].appendChild(tag);
                                     for (i = stack.length - 1; i > index; i--) {
                                         var currentStackItem = stack[i],preStackItem = stack[i - 1];
-                                        currentStackItem.closed = true;
+                                        currentStackItem['closed'] = true;
                                         preStackItem.appendChild(currentStackItem);
                                     }
                                     tag = stack[index];
@@ -1723,17 +1723,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
 
                             }
                         } else {
-                            if (
-                            // not text node , it can nest of course
-                                node.nodeType != 3 ||
-                                    // tag can nest text node
-                                    this.canHasNodeAsChild(tag, node)) {
-                                tag.appendChild(node);
-                            } else {
-                                // <br> a
-                                lexer.setPosition(node.startPosition);
-                                node = null;
-                            }
+                            tag.appendChild(node);
                         }
                     }
 
@@ -1745,7 +1735,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                 // fake recursion
                                 if (node.scanner === scanner) {
                                     stack.length = stack.length - 1;
-                                    tag.closed = true;
+                                    tag['closed'] = true;
                                     node.appendChild(tag);
                                     tag = node;
                                 } else {
@@ -1758,7 +1748,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                     }
                 } while (node);
 
-                tag.closed = true;
+                tag['closed'] = true;
             }
 
             return tag;
@@ -1860,25 +1850,28 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
  * format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
+KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
 
     function BeautifyWriter() {
-        BeautifyWriter.superclass.constructor.apply(this, arguments);
+        var self = this;
+        BeautifyWriter.superclass.constructor.apply(self, arguments);
         // tag in pre should not indent
         // space (\t\r\n ) in pre should not collapse
-        this.inPre = 0;
-        this.indentChar = "\t";
-        this.indentLevel = 0;
+        self.inPre = 0;
+        self.indentChar = "\t";
+        self.indentLevel = 0;
         // whether to indent on current line
         // if already indent and then not line break ,next tag should not indent
-        this.allowIndent = 0;
-        this.rules = {};
+        self.allowIndent = 0;
+        self.rules = {};
 
         for (var e in S.merge(
             dtd.$nonBodyContent,
             dtd.$block,
             dtd.$listItem,
-            dtd.$tableContent
+            dtd.$tableContent,
+            // may add unnecessary whitespaces
+            {"select":1}
         )) {
             this.setRules(e, {
                 // whether its tag/text children should indent
@@ -1890,17 +1883,25 @@ KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
             });
         }
 
-        this.setRules('br', {
+        self.setRules('option', {
+            breakBeforeOpen : 1
+        });
+
+        self.setRules('optiongroup', {
+            breakBeforeOpen : 1
+        });
+
+        self.setRules('br', {
             breakAfterOpen : 1
         });
 
-        this.setRules('title', {
+        self.setRules('title', {
             allowIndent : 0,
             breakBeforeClose:0,
             breakAfterOpen : 0
         });
 
-        this.setRules('style', {
+        self.setRules('style', {
             allowIndent : 0,
             breakBeforeOpen : 1,
             breakAfterOpen : 1,
@@ -1908,7 +1909,7 @@ KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
             breakAfterClose : 1
         });
 
-        this.setRules('script', {
+        self.setRules('script', {
             allowIndent : 0,
             breakBeforeOpen : 1,
             breakAfterOpen : 1,
@@ -1917,7 +1918,7 @@ KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
         });
 
         // Disable indentation on <pre>.
-        this.setRules('pre', {
+        self.setRules('pre', {
             allowIndent : 0
         });
     }

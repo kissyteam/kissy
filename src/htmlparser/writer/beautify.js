@@ -2,25 +2,28 @@
  * format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
+KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
 
     function BeautifyWriter() {
-        BeautifyWriter.superclass.constructor.apply(this, arguments);
+        var self = this;
+        BeautifyWriter.superclass.constructor.apply(self, arguments);
         // tag in pre should not indent
         // space (\t\r\n ) in pre should not collapse
-        this.inPre = 0;
-        this.indentChar = "\t";
-        this.indentLevel = 0;
+        self.inPre = 0;
+        self.indentChar = "\t";
+        self.indentLevel = 0;
         // whether to indent on current line
         // if already indent and then not line break ,next tag should not indent
-        this.allowIndent = 0;
-        this.rules = {};
+        self.allowIndent = 0;
+        self.rules = {};
 
         for (var e in S.merge(
             dtd.$nonBodyContent,
             dtd.$block,
             dtd.$listItem,
-            dtd.$tableContent
+            dtd.$tableContent,
+            // may add unnecessary whitespaces
+            {"select":1}
         )) {
             this.setRules(e, {
                 // whether its tag/text children should indent
@@ -32,17 +35,25 @@ KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
             });
         }
 
-        this.setRules('br', {
+        self.setRules('option', {
+            breakBeforeOpen : 1
+        });
+
+        self.setRules('optiongroup', {
+            breakBeforeOpen : 1
+        });
+
+        self.setRules('br', {
             breakAfterOpen : 1
         });
 
-        this.setRules('title', {
+        self.setRules('title', {
             allowIndent : 0,
             breakBeforeClose:0,
             breakAfterOpen : 0
         });
 
-        this.setRules('style', {
+        self.setRules('style', {
             allowIndent : 0,
             breakBeforeOpen : 1,
             breakAfterOpen : 1,
@@ -50,7 +61,7 @@ KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
             breakAfterClose : 1
         });
 
-        this.setRules('script', {
+        self.setRules('script', {
             allowIndent : 0,
             breakBeforeOpen : 1,
             breakAfterOpen : 1,
@@ -59,7 +70,7 @@ KISSY.add("htmlparser/writer/beautify",function(S, BasicWriter, dtd) {
         });
 
         // Disable indentation on <pre>.
-        this.setRules('pre', {
+        self.setRules('pre', {
             allowIndent : 0
         });
     }
