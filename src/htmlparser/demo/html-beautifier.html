@@ -23,19 +23,20 @@
     </textarea>
 </label>
 <br/>
-<button id="start">beautify</button>
+<button id="start" disabled>beautify</button>
 <br/>
 <label>后：
     <textarea id="after" style="width:80%;height: 300px;"></textarea>
 </label>
 
-<script src="../../../build/kissy.js?t=htmlparser11111111111"></script>
+<script src="../../../build/kissy.js?t=htmlparser11111111112"></script>
 <script>
-    KISSY.Config.tag = "htmlparser11111111111";
+    KISSY.Config.tag = "htmlparser11111111112";
     KISSY.use("htmlparser", function(S, HtmlParser) {
         var $ = S.all;
         $("#after").val("");
         var start = $("#start");
+        start.attr("disabled", false);
         start.on("click", function() {
             var writer = new HtmlParser.BeautifyWriter(),
                     filter = new HtmlParser.Filter(),
