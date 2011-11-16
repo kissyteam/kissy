@@ -2,12 +2,13 @@
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Lexer",function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
+KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
 
     function Lexer(text) {
-        this.page = new Page(text);
-        this.cursor = new Cursor();
-        this.nodeFactory = this;
+        var self = this;
+        self.page = new Page(text);
+        self.cursor = new Cursor();
+        self.nodeFactory = this;
     }
 
     Lexer.prototype = {
@@ -489,7 +490,7 @@ KISSY.add("htmlparser/lexer/Lexer",function(S, Cursor, Page, TextNode, CData, Ut
          * parse cdata such as code in script
          * @param quoteSmart if set true end tag in quote (but not in comment mode) does not end current tag ( <script>x="<a>taobao</a>"</script> )
          */
-        parseCDATA:function(quoteSmart) {
+        parseCDATA:function(quoteSmart, tagName) {
             var start,
                 state,
                 done,
@@ -594,7 +595,18 @@ KISSY.add("htmlparser/lexer/Lexer",function(S, Cursor, Page, TextNode, CData, Ut
                                 done = true;
                                 break;
                             case '/':
-                                state = 2;
+                                // tagName = "textarea"
+                                // <textarea><div></div></textarea>
+                                if (!tagName || (mPage.getText(mCursor.position,
+                                    mCursor.position + tagName.length) === tagName &&
+                                    !(mPage.getText(mCursor.position + tagName.length,
+                                        mCursor.position + tagName.length + 1).match(/\w/))
+                                    )) {
+                                    state = 2;
+                                } else {
+                                    state = 0;
+                                }
+
                                 break;
                             case '!':
                                 ch = mPage.getChar(mCursor);

@@ -2,7 +2,7 @@
  * represent html source
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Page",function(S, Index) {
+KISSY.add("htmlparser/lexer/Page", function(S, Index) {
     function Page(source) {
         this.source = source;
         this.lineIndex = new Index();
@@ -41,8 +41,8 @@ KISSY.add("htmlparser/lexer/Page",function(S, Index) {
         ungetChar:function(cursor) {
             var source = this.source;
             cursor.retreat();
-            var i = cursor.position;
-            var ch = source.charAt(i);
+            var i = cursor.position,
+                ch = source.charAt(i);
             if (ch === '\n' && 0 != i) {
                 ch = source.charAt(i - 1);
                 if ('\r' === ch) {

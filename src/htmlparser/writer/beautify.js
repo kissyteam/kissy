@@ -2,7 +2,7 @@
  * format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
+KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
     function BeautifyWriter() {
         var self = this;
@@ -23,9 +23,14 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
             dtd.$listItem,
             dtd.$tableContent,
             // may add unnecessary whitespaces
-            {"select":1}
+            {
+                "select":1,
+                // add unnecessary whitespaces is ok for script and style
+                "script":1,
+                "style":1
+            }
         )) {
-            this.setRules(e, {
+            self.setRules(e, {
                 // whether its tag/text children should indent
                 allowIndent : 1,
                 breakBeforeOpen : 1,
@@ -51,22 +56,6 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
             allowIndent : 0,
             breakBeforeClose:0,
             breakAfterOpen : 0
-        });
-
-        self.setRules('style', {
-            allowIndent : 0,
-            breakBeforeOpen : 1,
-            breakAfterOpen : 1,
-            breakBeforeClose : 1,
-            breakAfterClose : 1
-        });
-
-        self.setRules('script', {
-            allowIndent : 0,
-            breakBeforeOpen : 1,
-            breakAfterOpen : 1,
-            breakBeforeClose : 1,
-            breakAfterClose : 1
         });
 
         // Disable indentation on <pre>.
@@ -143,29 +132,29 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
         },
 
         closeTag:function(el) {
-
-            var tagName = el.tagName;
-            var rules = this.rules[tagName] || {};
+            var self = this,
+                tagName = el.tagName,
+                rules = self.rules[tagName] || {};
 
             if (rules.allowIndent) {
-                this.indentLevel--;
+                self.indentLevel--;
             }
 
-            if (this.allowIndent) {
-                this.indentation();
+            if (self.allowIndent) {
+                self.indentation();
             } else if (rules.breakBeforeClose) {
-                this.lineBreak();
-                this.indentation();
+                self.lineBreak();
+                self.indentation();
             }
 
-            BeautifyWriter.superclass.closeTag.apply(this, arguments);
+            BeautifyWriter.superclass.closeTag.apply(self, arguments);
 
             if (tagName === "pre") {
-                this.inPre = 0;
+                self.inPre = 0;
             }
 
             if (rules.breakAfterClose) {
-                this.lineBreak();
+                self.lineBreak();
             }
 
         },
@@ -177,7 +166,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
             }
             if (!this.inPre) {
                 // shrink consequential spaces into one space
-                text = text.replace(/[\t\r\n ]{2,}|[\t\r\n]/g, ' ');
+                text = Utils.collapseWhitespace(text);
             }
             this.append(text);
         },
@@ -187,6 +176,13 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
                 this.indentation();
             }
             this.append(comment);
+        },
+
+        cdata:function(text) {
+            if (this.allowIndent) {
+                this.indentation();
+            }
+            this.append(text);
         }
 
 
@@ -195,5 +191,5 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd) {
     return BeautifyWriter;
 
 }, {
-    requires:['./basic','../dtd']
+    requires:['./basic','../dtd','../Utils']
 });

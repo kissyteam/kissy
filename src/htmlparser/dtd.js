@@ -2,7 +2,11 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("htmlparser/dtd",function(KY) {
+/**
+ * modified by yiminghe , support html5 tag
+ * @author yimingh@gmail.com
+ */
+KISSY.add("htmlparser/dtd", function(KY) {
     /**
      * Holds and object representation of the HTML DTD to be used by the editor in
      * its internal operations.
@@ -114,7 +118,7 @@ KISSY.add("htmlparser/dtd",function(KY) {
         "pre":1,"table":1,"ul":1
     };
 
-    return  {
+    var ret = {
 
         // The "$" items have been added manually.
         // List of elements living outside body.
@@ -301,4 +305,27 @@ KISSY.add("htmlparser/dtd",function(KY) {
         "em": L,
         "dfn": L
     };
+    (function() {
+        var i,
+            html_tags = [
+                "article","figure","nav",
+                "aside","section","footer"
+            ];
+
+        for (var p in ret) {
+            for (var p2 in ret[p]) {
+                if (p2 == "div") {
+                    for (i = 0; i < html_tags.length; i++) {
+                        ret[p][html_tags[i]] = ret[p][p2];
+                    }
+                }
+            }
+        }
+
+        for (i = 0; i < html_tags.length; i++) {
+            ret[html_tags[i]] = ret["div"];
+        }
+    })();
+
+    return ret;
 });

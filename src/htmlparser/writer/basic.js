@@ -1,4 +1,11 @@
 KISSY.add("htmlparser/writer/basic", function(S) {
+
+
+    function escapeAttrValue(str) {
+        return str.replace(/"/g, "&quote;");
+    }
+
+
     function BasicWriter() {
         this.output = [];
     }
@@ -41,7 +48,7 @@ KISSY.add("htmlparser/writer/basic", function(S) {
             this.append(" ",
                 attr.name,
                 "=\"",
-                S.escapeHTML(attr.value || attr.name),
+                escapeAttrValue(attr.value || attr.name),
                 "\"");
         },
 

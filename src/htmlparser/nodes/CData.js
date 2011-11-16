@@ -2,7 +2,7 @@
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/CData",function(S, Text) {
+KISSY.add("htmlparser/nodes/CData", function(S, Text) {
 
     function CData() {
         CData.superclass.constructor.apply(this, arguments);
@@ -13,7 +13,7 @@ KISSY.add("htmlparser/nodes/CData",function(S, Text) {
     S.extend(CData, Text, {
         writeHtml:function(writer, filter) {
             var value = this.toHtml();
-            if (filter.onCData(this) !== false) {
+            if (!filter || filter.onCData(this) !== false) {
                 writer.cdata(value);
             }
         }

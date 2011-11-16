@@ -2,7 +2,7 @@
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/Parser",function(S, Cursor, Lexer) {
+KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
 
     function Iterator(lexer) {
         this.lexer = lexer;
@@ -15,6 +15,7 @@ KISSY.add("htmlparser/Parser",function(S, Cursor, Lexer) {
                 stack,
                 scanner,
                 lexer = this.lexer;
+            
             ret = lexer.nextNode();
             if (ret) {
                 if (ret.nodeType == 1) {

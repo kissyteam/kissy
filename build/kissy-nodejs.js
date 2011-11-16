@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 15 17:48
+build time: Nov 16 20:20
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 15 17:48
          */
         version: '1.20dev',
 
-        buildTime:'20111115174805',
+        buildTime:'20111116202040',
 
         /**
          * Returns a new object containing all of the properties of
@@ -524,7 +524,7 @@ build time: Nov 15 17:48
         CLONE_MARKER = '__~ks_cloned',
         COMPARE_MARKER = '__~ks_compared',
         STAMP_MARKER = '__~ks_stamped',
-        RE_TRIM = /^\s+|\s+$/g,
+        RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         encode = encodeURIComponent,
         decode = decodeURIComponent,
         SEP = '&',
@@ -4295,6 +4295,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                             });
                             success = true;
                         } catch(e) {
+                            // a <= "<a>"
+                            // a.innerHTML='<p>1</p>';
                         }
 
                     }

@@ -37,13 +37,15 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
             attributes.splice(0, 1);
         }
 
-        if (!self.isEmptyXmlTag) {
-            var lastAttr = attributes[attributes.length - 1];
-            self.isEmptyXmlTag = !!(lastAttr && /\/$/.test(lastAttr.name));
-            if (self.isEmptyXmlTag) {
-                attributes.length = attributes.length - 1;
-            }
+        var lastAttr = attributes[attributes.length - 1],
+            lastSlash = !!(lastAttr && /\/$/.test(lastAttr.name));
+
+        if (lastSlash) {
+            attributes.length = attributes.length - 1;
         }
+
+        self.isEmptyXmlTag = self.isEmptyXmlTag || lastSlash;
+
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
         self['closed'] = self.isEmptyXmlTag;
@@ -182,7 +184,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
                         continue;
                     }
                 }
-                writer.attribute(attr);
+                writer.attribute(attr, el);
             }
 
             // close its open tag

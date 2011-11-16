@@ -1,9 +1,9 @@
-KISSY.add("htmlparser/scanners/CdataScanner",function() {
+KISSY.add("htmlparser/scanners/CdataScanner", function() {
     return {
         scan:function(tag, lexer, stack, quoteSmart) {
-            // tolerate var x="<a></a>"
-            // but still not var x="<a></a>"; </a>
-            var content = lexer.parseCDATA(quoteSmart),
+            // only terminate when encouter </tag>
+            // <textarea><div></div></textarea>
+            var content = lexer.parseCDATA(quoteSmart, tag.nodeName),
                 position = lexer.getPosition(),
                 node = lexer.nextNode();
             if (node) {

@@ -1328,6 +1328,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                             });
                             success = true;
                         } catch(e) {
+                            // a <= "<a>"
+                            // a.innerHTML='<p>1</p>';
                         }
 
                     }
