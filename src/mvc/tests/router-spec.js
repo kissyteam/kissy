@@ -10,7 +10,6 @@ KISSY.use('mvc,event', function(S, MVC, Event) {
 
         it("works", function() {
 
-
             //document.domain='ali.com';
 
             var ok = 0,
@@ -39,6 +38,9 @@ KISSY.use('mvc,event', function(S, MVC, Event) {
                 }
             });
 
+            // restore hash to its original value
+            location.hash = '';
+
             Router.start({
                 success:function() {
                     Router.navigate("/list/what/item?item1=1&item2=2");
@@ -52,7 +54,6 @@ KISSY.use('mvc,event', function(S, MVC, Event) {
             });
 
             waits(1000);
-
 
             runs(function() {
                 Router.navigate("/detail/9999?item1=1&item2=2");
