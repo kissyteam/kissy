@@ -29,7 +29,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
     /**
      * test for css anim native support
      */
-    var transitionName = Anim.supportTransition();
+    var transitionName;
     if (transitionName) {
         transitionName += "Property";
     }
