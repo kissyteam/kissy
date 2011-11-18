@@ -100,7 +100,7 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             var html = "<a>我<p>测试</p>一下</a>";
             var parser = new Parser(html);
             var nodes = parser.parse();
-            expect(nodes.length).toBe(3);
+            expect(nodes.length).toBe(1);
             expect(nodes[0].nodeName).toBe("a");
             expect(nodes[0].childNodes[0].toHtml()).toBe("我");
         });
