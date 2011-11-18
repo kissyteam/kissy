@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 8 11:52
+build time: Nov 18 17:24
 */
 KISSY.add("template/base",function(e){function h(a){if(!i[a]){var d=e.guid(l),f,g,c=[s,d,t,g=u(a),v];try{f=new Function(d,c.join(k))}catch(b){c[3]=m+n+w+","+b.message+m+n;f=new Function(d,c.join(k))}i[a]={name:d,o:g,parser:c.join(k),render:f}}return i[a]}var i={},j={"#":"start","/":"end"},o=RegExp("KS_TEMPL_STAT_PARAM","g"),l="KS_DATA_",k="",m='");',n='KS_TEMPL.push("',w="KISSY.Template: Syntax Error. ",s="var KS_TEMPL=[],KS_TEMPL_STAT_PARAM=false;with(",t='||{}){try{KS_TEMPL.push("',v='");}catch(e){KS_TEMPL=["KISSY.Template: Render Error. " + e.message]}};return KS_TEMPL.join("");',
 p=function(a){return a.replace(/\\"/g,'"')},x=function(a){return a.replace(/"/g,'\\"')},q=e.trim,u=function(a){var d,f;return x(q(a).replace(/[\r\t\n]/g," ").replace(/\\/g,"\\\\")).replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,function(g,c,b){d=k;if(c){b=q(b);f=b.indexOf(" ");b=f===-1?[b,""]:[b.substring(0,f),b.substring(f)];g=b[0];b=q(b[1]);if((g=r[g])&&j[c]){c=g[j[c]];d=e.isFunction(c)?p(c.apply(this,b.split(/\s+/))):p(c.replace(o,b))}}else d="KS_TEMPL.push("+p(b)+");";return m+d+n})},r={"if":{start:"if(KS_TEMPL_STAT_PARAM){",

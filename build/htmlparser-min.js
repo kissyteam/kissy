@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 16:40
+build time: Nov 18 17:23
 */
 KISSY.add("htmlparser/Parser",function(i,m,n){function f(d,l){this.lexer=d;this.opts=l}function g(d,l){this.lexer=new n(d);this.opts=l||{}}f.prototype={nextNode:function(){var d,l,k,q=this.lexer;if(d=q.nextNode())if(d.nodeType==1)if(d.isEndTag())return this.nextNode();else if(k=d.scanner){l=[];d=k.scan(d,q,l,this.opts)}return d}};g.prototype={elements:function(){return new f(this.lexer,this.opts)},parse:function(){for(var d=[],l,k=this.elements();l=k.nextNode();)d.push(l);return d}};return g},{requires:["./lexer/Cursor",
 "./lexer/Lexer"]});KISSY.add("htmlparser/Utils",function(){return{collapseWhitespace:function(i){return i.replace(/[\s\xa0]+/g," ")},isLetter:function(i){return"a"<=i&&"z">=i||"A"<=i&&"Z">=i},isWhitespace:function(i){return/^[\s\xa0]$/.test(i)}}});

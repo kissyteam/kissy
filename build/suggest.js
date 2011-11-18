@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 18 17:24
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -11,7 +11,7 @@ KISSY.add("suggest", function(S, Sug) {
 });/**
  * 提示补全组件
  * @module   suggest
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator lifesinger@gmail.com
  */
 KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 

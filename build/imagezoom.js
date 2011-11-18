@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 2 16:28
+build time: Nov 18 17:23
 */
 /**
  * @fileoverview 图像放大区域

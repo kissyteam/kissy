@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 26 16:44
+build time: Nov 18 17:22
 */
 /**
  * @module  Attribute

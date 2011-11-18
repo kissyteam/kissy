@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 23 13:05
+build time: Nov 18 17:23
 */
 /**
  * combination of menu and button ,similar to native select
@@ -161,6 +161,7 @@ KISSY.add("menubutton/menubutton", function(S, UIBase, Node, Button, MenuButtonR
              */
             _handleBlur:function(e) {
                 MenuButton.superclass._handleBlur.call(this, e);
+                // such as : click the document
                 this.set("collapsed", true);
             },
 

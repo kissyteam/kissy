@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 18 17:23
 */
 /**
  * container can delegate event for its children
@@ -236,7 +236,7 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                 /**
                  * 将渲染层初始化所需要的属性，直接构造器设置过去
                  */
-                var attrs = self.__attrs,
+                var attrs = self['__attrs'] || {},
                     cfg = {};
                 for (var attrName in attrs) {
                     if (attrs.hasOwnProperty(attrName)) {
@@ -289,7 +289,7 @@ KISSY.add("component/modelcontrol", function(S, Event, UIBase, UIStore, Render) 
                      * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                      */
                     var self = this,
-                        attrs = self.__attrs;
+                        attrs = self['__attrs'] || {};
                     for (var attrName in attrs) {
                         if (attrs.hasOwnProperty(attrName)) {
                             var attrCfg = attrs[attrName];

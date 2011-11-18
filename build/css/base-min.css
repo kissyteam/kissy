@@ -1,6 +1,6 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 29 16:18
+build time: Nov 18 17:23
 */
 body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53,sans-serif;}h1,h2,h3,h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp{font-family:courier new,courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}legend{color:#000;}fieldset,img{border:0;}button,input,select,textarea{font-size:100%;}table{border-collapse:collapse;border-spacing:0;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{display:block;margin:0;padding:0;}mark{background:#ff0;}#header,#content,#footer{margin-left:auto;margin-right:auto;}.col-main{float:left;width:100%;min-height:1px;}.col-sub,.col-extra{float:left;}.layout:after,.main-wrap:after,.col-sub:after,.col-extra:after{content:'\20';display:block;height:0;clear:both;}.layout,.main-wrap,.col-sub,.col-extra{*zoom:1;}.ks-hidden{display:none;}.ks-invisible{visibility:hidden;}.ks-clear:after{content:'\20';display:block;height:0;clear:both;}.ks-clear{*zoom:1;}.ks-inline-block{display:inline-block;*display:inline;}

@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 18 17:23
 */
 KISSY.add("json/json2",function(t,n){function j(b){return b<10?"0"+b:b}function q(b){r.lastIndex=0;return r.test(b)?'"'+b.replace(r,function(f){var c=v[f];return typeof c==="string"?c:"\\u"+("0000"+f.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+b+'"'}function o(b,f){var c,d,g,k,i=h,e,a=f[b];if(a&&typeof a==="object"&&typeof a.toJSON==="function")a=a.toJSON(b);if(typeof l==="function")a=l.call(f,b,a);switch(typeof a){case "string":return q(a);case "number":return isFinite(a)?String(a):"null";case "boolean":case "null":return String(a);
 case "object":if(!a)return"null";h+=p;e=[];if(Object.prototype.toString.apply(a)==="[object Array]"){k=a.length;for(c=0;c<k;c+=1)e[c]=o(c,a)||"null";g=e.length===0?"[]":h?"[\n"+h+e.join(",\n"+h)+"\n"+i+"]":"["+e.join(",")+"]";h=i;return g}if(l&&typeof l==="object"){k=l.length;for(c=0;c<k;c+=1){d=l[c];if(typeof d==="string")if(g=o(d,a))e.push(q(d)+(h?": ":":")+g)}}else for(d in a)if(Object.hasOwnProperty.call(a,d))if(g=o(d,a))e.push(q(d)+(h?": ":":")+g);g=e.length===0?"{}":h?"{\n"+h+e.join(",\n"+h)+

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 15 17:47
+build time: Nov 18 17:23
 */
 /**
  * @module  dom-attr
@@ -1027,6 +1027,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                             });
                             success = true;
                         } catch(e) {
+                            // a <= "<a>"
+                            // a.innerHTML='<p>1</p>';
                         }
 
                     }

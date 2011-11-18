@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 17 17:51
+build time: Nov 18 17:22
 */
 /**
  * a scalable client io framework
@@ -999,7 +999,7 @@ KISSY.add("ajax/xhrbase", function(S, io) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch(e) {
-            S.log("createStandardXHR error");
+            //S.log("createStandardXHR error");
         }
         return undefined;
     }

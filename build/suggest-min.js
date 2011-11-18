@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 18 17:24
 */
 KISSY.add("suggest",function(g,d){return g.Suggest=d},{requires:["suggest/base"]});
 KISSY.add("suggest/base",function(g,d,j,u,m){function l(a,b,c){if(!(this instanceof l))return new l(a,b,c);this.textInput=d.get(a);this.config=c=g.merge(A,c);if(g.isString(b)){b+=b.indexOf("?")===-1?"?":"&";this.dataSource=b+c.callbackName+"="+(a=c.callbackFn);if(c.dataType===2)this.config.dataType=0;if(a!==v){b=a;c=b.split(".");a=c.length;if(a>1){b=b.replace(/^(.*)\..+$/,"$1");b=g.namespace(b,true);b[c[a-1]]=r}else s[b]=r}}else{this.dataSource=b;this.config.dataType=2}this.queryParams=this.query=

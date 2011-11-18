@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 11 11:39
+build time: Nov 18 17:24
 */
 KISSY.add("tree/basenode",function(g,e,h,d,f){var b=e.all,k=f.ITEM_CLS,i=e.KeyCodes,l=h.create(d.ModelControl,[d.DecorateChild],{_keyNav:function(a){var c=true,j,m=this.get("children");switch(a.keyCode){case i.HOME:j=this.get("tree");break;case i.END:j=this.get("tree").getLastVisibleDescendant();break;case i.UP:j=this.getPreviousVisibleNode();break;case i.DOWN:j=this.getNextVisibleNode();break;case i.LEFT:if(this.get("expanded")&&(m.length||this.get("isLeaf")===false))this.set("expanded",false);else j=
 this.get("parent");break;case i.RIGHT:if(m.length||this.get("isLeaf")===false)this.get("expanded")?m[0].select():this.set("expanded",true);break;default:c=false}j&&j.select();return c},getLastVisibleDescendant:function(){var a=this.get("children");if(!this.get("expanded")||!a.length)return this;return a[a.length-1].getLastVisibleDescendant()},getNextVisibleNode:function(){var a=this.get("children"),c=this.get("parent");if(this.get("expanded")&&a.length)return a[0];for(a=this.next();c&&!a;){a=c.next();

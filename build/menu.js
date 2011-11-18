@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 7 12:10
+build time: Nov 18 17:23
 */
 /**
  * deletable menuitem

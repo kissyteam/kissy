@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 23 13:05
+build time: Nov 18 17:26
 */
 KISSY.add("button/base",function(f,e,g,a,d){var b=e.KeyCodes;f=g.create(a.ModelControl,[g.Contentbox],{bindUI:function(){this.get("el").on("keyup",this._handleKeyEventInternal,this)},_handleKeyEventInternal:function(c){if(c.keyCode==b.ENTER&&c.type=="keydown"||c.keyCode==b.SPACE&&c.type=="keyup")return this._performInternal(c);return c.keyCode==b.SPACE},_performInternal:function(){this.fire("click")}},{ATTRS:{value:{},describedby:{view:true},tooltip:{view:true},collapseSide:{view:true}}});f.DefaultRender=
 d;a.UIStore.setUIByClass("button",{priority:a.UIStore.PRIORITY.LEVEL1,ui:f});return f},{requires:["event","uibase","component","./customrender"]});

@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Sep 22 13:54
+build time: Nov 18 17:23
 */
 /**
  * 数据延迟加载组件
  * @module   datalazyload
- * @creator  玉伯<lifesinger@gmail.com>
+ * @creator lifesinger@gmail.com
  */
 KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
 

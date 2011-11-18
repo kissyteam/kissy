@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Oct 28 11:58
+build time: Nov 18 17:24
 */
 /**
  * UIBase.Align
@@ -1423,7 +1423,9 @@ KISSY.add("uibase/drag", function(S) {
     }
 
     Drag.ATTRS = {
-        handlers:{value:[]},
+        handlers:{
+            value:[]
+        },
         draggable:{value:true}
     };
 
@@ -1441,8 +1443,7 @@ KISSY.add("uibase/drag", function(S) {
                 el = self.get("el");
             if (self.get("draggable") && Draggable) {
                 self.__drag = new Draggable({
-                    node:el,
-                    handlers:self.get("handlers")
+                    node:el
                 });
             }
         },
