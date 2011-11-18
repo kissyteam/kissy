@@ -81,9 +81,7 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
 
             node = parser.parse()[0];
 
-            expect(node.childNodes.length).toBe(2);
-
-            expect(node.childNodes[1].toHtml()).toBe("test");
+            expect(node.childNodes.length).toBe(1);
 
             var script = node.childNodes[0];
 
@@ -91,7 +89,7 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
 
             expect(script.childNodes.length).toBe(1);
 
-            expect(script.childNodes[0].toHtml()).toBe("var x='<a>b</a>';");
+            expect(script.childNodes[0].toHtml()).toBe("var x='<a>b</a>';</a>test");
 
         });
 

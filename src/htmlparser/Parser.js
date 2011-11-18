@@ -4,8 +4,9 @@
  */
 KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
 
-    function Iterator(lexer) {
+    function Iterator(lexer, opts) {
         this.lexer = lexer;
+        this.opts = opts;
     }
 
     Iterator.prototype = {
@@ -15,7 +16,7 @@ KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
                 stack,
                 scanner,
                 lexer = this.lexer;
-            
+
             ret = lexer.nextNode();
             if (ret) {
                 if (ret.nodeType == 1) {
@@ -23,7 +24,7 @@ KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
                         scanner = ret.scanner;
                         if (scanner) {
                             stack = [];
-                            ret = scanner.scan(ret, lexer, stack);
+                            ret = scanner.scan(ret, lexer, stack, this.opts);
                         }
                     } else {
                         return this.nextNode();
@@ -35,13 +36,14 @@ KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
     };
 
 
-    function Parser(html) {
+    function Parser(html, opts) {
         this.lexer = new Lexer(html);
+        this.opts = opts || {};
     }
 
     Parser.prototype = {
         elements:function() {
-            return new Iterator(this.lexer);
+            return new Iterator(this.lexer, this.opts);
         },
 
         parse:function() {

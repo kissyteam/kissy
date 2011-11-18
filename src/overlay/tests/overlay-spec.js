@@ -180,8 +180,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
             it("应该能够调节大小", function() {
                 // ie9 测试不了
-                if (UA.ie == 9) return;
-                var h = o.get("el").one(".ke-resizehandler-t"),
+                if (UA.ie == 9) {
+                    return;
+                }
+                var h = o.get("el").one(".ks-resize-handler-t"),
                     height = o.get("el").outerHeight();
                 var hxy = h.offset();
                 S.log(hxy);

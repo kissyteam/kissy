@@ -4,7 +4,7 @@
  */
 KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
     var scanner = {
-        scan:function(tag, lexer, stack) {
+        scan:function(tag, lexer, stack, opts) {
             var node,i;
             if (tag.isEmptyXmlTag) {
                 tag.closed = true;
@@ -21,8 +21,12 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                             // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
                             // perfection is better and more complicated :
                             // <a>1<p>2</p>3</a> , move <a> inside => <a>1</a><p><a>2</a></p><a>3</a>
-                            else if (!node.isEndTag() && !this.canHasNodeAsChild(tag, node)) {
+                            else if (opts['fixByDtd'] &&
+                                !node.isEndTag() &&
+                                !this.canHasNodeAsChild(tag, node)) {
                                 // can not be it as child ,will terminate tag lately
+                                // TODO : maybe move tag as child of node is better
+                                // <a><p>haha</p>wa</a> -> <p><a>haha</a></p><a>wa</a>
                                 lexer.setPosition(node.startPosition);
                                 node = null;
                             } else if (!node.isEndTag()) {
@@ -38,13 +42,13 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                         }
                                     } else {
                                         // change scanner ,such as textarea scanner ... etc
-                                        node = nodeScanner.scan(node, lexer, stack);
+                                        node = nodeScanner.scan(node, lexer, stack, opts);
                                         tag.appendChild(node);
                                     }
                                 } else {
                                     tag.appendChild(node);
                                 }
-                            } else {
+                            } else if (node.isEndTag()) {
                                 // encouter a end tag without open tag
                                 // There are two cases...
                                 // 1) The tag hasn't been registered, in which case
@@ -66,7 +70,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                     if (c.tagName === node.tagName) {
                                         index = i;
                                         break;
-                                    } else if (!this.canHasNodeAsChild(c, node)) {
+                                    } else if (opts['fixByDtd'] &&
+                                        !this.canHasNodeAsChild(c, node)) {
                                         // can not include this node as child of a node in stack
                                         index = i;
                                         break;
@@ -86,6 +91,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                     tag = stack[index];
                                     stack.length = index;
                                     node = null;
+                                } else {
+                                    // discard this close tag
                                 }
 
                             }
