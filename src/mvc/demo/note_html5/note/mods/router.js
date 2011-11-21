@@ -2,7 +2,10 @@
  * 应用路由规则
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
+KISSY.add(function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel, SearchView) {
+
+    var $ = S.Node.all;
+
     /**
      * 应用 router
      */
@@ -10,13 +13,15 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
         var self = this;
         NoteRouter.superclass.constructor.apply(self, arguments);
         self.notesView = new NotesView({
-            notes:new NotesCollection(),
-            router:self
+            notes:new NotesCollection()
         });
         self.editView = new EditView();
         // 初始载入全部笔记
         self.notesView.get("notes").load();
         self.editView.on("submit", self._onEditSubmit, self);
+        self.searchView = new SearchView({
+            notes:new NotesCollection()
+        });
     }
 
 
@@ -50,7 +55,7 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
          */
         index:function() {
             var self = this;
-            self.editView.get("el").hide();
+            $(".page").hide();
             self.notesView.get("el").show();
         },
 
@@ -68,7 +73,7 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
             // 没的话可以直接 note=notes.getById(id)
             note.load({
                 success:function() {
-                    self.notesView.get("el").hide();
+                    $(".page").hide();
                     editView.set("note", note);
                     /*根据note模型，重新渲染编辑界面*/
                     editView.render();
@@ -84,10 +89,24 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
         newNote:function() {
             var self = this,
                 editView = self.editView;
-            self.notesView.get("el").hide();
+            $(".page").hide();
             editView.set("note", new NoteModel());
             /*根据note模型，重新渲染编辑界面*/
             editView.render().get("el").show();
+        },
+
+        search:function(path, query) {
+            var q = decodeURIComponent(query.q),self = this;
+            self.searchView.searchInput.val(q);
+            self.searchView.get("notes").load({
+                data:{
+                    q:q
+                },
+                success:function() {
+                    $(".page").hide();
+                    self.searchView.get("el").show();
+                }
+            });
         }
 
     }, {
@@ -100,7 +119,8 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
                     '/':'index',
                     '':"index",
                     '/edit/:id':"editNote",
-                    '/new/':"newNote"
+                    '/new/':"newNote",
+                    '/search/':"search"
                 }
             }
         }
@@ -108,5 +128,5 @@ KISSY.add(function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
 
     return NoteRouter;
 }, {
-    requires:['mvc','./NotesView','./EditView','./NotesCollection','./NoteModel']
+    requires:['node','mvc','./NotesView','./EditView','./NotesCollection','./NoteModel','./SearchView']
 });

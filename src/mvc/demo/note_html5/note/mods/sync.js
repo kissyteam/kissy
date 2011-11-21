@@ -23,6 +23,7 @@ KISSY.add(function(S, mvc) {
      覆盖全局的同步函数
      */
     sync = mvc.sync = function(self, method, options) {
+        options = options || {};
         S.log(method);
         // 模拟异步请求
         setTimeout(function() {
@@ -32,18 +33,28 @@ KISSY.add(function(S, mvc) {
                 store = JSON.parse(store);
             }
 
-            var ret,id,error;
+            var ret,id,error,i;
             switch (method) {
                 case 'read':
-                    if (isModel(self)) {
-                        ret = store[findById(store, self.get("id"))];
-                        if (!ret) {
-                            error = 'not found';
+                    var q;
+                    if (options.data && (q = options.data.q)) {
+                        ret = [];
+                        for (i in store) {
+                            if (store[i].title.indexOf(q) > -1) {
+                                ret.push(store[i]);
+                            }
                         }
                     } else {
-                        ret = [];
-                        for (var i in store) {
-                            ret.push(store[i]);
+                        if (isModel(self)) {
+                            ret = store[findById(store, self.get("id"))];
+                            if (!ret) {
+                                error = 'not found';
+                            }
+                        } else {
+                            ret = [];
+                            for (i in store) {
+                                ret.push(store[i]);
+                            }
                         }
                     }
                     break;

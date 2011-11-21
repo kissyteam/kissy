@@ -26,7 +26,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
     }
 
     function isBooleanAttribute(attrName) {
-        return (/^(?:checked|disabled|selected|readonly)$/i).test(attrName);
+        return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
     }
 
     function canRemoveAttributeQuotes(value) {

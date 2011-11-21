@@ -2,8 +2,8 @@
  * 笔记列表视图
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, Node,mvc, Template, NoteView) {
-    var $=Node.all,
+KISSY.add(function(S, Node, mvc, Template, NoteView) {
+    var $ = Node.all,
         tmpl = Template($("#listTpl").html());
 
     /**
@@ -16,6 +16,9 @@ KISSY.add(function(S, Node,mvc, Template, NoteView) {
             statistic,
             dataList,
             el = self.get("el");
+
+
+        self.searchInput = el.one(".searchInput");
 
         dataList = self.dataList = el.one(".dataList");
         statistic = self.statistic = el.one(".statistic");
@@ -93,6 +96,18 @@ KISSY.add(function(S, Node,mvc, Template, NoteView) {
             ).destroy({
                     "delete":1
                 });
+        },
+        search:function() {
+            if (S.trim(this.searchInput.val())) {
+                mvc.Router.navigate("/search/?q=" + encodeURIComponent(this.searchInput.val()));
+            }
+        },
+        keyup:function(e) {
+            if (e.keyCode == 13) {
+                e.halt();
+                this.searchInput[0].focus();
+                this.search();
+            }
         }
     }, {
         ATTRS:{
@@ -115,6 +130,12 @@ KISSY.add(function(S, Node,mvc, Template, NoteView) {
                     },
                     ".refreshNote":{
                         click:"refreshNote"
+                    },
+                    '.searchNote':{
+                        'click':'search'
+                    },
+                    '.searchInput':{
+                        'keyup':'keyup'
                     }
                 }
             }
