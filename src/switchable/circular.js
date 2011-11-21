@@ -66,7 +66,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
                     // free
                     self.anim = undefined;
                     callback && callback();
-                }, cfg.nativeAnim).run();
+                }).run();
         } else {
             // 初始化
             DOM.css(self.content, props);
