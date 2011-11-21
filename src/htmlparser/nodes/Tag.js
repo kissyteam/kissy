@@ -4,11 +4,15 @@
  */
 KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute, Dtd) {
 
-    var scanners = {
-        'style':QuoteCdataScanner,
-        'script':QuoteCdataScanner,
-        'textarea':TextareaScanner
-    };
+    var cdataTags = Dtd.$cdata,
+        scanners = {
+            'textarea':TextareaScanner
+        };
+
+    // script/style
+    for (var t in cdataTags) {
+        scanners[t] = QuoteCdataScanner;
+    }
 
     function getScannerForTag(nodeName) {
         return scanners[nodeName] || TagScanner;

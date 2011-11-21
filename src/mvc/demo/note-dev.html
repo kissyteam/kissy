@@ -11,11 +11,34 @@
 <body>
 
 <h1 style="width:400px;margin: 10px auto;">KISSY NoteBook</h1>
+<!--搜索列表界面-->
+<div id="search" style="display:none" class="page">
+    <p><input class="searchInput" /> <button class="searchBtn">search by name </button>
+        &nbsp;
+ <input class="backBtn" type="button" value="back"/>
+    </p>
+    <div class="searchList">
 
-<div id="list" style="display:none">
+    </div>
+</div>
+
+
+<!--笔记列表的搜索模板-->
+<script type="template" id="searchTpl">
+    {{#each list as l}}
+    <div id='{{l.id}}' class='note'>
+        <p>{{l.title}} @ {{l.time}}</p>
+    </div>
+    {{/each}}
+</script>
+
+<!--笔记列表主界面-->
+<div id="list" style="display:none" class="page">
     <div>
         <button class="newNote">new</button>
         <button class="refreshNote">refresh</button>
+        &nbsp;
+        <input class="searchInput" /> <button class="searchNote">search by name </button>
     </div>
     <!--笔记列表容器-->
     <div class="dataList">
@@ -29,7 +52,7 @@
 </div>
 
 <!--编辑笔记界面容器-->
-<div id="edit" style="display:none">
+<div id="edit" style="display:none" class="page">
 </div>
 
 <div id="loading">
@@ -80,7 +103,7 @@ src = "../../../build/template.js?x=201110261144" ></script>
             {
                 name:'note',
                 tag:'1',
-                path:'./'
+                path:'./note_html5/'
             }
        ]
     });

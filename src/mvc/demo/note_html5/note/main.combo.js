@@ -6,6 +6,7 @@ D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\NotesView.js
 D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\EditView.js
 D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\NoteModel.js
 D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\NotesCollection.js
+D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\SearchView.js
 D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\router.js
 D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\sync.js
 D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\main.js
@@ -35,6 +36,7 @@ KISSY.add("note/mods/NotesView", function(S, Node, mvc, Template, NoteView) {
   function NotesView() {
     NotesView.superclass.constructor.apply(this, arguments);
     var self = this, statistic, dataList, el = self.get("el");
+    self.searchInput = el.one(".searchInput");
     dataList = self.dataList = el.one(".dataList");
     statistic = self.statistic = el.one(".statistic");
     var notes = self.get("notes");
@@ -66,7 +68,17 @@ KISSY.add("note/mods/NotesView", function(S, Node, mvc, Template, NoteView) {
   }, deleteNode:function(e) {
     var notes = this.get("notes");
     notes.getById($(e.currentTarget).parent("div").attr("id")).destroy({"delete":1})
-  }}, {ATTRS:{el:{value:"#list"}, events:{value:{".edit":{click:"editNote"}, ".newNote":{click:"newNote"}, ".delete":{click:"deleteNode"}, ".refreshNote":{click:"refreshNote"}}}}});
+  }, search:function() {
+    if(S.trim(this.searchInput.val())) {
+      mvc.Router.navigate("/search/?q=" + encodeURIComponent(this.searchInput.val()))
+    }
+  }, keyup:function(e) {
+    if(e.keyCode == 13) {
+      e.halt();
+      this.searchInput[0].focus();
+      this.search()
+    }
+  }}, {ATTRS:{el:{value:"#list"}, events:{value:{".edit":{click:"editNote"}, ".newNote":{click:"newNote"}, ".delete":{click:"deleteNode"}, ".refreshNote":{click:"refreshNote"}, ".searchNote":{click:"search"}, ".searchInput":{keyup:"keyup"}}}}});
   return NotesView
 }, {requires:["node", "mvc", "template", "./NoteView"]});
 
@@ -103,14 +115,44 @@ KISSY.add("note/mods/NotesCollection", function(S, mvc, NoteModel) {
   return NotesModel
 }, {requires:["mvc", "./NoteModel"]});
 
-KISSY.add("note/mods/router", function(S, mvc, NotesView, EditView, NotesCollection, NoteModel) {
+KISSY.add("note/mods/SearchView", function(S, Node, mvc, Template) {
+  var $ = Node.all, tmpl = Template($("#searchTpl").html());
+  function SearchView() {
+    var self = this;
+    SearchView.superclass.constructor.apply(this, arguments);
+    this.searchInput = this.get("el").one(".searchInput");
+    this.searchList = this.get("el").one(".searchList");
+    this.get("notes").on("afterModelsChange", function() {
+      self.searchList.html(tmpl.render({list:self.get("notes").toJSON()}))
+    })
+  }
+  S.extend(SearchView, mvc.View, {search:function() {
+    if(S.trim(this.searchInput.val())) {
+      mvc.Router.navigate("/search/?q=" + encodeURIComponent(this.searchInput.val()))
+    }
+  }, keyup:function(e) {
+    if(e.keyCode == 13) {
+      e.halt();
+      this.searchInput[0].focus();
+      this.search()
+    }
+  }, back:function() {
+    this.searchInput.val("");
+    mvc.Router.navigate("/")
+  }}, {ATTRS:{el:{value:"#search"}, events:{value:{".searchBtn":{click:"search"}, ".backBtn":{click:"back"}, ".searchInput":{keyup:"keyup"}}}}});
+  return SearchView
+}, {requires:["node", "mvc", "template"]});
+
+KISSY.add("note/mods/router", function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel, SearchView) {
+  var $ = S.Node.all;
   function NoteRouter() {
     var self = this;
     NoteRouter.superclass.constructor.apply(self, arguments);
-    self.notesView = new NotesView({notes:new NotesCollection, router:self});
+    self.notesView = new NotesView({notes:new NotesCollection});
     self.editView = new EditView;
     self.notesView.get("notes").load();
-    self.editView.on("submit", self._onEditSubmit, self)
+    self.editView.on("submit", self._onEditSubmit, self);
+    self.searchView = new SearchView({notes:new NotesCollection})
   }
   S.extend(NoteRouter, mvc.Router, {_onEditSubmit:function(e) {
     var note = e.note, self = this, notes = self.notesView.get("notes");
@@ -127,24 +169,31 @@ KISSY.add("note/mods/router", function(S, mvc, NotesView, EditView, NotesCollect
     }
   }, index:function() {
     var self = this;
-    self.editView.get("el").hide();
+    $(".page").hide();
     self.notesView.get("el").show()
   }, editNote:function(paths) {
     var self = this, id = paths.id, note = new NoteModel({id:id}), editView = self.editView;
     note.load({success:function() {
-      self.notesView.get("el").hide();
+      $(".page").hide();
       editView.set("note", note);
       editView.render();
       editView.get("el").show()
     }})
   }, newNote:function() {
     var self = this, editView = self.editView;
-    self.notesView.get("el").hide();
+    $(".page").hide();
     editView.set("note", new NoteModel);
     editView.render().get("el").show()
-  }}, {ATTRS:{routes:{value:{"/":"index", "":"index", "/edit/:id":"editNote", "/new/":"newNote"}}}});
+  }, search:function(path, query) {
+    var q = decodeURIComponent(query.q), self = this;
+    self.searchView.searchInput.val(q);
+    self.searchView.get("notes").load({data:{q:q}, success:function() {
+      $(".page").hide();
+      self.searchView.get("el").show()
+    }})
+  }}, {ATTRS:{routes:{value:{"/":"index", "":"index", "/edit/:id":"editNote", "/new/":"newNote", "/search/":"search"}}}});
   return NoteRouter
-}, {requires:["mvc", "./NotesView", "./EditView", "./NotesCollection", "./NoteModel"]});
+}, {requires:["node", "mvc", "./NotesView", "./EditView", "./NotesCollection", "./NoteModel", "./SearchView"]});
 
 KISSY.add("note/mods/sync", function(S, mvc) {
   var KEY = "KISSY_Note";
@@ -161,6 +210,7 @@ KISSY.add("note/mods/sync", function(S, mvc) {
   }
   var STORE, sync;
   sync = mvc.sync = function(self, method, options) {
+    options = options || {};
     S.log(method);
     setTimeout(function() {
       var index;
@@ -168,18 +218,28 @@ KISSY.add("note/mods/sync", function(S, mvc) {
       if(S.isString(store)) {
         store = JSON.parse(store)
       }
-      var ret, id, error;
+      var ret, id, error, i;
       switch(method) {
         case "read":
-          if(isModel(self)) {
-            ret = store[findById(store, self.get("id"))];
-            if(!ret) {
-              error = "not found"
+          var q;
+          if(options.data && (q = options.data.q)) {
+            ret = [];
+            for(i in store) {
+              if(store[i].title.indexOf(q) > -1) {
+                ret.push(store[i])
+              }
             }
           }else {
-            ret = [];
-            for(var i in store) {
-              ret.push(store[i])
+            if(isModel(self)) {
+              ret = store[findById(store, self.get("id"))];
+              if(!ret) {
+                error = "not found"
+              }
+            }else {
+              ret = [];
+              for(i in store) {
+                ret.push(store[i])
+              }
             }
           }
           break;
@@ -227,7 +287,7 @@ KISSY.add("note/mods/sync", function(S, mvc) {
 
 KISSY.add("note/main", function(S, Node, NoteRouter, Sy, MVC) {
   new NoteRouter;
-  MVC.Router.start({triggerRoute:1, nativeHistory:1, urlRoot:location.hostname == "localhost" ? "/kissy_git/kissy/src/mvc/demo/note_html5" : "/kissy/src/mvc/demo/note_html5", success:function() {
+  MVC.Router.start({success:function() {
     Node.all("#loading").hide()
   }})
 }, {requires:["node", "./mods/router", "./mods/sync", "mvc"]});
