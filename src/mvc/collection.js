@@ -83,7 +83,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             if (S.isArray(model)) {
                 var orig = [].concat(model);
                 S.each(orig, function(m) {
-                    ret = ret && self._add(m, opts);
+                    var t = self._add(m, opts);
+                    ret = ret && t;
                 });
             } else {
                 ret = self._add(model, opts);

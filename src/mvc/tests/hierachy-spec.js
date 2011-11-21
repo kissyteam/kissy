@@ -25,13 +25,9 @@ KISSY.use("mvc", function(S, mvc) {
 
         toJSON:function() {
             var ret = TreeNodeModel.superclass.toJSON.apply(this, arguments),
-                c,
-                children = this.children.get("models");
+                children = this.children.toJSON();
             if (children.length) {
-                c = ret.children = [];
-                for (var i = 0; i < children.length; i++) {
-                    c.push(children[i].toJSON());
-                }
+                ret.children = children;
             }
             return ret;
 
