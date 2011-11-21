@@ -15,7 +15,7 @@ KISSY.add("uibase/resize", function(S) {
 
     Resize.prototype = {
         __destructor:function() {
-            self.resizer && self.resizer.destroy();
+            this.resizer && this.resizer.destroy();
         },
         _uiSetResize:function(v) {
 
