@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:26
+build time: Nov 21 19:06
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 18 17:26
          */
         version: '1.20dev',
 
-        buildTime:'20111118172621',
+        buildTime:'20111121190606',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1617,7 +1617,7 @@ build time: Nov 18 17:26
 
 })(KISSY, KISSY.__loaderUtils);/**
  * add module definition
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) {
@@ -1766,7 +1766,12 @@ build time: Nov 18 17:26
         }
     });
 
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
+})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);
+
+/**
+ * @refer
+ *  - https://github.com/amdjs/amdjs-api/wiki/AMD
+ **//**
  * build full path from relative path and base path
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
@@ -2038,7 +2043,7 @@ build time: Nov 18 17:26
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
  * @module loader
- * @author lifesinger@gmail.com, lijing00333@163.com, yiminghe@gmail.com
+ * @author lifesinger@gmail.com,yiminghe@gmail.com,lijing00333@163.com
  * @description: constant member and common method holder
  */
 (function(S, loader, data) {
@@ -2206,7 +2211,7 @@ build time: Nov 18 17:26
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
  * register module ,associate module name with module factory(definition)
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader,data) {
     if ("require" in this) {
@@ -2240,7 +2245,7 @@ build time: Nov 18 17:26
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderData);/**
  * use and attach mod
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader, utils, data) {
 
@@ -17298,7 +17303,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 21 16:36
 */
 /**
  * UIBase.Align
@@ -19133,7 +19138,7 @@ KISSY.add("uibase/resize", function(S) {
 
     Resize.prototype = {
         __destructor:function() {
-            self.resizer && self.resizer.destroy();
+            this.resizer && this.resizer.destroy();
         },
         _uiSetResize:function(v) {
 
@@ -28658,6 +28663,1288 @@ MIT Licensed
 build time: Nov 18 17:24
 */
 /**
+ * @fileOverview abstraction of tree node ,root and other node will extend it
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) {
+    var $ = Node.all,
+        ITEM_CLS = BaseNodeRender.ITEM_CLS,
+        KeyCodes = Node.KeyCodes;
+
+
+    /**
+     * 基类树节点
+     * @constructor
+     */
+    var BaseNode = UIBase.create(Component.ModelControl,
+        /*
+         * 可多继承从某个子节点开始装饰儿子组件
+         */
+        [Component.DecorateChild],
+        {
+            _keyNav:function(e) {
+                var self = this,
+                    processed = true,
+                    n,
+                    children = self.get("children"),
+                    keyCode = e.keyCode;
+
+                // 顺序统统为前序遍历顺序
+                switch (keyCode) {
+                    // home
+                    // 移到树的顶层节点
+                    case KeyCodes.HOME:
+                        n = self.get("tree");
+                        break;
+
+                    // end
+                    // 移到最后一个可视节点
+                    case KeyCodes.END:
+                        n = self.get("tree").getLastVisibleDescendant();
+                        break;
+
+                    // 上
+                    // 当前节点的上一个兄弟节点的最后一个可显示节点
+                    case KeyCodes.UP:
+                        n = self.getPreviousVisibleNode();
+                        break;
+
+                    // 下
+                    // 当前节点的下一个可显示节点
+                    case KeyCodes.DOWN:
+                        n = self.getNextVisibleNode();
+                        break;
+
+                    // 左
+                    // 选择父节点或 collapse 当前节点
+                    case KeyCodes.LEFT:
+                        if (self.get("expanded") && (children.length || self.get("isLeaf") === false)) {
+                            self.set("expanded", false);
+                        } else {
+                            n = self.get("parent");
+                        }
+                        break;
+
+                    // 右
+                    // expand 当前节点
+                    case KeyCodes.RIGHT:
+                        if (children.length || self.get("isLeaf") === false) {
+                            if (!self.get("expanded")) {
+                                self.set("expanded", true);
+                            } else {
+                                children[0].select();
+                            }
+                        }
+                        break;
+
+                    default:
+                        processed = false;
+                        break;
+
+                }
+                if (n) {
+                    n.select();
+                }
+                return processed;
+            },
+
+            getLastVisibleDescendant:function() {
+                var self = this,children = self.get("children");
+                // 没有展开或者根本没有儿子节点，可视的只有自己
+                if (!self.get("expanded") || !children.length) {
+                    return self;
+                }
+                // 可视的最后一个子孙
+                return children[children.length - 1].getLastVisibleDescendant();
+            },
+
+            getNextVisibleNode:function() {
+                var self = this,
+                    children = self.get("children"),
+                    parent = self.get("parent");
+                if (self.get("expanded") && children.length) {
+                    return children[0];
+                }
+                // 没有展开或者根本没有儿子节点
+                // 深度遍历的下一个
+                var n = self.next();
+                while (parent && !n) {
+                    n = parent.next();
+                    parent = parent.get("parent");
+                }
+                return n;
+            },
+
+            getPreviousVisibleNode:function() {
+                var self = this,prev = self.prev();
+                if (!prev) {
+                    prev = self.get("parent");
+                } else {
+                    prev = prev.getLastVisibleDescendant();
+                }
+                return prev;
+            },
+
+            next:function() {
+                var self = this,parent = self.get("parent");
+                if (!parent) {
+                    return null;
+                }
+                var siblings = parent.get('children');
+                var index = S.indexOf(self, siblings);
+                if (index == siblings.length - 1) {
+                    return null;
+                }
+                return siblings[index + 1];
+            },
+
+            prev:function() {
+                var self = this, parent = self.get("parent");
+                if (!parent) {
+                    return null;
+                }
+                var siblings = parent.get('children');
+                var index = S.indexOf(self, siblings);
+                if (index === 0) {
+                    return null;
+                }
+                return siblings[index - 1];
+            },
+
+            /**
+             * 选中当前节点
+             * @public
+             */
+            select : function() {
+                var self = this;
+                self.get("tree").set("selectedItem", self);
+            },
+
+            _performInternal:function(e) {
+                var self = this,
+                    target = $(e.target),
+                    tree = self.get("tree"),
+                    view = self.get("view");
+                tree.get("el")[0].focus();
+                if (target.equals(view.get("expandIconEl"))) {
+                    // 忽略双击
+                    if (e.type != 'dblclick') {
+                        self.set("expanded", !self.get("expanded"));
+                    }
+                } else if (e.type == 'dblclick') {
+                    self.set("expanded", !self.get("expanded"));
+                }
+                else {
+                    self.select();
+                    tree.fire("click", {
+                        target:self
+                    });
+                }
+            },
+
+            // 默认 addChild，这里需要设置 tree 属性
+            decorateChildrenInternal:function(ui, c, cls) {
+                var self = this;
+                self.addChild(new ui({
+                    srcNode:c,
+                    tree:self.get("tree"),
+                    prefixCls:cls
+                }));
+            },
+
+            addChild:function(c) {
+                var self = this,tree = self.get("tree");
+                c.set("tree", tree);
+                c.set("depth", self.get('depth') + 1);
+                BaseNode.superclass.addChild.call(self, c);
+                self._updateRecursive();
+                tree._register(c);
+                S.each(c.get("children"), function(cc) {
+                    tree._register(cc);
+                });
+            },
+
+            /*
+             每次添加/删除节点，都检查自己以及自己子孙 class
+             每次 expand/collapse，都检查
+             */
+            _computeClass:function(cause) {
+                var self = this,view = self.get("view");
+                view._computeClass(self.get('children'), self.get("parent"), cause);
+            },
+
+            _updateRecursive:function() {
+                var self = this,len = self.get('children').length;
+                self._computeClass("_updateRecursive");
+                S.each(self.get("children"), function(c, index) {
+                    c._computeClass("_updateRecursive_children");
+                    c.get("view").set("ariaPosInSet", index + 1);
+                    c.get("view").set("ariaSize", len);
+                });
+            },
+
+            removeChild:function(c) {
+                var self = this,tree = self.get("tree");
+                tree._unregister(c);
+                S.each(c.get("children"), function(cc) {
+                    tree._unregister(cc);
+                });
+                BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
+                self._updateRecursive();
+            },
+
+            _uiSetExpanded:function(v) {
+                var self = this,
+                    tree = self.get("tree");
+                self._computeClass("expanded-" + v);
+                if (v) {
+                    tree.fire("expand", {
+                        target:self
+                    });
+                } else {
+                    tree.fire("collapse", {
+                        target:self
+                    });
+                }
+            },
+
+            _uiSetSelected:function(v) {
+                this._forwardSetAttrToView("selected", v);
+            },
+
+
+            expandAll:function() {
+                var self = this;
+                self.set("expanded", true);
+                S.each(self.get("children"), function(c) {
+                    c.expandAll();
+                });
+            },
+
+            collapseAll:function() {
+                var self = this;
+                self.set("expanded", false);
+                S.each(self.get("children"), function(c) {
+                    c.collapseAll();
+                });
+            }
+        },
+
+        {
+            DefaultRender:BaseNodeRender,
+            ATTRS:{
+                /*事件代理*/
+                handleMouseEvents:{
+                    value:false
+                },
+                id:{
+                    getter:function() {
+                        var self = this,
+                            id = self.get("el").attr("id");
+                        if (!id) {
+                            self.get("el").attr("id", id = S.guid("tree-node"));
+                        }
+                        return id;
+                    }
+                },
+                /**
+                 * 节点字内容
+                 * @type String
+                 */
+                content:{view:true},
+
+                /**
+                 * 强制指明该节点是否具备子孙，影响样式，不配置默认样式自动变化
+                 * @type Boolean
+                 */
+                isLeaf:{
+                    view:true
+                },
+
+                expandIconEl:{ view:true},
+
+                iconEl:{ view:true},
+
+                /**
+                 * 是否选中
+                 * @type Boolean
+                 */
+                selected:{},
+
+                expanded:{
+                    value:false,
+                    view:true
+                },
+
+                /**
+                 * html title
+                 * @type String
+                 */
+                tooltip:{view:true},
+                tree:{
+                },
+
+                /**
+                 * depth of node
+                 */
+                depth:{
+                    value:0,
+                    view:true
+                },
+                focusable:{value:false},
+                decorateChildCls:{
+                    value:"tree-children"
+                }
+            },
+
+            HTML_PARSER:{
+                expanded:function(el) {
+                    var children = el.one("." + this.getCls("tree-children"));
+                    if (!children) {
+                        return false;
+                    }
+                    return children.css("display") != "none";
+                }
+            }
+        });
+
+    Component.UIStore.setUIByClass(ITEM_CLS, {
+        priority:10,
+        ui:BaseNode
+    });
+
+    return BaseNode;
+
+}, {
+    requires:['node','uibase','component','./basenoderender']
+});/**
+ * common render for node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
+    var $ = Node.all,
+        LABEL_CLS = "tree-item-label",
+        FILE_CLS = "tree-file-icon",
+        FILE_EXPAND = "tree-expand-icon-{t}",
+        FOLDER_EXPAND = FILE_EXPAND + "minus",
+        FOLDER_COLLAPSED = FILE_EXPAND + "plus",
+
+        INLINE_BLOCK = "inline-block",
+        ITEM_CLS = "tree-item",
+
+        FOLDER_ICON_EXPANED = "tree-expanded-folder-icon",
+        FOLDER_ICON_COLLAPSED = "tree-collapsed-folder-icon",
+
+        CHILDREN_CLS = "tree-children",
+        CHILDREN_CLS_L = "tree-lchildren",
+
+        EXPAND_ICON_CLS = "tree-expand-icon",
+        ICON_CLS = "tree-icon",
+
+        LEAF_CLS = "tree-item-leaf",
+
+        NOT_LEAF_CLS = "tree-item-folder",
+
+        ROW_CLS = "tree-row";
+
+    return UIBase.create(Component.Render, {
+
+        _computeClass:function(children, parent
+                               //, cause
+            ) {
+            // S.log("hi " + cause + ": " + this.get("content"));
+            var self = this,
+                expanded = self.get("expanded"),
+                isLeaf = self.get("isLeaf"),
+                iconEl = self.get("iconEl"),
+                expandIconEl = self.get("expandIconEl"),
+                childrenEl = self.get("childrenEl"),
+                expand_cls = [INLINE_BLOCK,ICON_CLS,EXPAND_ICON_CLS,""].join(" "),
+                icon_cls = self.getCls([INLINE_BLOCK,ICON_CLS,FILE_CLS,""].join(" ")),
+                folder_cls = self.getCls(
+                    [INLINE_BLOCK,ICON_CLS,expanded ? FOLDER_ICON_EXPANED : FOLDER_ICON_COLLAPSED,""].join(" ")),
+                last = !parent ||
+                    parent.get("children")[parent.get("children").length - 1].get("view") == self;
+            // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
+            if (isLeaf === false || (isLeaf === undefined && children.length)) {
+                iconEl.attr("class", folder_cls);
+                if (expanded) {
+                    expand_cls += FOLDER_EXPAND;
+                } else {
+                    expand_cls += FOLDER_COLLAPSED;
+                }
+                expandIconEl.attr("class", self.getCls(S.substitute(expand_cls, {
+                    "t":last ? "l" : "t"
+                })));
+            } else
+            //if (isLeaf !== false && (isLeaf ==true || !children.length))
+            {
+                iconEl.attr("class", icon_cls);
+                expandIconEl.attr("class",
+                    self.getCls(S.substitute((expand_cls + FILE_EXPAND), {
+                        "t":last ? "l" : "t"
+                    })));
+            }
+            childrenEl && childrenEl.attr("class", self.getCls(last ? CHILDREN_CLS_L : CHILDREN_CLS));
+
+        },
+
+        createDom:function() {
+            var self = this,
+                el = self.get("el"),
+                id,
+                rowEl,
+                labelEl = self.get("labelEl");
+
+
+            rowEl = $("<div class='" + self.getCls(ROW_CLS) + "'/>");
+            id = S.guid('tree-item');
+            self.set("rowEl", rowEl);
+
+            var expandIconEl = $("<div/>")
+                .appendTo(rowEl);
+            var iconEl = $("<div />")
+                .appendTo(rowEl);
+
+            if (!labelEl) {
+                labelEl = $("<span id='" + id + "' class='" + self.getCls(LABEL_CLS) + "'/>");
+                self.set("labelEl", labelEl);
+            }
+            labelEl.appendTo(rowEl);
+
+            el.attr({
+                "role":"treeitem",
+                "aria-labelledby":id
+            }).prepend(rowEl);
+
+            self.set("expandIconEl", expandIconEl);
+            self.set("iconEl", iconEl);
+
+        },
+
+        _uiSetExpanded:function(v) {
+            var self = this,
+                childrenEl = self.get("childrenEl");
+            if (childrenEl) {
+                if (!v) {
+                    childrenEl.hide();
+                } else if (v) {
+                    childrenEl.show();
+                }
+            }
+            self.get("el").attr("aria-expanded", v);
+        },
+
+        _setSelected:function(v, classes) {
+            var self = this,
+                // selected 放在 row 上，防止由于子选择器而干扰节点的子节点显示
+                // .selected .label {background:xx;}
+                rowEl = self.get("rowEl");
+            rowEl[v ? "addClass" : "removeClass"](self._completeClasses(classes, "-selected"));
+            self.get("el").attr("aria-selected", v);
+        },
+
+        _uiSetContent:function(c) {
+            this.get("labelEl").html(c);
+        },
+
+        _uiSetDepth:function(v) {
+            this.get("el").attr("aria-level", v);
+        },
+
+        _uiSetAriaSize:function(v) {
+            this.get("el").attr("aria-setsize", v);
+        },
+
+        _uiSetAriaPosInSet:function(v) {
+            this.get("el").attr("aria-posinset", v);
+        },
+
+        _uiSetTooltip:function(v) {
+            this.get("el").attr("title", v);
+        },
+
+        /**
+         * 内容容器节点，子树节点都插到这里
+         * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
+         * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
+         * @override
+         */
+        getContentElement:function() {
+            var self = this;
+            if (self.get("childrenEl")) {
+                return self.get("childrenEl");
+            }
+            var c = $("<div " + (self.get("expanded") ? "" : "style='display:none'")
+                + " role='group'><" + "/div>")
+                .appendTo(self.get("el"));
+            self.set("childrenEl", c);
+            return c;
+        }
+    }, {
+        ATTRS:{
+            ariaSize:{},
+            ariaPosInSet:{},
+            childrenEl:{},
+            expandIconEl:{},
+            tooltip:{},
+            iconEl:{},
+            expanded:{},
+            rowEl:{},
+            depth:{},
+            labelEl:{},
+            content:{},
+            isLeaf:{}
+        },
+
+        HTML_PARSER:{
+            childrenEl:function(el) {
+                return el.children("." + this.getCls(CHILDREN_CLS));
+            },
+            labelEl:function(el) {
+                return el.children("." + this.getCls(LABEL_CLS));
+            },
+            content:function(el) {
+                return el.children("." + this.getCls(LABEL_CLS)).html();
+            },
+            isLeaf:function(el) {
+                var self = this;
+                if (el.hasClass(self.getCls(LEAF_CLS))) {
+                    return true;
+                }
+                if (el.hasClass(self.getCls(NOT_LEAF_CLS))) {
+                    return false;
+                }
+            }
+        },
+
+        ITEM_CLS:ITEM_CLS
+
+    });
+
+}, {
+    requires:['node','uibase','component']
+});/**
+ * checkable tree node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
+    var $ = Node.all,
+        PARTIAL_CHECK = 2,
+        CHECK_CLS = "tree-item-check",
+        CHECK = 1,
+        EMPTY = 0;
+
+    var CheckNode = UIBase.create(BaseNode, {
+        _performInternal:function(e) {
+            var self=this;
+            // 需要通知 tree 获得焦点
+            self.get("tree").get("el")[0].focus();
+            var target = $(e.target),
+                view = self.get("view"),
+                tree = self.get("tree");
+
+            if (e.type == "dblclick") {
+                // 双击在 +- 号上无效
+                if (target.equals(view.get("expandIconEl"))) {
+                    return;
+                }
+                // 双击在 checkbox 上无效
+                if (target.equals(view.get("checkEl"))) {
+                    return;
+                }
+                // 双击在字或者图标上，切换 expand 装tai
+                self.set("expanded", !self.get("expanded"));
+            }
+
+            // 点击在 +- 号，切换状态
+            if (target.equals(view.get("expandIconEl"))) {
+                self.set("expanded", !self.get("expanded"));
+                return;
+            }
+
+            // 单击任何其他地方都切换 check 状态
+            var checkState = self.get("checkState");
+            if (checkState == CHECK) {
+                checkState = EMPTY;
+            } else {
+                checkState = CHECK;
+            }
+            self.set("checkState", checkState);
+            tree.fire("click", {
+                target:self
+            });
+        },
+
+        _uiSetCheckState:function(s) {
+            var self=this;
+            if (s == CHECK || s == EMPTY) {
+                S.each(self.get("children"), function(c) {
+                    c.set("checkState", s);
+                });
+            }
+            // 每次状态变化都通知 parent 沿链检查，一层层向上通知
+            // 效率不高，但是结构清晰
+            var parent = self.get("parent");
+            if (parent) {
+                var checkCount = 0;
+                var cs = parent.get("children");
+                for (var i = 0; i < cs.length; i++) {
+                    var c = cs[i],cState = c.get("checkState");
+                    // 一个是部分选，父亲必定是部分选，立即结束
+                    if (cState == PARTIAL_CHECK) {
+                        parent.set("checkState", PARTIAL_CHECK);
+                        return;
+                    } else if (cState == CHECK) {
+                        checkCount++;
+                    }
+                }
+
+                // 儿子全都选了，父亲也全选
+                if (checkCount == cs.length) {
+                    parent.set("checkState", CHECK);
+                }
+                // 儿子都没选，父亲也不选
+                else if (checkCount === 0) {
+                    parent.set("checkState", EMPTY);
+                }
+                // 有的儿子选了，有的没选，父亲部分选
+                else {
+                    parent.set("checkState", PARTIAL_CHECK);
+                }
+            }
+        }
+    }, {
+        ATTRS:{
+            checkState:{
+                view:true,
+                // check 的三状态
+                // 0 一个不选
+                // 1 儿子有选择
+                // 2 全部都选了
+                value:0
+            }
+        },
+        CHECK_CLS :CHECK_CLS,
+        DefaultRender:CheckNodeRender,
+        PARTIAL_CHECK:PARTIAL_CHECK,
+        CHECK:CHECK,
+        EMPTY:EMPTY
+    });
+
+    Component.UIStore.setUIByClass(CHECK_CLS, {
+        priority:Component.UIStore.PRIORITY.LEVEL2,
+        ui:CheckNode
+    });
+
+    return CheckNode;
+}, {
+    requires:['node','uibase','component','./basenode','./checknoderender']
+});KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
+    var $ = Node.all,
+        ICON_CLS = "tree-icon",
+        CHECK_CLS = "tree-item-check",
+        ALL_STATES_CLS = "tree-item-checked0 tree-item-checked1 tree-item-checked2",
+        INLINE_BLOCK = "inline-block";
+    return UIBase.create(BaseNodeRender, {
+
+        createDom:function() {
+            var self = this;
+            var expandIconEl = self.get("expandIconEl"),
+                checkEl = $("<div class='" + self.getCls(INLINE_BLOCK + " " + " "
+                    + ICON_CLS) + "'/>").insertAfter(expandIconEl);
+            self.set("checkEl", checkEl);
+        },
+
+        _uiSetCheckState:function(s) {
+            var self = this;
+            var checkEl = self.get("checkEl");
+            checkEl.removeClass(self.getCls(ALL_STATES_CLS))
+                .addClass(self.getCls(CHECK_CLS + "ed" + s));
+        }
+
+    }, {
+        ATTRS:{
+            checkEl:{},
+            checkState:{}
+        },
+
+        CHECK_CLS:CHECK_CLS
+    });
+}, {
+    requires:['node','uibase','component','./basenoderender']
+});/**
+ * root node represent a check tree
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
+    var CHECK_TREE_CLS = CheckTreeRender.CHECK_TREE_CLS;
+    /*多继承*/
+    var CheckTree = UIBase.create(CheckNode, [Component.DelegateChildren,TreeMgr], {
+    }, {
+        DefaultRender:CheckTreeRender
+    });
+
+    Component.UIStore.setUIByClass(CHECK_TREE_CLS, {
+        priority:Component.UIStore.PRIORITY.LEVEL4,
+        ui:CheckTree
+    });
+
+    return CheckTree;
+
+}, {
+    requires:['uibase','component','./checknode','./checktreerender','./treemgr']
+});/**
+ * root node render for checktree
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {
+    var CHECK_TREE_CLS="tree-root-check";
+    return UIBase.create(CheckNodeRender, [TreeMgrRender],{
+    },{
+        CHECK_TREE_CLS:CHECK_TREE_CLS
+    });
+}, {
+    requires:['uibase','component','./checknoderender','./treemgrrender']
+});/**
+ * root node represent a simple tree
+ * @author yiminghe@gmail.com
+ * @refer http://www.w3.org/TR/wai-aria-practices/#TreeView
+ */
+KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
+
+    var TREE_CLS = TreeRender.TREE_CLS;
+
+    /*多继承
+     *1. 继承基节点（包括可装饰儿子节点功能）
+     *2. 继承 mixin 树管理功能
+     *3. 继承 mixin 儿子事件代理功能
+     */
+    var Tree = UIBase.create(BaseNode, [Component.DelegateChildren,TreeMgr], {
+    }, {
+        DefaultRender:TreeRender
+    });
+
+
+    Component.UIStore.setUIByClass(TREE_CLS, {
+        priority:Component.UIStore.PRIORITY.LEVEL3,
+        ui:Tree
+    });
+
+
+    return Tree;
+
+}, {
+    requires:['uibase','component','./basenode','./treerender','./treemgr']
+});
+
+/**
+ * note bug:
+ *
+ * 1. checked tree 根节点总是 selected ！
+ * 2. 根节点 hover 后取消不了了
+ **//**
+ * tree management utils
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/treemgr", function(S, Event) {
+
+    function TreeMgr() {
+    }
+
+    TreeMgr.ATTRS = {
+        // 默认 true
+        // 是否显示根节点
+        showRootNode:{
+            view:true
+        },
+        selectedItem:{},
+        tree:{
+            valueFn:function() {
+                return this;
+            }
+        },
+        focusable:{
+            value:true
+        }
+    };
+
+    S.augment(TreeMgr, {
+        /*
+         加快从事件代理获取原事件节点
+         */
+        __getAllNodes:function() {
+            var self=this;
+            if (!self._allNodes) {
+                self._allNodes = {};
+            }
+            return self._allNodes;
+        },
+
+        __renderUI:function() {
+             var self=this;
+            // add 过那么一定调用过 checkIcon 了
+            if (!self.get("children").length) {
+                self._computeClass("root_renderUI");
+            }
+        },
+
+        _register:function(c) {
+            this.__getAllNodes()[c.get("id")] = c;
+        },
+
+        _unregister:function(c) {
+            delete this.__getAllNodes()[c.get("id")];
+        },
+
+        _handleKeyEventInternal:function(e) {
+            var current = this.get("selectedItem");
+            if (e.keyCode == Event.KeyCodes.ENTER) {
+                // 传递给真正的单个子节点
+                return current._performInternal(e);
+            }
+            return current._keyNav(e);
+        },
+
+        // 重写 delegatechildren ，缓存加快从节点获取对象速度
+        getOwnerControl:function(node) {
+            var self = this,
+                n,
+                allNodes = self.__getAllNodes(),
+                elem = self.get("el")[0];
+            while (node && node !== elem) {
+                if (n = allNodes[node.id]) {
+                    return n;
+                }
+                node = node.parentNode;
+            }
+            // 最终自己处理
+            return self;
+        },
+
+        // 单选
+        _uiSetSelectedItem:function(n, ev) {
+            if (ev.prevVal) {
+                ev.prevVal.set("selected", false);
+            }
+            n.set("selected", true);
+        },
+
+
+        _uiSetFocused:function(v) {
+            var self = this;
+            self.constructor.superclass._uiSetFocused.call(self, v);
+            // 得到焦点时没有选择节点
+            // 默认选择自己
+            if (v && !self.get("selectedItem")) {
+                self.select();
+            }
+        }
+    });
+
+    return TreeMgr;
+}, {
+    requires:['event']
+});/**
+ * tree management utils render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/treemgrrender", function(S) {
+    var FOCUSED_CLS = "tree-item-focused";
+
+    function TreeMgrRender() {
+    }
+
+    TreeMgrRender.ATTRS = {
+        // 默认 true
+        // 是否显示根节点
+        showRootNode:{
+        }
+    };
+
+    S.augment(TreeMgrRender, {
+        __renderUI:function() {
+            var self=this;
+            self.get("el").attr("role", "tree")[0]['hideFocus'] = true;
+            self.get("rowEl").addClass(self.getCls("tree-root-row"));
+        },
+
+        _uiSetShowRootNode:function(v) {
+            this.get("rowEl")[v ? "show" : "hide"]();
+        },
+
+        _uiSetFocused:function(v) {
+            this.get("el")[v ? "addClass" : "removeClass"](this.getCls(FOCUSED_CLS));
+        }
+    });
+
+    return TreeMgrRender;
+});/**
+ * root node render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, TreeMgrRender) {
+    var TREE_CLS="tree-root";
+    return UIBase.create(BaseNodeRender, [TreeMgrRender],{},{
+        TREE_CLS:TREE_CLS
+    });
+}, {
+    requires:['uibase','component','./basenoderender','./treemgrrender']
+});/**
+ * tree component for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
+    Tree.Node = TreeNode;
+    Tree.CheckNode = CheckNode;
+    Tree.CheckTree = CheckTree;
+    return Tree;
+}, {
+    requires:["tree/tree","tree/basenode","tree/checknode","tree/checktree"]
+});
+/*
+Copyright 2011, KISSY UI Library v1.20dev
+MIT Licensed
+build time: Nov 18 17:24
+*/
+/**
+ * intervein elements dynamically
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("waterfall/base", function(S, Node, Base) {
+
+    var $ = Node.all,
+        RESIZE_DURATION = 50;
+
+    function Intervein() {
+        Intervein.superclass.constructor.apply(this, arguments);
+        this._init();
+    }
+
+
+    function timedChunk(items, process, context, callback) {
+        var todo = S.makeArray(items),
+            stopper = {},
+            timer;
+        if (todo.length > 0) {
+            timer = setTimeout(function() {
+                var start = +new Date();
+                do {
+                    var item = todo.shift();
+                    process.call(context, item);
+                } while (todo.length > 0 && (+new Date() - start < 50));
+
+                if (todo.length > 0) {
+                    timer = setTimeout(arguments.callee, 25);
+                } else {
+                    callback && callback.call(context, items);
+                }
+            }, 25);
+        } else {
+            callback && S.later(callback, 0, false, context, [items]);
+        }
+
+        stopper.stop = function() {
+            if (timer) {
+                clearTimeout(timer);
+                todo = [];
+            }
+        };
+
+        return stopper;
+    }
+
+
+    Intervein.ATTRS = {
+        /**
+         * 错乱节点容器
+         * @type Node
+         */
+        container:{
+            setter:function(v) {
+                return $(v);
+            }
+        },
+
+        /**
+         * @private
+         */
+        curColHeights:{
+            value:[]
+        },
+
+
+        minColCount:{
+            value:1
+        },
+
+        effect:{
+            value:{
+                effect:"fadeIn",
+                duration:1
+            }
+        },
+
+        colWidth:{}
+    };
+
+    function doResize() {
+        var self = this,
+            containerRegion = self._containerRegion;
+        // 宽度没变就没必要调整
+        if (containerRegion && self.get("container").width() === containerRegion.width) {
+            return
+        }
+        self.adjust();
+    }
+
+    function recalculate() {
+        var self = this,
+            container = self.get("container"),
+            containerWidth = container.width(),
+            curColHeights = self.get("curColHeights");
+        curColHeights.length = Math.max(parseInt(containerWidth / self.get("colWidth")),
+            self.get("minColCount"));
+        self._containerRegion = {
+            width:containerWidth
+        };
+        S.each(curColHeights, function(v, i) {
+            curColHeights[i] = 0;
+        });
+    }
+
+    function adjustItem(itemRaw) {
+        var self = this,
+            item = $(itemRaw),
+            curColHeights = self.get("curColHeights"),
+            container = self.get("container"),
+            curColCount = curColHeights.length,
+            dest = 0,
+            containerRegion = self._containerRegion,
+            guard = Number.MAX_VALUE;
+        for (var i = 0; i < curColCount; i++) {
+            if (curColHeights[i] < guard) {
+                guard = curColHeights[i];
+                dest = i;
+            }
+        }
+        if (!curColCount) {
+            guard = 0;
+        }
+        // 元素保持间隔不变，居中
+        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
+        item.css({
+            //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
+            //    + containerRegion.left,
+            // 元素间固定间隔好点
+            left:dest * self.get("colWidth") + margin,
+            top:guard
+        });
+        /*不在容器里，就加上*/
+        if (!container.contains(item)) {
+            container.append(item);
+        }
+        curColHeights[dest] += item.outerHeight(true);
+        return item;
+    }
+
+    S.extend(Intervein, Base, {
+        isAdjusting:function() {
+            return !!this._adjuster;
+        },
+        _init:function() {
+            var self = this;
+            // 一开始就 adjust 一次，可以对已有静态数据处理
+            doResize.call(self);
+            self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
+            $(window).on("resize", self.__onResize);
+        },
+
+        /**
+         * 调整所有的元素位置
+         * @param callback
+         */
+        adjust:function(callback) {
+            S.log("waterfall:adjust");
+            var self = this,
+                items = self.get("container").all(".ks-waterfall");
+            /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
+            /* 正在调整中，取消上次调整，开始这次调整 */
+            if (self.isAdjusting()) {
+                self._adjuster.stop();
+            }
+            /*计算容器宽度等信息*/
+            recalculate.call(self);
+            return self._adjuster = timedChunk(items, adjustItem, self, function() {
+                self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
+                self._adjuster = 0;
+                callback && callback.call(self);
+            });
+        },
+
+        addItems:function(items, callback) {
+            var self = this;
+
+            /* 正在调整中，直接这次加，和调整的节点一起处理 */
+            /* 正在加，直接这次加，一起处理 */
+            self._adder = timedChunk(items,
+                self._addItem,
+                self,
+                function() {
+                    self.get("container").height(Math.max.apply(Math,
+                        self.get("curColHeights")));
+                    self._adder = 0;
+                    callback && callback.call(self);
+                });
+
+            return self._adder;
+        },
+
+        _addItem:function(itemRaw) {
+            var self = this,
+                curColHeights = self.get("curColHeights"),
+                container = self.get("container"),
+                item = adjustItem.call(self, itemRaw),
+                effect = self.get("effect");
+            if (!effect.effect) {
+                return;
+            }
+            item[effect.effect](effect.duration, undefined, effect.easing);
+        },
+
+        destroy:function() {
+            $(window).detach("resize", this.__onResize);
+        }
+    });
+
+
+    return Intervein;
+
+}, {
+    requires:['node','base']
+});/**
+ * load content
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("waterfall/loader", function(S, Node, Intervein) {
+
+    var $ = Node.all,
+        SCROLL_TIMER = 50;
+
+    function Loader() {
+        Loader.superclass.constructor.apply(this, arguments);
+    }
+
+
+    function doScroll() {
+        var self = this;
+        if (self.__pause) {
+            return;
+        }
+        S.log("waterfall:doScroll");
+        if (self.__loading) {
+            return;
+        }
+        // 如果正在调整中，等会再看
+        // 调整中的高度不确定，现在不适合判断是否到了加载新数据的条件
+        if (self.isAdjusting()) {
+            // 恰好 __onScroll 是 buffered . :)
+            self.__onScroll();
+            return;
+        }
+        var container = self.get("container"),
+            colHeight = container.offset().top,
+            diff = self.get("diff"),
+            curColHeights = self.get("curColHeights");
+        // 找到最小列高度
+        if (curColHeights.length) {
+            colHeight += Math.min.apply(Math, curColHeights);
+        }
+        // 动态载
+        // 最小高度(或被用户看到了)低于预加载线
+        if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
+            S.log("waterfall:loading");
+            loadData.call(self);
+        }
+    }
+
+    function loadData() {
+        var self = this,
+            container = this.get("container");
+
+        self.__loading = 1;
+
+        var load = self.get("load");
+
+        load && load(success, end);
+
+        function success(items) {
+            self.__loading = 0;
+            self.addItems(items);
+        }
+
+        function end() {
+            self.end();
+        }
+
+    }
+
+    Loader.ATTRS = {
+        diff:{
+            getter:function(v) {
+                return v || 0;
+                // 默认一屏内加载
+                //return $(window).height() / 4;
+            }
+        }
+    };
+
+
+    S.extend(Loader, Intervein, {
+        _init:function() {
+            var self = this;
+            Loader.superclass._init.apply(self, arguments);
+            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
+            $(window).on("scroll", self.__onScroll);
+            doScroll.call(self);
+        },
+
+        end:function() {
+            $(window).detach("scroll", this.__onScroll);
+        },
+
+
+        pause:function() {
+            this.__pause = 1;
+        },
+
+        resume:function() {
+            this.__pause = 0;
+        },
+
+        destroy:function() {
+            var self = this;
+            Loader.superclass.destroy.apply(self, arguments);
+            $(window).detach("scroll", self.__onScroll);
+        }
+    });
+
+    return Loader;
+
+}, {
+    requires:['node','./base']
+});KISSY.add("waterfall", function(S, Intervein, Loader) {
+    Intervein.Loader = Loader;
+    return Intervein;
+}, {
+    requires:['waterfall/base','waterfall/loader']
+});
+/*
+Copyright 2011, KISSY UI Library v1.20dev
+MIT Licensed
+build time: Nov 18 17:24
+*/
+/**
  * @author: 常胤 (lzlu.com)
  * @version: 2.0
  * @date: 2011.5.18
@@ -30175,3 +31462,1019 @@ KISSY.add("validation", function(S, Validation) {
 		requires:["validation/base","validation/assets/base.css"]
 	}
 );
+/*
+Copyright 2011, KISSY UI Library v1.20dev
+MIT Licensed
+build time: Nov 18 17:23
+*/
+/**
+ * mvc base
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("mvc/base", function(S, sync) {
+    return {
+        sync:sync
+    };
+}, {
+    requires:['./sync']
+});/**
+ * collection of models
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
+
+    function findModelIndex(mods, mod, comparator) {
+        var i = mods.length;
+        if (comparator) {
+            var k = comparator(mod);
+            for (i = 0; i < mods.length; i++) {
+                var k2 = comparator(mods[i]);
+                if (k < k2) {
+                    break;
+                }
+            }
+        }
+        return i;
+    }
+
+    function Collection() {
+        Collection.superclass.constructor.apply(this, arguments);
+    }
+
+    Collection.ATTRS = {
+        model:{
+            value:Model
+        },
+        models:{
+            /**
+             * normalize model list
+             * @param models
+             */
+            setter:function(models) {
+                var prev = this.get("models");
+                this.remove(prev, {silent:1});
+                this.add(models, {silent:1});
+                return this.get("models");
+            },
+            value:[]
+        },
+        url:{value:S.noop},
+        comparator:{},
+        sync:{
+            value:function() {
+                mvc.sync.apply(this, arguments);
+            }
+        },
+        parse:{
+            value:function(resp) {
+                return resp;
+            }
+        }
+    };
+
+    S.extend(Collection, Base, {
+        sort:function() {
+            var comparator = this.get("comparator");
+            if (comparator) {
+                this.get("models").sort(function(a, b) {
+                    return comparator(a) - comparator(b);
+                });
+            }
+        },
+
+        toJSON:function() {
+            return S.map(this.get("models"), function(m) {
+                return m.toJSON();
+            });
+        },
+
+        /**
+         *
+         * @param model
+         * @param opts
+         * @return  boolean flag
+         *          true:add success
+         *          false:validate error
+         */
+        add:function(model, opts) {
+            var self = this,
+                ret = true;
+            if (S.isArray(model)) {
+                var orig = [].concat(model);
+                S.each(orig, function(m) {
+                    ret = ret && self._add(m, opts);
+                });
+            } else {
+                ret = self._add(model, opts);
+            }
+            return ret;
+        },
+
+        remove:function(model, opts) {
+            var self = this;
+            if (S.isArray(model)) {
+                var orig = [].concat(model);
+                S.each(orig, function(m) {
+                    self._remove(m, opts);
+                });
+            } else if (model) {
+                self._remove(model, opts);
+            }
+        },
+
+        at:function(i) {
+            return this.get("models")[i];
+        },
+
+        _normModel:function(model) {
+            var ret = true;
+            if (!(model instanceof Model)) {
+                var data = model,
+                    modelConstructor = this.get("model");
+                model = new modelConstructor();
+                ret = model.set(data, {
+                    silent:1
+                });
+            }
+            return ret && model;
+        },
+
+        load:function(opts) {
+            var self = this;
+            opts = opts || {};
+            var success = opts.success;
+            opts.success = function(resp) {
+                if (resp) {
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set("models", v, opts);
+                    }
+                }
+                success && success.apply(this, arguments);
+            };
+            self.get("sync").call(self, self, 'read', opts);
+            return self;
+        },
+
+        create:function(model, opts) {
+            var self = this;
+            opts = opts || {};
+            model = this._normModel(model);
+            if (model) {
+                model.addToCollection(self);
+                var success = opts.success;
+                opts.success = function() {
+                    self.add(model, opts);
+                    success && success();
+                };
+                model.save(opts);
+            }
+            return model;
+        },
+
+        _add:function(model, opts) {
+            model = this._normModel(model);
+            if (model) {
+                opts = opts || {};
+                var index = findModelIndex(this.get("models"), model, this.get("comparator"));
+                this.get("models").splice(index, 0, model);
+                model.addToCollection(this);
+                if (!opts['silent']) {
+                    this.fire("add", {
+                        model:model
+                    });
+                }
+            }
+            return model;
+        },
+
+        /**
+         * not call model.destroy ,maybe model belongs to multiple collections
+         * @private
+         * @param model
+         * @param opts
+         */
+        _remove:function(model, opts) {
+            opts = opts || {};
+            var index = S.indexOf(model, this.get("models"));
+            if (index != -1) {
+                this.get("models").splice(index, 1);
+                model.removeFromCollection(this);
+            }
+            if (!opts['silent']) {
+                this.fire("remove", {
+                    model:model
+                });
+            }
+        },
+
+        getById:function(id) {
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
+                if (model.getId() === id) {
+                    return model;
+                }
+            }
+            return null;
+        },
+
+        getByCid:function(cid) {
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
+                if (model.get("clientId") === cid) {
+                    return model;
+                }
+            }
+            return null;
+        }
+
+    });
+
+    return Collection;
+
+}, {
+    requires:['event','./model','./base','base']
+});/**
+ * enhanced base for model with sync
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("mvc/model", function(S, Base, mvc) {
+
+    var blacklist = [
+        "idAttribute",
+        "clientId",
+        "urlRoot",
+        "url",
+        "parse",
+        "sync"
+    ];
+
+    function Model() {
+        var self = this;
+        Model.superclass.constructor.apply(self, arguments);
+        /**
+         * should bubble to its collections
+         */
+        self.publish("*Change", {
+            bubbles:1
+        });
+        /**
+         * @Array mvc/collection collections this model belonged to
+         */
+        self.collections = {};
+    }
+
+    S.extend(Model, Base, {
+
+        addToCollection:function(c) {
+            this.collections[S.stamp(c)] = c;
+            this.addTarget(c);
+        },
+
+        removeFromCollection:function(c) {
+            delete this.collections[S.stamp(c)];
+            this.removeTarget(c);
+        },
+
+        getId:function() {
+            return this.get(this.get("idAttribute"));
+        },
+
+        setId:function(id) {
+            return this.set(this.get("idAttribute"), id);
+        },
+
+        /**
+         * @override
+         */
+        __set:function() {
+            this.__isModified = 1;
+            return Model.superclass.__set.apply(this, arguments);
+        },
+
+        /**
+         * whether it is newly created
+         */
+        isNew:function() {
+            return !this.getId();
+        },
+
+        /**
+         * whether has been modified since last save
+         */
+        isModified:function() {
+            return !!(this.isNew() || this.__isModified);
+        },
+
+        /**
+         * destroy this model
+         * @param opts
+         */
+        destroy:function(opts) {
+            var self = this;
+            opts = opts || {};
+            var success = opts.success;
+            opts.success = function(resp) {
+                var lists = self.collections;
+                if (resp) {
+                    self.set(resp, opts);
+                }
+                for (var l in lists) {
+                    lists[l].remove(self, opts);
+                    self.removeFromCollection(lists[l]);
+                }
+                self.fire("destroy");
+                success && success.apply(this, arguments);
+            };
+            if (!self.isNew() && opts['delete']) {
+                self.get("sync").call(self, self, 'delete', opts);
+            } else {
+                opts.success();
+                if (opts.complete) {
+                    opts.complete();
+                }
+            }
+
+            return self;
+        },
+
+        /**
+         * call sycn to load
+         * @param opts
+         */
+        load:function(opts) {
+            var self = this;
+            opts = opts || {};
+            var success = opts.success;
+            opts.success = function(resp) {
+                if (resp) {
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set(v, opts);
+                    }
+                }
+                self.__isModified = 0;
+                success && success.apply(this, arguments);
+            };
+            self.get("sync").call(self, self, 'read', opts);
+            return self;
+        },
+
+        save:function(opts) {
+            var self = this;
+            opts = opts || {};
+            var success = opts.success;
+            opts.success = function(resp) {
+                if (resp) {
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set(v, opts);
+                    }
+                }
+                self.__isModified = 0;
+                success && success.apply(this, arguments);
+            };
+            self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
+            return self;
+        },
+
+        toJSON:function() {
+            var ret = this.getAttrVals();
+            S.each(blacklist, function(b) {
+                delete ret[b];
+            });
+            return ret;
+        }
+
+    }, {
+        ATTRS:{
+            idAttribute:{
+                value:'id'
+            },
+            clientId:{
+                valueFn:function() {
+                    return S.guid("mvc-client");
+                }
+            },
+            url:{
+                value:url
+            },
+            urlRoot:{
+                value:""
+            },
+            sync:{
+                value:sync
+            },
+            parse:{
+                /**
+                 * parse json from server to get attr/value pairs
+                 * @param resp
+                 */
+                value:function(resp) {
+                    return resp;
+                }
+            }
+        }
+    });
+
+    function getUrl(o) {
+        var u;
+        if (o && (u = o.get("url"))) {
+            if (S.isString(u)) {
+                return u;
+            }
+            return u.call(o);
+        }
+        return u;
+    }
+
+
+    function sync() {
+        mvc.sync.apply(this, arguments);
+    }
+
+    function url() {
+        var c,
+            cv,
+            collections = this.collections;
+        for (c in collections) {
+            if (collections.hasOwnProperty(c)) {
+                cv = collections[c];
+                break;
+            }
+        }
+        var base = getUrl(cv) || this.get("urlRoot");
+
+        if (this.isNew()) {
+            return base;
+        }
+
+        base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
+        return base + encodeURIComponent(this.getId()) + "/";
+    }
+
+    return Model;
+
+}, {
+    requires:['base','./base']
+});/**
+ * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('mvc/router', function(S, Event, Base) {
+    var queryReg = /\?(.*)/,
+        each = S.each,
+        // take a breath to avoid duplicate hashchange
+        BREATH_INTERVAL = 100,
+        grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
+        // all registered route instance
+        allRoutes = [],
+        win = window,
+        location = win.location,
+        history = win.history ,
+        supportNativeHistory = !!(history && history['pushState']),
+        __routerMap = "__routerMap";
+
+    function findFirstCaptureGroupIndex(regStr) {
+        var r,i;
+        for (i = 0;
+             i < regStr.length;
+             i++) {
+            r = regStr.charAt(i);
+            // skip escaped reg meta char
+            if (r == "\\") {
+                i++;
+            } else if (r == "(") {
+                return i;
+            }
+        }
+        throw new Error("impossible to not to get capture group in kissy mvc route");
+    }
+
+    function getHash() {
+        // 不能 location.hash
+        // http://xx.com/#yy?z=1
+        // ie6 => location.hash = #yy
+        // 其他浏览器 => location.hash = #yy?z=1
+        return location.href.replace(/^[^#]*#?!?(.*)$/, '$1');
+    }
+
+    /**
+     * get url fragment and dispatch
+     */
+    function getFragment() {
+        if (Router.nativeHistory && supportNativeHistory) {
+            return location.pathname.substr(Router.urlRoot.length) + location.search;
+        } else {
+            return getHash();
+        }
+    }
+
+    /**
+     * slash ------------- start
+     */
+
+    /**
+     * whether string end with slash
+     * @param str
+     */
+    function endWithSlash(str) {
+        return S.endsWith(str, "/");
+    }
+
+    function startWithSlash(str) {
+        return S.startsWith(str, "/");
+    }
+
+    function removeEndSlash(str) {
+        if (endWithSlash(str)) {
+            str = str.substring(0, str.length - 1);
+        }
+        return str;
+    }
+
+    function removeStartSlash(str) {
+        if (startWithSlash(str)) {
+            str = str.substring(1);
+        }
+        return str;
+    }
+
+    function addEndSlash(str) {
+        return removeEndSlash(str) + "/";
+    }
+
+    function addStartSlash(str) {
+        return "/" + removeStartSlash(str);
+    }
+
+    function equalsIgnoreSlash(str1, str2) {
+        str1 = removeEndSlash(str1);
+        str2 = removeEndSlash(str2);
+        return str1 == str2;
+    }
+
+    /**
+     * slash ------------------  end
+     */
+
+    /**
+     * get full path from fragment for html history
+     * @param fragment
+     */
+    function getFullPath(fragment) {
+        return location.protocol + "//" + location.host +
+            removeEndSlash(Router.urlRoot) + addStartSlash(fragment)
+    }
+
+    /**
+     * get query object from query string
+     * @param path
+     */
+    function getQuery(path) {
+        var m,
+            ret = {};
+        if (m = path.match(queryReg)) {
+            return S.unparam(m[1]);
+        }
+        return ret;
+    }
+
+    /**
+     * match url with route intelligently (always get optimal result)
+     */
+    function dispatch() {
+        var path = getFragment(),
+            fullPath = path,
+            query,
+            arg,
+            finalRoute = 0,
+            finalMatchLength = -1,
+            finalRegStr = "",
+            finalFirstCaptureGroupIndex = -1,
+            finalCallback = 0,
+            finalRouteName = "",
+            finalParam = 0;
+
+        path = fullPath.replace(queryReg, "");
+        // user input : /xx/yy/zz
+        each(allRoutes, function(route) {
+            var routeRegs = route[__routerMap],
+                // match exactly
+                exactlyMatch = 0;
+            each(routeRegs, function(desc) {
+                    var reg = desc.reg,
+                        regStr = desc.regStr,
+                        paramNames = desc.paramNames,
+                        firstCaptureGroupIndex = -1,
+                        m,
+                        name = desc.name,
+                        callback = desc.callback;
+                    if (m = path.match(reg)) {
+                        // match all result item shift out
+                        m.shift();
+
+                        function genParam() {
+                            var params = {};
+                            each(m, function(sm, i) {
+                                params[paramNames[i]] = sm;
+                            });
+                            return params;
+                        }
+
+                        function upToFinal() {
+                            finalRegStr = regStr;
+                            finalFirstCaptureGroupIndex = firstCaptureGroupIndex;
+                            finalCallback = callback;
+                            finalParam = genParam();
+                            finalRoute = route;
+                            finalRouteName = name;
+                            finalMatchLength = m.length;
+                        }
+
+                        // route: /xx/yy/zz
+                        if (!m.length) {
+
+                            upToFinal();
+                            exactlyMatch = 1;
+                            return false;
+
+                        } else {
+
+                            firstCaptureGroupIndex = findFirstCaptureGroupIndex(regStr);
+
+                            // final route : /*
+                            // now route : /xx/*
+                            if (firstCaptureGroupIndex > finalFirstCaptureGroupIndex) {
+                                upToFinal();
+                            }
+
+                            // final route : /xx/:id/:id
+                            // now route :  /xx/:id/zz
+                            else if (
+                                firstCaptureGroupIndex == finalFirstCaptureGroupIndex &&
+                                    finalMatchLength >= m.length
+                                ) {
+                                if (m.length < finalMatchLength) {
+                                    upToFinal()
+                                } else if (regStr.length > finalRegStr.length) {
+                                    upToFinal();
+                                }
+                            }
+
+                            // first route has priority
+                            else if (!finalRoute) {
+                                upToFinal();
+                            }
+                        }
+
+                    }
+                }
+            );
+
+            if (exactlyMatch) {
+                return false;
+            }
+        });
+
+
+        if (finalParam) {
+            query = getQuery(fullPath);
+            finalCallback.apply(finalRoute, [finalParam,query]);
+            arg = {
+                name:name,
+                paths:finalParam,
+                query:query
+            };
+            finalRoute.fire('route:' + name, arg);
+            finalRoute.fire('route', arg);
+        }
+    }
+
+    /**
+     * transform route declaration to router reg
+     * @param str
+     *         /search/:q
+     *         /user/*path
+     */
+    function transformRouterReg(str, callback) {
+        var name = str,
+            paramNames = [];
+        // escape keyword from regexp
+        str = S.escapeRegExp(str);
+
+        str = str.replace(grammar, function(m, g1, g2, g3, g4) {
+            paramNames.push(g2 || g4);
+            // :name
+            if (g2) {
+                return "([^/]+)";
+            }
+            // *name
+            else if (g4) {
+                return "(.*)";
+            }
+        });
+
+        return {
+            name:name,
+            paramNames:paramNames,
+            reg:new RegExp("^" + str + "$"),
+            regStr:str,
+            callback:callback
+        }
+    }
+
+    /**
+     * normalize function by self
+     * @param self
+     * @param callback
+     */
+    function normFn(self, callback) {
+        if (S.isFunction(callback)) {
+            return callback;
+        } else {
+            return self[callback];
+        }
+    }
+
+    function _afterRoutesChange(e) {
+        var self = this;
+        self[__routerMap] = {};
+        self.addRoutes(e.newVal);
+    }
+
+    function Router() {
+        var self = this;
+        Router.superclass.constructor.apply(self, arguments);
+        self.on("afterRoutesChange", _afterRoutesChange, self);
+        _afterRoutesChange.call(self, {newVal:self.get("routes")});
+        allRoutes.push(self);
+    }
+
+    Router.ATTRS = {
+        /**
+         * @example
+         *   {
+         *     path:callback
+         *   }
+         */
+        routes:{}
+    };
+
+    S.extend(Router, Base, {
+        /**
+         *
+         * @param routes
+         *         {
+         *           "/search/:param":"callback"
+         *         }
+         */
+        addRoutes:function(routes) {
+            var self = this;
+            each(routes, function(callback, name) {
+                self[__routerMap][name] = transformRouterReg(name, normFn(self, callback));
+            });
+        }
+    }, {
+        navigate:function(path, opts) {
+            if (getFragment() !== path) {
+                if (Router.nativeHistory && supportNativeHistory) {
+                    history['pushState']({}, "", getFullPath(path));
+                    // pushState does not fire popstate event (unlike hashchange)
+                    // so popstate is not statechange
+                    // fire manually
+                    dispatch();
+                } else {
+                    location.hash = "!" + path;
+                }
+            } else if (opts && opts.triggerRoute) {
+                dispatch();
+            }
+        },
+        start:function(opts) {
+            opts = opts || {};
+
+            opts.urlRoot = opts.urlRoot || "";
+
+            var urlRoot,
+                nativeHistory = opts.nativeHistory,
+                locPath = location.pathname,
+                hash = getFragment(),
+                hashIsValid = location.hash.match(/#!.+/);
+
+            urlRoot = Router.urlRoot = opts.urlRoot;
+            Router.nativeHistory = nativeHistory;
+
+            if (nativeHistory) {
+
+                if (supportNativeHistory) {
+                    // http://x.com/#!/x/y
+                    // =>
+                    // http://x.com/x/y
+                    // =>
+                    // process without refresh page and add history entry
+                    if (hashIsValid) {
+                        if (equalsIgnoreSlash(locPath, urlRoot)) {
+                            // put hash to path
+                            history['replaceState']({}, "", getFullPath(hash));
+                            opts.triggerRoute = 1;
+                        } else {
+                            S.error("location path must be same with urlRoot!");
+                        }
+                    }
+                }
+                // http://x.com/x/y
+                // =>
+                // http://x.com/#!/x/y
+                // =>
+                // refresh page without add history entry
+                else if (!equalsIgnoreSlash(locPath, urlRoot)) {
+                    location.replace(addEndSlash(urlRoot) + "#!" + hash);
+                    return;
+                }
+
+            }
+
+            // prevent hashChange trigger on start
+            setTimeout(function() {
+                if (nativeHistory && supportNativeHistory) {
+                    Event.on(win, 'popstate', dispatch);
+                } else {
+                    Event.on(win, "hashchange", dispatch);
+                    opts.triggerRoute = 1;
+                }
+
+                // check initial hash on start
+                // in case server does not render initial state correctly
+                // when monitor hashchange ,client must be responsible for dispatching and rendering.
+                if (opts.triggerRoute) {
+                    dispatch();
+                }
+                opts.success && opts.success();
+
+            }, BREATH_INTERVAL);
+        }
+    });
+
+    return Router;
+
+}, {
+    requires:['event','base']
+});
+
+/**
+ * refer :
+ * http://www.w3.org/TR/html5/history.html
+ * http://documentcloud.github.com/backbone/
+ **//**
+ * default sync for model
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("mvc/sync", function(S, io) {
+    var methodMap = {
+        'create': 'POST',
+        'update': 'POST', //'PUT'
+        'delete': 'POST', //'DELETE'
+        'read'  : 'GET'
+    };
+
+    function sync(self, method, options) {
+        var type = methodMap[method],
+            ioParam = S.merge({
+                type:type,
+                dataType:'json'
+            }, options);
+
+        var data = ioParam.data = ioParam.data || {};
+        data['_method'] = method;
+
+        if (!ioParam.url) {
+            ioParam.url = S.isString(self.get("url")) ?
+                self.get("url") :
+                self.get("url").call(self);
+        }
+
+        if (method == 'create' || method == 'update') {
+            data.model = self.toJSON();
+        }
+
+        return io(ioParam);
+    }
+
+    return sync;
+}, {
+    requires:['ajax']
+});/**
+ * view for kissy mvc : event delegation,el generator
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("mvc/view", function(S, Node, Base) {
+
+    var $ = Node.all;
+
+    function normFn(self, f) {
+        if (S.isString(f)) {
+            return self[f];
+        }
+        return f;
+    }
+
+    function View() {
+        View.superclass.constructor.apply(this, arguments);
+        var events;
+        if (events = this.get("events")) {
+            this._afterEventsChange({
+                newVal:events
+            });
+        }
+    }
+
+    View.ATTRS = {
+        el:{
+            value:"<div />",
+            getter:function(s) {
+                if (S.isString(s)) {
+                    s = $(s);
+                    this.__set("el", s);
+                }
+                return s;
+            }
+        },
+
+        /**
+         * events:{
+         *   selector:{
+         *     eventType:callback
+         *   }
+         * }
+         */
+        events:{
+
+        }
+    };
+
+
+    S.extend(View, Base, {
+
+        _afterEventsChange:function(e) {
+            var prevVal = e.prevVal;
+            if (prevVal) {
+                this._removeEvents(prevVal);
+            }
+            this._addEvents(e.newVal);
+        },
+
+        _removeEvents:function(events) {
+            var el = this.get("el");
+            for (var selector in events) {
+                var event = events[selector];
+                for (var type in event) {
+                    var callback = normFn(this, event[type]);
+                    el.undelegate(type, selector, callback, this);
+                }
+            }
+        },
+
+        _addEvents:function(events) {
+            var el = this.get("el");
+            for (var selector in events) {
+                var event = events[selector];
+                for (var type in event) {
+                    var callback = normFn(this, event[type]);
+                    el.delegate(type, selector, callback, this);
+                }
+            }
+        },
+        /**
+         * user need to override
+         */
+        render:function() {
+            return this;
+        },
+
+        destroy:function() {
+            this.get("el").remove();
+        }
+
+    });
+
+    return View;
+
+}, {
+    requires:['node','base']
+});/**
+ * KISSY's MVC Framework for Page Application (Backbone Style)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("mvc", function(S, MVC, Model, Collection, View, Router) {
+    return S.mix(MVC, {
+        Model:Model,
+        View:View,
+        Collection:Collection,
+        Router:Router
+    });
+}, {
+    requires:["mvc/base","mvc/model","mvc/collection","mvc/view","mvc/router"]
+});
