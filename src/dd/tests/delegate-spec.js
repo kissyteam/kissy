@@ -102,7 +102,17 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
                 });
             });
 
-            waits(1000);
+            waits(100);
+
+            // 10px move to start
+            runs(function() {
+                jasmine.simulate(document, "mousemove", {
+                   clientX:c2.offset().left + 15 - DOM.scrollLeft(),
+                    clientY:c2.offset().top + 15 - DOM.scrollTop()
+                });
+            });
+
+            waits(100);
             runs(function() {
                 jasmine.simulate(document, "mousemove", {
                     clientX:c1.offset().left + 5 - DOM.scrollLeft(),
@@ -111,7 +121,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             });
 
 
-            waits(1000);
+            waits(100);
             runs(function() {
                 jasmine.simulate(document, "mousemove", {
                     clientX:c1.offset().left + 6 - DOM.scrollLeft(),
@@ -120,12 +130,12 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             });
 
 
-            waits(1000);
+            waits(100);
             runs(function() {
                 jasmine.simulate(document, "mouseup");
             });
 
-            waits(1000);
+            waits(100);
             runs(function() {
                 expect(S.one("#container2").children()[0]).toBe(c2[0]);
             });

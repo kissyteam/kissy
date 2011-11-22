@@ -54,8 +54,10 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
             _handleMouseDown:function(ev) {
                 var self = this,
                     handler,
+                    node,
                     handlers = self.get("handlers"),
                     target = new Node(ev.target);
+
                 // 不需要像 Draggble 一样，判断 target 是否在 handler 内
                 // 委托时，直接从 target 开始往上找 handler
                 if (handlers.length) {
@@ -63,8 +65,11 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                 } else {
                     handler = target;
                 }
-                var node = handler && self._getNode(handler);
-                if (!node) {
+
+                if (handler) {
+                    self.set("activeHandler", handler);
+                    node = self._getNode(handler);
+                } else {
                     return;
                 }
 
