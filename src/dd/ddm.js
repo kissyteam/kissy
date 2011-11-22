@@ -5,7 +5,8 @@
 KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
     var doc = document,
-        BUFFER_TIME = 100,
+        // prevent collision with click
+        BUFFER_TIME = 200,
         MOVE_DELAY = 30,
         SHIM_ZINDEX = 999999;
 
@@ -276,7 +277,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
                 });
             }
             self.fire("dragend", {
-                drag:self
+                drag:activeDrag
             });
             self.set("activeDrag", null);
             self.set("activeDrop", null);
