@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 22 22:32
+build time: Nov 22 22:35
 */
 KISSY.add("dd/ddm",function(j,q,o,k,i){function d(){d.superclass.constructor.apply(this,arguments)}function h(b,g){var l=b.get("activeDrag"),w=l.get("mode"),C=b.get("drops"),r,y=0,t=0,D=c(l.get("node")),E=m(D);j.each(C,function(A){var s;if(s=A.getNodeFromTarget(g,l.get("dragNode")[0],l.get("node")[0]))if(w=="point"){if(f(c(s),l.mousePos)){s=m(c(s));if(r){if(s<t){r=A;t=s}}else{r=A;t=s}}}else if(w=="intersect"){s=m(n(D,c(s)));if(s>t){t=s;r=A}}else if(w=="strict"){s=m(n(D,c(s)));if(s==E){r=A;return false}}});
 if((y=b.get("activeDrop"))&&y!=r){y._handleOut(g);l._handleOut(g)}b.set("activeDrop",r);if(r)y!=r?r._handleEnter(g):r._handleOver(g)}function a(b){var g=document;b._shim=(new k("<div style='background-color:red;position:absolute;left:0;top:0;cursor:"+u.get("dragCursor")+";z-index:"+z+";'></div>")).prependTo(g.body||g.documentElement).css("opacity",0);a=e;o.on(v,"resize",x,b);o.on(v,"scroll",x,b);e(b)}function e(b){var g=b.get("activeDrag").get("activeHandler"),l="auto";if(g)l=g.css("cursor");if(l==

@@ -175,7 +175,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             if (bufferTime) {
                 self._bufferTimer = setTimeout(function() {
                     // 事件到了，仍然是 mousedown 触发！
-                    S.log("drag start by timeout");
+                    //S.log("drag start by timeout");
                     self._start();
                 }, bufferTime);
             }
@@ -207,7 +207,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 if ((l1 = Math.abs(pageX - startMousePos.left)) >= clickPixelThresh ||
                     (l2 = Math.abs(pageY - startMousePos.top)) >= clickPixelThresh
                     ) {
-                    S.log("start drag by pixel : " + l1 + " : " + l2);
+                    //S.log("start drag by pixel : " + l1 + " : " + l2);
                     self._start();
                 }
                 // 开始后，下轮 move 开始触发 drag 事件
