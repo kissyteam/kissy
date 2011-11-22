@@ -301,6 +301,18 @@ offset-spec end
 <div id="test-contains">text node</div>
 <!--traversal-spec end-->
 
+<!-- script clone insert spec start-->
+<div id="scriptTestHolder">
+ <script>
+    if (!window.scriptTest1) {
+    window.scriptTest1 = 1;
+} else {
+    window.scriptTest1++;
+}
+    </script>
+    <script src="./scripts-exec/clone-ie-tc.js"></script>
+</div>
+<!-- script clone insert spec end-->
 
 </div>
 <!-- selector 核心，首先测试 -->
@@ -315,6 +327,7 @@ offset-spec end
 <script src="style-spec.js"></script>
 <script src="traversal-spec.js"></script>
 <script src="clone-spec.js"></script>
+<script src="script-spec.js"></script>
 <script>
 
     window.onload = function() {
