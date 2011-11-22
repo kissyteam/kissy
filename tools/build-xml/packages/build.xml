@@ -106,7 +106,10 @@
             <path path="${kissy.build.dir}/menu.js"/>
             <path path="${kissy.build.dir}/button.js"/>
             <path path="${kissy.build.dir}/menubutton.js"/>
+            <path path="${kissy.build.dir}/tree.js"/>
+            <path path="${kissy.build.dir}/waterfall.js"/>
             <path path="${kissy.build.dir}/validation.js"/>
+            <path path="${kissy.build.dir}/mvc.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
             </filterchain>

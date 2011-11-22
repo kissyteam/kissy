@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 21 16:36
 */
 /**
  * UIBase.Align
@@ -1836,7 +1836,7 @@ KISSY.add("uibase/resize", function(S) {
 
     Resize.prototype = {
         __destructor:function() {
-            self.resizer && self.resizer.destroy();
+            this.resizer && this.resizer.destroy();
         },
         _uiSetResize:function(v) {
 

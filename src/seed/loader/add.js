@@ -1,6 +1,6 @@
 /**
  * add module definition
- * @author  lifesinger@gmail.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader, utils, data) {
     if ("require" in this) {
@@ -150,3 +150,8 @@
     });
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);
+
+/**
+ * @refer
+ *  - https://github.com/amdjs/amdjs-api/wiki/AMD
+ **/
