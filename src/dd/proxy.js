@@ -48,11 +48,16 @@ KISSY.add("dd/proxy", function(S, Node) {
                 var node = self.get("node"),
                     dragNode = drag.get("node");
 
-                if (!self[PROXY_ATTR] && S.isFunction(node)) {
-                    node = node(drag);
-                    node.addClass("ks-dd-proxy");
-                    node.css("position", "absolute");
-                    self[PROXY_ATTR] = node;
+                // cache proxy node
+                if (!self[PROXY_ATTR]) {
+                    if (S.isFunction(node)) {
+                        node = node(drag);
+                        node.addClass("ks-dd-proxy");
+                        node.css("position", "absolute");
+                        self[PROXY_ATTR] = node;
+                    }
+                } else {
+                    node = self[PROXY_ATTR];
                 }
                 dragNode.parent()
                     .append(node);

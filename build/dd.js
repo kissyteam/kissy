@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 22 10:42
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -10,7 +10,8 @@ build time: Nov 18 17:23
 KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
     var doc = document,
-        BUFFER_TIME = 100,
+        // prevent collision with click
+        BUFFER_TIME = 200,
         MOVE_DELAY = 30,
         SHIM_ZINDEX = 999999;
 
@@ -281,7 +282,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
                 });
             }
             self.fire("dragend", {
-                drag:self
+                drag:activeDrag
             });
             self.set("activeDrag", null);
             self.set("activeDrop", null);
@@ -720,11 +721,16 @@ KISSY.add("dd/proxy", function(S, Node) {
                 var node = self.get("node"),
                     dragNode = drag.get("node");
 
-                if (!self[PROXY_ATTR] && S.isFunction(node)) {
-                    node = node(drag);
-                    node.addClass("ks-dd-proxy");
-                    node.css("position", "absolute");
-                    self[PROXY_ATTR] = node;
+                // cache proxy node
+                if (!self[PROXY_ATTR]) {
+                    if (S.isFunction(node)) {
+                        node = node(drag);
+                        node.addClass("ks-dd-proxy");
+                        node.css("position", "absolute");
+                        self[PROXY_ATTR] = node;
+                    }
+                } else {
+                    node = self[PROXY_ATTR];
                 }
                 dragNode.parent()
                     .append(node);
