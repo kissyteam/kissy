@@ -45,9 +45,9 @@
     KISSY.ready(function(S) {
 
         // S.one('#haha').text('alert(2)');
-        // S.one('<div>3<script>alert(1)<' + '/script>3</div>').prependTo('body');
+        S.one('<div>3<script>alert("bug inline")<' + '/script>3</div>').clone(true).prependTo('body');
 
-        // S.one('<div>3</p><script src="clone-ie.js"><' + '/script>3</div>').prependTo('body');
+        S.one('<div>3<script src="clone-ie.js"><' + '/script>3</div>').clone(true).prependTo('body');
 
         var $k = S.all,
                 holder = $k('#holder'),
