@@ -210,6 +210,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     return null;
                 }
 
+                // TODO
+                // ie bug :
+                // 1. ie<9 <script>xx</script> => <script></script>
+                // 2. ie will execute external script
                 var clone = elem.cloneNode(deep);
 
                 if (isElementNode(elem) ||

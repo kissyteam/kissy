@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 22 10:34
+build time: Nov 22 14:33
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 22 10:34
          */
         version: '1.20dev',
 
-        buildTime:'20111122103402',
+        buildTime:'20111122143310',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4355,6 +4355,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     return null;
                 }
 
+                // TODO
+                // ie bug :
+                // 1. ie<9 <script>xx</script> => <script></script>
+                // 2. ie will execute external script
                 var clone = elem.cloneNode(deep);
 
                 if (isElementNode(elem) ||
@@ -4899,23 +4903,32 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
 
     // extract script nodes and execute alone later
     function filterScripts(nodes, scripts) {
-        var ret = [];
-        for (var i = 0; nodes[i]; i++) {
-            var el = nodes[i],nodeName = el.nodeName.toLowerCase();
+        var ret = [],i,el,nodeName;
+        for (i = 0; nodes[i]; i++) {
+            el = nodes[i];
+            nodeName = el.nodeName.toLowerCase();
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
             } else if (nodeName === "script" && isJs(el)) {
+                // remove script to make sure ie9 does not invoke when append
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el)
+                }
                 if (scripts) {
-                    scripts.push(el.parentNode ? el.parentNode.removeChild(el) : el);
+                    scripts.push(el);
                 }
             } else {
                 if (_isElementNode(el) &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
                     !rformEls.test(nodeName)) {
-                    var tmp = [],ss = el.getElementsByTagName("script");
-                    for (var j = 0; j < ss.length; j++) {
-                        if (isJs(ss[j])) {
-                            tmp.push(ss[j]);
+                    var tmp = [],
+                        s,
+                        j,
+                        ss = el.getElementsByTagName("script");
+                    for (j = 0; j < ss.length; j++) {
+                        s = ss[j];
+                        if (isJs(s)) {
+                            tmp.push(s);
                         }
                     }
                     nodes.splice.apply(nodes, [i + 1,0].concat(tmp));
@@ -4976,7 +4989,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
                 var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
                 fn(node, refNode);
             }
-            if (scripts) {
+            if (scripts && scripts.length) {
                 S.each(scripts, evalScript);
             }
         }

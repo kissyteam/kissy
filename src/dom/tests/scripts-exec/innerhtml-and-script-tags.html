@@ -42,6 +42,7 @@
     t.innerHTML = '<script defer>alert("set innerHTML(only script) via defer");<\/script>';
 
     // firefox 会执行
+    // ! firefox 7 开始不执行
     div = doc.createElement('DIV');
     div.innerHTML = 'html 3<script>alert("set innerHTML via appendChild");<\/script>';
     t.appendChild(div);

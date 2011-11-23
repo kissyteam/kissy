@@ -4,7 +4,7 @@
  */
 KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
     var Draggable = DD.Draggable,
-        DOM=S.DOM,
+        DOM = S.DOM,
         Proxy = DD.Proxy;
     var ie = document['documentMode'] || UA['ie'];
 
@@ -33,12 +33,22 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
                 dragXy = dragNode.offset();
                 jasmine.simulate(dragNode[0], "mousedown", {
-                    clientX:dragXy.left + 10- DOM.scrollLeft(),
-                    clientY:dragXy.top + 10- DOM.scrollTop()
+                    clientX:dragXy.left + 10 - DOM.scrollLeft(),
+                    clientY:dragXy.top + 10 - DOM.scrollTop()
                 });
             });
 
-            waits(300);
+            waits(100);
+
+            // 10px move to start
+            runs(function() {
+                jasmine.simulate(document, "mousemove", {
+                    clientX:dragXy.left + 15 - DOM.scrollLeft(),
+                    clientY:dragXy.top + 15 - DOM.scrollTop()
+                });
+            });
+
+            waits(100);
 
             runs(function() {
                 expect(drag.get("node")[0]).not.toBe(drag.get("dragNode")[0]);

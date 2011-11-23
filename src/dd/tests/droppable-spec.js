@@ -4,7 +4,7 @@
  */
 KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
     var Draggable = DD.Draggable,
-    DOM=S.DOM,
+        DOM = S.DOM,
         Droppable = DD.Droppable;
     var ie = document['documentMode'] || UA['ie'];
 
@@ -34,11 +34,21 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
             runs(function() {
                 jasmine.simulate(dragNode[0], "mousedown", {
-                    clientX:dragXy.left + 10- DOM.scrollLeft(),
-                    clientY:dragXy.top + 10- DOM.scrollTop()
+                    clientX:dragXy.left + 10 - DOM.scrollLeft(),
+                    clientY:dragXy.top + 10 - DOM.scrollTop()
                 });
             });
-            waits(300);
+            waits(100);
+
+            // 10px move to start
+            runs(function() {
+                jasmine.simulate(document, "mousemove", {
+                    clientX:dragXy.left + 15 - DOM.scrollLeft(),
+                    clientY:dragXy.top + 15 - DOM.scrollTop()
+                });
+            });
+
+            waits(100);
             it("should fire dragenter properly", function() {
 
                 var dragenterSpy = jasmine.createSpy();
@@ -46,8 +56,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
                 runs(function() {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:dropXy.left + 10- DOM.scrollLeft(),
-                        clientY:dropXy.top + 10- DOM.scrollTop()
+                        clientX:dropXy.left + 10 - DOM.scrollLeft(),
+                        clientY:dropXy.top + 10 - DOM.scrollTop()
                     });
                 });
                 waits(300);
@@ -56,8 +66,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
                 });
                 runs(function() {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:dropXy.left + 20- DOM.scrollLeft(),
-                        clientY:dropXy.top + 20- DOM.scrollTop()
+                        clientX:dropXy.left + 20 - DOM.scrollLeft(),
+                        clientY:dropXy.top + 20 - DOM.scrollTop()
                     });
                 });
                 waits(300);
@@ -73,8 +83,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
                 drag.on("dragover", dragoverSpy);
                 runs(function() {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:dropXy.left + 21- DOM.scrollLeft(),
-                        clientY:dropXy.top + 22- DOM.scrollTop()
+                        clientX:dropXy.left + 21 - DOM.scrollLeft(),
+                        clientY:dropXy.top + 22 - DOM.scrollTop()
                     });
                 });
                 waits(300);
@@ -83,8 +93,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
                 });
                 runs(function() {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:dropXy.left + 20- DOM.scrollLeft(),
-                        clientY:dropXy.top + 20- DOM.scrollTop()
+                        clientX:dropXy.left + 20 - DOM.scrollLeft(),
+                        clientY:dropXy.top + 20 - DOM.scrollTop()
                     });
                 });
                 waits(300);
@@ -99,8 +109,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
                 drag.on("dragexit", dragExit);
                 runs(function() {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:dropXy.left + 150- DOM.scrollLeft(),
-                        clientY:dropXy.top + 150- DOM.scrollTop()
+                        clientX:dropXy.left + 150 - DOM.scrollLeft(),
+                        clientY:dropXy.top + 150 - DOM.scrollTop()
                     });
                 });
                 waits(300);
@@ -115,8 +125,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
                 drag.on("dragdrophit", dragdropHit);
                 runs(function() {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:dropXy.left + 10- DOM.scrollLeft(),
-                        clientY:dropXy.top + 10- DOM.scrollTop()
+                        clientX:dropXy.left + 10 - DOM.scrollLeft(),
+                        clientY:dropXy.top + 10 - DOM.scrollTop()
                     });
                 });
 
@@ -135,19 +145,29 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             runs(function() {
                 dragXy = dragNode.offset();
                 jasmine.simulate(dragNode[0], "mousedown", {
-                    clientX:dragXy.left + 10- DOM.scrollLeft(),
-                    clientY:dragXy.top + 10- DOM.scrollTop()
+                    clientX:dragXy.left + 10 - DOM.scrollLeft(),
+                    clientY:dragXy.top + 10 - DOM.scrollTop()
                 });
             });
-            waits(300);
+            waits(100);
+
+            // 10px move to start
+            runs(function() {
+                jasmine.simulate(document, "mousemove", {
+                    clientX:dragXy.left + 15 - DOM.scrollLeft(),
+                    clientY:dragXy.top + 15 - DOM.scrollTop()
+                });
+            });
+
+            waits(100);
 
             it("should fire dragdropmiss properly", function() {
                 var dragdropMiss = jasmine.createSpy();
                 drag.on("dragdropmiss", dragdropMiss);
                 runs(function() {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:dropXy.left + 150- DOM.scrollLeft(),
-                        clientY:dropXy.top + 150- DOM.scrollTop()
+                        clientX:dropXy.left + 150 - DOM.scrollLeft(),
+                        clientY:dropXy.top + 150 - DOM.scrollTop()
                     });
                 });
 
