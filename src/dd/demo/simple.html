@@ -65,9 +65,10 @@
         point drag
     </div>
 
-    <div id="c3" class="component" style="width:250px">
-
+    <div id="c3" class="component" style="width:250px;line-height: 1;height: 110px;">
         strict drag with proxy
+        <img height="100"
+                src="http://img.alimama.cn/adbrand/adboard/picture/2011-09-20/126792650001110920134440.jpg"/>
     </div>
 
 
@@ -126,44 +127,44 @@
          */
         S.ready(function(S) {
             var p = new Proxy({
-                        /**
-                         * 如何产生替代节点
-                         * @param drag 当前拖对象
-                         */
-                        node:function(drag) {
-                            var n = S.one(drag.get("dragNode").clone(true));
-                            n.attr("id", S.guid("ks-dd-proxy"));
-                            n.css("opacity", 0.2);
-                            return n;
-                        }
-                    });
+                /**
+                 * 如何产生替代节点
+                 * @param drag 当前拖对象
+                 */
+                node:function(drag) {
+                    var n = S.one(drag.get("dragNode").clone(true));
+                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.css("opacity", 0.2);
+                    return n;
+                }
+            });
             var c1 = new Draggable({
-                        node:"#c1",
-                        //模式，
-                        // intersect :区域相交就算enter
-                        // strict : drag 区域完全在 drop 区域内才算
-                        // point : 鼠标在 drop 区域内
-                        //默认 point
-                        mode:Draggable.INTERSECT
-                    });
+                node:"#c1",
+                //模式，
+                // intersect :区域相交就算enter
+                // strict : drag 区域完全在 drop 区域内才算
+                // point : 鼠标在 drop 区域内
+                //默认 point
+                mode:Draggable.INTERSECT
+            });
 
 
             var c3 = new Draggable({
-                        node:"#c3",
-                        mode:Draggable.STRICT
-                    });
+                node:"#c3",
+                mode:Draggable.STRICT
+            });
 
 
             p.attach(c3);
 
             var c2 = new Draggable({
-                        node:"#c2"
-                    });
+                node:"#c2"
+            });
 
 
             var drop = new Droppable({
-                        node:"#drop"
-                    });
+                node:"#drop"
+            });
 
             c1.on("dragenter", function(ev) {
 

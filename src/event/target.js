@@ -40,11 +40,15 @@ KISSY.add('event/target', function(S, Event, EventObject) {
     function attach(method) {
         return function(type, fn, scope) {
             var self = this;
-            S.each(S.trim(type).split(/\s+/), function(t) {
+            splitAndRun(type, function(t) {
                 Event["__" + method](false, self, t, fn, scope);
             });
             return self; // chain
         };
+    }
+
+    function splitAndRun(type, fn) {
+        S.each(S.trim(type).split(/\s+/), fn);
     }
 
     /**
@@ -67,9 +71,21 @@ KISSY.add('event/target', function(S, Event, EventObject) {
             var self = this,
                 ret,
                 r2,
-                customEvent = getCustomEvent(self, type, eventData);
+                customEvent;
+            if ((type = S.trim(type)) &&
+                type.indexOf(" ") > 0) {
+                splitAndRun(type, function(t) {
+                    r2 = self.fire(t, eventData);
+                    if (r2 === false) {
+                        ret = false;
+                    }
+                });
+                return ret;
+            }
+            customEvent = getCustomEvent(self, type, eventData);
             ret = Event._handle(self, customEvent);
-            if (!customEvent.isPropagationStopped && isBubblable(self, type)) {
+            if (!customEvent.isPropagationStopped &&
+                isBubblable(self, type)) {
                 r2 = self.bubble(type, customEvent);
                 // false 优先返回
                 if (r2 === false) {
