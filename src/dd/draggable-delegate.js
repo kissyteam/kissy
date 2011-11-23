@@ -16,8 +16,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
     function _handleMouseDown(ev) {
         var self = this,
             handler,
-            node,
-            handlers = self.get("handlers"),
+            node;
+
+        if (!self._checkMouseDown(ev)) {
+            return;
+        }
+
+        var handlers = self.get("handlers"),
             target = new Node(ev.target);
 
         // 不需要像 Draggble 一样，判断 target 是否在 handler 内

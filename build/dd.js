@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 23 17:37
+build time: Nov 23 18:02
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -443,11 +443,15 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
 
         clickPixelThresh:{
-            value: DDM.get("clickPixelThresh")
+            valueFn:function() {
+                return DDM.get("clickPixelThresh");
+            }
         },
 
         bufferTime:{
-            value:  DDM.get("bufferTime")
+            valueFn:function() {
+                return DDM.get("bufferTime");
+            }
         },
 
         /*
@@ -586,21 +590,16 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
      */
     function _handleMouseDown(ev) {
         var self = this,
-            t;
+            t = ev.target;
 
-        if (self.get('primaryButtonOnly') && ev.button > 1 ||
-            self.get("disabled")) {
-            return;
+        if (self._checkMouseDown(ev)) {
+
+            if (!self._check(t)) {
+                return;
+            }
+
+            self._prepare(ev);
         }
-
-        t = new Node(ev.target);
-
-        if (!self._check(t)) {
-            return;
-        }
-
-        self._prepare(ev);
-
     }
 
     S.extend(Draggable, Base, {
@@ -643,6 +642,10 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             self.detach();
         },
 
+        /**
+         *
+         * @param {HTMLElement} t
+         */
         _check: function(t) {
             var self = this,
                 handlers = self.get('handlers'),
@@ -650,13 +653,21 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             each(handlers, function(handler) {
                 //子区域内点击也可以启动
                 if (handler.contains(t) ||
-                    handler[0] == t[0]) {
+                    handler[0] == t) {
                     ret = 1;
                     self.set("activeHandler", handler);
                     return false;
                 }
             });
             return ret;
+        },
+
+        _checkMouseDown:function(ev) {
+            if (this.get('primaryButtonOnly') && ev.button > 1 ||
+                this.get("disabled")) {
+                return 0;
+            }
+            return 1;
         },
 
         _prepare:function(ev) {
@@ -1065,8 +1076,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
     function _handleMouseDown(ev) {
         var self = this,
             handler,
-            node,
-            handlers = self.get("handlers"),
+            node;
+
+        if (!self._checkMouseDown(ev)) {
+            return;
+        }
+
+        var handlers = self.get("handlers"),
             target = new Node(ev.target);
 
         // 不需要像 Draggble 一样，判断 target 是否在 handler 内
