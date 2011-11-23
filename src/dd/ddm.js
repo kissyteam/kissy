@@ -2,10 +2,12 @@
  * dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
+KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
 
     var doc = document,
         win = window,
+
+        ie6 = UA['ie'] === 6,
 
         // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
@@ -175,8 +177,10 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
             "style='" +
             //red for debug
             "background-color:red;" +
-            "position:absolute;" +
+            "position:" + (ie6 ? 'absolute' : 'fixed') + ";" +
             "left:0;" +
+            "width:100%;" +
+            "height:100%;" +
             "top:0;" +
             "cursor:" + ddm.get("dragCursor") + ";" +
             "z-index:" +
@@ -190,10 +194,12 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
 
         activeShim = showShim;
 
-        // support dd-scroll
-        // prevent empty when scroll outside initial window
-        Event.on(win, "resize", adjustShimSize, self);
-        Event.on(win, "scroll", adjustShimSize, self);
+        if (ie6) {
+            // ie6 不支持 fixed 以及 width/height 100%
+            // support dd-scroll
+            // prevent empty when scroll outside initial window
+            Event.on(win, "resize scroll", adjustShimSize, self);
+        }
 
         showShim(self);
     }
@@ -224,7 +230,9 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
             cursor:cur,
             display: "block"
         });
-        adjustShimSize.call(self);
+        if (ie6) {
+            adjustShimSize.call(self);
+        }
     }
 
     /**
@@ -314,7 +322,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
             unregisterEvent(self);
             // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
             if (self.__activeToDrag) {
-                self.__activeToDrag._clearBufferTimer();
+                self.__activeToDrag._end();
                 self.__activeToDrag = 0;
             }
             self._shim && self._shim.hide();
@@ -387,7 +395,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
     ddm.area = area;
     return ddm;
 }, {
-    requires:["dom","event","node","base"]
+    requires:["ua","dom","event","node","base"]
 });
 
 /**

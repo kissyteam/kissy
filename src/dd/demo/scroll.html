@@ -244,7 +244,8 @@
 
         (function() {
             var drag = new Draggable({
-                node :'#component'
+                node :'#component',
+                move:1
             });
 
             new Scroll({
@@ -255,26 +256,13 @@
                 //容器边缘高宽度
                 diff:[20,20]
             }).attach(drag);
-
-            drag.on("drag", function(ev) {
-                drag.get("node").offset({
-                    left:ev.left,
-                    top:ev.top
-                });
-            });
         })();
 
 
         (function() {
             var drag = new Draggable({
-                node :'#free'
-            });
-
-            drag.on("drag", function(ev) {
-                drag.get("node").offset({
-                    left:ev.left,
-                    top:ev.top
-                });
+                node :'#free',
+                move:1
             });
 
             new Scroll({

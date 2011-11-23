@@ -101,15 +101,6 @@
             var c = ev.drag;
             p = c.get("dragNode").css("position");
         });
-        DDM.on("drag", function(ev) {
-
-            var c = ev.drag;
-            /**
-             * node 和 dragNode 区别：
-             * node : 可能是 proxy node，指实际拖放节点
-             */
-            c.get("node").offset(ev);
-        });
         DDM.on("dragend", function(ev) {
             var c = ev.drag;
             c.get("dragNode").css("position", p);
@@ -121,39 +112,38 @@
          */
         S.ready(function() {
 
-            S.one("#container3").unselectable();
-
             var p = new Proxy({
-                        /**
-                         * 如何产生替代节点
-                         * @param drag 当前拖对象
-                         */
-                        node:function(drag) {
-                            var n = S.one(drag.get("dragNode").clone(true));
-                            n.attr("id", S.guid("ks-dd-proxy"));
-                            n.css("opacity", 0.2);
-                            return n;
-                        },
-                        //每次都生成新节点
-                        destroyOnEnd:true
-                    });
+                /**
+                 * 如何产生替代节点
+                 * @param drag 当前拖对象
+                 */
+                node:function(drag) {
+                    var n = S.one(drag.get("dragNode").clone(true));
+                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.css("opacity", 0.2);
+                    return n;
+                },
+                //每次都生成新节点
+                destroyOnEnd:true
+            });
 
             var delegate = new DraggableDelegate({
-                        container:"#container3",
-                        handlers:['.cheader'],
-                        selector:'.component'
-                    });
+                container:"#container3",
+                move:1,
+                handlers:['.cheader'],
+                selector:'.component'
+            });
 
             p.attach(delegate);
 
             var drop = new Droppable({
-                        node:"#drop3"
-                    });
+                node:"#drop3"
+            });
             var c = 0;
             S.one("#add_delegate").on("click", function() {
                 new Node('<div class="component"><div class="cheader">拖动头</div>delegate'
                         + (++c) + '</div>')
-                        .prependTo("#container3").unselectable();
+                        .prependTo("#container3");
             });
         });
 
