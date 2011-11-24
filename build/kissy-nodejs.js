@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 24 20:59
+build time: Nov 24 21:40
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 24 20:59
          */
         version: '1.20dev',
 
-        buildTime:'20111124205903',
+        buildTime:'20111124214009',
 
         /**
          * Returns a new object containing all of the properties of
@@ -7996,7 +7996,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject, Utils,undefined) {
+KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
     var KS_PUBLISH = "__~ks_publish",
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
@@ -8036,6 +8036,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils,undefined) {
     function attach(method) {
         return function(type, fn, scope) {
             var self = this;
+            type = trim(type);
             splitAndRun(type, function(t) {
                 Event["__" + method](false, self, t, fn, scope);
             });

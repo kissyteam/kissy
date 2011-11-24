@@ -5024,7 +5024,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject, Utils,undefined) {
+KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
     var KS_PUBLISH = "__~ks_publish",
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
@@ -5064,6 +5064,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils,undefined) {
     function attach(method) {
         return function(type, fn, scope) {
             var self = this;
+            type = trim(type);
             splitAndRun(type, function(t) {
                 Event["__" + method](false, self, t, fn, scope);
             });
