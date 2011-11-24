@@ -9,7 +9,7 @@ KISSY.add("resizable/base", function(S, Node, Base, D) {
         i,
         j,
         Draggable = D.Draggable,
-        CLS_PREFIX = "ks-resize-handler",
+        CLS_PREFIX = "ks-resizable-handler",
         horizonal = ["l","r"],
         vertical = ["t","b"],
         hcNormal = {

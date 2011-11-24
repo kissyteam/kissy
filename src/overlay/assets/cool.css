@@ -68,14 +68,14 @@
     background-attachment: fixed;
 }
 
-.ks-overlay .ke-resizehandler {
+.ks-overlay .ks-resizable-handler {
     overflow: hidden;
     font-size: 0;
     line-height: 0;
     position: absolute;
 }
 
-.ks-overlay .ke-resizehandler-b {
+.ks-overlay .ks-resizable-handler-b {
     height: 15px;
     width: 100%; /*background-color: yellow;*/
     /*-15px ie6 cross iframe shim*/
@@ -84,7 +84,7 @@
     cursor: n-resize;
 }
 
-.ks-overlay .ke-resizehandler-t {
+.ks-overlay .ks-resizable-handler-t {
     height: 15px;
     width: 100%; /*background-color: yellow;*/
     top: -15px;
@@ -92,7 +92,7 @@
     cursor: n-resize;
 }
 
-.ks-overlay .ke-resizehandler-l {
+.ks-overlay .ks-resizable-handler-l {
     height: 100%;
     -height: expression(this.parentNode.offsetHeight);
     width: 15px; /*background-color: yellow;*/
@@ -101,7 +101,7 @@
     cursor: e-resize;
 }
 
-.ks-overlay .ke-resizehandler-r {
+.ks-overlay .ks-resizable-handler-r {
     height: 100%;
     -height: expression(this.parentNode.offsetHeight); /*background-color: yellow;*/
     width: 15px;
@@ -111,7 +111,7 @@
     cursor: e-resize;
 }
 
-.ks-overlay .ke-resizehandler-bl {
+.ks-overlay .ks-resizable-handler-bl {
     height: 15px;
     width: 15px; /*background-color: green;*/
     z-index: 1;
@@ -120,7 +120,7 @@
     cursor: sw-resize;
 }
 
-.ks-overlay .ke-resizehandler-br {
+.ks-overlay .ks-resizable-handler-br {
     height: 15px;
     width: 15px;
     z-index: 1; /*background-color: green;*/
@@ -129,7 +129,7 @@
     cursor: se-resize;
 }
 
-.ks-overlay .ke-resizehandler-tl {
+.ks-overlay .ks-resizable-handler-tl {
     height: 15px;
     width: 15px;
     z-index: 1; /*background-color: green;*/
@@ -138,7 +138,7 @@
     cursor: nw-resize;
 }
 
-.ks-overlay .ke-resizehandler-tr {
+.ks-overlay .ks-resizable-handler-tr {
     height: 15px;
     width: 15px;
     z-index: 1; /*background-color: green;*/
