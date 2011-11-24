@@ -215,7 +215,9 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
                 }
 
                 Event.on(f, 'click', foo);
+
                 Event.on(f, 'click', foo);
+
                 Event.remove(f, 'click', foo);
 
                 // click f
@@ -236,6 +238,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
                 Event.on(g, 'click', function() {
                     result.push(SECOND);
                 });
+
                 Event.remove(g, 'click');
 
                 // click g
@@ -249,13 +252,17 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
 
             it('should reomve all the event handler of the specified element', function() {
                 var h = DOM.get('#link-h');
+
                 var result = [];
+
                 Event.on(h, 'click', function() {
                     result.push(FIRST);
                 });
+
                 Event.on(h, 'click', function() {
                     result.push(SECOND);
                 });
+                
                 Event.remove(h);
 
                 // click h
@@ -463,6 +470,7 @@ KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {
             it('should guarantee separate event adding function keeps separate scope with multiple event.', function() {
                 Event.detach(doc);
                 var re = [];
+
                 Event.on(doc, 'click keydown', handler, {id: FIRST});
                 Event.on(doc, 'click keydown', handler, {id: SECOND});
                 function handler() {

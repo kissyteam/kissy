@@ -110,12 +110,12 @@
             }
 
             var retryCount = 1,
-
+                node,
                 timer = S.later(function() {
-                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                        ++retryCount > POLL_RETRYS) {
                         timer.cancel();
                     }
-
                 }, POLL_INTERVAL, true);
         }
     });

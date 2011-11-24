@@ -17,7 +17,7 @@ History:
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
 
-### v1.1.6 -> v1.2.0 (2011/06/08)
+### v1.1.6 -> v1.2.0 (2011/11/24)
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
@@ -26,14 +26,13 @@ History:
  - [!] DOM.create(html),参数为复杂 html 字符串时，需要加上结束标签，例如 <a href='#'></a> 而不是 <a href='#'>
  - [*] DOM.query(selector,context) context 可以为 Array<HTMLElement> HTMLNodeList 以及选择器字符串(限制同第一个参数 selector)
  - [!] DOM.css 取计算值，而不是行内样式值。行内样式可通过 DOM.style 获取
- - [+] 增加 DOM.clone
- - [+] 增加 DOM.style
+ - [+] 增加 DOM.clone ,DOM.style, DOM.empty
  - [!] 禁止使用原生 cloneNode ，使用 DOM.clone ，也不要设置自定义属性，使用 DOM.data
  - [*] DOM.remove 会自动清理当前节点以及子孙节点上注册的事件
  - [+] 增加 DOM.inner/outerWidth
  - [x] checkbox/radio append/insert 状态保持
  - [x] html(" <span></span>") 前缀空白保留
-  - [+] append/insert 都可以指定是否执行脚本节点的代码
+ - [+] append/insert 都可以指定是否执行脚本节点的代码
 
   
 
@@ -47,7 +46,7 @@ History:
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
  - [!] 字符串数组支持变化，例如 Event.on(['#xx','#yy'],...) 改写做 Event.on('#xx,#yy',...);
-
+ - [+] 自定义事件增加冒泡支持，参见 publish api
 
 
  - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）
@@ -58,20 +57,28 @@ History:
  - [+] 增加 form 配置，可直接序列化 form 并发送 ajax 请求
  - [+] 增加 S.io.serialize 方法，用于 form 序列化
  - [+] 支持 cross domain ajax , ie67 使用 flash ，详见 xdr 配置
+ - [+] 支持 sub domain ajax ，利用代理页，详见 xdr 配置
 
 
  - [+] 增加 Node.prototype.stop ，随时停止由 Node.prototype.animate 引起的动画
  - [*] Node 与 NodeList 合一
  - [!] NodeList.prototype.all(selector) 1.1.6为取得第一个元素的子孙中选符合 selector 的节点 , 1.2 改为取得所有元素的子孙符合 selector 的节点（经过去重和根据 DOM 树前序遍历顺序进行排序）
-
+ - [+] 增加 slideToggle/fadeToggle
 
  - [*] anim 完全重写，提高性能，不重复 touch dom / css
  - [+] anim 支持 scrollLeft,scrollTop （包括 window）
  - [+] 增加 anim 单元测试
+ - [+] 增加队列 (queue) 配置
+ - [!] 同一个元素的动画默认进入内置队列进行排队
 
  - [+] base ATTRS 支持 validator 配置，返回 false ，不设置值
  - [+] base set/get 支持 "x.y.z" 子属性设置，要求 x 为原生简单对象 : {y:{z:xx}}
+ - [+] base set 返回 boolean，代表属性值是否验证成功
 
+ - [+] dd 支持 drop 以及基于委托的 drag&drop
+ - [+] dd 增加单元测试
+ - [+] draggable 增加 move 配置
+ - [*] 改进 draggable，提高拖时的响应速度
 
  - [*] Suggest 增加配置项 dataType, 标志数据来源, 支持动态且缓存, 动态但不缓存, 静态数据
  - [x] Suggest fix: IE9 下无法更新数据
@@ -100,6 +107,7 @@ History:
  - [+] loader 增加单元测试
  - [*] 所有模块结构根据 loader 重新组织
 
+ - [x] 修复 datalazyload addCallback 元素本事可见时不触发回调的 bug
 
  - [+] 增加 button 组件
 
@@ -111,13 +119,12 @@ History:
 
  - [+] 增加 waterfall 组件
 
+ - [+] 增加 mvc 框架
+ - [+] mvc 支持 hash 导航以及 html5 history api
+
  - [+] 增加 component 组件基类
 
  - [+] kissy-tools 增加 module-compiler 工具
-
- - [+] dd 支持 drop 以及基于委托的 drag&drop
- - [+] dd 增加单元测试
- - [+] dd 增加 portal 示例
 
  - [*] kissyteam 文档利用 sphinx 重新编写整理
 

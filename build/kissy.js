@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 23 12:07
+build time: Nov 24 20:59
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 23 12:07
          */
         version: '1.20dev',
 
-        buildTime:'20111123120737',
+        buildTime:'20111124205903',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2650,12 +2650,12 @@ build time: Nov 23 12:07
             }
 
             var retryCount = 1,
-
+                node,
                 timer = S.later(function() {
-                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                        ++retryCount > POLL_RETRYS) {
                         timer.cancel();
                     }
-
                 }, POLL_INTERVAL, true);
         }
     });
@@ -2804,6 +2804,7 @@ D:\code\kissy_git\kissy\src\dom\traversal.js
 D:\code\kissy_git\kissy\src\dom.js
 D:\code\kissy_git\kissy\src\event\keycodes.js
 D:\code\kissy_git\kissy\src\event\object.js
+D:\code\kissy_git\kissy\src\event\utils.js
 D:\code\kissy_git\kissy\src\event\base.js
 D:\code\kissy_git\kissy\src\event\target.js
 D:\code\kissy_git\kissy\src\event\focusin.js
@@ -3104,17 +3105,17 @@ KISSY.add('dom/base', function(S, UA, undefined) {
          * @type Number
          */
         ELEMENT_NODE : 1,
-        ATTRIBUTE_NODE : 2,
+        "ATTRIBUTE_NODE" : 2,
         TEXT_NODE:3,
-        CDATA_SECTION_NODE : 4,
-        ENTITY_REFERENCE_NODE: 5,
-        ENTITY_NODE : 6,
-        PROCESSING_INSTRUCTION_NODE :7,
+        "CDATA_SECTION_NODE" : 4,
+        "ENTITY_REFERENCE_NODE": 5,
+        "ENTITY_NODE" : 6,
+        "PROCESSING_INSTRUCTION_NODE" :7,
         COMMENT_NODE : 8,
         DOCUMENT_NODE : 9,
-        DOCUMENT_TYPE_NODE : 10,
+        "DOCUMENT_TYPE_NODE" : 10,
         DOCUMENT_FRAGMENT_NODE : 11,
-        NOTATION_NODE : 12
+        "NOTATION_NODE" : 12
     };
     var DOM = {
 
@@ -7238,14 +7239,74 @@ KISSY.add('event/object', function(S, undefined) {
  */
 
 /**
- * @module  event
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * utils for event
+ * @author yiminghe@gmail.com
  */
-KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
+KISSY.add("event/utils", function(S, DOM) {
+
+    /**
+     * whether two event listens are the same
+     * @param h1 已有的 handler 描述
+     * @param h2 用户提供的 handler 描述
+     */
+    function isIdenticalHandler(h1, h2, el) {
+        var scope1 = h1.scope || el,
+            ret = 1,
+            d1,
+            d2,
+            scope2 = h2.scope || el;
+        if (h1.fn !== h2.fn
+            || scope1 !== scope2) {
+            ret = 0;
+        } else if ((d1 = h1.data) !== (d2 = h2.data)) {
+            // undelgate 不能 remove 普通 on 的 handler
+            // remove 不能 remove delegate 的 handler
+            if (!d1 && d2
+                || d1 && !d2
+                ) {
+                ret = 0;
+            } else if (d1 && d2) {
+                if (!d1.equals || !d2.equals) {
+                    S.error("no equals in data");
+                } else if (!d1.equals(d2,el)) {
+                    ret = 0;
+                }
+            }
+        }
+        return ret;
+    }
+
+
+    function isValidTarget(target) {
+        // 3 - is text node
+        // 8 - is comment node
+        return target &&
+            target.nodeType !== DOM.TEXT_NODE &&
+            target.nodeType !== DOM.COMMENT_NODE;
+    }
+
+
+    function batchForType(obj, methodName, targets, types) {
+        // on(target, 'click focus', fn)
+        if (types && types.indexOf(" ") > 0) {
+            var args = S.makeArray(arguments);
+            S.each(types.split(/\s+/), function(type) {
+                var args2 = [].concat(args);
+                args2.splice(0, 4, targets, type);
+                obj[methodName].apply(obj, args2);
+            });
+            return true;
+        }
+        return 0;
+    }
+
+
+    function splitAndRun(type, fn) {
+        S.each(type.split(/\s+/), fn);
+    }
+
 
     var doc = document,
-        nodeName = DOM._nodeName,
-        makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -7267,9 +7328,38 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 if (el.detachEvent) {
                     el.detachEvent('on' + type, fn);
                 }
-            },
-        SPACE = " ",
+            };
+
+
+    return {
+        splitAndRun:splitAndRun,
+        batchForType:batchForType,
+        isValidTarget:isValidTarget,
+        isIdenticalHandler:isIdenticalHandler,
+        simpleAdd:simpleAdd,
+        simpleRemove:simpleRemove
+    };
+
+}, {
+    requires:['dom']
+});
+
+/**
+ * scalable event framework for kissy (refer DOM3 Events)
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ */
+KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
+
+    var isValidTarget = Utils.isValidTarget,
+        isIdenticalHandler = Utils.isIdenticalHandler,
+        batchForType = Utils.batchForType,
+        simpleRemove = Utils.simpleRemove,
+        simpleAdd = Utils.simpleAdd,
+        splitAndRun = Utils.splitAndRun,
+        nodeName = DOM._nodeName,
+        makeArray = S.makeArray,
         each = S.each,
+        trim = S.trim,
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了
@@ -7295,6 +7385,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 events = eventDesc.events;
             each(events, function(handlers, type) {
                 each(handlers, function(handler) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     Event.on(dest, type, handler.fn, handler.scope, handler.data);
                 });
             });
@@ -7334,7 +7425,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             if (!eventDesc) {
                 Event._data(target, eventDesc = {});
             }
-            //事件 listeners
+            //事件 listeners , similar to eventListeners in DOM3 Events
             var events = eventDesc.events = eventDesc.events || {},
                 handlers = events[type] = events[type] || [],
                 handleObj = {
@@ -7363,30 +7454,46 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     if (type) {
                         event.type = type;
                     }
-                    return Event._handle(target, event);
+                    return _handle(target, event);
                 };
                 eventHandler.target = target;
             }
+
+            for (var i = handlers.length - 1; i >= 0; --i) {
+                /**
+                 * If multiple identical EventListeners are registered on the same EventTarget
+                 * with the same parameters the duplicate instances are discarded.
+                 * They do not cause the EventListener to be called twice
+                 * and since they are discarded
+                 * they do not need to be removed with the removeEventListener method.
+                 */
+                if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                    return;
+                }
+            }
+
             if (isNativeTarget) {
                 addDomEvent(target, type, eventHandler, handlers, handleObj);
                 //nullify to prevent memory leak in ie ?
                 target = null;
             }
+
             // 增加 listener
             handlers.push(handleObj);
         },
 
         /**
-         * Adds an event listener.
+         * Adds an event listener.similar to addEventListener in DOM3 Events
          * @param targets KISSY selector
          * @param type {String} The type of event to append.
-         * @param fn {Function} The event handler.
+         * @param fn {Function} The event handler/listener.
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
+            type = trim(type);
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            if (batchForType('add', targets, type, fn, scope, data)) {
+            if (batchForType(Event, 'add', targets, type, fn, scope, data)) {
                 return targets;
             }
 
@@ -7395,17 +7502,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             });
 
             return targets;
-        },
-
-        __getListeners:function(target, type) {
-            var events = Event.__getEvents(target) || {};
-            return events[type] || [];
-        },
-
-        __getEvents:function(target) {
-            // 获取事件描述
-            var eventDesc = Event._data(target);
-            return eventDesc && eventDesc.events;
         },
 
         // single target, single type, fixed native
@@ -7432,49 +7528,33 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
 
             // remove all types of event
-            if (type === undefined) {
+            if (!type) {
                 for (type in events) {
-                    Event.remove.call(Event, target, type);
+                    Event.__remove(isNativeTarget, target, type);
                 }
                 return;
             }
-
-            scope = scope || target;
 
             if ((handlers = events[type])) {
                 len = handlers.length;
                 // 移除 fn
                 if (fn && len) {
+                    var currentHandler = {
+                        data:data,
+                        fn:fn,
+                        scope:scope
+                    },handler;
+
                     for (i = 0,j = 0,t = []; i < len; ++i) {
-                        var reserve = false,
-                            handler = handlers[i],
-                            handlerScope = handler.scope || target;
-                        if (fn !== handler.fn
-                            || scope !== handlerScope) {
+                        handler = handlers[i];
+                        // 注意顺序，用户提供的 handler 在第二个参数
+                        if (!isIdenticalHandler(handler, currentHandler, target)) {
                             t[j++] = handler;
-                            reserve = true;
-                        } else if (data !== data2) {
-                            var data2 = handler.data;
-                            // undelgate 不能 remove 普通 on 的 handler
-                            // remove 不能 remove delegate 的 handler
-                            if (!data && data2
-                                || data2 && !data
-                                ) {
-                                t[j++] = handler;
-                                reserve = true;
-                            } else if (data && data2) {
-                                if (!data.equals || !data2.equals) {
-                                    S.error("no equals in data");
-                                } else if (!data2.equals(data)) {
-                                    t[j++] = handler;
-                                    reserve = true;
-                                }
-                            }
-                        }
-                        if (!reserve && special.remove) {
+                        } else if (special.remove) {
                             special.remove.call(target, handler);
                         }
                     }
+
                     events[type] = t;
                     len = t.length;
                 }
@@ -7502,10 +7582,15 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         },
 
         /**
-         * Detach an event or set of events from an element.
+         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+         * @param targets KISSY selector
+         * @param type {String} The type of event to append.
+         * @param fn {Function} The event handler/listener.
+         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         remove: function(targets, type /* optional */, fn /* optional */, scope /* optional */, data/*internal usage*/) {
-            if (batchForType('remove', targets, type, fn, scope)) {
+            type = trim(type);
+            if (batchForType(Event, 'remove', targets, type, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -7514,88 +7599,92 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             return targets;
         },
 
-        _handle: function(target, event) {
-            /* As some listeners may remove themselves from the
-             event, the original array length is dynamic. So,
-             let's make a copy of all listeners, so we are
-             sure we'll call all of them.*/
-            var listeners = Event.__getListeners(target, event.type).slice(0),
-                ret,
-                gRet,
-                i = 0,
-                len = listeners.length,
-                listener;
-
-            for (; i < len; ++i) {
-                listener = listeners[i];
-                // 传入附件参数data，目前用于委托
-                ret = listener.fn.call(listener.scope || target,
-                    event, listener.data);
-
-                // 和 jQuery 逻辑保持一致
-                if (ret !== undefined) {
-                    // 有一个 false，最终结果就是 false
-                    // 否则等于最后一个返回值
-                    if (gRet !== false) {
-                        gRet = ret;
-                    }
-                    // return false 等价 preventDefault + stopProgation
-                    if (ret === false) {
-                        event.halt();
-                    }
-                }
-
-                if (event.isImmediatePropagationStopped) {
-                    break;
-                }
-            }
-
-            return gRet;
-        },
+        _handle:_handle,
 
         /**
-         * fire event , simulate bubble in browser
-         * @return undefined
+         * fire event , simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @return boolean The return value of fire/dispatchEvent indicates
+         *                 whether any of the listeners which handled the event called preventDefault.
+         *                 If preventDefault was called the value is false, else the value is true.
          */
         fire: function(targets, eventType, eventData, onlyHandlers) {
-            if (!batchForType("fire", targets, eventType, eventData, onlyHandlers)) {
-                // custom event firing moved to target.js
-                eventData = eventData || {};
-                // protect event type
-                eventData.type = eventType;
-                DOM.query(targets).each(function(target) {
-                    fireDOMEvent(target, eventType, eventData, onlyHandlers);
+            var ret = true;
+            eventType = trim(eventType);
+            if (eventType.indexOf(" ") > -1) {
+                splitAndRun(eventType, function(t) {
+                    ret = Event.fire(targets, t, eventData, onlyHandlers) && ret;
                 });
+                return ret;
             }
-        },
-
-        __batchForType:batchForType,
-        __simpleAdd:simpleAdd,
-        __simpleRemove:simpleRemove
+            // custom event firing moved to target.js
+            eventData = eventData || {};
+            // protect event type
+            eventData.type = eventType;
+            DOM.query(targets).each(function(target) {
+                ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
+            });
+            return ret;
+        }
     };
 
     // shorthand
     Event.on = Event.add;
     Event.detach = Event.remove;
 
-    function batchForType(methodName, targets, types) {
-        // on(target, 'click focus', fn)
-        if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
-            var args = makeArray(arguments);
-            each(types.split(/\s+/), function(type) {
-                var args2 = [].concat(args);
-                args2.splice(0, 3, targets, type);
-                Event[methodName].apply(Event, args2);
-            });
-            return true;
-        }
-        return 0;
+    function getListeners(target, type) {
+        var events = getEvents(target) || {};
+        return events[type] || [];
     }
 
-    function isValidTarget(target) {
-        // 3 - is text node
-        // 8 - is comment node
-        return target && target.nodeType !== 3 && target.nodeType !== 8;
+    function _handle(target, event) {
+        /* As some listeners may remove themselves from the
+         event, the original array length is dynamic. So,
+         let's make a copy of all listeners, so we are
+         sure we'll call all of them.*/
+        /**
+         * DOM3 Events: EventListenerList objects in the DOM are live. ??
+         */
+        var listeners = getListeners(target, event.type).slice(0),
+            ret,
+            gRet,
+            i = 0,
+            len = listeners.length,
+            listener;
+
+        for (; i < len; ++i) {
+            listener = listeners[i];
+            // 传入附件参数data，目前用于委托
+            // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            ret = listener.fn.call(listener.scope || target,
+                event, listener.data);
+
+            // 和 jQuery 逻辑保持一致
+            if (ret !== undefined) {
+                // 有一个 false，最终结果就是 false
+                // 否则等于最后一个返回值
+                if (gRet !== false) {
+                    gRet = ret;
+                }
+                // return false 等价 preventDefault + stopProgation
+                if (ret === false) {
+                    event.halt();
+                }
+            }
+
+            if (event.isImmediatePropagationStopped) {
+                break;
+            }
+        }
+
+        // fire 时判断如果 preventDefault，则返回 false 否则返回 true
+        // 这里返回值意义不同
+        return gRet;
+    }
+
+    function getEvents(target) {
+        // 获取事件描述
+        var eventDesc = Event._data(target);
+        return eventDesc && eventDesc.events;
     }
 
     /**
@@ -7604,7 +7693,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = EVENT_SPECIAL[type] || {};
         // 第一次注册该事件，dom 节点才需要注册 dom 事件
-        if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
+        if (!handlers.length &&
+            (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
         }
         if (special.add) {
@@ -7614,14 +7704,29 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 
     /**
-     * fire dom event from bottom to up
+     * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+     * @return boolean The return value of dispatchEvent indicates
+     *                 whether any of the listeners which handled the event called preventDefault.
+     *                 If preventDefault was called the value is false, else the value is true.
      */
     function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         if (!isValidTarget(target)) {
-            return;
+            return false;
         }
-        var event = new EventObject(target, undefined, eventType);
-        S.mix(event, eventData);
+
+        var event,
+            ret = true;
+        if (eventData instanceof EventObject) {
+            event = eventData;
+        } else {
+            event = new EventObject(target, undefined, eventType);
+            S.mix(event, eventData);
+        }
+        /*
+         The target of the event is the EventTarget on which dispatchEvent is called.
+         */
+        // TODO: protect target , but incompatible
+        // event.target=target;
         // protect type
         event.type = eventType;
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
@@ -7634,9 +7739,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         //bubble up dom tree
         do{
             event.currentTarget = cur;
-            Event._handle(cur, event);
+            _handle(cur, event);
             // Trigger an inline bound script
-            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+            if (cur[ ontype ] &&
+                cur[ ontype ].call(cur) === false) {
                 event.preventDefault();
             }
             // Bubble up to document, then to window
@@ -7646,7 +7752,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         } while (cur && !event.isPropagationStopped);
 
         if (!event.isDefaultPrevented) {
-            if (!(eventType === "click" && nodeName(target, "a"))) {
+            if (!(eventType === "click" &&
+                nodeName(target, "a"))) {
                 var old;
                 try {
                     if (ontype && target[ eventType ]) {
@@ -7675,29 +7782,38 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
                 Event_Triggered = TRIGGERED_NONE;
             }
+        } else {
+            ret = false;
         }
+        return ret;
     }
 
     return Event;
 }, {
-    requires:["dom","event/object"]
+    requires:["dom","./object","./utils"]
 });
 
 /**
- * 承玉：2011-06-07
+ * 2011-11-24
+ *  - 自定义事件和 dom 事件操作彻底分离
+ *  - TODO: group event from DOM3 Event
+ *
+ * 2011-06-07
+ *  - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ *  - 重构
  *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
  *  - 减少闭包使用，prevent ie 内存泄露？
  *  - 增加 fire ，模拟冒泡处理 dom 事件
- *  - TODO: 自定义事件和 dom 事件操作彻底分离?
- *
  */
 
 /**
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject) {
+KISSY.add('event/target', function(S, Event, EventObject, Utils,undefined) {
     var KS_PUBLISH = "__~ks_publish",
+        trim = S.trim,
+        splitAndRun = Utils.splitAndRun,
         KS_BUBBLE_TARGETS = "__~ks_bubble_targets",
         ALL_EVENT = "*";
 
@@ -7741,10 +7857,6 @@ KISSY.add('event/target', function(S, Event, EventObject) {
         };
     }
 
-    function splitAndRun(type, fn) {
-        S.each(S.trim(type).split(/\s+/), fn);
-    }
-
     /**
      * 提供事件发布和订阅机制
      * @name Target
@@ -7766,8 +7878,8 @@ KISSY.add('event/target', function(S, Event, EventObject) {
                 ret,
                 r2,
                 customEvent;
-            if ((type = S.trim(type)) &&
-                type.indexOf(" ") > 0) {
+            type = trim(type);
+            if (type.indexOf(" ") > 0) {
                 splitAndRun(type, function(t) {
                     r2 = self.fire(t, eventData);
                     if (r2 === false) {
@@ -7782,7 +7894,7 @@ KISSY.add('event/target', function(S, Event, EventObject) {
                 isBubblable(self, type)) {
                 r2 = self.bubble(type, customEvent);
                 // false 优先返回
-                if (r2 === false) {
+                if (ret !== false) {
                     ret = r2;
                 }
             }
@@ -7799,7 +7911,10 @@ KISSY.add('event/target', function(S, Event, EventObject) {
         publish: function(type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
-            publish[type] = cfg;
+            type = trim(type);
+            if (type) {
+                publish[type] = cfg;
+            }
         },
 
         /**
@@ -7861,11 +7976,11 @@ KISSY.add('event/target', function(S, Event, EventObject) {
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object']
+    requires:["./base",'./object','./utils']
 });
 /**
- *  2011-10-17
- *    yiminghe: implement bubble for custom event
+ *  yiminghe:2011-10-17
+ *   - implement bubble for custom event
  **/
 
 /**
@@ -7974,7 +8089,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
             hashChange = ie && ie < 8 ? function(hash) {
                 // S.log("set iframe html :" + hash);
-                //debugger
+
                 var html = S.substitute(IFRAME_TEMPLATE, {
                     hash: hash,
                     // 一定要加哦
@@ -8071,7 +8186,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                      */
                     function onIframeLoad() {
                         // S.log('iframe start load..');
-                        // debugger
+                       
                         // 2011.11.02 note: 不能用 innerHtml 会自动转义！！
                         // #/x?z=1&y=2 => #/x?z=1&amp;y=2
                         var c = S.trim(getIframeDoc(iframe).body.innerText),
@@ -8231,8 +8346,8 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
  * kissy delegate for event module
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/delegate", function(S, DOM, Event) {
-    var batchForType = Event.__batchForType,
+KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
+    var batchForType = Utils.batchForType,
         delegateMap = {
             "focus":{
                 type:"focusin"
@@ -8252,7 +8367,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     S.mix(Event, {
         delegate:function(targets, type, selector, fn, scope) {
-            if (batchForType('delegate', targets, type, selector, fn, scope)) {
+            if (batchForType(Event, 'delegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -8273,7 +8388,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         },
 
         undelegate:function(targets, type, selector, fn, scope) {
-            if (batchForType('undelegate', targets, type, selector, fn, scope)) {
+            if (batchForType(Event, 'undelegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -8296,13 +8411,19 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     });
 
     // 比较函数，两个 delegate 描述对象比较
-    function equals(d) {
+    // 注意顺序： 已有data 和 用户提供的 data 比较
+    function equals(d, el) {
+        // 用户不提供 fn selector 那么肯定成功
         if (d.fn === undefined && d.selector === undefined) {
             return true;
-        } else if (d.fn === undefined) {
+        }
+        // 用户不提供 fn 则只比较 selector
+        else if (d.fn === undefined) {
             return this.selector == d.selector;
         } else {
-            return this.fn == d.fn && this.selector == d.selector && this.scope == d.scope;
+            var scope = this.scope || el,
+                dScope = d.scope || el;
+            return this.fn == d.fn && this.selector == d.selector && scope == dScope;
         }
     }
 
@@ -8363,7 +8484,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     return Event;
 }, {
-    requires:["dom","./base"]
+    requires:["dom","./base","./utils"]
 });
 
 /**
@@ -8638,9 +8759,11 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function(S, Event, UA) {
+KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
+        simpleRemove = Utils.simpleRemove,
+        simpleAdd = Utils.simpleAdd,
         mousewheelHandler = "mousewheelHandler";
 
     function handler(e) {
@@ -8698,20 +8821,20 @@ KISSY.add("event/mousewheel", function(S, Event, UA) {
                 eventDesc = Event._data(el);
             // solve this in ie
             mousewheelHandler = eventDesc[mousewheelHandler] = S.bind(handler, el);
-            Event.__simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
+            simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
         },
         tearDown:function() {
             var el = this,
                 mousewheelHandler,
                 eventDesc = Event._data(el);
             mousewheelHandler = eventDesc[mousewheelHandler];
-            Event.__simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
+            simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
         }
     };
 
 }, {
-    requires:['./base','ua','./object']
+    requires:['./base','ua','./utils']
 });
 
 /**
@@ -11769,19 +11892,19 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
                 iframe = iframeDesc.iframe;
             }
 
-            Event.on(iframe, "load", self._onLoad, self);
+            Event.on(iframe, "load", _onLoad, self);
 
-        },
-
-        _onLoad:function() {
-            var self = this,
-                hostname = self.__hostname,
-                iframeDesc = iframeMap[hostname];
-            iframeDesc.ready = 1;
-            Event.detach(iframeDesc.iframe, "load", self._onLoad, self);
-            self.send();
         }
     });
+
+    function _onLoad() {
+        var self = this,
+            hostname = self.__hostname,
+            iframeDesc = iframeMap[hostname];
+        iframeDesc.ready = 1;
+        Event.detach(iframeDesc.iframe, "load", _onLoad, self);
+        self.send();
+    }
 
     return SubDomain;
 
@@ -12693,274 +12816,271 @@ KISSY.add('base/attribute', function(S, undef) {
     function Attribute() {
     }
 
-    S.augment(Attribute,
+    S.augment(Attribute, {
+
         /**
-         * @lends Attribute.prototype
+         * @return un-cloned attr config collections
          */
-        {
+        getAttrs: function() {
+            return getAttrs(this);
+        },
 
-            /**
-             * @return un-cloned attr config collections
-             */
-            getAttrs: function() {
-                return getAttrs(this);
-            },
+        /**
+         * @return un-cloned attr value collections
+         */
+        getAttrVals:function() {
+            var self = this,
+                o = {},
+                a,
+                attrs = getAttrs(self);
+            for (a in attrs) {
+                o[a] = self.get(a);
+            }
+            return o;
+        },
 
-            /**
-             * @return un-cloned attr value collections
-             */
-            getAttrVals:function() {
-                var self = this,
-                    o = {},
-                    a,
-                    attrs = getAttrs(self);
-                for (a in attrs) {
-                    o[a] = self.get(a);
+        /**
+         * Adds an attribute with the provided configuration to the host object.
+         * @param {String} name attrName
+         * @param {Object} attrConfig The config supports the following properties:
+         * {
+         *     value: 'the default value', // 最好不要使用自定义类生成的对象，这时使用 valueFn
+         *     valueFn: function //
+         *     setter: function
+         *     getter: function
+         * }
+         * @param {boolean} override whether override existing attribute config ,default true
+         */
+        addAttr: function(name, attrConfig, override) {
+            var self = this,
+                attrs = getAttrs(self),
+                cfg = S.clone(attrConfig);
+            if (!attrs[name]) {
+                attrs[name] = cfg;
+            } else {
+                S.mix(attrs[name], cfg, override);
+            }
+            return self;
+        },
+
+        /**
+         * Configures a group of attributes, and sets initial values.
+         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+         * @param {Object} initialValues user defined initial values
+         */
+        addAttrs: function(attrConfigs, initialValues) {
+            var self = this;
+            S.each(attrConfigs, function(attrConfig, name) {
+                self.addAttr(name, attrConfig);
+            });
+            if (initialValues) {
+                self.set(initialValues);
+            }
+            return self;
+        },
+
+        /**
+         * Checks if the given attribute has been added to the host.
+         */
+        hasAttr: function(name) {
+            return name && getAttrs(this).hasOwnProperty(name);
+        },
+
+        /**
+         * Removes an attribute from the host object.
+         */
+        removeAttr: function(name) {
+            var self = this;
+
+            if (self.hasAttr(name)) {
+                delete getAttrs(self)[name];
+                delete getAttrVals(self)[name];
+            }
+
+            return self;
+        },
+
+        /**
+         * Sets the value of an attribute.
+         */
+        set: function(name, value, opts) {
+            var ret,self = this;
+            if (S.isPlainObject(name)) {
+                var all = name;
+                name = 0;
+                ret = true;
+                opts = value;
+                var attrs = [];
+                for (name in all) {
+                    ret = setInternal(self, name, all[name], opts, attrs);
+                    if (ret === false) {
+                        break;
+                    }
                 }
-                return o;
-            },
-
-            /**
-             * Adds an attribute with the provided configuration to the host object.
-             * @param {String} name attrName
-             * @param {Object} attrConfig The config supports the following properties:
-             * {
-             *     value: 'the default value', // 最好不要使用自定义类生成的对象，这时使用 valueFn
-             *     valueFn: function //
-             *     setter: function
-             *     getter: function
-             * }
-             * @param {boolean} override whether override existing attribute config ,default true
-             */
-            addAttr: function(name, attrConfig, override) {
-                var self = this,
-                    attrs = getAttrs(self),
-                    cfg = S.clone(attrConfig);
-                if (!attrs[name]) {
-                    attrs[name] = cfg;
-                } else {
-                    S.mix(attrs[name], cfg, override);
-                }
-                return self;
-            },
-
-            /**
-             * Configures a group of attributes, and sets initial values.
-             * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-             * @param {Object} initialValues user defined initial values
-             */
-            addAttrs: function(attrConfigs, initialValues) {
-                var self = this;
-                S.each(attrConfigs, function(attrConfig, name) {
-                    self.addAttr(name, attrConfig);
+                var attrNames = [],
+                    prevVals = [],
+                    newVals = [],
+                    subAttrNames = [];
+                S.each(attrs, function(attr) {
+                    prevVals.push(attr.prevVal);
+                    newVals.push(attr.newVal);
+                    attrNames.push(attr.attrName);
+                    subAttrNames.push(attr.subAttrName);
                 });
-                if (initialValues) {
-                    self.set(initialValues);
+                if (attrNames.length) {
+                    __fireAttrChange(self,
+                        '',
+                        '*',
+                        prevVals,
+                        newVals,
+                        subAttrNames,
+                        attrNames);
                 }
-                return self;
-            },
+                return ret;
+            }
 
-            /**
-             * Checks if the given attribute has been added to the host.
-             */
-            hasAttr: function(name) {
-                return name && getAttrs(this).hasOwnProperty(name);
-            },
-
-            /**
-             * Removes an attribute from the host object.
-             */
-            removeAttr: function(name) {
-                var self = this;
-
-                if (self.hasAttr(name)) {
-                    delete getAttrs(self)[name];
-                    delete getAttrVals(self)[name];
-                }
-
-                return self;
-            },
-
-            /**
-             * Sets the value of an attribute.
-             */
-            set: function(name, value, opts) {
-                var ret,self = this;
-                if (S.isPlainObject(name)) {
-                    var all = name;
-                    name = 0;
-                    ret = true;
-                    opts = value;
-                    var attrs = [];
-                    for (name in all) {
-                        ret = setInternal(self, name, all[name], opts, attrs);
-                        if (ret === false) {
-                            break;
-                        }
-                    }
-                    var attrNames = [],
-                        prevVals = [],
-                        newVals = [],
-                        subAttrNames = [];
-                    S.each(attrs, function(attr) {
-                        prevVals.push(attr.prevVal);
-                        newVals.push(attr.newVal);
-                        attrNames.push(attr.attrName);
-                        subAttrNames.push(attr.subAttrName);
-                    });
-                    if (attrNames.length) {
-                        __fireAttrChange(self,
-                            '',
-                            '*',
-                            prevVals,
-                            newVals,
-                            subAttrNames,
-                            attrNames);
-                    }
-                    return ret;
-                }
-
-                return setInternal(self, name, value, opts);
+            return setInternal(self, name, value, opts);
 
 
-            },
+        },
 
-            /**
-             * internal use, no event involved, just set.
-             * @protected overriden by mvc/model
-             */
-            __set: function(name, value) {
-                var self = this,
-                    setValue,
-                    // if host does not have meta info corresponding to (name,value)
-                    // then register on demand in order to collect all data meta info
-                    // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                    // 因为属性在声明注册前可以直接设置值
-                    attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                    validator = attrConfig['validator'],
-                    setter = attrConfig['setter'];
+        /**
+         * internal use, no event involved, just set.
+         * @protected overriden by mvc/model
+         */
+        __set: function(name, value) {
+            var self = this,
+                setValue,
+                // if host does not have meta info corresponding to (name,value)
+                // then register on demand in order to collect all data meta info
+                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                // 因为属性在声明注册前可以直接设置值
+                attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+                validator = attrConfig['validator'],
+                setter = attrConfig['setter'];
 
-                // validator check
-                if (validator = normalFn(self, validator)) {
-                    if (!validator.call(self, value, name)) {
-                        return false;
-                    }
-                }
-
-                // if setter has effect
-                if (setter = normalFn(self, setter)) {
-                    setValue = setter.call(self, value, name);
-                }
-
-                if (setValue === INVALID) {
+            // validator check
+            if (validator = normalFn(self, validator)) {
+                if (validator.call(self, value, name) === false) {
                     return false;
                 }
-
-                if (setValue !== undef) {
-                    value = setValue;
-                }
-
-                // finally set
-                getAttrVals(self)[name] = value;
-            },
-
-            /**
-             * Gets the current value of the attribute.
-             */
-            get: function(name) {
-                var self = this,
-                    dot = ".",
-                    path,
-                    attrConfig,
-                    getter, ret;
-
-                if (name.indexOf(dot) !== -1) {
-                    path = name.split(dot);
-                    name = path.shift();
-                }
-
-                attrConfig = ensureNonEmpty(getAttrs(self), name);
-                getter = attrConfig['getter'];
-
-                // get user-set value or default value
-                //user-set value takes privilege
-                ret = name in getAttrVals(self) ?
-                    getAttrVals(self)[name] :
-                    self.__getDefAttrVal(name);
-
-                // invoke getter for this attribute
-                if (getter = normalFn(self, getter)) {
-                    ret = getter.call(self, ret, name);
-                }
-
-                if (path) {
-                    ret = getValueByPath(ret, path);
-                }
-
-                return ret;
-            },
-
-            /**
-             * get default attribute value from valueFn/value
-             * @private
-             * @param name
-             */
-            __getDefAttrVal: function(name) {
-                var self = this,
-                    attrConfig = ensureNonEmpty(getAttrs(self), name),
-                    valFn,
-                    val;
-
-                if ((valFn = normalFn(self, attrConfig.valueFn))) {
-                    val = valFn.call(self);
-                    if (val !== undef) {
-                        attrConfig.value = val;
-                    }
-                    delete attrConfig.valueFn;
-                    getAttrs(self)[name] = attrConfig;
-                }
-
-                return attrConfig.value;
-            },
-
-            /**
-             * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-             * @param {String} name name of attribute
-             */
-            reset: function (name, opts) {
-                var self = this;
-
-                if (S.isString(name)) {
-                    if (self.hasAttr(name)) {
-                        // if attribute does not have default value, then set to undefined.
-                        return self.set(name, self.__getDefAttrVal(name), opts);
-                    }
-                    else {
-                        return self;
-                    }
-                }
-
-                opts = name;
-
-                var attrs = getAttrs(self),
-                    values = {};
-
-                // reset all
-                for (name in attrs) {
-                    values[name] = self.__getDefAttrVal(name);
-                }
-
-                self.set(values, opts);
-                return self;
             }
-        });
+
+            // if setter has effect
+            if (setter = normalFn(self, setter)) {
+                setValue = setter.call(self, value, name);
+            }
+
+            if (setValue === INVALID) {
+                return false;
+            }
+
+            if (setValue !== undef) {
+                value = setValue;
+            }
+
+            // finally set
+            getAttrVals(self)[name] = value;
+        },
+
+        /**
+         * Gets the current value of the attribute.
+         */
+        get: function(name) {
+            var self = this,
+                dot = ".",
+                path,
+                attrConfig,
+                getter, ret;
+
+            if (name.indexOf(dot) !== -1) {
+                path = name.split(dot);
+                name = path.shift();
+            }
+
+            attrConfig = ensureNonEmpty(getAttrs(self), name);
+            getter = attrConfig['getter'];
+
+            // get user-set value or default value
+            //user-set value takes privilege
+            ret = name in getAttrVals(self) ?
+                getAttrVals(self)[name] :
+                self.__getDefAttrVal(name);
+
+            // invoke getter for this attribute
+            if (getter = normalFn(self, getter)) {
+                ret = getter.call(self, ret, name);
+            }
+
+            if (path) {
+                ret = getValueByPath(ret, path);
+            }
+
+            return ret;
+        },
+
+        /**
+         * get default attribute value from valueFn/value
+         * @private
+         * @param name
+         */
+        __getDefAttrVal: function(name) {
+            var self = this,
+                attrConfig = ensureNonEmpty(getAttrs(self), name),
+                valFn,
+                val;
+
+            if ((valFn = normalFn(self, attrConfig.valueFn))) {
+                val = valFn.call(self);
+                if (val !== undef) {
+                    attrConfig.value = val;
+                }
+                delete attrConfig.valueFn;
+                getAttrs(self)[name] = attrConfig;
+            }
+
+            return attrConfig.value;
+        },
+
+        /**
+         * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+         * @param {String} name name of attribute
+         */
+        reset: function (name, opts) {
+            var self = this;
+
+            if (S.isString(name)) {
+                if (self.hasAttr(name)) {
+                    // if attribute does not have default value, then set to undefined.
+                    return self.set(name, self.__getDefAttrVal(name), opts);
+                }
+                else {
+                    return self;
+                }
+            }
+
+            opts = name;
+
+            var attrs = getAttrs(self),
+                values = {};
+
+            // reset all
+            for (name in attrs) {
+                values[name] = self.__getDefAttrVal(name);
+            }
+
+            self.set(values, opts);
+            return self;
+        }
+    });
 
     function capitalFirst(s) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    Attribute['__capitalFirst'] = capitalFirst;
-
+    if (undef) {
+        Attribute.prototype.addAttrs = undef;
+    }
     return Attribute;
 });
 

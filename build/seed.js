@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 23 12:07
+build time: Nov 24 20:59
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 23 12:07
          */
         version: '1.20dev',
 
-        buildTime:'20111123120737',
+        buildTime:'20111124205903',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2650,12 +2650,12 @@ build time: Nov 23 12:07
             }
 
             var retryCount = 1,
-
+                node,
                 timer = S.later(function() {
-                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                        ++retryCount > POLL_RETRYS) {
                         timer.cancel();
                     }
-
                 }, POLL_INTERVAL, true);
         }
     });

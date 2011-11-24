@@ -353,6 +353,9 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
                 callbacks.els.push(el);
                 callbacks.fns.push(fn);
             }
+
+            // add 立即检测，防止首屏元素问题
+            this._fireCallbacks();
         },
 
         /**
@@ -390,7 +393,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             var self = this, area, imgs;
 
             if (type === 'img-src') type = 'img';
-            
+
             // 支持数组
             if (!S.isArray(containers)) {
                 containers = [DOM.get(containers)];

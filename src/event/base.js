@@ -1,36 +1,19 @@
 /**
- * @module  event
+ * scalable event framework for kissy (refer DOM3 Events)
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
+KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
 
-    var doc = document,
+    var isValidTarget = Utils.isValidTarget,
+        isIdenticalHandler = Utils.isIdenticalHandler,
+        batchForType = Utils.batchForType,
+        simpleRemove = Utils.simpleRemove,
+        simpleAdd = Utils.simpleAdd,
+        splitAndRun = Utils.splitAndRun,
         nodeName = DOM._nodeName,
         makeArray = S.makeArray,
-        simpleAdd = doc.addEventListener ?
-            function(el, type, fn, capture) {
-                if (el.addEventListener) {
-                    el.addEventListener(type, fn, !!capture);
-                }
-            } :
-            function(el, type, fn) {
-                if (el.attachEvent) {
-                    el.attachEvent('on' + type, fn);
-                }
-            },
-        simpleRemove = doc.removeEventListener ?
-            function(el, type, fn, capture) {
-                if (el.removeEventListener) {
-                    el.removeEventListener(type, fn, !!capture);
-                }
-            } :
-            function(el, type, fn) {
-                if (el.detachEvent) {
-                    el.detachEvent('on' + type, fn);
-                }
-            },
-        SPACE = " ",
         each = S.each,
+        trim = S.trim,
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了
@@ -56,6 +39,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 events = eventDesc.events;
             each(events, function(handlers, type) {
                 each(handlers, function(handler) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     Event.on(dest, type, handler.fn, handler.scope, handler.data);
                 });
             });
@@ -95,7 +79,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             if (!eventDesc) {
                 Event._data(target, eventDesc = {});
             }
-            //事件 listeners
+            //事件 listeners , similar to eventListeners in DOM3 Events
             var events = eventDesc.events = eventDesc.events || {},
                 handlers = events[type] = events[type] || [],
                 handleObj = {
@@ -124,30 +108,46 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     if (type) {
                         event.type = type;
                     }
-                    return Event._handle(target, event);
+                    return _handle(target, event);
                 };
                 eventHandler.target = target;
             }
+
+            for (var i = handlers.length - 1; i >= 0; --i) {
+                /**
+                 * If multiple identical EventListeners are registered on the same EventTarget
+                 * with the same parameters the duplicate instances are discarded.
+                 * They do not cause the EventListener to be called twice
+                 * and since they are discarded
+                 * they do not need to be removed with the removeEventListener method.
+                 */
+                if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                    return;
+                }
+            }
+
             if (isNativeTarget) {
                 addDomEvent(target, type, eventHandler, handlers, handleObj);
                 //nullify to prevent memory leak in ie ?
                 target = null;
             }
+
             // 增加 listener
             handlers.push(handleObj);
         },
 
         /**
-         * Adds an event listener.
+         * Adds an event listener.similar to addEventListener in DOM3 Events
          * @param targets KISSY selector
          * @param type {String} The type of event to append.
-         * @param fn {Function} The event handler.
+         * @param fn {Function} The event handler/listener.
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
+            type = trim(type);
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            if (batchForType('add', targets, type, fn, scope, data)) {
+            if (batchForType(Event, 'add', targets, type, fn, scope, data)) {
                 return targets;
             }
 
@@ -156,17 +156,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             });
 
             return targets;
-        },
-
-        __getListeners:function(target, type) {
-            var events = Event.__getEvents(target) || {};
-            return events[type] || [];
-        },
-
-        __getEvents:function(target) {
-            // 获取事件描述
-            var eventDesc = Event._data(target);
-            return eventDesc && eventDesc.events;
         },
 
         // single target, single type, fixed native
@@ -193,49 +182,33 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
 
             // remove all types of event
-            if (type === undefined) {
+            if (!type) {
                 for (type in events) {
-                    Event.remove.call(Event, target, type);
+                    Event.__remove(isNativeTarget, target, type);
                 }
                 return;
             }
-
-            scope = scope || target;
 
             if ((handlers = events[type])) {
                 len = handlers.length;
                 // 移除 fn
                 if (fn && len) {
+                    var currentHandler = {
+                        data:data,
+                        fn:fn,
+                        scope:scope
+                    },handler;
+
                     for (i = 0,j = 0,t = []; i < len; ++i) {
-                        var reserve = false,
-                            handler = handlers[i],
-                            handlerScope = handler.scope || target;
-                        if (fn !== handler.fn
-                            || scope !== handlerScope) {
+                        handler = handlers[i];
+                        // 注意顺序，用户提供的 handler 在第二个参数
+                        if (!isIdenticalHandler(handler, currentHandler, target)) {
                             t[j++] = handler;
-                            reserve = true;
-                        } else if (data !== data2) {
-                            var data2 = handler.data;
-                            // undelgate 不能 remove 普通 on 的 handler
-                            // remove 不能 remove delegate 的 handler
-                            if (!data && data2
-                                || data2 && !data
-                                ) {
-                                t[j++] = handler;
-                                reserve = true;
-                            } else if (data && data2) {
-                                if (!data.equals || !data2.equals) {
-                                    S.error("no equals in data");
-                                } else if (!data2.equals(data)) {
-                                    t[j++] = handler;
-                                    reserve = true;
-                                }
-                            }
-                        }
-                        if (!reserve && special.remove) {
+                        } else if (special.remove) {
                             special.remove.call(target, handler);
                         }
                     }
+
                     events[type] = t;
                     len = t.length;
                 }
@@ -263,10 +236,15 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         },
 
         /**
-         * Detach an event or set of events from an element.
+         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+         * @param targets KISSY selector
+         * @param type {String} The type of event to append.
+         * @param fn {Function} The event handler/listener.
+         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         remove: function(targets, type /* optional */, fn /* optional */, scope /* optional */, data/*internal usage*/) {
-            if (batchForType('remove', targets, type, fn, scope)) {
+            type = trim(type);
+            if (batchForType(Event, 'remove', targets, type, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -275,88 +253,92 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             return targets;
         },
 
-        _handle: function(target, event) {
-            /* As some listeners may remove themselves from the
-             event, the original array length is dynamic. So,
-             let's make a copy of all listeners, so we are
-             sure we'll call all of them.*/
-            var listeners = Event.__getListeners(target, event.type).slice(0),
-                ret,
-                gRet,
-                i = 0,
-                len = listeners.length,
-                listener;
-
-            for (; i < len; ++i) {
-                listener = listeners[i];
-                // 传入附件参数data，目前用于委托
-                ret = listener.fn.call(listener.scope || target,
-                    event, listener.data);
-
-                // 和 jQuery 逻辑保持一致
-                if (ret !== undefined) {
-                    // 有一个 false，最终结果就是 false
-                    // 否则等于最后一个返回值
-                    if (gRet !== false) {
-                        gRet = ret;
-                    }
-                    // return false 等价 preventDefault + stopProgation
-                    if (ret === false) {
-                        event.halt();
-                    }
-                }
-
-                if (event.isImmediatePropagationStopped) {
-                    break;
-                }
-            }
-
-            return gRet;
-        },
+        _handle:_handle,
 
         /**
-         * fire event , simulate bubble in browser
-         * @return undefined
+         * fire event , simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @return boolean The return value of fire/dispatchEvent indicates
+         *                 whether any of the listeners which handled the event called preventDefault.
+         *                 If preventDefault was called the value is false, else the value is true.
          */
         fire: function(targets, eventType, eventData, onlyHandlers) {
-            if (!batchForType("fire", targets, eventType, eventData, onlyHandlers)) {
-                // custom event firing moved to target.js
-                eventData = eventData || {};
-                // protect event type
-                eventData.type = eventType;
-                DOM.query(targets).each(function(target) {
-                    fireDOMEvent(target, eventType, eventData, onlyHandlers);
+            var ret = true;
+            eventType = trim(eventType);
+            if (eventType.indexOf(" ") > -1) {
+                splitAndRun(eventType, function(t) {
+                    ret = Event.fire(targets, t, eventData, onlyHandlers) && ret;
                 });
+                return ret;
             }
-        },
-
-        __batchForType:batchForType,
-        __simpleAdd:simpleAdd,
-        __simpleRemove:simpleRemove
+            // custom event firing moved to target.js
+            eventData = eventData || {};
+            // protect event type
+            eventData.type = eventType;
+            DOM.query(targets).each(function(target) {
+                ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
+            });
+            return ret;
+        }
     };
 
     // shorthand
     Event.on = Event.add;
     Event.detach = Event.remove;
 
-    function batchForType(methodName, targets, types) {
-        // on(target, 'click focus', fn)
-        if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
-            var args = makeArray(arguments);
-            each(types.split(/\s+/), function(type) {
-                var args2 = [].concat(args);
-                args2.splice(0, 3, targets, type);
-                Event[methodName].apply(Event, args2);
-            });
-            return true;
-        }
-        return 0;
+    function getListeners(target, type) {
+        var events = getEvents(target) || {};
+        return events[type] || [];
     }
 
-    function isValidTarget(target) {
-        // 3 - is text node
-        // 8 - is comment node
-        return target && target.nodeType !== 3 && target.nodeType !== 8;
+    function _handle(target, event) {
+        /* As some listeners may remove themselves from the
+         event, the original array length is dynamic. So,
+         let's make a copy of all listeners, so we are
+         sure we'll call all of them.*/
+        /**
+         * DOM3 Events: EventListenerList objects in the DOM are live. ??
+         */
+        var listeners = getListeners(target, event.type).slice(0),
+            ret,
+            gRet,
+            i = 0,
+            len = listeners.length,
+            listener;
+
+        for (; i < len; ++i) {
+            listener = listeners[i];
+            // 传入附件参数data，目前用于委托
+            // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            ret = listener.fn.call(listener.scope || target,
+                event, listener.data);
+
+            // 和 jQuery 逻辑保持一致
+            if (ret !== undefined) {
+                // 有一个 false，最终结果就是 false
+                // 否则等于最后一个返回值
+                if (gRet !== false) {
+                    gRet = ret;
+                }
+                // return false 等价 preventDefault + stopProgation
+                if (ret === false) {
+                    event.halt();
+                }
+            }
+
+            if (event.isImmediatePropagationStopped) {
+                break;
+            }
+        }
+
+        // fire 时判断如果 preventDefault，则返回 false 否则返回 true
+        // 这里返回值意义不同
+        return gRet;
+    }
+
+    function getEvents(target) {
+        // 获取事件描述
+        var eventDesc = Event._data(target);
+        return eventDesc && eventDesc.events;
     }
 
     /**
@@ -365,7 +347,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = EVENT_SPECIAL[type] || {};
         // 第一次注册该事件，dom 节点才需要注册 dom 事件
-        if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
+        if (!handlers.length &&
+            (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
         }
         if (special.add) {
@@ -375,14 +358,29 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 
     /**
-     * fire dom event from bottom to up
+     * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+     * @return boolean The return value of dispatchEvent indicates
+     *                 whether any of the listeners which handled the event called preventDefault.
+     *                 If preventDefault was called the value is false, else the value is true.
      */
     function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         if (!isValidTarget(target)) {
-            return;
+            return false;
         }
-        var event = new EventObject(target, undefined, eventType);
-        S.mix(event, eventData);
+
+        var event,
+            ret = true;
+        if (eventData instanceof EventObject) {
+            event = eventData;
+        } else {
+            event = new EventObject(target, undefined, eventType);
+            S.mix(event, eventData);
+        }
+        /*
+         The target of the event is the EventTarget on which dispatchEvent is called.
+         */
+        // TODO: protect target , but incompatible
+        // event.target=target;
         // protect type
         event.type = eventType;
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
@@ -395,9 +393,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         //bubble up dom tree
         do{
             event.currentTarget = cur;
-            Event._handle(cur, event);
+            _handle(cur, event);
             // Trigger an inline bound script
-            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+            if (cur[ ontype ] &&
+                cur[ ontype ].call(cur) === false) {
                 event.preventDefault();
             }
             // Bubble up to document, then to window
@@ -407,7 +406,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         } while (cur && !event.isPropagationStopped);
 
         if (!event.isDefaultPrevented) {
-            if (!(eventType === "click" && nodeName(target, "a"))) {
+            if (!(eventType === "click" &&
+                nodeName(target, "a"))) {
                 var old;
                 try {
                     if (ontype && target[ eventType ]) {
@@ -436,19 +436,26 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
                 Event_Triggered = TRIGGERED_NONE;
             }
+        } else {
+            ret = false;
         }
+        return ret;
     }
 
     return Event;
 }, {
-    requires:["dom","event/object"]
+    requires:["dom","./object","./utils"]
 });
 
 /**
- * 承玉：2011-06-07
+ * 2011-11-24
+ *  - 自定义事件和 dom 事件操作彻底分离
+ *  - TODO: group event from DOM3 Event
+ *
+ * 2011-06-07
+ *  - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ *  - 重构
  *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
  *  - 减少闭包使用，prevent ie 内存泄露？
  *  - 增加 fire ，模拟冒泡处理 dom 事件
- *  - TODO: 自定义事件和 dom 事件操作彻底分离?
- *
  */

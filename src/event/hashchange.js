@@ -54,7 +54,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
             hashChange = ie && ie < 8 ? function(hash) {
                 // S.log("set iframe html :" + hash);
-                //debugger
+
                 var html = S.substitute(IFRAME_TEMPLATE, {
                     hash: hash,
                     // 一定要加哦
@@ -151,7 +151,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                      */
                     function onIframeLoad() {
                         // S.log('iframe start load..');
-                        // debugger
+                       
                         // 2011.11.02 note: 不能用 innerHtml 会自动转义！！
                         // #/x?z=1&y=2 => #/x?z=1&amp;y=2
                         var c = S.trim(getIframeDoc(iframe).body.innerText),

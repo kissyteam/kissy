@@ -2,8 +2,10 @@
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject) {
+KISSY.add('event/target', function(S, Event, EventObject, Utils,undefined) {
     var KS_PUBLISH = "__~ks_publish",
+        trim = S.trim,
+        splitAndRun = Utils.splitAndRun,
         KS_BUBBLE_TARGETS = "__~ks_bubble_targets",
         ALL_EVENT = "*";
 
@@ -47,10 +49,6 @@ KISSY.add('event/target', function(S, Event, EventObject) {
         };
     }
 
-    function splitAndRun(type, fn) {
-        S.each(S.trim(type).split(/\s+/), fn);
-    }
-
     /**
      * 提供事件发布和订阅机制
      * @name Target
@@ -72,8 +70,8 @@ KISSY.add('event/target', function(S, Event, EventObject) {
                 ret,
                 r2,
                 customEvent;
-            if ((type = S.trim(type)) &&
-                type.indexOf(" ") > 0) {
+            type = trim(type);
+            if (type.indexOf(" ") > 0) {
                 splitAndRun(type, function(t) {
                     r2 = self.fire(t, eventData);
                     if (r2 === false) {
@@ -88,7 +86,7 @@ KISSY.add('event/target', function(S, Event, EventObject) {
                 isBubblable(self, type)) {
                 r2 = self.bubble(type, customEvent);
                 // false 优先返回
-                if (r2 === false) {
+                if (ret !== false) {
                     ret = r2;
                 }
             }
@@ -105,7 +103,10 @@ KISSY.add('event/target', function(S, Event, EventObject) {
         publish: function(type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
-            publish[type] = cfg;
+            type = trim(type);
+            if (type) {
+                publish[type] = cfg;
+            }
         },
 
         /**
@@ -167,9 +168,9 @@ KISSY.add('event/target', function(S, Event, EventObject) {
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object']
+    requires:["./base",'./object','./utils']
 });
 /**
- *  2011-10-17
- *    yiminghe: implement bubble for custom event
+ *  yiminghe:2011-10-17
+ *   - implement bubble for custom event
  **/
