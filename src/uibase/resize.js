@@ -19,7 +19,8 @@ KISSY.add("uibase/resize", function(S) {
         },
         _uiSetResize:function(v) {
 
-            var Resizable = S.require("resizable"),self = this;
+            var Resizable = S.require("resizable"),
+                self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
                 v.node = self.get("el");

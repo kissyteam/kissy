@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 10:44
+build time: Nov 28 12:40
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 28 10:44
          */
         version: '1.20dev',
 
-        buildTime:'20111128104448',
+        buildTime:'20111128123959',
 
         /**
          * Returns a new object containing all of the properties of
@@ -11445,9 +11445,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  cache: null,
                  mimeType:null,
                  xdr:{
-                 subDomain:{
-                 proxy:'http://xx.t.com/proxy.html'
-                 }
+                     subDomain:{
+                        proxy:'http://xx.t.com/proxy.html'
+                     },
+                     src:''
                  },
                  headers: {},
                  xhrFields:{},
@@ -11836,15 +11837,12 @@ KISSY.add("ajax/xhrbase", function(S, io) {
  */
 KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
-
-    var PROXY_PAGE = "/sub_domain_proxy.html";
-
-    var doc = document;
-
-    var iframeMap = {
-        // hostname:{iframe: , ready:}
-    };
+    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        PROXY_PAGE = "/sub_domain_proxy.html",
+        doc = document,
+        iframeMap = {
+            // hostname:{iframe: , ready:}
+        };
 
     function SubDomain(xhrObj) {
         var self = this,
@@ -13293,7 +13291,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -14718,7 +14716,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 24 15:16
+build time: Nov 28 12:38
 */
 /**
  * 数据延迟加载组件
@@ -15224,7 +15222,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -15467,7 +15465,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * @module   Flash 全局静态类
@@ -15986,7 +15984,7 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 23 18:02
+build time: Nov 28 12:39
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -16780,10 +16778,10 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                         drag:self
                     });
                 }
+                self.set("dragging", 0);
                 self.fire("dragend", {
                     drag:self
                 });
-                self.set("dragging", 0);
             }
         },
 
@@ -17548,7 +17546,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 24 21:34
+build time: Nov 28 12:39
 */
 /**
  * resizable support for kissy
@@ -17742,7 +17740,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 23 12:36
+build time: Nov 28 12:39
 */
 /**
  * UIBase.Align
@@ -19831,7 +19829,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:38
 */
 /**
  * container can delegate event for its children
@@ -20731,7 +20729,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 23 11:43
+build time: Nov 28 12:39
 */
 /**
  * Switchable
@@ -23336,7 +23334,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * KISSY Overlay
@@ -23847,7 +23845,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -25037,7 +25035,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * @fileoverview 图像放大区域
@@ -25671,7 +25669,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:22
+build time: Nov 28 12:38
 */
 /**
  * KISSY Calendar
@@ -26957,7 +26955,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * deletable menuitem
@@ -28322,7 +28320,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:26
+build time: Nov 28 12:38
 */
 /**
  * Model and Control for button
@@ -28562,7 +28560,7 @@ KISSY.add("button", function(S, Button, Render, Split) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * combination of menu and button ,similar to native select
@@ -29099,7 +29097,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -30044,7 +30042,7 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * intervein elements dynamically
@@ -30381,7 +30379,7 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * @author: 常胤 (lzlu.com)
@@ -31904,7 +31902,7 @@ KISSY.add("validation", function(S, Validation) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * mvc base
@@ -32001,7 +31999,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             if (S.isArray(model)) {
                 var orig = [].concat(model);
                 S.each(orig, function(m) {
-                    ret = ret && self._add(m, opts);
+                    var t = self._add(m, opts);
+                    ret = ret && t;
                 });
             } else {
                 ret = self._add(model, opts);

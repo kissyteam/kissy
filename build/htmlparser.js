@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * parse html to a hierarchy dom tree
@@ -1418,11 +1418,15 @@ KISSY.add("htmlparser/nodes/Node",function(S) {
  */
 KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute, Dtd) {
 
-    var scanners = {
-        'style':QuoteCdataScanner,
-        'script':QuoteCdataScanner,
-        'textarea':TextareaScanner
-    };
+    var cdataTags = Dtd.$cdata,
+        scanners = {
+            'textarea':TextareaScanner
+        };
+
+    // script/style
+    for (var t in cdataTags) {
+        scanners[t] = QuoteCdataScanner;
+    }
 
     function getScannerForTag(nodeName) {
         return scanners[nodeName] || TagScanner;
@@ -2279,7 +2283,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
     }
 
     function isBooleanAttribute(attrName) {
-        return (/^(?:checked|disabled|selected|readonly)$/i).test(attrName);
+        return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
     }
 
     function canRemoveAttributeQuotes(value) {

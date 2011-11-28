@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * @module  dom-attr
@@ -611,17 +611,17 @@ KISSY.add('dom/base', function(S, UA, undefined) {
          * @type Number
          */
         ELEMENT_NODE : 1,
-        ATTRIBUTE_NODE : 2,
+        "ATTRIBUTE_NODE" : 2,
         TEXT_NODE:3,
-        CDATA_SECTION_NODE : 4,
-        ENTITY_REFERENCE_NODE: 5,
-        ENTITY_NODE : 6,
-        PROCESSING_INSTRUCTION_NODE :7,
+        "CDATA_SECTION_NODE" : 4,
+        "ENTITY_REFERENCE_NODE": 5,
+        "ENTITY_NODE" : 6,
+        "PROCESSING_INSTRUCTION_NODE" :7,
         COMMENT_NODE : 8,
         DOCUMENT_NODE : 9,
-        DOCUMENT_TYPE_NODE : 10,
+        "DOCUMENT_TYPE_NODE" : 10,
         DOCUMENT_FRAGMENT_NODE : 11,
-        NOTATION_NODE : 12
+        "NOTATION_NODE" : 12
     };
     var DOM = {
 
@@ -1082,6 +1082,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     return null;
                 }
 
+                // TODO
+                // ie bug :
+                // 1. ie<9 <script>xx</script> => <script></script>
+                // 2. ie will execute external script
                 var clone = elem.cloneNode(deep);
 
                 if (isElementNode(elem) ||
@@ -1623,23 +1627,32 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
 
     // extract script nodes and execute alone later
     function filterScripts(nodes, scripts) {
-        var ret = [];
-        for (var i = 0; nodes[i]; i++) {
-            var el = nodes[i],nodeName = el.nodeName.toLowerCase();
+        var ret = [],i,el,nodeName;
+        for (i = 0; nodes[i]; i++) {
+            el = nodes[i];
+            nodeName = el.nodeName.toLowerCase();
             if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
                 ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
             } else if (nodeName === "script" && isJs(el)) {
+                // remove script to make sure ie9 does not invoke when append
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el)
+                }
                 if (scripts) {
-                    scripts.push(el.parentNode ? el.parentNode.removeChild(el) : el);
+                    scripts.push(el);
                 }
             } else {
                 if (_isElementNode(el) &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
                     !rformEls.test(nodeName)) {
-                    var tmp = [],ss = el.getElementsByTagName("script");
-                    for (var j = 0; j < ss.length; j++) {
-                        if (isJs(ss[j])) {
-                            tmp.push(ss[j]);
+                    var tmp = [],
+                        s,
+                        j,
+                        ss = el.getElementsByTagName("script");
+                    for (j = 0; j < ss.length; j++) {
+                        s = ss[j];
+                        if (isJs(s)) {
+                            tmp.push(s);
                         }
                     }
                     nodes.splice.apply(nodes, [i + 1,0].concat(tmp));
@@ -1700,7 +1713,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
                 var node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
                 fn(node, refNode);
             }
-            if (scripts) {
+            if (scripts && scripts.length) {
                 S.each(scripts, evalScript);
             }
         }

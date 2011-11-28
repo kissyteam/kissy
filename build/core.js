@@ -8659,9 +8659,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  cache: null,
                  mimeType:null,
                  xdr:{
-                 subDomain:{
-                 proxy:'http://xx.t.com/proxy.html'
-                 }
+                     subDomain:{
+                        proxy:'http://xx.t.com/proxy.html'
+                     },
+                     src:''
                  },
                  headers: {},
                  xhrFields:{},
@@ -9050,15 +9051,12 @@ KISSY.add("ajax/xhrbase", function(S, io) {
  */
 KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
-
-    var PROXY_PAGE = "/sub_domain_proxy.html";
-
-    var doc = document;
-
-    var iframeMap = {
-        // hostname:{iframe: , ready:}
-    };
+    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        PROXY_PAGE = "/sub_domain_proxy.html",
+        doc = document,
+        iframeMap = {
+            // hostname:{iframe: , ready:}
+        };
 
     function SubDomain(xhrObj) {
         var self = this,
