@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 24 21:40
+build time: Nov 28 10:44
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -275,7 +275,7 @@ build time: Nov 24 21:40
          */
         version: '1.20dev',
 
-        buildTime:'20111124214009',
+        buildTime:'20111128104448',
 
         /**
          * Returns a new object containing all of the properties of
@@ -7810,7 +7810,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
             });
             return ret;
-        }
+        },
+        __getListeners:getListeners
     };
 
     // shorthand

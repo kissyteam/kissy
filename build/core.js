@@ -4838,7 +4838,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
             });
             return ret;
-        }
+        },
+        __getListeners:getListeners
     };
 
     // shorthand
