@@ -386,10 +386,10 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                         drag:self
                     });
                 }
+                self.set("dragging", 0);
                 self.fire("dragend", {
                     drag:self
                 });
-                self.set("dragging", 0);
             }
         },
 

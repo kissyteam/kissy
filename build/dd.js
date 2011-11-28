@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 23 18:02
+build time: Nov 28 11:36
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -795,10 +795,10 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                         drag:self
                     });
                 }
+                self.set("dragging", 0);
                 self.fire("dragend", {
                     drag:self
                 });
-                self.set("dragging", 0);
             }
         },
 
