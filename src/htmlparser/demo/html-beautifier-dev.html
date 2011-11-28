@@ -7,7 +7,7 @@
 <body>
 <h1 style="margin: 10px auto;text-align: center;"> KISSY Html Beautifier </h1>
 
-<label>前：
+<label>
     <textarea id="before" style="width:80%;height: 300px;">
         &lt;div id="name"> <!--测试 comment--> &lt;style type='text/css'>body{color:red};&lt;/style>
         &lt;script type='text/javascript'>alert('&lt;/body>');&lt;/script>
@@ -22,10 +22,15 @@
         &lt;/div>
     </textarea>
 </label>
+<br><br>
+<label>
+    根据 xhtml dtd 自动代码调整：<input id='fixByDtd' type="checkbox"/>
+</label>
+<br>
 <br/>
 <button id="start">beautify</button>
 <br/>
-<label>后：
+<label>
     <textarea id="after" style="width:80%;height: 300px;"></textarea>
 </label>
 
@@ -45,7 +50,9 @@
             var writer = new HtmlParser.BeautifyWriter(),
                     filter = new HtmlParser.Filter(),
                     before = S.trim($("#before").val()),
-                    nodes = new HtmlParser.Parser(before).parse();
+                    nodes = new HtmlParser.Parser(before, {
+                        fixByDtd:$("#fixByDtd").prop("checked")
+                    }).parse();
 
             filter.addRules({
                 tags:{

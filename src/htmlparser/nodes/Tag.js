@@ -80,6 +80,47 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
 
     S.extend(Tag, Node, {
 
+        clone:function() {
+            var ret = new Tag(),
+                attrs = [];
+            S.each(this.attributes, function(a) {
+                attrs.push(a.clone());
+            });
+            S.mix(ret, {
+                childNodes:[],
+                firstChild:null,
+                lastChild:null,
+                attributes:attrs,
+                nodeType:this.nodeType,
+                nodeName:this.nodeName,
+                tagName:this.tagName,
+                isEmptyXmlTag:this.isEmptyXmlTag,
+                scanner:this.scanner,
+                closed:this.closed,
+                closedStartPosition:this.closedStartPosition,
+                closedEndPosition:this.closedEndPosition
+            });
+            return ret;
+        },
+
+        equals:function(tag) {
+            if (!tag || this.nodeName != tag.nodeName) {
+                return 0;
+            }
+            if (this.nodeType != tag.nodeType) {
+                return 0;
+            }
+            if (this.attributes.length != tag.attributes.length) {
+                return 0;
+            }
+            for (var i = 0; i < this.attributes.length; i++) {
+                if (!this.attributes[i].equals(tag.attributes[i])) {
+                    return 0;
+                }
+            }
+            return 1;
+        },
+
         isEndTag:function() {
             return /^\//.test(this.nodeName);
         },
@@ -94,6 +135,21 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
                 index = S.indexOf(ref, silbing);
             silbing.splice(index, 0, this);
             refreshChildNodes(ref.parentNode);
+        },
+
+        insertAfter:function(ref) {
+            var silbing = ref.parentNode.childNodes,
+                index = S.indexOf(ref, silbing);
+            if (index == silbing.length - 1) {
+                ref.parentNode.appendChild(this);
+            } else {
+                this.insertBefore(ref.parentNode.childNodes[[index + 1]]);
+            }
+        },
+
+        empty:function() {
+            this.childNodes = [];
+            refreshChildNodes(this);
         },
 
         removeChild:function(node) {

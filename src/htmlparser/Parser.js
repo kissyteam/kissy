@@ -10,7 +10,6 @@ KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
     }
 
     Iterator.prototype = {
-
         nextNode:function() {
             var ret,
                 stack,
@@ -34,7 +33,6 @@ KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
             return ret;
         }
     };
-
 
     function Parser(html, opts) {
         this.lexer = new Lexer(html);
