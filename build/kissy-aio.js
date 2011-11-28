@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:40
+build time: Nov 28 13:29
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 28 12:40
          */
         version: '1.20dev',
 
-        buildTime:'20111128123959',
+        buildTime:'20111128132929',
 
         /**
          * Returns a new object containing all of the properties of
@@ -25669,7 +25669,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:38
+build time: Nov 28 13:29
 */
 /**
  * KISSY Calendar
@@ -25909,6 +25909,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 _y = self.trigger.offset().top + height;
             self.con.css('left', _x.toString() + 'px');
             self.con.css('top', _y.toString() + 'px');
+            self.fire("show");
             return this;
         },
 
@@ -25919,6 +25920,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         hide: function() {
             var self = this;
             self.con.css('visibility', 'hidden');
+            self.fire("hide");
             return this;
         },
 
