@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/event.js"></script>
+<script src="../../../../build/dom.js"></script>
+<script src="../../easing.js"></script>
+<script src="../../base.js"></script>
+<script src="../../manager.js"></script>
+<script src="../../color.js"></script>
+<script src="../../fx.js"></script>
+<script src="../../queue.js"></script>
+<script src="../../../anim.js"></script>
+<script src="../../../../build/node.js"></script>
+
+<script src="../../../../build/dom.js"></script>
+<script src="../../../../tools/third-party/jquery.js"></script>
+</head>
+<body>
+<div style="width:100px;height:100px;border: 1px solid red;" id="toggle">
+    toggle
+</div>
+<button id="tb">toggle button</button>
+<button id="tb2">slide toggle button</button>
+<button id="tb3">fade toggle button</button>
+<button id="jqtb2">jq slide toggle button</button>
+<button id="jqtb3">jq fade toggle button</button>
+<script>
+    KISSY.use("node", function(S, Node) {
+        var $ = Node.all;
+        $('#tb').on("click", function() {
+            $('#toggle').toggle(1);
+        });
+        $('#tb2').on("click", function() {
+            $('#toggle').slideToggle(1);
+        });
+        $('#tb3').on("click", function() {
+            $('#toggle').fadeToggle(1);
+        });
+    });
+
+
+    $('#jqtb3').on("click", function() {
+        $('#toggle').fadeToggle(1000);
+    });
+
+    $('#jqtb2').on("click", function() {
+        $('#toggle').slideToggle(1000);
+    });
+</script>
+</body>
+</html>
