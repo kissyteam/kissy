@@ -192,6 +192,12 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
                 attrName,
                 tagName = el.tagName;
 
+            // special treat for doctype
+            if (tagName == "!doctype") {
+                writer.append(this.toHtml());
+                return;
+            }
+
             // process its open tag
             if (filter) {
                 // element filtered by its name directly
@@ -251,13 +257,22 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
             writer.openTagClose(el);
 
             if (!el.isEmptyXmlTag) {
-                // process its children recursively
-                S.each(el.childNodes, function(child) {
-                    child.writeHtml(writer, filter);
-                });
+                this._writeChildrenHtml(writer, filter);
                 // process its close tag
                 writer.closeTag(el);
             }
+        },
+
+        /**
+         * @param writer
+         * @param filter
+         * @protected
+         */
+        _writeChildrenHtml:function(writer, filter) {
+            // process its children recursively
+            S.each(this.childNodes, function(child) {
+                child.writeHtml(writer, filter);
+            });
         }
 
     });

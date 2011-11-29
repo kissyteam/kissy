@@ -1,9 +1,9 @@
 KISSY.add("htmlparser/scanners/CdataScanner", function() {
     return {
-        scan:function(tag, lexer, stack, quoteSmart) {
+        scan:function(tag, lexer, opts) {
             // only terminate when encouter </tag>
             // <textarea><div></div></textarea>
-            var content = lexer.parseCDATA(quoteSmart, tag.nodeName),
+            var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName),
                 position = lexer.getPosition(),
                 node = lexer.nextNode();
             if (node) {
@@ -18,7 +18,6 @@ KISSY.add("htmlparser/scanners/CdataScanner", function() {
             if (content) {
                 tag.appendChild(content);
             }
-            return tag;
         }
     };
 });

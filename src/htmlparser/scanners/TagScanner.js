@@ -4,8 +4,11 @@
  */
 KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
     var scanner = {
-        scan:function(tag, lexer, stack, opts) {
-            var node,i;
+        scan:function(tag, lexer, opts) {
+            var node,
+                i,
+                stack;
+            stack = opts.stack = opts.stack || [];
             if (tag.isEmptyXmlTag) {
                 tag.closed = true;
             } else {
@@ -24,12 +27,13 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                         if (node.isEmptyXmlTag) {
                                             tag.appendChild(node);
                                         } else {
+                                            // fake stack
                                             stack.push(tag);
                                             tag = node;
                                         }
                                     } else {
                                         // change scanner ,such as textarea scanner ... etc
-                                        node = nodeScanner.scan(node, lexer, stack, opts);
+                                        nodeScanner.scan(node, lexer, opts);
                                         tag.appendChild(node);
                                     }
                                 } else {
@@ -55,10 +59,6 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                 for (i = stack.length - 1; i >= 0; i--) {
                                     var c = stack[i];
                                     if (c.tagName === node.tagName) {
-                                        index = i;
-                                        break;
-                                    } else if (opts['fixByDtd'] && !canHasNodeAsChild(c, node)) {
-                                        // can not include this node as child of a node in stack
                                         index = i;
                                         break;
                                     }
@@ -96,6 +96,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                 if (node.scanner === scanner) {
                                     stack.length = stack.length - 1;
                                     node.appendChild(tag);
+                                    // child fix
                                     fixCloseTagByDtd(tag, opts);
                                     tag = node;
                                 } else {
@@ -108,10 +109,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                     }
                 } while (node);
 
+                // root tag fix
                 fixCloseTagByDtd(tag, opts);
-            }
 
-            return tag;
+
+            }
         }
     };
 
@@ -125,7 +127,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
         tag['closed'] = 1;
 
         if (!opts['fixByDtd']) {
-            return;
+            return 0;
         }
 
         var valid = 1,
@@ -139,7 +141,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
         });
 
         if (valid) {
-            return;
+            return 0;
         }
 
         var holder = tag.clone(),
@@ -200,6 +202,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
             fixCloseTagByDtd(r, opts);
         });
 
+        return 1;
     }
 
 
@@ -207,13 +210,17 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
      * checked whether tag can include node as its child according to DTD
      */
     function canHasNodeAsChild(tag, node) {
+        // document can nest any tag
+        if (tag.nodeType == 9) {
+            return 1;
+        }
         if (!dtd[tag.tagName]) {
             S.error("dtd[" + tag.tagName + "] === undefined!")
         }
         if (node.nodeType == 8) {
             return 1;
         }
-        var nodeName = node.nodeName;
+        var nodeName = node.tagName||node.nodeName;
         if (node.nodeType == 3) {
             nodeName = '#';
         }

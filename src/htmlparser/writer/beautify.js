@@ -100,8 +100,8 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
         openTag:function(el) {
 
-            var tagName = el.tagName;
-            var rules = this.rules[tagName] || {};
+            var tagName = el.tagName,
+                rules = this.rules[tagName] || {};
             if (this.allowIndent) {
                 this.indentation();
             } else if (rules.breakBeforeOpen) {

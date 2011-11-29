@@ -1,7 +1,8 @@
 KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner) {
     return {
-        scan:function(tag, lexer, stack) {
-            return CdataScanner.scan(tag, lexer, stack, false);
+        scan:function(tag, lexer, opts) {
+            opts = opts || {};
+            CdataScanner.scan(tag, lexer, opts);
         }
     };
 }, {

@@ -2,60 +2,46 @@
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
-
-    function Iterator(lexer, opts) {
-        this.lexer = lexer;
-        this.opts = opts;
-    }
-
-    Iterator.prototype = {
-        nextNode:function() {
-            var ret,
-                stack,
-                scanner,
-                lexer = this.lexer;
-
-            ret = lexer.nextNode();
-            if (ret) {
-                if (ret.nodeType == 1) {
-                    if (!ret.isEndTag()) {
-                        scanner = ret.scanner;
-                        if (scanner) {
-                            stack = [];
-                            ret = scanner.scan(ret, lexer, stack, this.opts);
-                        }
-                    } else {
-                        return this.nextNode();
-                    }
-                }
-            }
-            return ret;
-        }
-    };
+KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer, Document) {
 
     function Parser(html, opts) {
         this.lexer = new Lexer(html);
         this.opts = opts || {};
+        this.document = new Document();
     }
 
     Parser.prototype = {
         elements:function() {
-            return new Iterator(this.lexer, this.opts);
+            var ret,
+                scanner,
+                lexer = this.lexer;
+            do{
+                ret = lexer.nextNode();
+
+                if (ret) {
+                    // dummy html root node
+                    this.document.appendChild(ret);
+                    if (ret.nodeType == 1 &&
+                        !ret.isEndTag()) {
+
+                        scanner = ret.scanner;
+                        if (scanner) {
+                            scanner.scan(ret, lexer, this.opts);
+                        }
+
+                    }
+                }
+            } while (ret);
+
+            return this.document.childNodes;
         },
 
         parse:function() {
-            var ret = [],
-                n,
-                iter = this.elements();
-            while (n = iter.nextNode()) {
-                ret.push(n);
-            }
-            return ret;
+            return this.elements();
         }
     };
 
     return Parser;
 }, {
-    requires:['./lexer/Cursor','./lexer/Lexer']
+    requires:['./lexer/Cursor','./lexer/Lexer','./nodes/Document']
 });
