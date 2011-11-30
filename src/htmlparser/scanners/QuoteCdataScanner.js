@@ -1,5 +1,5 @@
-KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner) {
-    return {
+KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd, SpecialScanners) {
+    var ret = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
             opts.quoteSmart = 1;
@@ -7,6 +7,11 @@ KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner) {
             opts.quoteSmart = 0;
         }
     };
+    // script/style
+    for (var t in Dtd.$cdata) {
+        SpecialScanners[t] = ret;
+    }
+    return ret;
 }, {
-    requires:["./CdataScanner"]
+    requires:["./CdataScanner",'../dtd','./SpecialScanners']
 });

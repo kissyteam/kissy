@@ -2,21 +2,7 @@
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute, Dtd) {
-
-    var cdataTags = Dtd.$cdata,
-        scanners = {
-            'textarea':TextareaScanner
-        };
-
-    // script/style
-    for (var t in cdataTags) {
-        scanners[t] = QuoteCdataScanner;
-    }
-
-    function getScannerForTag(nodeName) {
-        return scanners[nodeName] || TagScanner;
-    }
+KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
 
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
@@ -28,6 +14,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
         self.nodeType = 1;
         attributes = self.attributes;
         // first attribute is actually nodeName
+
         if (attributes[0]) {
             self.nodeName = attributes[0].name.toLowerCase();
             // note :
@@ -55,8 +42,6 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
         self['closed'] = self.isEmptyXmlTag;
         self['closedStartPosition'] = -1;
         self['closedEndPosition'] = -1;
-        // scan it's innerHTMl to childNodes
-        self.scanner = getScannerForTag(self.nodeName);
     }
 
     function refreshChildNodes(self) {
@@ -95,7 +80,6 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
                 nodeName:this.nodeName,
                 tagName:this.tagName,
                 isEmptyXmlTag:this.isEmptyXmlTag,
-                scanner:this.scanner,
                 closed:this.closed,
                 closedStartPosition:this.closedStartPosition,
                 closedEndPosition:this.closedEndPosition
@@ -289,10 +273,5 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
     return Tag;
 
 }, {
-    requires:['./Node',
-        '../scanners/TagScanner',
-        '../scanners/QuoteCdataScanner',
-        '../scanners/TextareaScanner',
-        './Attribute',
-        '../dtd']
+    requires:['./Node','./Attribute','../dtd']
 });

@@ -26,6 +26,10 @@
 <label>
     根据 xhtml dtd 自动代码调整：<input id='fixByDtd' type="checkbox"/>
 </label>
+<br/>
+<label>
+    根节点自动段落：<input id='autoParagraph' type="checkbox"/>
+</label>
 <br>
 <br/>
 <button id="start">beautify</button>
@@ -36,9 +40,6 @@
 
 <script src="../../../build/kissy.js"></script>
 <script>
-    //KISSY.escapeHTML(KISSY.get("#after").value)
-    // .replace(/\t/g,"&nbsp;&nbsp;&nbsp;&nbsp;")
-    // .replace(/ /g,"&nbsp;")
     KISSY.Config.debug = 1;
     KISSY.Config.base = "../../";
 
@@ -51,7 +52,8 @@
                     filter = new HtmlParser.Filter(),
                     before = S.trim($("#before").val()),
                     nodes = new HtmlParser.Parser(before, {
-                        fixByDtd:$("#fixByDtd").prop("checked")
+                        fixByDtd:$("#fixByDtd").prop("checked"),
+                        autoParagraph:$("#autoParagraph").prop("checked")
                     }).parse();
 
             filter.addRules({

@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 29 14:31
+build time: Nov 30 13:23
 */
 /**
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer, Document) {
+KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Scanner) {
 
     function Parser(html, opts) {
         this.lexer = new Lexer(html);
@@ -18,25 +18,21 @@ KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer, Document) {
     Parser.prototype = {
         elements:function() {
             var ret,
-                scanner,
                 lexer = this.lexer;
             do{
                 ret = lexer.nextNode();
-
                 if (ret) {
                     // dummy html root node
                     this.document.appendChild(ret);
-                    if (ret.nodeType == 1 &&
-                        !ret.isEndTag()) {
-
-                        scanner = ret.scanner;
-                        if (scanner) {
-                            scanner.scan(ret, lexer, this.opts);
-                        }
-
+                    if (ret.nodeType == 1 && !ret.isEndTag()) {
+                        Scanner.getScanner(ret.tagName).scan(ret, lexer, this.opts);
                     }
                 }
             } while (ret);
+
+            if (this.opts['autoParagraph']) {
+                autoParagraph(this.document);
+            }
 
             return this.document.childNodes;
         },
@@ -46,10 +42,77 @@ KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer, Document) {
         }
     };
 
+
+    function autoParagraph(doc) {
+        var childNodes = doc.childNodes,
+            c,
+            i,
+            pDtd = dtd['p'],
+            needFix = 0;
+
+        for (i = 0; i < childNodes.length; i++) {
+            c = childNodes[i];
+            if (c.nodeType == 3 || (c.nodeType == 1 && pDtd[c.nodeName])) {
+                needFix = 1;
+                break;
+            }
+        }
+        if (needFix) {
+            var newChildren = [],holder = new Tag();
+            holder.nodeName = holder.tagName = "p";
+            for (i = 0; i < childNodes.length; i++) {
+                c = childNodes[i];
+                if (c.nodeType == 3 || (c.nodeType == 1 && pDtd[c.nodeName])) {
+                    holder.appendChild(c);
+                } else {
+                    if (holder.childNodes.length) {
+                        newChildren.push(holder);
+                        holder = holder.clone();
+                    }
+                    newChildren.push(c);
+                }
+            }
+
+            if (holder.childNodes.length) {
+                newChildren.push(holder);
+            }
+
+            doc.empty();
+
+            for (i = 0; i < newChildren.length; i++) {
+                doc.appendChild(newChildren[i]);
+            }
+        }
+    }
+
     return Parser;
 }, {
-    requires:['./lexer/Cursor','./lexer/Lexer','./nodes/Document']
+    requires:[
+        './dtd',
+        './nodes/Tag',
+        './lexer/Cursor',
+        './lexer/Lexer',
+        './nodes/Document',
+        './Scanner'
+    ]
 });/**
+ * declare and initiate sub scanners
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('htmlparser/Scanner', function(S, TagScanner, SpecialScanners) {
+    return {
+        getScanner:function(nodeName) {
+            return SpecialScanners[nodeName] || TagScanner;
+        }
+    };
+}, {
+    requires:[
+        './scanners/TagScanner',
+        './scanners/SpecialScanners',
+        './scanners/QuoteCdataScanner',
+        './scanners/TextareaScanner'
+    ]
+})/**
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
@@ -1405,7 +1468,7 @@ KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
  * abstract class for tag and text , comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Node",function(S) {
+KISSY.add("htmlparser/nodes/Node", function(S) {
 
     function Node(page, startPosition, endPosition) {
         this.parentNode = null;
@@ -1423,7 +1486,7 @@ KISSY.add("htmlparser/nodes/Node",function(S) {
 
     Node.prototype = {
         toHtml:function() {
-            if (this.page) {
+            if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
         },
@@ -1440,21 +1503,7 @@ KISSY.add("htmlparser/nodes/Node",function(S) {
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute, Dtd) {
-
-    var cdataTags = Dtd.$cdata,
-        scanners = {
-            'textarea':TextareaScanner
-        };
-
-    // script/style
-    for (var t in cdataTags) {
-        scanners[t] = QuoteCdataScanner;
-    }
-
-    function getScannerForTag(nodeName) {
-        return scanners[nodeName] || TagScanner;
-    }
+KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
 
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
@@ -1466,6 +1515,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
         self.nodeType = 1;
         attributes = self.attributes;
         // first attribute is actually nodeName
+
         if (attributes[0]) {
             self.nodeName = attributes[0].name.toLowerCase();
             // note :
@@ -1493,8 +1543,6 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
         self['closed'] = self.isEmptyXmlTag;
         self['closedStartPosition'] = -1;
         self['closedEndPosition'] = -1;
-        // scan it's innerHTMl to childNodes
-        self.scanner = getScannerForTag(self.nodeName);
     }
 
     function refreshChildNodes(self) {
@@ -1533,7 +1581,6 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
                 nodeName:this.nodeName,
                 tagName:this.tagName,
                 isEmptyXmlTag:this.isEmptyXmlTag,
-                scanner:this.scanner,
                 closed:this.closed,
                 closedStartPosition:this.closedStartPosition,
                 closedEndPosition:this.closedEndPosition
@@ -1727,12 +1774,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
     return Tag;
 
 }, {
-    requires:['./Node',
-        '../scanners/TagScanner',
-        '../scanners/QuoteCdataScanner',
-        '../scanners/TextareaScanner',
-        './Attribute',
-        '../dtd']
+    requires:['./Node','./Attribute','../dtd']
 });/**
  * dom text node
  * @author yiminghe@gmail.com
@@ -1779,8 +1821,8 @@ KISSY.add("htmlparser/nodes/Text", function(S, Node) {
             }
         }
     };
-});KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner) {
-    return {
+});KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd, SpecialScanners) {
+    var ret = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
             opts.quoteSmart = 1;
@@ -1788,14 +1830,183 @@ KISSY.add("htmlparser/nodes/Text", function(S, Node) {
             opts.quoteSmart = 0;
         }
     };
+    // script/style
+    for (var t in Dtd.$cdata) {
+        SpecialScanners[t] = ret;
+    }
+    return ret;
 }, {
-    requires:["./CdataScanner"]
+    requires:["./CdataScanner",'../dtd','./SpecialScanners']
+});/**
+ * special scanners holder (textarea/style/script)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('htmlparser/scanners/SpecialScanners', function() {
+    return {};
 });/**
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
-    var scanner = {
+KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanners) {
+
+    var /**
+     * will create ul when encounter li and li's parent is not ul
+     */
+        wrapper = {
+        li:'ul',
+        dt:'dl',
+        dd:'dl'
+    };
+
+    /**
+     * close tag and check nest by xhtml dtd rules
+     * <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
+     * @param tag
+     */
+    function fixCloseTagByDtd(tag, opts) {
+        tag['closed'] = 1;
+
+        if (!opts['fixByDtd']) {
+            return 0;
+        }
+
+        var valid = 1,
+            childNodes = [].concat(tag.childNodes);
+
+        S.each(childNodes, function(c) {
+            if (!canHasNodeAsChild(tag, c)) {
+                valid = 0;
+                return false;
+            }
+        });
+
+        if (valid) {
+            return 0;
+        }
+
+        var holder = tag.clone(),
+            prev = tag,
+            recursives = [];
+
+        function closeCurrentHolder() {
+            if (holder.childNodes.length) {
+                holder.insertAfter(prev);
+                prev = holder;
+                holder = tag.clone();
+            }
+        }
+
+        for (var i = 0; i < childNodes.length; i++) {
+            var c = childNodes[i];
+
+            if (canHasNodeAsChild(holder, c)) {
+                holder.appendChild(c);
+            } else {
+
+                // if can not include text as its child , then discard
+                if (c.nodeType != 1) {
+                    continue;
+                }
+
+                var currentChildName = c.tagName;
+
+                // li -> ul
+                if (dtd.$listItem[currentChildName]) {
+                    closeCurrentHolder();
+                    var pTagName = wrapper[c.tagName],
+                        pTag = new Tag();
+                    pTag.nodeName = pTag.tagName = pTagName;
+                    while (i < childNodes.length) {
+                        if (childNodes[i].tagName == currentChildName) {
+                            pTag.appendChild(childNodes[i]);
+                        } else if (childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
+                        }
+                        // non-empty text leave it to outer loop
+                        else if (childNodes[i].nodeType == 3) {
+                            break;
+                        }
+                        i++;
+                    }
+                    pTag.insertAfter(prev);
+                    prev = pTag;
+                    i--;
+                    continue;
+                }
+
+                // only deal with inline element mistakenly wrap block element
+                if (dtd.$inline[tag.tagName]) {
+                    closeCurrentHolder();
+                    if (!c.equals(holder)) {
+                        // <a><p></p></a> => <p><a></a></p>
+                        if (canHasNodeAsChild(c, holder)) {
+                            holder = tag.clone();
+                            S.each(c.childNodes, function(cc) {
+                                holder.appendChild(cc);
+                            });
+                            c.empty();
+                            c.insertAfter(prev);
+                            prev = c;
+                            c.appendChild(holder);
+                            // recursive to a , lower
+                            recursives.push(holder);
+                            holder = tag.clone();
+                        } else {
+                            // <a href='1'> <a href='2'>2</a> </a>
+                            c.insertAfter(prev);
+                            prev = c;
+                        }
+                    } else {
+                        c.insertAfter(prev);
+                        prev = c;
+                    }
+                }
+            }
+        }
+
+        // <a>1<p>3</p>3</a>
+        // encouter 3 , last holder should be inserted after <p>
+        if (holder.childNodes.length) {
+            holder.insertAfter(prev);
+        }
+
+        // <a><p>1</p></a> => <a></a><p><a>1</a></p> => <p><a>1</a></p>
+        tag.parentNode.removeChild(tag);
+
+        // <a><div><div>1</div></div></a>
+        // =>
+        // <div><a><div>1</div></a></div>
+
+        // => fixCloseTagByDtd("<a><div>1</div></a>")
+        S.each(recursives, function(r) {
+            fixCloseTagByDtd(r, opts);
+        });
+
+        return 1;
+    }
+
+
+    /**
+     * checked whether tag can include node as its child according to DTD
+     */
+    function canHasNodeAsChild(tag, node) {
+        // document can nest any tag
+        if (tag.nodeType == 9) {
+            return 1;
+        }
+        if (!dtd[tag.tagName]) {
+            S.error("dtd[" + tag.tagName + "] === undefined!")
+        }
+        if (node.nodeType == 8) {
+            return 1;
+        }
+        var nodeName = node.tagName || node.nodeName;
+        if (node.nodeType == 3) {
+            nodeName = '#';
+        }
+        return !! dtd[tag.tagName][nodeName];
+    }
+
+    return {
         scan:function(tag, lexer, opts) {
             var node,
                 i,
@@ -1812,25 +2023,22 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                             if (node.isEndTag() && node.tagName == tag.tagName) {
                                 node = null;
                             } else if (!node.isEndTag()) {
-                                // now fake recursive using stack
-                                var nodeScanner = node.scanner;
-                                if (nodeScanner) {
-                                    if (nodeScanner === scanner) {
-                                        if (node.isEmptyXmlTag) {
-                                            tag.appendChild(node);
-                                        } else {
-                                            // fake stack
-                                            stack.push(tag);
-                                            tag = node;
-                                        }
-                                    } else {
-                                        // change scanner ,such as textarea scanner ... etc
-                                        nodeScanner.scan(node, lexer, opts);
-                                        tag.appendChild(node);
-                                    }
-                                } else {
+
+                                if (SpecialScanners[node.tagName]) {
+                                    // change scanner ,such as textarea scanner ... etc
+                                    SpecialScanners[node.tagName].scan(node, lexer, opts);
                                     tag.appendChild(node);
+                                } else {
+                                    // now fake recursive using stack
+                                    if (node.isEmptyXmlTag) {
+                                        tag.appendChild(node);
+                                    } else {
+                                        // fake stack
+                                        stack.push(tag);
+                                        tag = node;
+                                    }
                                 }
+
                             } else if (node.isEndTag()) {
                                 // encouter a end tag without open tag
                                 // There are two cases...
@@ -1885,7 +2093,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                             node = stack[stack.length - 1];
                             if (node.nodeType == 1) {
                                 // fake recursion
-                                if (node.scanner === scanner) {
+                                if (!SpecialScanners[node.tagName]) {
                                     stack.length = stack.length - 1;
                                     node.appendChild(tag);
                                     // child fix
@@ -1908,129 +2116,17 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
             }
         }
     };
-
-
-    /**
-     * close tag and check nest by xhtml dtd rules
-     * <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
-     * @param tag
-     */
-    function fixCloseTagByDtd(tag, opts) {
-        tag['closed'] = 1;
-
-        if (!opts['fixByDtd']) {
-            return 0;
-        }
-
-        var valid = 1,
-            childNodes = [].concat(tag.childNodes);
-
-        S.each(childNodes, function(c) {
-            if (!canHasNodeAsChild(tag, c)) {
-                valid = 0;
-                return false;
-            }
-        });
-
-        if (valid) {
-            return 0;
-        }
-
-        var holder = tag.clone(),
-            prev = tag,
-            recursives = [];
-
-        S.each(childNodes, function(c) {
-            if (canHasNodeAsChild(holder, c)) {
-                holder.appendChild(c);
-            } else {
-                if (holder.childNodes.length) {
-                    holder.insertAfter(prev);
-                    prev = holder;
-                    holder = tag.clone();
-                }
-
-                if (!c.equals(holder)) {
-                    // <a><p></p></a> => <p><a></a></p>
-                    if (canHasNodeAsChild(c, holder)) {
-                        holder = tag.clone();
-                        S.each(c.childNodes, function(cc) {
-                            holder.appendChild(cc);
-                        });
-                        c.empty();
-                        c.insertAfter(prev);
-                        prev = c;
-                        c.appendChild(holder);
-                        // recursive to a , lower
-                        recursives.push(holder);
-                        holder = tag.clone();
-                    } else {
-                        // <a href='1'> <a href='2'>2</a> </a>
-                        c.insertAfter(prev);
-                        prev = c;
-                    }
-                } else {
-                    c.insertAfter(prev);
-                    prev = c;
-                }
-            }
-        });
-
-        // <a>1<p>3</p>3</a>
-        // encouter 3 , last holder should be inserted after <p>
-        if (holder.childNodes.length) {
-            holder.insertAfter(prev);
-        }
-
-        // <a><p>1</p></a> => <a></a><p><a>1</a></p> => <p><a>1</a></p>
-        tag.parentNode.removeChild(tag);
-
-        // <a><div><div>1</div></div></a>
-        // =>
-        // <div><a><div>1</div></a></div>
-
-        // => fixCloseTagByDtd("<a><div>1</div></a>")
-        S.each(recursives, function(r) {
-            fixCloseTagByDtd(r, opts);
-        });
-
-        return 1;
-    }
-
-
-    /**
-     * checked whether tag can include node as its child according to DTD
-     */
-    function canHasNodeAsChild(tag, node) {
-        // document can nest any tag
-        if (tag.nodeType == 9) {
-            return 1;
-        }
-        if (!dtd[tag.tagName]) {
-            S.error("dtd[" + tag.tagName + "] === undefined!")
-        }
-        if (node.nodeType == 8) {
-            return 1;
-        }
-        var nodeName = node.tagName||node.nodeName;
-        if (node.nodeType == 3) {
-            nodeName = '#';
-        }
-        return !! dtd[tag.tagName][nodeName];
-    }
-
-    return scanner;
 }, {
-    requires:["../dtd"]
-});KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner) {
-    return {
+    requires:["../dtd","../nodes/Tag","./SpecialScanners"]
+});KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner, SpecialScanners) {
+    return SpecialScanners["textarea"] = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
             CdataScanner.scan(tag, lexer, opts);
         }
     };
 }, {
-    requires:["./CdataScanner"]
+    requires:["./CdataScanner","./SpecialScanners"]
 });KISSY.add("htmlparser/writer/basic", function(S) {
 
     function escapeAttrValue(str) {
