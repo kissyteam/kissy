@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * resizable support for kissy
@@ -14,7 +14,7 @@ KISSY.add("resizable/base", function(S, Node, Base, D) {
         i,
         j,
         Draggable = D.Draggable,
-        CLS_PREFIX = "ks-resize-handler",
+        CLS_PREFIX = "ks-resizable-handler",
         horizonal = ["l","r"],
         vertical = ["t","b"],
         hcNormal = {

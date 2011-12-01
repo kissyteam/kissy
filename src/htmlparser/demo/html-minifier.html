@@ -21,34 +21,46 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test&nbsp;&lt;span&gt;&nbsp;test2&nbsp;&lt;&#x2F;span&gt;&nbsp;test3
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;div&gt;
         &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;div&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;span&gt;
         &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;textarea&gt;&lt;div&gt;in&nbsp;textarea&lt;&#x2F;div&gt;&lt;&#x2F;textarea&gt;
         &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;p&gt;
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;span&gt;
         &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;type=&quot;text&quot;&nbsp;value=&quot;xx&quot;&nbsp;&#x2F;&gt;
         &nbsp;&nbsp;&nbsp;&nbsp;&lt;&#x2F;p&gt;
         &lt;&#x2F;div&gt;
     </textarea>
 </label>
+<br><br>
+<label>
+    fix html by xhtml dtd ：<input id='fixByDtd' type="checkbox"/>
+</label>
 <br/>
-<button id="start" disabled>minify</button>
+<label>
+    auto paragraph in root：<input id='autoParagraph' type="checkbox"/>
+</label>
+<br>
+<br/>
+<button id="start">minify</button>
 <br/>
 <label>After：
     <textarea id="after" style="width:80%;height: 300px;"></textarea>
 </label>
 
-<script src="../../../build/kissy.js?t=htmlparser11111111112"></script>
+<script src="../../../build/kissy.js"></script>
 <script>
-    KISSY.Config.tag="htmlparser11111111112";
     KISSY.use("htmlparser", function(S, HtmlParser) {
         var $ = S.all;
         $("#after").val("");
         var start = $("#start");
-        start.attr("disabled", false);
         start.on("click", function() {
             var writer = new HtmlParser.MinifyWriter(),
                     before = S.trim($("#before").val()),
-                    nodes = new HtmlParser.Parser(before).parse();
+                    nodes = new HtmlParser.Parser(before,{
+                        fixByDtd:$("#fixByDtd").prop("checked"),
+                        autoParagraph:$("#autoParagraph").prop("checked")
+                    }).parse();
 
             S.each(nodes, function(n) {
                 n.writeHtml(writer);

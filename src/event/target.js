@@ -2,8 +2,10 @@
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject) {
+KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
     var KS_PUBLISH = "__~ks_publish",
+        trim = S.trim,
+        splitAndRun = Utils.splitAndRun,
         KS_BUBBLE_TARGETS = "__~ks_bubble_targets",
         ALL_EVENT = "*";
 
@@ -40,7 +42,8 @@ KISSY.add('event/target', function(S, Event, EventObject) {
     function attach(method) {
         return function(type, fn, scope) {
             var self = this;
-            S.each(S.trim(type).split(/\s+/), function(t) {
+            type = trim(type);
+            splitAndRun(type, function(t) {
                 Event["__" + method](false, self, t, fn, scope);
             });
             return self; // chain
@@ -67,12 +70,24 @@ KISSY.add('event/target', function(S, Event, EventObject) {
             var self = this,
                 ret,
                 r2,
-                customEvent = getCustomEvent(self, type, eventData);
+                customEvent;
+            type = trim(type);
+            if (type.indexOf(" ") > 0) {
+                splitAndRun(type, function(t) {
+                    r2 = self.fire(t, eventData);
+                    if (r2 === false) {
+                        ret = false;
+                    }
+                });
+                return ret;
+            }
+            customEvent = getCustomEvent(self, type, eventData);
             ret = Event._handle(self, customEvent);
-            if (!customEvent.isPropagationStopped && isBubblable(self, type)) {
+            if (!customEvent.isPropagationStopped &&
+                isBubblable(self, type)) {
                 r2 = self.bubble(type, customEvent);
                 // false 优先返回
-                if (r2 === false) {
+                if (ret !== false) {
                     ret = r2;
                 }
             }
@@ -89,7 +104,10 @@ KISSY.add('event/target', function(S, Event, EventObject) {
         publish: function(type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
-            publish[type] = cfg;
+            type = trim(type);
+            if (type) {
+                publish[type] = cfg;
+            }
         },
 
         /**
@@ -151,9 +169,9 @@ KISSY.add('event/target', function(S, Event, EventObject) {
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object']
+    requires:["./base",'./object','./utils']
 });
 /**
- *  2011-10-17
- *    yiminghe: implement bubble for custom event
+ *  yiminghe:2011-10-17
+ *   - implement bubble for custom event
  **/

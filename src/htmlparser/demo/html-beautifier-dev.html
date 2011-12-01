@@ -7,12 +7,12 @@
 <body>
 <h1 style="margin: 10px auto;text-align: center;"> KISSY Html Beautifier </h1>
 
-<label>前：
+<label>
     <textarea id="before" style="width:80%;height: 300px;">
         &lt;div id="name"> <!--测试 comment--> &lt;style type='text/css'>body{color:red};&lt;/style>
         &lt;script type='text/javascript'>alert('&lt;/body>');&lt;/script>
-        &lt;div> &lt;div> test &lt;span>
-        test2 &lt;/span> test3 &lt;/div> &lt;/div>
+        &lt;div> &lt;a href="http://docs.kissyui.com">&lt;div> test &lt;span>
+        test2 &lt;/span> test3 &lt;/div>&lt;/a> &lt;/div>
         &lt;p>
         &lt;textarea>&lt;div>in textarea&lt;/div>&lt;/textarea>
         &lt;/p>
@@ -22,18 +22,24 @@
         &lt;/div>
     </textarea>
 </label>
+<br><br>
+<label>
+    fix html by xhtml dtd ：<input id='fixByDtd' type="checkbox"/>
+</label>
+<br/>
+<label>
+    auto paragraph in root：<input id='autoParagraph' type="checkbox"/>
+</label>
+<br>
 <br/>
 <button id="start">beautify</button>
 <br/>
-<label>后：
+<label>
     <textarea id="after" style="width:80%;height: 300px;"></textarea>
 </label>
 
 <script src="../../../build/kissy.js"></script>
 <script>
-    //KISSY.escapeHTML(KISSY.get("#after").value)
-    // .replace(/\t/g,"&nbsp;&nbsp;&nbsp;&nbsp;")
-    // .replace(/ /g,"&nbsp;")
     KISSY.Config.debug = 1;
     KISSY.Config.base = "../../";
 
@@ -45,7 +51,10 @@
             var writer = new HtmlParser.BeautifyWriter(),
                     filter = new HtmlParser.Filter(),
                     before = S.trim($("#before").val()),
-                    nodes = new HtmlParser.Parser(before).parse();
+                    nodes = new HtmlParser.Parser(before, {
+                        fixByDtd:$("#fixByDtd").prop("checked"),
+                        autoParagraph:$("#autoParagraph").prop("checked")
+                    }).parse();
 
             filter.addRules({
                 tags:{

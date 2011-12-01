@@ -6,6 +6,33 @@ KISSY.use("event", function(S, Event) {
 
 
     describe("custom event is same as native event.", function() {
+
+        it("can fire more than one", function() {
+
+            var args = [];
+
+            function Test() {
+                this.on("test", function(e) {
+                    args.push(e.a);
+                });
+                this.on("test2", function(e) {
+                    args.push(e.a);
+                });
+            }
+
+            S.augment(Test, Event.Target);
+
+            var t = new Test();
+
+            t.fire("test test2", {
+                a:1
+            });
+
+            expect(args).toEqual([1,1]);
+
+        });
+
+
         it("can bubble", function() {
 
             var ret = [],args = [];

@@ -2,10 +2,171 @@
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
-    var scanner = {
-        scan:function(tag, lexer, stack, opts) {
-            var node,i;
+KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanners) {
+
+    var /**
+     * will create ul when encounter li and li's parent is not ul
+     */
+        wrapper = {
+        li:'ul',
+        dt:'dl',
+        dd:'dl'
+    };
+
+    /**
+     * close tag and check nest by xhtml dtd rules
+     * <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
+     * @param tag
+     */
+    function fixCloseTagByDtd(tag, opts) {
+        tag['closed'] = 1;
+
+        if (!opts['fixByDtd']) {
+            return 0;
+        }
+
+        var valid = 1,
+            childNodes = [].concat(tag.childNodes);
+
+        S.each(childNodes, function(c) {
+            if (!canHasNodeAsChild(tag, c)) {
+                valid = 0;
+                return false;
+            }
+        });
+
+        if (valid) {
+            return 0;
+        }
+
+        var holder = tag.clone(),
+            prev = tag,
+            recursives = [];
+
+        function closeCurrentHolder() {
+            if (holder.childNodes.length) {
+                holder.insertAfter(prev);
+                prev = holder;
+                holder = tag.clone();
+            }
+        }
+
+        for (var i = 0; i < childNodes.length; i++) {
+            var c = childNodes[i];
+
+            if (canHasNodeAsChild(holder, c)) {
+                holder.appendChild(c);
+            } else {
+
+                // if can not include text as its child , then discard
+                if (c.nodeType != 1) {
+                    continue;
+                }
+
+                var currentChildName = c.tagName;
+
+                // li -> ul
+                if (dtd.$listItem[currentChildName]) {
+                    closeCurrentHolder();
+                    var pTagName = wrapper[c.tagName],
+                        pTag = new Tag();
+                    pTag.nodeName = pTag.tagName = pTagName;
+                    while (i < childNodes.length) {
+                        if (childNodes[i].tagName == currentChildName) {
+                            pTag.appendChild(childNodes[i]);
+                        } else if (childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
+                        }
+                        // non-empty text leave it to outer loop
+                        else if (childNodes[i].nodeType == 3) {
+                            break;
+                        }
+                        i++;
+                    }
+                    pTag.insertAfter(prev);
+                    prev = pTag;
+                    i--;
+                    continue;
+                }
+
+                // only deal with inline element mistakenly wrap block element
+                if (dtd.$inline[tag.tagName]) {
+                    closeCurrentHolder();
+                    if (!c.equals(holder)) {
+                        // <a><p></p></a> => <p><a></a></p>
+                        if (canHasNodeAsChild(c, holder)) {
+                            holder = tag.clone();
+                            S.each(c.childNodes, function(cc) {
+                                holder.appendChild(cc);
+                            });
+                            c.empty();
+                            c.insertAfter(prev);
+                            prev = c;
+                            c.appendChild(holder);
+                            // recursive to a , lower
+                            recursives.push(holder);
+                            holder = tag.clone();
+                        } else {
+                            // <a href='1'> <a href='2'>2</a> </a>
+                            c.insertAfter(prev);
+                            prev = c;
+                        }
+                    } else {
+                        c.insertAfter(prev);
+                        prev = c;
+                    }
+                }
+            }
+        }
+
+        // <a>1<p>3</p>3</a>
+        // encouter 3 , last holder should be inserted after <p>
+        if (holder.childNodes.length) {
+            holder.insertAfter(prev);
+        }
+
+        // <a><p>1</p></a> => <a></a><p><a>1</a></p> => <p><a>1</a></p>
+        tag.parentNode.removeChild(tag);
+
+        // <a><div><div>1</div></div></a>
+        // =>
+        // <div><a><div>1</div></a></div>
+
+        // => fixCloseTagByDtd("<a><div>1</div></a>")
+        S.each(recursives, function(r) {
+            fixCloseTagByDtd(r, opts);
+        });
+
+        return 1;
+    }
+
+
+    /**
+     * checked whether tag can include node as its child according to DTD
+     */
+    function canHasNodeAsChild(tag, node) {
+        // document can nest any tag
+        if (tag.nodeType == 9) {
+            return 1;
+        }
+        if (!dtd[tag.tagName]) {
+            S.error("dtd[" + tag.tagName + "] === undefined!")
+        }
+        if (node.nodeType == 8) {
+            return 1;
+        }
+        var nodeName = node.tagName || node.nodeName;
+        if (node.nodeType == 3) {
+            nodeName = '#';
+        }
+        return !! dtd[tag.tagName][nodeName];
+    }
+
+    return {
+        scan:function(tag, lexer, opts) {
+            var node,
+                i,
+                stack;
+            stack = opts.stack = opts.stack || [];
             if (tag.isEmptyXmlTag) {
                 tag.closed = true;
             } else {
@@ -15,39 +176,24 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                         if (node.nodeType === 1) {
                             // normal end tag
                             if (node.isEndTag() && node.tagName == tag.tagName) {
-                                tag['closed'] = true;
-                                node = null;
-                            }
-                            // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
-                            // perfection is better and more complicated :
-                            // <a>1<p>2</p>3</a> , move <a> inside => <a>1</a><p><a>2</a></p><a>3</a>
-                            else if (opts['fixByDtd'] &&
-                                !node.isEndTag() &&
-                                !this.canHasNodeAsChild(tag, node)) {
-                                // can not be it as child ,will terminate tag lately
-                                // TODO : maybe move tag as child of node is better
-                                // <a><p>haha</p>wa</a> -> <p><a>haha</a></p><a>wa</a>
-                                lexer.setPosition(node.startPosition);
                                 node = null;
                             } else if (!node.isEndTag()) {
-                                // now fake recursive using stack
-                                var nodeScanner = node.scanner;
-                                if (nodeScanner) {
-                                    if (nodeScanner === scanner) {
-                                        if (node.isEmptyXmlTag) {
-                                            tag.appendChild(node);
-                                        } else {
-                                            stack.push(tag);
-                                            tag = node;
-                                        }
-                                    } else {
-                                        // change scanner ,such as textarea scanner ... etc
-                                        node = nodeScanner.scan(node, lexer, stack, opts);
-                                        tag.appendChild(node);
-                                    }
-                                } else {
+
+                                if (SpecialScanners[node.tagName]) {
+                                    // change scanner ,such as textarea scanner ... etc
+                                    SpecialScanners[node.tagName].scan(node, lexer, opts);
                                     tag.appendChild(node);
+                                } else {
+                                    // now fake recursive using stack
+                                    if (node.isEmptyXmlTag) {
+                                        tag.appendChild(node);
+                                    } else {
+                                        // fake stack
+                                        stack.push(tag);
+                                        tag = node;
+                                    }
                                 }
+
                             } else if (node.isEndTag()) {
                                 // encouter a end tag without open tag
                                 // There are two cases...
@@ -70,23 +216,18 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                     if (c.tagName === node.tagName) {
                                         index = i;
                                         break;
-                                    } else if (opts['fixByDtd'] &&
-                                        !this.canHasNodeAsChild(c, node)) {
-                                        // can not include this node as child of a node in stack
-                                        index = i;
-                                        break;
                                     }
                                 }
 
                                 if (index != -1) {
                                     // <div><span> <a> </div>
                                     // tag==a
-                                    tag['closed'] = true;
                                     stack[stack.length - 1].appendChild(tag);
+                                    fixCloseTagByDtd(tag, opts);
                                     for (i = stack.length - 1; i > index; i--) {
                                         var currentStackItem = stack[i],preStackItem = stack[i - 1];
-                                        currentStackItem['closed'] = true;
                                         preStackItem.appendChild(currentStackItem);
+                                        fixCloseTagByDtd(currentStackItem, opts);
                                     }
                                     tag = stack[index];
                                     stack.length = index;
@@ -107,10 +248,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                             node = stack[stack.length - 1];
                             if (node.nodeType == 1) {
                                 // fake recursion
-                                if (node.scanner === scanner) {
+                                if (!SpecialScanners[node.tagName]) {
                                     stack.length = stack.length - 1;
-                                    tag['closed'] = true;
                                     node.appendChild(tag);
+                                    // child fix
+                                    fixCloseTagByDtd(tag, opts);
                                     tag = node;
                                 } else {
                                     node = null;
@@ -122,27 +264,13 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                     }
                 } while (node);
 
-                tag['closed'] = true;
-            }
+                // root tag fix
+                fixCloseTagByDtd(tag, opts);
 
-            return tag;
-        },
 
-        /**
-         * checked whether tag can include node as its child according to DTD
-         */
-        canHasNodeAsChild:function(tag, node) {
-            if (!dtd[tag.tagName]) {
-                S.error("dtd[" + tag.tagName + "] === undefined!")
             }
-            var nodeName = node.nodeName;
-            if (node.nodeType == 3) {
-                nodeName = '#';
-            }
-            return !! dtd[tag.tagName][nodeName];
         }
     };
-    return scanner;
 }, {
-    requires:["../dtd"]
+    requires:["../dtd","../nodes/Tag","./SpecialScanners"]
 });

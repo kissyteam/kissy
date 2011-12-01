@@ -1,6 +1,5 @@
 KISSY.add("htmlparser/writer/basic", function(S) {
 
-
     function escapeAttrValue(str) {
         return str.replace(/"/g, "&quote;");
     }

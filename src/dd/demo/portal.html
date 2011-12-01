@@ -106,7 +106,6 @@
                 Droppable = DD.Droppable,
                 Scroll = DD.Scroll,
                 Proxy = DD.Proxy;
-        $("#cols").unselectable();
 
         var proxy = new Proxy({
             /**
@@ -124,6 +123,7 @@
 
         var dragDelegate = new DraggableDelegate({
             container:"#cols",
+            move:1,
             handlers:['.header'],
             selector:function(el) {
                 el = $(el);
@@ -157,15 +157,7 @@
             var c = this;
             p = c.get("dragNode").css("position");
         });
-        dragDelegate.on("drag", function(ev) {
 
-            var c = this;
-            /**
-             * node 和 dragNode 区别：
-             * node : 可能是 proxy node，指实际拖放节点
-             */
-            c.get("node").offset(ev);
-        });
         dragDelegate.on("dragend", function(ev) {
             var c = this;
             c.get("dragNode").css("position", p);

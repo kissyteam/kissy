@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 22 14:33
+build time: Nov 29 11:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 22 14:33
          */
         version: '1.20dev',
 
-        buildTime:'20111122143310',
+        buildTime:'20111129114753',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2650,12 +2650,12 @@ build time: Nov 22 14:33
             }
 
             var retryCount = 1,
-
+                node,
                 timer = S.later(function() {
-                    if (doc.getElementById(id) && (fn() || 1) || ++retryCount > POLL_RETRYS) {
+                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                        ++retryCount > POLL_RETRYS) {
                         timer.cancel();
                     }
-
                 }, POLL_INTERVAL, true);
         }
     });
@@ -2804,6 +2804,7 @@ D:\code\kissy_git\kissy\src\dom\traversal.js
 D:\code\kissy_git\kissy\src\dom.js
 D:\code\kissy_git\kissy\src\event\keycodes.js
 D:\code\kissy_git\kissy\src\event\object.js
+D:\code\kissy_git\kissy\src\event\utils.js
 D:\code\kissy_git\kissy\src\event\base.js
 D:\code\kissy_git\kissy\src\event\target.js
 D:\code\kissy_git\kissy\src\event\focusin.js
@@ -3104,17 +3105,17 @@ KISSY.add('dom/base', function(S, UA, undefined) {
          * @type Number
          */
         ELEMENT_NODE : 1,
-        ATTRIBUTE_NODE : 2,
+        "ATTRIBUTE_NODE" : 2,
         TEXT_NODE:3,
-        CDATA_SECTION_NODE : 4,
-        ENTITY_REFERENCE_NODE: 5,
-        ENTITY_NODE : 6,
-        PROCESSING_INSTRUCTION_NODE :7,
+        "CDATA_SECTION_NODE" : 4,
+        "ENTITY_REFERENCE_NODE": 5,
+        "ENTITY_NODE" : 6,
+        "PROCESSING_INSTRUCTION_NODE" :7,
         COMMENT_NODE : 8,
         DOCUMENT_NODE : 9,
-        DOCUMENT_TYPE_NODE : 10,
+        "DOCUMENT_TYPE_NODE" : 10,
         DOCUMENT_FRAGMENT_NODE : 11,
-        NOTATION_NODE : 12
+        "NOTATION_NODE" : 12
     };
     var DOM = {
 
@@ -7238,14 +7239,74 @@ KISSY.add('event/object', function(S, undefined) {
  */
 
 /**
- * @module  event
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * utils for event
+ * @author yiminghe@gmail.com
  */
-KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
+KISSY.add("event/utils", function(S, DOM) {
+
+    /**
+     * whether two event listens are the same
+     * @param h1 已有的 handler 描述
+     * @param h2 用户提供的 handler 描述
+     */
+    function isIdenticalHandler(h1, h2, el) {
+        var scope1 = h1.scope || el,
+            ret = 1,
+            d1,
+            d2,
+            scope2 = h2.scope || el;
+        if (h1.fn !== h2.fn
+            || scope1 !== scope2) {
+            ret = 0;
+        } else if ((d1 = h1.data) !== (d2 = h2.data)) {
+            // undelgate 不能 remove 普通 on 的 handler
+            // remove 不能 remove delegate 的 handler
+            if (!d1 && d2
+                || d1 && !d2
+                ) {
+                ret = 0;
+            } else if (d1 && d2) {
+                if (!d1.equals || !d2.equals) {
+                    S.error("no equals in data");
+                } else if (!d1.equals(d2,el)) {
+                    ret = 0;
+                }
+            }
+        }
+        return ret;
+    }
+
+
+    function isValidTarget(target) {
+        // 3 - is text node
+        // 8 - is comment node
+        return target &&
+            target.nodeType !== DOM.TEXT_NODE &&
+            target.nodeType !== DOM.COMMENT_NODE;
+    }
+
+
+    function batchForType(obj, methodName, targets, types) {
+        // on(target, 'click focus', fn)
+        if (types && types.indexOf(" ") > 0) {
+            var args = S.makeArray(arguments);
+            S.each(types.split(/\s+/), function(type) {
+                var args2 = [].concat(args);
+                args2.splice(0, 4, targets, type);
+                obj[methodName].apply(obj, args2);
+            });
+            return true;
+        }
+        return 0;
+    }
+
+
+    function splitAndRun(type, fn) {
+        S.each(type.split(/\s+/), fn);
+    }
+
 
     var doc = document,
-        nodeName = DOM._nodeName,
-        makeArray = S.makeArray,
         simpleAdd = doc.addEventListener ?
             function(el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -7267,9 +7328,38 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 if (el.detachEvent) {
                     el.detachEvent('on' + type, fn);
                 }
-            },
-        SPACE = " ",
+            };
+
+
+    return {
+        splitAndRun:splitAndRun,
+        batchForType:batchForType,
+        isValidTarget:isValidTarget,
+        isIdenticalHandler:isIdenticalHandler,
+        simpleAdd:simpleAdd,
+        simpleRemove:simpleRemove
+    };
+
+}, {
+    requires:['dom']
+});
+
+/**
+ * scalable event framework for kissy (refer DOM3 Events)
+ * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ */
+KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
+
+    var isValidTarget = Utils.isValidTarget,
+        isIdenticalHandler = Utils.isIdenticalHandler,
+        batchForType = Utils.batchForType,
+        simpleRemove = Utils.simpleRemove,
+        simpleAdd = Utils.simpleAdd,
+        splitAndRun = Utils.splitAndRun,
+        nodeName = DOM._nodeName,
+        makeArray = S.makeArray,
         each = S.each,
+        trim = S.trim,
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了
@@ -7295,6 +7385,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                 events = eventDesc.events;
             each(events, function(handlers, type) {
                 each(handlers, function(handler) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     Event.on(dest, type, handler.fn, handler.scope, handler.data);
                 });
             });
@@ -7334,7 +7425,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             if (!eventDesc) {
                 Event._data(target, eventDesc = {});
             }
-            //事件 listeners
+            //事件 listeners , similar to eventListeners in DOM3 Events
             var events = eventDesc.events = eventDesc.events || {},
                 handlers = events[type] = events[type] || [],
                 handleObj = {
@@ -7363,30 +7454,46 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
                     if (type) {
                         event.type = type;
                     }
-                    return Event._handle(target, event);
+                    return _handle(target, event);
                 };
                 eventHandler.target = target;
             }
+
+            for (var i = handlers.length - 1; i >= 0; --i) {
+                /**
+                 * If multiple identical EventListeners are registered on the same EventTarget
+                 * with the same parameters the duplicate instances are discarded.
+                 * They do not cause the EventListener to be called twice
+                 * and since they are discarded
+                 * they do not need to be removed with the removeEventListener method.
+                 */
+                if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                    return;
+                }
+            }
+
             if (isNativeTarget) {
                 addDomEvent(target, type, eventHandler, handlers, handleObj);
                 //nullify to prevent memory leak in ie ?
                 target = null;
             }
+
             // 增加 listener
             handlers.push(handleObj);
         },
 
         /**
-         * Adds an event listener.
+         * Adds an event listener.similar to addEventListener in DOM3 Events
          * @param targets KISSY selector
          * @param type {String} The type of event to append.
-         * @param fn {Function} The event handler.
+         * @param fn {Function} The event handler/listener.
          * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
+            type = trim(type);
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            if (batchForType('add', targets, type, fn, scope, data)) {
+            if (batchForType(Event, 'add', targets, type, fn, scope, data)) {
                 return targets;
             }
 
@@ -7395,17 +7502,6 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             });
 
             return targets;
-        },
-
-        __getListeners:function(target, type) {
-            var events = Event.__getEvents(target) || {};
-            return events[type] || [];
-        },
-
-        __getEvents:function(target) {
-            // 获取事件描述
-            var eventDesc = Event._data(target);
-            return eventDesc && eventDesc.events;
         },
 
         // single target, single type, fixed native
@@ -7432,49 +7528,33 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             }
 
             // remove all types of event
-            if (type === undefined) {
+            if (!type) {
                 for (type in events) {
-                    Event.remove.call(Event, target, type);
+                    Event.__remove(isNativeTarget, target, type);
                 }
                 return;
             }
-
-            scope = scope || target;
 
             if ((handlers = events[type])) {
                 len = handlers.length;
                 // 移除 fn
                 if (fn && len) {
+                    var currentHandler = {
+                        data:data,
+                        fn:fn,
+                        scope:scope
+                    },handler;
+
                     for (i = 0,j = 0,t = []; i < len; ++i) {
-                        var reserve = false,
-                            handler = handlers[i],
-                            handlerScope = handler.scope || target;
-                        if (fn !== handler.fn
-                            || scope !== handlerScope) {
+                        handler = handlers[i];
+                        // 注意顺序，用户提供的 handler 在第二个参数
+                        if (!isIdenticalHandler(handler, currentHandler, target)) {
                             t[j++] = handler;
-                            reserve = true;
-                        } else if (data !== data2) {
-                            var data2 = handler.data;
-                            // undelgate 不能 remove 普通 on 的 handler
-                            // remove 不能 remove delegate 的 handler
-                            if (!data && data2
-                                || data2 && !data
-                                ) {
-                                t[j++] = handler;
-                                reserve = true;
-                            } else if (data && data2) {
-                                if (!data.equals || !data2.equals) {
-                                    S.error("no equals in data");
-                                } else if (!data2.equals(data)) {
-                                    t[j++] = handler;
-                                    reserve = true;
-                                }
-                            }
-                        }
-                        if (!reserve && special.remove) {
+                        } else if (special.remove) {
                             special.remove.call(target, handler);
                         }
                     }
+
                     events[type] = t;
                     len = t.length;
                 }
@@ -7502,10 +7582,15 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         },
 
         /**
-         * Detach an event or set of events from an element.
+         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+         * @param targets KISSY selector
+         * @param type {String} The type of event to append.
+         * @param fn {Function} The event handler/listener.
+         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
          */
         remove: function(targets, type /* optional */, fn /* optional */, scope /* optional */, data/*internal usage*/) {
-            if (batchForType('remove', targets, type, fn, scope)) {
+            type = trim(type);
+            if (batchForType(Event, 'remove', targets, type, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -7514,88 +7599,93 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
             return targets;
         },
 
-        _handle: function(target, event) {
-            /* As some listeners may remove themselves from the
-             event, the original array length is dynamic. So,
-             let's make a copy of all listeners, so we are
-             sure we'll call all of them.*/
-            var listeners = Event.__getListeners(target, event.type).slice(0),
-                ret,
-                gRet,
-                i = 0,
-                len = listeners.length,
-                listener;
-
-            for (; i < len; ++i) {
-                listener = listeners[i];
-                // 传入附件参数data，目前用于委托
-                ret = listener.fn.call(listener.scope || target,
-                    event, listener.data);
-
-                // 和 jQuery 逻辑保持一致
-                if (ret !== undefined) {
-                    // 有一个 false，最终结果就是 false
-                    // 否则等于最后一个返回值
-                    if (gRet !== false) {
-                        gRet = ret;
-                    }
-                    // return false 等价 preventDefault + stopProgation
-                    if (ret === false) {
-                        event.halt();
-                    }
-                }
-
-                if (event.isImmediatePropagationStopped) {
-                    break;
-                }
-            }
-
-            return gRet;
-        },
+        _handle:_handle,
 
         /**
-         * fire event , simulate bubble in browser
-         * @return undefined
+         * fire event , simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @return boolean The return value of fire/dispatchEvent indicates
+         *                 whether any of the listeners which handled the event called preventDefault.
+         *                 If preventDefault was called the value is false, else the value is true.
          */
         fire: function(targets, eventType, eventData, onlyHandlers) {
-            if (!batchForType("fire", targets, eventType, eventData, onlyHandlers)) {
-                // custom event firing moved to target.js
-                eventData = eventData || {};
-                // protect event type
-                eventData.type = eventType;
-                DOM.query(targets).each(function(target) {
-                    fireDOMEvent(target, eventType, eventData, onlyHandlers);
+            var ret = true;
+            eventType = trim(eventType);
+            if (eventType.indexOf(" ") > -1) {
+                splitAndRun(eventType, function(t) {
+                    ret = Event.fire(targets, t, eventData, onlyHandlers) && ret;
                 });
+                return ret;
             }
+            // custom event firing moved to target.js
+            eventData = eventData || {};
+            // protect event type
+            eventData.type = eventType;
+            DOM.query(targets).each(function(target) {
+                ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
+            });
+            return ret;
         },
-
-        __batchForType:batchForType,
-        __simpleAdd:simpleAdd,
-        __simpleRemove:simpleRemove
+        __getListeners:getListeners
     };
 
     // shorthand
     Event.on = Event.add;
     Event.detach = Event.remove;
 
-    function batchForType(methodName, targets, types) {
-        // on(target, 'click focus', fn)
-        if ((types = S.trim(types)) && types.indexOf(SPACE) > 0) {
-            var args = makeArray(arguments);
-            each(types.split(/\s+/), function(type) {
-                var args2 = [].concat(args);
-                args2.splice(0, 3, targets, type);
-                Event[methodName].apply(Event, args2);
-            });
-            return true;
-        }
-        return 0;
+    function getListeners(target, type) {
+        var events = getEvents(target) || {};
+        return events[type] || [];
     }
 
-    function isValidTarget(target) {
-        // 3 - is text node
-        // 8 - is comment node
-        return target && target.nodeType !== 3 && target.nodeType !== 8;
+    function _handle(target, event) {
+        /* As some listeners may remove themselves from the
+         event, the original array length is dynamic. So,
+         let's make a copy of all listeners, so we are
+         sure we'll call all of them.*/
+        /**
+         * DOM3 Events: EventListenerList objects in the DOM are live. ??
+         */
+        var listeners = getListeners(target, event.type).slice(0),
+            ret,
+            gRet,
+            i = 0,
+            len = listeners.length,
+            listener;
+
+        for (; i < len; ++i) {
+            listener = listeners[i];
+            // 传入附件参数data，目前用于委托
+            // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            ret = listener.fn.call(listener.scope || target,
+                event, listener.data);
+
+            // 和 jQuery 逻辑保持一致
+            if (ret !== undefined) {
+                // 有一个 false，最终结果就是 false
+                // 否则等于最后一个返回值
+                if (gRet !== false) {
+                    gRet = ret;
+                }
+                // return false 等价 preventDefault + stopProgation
+                if (ret === false) {
+                    event.halt();
+                }
+            }
+
+            if (event.isImmediatePropagationStopped) {
+                break;
+            }
+        }
+
+        // fire 时判断如果 preventDefault，则返回 false 否则返回 true
+        // 这里返回值意义不同
+        return gRet;
+    }
+
+    function getEvents(target) {
+        // 获取事件描述
+        var eventDesc = Event._data(target);
+        return eventDesc && eventDesc.events;
     }
 
     /**
@@ -7604,7 +7694,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = EVENT_SPECIAL[type] || {};
         // 第一次注册该事件，dom 节点才需要注册 dom 事件
-        if (!handlers.length && (!special.setup || special.setup.call(target) === false)) {
+        if (!handlers.length &&
+            (!special.setup || special.setup.call(target) === false)) {
             simpleAdd(target, type, eventHandler)
         }
         if (special.add) {
@@ -7614,14 +7705,29 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
 
     /**
-     * fire dom event from bottom to up
+     * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+     * @return boolean The return value of dispatchEvent indicates
+     *                 whether any of the listeners which handled the event called preventDefault.
+     *                 If preventDefault was called the value is false, else the value is true.
      */
     function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         if (!isValidTarget(target)) {
-            return;
+            return false;
         }
-        var event = new EventObject(target, undefined, eventType);
-        S.mix(event, eventData);
+
+        var event,
+            ret = true;
+        if (eventData instanceof EventObject) {
+            event = eventData;
+        } else {
+            event = new EventObject(target, undefined, eventType);
+            S.mix(event, eventData);
+        }
+        /*
+         The target of the event is the EventTarget on which dispatchEvent is called.
+         */
+        // TODO: protect target , but incompatible
+        // event.target=target;
         // protect type
         event.type = eventType;
         // 只运行自己的绑定函数，不冒泡也不触发默认行为
@@ -7634,9 +7740,10 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         //bubble up dom tree
         do{
             event.currentTarget = cur;
-            Event._handle(cur, event);
+            _handle(cur, event);
             // Trigger an inline bound script
-            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+            if (cur[ ontype ] &&
+                cur[ ontype ].call(cur) === false) {
                 event.preventDefault();
             }
             // Bubble up to document, then to window
@@ -7646,7 +7753,8 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
         } while (cur && !event.isPropagationStopped);
 
         if (!event.isDefaultPrevented) {
-            if (!(eventType === "click" && nodeName(target, "a"))) {
+            if (!(eventType === "click" &&
+                nodeName(target, "a"))) {
                 var old;
                 try {
                     if (ontype && target[ eventType ]) {
@@ -7675,29 +7783,38 @@ KISSY.add('event/base', function(S, DOM, EventObject, undefined) {
 
                 Event_Triggered = TRIGGERED_NONE;
             }
+        } else {
+            ret = false;
         }
+        return ret;
     }
 
     return Event;
 }, {
-    requires:["dom","event/object"]
+    requires:["dom","./object","./utils"]
 });
 
 /**
- * 承玉：2011-06-07
+ * 2011-11-24
+ *  - 自定义事件和 dom 事件操作彻底分离
+ *  - TODO: group event from DOM3 Event
+ *
+ * 2011-06-07
+ *  - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ *  - 重构
  *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
  *  - 减少闭包使用，prevent ie 内存泄露？
  *  - 增加 fire ，模拟冒泡处理 dom 事件
- *  - TODO: 自定义事件和 dom 事件操作彻底分离?
- *
  */
 
 /**
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject) {
+KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
     var KS_PUBLISH = "__~ks_publish",
+        trim = S.trim,
+        splitAndRun = Utils.splitAndRun,
         KS_BUBBLE_TARGETS = "__~ks_bubble_targets",
         ALL_EVENT = "*";
 
@@ -7734,7 +7851,8 @@ KISSY.add('event/target', function(S, Event, EventObject) {
     function attach(method) {
         return function(type, fn, scope) {
             var self = this;
-            S.each(S.trim(type).split(/\s+/), function(t) {
+            type = trim(type);
+            splitAndRun(type, function(t) {
                 Event["__" + method](false, self, t, fn, scope);
             });
             return self; // chain
@@ -7761,12 +7879,24 @@ KISSY.add('event/target', function(S, Event, EventObject) {
             var self = this,
                 ret,
                 r2,
-                customEvent = getCustomEvent(self, type, eventData);
+                customEvent;
+            type = trim(type);
+            if (type.indexOf(" ") > 0) {
+                splitAndRun(type, function(t) {
+                    r2 = self.fire(t, eventData);
+                    if (r2 === false) {
+                        ret = false;
+                    }
+                });
+                return ret;
+            }
+            customEvent = getCustomEvent(self, type, eventData);
             ret = Event._handle(self, customEvent);
-            if (!customEvent.isPropagationStopped && isBubblable(self, type)) {
+            if (!customEvent.isPropagationStopped &&
+                isBubblable(self, type)) {
                 r2 = self.bubble(type, customEvent);
                 // false 优先返回
-                if (r2 === false) {
+                if (ret !== false) {
                     ret = r2;
                 }
             }
@@ -7783,7 +7913,10 @@ KISSY.add('event/target', function(S, Event, EventObject) {
         publish: function(type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
-            publish[type] = cfg;
+            type = trim(type);
+            if (type) {
+                publish[type] = cfg;
+            }
         },
 
         /**
@@ -7845,11 +7978,11 @@ KISSY.add('event/target', function(S, Event, EventObject) {
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object']
+    requires:["./base",'./object','./utils']
 });
 /**
- *  2011-10-17
- *    yiminghe: implement bubble for custom event
+ *  yiminghe:2011-10-17
+ *   - implement bubble for custom event
  **/
 
 /**
@@ -7958,7 +8091,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
 
             hashChange = ie && ie < 8 ? function(hash) {
                 // S.log("set iframe html :" + hash);
-                //debugger
+
                 var html = S.substitute(IFRAME_TEMPLATE, {
                     hash: hash,
                     // 一定要加哦
@@ -8055,7 +8188,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                      */
                     function onIframeLoad() {
                         // S.log('iframe start load..');
-                        // debugger
+                       
                         // 2011.11.02 note: 不能用 innerHtml 会自动转义！！
                         // #/x?z=1&y=2 => #/x?z=1&amp;y=2
                         var c = S.trim(getIframeDoc(iframe).body.innerText),
@@ -8215,8 +8348,8 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
  * kissy delegate for event module
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/delegate", function(S, DOM, Event) {
-    var batchForType = Event.__batchForType,
+KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
+    var batchForType = Utils.batchForType,
         delegateMap = {
             "focus":{
                 type:"focusin"
@@ -8236,7 +8369,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     S.mix(Event, {
         delegate:function(targets, type, selector, fn, scope) {
-            if (batchForType('delegate', targets, type, selector, fn, scope)) {
+            if (batchForType(Event, 'delegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -8257,7 +8390,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         },
 
         undelegate:function(targets, type, selector, fn, scope) {
-            if (batchForType('undelegate', targets, type, selector, fn, scope)) {
+            if (batchForType(Event, 'undelegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -8280,13 +8413,19 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     });
 
     // 比较函数，两个 delegate 描述对象比较
-    function equals(d) {
+    // 注意顺序： 已有data 和 用户提供的 data 比较
+    function equals(d, el) {
+        // 用户不提供 fn selector 那么肯定成功
         if (d.fn === undefined && d.selector === undefined) {
             return true;
-        } else if (d.fn === undefined) {
+        }
+        // 用户不提供 fn 则只比较 selector
+        else if (d.fn === undefined) {
             return this.selector == d.selector;
         } else {
-            return this.fn == d.fn && this.selector == d.selector && this.scope == d.scope;
+            var scope = this.scope || el,
+                dScope = d.scope || el;
+            return this.fn == d.fn && this.selector == d.selector && scope == dScope;
         }
     }
 
@@ -8347,7 +8486,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     return Event;
 }, {
-    requires:["dom","./base"]
+    requires:["dom","./base","./utils"]
 });
 
 /**
@@ -8622,9 +8761,11 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function(S, Event, UA) {
+KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
+        simpleRemove = Utils.simpleRemove,
+        simpleAdd = Utils.simpleAdd,
         mousewheelHandler = "mousewheelHandler";
 
     function handler(e) {
@@ -8682,20 +8823,20 @@ KISSY.add("event/mousewheel", function(S, Event, UA) {
                 eventDesc = Event._data(el);
             // solve this in ie
             mousewheelHandler = eventDesc[mousewheelHandler] = S.bind(handler, el);
-            Event.__simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
+            simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
         },
         tearDown:function() {
             var el = this,
                 mousewheelHandler,
                 eventDesc = Event._data(el);
             mousewheelHandler = eventDesc[mousewheelHandler];
-            Event.__simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
+            simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
         }
     };
 
 }, {
-    requires:['./base','ua','./object']
+    requires:['./base','ua','./utils']
 });
 
 /**
@@ -9900,6 +10041,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             // hide/show/toggle : special treat!
             if (S.inArray(val, specialVals)) {
+                // backup original value
                 _backupProps[prop] = DOM.style(elem, prop);
                 if (val == "toggle") {
                     val = hidden ? "show" : "hide";
@@ -9910,9 +10052,11 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     // 执行完后隐藏
                     _backupProps.display = 'none';
                 } else {
-                    DOM.show(elem);
                     from = 0;
                     to = fx.cur();
+                    // prevent flash of content
+                    DOM.css(elem, prop, from);
+                    DOM.show(elem);
                 }
                 val = to;
             } else {
@@ -9956,9 +10100,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // change the overflow attribute when overflowX and
             // overflowY are set to the same value
             S.mix(_backupProps, {
-                overflow:DOM.css(elem, "overflow"),
-                "overflow-x":DOM.css(elem, "overflowX"),
-                "overflow-y":DOM.css(elem, "overflowY")
+                overflow:DOM.style(elem, "overflow"),
+                "overflow-x":DOM.style(elem, "overflowX"),
+                "overflow-y":DOM.style(elem, "overflowY")
             });
             DOM.css(elem, "overflow", "hidden");
             // inline element should has layout/inline-block
@@ -11304,9 +11448,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  cache: null,
                  mimeType:null,
                  xdr:{
-                 subDomain:{
-                 proxy:'http://xx.t.com/proxy.html'
-                 }
+                     subDomain:{
+                        proxy:'http://xx.t.com/proxy.html'
+                     },
+                     src:''
                  },
                  headers: {},
                  xhrFields:{},
@@ -11695,15 +11840,12 @@ KISSY.add("ajax/xhrbase", function(S, io) {
  */
 KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
-
-    var PROXY_PAGE = "/sub_domain_proxy.html";
-
-    var doc = document;
-
-    var iframeMap = {
-        // hostname:{iframe: , ready:}
-    };
+    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        PROXY_PAGE = "/sub_domain_proxy.html",
+        doc = document,
+        iframeMap = {
+            // hostname:{iframe: , ready:}
+        };
 
     function SubDomain(xhrObj) {
         var self = this,
@@ -11753,19 +11895,19 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
                 iframe = iframeDesc.iframe;
             }
 
-            Event.on(iframe, "load", self._onLoad, self);
+            Event.on(iframe, "load", _onLoad, self);
 
-        },
-
-        _onLoad:function() {
-            var self = this,
-                hostname = self.__hostname,
-                iframeDesc = iframeMap[hostname];
-            iframeDesc.ready = 1;
-            Event.detach(iframeDesc.iframe, "load", self._onLoad, self);
-            self.send();
         }
     });
+
+    function _onLoad() {
+        var self = this,
+            hostname = self.__hostname,
+            iframeDesc = iframeMap[hostname];
+        iframeDesc.ready = 1;
+        Event.detach(iframeDesc.iframe, "load", _onLoad, self);
+        self.send();
+    }
 
     return SubDomain;
 
@@ -12677,274 +12819,271 @@ KISSY.add('base/attribute', function(S, undef) {
     function Attribute() {
     }
 
-    S.augment(Attribute,
+    S.augment(Attribute, {
+
         /**
-         * @lends Attribute.prototype
+         * @return un-cloned attr config collections
          */
-        {
+        getAttrs: function() {
+            return getAttrs(this);
+        },
 
-            /**
-             * @return un-cloned attr config collections
-             */
-            getAttrs: function() {
-                return getAttrs(this);
-            },
+        /**
+         * @return un-cloned attr value collections
+         */
+        getAttrVals:function() {
+            var self = this,
+                o = {},
+                a,
+                attrs = getAttrs(self);
+            for (a in attrs) {
+                o[a] = self.get(a);
+            }
+            return o;
+        },
 
-            /**
-             * @return un-cloned attr value collections
-             */
-            getAttrVals:function() {
-                var self = this,
-                    o = {},
-                    a,
-                    attrs = getAttrs(self);
-                for (a in attrs) {
-                    o[a] = self.get(a);
+        /**
+         * Adds an attribute with the provided configuration to the host object.
+         * @param {String} name attrName
+         * @param {Object} attrConfig The config supports the following properties:
+         * {
+         *     value: 'the default value', // 最好不要使用自定义类生成的对象，这时使用 valueFn
+         *     valueFn: function //
+         *     setter: function
+         *     getter: function
+         * }
+         * @param {boolean} override whether override existing attribute config ,default true
+         */
+        addAttr: function(name, attrConfig, override) {
+            var self = this,
+                attrs = getAttrs(self),
+                cfg = S.clone(attrConfig);
+            if (!attrs[name]) {
+                attrs[name] = cfg;
+            } else {
+                S.mix(attrs[name], cfg, override);
+            }
+            return self;
+        },
+
+        /**
+         * Configures a group of attributes, and sets initial values.
+         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+         * @param {Object} initialValues user defined initial values
+         */
+        addAttrs: function(attrConfigs, initialValues) {
+            var self = this;
+            S.each(attrConfigs, function(attrConfig, name) {
+                self.addAttr(name, attrConfig);
+            });
+            if (initialValues) {
+                self.set(initialValues);
+            }
+            return self;
+        },
+
+        /**
+         * Checks if the given attribute has been added to the host.
+         */
+        hasAttr: function(name) {
+            return name && getAttrs(this).hasOwnProperty(name);
+        },
+
+        /**
+         * Removes an attribute from the host object.
+         */
+        removeAttr: function(name) {
+            var self = this;
+
+            if (self.hasAttr(name)) {
+                delete getAttrs(self)[name];
+                delete getAttrVals(self)[name];
+            }
+
+            return self;
+        },
+
+        /**
+         * Sets the value of an attribute.
+         */
+        set: function(name, value, opts) {
+            var ret,self = this;
+            if (S.isPlainObject(name)) {
+                var all = name;
+                name = 0;
+                ret = true;
+                opts = value;
+                var attrs = [];
+                for (name in all) {
+                    ret = setInternal(self, name, all[name], opts, attrs);
+                    if (ret === false) {
+                        break;
+                    }
                 }
-                return o;
-            },
-
-            /**
-             * Adds an attribute with the provided configuration to the host object.
-             * @param {String} name attrName
-             * @param {Object} attrConfig The config supports the following properties:
-             * {
-             *     value: 'the default value', // 最好不要使用自定义类生成的对象，这时使用 valueFn
-             *     valueFn: function //
-             *     setter: function
-             *     getter: function
-             * }
-             * @param {boolean} override whether override existing attribute config ,default true
-             */
-            addAttr: function(name, attrConfig, override) {
-                var self = this,
-                    attrs = getAttrs(self),
-                    cfg = S.clone(attrConfig);
-                if (!attrs[name]) {
-                    attrs[name] = cfg;
-                } else {
-                    S.mix(attrs[name], cfg, override);
-                }
-                return self;
-            },
-
-            /**
-             * Configures a group of attributes, and sets initial values.
-             * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-             * @param {Object} initialValues user defined initial values
-             */
-            addAttrs: function(attrConfigs, initialValues) {
-                var self = this;
-                S.each(attrConfigs, function(attrConfig, name) {
-                    self.addAttr(name, attrConfig);
+                var attrNames = [],
+                    prevVals = [],
+                    newVals = [],
+                    subAttrNames = [];
+                S.each(attrs, function(attr) {
+                    prevVals.push(attr.prevVal);
+                    newVals.push(attr.newVal);
+                    attrNames.push(attr.attrName);
+                    subAttrNames.push(attr.subAttrName);
                 });
-                if (initialValues) {
-                    self.set(initialValues);
+                if (attrNames.length) {
+                    __fireAttrChange(self,
+                        '',
+                        '*',
+                        prevVals,
+                        newVals,
+                        subAttrNames,
+                        attrNames);
                 }
-                return self;
-            },
+                return ret;
+            }
 
-            /**
-             * Checks if the given attribute has been added to the host.
-             */
-            hasAttr: function(name) {
-                return name && getAttrs(this).hasOwnProperty(name);
-            },
-
-            /**
-             * Removes an attribute from the host object.
-             */
-            removeAttr: function(name) {
-                var self = this;
-
-                if (self.hasAttr(name)) {
-                    delete getAttrs(self)[name];
-                    delete getAttrVals(self)[name];
-                }
-
-                return self;
-            },
-
-            /**
-             * Sets the value of an attribute.
-             */
-            set: function(name, value, opts) {
-                var ret,self = this;
-                if (S.isPlainObject(name)) {
-                    var all = name;
-                    name = 0;
-                    ret = true;
-                    opts = value;
-                    var attrs = [];
-                    for (name in all) {
-                        ret = setInternal(self, name, all[name], opts, attrs);
-                        if (ret === false) {
-                            break;
-                        }
-                    }
-                    var attrNames = [],
-                        prevVals = [],
-                        newVals = [],
-                        subAttrNames = [];
-                    S.each(attrs, function(attr) {
-                        prevVals.push(attr.prevVal);
-                        newVals.push(attr.newVal);
-                        attrNames.push(attr.attrName);
-                        subAttrNames.push(attr.subAttrName);
-                    });
-                    if (attrNames.length) {
-                        __fireAttrChange(self,
-                            '',
-                            '*',
-                            prevVals,
-                            newVals,
-                            subAttrNames,
-                            attrNames);
-                    }
-                    return ret;
-                }
-
-                return setInternal(self, name, value, opts);
+            return setInternal(self, name, value, opts);
 
 
-            },
+        },
 
-            /**
-             * internal use, no event involved, just set.
-             * @protected overriden by mvc/model
-             */
-            __set: function(name, value) {
-                var self = this,
-                    setValue,
-                    // if host does not have meta info corresponding to (name,value)
-                    // then register on demand in order to collect all data meta info
-                    // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                    // 因为属性在声明注册前可以直接设置值
-                    attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                    validator = attrConfig['validator'],
-                    setter = attrConfig['setter'];
+        /**
+         * internal use, no event involved, just set.
+         * @protected overriden by mvc/model
+         */
+        __set: function(name, value) {
+            var self = this,
+                setValue,
+                // if host does not have meta info corresponding to (name,value)
+                // then register on demand in order to collect all data meta info
+                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                // 因为属性在声明注册前可以直接设置值
+                attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+                validator = attrConfig['validator'],
+                setter = attrConfig['setter'];
 
-                // validator check
-                if (validator = normalFn(self, validator)) {
-                    if (!validator.call(self, value, name)) {
-                        return false;
-                    }
-                }
-
-                // if setter has effect
-                if (setter = normalFn(self, setter)) {
-                    setValue = setter.call(self, value, name);
-                }
-
-                if (setValue === INVALID) {
+            // validator check
+            if (validator = normalFn(self, validator)) {
+                if (validator.call(self, value, name) === false) {
                     return false;
                 }
-
-                if (setValue !== undef) {
-                    value = setValue;
-                }
-
-                // finally set
-                getAttrVals(self)[name] = value;
-            },
-
-            /**
-             * Gets the current value of the attribute.
-             */
-            get: function(name) {
-                var self = this,
-                    dot = ".",
-                    path,
-                    attrConfig,
-                    getter, ret;
-
-                if (name.indexOf(dot) !== -1) {
-                    path = name.split(dot);
-                    name = path.shift();
-                }
-
-                attrConfig = ensureNonEmpty(getAttrs(self), name);
-                getter = attrConfig['getter'];
-
-                // get user-set value or default value
-                //user-set value takes privilege
-                ret = name in getAttrVals(self) ?
-                    getAttrVals(self)[name] :
-                    self.__getDefAttrVal(name);
-
-                // invoke getter for this attribute
-                if (getter = normalFn(self, getter)) {
-                    ret = getter.call(self, ret, name);
-                }
-
-                if (path) {
-                    ret = getValueByPath(ret, path);
-                }
-
-                return ret;
-            },
-
-            /**
-             * get default attribute value from valueFn/value
-             * @private
-             * @param name
-             */
-            __getDefAttrVal: function(name) {
-                var self = this,
-                    attrConfig = ensureNonEmpty(getAttrs(self), name),
-                    valFn,
-                    val;
-
-                if ((valFn = normalFn(self, attrConfig.valueFn))) {
-                    val = valFn.call(self);
-                    if (val !== undef) {
-                        attrConfig.value = val;
-                    }
-                    delete attrConfig.valueFn;
-                    getAttrs(self)[name] = attrConfig;
-                }
-
-                return attrConfig.value;
-            },
-
-            /**
-             * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-             * @param {String} name name of attribute
-             */
-            reset: function (name, opts) {
-                var self = this;
-
-                if (S.isString(name)) {
-                    if (self.hasAttr(name)) {
-                        // if attribute does not have default value, then set to undefined.
-                        return self.set(name, self.__getDefAttrVal(name), opts);
-                    }
-                    else {
-                        return self;
-                    }
-                }
-
-                opts = name;
-
-                var attrs = getAttrs(self),
-                    values = {};
-
-                // reset all
-                for (name in attrs) {
-                    values[name] = self.__getDefAttrVal(name);
-                }
-
-                self.set(values, opts);
-                return self;
             }
-        });
+
+            // if setter has effect
+            if (setter = normalFn(self, setter)) {
+                setValue = setter.call(self, value, name);
+            }
+
+            if (setValue === INVALID) {
+                return false;
+            }
+
+            if (setValue !== undef) {
+                value = setValue;
+            }
+
+            // finally set
+            getAttrVals(self)[name] = value;
+        },
+
+        /**
+         * Gets the current value of the attribute.
+         */
+        get: function(name) {
+            var self = this,
+                dot = ".",
+                path,
+                attrConfig,
+                getter, ret;
+
+            if (name.indexOf(dot) !== -1) {
+                path = name.split(dot);
+                name = path.shift();
+            }
+
+            attrConfig = ensureNonEmpty(getAttrs(self), name);
+            getter = attrConfig['getter'];
+
+            // get user-set value or default value
+            //user-set value takes privilege
+            ret = name in getAttrVals(self) ?
+                getAttrVals(self)[name] :
+                self.__getDefAttrVal(name);
+
+            // invoke getter for this attribute
+            if (getter = normalFn(self, getter)) {
+                ret = getter.call(self, ret, name);
+            }
+
+            if (path) {
+                ret = getValueByPath(ret, path);
+            }
+
+            return ret;
+        },
+
+        /**
+         * get default attribute value from valueFn/value
+         * @private
+         * @param name
+         */
+        __getDefAttrVal: function(name) {
+            var self = this,
+                attrConfig = ensureNonEmpty(getAttrs(self), name),
+                valFn,
+                val;
+
+            if ((valFn = normalFn(self, attrConfig.valueFn))) {
+                val = valFn.call(self);
+                if (val !== undef) {
+                    attrConfig.value = val;
+                }
+                delete attrConfig.valueFn;
+                getAttrs(self)[name] = attrConfig;
+            }
+
+            return attrConfig.value;
+        },
+
+        /**
+         * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+         * @param {String} name name of attribute
+         */
+        reset: function (name, opts) {
+            var self = this;
+
+            if (S.isString(name)) {
+                if (self.hasAttr(name)) {
+                    // if attribute does not have default value, then set to undefined.
+                    return self.set(name, self.__getDefAttrVal(name), opts);
+                }
+                else {
+                    return self;
+                }
+            }
+
+            opts = name;
+
+            var attrs = getAttrs(self),
+                values = {};
+
+            // reset all
+            for (name in attrs) {
+                values[name] = self.__getDefAttrVal(name);
+            }
+
+            self.set(values, opts);
+            return self;
+        }
+    });
 
     function capitalFirst(s) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
-    Attribute['__capitalFirst'] = capitalFirst;
-
+    if (undef) {
+        Attribute.prototype.addAttrs = undef;
+    }
     return Attribute;
 });
 
@@ -13109,25 +13248,24 @@ KISSY.add("cookie", function(S,C) {
 });
 
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
-    Ajax.getScript=S.getScript;
     var re = {
         UA:UA,
         DOM:DOM,
         Event:Event,
         EventTarget:Event.Target,
-        EventObject:Event.Object,
+        "EventObject":Event.Object,
         Node:Node,
         NodeList:Node,
         JSON:JSON,
-        Ajax:Ajax,
-        IO:Ajax,
+        "Ajax":Ajax,
+        "IO":Ajax,
         ajax:Ajax,
         io:Ajax,
         jsonp:Ajax.jsonp,
         Anim:Anim,
         Easing:Anim.Easing,
         Base:Base,
-        Cookie:Cookie,
+        "Cookie":Cookie,
         one:Node.one,
         all:Node.all,
         get:DOM.get,
@@ -13155,7 +13293,7 @@ KISSY.use('core');
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -14580,7 +14718,7 @@ KISSY.add("sizzle", function(S, sizzle) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:38
 */
 /**
  * 数据延迟加载组件
@@ -14937,6 +15075,9 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
                 callbacks.els.push(el);
                 callbacks.fns.push(fn);
             }
+
+            // add 立即检测，防止首屏元素问题
+            this._fireCallbacks();
         },
 
         /**
@@ -14974,7 +15115,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             var self = this, area, imgs;
 
             if (type === 'img-src') type = 'img';
-            
+
             // 支持数组
             if (!S.isArray(containers)) {
                 containers = [DOM.get(containers)];
@@ -15083,7 +15224,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -15326,7 +15467,7 @@ KISSY.add("template", function(S, T) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * @module   Flash 全局静态类
@@ -15845,32 +15986,53 @@ KISSY.add("flash", function(S, F) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 22 10:42
+build time: Nov 28 12:39
 */
 /**
  * dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
+KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
 
     var doc = document,
-        // prevent collision with click
-        BUFFER_TIME = 200,
+        win = window,
+
+        ie6 = UA['ie'] === 6,
+
+        // prevent collision with click , only start when move
+        PIXEL_THRESH = 3,
+        // or start when mousedown for 1 second
+        BUFFER_TIME = 1000,
+
         MOVE_DELAY = 30,
+        _showShimMove = S.throttle(move,
+            MOVE_DELAY),
         SHIM_ZINDEX = 999999;
 
     function DDM() {
         var self = this;
         DDM.superclass.constructor.apply(self, arguments);
-        self._showShimMove = S.throttle(move,
-            MOVE_DELAY,
-            self);
     }
 
     DDM.ATTRS = {
         prefixCls:{
             value:"ks-dd-"
         },
+
+        /**
+         * shim 鼠标 icon (drag icon)
+         */
+        dragCursor:{
+            value:'move'
+        },
+
+        /***
+         * 移动的像素值（用于启动拖放）
+         */
+        clickPixelThresh: {
+            value: PIXEL_THRESH
+        },
+
         /**
          * mousedown 后 buffer 触发时间  time threshold
          */
@@ -15882,9 +16044,10 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
         activeDrag: {},
 
         /**
-         *当前激活的 drop 对象，在同一时间只有一个值
+         * 当前激活的 drop 对象，在同一时间只有一个值
          */
         activeDrop:{},
+
         /**
          * 所有注册的可放置对象，统一管理
          */
@@ -15899,18 +16062,23 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
      */
     function move(ev) {
         var self = this,
+            __activeToDrag = self.__activeToDrag,
             activeDrag = self.get('activeDrag');
-        //S.log("move");
-        if (!activeDrag) {
-            return;
+
+        if (activeDrag || __activeToDrag) {
+            //防止 ie 选择到字
+            ev.preventDefault();
         }
-        //防止 ie 选择到字
-        ev.preventDefault();
-        activeDrag._move(ev);
-        /**
-         * 获得当前的激活drop
-         */
-        notifyDropsMove(self, ev);
+        // 优先处理激活的
+        if (activeDrag) {
+            activeDrag._move(ev);
+            /**
+             * 获得当前的激活drop
+             */
+            notifyDropsMove(self, ev);
+        } else if (__activeToDrag) {
+            __activeToDrag._move(ev);
+        }
     }
 
 
@@ -15920,17 +16088,18 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
             mode = activeDrag.get("mode"),
             drops = self.get("drops"),
             activeDrop,
+            oldDrop = 0,
             vArea = 0,
             dragRegion = region(activeDrag.get("node")),
             dragArea = area(dragRegion);
 
         S.each(drops, function(drop) {
-
-            var node = drop.getNodeFromTarget(ev,
-                // node
-                activeDrag.get("dragNode")[0],
-                // proxy node
-                activeDrag.get("node")[0]);
+            var a,
+                node = drop.getNodeFromTarget(ev,
+                    // node
+                    activeDrag.get("dragNode")[0],
+                    // proxy node
+                    activeDrag.get("node")[0]);
 
             if (!node
             // 当前 drop 区域已经包含  activeDrag.get("node")
@@ -15939,7 +16108,6 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
                 return;
             }
 
-            var a;
             if (mode == "point") {
                 //取鼠标所在的 drop 区域
                 if (inNodeByPointer(node, activeDrag.mousePos)) {
@@ -15972,7 +16140,7 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
                 }
             }
         });
-        var oldDrop = self.get("activeDrop");
+        oldDrop = self.get("activeDrop");
         if (oldDrop && oldDrop != activeDrop) {
             oldDrop._handleOut(ev);
             activeDrag._handleOut(ev);
@@ -15989,21 +16157,6 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
     }
 
 
-    function bufferStart(self, drag) {
-        self.set('activeDrag', drag);
-
-        //真正开始移动了才激活垫片
-        if (drag.get("shim")) {
-            activeShim(self);
-        }
-
-        drag._start();
-        self.fire("dragstart", {
-            drag:drag
-        });
-    }
-
-
     /**
      * 垫片只需创建一次
      */
@@ -16014,11 +16167,12 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
             "style='" +
             //red for debug
             "background-color:red;" +
-            "position:absolute;" +
+            "position:" + (ie6 ? 'absolute' : 'fixed') + ";" +
             "left:0;" +
             "width:100%;" +
+            "height:100%;" +
             "top:0;" +
-            "cursor:move;" +
+            "cursor:" + ddm.get("dragCursor") + ";" +
             "z-index:" +
             //覆盖iframe上面即可
             SHIM_ZINDEX
@@ -16027,15 +16181,48 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
             .prependTo(doc.body || doc.documentElement)
             //0.5 for debug
             .css("opacity", 0);
+
         activeShim = showShim;
+
+        if (ie6) {
+            // ie6 不支持 fixed 以及 width/height 100%
+            // support dd-scroll
+            // prevent empty when scroll outside initial window
+            Event.on(win, "resize scroll", adjustShimSize, self);
+        }
+
         showShim(self);
     }
 
+    var adjustShimSize = S.throttle(function() {
+        var self = this,
+            activeDrag;
+        if ((activeDrag = self.get("activeDrag")) &&
+            activeDrag.get("shim")) {
+            self._shim.css({
+                width:DOM.docWidth(),
+                height:DOM.docHeight()
+            });
+        }
+    }, MOVE_DELAY);
+
     function showShim(self) {
+        // determin cursor according to activeHandler and dragCursor
+        var ah = self.get("activeDrag").get('activeHandler'),
+            cur = 'auto';
+        if (ah) {
+            cur = ah.css('cursor');
+        }
+        if (cur == 'auto') {
+            cur = self.get('dragCursor');
+        }
         self._shim.css({
-            display: "",
-            height: DOM['docHeight']()
+            cursor:cur,
+            display: "block"
         });
+        if (ie6) {
+            adjustShimSize.call(self);
+        }
     }
 
     /**
@@ -16043,14 +16230,14 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
      */
     function registerEvent(self) {
         Event.on(doc, 'mouseup', self._end, self);
-        Event.on(doc, 'mousemove', self._showShimMove, self);
+        Event.on(doc, 'mousemove', _showShimMove, self);
     }
 
     /**
      * 结束时需要取消掉，防止平时无谓的监听
      */
     function unregisterEvent(self) {
-        Event.remove(doc, 'mousemove', self._showShimMove, self);
+        Event.remove(doc, 'mousemove', _showShimMove, self);
         Event.remove(doc, 'mouseup', self._end, self);
     }
 
@@ -16061,6 +16248,11 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
      3.为了跨越 iframe 而统一在底下的遮罩层
      */
     S.extend(DDM, Base, {
+
+        /**
+         * 可能要进行拖放的对象，需要通过 buffer/pixelThresh 考验
+         */
+        __activeToDrag:0,
 
         _regDrop:function(d) {
             this.get("drops").push(d);
@@ -16075,30 +16267,41 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
         },
 
         /**
-         * 当前拖动对象通知全局：我要开始啦
-         * 全局设置当前拖动对象，
-         * 还要根据配置进行 buffer 处理
+         * 注册可能将要拖放的节点
          * @param drag
          */
-        _start: function(drag) {
-            var self = this,
-                bufferTime = self.get("bufferTime") || 0;
-
-            //事件先要注册好，防止点击，导致 mouseup 时还没注册事件
+        _regToDrag: function(drag) {
+            var self = this;
+            // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
             registerEvent(self);
-
-            //是否中央管理，强制限制拖放延迟
-            if (bufferTime) {
-                self._bufferTimer = setTimeout(function() {
-                    bufferStart(self, drag);
-                }, bufferTime);
-            } else {
-                bufferStart(self, drag);
-            }
+            self.__activeToDrag = drag;
         },
 
         /**
-         * 全局通知当前拖动对象：你结束拖动了！
+         * 真正开始 drag
+         * 当前拖动对象通知全局：我要开始啦
+         * 全局设置当前拖动对象，
+         */
+        _start:function () {
+
+            var self = this,
+                drag = self.__activeToDrag;
+
+            self.set('activeDrag', drag);
+            // 预备役清掉
+            self.__activeToDrag = 0;
+            // 真正开始移动了才激活垫片
+
+            if (drag.get("shim")) {
+                activeShim(self);
+            }
+            self.fire("dragstart", {
+                drag:drag
+            });
+        },
+
+        /**
+         * 全局通知当前拖动对象：结束拖动了！
          */
         _end: function() {
             var self = this,
@@ -16107,9 +16310,10 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
                 ret = { drag: activeDrag,
                     drop: activeDrop};
             unregisterEvent(self);
-            if (self._bufferTimer) {
-                clearTimeout(self._bufferTimer);
-                self._bufferTimer = null;
+            // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
+            if (self.__activeToDrag) {
+                self.__activeToDrag._end();
+                self.__activeToDrag = 0;
             }
             self._shim && self._shim.hide();
             if (!activeDrag) {
@@ -16181,15 +16385,23 @@ KISSY.add('dd/ddm', function(S, DOM, Event, Node, Base) {
     ddm.area = area;
     return ddm;
 }, {
-    requires:["dom","event","node","base"]
+    requires:["ua","dom","event","node","base"]
 });
+
+/**
+ * refer
+ *  - YUI3 dd
+ */
 /**
  * dd support for kissy, drag for dd
  * @author  yiminghe@gmail.com
  */
 KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
-    var each = S.each;
+    var each = S.each,
+        ie = UA['ie'],
+        NULL = null,
+        doc = document;
 
     /*
      拖放纯功能类
@@ -16213,13 +16425,27 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 return Node.one(v);
             }
         },
+
+
+        clickPixelThresh:{
+            valueFn:function() {
+                return DDM.get("clickPixelThresh");
+            }
+        },
+
+        bufferTime:{
+            valueFn:function() {
+                return DDM.get("bufferTime");
+            }
+        },
+
         /*
          真实的节点
          */
         dragNode:{},
 
         /**
-         * 是否需要遮罩跨越iframe
+         * 是否需要遮罩跨越 iframe 以及其他阻止 mousemove 事件的元素
          */
         shim:{
             value:true
@@ -16231,8 +16457,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         handlers:{
             value:[],
             getter:function(vs) {
-                var self = this,
-                    cursor = self.get("cursor");
+                var self = this;
                 if (!vs.length) {
                     vs[0] = self.get("node");
                 }
@@ -16243,19 +16468,28 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                     if (S.isString(v) || v.nodeType) {
                         v = Node.one(v);
                     }
-                    //ie 不能在其内开始选择区域
-                    v.unselectable();
-                    if (cursor) {
-                        v.css('cursor', cursor);
-                    }
                     vs[i] = v;
                 });
                 self.__set("handlers", vs);
                 return vs;
             }
         },
-        cursor:{
-            value:"move"
+
+        /**
+         * 激活 drag 的 handler
+         */
+        activeHandler:{},
+
+        /**
+         * 当前拖对象是否开始运行，用于调用者监听 change 事件
+         */
+        dragging:{
+            value:false,
+            setter:function(d) {
+                var self = this;
+                self.get("dragNode")[d ? 'addClass' : 'removeClass']
+                    (DDM.get("prefixCls") + "dragging");
+            }
         },
 
         mode:{
@@ -16267,74 +16501,180 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
              *  In strict mode, a Drop is targeted by the "entire" drag node being over the Target             *
              */
             value:'point'
+        },
+
+        /**
+         * 拖无效
+         */
+        disabled:{
+            value:false,
+            setter:function(d) {
+                this.get("dragNode")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+                return d;
+            }
+        },
+
+        /**
+         * whether the node moves with drag object
+         */
+        move:{
+            value:false
+        },
+
+        /**
+         * only left button of mouse trigger drag?
+         */
+        primaryButtonOnly: {
+            value: true
+        },
+
+        halt:{
+            value:true
         }
 
     };
 
+
+    var _ieSelectBack;
+
+    function fixIEMouseUp() {
+        doc.body.onselectstart = _ieSelectBack;
+    }
+
+    /**
+     * prevent select text in ie
+     */
+    function fixIEMouseDown() {
+        _ieSelectBack = doc.body.onselectstart;
+        doc.body.onselectstart = fixIESelect;
+    }
+
+    /**
+     * keeps IE from blowing up on images as drag handlers.
+     * 防止 html5 draggable 元素的拖放默认行为
+     * @param e
+     */
+    function fixDragStart(e) {
+        e.preventDefault();
+    }
+
+    /**
+     * keeps IE from selecting text
+     */
+    function fixIESelect() {
+        return false;
+    }
+
+
+    /**
+     * 鼠标按下时，查看触发源是否是属于 handler 集合，
+     * 保存当前状态
+     * 通知全局管理器开始作用
+     * @param ev
+     */
+    function _handleMouseDown(ev) {
+        var self = this,
+            t = ev.target;
+
+        if (self._checkMouseDown(ev)) {
+
+            if (!self._check(t)) {
+                return;
+            }
+
+            self._prepare(ev);
+        }
+    }
+
     S.extend(Draggable, Base, {
+
+        /**
+         * 开始拖时鼠标所在位置
+         */
+        startMousePos:NULL,
+
+        /**
+         * 开始拖时节点所在位置
+         */
+        startNodePos:NULL,
+
+        /**
+         * 开始拖时鼠标和节点所在位置的差值
+         */
+        _diff:NULL,
+
+        /**
+         * mousedown 1秒后自动开始拖的定时器
+         */
+        _bufferTimer:NULL,
 
         _init: function() {
             var self = this,
                 node = self.get('node');
             self.set("dragNode", node);
-            node.on('mousedown', self._handleMouseDown, self);
+            node.on('mousedown', _handleMouseDown, self)
+                .on('dragstart', self._fixDragStart);
         },
+
+        _fixDragStart:fixDragStart,
 
         destroy:function() {
             var self = this,
-                node = self.get('dragNode'),
-                handlers = self.get('handlers');
-            each(handlers, function(handler) {
-                handler.css("cursor", "auto");
-            });
-            node.detach('mousedown', self._handleMouseDown, self);
+                node = self.get('dragNode');
+            node.detach('mousedown', _handleMouseDown, self)
+                .detach('dragstart', self._fixDragStart);
             self.detach();
         },
 
+        /**
+         *
+         * @param {HTMLElement} t
+         */
         _check: function(t) {
-            var handlers = this.get('handlers'),ret = 0;
+            var self = this,
+                handlers = self.get('handlers'),
+                ret = 0;
             each(handlers, function(handler) {
                 //子区域内点击也可以启动
                 if (handler.contains(t) ||
-                    handler[0] == t[0]) {
+                    handler[0] == t) {
                     ret = 1;
+                    self.set("activeHandler", handler);
                     return false;
                 }
             });
             return ret;
         },
 
-        /**
-         * 鼠标按下时，查看触发源是否是属于 handler 集合，
-         * 保存当前状态
-         * 通知全局管理器开始作用
-         * @param ev
-         */
-        _handleMouseDown: function(ev) {
-            var self = this,
-                t = new Node(ev.target);
-
-            if (!self._check(t)) {
-                return;
+        _checkMouseDown:function(ev) {
+            if (this.get('primaryButtonOnly') && ev.button > 1 ||
+                this.get("disabled")) {
+                return 0;
             }
-            //chrome 阻止了 flash 点击？？
-            //不组织的话chrome会选择
-            //firefox 默认会拖动对象地址
-            ev.preventDefault();
-            self._prepare(ev);
-
+            return 1;
         },
 
         _prepare:function(ev) {
+
             var self = this;
 
-            DDM._start(self);
+            if (ie) {
+                fixIEMouseDown();
+            }
+
+            // 防止 firefox/chrome 选中 text
+            if (self.get("halt")) {
+                ev.halt();
+            } else {
+                ev.preventDefault();
+            }
 
             var node = self.get("node"),
                 mx = ev.pageX,
                 my = ev.pageY,
                 nxy = node.offset();
-            self['startMousePos'] = self.mousePos = {
+            self.startMousePos = self.mousePos = {
                 left:mx,
                 top:my
             };
@@ -16343,51 +16683,116 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
                 left:mx - nxy.left,
                 top:my - nxy.top
             };
+            DDM._regToDrag(self);
+
+            var bufferTime = self.get("bufferTime");
+
+            // 是否中央管理，强制限制拖放延迟
+            if (bufferTime) {
+                self._bufferTimer = setTimeout(function() {
+                    // 事件到了，仍然是 mousedown 触发！
+                    //S.log("drag start by timeout");
+                    self._start();
+                }, bufferTime);
+            }
+
+        },
+
+        _clearBufferTimer:function() {
+            var self = this;
+            if (self._bufferTimer) {
+                clearTimeout(self._bufferTimer);
+                self._bufferTimer = 0;
+            }
         },
 
         _move: function(ev) {
             var self = this,
                 ret,
                 diff = self._diff,
-                left = ev.pageX - diff.left,
-                top = ev.pageY - diff.top;
+                startMousePos = self.startMousePos,
+                pageX = ev.pageX,
+                pageY = ev.pageY,
+                left = pageX - diff.left,
+                top = pageY - diff.top;
+
+
+            if (!self.get("dragging")) {
+                var clickPixelThresh = self.get("clickPixelThresh"),l1,l2;
+                // 鼠标经过了一定距离，立即开始
+                if ((l1 = Math.abs(pageX - startMousePos.left)) >= clickPixelThresh ||
+                    (l2 = Math.abs(pageY - startMousePos.top)) >= clickPixelThresh
+                    ) {
+                    //S.log("start drag by pixel : " + l1 + " : " + l2);
+                    self._start();
+                }
+                // 开始后，下轮 move 开始触发 drag 事件
+                return;
+            }
+
             self.mousePos = {
-                left:ev.pageX,
-                top:ev.pageY
+                left:pageX,
+                top:pageY
             };
+
             ret = {
                 left:left,
                 top:top,
-                pageX:ev.pageX,
-                pageY:ev.pageY,
-                drag:this
+                pageX:pageX,
+                pageY:pageY,
+                drag:self
             };
-            self.fire("drag", ret);
-            DDM.fire("drag", ret);
+
+            var def = 1;
+
+            if (self.fire("drag", ret) === false) {
+                def = 0;
+            }
+            if (DDM.fire("drag", ret) === false) {
+                def = 0;
+            }
+
+            if (def && self.get("move")) {
+                // 取 'node' , 改 node 可能是代理哦
+                self.get('node').offset(ret);
+            }
         },
 
         _end: function() {
-            var self = this,activeDrop;
-            self.get("dragNode").removeClass(DDM.get("prefixCls") + "dragging");
-            self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
-            if (activeDrop = DDM.get("activeDrop")) {
-                self.fire('dragdrophit', {
-                    drag:self,
-                    drop:activeDrop
-                });
-            } else {
-                self.fire('dragdropmiss', {
+            var self = this,
+                activeDrop;
+
+            // 否则清除定时器即可
+            self._clearBufferTimer();
+            if (ie) {
+                fixIEMouseUp();
+            }
+            // 如果已经开始，收尾工作
+            if (self.get("dragging")) {
+                self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+                if (activeDrop = DDM.get("activeDrop")) {
+                    self.fire('dragdrophit', {
+                        drag:self,
+                        drop:activeDrop
+                    });
+                } else {
+                    self.fire('dragdropmiss', {
+                        drag:self
+                    });
+                }
+                self.set("dragging", 0);
+                self.fire("dragend", {
                     drag:self
                 });
             }
-            self.fire("dragend", {
-                drag:self
-            });
         },
 
         _handleOut:function() {
             var self = this;
             self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
+            /**
+             *  html5 => dragleave
+             */
             self.fire("dragexit", {
                 drag:self,
                 drop:DDM.get("activeDrop")
@@ -16406,10 +16811,11 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             this.fire("dragover", e);
         },
 
-
         _start: function() {
             var self = this;
-            self.get("dragNode").addClass(DDM.get("prefixCls") + "dragging");
+            self._clearBufferTimer();
+            self.set("dragging", 1);
+            DDM._start();
             self.fire("dragstart", {
                 drag:self
             });
@@ -16476,6 +16882,9 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             var self = this,
                 ret = self.__getCustomEvt();
             self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+            /**
+             * html5 => dragleave
+             */
             self.fire("dropexit", ret);
             DDM.fire("dropexit", ret);
             DDM.fire("dragexit", ret);
@@ -16643,11 +17052,51 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
         Delegate.superclass.constructor.apply(this, arguments);
     }
 
+
+    /**
+     * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
+     *
+     * @param ev
+     */
+    function _handleMouseDown(ev) {
+        var self = this,
+            handler,
+            node;
+
+        if (!self._checkMouseDown(ev)) {
+            return;
+        }
+
+        var handlers = self.get("handlers"),
+            target = new Node(ev.target);
+
+        // 不需要像 Draggble 一样，判断 target 是否在 handler 内
+        // 委托时，直接从 target 开始往上找 handler
+        if (handlers.length) {
+            handler = self._getHandler(target);
+        } else {
+            handler = target;
+        }
+
+        if (handler) {
+            self.set("activeHandler", handler);
+            node = self._getNode(handler);
+        } else {
+            return;
+        }
+
+        // 找到 handler 确定 委托的 node ，就算成功了
+        self.set("node", node);
+        self.set("dragNode", node);
+        self._prepare(ev);
+    }
+
     S.extend(Delegate, Draggable, {
             _init:function() {
                 var self = this,
                     node = self.get('container');
-                node.on('mousedown', self._handleMouseDown, self);
+                node.on('mousedown', _handleMouseDown, self)
+                    .on('dragstart', self._fixDragStart);
             },
 
             /**
@@ -16682,42 +17131,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                 return h.closest(this.get("selector"), this.get("container"));
             },
 
-            /**
-             * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-             *
-             * @param ev
-             */
-            _handleMouseDown:function(ev) {
-                var self = this,
-                    handler,
-                    handlers = self.get("handlers"),
-                    target = new Node(ev.target);
-                // 不需要像 Draggble 一样，判断 target 是否在 handler 内
-                // 委托时，直接从 target 开始往上找 handler
-                if (handlers.length) {
-                    handler = self._getHandler(target);
-                } else {
-                    handler = target;
-                }
-                var node = handler && self._getNode(handler);
-                if (!node) {
-                    return;
-                }
-
-                ev.preventDefault();
-
-                // 找到 handler 确定 委托的 node ，就算成功了
-                self.set("node", node);
-                self.set("dragNode", node);
-                self._prepare(ev);
-            },
-
             destroy:function() {
                 var self = this;
                 self.get("container")
                     .detach('mousedown',
-                    self._handleMouseDown,
-                    self);
+                    _handleMouseDown,
+                    self)
+                    .detach('dragstart', self._fixDragStart);
                 self.detach();
             }
         },
@@ -17128,7 +17548,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * resizable support for kissy
@@ -17141,7 +17561,7 @@ KISSY.add("resizable/base", function(S, Node, Base, D) {
         i,
         j,
         Draggable = D.Draggable,
-        CLS_PREFIX = "ks-resize-handler",
+        CLS_PREFIX = "ks-resizable-handler",
         horizonal = ["l","r"],
         vertical = ["t","b"],
         hcNormal = {
@@ -17322,7 +17742,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 21 16:36
+build time: Nov 28 12:39
 */
 /**
  * UIBase.Align
@@ -18925,7 +19345,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             this.get("prefixCls") + "ext-mask'/>")
             .prependTo("body");
         mask.css({
-            "position":"fixed", // mask 不会撑大 docWidth
+            "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
             left:0,
             top:0,
             width: docWidth(),
@@ -18957,7 +19377,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
     function Mask() {
     }
 
-    var resizeMask = S.buffer(function() {
+    var resizeMask = S.throttle(function() {
         var v = {
             width : docWidth(),
             height : docHeight()
@@ -18987,7 +19407,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                 mask.css(display);
                 iframe && iframe.css(display);
                 if (ie6) {
-                    win.on("resize", resizeMask);
+                    win.on("resize scroll", resizeMask);
                 }
             }
         },
@@ -19004,7 +19424,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                 mask && mask.css(display);
                 iframe && iframe.css(display);
                 if (ie6) {
-                    win.detach("resize", resizeMask);
+                    win.detach("resize scroll", resizeMask);
                 }
             }
         },
@@ -19411,7 +19831,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:38
 */
 /**
  * container can delegate event for its children
@@ -20311,7 +20731,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * Switchable
@@ -22916,7 +23336,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * KISSY Overlay
@@ -23427,7 +23847,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -24617,7 +25037,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * @fileoverview 图像放大区域
@@ -25251,7 +25671,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:22
+build time: Nov 28 13:29
 */
 /**
  * KISSY Calendar
@@ -25491,6 +25911,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 _y = self.trigger.offset().top + height;
             self.con.css('left', _x.toString() + 'px');
             self.con.css('top', _y.toString() + 'px');
+            self.fire("show");
             return this;
         },
 
@@ -25501,6 +25922,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         hide: function() {
             var self = this;
             self.con.css('visibility', 'hidden');
+            self.fire("hide");
             return this;
         },
 
@@ -26537,7 +26959,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * deletable menuitem
@@ -27902,7 +28324,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:26
+build time: Nov 28 12:38
 */
 /**
  * Model and Control for button
@@ -28142,7 +28564,7 @@ KISSY.add("button", function(S, Button, Render, Split) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * combination of menu and button ,similar to native select
@@ -28679,7 +29101,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -29624,7 +30046,7 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * intervein elements dynamically
@@ -29961,7 +30383,7 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:24
+build time: Nov 28 12:39
 */
 /**
  * @author: 常胤 (lzlu.com)
@@ -31484,7 +31906,7 @@ KISSY.add("validation", function(S, Validation) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:39
 */
 /**
  * mvc base
@@ -31581,7 +32003,8 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
             if (S.isArray(model)) {
                 var orig = [].concat(model);
                 S.each(orig, function(m) {
-                    ret = ret && self._add(m, opts);
+                    var t = self._add(m, opts);
+                    ret = ret && t;
                 });
             } else {
                 ret = self._add(model, opts);

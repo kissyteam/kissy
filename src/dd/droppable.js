@@ -52,6 +52,9 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             var self = this,
                 ret = self.__getCustomEvt();
             self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
+            /**
+             * html5 => dragleave
+             */
             self.fire("dropexit", ret);
             DDM.fire("dropexit", ret);
             DDM.fire("dragexit", ret);

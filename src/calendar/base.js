@@ -236,6 +236,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 _y = self.trigger.offset().top + height;
             self.con.css('left', _x.toString() + 'px');
             self.con.css('top', _y.toString() + 'px');
+            self.fire("show");
             return this;
         },
 
@@ -246,6 +247,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         hide: function() {
             var self = this;
             self.con.css('visibility', 'hidden');
+            self.fire("hide");
             return this;
         },
 

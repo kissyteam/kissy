@@ -2,9 +2,11 @@
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function(S, Event, UA) {
+KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
+        simpleRemove = Utils.simpleRemove,
+        simpleAdd = Utils.simpleAdd,
         mousewheelHandler = "mousewheelHandler";
 
     function handler(e) {
@@ -62,20 +64,20 @@ KISSY.add("event/mousewheel", function(S, Event, UA) {
                 eventDesc = Event._data(el);
             // solve this in ie
             mousewheelHandler = eventDesc[mousewheelHandler] = S.bind(handler, el);
-            Event.__simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
+            simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
         },
         tearDown:function() {
             var el = this,
                 mousewheelHandler,
                 eventDesc = Event._data(el);
             mousewheelHandler = eventDesc[mousewheelHandler];
-            Event.__simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
+            simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
         }
     };
 
 }, {
-    requires:['./base','ua','./object']
+    requires:['./base','ua','./utils']
 });
 
 /**

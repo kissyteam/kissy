@@ -7,11 +7,51 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
         Delegate.superclass.constructor.apply(this, arguments);
     }
 
+
+    /**
+     * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
+     *
+     * @param ev
+     */
+    function _handleMouseDown(ev) {
+        var self = this,
+            handler,
+            node;
+
+        if (!self._checkMouseDown(ev)) {
+            return;
+        }
+
+        var handlers = self.get("handlers"),
+            target = new Node(ev.target);
+
+        // 不需要像 Draggble 一样，判断 target 是否在 handler 内
+        // 委托时，直接从 target 开始往上找 handler
+        if (handlers.length) {
+            handler = self._getHandler(target);
+        } else {
+            handler = target;
+        }
+
+        if (handler) {
+            self.set("activeHandler", handler);
+            node = self._getNode(handler);
+        } else {
+            return;
+        }
+
+        // 找到 handler 确定 委托的 node ，就算成功了
+        self.set("node", node);
+        self.set("dragNode", node);
+        self._prepare(ev);
+    }
+
     S.extend(Delegate, Draggable, {
             _init:function() {
                 var self = this,
                     node = self.get('container');
-                node.on('mousedown', self._handleMouseDown, self);
+                node.on('mousedown', _handleMouseDown, self)
+                    .on('dragstart', self._fixDragStart);
             },
 
             /**
@@ -46,47 +86,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                 return h.closest(this.get("selector"), this.get("container"));
             },
 
-            /**
-             * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-             *
-             * @param ev
-             */
-            _handleMouseDown:function(ev) {
-                var self = this,
-                    handler,
-                    node,
-                    handlers = self.get("handlers"),
-                    target = new Node(ev.target);
-
-                // 不需要像 Draggble 一样，判断 target 是否在 handler 内
-                // 委托时，直接从 target 开始往上找 handler
-                if (handlers.length) {
-                    handler = self._getHandler(target);
-                } else {
-                    handler = target;
-                }
-
-                if (handler) {
-                    self.set("activeHandler", handler);
-                    node = self._getNode(handler);
-                } else {
-                    return;
-                }
-
-                ev.preventDefault();
-
-                // 找到 handler 确定 委托的 node ，就算成功了
-                self.set("node", node);
-                self.set("dragNode", node);
-                self._prepare(ev);
-            },
-
             destroy:function() {
                 var self = this;
                 self.get("container")
                     .detach('mousedown',
-                    self._handleMouseDown,
-                    self);
+                    _handleMouseDown,
+                    self)
+                    .detach('dragstart', self._fixDragStart);
                 self.detach();
             }
         },

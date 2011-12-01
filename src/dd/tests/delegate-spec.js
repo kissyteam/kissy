@@ -17,7 +17,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             c3 = S.one("#c3");
 
         runs(function() {
-            S.one("#container2").unselectable();
+            // S.one("#container2").unselectable();
             var proxy = new Proxy({
                 /**
                  * 如何产生替代节点
@@ -107,7 +107,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
             // 10px move to start
             runs(function() {
                 jasmine.simulate(document, "mousemove", {
-                   clientX:c2.offset().left + 15 - DOM.scrollLeft(),
+                    clientX:c2.offset().left + 15 - DOM.scrollLeft(),
                     clientY:c2.offset().top + 15 - DOM.scrollTop()
                 });
             });

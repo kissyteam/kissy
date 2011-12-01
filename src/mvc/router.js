@@ -156,11 +156,17 @@ KISSY.add('mvc/router', function(S, Event, Base) {
                         m.shift();
 
                         function genParam() {
-                            var params = {};
-                            each(m, function(sm, i) {
-                                params[paramNames[i]] = sm;
-                            });
-                            return params;
+                            if (paramNames) {
+                                var params = {};
+                                each(m, function(sm, i) {
+                                    params[paramNames[i]] = sm;
+                                });
+                                return params;
+                            } else {
+                                // if user gave directly reg
+                                // then call callback with match result array
+                                return [].concat(m);
+                            }
                         }
 
                         function upToFinal() {
@@ -175,12 +181,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
                         // route: /xx/yy/zz
                         if (!m.length) {
-
                             upToFinal();
                             exactlyMatch = 1;
                             return false;
-
-                        } else {
+                        } else if (regStr) {
 
                             firstCaptureGroupIndex = findFirstCaptureGroupIndex(regStr);
 
@@ -208,7 +212,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
                                 upToFinal();
                             }
                         }
-
+                        // if exists user-given reg router rule then update value directly
+                        else {
+                            upToFinal();
+                        }
                     }
                 }
             );
@@ -238,30 +245,39 @@ KISSY.add('mvc/router', function(S, Event, Base) {
      *         /search/:q
      *         /user/*path
      */
-    function transformRouterReg(str, callback) {
+    function transformRouterReg(self, str, callback) {
         var name = str,
             paramNames = [];
-        // escape keyword from regexp
-        str = S.escapeRegExp(str);
 
-        str = str.replace(grammar, function(m, g1, g2, g3, g4) {
-            paramNames.push(g2 || g4);
-            // :name
-            if (g2) {
-                return "([^/]+)";
-            }
-            // *name
-            else if (g4) {
-                return "(.*)";
-            }
-        });
+        if (S.isFunction(callback)) {
+            // escape keyword from regexp
+            str = S.escapeRegExp(str);
 
-        return {
-            name:name,
-            paramNames:paramNames,
-            reg:new RegExp("^" + str + "$"),
-            regStr:str,
-            callback:callback
+            str = str.replace(grammar, function(m, g1, g2, g3, g4) {
+                paramNames.push(g2 || g4);
+                // :name
+                if (g2) {
+                    return "([^/]+)";
+                }
+                // *name
+                else if (g4) {
+                    return "(.*)";
+                }
+            });
+
+            return {
+                name:name,
+                paramNames:paramNames,
+                reg:new RegExp("^" + str + "$"),
+                regStr:str,
+                callback:callback
+            };
+        } else {
+            return {
+                name:name,
+                reg:callback.reg,
+                callback:normFn(self, callback.callback)
+            };
         }
     }
 
@@ -273,9 +289,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
     function normFn(self, callback) {
         if (S.isFunction(callback)) {
             return callback;
-        } else {
+        } else if (S.isString(callback)) {
             return self[callback];
         }
+        return callback;
     }
 
     function _afterRoutesChange(e) {
@@ -308,12 +325,17 @@ KISSY.add('mvc/router', function(S, Event, Base) {
          * @param routes
          *         {
          *           "/search/:param":"callback"
+         *           or
+         *           "search":{
+         *              reg:/xx/,
+         *              callback:fn
+         *           }
          *         }
          */
         addRoutes:function(routes) {
             var self = this;
             each(routes, function(callback, name) {
-                self[__routerMap][name] = transformRouterReg(name, normFn(self, callback));
+                self[__routerMap][name] = transformRouterReg(self, name, normFn(self, callback));
             });
         }
     }, {
@@ -404,6 +426,9 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 });
 
 /**
+ * 2011-11-30
+ *  - support user-given native regexp for router rule
+ *
  * refer :
  * http://www.w3.org/TR/html5/history.html
  * http://documentcloud.github.com/backbone/

@@ -130,13 +130,12 @@
 
             var dragDelegate = new DraggableDelegate({
                 container:"#container2",
+                move:1,
                 handlers:['.cheader'],
                 selector:'.component'
             });
 
             proxy.attach(dragDelegate);
-
-
 
 
             var dropDelegate = new DroppableDelegate({
@@ -152,15 +151,6 @@
             dragDelegate.on("dragstart", function(ev) {
                 var c = this;
                 p = c.get("dragNode").css("position");
-            });
-            dragDelegate.on("drag", function(ev) {
-
-                var c = this;
-                /**
-                 * node 和 dragNode 区别：
-                 * node : 可能是 proxy node，指实际拖放节点
-                 */
-                c.get("node").offset(ev);
             });
             dragDelegate.on("dragend", function(ev) {
                 var c = this;
@@ -191,7 +181,7 @@
             });
 
 
-            var s=new Scroll({
+            var s = new Scroll({
                 node:"#container2"
             });
 
@@ -199,11 +189,10 @@
 
             var container = S.one("#container2");
             var id = 4;
-            container.unselectable();
             S.one("#add").on("click", function() {
                 new Node('<div class="component">' +
                         '<div class="cheader">拖动头</div>' +
-                        '<span>drag proxy' + (id++) + '</span></div>').appendTo(container).unselectable();
+                        '<span>drag proxy' + (id++) + '</span></div>').appendTo(container);
             });
         });
     });

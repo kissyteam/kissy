@@ -4,15 +4,12 @@
  */
 KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
-
-    var PROXY_PAGE = "/sub_domain_proxy.html";
-
-    var doc = document;
-
-    var iframeMap = {
-        // hostname:{iframe: , ready:}
-    };
+    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        PROXY_PAGE = "/sub_domain_proxy.html",
+        doc = document,
+        iframeMap = {
+            // hostname:{iframe: , ready:}
+        };
 
     function SubDomain(xhrObj) {
         var self = this,
@@ -62,19 +59,19 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
                 iframe = iframeDesc.iframe;
             }
 
-            Event.on(iframe, "load", self._onLoad, self);
+            Event.on(iframe, "load", _onLoad, self);
 
-        },
-
-        _onLoad:function() {
-            var self = this,
-                hostname = self.__hostname,
-                iframeDesc = iframeMap[hostname];
-            iframeDesc.ready = 1;
-            Event.detach(iframeDesc.iframe, "load", self._onLoad, self);
-            self.send();
         }
     });
+
+    function _onLoad() {
+        var self = this,
+            hostname = self.__hostname,
+            iframeDesc = iframeMap[hostname];
+        iframeDesc.ready = 1;
+        Event.detach(iframeDesc.iframe, "load", _onLoad, self);
+        self.send();
+    }
 
     return SubDomain;
 

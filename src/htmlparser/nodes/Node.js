@@ -2,7 +2,7 @@
  * abstract class for tag and text , comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Node",function(S) {
+KISSY.add("htmlparser/nodes/Node", function(S) {
 
     function Node(page, startPosition, endPosition) {
         this.parentNode = null;
@@ -20,7 +20,7 @@ KISSY.add("htmlparser/nodes/Node",function(S) {
 
     Node.prototype = {
         toHtml:function() {
-            if (this.page) {
+            if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
         },

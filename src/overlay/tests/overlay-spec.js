@@ -180,22 +180,28 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
 
             it("应该能够调节大小", function() {
                 // ie9 测试不了
-                if (UA.ie == 9) {
+                if (UA.ie == 9 || UA.chrome) {
                     return;
                 }
-                var h = o.get("el").one(".ks-resize-handler-t"),
-                    height = o.get("el").outerHeight();
-                var hxy = h.offset();
-                S.log(hxy);
+                var h = o.get("el").one(".ks-resizable-handler-t"),
+                    height = o.get("el").outerHeight(),
+                    hxy = h.offset();
 
                 jasmine.simulate(h[0], "mousedown", {
-                    clientX:hxy.left + 2 ,
-                    clientY:hxy.top + 2
+                    clientX:hxy.left - 2 ,
+                    clientY:hxy.top - 2
                 });
 
-                waits(300);
+                waits(100);
+                runs(function() {
 
+                    jasmine.simulate(document, "mousemove", {
+                        clientX: hxy.left - 5,
+                        clientY:hxy.top - 5
+                    });
 
+                });
+                waits(100);
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
@@ -210,11 +216,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                 runs(function() {
                     jasmine.simulate(document, "mouseup");
                 });
-
+                waits(100);
                 runs(function() {
                     var dheight = o.get("el").outerHeight();
 
-                    expect(dheight - height).toBeEqual(98);
                     expect(dheight - height).toBeEqual(98);
                 });
 
@@ -348,9 +353,16 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                     clientY:xy[1] + 10
                 });
 
-                waits(300);
+                waits(100);
+                runs(function() {
 
+                    jasmine.simulate(document, "mousemove", {
+                        clientX: xy[0] + 15,
+                        clientY:xy[1] + 15
+                    });
 
+                });
+                waits(100);
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {
@@ -387,9 +399,16 @@ KISSY.use("ua,node,overlay,dd,resizable", function(S, UA, Node, Overlay) {
                     clientY:xy[1] + 10
                 });
 
-                waits(300);
+                waits(100);
+                runs(function() {
 
+                    jasmine.simulate(document, "mousemove", {
+                        clientX: xy[0] + 15,
+                        clientY:xy[1] + 15
+                    });
 
+                });
+                waits(100);
                 runs(function() {
 
                     jasmine.simulate(document, "mousemove", {

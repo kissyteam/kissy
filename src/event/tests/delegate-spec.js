@@ -134,7 +134,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             Event.delegate(S.get('#test-delegate'), "focus", ".xx", test);
             var a = S.get('#test-delegate-b');
             // support native dom event
-            //debugger
+
             Event.fire(a, "focus");
             waits(100);
 
@@ -193,6 +193,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             runs(function() {
                 ret = [];
                 Event.delegate(d, "click", "button", t);
+
                 Event.undelegate(d, "click", "button");
                 jasmine.simulate(s, 'click');
             });
@@ -209,7 +210,6 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             waits(100);
             runs(function() {
                 expect(ret + "").toBe([9] + "");
-
                 DOM.remove(d);
             });
 

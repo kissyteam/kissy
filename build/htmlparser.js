@@ -1,71 +1,118 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 30 13:23
 */
 /**
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/Parser", function(S, Cursor, Lexer) {
-
-    function Iterator(lexer, opts) {
-        this.lexer = lexer;
-        this.opts = opts;
-    }
-
-    Iterator.prototype = {
-
-        nextNode:function() {
-            var ret,
-                stack,
-                scanner,
-                lexer = this.lexer;
-
-            ret = lexer.nextNode();
-            if (ret) {
-                if (ret.nodeType == 1) {
-                    if (!ret.isEndTag()) {
-                        scanner = ret.scanner;
-                        if (scanner) {
-                            stack = [];
-                            ret = scanner.scan(ret, lexer, stack, this.opts);
-                        }
-                    } else {
-                        return this.nextNode();
-                    }
-                }
-            }
-            return ret;
-        }
-    };
-
+KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Scanner) {
 
     function Parser(html, opts) {
         this.lexer = new Lexer(html);
         this.opts = opts || {};
+        this.document = new Document();
     }
 
     Parser.prototype = {
         elements:function() {
-            return new Iterator(this.lexer, this.opts);
+            var ret,
+                lexer = this.lexer;
+            do{
+                ret = lexer.nextNode();
+                if (ret) {
+                    // dummy html root node
+                    this.document.appendChild(ret);
+                    if (ret.nodeType == 1 && !ret.isEndTag()) {
+                        Scanner.getScanner(ret.tagName).scan(ret, lexer, this.opts);
+                    }
+                }
+            } while (ret);
+
+            if (this.opts['autoParagraph']) {
+                autoParagraph(this.document);
+            }
+
+            return this.document.childNodes;
         },
 
         parse:function() {
-            var ret = [],
-                n,
-                iter = this.elements();
-            while (n = iter.nextNode()) {
-                ret.push(n);
-            }
-            return ret;
+            return this.elements();
         }
     };
 
+
+    function autoParagraph(doc) {
+        var childNodes = doc.childNodes,
+            c,
+            i,
+            pDtd = dtd['p'],
+            needFix = 0;
+
+        for (i = 0; i < childNodes.length; i++) {
+            c = childNodes[i];
+            if (c.nodeType == 3 || (c.nodeType == 1 && pDtd[c.nodeName])) {
+                needFix = 1;
+                break;
+            }
+        }
+        if (needFix) {
+            var newChildren = [],holder = new Tag();
+            holder.nodeName = holder.tagName = "p";
+            for (i = 0; i < childNodes.length; i++) {
+                c = childNodes[i];
+                if (c.nodeType == 3 || (c.nodeType == 1 && pDtd[c.nodeName])) {
+                    holder.appendChild(c);
+                } else {
+                    if (holder.childNodes.length) {
+                        newChildren.push(holder);
+                        holder = holder.clone();
+                    }
+                    newChildren.push(c);
+                }
+            }
+
+            if (holder.childNodes.length) {
+                newChildren.push(holder);
+            }
+
+            doc.empty();
+
+            for (i = 0; i < newChildren.length; i++) {
+                doc.appendChild(newChildren[i]);
+            }
+        }
+    }
+
     return Parser;
 }, {
-    requires:['./lexer/Cursor','./lexer/Lexer']
+    requires:[
+        './dtd',
+        './nodes/Tag',
+        './lexer/Cursor',
+        './lexer/Lexer',
+        './nodes/Document',
+        './Scanner'
+    ]
 });/**
+ * declare and initiate sub scanners
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('htmlparser/Scanner', function(S, TagScanner, SpecialScanners) {
+    return {
+        getScanner:function(nodeName) {
+            return SpecialScanners[nodeName] || TagScanner;
+        }
+    };
+}, {
+    requires:[
+        './scanners/TagScanner',
+        './scanners/SpecialScanners',
+        './scanners/QuoteCdataScanner',
+        './scanners/TextareaScanner'
+    ]
+})/**
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
@@ -97,7 +144,7 @@ KISSY.add("htmlparser/Utils", function() {
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 /**
- * modified by yiminghe , support html5 tag
+ * modified by yiminghe , support html5 tag and dtd
  * @author yimingh@gmail.com
  */
 KISSY.add("htmlparser/dtd", function(KY) {
@@ -419,6 +466,9 @@ KISSY.add("htmlparser/dtd", function(KY) {
         for (i = 0; i < html_tags.length; i++) {
             ret[html_tags[i]] = ret["div"];
         }
+
+
+        ret.$empty['!doctype'] = 1;
     })();
 
     return ret;
@@ -511,7 +561,13 @@ KISSY.add("htmlparser/lexer/Index",function() {
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
+KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
+                                             Page,
+                                             TextNode,
+                                             CData, Utils,
+                                             Attribute,
+                                             TagNode,
+                                             CommentNode) {
 
     function Lexer(text) {
         var self = this;
@@ -1319,7 +1375,7 @@ KISSY.add("htmlparser/lexer/Page", function(S, Index) {
  * represent attribute node in tag node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Attribute",function() {
+KISSY.add("htmlparser/nodes/Attribute", function(S) {
     function Attribute(name, assignMent, value, quote) {
         this.nodeType = 2;
         this.name = name;
@@ -1328,6 +1384,21 @@ KISSY.add("htmlparser/nodes/Attribute",function() {
         this.quote = quote;
     }
 
+    S.augment(Attribute, {
+        clone: function() {
+            var ret = new Attribute();
+            S.mix(ret, this);
+            return ret;
+        },
+        equals:function(other) {
+            return this.name == other.name && this.value == other.value && this.nodeType == other.nodeType;
+        }
+    });
+    Attribute.prototype.clone = function() {
+        var ret = new Attribute();
+        S.mix(ret, this);
+        return ret;
+    };
     return Attribute;
 });/**
  * dom text node
@@ -1377,11 +1448,27 @@ KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
     return Comment;
 }, {
     requires:['./Tag']
+});KISSY.add("htmlparser/nodes/Document", function(S, Tag) {
+    function Document() {
+        this.childNodes = [];
+        this.nodeType = 9;
+        this.nodeName = '#document';
+    }
+
+    S.extend(Document, Tag, {
+        writeHtml:function(writer, filter) {
+            this._writeChildrenHtml(writer, filter);
+        }
+    });
+
+    return Document;
+}, {
+    requires:['./Tag']
 });/**
  * abstract class for tag and text , comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Node",function(S) {
+KISSY.add("htmlparser/nodes/Node", function(S) {
 
     function Node(page, startPosition, endPosition) {
         this.parentNode = null;
@@ -1399,7 +1486,7 @@ KISSY.add("htmlparser/nodes/Node",function(S) {
 
     Node.prototype = {
         toHtml:function() {
-            if (this.page) {
+            if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
         },
@@ -1416,17 +1503,7 @@ KISSY.add("htmlparser/nodes/Node",function(S) {
  * represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanner, TextareaScanner, Attribute, Dtd) {
-
-    var scanners = {
-        'style':QuoteCdataScanner,
-        'script':QuoteCdataScanner,
-        'textarea':TextareaScanner
-    };
-
-    function getScannerForTag(nodeName) {
-        return scanners[nodeName] || TagScanner;
-    }
+KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
 
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
@@ -1438,6 +1515,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
         self.nodeType = 1;
         attributes = self.attributes;
         // first attribute is actually nodeName
+
         if (attributes[0]) {
             self.nodeName = attributes[0].name.toLowerCase();
             // note :
@@ -1465,8 +1543,6 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
         self['closed'] = self.isEmptyXmlTag;
         self['closedStartPosition'] = -1;
         self['closedEndPosition'] = -1;
-        // scan it's innerHTMl to childNodes
-        self.scanner = getScannerForTag(self.nodeName);
     }
 
     function refreshChildNodes(self) {
@@ -1490,6 +1566,46 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
 
     S.extend(Tag, Node, {
 
+        clone:function() {
+            var ret = new Tag(),
+                attrs = [];
+            S.each(this.attributes, function(a) {
+                attrs.push(a.clone());
+            });
+            S.mix(ret, {
+                childNodes:[],
+                firstChild:null,
+                lastChild:null,
+                attributes:attrs,
+                nodeType:this.nodeType,
+                nodeName:this.nodeName,
+                tagName:this.tagName,
+                isEmptyXmlTag:this.isEmptyXmlTag,
+                closed:this.closed,
+                closedStartPosition:this.closedStartPosition,
+                closedEndPosition:this.closedEndPosition
+            });
+            return ret;
+        },
+
+        equals:function(tag) {
+            if (!tag || this.nodeName != tag.nodeName) {
+                return 0;
+            }
+            if (this.nodeType != tag.nodeType) {
+                return 0;
+            }
+            if (this.attributes.length != tag.attributes.length) {
+                return 0;
+            }
+            for (var i = 0; i < this.attributes.length; i++) {
+                if (!this.attributes[i].equals(tag.attributes[i])) {
+                    return 0;
+                }
+            }
+            return 1;
+        },
+
         isEndTag:function() {
             return /^\//.test(this.nodeName);
         },
@@ -1504,6 +1620,21 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
                 index = S.indexOf(ref, silbing);
             silbing.splice(index, 0, this);
             refreshChildNodes(ref.parentNode);
+        },
+
+        insertAfter:function(ref) {
+            var silbing = ref.parentNode.childNodes,
+                index = S.indexOf(ref, silbing);
+            if (index == silbing.length - 1) {
+                ref.parentNode.appendChild(this);
+            } else {
+                this.insertBefore(ref.parentNode.childNodes[[index + 1]]);
+            }
+        },
+
+        empty:function() {
+            this.childNodes = [];
+            refreshChildNodes(this);
         },
 
         removeChild:function(node) {
@@ -1545,6 +1676,12 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
                 tmp,
                 attrName,
                 tagName = el.tagName;
+
+            // special treat for doctype
+            if (tagName == "!doctype") {
+                writer.append(this.toHtml());
+                return;
+            }
 
             // process its open tag
             if (filter) {
@@ -1605,13 +1742,22 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
             writer.openTagClose(el);
 
             if (!el.isEmptyXmlTag) {
-                // process its children recursively
-                S.each(el.childNodes, function(child) {
-                    child.writeHtml(writer, filter);
-                });
+                this._writeChildrenHtml(writer, filter);
                 // process its close tag
                 writer.closeTag(el);
             }
+        },
+
+        /**
+         * @param writer
+         * @param filter
+         * @protected
+         */
+        _writeChildrenHtml:function(writer, filter) {
+            // process its children recursively
+            S.each(this.childNodes, function(child) {
+                child.writeHtml(writer, filter);
+            });
         }
 
     });
@@ -1628,12 +1774,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, TagScanner, QuoteCdataScanne
     return Tag;
 
 }, {
-    requires:['./Node',
-        '../scanners/TagScanner',
-        '../scanners/QuoteCdataScanner',
-        '../scanners/TextareaScanner',
-        './Attribute',
-        '../dtd']
+    requires:['./Node','./Attribute','../dtd']
 });/**
  * dom text node
  * @author yiminghe@gmail.com
@@ -1660,10 +1801,10 @@ KISSY.add("htmlparser/nodes/Text", function(S, Node) {
     requires:['./Node']
 });KISSY.add("htmlparser/scanners/CdataScanner", function() {
     return {
-        scan:function(tag, lexer, stack, quoteSmart) {
+        scan:function(tag, lexer, opts) {
             // only terminate when encouter </tag>
             // <textarea><div></div></textarea>
-            var content = lexer.parseCDATA(quoteSmart, tag.nodeName),
+            var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName),
                 position = lexer.getPosition(),
                 node = lexer.nextNode();
             if (node) {
@@ -1678,25 +1819,199 @@ KISSY.add("htmlparser/nodes/Text", function(S, Node) {
             if (content) {
                 tag.appendChild(content);
             }
-            return tag;
         }
     };
-});KISSY.add("htmlparser/scanners/QuoteCdataScanner",function(S, CdataScanner) {
-    return {
-        scan:function(tag, lexer, stack) {
-            return CdataScanner.scan(tag, lexer, stack, true);
+});KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd, SpecialScanners) {
+    var ret = {
+        scan:function(tag, lexer, opts) {
+            opts = opts || {};
+            opts.quoteSmart = 1;
+            CdataScanner.scan(tag, lexer, opts);
+            opts.quoteSmart = 0;
         }
     };
+    // script/style
+    for (var t in Dtd.$cdata) {
+        SpecialScanners[t] = ret;
+    }
+    return ret;
 }, {
-    requires:["./CdataScanner"]
+    requires:["./CdataScanner",'../dtd','./SpecialScanners']
+});/**
+ * special scanners holder (textarea/style/script)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('htmlparser/scanners/SpecialScanners', function() {
+    return {};
 });/**
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
-    var scanner = {
-        scan:function(tag, lexer, stack, opts) {
-            var node,i;
+KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanners) {
+
+    var /**
+     * will create ul when encounter li and li's parent is not ul
+     */
+        wrapper = {
+        li:'ul',
+        dt:'dl',
+        dd:'dl'
+    };
+
+    /**
+     * close tag and check nest by xhtml dtd rules
+     * <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
+     * @param tag
+     */
+    function fixCloseTagByDtd(tag, opts) {
+        tag['closed'] = 1;
+
+        if (!opts['fixByDtd']) {
+            return 0;
+        }
+
+        var valid = 1,
+            childNodes = [].concat(tag.childNodes);
+
+        S.each(childNodes, function(c) {
+            if (!canHasNodeAsChild(tag, c)) {
+                valid = 0;
+                return false;
+            }
+        });
+
+        if (valid) {
+            return 0;
+        }
+
+        var holder = tag.clone(),
+            prev = tag,
+            recursives = [];
+
+        function closeCurrentHolder() {
+            if (holder.childNodes.length) {
+                holder.insertAfter(prev);
+                prev = holder;
+                holder = tag.clone();
+            }
+        }
+
+        for (var i = 0; i < childNodes.length; i++) {
+            var c = childNodes[i];
+
+            if (canHasNodeAsChild(holder, c)) {
+                holder.appendChild(c);
+            } else {
+
+                // if can not include text as its child , then discard
+                if (c.nodeType != 1) {
+                    continue;
+                }
+
+                var currentChildName = c.tagName;
+
+                // li -> ul
+                if (dtd.$listItem[currentChildName]) {
+                    closeCurrentHolder();
+                    var pTagName = wrapper[c.tagName],
+                        pTag = new Tag();
+                    pTag.nodeName = pTag.tagName = pTagName;
+                    while (i < childNodes.length) {
+                        if (childNodes[i].tagName == currentChildName) {
+                            pTag.appendChild(childNodes[i]);
+                        } else if (childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
+                        }
+                        // non-empty text leave it to outer loop
+                        else if (childNodes[i].nodeType == 3) {
+                            break;
+                        }
+                        i++;
+                    }
+                    pTag.insertAfter(prev);
+                    prev = pTag;
+                    i--;
+                    continue;
+                }
+
+                // only deal with inline element mistakenly wrap block element
+                if (dtd.$inline[tag.tagName]) {
+                    closeCurrentHolder();
+                    if (!c.equals(holder)) {
+                        // <a><p></p></a> => <p><a></a></p>
+                        if (canHasNodeAsChild(c, holder)) {
+                            holder = tag.clone();
+                            S.each(c.childNodes, function(cc) {
+                                holder.appendChild(cc);
+                            });
+                            c.empty();
+                            c.insertAfter(prev);
+                            prev = c;
+                            c.appendChild(holder);
+                            // recursive to a , lower
+                            recursives.push(holder);
+                            holder = tag.clone();
+                        } else {
+                            // <a href='1'> <a href='2'>2</a> </a>
+                            c.insertAfter(prev);
+                            prev = c;
+                        }
+                    } else {
+                        c.insertAfter(prev);
+                        prev = c;
+                    }
+                }
+            }
+        }
+
+        // <a>1<p>3</p>3</a>
+        // encouter 3 , last holder should be inserted after <p>
+        if (holder.childNodes.length) {
+            holder.insertAfter(prev);
+        }
+
+        // <a><p>1</p></a> => <a></a><p><a>1</a></p> => <p><a>1</a></p>
+        tag.parentNode.removeChild(tag);
+
+        // <a><div><div>1</div></div></a>
+        // =>
+        // <div><a><div>1</div></a></div>
+
+        // => fixCloseTagByDtd("<a><div>1</div></a>")
+        S.each(recursives, function(r) {
+            fixCloseTagByDtd(r, opts);
+        });
+
+        return 1;
+    }
+
+
+    /**
+     * checked whether tag can include node as its child according to DTD
+     */
+    function canHasNodeAsChild(tag, node) {
+        // document can nest any tag
+        if (tag.nodeType == 9) {
+            return 1;
+        }
+        if (!dtd[tag.tagName]) {
+            S.error("dtd[" + tag.tagName + "] === undefined!")
+        }
+        if (node.nodeType == 8) {
+            return 1;
+        }
+        var nodeName = node.tagName || node.nodeName;
+        if (node.nodeType == 3) {
+            nodeName = '#';
+        }
+        return !! dtd[tag.tagName][nodeName];
+    }
+
+    return {
+        scan:function(tag, lexer, opts) {
+            var node,
+                i,
+                stack;
+            stack = opts.stack = opts.stack || [];
             if (tag.isEmptyXmlTag) {
                 tag.closed = true;
             } else {
@@ -1706,39 +2021,24 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                         if (node.nodeType === 1) {
                             // normal end tag
                             if (node.isEndTag() && node.tagName == tag.tagName) {
-                                tag['closed'] = true;
-                                node = null;
-                            }
-                            // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
-                            // perfection is better and more complicated :
-                            // <a>1<p>2</p>3</a> , move <a> inside => <a>1</a><p><a>2</a></p><a>3</a>
-                            else if (opts['fixByDtd'] &&
-                                !node.isEndTag() &&
-                                !this.canHasNodeAsChild(tag, node)) {
-                                // can not be it as child ,will terminate tag lately
-                                // TODO : maybe move tag as child of node is better
-                                // <a><p>haha</p>wa</a> -> <p><a>haha</a></p><a>wa</a>
-                                lexer.setPosition(node.startPosition);
                                 node = null;
                             } else if (!node.isEndTag()) {
-                                // now fake recursive using stack
-                                var nodeScanner = node.scanner;
-                                if (nodeScanner) {
-                                    if (nodeScanner === scanner) {
-                                        if (node.isEmptyXmlTag) {
-                                            tag.appendChild(node);
-                                        } else {
-                                            stack.push(tag);
-                                            tag = node;
-                                        }
-                                    } else {
-                                        // change scanner ,such as textarea scanner ... etc
-                                        node = nodeScanner.scan(node, lexer, stack, opts);
-                                        tag.appendChild(node);
-                                    }
-                                } else {
+
+                                if (SpecialScanners[node.tagName]) {
+                                    // change scanner ,such as textarea scanner ... etc
+                                    SpecialScanners[node.tagName].scan(node, lexer, opts);
                                     tag.appendChild(node);
+                                } else {
+                                    // now fake recursive using stack
+                                    if (node.isEmptyXmlTag) {
+                                        tag.appendChild(node);
+                                    } else {
+                                        // fake stack
+                                        stack.push(tag);
+                                        tag = node;
+                                    }
                                 }
+
                             } else if (node.isEndTag()) {
                                 // encouter a end tag without open tag
                                 // There are two cases...
@@ -1761,23 +2061,18 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                                     if (c.tagName === node.tagName) {
                                         index = i;
                                         break;
-                                    } else if (opts['fixByDtd'] &&
-                                        !this.canHasNodeAsChild(c, node)) {
-                                        // can not include this node as child of a node in stack
-                                        index = i;
-                                        break;
                                     }
                                 }
 
                                 if (index != -1) {
                                     // <div><span> <a> </div>
                                     // tag==a
-                                    tag['closed'] = true;
                                     stack[stack.length - 1].appendChild(tag);
+                                    fixCloseTagByDtd(tag, opts);
                                     for (i = stack.length - 1; i > index; i--) {
                                         var currentStackItem = stack[i],preStackItem = stack[i - 1];
-                                        currentStackItem['closed'] = true;
                                         preStackItem.appendChild(currentStackItem);
+                                        fixCloseTagByDtd(currentStackItem, opts);
                                     }
                                     tag = stack[index];
                                     stack.length = index;
@@ -1798,10 +2093,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                             node = stack[stack.length - 1];
                             if (node.nodeType == 1) {
                                 // fake recursion
-                                if (node.scanner === scanner) {
+                                if (!SpecialScanners[node.tagName]) {
                                     stack.length = stack.length - 1;
-                                    tag['closed'] = true;
                                     node.appendChild(tag);
+                                    // child fix
+                                    fixCloseTagByDtd(tag, opts);
                                     tag = node;
                                 } else {
                                     node = null;
@@ -1813,39 +2109,25 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd) {
                     }
                 } while (node);
 
-                tag['closed'] = true;
-            }
+                // root tag fix
+                fixCloseTagByDtd(tag, opts);
 
-            return tag;
-        },
 
-        /**
-         * checked whether tag can include node as its child according to DTD
-         */
-        canHasNodeAsChild:function(tag, node) {
-            if (!dtd[tag.tagName]) {
-                S.error("dtd[" + tag.tagName + "] === undefined!")
             }
-            var nodeName = node.nodeName;
-            if (node.nodeType == 3) {
-                nodeName = '#';
-            }
-            return !! dtd[tag.tagName][nodeName];
-        }
-    };
-    return scanner;
-}, {
-    requires:["../dtd"]
-});KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner) {
-    return {
-        scan:function(tag, lexer, stack) {
-            return CdataScanner.scan(tag, lexer, stack, false);
         }
     };
 }, {
-    requires:["./CdataScanner"]
+    requires:["../dtd","../nodes/Tag","./SpecialScanners"]
+});KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner, SpecialScanners) {
+    return SpecialScanners["textarea"] = {
+        scan:function(tag, lexer, opts) {
+            opts = opts || {};
+            CdataScanner.scan(tag, lexer, opts);
+        }
+    };
+}, {
+    requires:["./CdataScanner","./SpecialScanners"]
 });KISSY.add("htmlparser/writer/basic", function(S) {
-
 
     function escapeAttrValue(str) {
         return str.replace(/"/g, "&quote;");
@@ -2020,8 +2302,8 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
         openTag:function(el) {
 
-            var tagName = el.tagName;
-            var rules = this.rules[tagName] || {};
+            var tagName = el.tagName,
+                rules = this.rules[tagName] || {};
             if (this.allowIndent) {
                 this.indentation();
             } else if (rules.breakBeforeOpen) {
@@ -2279,7 +2561,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
     }
 
     function isBooleanAttribute(attrName) {
-        return (/^(?:checked|disabled|selected|readonly)$/i).test(attrName);
+        return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
     }
 
     function canRemoveAttributeQuotes(value) {

@@ -2,8 +2,8 @@
  * kissy delegate for event module
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/delegate", function(S, DOM, Event) {
-    var batchForType = Event.__batchForType,
+KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
+    var batchForType = Utils.batchForType,
         delegateMap = {
             "focus":{
                 type:"focusin"
@@ -23,7 +23,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     S.mix(Event, {
         delegate:function(targets, type, selector, fn, scope) {
-            if (batchForType('delegate', targets, type, selector, fn, scope)) {
+            if (batchForType(Event, 'delegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -44,7 +44,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
         },
 
         undelegate:function(targets, type, selector, fn, scope) {
-            if (batchForType('undelegate', targets, type, selector, fn, scope)) {
+            if (batchForType(Event, 'undelegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
             DOM.query(targets).each(function(target) {
@@ -67,13 +67,19 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
     });
 
     // 比较函数，两个 delegate 描述对象比较
-    function equals(d) {
+    // 注意顺序： 已有data 和 用户提供的 data 比较
+    function equals(d, el) {
+        // 用户不提供 fn selector 那么肯定成功
         if (d.fn === undefined && d.selector === undefined) {
             return true;
-        } else if (d.fn === undefined) {
+        }
+        // 用户不提供 fn 则只比较 selector
+        else if (d.fn === undefined) {
             return this.selector == d.selector;
         } else {
-            return this.fn == d.fn && this.selector == d.selector && this.scope == d.scope;
+            var scope = this.scope || el,
+                dScope = d.scope || el;
+            return this.fn == d.fn && this.selector == d.selector && scope == dScope;
         }
     }
 
@@ -134,7 +140,7 @@ KISSY.add("event/delegate", function(S, DOM, Event) {
 
     return Event;
 }, {
-    requires:["dom","./base"]
+    requires:["dom","./base","./utils"]
 });
 
 /**

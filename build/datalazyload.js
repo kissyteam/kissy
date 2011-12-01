@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 18 17:23
+build time: Nov 28 12:38
 */
 /**
  * 数据延迟加载组件
@@ -358,6 +358,9 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
                 callbacks.els.push(el);
                 callbacks.fns.push(fn);
             }
+
+            // add 立即检测，防止首屏元素问题
+            this._fireCallbacks();
         },
 
         /**
@@ -395,7 +398,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             var self = this, area, imgs;
 
             if (type === 'img-src') type = 'img';
-            
+
             // 支持数组
             if (!S.isArray(containers)) {
                 containers = [DOM.get(containers)];

@@ -56,9 +56,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  cache: null,
                  mimeType:null,
                  xdr:{
-                 subDomain:{
-                 proxy:'http://xx.t.com/proxy.html'
-                 }
+                     subDomain:{
+                        proxy:'http://xx.t.com/proxy.html'
+                     },
+                     src:''
                  },
                  headers: {},
                  xhrFields:{},
