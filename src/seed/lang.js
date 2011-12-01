@@ -137,7 +137,7 @@
          * @param context {Object} (opt)
          */
         each: function(object, fn, context) {
-            var key, val, i = 0, length = object.length,
+            var key, val, i = 0, length = object ? object.length : undef,
                 isObj = length === undef || S.type(object) === 'function';
             context = context || host;
 

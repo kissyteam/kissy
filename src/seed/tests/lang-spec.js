@@ -284,6 +284,14 @@ describe('lang.js', function() {
         S.each([1], function() {
             expect(this).toBe(host);
         });
+        var xx;
+        S.each(xx, function() {
+        });
+
+        S.each({a: 1, b: 2}, function(v, k) {
+            ret += v;
+        });
+        expect(ret).toBe(18);
     });
 
     it('S.indexOf', function() {

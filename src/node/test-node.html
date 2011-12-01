@@ -391,6 +391,13 @@
     function test_all(test) {
         if(S.one('#foo').all('input').length !== 3) test.fail();
     }
+    function test_each(test) {
+        var ret = 0;
+        S.one('#foo').all('input').each(function(el, idx) {
+            ret = idx;
+        })
+        if(ret !== 2) test.fail();
+    }
 
     function test_query_event_sep(test) {
         test.status = 'sep';
