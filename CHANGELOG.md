@@ -32,6 +32,7 @@ History:
  - [+] 增加 DOM.inner/outerWidth
  - [x] checkbox/radio append/insert 状态保持
  - [x] html(" <span></span>") 前缀空白保留
+ - [!] html()参数中的脚本会在调用后立即执行，请避免在脚本内部引用尚没添加到dom的根节点：DOM.html(DOM.create("<div>"),"<div id='t'><script>alert(document.getElementById('t'));</script></div>",true);
  - [+] append/insert 都可以指定是否执行脚本节点的代码
 
   
