@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 30 13:23
+build time: Dec 1 20:08
 */
 /**
  * parse html to a hierarchy dom tree
@@ -20,6 +20,7 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
             var ret,
                 lexer = this.lexer;
             do{
+                
                 ret = lexer.nextNode();
                 if (ret) {
                     // dummy html root node
@@ -34,6 +35,8 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
                 autoParagraph(this.document);
             }
 
+            post_process(this.document);
+            
             return this.document.childNodes;
         },
 
@@ -85,6 +88,31 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
         }
     }
 
+
+    function post_process(doc) {
+        // Space characters before the root html element,
+        // and space characters at the start of the html element and before the head element,
+        // will be dropped when the document is parsed;
+        var childNodes = [].concat(doc.childNodes);
+        for (var i = 0; i < childNodes.length; i++) {
+            if (childNodes[i].nodeName == "html") {
+                var html = childNodes[i];
+                for (var j = 0; j < i; j++) {
+                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
+                        doc.removeChild(childNodes[j]);
+                    }
+                }
+                while (html.firstChild &&
+                    html.firstChild.nodeType == 3 &&
+                    !S.trim(html.firstChild.toHtml())) {
+                    html.removeChild(html.firstChild);
+                }
+                break;
+            }
+        }
+    }
+
+
     return Parser;
 }, {
     requires:[
@@ -125,6 +153,18 @@ KISSY.add("htmlparser/Utils", function() {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
         /**
+         * @refer http://www.w3.org/TR/html5/syntax.html#attributes-0
+         */
+        isValidAttributeNameStartChar:function(ch) {
+            return !this.isWhitespace(ch) &&
+                ch != '"' &&
+                ch != "'" &&
+                ch != '>' &&
+                ch != "<" &&
+                ch != '/' &&
+                ch != '=';
+        },
+        /**
          *
          * @param ch
          */
@@ -139,7 +179,11 @@ KISSY.add("htmlparser/Utils", function() {
             return /^[\s\xa0]$/.test(ch);
         }
     };
-});/*
+});
+/**
+ * refer:
+ *  -  http://www.w3.org/TR/html5/syntax.html
+ **//*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
@@ -561,13 +605,7 @@ KISSY.add("htmlparser/lexer/Index",function() {
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
-                                             Page,
-                                             TextNode,
-                                             CData, Utils,
-                                             Attribute,
-                                             TagNode,
-                                             CommentNode) {
+KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
 
     function Lexer(text) {
         var self = this;
@@ -751,8 +789,17 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
                                 bookmarks[state + 1] = cursor.position;
                             }
                             done = true;
-                        } else if (!Utils.isWhitespace(ch)) {
-                            state = 1;
+                        } else {
+                            // tag name as a attribute
+                            if (!attributes.length) {
+                                // </div>
+                                if (ch == "/" || Utils.isValidAttributeNameStartChar(ch)) {
+                                    state = 1;
+                                }
+                            }
+                            else if (Utils.isValidAttributeNameStartChar(ch)) {
+                                state = 1;
+                            }
                         }
                         break;
 
@@ -1162,6 +1209,16 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
                             case '/':
                                 // tagName = "textarea"
                                 // <textarea><div></div></textarea>
+                                /**
+                                 * 8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
+                                 *
+                                 *   The text in raw text and RCDATA elements must not contain any occurrences
+                                 *   of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
+                                 *   followed by characters that case-insensitively match the tag name of the element
+                                 *   followed by one of U+0009 CHARACTER TABULATION (tab),
+                                 *   U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
+                                 *   U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
+                                 */
                                 if (!tagName || (mPage.getText(mCursor.position,
                                     mCursor.position + tagName.length) === tagName &&
                                     !(mPage.getText(mCursor.position + tagName.length,
@@ -1323,6 +1380,11 @@ KISSY.add("htmlparser/lexer/Page", function(S, Index) {
 
             cursor.advance();
 
+            // U+000D CARRIAGE RETURN (CR) characters and U+000A LINE FEED (LF) characters are treated specially.
+            // Any CR characters that are followed by LF characters must be removed,
+            // and any CR characters not followed by LF characters must be converted to LF characters.
+            // Thus, newlines in HTML DOMs are represented by LF characters,
+            // and there are never any CR characters in the input to the tokenization stage.
             // normalize line separator
             if ('\r' === ret) {
                 ret = '\n';
@@ -1522,9 +1584,9 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
             self.tagName = self.nodeName.replace(/\//, "");
             // <br> <img> <input> , just recognize them immediately
-            self.isEmptyXmlTag = !!(Dtd.$empty[self.nodeName]);
-            if (!self.isEmptyXmlTag) {
-                self.isEmptyXmlTag = /\/$/.test(self.nodeName);
+            self.isSelfClosed = !!(Dtd.$empty[self.nodeName]);
+            if (!self.isSelfClosed) {
+                self.isSelfClosed = /\/$/.test(self.nodeName);
             }
             attributes.splice(0, 1);
         }
@@ -1536,11 +1598,12 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             attributes.length = attributes.length - 1;
         }
 
-        self.isEmptyXmlTag = self.isEmptyXmlTag || lastSlash;
+        // self-closing flag
+        self.isSelfClosed = self.isSelfClosed || lastSlash;
 
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
-        self['closed'] = self.isEmptyXmlTag;
+        self['closed'] = self.isSelfClosed;
         self['closedStartPosition'] = -1;
         self['closedEndPosition'] = -1;
     }
@@ -1580,7 +1643,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
                 nodeType:this.nodeType,
                 nodeName:this.nodeName,
                 tagName:this.tagName,
-                isEmptyXmlTag:this.isEmptyXmlTag,
+                isSelfClosed:this.isSelfClosed,
                 closed:this.closed,
                 closedStartPosition:this.closedStartPosition,
                 closedEndPosition:this.closedEndPosition
@@ -1679,7 +1742,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHtml());
+                writer.append(this.toHtml() + "\n");
                 return;
             }
 
@@ -1741,7 +1804,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             // close its open tag
             writer.openTagClose(el);
 
-            if (!el.isEmptyXmlTag) {
+            if (!el.isSelfClosed) {
                 this._writeChildrenHtml(writer, filter);
                 // process its close tag
                 writer.closeTag(el);
@@ -2011,8 +2074,10 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
             var node,
                 i,
                 stack;
+            // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
+            // stack of open elements
             stack = opts.stack = opts.stack || [];
-            if (tag.isEmptyXmlTag) {
+            if (tag.isSelfClosed) {
                 tag.closed = true;
             } else {
                 do{
@@ -2030,7 +2095,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                                     tag.appendChild(node);
                                 } else {
                                     // now fake recursive using stack
-                                    if (node.isEmptyXmlTag) {
+                                    if (node.isSelfClosed) {
                                         tag.appendChild(node);
                                     } else {
                                         // fake stack
@@ -2162,7 +2227,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
         },
 
         openTagClose:function(el) {
-            if (el.isEmptyXmlTag) {
+            if (el.isSelfClosed) {
                 this.append(" ", "/");
             }
             this.append(">");
@@ -2317,7 +2382,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
-            if (el.isEmptyXmlTag) {
+            if (el.isSelfClosed) {
                 this.append(" />")
             } else {
                 this.append(">");
@@ -2565,9 +2630,9 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
     }
 
     function canRemoveAttributeQuotes(value) {
-        // http://www.w3.org/TR/html4/intro/sgmltut.html#attributes
+        // http://www.w3.org/TR/html5/syntax.html#unquoted
         // avoid \w, which could match unicode in some implementations
-        return (/^[a-zA-Z0-9-._:]+$/).test(value);
+        return !(/[ "'=<>`]/).test(value);
     }
 
     function isAttributeRedundant(el, attr) {
@@ -2789,7 +2854,10 @@ KISSY.add("htmlparser", function(S, Lexer, Parser, BasicWriter, BeautifyWriter, 
 });
 
 /**
- * 参考 http://htmlparser.sourceforge.net/
+ * refer
+ *  - http://htmlparser.sourceforge.net/
+ *  - http://www.w3.org/TR/html5/syntax.html
+ *  - http://www.w3.org/TR/html5/parsing.html
  *
  * TODO
  *  - http://blogs.msdn.com/b/ie/archive/2010/09/13/interoperable-html-parsing-in-ie9.aspx

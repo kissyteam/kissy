@@ -15,6 +15,7 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
             var ret,
                 lexer = this.lexer;
             do{
+                
                 ret = lexer.nextNode();
                 if (ret) {
                     // dummy html root node
@@ -30,7 +31,7 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
             }
 
             post_process(this.document);
-
+            
             return this.document.childNodes;
         },
 

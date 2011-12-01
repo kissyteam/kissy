@@ -186,8 +186,17 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
                                 bookmarks[state + 1] = cursor.position;
                             }
                             done = true;
-                        } else if (Utils.isValidAttributeNameChar(ch)) {
-                            state = 1;
+                        } else {
+                            // tag name as a attribute
+                            if (!attributes.length) {
+                                // </div>
+                                if (ch == "/" || Utils.isValidAttributeNameStartChar(ch)) {
+                                    state = 1;
+                                }
+                            }
+                            else if (Utils.isValidAttributeNameStartChar(ch)) {
+                                state = 1;
+                            }
                         }
                         break;
 
@@ -597,6 +606,16 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
                             case '/':
                                 // tagName = "textarea"
                                 // <textarea><div></div></textarea>
+                                /**
+                                 * 8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
+                                 *
+                                 *   The text in raw text and RCDATA elements must not contain any occurrences
+                                 *   of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
+                                 *   followed by characters that case-insensitively match the tag name of the element
+                                 *   followed by one of U+0009 CHARACTER TABULATION (tab),
+                                 *   U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
+                                 *   U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
+                                 */
                                 if (!tagName || (mPage.getText(mCursor.position,
                                     mCursor.position + tagName.length) === tagName &&
                                     !(mPage.getText(mCursor.position + tagName.length,

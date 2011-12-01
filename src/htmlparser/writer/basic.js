@@ -33,7 +33,7 @@ KISSY.add("htmlparser/writer/basic", function(S) {
         },
 
         openTagClose:function(el) {
-            if (el.isEmptyXmlTag) {
+            if (el.isSelfClosed) {
                 this.append(" ", "/");
             }
             this.append(">");

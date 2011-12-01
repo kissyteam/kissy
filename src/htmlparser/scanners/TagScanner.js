@@ -166,8 +166,10 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
             var node,
                 i,
                 stack;
+            // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
+            // stack of open elements
             stack = opts.stack = opts.stack || [];
-            if (tag.isEmptyXmlTag) {
+            if (tag.isSelfClosed) {
                 tag.closed = true;
             } else {
                 do{
@@ -185,7 +187,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                                     tag.appendChild(node);
                                 } else {
                                     // now fake recursive using stack
-                                    if (node.isEmptyXmlTag) {
+                                    if (node.isSelfClosed) {
                                         tag.appendChild(node);
                                     } else {
                                         // fake stack

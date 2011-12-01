@@ -33,7 +33,7 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             }
             expect(nodes.length).toBe(1);
             expect(nodes[0].tagName).toBe("br");
-            expect(nodes[0].isEmptyXmlTag).toBe(true);
+            expect(nodes[0].isSelfClosed).toBe(true);
         });
 
         it("works when encounter invalid attribute value", function() {

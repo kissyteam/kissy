@@ -13,7 +13,7 @@ KISSY.add("htmlparser/Utils", function() {
         /**
          * @refer http://www.w3.org/TR/html5/syntax.html#attributes-0
          */
-        isValidAttributeNameChar:function(ch) {
+        isValidAttributeNameStartChar:function(ch) {
             return !this.isWhitespace(ch) &&
                 ch != '"' &&
                 ch != "'" &&
