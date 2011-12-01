@@ -29,6 +29,8 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
                 autoParagraph(this.document);
             }
 
+            post_process(this.document);
+
             return this.document.childNodes;
         },
 
@@ -79,6 +81,31 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
             }
         }
     }
+
+
+    function post_process(doc) {
+        // Space characters before the root html element,
+        // and space characters at the start of the html element and before the head element,
+        // will be dropped when the document is parsed;
+        var childNodes = [].concat(doc.childNodes);
+        for (var i = 0; i < childNodes.length; i++) {
+            if (childNodes[i].nodeName == "html") {
+                var html = childNodes[i];
+                for (var j = 0; j < i; j++) {
+                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
+                        doc.removeChild(childNodes[j]);
+                    }
+                }
+                while (html.firstChild &&
+                    html.firstChild.nodeType == 3 &&
+                    !S.trim(html.firstChild.toHtml())) {
+                    html.removeChild(html.firstChild);
+                }
+                break;
+            }
+        }
+    }
+
 
     return Parser;
 }, {

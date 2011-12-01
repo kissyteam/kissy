@@ -2,13 +2,7 @@
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
-                                             Page,
-                                             TextNode,
-                                             CData, Utils,
-                                             Attribute,
-                                             TagNode,
-                                             CommentNode) {
+KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
 
     function Lexer(text) {
         var self = this;
@@ -192,7 +186,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
                                 bookmarks[state + 1] = cursor.position;
                             }
                             done = true;
-                        } else if (!Utils.isWhitespace(ch)) {
+                        } else if (Utils.isValidAttributeNameChar(ch)) {
                             state = 1;
                         }
                         break;
