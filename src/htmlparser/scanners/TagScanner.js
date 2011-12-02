@@ -14,6 +14,24 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
     };
 
     /**
+     * @refer http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+     * When the steps below require the UA to generate implied end tags,
+     * then, while the current node is a dd element,
+     * a dt element, an li element, an option element,
+     * an optgroup element, a p element, an rp element, or an rt element,
+     * the UA must pop the current node off the stack of open elements.
+     */
+    var impliedEndTag = {
+        // if dd encounter another dd before encounter dl ,then close last dd
+        'dd':'dl',
+        'dt':'dl',
+        'li':'ul',
+        'option':'select',
+        'optgroup':'select'
+        // p? rp? rt?
+    };
+
+    /**
      * close tag and check nest by xhtml dtd rules
      * <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
      * @param tag
@@ -74,7 +92,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                     while (i < childNodes.length) {
                         if (childNodes[i].tagName == currentChildName) {
                             pTag.appendChild(childNodes[i]);
-                        } else if (childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
+                        } else if (childNodes[i].nodeType == 3 &&
+                            !S.trim(childNodes[i].toHtml())) {
                         }
                         // non-empty text leave it to outer loop
                         else if (childNodes[i].nodeType == 3) {
@@ -161,116 +180,147 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
         return !! dtd[tag.tagName][nodeName];
     }
 
+
     return {
         scan:function(tag, lexer, opts) {
+
+            function closeStackOpenTag(end, from) {
+                for (i = end; i > from; i--) {
+                    var currentStackItem = stack[i],
+                        preStackItem = stack[i - 1];
+                    preStackItem.appendChild(currentStackItem);
+                    fixCloseTagByDtd(currentStackItem, opts);
+                }
+                tag = stack[from];
+                stack.length = from;
+            }
+
+            function processImpliedEndTag(node) {
+                var needFix = 0,
+                    endParentTagName;
+                // <ul><li>1<ul><li>2</ul></ul>
+                if (endParentTagName = impliedEndTag[node.tagName]) {
+                    var from = stack.length - 1,
+                        parent = stack[from];
+                    while (parent &&
+                        parent.tagName != endParentTagName) {
+                        // <ul><li>1<div><li>2</div></ul>
+                        if (parent.tagName == node.tagName) {
+                            needFix = 1;
+                            break;
+                        }
+                        from--;
+                        parent = stack[from];
+                    }
+                    if (needFix) {
+                        closeStackOpenTag(stack.length - 1, from - 1);
+                    }
+
+                }
+                return needFix;
+            }
+
             var node,
                 i,
                 stack;
             // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
             // stack of open elements
             stack = opts.stack = opts.stack || [];
-            if (tag.isSelfClosed) {
-                tag.closed = true;
-            } else {
-                do{
-                    node = lexer.nextNode();
-                    if (node) {
-                        if (node.nodeType === 1) {
-                            // normal end tag
-                            if (node.isEndTag() && node.tagName == tag.tagName) {
-                                node = null;
-                            } else if (!node.isEndTag()) {
+            do{
+                node = lexer.nextNode();
+                if (node) {
+                    if (node.nodeType === 1) {
+                        // normal end tag
+                        if (node.isEndTag() &&
+                            node.tagName == tag.tagName) {
+                            node = null;
+                        } else if (!node.isEndTag()) {
 
-                                if (SpecialScanners[node.tagName]) {
-                                    // change scanner ,such as textarea scanner ... etc
-                                    SpecialScanners[node.tagName].scan(node, lexer, opts);
+                            if (SpecialScanners[node.tagName]) {
+                                // change scanner ,such as textarea scanner ... etc
+                                SpecialScanners[node.tagName].scan(node, lexer, opts);
+                                tag.appendChild(node);
+                            } else {
+                                // now fake recursive using stack
+                                if (node.isSelfClosed) {
                                     tag.appendChild(node);
                                 } else {
-                                    // now fake recursive using stack
-                                    if (node.isSelfClosed) {
-                                        tag.appendChild(node);
-                                    } else {
-                                        // fake stack
+                                    // fake stack
+                                    stack.push(tag);// <ul>
+                                    //      <li>1
+                                    //      <li>2
+                                    // </ul>
+                                    if (processImpliedEndTag(node)) {
                                         stack.push(tag);
-                                        tag = node;
                                     }
-                                }
-
-                            } else if (node.isEndTag()) {
-                                // encouter a end tag without open tag
-                                // There are two cases...
-                                // 1) The tag hasn't been registered, in which case
-                                // we just add it as a simple child, like it's
-                                // opening tag
-                                // 2) There may be an opening tag further up the
-                                // parse stack that needs closing.
-                                // So, we ask the factory for a node like this one
-                                // (since end tags never have scanners) and see
-                                // if it's scanner is a composite tag scanner.
-                                // If it is we walk up the parse stack looking for
-                                // something that needs this end tag to finish it.
-                                // If there is something, we close off all the tags
-                                // walked over and continue on as if nothing
-                                // happened.
-                                var index = -1;
-                                for (i = stack.length - 1; i >= 0; i--) {
-                                    var c = stack[i];
-                                    if (c.tagName === node.tagName) {
-                                        index = i;
-                                        break;
-                                    }
-                                }
-
-                                if (index != -1) {
-                                    // <div><span> <a> </div>
-                                    // tag==a
-                                    stack[stack.length - 1].appendChild(tag);
-                                    fixCloseTagByDtd(tag, opts);
-                                    for (i = stack.length - 1; i > index; i--) {
-                                        var currentStackItem = stack[i],preStackItem = stack[i - 1];
-                                        preStackItem.appendChild(currentStackItem);
-                                        fixCloseTagByDtd(currentStackItem, opts);
-                                    }
-                                    tag = stack[index];
-                                    stack.length = index;
-                                    node = null;
-                                } else {
-                                    // discard this close tag
-                                }
-
-                            }
-                        } else {
-                            tag.appendChild(node);
-                        }
-                    }
-
-                    // fake recursive success , stack retreat
-                    if (node == null) {
-                        if (stack.length > 0) {
-                            node = stack[stack.length - 1];
-                            if (node.nodeType == 1) {
-                                // fake recursion
-                                if (!SpecialScanners[node.tagName]) {
-                                    stack.length = stack.length - 1;
-                                    node.appendChild(tag);
-                                    // child fix
-                                    fixCloseTagByDtd(tag, opts);
                                     tag = node;
-                                } else {
-                                    node = null;
+
                                 }
-                            } else {
-                                node = null;
                             }
+
+                        } else if (node.isEndTag()) {
+                            // encouter a end tag without open tag
+                            // There are two cases...
+                            // 1) The tag hasn't been registered, in which case
+                            // we just add it as a simple child, like it's
+                            // opening tag
+                            // 2) There may be an opening tag further up the
+                            // parse stack that needs closing.
+                            // So, we ask the factory for a node like this one
+                            // (since end tags never have scanners) and see
+                            // if it's scanner is a composite tag scanner.
+                            // If it is we walk up the parse stack looking for
+                            // something that needs this end tag to finish it.
+                            // If there is something, we close off all the tags
+                            // walked over and continue on as if nothing
+                            // happened.
+                            var index = -1;
+                            for (i = stack.length - 1; i >= 0; i--) {
+                                var c = stack[i];
+                                if (c.tagName === node.tagName) {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            if (index != -1) {
+                                // <div><span> <a> </div>
+                                // tag==a
+                                stack[stack.length - 1].appendChild(tag);
+                                fixCloseTagByDtd(tag, opts);
+                                closeStackOpenTag(stack.length - 1, index);
+                                node = null;
+                            } else {
+                                // discard this close tag
+                            }
+
+                        }
+                    } else {
+                        tag.appendChild(node);
+                    }
+                }
+
+                // fake recursive success , stack retreat
+                if (node == null) {
+                    if (stack.length > 0) {
+                        node = stack[stack.length - 1];
+                        // fake recursion
+                        if (!SpecialScanners[node.tagName]) {
+                            stack.length = stack.length - 1;
+                            node.appendChild(tag);
+                            // child fix
+                            fixCloseTagByDtd(tag, opts);
+                            tag = node;
+                        } else {
+                            node = null;
                         }
                     }
-                } while (node);
+                }
+            } while (node);
 
-                // root tag fix
-                fixCloseTagByDtd(tag, opts);
+            // root tag fix
+            fixCloseTagByDtd(tag, opts);
 
-
-            }
         }
     };
 }, {

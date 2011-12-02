@@ -115,12 +115,26 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             refreshChildNodes(this);
         },
 
+        replace:function(ref) {
+            var silbing = ref.parentNode.childNodes,
+                index = S.indexOf(ref, silbing);
+            silbing[index] = this;
+            refreshChildNodes(ref.parentNode);
+        },
+
+        prepend:function(node) {
+            this.childNodes.unshift(node);
+            refreshChildNodes(this);
+        },
+
         insertBefore:function(ref) {
             var silbing = ref.parentNode.childNodes,
                 index = S.indexOf(ref, silbing);
             silbing.splice(index, 0, this);
             refreshChildNodes(ref.parentNode);
         },
+
+
 
         insertAfter:function(ref) {
             var silbing = ref.parentNode.childNodes,
