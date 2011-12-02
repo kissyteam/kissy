@@ -96,9 +96,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (event && event.type == Event_Triggered) {
                         return;
                     }
-                    var target = eventHandler.target;
+                    var currentTarget = eventHandler.target;
                     if (!event || !event.fixed) {
-                        event = new EventObject(target, event);
+                        event = new EventObject(currentTarget, event);
                     }
                     var type = event.type;
                     if (S.isPlainObject(data)) {
@@ -108,8 +108,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (type) {
                         event.type = type;
                     }
-                    return _handle(target, event);
+                    return _handle(currentTarget, event);
                 };
+                // as for native dom event , this represents currentTarget !
                 eventHandler.target = target;
             }
 
@@ -278,9 +279,11 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
             });
             return ret;
-        },
-        __getListeners:getListeners
+        }
     };
+
+    // for compatibility
+    Event['__getListeners'] = getListeners
 
     // shorthand
     Event.on = Event.add;
