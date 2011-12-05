@@ -11,6 +11,18 @@ KISSY.add("htmlparser/Utils", function() {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
         /**
+         * @refer http://www.w3.org/TR/html5/syntax.html#attributes-0
+         */
+        isValidAttributeNameStartChar:function(ch) {
+            return !this.isWhitespace(ch) &&
+                ch != '"' &&
+                ch != "'" &&
+                ch != '>' &&
+                ch != "<" &&
+                ch != '/' &&
+                ch != '=';
+        },
+        /**
          *
          * @param ch
          */
@@ -26,3 +38,7 @@ KISSY.add("htmlparser/Utils", function() {
         }
     };
 });
+/**
+ * refer:
+ *  -  http://www.w3.org/TR/html5/syntax.html
+ **/

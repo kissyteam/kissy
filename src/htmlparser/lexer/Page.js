@@ -19,6 +19,11 @@ KISSY.add("htmlparser/lexer/Page", function(S, Index) {
 
             cursor.advance();
 
+            // U+000D CARRIAGE RETURN (CR) characters and U+000A LINE FEED (LF) characters are treated specially.
+            // Any CR characters that are followed by LF characters must be removed,
+            // and any CR characters not followed by LF characters must be converted to LF characters.
+            // Thus, newlines in HTML DOMs are represented by LF characters,
+            // and there are never any CR characters in the input to the tokenization stage.
             // normalize line separator
             if ('\r' === ret) {
                 ret = '\n';

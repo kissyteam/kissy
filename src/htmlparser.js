@@ -23,7 +23,10 @@ KISSY.add("htmlparser", function(S, Lexer, Parser, BasicWriter, BeautifyWriter, 
 });
 
 /**
- * 参考 http://htmlparser.sourceforge.net/
+ * refer
+ *  - http://htmlparser.sourceforge.net/
+ *  - http://www.w3.org/TR/html5/syntax.html
+ *  - http://www.w3.org/TR/html5/parsing.html
  *
  * TODO
  *  - http://blogs.msdn.com/b/ie/archive/2010/09/13/interoperable-html-parsing-in-ie9.aspx

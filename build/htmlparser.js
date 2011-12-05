@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 30 13:23
+build time: Dec 2 17:26
 */
 /**
  * parse html to a hierarchy dom tree
@@ -10,37 +10,89 @@ build time: Nov 30 13:23
 KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Scanner) {
 
     function Parser(html, opts) {
+        // fake root node
+        html = S.trim(html);
+        // only allow condition
+        // 1. start with <!doctype
+        // 2. start with <!html
+        // 3. start with <!body
+        // 4. not start with <head
+        // 5. not start with <meta
+        if (/^(<!doctype|<html|<body)/i.test(html)) {
+            html = "<document>" + html + "</document>";
+        } else {
+            html = "<body>" + html + "</body>";
+        }
         this.lexer = new Lexer(html);
         this.opts = opts || {};
-        this.document = new Document();
     }
 
     Parser.prototype = {
         elements:function() {
-            var ret,
-                lexer = this.lexer;
-            do{
-                ret = lexer.nextNode();
-                if (ret) {
-                    // dummy html root node
-                    this.document.appendChild(ret);
-                    if (ret.nodeType == 1 && !ret.isEndTag()) {
-                        Scanner.getScanner(ret.tagName).scan(ret, lexer, this.opts);
-                    }
-                }
-            } while (ret);
+            var root ,
+                doc,
+                lexer = this.lexer,
+                opts = this.opts;
 
-            if (this.opts['autoParagraph']) {
-                autoParagraph(this.document);
+            doc = root = lexer.nextNode();
+
+            if (root.tagName != 'document') {
+                doc = new Document();
+                doc.appendChild(root);
             }
 
-            return this.document.childNodes;
+            doc.nodeType = 9;
+
+            Scanner.getScanner("div").scan(root, lexer, opts);
+
+            var body = fixBody(doc);
+
+            if (body && opts['autoParagraph']) {
+                autoParagraph(body);
+            }
+
+            post_process(doc);
+
+            return doc.childNodes;
         },
 
         parse:function() {
             return this.elements();
         }
     };
+
+    function fixBody(doc) {
+        // 3 limit depth
+        var body = findTagWithName(doc, "body", 3);
+        if (body) {
+            /**
+             * <body>
+             <li>2</li>
+             <span>1</span>
+             <li>2</li>
+             <span>3</span>
+             <li>2</li>
+             </body>
+             */
+            var parent = body.parentNode,
+                silbing = parent.childNodes,
+                bodyIndex = S.indexOf(body, silbing);
+            if (bodyIndex != silbing.length - 1) {
+                var fixes = silbing.slice(bodyIndex + 1, silbing.length);
+                for (var i = 0; i < fixes.length; i++) {
+                    parent.removeChild(fixes[i]);
+                    if (fixes[i].tagName == "body") {
+                        S.each(fixes[i].childNodes, function(c) {
+                            body.appendChild(c);
+                        });
+                    } else {
+                        body.appendChild(fixes[i]);
+                    }
+                }
+            }
+        }
+        return body;
+    }
 
 
     function autoParagraph(doc) {
@@ -85,6 +137,48 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
         }
     }
 
+
+    function findTagWithName(root, tagName, level) {
+        if (level === 0) return 0;
+        if (S.isNumber(level)) {
+            level--;
+        }
+        var r,childNodes = root.childNodes;
+        for (var i = 0; i < childNodes.length; i++) {
+            if (childNodes[i].tagName === tagName) {
+                return childNodes[i];
+            }
+            if (r = findTagWithName(childNodes[i], tagName, level)) {
+                return r;
+            }
+        }
+        return 0;
+    }
+
+    function post_process(doc) {
+        // Space characters before the root html element,
+        // and space characters at the start of the html element and before the head element,
+        // will be dropped when the document is parsed;
+        var childNodes = [].concat(doc.childNodes);
+        for (var i = 0; i < childNodes.length; i++) {
+            if (childNodes[i].nodeName == "html") {
+                var html = childNodes[i];
+                for (var j = 0; j < i; j++) {
+                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
+                        doc.removeChild(childNodes[j]);
+                    }
+                }
+                while (html.firstChild &&
+                    html.firstChild.nodeType == 3 &&
+                    !S.trim(html.firstChild.toHtml())) {
+                    html.removeChild(html.firstChild);
+                }
+                break;
+            }
+        }
+    }
+
+
     return Parser;
 }, {
     requires:[
@@ -125,6 +219,18 @@ KISSY.add("htmlparser/Utils", function() {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
         /**
+         * @refer http://www.w3.org/TR/html5/syntax.html#attributes-0
+         */
+        isValidAttributeNameStartChar:function(ch) {
+            return !this.isWhitespace(ch) &&
+                ch != '"' &&
+                ch != "'" &&
+                ch != '>' &&
+                ch != "<" &&
+                ch != '/' &&
+                ch != '=';
+        },
+        /**
          *
          * @param ch
          */
@@ -139,7 +245,11 @@ KISSY.add("htmlparser/Utils", function() {
             return /^[\s\xa0]$/.test(ch);
         }
     };
-});/*
+});
+/**
+ * refer:
+ *  -  http://www.w3.org/TR/html5/syntax.html
+ **//*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
@@ -561,13 +671,7 @@ KISSY.add("htmlparser/lexer/Index",function() {
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
-                                             Page,
-                                             TextNode,
-                                             CData, Utils,
-                                             Attribute,
-                                             TagNode,
-                                             CommentNode) {
+KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
 
     function Lexer(text) {
         var self = this;
@@ -751,8 +855,17 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
                                 bookmarks[state + 1] = cursor.position;
                             }
                             done = true;
-                        } else if (!Utils.isWhitespace(ch)) {
-                            state = 1;
+                        } else {
+                            // tag name as a attribute
+                            if (!attributes.length) {
+                                // </div>
+                                if (ch == "/" || Utils.isValidAttributeNameStartChar(ch)) {
+                                    state = 1;
+                                }
+                            }
+                            else if (Utils.isValidAttributeNameStartChar(ch)) {
+                                state = 1;
+                            }
                         }
                         break;
 
@@ -1162,6 +1275,16 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor,
                             case '/':
                                 // tagName = "textarea"
                                 // <textarea><div></div></textarea>
+                                /**
+                                 * 8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
+                                 *
+                                 *   The text in raw text and RCDATA elements must not contain any occurrences
+                                 *   of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
+                                 *   followed by characters that case-insensitively match the tag name of the element
+                                 *   followed by one of U+0009 CHARACTER TABULATION (tab),
+                                 *   U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
+                                 *   U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
+                                 */
                                 if (!tagName || (mPage.getText(mCursor.position,
                                     mCursor.position + tagName.length) === tagName &&
                                     !(mPage.getText(mCursor.position + tagName.length,
@@ -1323,6 +1446,11 @@ KISSY.add("htmlparser/lexer/Page", function(S, Index) {
 
             cursor.advance();
 
+            // U+000D CARRIAGE RETURN (CR) characters and U+000A LINE FEED (LF) characters are treated specially.
+            // Any CR characters that are followed by LF characters must be removed,
+            // and any CR characters not followed by LF characters must be converted to LF characters.
+            // Thus, newlines in HTML DOMs are represented by LF characters,
+            // and there are never any CR characters in the input to the tokenization stage.
             // normalize line separator
             if ('\r' === ret) {
                 ret = '\n';
@@ -1522,9 +1650,9 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
             self.tagName = self.nodeName.replace(/\//, "");
             // <br> <img> <input> , just recognize them immediately
-            self.isEmptyXmlTag = !!(Dtd.$empty[self.nodeName]);
-            if (!self.isEmptyXmlTag) {
-                self.isEmptyXmlTag = /\/$/.test(self.nodeName);
+            self.isSelfClosed = !!(Dtd.$empty[self.nodeName]);
+            if (!self.isSelfClosed) {
+                self.isSelfClosed = /\/$/.test(self.nodeName);
             }
             attributes.splice(0, 1);
         }
@@ -1536,11 +1664,12 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             attributes.length = attributes.length - 1;
         }
 
-        self.isEmptyXmlTag = self.isEmptyXmlTag || lastSlash;
+        // self-closing flag
+        self.isSelfClosed = self.isSelfClosed || lastSlash;
 
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
-        self['closed'] = self.isEmptyXmlTag;
+        self['closed'] = self.isSelfClosed;
         self['closedStartPosition'] = -1;
         self['closedEndPosition'] = -1;
     }
@@ -1580,7 +1709,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
                 nodeType:this.nodeType,
                 nodeName:this.nodeName,
                 tagName:this.tagName,
-                isEmptyXmlTag:this.isEmptyXmlTag,
+                isSelfClosed:this.isSelfClosed,
                 closed:this.closed,
                 closedStartPosition:this.closedStartPosition,
                 closedEndPosition:this.closedEndPosition
@@ -1615,12 +1744,26 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             refreshChildNodes(this);
         },
 
+        replace:function(ref) {
+            var silbing = ref.parentNode.childNodes,
+                index = S.indexOf(ref, silbing);
+            silbing[index] = this;
+            refreshChildNodes(ref.parentNode);
+        },
+
+        prepend:function(node) {
+            this.childNodes.unshift(node);
+            refreshChildNodes(this);
+        },
+
         insertBefore:function(ref) {
             var silbing = ref.parentNode.childNodes,
                 index = S.indexOf(ref, silbing);
             silbing.splice(index, 0, this);
             refreshChildNodes(ref.parentNode);
         },
+
+
 
         insertAfter:function(ref) {
             var silbing = ref.parentNode.childNodes,
@@ -1679,7 +1822,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHtml());
+                writer.append(this.toHtml() + "\n");
                 return;
             }
 
@@ -1741,7 +1884,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             // close its open tag
             writer.openTagClose(el);
 
-            if (!el.isEmptyXmlTag) {
+            if (!el.isSelfClosed) {
                 this._writeChildrenHtml(writer, filter);
                 // process its close tag
                 writer.closeTag(el);
@@ -1859,6 +2002,24 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
     };
 
     /**
+     * @refer http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+     * When the steps below require the UA to generate implied end tags,
+     * then, while the current node is a dd element,
+     * a dt element, an li element, an option element,
+     * an optgroup element, a p element, an rp element, or an rt element,
+     * the UA must pop the current node off the stack of open elements.
+     */
+    var impliedEndTag = {
+        // if dd encounter another dd before encounter dl ,then close last dd
+        'dd':'dl',
+        'dt':'dl',
+        'li':'ul',
+        'option':'select',
+        'optgroup':'select'
+        // p? rp? rt?
+    };
+
+    /**
      * close tag and check nest by xhtml dtd rules
      * <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
      * @param tag
@@ -1919,7 +2080,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                     while (i < childNodes.length) {
                         if (childNodes[i].tagName == currentChildName) {
                             pTag.appendChild(childNodes[i]);
-                        } else if (childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
+                        } else if (childNodes[i].nodeType == 3 &&
+                            !S.trim(childNodes[i].toHtml())) {
                         }
                         // non-empty text leave it to outer loop
                         else if (childNodes[i].nodeType == 3) {
@@ -2006,114 +2168,147 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
         return !! dtd[tag.tagName][nodeName];
     }
 
+
     return {
         scan:function(tag, lexer, opts) {
+
+            function closeStackOpenTag(end, from) {
+                for (i = end; i > from; i--) {
+                    var currentStackItem = stack[i],
+                        preStackItem = stack[i - 1];
+                    preStackItem.appendChild(currentStackItem);
+                    fixCloseTagByDtd(currentStackItem, opts);
+                }
+                tag = stack[from];
+                stack.length = from;
+            }
+
+            function processImpliedEndTag(node) {
+                var needFix = 0,
+                    endParentTagName;
+                // <ul><li>1<ul><li>2</ul></ul>
+                if (endParentTagName = impliedEndTag[node.tagName]) {
+                    var from = stack.length - 1,
+                        parent = stack[from];
+                    while (parent &&
+                        parent.tagName != endParentTagName) {
+                        // <ul><li>1<div><li>2</div></ul>
+                        if (parent.tagName == node.tagName) {
+                            needFix = 1;
+                            break;
+                        }
+                        from--;
+                        parent = stack[from];
+                    }
+                    if (needFix) {
+                        closeStackOpenTag(stack.length - 1, from - 1);
+                    }
+
+                }
+                return needFix;
+            }
+
             var node,
                 i,
                 stack;
+            // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
+            // stack of open elements
             stack = opts.stack = opts.stack || [];
-            if (tag.isEmptyXmlTag) {
-                tag.closed = true;
-            } else {
-                do{
-                    node = lexer.nextNode();
-                    if (node) {
-                        if (node.nodeType === 1) {
-                            // normal end tag
-                            if (node.isEndTag() && node.tagName == tag.tagName) {
-                                node = null;
-                            } else if (!node.isEndTag()) {
+            do{
+                node = lexer.nextNode();
+                if (node) {
+                    if (node.nodeType === 1) {
+                        // normal end tag
+                        if (node.isEndTag() &&
+                            node.tagName == tag.tagName) {
+                            node = null;
+                        } else if (!node.isEndTag()) {
 
-                                if (SpecialScanners[node.tagName]) {
-                                    // change scanner ,such as textarea scanner ... etc
-                                    SpecialScanners[node.tagName].scan(node, lexer, opts);
+                            if (SpecialScanners[node.tagName]) {
+                                // change scanner ,such as textarea scanner ... etc
+                                SpecialScanners[node.tagName].scan(node, lexer, opts);
+                                tag.appendChild(node);
+                            } else {
+                                // now fake recursive using stack
+                                if (node.isSelfClosed) {
                                     tag.appendChild(node);
                                 } else {
-                                    // now fake recursive using stack
-                                    if (node.isEmptyXmlTag) {
-                                        tag.appendChild(node);
-                                    } else {
-                                        // fake stack
+                                    // fake stack
+                                    stack.push(tag);// <ul>
+                                    //      <li>1
+                                    //      <li>2
+                                    // </ul>
+                                    if (processImpliedEndTag(node)) {
                                         stack.push(tag);
-                                        tag = node;
                                     }
-                                }
-
-                            } else if (node.isEndTag()) {
-                                // encouter a end tag without open tag
-                                // There are two cases...
-                                // 1) The tag hasn't been registered, in which case
-                                // we just add it as a simple child, like it's
-                                // opening tag
-                                // 2) There may be an opening tag further up the
-                                // parse stack that needs closing.
-                                // So, we ask the factory for a node like this one
-                                // (since end tags never have scanners) and see
-                                // if it's scanner is a composite tag scanner.
-                                // If it is we walk up the parse stack looking for
-                                // something that needs this end tag to finish it.
-                                // If there is something, we close off all the tags
-                                // walked over and continue on as if nothing
-                                // happened.
-                                var index = -1;
-                                for (i = stack.length - 1; i >= 0; i--) {
-                                    var c = stack[i];
-                                    if (c.tagName === node.tagName) {
-                                        index = i;
-                                        break;
-                                    }
-                                }
-
-                                if (index != -1) {
-                                    // <div><span> <a> </div>
-                                    // tag==a
-                                    stack[stack.length - 1].appendChild(tag);
-                                    fixCloseTagByDtd(tag, opts);
-                                    for (i = stack.length - 1; i > index; i--) {
-                                        var currentStackItem = stack[i],preStackItem = stack[i - 1];
-                                        preStackItem.appendChild(currentStackItem);
-                                        fixCloseTagByDtd(currentStackItem, opts);
-                                    }
-                                    tag = stack[index];
-                                    stack.length = index;
-                                    node = null;
-                                } else {
-                                    // discard this close tag
-                                }
-
-                            }
-                        } else {
-                            tag.appendChild(node);
-                        }
-                    }
-
-                    // fake recursive success , stack retreat
-                    if (node == null) {
-                        if (stack.length > 0) {
-                            node = stack[stack.length - 1];
-                            if (node.nodeType == 1) {
-                                // fake recursion
-                                if (!SpecialScanners[node.tagName]) {
-                                    stack.length = stack.length - 1;
-                                    node.appendChild(tag);
-                                    // child fix
-                                    fixCloseTagByDtd(tag, opts);
                                     tag = node;
-                                } else {
-                                    node = null;
+
                                 }
-                            } else {
-                                node = null;
                             }
+
+                        } else if (node.isEndTag()) {
+                            // encouter a end tag without open tag
+                            // There are two cases...
+                            // 1) The tag hasn't been registered, in which case
+                            // we just add it as a simple child, like it's
+                            // opening tag
+                            // 2) There may be an opening tag further up the
+                            // parse stack that needs closing.
+                            // So, we ask the factory for a node like this one
+                            // (since end tags never have scanners) and see
+                            // if it's scanner is a composite tag scanner.
+                            // If it is we walk up the parse stack looking for
+                            // something that needs this end tag to finish it.
+                            // If there is something, we close off all the tags
+                            // walked over and continue on as if nothing
+                            // happened.
+                            var index = -1;
+                            for (i = stack.length - 1; i >= 0; i--) {
+                                var c = stack[i];
+                                if (c.tagName === node.tagName) {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            if (index != -1) {
+                                // <div><span> <a> </div>
+                                // tag==a
+                                stack[stack.length - 1].appendChild(tag);
+                                fixCloseTagByDtd(tag, opts);
+                                closeStackOpenTag(stack.length - 1, index);
+                                node = null;
+                            } else {
+                                // discard this close tag
+                            }
+
+                        }
+                    } else {
+                        tag.appendChild(node);
+                    }
+                }
+
+                // fake recursive success , stack retreat
+                if (node == null) {
+                    if (stack.length > 0) {
+                        node = stack[stack.length - 1];
+                        // fake recursion
+                        if (!SpecialScanners[node.tagName]) {
+                            stack.length = stack.length - 1;
+                            node.appendChild(tag);
+                            // child fix
+                            fixCloseTagByDtd(tag, opts);
+                            tag = node;
+                        } else {
+                            node = null;
                         }
                     }
-                } while (node);
+                }
+            } while (node);
 
-                // root tag fix
-                fixCloseTagByDtd(tag, opts);
+            // root tag fix
+            fixCloseTagByDtd(tag, opts);
 
-
-            }
         }
     };
 }, {
@@ -2162,7 +2357,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
         },
 
         openTagClose:function(el) {
-            if (el.isEmptyXmlTag) {
+            if (el.isSelfClosed) {
                 this.append(" ", "/");
             }
             this.append(">");
@@ -2317,7 +2512,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
-            if (el.isEmptyXmlTag) {
+            if (el.isSelfClosed) {
                 this.append(" />")
             } else {
                 this.append(">");
@@ -2565,9 +2760,9 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
     }
 
     function canRemoveAttributeQuotes(value) {
-        // http://www.w3.org/TR/html4/intro/sgmltut.html#attributes
+        // http://www.w3.org/TR/html5/syntax.html#unquoted
         // avoid \w, which could match unicode in some implementations
-        return (/^[a-zA-Z0-9-._:]+$/).test(value);
+        return !(/[ "'=<>`]/).test(value);
     }
 
     function isAttributeRedundant(el, attr) {
@@ -2789,7 +2984,10 @@ KISSY.add("htmlparser", function(S, Lexer, Parser, BasicWriter, BeautifyWriter, 
 });
 
 /**
- * 参考 http://htmlparser.sourceforge.net/
+ * refer
+ *  - http://htmlparser.sourceforge.net/
+ *  - http://www.w3.org/TR/html5/syntax.html
+ *  - http://www.w3.org/TR/html5/parsing.html
  *
  * TODO
  *  - http://blogs.msdn.com/b/ie/archive/2010/09/13/interoperable-html-parsing-in-ie9.aspx

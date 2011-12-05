@@ -115,7 +115,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
-            if (el.isEmptyXmlTag) {
+            if (el.isSelfClosed) {
                 this.append(" />")
             } else {
                 this.append(">");

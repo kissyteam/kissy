@@ -48,6 +48,7 @@ History:
  - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
  - [!] 字符串数组支持变化，例如 Event.on(['#xx','#yy'],...) 改写做 Event.on('#xx,#yy',...);
  - [+] 自定义事件增加冒泡支持，参见 publish api
+ - [+] 兼容 mousewheel 事件：http://docs.kissyui.com/docs/html/api/core/event/mousewheel.html
 
 
  - [x] ajax 触发 success 或 error 后触发 complete 回调（ if exists ）

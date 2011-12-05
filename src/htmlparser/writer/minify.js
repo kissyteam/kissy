@@ -30,9 +30,9 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
     }
 
     function canRemoveAttributeQuotes(value) {
-        // http://www.w3.org/TR/html4/intro/sgmltut.html#attributes
+        // http://www.w3.org/TR/html5/syntax.html#unquoted
         // avoid \w, which could match unicode in some implementations
-        return (/^[a-zA-Z0-9-._:]+$/).test(value);
+        return !(/[ "'=<>`]/).test(value);
     }
 
     function isAttributeRedundant(el, attr) {

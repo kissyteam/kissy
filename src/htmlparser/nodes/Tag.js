@@ -21,9 +21,9 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
             self.tagName = self.nodeName.replace(/\//, "");
             // <br> <img> <input> , just recognize them immediately
-            self.isEmptyXmlTag = !!(Dtd.$empty[self.nodeName]);
-            if (!self.isEmptyXmlTag) {
-                self.isEmptyXmlTag = /\/$/.test(self.nodeName);
+            self.isSelfClosed = !!(Dtd.$empty[self.nodeName]);
+            if (!self.isSelfClosed) {
+                self.isSelfClosed = /\/$/.test(self.nodeName);
             }
             attributes.splice(0, 1);
         }
@@ -35,11 +35,12 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             attributes.length = attributes.length - 1;
         }
 
-        self.isEmptyXmlTag = self.isEmptyXmlTag || lastSlash;
+        // self-closing flag
+        self.isSelfClosed = self.isSelfClosed || lastSlash;
 
         // whether has been closed by its end tag
         // !TODO how to set closed position correctly
-        self['closed'] = self.isEmptyXmlTag;
+        self['closed'] = self.isSelfClosed;
         self['closedStartPosition'] = -1;
         self['closedEndPosition'] = -1;
     }
@@ -79,7 +80,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
                 nodeType:this.nodeType,
                 nodeName:this.nodeName,
                 tagName:this.tagName,
-                isEmptyXmlTag:this.isEmptyXmlTag,
+                isSelfClosed:this.isSelfClosed,
                 closed:this.closed,
                 closedStartPosition:this.closedStartPosition,
                 closedEndPosition:this.closedEndPosition
@@ -114,12 +115,26 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             refreshChildNodes(this);
         },
 
+        replace:function(ref) {
+            var silbing = ref.parentNode.childNodes,
+                index = S.indexOf(ref, silbing);
+            silbing[index] = this;
+            refreshChildNodes(ref.parentNode);
+        },
+
+        prepend:function(node) {
+            this.childNodes.unshift(node);
+            refreshChildNodes(this);
+        },
+
         insertBefore:function(ref) {
             var silbing = ref.parentNode.childNodes,
                 index = S.indexOf(ref, silbing);
             silbing.splice(index, 0, this);
             refreshChildNodes(ref.parentNode);
         },
+
+
 
         insertAfter:function(ref) {
             var silbing = ref.parentNode.childNodes,
@@ -178,7 +193,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHtml());
+                writer.append(this.toHtml() + "\n");
                 return;
             }
 
@@ -240,7 +255,7 @@ KISSY.add("htmlparser/nodes/Tag", function(S, Node, Attribute, Dtd) {
             // close its open tag
             writer.openTagClose(el);
 
-            if (!el.isEmptyXmlTag) {
+            if (!el.isSelfClosed) {
                 this._writeChildrenHtml(writer, filter);
                 // process its close tag
                 writer.closeTag(el);
