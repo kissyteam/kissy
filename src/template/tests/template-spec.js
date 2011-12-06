@@ -6,6 +6,10 @@ KISSY.use("template", function(S, T) {
             expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
         });
 
+        it("should ignore undefined variable",function(){
+                expect(T('{{#if typeof a === "undefined" || a === "a"}}{{b}}{{/if}}').render({})).toBe('');
+        });
+
         describe('variable', function() { // {{{
             it('should render a normal string', function() {
                 expect(T('a').render()).toEqual('a');
