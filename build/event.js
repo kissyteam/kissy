@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 2 12:58
+build time: Dec 8 00:58
 */
 /**
  * scalable event framework for kissy (refer DOM3 Events)

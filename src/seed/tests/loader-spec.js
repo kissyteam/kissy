@@ -140,6 +140,28 @@
 
 
         });
+
+
+        it("detect cyclic dependency", function() {
+            var old = KISSY.Config.base;
+            KISSY.Config.base = "./loader/";
+            var oldError = S.error,err = '';
+            S.error = function(args) {
+                err = args;
+                oldError(args);
+            };
+            KISSY.use("a");
+
+            waitsFor(function() {
+                return err == 'cyclic dependency : c->a->b->c';
+            }, 10000);
+            runs(function() {
+                S.error = oldError;
+                KISSY.Config.base = old;
+            });
+
+        });
+
     });
 
 

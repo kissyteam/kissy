@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 8 00:58
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -90,7 +90,9 @@ KISSY.add('template/base', function(S) {
                     else {
                         _parser = KS_TEMPL +
                             '.push(' +
-                            restoreQuote(body) +
+                            // prevent variable undefined error when look up in with ,simple variable substitution
+                            // with({}){alert(x);} => ReferenceError: x is not defined
+                            'typeof '+body+'==="undefined"?"":'+restoreQuote(body) +
                             ');';
                     }
                     return PREFIX + _parser + SUFFIX;

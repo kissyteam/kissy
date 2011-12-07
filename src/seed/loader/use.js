@@ -11,6 +11,48 @@
     var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
+
+    /**
+     * whether eists cyclic dependency
+     * @param mod
+     * @param requires
+     * @param path dependency stack
+     */
+    function cyclicChecksInternal(self, mod, requires, path) {
+        if (requires) {
+            for (var i = 0; i < requires.length; i++) {
+                if (_cyclicChecks(self, mod, requires[i], path)) {
+                    path.unshift(requires[i]);
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    function cyclicCheck(self, mod) {
+        var path = [];
+        cyclicChecksInternal(self, mod, mod.requires, path);
+        path.unshift(mod.name);
+        return path;
+    }
+
+    function _cyclicChecks(self, mod, requireModName, path) {
+        /**
+         * max depth of recursive stack
+         * one child of ancestor's name is same with mod name
+         */
+        if (requireModName == mod.name) {
+            return 1;
+        }
+        var mods = self.Env.mods,
+            rmod = mods[requireModName];
+        if (rmod && cyclicChecksInternal(self, mod, rmod.requires, path)) {
+            return 1;
+        }
+        return 0;
+    }
+
     S.mix(loader, {
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
@@ -107,10 +149,13 @@
                 //添加模块定义
                 mods[modName] = mod;
             }
+
             mod.name = modName;
+
             if (mod && mod.status === ATTACHED) {
                 return;
             }
+
             // 先从 global 里取
             if (cfg.global) {
                 self.__mixMod(modName, cfg.global);
@@ -124,22 +169,47 @@
          */
         __attach: function(mod, callback, cfg) {
             var self = this,
+                r,
+                rMod,
+                i,
+                attached = 0,
                 mods = self.Env.mods,
-                //复制一份当前的依赖项出来，防止add后修改！
+                //复制一份当前的依赖项出来，防止 add 后修改！
                 requires = (mod['requires'] || []).concat();
+
             mod['requires'] = requires;
 
+            function markAndCheckCyclic() {
+                if (S.Config.debug) {
+                    // one mod only need to check its dependency once
+                    if (mod.cyclicCheck) {
+                        return;
+                    }
+                    // S.log("check cyclic for mod : " + mod.name);
+                    var path = cyclicCheck(self, mod);
+                    if (path.length > 1) {
+                        S.error("cyclic dependency : " + path.join("->"));
+                    }
+                    // tag this module
+                    mod.cyclicCheck = 1;
+                }
+            }
+
+            // incase required mods and mod scripts is loaded statically
+            if (mod.fns && mod.fns.length) {
+                markAndCheckCyclic();
+            }
+
             // attach all required modules
-            S.each(requires, function(r, i, requires) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, r);
-                var rMod = mods[r];
+            for (i = 0; i < requires.length; i++) {
+                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
                     self.__attachModByName(r, fn, cfg);
                 }
-            });
-
+            }
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
@@ -149,28 +219,37 @@
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'];
+                var newRequires = mod['requires'],needToLoad = [];
 
                 //本模块下载成功后串行下载 require
-                S.each(newRequires, function(r, i, newRequires) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, r);
+
+                for (i = 0; i < newRequires.length; i++) {
+                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod && rMod.status === ATTACHED
+                    if (rMod &&
+                        rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, cfg);
+                        needToLoad.push(r);
                     }
-                });
+                }
 
-                fn();
+                // else check on load
+                markAndCheckCyclic();
+
+                if (needToLoad.length) {
+                    for (i = 0; i < needToLoad.length; i++) {
+                        self.__attachModByName(needToLoad[i], fn, cfg);
+                    }
+                } else {
+                    fn();
+                }
             }, cfg);
-
-            var attached = false;
 
             function fn() {
                 if (!attached &&
@@ -180,7 +259,7 @@
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
-                        attached = true;
+                        attached = 1;
                         callback();
                     }
                 }
