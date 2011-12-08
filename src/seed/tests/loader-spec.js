@@ -153,7 +153,7 @@
             KISSY.use("a");
 
             waitsFor(function() {
-                return err == 'cyclic dependency : c->a->b->c';
+                return err == 'find cyclic dependency by mod b between mods : c,a,b';
             }, 10000);
             runs(function() {
                 S.error = oldError;

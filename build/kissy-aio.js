@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 8 01:53
+build time: Dec 8 18:25
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Dec 8 01:53
          */
         version: '1.20dev',
 
-        buildTime:'20111208015257',
+        buildTime:'20111208182514',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2256,48 +2256,6 @@ build time: Dec 8 01:53
     var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
-
-    /**
-     * whether eists cyclic dependency
-     * @param mod
-     * @param requires
-     * @param path dependency stack
-     */
-    function cyclicChecksInternal(self, mod, requires, path) {
-        if (requires) {
-            for (var i = 0; i < requires.length; i++) {
-                if (_cyclicChecks(self, mod, requires[i], path)) {
-                    path.unshift(requires[i]);
-                    return 1;
-                }
-            }
-        }
-        return 0;
-    }
-
-    function cyclicCheck(self, mod) {
-        var path = [];
-        cyclicChecksInternal(self, mod, mod.requires, path);
-        path.unshift(mod.name);
-        return path;
-    }
-
-    function _cyclicChecks(self, mod, requireModName, path) {
-        /**
-         * max depth of recursive stack
-         * one child of ancestor's name is same with mod name
-         */
-        if (requireModName == mod.name) {
-            return 1;
-        }
-        var mods = self.Env.mods,
-            rmod = mods[requireModName];
-        if (rmod && cyclicChecksInternal(self, mod, rmod.requires, path)) {
-            return 1;
-        }
-        return 0;
-    }
-
     S.mix(loader, {
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
@@ -2424,25 +2382,38 @@ build time: Dec 8 01:53
 
             mod['requires'] = requires;
 
-            function markAndCheckCyclic() {
-                if (S.Config.debug) {
-                    // one mod only need to check its dependency once
-                    if (mod.cyclicCheck) {
-                        return;
+            /**
+             * check cyclic dependency between mods
+             */
+            function cyclicCheck() {
+                var __allRequires,
+                    myName = mod.name,
+                    r,r2,rmod,
+                    r__allRequires,
+                    requires = mod.requires;
+                // one mod's all requires mods to run its callback
+                __allRequires = mod.__allRequires = mod.__allRequires || {};
+                for (var i = 0; i < requires.length; i++) {
+                    r = requires[i];
+                    rmod = mods[r];
+                    __allRequires[r] = 1;
+                    if (rmod && (r__allRequires = rmod.__allRequires)) {
+                        for (r2 in r__allRequires) {
+                            __allRequires[r2] = 1;
+                        }
                     }
-                    // S.log("check cyclic for mod : " + mod.name);
-                    var path = cyclicCheck(self, mod);
-                    if (path.length > 1) {
-                        S.error("cyclic dependency : " + path.join("->"));
+                }
+                if (__allRequires[myName]) {
+                    var t = [];
+                    for (r in __allRequires) {
+                        t.push(r);
                     }
-                    // tag this module
-                    mod.cyclicCheck = 1;
+                    S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
                 }
             }
 
-            // incase required mods and mod scripts is loaded statically
-            if (mod.fns && mod.fns.length) {
-                markAndCheckCyclic();
+            if (S.Config.debug) {
+                cyclicCheck();
             }
 
             // attach all required modules
@@ -2464,7 +2435,13 @@ build time: Dec 8 01:53
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'],needToLoad = [];
+                var newRequires = mod['requires'],
+                    needToLoad = [];
+
+                if (S.Config.debug) {
+
+                }
+
 
                 //本模块下载成功后串行下载 require
 
@@ -2483,9 +2460,6 @@ build time: Dec 8 01:53
                         needToLoad.push(r);
                     }
                 }
-
-                // else check on load
-                markAndCheckCyclic();
 
                 if (needToLoad.length) {
                     for (i = 0; i < needToLoad.length; i++) {
@@ -2866,67 +2840,67 @@ build time: Dec 8 01:53
 /**
  combined files : 
 
-/Users/yiminghe/code/kissy_git/kissy/src/ua/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/ua/extra.js
-/Users/yiminghe/code/kissy_git/kissy/src/ua.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/attr.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/class.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/create.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/data.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/insertion.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/offset.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/style.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/selector.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/style-ie.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom/traversal.js
-/Users/yiminghe/code/kissy_git/kissy/src/dom.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/keycodes.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/object.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/utils.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/target.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/focusin.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/hashchange.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/valuechange.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/delegate.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/mouseenter.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/submit.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/change.js
-/Users/yiminghe/code/kissy_git/kissy/src/event/mousewheel.js
-/Users/yiminghe/code/kissy_git/kissy/src/event.js
-/Users/yiminghe/code/kissy_git/kissy/src/node/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/node/attach.js
-/Users/yiminghe/code/kissy_git/kissy/src/node/override.js
-/Users/yiminghe/code/kissy_git/kissy/src/anim/easing.js
-/Users/yiminghe/code/kissy_git/kissy/src/anim/manager.js
-/Users/yiminghe/code/kissy_git/kissy/src/anim/fx.js
-/Users/yiminghe/code/kissy_git/kissy/src/anim/queue.js
-/Users/yiminghe/code/kissy_git/kissy/src/anim/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/anim/color.js
-/Users/yiminghe/code/kissy_git/kissy/src/anim.js
-/Users/yiminghe/code/kissy_git/kissy/src/node/anim.js
-/Users/yiminghe/code/kissy_git/kissy/src/node.js
-/Users/yiminghe/code/kissy_git/kissy/src/json/json2.js
-/Users/yiminghe/code/kissy_git/kissy/src/json.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/form-serializer.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrobject.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrbase.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/subdomain.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/xdr.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhr.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/script.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/jsonp.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/form.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax/iframe-upload.js
-/Users/yiminghe/code/kissy_git/kissy/src/ajax.js
-/Users/yiminghe/code/kissy_git/kissy/src/base/attribute.js
-/Users/yiminghe/code/kissy_git/kissy/src/base/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/cookie/base.js
-/Users/yiminghe/code/kissy_git/kissy/src/cookie.js
-/Users/yiminghe/code/kissy_git/kissy/src/core.js
+D:\code\kissy_git\kissy\src\ua\base.js
+D:\code\kissy_git\kissy\src\ua\extra.js
+D:\code\kissy_git\kissy\src\ua.js
+D:\code\kissy_git\kissy\src\dom\base.js
+D:\code\kissy_git\kissy\src\dom\attr.js
+D:\code\kissy_git\kissy\src\dom\class.js
+D:\code\kissy_git\kissy\src\dom\create.js
+D:\code\kissy_git\kissy\src\dom\data.js
+D:\code\kissy_git\kissy\src\dom\insertion.js
+D:\code\kissy_git\kissy\src\dom\offset.js
+D:\code\kissy_git\kissy\src\dom\style.js
+D:\code\kissy_git\kissy\src\dom\selector.js
+D:\code\kissy_git\kissy\src\dom\style-ie.js
+D:\code\kissy_git\kissy\src\dom\traversal.js
+D:\code\kissy_git\kissy\src\dom.js
+D:\code\kissy_git\kissy\src\event\keycodes.js
+D:\code\kissy_git\kissy\src\event\object.js
+D:\code\kissy_git\kissy\src\event\utils.js
+D:\code\kissy_git\kissy\src\event\base.js
+D:\code\kissy_git\kissy\src\event\target.js
+D:\code\kissy_git\kissy\src\event\focusin.js
+D:\code\kissy_git\kissy\src\event\hashchange.js
+D:\code\kissy_git\kissy\src\event\valuechange.js
+D:\code\kissy_git\kissy\src\event\delegate.js
+D:\code\kissy_git\kissy\src\event\mouseenter.js
+D:\code\kissy_git\kissy\src\event\submit.js
+D:\code\kissy_git\kissy\src\event\change.js
+D:\code\kissy_git\kissy\src\event\mousewheel.js
+D:\code\kissy_git\kissy\src\event.js
+D:\code\kissy_git\kissy\src\node\base.js
+D:\code\kissy_git\kissy\src\node\attach.js
+D:\code\kissy_git\kissy\src\node\override.js
+D:\code\kissy_git\kissy\src\anim\easing.js
+D:\code\kissy_git\kissy\src\anim\manager.js
+D:\code\kissy_git\kissy\src\anim\fx.js
+D:\code\kissy_git\kissy\src\anim\queue.js
+D:\code\kissy_git\kissy\src\anim\base.js
+D:\code\kissy_git\kissy\src\anim\color.js
+D:\code\kissy_git\kissy\src\anim.js
+D:\code\kissy_git\kissy\src\node\anim.js
+D:\code\kissy_git\kissy\src\node.js
+D:\code\kissy_git\kissy\src\json\json2.js
+D:\code\kissy_git\kissy\src\json.js
+D:\code\kissy_git\kissy\src\ajax\form-serializer.js
+D:\code\kissy_git\kissy\src\ajax\xhrobject.js
+D:\code\kissy_git\kissy\src\ajax\base.js
+D:\code\kissy_git\kissy\src\ajax\xhrbase.js
+D:\code\kissy_git\kissy\src\ajax\subdomain.js
+D:\code\kissy_git\kissy\src\ajax\xdr.js
+D:\code\kissy_git\kissy\src\ajax\xhr.js
+D:\code\kissy_git\kissy\src\ajax\script.js
+D:\code\kissy_git\kissy\src\ajax\jsonp.js
+D:\code\kissy_git\kissy\src\ajax\form.js
+D:\code\kissy_git\kissy\src\ajax\iframe-upload.js
+D:\code\kissy_git\kissy\src\ajax.js
+D:\code\kissy_git\kissy\src\base\attribute.js
+D:\code\kissy_git\kissy\src\base\base.js
+D:\code\kissy_git\kissy\src\base.js
+D:\code\kissy_git\kissy\src\cookie\base.js
+D:\code\kissy_git\kissy\src\cookie.js
+D:\code\kissy_git\kissy\src\core.js
 **/
 
 /**
@@ -15313,7 +15287,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 8 00:58
+build time: Dec 8 16:21
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -15335,9 +15309,9 @@ KISSY.add('template/base', function(S) {
         KS_TEMPL_STAT_PARAM_REG = new RegExp(KS_TEMPL_STAT_PARAM, "g"),
         KS_TEMPL = 'KS_TEMPL',
         KS_DATA = 'KS_DATA_',
-        KS_EMPTY = '',
         KS_AS = 'as',
 
+        // note : double quote for generated code
         PREFIX = '");',
         SUFFIX = KS_TEMPL + '.push("',
 
@@ -15353,10 +15327,12 @@ KISSY.add('template/base', function(S) {
             PARSER_RENDER_ERROR + '" + e.message]}};return ' +
             KS_TEMPL + '.join("");',
 
+        // restore double quote in logic template variable
         restoreQuote = function(str) {
             return str.replace(/\\"/g, '"');
         },
 
+        // escape double quote in template
         escapeQuote = function(str) {
             return str.replace(/"/g, '\\"');
         },
@@ -15369,14 +15345,17 @@ KISSY.add('template/base', function(S) {
                 _empty_index;
             return escapeQuote(trim(tpl)
                 .replace(/[\r\t\n]/g, ' ')
-                // escape escape ...
+                // escape escape ... . in case \ is consumed when run tpl parser function
+                // '{{y}}\\x{{/y}}' =>tmpl.push('\x'); => tmpl.push('\\x');
                 .replace(/\\/g, '\\\\'))
                 .replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,
                 function(all, expr, body) {
-                    _parser = KS_EMPTY;
+                    _parser = "";
+                    // must restore quote , if str is used as code directly
+                    body = restoreQuote(trim(body));
+                    //body = trim(body);
                     // is an expression
                     if (expr) {
-                        body = trim(body);
                         _empty_index = body.indexOf(' ');
                         body = _empty_index === -1 ?
                             [ body, '' ] :
@@ -15393,9 +15372,9 @@ KISSY.add('template/base', function(S) {
                         if (opStatement && tagStartEnd[expr]) {
                             // get expression definition function/string
                             fn = opStatement[tagStartEnd[expr]];
-                            _parser = S.isFunction(fn) ?
-                                restoreQuote(fn.apply(this, args.split(/\s+/))) :
-                                restoreQuote(fn.replace(KS_TEMPL_STAT_PARAM_REG, args));
+                            _parser = String(S.isFunction(fn) ?
+                                fn.apply(this, args.split(/\s+/)) :
+                                fn.replace(KS_TEMPL_STAT_PARAM_REG, args));
                         }
                     }
                     // return array directly
@@ -15404,7 +15383,7 @@ KISSY.add('template/base', function(S) {
                             '.push(' +
                             // prevent variable undefined error when look up in with ,simple variable substitution
                             // with({}){alert(x);} => ReferenceError: x is not defined
-                            'typeof '+body+'==="undefined"?"":'+restoreQuote(body) +
+                            'typeof (' + body + ') ==="undefined"?"":' + body +
                             ');';
                     }
                     return PREFIX + _parser + SUFFIX;
@@ -15468,18 +15447,18 @@ KISSY.add('template/base', function(S) {
                 ];
 
             try {
-                func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                func = new Function(_ks_data, _parser.join(""));
             } catch (e) {
                 _parser[3] = PREFIX + SUFFIX +
                     PARSER_SYNTAX_ERROR + ',' +
                     e.message + PREFIX + SUFFIX;
-                func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                func = new Function(_ks_data, _parser.join(""));
             }
 
             templateCache[tpl] = {
                 name: _ks_data,
                 o:o,
-                parser: _parser.join(KS_EMPTY),
+                parser: _parser.join(""),
                 render: func
             };
         }
@@ -30182,7 +30161,7 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 8 17:11
 */
 /**
  * intervein elements dynamically
@@ -30292,6 +30271,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
     function adjustItem(itemRaw) {
         var self = this,
+            effect = self.get("effect"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -30319,6 +30299,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         });
         /*不在容器里，就加上*/
         if (!container.contains(item)) {
+            if (effect && effect.effect == "fadeIn") {
+                item.css("opacity", 0);
+            }
             container.append(item);
         }
         curColHeights[dest] += item.outerHeight(true);
@@ -30383,10 +30366,20 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                 container = self.get("container"),
                 item = adjustItem.call(self, itemRaw),
                 effect = self.get("effect");
-            if (!effect.effect) {
+            if (!effect.effect ||
+                effect.effect !== "fadeIn") {
                 return;
             }
-            item[effect.effect](effect.duration, undefined, effect.easing);
+            // only allow fadeIn temporary
+            item.animate({
+                opacity:1
+            }, {
+                duration:effect.duration,
+                easing:effect.easing,
+                complete:function() {
+                    item.css("opacity", "");
+                }
+            });
         },
 
         destroy:function() {

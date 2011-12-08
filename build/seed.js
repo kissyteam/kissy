@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 8 01:53
+build time: Dec 8 18:25
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Dec 8 01:53
          */
         version: '1.20dev',
 
-        buildTime:'20111208015257',
+        buildTime:'20111208182514',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2256,48 +2256,6 @@ build time: Dec 8 01:53
     var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
-
-    /**
-     * whether eists cyclic dependency
-     * @param mod
-     * @param requires
-     * @param path dependency stack
-     */
-    function cyclicChecksInternal(self, mod, requires, path) {
-        if (requires) {
-            for (var i = 0; i < requires.length; i++) {
-                if (_cyclicChecks(self, mod, requires[i], path)) {
-                    path.unshift(requires[i]);
-                    return 1;
-                }
-            }
-        }
-        return 0;
-    }
-
-    function cyclicCheck(self, mod) {
-        var path = [];
-        cyclicChecksInternal(self, mod, mod.requires, path);
-        path.unshift(mod.name);
-        return path;
-    }
-
-    function _cyclicChecks(self, mod, requireModName, path) {
-        /**
-         * max depth of recursive stack
-         * one child of ancestor's name is same with mod name
-         */
-        if (requireModName == mod.name) {
-            return 1;
-        }
-        var mods = self.Env.mods,
-            rmod = mods[requireModName];
-        if (rmod && cyclicChecksInternal(self, mod, rmod.requires, path)) {
-            return 1;
-        }
-        return 0;
-    }
-
     S.mix(loader, {
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
@@ -2424,25 +2382,38 @@ build time: Dec 8 01:53
 
             mod['requires'] = requires;
 
-            function markAndCheckCyclic() {
-                if (S.Config.debug) {
-                    // one mod only need to check its dependency once
-                    if (mod.cyclicCheck) {
-                        return;
+            /**
+             * check cyclic dependency between mods
+             */
+            function cyclicCheck() {
+                var __allRequires,
+                    myName = mod.name,
+                    r,r2,rmod,
+                    r__allRequires,
+                    requires = mod.requires;
+                // one mod's all requires mods to run its callback
+                __allRequires = mod.__allRequires = mod.__allRequires || {};
+                for (var i = 0; i < requires.length; i++) {
+                    r = requires[i];
+                    rmod = mods[r];
+                    __allRequires[r] = 1;
+                    if (rmod && (r__allRequires = rmod.__allRequires)) {
+                        for (r2 in r__allRequires) {
+                            __allRequires[r2] = 1;
+                        }
                     }
-                    // S.log("check cyclic for mod : " + mod.name);
-                    var path = cyclicCheck(self, mod);
-                    if (path.length > 1) {
-                        S.error("cyclic dependency : " + path.join("->"));
+                }
+                if (__allRequires[myName]) {
+                    var t = [];
+                    for (r in __allRequires) {
+                        t.push(r);
                     }
-                    // tag this module
-                    mod.cyclicCheck = 1;
+                    S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
                 }
             }
 
-            // incase required mods and mod scripts is loaded statically
-            if (mod.fns && mod.fns.length) {
-                markAndCheckCyclic();
+            if (S.Config.debug) {
+                cyclicCheck();
             }
 
             // attach all required modules
@@ -2464,7 +2435,13 @@ build time: Dec 8 01:53
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'],needToLoad = [];
+                var newRequires = mod['requires'],
+                    needToLoad = [];
+
+                if (S.Config.debug) {
+
+                }
+
 
                 //本模块下载成功后串行下载 require
 
@@ -2483,9 +2460,6 @@ build time: Dec 8 01:53
                         needToLoad.push(r);
                     }
                 }
-
-                // else check on load
-                markAndCheckCyclic();
 
                 if (needToLoad.length) {
                     for (i = 0; i < needToLoad.length; i++) {
