@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 8 19:30
+build time: Dec 8 19:41
 */
 /**
  * intervein elements dynamically
@@ -19,7 +19,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
 
     function timedChunk(items, process, context, callback) {
-        var todo = [].concat(items),
+        var todo = [].concat(S.makeArray(items)),
             stopper = {},
             timer;
         if (todo.length > 0) {

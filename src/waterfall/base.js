@@ -14,7 +14,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
 
     function timedChunk(items, process, context, callback) {
-        var todo = [].concat(items),
+        var todo = [].concat(S.makeArray(items)),
             stopper = {},
             timer;
         if (todo.length > 0) {
