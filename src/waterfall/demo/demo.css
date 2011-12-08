@@ -1,0 +1,1435 @@
+@charset "UTF-8";
+
+/* RESET
+---------------------------------------------- */
+html{background-color:#e8e7e3;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin: 0;padding: 0;}table{border-collapse:collapse;border-spacing: 0;}fieldset,img{border: 0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym {border: 0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;overflow:hidden;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit; resize: none;outline:none;}legend{color:#000;}
+body {font-family:"helvetica neue",arial,sans-serif;font-size:10px;color:#211922;}table{font-size:inherit;}pre,code,kbd,samp,tt{font-family:monospace;line-height:100%;}em{font-style:italic;}strong{font-weight:bold;}
+
+/* FOUNDATION
+---------------------------------------------- */
+h1 {margin: 32px 0 11px; font-size: 3em;}
+h2 {padding: 0 0 8px; font-size: 2.5em;}
+h1, h2 {letter-spacing: -0.0125em; font-weight: bold;}
+p {margin: 0 0 .8em; line-height: 1.35em;}
+a {font-weight: bold; color: #1389e5; text-decoration: underline; outline: none;}
+a:hover {color: #fff; text-decoration: none; background-color: #1389e5;}
+a:active {color: #fff; background-color: #211922;}
+a:hover img {opacity: .92; filter: alpha(opacity=92);}
+#noHover a:hover {color: #fff; background-color: none;}
+#noHover a:active {color: #fff; background-color: none;}
+input, textarea {color: #777;}
+input:focus, textarea:focus {color: #211922 !important;}
+textarea, input[type="text"], input[type="password"] {padding: 5px 8px; line-height: 1em; background-color: #fff; border: 1px solid; border-color: #ccc #bbb #aaa; box-shadow: 0 1px #e7e7e7; -moz-box-shadow: 0 1px #e7e7e7; -webkit-box-shadow: 0 1px #e7e7e7;}
+
+/* REUSABLE STYLES
+---------------------------------------------- */
+.hidden {display: none !important;}
+.highlighted {color: #211922; background-color: #ff0 !important;}
+.error {font-size: 1.3em; color: #f00;}
+.clear {clear: both !important;}
+.floatRight {float: right !important;}
+.floatLeft {float: left !important;}
+.halfRight {float: right; width: 49%; overflow: hidden;}
+.halfLeft {float: left; width: 49%; overflow: hidden;}
+.third {float: left; width: 31%; margin-right: 2.83%;}
+.thirdRight {float: right; width: 32%;}
+.twoThirdsLeft {width: 65%; margin-right: 2%;}
+.twoThirdsRight {float: right; width: 65%;}
+.oneFifthLeft {float: left; width: 188px;}
+.oneFifth {float: right; width: 185px; padding-left: 6px;}
+.twoFifths {float: right; width: 372px;}
+.twoFifthsLeft {float: left; width: 372px;}
+.threeFifths {float: left; width: 564px;}
+.threeFifthsRight {float: right; width: 564px;}
+.threeFifthsCenter {float: left; width: 559px; margin-left: 9px;}
+.fourFifths {float: left; width: 754px;}
+.quarterLeft {float: left; width: 24%; margin-right: 1%;}
+.quarterRight {float: right; width: 24%;}
+.threeQuartersLeft {float: left; width: 74%;}
+.threeQuartersRight {float: right; width: 74%;}
+.noBorder {border-width: 0 !important;}
+.noBorderTop {border-top-width: 0 !important;}
+.noBorderRight {border-right-width: 0 !important;}
+.noBorderBottom {border-bottom-width: 0 !important;}
+.noBorderLeft {border-left-width: 0 !important;}
+.noMarginTop {margin-top: 0 !important;}
+.noMarginRight {margin-right: 0 !important;}
+.noMarginBottom {margin-bottom: 0 !important;}
+.noMarginLeft {margin-left: 0 !important;}
+.fixed {position: fixed !important;}
+.invisible {visibility: hidden !important;}
+.red {color: red;}
+a.red:hover {color: #fff; background-color: red;}
+.rule  {clear: both; height: 0; margin: 15px 0; border-bottom-color: #ddd; border-bottom-style: solid; border-bottom-width: 1px; overflow: hidden;}
+
+/* CORE STYLES
+---------------------------------------------- */
+.fixedWidthContainer {width: 850px; margin: 0 auto;}
+#article {width: auto; min-width: 932px; padding: 8px 0 0 0;}
+  .BoardLayout {opacity: 0;}
+  .BoardLayout #article {padding-top: 0;}
+
+#ColumnContainer {position: relative; min-width: 692px; min-height: 500px; margin: 0 auto;}
+
+.pageOverlay {position: fixed; z-index: 9997; top: 0; right: 0; bottom: 0; left: 0; background-color: #fff; opacity: .95; filter: alpha(opacity=95);}
+
+.pin {position: absolute; width: 193px; padding: 14px; background-color: #fff; overflow: hidden;margin-bottom: 20px;}
+  .pin h3 {margin: 1px 1px 10px; font-size: 1.3em; font-weight: bold; text-align: left; color: #211922;}
+  .pin .image {position: relative; display: block; width: 190px; overflow: hidden;background-color: #fff; border: 1px solid #fff;}
+  .pin .image img {display: block;/* height: auto; margin: auto;*/}
+  .pin .image .video {position: absolute; z-index: 1; top: 50%; left: 50%; width: 50px; height: 50px; margin: -25px 0 0 -25px;}
+  .pin .image:hover {background-color: #fff;}
+    .pin .image:hover img {opacity: .9; filter: alpha(opacity=90);}
+    .pin .image:active img {opacity: 1; filter: alpha(opacity=100);}
+
+  .pin p {display: block; margin: 0 2px; font-size: 1.1em; line-height: 1.45em}
+  .pin .description {padding-top: 4px;}
+  .pin .meta {margin: 0; color: #76838b;}
+  .pin .attribution {margin-top: 6px; margin-bottom: 1px; overflow: hidden;}
+.pin .likesComments {color: #aaa;}
+.pin .likesComments p {margin: 2px 4px;}
+.pin .likesComments a {font-weight: normal; color: #aaa;}
+.pin .likesComments span.likes {margin-right: 5px;}
+.pin .likesComments span.comments {margin-right: 5px;}
+.pin .userImage {float: left; width: 28px; height: 28px; margin-right: 5px;}
+  .pin .userImage img {width: 28px; height: 28px;}
+  .pin .userImage:hover {background-color: transparent; opacity: .8; filter: alpha(opacity=80);}
+
+.profilePin {border-bottom: 2px solid #000}
+	.profilePin h2 {display: block; font-size: 1.6em; line-height: 1.2em; font-weight: 400; padding: 5px 15px 0px 0px;}
+	.profilePin p {color: #888; padding: 2px 15px 7px 0px;}
+	.profilePin .followBoard {text-align: center; background-color: #fff;}
+    .profilePin .followBoard .button {display: block; padding: 0.5em 0.825em;}
+
+.pin .followPersonSubtitle {margin: 0; padding: 10px 14px 8px; font-size: 11px; color: #76838b; background-color: #f3f3f3;}
+  .pin .followPersonSubtitle a {color: #aaa;}
+  .pin .followPersonSubtitle a:hover {color: #fff; background-color: #aaa;}
+
+.pin .inviteContainer {background-color: #fff; padding: 10px 10px;}
+  .pin .inviteContainer input {width: 163px; font-size: 1.2em; margin: 0px 0px 10px 10px;}
+  .pin .inviteContainerSubtitle {margin: 0; padding: 10px 14px 8px; font-size: 15px; color: #76838b; background-color: #f3f3f3}
+  .pin p.reminder {font-size: 1.1em; text-align: center;}
+
+.pinhidden {display: none;}
+
+.colorless {color: #aaa;}
+.colorless:hover {background-color: #aaa;}
+.textless {font-weight: normal; color: #76838b; text-decoration: none;}
+.textless:hover {color: #76838b; text-decoration: underline; background-color: transparent;}
+
+.pin .pinActions {clear: both; margin-top: 6px; font-size: 1em;}
+  .pin .pinActions a {text-decoration: none; font-weight: normal; color: #76838b;}
+  .pin .pinActions a:hover {text-decoration: underline; background-color: white; color: #1389e5;}
+
+.pinOrigin {clear: both; margin: 5px -14px -14px; padding: 10px 14px 14px; background-color: #f3f3f3; overflow: hidden;}
+  .pinBoard .pinOrigin {margin: 0px; padding: 7px 7px 9px; background-color: #fff;}
+  .pinOrigin p {font-size: 1.1em; line-height: 1.25em; color: #76838b; margin-left: 33px;}
+  .pinOrigin p a {color: #aaa;}
+  .pinOrigin p a:hover {color: #1389e5; background-color: transparent;}
+  .pinOrigin p.originBoard {margin-left: 0 !important;}
+  .pinOriginTitle {height: 28px; overflow: hidden;}
+
+.pinOriginBoard {color: #aaa;}
+  .pin .pinUserProfile h3 a {text-decoration: none; color: #211922;}
+  .pin .pinUserProfile h3 a:hover {text-decoration: underline; color: #1389E5; background-color: white;}
+  .pin .pinUserProfile img {float: left; width: 68px; border: 5px solid #F3F3F3;}
+  .pin .pinUserProfile a {float: left; width: 68px; border: 5px solid #F3F3F3;}
+  .pin .pinUserProfile .userStats {padding: 10px 0px; font-size: 1.1em; line-height: 1.45em; color: #76838B; text-align: center;}
+  .pin .pinUserProfile a.followUser {display: block; padding: 0.4em 0.825em; text-align: center; font-size: 1.4em;}
+
+.pinComments {clear: both; margin: 14px -14px -14px; padding: 0; background-color: #f9f9f9; overflow: hidden;}
+  .pinComments div {padding: 10px 14px; border-top: 1px solid #e7e7e7; overflow: hidden;}
+  .pinComments .writeComment {padding: 10px 10px 10px 14px; overflow: hidden;}
+  .writeComment textarea {width: 156px; height: 19px; padding: 4px 3px 3px; font-size: 11px; border: 1px solid #ccc; box-shadow: 0 0 #fff; -moz-box-shadow: 0 0 #fff; -webkit-box-shadow: 0 0 #fff;}
+  .writeComment .button {float: right; clear: both; margin: 3px 0 -1px; font-size: 11px;}
+
+.pinComments .pinComments_comments {padding: 0; border-width: 0;}
+
+.pinOrigin .board {height: 34px; margin: 0 -14px 8px; padding: 0 14px 8px; text-align: center; border-bottom: 1px solid #f2f2f2;}
+  .pinOrigin .board .button {display: block; padding: 0.5em 0.825em;}
+  .pinOrigin .board .boardMeta {float: left; width: auto; margin-top: 8px; font-size: 11px;}
+  .pinOrigin br {display: block; height: 0;}
+
+
+.pin.pinBoard {width: 221px !important; padding: 0 !important;}
+#profile .pin.pinBoard {position: static;}
+.pin.pinBoard.inMotion {cursor: move; box-shadow: 0 1px 6px rgba(0,0,0,0.25); -moz-box-shadow: 0 1px 6px rgba(0,0,0,0.25); -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.25);}
+.pin.pinBoard.inMotion:hover {box-shadow: 0 1px 6px rgba(0,0,0,0.5); -moz-box-shadow: 0 1px 6px rgba(0,0,0,0.5); -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.5);}
+.pin.pinBoard.inMotion * {cursor: move;}
+  .pinBoard h3 {margin: 0; padding: 9px 14px 6px; font-size: 13px; font-weight: 300; height: 12px; overflow: hidden;}
+  .pinBoard .curatedBy {padding: 7px 7px 0 14px; overflow: hidden;}
+    .pinBoard .curatedBy img {float: left; width: 18px; height: 18px; margin-right: 4px;}
+    .pinBoard .curatedBy p {float: left; width: 178px; margin: 0; font-size: 11px; color: #76838b; white-space: nowrap; overflow: hidden;}
+  .pinBoard .link {display: block; height: 200px; background: url(/images/BoardBackground.png) top left no-repeat; border: solid #fff; border-width: 7px 0 4px 14px; overflow: hidden;}
+    .pinBoard .link img {float: left; width: 61px; height: 61px; background-color: #fff; border: solid #fff; border-width: 0 4px 4px 0;}
+    .pinBoard .link:hover img {opacity: .92; filter: alpha(opacity=92);}
+    .pinBoard.domainPins h3 {font-size: 13px; line-height: 1.33em; height: auto;}
+    .pinBoard.domainPins .link {height: auto; margin-bottom: 10px;}
+  .pinBoard .likesComments {margin: 0; padding: 0 14px 10px; background-color: #fff;}
+  .pinBoard .followBoard {padding: 0 14px 9px; text-align: center; background-color: #fff; border-bottom: 2px solid #000;}
+    .pinBoard .followBoard .button {display: block; padding: 0.5em 0.825em;}
+    .pinBoard .followBoard .boardMeta {float: left; width: auto; margin-top: 8px; font-size: 11px;}
+
+#mapContainer {position: relative;}
+#map {width: 201px; height: 201px; overflow: hidden; margin: 6px 10px 10px; background: #eee;}
+#pinOnMap {position: absolute; z-index: 1; left: 50%; bottom: 90px; margin-left: -25px;}
+
+.sortable {display: block; margin-left: -16px !important; zoom: 1;}
+.sortable li {float: left; width: 221px; margin: 0 0 16px 16px;}
+#SortableHelper {display: none; margin: 13px 0; padding: 14px; text-align: right; background: #ffc; overflow: hidden;}
+#SortableText {float: left; font-size: 18px; font-weight: 300;}
+#SortableButtons .button {position: relative; top: 3px; margin-left: 10px; font-size: 14px;}
+#SortStatus {position: absolute; top: 14px; right: 155px; font-size: 18px; font-weight: 300; opacity: 0; filter: alpha(opacity=0);}
+
+.pin span.sayHi {float: right; margin-bottom: -30px;}
+  .pin span.sayHi img {width: 23px; height: 24px;}
+
+.pin #homeDashboard h2 {font-size: 1.4em; font-weight: normal;}
+  .pin #homeDashboard h3 {font-size: 1.1em; font-weight: bold;}
+  .pin #homeDashboard a.seeAll {float: right; text-decoration: none; font-weight: normal;}
+  .pin #homeDashboard a.seeAll:hover {text-decoration: underline; background-color: #fff;}
+  .pin #homeDashboard p {font-size: 1.1em; margin-right: 35px;}
+  .pin #homeDashboard img {width: 35px;}
+  .pin #homeDashboard .dashboardSection {padding: 4px; border-top: 1px solid #f3f3f3;}
+  .pin #homeDashboard .dashboardElem {margin: 5px 0px;}
+  .pin #homeDashboard ul li {display: inline; margin-right: 5px;}
+
+#pinGrid {display: table;}
+  #pinGrid .pin {float: left; width: 150px; height: 150px; margin: 0 12px 22px 0;}
+  #pinGrid .pin:nth-child(5n+5) {margin-right: 0;}
+  #pinGrid .image {display: table-cell; position: static; width: 149px; height: 150px; vertical-align: middle;}
+  #pinGrid img {display: block; max-width: 150px; margin: auto; max-height: 150px;}
+
+#pinGridNew ul {width: 820px; margin-right: -14px;}
+  #pinGridNew .pin {float: left; width: 158px; padding: 14px; margin: 0 14px 20px 0; background: #fff; border: 1px solid #e8e7e3; box-shadow: 0 1px 4px #ccc; -moz-box-shadow: 0 1px 4px #ccc; -webkit-box-shadow: 0 1px 4px #ccc;}
+  #pinGridNew .pin .image {display: table-cell; position: static; width: 149px; height: 150px; vertical-align: middle; text-align: center;}
+  #pinGridNew .pin img {max-width: 158px; margin: auto;}
+  #pinGridNew .pinOrigin p {margin-left: 0;}
+
+#tooltip {position: absolute; z-index: 3000; padding: 0; font-size: 1.3em; color: #211922; background-color: #e0ecf0; border: 4px solid #fff; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; box-shadow: 0 0 6px #aaa; -moz-box-shadow: 0 0 6px #aaa; -webkit-box-shadow: 0 0 6px #aaa;}
+  #tooltip h3 {margin: 0; padding: 5px 10px 2px; line-height: 1em; font-weight: bold; color: #211922; border: solid #bed7e5; border-width: 1px 1px 0; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;}
+  #tooltip .body {padding: 0 10px 5px; color: #76838b; border: solid #bed7e5; border-width: 0 1px 1px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;}
+
+#sortFilters {clear: both; height: 35px; margin: 0 -6px 10px; background-color: #f2f2f2; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+  #boards #sortFilters {height: 34px; margin-top: -4px; margin-bottom: 0;}
+  #sortFilters.sortFiltersSubbed {border-bottom-left-radius: 0; border-bottom-right-radius: 0; -webkit-border-bottom-left-radius: 0; -moz-border-radius-bottomleft: 0; -webkit-border-bottom-right-radius: 0; -moz-border-radius-bottomright: 0;}
+  #sortFilters form {float: right; width: 265px; padding: 4px 1px 0 0;}
+  #sortFilters input {float: left; width: 180px; padding: 2px 4px 3px; font-size: 1.5em; border: 1px solid #aaa;}
+  #sortFilters form a {float: left; margin-left: 4px; font-size: 1.3em;}
+  #sortFilters li {float: left; font-size: 1.3em;}
+  #sortFilters li:first-child {padding: 9px 14px 0 16px; color: #76838b;}
+  #sortFilters li a {display: block; margin-left: -1px; padding: 9px 13px; color: #211922; text-decoration: none; border: solid #d7d7d7; border-width: 0 1px;}
+  #sortFilters li a:hover {color: #1389e5; background-color: transparent;}
+  #sortFilters li a.active {text-decoration: underline;}
+  #sortFilters.sortFiltersSubbed li.active a {text-decoration: none; margin-bottom: -1px; padding-bottom: 10px; position: relative; z-index: 2;}
+  #sortFilters li.active {text-decoration: underline;}
+
+#sortFiltersSub {background: #f5f5f5; clear: both; margin: -17px -19px 10px; height: 34px; border-top: 1px solid #ccc;}
+  #sortFiltersSub ul {margin-left: 6px;}
+  #sortFiltersSub li {display: inline; font-size: 1.2em;}
+  #sortFiltersSub li a {display: block; float: left; padding: 10px 9px; text-decoration: none; color: #211922;}
+  #sortFiltersSub li a:hover {background-color: transparent; color: #1389e5; text-decoration: underline;}
+  #sortFiltersSub li.active a {text-decoration: underline;}
+  #sortFiltersSub form {float: right; padding: 4px 4px 0 0;}
+
+.button {padding: .3em .825em; vertical-align: top; font-size: 1.4em; font-weight: bold; text-decoration: none; background-image: url(/images/buttonGradient20.png); background-repeat: repeat; background-position: 0 0; border-width: 1px; border-style: solid; cursor: pointer; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; box-shadow: #ddd 0 1px 2px; -moz-box-shadow: #ddd 0 1px 2px; -webkit-box-shadow: #ddd 0 1px 2px;}
+.button dfn {font-weight: normal;}
+.button span {float: left; width: 12px; height: 12px; margin: 2px 4px 0 -1px; background: url(/images/ActionIcons17.gif);}
+  .like-button span {background-position: -24px 0;}
+  .repin-button span {background-position: -12px 0;}
+  .follow-button span {background-position: -36px 0;}
+  .next-button span {float: right; background-position: -48px 0; margin: 2px -4px 0 4px;}
+  .prior-button span {background-position: 0 0; margin: 2px 4px 0 -4px;}
+
+h2 .button {font-size: .55em;}
+.button.pressed {color: #888; text-shadow: 0 0 #fff; background-image: none; background-color: #fff; border-color: #e7e7e7; box-shadow: 0 0 #fff; -moz-box-shadow: 0 0 #fff; -webkit-box-shadow: 0 0 #fff;}
+  .button.pressed:hover {color: #888; background-color: #fff; border-color: #e7e7e7; color: #888;}
+  .button.pressed:active {color: #211922; background-color: #fff; border-color: #e7e7e7; color: #211922;}
+
+.blueButton {color: #31545f; background-color: #bed7e5; border-color: #aaa; text-shadow: 0 1px #eaeaea;}
+.blueButton:hover {color: #211922; background-color: #bed7e5; border-color: #777;}
+.blueButton:active {color: #eaeaea; background-color: #41545f; border-color: #444; text-shadow: 0 -1px #211922; box-shadow: inset #24323a 0 0 3px; -moz-box-shadow: inset #24323a 0 0 3px; -webkit-box-shadow: inset #24323a 0 0 3px;}
+.lightButton {color: #41545f; background-color: #e0ecf0; border-color: #bbb; text-shadow: 0 1px #fafafa;}
+.lightButton:hover {color: #211922; background-color: #e0ecf0; border-color: #aaa;}
+.lightButton:active {color: #000; background-color: #bed7e5; border-color: #777; text-shadow: 0 1px #eaeaea; box-shadow: inset #8fa7b4 0 0 3px; -moz-box-shadow: inset #8fa7b4 0 0 3px; -webkit-box-shadow: inset #8fa7b4 0 0 3px;}
+
+.whiteButton {color: #41545f; background-color: #fff; border-color: #d7d7d7 #ccc #c3c3c3; text-shadow: 0 1px #fafafa; box-shadow: #eee 0 1px 1px; -moz-box-shadow: #eee 0 1px 1px; -webkit-box-shadow: #eee 0 1px 1px;}
+.whiteButton:hover {color: #211922; background-color: #e0ecf0; border-color: #ccc;}
+.whiteButton:active {color: #000; background-color: #bed7e5; border-color: #aaa; text-shadow: 0 1px #eaeaea; box-shadow: inset #8fa7b4 0 0 3px; -moz-box-shadow: inset #8fa7b4 0 0 3px; -webkit-box-shadow: inset #8fa7b4 0 0 3px;}
+
+.suppressed.whiteButton {border-color: transparent; background-image: none; box-shadow: 0 0 #fff; -moz-box-shadow: 0 0 #fff; -webkit-box-shadow: 0 0 #fff;}
+.suppressed.whiteButton:hover {background: #fff url(/images/buttonGradient20.png); border-color: #d7d7d7 #ccc #c3c3c3; box-shadow: #eee 0 1px 1px; -moz-box-shadow: #eee 0 1px 1px; -webkit-box-shadow: #eee 0 1px 1px;}
+.suppressed.whiteButton:active {background-color: #bed7e5; border-color: #aaa; box-shadow: inset #8fa7b4 0 0 3px; -moz-box-shadow: inset #8fa7b4 0 0 3px; -webkit-box-shadow: inset #8fa7b4 0 0 3px;}
+
+.form {margin: 15px auto; padding: 15px; background-color: #fff; border: 4px solid #e0ecf0; border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; overflow: hidden;}
+  .form .division {padding: 15px; background-color: #e8e7e3; border-radius: 7px; -moz-border-radius: 7px; -webkit-border-radius: 7px;}
+  .form h2 {margin-bottom: 4px;}
+  .form h3 {margin: 0 0 15px; font-size: 1.8em; font-weight: bold;}
+  .form .division {padding: 15px; background-color: #e8e7e3; border-radius: 7px; -moz-border-radius: 7px; -webkit-border-radius: 7px;}
+  .form .inputHolder {position: relative;}
+  .form .inputHolder label {position: absolute; top: 6px; left: 0;}
+  .form input[type="text"],
+    .form textarea {display: block; margin-bottom: 12px; font-size: 1.5em;}
+  .form label {display: block; margin: 0 0 5px; font-size: 1.5em;}
+  .form label span {float: right; margin-top: 3px; font-size: .8em; color: #76838b;}
+  .form .button {display: inline-block; font-size: 1.9em;}
+  .form .lightButton {margin-top: 4px; font-size: 1.5em;}
+  .form .or {display: inline-block; margin: 9px 0 0 4px; font-size: 1.5em;}
+
+.pin .hb {display: none; position: absolute; z-index: 2; top: 6px; left: 6px; padding: 4px 7px; font-size: 1.2em; font-weight: normal; color: #211922; text-decoration: none; background: #fff; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; box-shadow: 0 0 2px #888; -moz-box-shadow: 0 0 2px #888; -webkit-box-shadow: 0 0 2px #888;}
+.pin:hover .hb {display: block;}
+.pin .hb:hover  {color: #211922; background: #fff url(/images/buttonGradient20.png) 0 0 repeat-x;}
+.pin .hb:active {color: #211922; background: #fff url(/images/buttonGradient20Inverted.png) 0 -3px repeat-x;}
+
+.pin .hbc {display: none; position: absolute; top: 6px; right: 6px; text-align: right;}
+.pin .hbc .hb {position: static; display: inline-block; margin-left: 4px; vertical-align: top;}
+.pin:hover .hbc {display: block;}
+
+.pin a span {float: left; width: 10px; height: 10px; margin: 2px 0 0 0; background-image: url(/images/ActionIcons10.png);}
+.pin .repin span {background-position: 0;}
+.pin .like span {background-position: -10px 0;}
+.pin .follow span {background-position: -20px 0;}
+
+/* IE */
+*+html .repin_link {border: 1px solid #ccc !important;}
+*+html .repin {border: 1px solid #ccc !important;}
+*+html .comment {border: 1px solid #ccc !important;}
+*+html .like {border: 1px solid #ccc !important;}
+*+html .follow {border: 1px solid #ccc !important;}
+
+.otherBoards a {display: block; margin: 5px -3px; padding: .325em 80px .45em .38em; font-size: 1.55em; font-weight: 300; color: #76838b; text-decoration: none; border: 1px solid #e8e7e3; border-bottom: 3px solid #e8e7e3; overflow: hidden;}
+  .otherBoards a span {float: right; width: 80px; margin-top: 3px; margin-right: -80px; font-size: .81em; font-weight: bold; color: #76838b;}
+  .otherBoards a img {float: left; width: 21px; margin: -2px 4px 0 0;}
+  .otherBoards a:hover,
+  .otherBoards a:hover span {color: #fff; background-color: #1389e5; border-top-color: #1389e5; border-right-color: #1389e5; border-bottom-color: #211922; border-left-color: #1389e5;}
+
+.tagsHolder {overflow: hidden; padding-top: 10px;}
+  .tagsHolder li {position: relative; float: left; margin: 0 3px 1px 0; clear:none !important;}
+  .tagsHolder .deletable {margin-right: 18px;}
+  .tagsHolder a {display: inline-block; text-decoration: none; color: #76838b; background-color: #e0ecf0; border-style: solid; border-color: #ccc;}
+  .tagsHolder a.removeTag:hover {color: #1389e5; background-color: #fff;}
+  .tagsHolder .tagBody {padding: 4px 7px 5px; font-size: 1.2em; border-width: 1px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+  .tagsHolder .tagBody:hover {border-color: #bbb;}
+  .tagsHolder .deletable .tagbody {border-width: 1px 0 1px 1px; border-radius: 3px 0 0 3px; -moz-border-radius: 3px 0 0 3px; -webkit-border-radius: 3px 0 0 3px;}
+  .tagsHolder .removeTag {position: absolute; top: 0; right: -17px; bottom: 0; width: 7px; padding: 4px 5px 0; font-size: 1.1em !important; font-weight: 900; text-decoration: none; color: #76838b; border-width: 1px 1px 1px 0; border-left: 1px dotted #bbb; border-radius: 0 3px 3px 0; -moz-border-radius: 0 3px 3px 0; -webkit-border-radius: 0 3px 3px 0;}
+.permalink {width: 95%; padding: 3px; font-size: 1.5em; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0;}
+
+
+/* HEADER
+---------------------------------------------- */
+#header {position: relative; z-index: 3; height: 52px; margin: 0 auto; padding-top: 6px;}
+#headerWrapper {margin: 8px auto 0; width: 850px;}
+
+#pinterestNav a {float: left; width: 140px; height: 44px; margin: -1px 10px 0 0; padding: 0; text-indent: -9999px; background: url(/images/NewPinterestLogo221919.png);}
+#pinterestNavMobile a {float: left; width: 140px; height: 44px; margin: 6px 10px 0 2px; padding: 0; text-indent: -9999px; background: url(/images/NewPinterestLogo@2x.png); -webkit-background-size: 140px 44px;}
+
+.nav {float: right; margin: 10px 0 0 12px;}
+.nav li {position: relative; float: right;}
+.nav li:hover ul {display: block;}
+.nav li ul {display: none; position: absolute; z-index: 1; top: 25px; left: 0; min-width: 90px; padding: 5px 0; background-color: #eef5f7; border-width: 1px; border-style: solid; border-color: #bbb #aaa #999;}
+.nav li ul li {float: none; display: inlin;}
+.nav li ul a {display: block; padding: 4px 9px; font-size: 12px; font-weight: normal; color: #211922; text-decoration: none; white-space: nowrap;}
+.nav li ul a:hover {background-color: #bed7e5;}
+.nav li ul a:active {background-color: #a4b7c2;}
+
+.nav .DropDownArrow {display: inline-block; margin: 0 0 3px 4px;}
+.nav .UserImage {width: 15px; height: 15px; float: left; margin-right: 4px;}
+
+.nav .button {background-image: none;}
+.nav .button:hover {background-image: url(/images/buttonGradient20.png);}
+.nav .pillButton {position: relative; z-index: 0; display: inline-block; padding: 4px 9px; font-size: 13px; border-width: 1px 0 1px 0; border-style: solid; border-color: #ccc #bbb #aaa; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; box-shadow: 0 1px #d7d7d7; -moz-box-shadow: 0 1px #d7d7d7; -webkit-box-shadow: 0 1px #d7d7d7;}
+.nav .pillButton:hover {z-index: 1; padding-left: 8px; padding-right: 8px; background-color: #eef5f7; border-right-width: 1px; border-left-width: 1px; border-color: #bbb #bbb #999;}
+.nav .pillButton.addButton:hover {border-color: #bbb #aaa #999;}
+.nav .pillButton:active {color: #000; background-color: #bed7e5; border-color: #777; text-shadow: 0 1px #eaeaea; box-shadow: inset 0 0 3px #8fa7b4; -moz-box-shadow: inset 0 0 3px #8fa7b4; -webkit-box-shadow: inset 0 0 3px #8fa7b4;}
+.nav .leftButton {border-left-width: 1px;}
+.nav .leftButton:hover {padding-left: 9px;}
+.nav .rightButton {border-right-width: 1px;}
+.nav .rightButton:hover {padding-right: 9px;}
+
+.searchContainer {position: relative; float: right; margin: 10px 4px 0 15px;}
+.searchContainer input {width: 154px; padding: 4px 32px 4px 4px; font-size: 1.3em; box-shadow: 0 1px #d7d7d7; -moz-box-shadow: 0 1px #d7d7d7; -webkit-box-shadow: 0 1px #d7d7d7;}
+.searchContainer a {position: absolute; z-index: 1; right: 1px; top: 1px; bottom: 1px; width: 12px; padding: 6px 7px 0; background: 0 0 repeat-x; border-left: 1px solid #e7e7e7;}
+.searchContainer a:hover {background-image: url(/images/buttonGradient20.png); border-left-color: #ddd;}
+.searchContainer a:active {background-color: #f2f2f2; border-left-color: #ccc; box-shadow: inset 0 1px 1px #ccc; -moz-box-shadow: inset 0 1px 1px #ccc; -webkit-box-shadow: inset 0 1px 1px #ccc;}
+.searchContainer a img {display: block;}
+
+
+/* FOOTER
+---------------------------------------------- */
+#footer {clear: both; position: relative; z-index: 2; margin-top: 32px; padding: 11px 5px 8px 0; border-top: 1px solid #ddd;}
+#pinterestLogoFooter {float: left; width: 60px; height: 15px; text-indent: -9999px; background: url(/images/PinterestLogo15.png) 0 0 no-repeat; cursor: pointer;}
+#footer ul li {float: right; margin-left: 14px; font-size: 1.2em; color: #76838b;}
+#footer ul li a:hover {color: #fff; background-color: #1389e5;}
+#footer ul li a:active {background-color: #211922;}
+
+
+/* AUTOCOMPLETE TEXTAREAs - CORE + .addAPin .bookmarklet & .closeup_commment
+---------------------------------------------- */
+#description, #pin_closeup_comment {position: relative; z-index: 1; color: #888; background-color: transparent; overflow: hidden; outline: none; white-space: pre-wrap; word-wrap: break-word; resize: none; radius: 5px; font-family: inherit;}
+#highlighter {position: absolute; top: 1px; left: 1px; color: transparent; background-color: #fff; white-space: pre-wrap; word-wrap:break-word; -webkit-user-select: none; -moz-user-select: none;}
+#highlighter b {font-weight: inherit; background-color: #c7dfec; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;}
+#highlighter .c_person {background-color: #ebeff6;}
+#highlighter .c_tag,
+#highlighter .c_new_tags {background-color: #f3f3f3;}
+#highlighter .c_currency {background-color: #ffc;}
+#tag_list, #peeps_list, #currency_list {display: none;}
+#auto_help {position: relative; z-index: 2; width: 388px; margin-top: -3px; padding: 6px 8px; font-size: 13px; color: #76838b; background-color: #f3f3f3; border-right: 1px solid #bbb; border-bottom: 1px solid #aaa; border-left: 1px solid #bbb;}
+#auto_help strong {color: #555;}
+
+#highlighter.bookmarklet, #description.bookmarklet {width: 388px; height: 117px; padding: 6px 8px 0; font-size: 1.8em; line-height: 22px;}
+#highlighter.addAPin, #description.addAPin {width: 388px; height: 72px; padding: 6px 8px 0; font-size: 1.8em; line-height: 22px;}
+#highlighter.closeupComment, #pin_closeup_comment.closeupComment {width: 477px; height: 72px; padding: 6px 8px 0; font-size: 1.3em; line-height: 22px;}
+
+/* This should be cleaned up ck 2/28/11 */
+#highlighter_comment {position: absolute; top: 1px; left: 1px; color: transparent; background-color: #fff; white-space: pre-wrap; word-wrap:break-word; -webkit-user-select: none; -moz-user-select: none;}
+#highlighter_comment b {font-weight: inherit; background-color: #c7dfec; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;}
+#highlighter_comment .c_person {background-color: #ebeff6;}
+#highlighter_comment .c_tag,
+#highlighter_comment .c_new_tags {background-color: #f3f3f3;}
+#highlighter_comment .c_currency {background-color: #ffc;}
+#highlighter_comment.bookmarklet, #description.bookmarklet {width: 388px; height: 117px; padding: 6px 8px 0; font-size: 1.8em; line-height: 22px;}
+#highlighter_comment.addAPin, #description.addAPin {width: 388px; height: 72px; padding: 6px 8px 0; font-size: 1.8em; line-height: 22px;}
+#highlighter_comment.closeupComment, #pin_closeup_comment.closeupComment {width: 477px; height: 72px; padding: 6px 8px 0; font-size: 1.3em; line-height: 22px;}
+
+/* CJK - 4/6/11 */
+.description_auto_help {position: relative; z-index: 2; width: 386px; margin-top: -3px; padding: 6px 8px; font-size: 13px; color: #76838b; background-color: #f3f3f3; border-right: 1px solid #bbb; border-bottom: 1px solid #aaa; border-left: 1px solid #bbb;}
+.description_auto_help strong {color: #555;}
+
+div.pinHighlighter {position: absolute; top:1px; left:1px; color: transparent; background-color: #fff; white-space: pre-wrap; word-wrap:break-word; -webkit-user-select: none; -moz-user-select: none;}
+div.pinHighlighter b {font-weight: inherit; background-color: #c7dfec; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px;}
+div.pinHighlighter .c_person {background-color: #ebeff6;}
+div.pinHighlighter .c_tag,
+div.pinHighlighter .c_new_tags {background-color: #f3f3f3;}
+div.pinHighlighter .c_currency {background-color: #ffc;}
+#tag_list, #peeps_list, #currency_list {display: none;}
+
+textarea.autocomplete_desc {position: relative; z-index: 1; color: #888; background-color: transparent; overflow: hidden; outline: none; white-space: pre-wrap; word-wrap: break-word; resize: none; radius: 5px; font-family: inherit;}
+
+
+/* Styles the description and highlighter need to share to be in sync */
+textarea.autocomplete_desc, div.pinHighlighter {height: 72px; line-height: 22px; width: 100%; padding: 5px; font-size: 1.5em; font-color: #ffffff; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -webkit-box-sizing: border-box; -khtml-box-sizing: border-box;}
+
+/* Edit pin form because of the #edit div style, ugh */
+#edit div.pinHighlighter {position: absolute; top:1px; left:1px; color: transparent; background-color: #fff; white-space: pre-wrap; word-wrap:break-word; -webkit-user-select: none; -moz-user-select: none; top:0;left:0;border-left:1px solid #fff;border-right:1px solid #fff;}
+#edit textarea.autocomplete_desc, #edit div.pinHighlighter {height: 120px; line-height: 22px; width: 100%; padding: 5px; font-size: 1em; font-color: #ffffff; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -webkit-box-sizing: border-box; -khtml-box-sizing: border-box;}
+#edit div.description_auto_help {width:100%;}
+
+
+/* BOOKMARKLET ADD PIN
+---------------------------------------------- */
+#BookmarkletaddAPinContainer {width: 675px; margin: 0 auto;}
+#AddForm {padding: 24px 30px;}
+#addAPinContainer #AddForm {padding: 0 0;}
+#addAPinContainer #auto_help {width: 386px}
+
+.ui-autocomplete {z-index: 9999;}
+
+#PinImageArea {position: relative; float: right; width: 191px; text-align: center;}
+#PinImageWrapper {position: relative; overflow: hidden;}
+#PinImageWrapper .video {position: absolute; top: 42%; left: 50%; margin: -25px 0 0 -25px;}
+#PinImageArea img {max-width: 191px; max-height: 191px;}
+#PinImageArea p {margin-top: 5px; font-size: 13px; color: #76838b; white-space: nowrap; overflow: hidden;}
+
+#PinInputArea, #RePinInputArea {position: relative; overflow: hidden;}
+
+#tag_list.bookmarklet li {float:left;}
+#peeps_list.bookmarklet li {float:left;}
+#currency_list.bookmarklet li {float:left;}
+
+#AddForm #PinBoard {position: relative; margin-bottom: 8px; z-index: 5;}
+#AddForm #PinBoard strong {float: left; margin-right: 5px; font-size: 1.5em;}
+
+#AddBoardSelector {font-size: 18px;}
+#AddBoardSelectorActive {position: relative; display: block; width: 388px; margin: 6px 0 5px; padding: 8px 8px 7px; text-decoration: none; background-color: #fff; border: 1px solid; border-color: #ccc #bbb #aaa; box-shadow: 0 1px #e7e7e7; -moz-box-shadow: 0 1px #e7e7e7; -webkitbox-shadow: 0 1px #e7e7e7;}
+#AddBoardSelectorActive span {position: absolute; width: 16px; height: 8px; top: 50%; right: 5px; margin-top: -4px; background: url(/images/downArrow1389e5.png) center top no-repeat;}
+#AddBoardSelectorActive:hover {color: #211922; background-color: #f3f3f3;}
+#AddBoardSelectorActive:hover span {background-position: center bottom;}
+#AddBoardSelectorList {display: none;}
+
+#AddForm #PinButtons {margin-top: 14px;}
+#AddForm #AddSubmission {padding: 8px 0;}
+#AddForm .button {font-size: 18px;}
+
+#editing_div {width: 200px; height: 50px; margin: 10px; padding: 10px; background: #fff;}
+
+.boardPicker {position: relative; display: inline-block; padding: 5px 24px 3px 8px; font-size: 18px; background-color: #fff; border: 1px solid; border-color: #ccc #bbb #aaa; box-shadow: 0 1px #d7d7d7; -moz-box-shadow: 0 1px #d7d7d7; -webkit-box-shadow: 0 1px #d7d7d7; cursor: pointer;}
+.boardPicker .current {line-height: 1em;}
+.boardPicker .currentName {display: inline-block; line-height: 1.25em; font-size:0.9em; color: #1389e5; white-space: nowrap; overflow: hidden;}
+.boardPicker .currentDownArrow {position: absolute; top: 13px; right: 2px; width: 21px; height: 8px; background: url(/images/downArrowHollow3.png) right top no-repeat;}
+.boardPicker:hover {background-color: #f3f3f3;}
+.boardPicker:hover .currentName {color: #211922;}
+.boardPicker:hover .currentDownArrow {background-position: right center;}
+.boardPicker:active {background-color: #211922;}
+.boardPicker:active .currentName {color: #fff;}
+.boardPicker:active .currentDownArrow {background-position: right bottom;}
+.boardPickerOverlay {display: none; position: fixed; z-index: 9998; top: 0; right: 0; bottom: 0; left: 0;}
+.boardPicker .optionPanel {display: none; position: absolute; z-index: 9999; top: -1px; left: -1px; width: 350px; max-height: 200px; background-color: #fff; border: 1px solid #aaa; overflow-x: hidden; overflow-y: auto; box-shadow: 0 0 17px #bbb; -moz-box-shadow: 0 0 17px #bbb; -webkit-box-shadow: 0 0 17px #bbb;}
+.boardPicker .optionPanel ul {border-bottom: 1px solid #ccc;}
+.boardPicker .optionPanel li {display: block; padding: 5px 8px; font-size:0.9em; line-height: 1.1em; color: #76838b; list-style: none; cursor: pointer;}
+.boardPicker .optionPanel li:hover {color: #fff; background-color: #211922;}
+.boardPicker .optionPanel li:active {color: #fff; background-color: #000;}
+.boardPicker .createNewBoard {padding: 5px 0 2px; background-color: #f3f3f3;}
+.boardPicker .createNewBoard input {display: inline-block; width: 214px; margin: 0 5px 0 8px; padding: 5px; font-size: 1em; color: #76838b; background-color: #fff; border: 1px solid #ccc;}
+.boardPicker .createNewBoard .button {vertical-align: text-top; font-size: 1em;}
+
+.boardPicker .inputstatus {text-align: right; padding: 2px; font-size: .8em;}
+.boardPicker .inputstatus.error {color: #f00;}
+.boardPicker .inputstatus.good {color: green;}
+.optionPanel .collabarated_board {background: url(/images/collaborated_board.png) 93% 50% no-repeat;}
+
+
+/* LANDING PAGE
+---------------------------------------------- */
+#landingPage {background: url(/images/MutedStripes.gif) center repeat;}
+#landingPage #container {position: absolute; width: 822px; height: 200px; top: 50%; left: 50%; margin: -145px 0 0 -411px;}
+#whiteBackground {position: absolute; z-index: 1; top: 0; right: 0; bottom: 0; left: 0; background: url(/images/TopGradient.png) top left repeat-x;}
+#LandingLeft {float: left; width: 310px;}
+#landingPage h2 {margin-top: 82px; text-align: right; font-size: 2em; line-height: 1.05em; font-weight: 300; letter-spacing: 0; color: #76838b;}
+#LandingLogin {float: right; width: 93px; height: 35px; margin-top: 8px; text-indent: -9999px; background: url(/images/LoginButton.png) top center no-repeat;}
+#LandingLogin:hover {background-position: center;}
+#LandingLogin:active {background-position: bottom center;}
+#LandingRight {float: right; width: 479px;}
+#landingPage h1 {width: 230px; height: 62px; margin: 0; text-indent: -9999px; background: url(/images/PinterestLogoNew.gif) center no-repeat;}
+#LandingTestimonials {width: 100%; height: 48px; margin: 30px 0 20px;}
+#LandingTestimonials div {display: none;}
+#LandingTestimonials img {position: relative; top: -2px; float: left; width: 50px; height: 50px; margin-right: 16px;}
+#LandingTestimonials p {font-size: 15px; color: #76838b; letter-spacing: 0;}
+#LandingTestimonials p span {font-weight: bold;}
+#requestInvitation button {float: right; width: 188px; height: 35px; text-indent: -9999px; background: transparent url(/images/RequestInvitationButton.png) top center no-repeat; border-width: 0;}
+#requestInvitation button:hover {background-position: center; cursor: pointer;}
+#requestInvitation button:active {background-position: bottom center;}
+#invitationBox {width: 250px; margin-top: 1px; padding: 7px 15px; font-size: 15px; line-height: 1em; color: #bbb; background-color: #fff; border-width: 0; border-radius: 18px; -moz-border-radius: 18px; -webkit-border-radius: 18px; box-shadow: 0 1px 1px #bbb; -moz-box-shadow: 0 1px 1px #bbb; -webkit-box-shadow: 0 1px 1px #bbb; filter: progid:DXImageTransform.Microsoft.Shadow(color='#bbbbbb', Direction=180, Strength=2);}
+*+html #invitationBox {height: 28px;}
+#landingFooter {position: relative; left: -6px; margin-top: 16px;}
+#landingFooter li {float: left; margin: 3px 6px 0; color: #76838B;}
+#landingFooter a {display: inline; font-size: 1.2em; font-weight: normal; color: #76838B; text-decoration: none;}
+#landingFooter a:hover {background-color: transparent; text-decoration: underline;}
+#requestInvitation #errorbox {width: auto; padding: 0;}
+#requestInvitation #errorbox span {display: block; margin: 16px 0 16px -15px; padding: 10px 15px; font-size: 1.2em; font-weight: normal; color: #211922 !important; background-color: #feffdf; border-bottom: 4px solid #d4d5ba;}
+#requestInvitation h3 {width: 240px; margin: 10px 0; padding: 0 0 0 10px; font-size: 1.5em;}
+
+
+/* MUTED STRIPES STYLE
+---------------------------------------------- */
+.FixedWidthContainer {width: 850px; margin: 0 auto;}
+
+.WhiteContainer {position: relative; margin: 32px auto; padding: 0 18px 10px 18px; background-color: #fff; overflow: hidden; box-shadow: 0 1px #d7d7d7; -moz-box-shadow: 0 1px #d7d7d7; -webkit-box-shadow: 0 1px #d7d7d7;}
+.WhiteContainer.BlackLipped {margin-top: 16px; border-top: 2px solid #000;}
+
+.TopBar {margin: -26px -18px 24px -18px; padding: 28px 18px 21px 18px; text-align: center; background-color: #ffe;}
+.BottomBar {position: absolute; right: 0; bottom: 0; left: 0; height: 60px; text-align: center; font-size: 14px; background-color: #ffe;}
+.BottomBar .button {float: right; margin: 16px 28px 0 0; padding: 0.3em 1.35em;}
+
+.WhiteContainer #sortFilters {height: 34px; margin: -24px -18px 16px; border-bottom: 1px solid #ccc; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0;}
+
+
+/* WELCOME
+---------------------------------------------- */
+#logo {display: block; margin: 17px auto 15px;}
+#RoadblockHeaderSubtitle {display: inline-block; margin: 17px 0 0; font-size: 14px;}
+
+.FixedBar {position: fixed; z-index: 1; right: 0; bottom: 0; left: 0; height: 58px; background-color: #ffe; border-top: 4px solid #ccc;}
+.FixedBar div {position: relative; display: block; width: 850px; height: 58px; margin: 0 auto;}
+.FixedBar a {position: absolute; top: 15px; right: 0;}
+.FixedBar .previous {right: auto; left: 0;}
+
+.welcome h1 {text-align: center;}
+.welcome h3 {margin-bottom: 12px; font-size: 1.8em; line-height: 1.1em;}
+
+.welcome .WhiteContainer {margin: 12px 0;}
+.welcome .WhiteContainer.progressBar {margin-top: 10px;}
+.welcome .WhiteContainer.bottom {margin-bottom: 94px; padding: 36px 24px; border-top: 2px solid #000;}
+.welcome .TopBar {text-align: center; font-size: 22px; font-weight: normal; border-bottom: 1px solid #e3e3e3;}
+.welcome p {font-size: 1.3em; color: #545454; line-height: 1.4em;}
+
+.welcome .progressBar {height: 55px; padding: 0; background: url(/images/progress.png) 0 0 no-repeat;}
+#WelcomeTwo .progressBar {background-position: 0 -55px;}
+#WelcomeThree .progressBar {background-position: 0 -110px;}
+
+#WelcomeOne #BoardCreator {margin: 0 auto;}
+#WelcomeOne #BoardCreator li {padding: 10px 0; border-bottom: 1px solid #e7e7e7;}
+#WelcomeOne #BoardCreator input[type="text"] {width: 68%; margin-left: 8px; font-size: 1.8em;}
+#WelcomeOne #BoardCreator li span {margin: 2px 18px; font-size: 2.2em;}
+#WelcomeOne #BoardCreator li span.text {margin: 8px 28px; font-size: 1.2em; display: block;}
+#WelcomeOne #BoardCreator #BoardCreateMessage {margin: 20px 0px; font-size: 1.2em; background: #e7e7e7;}
+#WelcomeOne .thirdRight {margin-top: 20px;}
+#WelcomeOne .thirdRight img {margin-bottom: 8px; border-top: 2px solid #000; border-bottom: 2px solid #000;}
+
+#WelcomeTwo #FriendFollow {margin-top: 36px;}
+#WelcomeTwo #FriendFollow span {font-size: 1.4em; vertical-align: top;}
+#WelcomeTwo #FriendFollow ul {margin: 0 auto 8px; overflow: hidden;}
+#WelcomeTwo #FriendFollow li {float: left; margin: 0 2px 2px 0;}
+#WelcomeTwo #FriendFollow li img {display: block; width: 34px; height: 34px;}
+#WelcomeTwo .twoThirdsLeft div {position: relative; padding: 8px 0; border-bottom: 1px solid #e7e7e7; overflow: hidden;}
+#WelcomeTwo .twoThirdsLeft img {float: left; width: 50px; height: 50px; margin-right: 8px;}
+#WelcomeTwo .twoThirdsLeft h4 {display: block; margin: 5px 0 2px; font-size: 16px; color: #76838b;}
+#WelcomeTwo .twoThirdsLeft p {font-size: 12px; color: #aaa;}
+#WelcomeTwo .twoThirdsLeft a {float: right; margin-top: 12px;}
+#WelcomeTwo #InviteFriends input[type="text"] {width: 177px; margin: 0 auto 10px; padding: 4px; font-size: 1.4em;}
+#WelcomeTwo #InviteFriends input[type="submit"] {display: none; margin: 1px 0 0 5px; vertical-align: top; font-size: 1.3em;}
+
+#WelcomeThree h2 span {font-size: 14px; font-weight: normal; color: #76838b;}
+#WelcomeThree #DragMe {padding: 8px 12px; text-align: center; background-color: #f3f3f3;}
+#WelcomeThree #BookmarkletLink {display: inline-block; padding: 8px 15px; font-size: 1.4em; text-decoration: none; color: #211922; background-color: #ffe; border: 0; border-radius: 7px; -moz-border-radius: 7px; -webkit-border-radius: 7px; box-shadow: 0 3px 12px #ccc; -moz-box-shadow: 0 3px 12px #ccc; -webkit-box-shadow: 0 3px 12px #ccc;}
+#WelcomeThree #BookmarkletLink:hover {box-shadow: 0 3px 12px #aaa; -moz-box-shadow: 0 3px 12px #aaa; -webkit-box-shadow: 0 3px 12px #aaa;}
+#WelcomeThree #DragArrowTall {height: 223px; position: absolute; right: 100px; top: -115px}
+
+#DragArrowTall {position: absolute; z-index: 9999; top: -63px; right: 35px;}
+
+
+/* LOGIN PAGE
+---------------------------------------------- */
+.loginPage h1, #loginPage h1 {margin-bottom: 6px;}
+.loginPage ul input, #loginPage ul input {width: 220px;}
+.loginPage h1, #loginPage h1 {margin-top: 0;}
+.auth_fb a:hover {background-color: transparent; opacity: .85; filter: alpha(opacity=85);}
+.auth_pint fieldset .button {display: inline-block; margin-left: 80px;}
+.auth_pint ul {padding: 20px 0;}
+.auth_pint fieldset legend {padding-left: 80px;}
+
+
+/* BOARD PAGE
+---------------------------------------------- */
+.priceFlag {background-color: #f3f3f3; color: #000; font-size: 1.2 em; position: absolute; height: 20px; padding-top: 5px; left: -23px; overflow: hidden; text-align:center; top: 10px; width: 96px; -webkit-transform:rotate(-45deg); -moz-transform:rotate(-45deg); -o-transform:rotate(-45deg); -ms-transform:rotate(-45deg); z-index:1;}
+#boardIntroduction {position: relative; margin-bottom: 13px; padding: 14px 14px 17px; background-color: #fff; border-bottom: 3px solid #000;}
+  #boardIntroduction.fixed {position: fixed; top: 15px; left: 15px;}
+  #boardIntroduction p {margin: 0; padding: 0; font-size: 1.8em; line-height: 1em; font-weight: 300; color: #211922; border-width: 0;}
+  #boardIntroduction p span {margin-left: 5px;}
+  #boardIntroduction p span.hilight {font-size: 1em; font-weight: 600; float: none; vertical-align: 5%;}
+  #boardIntroduction p span.selected {margin: 0px; color: #000;}
+  #boardIntroduction p span.greyselected {margin: 0px; color: #76838B;}
+  #boardIntroduction p a {font-weight: 300;}
+  #boardIntroduction a.reArrange {padding: 0.5em 0.825em;}
+  #NewIndicator {position: relative; display: block; font-size: 13px; font-weight: 300; text-decoration: none; margin-bottom: 13px; padding: 10px; text-align: center; background-color: #fff;}
+  #NewIndicator:hover {color: #fff; background-color: #1389e5;}
+  #morePins {clear: both; display: none; width: 237px; margin: 0 auto 16px; padding: .7em .825em; text-align: center; text-decoration: none; color: #221919;}
+  #boardIntroFilters {padding: 10px; border-top: 3px solid #000;}
+  #boardIntroFilters .boardIntroFiltersShort {height: 270px;}
+  #boardIntroFilters ul li {display: inline-block; line-height: 2.7em;}
+  #boardIntroFilters ul li a {white-space: nowrap; padding: 4px 10px 4px 10px; border-radius: 13px; -moz-border-radius: 13px; -webkit-border-radius: 13px; background-color: #ededeb; border: 1px solid #bbb; font-size: 1.15em; color: #76838b; font-weight: normal; text-decoration: none;}
+  #boardIntroFilters ul li a:hover {background-color: #fafafa; box-shadow: 4px #1389e5; -moz-box-shadow: 4px #1389e5; -webkit-box-shadow: 4px #1389e5;}
+  #boardIntroFilters ul li a.selected {background-color: #fafafa; color: #000;}
+  #boardIntroFilters ul li a.new {background-color: #b2dfee; color: #000;}
+  #boardIntroFilters ul li a.new:hover {background-color: #fafafa; box-shadow: 4px #1389e5; -moz-box-shadow: 4px #1389e5; -webkit-box-shadow: 4px #1389e5;}
+  #boardIntroFilters ul li a span {font-size: 0.8em; font-weight: bold; background: none; float: none; vertical-align: 5%;}
+
+  #introductionRight {position: relative; float: right; font-size: 1.2em; color: #76838b; top: 2px; right: -4px;}
+  #introductionRight .button {font-size: 1.2em;}
+  #introductionRight #FriendButtons {position: absolute; top: -6px; left: -400px; width: 400px; text-align: right;}
+  #introductionRight #FriendButtons .button {display: inline-block;}
+
+  #introductionRight .boardMeta {float: none; font-size: 1em;}
+  #introductionRight .homeMeta {float: none; font-size: 1em;}
+
+  .board #introductionRight {position: absolute; float: none; top: 10px; right: 0; width: 221px; font-size: 1.2em; color: #76838b;}
+  .board #introductionRight .button {position: absolute; top: -2px; right: 234px; left: auto; padding-top: .285em; padding-bottom: .285em; font-size: 1.3em !important;}
+
+  #introductionRight iframe {display: inline-block; margin-left: 4px;}
+  #introductionRight .twitter-share-button {position: relative; top: 4px;}
+  #boardMetadata {position: absolute; top: 0; right: 0; width: 193px; padding: 14px; background-color: #fff; border-top: 3px solid #000; overflow: hidden;}
+  #introductionProfileImage {position: relative; top: -4px; left: -4px; float: left; margin-bottom: 13px; border: 4px solid #fff;}
+  #introductionProfileImage:hover {border-color: #1389e5;}
+  #introductionProfileImage img {display: block; width: 58px; height: 58px;}
+  #boardAuthor {float: left; margin: 7px 0 0; padding: 0; font-size: 1.8em; line-height: 1.2em; border-bottom: 0;}
+  #boardAuthor a {font-weight: 500; text-decoration: none;}
+  #description {clear: both; font-size: 1.2em; line-height: 1.5em; color: #555;}
+  #description textarea {min-height: 180px !important; color: #555;}
+  #description_error {clear: both;}
+  #boardMetadata h3 {clear: both; margin: 15px 0 8px; font-size: 1.4em; font-weight: normal; color: #aaa;}
+  #boardMetadata li strong {display: block; margin-bottom: 4px;}
+  #boardMetadata .boardShare {margin-top: 21px; clear: both; vertical-align: baseline;}
+  #boardMetadata .boardShare li {display:inline; margin: 0 0px 0 2px;}
+  #boardMetadata .boardShare li:first-child {margin-left: 0px;}
+  #boardMetadata .boardShare li img {border-radius: 2px; -moz-border-radius: 2px; webkit-border-radius: 2px; border: 1px solid #c7c7c7; border-top-color: #e2e2e2; height: 17px; width: 17px;}
+  #boardMetadata .boardShare a:hover {background-color: #fff; color: #fff; box-shadow: 2px #1389e5; -moz-box-shadow: 2px #1389e5; -webkit-box-shadow: 2px #1389e5;}
+  #boardMetadata .boardShare .shortUrl {display: none;}
+  #boardMetadata .otherBoards a {padding-right: 0; line-height: 1.125-em; color: #1389e5;}
+  #boardMetadata .otherBoards a:hover {color: #fff;}
+  #boardMetadata .otherBoards a span {display: none;}
+#boardMetadata .tags {margin: 0; padding: 0;}
+#boardMetadata .tags a {font-weight: 500;}
+#boardFollowers {clear:both; margin: 21px 0 0; overflow: hidden;}
+  #boardFollowers h3 {margin-top: 0; clear: both;}
+  #boardFollowers li {display: inline;}
+  #boardFollowers a {float: left;}
+  #boardFollowers a:hover {background-color: #fff; opacity: .9; filter: alpha(opacity=90);}
+  #boardFollowers a img {display: block; width: 30px; height: 30px; margin: 0 2px 2px 0;}
+  #boardFollowers #boardFollowersCount {float: none; font-weight: normal; color: #aaa; text-decoration: none;}
+  #boardFollowers #boardFollowersCount:hover {text-decoration: underline; background-color: #fff; opacity: 1; filter: alpha(opacity=100);}
+
+#boardCollabarator {clear:both; margin: 21px 0 0; overflow: hidden;}
+  #boardCollabarator h3 {margin-top: 0; clear: both;}
+  #boardCollabarator li {display: inline;}
+  #boardCollabarator a {float: left;}
+  #boardCollabarator a:hover {background-color: #fff; opacity: .9; filter: alpha(opacity=90);}
+  #boardCollabarator a img {display: block; width: 27px; height: 27px; margin: 0 2px 2px 0;}
+
+
+/* PEOPLE PAGE
+---------------------------------------------- */
+#PeopleSidebar {float: left; width: 16epx; margin-right: 15px;}
+  #PeopleSidebar p {font-size: 1.5em; color: #aaa;}
+  #PeopleSidebar a {display: block; margin-top: -1px; padding: 3px 5px; font-size: 1.6em; font-weight: 300; text-decoration: none; border: solid #e7e7e7; border-width: 1px 0;}
+  #PeopleSidebar a:hover {border-color: #1389e5;}
+  #PeopleSidebar .active {color: #fff; background-color: #211922; border-color: #211922;}
+  #PeopleSidebar .active:hover {background-color: #211922; border-color: #211922;}
+#PeopleList {margin-left: 176px; border-top: 1px solid #e7e7e7;}
+  #PeopleList .person {position: relative; padding: 8px 0; border-bottom: 1px solid #e7e7e7; overflow: hidden;}
+  #PeopleList .PeopleListImage {float: left; margin-right: 8px;}
+  #PeopleList .PeopleListImage img {display: block;}
+  #PeopleList p {position: relative; top: 3px; display: inline; font-size: 12px;}
+  #PeopleList p a {display: inline-block; max-width: 162px; font-size: 16px; line-height: 1.05em; font-weight: 300; color: #211922; text-decoration: none;}
+  #PeopleList p a:hover {color: #fff; background-color: #211922;}
+  #PeopleList p span {color: #aaa;}
+  #PeopleList .person .button {position: absolute; top: 8px; left: 227px;}
+  #PeopleList ul {float: right;}
+  #PeopleList li {display: inline;}
+  #PeopleList ul a {float: left; margin-left: 8px;}
+  #PeopleList ul a img {display: block;}
+
+
+/* PROFILE PAGE
+---------------------------------------------- */
+#profile {background-color: #e8e7e3;}
+  #profile #article {min-width: 695px; margin-left: 237px;}
+
+#ProfileSidebar {position: static; float: left; width: 193px; padding: 14px; background-color: #fff;}
+  #ProfileSidebar h3 {clear: both; margin: 10px 0 8px; font-size: 14px; font-weight: normal; color: #aaa;}
+
+#ProfileTop {clear: both; margin-bottom: 8px; overflow: hidden;}
+  .ProfileImage img {display: block; width: 193px; clear: both;}
+  div.profileImageHolder {height: 193px; overflow:hidden;}
+  p.profileLocation {min-height:16px;}
+  #ProfileTop h2 {display: block; margin: 0 0 0; padding-bottom: 1px; font-size: 1.8em; line-height: 1.2em; font-weight: 500; color: #211922; text-decoration: none; border-bottom: 0;}
+  #ProfileTop #ProfileFollow {text-align: center; margin: 10px 0;}
+  #ProfileTop #ProfileFollow a {display: block; padding-top: 0.5em; padding-bottom: 0.5em;}
+  #ProfileTop #ProfileAbout {border: solid 1px #e7e7e7;}
+  #ProfileTop #ProfileAboutInner {padding: 6px; font-size: 1.1em; line-height: 1.3em;}
+  #profile #boardIntroduction .button {position: absolute; bottom: 11px; right: 8px; font-size: 13px;}
+
+#ProfileMetrics {margin-bottom: 4px;}
+  #ProfileMetrics a {float:left; padding: 5px 0px; margin-right: 10px; font-size: 15px; line-height: 14px; font-weight: normal; color: #211922; text-decoration: none;}
+  #ProfileMetrics a span {font-size: 11px; font-weight: normal; background-image: none; margin: 0; display: inline; float:none;}
+  #ProfileMetrics a:hover {color: #fff;}
+
+#ProfileLinks {margin-bottom: 8px; overflow: hidden;}
+  #ProfileLinks li {float: left; margin-right: 6px;}
+  #ProfileLinks a {font-weight: normal; color: #211922; text-decoration: none;}
+  #ProfileLinks a:hover {color: #fff; background-color: #1398e5;}
+
+#ProfileLinks li {display: block; min-height: 16px; font-size: 1.1em; background-position: 0; background-repeat: no-repeat;}
+  #ProfileLinks a img {display: block;}
+  #ProfileLinks #profileLinksLocation {float: right;}
+
+#send_usermessage {margin: 0 -14px; padding: 8px 14px; background: #f3f3f3;}
+  #send_usermessage textarea {width: 181px; height: 13px; padding: 5px; font-size: 12px;}
+  #complete_usermessage {display: none;}
+  .complete_usermessage_button {font-size: 1.2em; margin: 10px 0 0px 134px; width: 35px;}
+
+.activity {margin: 0 -14px; padding-top: 7px; border-top: 1px solid #e7e7e7;}
+  .activity li {display: block; padding: 7px 12px; font-size: 11px; color: #362d42; overflow: hidden;}
+  .activity li img {float: left; height: 30px; width: 30px; margin-right: 5px;}
+  .activity li a {color: #211922; text-decoration: none;}
+  .activity li a:hover {color: #fff;}
+
+
+/* PROFILE EDIT AND BOARD EDIT
+---------------------------------------------- */
+#edit {width: 462px; margin-left: 0; font-size: 14px; overflow: visible;}
+#edit h3 {margin: 0; padding: 20px 0 13px; font-size: 24px; font-weight: bold; display: block;}
+#edit h3 a {font-weight: bold;}
+#edit a {font-weight: normal; text-decoration: none;}
+#edit label {float: left; width: 133px; margin-top: 8px; font-weight: bold;}
+#edit p,
+#edit div {margin-bottom: 0; font-size: 14px; border-top: 1px solid #e8e7e3; padding: 11px 0; line-height: 1; position: relative;}
+#add_collaborators {border-top: 10px solid #000;}
+#edit div ul {margin-left: 133px;}
+#edit li {display: block; padding: 4px 0px; font-weight: bold;}
+#edit li label {float: none; width: auto; cursor: pointer;}
+#edit span {font-size: 14px; font-weight: normal; padding-left: 3px;}
+#edit .NoInput {margin-bottom: 5px;}
+#edit .Delete {margin-bottom: 5px; padding-top: 16px;}
+#edit .Delete label {margin-top: -1px;}
+#edit input[type="text"],
+#edit input[type="password"],
+#edit textarea {width: 311px; font-family: "helvetica neue", arial, sans-serif; font-size: 14px; line-height: 1.2em;}
+#edit .change_avatar {vertical-align: 20px; margin-left: 6px;}
+#edit .link_account {display: block; margin-left: 130px;}
+#edit .link_account:hover {background: inherit; color: #1389e5; text-decoration: underline;}
+#edit a.red:hover {text-decoration: none;}
+#edit .unlink {color: #aaa;}
+#edit .unlink:hover {color: #aaa;}
+#edit #id_img {display: none; position:relative; bottom: 20px; left: 20px;}
+#edit #id_twitter {width:220px; margin-left: 5px;}
+#edit input[type="submit"] {float: right;}
+#edit span.help_text {width: 320px; display: block; position: absolute; right: -357px; top: 22px; color: #76838b; font-size: 11px;}
+#edit span.error {color: #900; background: #f6e5ea; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; padding: 8px; top: 12px; display: block; font-size: 11px; margin-bottom: 9px;}
+#edit select   {max-width: 311px; margin-top: 4px;}
+#edit input.button {float: left; margin-left: 133px; margin-bottom: 15px; font-size: 14px;}
+#edit #id_buyable {width: 299px; margin-left: 4px;}
+#edit .tagsHolder {padding-top: 6px;}
+#edit .tagsHolder .tagBody,
+#edit .tagsHolder .removeTag {font-size: 12px !important;}
+#edit .tagsHolder li {padding: 0;}
+.refresh_user_image:hover {cursor: pointer;}
+#facebook_status, #twitter_status {display:block; padding-top: 8px;}
+.editpage_submit {margin-top: 13px;}
+#edit .user_settings_linked_button {font-weight: bold; font-size: 15px; padding: 10px; width: 75px; margin-bottom: 15px;}
+.user_settings_linked_button:hover {text-decoration: none !important; color: #555 !important;}
+.social-label {padding-top: 11px;}
+.link_twitter_account_button {width: 151px !important; margin-bottom: 3px !important;}
+.link_facebook_account_button {width: 172px !important; margin-bottom: 3px !important;}
+.link_twitter_account_button:hover , .link_facebook_account_button:hover {text-decoration: underline !important;}
+
+/* PIN EDIT
+---------------------------------------------- */
+.WhiteContainer.BlackLipped.editPinBox {margin: 0px 57px 0px 0px; padding: 14px;}
+.WhiteContainer.BlackLipped.editPinBox .pinOriginTitle {height: auto!important;}
+.WhiteContainer.BlackLipped.editPinBox p {margin: 0px; overflow: visible;}
+.WhiteContainer.BlackLipped a#delete {font-size: 0.9em; margin-top: 22px;}
+
+/* ABOUT
+---------------------------------------------- */
+#AboutPages .WhiteContainer {border-top: 2px solid #000;}
+#AboutPages h2 {padding: 20px 0px; text-align:center;}
+#AboutPages #sortFilters {margin-top: 0px; border-left: 1px solid white; border-right: 1px solid white;}
+#AboutPages #DragArrowTall {height: 116px; right: 10px; top: -77px;}
+
+
+
+/* COLLABORATORS SETTINGS
+---------------------------------------------- */
+#add_collaborators,
+#add_collaborators div,
+#add_collaborators p {border-width: 0;}
+#collabarators {font-size: 1.8em;}
+#collabarators ul li {padding: 3px; width: 300px; position: relative;}
+#collabarators ul li:hover {background: #d6d6d6;}
+#collabarators ul li img {vertical-align: middle; height: 30px; width: 30px; padding: 5px;}
+#collabarators ul li .collabarator_name {margin-left: 10px; font-weight: 300;}
+#invite_response {font-size: 1.2em; color: green;}
+#collabarators a {text-decoration: none; size: 1.8em;}
+#collabarators a:hover {background: none; color: #aaa;}
+#collabarators .close_button {height: 18px; width: 18px;}
+.delete_collabarator {display: block; background: url(/images/close_pill.png) 0 0px no-repeat !important; height: 18px; width: 18px; text-indent: -9999px; float: right; top: 5px; position: relative;}
+.delete_collabarator:hover {background: url(/images/close_pill.png) 0 -50px no-repeat !important;}
+.collabarator_form {width: 525px;}
+.collabarator_form legend {font-size: 1.8em; font-weight: bold; display: block;}
+.collabarator_form p {font-size: 1.5em; line-height: 1; position: relative;}
+.collabarator_form label {width: 600px; float: left; font-weight: bold; line-height: 1.8; margin 5px 0px; padding: 15px, 0px; clear: right; font-size: .9em;}
+.collabarator_form input[type="text"],
+.collabarator_form input[type="password"],
+.collabarator_form textarea {width: 225px; font-family: "helvetica neue", arial, sans-serif; font-size: .9em; line-height: 1.2em; margin-top: 5px; color: #76838b;}
+#invite_message {width: 375px;}
+.collabarator_form input[type="submit"] {float: right;}
+.collabarator_form span.help_text {width: 250px; display: block; position: absolute; right: -275px; top: 18px; color: #999; font-size: .8em;}
+.collabarator_form span.error {color: #900; background: #f6e5ea; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; padding: 8px; top: 12px; display: block; font-size: .8em; margin-bottom: 9px;}
+.collab_button {font-size: 1.5em; padding: 3px 10px;}
+#invite_submit .collab_button {float: left; margin-bottom: 15px; font-size: 1.4em;}
+
+#add_collaborators {border-top: 0 !important; padding-top: 0 !important;}
+#add_collaborator_form {overflow: hidden; width: 329px; margin-left: 133px;}
+.collab_button {margin:5px 0 0 !important; padding: 5px !important;}
+li .delete_collabarator {display: none !important;}
+li:hover .delete_collabarator {display: block !important;}
+.collabarator_name {font-size: 15px !important; position: relative; top: -7px; margin-left: 7px; color: #000;}
+.collabarator_name:hover {background: #fff; color: #000; text-decoration: underline !important;}
+
+
+/* RESULTS page
+---------------------------------------------- */
+#results .board .boardCredit {float: right; margin: 2px -185px 0 0; font-weight: 500; color: #76838b;}
+#results .board span.boardCredit {font-size: .7em; display: block; color: #aaa;}
+#results .board span.boardCredit img {float: left; margin: -2px 4px 0 0; width: 21px; border: 0 none}
+
+#noResults p {font-size: 2em;}
+
+
+/* JQUERY ALERTS
+---------------------------------------------- */
+#popup_overlay {opacity: 0.6 !important; filter: alpha(opacity=60) !important;}
+#popup_container {font-family: 'lucida grande',arial; font-weight: bold; text-align: left; font-size: 12px; width: 364px; height: 86px; background: #FFF; color: #000; border-spacing: 2px; border: 4px solid #e0ecf0; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;}
+#popup_title {display: none;}
+#popup_message {padding-top: 15px; padding-left: 15px;}
+#popup_panel {padding-left: 15px; text-align: left;}
+#popup_content input[type=button] {margin-top: 20px; margin-right: 10px; padding: 3px; color: #fff; background-color: #476ea7;}
+
+
+/* ADD FORMS
+---------------------------------------------- */
+.popup.addForm {display: none; width: 780px;}
+.popup.addForm .interstertial {position: fixed; width: 618px; margin-left: -340px; padding-top: 70px; padding-bottom: 30px; background-color: #E8E7E3;}
+.popup.addForm .interstertial h2 {font-size: 2.5em!important; position: absolute; top: 0; left: 0; right: 0; padding: 14px 30px!important; line-height: 1em!important; text-align: left !important; background-color: #fff; border-bottom: 1px solid #e7e7e7; border-radius: 11px 11px 0 0; -moz-border-radius: 11px 11px 0 0; -webkit-border-radius: 11px 11px 0 0;}
+.popup.addForm .interstertial h2 a {position: absolute; top: 0; right: 0; bottom: 0; width: 55px; text-indent: -9999px; border-left: 1px solid #e7e7e7; background: url(/images/CloseIcon.gif) center no-repeat;  outline: none; border-top-right-radius: 11px; -moz-border-radius-topright: 11px; -webkit-border-top-right-radius: 11px;}
+.popup.addForm .interstertial h2 a:hover {background-color: #f5f5f5;}
+.popup.addForm .interstertial h2 a:active {background-color: #76838b;}
+.popup.addForm .interstertial h3 {margin: 15px 0 5px; font-size: 15px; font-weight: bold; color: #211922;}
+.popup.addForm .interstertial h3 span.required {margin-left: 8px; font-size: 11px; color: #76838B;}
+
+
+/* ADD PIN FORM
+---------------------------------------------- */
+#PinTop {position: relative; display: block; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 0 solid #e7e7e7; overflow: hidden;}
+#PinTop label {float: left; width: 196px; margin-top: 6px; text-align: right; font-size: 1.5em;}
+#PinTop label a {line-height: 1em;}
+#PinTop .active {color: #211922; text-decoration: none; cursor: default;}
+#PinTop .active:hover {background-color: transparent;}
+#scrapePinInputHolder input[type="text"] {float: right; width: 386px; font-size: 1.5em;}
+#uploadPinInputHolder #uploadPinInput {float: left; width: 318px; margin-left: 20px; font-size: 1.5em;}
+#uploadPinInputHolder .button {float: right; font-size: 1.3em;}
+#load2 {display: none; position: absolute; top: 6px; right: 6px;}
+
+.pinSuccess {text-align: center;}
+#BookmarkletaddAPinContainer .pinSucesss .button {font-size: 15px;}
+.pinSuccess h3 {font-size: 1.8em; font-weight: bold; color: #76838b; padding: 20px 0px;}
+.pinSuccess li {display: inline; margin-right: 20px;}
+.pinSuccess .duplicates {display: block; margin: 20px 0px;}
+.pinSuccess .duplicates li {float: left; margin-right: 10px;}
+.pinSuccess .duplicates li img {float: left; height: 25px; width: 25px;}
+.pinSuccess .duplicates li span {display: block;}
+
+.pinLeft {position: relative; float: left; max-width: 200px;}
+.pinLeft img {display: block; max-width: 168px; max-height: 168px; border: 14px solid #fff;}
+.pinLeft .video {position: absolute; top: 50%; left: 50%; margin: -25px 0 0 -25px;}
+
+.pinMain {margin-left: 214px; width: 404px;}
+.pinMain h3 {display: none; clear: left; float: left; width: 0; font-size: 1.3em; font-weight: bold; color: #76838b;}
+.pinMain #PinDescription  {display: block; margin: 6px 0;}
+.pinMain #RePinDescription  {display: block; margin: 6px 0;}
+#RePinDescriptionTextarea {width: 386px; font-size: 14px; padding: 5px;}
+#description.addAPin, #highlighter.addAPin {width: 100%; padding: 5px; font-size: 1.5em; font-color: #fff; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -webkit-box-sizing: border-box; -khtml-box-sizing: border-box;}
+
+#RepinContainer .postSuccess {text-align: center; font-size: 1.5em; line-height: 1.8em; display: none;}
+#RepinContainer .postSuccess span {font-weight: bold;}
+
+#PinTags input, #RePinTags input {width: 100%; padding-top: 5px 0px; font-size: 1.5em; color: #777; border-bottom: 1px dashed #aaa; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -webkit-box-sizing: border-box; -khtml-box-sizing: border-box;}
+
+#PinTags .tagsHolder, #RePinTags .tagsHolder {padding: 3px 3px 2px; background-color: #fff; border-style: solid; border-width: 0 1px 1px; border-color: #ccc #bbb #aaa; box-shadow: 0 1px #d7d7d7; -moz-box-shadow: 0 1px #d7d7d7; -webkit-box-shadow: 0 1px #d7d7d7;}
+#PinTagsInput #RepinTagsInput {border-bottom-style: dashed;}
+
+.PinExtra {float: right; width: 275px; margin-top: 18px; text-align: right; font-size: 1.25em; color: #888; white-space: nowrap; overflow: hidden;}
+#PinButtons, #RePinButtons {margin: 17px 0 0 0;}
+#PinButtons .button {font-size: 1.8em; padding: .3em 1em;}
+#RePinButtons .button {font-size: 1.8em; padding: .3em 1em;}
+#RePinButtons ul.share li, #PinButtons ul.share li {float: left; clear: none; line-height: 2em;}
+#RePinButtons ul.share li label, #PinButtons ul.share li label {width: 100px; margin: 0px; padding: 0px; text-align: center; line-height: 2em; border: none; font-size: 1.25em;}
+#RePinButtons ul.share li label:hover, #PinButtons ul.share li label:hover {background-color: inherit;}
+#RePinButtons ul.share li label:active, #PinButtons ul.share li label:active {background-color: inherit; color: inherit;}
+#RePinButtons label, #PinButtons label {display: inline-block; margin: 2px 0 0 8px; padding: 2px 3px; font-size: 1.3em; line-height: 1em; font-weight: normal; color: #76838b; border: 1px solid transparent; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+#RePinButtons label:hover, #PinButtons label:hover {background-color: #fff; border-color: #ccc; cursor: pointer;}
+#RePinButtons label:active, #PinButtons label:active {color: #fff; background-color: #76838b; border-color: #76838b;}
+#RePinButtons span#facebook, #PinButtons span#facebook {width: 16px; height: 16px; background: url(/images/FaceBook-icon16.png) right top no-repeat; display: inline-block; vertical-align: middle; margin-top: -4px;}
+#RePinButtons span#twitter, #PinButtons span#twitter {width: 16px; height: 16px; background: url(/images/Twitter-icon16.png) right top no-repeat; display: inline-block; vertical-align: middle; margin-top: -4px;}
+#RePinButtons .share {float: right; width: 320px; margin-top: 7px; overflow: hidden;}
+
+#bookmarklet p {padding: 10px 0px; color: #000; font-size: 13px; font-weight: normal; clear: both;}
+
+#PinTagsInput {box-shadow: 0 0 #fff; -moz-box-shadow: 0 0 #fff; -webkit-box-shadow: 0 0 #fff;}
+
+
+/* ADD BOARD FORM
+----------------------------------------------  */
+#addBoard, #catBoard {width: 380px; margin-top: -170px; margin-left: -221px;}
+#addBoard li, #catBoard li {display: block; padding: 2px; font-size: 1.5em; color: #76838b; cursor: pointer;}
+#addBoard li input,
+#addBoard label, #catBoard li input, #catBoard label {cursor: pointer;}
+#addBoard label:hover span, #catBoard label:hover span {text-decoration: underline;}
+#addBoard .BoardName, #catBoard .BoardName {width: 100%; margin: 0;}
+#addBoard .TextInput, #catBoard .TextInput  {width: 75%; position: absolute; margin: 2px 0 0 0px; font-size: 1.5em; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -webkit-box-sizing: border-box; -khtml-box-sizing: border-box;}
+#collaborators label {display: block;}
+#OtherCategories {display: block;}
+#BoardCategories {padding-bottom: 15px;}
+#BoardCategories, #catCategories {overflow: hidden;}
+#BoardCategories li, #catCategories li {float: left; width: 46%;}
+#addBoard .buttonContainer, #catBoard .buttonContainer {clear: both; margin: 21px 0 0;}
+#addBoard .buttonContainer .button, #catBoard .buttonContainer .button  {font-size: 1.8em;}
+#addBoard .error, #catBoard .error {font-size: 1.3em; margin-top: 10px; padding: 6px; display: none;}
+#OtherCategoriesInput {font-size: 1em; cursor: text !important; margin: 2px 0 0 0px; width: 200px; float: left; position: relative; top: 20px; left: -179px; box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; -webkit-box-sizing: border-box; -khtml-box-sizing: border-box;}
+
+
+/* AUTOCOMPLETE RESULTS
+---------------------------------------------- */
+.ui-widget {font-size: 13px;}
+.ui-widget .ui-widget {font-size: 13px;}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {font-size: 13px;}
+.ui-widget-content {margin: 0; background-color: #fff; color: #211922;}
+.ui-widget-content a {color: #211922;}
+.ui-widget-header {border: 1px solid #e78f08; background: #f6a828; color: #fff; font-weight: bold;}
+.ui-widget-header a {color: #fff;}
+ .ui-autocomplete {z-index: 9999; position: absolute; max-height: 115px; cursor: default; overflow: hidden; border-right: 1px solid #bbb; border-bottom: 1px solid #aaa; border-left: 1px solid #bbb;}
+/* workarounds */
+* html .ui-autocomplete {width:1px;} /* without this, the menu expands to 100% in IE6 */
+.ui-menu {list-style:none; padding: 0;margin: 0;display:block;float: left;}
+.ui-menu .ui-menu {margin-top: -3px;}
+.ui-menu .ui-menu-item {margin:0;padding: 0;zoom: 1;float: left;clear: left;width: 100%;}
+.ui-menu .ui-menu-item a {text-decoration:none;display:block;padding: 3px 8px;font-weight: normal;line-height:1.5;zoom:1;}
+.ui-menu .ui-menu-item a.ui-state-hover,
+.ui-menu .ui-menu-item a.ui-state-active {font-weight: normal;x}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {border: 1px solid #ccc; background-color: #f3f3f3; font-weight: bold; color: #1c94c4;}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {color: #1c94c4; text-decoration: none;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {font-weight: bold; background-color: #1389e5; color: #fff;}
+.ui-state-hover a, .ui-state-hover a:hover {color: #c77405; text-decoration: none;}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {border: 1px solid #fbd850; background-color: #fff; font-weight: bold; color: #eb8f00;}
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {color: #eb8f00; text-decoration: none;}
+.ui-widget :active {outline: none;}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 1px solid #fed22f; background: #ffe45c url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png) 50% top repeat-x; color: #363636;}
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a {color: #363636;}
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {border: 1px solid #cd0a0a; background: #b81900 url(images/ui-bg_diagonals-thick_18_b81900_40x40.png) 50% 50% repeat; color: #fff;}
+.ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a {color: #fff;}
+.ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text {color: #fff;}
+.ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary {font-weight: bold;}
+.ui-priority-secondary, .ui-widget-content .ui-priority-secondary,  .ui-widget-header .ui-priority-secondary {opacity: .7; filter: alpha(opacity=70); font-weight: normal;}
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {opacity: .35; filter: alpha(opacity=35); background-image: none;}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {border: 1px solid #ccc; background-color: #f3f3f3; font-weight: bold; color: #1c94c4;}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {color: #1c94c4; text-decoration: none;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {font-weight: bold; background-color: #1389e5; color: #fff !important;}
+.ui-state-hover a, .ui-state-hover a:hover {color: #c77405; text-decoration: none;}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {border: 1px solid #fbd850; background-color: #fff; font-weight: bold; color: #eb8f00;}
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {color: #eb8f00; text-decoration: none;}
+.ui-widget :active {outline: none;}
+
+
+
+#SearchAutocompleteHolder .ui-autocomplete {width: 300px; max-height: none; border: 1px solid #666; overflow:hidden; padding: 4px; z-index:10000;}
+#SearchAutocompleteHolder .ui-menu .ui-menu-item {background-color: #fff; padding: 2px 2px; overflow: hidden;}
+#SearchAutocompleteHolder .ui-menu .ui-menu-item img {float: left; width: 24px; height: 24px;}
+#SearchAutocompleteHolder .ui-menu .ui-menu-item p {padding-left:40px; margin: 4px 0px;}
+#SearchAutocompleteHolder .ui-menu .ui-menu-item a:hover {background-color: none; font-weight: normal; margin: 0px;}
+#SearchAutocompleteHolder .ui-menu .ui-menu-item:last-child a{text-align:center;}
+#SearchAutocompleteHolder .ui-menu .ui-menu-item:last-child a p {padding-left: 0;}
+#SearchAutocompleteHolder .ui-autocomplete-category {padding: 4px 0px 4px 4px; font-size: 0.8em; font-weight: bold;}
+
+
+/* ADD BOARD DESCRIPTION NAG *
+---------------------------------------------- */
+#addBoardDescriptionContainer {display: none;}
+#addBoardDescriptionContainer h2 {margin: 5px 0 0 15px;}
+#addBoardDescription li {position: relative; margin-bottom: 0;}
+#addBoardDescription label {position: absolute; top: 6px; left: 0; display: block; width: 7.6em; font-weight: bold; white-space: nowrap;}
+#addBoardDescription input,
+#addBoardDescription textarea {position absolute; margin-left: 0; top: 0; width: 410px; height: 60px;}
+#addBoardDescription {position: fixed; z-index: 9999; top: 60px; left: 50%; margin: 0 0 0 -250px; overflow: visible; border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; box-shadow: 0 0 38px #999; -moz-box-shadow: 0 0 38px #999; -webkit-box-shadow: 0 0 38px #999; width: 460px;}
+#addBoardDescription .inputstatus.error {color: #f00; font-size: 11px;}
+#addBoardDescription .inputstatus {padding: 6px; font-weight: bold; font-size: 1em;}
+#addBoardDescription .division {padding-bottom: 6px; margin-bottom:40px;}
+#addBoardDescription .buttonContainer {float:right; padding-top: 14px;}
+
+
+/* REQUEST INVITE FORM
+---------------------------------------------- */
+#InviteRequestContainer {display: none;}
+#InviteRequestContainer h2 {margin: 5px 0 0 4px;}
+#InviteRequest {position: fixed; z-index: 9999; top: 60px; left: 50%; width: 460px; margin: 0 0 0 -250px; padding: 20px; border: 5px solid #e8e7e3; overflow: visible; border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; box-shadow: 0 0 38px #999; -moz-box-shadow: 0 0 38px #999; -webkit-box-shadow: 0 0 38px #999; background: #fff;}
+#InviteRequest .inputstatus.error {color: #f00; text-align: left; padding-top: 0;}
+#InviteRequest .inputstatus.good {color: green;}
+#InviteRequest .inputstatus {padding: 3px; font-weight: bold; font-size: 1.4em; text-align: center;}
+#InviteRequest li {position: relative; margin-bottom: 0;}
+#InviteRequest label {position: absolute; top: 6px; left: 0; display: block; width: 102px; font-weight: bold; white-space: nowrap;}
+
+#InviteRequest textarea {padding: 5px 8px; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; box-shadow: inset 0 1px 1px #ddd; -moz-box-shadow: inset 0 1px 1px #ddd; -webkit-box-shadow: inset 0 1px 1px #ddd;}
+#InviteRequest textarea, #InviteRequest span, #InviteRequest input[type="text"] {width: 265px; margin-left: 50px; display: inline;}
+#InviteRequest span {margin-left: 10em;}
+#InviteRequest li ul {display: inline;}
+#InviteRequest li ul li {margin-bottom: 4px;}
+
+
+/* REPIN FORM
+---------------------------------------------- */
+#RepinContainer {display: none;}
+#RepinBox {position: fixed; z-index: 9999; top: 60px; left: 50%; width: 738px; margin: 0 0 0 -319px; overflow: visible; border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; box-shadow: 0 0 38px #999; -moz-box-shadow: 0 0 38px #999; -webkit-box-shadow: 0 0 38px #999;}
+  .addAPin h2 {margin: 0 0 4px; padding: 0 0 0 5px;}
+#RepinBox h2 {margin: 0 0 4px; padding: 0 0 0 5px;}
+
+#RepinLeft {float: left; width: 156px; overflow: hidden;}
+#RepinRight {float: left; width: 414px; margin-bottom: 56px; padding: 14px; margin-left:14px;}
+
+#RepinRight > ul > li {position: relative; display: block; margin-bottom: 12px;}
+#RepinRight label {position: absolute; top: 6px; left: 0; display: block; width: 102px; font-weight: bold; white-space: nowrap;}
+#RepinPinRight li > span,
+#RepinRight .boardPicker {display: block; margin-left: 83px;}
+#RepinRight input[type="text"] {display: block; width: 306px; margin-bottom: 0;}
+#RepinRight li ul {display: inline;}
+#RepinRight li ul li {margin-bottom: 4px;}
+#RepinRight .tagInput {display: inline-block; font-size: 1.5em; color: #76838b;}
+#RepinRight .tagInput.deletable {padding: 0 0 0 9px; font-size: 1.2em; background-color: #e0ecf0; border-bottom: 1px solid #ccc; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+#RepinRight .tagInput input[type="text"] {float: left; width: 87px; margin-right: 1px; font-size: 1em; outline: none;}
+#RepinRight .button {float: left; height: auto; margin-left: 15px; padding: 0 4px 4px; text-align: center; line-height: 1em; font-size: 1.8em;}
+#RepinRight .deletable .tagBody {max-width: 300px; padding: 7px 9px; border-right-width: 0; border-radius: 3px 0 0 3px; -moz-border-radius: 3px 0 0 3px; -webkit-border-radius: 3px 0 0 3px; outline: none;}
+#RepinRight .removeTag {display: none; right: -16px; padding-top: 7px; outline: none;}
+
+#uploadForm, #repinform {display: none;}
+
+
+/* ORIENTATION SCREENS
+---------------------------------------------- */
+.pinForm .welcome {position: fixed; z-index: 9999; top: 20%; left: 50%; width: 800px; margin: 0 0 0 -400px; overflow: visible; border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; box-shadow: 0 0 38px #999; -moz-box-shadow: 0 0 38px #999; -webkit-box-shadow: 0 0 38px #999;}
+.pinForm .welcome h2 {margin: 0 0 4px; padding: 0 0 0 }
+
+
+/* INSTALL BOOKMARK
+---------------------------------------------- */
+.installBookmark {position: absolute; background-color: ; width: 700; padding: 13px 13px 0;}
+.installBookmark h2 {font-weight: lighter; text-shadow: 0 1px 0 #e5e5ee; padding-bottom: 10px;}
+.installBookmark p {font-size: 1.4em; line-height: 1.em;}
+.installBookmark a {font-weight: normal;}
+.installBookmark a:hover {font-weight: normal;}
+.installBookmark img {padding-top: 9px; padding-bottom: 14px; padding-left: 18px;}
+
+
+/* INTERSTERTIAL
+---------------------------------------------- */
+.popup {width: 700px; margin: auto;}
+.popup .interstertial {top: 35%; width: 556px; margin: -150px 0 0 -278px; padding-bottom: 32px; border: 1px solid #ccc; box-shadow: 0 1px 1px #d7d7d7; -moz-box-shadow: 0 1px 1px #d7d7d7; -webkit-box-shadow: 0 1px 1px #d7d7d7;}
+
+.interstertial {position: absolute; z-index: 9998; left: 50%; top: 40px; margin-left: -408px; padding: 30px 30px 20px; font-size: 0.9em; background-color: #fff; border:4px solid #e0ecf0; border-radius: 12px; -moz-border-radius: 12px; -webkit-border-radius: 12px; box-shadow: 0 0 38px #666; -moz-box-shadow: 0 0 38px #666; -webkit-box-shadow: 0 0 38px #666;}
+
+
+.interstertial .deletable .tagBody {max-width: 300px; padding: 4px 11px; border-right-width: 0; border-radius: 10px 0 0 10px; -moz-border-radius: 10px 0 0 10px; -webkit-border-radius: 10px 0 0 10px; outline: none;}
+.interstertial .removeTag {display: none; right: -16px; padding-top: 5px; outline: none;}
+
+.interstertial  input[type="text"].boardInput {border-radius: 0px; -moz-border-radius: 0; -webkit-border-radius: 0; box-shadow: 0; -moz-box-shadow: 0; -webkit-box-shadow: 0; border: 1px 1px 5px solid #ccc; width: 750px; font-padding: 4px; font-size: 2em; font-weight: 300; margin-top: 15px; border-width: 1px 1px 4px; border-style: 1px solid #e8e7e3;}
+
+.interstertial legend {font-size: 1.5em; display: block; padding: 20px 0 12px;}
+.interstertial form ul li {clear: both; margin-bottom: 0px; line-height: 1.2em;}
+.interstertial form ul li label {font-style: bold; font-size: 1.5em; float:left; width: 60px; margin-right: 20px; text-align: right; text-align: middle; padding-top: 7px; color: #76838b;}
+
+.interstertial span.help_text {width: 250px; display: block; position: absolute; right: -275px; top: 18px; color: #999; font-size: .8em;}
+.interstertial span.error {color: #900; background: #f6e5ea; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; padding: 8px; top: 12px; display: block; font-size: .8em; margin-bottom: 9px;}
+
+#resetPassword {display: inline-block; font-size: 1.3em; font-weight: normal; margin: 6px 0 0 12px; color: #76838b;}
+#resetPassword:hover {color: #fff;}
+
+.interstertial span.nextButton {float: right; margin-top: 10px;}
+
+
+/*PEOPLE FINDER */
+#people_finder {border-top: 1px solid #e3e3e3; overflow: hidden;}
+#people_finder ul li {padding: 5px 5px; font-size: 1em; border-bottom: 1px solid #e3e3e3; overflow: hidden;}
+#people_finder ul li img {width: 30px; float: left; margin-right: 10px;}
+#people_finder ul li .description {margin: 5px 10px -6px 15px; float: left;}
+#people_finder ul li .description h4 {font-size: 1.5em; font-weight: 310; color: #211922; text-decoration: none; margin-top: -5px;}
+#people_finder ul li .description p {padding-top: 1px; line-height: 1em; font-size: 1.3em; color: #76838b; font-weight: normal; width: 374px;}
+#people_finder ul li .description a {text-decoration: none; font-weight: normal; font-size: 1.3em;}
+#people_finder ul li .follow {margin: 10px 5px; float: left; font-size: 1.8em; background: #AAA; padding: 5px 10px; color: #FFF;}
+#people_finder span.buttonHolder {float:right; margin: 4px 0px 7px;}
+#people_finder .buttonHolder a {font-size: 1.3em;}
+
+#people_finder_left {width: 184px; background: #efefef; padding:10px 0; margin-left: 5px; margin-bottom: 15px; text-align: center; overflow: hidden; float: left;}
+#people_finder_left img {margin-right: 10px; margin-top: 1px; float: left;}
+#people_finder_left a {float: left; margin-bottom: 10px; width: 130px;}
+#find_button_holder, #invite_button_holder {padding-left: 10px;}
+    #people_finder_left p {font-size: 14px; color: #76838B; font-weight: bold; margin: 0 0 7px;}
+    #find_button_holder .button {clear: both; float: left; margin: 0 5px 5px !important;}
+#invite_button_holder {padding-left:15px;}
+#invite_by_email {width: 600px; float: right;}
+#invite_by_email .thirdRight {width: 345px;}
+
+#people_finder_holder {width: 610px; float: right;}
+#people_inviter_holder {width: 814px; clear: both; margin-bottom: 15px;}
+
+#find_friends {text-align:left;}
+.inviter {margin-bottom: 15px;}
+.find_friends_body .WhiteContainer, .invite_friends_body .WhiteContainer {margin: 10px 0 !important;}
+
+.inviter .twoThirdsLeft input[type=text] {width: 212px; margin-bottom: 10px; margin-right: 10px; border-bottom: 1px solid #ccc; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; font-size: 1.35em;}
+.inviter .thirdRight textarea {width: 320px; height: 93px; border-bottom: 1px solid #ccc; font-size: 1.35em; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0;}
+
+
+/* CLEARFIXES
+---------------------------------------------- */
+#article:after,
+#ColumnContainer:after,
+.WhiteContainer:after,
+#catBoard #catCatagories {content: " "; display: block; clear: both; visibility: hidden;}
+
+*+html #ColumnContainer,
+*+html .WhiteContainer {display: inline-block;}
+
+
+/* ERROR
+---------------------------------------------- */
+.errorBox {width: 800px; margin: 100px auto 0; text-align: left; line-height: 45px;}
+
+
+/* PROFILEBOX
+---------------------------------------------- */
+#pin .profilebox {margin-left: 236px; z-index:1; margin-top:0px;}
+.profilebox {position: relative; background: #feffdf; margin-bottom: 20px; padding: 13px 20px; font-size: 1.4em; overflow: hidden; box-shadow: 0 1px #d7d7d7; -moz-box-shadow: 0 1px #d7d7d7; -webkit-box-shadow: 0 1px #d7d7d7;}
+.profilebox img {position: absolute; top: 22px; right: 50px;}
+.profilebox h3,
+.profilebox p {width: 450px; margin: 0 2px 6px;}
+.profilebox h3 {font-size: 24px; line-height: 28px; font-weight: bold;}
+.profilebox p {margin-bottom: 0; color: #76838b;}
+.profilebox .button {clear: both; display: inline-block; margin-top: 10px; font-size: 18px;}
+.profilebox.profilebox_board {margin: 0 auto 15px; padding: 13px 14px;}
+#profile .profilebox.profilebox_board {margin: 0 auto 15px;}
+
+
+/* CLOSEUP
+---------------------------------------------- */
+#pin #header {padding-top: 1px; margin-bottom: 11px;}
+#pin #pinterestNav {position: fixed; top: 9px; left: 50%; margin-left: -425px;}
+#pin .searchContainer {margin-right: 73px;}
+
+/* RIGHT COLUMN */
+.closeupRight {float: right; width: 613px;}
+.closeupRight .WhiteContainer {margin-top: 0; padding: 0;}
+
+#PinPinner {padding: 18px 30px; background-color: #f3f3f3; overflow: hidden;}
+#PinPinner #PinnerImage {float: left; margin-right: 9px;}
+#PinPinner #PinnerImage img {display: block; width: 50px; height: 50px;}
+#PinPinner #PinnerName {font-size: 23px; line-height: 1em; margin-bottom: 2px;}
+#PinPinner #PinnerName a {color: #211922; text-decoration: none;}
+#PinPinner #PinnerName a:hover {color: #211922; text-decoration: underline; background-color: transparent;}
+#PinnerStats {display: block; margin-bottom: 0; padding-left: 60px; font-size: 13px; color: #76838b;}
+
+#PinActionButtons {padding: 10px 30px 10px; overflow: hidden;}
+#PinActionButtons ul {float: left; margin-right: 12px;}
+#PinActionButtons li {display: inline;}
+#PinActionButtons li a {float: left; margin-right: 6px; font-size: 13px;}
+#PinActionButtons .liked-button {background-image: none; box-shadow: 0 0 #fff; -moz-box-shadow: 0 0 #fff; -webkit-box-shadow: 0 0 #fff;}
+
+#PinImage {position: relative; padding: 18px 30px 30px; overflow: hidden;}
+#PinImage img {display: block; max-width: 554px; margin: 0 auto;}
+#PinImage .buyable {position: absolute; z-index: 1; top: 17px; left: -31px; width: 130px; padding: 8px 0; font-size: 13px; text-align: center; color: #000; background-color: #f3f3f3; overflow: hidden; -webkit-transform:rotate(-45deg); -moz-transform:rotate(-45deg); -o-transform:rotate(-45deg); -ms-transform:rotate(-45deg);}
+
+#PinCaption {padding: 0 30px 30px; font-size: 13px; border-bottom-width: 0;}
+	.pintag {color: #AAA; font-weight: normal; margin-right: 4px;} .pintag:hover {background: #AAA;}
+#PinOrigin {display: block; margin-top: 8px; margin-bottom: 0; line-height: 16px; color: #76838b;}
+
+
+.PinComments {border-top: 1px solid #e7e7e7;}
+.PinComments p {line-height: 1.33em;}
+.PinComments .comment {clear: both; padding: 15px 30px; border-bottom: 1px solid #e7e7e7; overflow: hidden;}
+.PinComments .comment p {display: block; margin: 0 58px 4px 58px; font-size: 1.3em;}
+.PinComments .comment img {display: block; width: 50px;}
+.PinComments .CommenterMeta {color: #211922;}
+.PinComments .comment ul {margin: 0 0px 4px 58px;}
+.PinComments .comment li {display:inline; margin-right: 3px;}
+.PinComments .comment li img {display: inline; width: 5px;}
+.PinComments .CommenterImage {float: left; margin-right: 8px; margin-bottom: 8px;}
+.PinComments .CommenterImage img {width: 50px; height: 50px;}
+.PinComments .RepinnerImage {float: left; margin-right: 8px;}
+#PinLikes .CommenterImage {float: left; margin-right: 8px; margin-bottom: 8px;}
+.PinComments .RepinnerImage img {width: 50px; height: 50px;}
+.PinComments .CommenterName {text-decoration: none;}
+.PinComments .remove_comment {visibility: hidden; margin-top: 4px; padding: 2px 6px; color: #000; text-decoration: none; background: #f3f3f3; border: 1px solid #ccc;}
+.PinComments .comment:hover .remove_comment {visibility: visible;}
+
+#PinAddComment {padding: 15px 30px;}
+#PinAddComment img {float: left; width: 50px;}
+#PinAddComment .editable_shadow {margin-left: 58px; position: relative;}
+#PinAddComment #PinAddCommentControls {height: 42px; overflow: hidden;}
+#PinAddComment .comment-instructions {width: 290px; margin: 13px 0 0 58px; font-size: 1.3em;}
+#PinAddComment .comment-button {float: right; width: 185px; padding-top: 8px; text-align: right;}
+#postcomment {font-family: "helvetica neue", arial, sans-serif; font-size: 13px; cursor: pointer;}
+#ce2 {width: 477px; height: 38px; font-size: 1.3em;}
+
+#PinCloseupComment {padding: 15px 30px;}
+#PinCloseupComment img {float: left;}
+
+.PinActivity {clear: both; padding: 18px 30px 10px 88px; font-size: 13px; border-top: 1px solid #e7e7e7; overflow: hidden;}
+.PinActivity h4 {float: left; width: 50px; margin-left: -58px; padding-top: 16px; font-weight: bold; text-align: right;}
+.PinActivity .CommenterImage {float: left; margin-right: 8px;}
+.PinActivity .CommenterImage img {display: block; width: 50px; height: 50px;}
+.PinActivity .repin {float: left; width: 495px; margin-bottom: 8px; line-height: 14px; color: #76838b;}
+.PinActivity .repin p {float: left; margin: 0; padding-top: 14px;}
+.PinActivity .repin_attr {display: block; padding: 16px 0 25px;}
+
+.PinRepinStory {margin: 8px 0; overflow: hidden;}
+.PinRepinStory span {display: block; padding-top: 16px;}
+
+.PinMoreActivity {clear: both; margin-top: 16px; font-weight: bold;}
+
+/* LEFT COLUMN */
+.closeupLeft {position: fixed; top: 64px; left: 50%; width: 221px; margin-left: -425px;}
+.closeupLeft .WhiteContainer {margin: 0 0 14px; border: 0 solid; border-color: #ccc #ddd #e8e7e3; box-shadow: 0 0 #fff; -moz-box-shadow: 0 0 #fff; -webkit-box-shadow: 0 0 #fff;}
+
+#PinSource {float: right; margin: 5px 0 0; font-size: 13px; color: #76838b;}
+
+#pin .pinBoard h3 {height: auto; padding-bottom: 0; line-height: 14px;}
+#pin .followBoard {border-bottom-width: 0;}
+
+
+/* OTHER */
+.pin-share {position: absolute; z-index: 9999; left: 35%;}
+.pin-share form legend {font-size: 1.5em;}
+.pin_share input[type="text"], .pin_share textarea {width: 350px;}
+
+/* PRIOR AND NEXT */
+#PriorAndNext {display: block; padding: 10px 10px;}
+#PriorAndNext a {z-index: 999;}
+#PriorAndNext #PriorPin {float: left; position: relative;}
+.prior-button span {margin: 2px -4px 0px -4px;}
+.next-button span {margin: 2px -4px 0px -4px;}
+#PriorAndNext #NextPin {float: right; position: relative;}
+#PriorAndNext .position {position: absolute; font-size: 13px; top: 16px; text-align: center; width: 200px;}
+
+
+/* new social share */
+#SocialShare {position: fixed; left: 50%; top: 298px; width: 50px; margin-left: 437px; opacity: 1; filter: alpha(opacity=100);}
+
+#share-header {font-weight: bold; font-size: 12px; color: #777; margin-bottom: 10px;}
+#social-buttons {background: #d8d7d3; width: 80px; padding: 5px 10px; border-left: 2px solid #cfcfcb; margin-bottom: 12px;}
+#social-buttons li {margin: 7px 0; display: block; height: 20px;}
+#social-buttons #PinEmbed, #EmailShare {background: #f9f9f9; border: 1px solid #bababa; padding: 3px 5px; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; color: #444; text-decoration: none; font-size: 11px; text-shadow: 0 1px white;}
+#social-buttons #PinEmbed:hover, #EmailShare:hover {border: 1px solid #888;}
+.localButtons {padding-top: 4px; margin: 0; height: 16px !important;}
+.localButtons span {color: #aaa;}
+
+#PinReport {font-size: 11px;}
+
+/* more button for pagination*/
+.more{background-color:#fff;background-image:url(/images/more.gif);background-position:left top;background-repeat:repeat-x;border-color:#ddd #aaa #aaa #ddd;border-style:solid;border-width:1px;display:block;font-size:14px;font-weight:bold;height:22px;line-height:1.5em;margin-bottom:6px;outline:medium none;padding:6px 0;text-align:center;text-shadow:1px 1px 1px #fff;width:100%;}
+.more:hover {color: #555;}
+.round {border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+
+#wrapper {position: relative; width: auto; margin: 0 auto; border: none;}
+
+#loadingPins {display: none; height: 20px; padding: 15px 0; text-align: center; font-weight: bold; border-top: 1px solid #ccc;}
+#loadingPins img {display: inline-block; margin-right: 6px;}
+#loadingPins span {font-size: 1.3em;}
+
+/* JQuery Tipsy CSS */
+.tipsy {padding: 5px; font-size: 11px; line-height: 13px; background-image: url(/images/tipsy.gif); background-repeat: no-repeat; opacity: 0.8; filter: alpha(opacity=80); max-width: ;}
+  .tipsy-inner {max-width: 150px; padding: 5px 8px; text-align: center; color: #fff; background-color: #000;}
+  .tipsy-north {background-position: top center;}
+  .tipsy-south {background-position: bottom center;}
+  .tipsy-east {background-position: right center;}
+  .tipsy-west {background-position: left center;}
+
+.any_form p{margin:0;padding-bottom:25px;}
+.any_form {margin-left: 100px; margin-top: 25px;}
+.any_form legend {font-size: 1.5em; margin-bottom: 10px;}
+.any_form label{font-size:12px;font-family:'Helvetica Neue',Arial,sans-serif;text-transform:uppercase;display:block;width:90px;color:#777;padding:0 10px;float:left;text-align:right;margin-bottom:10px;margin-left:-110px;margin-top: 8px;}
+.any_form textarea{color:#211922;width:388px;}
+.any_form input[type="text"], .any_form input[type="password"]{font-size: 1.3em; width: 258px; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0;}
+.any_form span.message_info {background: #FFF691; padding: 3px 10px; font-size: 1.3em;}
+
+.login_message {font-size: 1.3em; background: #FF859F; padding: 3px 10px !important;}
+
+/* Import Contacts */
+.import_services {overflow: hidden;}
+.import_services a {float: left; margin-right: 14px;}
+.import_services a img {float: left; margin: 2px 4px 0 0;}
+#import_contacts td {padding: 12px 2px 12px 4px; font-size: 1.2em; background: #fff; border-bottom: 1px solid #ccc;}
+#import_contacts td.name_email {width: 440px;}
+#import_contacts td a {font-size: 1em;}
+#import_contacts .invite_email {color: #999;}
+#contacts {clear: left; margin-top: 30px; font-size: 1.2em;}
+.contacts .twoThirdsLeft h2 {float: left; width: 450px;}
+.contacts .twoThirdsLeft .remaining {float: right; font-size: 1.2em; width: 90px; margin-top: 1px; background: #ddd; padding: 6.5px; text-align: center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+.contacts .thirdRight h4 {font-size: 1.2em; font-weight: bold; margin: 10px 0px;}
+.contacts .thirdRight input[type=text] {width: 212px; margin: 5px 0px; border-bottom: 1px solid #ccc; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0;}
+.contacts .thirdRight textarea {width: 212px; margin: 5px 0px; border-bottom: 1px solid #ccc; border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0;}
+.contacts .thirdRight .error_message {float: left; margin-top: 4px; font-size: 1.2em; color: green; width: 125px;}
+.contacts .thirdRight input[type=submit] {float: right; margin: 3px 25px 0 0; padding: 1px 6px; font-size: 1.2em;}
+.contact_import {padding: 2px 10px; font-size: 1em;}
+.contacts #delete_contacts {text-decoration: none; font-size: 1.2em; color: grey; position: relative; top: 5px;  }
+.contacts #delete_contacts:hover {background: none; color:#111;}
+
+
+/* jcarousel.css */
+.jcarousel-container {position: relative; width: 196px; height: 196px;}
+.jcarousel-clip {position: relative; z-index: 2; margin: 0; padding: 0; overflow: hidden;}
+.jcarousel-list {position: relative; z-index: 1; top: 0; left: 0; margin: 0; padding: 0; overflow: hidden;}
+.jcarousel-list li,
+.jcarousel-item {float: left; width: 196px !important; height: 196px;}/* We set the width/height explicitly. No width/height causes infinite loops. */
+.jcarousel-item a,
+.jcarousel-item img {max-width: 168px; max-height: 168px;}
+
+/**
+ * Badge Generator
+ */
+#badgeGen {width: 600px; margin: auto;}
+  #badgeGen legend {font-size: 1.8em; font-weight: bold; display: block; padding: 20px 0 30px;}
+  #badgeGen li {font-size: 1.5em; border-top: 1px solid #e8e7e3; padding: 11px 0; line-height: 1.3em;}
+  #badgeGen p {color: #211922;}
+  #badgeGen label {width: 300px; display: inline-block; vertical-align: top;}
+  #badgeGen select {border: 0; font-size: 0.8em; margin-top: 3px;}
+#previewOutput {width: 600px; border: 1px solid #d3d3d3; margin-top: 20px; padding: 20px;}
+#previewOutput .dark {background-color: #3b393a;}
+#badgeGen textarea {width: 600px; border: 1px solid #d3d3d3; padding: 20px;}
+
+
+/*EMBED BUTTONS ON BLOG
+---------------------------------------------- */
+.promo {border-bottom: 1px dotted #666; padding-top: 10px; padding-left: 10px; display: block; height: 73px;}
+.promo textarea {width: 430px; height: 50px; font-size: 1.2em; float: right; margin-right: 10px;}
+.promo img {border: none; padding: none; align: center;}
+
+.imagePicker {background: #fff; position: relative; display: block; width: 196px; height: 196px; border: 1px solid; border-color: #ccc #bbb #aaa; box-shadow: 0 1px #e7e7e7; -moz-box-shadow: 0 1px #e7e7e7; -webkit-box-shadow: 0 1px #e7e7e7; overflow: hidden;}
+.imagePicker .loading {background: url(/images/ajaxload2.gif) no-repeat; background-position: center center;}
+.imagePicker li {position: relative; width: 156px;}
+.imagePicker .video {position: absolute; z-index: 1; top: 37%; left: 50%; width: 50px; height: 50px; margin: -25px 0 0 -25px; border-width: 0;}
+.pinLeft a.picker {position: relative; width: 52px; margin-top: 6px; padding: 6px 8px 6px; font-size: 1.3em; line-height: 1em; text-decoration: none; background-color: #fff; border: 1px solid #ccc; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+.pinLeft a.picker:hover {border-color: #aaa;}
+.pinLeft a.picker:active {background-color: #ccc; border-color: #aaa;}
+.pinLeft a.imagePickerNext {float: right; padding-right: 32px;}
+.pinLeft a.imagePickerPrevious {float: left; padding-left: 32px; text-align: right;}
+.pinLeft a span {position: absolute; top: 6px; right: 2px; width: 9px; height: 13px; background-position: left top;}
+.pinLeft a.imagePickerPrevious span {right: auto; left: 2px; background-position: right top;}
+.imagePickerNextArrow {background: url(/images/rightArrow.png);}
+.imagePickerPreviousArrow {background: url(/images/leftArrow.png);}
+.imagePickerNext:hover,
+.imagePickerPrevious:hover {color: #211922; background-color: #ccc; border-color: #aaa;}
+.imagePickerNext:active,
+.imagePickerPrevious:active {background-color: #76838b; border-color: #76838b;}
+.imagePickerNext:hover .imagePickerNextArrow,
+.imagePickerPrevious:hover .imagePickerPreviousArrow {background-position: center;}
+.imagePickerNext:active .imagePickerNextArrow,
+.imagePickerPrevious:active .imagePickerPreviousArrow {background-position: bottom center;}
+
+#BackToTop {position: fixed; right: 9px; bottom: 9px; width: 50px; padding: 20px 10px; text-align: center; text-transform: uppercase; color: #41545F; text-decoration: none; background-color: #fff; border: 1px solid #ececec; opacity: 0.9;  filter: alpha(opacity=90); cursor: pointer; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px;}
+#BackToTop:hover {color: #211922; opacity: 1.0; filter: alpha(opacity=100);}
+
+
+/*FEED
+---------------------------------------------- */
+.feed {float: left; width: 221px !important; margin: 0px; background-color: #fff; padding: 2px 0px 0px 0px !important;}
+.feed h2 {padding: 9px 12px 11px; font-size: 13px; line-height: 1em; border-bottom: 1px solid #ececec;}
+.feed .friend .button {float: right; margin: 0px; font-size: 13px;margin-right:10px;}
+.feed .story .button:hover {text-decoration: none; color: inherit; background-color: inherit;}
+.feed .story {clear: both; display: block; padding: 7px 0; font-size: 11px; font-weight: normal; color: #362d42; text-decoration: none; overflow: hidden;}
+.feed .story.friend {}
+.feed  p.inviteReminder {text-align:center; margin: 5px 5px;}
+.feed .story a {color: #211922; text-decoration: none;}
+.feed .story a:hover {text-decoration: underline; color: #1389e5; background-color: transparent;}
+#invite_friends .activity_invite_name,
+.feed .story a.storyFriendContent {display: inline-block; padding-left: 10px;}
+.feed .story img {display: block; width: 28px; height: 28px;}
+.feed .story a:hover img {opacity: .9; filter: alpha(opacity=90);}
+.feed .story .actor {float: left; display: block; margin-left: -22px;}
+.feed .story strong {color: #211922;}
+.feed .story span.timeago {display: block; color: #888;}
+.feed .story .remove_story {position: absolute; display: none; width: 12px; height: 12px; margin-top: 7px; margin-left: 4px; background: url('/images/close_pill2.png') no-repeat;}
+.feed .story:hover .remove_story {display:block;}
+.feed .story .remove_story:hover {background-position: 0 -50px; cursor: pointer;}
+.feed a.story:hover {color: #fff; background-color: #30a7f1;}
+.feed a.story:hover strong {color: #fff;}
+.feed a.story:hover span {color: #f3f3f3;}
+.feed a span {float: none; width: auto; height: auto; margin: 0; background: none;}
+.feed .others {margin: 6px 0; overflow: hidden;}
+.feed .others .OneOfMany {float: left; margin: 1px 1px 0 0;}
+#article .feed {overflow: visible;}
+#article .feed .story {height: 29px; width: 100%; overflow: visible;}
+#article .feed .story img.actor {margin-left: 10px;}
+#recommended_friends {width: 221px; padding-bottom: 15px;}
+#recommended_friends h2{margin-bottom: 5px; padding-right: 0;}
+#article .feed #invite_more_friends {float: right; margin: 10px 10px 0 0;}
+#view_all_to_follow_link, #view_all_to_invite_link {float: left; font-size: 11px; color: #888;}
+#view_all_to_follow_link:hover, #view_all_to_invite_link:hover {color: #fff; background: #888;}
+#follow_all_link, #invite_all_link {float: right; color: #888;}
+#follow_all_link:hover, #invite_all_link:hover {color: #fff; background: #888;}
+#follow_rec_opts, #follow_invite_opts  {padding-left: 30px; padding: 8px 8px 10px 12px; font-size: 11px; overflow: hidden;}
+#rec_friends_holder, #invite_friends_holder {max-height: 128px; overflow: hidden;}
+
+#invite_friends {width: 221px; padding-top: 10px; padding-bottom: 15px;}
+#invite_friends h2 {margin-bottom: 5px;padding-right: 0;}
+#article .feed .name_details {float: left; max-width: 95px; overflow: hidden; max-height: 30px;}
+#recent_activity_holder {width: 221px; padding-bottom: 0; padding-top: 0;}
+#recent_activity_holder h2{padding-right: 0; margin-bottom: 5px;}
+#article .feed #recent_activity_holder img {padding-right: 10px;}
+#article .feed #recent_activity_holder .story {width: 100%;}
+#article .feed #recent_activity_holder .activity_details {float: left; width: 153px;}
+
