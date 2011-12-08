@@ -2,12 +2,12 @@ KISSY.use("template", function(S, T) {
 
     describe('template', function() {
 
-        it("slash should works", function() {
+        it("slash and quote should be escaped", function() {
             expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
         });
 
-        it("should ignore undefined variable",function(){
-                expect(T('{{#if typeof a === "undefined" || a === "a"}}{{b}}{{/if}}').render({})).toBe('');
+        it("should ignore undefined variable", function() {
+            expect(T('{{#if typeof a === "undefined" || a === "a"}}{{b}}{{/if}}').render({})).toBe('');
         });
 
         describe('variable', function() { // {{{
