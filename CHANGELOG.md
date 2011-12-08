@@ -18,6 +18,7 @@ History:
  - [!] Still Alive
 
 ### v1.1.6 -> v1.2.0 (2011/11/24)
+ - [+] waterfall 添加 addComplete/adjustComplete 事件支持
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
