@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 8 17:11
+build time: Dec 8 18:39
 */
 /**
  * intervein elements dynamically
@@ -167,7 +167,8 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         adjust:function(callback) {
             S.log("waterfall:adjust");
             var self = this,
-                items = self.get("container").all(".ks-waterfall");
+                items = self.get("container").all(".ks-waterfall"),
+                count = items.length;
             /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
             /* 正在调整中，取消上次调整，开始这次调整 */
             if (self.isAdjusting()) {
@@ -175,15 +176,20 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }
             /*计算容器宽度等信息*/
             recalculate.call(self);
-            return self._adjuster = timedChunk(items, adjustItem, self, function() {
+            return self._adjuster = timedChunk(items, self._addItem, self, function() {
                 self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
                 self._adjuster = 0;
                 callback && callback.call(self);
+
+                count && self.fire('adjustComplete', {
+                    items:items
+                });
             });
         },
 
         addItems:function(items, callback) {
-            var self = this;
+            var self = this,
+                count = items.length;
 
             /* 正在调整中，直接这次加，和调整的节点一起处理 */
             /* 正在加，直接这次加，一起处理 */
@@ -195,6 +201,10 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                         self.get("curColHeights")));
                     self._adder = 0;
                     callback && callback.call(self);
+
+                    count && self.fire('addComplete', {
+                        items:items
+                    });
                 });
 
             return self._adder;
