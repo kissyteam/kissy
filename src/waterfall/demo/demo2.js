@@ -48,7 +48,12 @@
         minColCount:2,
         colWidth:228
     });
-
+    waterfall.on('adjustComplete', function() {
+        S.log('after adjust complete!');
+    });
+    waterfall.on('addComplete', function() {
+        S.log('after add complete!');
+    });
     // scrollTo
     $('#BackToTop').on('click', function(e) {
         e.halt();
