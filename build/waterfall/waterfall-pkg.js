@@ -235,7 +235,9 @@ KISSY.add("waterfall", function(S, undefined) {
                 self._adjuster = 0;
                 callback && callback.call(self);
 
-                count && self.fire('adjustComplete');
+                count && self.fire('adjustComplete', {
+                    items:items
+                });
             });
         },
 
@@ -254,7 +256,9 @@ KISSY.add("waterfall", function(S, undefined) {
                     self._adder = 0;
                     callback && callback.call(self);
 
-                    count && self.fire('addComplete');
+                    count && self.fire('addComplete', {
+                        items:items
+                    });
                 });
 
             return self._adder;
@@ -289,7 +293,7 @@ KISSY.add("waterfall", function(S, undefined) {
 
     S.Waterfall = Intervein;
 
-},{
+}, {
     requires:['template']
 });/**
  * load content from remote async
