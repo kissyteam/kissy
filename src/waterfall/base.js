@@ -106,6 +106,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
     function adjustItem(itemRaw) {
         var self = this,
+            effect = self.get("effect"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -133,13 +134,12 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         });
         /*不在容器里，就加上*/
         if (!container.contains(item)) {
+            if (effect && effect.effect == "fadeIn") {
+                item.css("opacity", 0);
+            }
             container.append(item);
         }
         curColHeights[dest] += item.outerHeight(true);
-
-        var effect = self.get("effect");
-        if (effect.effect) item[effect.effect](effect.duration, undefined, effect.easing);
-
         return item;
     }
 
@@ -170,7 +170,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }
             /*计算容器宽度等信息*/
             recalculate.call(self);
-            return self._adjuster = timedChunk(items, adjustItem, self, function() {
+            return self._adjuster = timedChunk(items, self._addItem, self, function() {
                 self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
                 self._adjuster = 0;
                 callback && callback.call(self);
@@ -200,7 +200,25 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         },
 
         _addItem:function(itemRaw) {
-            adjustItem.call(this, itemRaw);
+            var self = this,
+                curColHeights = self.get("curColHeights"),
+                container = self.get("container"),
+                item = adjustItem.call(self, itemRaw),
+                effect = self.get("effect");
+            if (!effect.effect ||
+                effect.effect !== "fadeIn") {
+                return;
+            }
+            // only allow fadeIn temporary
+            item.animate({
+                opacity:1
+            }, {
+                duration:effect.duration,
+                easing:effect.easing,
+                complete:function() {
+                    item.css("opacity", "");
+                }
+            });
         },
 
         destroy:function() {

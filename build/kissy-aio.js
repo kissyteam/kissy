@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 2 12:59
+build time: Dec 8 01:53
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Dec 2 12:59
          */
         version: '1.20dev',
 
-        buildTime:'20111202125858',
+        buildTime:'20111208015257',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2256,6 +2256,48 @@ build time: Dec 2 12:59
     var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
+
+    /**
+     * whether eists cyclic dependency
+     * @param mod
+     * @param requires
+     * @param path dependency stack
+     */
+    function cyclicChecksInternal(self, mod, requires, path) {
+        if (requires) {
+            for (var i = 0; i < requires.length; i++) {
+                if (_cyclicChecks(self, mod, requires[i], path)) {
+                    path.unshift(requires[i]);
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    function cyclicCheck(self, mod) {
+        var path = [];
+        cyclicChecksInternal(self, mod, mod.requires, path);
+        path.unshift(mod.name);
+        return path;
+    }
+
+    function _cyclicChecks(self, mod, requireModName, path) {
+        /**
+         * max depth of recursive stack
+         * one child of ancestor's name is same with mod name
+         */
+        if (requireModName == mod.name) {
+            return 1;
+        }
+        var mods = self.Env.mods,
+            rmod = mods[requireModName];
+        if (rmod && cyclicChecksInternal(self, mod, rmod.requires, path)) {
+            return 1;
+        }
+        return 0;
+    }
+
     S.mix(loader, {
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
@@ -2352,10 +2394,13 @@ build time: Dec 2 12:59
                 //添加模块定义
                 mods[modName] = mod;
             }
+
             mod.name = modName;
+
             if (mod && mod.status === ATTACHED) {
                 return;
             }
+
             // 先从 global 里取
             if (cfg.global) {
                 self.__mixMod(modName, cfg.global);
@@ -2369,22 +2414,47 @@ build time: Dec 2 12:59
          */
         __attach: function(mod, callback, cfg) {
             var self = this,
+                r,
+                rMod,
+                i,
+                attached = 0,
                 mods = self.Env.mods,
-                //复制一份当前的依赖项出来，防止add后修改！
+                //复制一份当前的依赖项出来，防止 add 后修改！
                 requires = (mod['requires'] || []).concat();
+
             mod['requires'] = requires;
 
+            function markAndCheckCyclic() {
+                if (S.Config.debug) {
+                    // one mod only need to check its dependency once
+                    if (mod.cyclicCheck) {
+                        return;
+                    }
+                    // S.log("check cyclic for mod : " + mod.name);
+                    var path = cyclicCheck(self, mod);
+                    if (path.length > 1) {
+                        S.error("cyclic dependency : " + path.join("->"));
+                    }
+                    // tag this module
+                    mod.cyclicCheck = 1;
+                }
+            }
+
+            // incase required mods and mod scripts is loaded statically
+            if (mod.fns && mod.fns.length) {
+                markAndCheckCyclic();
+            }
+
             // attach all required modules
-            S.each(requires, function(r, i, requires) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, r);
-                var rMod = mods[r];
+            for (i = 0; i < requires.length; i++) {
+                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
                     self.__attachModByName(r, fn, cfg);
                 }
-            });
-
+            }
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
@@ -2394,28 +2464,37 @@ build time: Dec 2 12:59
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'];
+                var newRequires = mod['requires'],needToLoad = [];
 
                 //本模块下载成功后串行下载 require
-                S.each(newRequires, function(r, i, newRequires) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, r);
+
+                for (i = 0; i < newRequires.length; i++) {
+                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod && rMod.status === ATTACHED
+                    if (rMod &&
+                        rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, cfg);
+                        needToLoad.push(r);
                     }
-                });
+                }
 
-                fn();
+                // else check on load
+                markAndCheckCyclic();
+
+                if (needToLoad.length) {
+                    for (i = 0; i < needToLoad.length; i++) {
+                        self.__attachModByName(needToLoad[i], fn, cfg);
+                    }
+                } else {
+                    fn();
+                }
             }, cfg);
-
-            var attached = false;
 
             function fn() {
                 if (!attached &&
@@ -2425,7 +2504,7 @@ build time: Dec 2 12:59
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
-                        attached = true;
+                        attached = 1;
                         callback();
                     }
                 }
@@ -2787,67 +2866,67 @@ build time: Dec 2 12:59
 /**
  combined files : 
 
-D:\code\kissy_git\kissy\src\ua\base.js
-D:\code\kissy_git\kissy\src\ua\extra.js
-D:\code\kissy_git\kissy\src\ua.js
-D:\code\kissy_git\kissy\src\dom\base.js
-D:\code\kissy_git\kissy\src\dom\attr.js
-D:\code\kissy_git\kissy\src\dom\class.js
-D:\code\kissy_git\kissy\src\dom\create.js
-D:\code\kissy_git\kissy\src\dom\data.js
-D:\code\kissy_git\kissy\src\dom\insertion.js
-D:\code\kissy_git\kissy\src\dom\offset.js
-D:\code\kissy_git\kissy\src\dom\style.js
-D:\code\kissy_git\kissy\src\dom\selector.js
-D:\code\kissy_git\kissy\src\dom\style-ie.js
-D:\code\kissy_git\kissy\src\dom\traversal.js
-D:\code\kissy_git\kissy\src\dom.js
-D:\code\kissy_git\kissy\src\event\keycodes.js
-D:\code\kissy_git\kissy\src\event\object.js
-D:\code\kissy_git\kissy\src\event\utils.js
-D:\code\kissy_git\kissy\src\event\base.js
-D:\code\kissy_git\kissy\src\event\target.js
-D:\code\kissy_git\kissy\src\event\focusin.js
-D:\code\kissy_git\kissy\src\event\hashchange.js
-D:\code\kissy_git\kissy\src\event\valuechange.js
-D:\code\kissy_git\kissy\src\event\delegate.js
-D:\code\kissy_git\kissy\src\event\mouseenter.js
-D:\code\kissy_git\kissy\src\event\submit.js
-D:\code\kissy_git\kissy\src\event\change.js
-D:\code\kissy_git\kissy\src\event\mousewheel.js
-D:\code\kissy_git\kissy\src\event.js
-D:\code\kissy_git\kissy\src\node\base.js
-D:\code\kissy_git\kissy\src\node\attach.js
-D:\code\kissy_git\kissy\src\node\override.js
-D:\code\kissy_git\kissy\src\anim\easing.js
-D:\code\kissy_git\kissy\src\anim\manager.js
-D:\code\kissy_git\kissy\src\anim\fx.js
-D:\code\kissy_git\kissy\src\anim\queue.js
-D:\code\kissy_git\kissy\src\anim\base.js
-D:\code\kissy_git\kissy\src\anim\color.js
-D:\code\kissy_git\kissy\src\anim.js
-D:\code\kissy_git\kissy\src\node\anim.js
-D:\code\kissy_git\kissy\src\node.js
-D:\code\kissy_git\kissy\src\json\json2.js
-D:\code\kissy_git\kissy\src\json.js
-D:\code\kissy_git\kissy\src\ajax\form-serializer.js
-D:\code\kissy_git\kissy\src\ajax\xhrobject.js
-D:\code\kissy_git\kissy\src\ajax\base.js
-D:\code\kissy_git\kissy\src\ajax\xhrbase.js
-D:\code\kissy_git\kissy\src\ajax\subdomain.js
-D:\code\kissy_git\kissy\src\ajax\xdr.js
-D:\code\kissy_git\kissy\src\ajax\xhr.js
-D:\code\kissy_git\kissy\src\ajax\script.js
-D:\code\kissy_git\kissy\src\ajax\jsonp.js
-D:\code\kissy_git\kissy\src\ajax\form.js
-D:\code\kissy_git\kissy\src\ajax\iframe-upload.js
-D:\code\kissy_git\kissy\src\ajax.js
-D:\code\kissy_git\kissy\src\base\attribute.js
-D:\code\kissy_git\kissy\src\base\base.js
-D:\code\kissy_git\kissy\src\base.js
-D:\code\kissy_git\kissy\src\cookie\base.js
-D:\code\kissy_git\kissy\src\cookie.js
-D:\code\kissy_git\kissy\src\core.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua/extra.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/attr.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/class.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/create.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/data.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/insertion.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/offset.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/style.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/selector.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/style-ie.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/traversal.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/keycodes.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/object.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/utils.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/target.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/focusin.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/hashchange.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/valuechange.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/delegate.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/mouseenter.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/submit.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/change.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/mousewheel.js
+/Users/yiminghe/code/kissy_git/kissy/src/event.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/attach.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/override.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/easing.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/manager.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/fx.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/queue.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/color.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/anim.js
+/Users/yiminghe/code/kissy_git/kissy/src/node.js
+/Users/yiminghe/code/kissy_git/kissy/src/json/json2.js
+/Users/yiminghe/code/kissy_git/kissy/src/json.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/form-serializer.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrobject.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrbase.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/subdomain.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xdr.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhr.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/script.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/jsonp.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/form.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/iframe-upload.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax.js
+/Users/yiminghe/code/kissy_git/kissy/src/base/attribute.js
+/Users/yiminghe/code/kissy_git/kissy/src/base/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/cookie/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/cookie.js
+/Users/yiminghe/code/kissy_git/kissy/src/core.js
 **/
 
 /**
@@ -9234,9 +9313,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = makeArray(arguments);
-            args.unshift(this);
-            return Event[k].apply(Event, args);
+            var self=this,
+                args = makeArray(arguments);
+            args.unshift(self);
+            Event[k].apply(Event, args);
+            return self;
         }
     });
 
@@ -15232,7 +15313,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 8 00:58
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -15321,7 +15402,9 @@ KISSY.add('template/base', function(S) {
                     else {
                         _parser = KS_TEMPL +
                             '.push(' +
-                            restoreQuote(body) +
+                            // prevent variable undefined error when look up in with ,simple variable substitution
+                            // with({}){alert(x);} => ReferenceError: x is not defined
+                            'typeof '+body+'==="undefined"?"":'+restoreQuote(body) +
                             ');';
                     }
                     return PREFIX + _parser + SUFFIX;
@@ -25679,7 +25762,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 13:29
+build time: Dec 8 00:57
 */
 /**
  * KISSY Calendar
@@ -25702,7 +25785,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
          * @private
          */
         _init: function(selector, config) {
-            var self = this,con = Node.one(selector);
+            var self = this,con = $(selector);
             self.id = self.C_Id = self._stamp(con);
             self._buildParam(config);
 
@@ -25716,7 +25799,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             } else {
                 self.trigger = con;
                 self.con = new Node('<div>');
-                Node.one('body').append(self.con);
+                $(document.body).append(self.con);
                 self.C_Id = self._stamp(self.con);
                 self.con.css({
                     'top':'0px',
@@ -25805,18 +25888,23 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
          * @private
          */
         _buildEvent: function() {
-            var self = this;
+            var self = this,tev,i;
             if (!self.popup) {
                 return this;
             }
             //点击空白
             //flush event
-            for (var i = 0; i < self.EV.length; i++) {
-                if (self.EV[i] !== undefined) {
-                    self.EV[i].detach();
+            S.each(self.EV, function(tev) {
+                if (tev) {
+                    tev.target.detach(tev.type, tev.fn);
                 }
-            }
-            self.EV[0] = Node.one('body').on('click', function(e) {
+            });
+            self.EV = self.EV || [];
+            tev = self.EV[0] = {
+                target:$(document),
+                type:'click'
+            };
+            tev.fn = function(e) {
                 var target = $(e.target);
                 //点击到日历上
                 if (target.attr('id') === self.C_Id) {
@@ -25831,7 +25919,9 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     return;
                 }
 
-                if (self.con.css('visibility') == 'hidden') return;
+                if (self.con.css('visibility') == 'hidden') {
+                    return;
+                }
                 var inRegion = function(dot, r) {
                     return dot[0] > r[0].x
                         && dot[0] < r[1].x
@@ -25861,34 +25951,38 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 ])) {
                     self.hide();
                 }
-            });
+            };
+            tev.target.on(tev.type, tev.fn);
             //点击触点
             for (i = 0; i < self.triggerType.length; i++) {
+                tev = self.EV[i + 1] = {
+                    target: $('#' + self.id),
+                    type: self.triggerType[i],
+                    fn: function(e) {
+                        e.target = $(e.target);
+                        e.preventDefault();
+                        //如果focus和click同时存在的hack
 
-                self.EV[1] = Node.one('#' + self.id).on(self.triggerType[i], function(e) {
-                    e.target = $(e.target);
-                    e.preventDefault();
-                    //如果focus和click同时存在的hack
-
-                    var a = self.triggerType;
-                    if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
-                        if (e.type == 'focus') {
+                        var a = self.triggerType;
+                        if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
+                            if (e.type == 'focus') {
+                                self.toggle();
+                            }
+                        } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
+                            if (e.type == 'click') {
+                                self.toggle();
+                            }
+                        } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
+                            setTimeout(function() {//为了跳过document.onclick事件
+                                self.toggle();
+                            }, 170);
+                        } else {
                             self.toggle();
                         }
-                    } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
-                        if (e.type == 'click') {
-                            self.toggle();
-                        }
-                    } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
-                        setTimeout(function() {//为了跳过document.onclick事件
-                            self.toggle();
-                        }, 170);
-                    } else {
-                        self.toggle();
+
                     }
-
-                });
-
+                };
+                tev.target.on(tev.type, tev.fn);
             }
             return this;
         },
@@ -26045,7 +26139,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         _handleDate: function() {
             var self = this,
                 date = self.date;
-            self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
+            self['weekday'] = date.getDay() + 1;//星期几 //指定日期是星期几
             self.day = date.getDate();//几号
             self.month = date.getMonth();//月份
             self.year = date.getFullYear();//年份
@@ -26141,6 +26235,10 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
 }, { requires: ['node',"event"] });
 
 /**
+ * 2011-12-06 by yiminghe@gmail.com
+ *  - 全局绑定放 document
+ *  - fix 清除事件调用
+ *
  * 2010-09-09 by lijing00333@163.com - 拔赤
  *     - 将基于YUI2/3的Calendar改为基于KISSY
  *     - 增加起始日期（星期x）的自定义
@@ -26504,89 +26602,139 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
              */
             this._buildEvent = function() {
                 var cc = this,i,
+                    tev,
                     con = Node.one('#' + cc.id);
                 //flush event
-                for (i = 0; i < cc.EV.length; i++) {
-                    if (typeof cc.EV[i] != 'undefined') {
-                        cc.EV[i].detach();
+                S.each(cc.EV, function(tev) {
+                    if (tev) {
+                        tev.target.detach(tev.type, tev.fn);
                     }
+                });
+                cc.EV = cc.EV || [];
+                tev = cc.EV[0] = {
+                    target:     con.one('div.ks-dbd'),
+                    type:"click",
+                    fn:   function(e) {
+                        //e.preventDefault();
+                        e.target = Node(e.target);
+                        if (e.target.hasClass('ks-null')) {
+                            return;
+                        }
+                        if (e.target.hasClass('ks-disabled')) {
+                            return;
+                        }
+                        var selectedd = Number(e.target.html());
+                        //如果当天是30日或者31日，设置2月份就会出问题
+                        var d = new Date('2010/01/01');
+                        d.setYear(cc.year);
+                        d.setMonth(cc.month);
+                        d.setDate(selectedd);
+                        //self.callback(d);
+                        //datetime的date
+                        cc.father.dt_date = d;
+                        cc.father.fire('select', {
+                            date:d
+                        });
+                        if (cc.father.popup && cc.father.closable) {
+                            cc.father.hide();
+                        }
+                        if (cc.father.rangeSelect) {
+                            cc.father._handleRange(d);
+                        }
+                        cc.father.render({selected:d});
+                    }
+                };
+                function bindEventTev() {
+                    tev.target.on(tev.type, tev.fn);
                 }
 
-                cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
-                    //e.preventDefault();
-                    e.target = Node(e.target);
-                    if (e.target.hasClass('ks-null')) {
-                        return;
-                    }
-                    if (e.target.hasClass('ks-disabled')) {
-                        return;
-                    }
-                    var selectedd = Number(e.target.html());
-                    //如果当天是30日或者31日，设置2月份就会出问题
-                    var d = new Date('2010/01/01');
-                    d.setYear(cc.year);
-                    d.setMonth(cc.month);
-                     d.setDate(selectedd);
-                    //self.callback(d);
-                    //datetime的date
-                    cc.father.dt_date = d;
-                    cc.father.fire('select', {
-                        date:d
-                    });
-                    if (cc.father.popup && cc.father.closable) {
-                        cc.father.hide();
-                    }
-                    if (cc.father.rangeSelect) {
-                        cc.father._handleRange(d);
-                    }
-                    cc.father.render({selected:d});
-                });
+                bindEventTev();
                 //向前
-                cc.EV[1] = con.one('a.ks-prev').on('click', function(e) {
-                    e.preventDefault();
-                    cc.father._monthMinus().render();
-                    cc.father.fire('monthChange', {
-                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
-                    });
-
-                });
-                //向后
-                cc.EV[2] = con.one('a.ks-next').on('click', function(e) {
-                    e.preventDefault();
-                    cc.father._monthAdd().render();
-                    cc.father.fire('monthChange', {
-                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
-                    });
-                });
-                if (cc.father.navigator) {
-                    cc.EV[3] = con.one('a.ks-title').on('click', function(e) {
-                        try {
-                            cc.timmer.hidePopup();
-                            e.preventDefault();
-                        } catch(exp) {
-                        }
-                        e.target = Node(e.target);
-                        var setime_node = con.one('.ks-setime');
-                        setime_node.html('');
-                        var in_str = cc.father._templetShow(cc.nav_html, {
-                            the_month:cc.month + 1,
-                            the_year:cc.year
+                tev = cc.EV[1] = {
+                    target:con.one('a.ks-prev'),
+                    type:'click',
+                    fn:function(e) {
+                        e.preventDefault();
+                        cc.father._monthMinus().render();
+                        cc.father.fire('monthChange', {
+                            date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
                         });
-                        setime_node.html(in_str);
-                        setime_node.removeClass('hidden');
-                        con.one('input').on('keydown', function(e) {
+
+                    }
+                };
+                bindEventTev();
+                //向后
+                tev = cc.EV[2] = {
+                    target:con.one('a.ks-next'),
+                    type:'click',
+                    fn: function(e) {
+                        e.preventDefault();
+                        cc.father._monthAdd().render();
+                        cc.father.fire('monthChange', {
+                            date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
+                        });
+                    }
+                };
+                bindEventTev();
+                if (cc.father.navigator) {
+                    tev = cc.EV[3] = {
+                        target:con.one('a.ks-title'),
+                        type:'click',
+                        fn:function(e) {
+                            try {
+                                cc.timmer.hidePopup();
+                                e.preventDefault();
+                            } catch(exp) {
+                            }
                             e.target = Node(e.target);
-                            if (e.keyCode == 38) {//up
-                                e.target.val(Number(e.target.val()) + 1);
-                                e.target[0].select();
-                            }
-                            if (e.keyCode == 40) {//down
-                                e.target.val(Number(e.target.val()) - 1);
-                                e.target[0].select();
-                            }
-                            if (e.keyCode == 13) {//enter
-                                var _month = con.one('.ks-setime').one('select').val();
-                                var _year = con.one('.ks-setime').one('input').val();
+                            var setime_node = con.one('.ks-setime');
+                            setime_node.html('');
+                            var in_str = cc.father._templetShow(cc.nav_html, {
+                                the_month:cc.month + 1,
+                                the_year:cc.year
+                            });
+                            setime_node.html(in_str);
+                            setime_node.removeClass('hidden');
+                            con.one('input').on('keydown', function(e) {
+                                e.target = Node(e.target);
+                                if (e.keyCode == 38) {//up
+                                    e.target.val(Number(e.target.val()) + 1);
+                                    e.target[0].select();
+                                }
+                                if (e.keyCode == 40) {//down
+                                    e.target.val(Number(e.target.val()) - 1);
+                                    e.target[0].select();
+                                }
+                                if (e.keyCode == 13) {//enter
+                                    var _month = con.one('.ks-setime').one('select').val();
+                                    var _year = con.one('.ks-setime').one('input').val();
+                                    con.one('.ks-setime').addClass('hidden');
+                                    if (!cc.Verify().isYear(_year)) {
+                                        return;
+                                    }
+                                    if (!cc.Verify().isMonth(_month)) {
+                                        return;
+                                    }
+                                    cc.father.render({
+                                        date:new Date(_year + '/' + _month + '/01')
+                                    });
+                                    cc.father.fire('monthChange', {
+                                        date:new Date(_year + '/' + _month + '/01')
+                                    });
+                                }
+                            });
+                        }
+                    };
+                    bindEventTev();
+                    tev = cc.EV[4] = {
+                        target:con.one('.ks-setime'),
+                        type:'click',
+                        fn:function(e) {
+                            e.preventDefault();
+                            e.target = Node(e.target);
+                            if (e.target.hasClass('ok')) {
+                                var _month = con.one('.ks-setime').one('select').val(),
+                                    _year = con.one('.ks-setime').one('input').val();
                                 con.one('.ks-setime').addClass('hidden');
                                 if (!cc.Verify().isYear(_year)) {
                                     return;
@@ -26600,32 +26748,12 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                                 cc.father.fire('monthChange', {
                                     date:new Date(_year + '/' + _month + '/01')
                                 });
+                            } else if (e.target.hasClass('cancel')) {
+                                con.one('.ks-setime').addClass('hidden');
                             }
-                        });
-                    });
-                    cc.EV[4] = con.one('.ks-setime').on('click', function(e) {
-                        e.preventDefault();
-                        e.target = Node(e.target);
-                        if (e.target.hasClass('ok')) {
-                            var _month = con.one('.ks-setime').one('select').val(),
-                                _year = con.one('.ks-setime').one('input').val();
-                            con.one('.ks-setime').addClass('hidden');
-                            if (!cc.Verify().isYear(_year)) {
-                                return;
-                            }
-                            if (!cc.Verify().isMonth(_month)) {
-                                return;
-                            }
-                            cc.father.render({
-                                date:new Date(_year + '/' + _month + '/01')
-                            });
-                            cc.father.fire('monthChange', {
-                                date:new Date(_year + '/' + _month + '/01')
-                            });
-                        } else if (e.target.hasClass('cancel')) {
-                            con.one('.ks-setime').addClass('hidden');
                         }
-                    });
+                    };
+                    bindEventTev();
                 }
                 return this;
 
@@ -26674,7 +26802,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 
 
                     } else if ((cc.father.range.start !== null && cc.father.range.end !== null) && //日期选择范围
-                       (  _td_s.getTime() >= cc.father._showdate(1,cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1,cc.father.range.end).getTime())) {
+                        (  _td_s.getTime() >= cc.father._showdate(1, cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1, cc.father.range.end).getTime())) {
 
                         if (i == (startweekday + (new Date()).getDate() - 1) &&
                             (new Date()).getFullYear() == cc.year &&

@@ -18,9 +18,9 @@ KISSY.add('template/base', function(S) {
         KS_TEMPL_STAT_PARAM_REG = new RegExp(KS_TEMPL_STAT_PARAM, "g"),
         KS_TEMPL = 'KS_TEMPL',
         KS_DATA = 'KS_DATA_',
-        KS_EMPTY = '',
         KS_AS = 'as',
 
+        // note : double quote for generated code
         PREFIX = '");',
         SUFFIX = KS_TEMPL + '.push("',
 
@@ -36,10 +36,12 @@ KISSY.add('template/base', function(S) {
             PARSER_RENDER_ERROR + '" + e.message]}};return ' +
             KS_TEMPL + '.join("");',
 
+        // restore double quote in logic template variable
         restoreQuote = function(str) {
             return str.replace(/\\"/g, '"');
         },
 
+        // escape double quote in template
         escapeQuote = function(str) {
             return str.replace(/"/g, '\\"');
         },
@@ -52,14 +54,17 @@ KISSY.add('template/base', function(S) {
                 _empty_index;
             return escapeQuote(trim(tpl)
                 .replace(/[\r\t\n]/g, ' ')
-                // escape escape ...
+                // escape escape ... . in case \ is consumed when run tpl parser function
+                // '{{y}}\\x{{/y}}' =>tmpl.push('\x'); => tmpl.push('\\x');
                 .replace(/\\/g, '\\\\'))
                 .replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,
                 function(all, expr, body) {
-                    _parser = KS_EMPTY;
+                    _parser = "";
+                    // must restore quote , if str is used as code directly
+                    body = restoreQuote(trim(body));
+                    //body = trim(body);
                     // is an expression
                     if (expr) {
-                        body = trim(body);
                         _empty_index = body.indexOf(' ');
                         body = _empty_index === -1 ?
                             [ body, '' ] :
@@ -76,9 +81,9 @@ KISSY.add('template/base', function(S) {
                         if (opStatement && tagStartEnd[expr]) {
                             // get expression definition function/string
                             fn = opStatement[tagStartEnd[expr]];
-                            _parser = S.isFunction(fn) ?
-                                restoreQuote(fn.apply(this, args.split(/\s+/))) :
-                                restoreQuote(fn.replace(KS_TEMPL_STAT_PARAM_REG, args));
+                            _parser = String(S.isFunction(fn) ?
+                                fn.apply(this, args.split(/\s+/)) :
+                                fn.replace(KS_TEMPL_STAT_PARAM_REG, args));
                         }
                     }
                     // return array directly
@@ -87,7 +92,7 @@ KISSY.add('template/base', function(S) {
                             '.push(' +
                             // prevent variable undefined error when look up in with ,simple variable substitution
                             // with({}){alert(x);} => ReferenceError: x is not defined
-                            'typeof '+body+'==="undefined"?"":'+restoreQuote(body) +
+                            'typeof (' + body + ') ==="undefined"?"":' + body +
                             ');';
                     }
                     return PREFIX + _parser + SUFFIX;
@@ -151,18 +156,18 @@ KISSY.add('template/base', function(S) {
                 ];
 
             try {
-                func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                func = new Function(_ks_data, _parser.join(""));
             } catch (e) {
                 _parser[3] = PREFIX + SUFFIX +
                     PARSER_SYNTAX_ERROR + ',' +
                     e.message + PREFIX + SUFFIX;
-                func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                func = new Function(_ks_data, _parser.join(""));
             }
 
             templateCache[tpl] = {
                 name: _ks_data,
                 o:o,
-                parser: _parser.join(KS_EMPTY),
+                parser: _parser.join(""),
                 render: func
             };
         }

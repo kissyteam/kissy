@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Dec 2 12:59
+build time: Dec 8 01:53
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Dec 2 12:59
          */
         version: '1.20dev',
 
-        buildTime:'20111202125858',
+        buildTime:'20111208015257',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2256,6 +2256,48 @@ build time: Dec 2 12:59
     var LOADED = data.LOADED,
         ATTACHED = data.ATTACHED;
 
+
+    /**
+     * whether eists cyclic dependency
+     * @param mod
+     * @param requires
+     * @param path dependency stack
+     */
+    function cyclicChecksInternal(self, mod, requires, path) {
+        if (requires) {
+            for (var i = 0; i < requires.length; i++) {
+                if (_cyclicChecks(self, mod, requires[i], path)) {
+                    path.unshift(requires[i]);
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    function cyclicCheck(self, mod) {
+        var path = [];
+        cyclicChecksInternal(self, mod, mod.requires, path);
+        path.unshift(mod.name);
+        return path;
+    }
+
+    function _cyclicChecks(self, mod, requireModName, path) {
+        /**
+         * max depth of recursive stack
+         * one child of ancestor's name is same with mod name
+         */
+        if (requireModName == mod.name) {
+            return 1;
+        }
+        var mods = self.Env.mods,
+            rmod = mods[requireModName];
+        if (rmod && cyclicChecksInternal(self, mod, rmod.requires, path)) {
+            return 1;
+        }
+        return 0;
+    }
+
     S.mix(loader, {
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
@@ -2352,10 +2394,13 @@ build time: Dec 2 12:59
                 //添加模块定义
                 mods[modName] = mod;
             }
+
             mod.name = modName;
+
             if (mod && mod.status === ATTACHED) {
                 return;
             }
+
             // 先从 global 里取
             if (cfg.global) {
                 self.__mixMod(modName, cfg.global);
@@ -2369,22 +2414,47 @@ build time: Dec 2 12:59
          */
         __attach: function(mod, callback, cfg) {
             var self = this,
+                r,
+                rMod,
+                i,
+                attached = 0,
                 mods = self.Env.mods,
-                //复制一份当前的依赖项出来，防止add后修改！
+                //复制一份当前的依赖项出来，防止 add 后修改！
                 requires = (mod['requires'] || []).concat();
+
             mod['requires'] = requires;
 
+            function markAndCheckCyclic() {
+                if (S.Config.debug) {
+                    // one mod only need to check its dependency once
+                    if (mod.cyclicCheck) {
+                        return;
+                    }
+                    // S.log("check cyclic for mod : " + mod.name);
+                    var path = cyclicCheck(self, mod);
+                    if (path.length > 1) {
+                        S.error("cyclic dependency : " + path.join("->"));
+                    }
+                    // tag this module
+                    mod.cyclicCheck = 1;
+                }
+            }
+
+            // incase required mods and mod scripts is loaded statically
+            if (mod.fns && mod.fns.length) {
+                markAndCheckCyclic();
+            }
+
             // attach all required modules
-            S.each(requires, function(r, i, requires) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, r);
-                var rMod = mods[r];
+            for (i = 0; i < requires.length; i++) {
+                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
                     self.__attachModByName(r, fn, cfg);
                 }
-            });
-
+            }
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
@@ -2394,28 +2464,37 @@ build time: Dec 2 12:59
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'];
+                var newRequires = mod['requires'],needToLoad = [];
 
                 //本模块下载成功后串行下载 require
-                S.each(newRequires, function(r, i, newRequires) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, r);
+
+                for (i = 0; i < newRequires.length; i++) {
+                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod && rMod.status === ATTACHED
+                    if (rMod &&
+                        rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, cfg);
+                        needToLoad.push(r);
                     }
-                });
+                }
 
-                fn();
+                // else check on load
+                markAndCheckCyclic();
+
+                if (needToLoad.length) {
+                    for (i = 0; i < needToLoad.length; i++) {
+                        self.__attachModByName(needToLoad[i], fn, cfg);
+                    }
+                } else {
+                    fn();
+                }
             }, cfg);
-
-            var attached = false;
 
             function fn() {
                 if (!attached &&
@@ -2425,7 +2504,7 @@ build time: Dec 2 12:59
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
-                        attached = true;
+                        attached = 1;
                         callback();
                     }
                 }
@@ -2787,67 +2866,67 @@ build time: Dec 2 12:59
 /**
  combined files : 
 
-D:\code\kissy_git\kissy\src\ua\base.js
-D:\code\kissy_git\kissy\src\ua\extra.js
-D:\code\kissy_git\kissy\src\ua.js
-D:\code\kissy_git\kissy\src\dom\base.js
-D:\code\kissy_git\kissy\src\dom\attr.js
-D:\code\kissy_git\kissy\src\dom\class.js
-D:\code\kissy_git\kissy\src\dom\create.js
-D:\code\kissy_git\kissy\src\dom\data.js
-D:\code\kissy_git\kissy\src\dom\insertion.js
-D:\code\kissy_git\kissy\src\dom\offset.js
-D:\code\kissy_git\kissy\src\dom\style.js
-D:\code\kissy_git\kissy\src\dom\selector.js
-D:\code\kissy_git\kissy\src\dom\style-ie.js
-D:\code\kissy_git\kissy\src\dom\traversal.js
-D:\code\kissy_git\kissy\src\dom.js
-D:\code\kissy_git\kissy\src\event\keycodes.js
-D:\code\kissy_git\kissy\src\event\object.js
-D:\code\kissy_git\kissy\src\event\utils.js
-D:\code\kissy_git\kissy\src\event\base.js
-D:\code\kissy_git\kissy\src\event\target.js
-D:\code\kissy_git\kissy\src\event\focusin.js
-D:\code\kissy_git\kissy\src\event\hashchange.js
-D:\code\kissy_git\kissy\src\event\valuechange.js
-D:\code\kissy_git\kissy\src\event\delegate.js
-D:\code\kissy_git\kissy\src\event\mouseenter.js
-D:\code\kissy_git\kissy\src\event\submit.js
-D:\code\kissy_git\kissy\src\event\change.js
-D:\code\kissy_git\kissy\src\event\mousewheel.js
-D:\code\kissy_git\kissy\src\event.js
-D:\code\kissy_git\kissy\src\node\base.js
-D:\code\kissy_git\kissy\src\node\attach.js
-D:\code\kissy_git\kissy\src\node\override.js
-D:\code\kissy_git\kissy\src\anim\easing.js
-D:\code\kissy_git\kissy\src\anim\manager.js
-D:\code\kissy_git\kissy\src\anim\fx.js
-D:\code\kissy_git\kissy\src\anim\queue.js
-D:\code\kissy_git\kissy\src\anim\base.js
-D:\code\kissy_git\kissy\src\anim\color.js
-D:\code\kissy_git\kissy\src\anim.js
-D:\code\kissy_git\kissy\src\node\anim.js
-D:\code\kissy_git\kissy\src\node.js
-D:\code\kissy_git\kissy\src\json\json2.js
-D:\code\kissy_git\kissy\src\json.js
-D:\code\kissy_git\kissy\src\ajax\form-serializer.js
-D:\code\kissy_git\kissy\src\ajax\xhrobject.js
-D:\code\kissy_git\kissy\src\ajax\base.js
-D:\code\kissy_git\kissy\src\ajax\xhrbase.js
-D:\code\kissy_git\kissy\src\ajax\subdomain.js
-D:\code\kissy_git\kissy\src\ajax\xdr.js
-D:\code\kissy_git\kissy\src\ajax\xhr.js
-D:\code\kissy_git\kissy\src\ajax\script.js
-D:\code\kissy_git\kissy\src\ajax\jsonp.js
-D:\code\kissy_git\kissy\src\ajax\form.js
-D:\code\kissy_git\kissy\src\ajax\iframe-upload.js
-D:\code\kissy_git\kissy\src\ajax.js
-D:\code\kissy_git\kissy\src\base\attribute.js
-D:\code\kissy_git\kissy\src\base\base.js
-D:\code\kissy_git\kissy\src\base.js
-D:\code\kissy_git\kissy\src\cookie\base.js
-D:\code\kissy_git\kissy\src\cookie.js
-D:\code\kissy_git\kissy\src\core.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua/extra.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/attr.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/class.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/create.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/data.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/insertion.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/offset.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/style.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/selector.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/style-ie.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/traversal.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/keycodes.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/object.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/utils.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/target.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/focusin.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/hashchange.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/valuechange.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/delegate.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/mouseenter.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/submit.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/change.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/mousewheel.js
+/Users/yiminghe/code/kissy_git/kissy/src/event.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/attach.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/override.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/easing.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/manager.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/fx.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/queue.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/color.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/anim.js
+/Users/yiminghe/code/kissy_git/kissy/src/node.js
+/Users/yiminghe/code/kissy_git/kissy/src/json/json2.js
+/Users/yiminghe/code/kissy_git/kissy/src/json.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/form-serializer.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrobject.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrbase.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/subdomain.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xdr.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhr.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/script.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/jsonp.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/form.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/iframe-upload.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax.js
+/Users/yiminghe/code/kissy_git/kissy/src/base/attribute.js
+/Users/yiminghe/code/kissy_git/kissy/src/base/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/cookie/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/cookie.js
+/Users/yiminghe/code/kissy_git/kissy/src/core.js
 **/
 
 /**
@@ -9234,9 +9313,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = makeArray(arguments);
-            args.unshift(this);
-            return Event[k].apply(Event, args);
+            var self=this,
+                args = makeArray(arguments);
+            args.unshift(self);
+            Event[k].apply(Event, args);
+            return self;
         }
     });
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 8 17:11
 */
 /**
  * intervein elements dynamically
@@ -111,6 +111,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
     function adjustItem(itemRaw) {
         var self = this,
+            effect = self.get("effect"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -138,6 +139,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         });
         /*不在容器里，就加上*/
         if (!container.contains(item)) {
+            if (effect && effect.effect == "fadeIn") {
+                item.css("opacity", 0);
+            }
             container.append(item);
         }
         curColHeights[dest] += item.outerHeight(true);
@@ -202,10 +206,20 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                 container = self.get("container"),
                 item = adjustItem.call(self, itemRaw),
                 effect = self.get("effect");
-            if (!effect.effect) {
+            if (!effect.effect ||
+                effect.effect !== "fadeIn") {
                 return;
             }
-            item[effect.effect](effect.duration, undefined, effect.easing);
+            // only allow fadeIn temporary
+            item.animate({
+                opacity:1
+            }, {
+                duration:effect.duration,
+                easing:effect.easing,
+                complete:function() {
+                    item.css("opacity", "");
+                }
+            });
         },
 
         destroy:function() {

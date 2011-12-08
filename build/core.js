@@ -1,67 +1,67 @@
 ﻿/**
  combined files : 
 
-D:\code\kissy_git\kissy\src\ua\base.js
-D:\code\kissy_git\kissy\src\ua\extra.js
-D:\code\kissy_git\kissy\src\ua.js
-D:\code\kissy_git\kissy\src\dom\base.js
-D:\code\kissy_git\kissy\src\dom\attr.js
-D:\code\kissy_git\kissy\src\dom\class.js
-D:\code\kissy_git\kissy\src\dom\create.js
-D:\code\kissy_git\kissy\src\dom\data.js
-D:\code\kissy_git\kissy\src\dom\insertion.js
-D:\code\kissy_git\kissy\src\dom\offset.js
-D:\code\kissy_git\kissy\src\dom\style.js
-D:\code\kissy_git\kissy\src\dom\selector.js
-D:\code\kissy_git\kissy\src\dom\style-ie.js
-D:\code\kissy_git\kissy\src\dom\traversal.js
-D:\code\kissy_git\kissy\src\dom.js
-D:\code\kissy_git\kissy\src\event\keycodes.js
-D:\code\kissy_git\kissy\src\event\object.js
-D:\code\kissy_git\kissy\src\event\utils.js
-D:\code\kissy_git\kissy\src\event\base.js
-D:\code\kissy_git\kissy\src\event\target.js
-D:\code\kissy_git\kissy\src\event\focusin.js
-D:\code\kissy_git\kissy\src\event\hashchange.js
-D:\code\kissy_git\kissy\src\event\valuechange.js
-D:\code\kissy_git\kissy\src\event\delegate.js
-D:\code\kissy_git\kissy\src\event\mouseenter.js
-D:\code\kissy_git\kissy\src\event\submit.js
-D:\code\kissy_git\kissy\src\event\change.js
-D:\code\kissy_git\kissy\src\event\mousewheel.js
-D:\code\kissy_git\kissy\src\event.js
-D:\code\kissy_git\kissy\src\node\base.js
-D:\code\kissy_git\kissy\src\node\attach.js
-D:\code\kissy_git\kissy\src\node\override.js
-D:\code\kissy_git\kissy\src\anim\easing.js
-D:\code\kissy_git\kissy\src\anim\manager.js
-D:\code\kissy_git\kissy\src\anim\fx.js
-D:\code\kissy_git\kissy\src\anim\queue.js
-D:\code\kissy_git\kissy\src\anim\base.js
-D:\code\kissy_git\kissy\src\anim\color.js
-D:\code\kissy_git\kissy\src\anim.js
-D:\code\kissy_git\kissy\src\node\anim.js
-D:\code\kissy_git\kissy\src\node.js
-D:\code\kissy_git\kissy\src\json\json2.js
-D:\code\kissy_git\kissy\src\json.js
-D:\code\kissy_git\kissy\src\ajax\form-serializer.js
-D:\code\kissy_git\kissy\src\ajax\xhrobject.js
-D:\code\kissy_git\kissy\src\ajax\base.js
-D:\code\kissy_git\kissy\src\ajax\xhrbase.js
-D:\code\kissy_git\kissy\src\ajax\subdomain.js
-D:\code\kissy_git\kissy\src\ajax\xdr.js
-D:\code\kissy_git\kissy\src\ajax\xhr.js
-D:\code\kissy_git\kissy\src\ajax\script.js
-D:\code\kissy_git\kissy\src\ajax\jsonp.js
-D:\code\kissy_git\kissy\src\ajax\form.js
-D:\code\kissy_git\kissy\src\ajax\iframe-upload.js
-D:\code\kissy_git\kissy\src\ajax.js
-D:\code\kissy_git\kissy\src\base\attribute.js
-D:\code\kissy_git\kissy\src\base\base.js
-D:\code\kissy_git\kissy\src\base.js
-D:\code\kissy_git\kissy\src\cookie\base.js
-D:\code\kissy_git\kissy\src\cookie.js
-D:\code\kissy_git\kissy\src\core.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua/extra.js
+/Users/yiminghe/code/kissy_git/kissy/src/ua.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/attr.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/class.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/create.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/data.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/insertion.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/offset.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/style.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/selector.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/style-ie.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom/traversal.js
+/Users/yiminghe/code/kissy_git/kissy/src/dom.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/keycodes.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/object.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/utils.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/target.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/focusin.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/hashchange.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/valuechange.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/delegate.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/mouseenter.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/submit.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/change.js
+/Users/yiminghe/code/kissy_git/kissy/src/event/mousewheel.js
+/Users/yiminghe/code/kissy_git/kissy/src/event.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/attach.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/override.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/easing.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/manager.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/fx.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/queue.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim/color.js
+/Users/yiminghe/code/kissy_git/kissy/src/anim.js
+/Users/yiminghe/code/kissy_git/kissy/src/node/anim.js
+/Users/yiminghe/code/kissy_git/kissy/src/node.js
+/Users/yiminghe/code/kissy_git/kissy/src/json/json2.js
+/Users/yiminghe/code/kissy_git/kissy/src/json.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/form-serializer.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrobject.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhrbase.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/subdomain.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xdr.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/xhr.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/script.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/jsonp.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/form.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax/iframe-upload.js
+/Users/yiminghe/code/kissy_git/kissy/src/ajax.js
+/Users/yiminghe/code/kissy_git/kissy/src/base/attribute.js
+/Users/yiminghe/code/kissy_git/kissy/src/base/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/cookie/base.js
+/Users/yiminghe/code/kissy_git/kissy/src/cookie.js
+/Users/yiminghe/code/kissy_git/kissy/src/core.js
 **/
 
 /**
@@ -6448,9 +6448,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = makeArray(arguments);
-            args.unshift(this);
-            return Event[k].apply(Event, args);
+            var self=this,
+                args = makeArray(arguments);
+            args.unshift(self);
+            Event[k].apply(Event, args);
+            return self;
         }
     });
 
