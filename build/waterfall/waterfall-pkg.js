@@ -160,6 +160,7 @@ KISSY.add("waterfall", function(S, undefined) {
 
     function adjustItem(itemRaw) {
         var self = this,
+            effect = self.get("effect"),
             item = new S.Node(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -188,6 +189,9 @@ KISSY.add("waterfall", function(S, undefined) {
         });
         /*不在容器里，就加上*/
         if (!container.contains(item)) {
+            if (effect && effect.effect == "fadeIn") {
+                item.css("opacity", 0);
+            }
             container.append(item);
         }
         curColHeights[dest] += item[0].offsetHeight + (parseInt(item.css('marginTop')) || 0) + (parseInt(item.css('marginBottom')) || 0);
@@ -217,7 +221,8 @@ KISSY.add("waterfall", function(S, undefined) {
         adjust:function(callback) {
             S.log("waterfall:adjust");
             var self = this,
-                items = self.get("container").all(".ks-waterfall");
+                items = self.get("container").all(".ks-waterfall"),
+                count = items.length;
             /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
             /* 正在调整中，取消上次调整，开始这次调整 */
             if (self.isAdjusting()) {
@@ -225,15 +230,18 @@ KISSY.add("waterfall", function(S, undefined) {
             }
             /*计算容器宽度等信息*/
             recalculate.call(self);
-            return self._adjuster = timedChunk(items, adjustItem, self, function() {
+            return self._adjuster = timedChunk(items, self._addItem, self, function() {
                 self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
                 self._adjuster = 0;
                 callback && callback.call(self);
+
+                count && self.fire('adjustComplete');
             });
         },
 
         addItems:function(items, callback) {
-            var self = this;
+            var self = this,
+                count = items.length;
 
             /* 正在调整中，直接这次加，和调整的节点一起处理 */
             /* 正在加，直接这次加，一起处理 */
@@ -245,6 +253,8 @@ KISSY.add("waterfall", function(S, undefined) {
                         self.get("curColHeights")));
                     self._adder = 0;
                     callback && callback.call(self);
+
+                    count && self.fire('addComplete');
                 });
 
             return self._adder;
@@ -256,10 +266,20 @@ KISSY.add("waterfall", function(S, undefined) {
                 container = self.get("container"),
                 item = adjustItem.call(self, itemRaw),
                 effect = self.get("effect");
-            if (!effect.effect) {
+            if (!effect.effect ||
+                effect.effect !== "fadeIn") {
                 return;
             }
-            item[effect.effect](effect.duration, undefined, effect.easing);
+            // only allow fadeIn temporary
+            item.animate({
+                opacity:1
+            }, {
+                duration:effect.duration,
+                easing:effect.easing || 'easeNone',
+                complete:function() {
+                    item.css("opacity", "");
+                }
+            });
         },
 
         destroy:function() {
