@@ -138,9 +138,18 @@
                 });
             },
             minColCount:2,
-            colWidth:235
+            colWidth:235,
+            effect: {
+                effect: 'slideDown'
+            }
         });
 
+        waterFall.on('adjustComplete', function() {
+            S.log('after adjust complete!');
+        });
+        waterFall.on('addComplete', function() {
+            S.log('after add complete!');
+        });
         S.all("#uninstall").on("click", function() {
             waterFall.destroy();
         });

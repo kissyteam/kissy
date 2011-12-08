@@ -136,6 +136,10 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             container.append(item);
         }
         curColHeights[dest] += item.outerHeight(true);
+
+        var effect = self.get("effect");
+        if (effect.effect) item[effect.effect](effect.duration, undefined, effect.easing);
+
         return item;
     }
 
@@ -170,6 +174,8 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                 self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
                 self._adjuster = 0;
                 callback && callback.call(self);
+
+                self.fire('adjustComplete');
             });
         },
 
@@ -186,21 +192,15 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                         self.get("curColHeights")));
                     self._adder = 0;
                     callback && callback.call(self);
+
+                    self.fire('addComplete');
                 });
 
             return self._adder;
         },
 
         _addItem:function(itemRaw) {
-            var self = this,
-                curColHeights = self.get("curColHeights"),
-                container = self.get("container"),
-                item = adjustItem.call(self, itemRaw),
-                effect = self.get("effect");
-            if (!effect.effect) {
-                return;
-            }
-            item[effect.effect](effect.duration, undefined, effect.easing);
+            adjustItem.call(this, itemRaw);
         },
 
         destroy:function() {
