@@ -2,8 +2,19 @@ KISSY.use("template", function(S, T) {
 
     describe('template', function() {
 
-        it("slash should works", function() {
+        it("slash and quote should be escaped", function() {
             expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
+        });
+
+        it("should ignore undefined variable", function() {
+            expect(T('{{#if typeof a === "undefined" || a === "a"}}{{b}}{{/if}}').render({})).toBe('');
+        });
+
+        // KS_TEMPL.push(typeof (item.x||item.y) ==="undefined"?"":item.x||item.y)
+        it("should support undefined variable in object", function() {
+            expect(T('{{item.x||item.y}}').render({
+                item:{x:0,y:2}
+            })).toBe('2');
         });
 
         describe('variable', function() { // {{{

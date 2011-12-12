@@ -19,7 +19,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
          * @private
          */
         _init: function(selector, config) {
-            var self = this,con = Node.one(selector);
+            var self = this,con = $(selector);
             self.id = self.C_Id = self._stamp(con);
             self._buildParam(config);
 
@@ -33,7 +33,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             } else {
                 self.trigger = con;
                 self.con = new Node('<div>');
-                Node.one('body').append(self.con);
+                $(document.body).append(self.con);
                 self.C_Id = self._stamp(self.con);
                 self.con.css({
                     'top':'0px',
@@ -122,18 +122,23 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
          * @private
          */
         _buildEvent: function() {
-            var self = this;
+            var self = this,tev,i;
             if (!self.popup) {
                 return this;
             }
             //点击空白
             //flush event
-            for (var i = 0; i < self.EV.length; i++) {
-                if (self.EV[i] !== undefined) {
-                    self.EV[i].detach();
+            S.each(self.EV, function(tev) {
+                if (tev) {
+                    tev.target.detach(tev.type, tev.fn);
                 }
-            }
-            self.EV[0] = Node.one('body').on('click', function(e) {
+            });
+            self.EV = self.EV || [];
+            tev = self.EV[0] = {
+                target:$(document),
+                type:'click'
+            };
+            tev.fn = function(e) {
                 var target = $(e.target);
                 //点击到日历上
                 if (target.attr('id') === self.C_Id) {
@@ -148,7 +153,9 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     return;
                 }
 
-                if (self.con.css('visibility') == 'hidden') return;
+                if (self.con.css('visibility') == 'hidden') {
+                    return;
+                }
                 var inRegion = function(dot, r) {
                     return dot[0] > r[0].x
                         && dot[0] < r[1].x
@@ -178,34 +185,38 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 ])) {
                     self.hide();
                 }
-            });
+            };
+            tev.target.on(tev.type, tev.fn);
             //点击触点
             for (i = 0; i < self.triggerType.length; i++) {
+                tev = self.EV[i + 1] = {
+                    target: $('#' + self.id),
+                    type: self.triggerType[i],
+                    fn: function(e) {
+                        e.target = $(e.target);
+                        e.preventDefault();
+                        //如果focus和click同时存在的hack
 
-                self.EV[1] = Node.one('#' + self.id).on(self.triggerType[i], function(e) {
-                    e.target = $(e.target);
-                    e.preventDefault();
-                    //如果focus和click同时存在的hack
-
-                    var a = self.triggerType;
-                    if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
-                        if (e.type == 'focus') {
+                        var a = self.triggerType;
+                        if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
+                            if (e.type == 'focus') {
+                                self.toggle();
+                            }
+                        } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
+                            if (e.type == 'click') {
+                                self.toggle();
+                            }
+                        } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
+                            setTimeout(function() {//为了跳过document.onclick事件
+                                self.toggle();
+                            }, 170);
+                        } else {
                             self.toggle();
                         }
-                    } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
-                        if (e.type == 'click') {
-                            self.toggle();
-                        }
-                    } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
-                        setTimeout(function() {//为了跳过document.onclick事件
-                            self.toggle();
-                        }, 170);
-                    } else {
-                        self.toggle();
+
                     }
-
-                });
-
+                };
+                tev.target.on(tev.type, tev.fn);
             }
             return this;
         },
@@ -362,7 +373,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         _handleDate: function() {
             var self = this,
                 date = self.date;
-            self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
+            self['weekday'] = date.getDay() + 1;//星期几 //指定日期是星期几
             self.day = date.getDate();//几号
             self.month = date.getMonth();//月份
             self.year = date.getFullYear();//年份
@@ -458,6 +469,10 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
 }, { requires: ['node',"event"] });
 
 /**
+ * 2011-12-06 by yiminghe@gmail.com
+ *  - 全局绑定放 document
+ *  - fix 清除事件调用
+ *
  * 2010-09-09 by lijing00333@163.com - 拔赤
  *     - 将基于YUI2/3的Calendar改为基于KISSY
  *     - 增加起始日期（星期x）的自定义
