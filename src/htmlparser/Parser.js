@@ -7,6 +7,7 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
     function Parser(html, opts) {
         // fake root node
         html = S.trim(html);
+        this.originalHtml = html;
         // only allow condition
         // 1. start with <!doctype
         // 2. start with <!html
@@ -48,7 +49,13 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
 
             post_process(doc);
 
-            return doc.childNodes;
+            var originalHtml = this.originalHtml;
+
+            if (/^(<!doctype|<html|<body)/i.test(originalHtml)) {
+                return doc.childNodes;
+            } else {
+                return body.childNodes;
+            }
         },
 
         parse:function() {
@@ -139,12 +146,14 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
             level--;
         }
         var r,childNodes = root.childNodes;
-        for (var i = 0; i < childNodes.length; i++) {
-            if (childNodes[i].tagName === tagName) {
-                return childNodes[i];
-            }
-            if (r = findTagWithName(childNodes[i], tagName, level)) {
-                return r;
+        if (childNodes) {
+            for (var i = 0; i < childNodes.length; i++) {
+                if (childNodes[i].tagName === tagName) {
+                    return childNodes[i];
+                }
+                if (r = findTagWithName(childNodes[i], tagName, level)) {
+                    return r;
+                }
             }
         }
         return 0;
