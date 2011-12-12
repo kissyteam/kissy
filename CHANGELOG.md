@@ -17,7 +17,9 @@ History:
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
 
-### v1.1.6 -> v1.2.0 (2011/11/24)
+### v1.1.6 -> v1.2.0 (2011/12/12)
+ - [+] 详见 http://docs.kissyui.com/docs/html/changelog/1.2.0.html
+
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
@@ -44,8 +46,8 @@ History:
  - [+] event 增加 valuechange ,hashchange 事件兼容处理
  - [*] Event.detach = Event.remove
  - [x] 修正 focusin/out 事件触发顺序,子元素先，父元素后
- - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
- - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
+ - [!] 无论是通过 Event.on 还是 S.one("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
+ - [!] 无论是通过 Event.on 还是 S.one("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
  - [!] 字符串数组支持变化，例如 Event.on(['#xx','#yy'],...) 改写做 Event.on('#xx,#yy',...);
  - [+] 自定义事件增加冒泡支持，参见 publish api
  - [+] 兼容 mousewheel 事件：http://docs.kissyui.com/docs/html/api/core/event/mousewheel.html
