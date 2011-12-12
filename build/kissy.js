@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Dec 8 18:25
 */
@@ -87,7 +87,7 @@ build time: Dec 8 18:25
          * The version of the library.
          * @type {String}
          */
-        version: '1.20dev',
+        version: '1.20',
 
         buildTime:'20111208182514',
 

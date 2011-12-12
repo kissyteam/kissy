@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Dec 8 18:25
 */
@@ -87,7 +87,7 @@ build time: Dec 8 18:25
          * The version of the library.
          * @type {String}
          */
-        version: '1.20dev',
+        version: '1.20',
 
         buildTime:'20111208182514',
 
@@ -13354,7 +13354,7 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
 
 KISSY.use('core');
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -14779,7 +14779,7 @@ KISSY.add("sizzle", function(S, sizzle) {
     requires:["sizzle/impl"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:38
 */
@@ -15285,7 +15285,7 @@ KISSY.add("datalazyload", function(S, D) {
     requires:["datalazyload/impl"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Dec 8 16:21
 */
@@ -15535,7 +15535,7 @@ KISSY.add("template", function(S, T) {
     requires:["template/base","template/node"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -16054,7 +16054,7 @@ KISSY.add("flash", function(S, F) {
     requires:["flash/base","flash/embed"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -17616,7 +17616,7 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
         "dd/scroll"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -17810,7 +17810,7 @@ KISSY.add("resizable", function(S, R) {
     requires:["resizable/base"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -19899,7 +19899,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         "uibase/stdmodrender"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:38
 */
@@ -20799,7 +20799,7 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
         'component/decoratechild']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -23404,7 +23404,7 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
     ]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -23915,7 +23915,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
     requires:["overlay/overlay","overlay/overlayrender","overlay/dialog","overlay/dialogrender", "overlay/popup"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -25105,7 +25105,7 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
  *                   2. 改进上下方向键选择item的代码逻辑
  */
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -25739,7 +25739,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
     "imagezoom/autorender"
 ]});
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Dec 8 00:57
 */
@@ -27072,7 +27072,7 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
     requires:["calendar/base","calendar/page","calendar/time","calendar/date"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -28437,7 +28437,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     ]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:38
 */
@@ -28677,7 +28677,7 @@ KISSY.add("button", function(S, Button, Render, Split) {
     requires:['button/base','button/customrender','button/split']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -29214,7 +29214,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
         'menubutton/option']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -30159,7 +30159,7 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
     requires:["tree/tree","tree/basenode","tree/checknode","tree/checktree"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Dec 8 17:11
 */
@@ -30510,7 +30510,7 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
     requires:['waterfall/base','waterfall/loader']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 28 12:39
 */
@@ -32033,7 +32033,7 @@ KISSY.add("validation", function(S, Validation) {
 	}
 );
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
 build time: Nov 30 19:02
 */
