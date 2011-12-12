@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 8 18:36
 */
 /**
  * Switchable
@@ -1591,8 +1591,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
     S.mix(Switchable.Config, {
         effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
         duration: .5, // 动画的时长
-        easing: 'easeNone', // easing method
-        nativeAnim: undefined
+        easing: 'easeNone' // easing method
     });
 
     /**
@@ -1651,7 +1650,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                         DOM.css(toEl, Z_INDEX, 9);
                         DOM.css(fromEl, Z_INDEX, 1);
                         callback && callback();
-                    }, cfg.nativeAnim).run();
+                    }).run();
                 self.anim.toEl = toEl;
                 self.anim.fromEl = fromEl;
             } else {
@@ -1681,7 +1680,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     function() {
                         self.anim = undefined; // free
                         callback && callback();
-                    }, cfg.nativeAnim).run();
+                    }).run();
             } else {
                 DOM.css(self.content, props);
                 callback && callback();
@@ -1863,7 +1862,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
                     // free
                     self.anim = undefined;
                     callback && callback();
-                }, cfg.nativeAnim).run();
+                }).run();
         } else {
             // 初始化
             DOM.css(self.content, props);

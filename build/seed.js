@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 13:29
+build time: Dec 8 18:25
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 28 13:29
          */
         version: '1.20dev',
 
-        buildTime:'20111128132929',
+        buildTime:'20111208182514',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2352,10 +2352,13 @@ build time: Nov 28 13:29
                 //添加模块定义
                 mods[modName] = mod;
             }
+
             mod.name = modName;
+
             if (mod && mod.status === ATTACHED) {
                 return;
             }
+
             // 先从 global 里取
             if (cfg.global) {
                 self.__mixMod(modName, cfg.global);
@@ -2369,22 +2372,60 @@ build time: Nov 28 13:29
          */
         __attach: function(mod, callback, cfg) {
             var self = this,
+                r,
+                rMod,
+                i,
+                attached = 0,
                 mods = self.Env.mods,
-                //复制一份当前的依赖项出来，防止add后修改！
+                //复制一份当前的依赖项出来，防止 add 后修改！
                 requires = (mod['requires'] || []).concat();
+
             mod['requires'] = requires;
 
+            /**
+             * check cyclic dependency between mods
+             */
+            function cyclicCheck() {
+                var __allRequires,
+                    myName = mod.name,
+                    r,r2,rmod,
+                    r__allRequires,
+                    requires = mod.requires;
+                // one mod's all requires mods to run its callback
+                __allRequires = mod.__allRequires = mod.__allRequires || {};
+                for (var i = 0; i < requires.length; i++) {
+                    r = requires[i];
+                    rmod = mods[r];
+                    __allRequires[r] = 1;
+                    if (rmod && (r__allRequires = rmod.__allRequires)) {
+                        for (r2 in r__allRequires) {
+                            __allRequires[r2] = 1;
+                        }
+                    }
+                }
+                if (__allRequires[myName]) {
+                    var t = [];
+                    for (r in __allRequires) {
+                        t.push(r);
+                    }
+                    S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
+                }
+            }
+
+            if (S.Config.debug) {
+                cyclicCheck();
+            }
+
             // attach all required modules
-            S.each(requires, function(r, i, requires) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, r);
-                var rMod = mods[r];
+            for (i = 0; i < requires.length; i++) {
+                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
                     self.__attachModByName(r, fn, cfg);
                 }
-            });
-
+            }
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
@@ -2394,28 +2435,40 @@ build time: Nov 28 13:29
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'];
+                var newRequires = mod['requires'],
+                    needToLoad = [];
+
+                if (S.Config.debug) {
+
+                }
+
 
                 //本模块下载成功后串行下载 require
-                S.each(newRequires, function(r, i, newRequires) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, r);
+
+                for (i = 0; i < newRequires.length; i++) {
+                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod && rMod.status === ATTACHED
+                    if (rMod &&
+                        rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, cfg);
+                        needToLoad.push(r);
                     }
-                });
+                }
 
-                fn();
+                if (needToLoad.length) {
+                    for (i = 0; i < needToLoad.length; i++) {
+                        self.__attachModByName(needToLoad[i], fn, cfg);
+                    }
+                } else {
+                    fn();
+                }
             }, cfg);
-
-            var attached = false;
 
             function fn() {
                 if (!attached &&
@@ -2425,7 +2478,7 @@ build time: Nov 28 13:29
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
-                        attached = true;
+                        attached = 1;
                         callback();
                     }
                 }

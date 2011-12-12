@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 13:29
+build time: Dec 8 18:25
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 28 13:29
          */
         version: '1.20dev',
 
-        buildTime:'20111128132929',
+        buildTime:'20111208182514',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2352,10 +2352,13 @@ build time: Nov 28 13:29
                 //添加模块定义
                 mods[modName] = mod;
             }
+
             mod.name = modName;
+
             if (mod && mod.status === ATTACHED) {
                 return;
             }
+
             // 先从 global 里取
             if (cfg.global) {
                 self.__mixMod(modName, cfg.global);
@@ -2369,22 +2372,60 @@ build time: Nov 28 13:29
          */
         __attach: function(mod, callback, cfg) {
             var self = this,
+                r,
+                rMod,
+                i,
+                attached = 0,
                 mods = self.Env.mods,
-                //复制一份当前的依赖项出来，防止add后修改！
+                //复制一份当前的依赖项出来，防止 add 后修改！
                 requires = (mod['requires'] || []).concat();
+
             mod['requires'] = requires;
 
+            /**
+             * check cyclic dependency between mods
+             */
+            function cyclicCheck() {
+                var __allRequires,
+                    myName = mod.name,
+                    r,r2,rmod,
+                    r__allRequires,
+                    requires = mod.requires;
+                // one mod's all requires mods to run its callback
+                __allRequires = mod.__allRequires = mod.__allRequires || {};
+                for (var i = 0; i < requires.length; i++) {
+                    r = requires[i];
+                    rmod = mods[r];
+                    __allRequires[r] = 1;
+                    if (rmod && (r__allRequires = rmod.__allRequires)) {
+                        for (r2 in r__allRequires) {
+                            __allRequires[r2] = 1;
+                        }
+                    }
+                }
+                if (__allRequires[myName]) {
+                    var t = [];
+                    for (r in __allRequires) {
+                        t.push(r);
+                    }
+                    S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
+                }
+            }
+
+            if (S.Config.debug) {
+                cyclicCheck();
+            }
+
             // attach all required modules
-            S.each(requires, function(r, i, requires) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, r);
-                var rMod = mods[r];
+            for (i = 0; i < requires.length; i++) {
+                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
                     self.__attachModByName(r, fn, cfg);
                 }
-            });
-
+            }
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
@@ -2394,28 +2435,40 @@ build time: Nov 28 13:29
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'];
+                var newRequires = mod['requires'],
+                    needToLoad = [];
+
+                if (S.Config.debug) {
+
+                }
+
 
                 //本模块下载成功后串行下载 require
-                S.each(newRequires, function(r, i, newRequires) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, r);
+
+                for (i = 0; i < newRequires.length; i++) {
+                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod && rMod.status === ATTACHED
+                    if (rMod &&
+                        rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, cfg);
+                        needToLoad.push(r);
                     }
-                });
+                }
 
-                fn();
+                if (needToLoad.length) {
+                    for (i = 0; i < needToLoad.length; i++) {
+                        self.__attachModByName(needToLoad[i], fn, cfg);
+                    }
+                } else {
+                    fn();
+                }
             }, cfg);
-
-            var attached = false;
 
             function fn() {
                 if (!attached &&
@@ -2425,7 +2478,7 @@ build time: Nov 28 13:29
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
-                        attached = true;
+                        attached = 1;
                         callback();
                     }
                 }
@@ -7442,9 +7495,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (event && event.type == Event_Triggered) {
                         return;
                     }
-                    var target = eventHandler.target;
+                    var currentTarget = eventHandler.target;
                     if (!event || !event.fixed) {
-                        event = new EventObject(target, event);
+                        event = new EventObject(currentTarget, event);
                     }
                     var type = event.type;
                     if (S.isPlainObject(data)) {
@@ -7454,8 +7507,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (type) {
                         event.type = type;
                     }
-                    return _handle(target, event);
+                    return _handle(currentTarget, event);
                 };
+                // as for native dom event , this represents currentTarget !
                 eventHandler.target = target;
             }
 
@@ -7624,9 +7678,11 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
             });
             return ret;
-        },
-        __getListeners:getListeners
+        }
     };
+
+    // for compatibility
+    Event['__getListeners'] = getListeners
 
     // shorthand
     Event.on = Event.add;
@@ -8761,7 +8817,7 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
+KISSY.add("event/mousewheel", function(S, Event, UA, Utils, EventObject) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
@@ -8769,9 +8825,8 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
         mousewheelHandler = "mousewheelHandler";
 
     function handler(e) {
-        var eventDesc = Event._data(this),
-            eventHandler = eventDesc.handler,
-            deltaX,
+        var deltaX,
+            currentTarget = this,
             deltaY,
             delta,
             detail = e.detail;
@@ -8808,12 +8863,18 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
             deltaY = delta;
         }
 
-        return eventHandler(e, {
+        // can not invoke eventDesc.handler , it will protect type
+        // but here in firefox , we want to change type really
+        e = new EventObject(currentTarget, e);
+
+        S.mix(e, {
             deltaY:deltaY,
             delta:delta,
             deltaX:deltaX,
             type:'mousewheel'
         });
+
+        return  Event._handle(currentTarget, e);
     }
 
     Event.special['mousewheel'] = {
@@ -8836,7 +8897,7 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
     };
 
 }, {
-    requires:['./base','ua','./utils']
+    requires:['./base','ua','./utils','./object']
 });
 
 /**
@@ -9226,9 +9287,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = makeArray(arguments);
-            args.unshift(this);
-            return Event[k].apply(Event, args);
+            var self=this,
+                args = makeArray(arguments);
+            args.unshift(self);
+            Event[k].apply(Event, args);
+            return self;
         }
     });
 
@@ -10041,6 +10104,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             // hide/show/toggle : special treat!
             if (S.inArray(val, specialVals)) {
+                // backup original value
                 _backupProps[prop] = DOM.style(elem, prop);
                 if (val == "toggle") {
                     val = hidden ? "show" : "hide";
@@ -10051,9 +10115,11 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     // 执行完后隐藏
                     _backupProps.display = 'none';
                 } else {
-                    DOM.show(elem);
                     from = 0;
                     to = fx.cur();
+                    // prevent flash of content
+                    DOM.css(elem, prop, from);
+                    DOM.show(elem);
                 }
                 val = to;
             } else {
@@ -10097,9 +10163,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // change the overflow attribute when overflowX and
             // overflowY are set to the same value
             S.mix(_backupProps, {
-                overflow:DOM.css(elem, "overflow"),
-                "overflow-x":DOM.css(elem, "overflowX"),
-                "overflow-y":DOM.css(elem, "overflowY")
+                overflow:DOM.style(elem, "overflow"),
+                "overflow-x":DOM.style(elem, "overflowX"),
+                "overflow-y":DOM.style(elem, "overflowY")
             });
             DOM.css(elem, "overflow", "hidden");
             // inline element should has layout/inline-block
@@ -13245,25 +13311,24 @@ KISSY.add("cookie", function(S,C) {
 });
 
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
-    Ajax.getScript=S.getScript;
     var re = {
         UA:UA,
         DOM:DOM,
         Event:Event,
         EventTarget:Event.Target,
-        EventObject:Event.Object,
+        "EventObject":Event.Object,
         Node:Node,
         NodeList:Node,
         JSON:JSON,
-        Ajax:Ajax,
-        IO:Ajax,
+        "Ajax":Ajax,
+        "IO":Ajax,
         ajax:Ajax,
         io:Ajax,
         jsonp:Ajax.jsonp,
         Anim:Anim,
         Easing:Anim.Easing,
         Base:Base,
-        Cookie:Cookie,
+        "Cookie":Cookie,
         one:Node.one,
         all:Node.all,
         get:DOM.get,

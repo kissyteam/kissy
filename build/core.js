@@ -4656,9 +4656,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (event && event.type == Event_Triggered) {
                         return;
                     }
-                    var target = eventHandler.target;
+                    var currentTarget = eventHandler.target;
                     if (!event || !event.fixed) {
-                        event = new EventObject(target, event);
+                        event = new EventObject(currentTarget, event);
                     }
                     var type = event.type;
                     if (S.isPlainObject(data)) {
@@ -4668,8 +4668,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (type) {
                         event.type = type;
                     }
-                    return _handle(target, event);
+                    return _handle(currentTarget, event);
                 };
+                // as for native dom event , this represents currentTarget !
                 eventHandler.target = target;
             }
 
@@ -4838,9 +4839,11 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
             });
             return ret;
-        },
-        __getListeners:getListeners
+        }
     };
+
+    // for compatibility
+    Event['__getListeners'] = getListeners
 
     // shorthand
     Event.on = Event.add;
@@ -5975,7 +5978,7 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
+KISSY.add("event/mousewheel", function(S, Event, UA, Utils, EventObject) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
@@ -5983,9 +5986,8 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
         mousewheelHandler = "mousewheelHandler";
 
     function handler(e) {
-        var eventDesc = Event._data(this),
-            eventHandler = eventDesc.handler,
-            deltaX,
+        var deltaX,
+            currentTarget = this,
             deltaY,
             delta,
             detail = e.detail;
@@ -6022,12 +6024,18 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
             deltaY = delta;
         }
 
-        return eventHandler(e, {
+        // can not invoke eventDesc.handler , it will protect type
+        // but here in firefox , we want to change type really
+        e = new EventObject(currentTarget, e);
+
+        S.mix(e, {
             deltaY:deltaY,
             delta:delta,
             deltaX:deltaX,
             type:'mousewheel'
         });
+
+        return  Event._handle(currentTarget, e);
     }
 
     Event.special['mousewheel'] = {
@@ -6050,7 +6058,7 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
     };
 
 }, {
-    requires:['./base','ua','./utils']
+    requires:['./base','ua','./utils','./object']
 });
 
 /**
@@ -6440,9 +6448,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = makeArray(arguments);
-            args.unshift(this);
-            return Event[k].apply(Event, args);
+            var self=this,
+                args = makeArray(arguments);
+            args.unshift(self);
+            Event[k].apply(Event, args);
+            return self;
         }
     });
 
@@ -7255,6 +7265,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             // hide/show/toggle : special treat!
             if (S.inArray(val, specialVals)) {
+                // backup original value
                 _backupProps[prop] = DOM.style(elem, prop);
                 if (val == "toggle") {
                     val = hidden ? "show" : "hide";
@@ -7265,9 +7276,11 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     // 执行完后隐藏
                     _backupProps.display = 'none';
                 } else {
-                    DOM.show(elem);
                     from = 0;
                     to = fx.cur();
+                    // prevent flash of content
+                    DOM.css(elem, prop, from);
+                    DOM.show(elem);
                 }
                 val = to;
             } else {
@@ -7311,9 +7324,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // change the overflow attribute when overflowX and
             // overflowY are set to the same value
             S.mix(_backupProps, {
-                overflow:DOM.css(elem, "overflow"),
-                "overflow-x":DOM.css(elem, "overflowX"),
-                "overflow-y":DOM.css(elem, "overflowY")
+                overflow:DOM.style(elem, "overflow"),
+                "overflow-x":DOM.style(elem, "overflowX"),
+                "overflow-y":DOM.style(elem, "overflowY")
             });
             DOM.css(elem, "overflow", "hidden");
             // inline element should has layout/inline-block
@@ -10459,25 +10472,24 @@ KISSY.add("cookie", function(S,C) {
 });
 
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
-    Ajax.getScript=S.getScript;
     var re = {
         UA:UA,
         DOM:DOM,
         Event:Event,
         EventTarget:Event.Target,
-        EventObject:Event.Object,
+        "EventObject":Event.Object,
         Node:Node,
         NodeList:Node,
         JSON:JSON,
-        Ajax:Ajax,
-        IO:Ajax,
+        "Ajax":Ajax,
+        "IO":Ajax,
         ajax:Ajax,
         io:Ajax,
         jsonp:Ajax.jsonp,
         Anim:Anim,
         Easing:Anim.Easing,
         Base:Base,
-        Cookie:Cookie,
+        "Cookie":Cookie,
         one:Node.one,
         all:Node.all,
         get:DOM.get,

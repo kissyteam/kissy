@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 13:29
+build time: Dec 8 18:25
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -89,7 +89,7 @@ build time: Nov 28 13:29
          */
         version: '1.20dev',
 
-        buildTime:'20111128132929',
+        buildTime:'20111208182514',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2352,10 +2352,13 @@ build time: Nov 28 13:29
                 //添加模块定义
                 mods[modName] = mod;
             }
+
             mod.name = modName;
+
             if (mod && mod.status === ATTACHED) {
                 return;
             }
+
             // 先从 global 里取
             if (cfg.global) {
                 self.__mixMod(modName, cfg.global);
@@ -2369,22 +2372,60 @@ build time: Nov 28 13:29
          */
         __attach: function(mod, callback, cfg) {
             var self = this,
+                r,
+                rMod,
+                i,
+                attached = 0,
                 mods = self.Env.mods,
-                //复制一份当前的依赖项出来，防止add后修改！
+                //复制一份当前的依赖项出来，防止 add 后修改！
                 requires = (mod['requires'] || []).concat();
+
             mod['requires'] = requires;
 
+            /**
+             * check cyclic dependency between mods
+             */
+            function cyclicCheck() {
+                var __allRequires,
+                    myName = mod.name,
+                    r,r2,rmod,
+                    r__allRequires,
+                    requires = mod.requires;
+                // one mod's all requires mods to run its callback
+                __allRequires = mod.__allRequires = mod.__allRequires || {};
+                for (var i = 0; i < requires.length; i++) {
+                    r = requires[i];
+                    rmod = mods[r];
+                    __allRequires[r] = 1;
+                    if (rmod && (r__allRequires = rmod.__allRequires)) {
+                        for (r2 in r__allRequires) {
+                            __allRequires[r2] = 1;
+                        }
+                    }
+                }
+                if (__allRequires[myName]) {
+                    var t = [];
+                    for (r in __allRequires) {
+                        t.push(r);
+                    }
+                    S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
+                }
+            }
+
+            if (S.Config.debug) {
+                cyclicCheck();
+            }
+
             // attach all required modules
-            S.each(requires, function(r, i, requires) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, r);
-                var rMod = mods[r];
+            for (i = 0; i < requires.length; i++) {
+                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
                     self.__attachModByName(r, fn, cfg);
                 }
-            });
-
+            }
 
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
@@ -2394,28 +2435,40 @@ build time: Nov 28 13:29
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
 
-                var newRequires = mod['requires'];
+                var newRequires = mod['requires'],
+                    needToLoad = [];
+
+                if (S.Config.debug) {
+
+                }
+
 
                 //本模块下载成功后串行下载 require
-                S.each(newRequires, function(r, i, newRequires) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, r);
+
+                for (i = 0; i < newRequires.length; i++) {
+                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod && rMod.status === ATTACHED
+                    if (rMod &&
+                        rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
                     } else {
                         //新增的依赖项
-                        self.__attachModByName(r, fn, cfg);
+                        needToLoad.push(r);
                     }
-                });
+                }
 
-                fn();
+                if (needToLoad.length) {
+                    for (i = 0; i < needToLoad.length; i++) {
+                        self.__attachModByName(needToLoad[i], fn, cfg);
+                    }
+                } else {
+                    fn();
+                }
             }, cfg);
-
-            var attached = false;
 
             function fn() {
                 if (!attached &&
@@ -2425,7 +2478,7 @@ build time: Nov 28 13:29
                         self.__attachMod(mod);
                     }
                     if (mod.status === ATTACHED) {
-                        attached = true;
+                        attached = 1;
                         callback();
                     }
                 }
@@ -7442,9 +7495,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (event && event.type == Event_Triggered) {
                         return;
                     }
-                    var target = eventHandler.target;
+                    var currentTarget = eventHandler.target;
                     if (!event || !event.fixed) {
-                        event = new EventObject(target, event);
+                        event = new EventObject(currentTarget, event);
                     }
                     var type = event.type;
                     if (S.isPlainObject(data)) {
@@ -7454,8 +7507,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                     if (type) {
                         event.type = type;
                     }
-                    return _handle(target, event);
+                    return _handle(currentTarget, event);
                 };
+                // as for native dom event , this represents currentTarget !
                 eventHandler.target = target;
             }
 
@@ -7624,9 +7678,11 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
             });
             return ret;
-        },
-        __getListeners:getListeners
+        }
     };
+
+    // for compatibility
+    Event['__getListeners'] = getListeners
 
     // shorthand
     Event.on = Event.add;
@@ -8761,7 +8817,7 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
+KISSY.add("event/mousewheel", function(S, Event, UA, Utils, EventObject) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
@@ -8769,9 +8825,8 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
         mousewheelHandler = "mousewheelHandler";
 
     function handler(e) {
-        var eventDesc = Event._data(this),
-            eventHandler = eventDesc.handler,
-            deltaX,
+        var deltaX,
+            currentTarget = this,
             deltaY,
             delta,
             detail = e.detail;
@@ -8808,12 +8863,18 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
             deltaY = delta;
         }
 
-        return eventHandler(e, {
+        // can not invoke eventDesc.handler , it will protect type
+        // but here in firefox , we want to change type really
+        e = new EventObject(currentTarget, e);
+
+        S.mix(e, {
             deltaY:deltaY,
             delta:delta,
             deltaX:deltaX,
             type:'mousewheel'
         });
+
+        return  Event._handle(currentTarget, e);
     }
 
     Event.special['mousewheel'] = {
@@ -8836,7 +8897,7 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils) {
     };
 
 }, {
-    requires:['./base','ua','./utils']
+    requires:['./base','ua','./utils','./object']
 });
 
 /**
@@ -9226,9 +9287,11 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
 
     S.each(EVENT_INCLUDES, function(k) {
         NLP[k] = function() {
-            var args = makeArray(arguments);
-            args.unshift(this);
-            return Event[k].apply(Event, args);
+            var self=this,
+                args = makeArray(arguments);
+            args.unshift(self);
+            Event[k].apply(Event, args);
+            return self;
         }
     });
 
@@ -10041,6 +10104,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             // hide/show/toggle : special treat!
             if (S.inArray(val, specialVals)) {
+                // backup original value
                 _backupProps[prop] = DOM.style(elem, prop);
                 if (val == "toggle") {
                     val = hidden ? "show" : "hide";
@@ -10051,9 +10115,11 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     // 执行完后隐藏
                     _backupProps.display = 'none';
                 } else {
-                    DOM.show(elem);
                     from = 0;
                     to = fx.cur();
+                    // prevent flash of content
+                    DOM.css(elem, prop, from);
+                    DOM.show(elem);
                 }
                 val = to;
             } else {
@@ -10097,9 +10163,9 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // change the overflow attribute when overflowX and
             // overflowY are set to the same value
             S.mix(_backupProps, {
-                overflow:DOM.css(elem, "overflow"),
-                "overflow-x":DOM.css(elem, "overflowX"),
-                "overflow-y":DOM.css(elem, "overflowY")
+                overflow:DOM.style(elem, "overflow"),
+                "overflow-x":DOM.style(elem, "overflowX"),
+                "overflow-y":DOM.style(elem, "overflowY")
             });
             DOM.css(elem, "overflow", "hidden");
             // inline element should has layout/inline-block
@@ -13245,25 +13311,24 @@ KISSY.add("cookie", function(S,C) {
 });
 
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
-    Ajax.getScript=S.getScript;
     var re = {
         UA:UA,
         DOM:DOM,
         Event:Event,
         EventTarget:Event.Target,
-        EventObject:Event.Object,
+        "EventObject":Event.Object,
         Node:Node,
         NodeList:Node,
         JSON:JSON,
-        Ajax:Ajax,
-        IO:Ajax,
+        "Ajax":Ajax,
+        "IO":Ajax,
         ajax:Ajax,
         io:Ajax,
         jsonp:Ajax.jsonp,
         Anim:Anim,
         Easing:Anim.Easing,
         Base:Base,
-        Cookie:Cookie,
+        "Cookie":Cookie,
         one:Node.one,
         all:Node.all,
         get:DOM.get,
@@ -15222,7 +15287,7 @@ KISSY.add("datalazyload", function(S, D) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 8 16:21
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -15244,9 +15309,9 @@ KISSY.add('template/base', function(S) {
         KS_TEMPL_STAT_PARAM_REG = new RegExp(KS_TEMPL_STAT_PARAM, "g"),
         KS_TEMPL = 'KS_TEMPL',
         KS_DATA = 'KS_DATA_',
-        KS_EMPTY = '',
         KS_AS = 'as',
 
+        // note : double quote for generated code
         PREFIX = '");',
         SUFFIX = KS_TEMPL + '.push("',
 
@@ -15262,10 +15327,12 @@ KISSY.add('template/base', function(S) {
             PARSER_RENDER_ERROR + '" + e.message]}};return ' +
             KS_TEMPL + '.join("");',
 
+        // restore double quote in logic template variable
         restoreQuote = function(str) {
             return str.replace(/\\"/g, '"');
         },
 
+        // escape double quote in template
         escapeQuote = function(str) {
             return str.replace(/"/g, '\\"');
         },
@@ -15278,14 +15345,17 @@ KISSY.add('template/base', function(S) {
                 _empty_index;
             return escapeQuote(trim(tpl)
                 .replace(/[\r\t\n]/g, ' ')
-                // escape escape ...
+                // escape escape ... . in case \ is consumed when run tpl parser function
+                // '{{y}}\\x{{/y}}' =>tmpl.push('\x'); => tmpl.push('\\x');
                 .replace(/\\/g, '\\\\'))
                 .replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,
                 function(all, expr, body) {
-                    _parser = KS_EMPTY;
+                    _parser = "";
+                    // must restore quote , if str is used as code directly
+                    body = restoreQuote(trim(body));
+                    //body = trim(body);
                     // is an expression
                     if (expr) {
-                        body = trim(body);
                         _empty_index = body.indexOf(' ');
                         body = _empty_index === -1 ?
                             [ body, '' ] :
@@ -15302,16 +15372,18 @@ KISSY.add('template/base', function(S) {
                         if (opStatement && tagStartEnd[expr]) {
                             // get expression definition function/string
                             fn = opStatement[tagStartEnd[expr]];
-                            _parser = S.isFunction(fn) ?
-                                restoreQuote(fn.apply(this, args.split(/\s+/))) :
-                                restoreQuote(fn.replace(KS_TEMPL_STAT_PARAM_REG, args));
+                            _parser = String(S.isFunction(fn) ?
+                                fn.apply(this, args.split(/\s+/)) :
+                                fn.replace(KS_TEMPL_STAT_PARAM_REG, args));
                         }
                     }
                     // return array directly
                     else {
                         _parser = KS_TEMPL +
                             '.push(' +
-                            restoreQuote(body) +
+                            // prevent variable undefined error when look up in with ,simple variable substitution
+                            // with({}){alert(x);} => ReferenceError: x is not defined
+                            'typeof (' + body + ') ==="undefined"?"":' + body +
                             ');';
                     }
                     return PREFIX + _parser + SUFFIX;
@@ -15375,18 +15447,18 @@ KISSY.add('template/base', function(S) {
                 ];
 
             try {
-                func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                func = new Function(_ks_data, _parser.join(""));
             } catch (e) {
                 _parser[3] = PREFIX + SUFFIX +
                     PARSER_SYNTAX_ERROR + ',' +
                     e.message + PREFIX + SUFFIX;
-                func = new Function(_ks_data, _parser.join(KS_EMPTY));
+                func = new Function(_ks_data, _parser.join(""));
             }
 
             templateCache[tpl] = {
                 name: _ks_data,
                 o:o,
-                parser: _parser.join(KS_EMPTY),
+                parser: _parser.join(""),
                 render: func
             };
         }
@@ -25669,7 +25741,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 13:29
+build time: Dec 8 00:57
 */
 /**
  * KISSY Calendar
@@ -25692,7 +25764,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
          * @private
          */
         _init: function(selector, config) {
-            var self = this,con = Node.one(selector);
+            var self = this,con = $(selector);
             self.id = self.C_Id = self._stamp(con);
             self._buildParam(config);
 
@@ -25706,7 +25778,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             } else {
                 self.trigger = con;
                 self.con = new Node('<div>');
-                Node.one('body').append(self.con);
+                $(document.body).append(self.con);
                 self.C_Id = self._stamp(self.con);
                 self.con.css({
                     'top':'0px',
@@ -25795,18 +25867,23 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
          * @private
          */
         _buildEvent: function() {
-            var self = this;
+            var self = this,tev,i;
             if (!self.popup) {
                 return this;
             }
             //点击空白
             //flush event
-            for (var i = 0; i < self.EV.length; i++) {
-                if (self.EV[i] !== undefined) {
-                    self.EV[i].detach();
+            S.each(self.EV, function(tev) {
+                if (tev) {
+                    tev.target.detach(tev.type, tev.fn);
                 }
-            }
-            self.EV[0] = Node.one('body').on('click', function(e) {
+            });
+            self.EV = self.EV || [];
+            tev = self.EV[0] = {
+                target:$(document),
+                type:'click'
+            };
+            tev.fn = function(e) {
                 var target = $(e.target);
                 //点击到日历上
                 if (target.attr('id') === self.C_Id) {
@@ -25821,7 +25898,9 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     return;
                 }
 
-                if (self.con.css('visibility') == 'hidden') return;
+                if (self.con.css('visibility') == 'hidden') {
+                    return;
+                }
                 var inRegion = function(dot, r) {
                     return dot[0] > r[0].x
                         && dot[0] < r[1].x
@@ -25851,34 +25930,38 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                 ])) {
                     self.hide();
                 }
-            });
+            };
+            tev.target.on(tev.type, tev.fn);
             //点击触点
             for (i = 0; i < self.triggerType.length; i++) {
+                tev = self.EV[i + 1] = {
+                    target: $('#' + self.id),
+                    type: self.triggerType[i],
+                    fn: function(e) {
+                        e.target = $(e.target);
+                        e.preventDefault();
+                        //如果focus和click同时存在的hack
 
-                self.EV[1] = Node.one('#' + self.id).on(self.triggerType[i], function(e) {
-                    e.target = $(e.target);
-                    e.preventDefault();
-                    //如果focus和click同时存在的hack
-
-                    var a = self.triggerType;
-                    if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
-                        if (e.type == 'focus') {
+                        var a = self.triggerType;
+                        if (S.inArray('click', a) && S.inArray('focus', a)) {//同时含有
+                            if (e.type == 'focus') {
+                                self.toggle();
+                            }
+                        } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
+                            if (e.type == 'click') {
+                                self.toggle();
+                            }
+                        } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
+                            setTimeout(function() {//为了跳过document.onclick事件
+                                self.toggle();
+                            }, 170);
+                        } else {
                             self.toggle();
                         }
-                    } else if (S.inArray('click', a) && !S.inArray('focus', a)) {//只有click
-                        if (e.type == 'click') {
-                            self.toggle();
-                        }
-                    } else if (!S.inArray('click', a) && S.inArray('focus', a)) {//只有focus
-                        setTimeout(function() {//为了跳过document.onclick事件
-                            self.toggle();
-                        }, 170);
-                    } else {
-                        self.toggle();
+
                     }
-
-                });
-
+                };
+                tev.target.on(tev.type, tev.fn);
             }
             return this;
         },
@@ -26035,7 +26118,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         _handleDate: function() {
             var self = this,
                 date = self.date;
-            self.weekday = date.getDay() + 1;//星期几 //指定日期是星期几
+            self['weekday'] = date.getDay() + 1;//星期几 //指定日期是星期几
             self.day = date.getDate();//几号
             self.month = date.getMonth();//月份
             self.year = date.getFullYear();//年份
@@ -26131,6 +26214,10 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
 }, { requires: ['node',"event"] });
 
 /**
+ * 2011-12-06 by yiminghe@gmail.com
+ *  - 全局绑定放 document
+ *  - fix 清除事件调用
+ *
  * 2010-09-09 by lijing00333@163.com - 拔赤
  *     - 将基于YUI2/3的Calendar改为基于KISSY
  *     - 增加起始日期（星期x）的自定义
@@ -26494,89 +26581,139 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
              */
             this._buildEvent = function() {
                 var cc = this,i,
+                    tev,
                     con = Node.one('#' + cc.id);
                 //flush event
-                for (i = 0; i < cc.EV.length; i++) {
-                    if (typeof cc.EV[i] != 'undefined') {
-                        cc.EV[i].detach();
+                S.each(cc.EV, function(tev) {
+                    if (tev) {
+                        tev.target.detach(tev.type, tev.fn);
                     }
+                });
+                cc.EV = cc.EV || [];
+                tev = cc.EV[0] = {
+                    target:     con.one('div.ks-dbd'),
+                    type:"click",
+                    fn:   function(e) {
+                        //e.preventDefault();
+                        e.target = Node(e.target);
+                        if (e.target.hasClass('ks-null')) {
+                            return;
+                        }
+                        if (e.target.hasClass('ks-disabled')) {
+                            return;
+                        }
+                        var selectedd = Number(e.target.html());
+                        //如果当天是30日或者31日，设置2月份就会出问题
+                        var d = new Date('2010/01/01');
+                        d.setYear(cc.year);
+                        d.setMonth(cc.month);
+                        d.setDate(selectedd);
+                        //self.callback(d);
+                        //datetime的date
+                        cc.father.dt_date = d;
+                        cc.father.fire('select', {
+                            date:d
+                        });
+                        if (cc.father.popup && cc.father.closable) {
+                            cc.father.hide();
+                        }
+                        if (cc.father.rangeSelect) {
+                            cc.father._handleRange(d);
+                        }
+                        cc.father.render({selected:d});
+                    }
+                };
+                function bindEventTev() {
+                    tev.target.on(tev.type, tev.fn);
                 }
 
-                cc.EV[0] = con.one('div.ks-dbd').on('click', function(e) {
-                    //e.preventDefault();
-                    e.target = Node(e.target);
-                    if (e.target.hasClass('ks-null')) {
-                        return;
-                    }
-                    if (e.target.hasClass('ks-disabled')) {
-                        return;
-                    }
-                    var selectedd = Number(e.target.html());
-                    //如果当天是30日或者31日，设置2月份就会出问题
-                    var d = new Date('2010/01/01');
-                    d.setYear(cc.year);
-                    d.setMonth(cc.month);
-                     d.setDate(selectedd);
-                    //self.callback(d);
-                    //datetime的date
-                    cc.father.dt_date = d;
-                    cc.father.fire('select', {
-                        date:d
-                    });
-                    if (cc.father.popup && cc.father.closable) {
-                        cc.father.hide();
-                    }
-                    if (cc.father.rangeSelect) {
-                        cc.father._handleRange(d);
-                    }
-                    cc.father.render({selected:d});
-                });
+                bindEventTev();
                 //向前
-                cc.EV[1] = con.one('a.ks-prev').on('click', function(e) {
-                    e.preventDefault();
-                    cc.father._monthMinus().render();
-                    cc.father.fire('monthChange', {
-                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
-                    });
-
-                });
-                //向后
-                cc.EV[2] = con.one('a.ks-next').on('click', function(e) {
-                    e.preventDefault();
-                    cc.father._monthAdd().render();
-                    cc.father.fire('monthChange', {
-                        date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
-                    });
-                });
-                if (cc.father.navigator) {
-                    cc.EV[3] = con.one('a.ks-title').on('click', function(e) {
-                        try {
-                            cc.timmer.hidePopup();
-                            e.preventDefault();
-                        } catch(exp) {
-                        }
-                        e.target = Node(e.target);
-                        var setime_node = con.one('.ks-setime');
-                        setime_node.html('');
-                        var in_str = cc.father._templetShow(cc.nav_html, {
-                            the_month:cc.month + 1,
-                            the_year:cc.year
+                tev = cc.EV[1] = {
+                    target:con.one('a.ks-prev'),
+                    type:'click',
+                    fn:function(e) {
+                        e.preventDefault();
+                        cc.father._monthMinus().render();
+                        cc.father.fire('monthChange', {
+                            date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
                         });
-                        setime_node.html(in_str);
-                        setime_node.removeClass('hidden');
-                        con.one('input').on('keydown', function(e) {
+
+                    }
+                };
+                bindEventTev();
+                //向后
+                tev = cc.EV[2] = {
+                    target:con.one('a.ks-next'),
+                    type:'click',
+                    fn: function(e) {
+                        e.preventDefault();
+                        cc.father._monthAdd().render();
+                        cc.father.fire('monthChange', {
+                            date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
+                        });
+                    }
+                };
+                bindEventTev();
+                if (cc.father.navigator) {
+                    tev = cc.EV[3] = {
+                        target:con.one('a.ks-title'),
+                        type:'click',
+                        fn:function(e) {
+                            try {
+                                cc.timmer.hidePopup();
+                                e.preventDefault();
+                            } catch(exp) {
+                            }
                             e.target = Node(e.target);
-                            if (e.keyCode == 38) {//up
-                                e.target.val(Number(e.target.val()) + 1);
-                                e.target[0].select();
-                            }
-                            if (e.keyCode == 40) {//down
-                                e.target.val(Number(e.target.val()) - 1);
-                                e.target[0].select();
-                            }
-                            if (e.keyCode == 13) {//enter
-                                var _month = con.one('.ks-setime').one('select').val();
-                                var _year = con.one('.ks-setime').one('input').val();
+                            var setime_node = con.one('.ks-setime');
+                            setime_node.html('');
+                            var in_str = cc.father._templetShow(cc.nav_html, {
+                                the_month:cc.month + 1,
+                                the_year:cc.year
+                            });
+                            setime_node.html(in_str);
+                            setime_node.removeClass('hidden');
+                            con.one('input').on('keydown', function(e) {
+                                e.target = Node(e.target);
+                                if (e.keyCode == 38) {//up
+                                    e.target.val(Number(e.target.val()) + 1);
+                                    e.target[0].select();
+                                }
+                                if (e.keyCode == 40) {//down
+                                    e.target.val(Number(e.target.val()) - 1);
+                                    e.target[0].select();
+                                }
+                                if (e.keyCode == 13) {//enter
+                                    var _month = con.one('.ks-setime').one('select').val();
+                                    var _year = con.one('.ks-setime').one('input').val();
+                                    con.one('.ks-setime').addClass('hidden');
+                                    if (!cc.Verify().isYear(_year)) {
+                                        return;
+                                    }
+                                    if (!cc.Verify().isMonth(_month)) {
+                                        return;
+                                    }
+                                    cc.father.render({
+                                        date:new Date(_year + '/' + _month + '/01')
+                                    });
+                                    cc.father.fire('monthChange', {
+                                        date:new Date(_year + '/' + _month + '/01')
+                                    });
+                                }
+                            });
+                        }
+                    };
+                    bindEventTev();
+                    tev = cc.EV[4] = {
+                        target:con.one('.ks-setime'),
+                        type:'click',
+                        fn:function(e) {
+                            e.preventDefault();
+                            e.target = Node(e.target);
+                            if (e.target.hasClass('ok')) {
+                                var _month = con.one('.ks-setime').one('select').val(),
+                                    _year = con.one('.ks-setime').one('input').val();
                                 con.one('.ks-setime').addClass('hidden');
                                 if (!cc.Verify().isYear(_year)) {
                                     return;
@@ -26590,32 +26727,12 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                                 cc.father.fire('monthChange', {
                                     date:new Date(_year + '/' + _month + '/01')
                                 });
+                            } else if (e.target.hasClass('cancel')) {
+                                con.one('.ks-setime').addClass('hidden');
                             }
-                        });
-                    });
-                    cc.EV[4] = con.one('.ks-setime').on('click', function(e) {
-                        e.preventDefault();
-                        e.target = Node(e.target);
-                        if (e.target.hasClass('ok')) {
-                            var _month = con.one('.ks-setime').one('select').val(),
-                                _year = con.one('.ks-setime').one('input').val();
-                            con.one('.ks-setime').addClass('hidden');
-                            if (!cc.Verify().isYear(_year)) {
-                                return;
-                            }
-                            if (!cc.Verify().isMonth(_month)) {
-                                return;
-                            }
-                            cc.father.render({
-                                date:new Date(_year + '/' + _month + '/01')
-                            });
-                            cc.father.fire('monthChange', {
-                                date:new Date(_year + '/' + _month + '/01')
-                            });
-                        } else if (e.target.hasClass('cancel')) {
-                            con.one('.ks-setime').addClass('hidden');
                         }
-                    });
+                    };
+                    bindEventTev();
                 }
                 return this;
 
@@ -26664,7 +26781,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 
 
                     } else if ((cc.father.range.start !== null && cc.father.range.end !== null) && //日期选择范围
-                       (  _td_s.getTime() >= cc.father._showdate(1,cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1,cc.father.range.end).getTime())) {
+                        (  _td_s.getTime() >= cc.father._showdate(1, cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1, cc.father.range.end).getTime())) {
 
                         if (i == (startweekday + (new Date()).getDate() - 1) &&
                             (new Date()).getFullYear() == cc.year &&
@@ -30044,7 +30161,7 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 8 17:11
 */
 /**
  * intervein elements dynamically
@@ -30154,6 +30271,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
     function adjustItem(itemRaw) {
         var self = this,
+            effect = self.get("effect"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -30181,6 +30299,9 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         });
         /*不在容器里，就加上*/
         if (!container.contains(item)) {
+            if (effect && effect.effect == "fadeIn") {
+                item.css("opacity", 0);
+            }
             container.append(item);
         }
         curColHeights[dest] += item.outerHeight(true);
@@ -30245,10 +30366,20 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                 container = self.get("container"),
                 item = adjustItem.call(self, itemRaw),
                 effect = self.get("effect");
-            if (!effect.effect) {
+            if (!effect.effect ||
+                effect.effect !== "fadeIn") {
                 return;
             }
-            item[effect.effect](effect.duration, undefined, effect.easing);
+            // only allow fadeIn temporary
+            item.animate({
+                opacity:1
+            }, {
+                duration:effect.duration,
+                easing:effect.easing,
+                complete:function() {
+                    item.css("opacity", "");
+                }
+            });
         },
 
         destroy:function() {
@@ -31904,7 +32035,7 @@ KISSY.add("validation", function(S, Validation) {
 /*
 Copyright 2011, KISSY UI Library v1.20dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Nov 30 19:02
 */
 /**
  * mvc base
@@ -32517,11 +32648,17 @@ KISSY.add('mvc/router', function(S, Event, Base) {
                         m.shift();
 
                         function genParam() {
-                            var params = {};
-                            each(m, function(sm, i) {
-                                params[paramNames[i]] = sm;
-                            });
-                            return params;
+                            if (paramNames) {
+                                var params = {};
+                                each(m, function(sm, i) {
+                                    params[paramNames[i]] = sm;
+                                });
+                                return params;
+                            } else {
+                                // if user gave directly reg
+                                // then call callback with match result array
+                                return [].concat(m);
+                            }
                         }
 
                         function upToFinal() {
@@ -32536,12 +32673,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
                         // route: /xx/yy/zz
                         if (!m.length) {
-
                             upToFinal();
                             exactlyMatch = 1;
                             return false;
-
-                        } else {
+                        } else if (regStr) {
 
                             firstCaptureGroupIndex = findFirstCaptureGroupIndex(regStr);
 
@@ -32569,7 +32704,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
                                 upToFinal();
                             }
                         }
-
+                        // if exists user-given reg router rule then update value directly
+                        else {
+                            upToFinal();
+                        }
                     }
                 }
             );
@@ -32599,30 +32737,39 @@ KISSY.add('mvc/router', function(S, Event, Base) {
      *         /search/:q
      *         /user/*path
      */
-    function transformRouterReg(str, callback) {
+    function transformRouterReg(self, str, callback) {
         var name = str,
             paramNames = [];
-        // escape keyword from regexp
-        str = S.escapeRegExp(str);
 
-        str = str.replace(grammar, function(m, g1, g2, g3, g4) {
-            paramNames.push(g2 || g4);
-            // :name
-            if (g2) {
-                return "([^/]+)";
-            }
-            // *name
-            else if (g4) {
-                return "(.*)";
-            }
-        });
+        if (S.isFunction(callback)) {
+            // escape keyword from regexp
+            str = S.escapeRegExp(str);
 
-        return {
-            name:name,
-            paramNames:paramNames,
-            reg:new RegExp("^" + str + "$"),
-            regStr:str,
-            callback:callback
+            str = str.replace(grammar, function(m, g1, g2, g3, g4) {
+                paramNames.push(g2 || g4);
+                // :name
+                if (g2) {
+                    return "([^/]+)";
+                }
+                // *name
+                else if (g4) {
+                    return "(.*)";
+                }
+            });
+
+            return {
+                name:name,
+                paramNames:paramNames,
+                reg:new RegExp("^" + str + "$"),
+                regStr:str,
+                callback:callback
+            };
+        } else {
+            return {
+                name:name,
+                reg:callback.reg,
+                callback:normFn(self, callback.callback)
+            };
         }
     }
 
@@ -32634,9 +32781,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
     function normFn(self, callback) {
         if (S.isFunction(callback)) {
             return callback;
-        } else {
+        } else if (S.isString(callback)) {
             return self[callback];
         }
+        return callback;
     }
 
     function _afterRoutesChange(e) {
@@ -32669,12 +32817,17 @@ KISSY.add('mvc/router', function(S, Event, Base) {
          * @param routes
          *         {
          *           "/search/:param":"callback"
+         *           or
+         *           "search":{
+         *              reg:/xx/,
+         *              callback:fn
+         *           }
          *         }
          */
         addRoutes:function(routes) {
             var self = this;
             each(routes, function(callback, name) {
-                self[__routerMap][name] = transformRouterReg(name, normFn(self, callback));
+                self[__routerMap][name] = transformRouterReg(self, name, normFn(self, callback));
             });
         }
     }, {
@@ -32765,6 +32918,9 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 });
 
 /**
+ * 2011-11-30
+ *  - support user-given native regexp for router rule
+ *
  * refer :
  * http://www.w3.org/TR/html5/history.html
  * http://documentcloud.github.com/backbone/
