@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 00:57
+build time: Dec 13 18:46
 */
 KISSY.add("calendar/base",function(k,l,i,m){function j(a,e){this._init(a,e)}var f=i.Target,b=l.all;k.augment(j,{_init:function(a,e){var c=b(a);this.id=this.C_Id=this._stamp(c);this._buildParam(e);if(this.popup){this.trigger=c;this.con=new l("<div>");b(document.body).append(this.con);this.C_Id=this._stamp(this.con);this.con.css({top:"0px",position:"absolute",background:"white",visibility:"hidden"})}else this.con=c;c=function(){};k.augment(c,f);c=new c;k.mix(this,c);this.render();this._buildEvent();
 return this},render:function(a){var e=0,c,d;a=a||{};this._parseParam(a);this.ca=[];this.con.addClass("ks-cal-call ks-clearfix multi-"+this.pages);this.con.html("");e=0;for(d=[this.year,this.month];e<this.pages;e++){if(e===0)a=true;else{a=false;d=this._computeNextMonth(d)}c=e==this.pages-1;this.ca.push(new this.Page({year:d[0],month:d[1],prevArrow:a,nextArrow:c,showTime:this.showTime},this));this.ca[e].render()}return this},_stamp:function(a){a.attr("id")||a.attr("id",k.guid("K_Calendar"));return a.attr("id")},

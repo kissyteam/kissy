@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 29 11:47
+build time: Dec 13 18:45
 */
 /**
  * animation framework for KISSY

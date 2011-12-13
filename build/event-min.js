@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 00:58
+build time: Dec 13 18:46
 */
 KISSY.add("event/base",function(a,b,f,d,h){function g(o,m){var r=A._data(o);return(r&&r.events||{})[m]||[]}function k(o,m){for(var r=g(o,m.type).slice(0),w,y,q=0,z=r.length;q<z;++q){w=r[q];w=w.fn.call(w.scope||o,m,w.data);if(w!==h){if(y!==false)y=w;w===false&&m.halt()}if(m.isImmediatePropagationStopped)break}return y}function j(o,m,r,w,y){var q=H[m]||{};if(!w.length&&(!q.setup||q.setup.call(o)===false))s(o,m,r);q.add&&q.add.call(o,y)}var n=d.isValidTarget,c=d.isIdenticalHandler,e=d.batchForType,p=
 d.simpleRemove,s=d.simpleAdd,l=d.splitAndRun,t=b._nodeName,i=a.makeArray,u=a.each,v=a.trim,D="",F="trigger-none-"+a.now(),H={},I="ksEventTargetId"+a.now(),A={_clone:function(o,m){if(!(m.nodeType!==b.ELEMENT_NODE||!A._hasData(o))){var r=A._data(o).events;u(r,function(w,y){u(w,function(q){A.on(m,y,q.fn,q.scope,q.data)})})}},_hasData:function(o){return b.hasData(o,I)},_data:function(){var o=i(arguments);o.splice(1,0,I);return b.data.apply(b,o)},_removeData:function(){var o=i(arguments);o.splice(1,0,

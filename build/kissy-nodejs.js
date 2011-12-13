@@ -185,9 +185,9 @@
     }
 
 })(KISSY);/*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 18:25
+build time: Dec 13 18:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -273,9 +273,9 @@ build time: Dec 8 18:25
          * The version of the library.
          * @type {String}
          */
-        version: '1.20dev',
+        version: '1.30dev',
 
-        buildTime:'20111208182514',
+        buildTime:'20111213184729',
 
         /**
          * Returns a new object containing all of the properties of
@@ -328,7 +328,7 @@ build time: Dec 8 18:25
          * @param r {Function} the object to modify
          * @param s {Function} the object to inherit
          * @param px {Object} prototype properties to add/override
-         * @param sx {Object} static properties to add/override
+         * @param {Object} [sx] static properties to add/override
          * @return r {Object}
          */
         extend: function(r, s, px, sx) {
@@ -760,7 +760,7 @@ build time: Dec 8 18:25
          * @param object {Object} the object to iterate
          * @param fn {Function} the function to execute on each item. The function
          *        receives three arguments: the value, the index, the full array.
-         * @param context {Object} (opt)
+         * @param {Object} [context]
          */
         each: function(object, fn, context) {
             if (object) {

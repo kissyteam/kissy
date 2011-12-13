@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 18:25
+build time: Dec 13 18:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -87,9 +87,9 @@ build time: Dec 8 18:25
          * The version of the library.
          * @type {String}
          */
-        version: '1.20dev',
+        version: '1.30dev',
 
-        buildTime:'20111208182514',
+        buildTime:'20111213184729',
 
         /**
          * Returns a new object containing all of the properties of
@@ -142,7 +142,7 @@ build time: Dec 8 18:25
          * @param r {Function} the object to modify
          * @param s {Function} the object to inherit
          * @param px {Object} prototype properties to add/override
-         * @param sx {Object} static properties to add/override
+         * @param {Object} [sx] static properties to add/override
          * @return r {Object}
          */
         extend: function(r, s, px, sx) {
@@ -574,7 +574,7 @@ build time: Dec 8 18:25
          * @param object {Object} the object to iterate
          * @param fn {Function} the function to execute on each item. The function
          *        receives three arguments: the value, the index, the full array.
-         * @param context {Object} (opt)
+         * @param {Object} [context]
          */
         each: function(object, fn, context) {
             if (object) {
@@ -13354,9 +13354,9 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
 
 KISSY.use('core');
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:47
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -14779,9 +14779,9 @@ KISSY.add("sizzle", function(S, sizzle) {
     requires:["sizzle/impl"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:38
+build time: Dec 13 18:46
 */
 /**
  * 数据延迟加载组件
@@ -15285,9 +15285,9 @@ KISSY.add("datalazyload", function(S, D) {
     requires:["datalazyload/impl"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 16:21
+build time: Dec 13 18:47
 */
 /**
  * @fileoverview KISSY Template Engine.
@@ -15535,9 +15535,9 @@ KISSY.add("template", function(S, T) {
     requires:["template/base","template/node"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 /**
  * @module   Flash 全局静态类
@@ -16054,9 +16054,9 @@ KISSY.add("flash", function(S, F) {
     requires:["flash/base","flash/embed"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -17616,9 +17616,9 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
         "dd/scroll"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 /**
  * resizable support for kissy
@@ -17810,9 +17810,9 @@ KISSY.add("resizable", function(S, R) {
     requires:["resizable/base"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:47
 */
 /**
  * UIBase.Align
@@ -19651,7 +19651,8 @@ KISSY.add("uibase/resize", function(S) {
         },
         _uiSetResize:function(v) {
 
-            var Resizable = S.require("resizable"),self = this;
+            var Resizable = S.require("resizable"),
+                self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
                 v.node = self.get("el");
@@ -19899,9 +19900,9 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         "uibase/stdmodrender"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:38
+build time: Dec 13 18:46
 */
 /**
  * container can delegate event for its children
@@ -20799,9 +20800,9 @@ KISSY.add("component", function(KISSY, ModelControl, Render, Container, UIStore,
         'component/decoratechild']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:47
 */
 /**
  * Switchable
@@ -22391,8 +22392,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
     S.mix(Switchable.Config, {
         effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
         duration: .5, // 动画的时长
-        easing: 'easeNone', // easing method
-        nativeAnim: undefined
+        easing: 'easeNone' // easing method
     });
 
     /**
@@ -22451,7 +22451,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                         DOM.css(toEl, Z_INDEX, 9);
                         DOM.css(fromEl, Z_INDEX, 1);
                         callback && callback();
-                    }, cfg.nativeAnim).run();
+                    }).run();
                 self.anim.toEl = toEl;
                 self.anim.fromEl = fromEl;
             } else {
@@ -22481,7 +22481,7 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
                     function() {
                         self.anim = undefined; // free
                         callback && callback();
-                    }, cfg.nativeAnim).run();
+                    }).run();
             } else {
                 DOM.css(self.content, props);
                 callback && callback();
@@ -22663,7 +22663,7 @@ KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {
                     // free
                     self.anim = undefined;
                     callback && callback();
-                }, cfg.nativeAnim).run();
+                }).run();
         } else {
             // 初始化
             DOM.css(self.content, props);
@@ -23404,9 +23404,9 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
     ]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 /**
  * KISSY Overlay
@@ -23915,9 +23915,9 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
     requires:["overlay/overlay","overlay/overlayrender","overlay/dialog","overlay/dialogrender", "overlay/popup"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:47
 */
 KISSY.add("suggest", function(S, Sug) {
     S.Suggest = Sug;
@@ -25105,9 +25105,9 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
  *                   2. 改进上下方向键选择item的代码逻辑
  */
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 /**
  * @fileoverview 图像放大区域
@@ -25739,9 +25739,9 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
     "imagezoom/autorender"
 ]});
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 00:57
+build time: Dec 13 18:46
 */
 /**
  * KISSY Calendar
@@ -27072,9 +27072,9 @@ KISSY.add("calendar", function(S, C, Page, Time, Date) {
     requires:["calendar/base","calendar/page","calendar/time","calendar/date"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 /**
  * deletable menuitem
@@ -28437,9 +28437,9 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
     ]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:38
+build time: Dec 13 18:46
 */
 /**
  * Model and Control for button
@@ -28677,9 +28677,9 @@ KISSY.add("button", function(S, Button, Render, Split) {
     requires:['button/base','button/customrender','button/split']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 /**
  * combination of menu and button ,similar to native select
@@ -29214,9 +29214,9 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
         'menubutton/option']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:47
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
@@ -30159,9 +30159,9 @@ KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
     requires:["tree/tree","tree/basenode","tree/checknode","tree/checktree"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 17:11
+build time: Dec 13 18:47
 */
 /**
  * intervein elements dynamically
@@ -30179,7 +30179,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 
 
     function timedChunk(items, process, context, callback) {
-        var todo = S.makeArray(items),
+        var todo = [].concat(S.makeArray(items)),
             stopper = {},
             timer;
         if (todo.length > 0) {
@@ -30327,7 +30327,8 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         adjust:function(callback) {
             S.log("waterfall:adjust");
             var self = this,
-                items = self.get("container").all(".ks-waterfall");
+                items = self.get("container").all(".ks-waterfall"),
+                count = items.length;
             /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
             /* 正在调整中，取消上次调整，开始这次调整 */
             if (self.isAdjusting()) {
@@ -30335,15 +30336,20 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }
             /*计算容器宽度等信息*/
             recalculate.call(self);
-            return self._adjuster = timedChunk(items, adjustItem, self, function() {
+            return self._adjuster = timedChunk(items, self._addItem, self, function() {
                 self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
                 self._adjuster = 0;
                 callback && callback.call(self);
+
+                count && self.fire('adjustComplete', {
+                    items:items
+                });
             });
         },
 
         addItems:function(items, callback) {
-            var self = this;
+            var self = this,
+                count = items.length;
 
             /* 正在调整中，直接这次加，和调整的节点一起处理 */
             /* 正在加，直接这次加，一起处理 */
@@ -30355,6 +30361,10 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                         self.get("curColHeights")));
                     self._adder = 0;
                     callback && callback.call(self);
+
+                    count && self.fire('addComplete', {
+                        items:items
+                    });
                 });
 
             return self._adder;
@@ -30510,9 +30520,9 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
     requires:['waterfall/base','waterfall/loader']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:47
 */
 /**
  * @author: 常胤 (lzlu.com)
@@ -32033,9 +32043,9 @@ KISSY.add("validation", function(S, Validation) {
 	}
 );
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 30 19:02
+build time: Dec 13 18:46
 */
 /**
  * mvc base
