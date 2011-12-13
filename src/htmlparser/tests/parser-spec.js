@@ -105,6 +105,34 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             expect(nodes[0].childNodes[0].toHtml()).toBe("我");
         });
 
+
+        it("adjust non-valid nest tag soup by dtd", function () {
+            // encounter  <a>1<p>2</p>3</a> , close <a> => <a>1</a><p>2</p>3</a> => <a>1</a><p>2</p>3
+            // perfection is better and more complicated ?
+            // <a>1<p>2</p>3</a> , move <a> inside => <a>1</a><p><a>2</a></p><a>3</a>
+            var html = "<a>我<p>测试</p>一下</a>",
+                parser = new Parser(html, {
+                    fixByDtd:1
+                }),
+                node = parser.parse(),
+                writer = new HtmlParser.BasicWriter();
+            node.writeHtml(writer);
+            expect(writer.getHtml()).toBe("<a>我</a><p><a>测试</a></p><a>一下</a>");
+        });
+
+
+        it("adjust non-valid nest tag soup by dtd and auto paragraph", function () {
+            var html = "<a>我<p>测试</p>一下</a>",
+                parser = new Parser(html, {
+                    fixByDtd:1,
+                    autoParagraph:1
+                }),
+                node = parser.parse(),
+                writer = new HtmlParser.BasicWriter();
+            node.writeHtml(writer);
+            expect(writer.getHtml()).toBe("<p><a>我</a></p><p><a>测试</a></p><p><a>一下</a></p>");
+        });
+
         it("filterChildren should works", function () {
             var html = "<div class='ul'><div class='li'>1</div><div class='li'>2</div></div>",
                 parser = new Parser(html),
@@ -136,8 +164,5 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             node.writeHtml(writer, filter);
             expect(writer.getHtml()).toBe("<ul><li>1</li><li>2</li></ul>");
         });
-
     });
-
-
 });
