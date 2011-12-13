@@ -1,4 +1,4 @@
-KISSY.add("htmlparser/nodes/Document", function(S, Tag) {
+KISSY.add("htmlparser/nodes/Document", function (S, Tag) {
     function Document() {
         this.childNodes = [];
         this.nodeType = 9;
@@ -6,8 +6,9 @@ KISSY.add("htmlparser/nodes/Document", function(S, Tag) {
     }
 
     S.extend(Document, Tag, {
-        writeHtml:function(writer, filter) {
-            this._writeChildrenHtml(writer, filter);
+        writeHtml:function (writer, filter) {
+            this.__filter = filter;
+            this._writeChildrenHtml(writer);
         }
     });
 

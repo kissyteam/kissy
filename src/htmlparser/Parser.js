@@ -2,7 +2,7 @@
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Scanner) {
+KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
 
     function Parser(html, opts) {
         // fake root node
@@ -24,7 +24,7 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
     }
 
     Parser.prototype = {
-        elements:function() {
+        elements:function () {
             var root ,
                 doc,
                 lexer = this.lexer,
@@ -49,16 +49,21 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
 
             post_process(doc);
 
-            var originalHtml = this.originalHtml;
+            var originalHtml = this.originalHtml,
+                fragment = new Fragment(), cs;
 
             if (/^(<!doctype|<html|<body)/i.test(originalHtml)) {
-                return doc.childNodes;
+                cs = doc.childNodes;
             } else {
-                return body.childNodes;
+                cs = body.childNodes;
             }
+            S.each(cs, function (c) {
+                fragment.appendChild(c);
+            });
+            return fragment;
         },
 
-        parse:function() {
+        parse:function () {
             return this.elements();
         }
     };
@@ -84,7 +89,7 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
                 for (var i = 0; i < fixes.length; i++) {
                     parent.removeChild(fixes[i]);
                     if (fixes[i].tagName == "body") {
-                        S.each(fixes[i].childNodes, function(c) {
+                        S.each(fixes[i].childNodes, function (c) {
                             body.appendChild(c);
                         });
                     } else {
@@ -112,7 +117,8 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
             }
         }
         if (needFix) {
-            var newChildren = [],holder = new Tag();
+            var newChildren = [],
+                holder = new Tag();
             holder.nodeName = holder.tagName = "p";
             for (i = 0; i < childNodes.length; i++) {
                 c = childNodes[i];
@@ -145,7 +151,7 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
         if (S.isNumber(level)) {
             level--;
         }
-        var r,childNodes = root.childNodes;
+        var r, childNodes = root.childNodes;
         if (childNodes) {
             for (var i = 0; i < childNodes.length; i++) {
                 if (childNodes[i].tagName === tagName) {
@@ -182,12 +188,12 @@ KISSY.add("htmlparser/Parser", function(S, dtd, Tag, Cursor, Lexer, Document, Sc
         }
     }
 
-
     return Parser;
 }, {
     requires:[
         './dtd',
         './nodes/Tag',
+        './nodes/Fragment',
         './lexer/Cursor',
         './lexer/Lexer',
         './nodes/Document',

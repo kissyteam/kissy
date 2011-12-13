@@ -137,7 +137,7 @@
          * @param r {Function} the object to modify
          * @param s {Function} the object to inherit
          * @param px {Object} prototype properties to add/override
-         * @param sx {Object} static properties to add/override
+         * @param {Object} [sx] static properties to add/override
          * @return r {Object}
          */
         extend: function(r, s, px, sx) {

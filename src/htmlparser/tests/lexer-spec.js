@@ -46,11 +46,9 @@ KISSY.use("htmlparser", function(S, HtmlParser) {
             node = nodes[0];
             expect(nodes.length).toBe(3);
             var attributes = node.attributes;
-            expect(attributes.length).toBe(2);
+            expect(attributes.length).toBe(1);
             expect(attributes[0].name).toBe('href');
             expect(attributes[0].value).toBe('http://g.cn/');
-            expect(attributes[1].name).toBe('"');
-            expect(attributes[1].value).toBeUndefined();
         });
 
     });

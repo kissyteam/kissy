@@ -261,7 +261,7 @@
          * @param object {Object} the object to iterate
          * @param fn {Function} the function to execute on each item. The function
          *        receives three arguments: the value, the index, the full array.
-         * @param context {Object} (opt)
+         * @param {Object} [context]
          */
         each: function(object, fn, context) {
             if (object) {
