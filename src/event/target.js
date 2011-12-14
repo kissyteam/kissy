@@ -2,7 +2,7 @@
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
+KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefined) {
     var KS_PUBLISH = "__~ks_publish",
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
@@ -68,7 +68,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
          */
         fire: function(type, eventData) {
             var self = this,
-                ret,
+                ret=undefined,
                 r2,
                 customEvent;
             type = trim(type);
@@ -82,7 +82,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
                 return ret;
             }
             customEvent = getCustomEvent(self, type, eventData);
-            ret = Event._handle(self, customEvent);
+            ret = handle(self, customEvent);
             if (!customEvent.isPropagationStopped &&
                 isBubblable(self, type)) {
                 r2 = self.bubble(type, customEvent);
@@ -117,7 +117,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
          */
         bubble: function(type, eventData) {
             var self = this,
-                ret,
+                ret=undefined,
                 targets = getBubbleTargetsObj(self);
             S.each(targets, function(t) {
                 var r2 = t.fire(type, eventData);
@@ -169,7 +169,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object','./utils']
+    requires:["./base",'./object','./utils','./handle']
 });
 /**
  *  yiminghe:2011-10-17

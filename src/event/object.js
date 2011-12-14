@@ -19,10 +19,14 @@ KISSY.add('event/object', function (S, undefined) {
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
+     *
+     * @constructor
+     * @name KISSY.Event.Object
      */
     function EventObject(currentTarget, domEvent, type) {
         var self = this;
         self.originalEvent = domEvent || { };
+        self.currentTarget = currentTarget;
         if (domEvent) { // html element
             self.type = domEvent.type;
             // incase dom event has been mark as default prevented by lower dom node

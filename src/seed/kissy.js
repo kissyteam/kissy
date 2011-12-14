@@ -3,6 +3,9 @@
  * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, undefined) {
+    /**
+     * @namespace KISSY
+     */
 
     var host = this,
         meta = {

@@ -2,12 +2,12 @@
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function(S, Event, UA, Utils, EventObject) {
+KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _protected) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
         simpleAdd = Utils.simpleAdd,
-        mousewheelHandler = "mousewheelHandler";
+        MOUSE_WHEEL_HANDLER = "mousewheelHandler";
 
     function handler(e) {
         var deltaX,
@@ -59,30 +59,30 @@ KISSY.add("event/mousewheel", function(S, Event, UA, Utils, EventObject) {
             type:'mousewheel'
         });
 
-        return  Event._handle(currentTarget, e);
+        return  handle(currentTarget, e);
     }
 
     Event.special['mousewheel'] = {
-        setup: function() {
+        setup:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = Event._data(el);
+                eventDesc = _protected._data(el);
             // solve this in ie
-            mousewheelHandler = eventDesc[mousewheelHandler] = S.bind(handler, el);
+            mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER] = S.bind(handler, el);
             simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
         },
-        tearDown:function() {
+        tearDown:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = Event._data(el);
-            mousewheelHandler = eventDesc[mousewheelHandler];
+                eventDesc = _protected._data(el);
+            mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER];
             simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
         }
     };
 
 }, {
-    requires:['./base','ua','./utils','./object']
+    requires:['./base', 'ua', './utils', './object', './handle', './protected']
 });
 
 /**
