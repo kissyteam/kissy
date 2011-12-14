@@ -2,13 +2,13 @@
  * @module  event-mouseenter
  * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
-KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
+KISSY.add('event/mouseenter', function (S, Event, DOM, UA) {
 
     if (!UA['ie']) {
         S.each([
-            { name: 'mouseenter', fix: 'mouseover' },
-            { name: 'mouseleave', fix: 'mouseout' }
-        ], function(o) {
+            { name:'mouseenter', fix:'mouseover' },
+            { name:'mouseleave', fix:'mouseout' }
+        ], function (o) {
 
 
             // 元素内触发的 mouseover/out 不能算 mouseenter/leave
@@ -31,16 +31,17 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
                     }
 
                     // 在自身外边就触发
-                    if (parent !== self &&
-                        // self==document , parent==null
-                        (!parent || !DOM.contains(self, parent))
+                    // self === document,parent === null
+                    if (
+                        !parent ||
+                            (parent !== self && !DOM.contains(self, parent))
                         ) {
                         // handle event if we actually just moused on to a non sub-element
                         Event._handle(self, event);
                     }
 
                     // assuming we've left the element since we most likely mousedover a xul element
-                } catch(e) {
+                } catch (e) {
                     S.log("withinElement error : ", "error");
                     S.log(e, "error");
                 }
@@ -51,12 +52,12 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
                 // 第一次 mouseenter 时注册下
                 // 以后都直接放到 listener 数组里， 由 mouseover 读取触发
-                setup: function() {
+                setup:function () {
                     Event.add(this, o.fix, withinElement);
                 },
 
                 //当 listener 数组为空时，也清掉 mouseover 注册，不再读取
-                tearDown:function() {
+                tearDown:function () {
                     Event.remove(this, o.fix, withinElement);
                 }
             }
@@ -65,7 +66,7 @@ KISSY.add('event/mouseenter', function(S, Event, DOM, UA) {
 
     return Event;
 }, {
-    requires:["./base","dom","ua"]
+    requires:["./base", "dom", "ua"]
 });
 
 /**

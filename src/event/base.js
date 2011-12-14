@@ -2,7 +2,7 @@
  * scalable event framework for kissy (refer DOM3 Events)
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
+KISSY.add('event/base', function (S, DOM, EventObject, Utils, undefined) {
 
     var isValidTarget = Utils.isValidTarget,
         isIdenticalHandler = Utils.isIdenticalHandler,
@@ -30,42 +30,42 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
      */
     var Event = {
 
-        _clone:function(src, dest) {
+        _clone:function (src, dest) {
             if (dest.nodeType !== DOM.ELEMENT_NODE ||
                 !Event._hasData(src)) {
                 return;
             }
             var eventDesc = Event._data(src),
                 events = eventDesc.events;
-            each(events, function(handlers, type) {
-                each(handlers, function(handler) {
+            each(events, function (handlers, type) {
+                each(handlers, function (handler) {
                     // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     Event.on(dest, type, handler.fn, handler.scope, handler.data);
                 });
             });
         },
 
-        _hasData:function(elem) {
+        _hasData:function (elem) {
             return DOM.hasData(elem, EVENT_GUID);
         },
 
-        _data:function(elem) {
+        _data:function (elem) {
             var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.data.apply(DOM, args);
         },
 
-        _removeData:function(elem) {
+        _removeData:function (elem) {
             var args = makeArray(arguments);
             args.splice(1, 0, EVENT_GUID);
             return DOM.removeData.apply(DOM, args);
         },
 
         // such as: { 'mouseenter' : { setup:fn ,tearDown:fn} }
-        special: EVENT_SPECIAL,
+        special:EVENT_SPECIAL,
 
         // single type , single target , fixed native
-        __add:function(isNativeTarget, target, type, fn, scope, data) {
+        __add:function (isNativeTarget, target, type, fn, scope, data) {
             var eventDesc;
 
             // 不是有效的 target 或 参数不对
@@ -83,17 +83,19 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
             var events = eventDesc.events = eventDesc.events || {},
                 handlers = events[type] = events[type] || [],
                 handleObj = {
-                    fn: fn,
-                    scope: scope,
+                    fn:fn,
+                    scope:scope,
                     data:data
                 },
                 eventHandler = eventDesc.handler;
             // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
             if (!eventHandler) {
-                eventHandler = eventDesc.handler = function(event, data) {
+                eventHandler = eventDesc.handler = function (event, data) {
                     // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
                     // 已经在 fire 中 bubble 过一次了
-                    if (event && event.type == Event_Triggered) {
+                    // incase after page has unloaded
+                    if (typeof KISSY == "undefined" ||
+                        event && event.type == Event_Triggered) {
                         return;
                     }
                     var currentTarget = eventHandler.target;
@@ -142,9 +144,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
          * @param targets KISSY selector
          * @param type {String} The type of event to append.
          * @param fn {Function} The event handler/listener.
-         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
+         * @param  {Object} [scope] The scope (this reference) in which the handler function is executed.
          */
-        add: function(targets, type, fn, scope /* optional */, data/*internal usage*/) {
+        add:function (targets, type, fn, scope /* optional */, data/*internal usage*/) {
             type = trim(type);
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
@@ -152,7 +154,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 return targets;
             }
 
-            DOM.query(targets).each(function(target) {
+            DOM.query(targets).each(function (target) {
                 Event.__add(true, target, type, fn, scope, data);
             });
 
@@ -160,7 +162,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
         },
 
         // single target, single type, fixed native
-        __remove:function(isNativeTarget, target, type, fn, scope, data) {
+        __remove:function (isNativeTarget, target, type, fn, scope, data) {
 
             if (
                 !target ||
@@ -185,7 +187,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
             // remove all types of event
             if (!type) {
                 for (type in events) {
-                    Event.__remove(isNativeTarget, target, type);
+                    if (events.hasOwnProperty(type)) {
+                        Event.__remove(isNativeTarget, target, type);
+                    }
                 }
                 return;
             }
@@ -198,9 +202,9 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                         data:data,
                         fn:fn,
                         scope:scope
-                    },handler;
+                    }, handler;
 
-                    for (i = 0,j = 0,t = []; i < len; ++i) {
+                    for (i = 0, j = 0, t = []; i < len; ++i) {
                         handler = handlers[i];
                         // 注意顺序，用户提供的 handler 在第二个参数
                         if (!isIdenticalHandler(handler, currentHandler, target)) {
@@ -241,14 +245,14 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
          * @param targets KISSY selector
          * @param type {String} The type of event to append.
          * @param fn {Function} The event handler/listener.
-         * @param scope {Object} (optional) The scope (this reference) in which the handler function is executed.
+         * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
          */
-        remove: function(targets, type /* optional */, fn /* optional */, scope /* optional */, data/*internal usage*/) {
+        remove:function (targets, type /* optional */, fn /* optional */, scope /* optional */, data/*internal usage*/) {
             type = trim(type);
             if (batchForType(Event, 'remove', targets, type, fn, scope)) {
                 return targets;
             }
-            DOM.query(targets).each(function(target) {
+            DOM.query(targets).each(function (target) {
                 Event.__remove(true, target, type, fn, scope, data);
             });
             return targets;
@@ -257,16 +261,17 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
         _handle:_handle,
 
         /**
-         * fire event , simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * fire event,simulate bubble in browser.
+         * similar to dispatchEvent in DOM3 Events
          * @return boolean The return value of fire/dispatchEvent indicates
          *                 whether any of the listeners which handled the event called preventDefault.
          *                 If preventDefault was called the value is false, else the value is true.
          */
-        fire: function(targets, eventType, eventData, onlyHandlers) {
+        fire:function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
             var ret = true;
             eventType = trim(eventType);
             if (eventType.indexOf(" ") > -1) {
-                splitAndRun(eventType, function(t) {
+                splitAndRun(eventType, function (t) {
                     ret = Event.fire(targets, t, eventData, onlyHandlers) && ret;
                 });
                 return ret;
@@ -275,15 +280,23 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
             eventData = eventData || {};
             // protect event type
             eventData.type = eventType;
-            DOM.query(targets).each(function(target) {
+            DOM.query(targets).each(function (target) {
                 ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
             });
             return ret;
+        },
+
+        /**
+         * does not cause default behavior to occur
+         * does not bubble up the DOM hierarchy
+         * @param targets
+         * @param eventType
+         * @param eventData
+         */
+        fireHandler:function (targets, eventType, eventData) {
+            return this.fire(targets, eventType, eventData, 1);
         }
     };
-
-    // for compatibility
-    Event['__getListeners'] = getListeners
 
     // shorthand
     Event.on = Event.add;
@@ -395,7 +408,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
             ontype = "on" + eventType;
 
         //bubble up dom tree
-        do{
+        do {
             event.currentTarget = cur;
             _handle(cur, event);
             // Trigger an inline bound script
@@ -414,7 +427,16 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
                 nodeName(target, "a"))) {
                 var old;
                 try {
-                    if (ontype && target[ eventType ]) {
+                    // execute default action on dom node
+                    // so exclude window
+                    // exclude focus/blue on hidden element
+                    if (ontype &&
+                        target[ eventType ] &&
+                        (
+                            (eventType !== "focus" && eventType !== "blur") ||
+                                target.offsetWidth !== 0
+                            ) &&
+                        !S.isWindow(target)) {
                         // Don't re-trigger an onFOO event when we call its FOO() method
                         old = target[ ontype ];
 
@@ -448,7 +470,7 @@ KISSY.add('event/base', function(S, DOM, EventObject, Utils, undefined) {
 
     return Event;
 }, {
-    requires:["dom","./object","./utils"]
+    requires:["dom", "./object", "./utils"]
 });
 
 /**

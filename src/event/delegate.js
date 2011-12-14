@@ -2,7 +2,7 @@
  * kissy delegate for event module
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
+KISSY.add("event/delegate", function (S, DOM, Event, Utils) {
     var batchForType = Utils.batchForType,
         delegateMap = {
             "focus":{
@@ -22,12 +22,12 @@ KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
         };
 
     S.mix(Event, {
-        delegate:function(targets, type, selector, fn, scope) {
+        delegate:function (targets, type, selector, fn, scope) {
             if (batchForType(Event, 'delegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
-            DOM.query(targets).each(function(target) {
-                var preType = type,handler = delegateHandler;
+            DOM.query(targets).each(function (target) {
+                var preType = type, handler = delegateHandler;
                 if (delegateMap[type]) {
                     type = delegateMap[preType].type;
                     handler = delegateMap[preType].handler || handler;
@@ -43,11 +43,11 @@ KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
             return targets;
         },
 
-        undelegate:function(targets, type, selector, fn, scope) {
+        undelegate:function (targets, type, selector, fn, scope) {
             if (batchForType(Event, 'undelegate', targets, type, selector, fn, scope)) {
                 return targets;
             }
-            DOM.query(targets).each(function(target) {
+            DOM.query(targets).each(function (target) {
                 var preType = type,
                     handler = delegateHandler;
                 if (delegateMap[type]) {
@@ -83,12 +83,21 @@ KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
         }
     }
 
+    function shouldOccur(event) {
+        // by jq
+        // Avoid disabled elements in IE (#6911)
+        // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
+        return !event.target.disabled;
+    }
+
     // 根据 selector ，从事件源得到对应节点
     function delegateHandler(event, data) {
         var delegateTarget = this,
             target = event.target,
             invokeds = DOM.closest(target, [data.selector], delegateTarget);
-
+        if (!shouldOccur(event)) {
+            return undefined;
+        }
         // 找到了符合 selector 的元素，可能并不是事件源
         return invokes.call(delegateTarget, invokeds, event, data);
     }
@@ -99,6 +108,9 @@ KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
             ret,
             target = event.target,
             relatedTarget = event.relatedTarget;
+        if (!shouldOccur(event)) {
+            return undefined;
+        }
         // 恢复为用户想要的 mouseenter/leave 类型
         event.type = data.preType;
         // mouseenter/leave 不会冒泡，只选择最近一个
@@ -140,7 +152,7 @@ KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
 
     return Event;
 }, {
-    requires:["dom","./base","./utils"]
+    requires:["dom", "./base", "./utils"]
 });
 
 /**
