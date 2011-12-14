@@ -37,7 +37,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA) {
                             (parent !== self && !DOM.contains(self, parent))
                         ) {
                         // handle event if we actually just moused on to a non sub-element
-                        Event._handle(self, event);
+                        Event.fireHandler(self, event);
                     }
 
                     // assuming we've left the element since we most likely mousedover a xul element
