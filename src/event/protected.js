@@ -21,6 +21,7 @@ KISSY.add("event/protected", function (S, DOM, Utils) {
                         fn:handler.fn,
                         scope:handler.scope,
                         data:handler.data,
+                        originalType:handler.originalType,
                         selector:handler.selector
                     });
                 });

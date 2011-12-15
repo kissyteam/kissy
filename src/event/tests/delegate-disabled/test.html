@@ -24,6 +24,7 @@
 <script src="../../change.js"></script>
 <script src="../../mousewheel.js"></script>
 <script src="../../utils.js"></script>
+<script src="../../special.js"></script>
 <script src="../../../event.js"></script>
 <style type="text/css">
     body, html {
@@ -46,13 +47,14 @@
 
     if (1) {
         S.use("dom,event,sizzle", function (S, DOM, Event) {
+            var t;
             Event.on("#b1", "click", function () {
                 S.log("KISSY click on #b1");
             });
             Event.on("#b2", "click", function () {
                 S.log("KISSY click on #b2");
             });
-            Event.delegate("#a", "click", ".c", function (e) {
+            Event.delegate("#a", "click", ".c", t = function (e) {
                 S.log("KISSY delegate-click on #a .c");
                 e.stopImmediatePropagation();
             });
@@ -62,7 +64,11 @@
             Event.delegate("#a", "click", ".b", function (e) {
                 S.log("KISSY delegate-click on #a .b");
             });
-            //DOM.get("#b1").click();
+            Event.on("#a", "click", function (e) {
+                S.log("KISSY click on #a");
+            });
+            // Event.undelegate("#a", "click");
+            // DOM.get("#b1").click();
         });
     }
 

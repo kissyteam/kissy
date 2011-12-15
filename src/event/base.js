@@ -1,8 +1,9 @@
 /**
  * scalable event framework for kissy (refer DOM3 Events)
+ * how to fire event just like browser?
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
+KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
@@ -14,10 +15,6 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
      * @name KISSY.Event
      */
     var Event = {
-
-        // such as: { 'mouseenter' : { setup:fn ,tearDown:fn} }
-        special:{},
-
         /**
          * fire event,simulate bubble in browser.
          * similar to dispatchEvent in DOM3 Events
@@ -26,14 +23,17 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
          *                 If preventDefault was called the value is false, else the value is true.
          */
         fire:function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
-            var ret = true;
+            var ret = true, r;
             // custom event firing moved to target.js
             eventData = eventData || {};
             if (S.isString(eventType)) {
                 eventType = trim(eventType);
                 if (eventType.indexOf(" ") > -1) {
                     splitAndRun(eventType, function (t) {
-                        ret = Event.fire(targets, t, eventData, onlyHandlers) && ret;
+                        r = Event.fire(targets, t, eventData, onlyHandlers);
+                        if (ret !== false) {
+                            ret = r;
+                        }
                     });
                     return ret;
                 }
@@ -44,7 +44,10 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
                 eventType = eventData.type;
             }
             DOM.query(targets).each(function (target) {
-                ret = fireDOMEvent(target, eventType, eventData, onlyHandlers) && ret;
+                r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
+                if (ret !== false) {
+                    ret = r;
+                }
             });
             return ret;
         },
@@ -71,6 +74,11 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
         if (!isValidTarget(target)) {
             return false;
         }
+        var s = special[eventType];
+        // TODO bug : when fire mouseenter , it also fire mouseover in firefox/chrome
+        if (s && s.onFix) {
+            eventType = s.onFix
+        }
 
         var event,
             ret = true;
@@ -87,17 +95,22 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
         // event.target=target;
         // protect type
         event.type = eventType;
-        // 只运行自己的绑定函数，不冒泡也不触发默认行为
-        if (onlyHandlers) {
-            event.halt();
-        }
+
+        // onlyHandlers is equal to event.halt()
+        // but we can not call event.halt()
+        // because handle will check event.isPropagationStopped
+
         var cur = target,
+            t,
             ontype = "on" + eventType;
 
         //bubble up dom tree
         do {
             event.currentTarget = cur;
-            handle(cur, event);
+            t = handle(cur, event);
+            if (ret !== false) {
+                ret = t;
+            }
             // Trigger an inline bound script
             if (cur[ ontype ] &&
                 cur[ ontype ].call(cur) === false) {
@@ -107,9 +120,9 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
             cur = cur.parentNode ||
                 cur.ownerDocument ||
                 cur === target.ownerDocument && window;
-        } while (cur && !event.isPropagationStopped);
+        } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
-        if (!event.isDefaultPrevented) {
+        if (!onlyHandlers && !event.isDefaultPrevented) {
             if (!(eventType === "click" &&
                 nodeName(target, "a"))) {
                 var old;
@@ -149,18 +162,19 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle) {
 
                 Utils.Event_Triggered = TRIGGERED_NONE;
             }
-        } else {
-            ret = false;
         }
         return ret;
     }
 
     return Event;
 }, {
-    requires:["dom", "./object", "./utils",'./handle']
+    requires:["dom", "./object", "./utils", './handle', './special']
 });
 
 /**
+ * yiminghe@gmail.com : 2011-12-15
+ *  - 重构，粒度更细，新的架构
+ *
  * 2011-11-24
  *  - 自定义事件和 dom 事件操作彻底分离
  *  - TODO: group event from DOM3 Event

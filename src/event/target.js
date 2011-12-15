@@ -75,8 +75,8 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
             if (type.indexOf(" ") > 0) {
                 splitAndRun(type, function(t) {
                     r2 = self.fire(t, eventData);
-                    if (r2 === false) {
-                        ret = false;
+                    if (ret !== false) {
+                        ret = r2;
                     }
                 });
                 return ret;

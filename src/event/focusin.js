@@ -2,26 +2,26 @@
  * @module  event-focusin
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/focusin', function(S, UA, Event) {
+KISSY.add('event/focusin', function (S, UA, Event, special) {
 
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
-            { name: 'focusin', fix: 'focus' },
-            { name: 'focusout', fix: 'blur' }
-        ], function(o) {
+            { name:'focusin', fix:'focus' },
+            { name:'focusout', fix:'blur' }
+        ], function (o) {
             var attaches = 0;
-            Event.special[o.name] = {
+            special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
                 // refer: http://yiminghe.iteye.com/blog/813255
-                setup: function() {
+                setup:function () {
                     if (attaches++ === 0) {
                         document.addEventListener(o.fix, handler, true);
                     }
                 },
 
-                tearDown:function() {
+                tearDown:function () {
                     if (--attaches === 0) {
                         document.removeEventListener(o.fix, handler, true);
                     }
@@ -35,9 +35,18 @@ KISSY.add('event/focusin', function(S, UA, Event) {
 
         });
     }
+
+    special["focus"] = {
+        delegateFix:"focusin"
+    };
+
+    special["blur"] = {
+        delegateFix:"focusout"
+    };
+
     return Event;
 }, {
-    requires:["ua","./base"]
+    requires:["ua", "./base", './special']
 });
 
 /**

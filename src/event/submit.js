@@ -2,11 +2,11 @@
  * patch for ie<9 submit : does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/submit", function(S, UA, Event, DOM) {
+KISSY.add("event/submit", function(S, UA, Event, DOM,special) {
     var mode = document['documentMode'];
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
         var nodeName = DOM._nodeName;
-        Event.special['submit'] = {
+        special['submit'] = {
             setup: function() {
                 var el = this;
                 // form use native
@@ -58,7 +58,7 @@ KISSY.add("event/submit", function(S, UA, Event, DOM) {
     }
 
 }, {
-    requires:["ua","./base","dom"]
+    requires:["ua","./base","dom","./special"]
 });
 /**
  * modified from jq ,fix submit in ie<9

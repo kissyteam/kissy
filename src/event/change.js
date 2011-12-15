@@ -2,7 +2,7 @@
  * change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/change", function(S, UA, Event, DOM) {
+KISSY.add("event/change", function (S, UA, Event, DOM, special) {
     var mode = document['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
@@ -18,8 +18,8 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
             return type == "checkbox" || type == "radio";
         }
 
-        Event.special['change'] = {
-            setup: function() {
+        special['change'] = {
+            setup:function () {
                 var el = this;
                 if (isFormElement(el)) {
                     // checkbox/radio only fires change when blur in ie<9
@@ -40,7 +40,7 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
                     Event.on(el, "beforeactivate", beforeActivate);
                 }
             },
-            tearDown:function() {
+            tearDown:function () {
                 var el = this;
                 if (isFormElement(el)) {
                     if (isCheckBoxOrRadio(el)) {
@@ -51,7 +51,7 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
                     }
                 } else {
                     Event.remove(el, "beforeactivate", beforeActivate);
-                    DOM.query("textarea,input,select", el).each(function(fel) {
+                    DOM.query("textarea,input,select", el).each(function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
                             Event.remove(fel, "change", changeHandler);
@@ -99,5 +99,5 @@ KISSY.add("event/change", function(S, UA, Event, DOM) {
 
     }
 }, {
-    requires:["ua","./base","dom"]
+    requires:["ua", "./base", "dom", './special']
 });

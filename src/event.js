@@ -9,6 +9,14 @@ KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
         Object:Object,
         on:Event.add,
         detach:Event.remove,
+        /**
+         *
+         * @param targets
+         * @param {String} eventType
+         * @param {String|Function} selector
+         * @param {Object|Function} fn
+         * @param [scope]
+         */
         delegate:function (targets, eventType, selector, fn, scope) {
             return Event.add(targets, eventType, {
                 fn:fn,
@@ -16,6 +24,14 @@ KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
                 selector:selector
             });
         },
+        /**
+         *
+         * @param targets
+         * @param {String} eventType
+         * @param {String|Function} [selector]
+         * @param {Object|Function} [fn]
+         * @param [scope]
+         */
         undelegate:function (targets, eventType, selector, fn, scope) {
             return Event.remove(targets, eventType, {
                 fn:fn,

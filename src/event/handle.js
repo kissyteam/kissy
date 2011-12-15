@@ -2,7 +2,7 @@
  * @fileOverview responsible for handling event from browser to KISSY Event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/handle", function (S, DOM, _protected) {
+KISSY.add("event/handle", function (S, DOM, _protected, special) {
 
     function getEvents(target) {
         // 获取事件描述
@@ -16,14 +16,16 @@ KISSY.add("event/handle", function (S, DOM, _protected) {
     }
 
     return function (currentTarget, event) {
-        /* As some listeners may remove themselves from the
+        /*
+         As some listeners may remove themselves from the
          event, the original array length is dynamic. So,
          let's make a copy of all listeners, so we are
-         sure we'll call all of them.*/
+         sure we'll call all of them.
+         */
         /**
          * DOM3 Events: EventListenerList objects in the DOM are live. ??
          */
-        var handlers = getHandlers(currentTarget, event.type).slice(0),
+        var handlers = getHandlers(currentTarget, event.type),
             target = event.target,
             currentTarget0,
             allHandlers = [],
@@ -32,7 +34,7 @@ KISSY.add("event/handle", function (S, DOM, _protected) {
             handlerObj,
             i,
             j,
-            delegateCount = handlers.delegateCount,
+            delegateCount = handlers.delegateCount || 0,
             len,
             currentTargetHandlers,
             currentTargetHandler,
@@ -69,6 +71,8 @@ KISSY.add("event/handle", function (S, DOM, _protected) {
             currentTargetHandlers:handlers.slice(delegateCount)
         });
 
+        // backup eventType
+        var eventType = event.type, s, t;
         for (i = 0, len = allHandlers.length;
              !event.isPropagationStopped && i < len;
              ++i) {
@@ -77,27 +81,38 @@ KISSY.add("event/handle", function (S, DOM, _protected) {
             currentTargetHandlers = handlerObj.currentTargetHandlers;
             currentTarget0 = handlerObj.currentTarget;
             event.currentTarget = currentTarget0;
-            for (j = 0; !event.isImmediatePropagationStopped && j < currentTargetHandlers.length; j++) {
+            for (j = 0; !event.isImmediatePropagationStopped &&
+                j < currentTargetHandlers.length;
+                 j++) {
                 currentTargetHandler = currentTargetHandlers[j];
                 event.data = currentTargetHandler.data;
-                // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-                ret = currentTargetHandler.fn.call(
-                    currentTargetHandler.scope || currentTarget,
-                    event
-                );
-                // 和 jQuery 逻辑保持一致
-                if (ret !== undefined) {
-                    // 有一个 false，最终结果就是 false
-                    // 否则等于最后一个返回值
-                    if (gRet !== false) {
-                        gRet = ret;
-                    }
-                    // return false 等价 preventDefault + stopProgation
-                    if (ret === false) {
-                        event.halt();
-                    }
-                }
 
+                // restore originalType if involving delegate/onFix handlers
+                event.type = currentTargetHandler.originalType || eventType;
+
+                // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+                if ((s = special[event.type]) && s.handle) {
+                    t = s.handle(event, currentTargetHandler);
+                    // can handle
+                    if (t.length > 0) {
+                        ret = t[0];
+                    }
+                } else {
+                    ret = currentTargetHandler.fn.call(
+                        currentTargetHandler.scope || currentTarget,
+                        event
+                    );
+                }
+                // 和 jQuery 逻辑保持一致
+                // 有一个 false，最终结果就是 false
+                // 否则等于最后一个返回值
+                if (gRet !== false) {
+                    gRet = ret;
+                }
+                // return false 等价 preventDefault + stopProgation
+                if (ret === false) {
+                    event.halt();
+                }
             }
         }
 
@@ -106,5 +121,5 @@ KISSY.add("event/handle", function (S, DOM, _protected) {
         return gRet;
     }
 }, {
-    requires:['dom', './protected']
+    requires:['dom', './protected', './special']
 });

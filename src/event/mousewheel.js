@@ -2,7 +2,7 @@
  * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _protected) {
+KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _protected, special) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
@@ -62,7 +62,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
         return  handle(currentTarget, e);
     }
 
-    Event.special['mousewheel'] = {
+    special['mousewheel'] = {
         setup:function () {
             var el = this,
                 mousewheelHandler,
@@ -82,7 +82,9 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
     };
 
 }, {
-    requires:['./base', 'ua', './utils', './object', './handle', './protected']
+    requires:['./base', 'ua', './utils',
+        './object', './handle',
+        './protected', "./special"]
 });
 
 /**

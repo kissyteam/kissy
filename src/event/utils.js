@@ -9,14 +9,17 @@ KISSY.add("event/utils", function (S, DOM) {
      * @param h1 已有的 handler 描述
      * @param h2 用户提供的 handler 描述
      */
-    function isIdenticalHandler(h1, h2, el, ignoreData) {
+    function isIdenticalHandler(h1, h2, el) {
         var scope1 = h1.scope || el,
             ret = 1,
             scope2 = h2.scope || el;
-        if (h1.fn !== h2.fn ||
-            h1.selector !== h2.selector ||
-            (ignoreData || h1.data !== h2.data) ||
-            scope1 !== scope2) {
+        if (
+            h1.fn !== h2.fn ||
+                h1.selector !== h2.selector ||
+                h1.data !== h2.data ||
+                scope1 !== scope2 ||
+                h1.originalType !== h2.originalType
+            ) {
             ret = 0;
         }
         return ret;
@@ -38,7 +41,7 @@ KISSY.add("event/utils", function (S, DOM) {
             var args = S.makeArray(arguments);
             S.each(types.split(/\s+/), function (type) {
                 var args2 = [].concat(args);
-                args2.splice(0, 4, targets, type);
+                args2.splice(0, 3, targets, type);
                 fn.apply(null, args2);
             });
             return true;
@@ -78,12 +81,6 @@ KISSY.add("event/utils", function (S, DOM) {
 
 
     return {
-        delegateMap:{
-            "focus":"focusin",
-            "blur":"focusout",
-            "mouseenter":"mouseover",
-            "mouseleave":"mouseout"
-        },
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了

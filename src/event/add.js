@@ -2,10 +2,8 @@
  * @fileOverview responsible for registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle,_protected) {
-    var delegateMap = Utils.delegateMap,
-        EVENT_SPECIAL = Event.special,
-        simpleAdd = Utils.simpleAdd,
+KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _protected, specials) {
+    var simpleAdd = Utils.simpleAdd,
         isValidTarget = Utils.isValidTarget,
         isIdenticalHandler = Utils.isIdenticalHandler;
 
@@ -13,7 +11,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle,_prot
      * dom node need eventHandler attached to dom node
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
-        var special = EVENT_SPECIAL[type] || {};
+        var special = specials[type] || {};
         // 第一次注册该事件，dom 节点才需要注册 dom 事件
         if (!handlers.length &&
             (!special.setup || special.setup.call(target) === false)) {
@@ -29,6 +27,10 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle,_prot
         __add:function (isNativeTarget, target, type, fn, scope) {
             var eventDesc,
                 data,
+                s = specials[type],
+                // incase overwrite by delegateFix/onFix in specials events
+                // (mouseenter/leave,focusin/out)
+                originalType,
                 selector;
             if (S.isObject(fn)) {
                 scope = fn.scope;
@@ -36,7 +38,18 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle,_prot
                 selector = fn.selector;
                 fn = fn.fn;
                 if (selector) {
-                    type = delegateMap[type] || type;
+                    if (s && s['delegateFix']) {
+                        originalType = type;
+                        type = s['delegateFix'];
+                    }
+                }
+            }
+            if (!selector) {
+                // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
+                // TODO need evaluate!
+                if (s && s['onFix']) {
+                    originalType = type;
+                    type = s['onFix'];
                 }
             }
             // 不是有效的 target 或 参数不对
@@ -57,7 +70,8 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle,_prot
                     fn:fn,
                     scope:scope,
                     selector:selector,
-                    data:data
+                    data:data,
+                    originalType:originalType
                 },
                 eventHandler = eventDesc.handler;
             // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
@@ -144,5 +158,5 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle,_prot
         }
     });
 }, {
-    requires:['./base', 'dom', './utils', './object', './handle','./protected']
+    requires:['./base', 'dom', './utils', './object', './handle', './protected', './special']
 });

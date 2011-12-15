@@ -2,7 +2,7 @@
  * @module  dom-attr
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
+KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
         var doc = document,
             docElement = doc.documentElement,
@@ -20,21 +20,21 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             attrFix = {
             },
             attrFn = {
-                val: 1,
-                css: 1,
-                html: 1,
-                text: 1,
-                data: 1,
-                width: 1,
-                height: 1,
-                offset: 1,
+                val:1,
+                css:1,
+                html:1,
+                text:1,
+                data:1,
+                width:1,
+                height:1,
+                offset:1,
                 scrollTop:1,
                 scrollLeft:1
             },
             attrHooks = {
                 // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
                 tabindex:{
-                    get:function(el) {
+                    get:function (el) {
                         // elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
                         var attributeNode = el.getAttributeNode("tabindex");
                         return attributeNode && attributeNode.specified ?
@@ -48,27 +48,28 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 // IE7- 下，需要用 cssText 来获取
                 // 统一使用 cssText
                 style:{
-                    get:function(el) {
+                    get:function (el) {
                         return el.style.cssText;
                     },
-                    set:function(el, val) {
+                    set:function (el, val) {
                         el.style.cssText = val;
                     }
                 }
             },
             propFix = {
-                tabindex: "tabIndex",
-                readonly: "readOnly",
-                "for": "htmlFor",
-                "class": "className",
-                maxlength: "maxLength",
-                cellspacing: "cellSpacing",
-                "cellpadding": "cellPadding",
-                rowspan: "rowSpan",
-                colspan: "colSpan",
-                usemap: "useMap",
-                frameborder: "frameBorder",
-                "contenteditable": "contentEditable"
+                "hidefocus":"hideFocus",
+                tabindex:"tabIndex",
+                readonly:"readOnly",
+                "for":"htmlFor",
+                "class":"className",
+                maxlength:"maxLength",
+                cellspacing:"cellSpacing",
+                "cellpadding":"cellPadding",
+                rowspan:"rowSpan",
+                colspan:"colSpan",
+                usemap:"useMap",
+                frameborder:"frameBorder",
+                "contenteditable":"contentEditable"
             },
             // Hook for boolean attributes
             // if bool is false
@@ -76,14 +77,14 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             //  - ie<8 return false
             //   - so norm to undefined
             boolHook = {
-                get: function(elem, name) {
+                get:function (elem, name) {
                     // 转发到 prop 方法
                     return DOM.prop(elem, name) ?
                         // 根据 w3c attribute , true 时返回属性名字符串
                         name.toLowerCase() :
                         undefined;
                 },
-                set: function(elem, value, name) {
+                set:function (elem, value, name) {
                     var propName;
                     if (value === false) {
                         // Remove boolean attributes when set to false
@@ -105,17 +106,17 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             attrNodeHook = {
             },
             valHooks = {
-                option: {
-                    get: function(elem) {
+                option:{
+                    get:function (elem) {
                         // 当没有设定 value 时，标准浏览器 option.value === option.text
                         // ie7- 下，没有设定 value 时，option.value === '', 需要用 el.attributes.value 来判断是否有设定 value
                         var val = elem.attributes.value;
                         return !val || val.specified ? elem.value : elem.text;
                     }
                 },
-                select: {
+                select:{
                     // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                    get: function(elem) {
+                    get:function (elem) {
                         var index = elem.selectedIndex,
                             options = elem.options,
                             one = elem.type === "select-one";
@@ -138,10 +139,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         return ret;
                     },
 
-                    set: function(elem, value) {
+                    set:function (elem, value) {
                         var values = S.makeArray(value),
                             opts = elem.options;
-                        S.each(opts, function(opt) {
+                        S.each(opts, function (opt) {
                             opt.selected = S.inArray(DOM.val(opt), values);
                         });
 
@@ -160,7 +161,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
             // get attribute value from attribute node for ie
             attrNodeHook = {
-                get: function(elem, name) {
+                get:function (elem, name) {
                     var ret;
                     ret = elem.getAttributeNode(name);
                     // Return undefined if nodeValue is empty string
@@ -168,7 +169,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                         ret.nodeValue :
                         undefined;
                 },
-                set: function(elem, value, name) {
+                set:function (elem, value, name) {
                     // Check form objects in IE (multiple bugs related)
                     // Only use nodeValue if the attribute node exists on the form
                     var ret = elem.getAttributeNode(name);
@@ -196,9 +197,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             // fix ie bugs
             // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
             // 注意 colSpan rowSpan 已经由 propFix 转为大写
-            S.each([ "href", "src", "width", "height","colSpan","rowSpan" ], function(name) {
+            S.each([ "href", "src", "width", "height", "colSpan", "rowSpan" ], function (name) {
                 attrHooks[ name ] = {
-                    get: function(elem) {
+                    get:function (elem) {
                         var ret = elem.getAttribute(name, 2);
                         return ret === null ? undefined : ret;
                     }
@@ -211,13 +212,13 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
 
         // Radios and checkboxes getter/setter
 
-        S.each([ "radio", "checkbox" ], function(r) {
+        S.each([ "radio", "checkbox" ], function (r) {
             valHooks[ r ] = {
-                get: function(elem) {
+                get:function (elem) {
                     // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
                     return elem.getAttribute("value") === null ? "on" : elem.value;
                 },
-                set: function(elem, value) {
+                set:function (elem, value) {
                     if (S.isArray(value)) {
                         return elem.checked = S.inArray(DOM.val(elem), value);
                     }
@@ -245,7 +246,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * @param name
              * @param value
              */
-            prop: function(selector, name, value) {
+            prop:function (selector, name, value) {
                 // suports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
@@ -258,7 +259,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 name = propFix[ name ] || name;
                 var hook = propHooks[ name ];
                 if (value !== undefined) {
-                    elems.each(function(elem) {
+                    elems.each(function (elem) {
                         if (hook && hook.set) {
                             hook.set(elem, value, name);
                         } else {
@@ -277,7 +278,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * @param selector
              * @param name
              */
-            hasProp:function(selector, name) {
+            hasProp:function (selector, name) {
                 var elems = DOM.query(selector);
                 for (var i = 0; i < elems.length; i++) {
                     var el = elems[i];
@@ -293,13 +294,13 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * @param selector
              * @param name
              */
-            removeProp:function(selector, name) {
+            removeProp:function (selector, name) {
                 name = propFix[ name ] || name;
-                DOM.query(selector).each(function(el) {
+                DOM.query(selector).each(function (el) {
                     try {
                         el[ name ] = undefined;
                         delete el[ name ];
-                    } catch(e) {
+                    } catch (e) {
                         S.log("delete el property error : ");
                         S.log(e);
                     }
@@ -310,7 +311,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * Gets the value of an attribute for the first element in the set of matched elements or
              * Sets an attribute for the set of matched elements.
              */
-            attr:function(selector, name, val, pass) {
+            attr:function (selector, name, val, pass) {
                 /*
                  Hazards From Caja Note:
 
@@ -345,7 +346,9 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 if (S.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
-                        DOM.attr(selector, k, name[k], pass);
+                        if (name.hasOwnProperty(k)) {
+                            DOM.attr(selector, k, name[k], pass);
+                        }
                     }
                     return;
                 }
@@ -365,17 +368,19 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 if (pass && attrFn[name]) {
                     return DOM[name](selector, val);
                 }
+
                 var els = DOM.query(selector);
+
                 if (val === undefined) {
                     return DOM.__attr(els[0], name);
                 } else {
-                    els.each(function(el) {
+                    els.each(function (el) {
                         DOM.__attr(el, name, val);
                     });
                 }
             },
 
-            __attr:function(el, name, val) {
+            __attr:function (el, name, val) {
                 if (!isElementNode(el)) {
                     return;
                 }
@@ -426,10 +431,10 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             /**
              * Removes the attribute of the matched elements.
              */
-            removeAttr: function(selector, name) {
+            removeAttr:function (selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
-                DOM.query(selector).each(function(el) {
+                DOM.query(selector).each(function (el) {
                     if (isElementNode(el)) {
                         var propName;
                         el.removeAttribute(name);
@@ -444,8 +449,8 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
             /**
              * 是否其中一个元素包含指定属性
              */
-            hasAttr: oldIE ?
-                function(selector, name) {
+            hasAttr:oldIE ?
+                function (selector, name) {
                     name = name.toLowerCase();
                     var elems = DOM.query(selector);
                     // from ppk :http://www.quirksmode.org/dom/w3c_core.html
@@ -461,7 +466,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return false;
                 }
                 :
-                function(selector, name) {
+                function (selector, name) {
                     var elems = DOM.query(selector);
                     for (var i = 0; i < elems.length; i++) {
                         var el = elems[i];
@@ -477,7 +482,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * Gets the current value of the first element in the set of matched or
              * Sets the value of each element in the set of matched elements.
              */
-            val : function(selector, value) {
+            val:function (selector, value) {
                 var hook, ret;
 
                 //getter
@@ -504,7 +509,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                     return;
                 }
 
-                DOM.query(selector).each(function(elem) {
+                DOM.query(selector).each(function (elem) {
 
                     if (elem.nodeType !== 1) {
                         return;
@@ -536,7 +541,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
              * Gets the text context of the first element in the set of matched elements or
              * Sets the text content of the matched elements.
              */
-            text: function(selector, val) {
+            text:function (selector, val) {
                 // getter
                 if (val === undefined) {
                     // supports css selector/Node/NodeList
@@ -553,7 +558,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    DOM.query(selector).each(function(el) {
+                    DOM.query(selector).each(function (el) {
                         if (isElementNode(el)) {
                             el[TEXT] = val;
                         }
@@ -566,7 +571,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
         });
         return DOM;
     }, {
-        requires:["./base","ua"]
+        requires:["./base", "ua"]
     }
 );
 
