@@ -2,19 +2,23 @@
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/delegatechildren", function(S) {
+KISSY.add("component/delegatechildren", function (S) {
+
+    /**
+     * @name Component.DelegateChildren
+     */
     function DelegateChildren() {
 
     }
 
     S.augment(DelegateChildren, {
-        __bindUI:function() {
+        __bindUI:function () {
             var self = this;
             self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
                 self._handleChildMouseEvents, self);
         },
 
-        _handleChildMouseEvents:function(e) {
+        _handleChildMouseEvents:function (e) {
             var control = this.getOwnerControl(e.target);
             if (control) {
                 // Child control identified; forward the event.
@@ -40,7 +44,7 @@ KISSY.add("component/delegatechildren", function(S) {
             }
         },
 
-        getOwnerControl:function(node) {
+        getOwnerControl:function (node) {
             var self = this,
                 children = self.get("children"),
                 len = children.length,

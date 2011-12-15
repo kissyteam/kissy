@@ -747,7 +747,7 @@
         /**
          * buffers a call between  a fixed time
          * @param {function} fn
-         * @param {object} context
+         * @param {object} [context]
          * @param {Number} ms
          */
         buffer:function (fn, ms, context) {

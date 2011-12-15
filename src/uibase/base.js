@@ -9,7 +9,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        noop = function() {
+        noop = function () {
         };
 
     function capitalFirst(s) {
@@ -185,7 +185,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * 建立节点，先不放在 dom 树中，为了性能!
              */
-            create:function() {
+            create:function () {
                 var self = this;
                 // 是否生成过节点
                 if (!self.get("created")) {
@@ -200,7 +200,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * 渲染组件到 dom 结构
              */
-            render: function() {
+            render:function () {
                 var self = this;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
@@ -232,19 +232,19 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * 节点已经创建完毕，可以放在 document 中了
              */
-            _renderUI: noop,
+            _renderUI:noop,
 
             /**
              * @protected
              */
-            renderUI: noop,
+            renderUI:noop,
 
             /**
              * 根据属性变化设置 UI
              */
-            _bindUI: function() {
+            _bindUI:function () {
                 var self = this,
-                    attrs = self.__attrs,
+                    attrs = self['__attrs'],
                     attr, m;
 
                 for (attr in attrs) {
@@ -252,8 +252,8 @@ KISSY.add('uibase/base', function (S, Base, Node) {
                         m = UI_SET + capitalFirst(attr);
                         if (self[m]) {
                             // 自动绑定事件到对应函数
-                            (function(attr, m) {
-                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                            (function (attr, m) {
+                                self.on('after' + capitalFirst(attr) + 'Change', function (ev) {
                                     self[m](ev.newVal, ev);
                                 });
                             })(attr, m);
@@ -265,14 +265,14 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * @protected
              */
-            bindUI: noop,
+            bindUI:noop,
 
             /**
              * 根据当前（初始化）状态来设置 UI
              */
-            _syncUI: function() {
+            _syncUI:function () {
                 var self = this,
-                    attrs = self.__attrs;
+                    attrs = self['__attrs'];
                 for (var a in attrs) {
                     if (attrs.hasOwnProperty(a)) {
                         var m = UI_SET + capitalFirst(a);
@@ -290,105 +290,105 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * protected
              */
-            syncUI: noop,
+            syncUI:noop,
 
 
             /**
              * 销毁组件
              */
-            destroy: function() {
+            destroy:function () {
                 destroyHierarchy(this);
                 this.fire('destroy');
                 this.detach();
             }
-        });
+        }, {
+            /**
+             * 根据基类以及扩展类得到新类
+             * @name UIBase.create
+             * @static
+             * @param {Function|Function[]} base 基类
+             * @param {Function[]} exts 扩展类
+             * @param {Object} px 原型 mix 对象
+             * @param {Object} sx 静态 mix 对象
+             * @returns {UIBase} 组合 后 的 新类
+             */
+            create:function (base, exts, px, sx) {
+                if (S.isArray(base)) {
+                    sx = px;
+                    px = exts;
+                    exts = /*@type Function[]*/base;
+                    base = UIBase;
+                }
+                base = base || UIBase;
+                if (S.isObject(exts)) {
+                    sx = px;
+                    px = exts;
+                    exts = [];
+                }
 
-    /**
-     * 根据基类以及扩展类得到新类
-     * @name UIBase.create
-     * @static
-     * @param {Function} base 基类
-     * @param {Function[]} exts 扩展类
-     * @param {Object} px 原型 mix 对象
-     * @param {Object} sx 静态 mix 对象
-     * @returns {UIBase} 组合 后 的 新类
-     */
-    UIBase.create = function(base, exts, px, sx) {
-        if (S.isArray(base)) {
-            sx = px;
-            px = exts;
-            exts = base;
-            base = UIBase;
-        }
-        base = base || UIBase;
-        if (S.isObject(exts)) {
-            sx = px;
-            px = exts;
-            exts = [];
-        }
+                function C() {
+                    UIBase.apply(this, arguments);
+                }
 
-        function C() {
-            UIBase.apply(this, arguments);
-        }
+                S.extend(C, base, px, sx);
 
-        S.extend(C, base, px, sx);
+                if (exts) {
 
-        if (exts) {
+                    C.__ks_exts = exts;
 
-            C.__ks_exts = exts;
+                    var desc = {
+                        // ATTRS:
+                        // HMTL_PARSER:
+                    }, constructors = exts.concat(C);
 
-            var desc = {
-                // ATTRS:
-                // HMTL_PARSER:
-            },constructors = exts.concat(C);
-
-            // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
-            // 主类最优先
-            S.each(constructors, function(ext) {
-                if (ext) {
-                    // 合并 ATTRS/HTML_PARSER 到主类
-                    S.each([ATTRS, HTML_PARSER], function(K) {
-                        if (ext[K]) {
-                            desc[K] = desc[K] || {};
-                            // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
-                            // 但是值是对象的话会深度合并
-                            // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
-                            S.mix(desc[K], ext[K], true, undefined, true);
+                    // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+                    // 主类最优先
+                    S.each(constructors, function (ext) {
+                        if (ext) {
+                            // 合并 ATTRS/HTML_PARSER 到主类
+                            S.each([ATTRS, HTML_PARSER], function (K) {
+                                if (ext[K]) {
+                                    desc[K] = desc[K] || {};
+                                    // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
+                                    // 但是值是对象的话会深度合并
+                                    // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
+                                    S.mix(desc[K], ext[K], true, undefined, true);
+                                }
+                            });
                         }
                     });
-                }
-            });
 
-            S.each(desc, function(v, k) {
-                C[k] = v;
-            });
+                    S.each(desc, function (v, k) {
+                        C[k] = v;
+                    });
 
-            var prototype = {};
+                    var prototype = {};
 
-            // 主类最优先
-            S.each(constructors, function(ext) {
-                if (ext) {
-                    var proto = ext.prototype;
-                    // 合并功能代码到主类，不覆盖
-                    for (var p in proto) {
-                        // 不覆盖主类，但是主类的父类还是覆盖吧
-                        if (proto.hasOwnProperty(p)) {
-                            prototype[p] = proto[p];
+                    // 主类最优先
+                    S.each(constructors, function (ext) {
+                        if (ext) {
+                            var proto = ext.prototype;
+                            // 合并功能代码到主类，不覆盖
+                            for (var p in proto) {
+                                // 不覆盖主类，但是主类的父类还是覆盖吧
+                                if (proto.hasOwnProperty(p)) {
+                                    prototype[p] = proto[p];
+                                }
+                            }
                         }
-                    }
-                }
-            });
+                    });
 
-            S.each(prototype, function(v, k) {
-                C.prototype[k] = v;
-            });
-        }
-        return C;
-    };
+                    S.each(prototype, function (v, k) {
+                        C.prototype[k] = v;
+                    });
+                }
+                return C;
+            }
+        });
 
     return UIBase;
 }, {
-    requires:["base","node"]
+    requires:["base", "node"]
 });
 /**
  * render 和 create 区别
