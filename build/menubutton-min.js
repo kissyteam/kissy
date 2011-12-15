@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 15 12:32
+build time: Dec 15 12:37
 */
 KISSY.add("menubutton/menubutton",function(f,g,j,e,h,q,p,n){function k(){var a=this.get("menu"),c=this.get("el");a&&a.get("visible")&&a.set("align",f.merge({node:c},i,this.get("menuAlign")))}var b=j.all,d=j.KeyCodes,i={points:["bl","tl"],overflow:{failX:1,failY:1,adjustX:1,adjustY:1}},l=g.create(e,[p.DecorateChild],{initializer:function(){this._reposition=f.buffer(k,50,this)},_hideMenu:function(){var a=this.get("menu");a&&a.hide()},_showMenu:function(){var a=this.get("el"),c=this.get("menu");if(c&&
 !c.get("visible")){c.set("align",f.merge({node:a},i,this.get("menuAlign")));c.show();a.attr("aria-haspopup",c.get("el").attr("id"))}},_uiSetCollapsed:function(a){a?this._hideMenu():this._showMenu()},__bindMenu:function(){var a=this,c=this.get("menu");if(c){c.on("afterActiveItemChange",function(m){a.set("activeItem",m.newVal)});c.on("click",a._handleMenuClick,a);b(window).on("resize",a._reposition,a);a.__bindMenu=f.noop}},_handleMenuClick:function(a){this.fire("click",{target:a.target});this.set("collapsed",
