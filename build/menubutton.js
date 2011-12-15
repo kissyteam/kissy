@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 15 12:22
 */
 /**
  * combination of menu and button ,similar to native select

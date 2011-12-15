@@ -20,9 +20,7 @@
 
     <property name="git.origin" value="origin"/>
     <property name="git.remote" value="remote"/>
-    <property name="git.gh-pages" value="gh-pages"/>
-    <property name="git.master" value="master"/>
-    <property name="git.dev" value="dev"/>
+    <property name="git.1.2.0" value="1.2.0.cdn"/>
 
 
     <!--
@@ -77,28 +75,11 @@
         </ac:if>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
+            <arg line="/c git push ${git.origin} ${git.1.2.0}:${git.1.2.0}"/>
         </exec>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.dev}:${git.master}"/>
-        </exec>
-
-        <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.dev}:${git.gh-pages}"/>
-        </exec>
-
-        <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
-        </exec>
-
-        <!--push master to gh-pages also-->
-        <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.dev}:${git.master}"/>
-        </exec>
-
-        <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.dev}:${git.gh-pages}"/>
+            <arg line="/c git push ${git.remote} ${git.1.2.0}:${git.1.2.0}"/>
         </exec>
 
     </target>

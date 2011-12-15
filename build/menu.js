@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 15 12:19
 */
 /**
  * deletable menuitem
@@ -381,7 +381,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  * menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
+KISSY.add("menu/menu", function (S, Event, UIBase, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
 
@@ -389,169 +389,176 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
         this.set("highlightedItem", undefined);
     }
 
-    var Menu = UIBase.create(Component.Container, {
-        _uiSetHighlightedItem:function(v, ev) {
-            var pre = ev && ev.prevVal;
-            if (pre) {
-                pre.set("highlighted", false);
-            }
-            v && v.set("highlighted", true);
-            this.set("activeItem", v);
-        },
-
-        _handleBlur:function(e) {
-            Menu.superclass._handleBlur.call(this, e);
-            this.set("highlightedItem", undefined);
-        },
-
-
-        //dir : -1 ,+1
-        //skip disabled items
-        _getNextEnabledHighlighted:function(index, dir) {
-            var children = this.get("children"),
-                len = children.length,
-                o = index;
-            do {
-                var c = children[index];
-                if (!c.get("disabled") && (c.get("visible") !== false)) {
-                    return children[index];
+    /**
+     * @name Menu
+     * @constructor
+     * @extends Component.Container
+     */
+    var Menu = UIBase.create(Component.Container,
+        /** @lends Menu.prototype*/
+        {
+            _uiSetHighlightedItem:function (v, ev) {
+                var pre = ev && ev.prevVal;
+                if (pre) {
+                    pre.set("highlighted", false);
                 }
-                index = (index + dir + len) % len;
-            } while (index != o);
-            return undefined;
-        },
+                v && v.set("highlighted", true);
+                this.set("activeItem", v);
+            },
 
-        _handleKeydown:function(e) {
-            if (this._handleKeyEventInternal(e)) {
-                e.halt();
-                return true;
-            }
-            // return false , 会阻止 tab 键 ....
-            return undefined;
-        },
+            _handleBlur:function (e) {
+                Menu.superclass._handleBlur.call(this, e);
+                this.set("highlightedItem", undefined);
+            },
 
-        /**
-         * Attempts to handle a keyboard event; returns true if the event was handled,
-         * false otherwise.  If the container is enabled, and a child is highlighted,
-         * calls the child control's {@code handleKeyEvent} method to give the control
-         * a chance to handle the event first.
-         * @param  e Key event to handle.
-         * @return {boolean} Whether the event was handled by the container (or one of
-         *     its children).
-         */
-        _handleKeyEventInternal:function(e) {
 
-            // Give the highlighted control the chance to handle the key event.
-            var highlightedItem = this.get("highlightedItem");
-
-            // 先看当前活跃 menuitem 是否要处理
-            if (highlightedItem && highlightedItem._handleKeydown(e)) {
-                return true;
-            }
-
-            var children = this.get("children"),len = children.length;
-
-            if (len === 0) {
+            //dir : -1 ,+1
+            //skip disabled items
+            _getNextEnabledHighlighted:function (index, dir) {
+                var children = this.get("children"),
+                    len = children.length,
+                    o = index;
+                do {
+                    var c = children[index];
+                    if (!c.get("disabled") && (c.get("visible") !== false)) {
+                        return children[index];
+                    }
+                    index = (index + dir + len) % len;
+                } while (index != o);
                 return undefined;
-            }
+            },
 
-            var index,destIndex;
-
-            //自己处理了，不要向上处理，嵌套菜单情况
-            switch (e.keyCode) {
-                // esc
-                case KeyCodes.ESC:
-                    // TODO
-                    // focus 的话手动失去焦点
-                    return undefined;
-                    break;
-
-                // home
-                case KeyCodes.HOME:
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(0, 1));
-                    break;
-                // end
-                case KeyCodes.END:
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(len - 1, -1));
-                    break;
-                // up
-                case KeyCodes.UP:
-                    if (!highlightedItem) {
-                        destIndex = len - 1;
-                    } else {
-                        index = S.indexOf(highlightedItem, children);
-                        destIndex = (index - 1 + len) % len;
-                    }
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(destIndex, -1));
-                    break;
-                //down
-                case KeyCodes.DOWN:
-                    if (!highlightedItem) {
-                        destIndex = 0;
-                    } else {
-                        index = S.indexOf(highlightedItem, children);
-                        destIndex = (index + 1 + len) % len;
-                    }
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(destIndex, 1));
-                    break;
-                default:
-                    return undefined;
-            }
-            return true;
-        },
-
-        bindUI:function() {
-            var self = this;
-            /**
-             * 隐藏后，去掉高亮与当前
-             */
-            self.on("hide", onMenuHide, self);
-        },
-
-        containsElement:function(element) {
-            if (this.get("view").containsElement(element)) {
-                return true;
-            }
-
-            var children = this.get('children');
-
-            for (var i = 0, count = children.length; i < count; i++) {
-                var child = children[i];
-                if (typeof child.containsElement == 'function' &&
-                    child.containsElement(element)) {
+            _handleKeydown:function (e) {
+                if (this._handleKeyEventInternal(e)) {
+                    e.halt();
                     return true;
                 }
-            }
+                // return false , 会阻止 tab 键 ....
+                return undefined;
+            },
 
-            return false;
-        }
-    }, {
-        ATTRS:{
-            // 普通菜单可聚焦
-            // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
-            focusable:{
-                value:true
-            },
-            visibleMode:{
-                value:"display"
-            },
             /**
-             * 当前高亮的儿子菜单项
+             * Attempts to handle a keyboard event; returns true if the event was handled,
+             * false otherwise.  If the container is enabled, and a child is highlighted,
+             * calls the child control's {@code handleKeyEvent} method to give the control
+             * a chance to handle the event first.
+             * @param  e Key event to handle.
+             * @return {boolean} Whether the event was handled by the container (or one of
+             *     its children).
              */
-            highlightedItem:{},
-            /**
-             * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
-             */
-            activeItem:{
-                view:true
+            _handleKeyEventInternal:function (e) {
+
+                // Give the highlighted control the chance to handle the key event.
+                var highlightedItem = this.get("highlightedItem");
+
+                // 先看当前活跃 menuitem 是否要处理
+                if (highlightedItem && highlightedItem._handleKeydown(e)) {
+                    return true;
+                }
+
+                var children = this.get("children"), len = children.length;
+
+                if (len === 0) {
+                    return undefined;
+                }
+
+                var index, destIndex;
+
+                //自己处理了，不要向上处理，嵌套菜单情况
+                switch (e.keyCode) {
+                    // esc
+                    case KeyCodes.ESC:
+                        // TODO
+                        // focus 的话手动失去焦点
+                        return undefined;
+                        break;
+
+                    // home
+                    case KeyCodes.HOME:
+                        this.set("highlightedItem",
+                            this._getNextEnabledHighlighted(0, 1));
+                        break;
+                    // end
+                    case KeyCodes.END:
+                        this.set("highlightedItem",
+                            this._getNextEnabledHighlighted(len - 1, -1));
+                        break;
+                    // up
+                    case KeyCodes.UP:
+                        if (!highlightedItem) {
+                            destIndex = len - 1;
+                        } else {
+                            index = S.indexOf(highlightedItem, children);
+                            destIndex = (index - 1 + len) % len;
+                        }
+                        this.set("highlightedItem",
+                            this._getNextEnabledHighlighted(destIndex, -1));
+                        break;
+                    //down
+                    case KeyCodes.DOWN:
+                        if (!highlightedItem) {
+                            destIndex = 0;
+                        } else {
+                            index = S.indexOf(highlightedItem, children);
+                            destIndex = (index + 1 + len) % len;
+                        }
+                        this.set("highlightedItem",
+                            this._getNextEnabledHighlighted(destIndex, 1));
+                        break;
+                    default:
+                        return undefined;
+                }
+                return true;
+            },
+
+            bindUI:function () {
+                var self = this;
+                /**
+                 * 隐藏后，去掉高亮与当前
+                 */
+                self.on("hide", onMenuHide, self);
+            },
+
+            containsElement:function (element) {
+                if (this.get("view").containsElement(element)) {
+                    return true;
+                }
+
+                var children = this.get('children');
+
+                for (var i = 0, count = children.length; i < count; i++) {
+                    var child = children[i];
+                    if (typeof child.containsElement == 'function' &&
+                        child.containsElement(element)) {
+                        return true;
+                    }
+                }
+
+                return false;
             }
-        },
-        DefaultRender:MenuRender
-    });
+        }, {
+            ATTRS:{
+                // 普通菜单可聚焦
+                // 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+                focusable:{
+                    value:true
+                },
+                visibleMode:{
+                    value:"display"
+                },
+                /**
+                 * 当前高亮的儿子菜单项
+                 */
+                highlightedItem:{},
+                /**
+                 * 当前 active 的子孙菜单项，并不一直等于 highlightedItem
+                 */
+                activeItem:{
+                    view:true
+                }
+            },
+            DefaultRender:MenuRender
+        });
 
     Component.UIStore.setUIByClass("menu", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -560,7 +567,7 @@ KISSY.add("menu/menu", function(S, Event, UIBase, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires:['event','uibase','component','./menurender','./submenu']
+    requires:['event', 'uibase', 'component', './menurender', './submenu']
 });
 
 /**
@@ -819,7 +826,7 @@ KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
  * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRender) {
 
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
@@ -839,7 +846,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     }
 
     function getOldestMenu(self) {
-        var pre = self,now = self;
+        var pre = self, now = self;
         while (now) {
             pre = now;
             now = getAutoHideParentMenu(pre);
@@ -860,12 +867,16 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
         }
     }
 
+    /**
+     * @name PopMenu
+     * @constructor
+     */
     var PopMenu = UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
-        _clearLeaveHideTimers:function() {
-            var self = this,i,item,menu;
+        _clearLeaveHideTimers:function () {
+            var self = this, i, item, menu;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
@@ -881,12 +892,12 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
                 }
             }
         },
-        _handleMouseLeave:function() {
+        _handleMouseLeave:function () {
             var self = this;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
-            self._leaveHideTimer = setTimeout(function() {
+            self._leaveHideTimer = setTimeout(function () {
                 // only hide ancestor is enough , it will listen to its ancestor's hide event to hide
                 var oldMenu = getOldestMenu(self);
                 oldMenu.hide();
@@ -897,7 +908,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             }, self.get("autoHideDelay"));
         },
 
-        _handleMouseEnter:function() {
+        _handleMouseEnter:function () {
             var self = this,
                 parent = getAutoHideParentMenu(self);
             if (parent) {
@@ -912,7 +923,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
          *  suppose it has focus (as a context menu),
          *  then it must hide when click document
          */
-        _handleBlur:function() {
+        _handleBlur:function () {
             var self = this;
             PopMenu.superclass._handleBlur.apply(self, arguments);
             self.hide();
@@ -942,7 +953,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     return PopMenu;
 
 }, {
-    requires:['uibase','component','./menu','./popupmenurender']
+    requires:['uibase', 'component', './menu', './popupmenurender']
 });/**
  * popup menu render
  * @author yiminghe@gmail.com
