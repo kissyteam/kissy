@@ -7,7 +7,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
         { name:'mouseenter', fix:'mouseover' },
         { name:'mouseleave', fix:'mouseout' }
     ], function (o) {
-        var t = special[o.name] = {
+        special[o.name] = {
             // fix #75
             onFix:o.fix,
             // all browser need
