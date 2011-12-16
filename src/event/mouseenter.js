@@ -8,6 +8,8 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
         { name:'mouseleave', fix:'mouseout' }
     ], function (o) {
         var t = special[o.name] = {
+            // fix #75
+            onFix:o.fix,
             // all browser need
             delegateFix:o.fix,
             handle:function (event, handler) {
@@ -24,10 +26,6 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                 return [];
             }
         };
-
-        if (!UA['ie']) {
-            t.onFix = o.fix;
-        }
     });
 
     return Event;
