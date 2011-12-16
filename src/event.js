@@ -27,7 +27,7 @@ KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
         /**
          *
          * @param targets
-         * @param {String} eventType
+         * @param {String} [eventType]
          * @param {String|Function} [selector]
          * @param {Object|Function} [fn]
          * @param [scope]

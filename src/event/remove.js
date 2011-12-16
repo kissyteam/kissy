@@ -14,9 +14,14 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 return;
             }
 
-            var selector, hasSelector, s = EVENT_SPECIAL[type];
+            var selector,
+                // in case type is undefined
+                originalFn = fn,
+                originalScope = scope,
+                hasSelector, s = EVENT_SPECIAL[type];
 
             if (S.isObject(fn)) {
+
                 scope = fn.scope;
                 hasSelector = ("selector" in fn);
                 selector = fn.selector;
@@ -52,7 +57,9 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
             if (!type) {
                 for (type in events) {
                     if (events.hasOwnProperty(type)) {
-                        Event.__remove(isNativeTarget, target, type);
+                        Event.__remove(isNativeTarget,
+                            target, type, originalFn,
+                            originalScope);
                     }
                 }
                 return;
