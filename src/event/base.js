@@ -76,8 +76,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
         }
         var s = special[eventType];
         // TODO bug : when fire mouseenter , it also fire mouseover in firefox/chrome
-        if (s && s.onFix) {
-            eventType = s.onFix
+        if (s && s['onFix']) {
+            eventType = s['onFix'];
         }
 
         var event,
@@ -88,6 +88,10 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
             event = new EventObject(target, undefined, eventType);
             S.mix(event, eventData);
         }
+        /**
+         * identify event as fired manually
+         */
+        event._ks_fired = 1;
         /*
          The target of the event is the EventTarget on which dispatchEvent is called.
          */

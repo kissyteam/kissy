@@ -21,7 +21,6 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 hasSelector, s = EVENT_SPECIAL[type];
 
             if (S.isObject(fn)) {
-
                 scope = fn.scope;
                 hasSelector = ("selector" in fn);
                 selector = fn.selector;
@@ -103,8 +102,11 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                             t[j++] = handler;
                         }
                         else {
-                            if (hasSelector && handlers.delegateCount) {
+                            if (handler.selector && handlers.delegateCount) {
                                 handlers.delegateCount--;
+                            }
+                            if (handler.last && handlers.lastCount) {
+                                handlers.lastCount--;
                             }
                             if (special.remove) {
                                 special.remove.call(target, handler);
@@ -112,6 +114,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                         }
                     }
                     t.delegateCount = handlers.delegateCount;
+                    t.lastCount = handlers.lastCount;
                     events[type] = t;
                     len = t.length;
                 }

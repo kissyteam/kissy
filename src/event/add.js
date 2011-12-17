@@ -31,8 +31,10 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                 // incase overwrite by delegateFix/onFix in specials events
                 // (mouseenter/leave,focusin/out)
                 originalType,
+                last,
                 selector;
             if (S.isObject(fn)) {
+                last = fn.last;
                 scope = fn.scope;
                 data = fn.data;
                 selector = fn.selector;
@@ -70,6 +72,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                     fn:fn,
                     scope:scope,
                     selector:selector,
+                    last:last,
                     data:data,
                     originalType:originalType
                 },
@@ -128,7 +131,14 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                 handlers.splice(delegateIndex, 0, handleObj);
                 handlers.delegateCount++;
             } else {
-                handlers.push(handleObj);
+                handlers.lastCount = handlers.lastCount || 0;
+                if (last) {
+                    handlers.push(handleObj);
+                    handlers.lastCount++;
+                } else {
+                    handlers.splice(handlers.length - 1 - handlers.lastCount,
+                        0, handleObj);
+                }
             }
         },
 
