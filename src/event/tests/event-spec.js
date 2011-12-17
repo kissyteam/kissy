@@ -47,6 +47,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 Event.on(a, 'click', function () {
                     result.push(FIRST);
                 });
+
                 Event.on(a, 'click', function () {
                     result.push(SECOND);
                 });

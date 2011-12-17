@@ -136,7 +136,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                     handlers.push(handleObj);
                     handlers.lastCount++;
                 } else {
-                    handlers.splice(handlers.length - 1 - handlers.lastCount,
+                    handlers.splice(handlers.length - handlers.lastCount,
                         0, handleObj);
                 }
             }
