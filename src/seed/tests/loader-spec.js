@@ -164,7 +164,7 @@
 
             S.Config.packages = {};
             S.Config.mappedRules = [];
-            S.Config.combines={};
+            S.Config.combines = {};
             S.Env._loadQueue = {};
             S.Env.mods = {};
 
@@ -198,17 +198,14 @@
         it("load core when use dom", function () {
             S.Config.packages = {};
             S.Config.mappedRules = [];
-            S.Config.combines={};
+            S.Config.combines = {};
             S.Env._loadQueue = {};
             S.Env.mods = {};
 
             S.config({
-                map:[
-                    [
-                        /(.+)(?:dom|ua|event|node|json|ajax|anim|base|cookie)((?:-min)?\.js(?:\?.+)?)$/,
-                        "$1core$2"
-                    ]
-                ],
+                'combines':{
+                    'core':['dom', 'ua', 'event', 'node', 'json', 'ajax', 'anim', 'base', 'cookie']
+                },
                 debug:0,
                 base:"../../../build/"
             });

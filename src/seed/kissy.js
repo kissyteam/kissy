@@ -263,15 +263,16 @@
 
 
         config:function (c) {
-            var configs, cfg;
+            var configs, cfg, r;
             for (var p in c) {
                 if (c.hasOwnProperty(p)) {
                     if ((configs = this['configs']) &&
                         (cfg = configs[p])) {
-                        return cfg(c[p]);
+                        r = cfg(c[p]);
                     }
                 }
             }
+            return r;
         },
 
         /**
