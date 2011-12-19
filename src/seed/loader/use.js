@@ -96,7 +96,11 @@
                             m = match[1];
                         }
                         return m + '-min.' + suffix;
-                    }, path = componentJsName(modName);
+                    }, path = componentJsName(
+                    self.config({
+                        combines:modName
+                    })
+                );
                 mod = {
                     path:path,
                     charset:'utf-8'

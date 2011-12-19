@@ -29,6 +29,7 @@
             <path location="loader/registerModule.js"/>
             <path location="loader/use.js"/>
             <path location="loader/map.js"/>
+            <path location="loader/combines.js"/>
             <path location="loader/init.js"/>
             <!--kissy loader end-->
 

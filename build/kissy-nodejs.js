@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 19 18:17
+build time: Dec 19 19:29
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -280,7 +280,7 @@ build time: Dec 19 18:17
          */
         version:'1.30dev',
 
-        buildTime:'20111219181712',
+        buildTime:'20111219192950',
 
         /**
          * Returns a new object containing all of the properties of
@@ -459,7 +459,7 @@ build time: Dec 19 18:17
                 if (c.hasOwnProperty(p)) {
                     if ((configs = this['configs']) &&
                         (cfg = configs[p])) {
-                        cfg(c[p]);
+                        return cfg(c[p]);
                     }
                 }
             }
@@ -2370,7 +2370,9 @@ build time: Dec 19 18:17
             }
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                modName = mod.name,
+                modName = self.config({
+                    combines:mod.name
+                }),
                 packages = self.Config.packages || {},
                 pName = "",
                 p_def;
@@ -2526,7 +2528,11 @@ build time: Dec 19 18:17
                             m = match[1];
                         }
                         return m + '-min.' + suffix;
-                    }, path = componentJsName(modName);
+                    }, path = componentJsName(
+                    self.config({
+                        combines:modName
+                    })
+                );
                 mod = {
                     path:path,
                     charset:'utf-8'
@@ -2689,7 +2695,9 @@ build time: Dec 19 18:17
  * @author yiminghe@gmail.com
  */
 (function (S, loader) {
-
+    if ("require" in this) {
+        return;
+    }
     /**
      * modify current module path
      * @param rules
@@ -2719,6 +2727,40 @@ build time: Dec 19 18:17
     });
 
 })(KISSY, KISSY.__loader);/**
+ * combine mechanism
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    if ("require" in this) {
+        return;
+    }
+
+    var combines;
+
+    /**
+     * compress 'from module' to 'to module'
+     * {
+     *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
+     * }
+     */
+    combines = S.configs.combines = function (from, to) {
+        var cs;
+        if (S.isObject(from)) {
+            S.each(from, function (v, k) {
+                S.each(v, function (v2) {
+                    combines(v2, k);
+                });
+            });
+            return;
+        }
+        cs = S.Config.combines = S.Config.combines || {};
+        if (to) {
+            cs[from] = to;
+        } else {
+            return cs[from] || from;
+        }
+    };
+})(KISSY);/**
  *  mix loader into S and infer KISSy baseUrl if not set
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
@@ -3057,12 +3099,9 @@ build time: Dec 19 18:17
  */
 (function (S) {
     S.config({
-        map:[
-            [
-                /(.+)(?:dom|ua|event|node|json|ajax|anim|base|cookie)((?:-min)?\.js(?:\?.+)?)$/,
-                "$1core$2"
-            ]
-        ]
+        'combines':{
+            'core':['dom', 'ua', 'event', 'node', 'json', 'ajax', 'anim', 'base', 'cookie']
+        }
     });
 })(KISSY);
 /**
