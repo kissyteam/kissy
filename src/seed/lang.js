@@ -49,7 +49,9 @@
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            reverseEntities[htmlEntities[k]] = k;
+            if (htmlEntities.hasOwnProperty(k)) {
+                reverseEntities[htmlEntities[k]] = k;
+            }
         }
     })();
 
@@ -222,7 +224,7 @@
                     }
                 }
             });
-            memory = undefined;
+            memory = null;
             return ret;
         },
 
@@ -587,24 +589,26 @@
             }
             var buf = [], key, val;
             for (key in o) {
-                val = o[key];
-                key = encode(key);
+                if (o.hasOwnProperty(key)) {
+                    val = o[key];
+                    key = encode(key);
 
-                // val is valid non-array value
-                if (isValidParamValue(val)) {
-                    buf.push(key, eq, encode(val + EMPTY), sep);
-                }
-                // val is not empty array
-                else if (S.isArray(val) && val.length) {
-                    for (var i = 0, len = val.length; i < len; ++i) {
-                        if (isValidParamValue(val[i])) {
-                            buf.push(key,
-                                (arr ? encode("[]") : EMPTY),
-                                eq, encode(val[i] + EMPTY), sep);
+                    // val is valid non-array value
+                    if (isValidParamValue(val)) {
+                        buf.push(key, eq, encode(val + EMPTY), sep);
+                    }
+                    // val is not empty array
+                    else if (S.isArray(val) && val.length) {
+                        for (var i = 0, len = val.length; i < len; ++i) {
+                            if (isValidParamValue(val[i])) {
+                                buf.push(key,
+                                    (arr ? encode("[]") : EMPTY),
+                                    eq, encode(val[i] + EMPTY), sep);
+                            }
                         }
                     }
+                    // ignore other cases, including empty array, Function, RegExp, Date etc.
                 }
-                // ignore other cases, including empty array, Function, RegExp, Date etc.
             }
             buf.pop();
             return buf.join(EMPTY);
@@ -665,7 +669,7 @@
          * @param periodic {Boolean} if true, executes continuously at supplied interval
          *        until canceled.
          * @param context {Object} the context object.
-         * @param data [Array] that is provided to the function. This accepts either a single
+         * @param [data] that is provided to the function. This accepts either a single
          *        item or an array. If an array is provided, the function is executed with
          *        one parameter for each array item. If you need to pass a single array
          *        parameter, it needs to be wrapped in an array [myarray].
@@ -854,10 +858,11 @@
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (k !== CLONE_MARKER &&
-                    input.hasOwnProperty(k) &&
-                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                    destination[k] = cloneInternal(input[k], f, memory);
+                if (input.hasOwnProperty(k)) {
+                    if (k !== CLONE_MARKER &&
+                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                        destination[k] = cloneInternal(input[k], f, memory);
+                    }
                 }
             }
         }
@@ -876,23 +881,29 @@
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (!hasKey(a, property) && hasKey(b, property)) {
-                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+            if (b.hasOwnProperty(property)) {
+                if (!hasKey(a, property) && hasKey(b, property)) {
+                    mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+                }
             }
         }
         for (property in a) {
-            if (!hasKey(b, property) && hasKey(a, property)) {
-                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+            if (a.hasOwnProperty(property)) {
+                if (!hasKey(b, property) && hasKey(a, property)) {
+                    mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+                }
             }
         }
         for (property in b) {
-            if (property == COMPARE_MARKER) {
-                continue;
-            }
-            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                    + "' in expected, but was '" +
-                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            if (b.hasOwnProperty(property)) {
+                if (property == COMPARE_MARKER) {
+                    continue;
+                }
+                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                    mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                        + "' in expected, but was '" +
+                        (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+                }
             }
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {

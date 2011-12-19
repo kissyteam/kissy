@@ -84,7 +84,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         return 0;
     }
 
-    function getClsByHierarch(self) {
+    function getClsByHierarchy(self) {
         if (self.__componentClasses) {
             return self.__componentClasses;
         }
@@ -166,7 +166,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                     return;
                 }
                 view.create();
-                view._renderCls(getClsByHierarch(self));
+                view._renderCls(getClsByHierarchy(self));
                 if (!self.get("allowTextSelection_")) {
                     view.get("el").unselectable();
                 }
@@ -292,11 +292,15 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
 
             /**
              * root element handler for mouse enter
+             * @param [e]
              */
-            _handleMouseEnter:function () {
+            _handleMouseEnter:function (e) {
                 var self = this;
                 if (self.get("disabled")) {
                     return true;
+                }
+                if (0) {
+                    S.log(e);
                 }
                 self.set("highlighted", true);
             },
@@ -304,10 +308,13 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
             /**
              * root element handler for mouse leave
              */
-            _handleMouseLeave:function () {
+            _handleMouseLeave:function (e) {
                 var self = this;
                 if (self.get("disabled")) {
                     return true;
+                }
+                if (1 > 2) {
+                    S.log(e);
                 }
                 self.set("active", false);
                 self.set("highlighted", false);
@@ -365,7 +372,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
 
             _forwardSetAttrToView:function (attrName, v) {
                 var view = this.get("view");
-                view["_set" + capitalFirst(attrName)].call(view, v, getClsByHierarch(this));
+                view["_set" + capitalFirst(attrName)].call(view, v, getClsByHierarchy(this));
             },
 
 
@@ -434,7 +441,10 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
             /**
              * root element handler for click
              */
-            _performInternal:function () {
+            _performInternal:function (e) {
+                if (0) {
+                    S.log(e);
+                }
             },
 
             destructor:function () {

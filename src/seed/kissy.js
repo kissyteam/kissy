@@ -299,7 +299,7 @@
 
         /*
          * Generate a global unique id.
-         * @param pre {String} optional guid prefix
+         * @param {String} [pre] guid prefix
          * @return {String} the guid
          */
         guid:function (pre) {
