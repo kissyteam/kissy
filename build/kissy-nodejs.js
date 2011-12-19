@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 19 18:24
+build time: Dec 19 18:55
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -280,7 +280,7 @@ build time: Dec 19 18:24
          */
         version:'1.20',
 
-        buildTime:'20111219182423',
+        buildTime:'20111219185538',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3059,7 +3059,7 @@ build time: Dec 19 18:24
     S.config({
         map:[
             [
-                /(.+)(?:dom|ua|event|node|json|ajax|anim|base|cookie)((?:-min)?\.js(?:\?.+)?)$/,
+                /(.+\/)(?:dom|ua|event|node|json|ajax|anim|base|cookie)((?:-min)?\.js(?:\?.+)?)$/,
                 "$1core$2"
             ]
         ]
