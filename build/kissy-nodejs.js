@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 19 19:38
+build time: Dec 19 19:50
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -280,7 +280,7 @@ build time: Dec 19 19:38
          */
         version:'1.30dev',
 
-        buildTime:'20111219193854',
+        buildTime:'20111219195009',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2371,9 +2371,9 @@ build time: Dec 19 19:38
             }
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                modName = self.config({
+                modName = self.config && self.config({
                     combines:mod.name
-                }),
+                }) || mod.name,
                 packages = self.Config.packages || {},
                 pName = "",
                 p_def;
@@ -2530,9 +2530,9 @@ build time: Dec 19 19:38
                         }
                         return m + '-min.' + suffix;
                     }, path = componentJsName(
-                    self.config({
+                    self.config && self.config({
                         combines:modName
-                    })
+                    }) || modName
                 );
                 mod = {
                     path:path,

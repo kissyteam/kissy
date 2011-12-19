@@ -30,9 +30,9 @@
             }
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                modName = self.config({
+                modName = self.config && self.config({
                     combines:mod.name
-                }),
+                }) || mod.name,
                 packages = self.Config.packages || {},
                 pName = "",
                 p_def;
