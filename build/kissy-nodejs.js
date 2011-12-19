@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 19 19:29
+build time: Dec 19 19:38
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -280,7 +280,7 @@ build time: Dec 19 19:29
          */
         version:'1.30dev',
 
-        buildTime:'20111219192950',
+        buildTime:'20111219193854',
 
         /**
          * Returns a new object containing all of the properties of
@@ -454,15 +454,16 @@ build time: Dec 19 19:29
 
 
         config:function (c) {
-            var configs, cfg;
+            var configs, cfg, r;
             for (var p in c) {
                 if (c.hasOwnProperty(p)) {
                     if ((configs = this['configs']) &&
                         (cfg = configs[p])) {
-                        return cfg(c[p]);
+                        r = cfg(c[p]);
                     }
                 }
             }
+            return r;
         },
 
         /**
