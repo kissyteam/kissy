@@ -97,9 +97,9 @@
                         }
                         return m + '-min.' + suffix;
                     }, path = componentJsName(
-                    self.config({
+                    self.config && self.config({
                         combines:modName
-                    })
+                    }) || modName
                 );
                 mod = {
                     path:path,
