@@ -187,13 +187,16 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 8 18:25
+build time: Dec 19 18:19
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, undefined) {
+(function (S, undefined) {
+    /**
+     * @namespace KISSY
+     */
 
     var host = this,
         meta = {
@@ -202,7 +205,7 @@ build time: Dec 8 18:25
              * @param deep {boolean} whether recursive mix if encounter object
              * @return {Object} the augmented object
              */
-            mix: function(r, s, ov, wl, deep) {
+            mix:function (r, s, ov, wl, deep) {
                 if (!s || !r) {
                     return r;
                 }
@@ -220,16 +223,18 @@ build time: Dec 8 18:25
                     }
                 } else {
                     for (p in s) {
-                        _mix(p, r, s, ov, deep);
+                        if (s.hasOwnProperty(p)) {
+                            _mix(p, r, s, ov, deep);
+                        }
                     }
                 }
                 return r;
             }
         },
 
-        _mix = function(p, r, s, ov, deep) {
+        _mix = function (p, r, s, ov, deep) {
             if (ov || !(p in r)) {
-                var target = r[p],src = s[p];
+                var target = r[p], src = s[p];
                 // prevent never-end loop
                 if (target === src) {
                     return;
@@ -264,18 +269,18 @@ build time: Dec 8 18:25
     S = host[S] = meta.mix(seed, meta);
 
     S.mix(S, {
-
+        configs:{},
         // S.app() with these members.
-        __APP_MEMBERS: ['namespace'],
-        __APP_INIT_METHODS: ['__init'],
+        __APP_MEMBERS:['namespace'],
+        __APP_INIT_METHODS:['__init'],
 
         /**
          * The version of the library.
          * @type {String}
          */
-        version: '1.20',
+        version:'1.20',
 
-        buildTime:'20111208182514',
+        buildTime:'20111219181916',
 
         /**
          * Returns a new object containing all of the properties of
@@ -284,7 +289,7 @@ build time: Dec 8 18:25
          * single object will create a shallow copy of it.
          * @return {Object} the new merged object
          */
-        merge: function() {
+        merge:function () {
             var o = {}, i, l = arguments.length;
             for (i = 0; i < l; i++) {
                 S.mix(o, arguments[i]);
@@ -296,7 +301,7 @@ build time: Dec 8 18:25
          * Applies prototype properties from the supplier to the receiver.
          * @return {Object} the augmented object
          */
-        augment: function(/*r, s1, s2, ..., ov, wl*/) {
+        augment:function (/*r, s1, s2, ..., ov, wl*/) {
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 r = args[0],
@@ -328,19 +333,19 @@ build time: Dec 8 18:25
          * @param r {Function} the object to modify
          * @param s {Function} the object to inherit
          * @param px {Object} prototype properties to add/override
-         * @param sx {Object} static properties to add/override
+         * @param {Object} [sx] static properties to add/override
          * @return r {Object}
          */
-        extend: function(r, s, px, sx) {
+        extend:function (r, s, px, sx) {
             if (!s || !r) {
                 return r;
             }
 
             var create = Object.create ?
-                function(proto, c) {
+                function (proto, c) {
                     return Object.create(proto, {
-                        constructor: {
-                            value: c
+                        constructor:{
+                            value:c
                         }
                     });
                 } :
@@ -384,7 +389,7 @@ build time: Dec 8 18:25
         /**
          * Initializes KISSY
          */
-        __init: function() {
+        __init:function () {
             this.Config = this.Config || {};
             this.Env = this.Env || {};
 
@@ -404,7 +409,7 @@ build time: Dec 8 18:25
          * </code>
          * @return {Object}  A reference to the last namespace object created
          */
-        namespace: function() {
+        namespace:function () {
             var args = S.makeArray(arguments),
                 l = args.length,
                 o = null, i, j, p,
@@ -430,7 +435,7 @@ build time: Dec 8 18:25
          * </code>
          * @return {Object}  A reference to the app global object
          */
-        app: function(name, sx) {
+        app:function (name, sx) {
             var isStr = S.isString(name),
                 O = isStr ? host[name] || {} : name,
                 i = 0,
@@ -448,10 +453,14 @@ build time: Dec 8 18:25
         },
 
 
-        config:function(c) {
+        config:function (c) {
+            var configs, cfg;
             for (var p in c) {
-                if (this["_" + p]) {
-                    this["_" + p](c[p]);
+                if (c.hasOwnProperty(p)) {
+                    if ((configs = this['configs']) &&
+                        (cfg = configs[p])) {
+                        cfg(c[p]);
+                    }
                 }
             }
         },
@@ -459,11 +468,11 @@ build time: Dec 8 18:25
         /**
          * Prints debug info.
          * @param msg {String} the message to log.
-         * @param cat {String} the log category for the message. Default
+         * @param {String} [cat] the log category for the message. Default
          *        categories are "info", "warn", "error", "time" etc.
-         * @param src {String} the source of the the message (opt)
+         * @param {String} [src] the source of the the message (opt)
          */
-        log: function(msg, cat, src) {
+        log:function (msg, cat, src) {
             if (S.Config.debug) {
                 if (src) {
                     msg = src + ': ' + msg;
@@ -477,7 +486,7 @@ build time: Dec 8 18:25
         /**
          * Throws error message.
          */
-        error: function(msg) {
+        error:function (msg) {
             if (S.Config.debug) {
                 throw msg;
             }
@@ -485,10 +494,10 @@ build time: Dec 8 18:25
 
         /*
          * Generate a global unique id.
-         * @param pre {String} optional guid prefix
+         * @param {String} [pre] guid prefix
          * @return {String} the guid
          */
-        guid: function(pre) {
+        guid:function (pre) {
             return (pre || EMPTY) + guid++;
         }
     });
@@ -502,7 +511,7 @@ build time: Dec 8 18:25
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
  */
-(function(S, undefined) {
+(function (S, undefined) {
 
     var host = S.__HOST,
         TRUE = true,
@@ -533,12 +542,12 @@ build time: Dec 8 18:25
         class2type = {},
         // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
-            '&amp;': '&',
-            '&gt;': '>',
-            '&lt;': '<',
+            '&amp;':'&',
+            '&gt;':'>',
+            '&lt;':'<',
             '&#x60;':'`',
             '&#x2F;':'/',
-            '&quot;': '"',
+            '&quot;':'"',
             '&#x27;':"'"
         },
         reverseEntities = {},
@@ -546,9 +555,11 @@ build time: Dec 8 18:25
         unEscapeReg,
         // - # $ ^ * ( ) + [ ] { } | \ , . ?
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
-    (function() {
+    (function () {
         for (var k in htmlEntities) {
-            reverseEntities[htmlEntities[k]] = k;
+            if (htmlEntities.hasOwnProperty(k)) {
+                reverseEntities[htmlEntities[k]] = k;
+            }
         }
     })();
 
@@ -557,7 +568,7 @@ build time: Dec 8 18:25
             return escapeReg
         }
         var str = EMPTY;
-        S.each(htmlEntities, function(entity) {
+        S.each(htmlEntities, function (entity) {
             str += entity + '|';
         });
         str = str.slice(0, -1);
@@ -569,7 +580,7 @@ build time: Dec 8 18:25
             return unEscapeReg
         }
         var str = EMPTY;
-        S.each(reverseEntities, function(entity) {
+        S.each(reverseEntities, function (entity) {
             str += entity + '|';
         });
         str += '&#(\\d{1,5});';
@@ -589,7 +600,7 @@ build time: Dec 8 18:25
          * stamp a object by guid
          * @return guid associated with this object
          */
-        stamp:function(o, readOnly, marker) {
+        stamp:function (o, readOnly, marker) {
             if (!o) {
                 return o
             }
@@ -601,20 +612,20 @@ build time: Dec 8 18:25
                 try {
                     guid = o[marker] = S.guid(marker);
                 }
-                catch(e) {
+                catch (e) {
                     guid = undefined;
                 }
             }
             return guid;
         },
 
-        noop:function() {
+        noop:function () {
         },
 
         /**
          * Determine the internal JavaScript [[Class]] of an object.
          */
-        type: function(o) {
+        type:function (o) {
             return nullOrUndefined(o) ?
                 String(o) :
                 class2type[toString.call(o)] || 'object';
@@ -622,18 +633,18 @@ build time: Dec 8 18:25
 
         isNullOrUndefined:nullOrUndefined,
 
-        isNull: function(o) {
+        isNull:function (o) {
             return o === null;
         },
 
-        isUndefined: function(o) {
+        isUndefined:function (o) {
             return o === undefined;
         },
 
         /**
          * Checks to see if an object is empty.
          */
-        isEmptyObject: function(o) {
+        isEmptyObject:function (o) {
             for (var p in o) {
                 if (p !== undefined) {
                     return FALSE;
@@ -647,7 +658,7 @@ build time: Dec 8 18:25
          * or "new Object()" or "new FunctionClass()").
          * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
          */
-        isPlainObject: function(o) {
+        isPlainObject:function (o) {
             /**
              * note by yiminghe
              * isPlainObject(node=document.getElementById("xx")) -> false
@@ -659,7 +670,6 @@ build time: Dec 8 18:25
         },
 
 
-
         /**
          * 两个目标是否内容相同
          *
@@ -668,7 +678,7 @@ build time: Dec 8 18:25
          * @param [mismatchKeys] internal use
          * @param [mismatchValues] internal use
          */
-        equals : function(a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+        equals:function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
             // inspired by jasmine
             mismatchKeys = mismatchKeys || [];
             mismatchValues = mismatchValues || [];
@@ -703,14 +713,14 @@ build time: Dec 8 18:25
          * @param {Function} filter filter function
          * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
-        clone: function(input, filter) {
+        clone:function (input, filter) {
             // Let memory be an association list of pairs of objects,
             // initially empty. This is used to handle duplicate references.
             // In each pair of objects, one is called the source object
             // and the other the destination object.
             var memory = {},
                 ret = cloneInternal(input, filter, memory);
-            S.each(memory, function(v) {
+            S.each(memory, function (v) {
                 // 清理在源对象上做的标记
                 v = v.input;
                 if (v[CLONE_MARKER]) {
@@ -722,18 +732,18 @@ build time: Dec 8 18:25
                     }
                 }
             });
-            memory = undefined;
+            memory = null;
             return ret;
         },
 
         /**
          * Removes the whitespace from the beginning and end of a string.
          */
-        trim: trim ?
-            function(str) {
+        trim:trim ?
+            function (str) {
                 return nullOrUndefined(str) ? EMPTY : trim.call(str);
             } :
-            function(str) {
+            function (str) {
                 return nullOrUndefined(str) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
             },
 
@@ -741,13 +751,13 @@ build time: Dec 8 18:25
          * Substitutes keywords in a string using an object/array.
          * Removes undefined keywords and ignores escaped keywords.
          */
-        substitute: function(str, o, regexp) {
+        substitute:function (str, o, regexp) {
             if (!S.isString(str)
                 || !S.isPlainObject(o)) {
                 return str;
             }
 
-            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }
@@ -760,9 +770,9 @@ build time: Dec 8 18:25
          * @param object {Object} the object to iterate
          * @param fn {Function} the function to execute on each item. The function
          *        receives three arguments: the value, the index, the full array.
-         * @param context {Object} (opt)
+         * @param {Object} [context]
          */
-        each: function(object, fn, context) {
+        each:function (object, fn, context) {
             if (object) {
                 var key,
                     val,
@@ -774,7 +784,8 @@ build time: Dec 8 18:25
 
                 if (isObj) {
                     for (key in object) {
-                        if (fn.call(context, object[key], key, object) === FALSE) {
+                        if (object.hasOwnProperty(key) &&
+                            fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
@@ -790,11 +801,11 @@ build time: Dec 8 18:25
         /**
          * Search for a specified value within an array.
          */
-        indexOf: indexOf ?
-            function(item, arr) {
+        indexOf:indexOf ?
+            function (item, arr) {
                 return indexOf.call(arr, item);
             } :
-            function(item, arr) {
+            function (item, arr) {
                 for (var i = 0, len = arr.length; i < len; ++i) {
                     if (arr[i] === item) {
                         return i;
@@ -808,11 +819,11 @@ build time: Dec 8 18:25
          * that contains the specified value, -1 if the
          * value isn't found.
          */
-        lastIndexOf: (lastIndexOf) ?
-            function(item, arr) {
+        lastIndexOf:(lastIndexOf) ?
+            function (item, arr) {
                 return lastIndexOf.call(arr, item);
             } :
-            function(item, arr) {
+            function (item, arr) {
                 for (var i = arr.length - 1; i >= 0; i--) {
                     if (arr[i] === item) {
                         break;
@@ -829,7 +840,7 @@ build time: Dec 8 18:25
          *        if override is false, S.unique([a, b, a]) => [a, b]
          * @return {Array} a copy of the array with duplicate entries removed
          */
-        unique: function(a, override) {
+        unique:function (a, override) {
             var b = a.slice();
             if (override) {
                 b.reverse();
@@ -855,7 +866,7 @@ build time: Dec 8 18:25
         /**
          * Search for a specified value index within an array.
          */
-        inArray: function(item, arr) {
+        inArray:function (item, arr) {
             return S.indexOf(item, arr) > -1;
         },
 
@@ -870,13 +881,13 @@ build time: Dec 8 18:25
          *         returned true. If no items matched an empty array is
          *         returned.
          */
-        filter: filter ?
-            function(arr, fn, context) {
+        filter:filter ?
+            function (arr, fn, context) {
                 return filter.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var ret = [];
-                S.each(arr, function(item, i, arr) {
+                S.each(arr, function (item, i, arr) {
                     if (fn.call(context || this, item, i, arr)) {
                         ret.push(item);
                     }
@@ -885,10 +896,10 @@ build time: Dec 8 18:25
             },
         // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
         map:map ?
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 return map.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var len = arr.length,
                     res = new Array(len);
                 for (var i = 0; i < len; i++) {
@@ -910,7 +921,7 @@ build time: Dec 8 18:25
          NaN ?
          reduce ? function(arr, callback, initialValue) {
          return arr.reduce(callback, initialValue);
-         } : */function(arr, callback, initialValue) {
+         } : */function (arr, callback, initialValue) {
             var len = arr.length;
             if (typeof callback !== "function") {
                 throw new TypeError("callback is not function!");
@@ -953,10 +964,10 @@ build time: Dec 8 18:25
         },
 
         every:every ?
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 return every.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var len = arr && arr.length || 0;
                 for (var i = 0; i < len; i++) {
                     if (i in arr && !fn.call(context, arr[i], i, arr)) {
@@ -967,10 +978,10 @@ build time: Dec 8 18:25
             },
 
         some:some ?
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 return some.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var len = arr && arr.length || 0;
                 for (var i = 0; i < len; i++) {
                     if (i in arr && fn.call(context, arr[i], i, arr)) {
@@ -985,7 +996,7 @@ build time: Dec 8 18:25
          * it is not same with native bind
          * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
-        bind:function(fn, obj) {
+        bind:function (fn, obj) {
             var slice = [].slice,
                 args = slice.call(arguments, 2),
                 fNOP = function () {
@@ -1005,14 +1016,14 @@ build time: Dec 8 18:25
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
-        now: Date.now || function() {
+        now:Date.now || function () {
             return +new Date();
         },
         /**
          * frequently used in taobao cookie about nick
          */
-        fromUnicode:function(str) {
-            return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+        fromUnicode:function (str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
                 return  String.fromCharCode(parseInt(u, HEX_BASE));
             });
         },
@@ -1022,13 +1033,13 @@ build time: Dec 8 18:25
          *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */
-        escapeHTML:function(str) {
-            return str.replace(getEscapeReg(), function(m) {
+        escapeHTML:function (str) {
+            return str.replace(getEscapeReg(), function (m) {
                 return reverseEntities[m];
             });
         },
 
-        escapeRegExp:function(str) {
+        escapeRegExp:function (str) {
             return str.replace(escapeRegExp, '\\$&');
         },
 
@@ -1036,8 +1047,8 @@ build time: Dec 8 18:25
          * unescape html to string
          * @param str {string} html2text
          */
-        unEscapeHTML:function(str) {
-            return str.replace(getUnEscapeReg(), function(m, n) {
+        unEscapeHTML:function (str) {
+            return str.replace(getUnEscapeReg(), function (m, n) {
                 return htmlEntities[m] || String.fromCharCode(+n);
             });
         },
@@ -1046,7 +1057,7 @@ build time: Dec 8 18:25
          * @param o {object|Array} array like object or array
          * @return {Array}
          */
-        makeArray: function(o) {
+        makeArray:function (o) {
             if (nullOrUndefined(o)) {
                 return [];
             }
@@ -1059,7 +1070,7 @@ build time: Dec 8 18:25
                 return [o];
             }
             var ret = [];
-            for (var i = 0,l = o.length; i < l; i++) {
+            for (var i = 0, l = o.length; i < l; i++) {
                 ret[i] = o[i];
             }
             return ret;
@@ -1075,7 +1086,7 @@ build time: Dec 8 18:25
          * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
          * </code>
          */
-        param: function(o, sep, eq, arr) {
+        param:function (o, sep, eq, arr) {
             if (!S.isPlainObject(o)) {
                 return EMPTY;
             }
@@ -1086,24 +1097,26 @@ build time: Dec 8 18:25
             }
             var buf = [], key, val;
             for (key in o) {
-                val = o[key];
-                key = encode(key);
+                if (o.hasOwnProperty(key)) {
+                    val = o[key];
+                    key = encode(key);
 
-                // val is valid non-array value
-                if (isValidParamValue(val)) {
-                    buf.push(key, eq, encode(val + EMPTY), sep);
-                }
-                // val is not empty array
-                else if (S.isArray(val) && val.length) {
-                    for (var i = 0, len = val.length; i < len; ++i) {
-                        if (isValidParamValue(val[i])) {
-                            buf.push(key,
-                                (arr ? encode("[]") : EMPTY),
-                                eq, encode(val[i] + EMPTY), sep);
+                    // val is valid non-array value
+                    if (isValidParamValue(val)) {
+                        buf.push(key, eq, encode(val + EMPTY), sep);
+                    }
+                    // val is not empty array
+                    else if (S.isArray(val) && val.length) {
+                        for (var i = 0, len = val.length; i < len; ++i) {
+                            if (isValidParamValue(val[i])) {
+                                buf.push(key,
+                                    (arr ? encode("[]") : EMPTY),
+                                    eq, encode(val[i] + EMPTY), sep);
+                            }
                         }
                     }
+                    // ignore other cases, including empty array, Function, RegExp, Date etc.
                 }
-                // ignore other cases, including empty array, Function, RegExp, Date etc.
             }
             buf.pop();
             return buf.join(EMPTY);
@@ -1118,7 +1131,7 @@ build time: Dec 8 18:25
          * 'id=45&raw'        // -> {id: '45', raw: ''}
          * </code>
          */
-        unparam: function(str, sep, eq) {
+        unparam:function (str, sep, eq) {
             if (typeof str !== 'string'
                 || (str = S.trim(str)).length === 0) {
                 return {};
@@ -1135,7 +1148,7 @@ build time: Dec 8 18:25
                 key = decode(pair[0]);
                 try {
                     val = decode(pair[1] || EMPTY);
-                } catch(e) {
+                } catch (e) {
                     S.log(e + "decodeURIComponent error : " + pair[1], "error");
                     val = pair[1] || EMPTY;
                 }
@@ -1146,7 +1159,7 @@ build time: Dec 8 18:25
                     if (S.isArray(ret[key])) {
                         ret[key].push(val);
                     } else {
-                        ret[key] = [ret[key],val];
+                        ret[key] = [ret[key], val];
                     }
                 } else {
                     ret[key] = val;
@@ -1164,14 +1177,14 @@ build time: Dec 8 18:25
          * @param periodic {Boolean} if true, executes continuously at supplied interval
          *        until canceled.
          * @param context {Object} the context object.
-         * @param data [Array] that is provided to the function. This accepts either a single
+         * @param [data] that is provided to the function. This accepts either a single
          *        item or an array. If an array is provided, the function is executed with
          *        one parameter for each array item. If you need to pass a single array
          *        parameter, it needs to be wrapped in an array [myarray].
          * @return {Object} a timer object. Call the cancel() method on this object to stop
          *         the timer.
          */
-        later: function(fn, when, periodic, context, data) {
+        later:function (fn, when, periodic, context, data) {
             when = when || 0;
             var m = fn,
                 d = S.makeArray(data),
@@ -1186,16 +1199,16 @@ build time: Dec 8 18:25
                 S.error('method undefined');
             }
 
-            f = function() {
+            f = function () {
                 m.apply(context, d);
             };
 
             r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
 
             return {
-                id: r,
-                interval: periodic,
-                cancel: function() {
+                id:r,
+                interval:periodic,
+                cancel:function () {
                     if (this.interval) {
                         clearInterval(r);
                     } else {
@@ -1205,11 +1218,11 @@ build time: Dec 8 18:25
             };
         },
 
-        startsWith:function(str, prefix) {
+        startsWith:function (str, prefix) {
             return str.lastIndexOf(prefix, 0) === 0;
         },
 
-        endsWith:function(str, suffix) {
+        endsWith:function (str, suffix) {
             var ind = str.length - suffix.length;
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
         },
@@ -1223,18 +1236,18 @@ build time: Dec 8 18:25
          *              Passing a -1 will disable the throttle. Defaults to 150.
          * @return {function} Returns a wrapped function that calls fn throttled.
          */
-        throttle:function(fn, ms, context) {
+        throttle:function (fn, ms, context) {
             ms = ms || 150;
 
             if (ms === -1) {
-                return (function() {
+                return (function () {
                     fn.apply(context || this, arguments);
                 });
             }
 
             var last = S.now();
 
-            return (function() {
+            return (function () {
                 var now = S.now();
                 if (now - last > ms) {
                     last = now;
@@ -1246,14 +1259,14 @@ build time: Dec 8 18:25
         /**
          * buffers a call between  a fixed time
          * @param {function} fn
-         * @param {object} context
+         * @param {object} [context]
          * @param {Number} ms
          */
-        buffer:function(fn, ms, context) {
+        buffer:function (fn, ms, context) {
             ms = ms || 150;
 
             if (ms === -1) {
-                return (function() {
+                return (function () {
                     fn.apply(context || this, arguments);
                 });
             }
@@ -1264,7 +1277,7 @@ build time: Dec 8 18:25
                 bufferTimer = S.later(fn, ms, FALSE, context || this);
             }
 
-            f.stop = function() {
+            f.stop = function () {
                 if (bufferTimer) {
                     bufferTimer.cancel();
                     bufferTimer = 0;
@@ -1289,12 +1302,12 @@ build time: Dec 8 18:25
     });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
-        function(name, lc) {
+        function (name, lc) {
             // populate the class2type map
             class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
 
             // add isBoolean/isNumber/...
-            S['is' + name] = function(o) {
+            S['is' + name] = function (o) {
                 return S.type(o) == lc;
             }
         });
@@ -1323,7 +1336,7 @@ build time: Dec 8 18:25
         } else if (typeof input === "object") {
             // 引用类型要先记录
             var constructor = input.constructor;
-            if (S.inArray(constructor, [Boolean,String,Number,Date,RegExp])) {
+            if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
                 destination = new constructor(input.valueOf());
             }
             // ImageData , File, Blob , FileList .. etc
@@ -1337,7 +1350,7 @@ build time: Dec 8 18:25
             // 做标记
             input[CLONE_MARKER] = (stamp = S.guid());
             // 存储源对象以及克隆后的对象
-            memory[stamp] = {destination:destination,input:input};
+            memory[stamp] = {destination:destination, input:input};
         }
         // If input is an Array object or an Object object,
         // then, for each enumerable property in input,
@@ -1353,10 +1366,11 @@ build time: Dec 8 18:25
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (k !== CLONE_MARKER &&
-                    input.hasOwnProperty(k) &&
-                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                    destination[k] = cloneInternal(input[k], f, memory);
+                if (input.hasOwnProperty(k)) {
+                    if (k !== CLONE_MARKER &&
+                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                        destination[k] = cloneInternal(input[k], f, memory);
+                    }
                 }
             }
         }
@@ -1371,27 +1385,33 @@ build time: Dec 8 18:25
         }
         a[COMPARE_MARKER] = b;
         b[COMPARE_MARKER] = a;
-        var hasKey = function(obj, keyName) {
+        var hasKey = function (obj, keyName) {
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (!hasKey(a, property) && hasKey(b, property)) {
-                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+            if (b.hasOwnProperty(property)) {
+                if (!hasKey(a, property) && hasKey(b, property)) {
+                    mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+                }
             }
         }
         for (property in a) {
-            if (!hasKey(b, property) && hasKey(a, property)) {
-                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+            if (a.hasOwnProperty(property)) {
+                if (!hasKey(b, property) && hasKey(a, property)) {
+                    mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+                }
             }
         }
         for (property in b) {
-            if (property == COMPARE_MARKER) {
-                continue;
-            }
-            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                    + "' in expected, but was '" +
-                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            if (b.hasOwnProperty(property)) {
+                if (property == COMPARE_MARKER) {
+                    continue;
+                }
+                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                    mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                        + "' in expected, but was '" +
+                        (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+                }
             }
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
@@ -1961,12 +1981,12 @@ build time: Dec 8 18:25
  * build full path from relative path and base path
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils, data) {
+(function (S, loader, utils, data) {
     if ("require" in this) {
         return;
     }
     S.mix(loader, {
-        __buildPath: function(mod, base) {
+        __buildPath:function (mod, base) {
             var self = this,
                 Config = self.Config;
 
@@ -1995,6 +2015,11 @@ build time: Dec 8 18:25
                     && mod.tag) {
                     mod[fullpath] += "?t=" + mod.tag;
                 }
+
+                if (mod[fullpath]) {
+                    mod[fullpath] = self.__getMappedPath(mod[fullpath]);
+                }
+
             }
         }
     });
@@ -2040,14 +2065,14 @@ build time: Dec 8 18:25
  * for ie ,find current executive script ,then infer module name
  * @author yiminghe@gmail.com
  */
-(function(S, loader, utils) {
+(function (S, loader, utils) {
     if ("require" in this) {
         return;
     }
     S.mix(loader, {
         //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
         // 如果找不到，返回发送前那个脚本
-        __findModuleNameByInteractive:function() {
+        __findModuleNameByInteractive:function () {
             var self = this,
                 scripts = document.getElementsByTagName("script"),
                 re,
@@ -2083,13 +2108,15 @@ build time: Dec 8 18:25
                 === 0) {
                 return utils.removePostfix(src.substring(self.Config.base.length));
             }
-            var packages = self.__packages;
+            var packages = self.Config.packages;
             //外部模块去除包路径，得到模块名
             for (var p in packages) {
-                var p_path = packages[p].path;
-                if (packages.hasOwnProperty(p)
-                    && src.lastIndexOf(p_path, 0) === 0) {
-                    return utils.removePostfix(src.substring(p_path.length));
+                if (packages.hasOwnProperty(p)) {
+                    var p_path = packages[p].path;
+                    if (packages.hasOwnProperty(p) &&
+                        src.lastIndexOf(p_path, 0) === 0) {
+                        return utils.removePostfix(src.substring(p_path.length));
+                    }
                 }
             }
             S.log("interactive script does not have package config ：" + src, "error");
@@ -2315,49 +2342,45 @@ build time: Dec 8 18:25
  * package mechanism
  * @author yiminghe@gmail.com
  */
-(function(S, loader, utils) {
+(function (S, loader, utils) {
     if ("require" in this) {
         return;
     }
-
+    /**
+     * 包声明
+     * biz -> .
+     * 表示遇到 biz/x
+     * 在当前网页路径找 biz/x.js
+     */
+    S.configs.packages = function (cfgs) {
+        var ps;
+        ps = S.Config.packages = S.Config.packages || {};
+        S.each(cfgs, function (cfg) {
+            ps[cfg.name] = cfg;
+            //注意正则化
+            cfg.path = cfg.path && utils.normalBasePath(cfg.path);
+            cfg.tag = cfg.tag && encodeURIComponent(cfg.tag);
+        });
+    };
     S.mix(loader, {
-
-        /**
-         * 包声明
-         * biz -> .
-         * 表示遇到 biz/x
-         * 在当前网页路径找 biz/x.js
-         */
-        _packages:function(cfgs) {
-            var self = this,
-                ps;
-            ps = self.__packages = self.__packages || {};
-            S.each(cfgs, function(cfg) {
-                ps[cfg.name] = cfg;
-                //注意正则化
-                cfg.path = cfg.path && utils.normalBasePath(cfg.path);
-                cfg.tag = cfg.tag && encodeURIComponent(cfg.tag);
-            });
-        },
-
-        __getPackagePath:function(mod) {
+        __getPackagePath:function (mod) {
             //缓存包路径，未申明的包的模块都到核心模块中找
             if (mod.packagepath) {
                 return mod.packagepath;
             }
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                modName = self._combine(mod.name),
-                packages = self.__packages || {},
+                modName = mod.name,
+                packages = self.Config.packages || {},
                 pName = "",
                 p_def;
 
             for (var p in packages) {
-                if (packages.hasOwnProperty(p)
-                    && S.startsWith(modName, p)
-                    && p.length > pName
-                    ) {
-                    pName = p;
+                if (packages.hasOwnProperty(p)) {
+                    if (S.startsWith(modName, p) &&
+                        p.length > pName) {
+                        pName = p;
+                    }
                 }
             }
             p_def = packages[pName];
@@ -2369,30 +2392,6 @@ build time: Dec 8 18:25
                 mod.tag = encodeURIComponent(S.Config.tag || S.buildTime);
             }
             return mod.packagepath = (p_def && p_def.path) || self.Config.base;
-        },
-        /**
-         * compress 'from module' to 'to module'
-         * {
-         *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
-         * }
-         */
-        _combine:function(from, to) {
-            var self = this,
-                cs;
-            if (S.isObject(from)) {
-                S.each(from, function(v, k) {
-                    S.each(v, function(v2) {
-                        self._combine(v2, k);
-                    });
-                });
-                return;
-            }
-            cs = self.__combines = self.__combines || {};
-            if (to) {
-                cs[from] = to;
-            } else {
-                return cs[from] || from;
-            }
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
@@ -2433,7 +2432,7 @@ build time: Dec 8 18:25
  * use and attach mod
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-(function(S, loader, utils, data) {
+(function (S, loader, utils, data) {
 
     if ("require" in this) {
         return;
@@ -2450,7 +2449,7 @@ build time: Dec 8 18:25
          * S.use('mod1,mod2', callback, config);
          * </code>
          */
-        use: function(modNames, callback, cfg) {
+        use:function (modNames, callback, cfg) {
             modNames = modNames.replace(/\s+/g, "").split(',');
             utils.indexMapping(modNames);
             cfg = cfg || {};
@@ -2466,9 +2465,9 @@ build time: Dec 8 18:25
             }
 
             // 有尚未 attached 的模块
-            S.each(modNames, function(modName) {
+            S.each(modNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
-                self.__attachModByName(modName, function() {
+                self.__attachModByName(modName, function () {
                     if (!fired &&
                         self.__isAttached(modNames)) {
                         fired = true;
@@ -2481,11 +2480,11 @@ build time: Dec 8 18:25
             return self;
         },
 
-        __getModules:function(modNames) {
+        __getModules:function (modNames) {
             var self = this,
                 mods = [self];
 
-            S.each(modNames, function(modName) {
+            S.each(modNames, function (modName) {
                 if (!utils.isCss(modName)) {
                     mods.push(self.require(modName));
                 }
@@ -2497,7 +2496,7 @@ build time: Dec 8 18:25
          * get module's value defined by define function
          * @param {string} moduleName
          */
-        require:function(moduleName) {
+        require:function (moduleName) {
             var self = this,
                 mods = self.Env.mods,
                 mod = mods[moduleName],
@@ -2509,7 +2508,7 @@ build time: Dec 8 18:25
         },
 
         // 加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName: function(modName, callback, cfg) {
+        __attachModByName:function (modName, callback, cfg) {
             var self = this,
                 mods = self.Env.mods;
 
@@ -2520,20 +2519,17 @@ build time: Dec 8 18:25
                 // 不指定 .js 默认为 js
                 // 指定为 css 载入 .css
                 var componentJsName = self.Config['componentJsName'] ||
-                    function(m) {
-                        var suffix = "js",match;
+                    function (m) {
+                        var suffix = "js", match;
                         if (match = m.match(/(.+)\.(js|css)$/i)) {
                             suffix = match[2];
                             m = match[1];
                         }
                         return m + '-min.' + suffix;
-                    },  path = S.isFunction(componentJsName) ?
-                    //一个模块合并到了了另一个模块文件中去
-                    componentJsName(self._combine(modName))
-                    : componentJsName;
+                    }, path = componentJsName(modName);
                 mod = {
                     path:path,
-                    charset: 'utf-8'
+                    charset:'utf-8'
                 };
                 //添加模块定义
                 mods[modName] = mod;
@@ -2556,7 +2552,7 @@ build time: Dec 8 18:25
         /**
          * Attach a module and all required modules.
          */
-        __attach: function(mod, callback, cfg) {
+        __attach:function (mod, callback, cfg) {
             var self = this,
                 r,
                 rMod,
@@ -2574,7 +2570,7 @@ build time: Dec 8 18:25
             function cyclicCheck() {
                 var __allRequires,
                     myName = mod.name,
-                    r,r2,rmod,
+                    r, r2, rmod,
                     r__allRequires,
                     requires = mod.requires;
                 // one mod's all requires mods to run its callback
@@ -2585,14 +2581,18 @@ build time: Dec 8 18:25
                     __allRequires[r] = 1;
                     if (rmod && (r__allRequires = rmod.__allRequires)) {
                         for (r2 in r__allRequires) {
-                            __allRequires[r2] = 1;
+                            if (r__allRequires.hasOwnProperty(r2)) {
+                                __allRequires[r2] = 1;
+                            }
                         }
                     }
                 }
                 if (__allRequires[myName]) {
                     var t = [];
                     for (r in __allRequires) {
-                        t.push(r);
+                        if (__allRequires.hasOwnProperty(r)) {
+                            t.push(r);
+                        }
                     }
                     S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
                 }
@@ -2616,7 +2616,7 @@ build time: Dec 8 18:25
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
 
-            self.__load(mod, function() {
+            self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
@@ -2624,13 +2624,7 @@ build time: Dec 8 18:25
                 var newRequires = mod['requires'],
                     needToLoad = [];
 
-                if (S.Config.debug) {
-
-                }
-
-
                 //本模块下载成功后串行下载 require
-
                 for (i = 0; i < newRequires.length; i++) {
                     r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
@@ -2671,12 +2665,12 @@ build time: Dec 8 18:25
             }
         },
 
-        __attachMod: function(mod) {
+        __attachMod:function (mod) {
             var self = this,
                 fns = mod.fns;
 
             if (fns) {
-                S.each(fns, function(fn) {
+                S.each(fns, function (fn) {
                     var value;
                     if (S.isFunction(fn)) {
                         value = fn.apply(self, self.__getModules(mod['requires']));
@@ -2691,10 +2685,44 @@ build time: Dec 8 18:25
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
+ * map mechanism
+ * @author yiminghe@gmail.com
+ */
+(function (S, loader) {
+
+    /**
+     * modify current module path
+     * @param rules
+     * @example
+     *      [
+     *          [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
+     *          [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
+     *              return m1+m2;
+     *          }]
+     *      ]
+     */
+    S.configs.map = function (rules) {
+        S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);
+    };
+
+    S.mix(loader, {
+        __getMappedPath:function (path) {
+            var __mappedRules = S.Config.mappedRules || [];
+            for (var i = 0; i < __mappedRules.length; i++) {
+                var m, rule = __mappedRules[i];
+                if (m = path.match(rule[0])) {
+                    return path.replace(rule[0], rule[1]);
+                }
+            }
+            return path;
+        }
+    });
+
+})(KISSY, KISSY.__loader);/**
  *  mix loader into S and infer KISSy baseUrl if not set
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils) {
+(function (S, loader, utils) {
     if ("require" in this) {
         return;
     }
@@ -2737,7 +2765,7 @@ build time: Dec 8 18:25
             }
             // combo after first
             else {
-                S.each(parts, function(part) {
+                S.each(parts, function (part) {
                     if (part.match(baseTestReg)) {
                         base += part.replace(baseReg, '$1');
                         return false;
@@ -2748,11 +2776,10 @@ build time: Dec 8 18:25
         return base;
     }
 
-
     /**
      * Initializes loader.
      */
-    S.__initLoader = function() {
+    S.__initLoader = function () {
         var self = this;
         self.Env.mods = self.Env.mods || {}; // all added mods
     };
@@ -2760,7 +2787,7 @@ build time: Dec 8 18:25
     S.Env._loadQueue = {}; // information for loading and loaded mods
     S.__initLoader();
 
-    (function() {
+    (function () {
         // get base from current script file path
         var scripts = document.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
@@ -2770,8 +2797,20 @@ build time: Dec 8 18:25
         S.Config.timeout = 10;
     })();
 
+    S.mix(S.configs, {
+        base:function (base) {
+            S.Config.base = utils.normalBasePath(base);
+        },
+        timeout:function (v) {
+            S.Config.timeout = v;
+        },
+        debug:function (v) {
+            S.Config.debug = v;
+        }
+    });
+
     // for S.app working properly
-    S.each(loader, function(v, k) {
+    S.each(loader, function (v, k) {
         S.__APP_MEMBERS.push(k);
     });
 
@@ -3016,77 +3055,80 @@ build time: Dec 8 18:25
  * @description: 为了和 1.1.7 及以前版本保持兼容，务实与创新，兼容与革新 ！
  * @author yiminghe@gmail.com
  */
-(function(S) {
+(function (S) {
     S.config({
-        combine:{
-            core:['dom','ua','event','node','json','ajax','anim','base','cookie']
-        }
+        map:[
+            [
+                /(.+)(?:dom|ua|event|node|json|ajax|anim|base|cookie)((?:-min)?\.js(?:\?.+)?)$/,
+                "$1core$2"
+            ]
+        ]
     });
 })(KISSY);
 /**
  combined files : 
 
-D:\code\kissy_git\kissy\src\ua\base.js
-D:\code\kissy_git\kissy\src\ua\extra.js
-D:\code\kissy_git\kissy\src\ua.js
-D:\code\kissy_git\kissy\src\dom\base.js
-D:\code\kissy_git\kissy\src\dom\attr.js
-D:\code\kissy_git\kissy\src\dom\class.js
-D:\code\kissy_git\kissy\src\dom\create.js
-D:\code\kissy_git\kissy\src\dom\data.js
-D:\code\kissy_git\kissy\src\dom\insertion.js
-D:\code\kissy_git\kissy\src\dom\offset.js
-D:\code\kissy_git\kissy\src\dom\style.js
-D:\code\kissy_git\kissy\src\dom\selector.js
-D:\code\kissy_git\kissy\src\dom\style-ie.js
-D:\code\kissy_git\kissy\src\dom\traversal.js
-D:\code\kissy_git\kissy\src\dom.js
-D:\code\kissy_git\kissy\src\event\keycodes.js
-D:\code\kissy_git\kissy\src\event\object.js
-D:\code\kissy_git\kissy\src\event\utils.js
-D:\code\kissy_git\kissy\src\event\base.js
-D:\code\kissy_git\kissy\src\event\target.js
-D:\code\kissy_git\kissy\src\event\focusin.js
-D:\code\kissy_git\kissy\src\event\hashchange.js
-D:\code\kissy_git\kissy\src\event\valuechange.js
-D:\code\kissy_git\kissy\src\event\delegate.js
-D:\code\kissy_git\kissy\src\event\mouseenter.js
-D:\code\kissy_git\kissy\src\event\submit.js
-D:\code\kissy_git\kissy\src\event\change.js
-D:\code\kissy_git\kissy\src\event\mousewheel.js
-D:\code\kissy_git\kissy\src\event.js
-D:\code\kissy_git\kissy\src\node\base.js
-D:\code\kissy_git\kissy\src\node\attach.js
-D:\code\kissy_git\kissy\src\node\override.js
-D:\code\kissy_git\kissy\src\anim\easing.js
-D:\code\kissy_git\kissy\src\anim\manager.js
-D:\code\kissy_git\kissy\src\anim\fx.js
-D:\code\kissy_git\kissy\src\anim\queue.js
-D:\code\kissy_git\kissy\src\anim\base.js
-D:\code\kissy_git\kissy\src\anim\color.js
-D:\code\kissy_git\kissy\src\anim.js
-D:\code\kissy_git\kissy\src\node\anim.js
-D:\code\kissy_git\kissy\src\node.js
-D:\code\kissy_git\kissy\src\json\json2.js
-D:\code\kissy_git\kissy\src\json.js
-D:\code\kissy_git\kissy\src\ajax\form-serializer.js
-D:\code\kissy_git\kissy\src\ajax\xhrobject.js
-D:\code\kissy_git\kissy\src\ajax\base.js
-D:\code\kissy_git\kissy\src\ajax\xhrbase.js
-D:\code\kissy_git\kissy\src\ajax\subdomain.js
-D:\code\kissy_git\kissy\src\ajax\xdr.js
-D:\code\kissy_git\kissy\src\ajax\xhr.js
-D:\code\kissy_git\kissy\src\ajax\script.js
-D:\code\kissy_git\kissy\src\ajax\jsonp.js
-D:\code\kissy_git\kissy\src\ajax\form.js
-D:\code\kissy_git\kissy\src\ajax\iframe-upload.js
-D:\code\kissy_git\kissy\src\ajax.js
-D:\code\kissy_git\kissy\src\base\attribute.js
-D:\code\kissy_git\kissy\src\base\base.js
-D:\code\kissy_git\kissy\src\base.js
-D:\code\kissy_git\kissy\src\cookie\base.js
-D:\code\kissy_git\kissy\src\cookie.js
-D:\code\kissy_git\kissy\src\core.js
+D:\code\kissy_git\kissy1.2\src\ua\base.js
+D:\code\kissy_git\kissy1.2\src\ua\extra.js
+D:\code\kissy_git\kissy1.2\src\ua.js
+D:\code\kissy_git\kissy1.2\src\dom\base.js
+D:\code\kissy_git\kissy1.2\src\dom\attr.js
+D:\code\kissy_git\kissy1.2\src\dom\class.js
+D:\code\kissy_git\kissy1.2\src\dom\create.js
+D:\code\kissy_git\kissy1.2\src\dom\data.js
+D:\code\kissy_git\kissy1.2\src\dom\insertion.js
+D:\code\kissy_git\kissy1.2\src\dom\offset.js
+D:\code\kissy_git\kissy1.2\src\dom\style.js
+D:\code\kissy_git\kissy1.2\src\dom\selector.js
+D:\code\kissy_git\kissy1.2\src\dom\style-ie.js
+D:\code\kissy_git\kissy1.2\src\dom\traversal.js
+D:\code\kissy_git\kissy1.2\src\dom.js
+D:\code\kissy_git\kissy1.2\src\event\keycodes.js
+D:\code\kissy_git\kissy1.2\src\event\object.js
+D:\code\kissy_git\kissy1.2\src\event\utils.js
+D:\code\kissy_git\kissy1.2\src\event\base.js
+D:\code\kissy_git\kissy1.2\src\event\target.js
+D:\code\kissy_git\kissy1.2\src\event\focusin.js
+D:\code\kissy_git\kissy1.2\src\event\hashchange.js
+D:\code\kissy_git\kissy1.2\src\event\valuechange.js
+D:\code\kissy_git\kissy1.2\src\event\delegate.js
+D:\code\kissy_git\kissy1.2\src\event\mouseenter.js
+D:\code\kissy_git\kissy1.2\src\event\submit.js
+D:\code\kissy_git\kissy1.2\src\event\change.js
+D:\code\kissy_git\kissy1.2\src\event\mousewheel.js
+D:\code\kissy_git\kissy1.2\src\event.js
+D:\code\kissy_git\kissy1.2\src\node\base.js
+D:\code\kissy_git\kissy1.2\src\node\attach.js
+D:\code\kissy_git\kissy1.2\src\node\override.js
+D:\code\kissy_git\kissy1.2\src\anim\easing.js
+D:\code\kissy_git\kissy1.2\src\anim\manager.js
+D:\code\kissy_git\kissy1.2\src\anim\fx.js
+D:\code\kissy_git\kissy1.2\src\anim\queue.js
+D:\code\kissy_git\kissy1.2\src\anim\base.js
+D:\code\kissy_git\kissy1.2\src\anim\color.js
+D:\code\kissy_git\kissy1.2\src\anim.js
+D:\code\kissy_git\kissy1.2\src\node\anim.js
+D:\code\kissy_git\kissy1.2\src\node.js
+D:\code\kissy_git\kissy1.2\src\json\json2.js
+D:\code\kissy_git\kissy1.2\src\json.js
+D:\code\kissy_git\kissy1.2\src\ajax\form-serializer.js
+D:\code\kissy_git\kissy1.2\src\ajax\xhrobject.js
+D:\code\kissy_git\kissy1.2\src\ajax\base.js
+D:\code\kissy_git\kissy1.2\src\ajax\xhrbase.js
+D:\code\kissy_git\kissy1.2\src\ajax\subdomain.js
+D:\code\kissy_git\kissy1.2\src\ajax\xdr.js
+D:\code\kissy_git\kissy1.2\src\ajax\xhr.js
+D:\code\kissy_git\kissy1.2\src\ajax\script.js
+D:\code\kissy_git\kissy1.2\src\ajax\jsonp.js
+D:\code\kissy_git\kissy1.2\src\ajax\form.js
+D:\code\kissy_git\kissy1.2\src\ajax\iframe-upload.js
+D:\code\kissy_git\kissy1.2\src\ajax.js
+D:\code\kissy_git\kissy1.2\src\base\attribute.js
+D:\code\kissy_git\kissy1.2\src\base\base.js
+D:\code\kissy_git\kissy1.2\src\base.js
+D:\code\kissy_git\kissy1.2\src\cookie\base.js
+D:\code\kissy_git\kissy1.2\src\cookie.js
+D:\code\kissy_git\kissy1.2\src\core.js
 **/
 
 /**

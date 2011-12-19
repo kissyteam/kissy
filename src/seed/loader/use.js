@@ -2,7 +2,7 @@
  * use and attach mod
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-(function(S, loader, utils, data) {
+(function (S, loader, utils, data) {
 
     if ("require" in this) {
         return;
@@ -19,7 +19,7 @@
          * S.use('mod1,mod2', callback, config);
          * </code>
          */
-        use: function(modNames, callback, cfg) {
+        use:function (modNames, callback, cfg) {
             modNames = modNames.replace(/\s+/g, "").split(',');
             utils.indexMapping(modNames);
             cfg = cfg || {};
@@ -35,9 +35,9 @@
             }
 
             // 有尚未 attached 的模块
-            S.each(modNames, function(modName) {
+            S.each(modNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
-                self.__attachModByName(modName, function() {
+                self.__attachModByName(modName, function () {
                     if (!fired &&
                         self.__isAttached(modNames)) {
                         fired = true;
@@ -50,11 +50,11 @@
             return self;
         },
 
-        __getModules:function(modNames) {
+        __getModules:function (modNames) {
             var self = this,
                 mods = [self];
 
-            S.each(modNames, function(modName) {
+            S.each(modNames, function (modName) {
                 if (!utils.isCss(modName)) {
                     mods.push(self.require(modName));
                 }
@@ -66,7 +66,7 @@
          * get module's value defined by define function
          * @param {string} moduleName
          */
-        require:function(moduleName) {
+        require:function (moduleName) {
             var self = this,
                 mods = self.Env.mods,
                 mod = mods[moduleName],
@@ -78,7 +78,7 @@
         },
 
         // 加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName: function(modName, callback, cfg) {
+        __attachModByName:function (modName, callback, cfg) {
             var self = this,
                 mods = self.Env.mods;
 
@@ -89,20 +89,17 @@
                 // 不指定 .js 默认为 js
                 // 指定为 css 载入 .css
                 var componentJsName = self.Config['componentJsName'] ||
-                    function(m) {
-                        var suffix = "js",match;
+                    function (m) {
+                        var suffix = "js", match;
                         if (match = m.match(/(.+)\.(js|css)$/i)) {
                             suffix = match[2];
                             m = match[1];
                         }
                         return m + '-min.' + suffix;
-                    },  path = S.isFunction(componentJsName) ?
-                    //一个模块合并到了了另一个模块文件中去
-                    componentJsName(self._combine(modName))
-                    : componentJsName;
+                    }, path = componentJsName(modName);
                 mod = {
                     path:path,
-                    charset: 'utf-8'
+                    charset:'utf-8'
                 };
                 //添加模块定义
                 mods[modName] = mod;
@@ -125,7 +122,7 @@
         /**
          * Attach a module and all required modules.
          */
-        __attach: function(mod, callback, cfg) {
+        __attach:function (mod, callback, cfg) {
             var self = this,
                 r,
                 rMod,
@@ -143,7 +140,7 @@
             function cyclicCheck() {
                 var __allRequires,
                     myName = mod.name,
-                    r,r2,rmod,
+                    r, r2, rmod,
                     r__allRequires,
                     requires = mod.requires;
                 // one mod's all requires mods to run its callback
@@ -154,14 +151,18 @@
                     __allRequires[r] = 1;
                     if (rmod && (r__allRequires = rmod.__allRequires)) {
                         for (r2 in r__allRequires) {
-                            __allRequires[r2] = 1;
+                            if (r__allRequires.hasOwnProperty(r2)) {
+                                __allRequires[r2] = 1;
+                            }
                         }
                     }
                 }
                 if (__allRequires[myName]) {
                     var t = [];
                     for (r in __allRequires) {
-                        t.push(r);
+                        if (__allRequires.hasOwnProperty(r)) {
+                            t.push(r);
+                        }
                     }
                     S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
                 }
@@ -185,7 +186,7 @@
             // load and attach this module
             self.__buildPath(mod, self.__getPackagePath(mod));
 
-            self.__load(mod, function() {
+            self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
                 mod['requires'] = mod['requires'] || [];
@@ -193,13 +194,7 @@
                 var newRequires = mod['requires'],
                     needToLoad = [];
 
-                if (S.Config.debug) {
-
-                }
-
-
                 //本模块下载成功后串行下载 require
-
                 for (i = 0; i < newRequires.length; i++) {
                     r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
@@ -240,12 +235,12 @@
             }
         },
 
-        __attachMod: function(mod) {
+        __attachMod:function (mod) {
             var self = this,
                 fns = mod.fns;
 
             if (fns) {
-                S.each(fns, function(fn) {
+                S.each(fns, function (fn) {
                     var value;
                     if (S.isFunction(fn)) {
                         value = fn.apply(self, self.__getModules(mod['requires']));
