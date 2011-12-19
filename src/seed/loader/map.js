@@ -3,7 +3,9 @@
  * @author yiminghe@gmail.com
  */
 (function (S, loader) {
-
+    if ("require" in this) {
+        return;
+    }
     /**
      * modify current module path
      * @param rules

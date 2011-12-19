@@ -164,6 +164,7 @@
 
             S.Config.packages = {};
             S.Config.mappedRules = [];
+            S.Config.combines={};
             S.Env._loadQueue = {};
             S.Env.mods = {};
 
@@ -197,6 +198,7 @@
         it("load core when use dom", function () {
             S.Config.packages = {};
             S.Config.mappedRules = [];
+            S.Config.combines={};
             S.Env._loadQueue = {};
             S.Env.mods = {};
 

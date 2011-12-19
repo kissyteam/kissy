@@ -268,7 +268,7 @@
                 if (c.hasOwnProperty(p)) {
                     if ((configs = this['configs']) &&
                         (cfg = configs[p])) {
-                        cfg(c[p]);
+                        return cfg(c[p]);
                     }
                 }
             }

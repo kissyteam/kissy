@@ -5,11 +5,8 @@
  */
 (function (S) {
     S.config({
-        map:[
-            [
-                /(.+\/)(?:dom|ua|event|node|json|ajax|anim|base|cookie)((?:-min)?\.js(?:\?.+)?)$/,
-                "$1core$2"
-            ]
-        ]
+        'combines':{
+            'core':['dom', 'ua', 'event', 'node', 'json', 'ajax', 'anim', 'base', 'cookie']
+        }
     });
 })(KISSY);
