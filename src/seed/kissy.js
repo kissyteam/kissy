@@ -78,7 +78,7 @@
     S = host[S] = meta.mix(seed, meta);
 
     S.mix(S, {
-
+        configs:{},
         // S.app() with these members.
         __APP_MEMBERS:['namespace'],
         __APP_INIT_METHODS:['__init'],
@@ -263,9 +263,13 @@
 
 
         config:function (c) {
+            var configs, cfg;
             for (var p in c) {
-                if (c.hasOwnProperty(p) && this["_" + p]) {
-                    this["_" + p](c[p]);
+                if (c.hasOwnProperty(p)) {
+                    if ((configs = this['configs']) &&
+                        (cfg = configs[p])) {
+                        cfg(c[p]);
+                    }
                 }
             }
         },

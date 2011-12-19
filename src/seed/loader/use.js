@@ -88,18 +88,14 @@
                 // 默认 js/css 名字
                 // 不指定 .js 默认为 js
                 // 指定为 css 载入 .css
-                var componentJsName = self.Config['componentJsName'] ||
-                    function (m) {
-                        var suffix = "js", match;
-                        if (match = m.match(/(.+)\.(js|css)$/i)) {
-                            suffix = match[2];
-                            m = match[1];
-                        }
-                        return m + '-min.' + suffix;
-                    }, path = S.isFunction(componentJsName) ?
-                    //一个模块合并到了了另一个模块文件中去
-                    componentJsName(self._combine(modName))
-                    : componentJsName;
+                var componentJsName = function (m) {
+                    var suffix = "js", match;
+                    if (match = m.match(/(.+)\.(js|css)$/i)) {
+                        suffix = match[2];
+                        m = match[1];
+                    }
+                    return m + '-min.' + suffix;
+                }, path = componentJsName(modName);
                 mod = {
                     path:path,
                     charset:'utf-8'
@@ -197,13 +193,7 @@
                 var newRequires = mod['requires'],
                     needToLoad = [];
 
-                if (S.Config.debug) {
-
-                }
-
-
                 //本模块下载成功后串行下载 require
-
                 for (i = 0; i < newRequires.length; i++) {
                     r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
                     var rMod = mods[r],
