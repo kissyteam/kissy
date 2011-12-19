@@ -112,6 +112,7 @@
             mod.name = modName;
 
             if (mod && mod.status === ATTACHED) {
+                callback();
                 return;
             }
 

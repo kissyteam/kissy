@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 19 19:50
+build time: Dec 19 20:21
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -94,7 +94,7 @@ build time: Dec 19 19:50
          */
         version:'1.30dev',
 
-        buildTime:'20111219195009',
+        buildTime:'20111219202152',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2359,6 +2359,7 @@ build time: Dec 19 19:50
             mod.name = modName;
 
             if (mod && mod.status === ATTACHED) {
+                callback();
                 return;
             }
 
