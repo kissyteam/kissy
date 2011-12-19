@@ -2,13 +2,13 @@
  * menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
+KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var $ = S.all;
 
     var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
 
-        _handleMouseEnter:function(e) {
+        _handleMouseEnter:function (e) {
             // 父亲不允许自己处理
             if (MenuItem.superclass._handleMouseEnter.call(this, e)) {
                 return true;
@@ -16,7 +16,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             this.get("parent").set("highlightedItem", this);
         },
 
-        _handleMouseLeave:function(e) {
+        _handleMouseLeave:function (e) {
             // 父亲不允许自己处理
             if (MenuItem.superclass._handleMouseLeave.call(this, e)) {
                 return true;
@@ -24,38 +24,39 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             this.get("parent").set("highlightedItem", undefined);
         },
 
-        _performInternal:function() {
+        _performInternal:function () {
+            var self = this;
             // 可选
-            if (this.get("selectable")) {
-                this.set("selected", true);
+            if (self.get("selectable")) {
+                self.set("selected", true);
             }
             // 可选中，取消选中
-            if (this.get("checkable")) {
-                this.set("checked", !this.get("checked"));
+            if (self.get("checkable")) {
+                self.set("checked", !self.get("checked"));
             }
-            this.get("parent").fire("click", {
+            self.get("parent").fire("click", {
                 // 使用熟悉的 target，而不是自造新词！
-                target:this
+                target:self
             });
             return true;
         },
 
-        _uiSetChecked:function(v) {
+        _uiSetChecked:function (v) {
             this._forwardSetAttrToView("checked", v);
         },
 
-        _uiSetSelected:function(v) {
+        _uiSetSelected:function (v) {
             this._forwardSetAttrToView("selected", v);
         },
 
-        _uiSetHighlighted:function(v) {
+        _uiSetHighlighted:function (v) {
             MenuItem.superclass._uiSetHighlighted.apply(this, arguments);
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
                 var el = this.get("el"),
                     // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
                     // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
-                    p = el.parent(function(e) {
+                    p = el.parent(function (e) {
                         return $(e).css("overflow") != "visible";
                     }, this.get("parent").get("el").parent());
                 if (!p) {
@@ -65,7 +66,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
             }
         },
 
-        containsElement:function(element) {
+        containsElement:function (element) {
             return this.get('view') && this.get('view').containsElement(element);
         }
 
@@ -112,7 +113,7 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
         },
 
         HTML_PARSER:{
-            selectable:function(el) {
+            selectable:function (el) {
                 var cls = this.getCls("menuitem-selectable");
                 return el.hasClass(cls);
             }
@@ -128,5 +129,5 @@ KISSY.add("menu/menuitem", function(S, UIBase, Component, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires:['uibase','component','./menuitemrender']
+    requires:['uibase', 'component', './menuitemrender']
 });

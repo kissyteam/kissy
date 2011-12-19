@@ -5,7 +5,6 @@
 KISSY.add("menu/menu", function (S, Event, UIBase, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
-
     function onMenuHide() {
         this.set("highlightedItem", undefined);
     }
@@ -141,11 +140,13 @@ KISSY.add("menu/menu", function (S, Event, UIBase, Component, MenuRender) {
             },
 
             containsElement:function (element) {
-                if (this.get("view").containsElement(element)) {
+                var self = this;
+                if (!self.get("view") ||
+                    self.get("view").containsElement(element)) {
                     return true;
                 }
 
-                var children = this.get('children');
+                var children = self.get('children');
 
                 for (var i = 0, count = children.length; i < count; i++) {
                     var child = children[i];
@@ -185,6 +186,7 @@ KISSY.add("menu/menu", function (S, Event, UIBase, Component, MenuRender) {
         priority:Component.UIStore.PRIORITY.LEVEL1,
         ui:Menu
     });
+
     return Menu;
 
 }, {
