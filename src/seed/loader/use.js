@@ -88,14 +88,15 @@
                 // 默认 js/css 名字
                 // 不指定 .js 默认为 js
                 // 指定为 css 载入 .css
-                var componentJsName = function (m) {
-                    var suffix = "js", match;
-                    if (match = m.match(/(.+)\.(js|css)$/i)) {
-                        suffix = match[2];
-                        m = match[1];
-                    }
-                    return m + '-min.' + suffix;
-                }, path = componentJsName(modName);
+                var componentJsName = self.Config['componentJsName'] ||
+                    function (m) {
+                        var suffix = "js", match;
+                        if (match = m.match(/(.+)\.(js|css)$/i)) {
+                            suffix = match[2];
+                            m = match[1];
+                        }
+                        return m + '-min.' + suffix;
+                    }, path = componentJsName(modName);
                 mod = {
                     path:path,
                     charset:'utf-8'

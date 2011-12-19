@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 19 18:08
+build time: Dec 19 18:17
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -280,7 +280,7 @@ build time: Dec 19 18:08
          */
         version:'1.30dev',
 
-        buildTime:'20111219180827',
+        buildTime:'20111219181712',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2518,14 +2518,15 @@ build time: Dec 19 18:08
                 // 默认 js/css 名字
                 // 不指定 .js 默认为 js
                 // 指定为 css 载入 .css
-                var componentJsName = function (m) {
-                    var suffix = "js", match;
-                    if (match = m.match(/(.+)\.(js|css)$/i)) {
-                        suffix = match[2];
-                        m = match[1];
-                    }
-                    return m + '-min.' + suffix;
-                }, path = componentJsName(modName);
+                var componentJsName = self.Config['componentJsName'] ||
+                    function (m) {
+                        var suffix = "js", match;
+                        if (match = m.match(/(.+)\.(js|css)$/i)) {
+                            suffix = match[2];
+                            m = match[1];
+                        }
+                        return m + '-min.' + suffix;
+                    }, path = componentJsName(modName);
                 mod = {
                     path:path,
                     charset:'utf-8'
