@@ -50,6 +50,11 @@
                             elem.animate({
                                 backgroundPositionY:(-height * next + "px")
                             }, {
+                                // 返回 0 不运行系统默认更新函数
+                                // 返回 1 ，结束该属性更新
+                                frame:function(fx){
+
+                                },
                                 duration:nextDuration2
                             });
                         } else {
