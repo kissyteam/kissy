@@ -32,9 +32,7 @@
                     }
                 } else {
                     for (p in s) {
-                        if (s.hasOwnProperty(p)) {
-                            _mix(p, r, s, ov, deep);
-                        }
+                        _mix(p, r, s, ov, deep);
                     }
                 }
                 return r;
