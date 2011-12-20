@@ -2,7 +2,7 @@
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function(S, DOM, undefined) {
+KISSY.add("anim/fx", function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -14,7 +14,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
 
     S.augment(Fx, {
 
-        load:function(cfg) {
+        load:function (cfg) {
             var self = this;
             S.mix(self, cfg);
             self.startTime = S.now();
@@ -22,11 +22,14 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
             self.unit = self.unit || "";
         },
 
-        frame:function(end) {
+        frame:function (end) {
             var self = this,
                 endFlag = 0,
-                elapsedTime,
-                t = S.now();
+                elapsedTime;
+            if (self.finished) {
+                return 1;
+            }
+            var t = S.now();
             if (end || t >= self.duration + self.startTime) {
                 self.pos = 1;
                 endFlag = 1;
@@ -35,6 +38,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
                 self.pos = self.easing(elapsedTime / self.duration);
             }
             self.update();
+            self.finished = self.finished || endFlag;
             return endFlag;
         },
 
@@ -55,7 +59,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
             }
         },
 
-        update:function() {
+        update:function () {
             var self = this,
                 prop = self.prop,
                 elem = self.elem,
@@ -83,7 +87,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
         /**
          * current value
          */
-        cur:function() {
+        cur:function () {
             var self = this,
                 prop = self.prop,
                 elem = self.elem;
@@ -112,7 +116,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
 
     Fx.Factories = {};
 
-    Fx.getFx = function(cfg) {
+    Fx.getFx = function (cfg) {
         var Constructor = Fx.Factories[cfg.prop] || Fx;
         return new Constructor(cfg);
     };

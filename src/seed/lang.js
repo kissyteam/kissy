@@ -202,7 +202,7 @@
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          * 稍微改改就和规范一样了 :)
          * @param input
-         * @param {Function} filter filter function
+         * @param {Function} [filter] filter function
          * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
         clone:function (input, filter) {

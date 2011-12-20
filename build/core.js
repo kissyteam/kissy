@@ -6932,7 +6932,7 @@ KISSY.add("anim/manager", function(S) {
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function(S, DOM, undefined) {
+KISSY.add("anim/fx", function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -6944,7 +6944,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
 
     S.augment(Fx, {
 
-        load:function(cfg) {
+        load:function (cfg) {
             var self = this;
             S.mix(self, cfg);
             self.startTime = S.now();
@@ -6952,11 +6952,14 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
             self.unit = self.unit || "";
         },
 
-        frame:function(end) {
+        frame:function (end) {
             var self = this,
                 endFlag = 0,
-                elapsedTime,
-                t = S.now();
+                elapsedTime;
+            if (self.finished) {
+                return 1;
+            }
+            var t = S.now();
             if (end || t >= self.duration + self.startTime) {
                 self.pos = 1;
                 endFlag = 1;
@@ -6965,6 +6968,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
                 self.pos = self.easing(elapsedTime / self.duration);
             }
             self.update();
+            self.finished = self.finished || endFlag;
             return endFlag;
         },
 
@@ -6985,7 +6989,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
             }
         },
 
-        update:function() {
+        update:function () {
             var self = this,
                 prop = self.prop,
                 elem = self.elem,
@@ -7013,7 +7017,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
         /**
          * current value
          */
-        cur:function() {
+        cur:function () {
             var self = this,
                 prop = self.prop,
                 elem = self.elem;
@@ -7042,7 +7046,7 @@ KISSY.add("anim/fx", function(S, DOM, undefined) {
 
     Fx.Factories = {};
 
-    Fx.getFx = function(cfg) {
+    Fx.getFx = function (cfg) {
         var Constructor = Fx.Factories[cfg.prop] || Fx;
         return new Constructor(cfg);
     };
@@ -7169,13 +7173,21 @@ KISSY.add("anim/queue", function(S, DOM) {
  * animation framework for KISSY
  * @author   yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
+KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         _isElementNode = DOM._isElementNode,
-        specialVals = ["hide","show","toggle"],
+        specialVals = ["hide", "show", "toggle"],
         // shorthand css properties
         SHORT_HANDS = {
+            backgroundPosition:[
+                "backgroundPositionX",
+                "backgroundPositionY"
+            ],
+            background:[
+                "backgroundPositionX",
+                "backgroundPositionY"
+            ],
             border:[
                 "borderBottomWidth",
                 "borderLeftWidth",
@@ -7205,8 +7217,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             ]
         },
         defaultConfig = {
-            duration: 1,
-            easing: 'easeNone'
+            duration:1,
+            easing:'easeNone'
         },
         rfxnum = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
@@ -7222,7 +7234,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param callback
      */
     function Anim(elem, props, duration, easing, callback) {
-        var self = this,config;
+        var self = this, config;
 
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) {
@@ -7287,7 +7299,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     function onComplete(e) {
         var self = this,
-            _backupProps = self._backupProps,
+            _backupProps,
             config = self.config;
 
         // only recover after complete anim
@@ -7335,7 +7347,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         // 分离 easing
-        S.each(props, function(val, prop) {
+        S.each(props, function (val, prop) {
             if (!props.hasOwnProperty(prop)) {
                 return;
             }
@@ -7354,13 +7366,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
 
         // 扩展分属性
-        S.each(SHORT_HANDS, function(shortHands, p) {
+        S.each(SHORT_HANDS, function (shortHands, p) {
             var sh,
                 origin,
                 val;
             if (val = props[p]) {
                 origin = {};
-                S.each(shortHands, function(sh) {
+                S.each(shortHands, function (sh) {
                     // 得到原始分属性之前值
                     origin[sh] = DOM.css(elem, sh);
                     specialEasing[sh] = specialEasing[p];
@@ -7481,7 +7493,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         /**
          * @type {boolean} 是否在运行
          */
-        isRunning:function() {
+        isRunning:function () {
             return isRunning(this);
         },
 
@@ -7490,7 +7502,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         /**
          * 开始动画
          */
-        run: function() {
+        run:function () {
             var self = this,
                 queueName = self.config.queue;
 
@@ -7504,16 +7516,32 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             return self;
         },
 
-        _frame:function() {
+        _frame:function () {
 
             var self = this,
                 prop,
+                config = self.config,
                 end = 1,
+                c,
                 fxs = self._fxs;
 
             for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop)) {
-                    end &= fxs[prop].frame();
+                if (fxs.hasOwnProperty(prop) &&
+                    // 当前属性没有结束
+                    !fxs[prop].finished) {
+                    // 非短路
+                    if (config.frame) {
+                        c = config.frame(fxs[prop]);
+                    }
+                    // 结束
+                    if (c == 1 ||
+                        // 不执行自带
+                        c == 0) {
+                        end &= c;
+                    }
+                    else {
+                        end &= fxs[prop].frame();
+                    }
                 }
             }
 
@@ -7524,7 +7552,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             }
         },
 
-        stop: function(finish) {
+        stop:function (finish) {
             var self = this,
                 config = self.config,
                 queueName = config.queue,
@@ -7599,7 +7627,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param end
      * @param clearQueue
      */
-    Anim.stop = function(elem, end, clearQueue, queueName) {
+    Anim.stop = function (elem, end, clearQueue, queueName) {
         if (
         // default queue
             queueName === null ||
@@ -7647,7 +7675,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * whether elem is running anim
      * @param elem
      */
-    Anim['isRunning'] = function(elem) {
+    Anim['isRunning'] = function (elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
     };
@@ -7658,7 +7686,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires:["dom","event","./easing","ua","./manager","./fx","./queue"]
+    requires:["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
 });
 
 /**
@@ -7686,29 +7714,29 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
  * special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
+KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
 
         floor = Math.floor,
 
         KEYWORDS = {
-            "black":[0,0,0],
-            "silver":[192,192,192],
-            "gray":[128,128,128],
-            "white":[255,255,255],
-            "maroon":[128,0,0],
-            "red":[255,0,0],
-            "purple":[128,0,128],
-            "fuchsia":[255,0,255],
-            "green":[0,128,0],
-            "lime":[0,255,0],
-            "olive":[128,128,0],
-            "yellow":[255,255,0],
-            "navy":[0,0,128],
-            "blue":[0,0,255],
-            "teal":[0,128,128],
-            "aqua":[0,255,255]
+            "black":[0, 0, 0],
+            "silver":[192, 192, 192],
+            "gray":[128, 128, 128],
+            "white":[255, 255, 255],
+            "maroon":[128, 0, 0],
+            "red":[255, 0, 0],
+            "purple":[128, 0, 128],
+            "fuchsia":[255, 0, 255],
+            "green":[0, 128, 0],
+            "lime":[0, 255, 0],
+            "olive":[128, 128, 0],
+            "yellow":[255, 255, 0],
+            "navy":[0, 0, 128],
+            "blue":[0, 0, 255],
+            "teal":[0, 128, 128],
+            "aqua":[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
@@ -7728,7 +7756,8 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
             'outlineColor'
         ];
 
-    SHORT_HANDS['background'] = ['backgroundColor'];
+    SHORT_HANDS['background'] = SHORT_HANDS['background'] || [];
+    SHORT_HANDS['background'].push('backgroundColor');
 
     SHORT_HANDS['borderColor'] = [
         'borderBottomColor',
@@ -7797,7 +7826,7 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
         //transparent 或者 颜色字符串返回
         S.log("only allow rgb or hex color string : " + val, "warn");
-        return [255,255,255];
+        return [255, 255, 255];
     }
 
     function ColorFx() {
@@ -7806,7 +7835,7 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     S.extend(ColorFx, Fx, {
 
-        load:function() {
+        load:function () {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
             if (self.from) {
@@ -7840,14 +7869,14 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     });
 
-    S.each(COLORS, function(color) {
+    S.each(COLORS, function (color) {
         Fx.Factories[color] = ColorFx;
     });
 
     return ColorFx;
 
 }, {
-    requires:["dom","./base","./fx"]
+    requires:["dom", "./base", "./fx"]
 });
 
 /**

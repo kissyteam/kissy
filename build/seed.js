@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 20 15:56
+build time: Dec 20 20:15
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -93,7 +93,7 @@ build time: Dec 20 15:56
          */
         version:'1.30dev',
 
-        buildTime:'20111220155638',
+        buildTime:'20111220201514',
 
         /**
          * Returns a new object containing all of the properties of
@@ -524,7 +524,7 @@ build time: Dec 20 15:56
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          * 稍微改改就和规范一样了 :)
          * @param input
-         * @param {Function} filter filter function
+         * @param {Function} [filter] filter function
          * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
         clone:function (input, filter) {
