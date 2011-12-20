@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 19 20:21
+build time: Dec 20 15:56
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -37,9 +37,8 @@ build time: Dec 19 20:21
                     }
                 } else {
                     for (p in s) {
-                        if (s.hasOwnProperty(p)) {
-                            _mix(p, r, s, ov, deep);
-                        }
+                        // no hasOwnProperty judge !
+                        _mix(p, r, s, ov, deep);
                     }
                 }
                 return r;
@@ -94,7 +93,7 @@ build time: Dec 19 20:21
          */
         version:'1.30dev',
 
-        buildTime:'20111219202152',
+        buildTime:'20111220155638',
 
         /**
          * Returns a new object containing all of the properties of
@@ -25996,7 +25995,7 @@ KISSY.add("imagezoom", function(S, ImageZoom) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 20 15:55
 */
 /**
  * KISSY Calendar
@@ -26009,7 +26008,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         this._init(trigger, config);
     }
 
-    S.augment(Calendar, {
+    S.augment(Calendar, EventTarget,{
 
         /**
          * 日历构造函数
@@ -26042,15 +26041,6 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     'visibility':'hidden'
                 });
             }
-
-            //创建事件中心
-            //事件中心已经和Calendar合并
-            var EventFactory = function() {
-            };
-            S.augment(EventFactory, EventTarget);
-            var eventCenter = new EventFactory();
-            S.mix(self, eventCenter);
-
             self.render();
             self._buildEvent();
             return this;

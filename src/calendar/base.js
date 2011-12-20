@@ -9,7 +9,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         this._init(trigger, config);
     }
 
-    S.augment(Calendar, {
+    S.augment(Calendar, EventTarget,{
 
         /**
          * 日历构造函数
@@ -42,15 +42,6 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     'visibility':'hidden'
                 });
             }
-
-            //创建事件中心
-            //事件中心已经和Calendar合并
-            var EventFactory = function() {
-            };
-            S.augment(EventFactory, EventTarget);
-            var eventCenter = new EventFactory();
-            S.mix(self, eventCenter);
-
             self.render();
             self._buildEvent();
             return this;
