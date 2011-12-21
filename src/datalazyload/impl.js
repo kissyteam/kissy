@@ -3,7 +3,7 @@
  * @module   datalazyload
  * @creator lifesinger@gmail.com
  */
-KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
+KISSY.add('datalazyload/impl', function (S, DOM, Event, undefined) {
 
     var win = window,
         DELAY = 0.1,
@@ -24,24 +24,24 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
              *   manual - 输出 html 时，已经将需要延迟加载的图片的 src 属性替换为 IMG_SRC_DATA
              * 注：对于 textarea 数据，只有手动模式
              */
-            mod: MANUAL,
+            mod:MANUAL,
 
             /**
              * 当前视窗往下，diff px 外的 img/textarea 延迟加载
              * 适当设置此值，可以让用户在拖动时感觉数据已经加载好
              * 默认为当前视窗高度（两屏以外的才延迟加载）
              */
-            diff: DEFAULT,
+            diff:DEFAULT,
 
             /**
              * 图像的占位图，默认无
              */
-            placeholder: NONE,
+            placeholder:NONE,
 
             /**
              * 是否执行 textarea 里面的脚本
              */
-            execScript: true
+            execScript:true
         };
 
     /**
@@ -95,13 +95,13 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 和延迟项绑定的回调函数
          * @type object
          */
-        self.callbacks = {els: [], fns: []};
+        self.callbacks = {els:[], fns:[]};
 
         /**
          * 开始延迟的 Y 坐标
          * @type number
          */
-        //self.threshold
+            //self.threshold
 
         self._init();
         return undefined;
@@ -113,7 +113,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 初始化
          * @protected
          */
-        _init: function() {
+        _init:function () {
             var self = this;
             self.threshold = self._getThreshold();
 
@@ -125,13 +125,13 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 获取并初始化需要延迟的 images 和 areaes
          * @protected
          */
-        _filterItems: function() {
+        _filterItems:function () {
             var self = this,
                 containers = self.containers,
                 n, N, imgs, areaes, i, img,
                 lazyImgs = [], lazyAreas = [];
 
-            for (n = 0,N = containers.length; n < N; ++n) {
+            for (n = 0, N = containers.length; n < N; ++n) {
                 imgs = DOM.query('img', containers[n]);
                 lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
 
@@ -146,7 +146,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         /**
          * filter for lazyload image
          */
-        _filterImg: function(img) {
+        _filterImg:function (img) {
             var self = this,
                 dataSrc = img.getAttribute(IMG_SRC_DATA),
                 threshold = self.threshold,
@@ -180,7 +180,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         /**
          * filter for lazyload textarea
          */
-        _filterArea: function(area) {
+        _filterArea:function (area) {
             return DOM.hasClass(area, AREA_DATA_CLS);
         },
 
@@ -188,19 +188,19 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 初始化加载事件
          * @protected
          */
-        _initLoadEvent: function() {
+        _initLoadEvent:function () {
             var timer, self = this, resizeHandler;
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, function() {
+            Event.on(win, RESIZE, function () {
                 self.threshold = self._getThreshold();
                 loader();
             });
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
             if (self._getItemsLength()) {
-                S.ready(function() {
+                S.ready(function () {
                     loadItems();
                 });
             }
@@ -210,7 +210,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
                 if (timer) {
                     return;
                 }
-                timer = S.later(function() {
+                timer = S.later(function () {
                     loadItems();
                     timer = null;
                 }, DELAY); // 0.1s 内，用户感觉流畅
@@ -229,7 +229,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         /**
          * 加载延迟项
          */
-        _loadItems: function() {
+        _loadItems:function () {
             var self = this;
             self._loadImgs();
             self._loadAreas();
@@ -240,7 +240,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 加载图片
          * @protected
          */
-        _loadImgs: function() {
+        _loadImgs:function () {
             var self = this;
             self.images = S.filter(self.images, self._loadImg, self);
         },
@@ -248,7 +248,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         /**
          * 监控滚动，处理图片
          */
-        _loadImg: function(img) {
+        _loadImg:function (img) {
             var self = this,
                 scrollTop = DOM.scrollTop(),
                 threshold = self.threshold + scrollTop,
@@ -265,7 +265,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 加载图片 src
          * @static
          */
-        _loadImgSrc: function(img, flag) {
+        _loadImgSrc:function (img, flag) {
             flag = flag || IMG_SRC_DATA;
             var dataSrc = img.getAttribute(flag);
 
@@ -279,7 +279,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 加载 textarea 数据
          * @protected
          */
-        _loadAreas: function() {
+        _loadAreas:function () {
             var self = this;
             self.areaes = S.filter(self.areaes, self._loadArea, self);
         },
@@ -287,7 +287,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         /**
          * 监控滚动，处理 textarea
          */
-        _loadArea: function(area) {
+        _loadArea:function (area) {
             var self = this, top,
                 isHidden = DOM.css(area, DISPLAY) === NONE;
 
@@ -306,7 +306,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 从 textarea 中加载数据
          * @static
          */
-        _loadAreaData: function(container, area, execScript) {
+        _loadAreaData:function (container, area, execScript) {
             // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
             area.style.display = NONE;
             area.className = ''; // clear hook
@@ -321,7 +321,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         /**
          * 触发回调
          */
-        _fireCallbacks: function() {
+        _fireCallbacks:function () {
             var self = this,
                 callbacks = self.callbacks,
                 els = callbacks.els, fns = callbacks.fns,
@@ -345,7 +345,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         /**
          * 添加回调函数。当 el 即将出现在视图中时，触发 fn
          */
-        addCallback: function(el, fn) {
+        addCallback:function (el, fn) {
             var callbacks = this.callbacks;
             el = DOM.get(el);
 
@@ -358,11 +358,49 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             this._fireCallbacks();
         },
 
+        removeElements:function (el) {
+            if (S.isArray(el)) {
+                S.each(el, function (e) {
+                    this.removeElements(e);
+                });
+                return;
+            }
+            var self = this,
+                callbacks = self.callbacks,
+                fns = callbacks.fns,
+                els = callbacks.els,
+                newEls = [],
+                newFns = [];
+
+            // els 里 el 会重复，不同的 callback
+            for (var i = 0; i < els.length; i++) {
+                if (els[i] == el) {
+
+                } else {
+                    newEls.push(els[i]);
+                    newFns.push(fns[i]);
+                }
+            }
+            callbacks.els = newEls;
+            callbacks.fns = newFns;
+
+            removeFromEls(el, self.images);
+            removeFromEls(el, self.areaes);
+        },
+
+        destroy:function () {
+            var self = this;
+            self.callbacks.els = [];
+            self.callbacks.fns = [];
+            self.images = [];
+            self.areaes = [];
+        },
+
         /**
          * 获取阈值
          * @protected
          */
-        _getThreshold: function() {
+        _getThreshold:function () {
             var diff = this.config.diff,
                 vh = DOM.viewportHeight();
 
@@ -380,7 +418,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 获取当前延迟项的数量
          * @protected
          */
-        _getItemsLength: function() {
+        _getItemsLength:function () {
             var self = this;
             return self.images.length + self.areaes.length + self.callbacks.els.length;
         },
@@ -389,7 +427,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
          * 加载自定义延迟数据
          * @static
          */
-        loadCustomLazyData: function(containers, type) {
+        loadCustomLazyData:function (containers, type) {
             var self = this, area, imgs;
 
             if (type === 'img-src') type = 'img';
@@ -400,7 +438,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
             }
 
             // 遍历处理
-            S.each(containers, function(container) {
+            S.each(containers, function (container) {
                 switch (type) {
                     case 'img':
                         if (container.nodeName === 'IMG') { // 本身就是图片
@@ -409,7 +447,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
                             imgs = DOM.query('img', container);
                         }
 
-                        S.each(imgs, function(img) {
+                        S.each(imgs, function (img) {
                             self._loadImgSrc(img, IMG_SRC_DATA + CUSTOM);
                         });
 
@@ -425,12 +463,20 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
         }
     });
 
+    function removeFromEls(el, arr) {
+        var index = S.indexOf(el, arr);
+        if (index != -1) {
+            arr.splice(index, 1);
+        }
+        return index;
+    }
+
     // attach static methods
     S.mix(DataLazyload, DataLazyload.prototype, true, ['loadCustomLazyData', '_loadImgSrc', '_loadAreaData']);
 
     return DataLazyload;
 
-}, { requires: ['dom','event'] });
+}, { requires:['dom', 'event'] });
 
 /**
  * NOTES:
@@ -487,8 +533,9 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
 
 /**
  * UPDATE LOG:
+ *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口
  *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
- *   - 2010-07-10 chengyu 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
+ *   - 2010-07-10 yiminghe@gmail.com 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调
  *   - 2010-05-10 yubo ie6 下，在 dom ready 后执行，会导致 placeholder 重复加载，为比避免此问题，默认为 none, 去掉占位图
  *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
