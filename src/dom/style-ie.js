@@ -2,7 +2,7 @@
  * @module  dom
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
+KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
         var HUNDRED = 100;
 
@@ -23,8 +23,22 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
             CUSTOM_STYLES = Style._CUSTOM_STYLES,
             RE_NUMPX = /^-?\d+(?:px)?$/i,
             RE_NUM = /^-?\d/,
+            backgroundPosition = "backgroundPosition",
             ropacity = /opacity=([^)]*)/,
             ralpha = /alpha\([^)]*\)/i;
+
+        // odd backgroundPosition
+        CUSTOM_STYLES[backgroundPosition] = {
+            get:function (elem, computed) {
+                if (computed) {
+                    return elem[CURRENT_STYLE][backgroundPosition + "X"] +
+                        " " +
+                        elem[CURRENT_STYLE][backgroundPosition + "Y"];
+                } else {
+                    return elem[STYLE][backgroundPosition];
+                }
+            }
+        };
 
         // use alpha filter for IE opacity
         try {
@@ -32,7 +46,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
 
                 CUSTOM_STYLES[OPACITY] = {
 
-                    get: function(elem, computed) {
+                    get:function (elem, computed) {
                         // 没有设置过 opacity 时会报错，这时返回 1 即可
                         // 如果该节点没有添加到 dom ，取不到 filters 结构
                         // val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
@@ -44,7 +58,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                             computed ? "1" : "";
                     },
 
-                    set: function(elem, val) {
+                    set:function (elem, val) {
                         val = parseFloat(val);
 
                         var style = elem[STYLE],
@@ -78,7 +92,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                 };
             }
         }
-        catch(ex) {
+        catch (ex) {
             S.log('IE filters ActiveX is disabled. ex = ' + ex);
         }
 
@@ -90,15 +104,15 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
         var IE8 = UA['ie'] == 8,
             BORDER_MAP = {
             },
-            BORDERS = ["","Top","Left","Right","Bottom"];
+            BORDERS = ["", "Top", "Left", "Right", "Bottom"];
         BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
         BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
         BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
-        S.each(BORDERS, function(b) {
+        S.each(BORDERS, function (b) {
             var name = "border" + b + "Width",
                 styleName = "border" + b + "Style";
             CUSTOM_STYLES[name] = {
-                get: function(elem, computed) {
+                get:function (elem, computed) {
                     // 只有需要计算样式的时候才转换，否则取原值
                     var currentStyle = computed ? elem[CURRENT_STYLE] : 0,
                         current = currentStyle && String(currentStyle[name]) || undefined;
@@ -120,7 +134,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
         // getComputedStyle for IE
         if (!(doc.defaultView || { }).getComputedStyle && docElem[CURRENT_STYLE]) {
 
-            DOM._getComputedStyle = function(elem, name) {
+            DOM._getComputedStyle = function (elem, name) {
                 name = DOM._cssProps[name] || name;
 
                 var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
@@ -159,12 +173,19 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
         return DOM;
     },
     {
-        requires:["./base","ua","./style"]
+        requires:["./base", "ua", "./style"]
     }
 );
 /**
  * NOTES:
- * 承玉： 2011.05.19 opacity in ie
+ *
+ * yiminghe@gmail.com: 2011.12.21 backgroundPosition in ie
+ *  - currentStyle['backgroundPosition'] undefined
+ *  - currentStyle['backgroundPositionX'] ok
+ *  - currentStyle['backgroundPositionY'] ok
+ *
+ *
+ * yiminghe@gmail.com： 2011.05.19 opacity in ie
  *  - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
  *  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
  *

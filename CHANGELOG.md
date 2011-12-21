@@ -18,6 +18,8 @@ History:
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加
  - [*] submenuitem 支持 click 事件
+ - [*] anim 支持 backgroundPosition
+ - [x] dom 支持 css("backgroundPosition") in ie
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

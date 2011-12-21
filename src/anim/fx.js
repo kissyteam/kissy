@@ -97,7 +97,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             var parsed,
                 r = DOM.css(elem, prop);
             // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" are returned as is,
+            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
             // simple values such as "10px" are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
                 !r || r === "auto" ? 0 : r

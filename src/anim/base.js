@@ -9,13 +9,11 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         specialVals = ["hide", "show", "toggle"],
         // shorthand css properties
         SHORT_HANDS = {
-            backgroundPosition:[
-                "backgroundPositionX",
-                "backgroundPositionY"
-            ],
+            // http://www.w3.org/Style/CSS/Tracker/issues/9
+            // http://snook.ca/archives/html_and_css/background-position-x-y
+            // backgroundPositionX  backgroundPositionY does not support
             background:[
-                "backgroundPositionX",
-                "backgroundPositionY"
+                "backgroundPosition"
             ],
             border:[
                 "borderBottomWidth",

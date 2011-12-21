@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 21 10:33
+build time: Dec 21 12:48
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -279,7 +279,7 @@ build time: Dec 21 10:33
          */
         version:'1.30dev',
 
-        buildTime:'20111221103342',
+        buildTime:'20111221124845',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3150,6 +3150,7 @@ D:\code\kissy_git\kissy\src\anim\fx.js
 D:\code\kissy_git\kissy\src\anim\queue.js
 D:\code\kissy_git\kissy\src\anim\base.js
 D:\code\kissy_git\kissy\src\anim\color.js
+D:\code\kissy_git\kissy\src\anim\backgroundPosition.js
 D:\code\kissy_git\kissy\src\anim.js
 D:\code\kissy_git\kissy\src\node\anim.js
 D:\code\kissy_git\kissy\src\node.js
@@ -6766,7 +6767,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  * @module  dom
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
+KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
         var HUNDRED = 100;
 
@@ -6787,8 +6788,22 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
             CUSTOM_STYLES = Style._CUSTOM_STYLES,
             RE_NUMPX = /^-?\d+(?:px)?$/i,
             RE_NUM = /^-?\d/,
+            backgroundPosition = "backgroundPosition",
             ropacity = /opacity=([^)]*)/,
             ralpha = /alpha\([^)]*\)/i;
+
+        // odd backgroundPosition
+        CUSTOM_STYLES[backgroundPosition] = {
+            get:function (elem, computed) {
+                if (computed) {
+                    return elem[CURRENT_STYLE][backgroundPosition + "X"] +
+                        " " +
+                        elem[CURRENT_STYLE][backgroundPosition + "Y"];
+                } else {
+                    return elem[STYLE][backgroundPosition];
+                }
+            }
+        };
 
         // use alpha filter for IE opacity
         try {
@@ -6796,7 +6811,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
 
                 CUSTOM_STYLES[OPACITY] = {
 
-                    get: function(elem, computed) {
+                    get:function (elem, computed) {
                         // 没有设置过 opacity 时会报错，这时返回 1 即可
                         // 如果该节点没有添加到 dom ，取不到 filters 结构
                         // val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
@@ -6808,7 +6823,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                             computed ? "1" : "";
                     },
 
-                    set: function(elem, val) {
+                    set:function (elem, val) {
                         val = parseFloat(val);
 
                         var style = elem[STYLE],
@@ -6842,7 +6857,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                 };
             }
         }
-        catch(ex) {
+        catch (ex) {
             S.log('IE filters ActiveX is disabled. ex = ' + ex);
         }
 
@@ -6854,15 +6869,15 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
         var IE8 = UA['ie'] == 8,
             BORDER_MAP = {
             },
-            BORDERS = ["","Top","Left","Right","Bottom"];
+            BORDERS = ["", "Top", "Left", "Right", "Bottom"];
         BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
         BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
         BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
-        S.each(BORDERS, function(b) {
+        S.each(BORDERS, function (b) {
             var name = "border" + b + "Width",
                 styleName = "border" + b + "Style";
             CUSTOM_STYLES[name] = {
-                get: function(elem, computed) {
+                get:function (elem, computed) {
                     // 只有需要计算样式的时候才转换，否则取原值
                     var currentStyle = computed ? elem[CURRENT_STYLE] : 0,
                         current = currentStyle && String(currentStyle[name]) || undefined;
@@ -6884,7 +6899,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
         // getComputedStyle for IE
         if (!(doc.defaultView || { }).getComputedStyle && docElem[CURRENT_STYLE]) {
 
-            DOM._getComputedStyle = function(elem, name) {
+            DOM._getComputedStyle = function (elem, name) {
                 name = DOM._cssProps[name] || name;
 
                 var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
@@ -6923,12 +6938,19 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
         return DOM;
     },
     {
-        requires:["./base","ua","./style"]
+        requires:["./base", "ua", "./style"]
     }
 );
 /**
  * NOTES:
- * 承玉： 2011.05.19 opacity in ie
+ *
+ * yiminghe@gmail.com: 2011.12.21 backgroundPosition in ie
+ *  - currentStyle['backgroundPosition'] undefined
+ *  - currentStyle['backgroundPositionX'] ok
+ *  - currentStyle['backgroundPositionY'] ok
+ *
+ *
+ * yiminghe@gmail.com： 2011.05.19 opacity in ie
  *  - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
  *  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
  *
@@ -10134,7 +10156,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             var parsed,
                 r = DOM.css(elem, prop);
             // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" are returned as is,
+            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
             // simple values such as "10px" are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
                 !r || r === "auto" ? 0 : r
@@ -10287,13 +10309,11 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         specialVals = ["hide", "show", "toggle"],
         // shorthand css properties
         SHORT_HANDS = {
-            backgroundPosition:[
-                "backgroundPositionX",
-                "backgroundPositionY"
-            ],
+            // http://www.w3.org/Style/CSS/Tracker/issues/9
+            // http://snook.ca/archives/html_and_css/background-position-x-y
+            // backgroundPositionX  backgroundPositionY does not support
             background:[
-                "backgroundPositionX",
-                "backgroundPositionY"
+                "backgroundPosition"
             ],
             border:[
                 "borderBottomWidth",
@@ -10994,11 +11014,88 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
  *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
  **/
 
+/**
+ * special patch for anim backgroundPosition
+ * @author  yiminghe@gmail.com
+ */
+KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
+
+    function numeric(bp) {
+        bp = bp.replace(/left|top/g, '0px')
+            .replace(/right|bottom/g, '100%')
+            .replace(/([0-9\.]+)(\s|\)|$)/g, "$1px$2");
+        var res = bp.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);
+        return [parseFloat(res[1]), res[2], parseFloat(res[3]), res[4]];
+    }
+
+    function BackgroundPositionFx() {
+        BackgroundPositionFx.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(BackgroundPositionFx, Fx, {
+
+        load:function () {
+            var self = this, fromUnit;
+            BackgroundPositionFx.superclass.load.apply(self, arguments);
+            fromUnit = self.unit = ["px", "px"];
+            if (self.from) {
+                var from = numeric(self.from);
+                self.from = [from[0], from[2]];
+                fromUnit = [from[1], from[3]];
+            } else {
+                self.from = [0, 0];
+            }
+            if (self.to) {
+                var to = numeric(self.to);
+                self.to = [to[0], to[2]];
+                self.unit = [to[1], to[3]];
+            } else {
+                self.to = [0, 0];
+            }
+            if (fromUnit) {
+                if (fromUnit[0] !== self.unit[0] || fromUnit[1] !== self.unit[1]) {
+                    S.log("BackgroundPosition x y unit is not same :", "warn");
+                    S.log(fromUnit, "warn");
+                    S.log(self.unit, "warn");
+                }
+            }
+        },
+
+        interpolate:function (from, to, pos) {
+            var unit = this.unit, interpolate = BackgroundPositionFx.superclass.interpolate;
+            return interpolate(from[0], to[0], pos) + unit[0] + " " +
+                interpolate(from[1], to[1], pos) + unit[1];
+        },
+
+        cur:function () {
+            return DOM.css(this.elem, "backgroundPosition");
+        },
+
+        update:function () {
+            var self = this,
+                prop = self.prop,
+                elem = self.elem,
+                from = self.from,
+                to = self.to,
+                val = self.interpolate(from, to, self.pos);
+            DOM.css(elem, prop, val);
+        }
+
+    });
+
+    Fx.Factories["backgroundPosition"] = BackgroundPositionFx;
+
+    return BackgroundPositionFx;
+
+}, {
+    requires:["dom", "./base", "./fx"]
+});
+
 KISSY.add("anim", function(S, Anim,Easing) {
     Anim.Easing=Easing;
     return Anim;
 }, {
-    requires:["anim/base","anim/easing","anim/color"]
+    requires:["anim/base","anim/easing","anim/color","anim/backgroundPosition"]
 });
 
 /**
