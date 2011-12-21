@@ -46,16 +46,17 @@
                             // 比平时慢 multiple 倍
                             var nextDuration2 = ((duration / (num - 1))) *
                                     (num - next - 1) *
-                                    multiple;
+                                    multiple * 2;
                             elem.animate({
                                 backgroundPositionY:(-height * next + "px")
                             }, {
-                                // 返回 0 不运行系统默认更新函数
-                                // 返回 1 ，结束该属性更新
-                                frame:function(fx){
-
-                                },
-                                duration:nextDuration2
+                                easing:"easeBoth",
+                                duration:nextDuration2,
+                                complete:function () {
+                                    this.fire("end", {
+                                        endIndex:next
+                                    });
+                                }
                             });
                         } else {
                             anim();
@@ -64,14 +65,15 @@
                 });
             }
 
-            return {
+            return S.mix({
                 start:function () {
+                    this.fire('start');
                     anim();
                 },
                 stop:function (next) {
                     anim(next);
                 }
-            };
+            }, S.EventTarget);
         }
 
 

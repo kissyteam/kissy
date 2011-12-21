@@ -352,24 +352,26 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 config = self.config,
                 end = 1,
                 c,
+                fx,
                 fxs = self._fxs;
 
             for (prop in fxs) {
                 if (fxs.hasOwnProperty(prop) &&
                     // 当前属性没有结束
-                    !fxs[prop].finished) {
+                    !((fx = fxs[prop]).finished)) {
                     // 非短路
                     if (config.frame) {
-                        c = config.frame(fxs[prop]);
+                        c = config.frame(fx);
                     }
                     // 结束
                     if (c == 1 ||
                         // 不执行自带
                         c == 0) {
+                        fx.finished = c;
                         end &= c;
                     }
                     else {
-                        end &= fxs[prop].frame();
+                        end &= fx.frame();
                     }
                 }
             }

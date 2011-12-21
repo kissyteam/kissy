@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 20 20:15
+build time: Dec 21 10:33
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -279,7 +279,7 @@ build time: Dec 20 20:15
          */
         version:'1.30dev',
 
-        buildTime:'20111220201514',
+        buildTime:'20111221103342',
 
         /**
          * Returns a new object containing all of the properties of
@@ -10630,24 +10630,26 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 config = self.config,
                 end = 1,
                 c,
+                fx,
                 fxs = self._fxs;
 
             for (prop in fxs) {
                 if (fxs.hasOwnProperty(prop) &&
                     // 当前属性没有结束
-                    !fxs[prop].finished) {
+                    !((fx = fxs[prop]).finished)) {
                     // 非短路
                     if (config.frame) {
-                        c = config.frame(fxs[prop]);
+                        c = config.frame(fx);
                     }
                     // 结束
                     if (c == 1 ||
                         // 不执行自带
                         c == 0) {
+                        fx.finished = c;
                         end &= c;
                     }
                     else {
-                        end &= fxs[prop].frame();
+                        end &= fx.frame();
                     }
                 }
             }
