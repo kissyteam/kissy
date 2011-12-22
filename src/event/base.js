@@ -43,6 +43,21 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
                 eventData = eventType;
                 eventType = eventData.type;
             }
+
+            var typedGroups = Utils.getTypedGroups(eventType),
+                _ks_groups = typedGroups[1];
+
+            if (_ks_groups) {
+                _ks_groups = Utils.getGroupsRe(_ks_groups);
+            }
+
+            eventType = typedGroups[0];
+
+            S.mix(eventData, {
+                type:eventType,
+                _ks_groups:_ks_groups
+            });
+
             DOM.query(targets).each(function (target) {
                 r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
                 if (ret !== false) {

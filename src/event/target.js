@@ -2,7 +2,7 @@
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefined) {
+KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
     var KS_PUBLISH = "__~ks_publish",
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
@@ -16,11 +16,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
             return eventData;
         }
         var customEvent = new EventObject(self, undefined, type);
-        if (S.isPlainObject(eventData)) {
-            S.mix(customEvent, eventData);
-        }
-        // protect type
-        customEvent.type = type;
+        S.mix(customEvent, eventData);
         return customEvent
     }
 
@@ -40,10 +36,10 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
     }
 
     function attach(method) {
-        return function(type, fn, scope) {
+        return function (type, fn, scope) {
             var self = this;
             type = trim(type);
-            splitAndRun(type, function(t) {
+            splitAndRun(type, function (t) {
                 Event["__" + method](false, self, t, fn, scope);
             });
             return self; // chain
@@ -63,17 +59,18 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
         /**
          * 触发事件
          * @param {String} type 事件名
-         * @param {Object} eventData 事件附加信息对象
+         * @param {Object} [eventData] 事件附加信息对象
          * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
          */
-        fire: function(type, eventData) {
+        fire:function (type, eventData) {
             var self = this,
-                ret=undefined,
+                ret = undefined,
                 r2,
                 customEvent;
+            eventData = eventData || {};
             type = trim(type);
             if (type.indexOf(" ") > 0) {
-                splitAndRun(type, function(t) {
+                splitAndRun(type, function (t) {
                     r2 = self.fire(t, eventData);
                     if (ret !== false) {
                         ret = r2;
@@ -81,6 +78,16 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
                 });
                 return ret;
             }
+            var typedGroups = Utils.getTypedGroups(type), _ks_groups = typedGroups[1];
+            type = typedGroups[0];
+            if (_ks_groups) {
+                _ks_groups = Utils.getGroupsRe(_ks_groups);
+            }
+            S.mix(eventData, {
+                // protect type
+                type:type,
+                _ks_groups:_ks_groups
+            });
             customEvent = getCustomEvent(self, type, eventData);
             ret = handle(self, customEvent);
             if (!customEvent.isPropagationStopped &&
@@ -101,7 +108,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          *        example { bubbles: true}
          *        default bubbles: false
          */
-        publish: function(type, cfg) {
+        publish:function (type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
             type = trim(type);
@@ -115,11 +122,11 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          * @param type
          * @param eventData
          */
-        bubble: function(type, eventData) {
+        bubble:function (type, eventData) {
             var self = this,
-                ret=undefined,
+                ret = undefined,
                 targets = getBubbleTargetsObj(self);
-            S.each(targets, function(t) {
+            S.each(targets, function (t) {
                 var r2 = t.fire(type, eventData);
                 if (ret !== false) {
                     ret = r2;
@@ -132,13 +139,13 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          * add target which bubblable event bubbles towards
          * @param target another EventTarget instance
          */
-        addTarget: function(target) {
+        addTarget:function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             targets[S.stamp(target)] = target;
         },
 
-        removeTarget:function(target) {
+        removeTarget:function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             delete targets[S.stamp(target)];
@@ -151,7 +158,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on: attach("add")
+        on:attach("add")
     };
 
     /**
@@ -169,7 +176,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object','./utils','./handle']
+    requires:["./base", './object', './utils', './handle']
 });
 /**
  *  yiminghe:2011-10-17

@@ -57,7 +57,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                 if (currentTargetHandlers.length) {
                     allHandlers.push({
                         currentTarget:target,
-                        currentTargetHandlers:currentTargetHandlers
+                        "currentTargetHandlers":currentTargetHandlers
                     });
                 }
                 target = target.parentNode || currentTarget;
@@ -72,7 +72,10 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
         });
 
         // backup eventType
-        var eventType = event.type, s, t;
+        var eventType = event.type,
+            s,
+            t,
+            _ks_groups = event._ks_groups;
         for (i = 0, len = allHandlers.length;
              !event.isPropagationStopped && i < len;
              ++i) {
@@ -84,7 +87,17 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
             for (j = 0; !event.isImmediatePropagationStopped &&
                 j < currentTargetHandlers.length;
                  j++) {
+
                 currentTargetHandler = currentTargetHandlers[j];
+
+                // handler's group does not match specified groups (at fire step)
+                if (_ks_groups &&
+                    (!currentTargetHandler.groups ||
+                        !(currentTargetHandler.groups.match(_ks_groups)))) {
+                    continue;
+                }
+
+
                 event.data = currentTargetHandler.data;
 
                 // restore originalType if involving delegate/onFix handlers

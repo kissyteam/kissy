@@ -11,6 +11,8 @@
 <script src="../../../build/seed.js"></script>
 <script src="../../../build/ua.js"></script>
 <script src="../../../build/dom.js"></script>
+<script src="../../../build/node.js"></script>
+<script src="../../../build/anim.js"></script>
 <script src="../base.js"></script>
 <script src="../object.js"></script>
 <script src="../target.js"></script>
@@ -29,7 +31,6 @@
 <script src="../utils.js"></script>
 <script src="../special.js"></script>
 <script src="../../event.js"></script>
-
 </head>
 <body>
 <!-- test data -->
@@ -85,6 +86,7 @@
 <script src="hashchange-spec.js"></script>
 <script src="delegate-advanced-spec.js"></script>
 <script src="submit-spec.js"></script>
+<script src="group-spec.js"></script>
 
 
 <!--
@@ -92,9 +94,9 @@
 move to change/test.html test by man !
 -->
 <script>
-    KISSY.ready(function() {
+    KISSY.ready(function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function() {
+        jasmine.getEnv().execute(function () {
             if (parent && parent.jasmine.kissyNext) {
                 parent.jasmine.kissyNext(this.results().failedCount);
             }

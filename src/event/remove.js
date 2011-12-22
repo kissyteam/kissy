@@ -14,7 +14,10 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 return;
             }
 
-            var selector,
+            var typedGroups = Utils.getTypedGroups(type);
+            type = typedGroups[0];
+            var groups = typedGroups[1],
+                selector,
                 // in case type is undefined
                 originalFn = fn,
                 originalScope = scope,
@@ -57,17 +60,23 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 for (type in events) {
                     if (events.hasOwnProperty(type)) {
                         Event.__remove(isNativeTarget,
-                            target, type, originalFn,
+                            target, type + groups, originalFn,
                             originalScope);
                     }
                 }
                 return;
             }
 
+            var groupsRe;
+
+            if (groups) {
+                groupsRe = Utils.getGroupsRe(groups);
+            }
+
             if ((handlers = events[type])) {
                 len = handlers.length;
                 // 移除 fn
-                if ((fn || hasSelector) && len) {
+                if ((fn || hasSelector || groupsRe ) && len) {
                     scope = target || scope;
 
                     for (i = 0, j = 0, t = []; i < len; ++i) {
@@ -97,7 +106,11 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                                             (selector && selector != handler.selector) ||
                                                 (!selector && !handler.selector)
                                             )
-                                    )
+                                    ) ||
+
+                                // 指定了删除的某些组，而该 handler 不属于这些组，保留，否则删除
+                                (groupsRe && !handler.groups.match(groupsRe))
+
                             ) {
                             t[j++] = handler;
                         }
@@ -117,11 +130,12 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                     t.lastCount = handlers.lastCount;
                     events[type] = t;
                     len = t.length;
+                } else {
+                    // 全部删除
+                    len = 0;
                 }
 
-                if ((!fn && !hasSelector) ||
-                    // 包括上一步删光的结果
-                    !len) {
+                if (!len) {
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
                     if (isNativeTarget &&

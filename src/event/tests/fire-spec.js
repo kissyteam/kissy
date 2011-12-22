@@ -1,5 +1,5 @@
 /**
- * @module  fire-spec
+ * @fileOverview tc about fire function
  * @author  yiminghe@gmail.com
  */
 KISSY.use("dom,event,ua", function(S, DOM, Event, UA) {

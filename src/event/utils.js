@@ -18,7 +18,9 @@ KISSY.add("event/utils", function (S, DOM) {
                 h1.selector !== h2.selector ||
                 h1.data !== h2.data ||
                 scope1 !== scope2 ||
-                h1.originalType !== h2.originalType
+                h1.originalType !== h2.originalType ||
+                h1.groups !== h2.groups ||
+                h1.last !== h2.last
             ) {
             ret = 0;
         }
@@ -92,7 +94,23 @@ KISSY.add("event/utils", function (S, DOM) {
         isValidTarget:isValidTarget,
         isIdenticalHandler:isIdenticalHandler,
         simpleAdd:simpleAdd,
-        simpleRemove:simpleRemove
+        simpleRemove:simpleRemove,
+        getTypedGroups:function (type) {
+            var m = type.match(/([^.]+)?(\..+)?$/),
+                t = m[1],
+                ret = [t],
+                gs = m[2];
+            if (gs) {
+                gs = gs.split(".").sort();
+                ret.push(gs.join("."));
+            } else {
+                ret.push("");
+            }
+            return ret;
+        },
+        getGroupsRe:function (groups) {
+            return new RegExp(groups.split(".").join(".*\\.") + "(?:\\.|$)");
+        }
     };
 
 }, {

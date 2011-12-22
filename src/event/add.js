@@ -25,10 +25,13 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
     S.mix(Event, {
         // single type , single target , fixed native
         __add:function (isNativeTarget, target, type, fn, scope) {
-            var eventDesc,
+            var typedGroups = Utils.getTypedGroups(type);
+            type = typedGroups[0];
+            var groups = typedGroups[1],
+                eventDesc,
                 data,
                 s = specials[type],
-                // incase overwrite by delegateFix/onFix in specials events
+                // in case overwrite by delegateFix/onFix in specials events
                 // (mouseenter/leave,focusin/out)
                 originalType,
                 last,
@@ -55,7 +58,8 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                 }
             }
             // 不是有效的 target 或 参数不对
-            if (!target ||
+            if (!type ||
+                !target ||
                 !S.isFunction(fn) ||
                 (isNativeTarget && !isValidTarget(target))) {
                 return;
@@ -74,6 +78,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                     selector:selector,
                     last:last,
                     data:data,
+                    groups:groups,
                     originalType:originalType
                 },
                 eventHandler = eventDesc.handler;

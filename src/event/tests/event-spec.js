@@ -1,6 +1,6 @@
 /**
  * @module  event-spec
- * @author  gonghao@ghsky.com,yiminghe@gmail.com
+ * @author  yiminghe@gmail.com gonghao@ghsky.com
  */
 KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
     var EventTarget = Event.Target;
