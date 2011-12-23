@@ -6,9 +6,16 @@ header("Content-Type:application/json;");
 {"x":1,"y":2,"id":9}
 <?php } ?>
 
-<?php if ($_REQUEST["_method"] == "update") { ?>
+<?php if ($_REQUEST["_method"] == "update") {
+if(isset($_REQUEST["model"])){
+?>
 {"x":5,"y":2,"id":9}
-<?php } ?>
+<?php }
+else{
+?>
+{"x":566,"y":6662,"id":9}
+<?php }
+} ?>
 
 
 <?php if ($_REQUEST["_method"] == "delete") { ?>
