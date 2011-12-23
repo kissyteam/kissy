@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 23 12:47
+build time: Dec 23 13:05
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -279,7 +279,7 @@ build time: Dec 23 12:47
          */
         version:'1.30dev',
 
-        buildTime:'20111223124722',
+        buildTime:'20111223130500',
 
         /**
          * Returns a new object containing all of the properties of
@@ -7938,8 +7938,12 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
      */
     {
         /**
-         * fire event,simulate bubble in browser.
-         * similar to dispatchEvent in DOM3 Events
+         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @memberOf Event
+         * @param targets html nodes
+         * @param {String|Event.Object} eventType event type
+         * @param [eventData] additional event data
+         * @param {boolean} [onlyHandlers] only fire handlers
          * @returns {boolean} The return value of fire/dispatchEvent indicates
          *                 whether any of the listeners which handled the event called preventDefault.
          *                 If preventDefault was called the value is false, else the value is true.
@@ -7993,7 +7997,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
          * does not cause default behavior to occur
          * does not bubble up the DOM hierarchy
          * @param targets
-         * @param {KISSY.Event.Object | String} eventType
+         * @param {Event.Object | String} eventType
          * @param [eventData]
          */
         fireHandler:function (targets, eventType, eventData) {
@@ -8179,12 +8183,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     /**
      * 提供事件发布和订阅机制
      * @name Target
-     * @constructor
+     * @class
      * @memberOf Event
      */
     var Target =
     /**
-     * @lends Event.Target
+     * @lends Event.Target#
      */
     {
         /**
@@ -9273,7 +9277,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 len = handlers.length;
                 // 移除 fn
                 if ((fn || hasSelector || groupsRe ) && len) {
-                    scope = target || scope;
+                    scope = scope || target;
 
                     for (i = 0, j = 0, t = []; i < len; ++i) {
                         handler = handlers[i];

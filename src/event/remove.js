@@ -77,7 +77,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 len = handlers.length;
                 // 移除 fn
                 if ((fn || hasSelector || groupsRe ) && len) {
-                    scope = target || scope;
+                    scope = scope || target;
 
                     for (i = 0, j = 0, t = []; i < len; ++i) {
                         handler = handlers[i];

@@ -230,6 +230,28 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 });
             });
 
+
+            it('should remove the specified event handler function and scope.', function () {
+                var f = DOM.get('#link-f');
+                var result = [],scope={};
+
+                function foo() {
+                    result = HAPPENED;
+                }
+
+                Event.on(f, 'click', foo,scope);
+
+                Event.remove(f, 'click', foo,scope);
+
+                // click f
+                result = null;
+                simulate(f, 'click');
+                waits(0);
+                runs(function () {
+                    expect(result).toBeNull();
+                });
+            });
+
             it('should remove all the event handlers of the specified event type.', function () {
                 var g = DOM.get('#link-g');
                 var result = [];
