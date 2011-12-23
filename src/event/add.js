@@ -22,7 +22,15 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
         }
     }
 
-    S.mix(Event, {
+    /**
+     * @exports Event as Event
+     */
+
+    S.mix(Event,
+        /**
+         * @lends Event
+         */
+        {
         // single type , single target , fixed native
         __add:function (isNativeTarget, target, type, fn, scope) {
             var typedGroups = Utils.getTypedGroups(type);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 21 12:48
+build time: Dec 23 12:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -93,7 +93,7 @@ build time: Dec 21 12:48
          */
         version:'1.30dev',
 
-        buildTime:'20111221124845',
+        buildTime:'20111223124722',
 
         /**
          * Returns a new object containing all of the properties of
@@ -988,9 +988,9 @@ build time: Dec 21 12:48
          * @param fn {Function|String} the function to execute or the name of the method in
          *        the 'o' object to execute.
          * @param when {Number} the number of milliseconds to wait until the fn is executed.
-         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         * @param {Boolean} [periodic] if true, executes continuously at supplied interval
          *        until canceled.
-         * @param context {Object} the context object.
+         * @param {Object} [context] the context object.
          * @param [data] that is provided to the function. This accepts either a single
          *        item or an array. If an array is provided, the function is executed with
          *        one parameter for each array item. If you need to pass a single array
@@ -1045,8 +1045,8 @@ build time: Dec 21 12:48
          * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
-         * @param {object} context ontext fn to run
-         * @param {Number} ms The number of milliseconds to throttle the method call.
+         * @param {object} [context] context fn to run
+         * @param {Number} [ms] The number of milliseconds to throttle the method call.
          *              Passing a -1 will disable the throttle. Defaults to 150.
          * @return {function} Returns a wrapped function that calls fn throttled.
          */

@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 21 12:48
+build time: Dec 23 12:47
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -279,7 +279,7 @@ build time: Dec 21 12:48
          */
         version:'1.30dev',
 
-        buildTime:'20111221124845',
+        buildTime:'20111223124722',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1174,9 +1174,9 @@ build time: Dec 21 12:48
          * @param fn {Function|String} the function to execute or the name of the method in
          *        the 'o' object to execute.
          * @param when {Number} the number of milliseconds to wait until the fn is executed.
-         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         * @param {Boolean} [periodic] if true, executes continuously at supplied interval
          *        until canceled.
-         * @param context {Object} the context object.
+         * @param {Object} [context] the context object.
          * @param [data] that is provided to the function. This accepts either a single
          *        item or an array. If an array is provided, the function is executed with
          *        one parameter for each array item. If you need to pass a single array
@@ -1231,8 +1231,8 @@ build time: Dec 21 12:48
          * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
-         * @param {object} context ontext fn to run
-         * @param {Number} ms The number of milliseconds to throttle the method call.
+         * @param {object} [context] context fn to run
+         * @param {Number} [ms] The number of milliseconds to throttle the method call.
          *              Passing a -1 will disable the throttle. Defaults to 150.
          * @return {function} Returns a wrapped function that calls fn throttled.
          */
@@ -5622,7 +5622,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
  * @module  dom
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('dom/style', function(S, DOM, UA, undefined) {
+KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     var doc = document,
         docElem = doc.documentElement,
@@ -5640,17 +5640,17 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         PARSEINT = parseInt,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
         cssNumber = {
-            "fillOpacity": 1,
-            "fontWeight": 1,
-            "lineHeight": 1,
-            "opacity": 1,
-            "orphans": 1,
-            "widows": 1,
-            "zIndex": 1,
-            "zoom": 1
+            "fillOpacity":1,
+            "fontWeight":1,
+            "lineHeight":1,
+            "opacity":1,
+            "orphans":1,
+            "widows":1,
+            "zIndex":1,
+            "zoom":1
         },
         RE_DASH = /-([a-z])/ig,
-        CAMELCASE_FN = function(all, letter) {
+        CAMELCASE_FN = function (all, letter) {
             return letter.toUpperCase();
         },
         // 考虑 ie9 ...
@@ -5723,7 +5723,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                             +
                             "</head><body>");
                         defaultDisplayDetectIframeDoc.close();
-                    } catch(e) {
+                    } catch (e) {
                         // ie6 need a breath , such as alert(8) or setTimeout;
                         // 同时需要同步，所以无解，勉强返回
                         return "block";
@@ -5748,12 +5748,12 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
         _camelCase:camelCase,
-        _cssNumber:cssNumber,
-        _CUSTOM_STYLES: CUSTOM_STYLES,
+        // _cssNumber:cssNumber,
+        _CUSTOM_STYLES:CUSTOM_STYLES,
         _cssProps:cssProps,
-        _getComputedStyle: function(elem, name) {
+        _getComputedStyle:function (elem, name) {
             var val = "",
-                computedStyle = {},
+                computedStyle,
                 d = elem.ownerDocument;
 
             name = name.replace(rupper, "-$1").toLowerCase();
@@ -5775,7 +5775,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          *  Get and set the style property on a DOM Node
          */
-        style:function(selector, name, val) {
+        style:function (selector, name, val) {
             // suports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
@@ -5784,13 +5784,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
             if (val === undefined) {
-                var elem = DOM.get(selector),ret = '';
+                var elem = DOM.get(selector), ret = '';
                 if (elem) {
                     ret = style(elem, name, val);
                 }
                 return ret;
             } else {
-                DOM.query(selector).each(function(elem) {
+                DOM.query(selector).each(function (elem) {
                     style(elem, name, val);
                 });
             }
@@ -5799,7 +5799,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * (Gets computed style) or (sets styles) on the matches elements.
          */
-        css: function(selector, name, val) {
+        css:function (selector, name, val) {
             // suports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
@@ -5832,9 +5832,9 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * Show the matched elements.
          */
-        show: function(selector) {
+        show:function (selector) {
 
-            DOM.query(selector).each(function(elem) {
+            DOM.query(selector).each(function (elem) {
 
                 elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
 
@@ -5851,8 +5851,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * Hide the matched elements.
          */
-        hide: function(selector) {
-            DOM.query(selector).each(function(elem) {
+        hide:function (selector) {
+            DOM.query(selector).each(function (elem) {
                 var style = elem[STYLE], old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {
@@ -5866,8 +5866,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * Display or hide the matched elements.
          */
-        toggle: function(selector) {
-            DOM.query(selector).each(function(elem) {
+        toggle:function (selector) {
+            DOM.query(selector).each(function (elem) {
                 if (DOM.css(elem, DISPLAY) === NONE) {
                     DOM.show(elem);
                 } else {
@@ -5882,14 +5882,14 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
          * @param {String} cssText The text containing the css rules
          * @param {String} id An id to add to the stylesheet for later removal
          */
-        addStyleSheet: function(refWin, cssText, id) {
+        addStyleSheet:function (refWin, cssText, id) {
             if (S.isString(refWin)) {
                 id = cssText;
                 cssText = refWin;
                 refWin = window;
             }
             refWin = DOM.get(refWin);
-            var win = DOM._getWin(refWin),doc = win.document;
+            var win = DOM._getWin(refWin), doc = win.document;
             var elem;
 
             if (id && (id = id.replace('#', EMPTY))) {
@@ -5901,7 +5901,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
 
-            elem = DOM.create('<style>', { id: id }, doc);
+            elem = DOM.create('<style>', { id:id }, doc);
 
             // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
             DOM.get('head', doc).appendChild(elem);
@@ -5913,8 +5913,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             }
         },
 
-        unselectable:function(selector) {
-            DOM.query(selector).each(function(elem) {
+        unselectable:function (selector) {
+            DOM.query(selector).each(function (elem) {
                 if (UA['gecko']) {
                     elem[STYLE]['MozUserSelect'] = 'none';
                 }
@@ -5922,7 +5922,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     elem[STYLE]['KhtmlUserSelect'] = 'none';
                 } else {
                     if (UA['ie'] || UA['opera']) {
-                        var e,i = 0,
+                        var e, i = 0,
                             els = elem.getElementsByTagName("*");
                         elem.setAttribute("unselectable", 'on');
                         while (( e = els[ i++ ] )) {
@@ -5954,8 +5954,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
 
-    S.each([WIDTH,HEIGHT], function(name) {
-        DOM["inner" + capital(name)] = function(selector) {
+    S.each([WIDTH, HEIGHT], function (name) {
+        DOM["inner" + capital(name)] = function (selector) {
             var el = DOM.get(selector);
             if (el) {
                 return getWH(el, name, "padding");
@@ -5965,7 +5965,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         };
 
 
-        DOM["outer" + capital(name)] = function(selector, includeMargin) {
+        DOM["outer" + capital(name)] = function (selector, includeMargin) {
             var el = DOM.get(selector);
             if (el) {
                 return getWH(el, name, includeMargin ? "margin" : "border");
@@ -5974,7 +5974,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             }
         };
 
-        DOM[name] = function(selector, val) {
+        DOM[name] = function (selector, val) {
             var ret = DOM.css(selector, name, val);
             if (ret) {
                 ret = parseFloat(ret);
@@ -5984,27 +5984,27 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     });
 
 
-    var cssShow = { position: "absolute", visibility: "hidden", display: "block" };
+    var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
 
     /**
      * css height,width 永远都是计算值
      */
-    S.each(["height", "width"], function(name) {
+    S.each(["height", "width"], function (name) {
         CUSTOM_STYLES[ name ] = {
-            get: function(elem, computed) {
+            get:function (elem, computed) {
                 var val;
                 if (computed) {
                     if (elem.offsetWidth !== 0) {
                         val = getWH(elem, name);
                     } else {
-                        swap(elem, cssShow, function() {
+                        swap(elem, cssShow, function () {
                             val = getWH(elem, name);
                         });
                     }
                     return val + "px";
                 }
             },
-            set: function(elem, value) {
+            set:function (elem, value) {
                 if (RE_NUMPX.test(value)) {
                     value = parseFloat(value);
                     if (value >= 0) {
@@ -6017,11 +6017,11 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         };
     });
 
-    S.each(["left", "top"], function(name) {
+    S.each(["left", "top"], function (name) {
         CUSTOM_STYLES[ name ] = {
-            get: function(elem, computed) {
+            get:function (elem, computed) {
                 if (computed) {
-                    var val = DOM._getComputedStyle(elem, name),offset;
+                    var val = DOM._getComputedStyle(elem, name), offset;
 
                     // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
                     //    比如：firefox 返回 0, webkit/ie 返回 auto
@@ -6030,7 +6030,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
                     if (val === AUTO) {
                         val = 0;
-                        if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
+                        if (S.inArray(DOM.css(elem, 'position'), ['absolute', 'fixed'])) {
                             offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                             // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
@@ -6079,7 +6079,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             return undefined;
         }
         name = camelCase(name);
-        var ret,hook = CUSTOM_STYLES[name];
+        var ret, hook = CUSTOM_STYLES[name];
         name = cssProps[name] || name;
         // setter
         if (val !== undefined) {
@@ -6098,7 +6098,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 // ie 无效值报错
                 try {
                     elem[STYLE][name] = val;
-                } catch(e) {
+                } catch (e) {
                     S.log("css set error :" + e);
                 }
             }
@@ -6123,7 +6123,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
      * 得到元素的大小信息
      * @param elem
      * @param name
-     * @param {String} extra    "padding" : (css width) + padding
+     * @param {String} [extra]  "padding" : (css width) + padding
      *                          "border" : (css width) + padding + border
      *                          "margin" : (css width) + padding + border + margin
      */
@@ -6138,7 +6138,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
         if (val > 0) {
             if (extra !== "border") {
-                S.each(which, function(w) {
+                S.each(which, function (w) {
                     if (!extra) {
                         val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
                     }
@@ -6163,7 +6163,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
         // Add padding, border, margin
         if (extra) {
-            S.each(which, function(w) {
+            S.each(which, function (w) {
                 val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
                 if (extra !== "padding") {
                     val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
@@ -6179,10 +6179,14 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base","ua"]
+    requires:["dom/base", "ua"]
 });
 
 /**
+ * 2011-12-21
+ *  - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
+ *  - w3c 为准，这里不 fix 了
+ *
  *
  * 2011-08-19
  *  - 调整结构，减少耦合
@@ -7227,7 +7231,9 @@ KISSY.add("event/utils", function (S, DOM) {
                 h1.selector !== h2.selector ||
                 h1.data !== h2.data ||
                 scope1 !== scope2 ||
-                h1.originalType !== h2.originalType
+                h1.originalType !== h2.originalType ||
+                h1.groups !== h2.groups ||
+                h1.last !== h2.last
             ) {
             ret = 0;
         }
@@ -7301,7 +7307,23 @@ KISSY.add("event/utils", function (S, DOM) {
         isValidTarget:isValidTarget,
         isIdenticalHandler:isIdenticalHandler,
         simpleAdd:simpleAdd,
-        simpleRemove:simpleRemove
+        simpleRemove:simpleRemove,
+        getTypedGroups:function (type) {
+            var m = type.match(/([^.]+)?(\..+)?$/),
+                t = m[1],
+                ret = [t],
+                gs = m[2];
+            if (gs) {
+                gs = gs.split(".").sort();
+                ret.push(gs.join("."));
+            } else {
+                ret.push("");
+            }
+            return ret;
+        },
+        getGroupsRe:function (groups) {
+            return new RegExp(groups.split(".").join(".*\\.") + "(?:\\.|$)");
+        }
     };
 
 }, {
@@ -7584,9 +7606,9 @@ KISSY.add('event/object', function (S, undefined) {
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
-     *
+     * @name Object
      * @constructor
-     * @name KISSY.Event.Object
+     * @memberOf Event
      */
     function EventObject(currentTarget, domEvent, type) {
         var self = this;
@@ -7814,7 +7836,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                 if (currentTargetHandlers.length) {
                     allHandlers.push({
                         currentTarget:target,
-                        currentTargetHandlers:currentTargetHandlers
+                        "currentTargetHandlers":currentTargetHandlers
                     });
                 }
                 target = target.parentNode || currentTarget;
@@ -7829,7 +7851,10 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
         });
 
         // backup eventType
-        var eventType = event.type, s, t;
+        var eventType = event.type,
+            s,
+            t,
+            _ks_groups = event._ks_groups;
         for (i = 0, len = allHandlers.length;
              !event.isPropagationStopped && i < len;
              ++i) {
@@ -7841,7 +7866,17 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
             for (j = 0; !event.isImmediatePropagationStopped &&
                 j < currentTargetHandlers.length;
                  j++) {
+
                 currentTargetHandler = currentTargetHandlers[j];
+
+                // handler's group does not match specified groups (at fire step)
+                if (_ks_groups &&
+                    (!currentTargetHandler.groups ||
+                        !(currentTargetHandler.groups.match(_ks_groups)))) {
+                    continue;
+                }
+
+
                 event.data = currentTargetHandler.data;
 
                 // restore originalType if involving delegate/onFix handlers
@@ -7895,9 +7930,13 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
-     * @name KISSY.Event
+     * @name Event
      */
-    var Event = {
+    var Event =
+    /**
+     * @lends Event
+     */
+    {
         /**
          * fire event,simulate bubble in browser.
          * similar to dispatchEvent in DOM3 Events
@@ -7926,6 +7965,21 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
                 eventData = eventType;
                 eventType = eventData.type;
             }
+
+            var typedGroups = Utils.getTypedGroups(eventType),
+                _ks_groups = typedGroups[1];
+
+            if (_ks_groups) {
+                _ks_groups = Utils.getGroupsRe(_ks_groups);
+            }
+
+            eventType = typedGroups[0];
+
+            S.mix(eventData, {
+                type:eventType,
+                _ks_groups:_ks_groups
+            });
+
             DOM.query(targets).each(function (target) {
                 r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
                 if (ret !== false) {
@@ -8075,10 +8129,10 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
  */
 
 /**
- * @module  EventTarget
+ * @fileOverview 提供事件发布和订阅机制
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefined) {
+KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
     var KS_PUBLISH = "__~ks_publish",
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
@@ -8092,11 +8146,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
             return eventData;
         }
         var customEvent = new EventObject(self, undefined, type);
-        if (S.isPlainObject(eventData)) {
-            S.mix(customEvent, eventData);
-        }
-        // protect type
-        customEvent.type = type;
+        S.mix(customEvent, eventData);
         return customEvent
     }
 
@@ -8116,10 +8166,10 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
     }
 
     function attach(method) {
-        return function(type, fn, scope) {
+        return function (type, fn, scope) {
             var self = this;
             type = trim(type);
-            splitAndRun(type, function(t) {
+            splitAndRun(type, function (t) {
                 Event["__" + method](false, self, t, fn, scope);
             });
             return self; // chain
@@ -8129,6 +8179,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
     /**
      * 提供事件发布和订阅机制
      * @name Target
+     * @constructor
      * @memberOf Event
      */
     var Target =
@@ -8139,17 +8190,18 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
         /**
          * 触发事件
          * @param {String} type 事件名
-         * @param {Object} eventData 事件附加信息对象
+         * @param {Object} [eventData] 事件附加信息对象
          * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
          */
-        fire: function(type, eventData) {
+        fire:function (type, eventData) {
             var self = this,
-                ret=undefined,
+                ret = undefined,
                 r2,
                 customEvent;
+            eventData = eventData || {};
             type = trim(type);
             if (type.indexOf(" ") > 0) {
-                splitAndRun(type, function(t) {
+                splitAndRun(type, function (t) {
                     r2 = self.fire(t, eventData);
                     if (ret !== false) {
                         ret = r2;
@@ -8157,6 +8209,16 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
                 });
                 return ret;
             }
+            var typedGroups = Utils.getTypedGroups(type), _ks_groups = typedGroups[1];
+            type = typedGroups[0];
+            if (_ks_groups) {
+                _ks_groups = Utils.getGroupsRe(_ks_groups);
+            }
+            S.mix(eventData, {
+                // protect type
+                type:type,
+                _ks_groups:_ks_groups
+            });
             customEvent = getCustomEvent(self, type, eventData);
             ret = handle(self, customEvent);
             if (!customEvent.isPropagationStopped &&
@@ -8177,7 +8239,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          *        example { bubbles: true}
          *        default bubbles: false
          */
-        publish: function(type, cfg) {
+        publish:function (type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
             type = trim(type);
@@ -8191,11 +8253,11 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          * @param type
          * @param eventData
          */
-        bubble: function(type, eventData) {
+        bubble:function (type, eventData) {
             var self = this,
-                ret=undefined,
+                ret = undefined,
                 targets = getBubbleTargetsObj(self);
-            S.each(targets, function(t) {
+            S.each(targets, function (t) {
                 var r2 = t.fire(type, eventData);
                 if (ret !== false) {
                     ret = r2;
@@ -8208,13 +8270,13 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          * add target which bubblable event bubbles towards
          * @param target another EventTarget instance
          */
-        addTarget: function(target) {
+        addTarget:function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             targets[S.stamp(target)] = target;
         },
 
-        removeTarget:function(target) {
+        removeTarget:function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             delete targets[S.stamp(target)];
@@ -8227,7 +8289,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on: attach("add")
+        on:attach("add")
     };
 
     /**
@@ -8245,7 +8307,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, handle,undefine
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object','./utils','./handle']
+    requires:["./base", './object', './utils', './handle']
 });
 /**
  *  yiminghe:2011-10-17
@@ -8970,13 +9032,24 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
         }
     }
 
-    S.mix(Event, {
+    /**
+     * @exports Event as Event
+     */
+
+    S.mix(Event,
+        /**
+         * @lends Event
+         */
+        {
         // single type , single target , fixed native
         __add:function (isNativeTarget, target, type, fn, scope) {
-            var eventDesc,
+            var typedGroups = Utils.getTypedGroups(type);
+            type = typedGroups[0];
+            var groups = typedGroups[1],
+                eventDesc,
                 data,
                 s = specials[type],
-                // incase overwrite by delegateFix/onFix in specials events
+                // in case overwrite by delegateFix/onFix in specials events
                 // (mouseenter/leave,focusin/out)
                 originalType,
                 last,
@@ -9003,7 +9076,8 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                 }
             }
             // 不是有效的 target 或 参数不对
-            if (!target ||
+            if (!type ||
+                !target ||
                 !S.isFunction(fn) ||
                 (isNativeTarget && !isValidTarget(target))) {
                 return;
@@ -9022,6 +9096,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                     selector:selector,
                     last:last,
                     data:data,
+                    groups:groups,
                     originalType:originalType
                 },
                 eventHandler = eventDesc.handler;
@@ -9135,7 +9210,10 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 return;
             }
 
-            var selector,
+            var typedGroups = Utils.getTypedGroups(type);
+            type = typedGroups[0];
+            var groups = typedGroups[1],
+                selector,
                 // in case type is undefined
                 originalFn = fn,
                 originalScope = scope,
@@ -9178,17 +9256,23 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 for (type in events) {
                     if (events.hasOwnProperty(type)) {
                         Event.__remove(isNativeTarget,
-                            target, type, originalFn,
+                            target, type + groups, originalFn,
                             originalScope);
                     }
                 }
                 return;
             }
 
+            var groupsRe;
+
+            if (groups) {
+                groupsRe = Utils.getGroupsRe(groups);
+            }
+
             if ((handlers = events[type])) {
                 len = handlers.length;
                 // 移除 fn
-                if ((fn || hasSelector) && len) {
+                if ((fn || hasSelector || groupsRe ) && len) {
                     scope = target || scope;
 
                     for (i = 0, j = 0, t = []; i < len; ++i) {
@@ -9218,7 +9302,11 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                                             (selector && selector != handler.selector) ||
                                                 (!selector && !handler.selector)
                                             )
-                                    )
+                                    ) ||
+
+                                // 指定了删除的某些组，而该 handler 不属于这些组，保留，否则删除
+                                (groupsRe && !handler.groups.match(groupsRe))
+
                             ) {
                             t[j++] = handler;
                         }
@@ -9238,11 +9326,12 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                     t.lastCount = handlers.lastCount;
                     events[type] = t;
                     len = t.length;
+                } else {
+                    // 全部删除
+                    len = 0;
                 }
 
-                if ((!fn && !hasSelector) ||
-                    // 包括上一步删光的结果
-                    !len) {
+                if (!len) {
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
                     if (isNativeTarget &&
@@ -13698,11 +13787,10 @@ KISSY.add('base/attribute', function(S, undef) {
 KISSY.add('base/base', function (S, Attribute, Event) {
 
     /**
-     * Base for class-based component
      * @name Base
      * @extends Event.Target
      * @extends Attribute
-     * @class
+     * @class Base for class-based component
      */
     function Base(config) {
         var c = this.constructor;
@@ -13744,7 +13832,7 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-    requires:["./attribute","event"]
+    requires:["./attribute", "event"]
 });
 
 KISSY.add("base", function(S, Base, Attribute) {

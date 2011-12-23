@@ -1,5 +1,5 @@
 /**
- * @module  EventTarget
+ * @fileOverview 提供事件发布和订阅机制
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
