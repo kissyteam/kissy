@@ -1,3 +1,7 @@
+/**
+ * @fileOverview node
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("node", function(S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
     return Node;

@@ -1,5 +1,5 @@
 /**
- * @fileoverview KISSY Template Engine.
+ * @fileOverview  KISSY Template Engine.
  * @author yyfrankyy@gmail.com
  */
 KISSY.add('template/base', function(S) {

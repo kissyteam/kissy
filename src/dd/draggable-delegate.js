@@ -8,8 +8,8 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
      * @memberOf DD
      * @class delegate drag
      */
-    function Delegate() {
-        Delegate.superclass.constructor.apply(this, arguments);
+    function DraggableDelegate() {
+        DraggableDelegate.superclass.constructor.apply(this, arguments);
     }
 
 
@@ -51,7 +51,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
         self._prepare(ev);
     }
 
-    S.extend(Delegate, Draggable, {
+    S.extend(DraggableDelegate, Draggable, {
             _init:function () {
                 var self = this,
                     node = self.get('container');
@@ -65,7 +65,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
              */
             _getHandler:function (target) {
                 var self = this,
-                    ret,
+                    ret=undefined,
                     node = self.get("container"),
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
@@ -102,9 +102,13 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
             }
         },
         {
-            ATTRS:{
+            ATTRS:/**
+             * @lends DD.DraggableDelegate#
+             */
+            {
                 /**
                  * 用于委托的父容器
+                 * @type {HTMLElement|String}
                  */
                 container:{
                     setter:function (v) {
@@ -114,6 +118,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
                 /**
                  * 实际拖放的节点选择器，一般用 tag.cls
+                 * @type {String}
                  */
                 selector:{
                 },
@@ -121,6 +126,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 /**
                  * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
                  * 不设则为 [ selector ]
+                 * @type {String[]}
                  **/
                 handlers:{
                     value:[],
@@ -131,7 +137,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
             }
         });
 
-    return Delegate;
+    return DraggableDelegate;
 }, {
     requires:['./ddm', './draggable', 'dom', 'node']
 });

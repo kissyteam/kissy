@@ -152,6 +152,6 @@
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);
 
 /**
- * @refer
+ * @see
  *  - https://github.com/amdjs/amdjs-api/wiki/AMD
  **/

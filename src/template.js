@@ -1,3 +1,6 @@
+/**
+ * @fileOverview template
+ */
 KISSY.add("template", function(S, T) {
     S.Template = T;
     return T;

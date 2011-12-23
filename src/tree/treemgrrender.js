@@ -1,5 +1,5 @@
 /**
- * tree management utils render
+ * @fileOverview tree management utils render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treemgrrender", function(S) {

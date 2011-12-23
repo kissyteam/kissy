@@ -83,7 +83,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          * @param hscroll
          * @param {Boolean} auto whether adjust element automatically
          *                       (it only scrollIntoView when element is out of view)
-         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */

@@ -203,7 +203,7 @@
          * 稍微改改就和规范一样了 :)
          * @param input
          * @param {Function} [filter] filter function
-         * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+         * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
         clone:function (input, filter) {
             // Let memory be an association list of pairs of objects,
@@ -407,7 +407,7 @@
             },
 
         /**
-         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          */
         reduce:/*
          NaN ?
@@ -486,7 +486,7 @@
 
         /**
          * it is not same with native bind
-         * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
         bind:function (fn, obj) {
             var slice = [].slice,
@@ -504,7 +504,7 @@
 
         /**
          * Gets current date in milliseconds.
-         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
@@ -521,7 +521,7 @@
         },
         /**
          * escape string to html
-         * @refer   http://yiminghe.javaeye.com/blog/788929
+         * @see   http://yiminghe.javaeye.com/blog/788929
          *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */

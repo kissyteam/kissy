@@ -178,7 +178,8 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
 
         /**
          * @name io
-         * @namespace
+         * @description kissy io framework
+         * @namespace io framework
          * @function
          * @param {Object} c 发送请求配置选项
          * @param {String} c.url 请求地址

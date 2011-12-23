@@ -1,3 +1,7 @@
+/**
+ * @fileOverview fake document node
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("htmlparser/nodes/Document", function (S, Tag) {
     function Document() {
         this.childNodes = [];

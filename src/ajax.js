@@ -1,3 +1,7 @@
+/**
+ * @fileOverview io shortcut
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("ajax", function (S, serializer, io, XhrObject) {
     var undef = undefined;
     // some shortcut

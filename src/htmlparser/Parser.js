@@ -1,5 +1,5 @@
 /**
- * parse html to a hierarchy dom tree
+ * @fileOverview parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {

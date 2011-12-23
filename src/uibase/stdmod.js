@@ -1,5 +1,5 @@
 /**
- * support standard mod for component
+ * @fileOverview support standard mod for component
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmod", function() {

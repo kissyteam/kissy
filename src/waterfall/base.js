@@ -1,5 +1,5 @@
 /**
- * intervein elements dynamically
+ * @fileOverview intervein elements dynamically
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/base", function(S, Node, Base) {

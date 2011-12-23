@@ -21,14 +21,19 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     /**
      * @memberOf DD
-     * manager of all dds
+     * @field
+     * @namespace
      */
     function DDM() {
         var self = this;
         DDM.superclass.constructor.apply(self, arguments);
     }
 
-    DDM.ATTRS = {
+    DDM.ATTRS =
+    /**
+     * @lends DD.DDM
+     */
+    {
         prefixCls:{
             value:"ks-dd-"
         },

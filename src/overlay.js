@@ -1,3 +1,7 @@
+/**
+ * @fileOverview overlay
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("overlay", function(S, O, OR, D, DR, P) {
     O.Render = OR;
     D.Render = DR;

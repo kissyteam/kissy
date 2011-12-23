@@ -1,3 +1,7 @@
+/**
+ * @fileOverview scanner cdata (script/textarea/style) with quote smart
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd, SpecialScanners) {
     var ret = {
         scan:function(tag, lexer, opts) {

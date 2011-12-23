@@ -1,7 +1,7 @@
 /**
- * @module  UIBase
+ * @fileOverview   UIBase
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
- * @refer http://martinfowler.com/eaaDev/uiArchs.html
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add('uibase/base', function (S, Base, Node) {
 

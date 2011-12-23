@@ -1,5 +1,5 @@
 /**
- * position and visible extension，可定位的隐藏层
+ * @fileOverview position and visible extension，可定位的隐藏层
  * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/positionrender", function() {

@@ -1,5 +1,5 @@
 /**
- * 里层包裹层定义，适合mask以及shim
+ * @fileOverview 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentbox", function() {

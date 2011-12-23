@@ -1,7 +1,7 @@
 /**
  * @fileOverview model and control base class for kissy
  * @author yiminghe@gmail.com
- * @refer http://martinfowler.com/eaaDev/uiArchs.html
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render) {
 

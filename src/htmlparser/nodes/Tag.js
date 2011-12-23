@@ -1,5 +1,5 @@
 /**
- * represent tag , it can nest other tag
+ * @fileOverview represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {

@@ -1,3 +1,7 @@
+/**
+ * @fileOverview basic writer for inheritance
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("htmlparser/writer/basic", function(S) {
 
     function escapeAttrValue(str) {

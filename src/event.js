@@ -1,6 +1,5 @@
 /**
- * KISSY Scalable Event Framework
- * @author yiminghe@gmail.com
+ * @fileOverview KISSY Scalable Event Framework
  */
 KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
     S.mix(Event, {

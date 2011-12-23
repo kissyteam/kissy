@@ -1,5 +1,5 @@
 /**
- * mvc based component framework for kissy
+ * @fileOverview mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("component",

@@ -1,6 +1,6 @@
 /**
- * @module  ua
- * @author  lifesinger@gmail.com
+ * @fileOverview ua
+ * @author lifesinger@gmail.com
  */
 KISSY.add('ua/base', function() {
 

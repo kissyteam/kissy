@@ -3,7 +3,7 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 /**
- * modified by yiminghe , support html5 tag and dtd
+ * @fileOverview modified from ckeditor dtd by yiminghe , support html5 tag and dtd
  * @author yimingh@gmail.com
  */
 KISSY.add("htmlparser/dtd", function(KY) {

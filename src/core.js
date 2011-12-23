@@ -1,3 +1,6 @@
+/**
+ * @fileOverview core
+ */
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
     var re = {
         UA:UA,
@@ -37,3 +40,6 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         "cookie"
     ]
 });
+/**
+ * TODO need to be deleted in 1.30dev
+ **/

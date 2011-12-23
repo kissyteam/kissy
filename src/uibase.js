@@ -1,3 +1,7 @@
+/**
+ * @fileOverview uibase
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Contrain, Contentbox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;

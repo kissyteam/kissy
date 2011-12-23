@@ -1,5 +1,5 @@
 /**
- * root node render for checktree
+ * @fileOverview root node render for checktree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {

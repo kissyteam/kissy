@@ -1,6 +1,5 @@
 /**
- * adapt json2 to kissy
- * @author lifesinger@gmail.com
+ * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 

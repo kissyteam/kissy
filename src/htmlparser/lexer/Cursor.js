@@ -1,5 +1,5 @@
 /**
- * represent a cursor of page , it can advance and retreat
+ * @fileOverview represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/lexer/Cursor",function() {

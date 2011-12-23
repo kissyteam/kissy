@@ -154,22 +154,23 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * 监听事件
+         * @function
          * @param {String} type 事件名
          * @param {Function} fn 事件处理器
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on:attach("add")
+        on:attach("add"),
+        /**
+         * 取消监听事件
+         * @function
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
+        detach:attach("remove")
     };
-
-    /**
-     * 取消监听事件
-     * @param {String} type 事件名
-     * @param {Function} fn 事件处理器
-     * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-     * @returns 当前实例
-     */
-    Target.detach = attach("remove");
 
     return Target;
 }, {

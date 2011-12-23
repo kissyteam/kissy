@@ -1,5 +1,5 @@
 /**
- * loading mask support for overlay
+ * @fileOverview loading mask support for overlay
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loadingrender", function(S, Node) {

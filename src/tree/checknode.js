@@ -1,5 +1,5 @@
 /**
- * checkable tree node
+ * @fileOverview checkable tree node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {

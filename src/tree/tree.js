@@ -1,7 +1,7 @@
 /**
- * root node represent a simple tree
+ * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
- * @refer http://www.w3.org/TR/wai-aria-practices/#TreeView
+ * @see http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
 KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
 
