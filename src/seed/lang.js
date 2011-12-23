@@ -723,8 +723,8 @@
          * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
-         * @param {object} context ontext fn to run
-         * @param {Number} ms The number of milliseconds to throttle the method call.
+         * @param {object} [context] context fn to run
+         * @param {Number} [ms] The number of milliseconds to throttle the method call.
          *              Passing a -1 will disable the throttle. Defaults to 150.
          * @return {function} Returns a wrapped function that calls fn throttled.
          */

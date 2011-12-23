@@ -17,7 +17,6 @@ KISSY.add("htmlparser/dtd", function(KY) {
      *
      * Several special grouping properties are also available. Their names start
      * with the "$" character.
-     * @namespace
      * @example
      * // Check if "div" can be contained in a "p" element.
      * alert( !!dtd[ 'p' ][ 'div' ] );  "false"

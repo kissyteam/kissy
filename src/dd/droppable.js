@@ -1,9 +1,14 @@
 /**
- * droppable for kissy
+ * @fileOverview droppable for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
+KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
 
+    /**
+     * @memberOf DD
+     * @class make a node droppable
+     * @since version 1.2.0
+     */
     function Droppable() {
         var self = this;
         Droppable.superclass.constructor.apply(self, arguments);
@@ -14,8 +19,8 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         /**
          * 放节点
          */
-        node: {
-            setter:function(v) {
+        node:{
+            setter:function (v) {
                 if (v) {
                     return Node.one(v);
                 }
@@ -28,7 +33,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         /**
          * 用于被 droppable-delegate override
          */
-        getNodeFromTarget:function(ev, dragNode, proxyNode) {
+        getNodeFromTarget:function (ev, dragNode, proxyNode) {
             var node = this.get("node"),
                 domNode = node[0];
             // 排除当前拖放和代理节点
@@ -37,18 +42,18 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
                 ? null : node;
         },
 
-        _init:function() {
+        _init:function () {
             DDM._regDrop(this);
         },
 
-        __getCustomEvt:function(ev) {
+        __getCustomEvt:function (ev) {
             return S.mix({
                 drag:DDM.get("activeDrag"),
                 drop:this
             }, ev);
         },
 
-        _handleOut:function() {
+        _handleOut:function () {
             var self = this,
                 ret = self.__getCustomEvt();
             self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
@@ -60,7 +65,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             DDM.fire("dragexit", ret);
         },
 
-        _handleEnter:function(ev) {
+        _handleEnter:function (ev) {
             var self = this,
                 e = self.__getCustomEvt(ev);
             e.drag._handleEnter(e);
@@ -71,7 +76,7 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
         },
 
 
-        _handleOver:function(ev) {
+        _handleOver:function (ev) {
             var self = this,
                 e = self.__getCustomEvt(ev);
             e.drag._handleOver(e);
@@ -80,18 +85,18 @@ KISSY.add("dd/droppable", function(S, Node, Base, DDM) {
             DDM.fire("dropover", e);
         },
 
-        _end:function() {
+        _end:function () {
             var self = this,
                 ret = self.__getCustomEvt();
             self.get("node").removeClass(DDM.get("prefixCls") + "drop-over");
             self.fire('drophit', ret);
         },
 
-        destroy:function() {
+        destroy:function () {
             DDM._unregDrop(this);
         }
     });
 
     return Droppable;
 
-}, { requires:["node","base","./ddm"] });
+}, { requires:["node", "base", "./ddm"] });

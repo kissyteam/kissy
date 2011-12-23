@@ -2,7 +2,12 @@
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
+KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
+
+    /**
+     * @memberOf DD
+     * @class delegate drag
+     */
     function Delegate() {
         Delegate.superclass.constructor.apply(this, arguments);
     }
@@ -47,7 +52,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
     }
 
     S.extend(Delegate, Draggable, {
-            _init:function() {
+            _init:function () {
                 var self = this,
                     node = self.get('container');
                 node.on('mousedown', _handleMouseDown, self)
@@ -58,13 +63,13 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
              * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
              * @param target
              */
-            _getHandler:function(target) {
+            _getHandler:function (target) {
                 var self = this,
                     ret,
                     node = self.get("container"),
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
-                    S.each(handlers, function(h) {
+                    S.each(handlers, function (h) {
                         if (DOM.test(target[0], h)) {
                             ret = target;
                             return false;
@@ -82,11 +87,11 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
              * 找到真正应该移动的节点，对应 selector 属性选择器字符串
              * @param h
              */
-            _getNode:function(h) {
+            _getNode:function (h) {
                 return h.closest(this.get("selector"), this.get("container"));
             },
 
-            destroy:function() {
+            destroy:function () {
                 var self = this;
                 self.get("container")
                     .detach('mousedown',
@@ -102,7 +107,7 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                  * 用于委托的父容器
                  */
                 container:{
-                    setter:function(v) {
+                    setter:function (v) {
                         return Node.one(v);
                     }
                 },
@@ -128,5 +133,5 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
 
     return Delegate;
 }, {
-    requires:['./ddm','./draggable','dom','node']
+    requires:['./ddm', './draggable', 'dom', 'node']
 });

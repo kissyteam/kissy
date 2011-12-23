@@ -1,8 +1,8 @@
 /**
- * dd support for kissy , dd objects central management module
+ * @fileOverview dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
+KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     var doc = document,
         win = window,
@@ -19,6 +19,10 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
             MOVE_DELAY),
         SHIM_ZINDEX = 999999;
 
+    /**
+     * @memberOf DD
+     * manager of all dds
+     */
     function DDM() {
         var self = this;
         DDM.superclass.constructor.apply(self, arguments);
@@ -39,19 +43,19 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
         /***
          * 移动的像素值（用于启动拖放）
          */
-        clickPixelThresh: {
-            value: PIXEL_THRESH
+        clickPixelThresh:{
+            value:PIXEL_THRESH
         },
 
         /**
          * mousedown 后 buffer 触发时间  time threshold
          */
-        bufferTime: { value: BUFFER_TIME },
+        bufferTime:{ value:BUFFER_TIME },
 
         /**
          * 当前激活的拖动对象，在同一时间只有一个值，所以不是数组
          */
-        activeDrag: {},
+        activeDrag:{},
 
         /**
          * 当前激活的 drop 对象，在同一时间只有一个值
@@ -97,13 +101,13 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
         var activeDrag = self.get("activeDrag"),
             mode = activeDrag.get("mode"),
             drops = self.get("drops"),
-            activeDrop,
-            oldDrop = 0,
+            activeDrop = 0,
+            oldDrop,
             vArea = 0,
             dragRegion = region(activeDrag.get("node")),
             dragArea = area(dragRegion);
 
-        S.each(drops, function(drop) {
+        S.each(drops, function (drop) {
             var a,
                 node = drop.getNodeFromTarget(ev,
                     // node
@@ -204,7 +208,7 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
         showShim(self);
     }
 
-    var adjustShimSize = S.throttle(function() {
+    var adjustShimSize = S.throttle(function () {
         var self = this,
             activeDrag;
         if ((activeDrag = self.get("activeDrag")) &&
@@ -228,7 +232,7 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
         }
         self._shim.css({
             cursor:cur,
-            display: "block"
+            display:"block"
         });
         if (ie6) {
             adjustShimSize.call(self);
@@ -264,11 +268,11 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
          */
         __activeToDrag:0,
 
-        _regDrop:function(d) {
+        _regDrop:function (d) {
             this.get("drops").push(d);
         },
 
-        _unregDrop:function(d) {
+        _unregDrop:function (d) {
             var self = this,
                 index = S.indexOf(d, self.get("drops"));
             if (index != -1) {
@@ -280,7 +284,7 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
          * 注册可能将要拖放的节点
          * @param drag
          */
-        _regToDrag: function(drag) {
+        _regToDrag:function (drag) {
             var self = this;
             // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
             registerEvent(self);
@@ -313,12 +317,12 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
         /**
          * 全局通知当前拖动对象：结束拖动了！
          */
-        _end: function() {
+        _end:function () {
             var self = this,
                 activeDrag = self.get("activeDrag"),
                 activeDrop = self.get("activeDrop"),
-                ret = { drag: activeDrag,
-                    drop: activeDrop};
+                ret = { drag:activeDrag,
+                    drop:activeDrop};
             unregisterEvent(self);
             // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
             if (self.__activeToDrag) {
@@ -395,7 +399,7 @@ KISSY.add('dd/ddm', function(S, UA, DOM, Event, Node, Base) {
     ddm.area = area;
     return ddm;
 }, {
-    requires:["ua","dom","event","node","base"]
+    requires:["ua", "dom", "event", "node", "base"]
 });
 
 /**

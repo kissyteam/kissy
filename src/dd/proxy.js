@@ -8,6 +8,10 @@ KISSY.add("dd/proxy", function(S, Node) {
         MARKER = S.guid("__dd_proxy"),
         PROXY_ATTR = "__proxy";
 
+    /**
+     * @memberOf DD
+     * @class proxy drag
+     */
     function Proxy() {
         var self = this;
         Proxy.superclass.constructor.apply(self, arguments);

@@ -21,7 +21,6 @@ KISSY.add('uibase/base', function (S, Base, Node) {
      * @class
      * @extends Base
      * @name UIBase
-     * @namespace
      */
     function UIBase(config) {
         // 读取用户设置的属性值并设置到自身
@@ -301,11 +300,13 @@ KISSY.add('uibase/base', function (S, Base, Node) {
                 this.fire('destroy');
                 this.detach();
             }
-        }, {
+        },
+        /**
+         * @lends UIBase#
+         */
+        {
             /**
              * 根据基类以及扩展类得到新类
-             * @name UIBase.create
-             * @static
              * @param {Function|Function[]} base 基类
              * @param {Function[]} exts 扩展类
              * @param {Object} px 原型 mix 对象

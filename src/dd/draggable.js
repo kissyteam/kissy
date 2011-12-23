@@ -1,18 +1,21 @@
 /**
- * dd support for kissy, drag for dd
+ * @fileOverview dd support for kissy, drag for dd
  * @author  yiminghe@gmail.com
  */
-KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
+KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
     var each = S.each,
         ie = UA['ie'],
         NULL = null,
         doc = document;
 
-    /*
-     拖放纯功能类
+    /**
+     * @memberOf DD
+     * @extends Base
+     * @class make a node draggable
      */
     function Draggable() {
+
         var self = this;
         Draggable.superclass.constructor.apply(self, arguments);
         self._init();
@@ -26,21 +29,21 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         /**
          * 拖放节点，可能指向 proxy node
          */
-        node: {
-            setter:function(v) {
+        node:{
+            setter:function (v) {
                 return Node.one(v);
             }
         },
 
 
         clickPixelThresh:{
-            valueFn:function() {
+            valueFn:function () {
                 return DDM.get("clickPixelThresh");
             }
         },
 
         bufferTime:{
-            valueFn:function() {
+            valueFn:function () {
                 return DDM.get("bufferTime");
             }
         },
@@ -62,12 +65,12 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
          */
         handlers:{
             value:[],
-            getter:function(vs) {
+            getter:function (vs) {
                 var self = this;
                 if (!vs.length) {
                     vs[0] = self.get("node");
                 }
-                each(vs, function(v, i) {
+                each(vs, function (v, i) {
                     if (S.isFunction(v)) {
                         v = v.call(self);
                     }
@@ -91,7 +94,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
          */
         dragging:{
             value:false,
-            setter:function(d) {
+            setter:function (d) {
                 var self = this;
                 self.get("dragNode")[d ? 'addClass' : 'removeClass']
                     (DDM.get("prefixCls") + "dragging");
@@ -114,7 +117,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
          */
         disabled:{
             value:false,
-            setter:function(d) {
+            setter:function (d) {
                 this.get("dragNode")[d ? 'addClass' :
                     'removeClass'](DDM.get("prefixCls") + '-disabled');
                 return d;
@@ -131,8 +134,8 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         /**
          * only left button of mouse trigger drag?
          */
-        primaryButtonOnly: {
-            value: true
+        primaryButtonOnly:{
+            value:true
         },
 
         halt:{
@@ -215,7 +218,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
          */
         _bufferTimer:NULL,
 
-        _init: function() {
+        _init:function () {
             var self = this,
                 node = self.get('node');
             self.set("dragNode", node);
@@ -225,7 +228,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
         _fixDragStart:fixDragStart,
 
-        destroy:function() {
+        destroy:function () {
             var self = this,
                 node = self.get('dragNode');
             node.detach('mousedown', _handleMouseDown, self)
@@ -237,11 +240,11 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
          *
          * @param {HTMLElement} t
          */
-        _check: function(t) {
+        _check:function (t) {
             var self = this,
                 handlers = self.get('handlers'),
                 ret = 0;
-            each(handlers, function(handler) {
+            each(handlers, function (handler) {
                 //子区域内点击也可以启动
                 if (handler.contains(t) ||
                     handler[0] == t) {
@@ -253,7 +256,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             return ret;
         },
 
-        _checkMouseDown:function(ev) {
+        _checkMouseDown:function (ev) {
             if (this.get('primaryButtonOnly') && ev.button > 1 ||
                 this.get("disabled")) {
                 return 0;
@@ -261,7 +264,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             return 1;
         },
 
-        _prepare:function(ev) {
+        _prepare:function (ev) {
 
             var self = this;
 
@@ -295,7 +298,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
             // 是否中央管理，强制限制拖放延迟
             if (bufferTime) {
-                self._bufferTimer = setTimeout(function() {
+                self._bufferTimer = setTimeout(function () {
                     // 事件到了，仍然是 mousedown 触发！
                     //S.log("drag start by timeout");
                     self._start();
@@ -304,7 +307,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
         },
 
-        _clearBufferTimer:function() {
+        _clearBufferTimer:function () {
             var self = this;
             if (self._bufferTimer) {
                 clearTimeout(self._bufferTimer);
@@ -312,7 +315,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             }
         },
 
-        _move: function(ev) {
+        _move:function (ev) {
             var self = this,
                 ret,
                 diff = self._diff,
@@ -324,7 +327,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
 
 
             if (!self.get("dragging")) {
-                var clickPixelThresh = self.get("clickPixelThresh"),l1,l2;
+                var clickPixelThresh = self.get("clickPixelThresh"), l1, l2;
                 // 鼠标经过了一定距离，立即开始
                 if ((l1 = Math.abs(pageX - startMousePos.left)) >= clickPixelThresh ||
                     (l2 = Math.abs(pageY - startMousePos.top)) >= clickPixelThresh
@@ -364,7 +367,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             }
         },
 
-        _end: function() {
+        _end:function () {
             var self = this,
                 activeDrop;
 
@@ -393,7 +396,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             }
         },
 
-        _handleOut:function() {
+        _handleOut:function () {
             var self = this;
             self.get("node").removeClass(DDM.get("prefixCls") + "drag-over");
             /**
@@ -405,7 +408,7 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
             });
         },
 
-        _handleEnter:function(e) {
+        _handleEnter:function (e) {
             var self = this;
             self.get("node").addClass(DDM.get("prefixCls") + "drag-over");
             //第一次先触发 dropenter,dragenter
@@ -413,11 +416,11 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
         },
 
 
-        _handleOver:function(e) {
+        _handleOver:function (e) {
             this.fire("dragover", e);
         },
 
-        _start: function() {
+        _start:function () {
             var self = this;
             self._clearBufferTimer();
             self.set("dragging", 1);
@@ -432,5 +435,5 @@ KISSY.add('dd/draggable', function(S, UA, Node, Base, DDM) {
     return Draggable;
 
 }, {
-    requires:["ua","node","base","./ddm"]
+    requires:["ua", "node", "base", "./ddm"]
 });

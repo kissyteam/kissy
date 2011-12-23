@@ -12,9 +12,13 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
-     * @name KISSY.Event
+     * @name Event
      */
-    var Event = {
+    var Event =
+    /**
+     * @lends Event#
+     */
+    {
         /**
          * fire event,simulate bubble in browser.
          * similar to dispatchEvent in DOM3 Events
