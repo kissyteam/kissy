@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 30 19:02
+build time: Dec 23 12:08
 */
 /**
  * mvc base
@@ -894,12 +894,12 @@ KISSY.add('mvc/router', function(S, Event, Base) {
  * default sync for model
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/sync", function(S, io) {
+KISSY.add("mvc/sync", function (S, io, JSON) {
     var methodMap = {
-        'create': 'POST',
-        'update': 'POST', //'PUT'
-        'delete': 'POST', //'DELETE'
-        'read'  : 'GET'
+        'create':'POST',
+        'update':'POST', //'PUT'
+        'delete':'POST', //'DELETE'
+        'read':'GET'
     };
 
     function sync(self, method, options) {
@@ -919,7 +919,7 @@ KISSY.add("mvc/sync", function(S, io) {
         }
 
         if (method == 'create' || method == 'update') {
-            data.model = self.toJSON();
+            data.model = JSON.stringify(self.toJSON());
         }
 
         return io(ioParam);
@@ -927,7 +927,7 @@ KISSY.add("mvc/sync", function(S, io) {
 
     return sync;
 }, {
-    requires:['ajax']
+    requires:['ajax', 'json']
 });/**
  * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
