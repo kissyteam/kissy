@@ -16,7 +16,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
      */
     var Event =
     /**
-     * @lends Event#
+     * @lends Event
      */
     {
         /**
