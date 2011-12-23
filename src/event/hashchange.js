@@ -2,7 +2,7 @@
  * @module  event-hashchange
  * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
-KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
+KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
     var doc = document,
         docMode = doc['documentMode'],
@@ -26,7 +26,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             IFRAME_TEMPLATE = "<html><head><title>" + (doc.title || "") +
                 " - {hash}</title>{head}</head><body>{hash}</body></html>",
 
-            getHash = function() {
+            getHash = function () {
                 // 不能 location.hash
                 // http://xx.com/#yy?z=1
                 // ie6 => location.hash = #yy
@@ -52,11 +52,11 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 timer = setTimeout(poll, POLL_INTERVAL);
             },
 
-            hashChange = ie && ie < 8 ? function(hash) {
+            hashChange = ie && ie < 8 ? function (hash) {
                 // S.log("set iframe html :" + hash);
 
                 var html = S.substitute(IFRAME_TEMPLATE, {
-                    hash: hash,
+                    hash:hash,
                     // 一定要加哦
                     head:DOM._isCustomDomain() ? "<script>document.domain = '" +
                         doc.domain
@@ -102,7 +102,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
              * 直接输入 : poll -> hashChange -> start
              * iframe 内容和 url 同步
              */
-            setup = function() {
+            setup = function () {
                 if (!iframe) {
                     var iframeSrc = DOM._genEmptyIframeSrc();
                     //http://www.paciellogroup.com/blog/?p=604
@@ -119,7 +119,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                     DOM.prepend(iframe, doc.documentElement);
 
                     // init，第一次触发，以后都是 onIframeLoad
-                    Event.add(iframe, "load", function() {
+                    Event.add(iframe, "load", function () {
                         Event.remove(iframe, "load");
                         // Update the iframe with the initial location hash, if any. This
                         // will create an initial history entry that the user can return to
@@ -133,13 +133,13 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                     // prettify the back/next history menu entries. Since IE sometimes
                     // errors with "Unspecified error" the very first time this is set
                     // (yes, very useful) wrap this with a try/catch block.
-                    doc.onpropertychange = function() {
+                    doc.onpropertychange = function () {
                         try {
                             if (event.propertyName === 'title') {
                                 getIframeDoc(iframe).title =
                                     doc.title + " - " + getHash();
                             }
-                        } catch(e) {
+                        } catch (e) {
                         }
                     };
 
@@ -151,7 +151,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                      */
                     function onIframeLoad() {
                         // S.log('iframe start load..');
-                       
+
                         // 2011.11.02 note: 不能用 innerHtml 会自动转义！！
                         // #/x?z=1&y=2 => #/x?z=1&amp;y=2
                         var c = S.trim(getIframeDoc(iframe).body.innerText),
@@ -174,7 +174,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 }
             };
 
-            tearDown = function() {
+            tearDown = function () {
                 timer && clearTimeout(timer);
                 timer = 0;
                 Event.detach(iframe);
@@ -183,8 +183,8 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
             };
         }
 
-        Event.special[HASH_CHANGE] = {
-            setup: function() {
+        special[HASH_CHANGE] = {
+            setup:function () {
                 if (this !== win) {
                     return;
                 }
@@ -194,7 +194,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
                 // 不用注册 dom 事件
                 setup();
             },
-            tearDown: function() {
+            tearDown:function () {
                 if (this !== win) {
                     return;
                 }
@@ -203,7 +203,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
         };
     }
 }, {
-    requires:["./base","dom","ua"]
+    requires:["./base", "dom", "ua", "./special"]
 });
 
 /**

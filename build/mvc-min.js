@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 30 19:02
+build time: Dec 13 18:46
 */
 KISSY.add("mvc/base",function(h,m){return{sync:m}},{requires:["./sync"]});
 KISSY.add("mvc/collection",function(h,m,n,k,l){function b(){b.superclass.constructor.apply(this,arguments)}b.ATTRS={model:{value:n},models:{setter:function(a){this.remove(this.get("models"),{silent:1});this.add(a,{silent:1});return this.get("models")},value:[]},url:{value:h.noop},comparator:{},sync:{value:function(){k.sync.apply(this,arguments)}},parse:{value:function(a){return a}}};h.extend(b,l,{sort:function(){var a=this.get("comparator");a&&this.get("models").sort(function(c,d){return a(c)-a(d)})},

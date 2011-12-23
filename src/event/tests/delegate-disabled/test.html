@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>delegate example</title>
+<script src="../../../../tools/third-party/jquery.js"></script>
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/dom.js"></script>
+<script src="../../../../build/sizzle.js"></script>
+<script src="../../base.js"></script>
+<script src="../../object.js"></script>
+<script src="../../target.js"></script>
+<script src="../../focusin.js"></script>
+<script src="../../mouseenter.js"></script>
+<script src="../../add.js"></script>
+<script src="../../remove.js"></script>
+<script src="../../handle.js"></script>
+<script src="../../protected.js"></script>
+<script src="../../valuechange.js"></script>
+<script src="../../hashchange.js"></script>
+<script src="../../keycodes.js"></script>
+<script src="../../submit.js"></script>
+<script src="../../change.js"></script>
+<script src="../../mousewheel.js"></script>
+<script src="../../utils.js"></script>
+<script src="../../special.js"></script>
+<script src="../../../event.js"></script>
+<style type="text/css">
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+</head>
+<body>
+<p>Click on disabled [button1], no click event should fire. However, live click event fires in IE.</p>
+
+<div id="a" class="b">
+    <div class="c">
+        <input type="button" class='b' disabled="disabled" id="b1" value="button1">
+        <input type="button" class='b' id="b2" value="button2">
+    </div>
+</div>
+<script>
+    var S = KISSY;
+
+    if (1) {
+        S.use("dom,event,sizzle", function (S, DOM, Event) {
+            var t;
+            Event.on("#b1", "click", function () {
+                S.log("KISSY click on #b1");
+            });
+            Event.on("#b2", "click", function () {
+                S.log("KISSY click on #b2");
+            });
+            Event.delegate("#a", "click", ".c", t = function (e) {
+                S.log("KISSY delegate-click on #a .c");
+                e.stopImmediatePropagation();
+            });
+            Event.delegate("#a", "click", ":button", function (e) {
+                S.log("KISSY delegate-click on #a :button");
+            });
+            Event.delegate("#a", "click", ".b", function (e) {
+                S.log("KISSY delegate-click on #a .b");
+            });
+            Event.on("#a", "click", function (e) {
+                S.log("KISSY click on #a");
+            });
+            // Event.undelegate("#a", "click");
+            // DOM.get("#b1").click();
+        });
+    }
+
+    if (0) {
+        var $ = jQuery;
+        $("#b1").on("click", function () {
+            S.log("click on #b1");
+        });
+        $("#b2").on("click", function () {
+            S.log("click on #b2");
+        });
+
+        $("#a").on("click", ".c", function (e) {
+            S.log("delegate-click on #a .c");
+            e.stopImmediatePropagation();
+        });
+
+        $("#a").on("click", ":button", function (e) {
+            S.log("delegate-click on #a :button");
+        });
+
+        $("#a").on("click", ".b", function () {
+            S.log("delegate-click on #a .b");
+        });
+
+        $("#a").trigger("click");
+    }
+
+</script>
+</body>
+</html>

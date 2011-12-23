@@ -5,11 +5,10 @@
 KISSY.add('base/base', function (S, Attribute, Event) {
 
     /**
-     * Base for class-based component
      * @name Base
      * @extends Event.Target
      * @extends Attribute
-     * @class
+     * @class Base for class-based component
      */
     function Base(config) {
         var c = this.constructor;
@@ -51,5 +50,5 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-    requires:["./attribute","event"]
+    requires:["./attribute", "event"]
 });

@@ -2,29 +2,29 @@
  * special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
+KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
 
         floor = Math.floor,
 
         KEYWORDS = {
-            "black":[0,0,0],
-            "silver":[192,192,192],
-            "gray":[128,128,128],
-            "white":[255,255,255],
-            "maroon":[128,0,0],
-            "red":[255,0,0],
-            "purple":[128,0,128],
-            "fuchsia":[255,0,255],
-            "green":[0,128,0],
-            "lime":[0,255,0],
-            "olive":[128,128,0],
-            "yellow":[255,255,0],
-            "navy":[0,0,128],
-            "blue":[0,0,255],
-            "teal":[0,128,128],
-            "aqua":[0,255,255]
+            "black":[0, 0, 0],
+            "silver":[192, 192, 192],
+            "gray":[128, 128, 128],
+            "white":[255, 255, 255],
+            "maroon":[128, 0, 0],
+            "red":[255, 0, 0],
+            "purple":[128, 0, 128],
+            "fuchsia":[255, 0, 255],
+            "green":[0, 128, 0],
+            "lime":[0, 255, 0],
+            "olive":[128, 128, 0],
+            "yellow":[255, 255, 0],
+            "navy":[0, 0, 128],
+            "blue":[0, 0, 255],
+            "teal":[0, 128, 128],
+            "aqua":[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
@@ -44,7 +44,8 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
             'outlineColor'
         ];
 
-    SHORT_HANDS['background'] = ['backgroundColor'];
+    SHORT_HANDS['background'] = SHORT_HANDS['background'] || [];
+    SHORT_HANDS['background'].push('backgroundColor');
 
     SHORT_HANDS['borderColor'] = [
         'borderBottomColor',
@@ -113,7 +114,7 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
         //transparent 或者 颜色字符串返回
         S.log("only allow rgb or hex color string : " + val, "warn");
-        return [255,255,255];
+        return [255, 255, 255];
     }
 
     function ColorFx() {
@@ -122,7 +123,7 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     S.extend(ColorFx, Fx, {
 
-        load:function() {
+        load:function () {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
             if (self.from) {
@@ -156,14 +157,14 @@ KISSY.add("anim/color", function(S, DOM, Anim, Fx) {
 
     });
 
-    S.each(COLORS, function(color) {
+    S.each(COLORS, function (color) {
         Fx.Factories[color] = ColorFx;
     });
 
     return ColorFx;
 
 }, {
-    requires:["dom","./base","./fx"]
+    requires:["dom", "./base", "./fx"]
 });
 
 /**

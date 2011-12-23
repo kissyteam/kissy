@@ -1,10 +1,12 @@
 /**
  * @module  EventObject
- * @author  lifesinger@gmail.com
+ * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('event/object', function(S, undefined) {
+KISSY.add('event/object', function (S, undefined) {
 
     var doc = document,
+        TRUE = true,
+        FALSE = false,
         props = ('altKey attrChange attrName bubbles button cancelable ' +
             'charCode clientX clientY ctrlKey currentTarget data detail ' +
             'eventPhase fromElement handler keyCode metaKey ' +
@@ -17,29 +19,37 @@ KISSY.add('event/object', function(S, undefined) {
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
+     * @name Object
+     * @constructor
+     * @memberOf Event
      */
     function EventObject(currentTarget, domEvent, type) {
         var self = this;
-        self.currentTarget = currentTarget;
         self.originalEvent = domEvent || { };
-
+        self.currentTarget = currentTarget;
         if (domEvent) { // html element
             self.type = domEvent.type;
+            // incase dom event has been mark as default prevented by lower dom node
+            self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
+                domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? TRUE : FALSE;
             self._fix();
         }
         else { // custom
             self.type = type;
             self.target = currentTarget;
         }
-
         // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
         self.currentTarget = currentTarget;
-        self.fixed = true;
+        self.fixed = TRUE;
     }
 
     S.augment(EventObject, {
 
-        _fix: function() {
+        isDefaultPrevented:FALSE,
+        isPropagationStopped:FALSE,
+        isImmediatePropagationStopped:FALSE,
+
+        _fix:function () {
             var self = this,
                 originalEvent = self.originalEvent,
                 l = props.length, prop,
@@ -94,39 +104,38 @@ KISSY.add('event/object', function(S, undefined) {
         /**
          * Prevents the event's default behavior
          */
-        preventDefault: function() {
+        preventDefault:function () {
             var e = this.originalEvent;
 
             // if preventDefault exists run it on the original event
             if (e.preventDefault) {
                 e.preventDefault();
             }
-            // otherwise set the returnValue property of the original event to false (IE)
+            // otherwise set the returnValue property of the original event to FALSE (IE)
             else {
-                e.returnValue = false;
+                e.returnValue = FALSE;
             }
 
-            this.isDefaultPrevented = true;
+            this.isDefaultPrevented = TRUE;
         },
 
         /**
          * Stops the propagation to the next bubble target
          */
-        stopPropagation: function() {
+        stopPropagation:function () {
             var e = this.originalEvent;
 
             // if stopPropagation exists run it on the original event
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
-            // otherwise set the cancelBubble property of the original event to true (IE)
+            // otherwise set the cancelBubble property of the original event to TRUE (IE)
             else {
-                e.cancelBubble = true;
+                e.cancelBubble = TRUE;
             }
 
-            this.isPropagationStopped = true;
+            this.isPropagationStopped = TRUE;
         },
-
 
 
         /**
@@ -134,9 +143,9 @@ KISSY.add('event/object', function(S, undefined) {
          * prevents any additional listeners from being exectued
          * on the current target.
          */
-        stopImmediatePropagation: function() {
+        stopImmediatePropagation:function () {
             var self = this;
-            self.isImmediatePropagationStopped = true;
+            self.isImmediatePropagationStopped = TRUE;
             // fixed 1.2
             // call stopPropagation implicitly
             self.stopPropagation();
@@ -145,23 +154,19 @@ KISSY.add('event/object', function(S, undefined) {
         /**
          * Stops the event propagation and prevents the default
          * event behavior.
-         * @param immediate {boolean} if true additional listeners
+         * @param immediate {boolean} if TRUE additional listeners
          * on the current target will not be executed
          */
-        halt: function(immediate) {
+        halt:function (immediate) {
+            var self = this;
             if (immediate) {
-                this.stopImmediatePropagation();
+                self.stopImmediatePropagation();
             } else {
-                this.stopPropagation();
+                self.stopPropagation();
             }
-
-            this.preventDefault();
+            self.preventDefault();
         }
     });
-
-    if (1 > 2) {
-        alert(S.cancelBubble);
-    }
 
     return EventObject;
 

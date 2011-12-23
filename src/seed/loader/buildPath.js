@@ -2,12 +2,12 @@
  * build full path from relative path and base path
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils, data) {
+(function (S, loader, utils, data) {
     if ("require" in this) {
         return;
     }
     S.mix(loader, {
-        __buildPath: function(mod, base) {
+        __buildPath:function (mod, base) {
             var self = this,
                 Config = self.Config;
 
@@ -36,6 +36,11 @@
                     && mod.tag) {
                     mod[fullpath] += "?t=" + mod.tag;
                 }
+
+                if (mod[fullpath]) {
+                    mod[fullpath] = self.__getMappedPath(mod[fullpath]);
+                }
+
             }
         }
     });

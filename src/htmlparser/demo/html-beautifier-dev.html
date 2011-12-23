@@ -51,7 +51,7 @@
             var writer = new HtmlParser.BeautifyWriter(),
                     filter = new HtmlParser.Filter(),
                     before = S.trim($("#before").val()),
-                    nodes = new HtmlParser.Parser(before, {
+                    n = new HtmlParser.Parser(before, {
                         fixByDtd:$("#fixByDtd").prop("checked"),
                         autoParagraph:$("#autoParagraph").prop("checked")
                     }).parse();
@@ -73,10 +73,7 @@
                 }
             });
 
-            // S.log(nodes);
-            S.each(nodes, function(n) {
-                n.writeHtml(writer);
-            });
+            n.writeHtml(writer);
 
             $("#after").val(writer.getHtml());
         });

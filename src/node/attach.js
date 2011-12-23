@@ -2,7 +2,7 @@
  * import methods from DOM to NodeList.prototype
  * @author  yiminghe@gmail.com
  */
-KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
+KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
@@ -74,7 +74,14 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "data":1
         },
         // Event 添加到 NP 上的方法
-        EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
+        EVENT_INCLUDES = [
+            "on",
+            "detach",
+            "fire",
+            "fireHandler",
+            "delegate",
+            "undelegate"
+        ];
 
 
     function accessNorm(fn, self, args) {
@@ -111,30 +118,30 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         return accessNorm(fn, self, args);
     }
 
-    S.each(DOM_INCLUDES_NORM, function(k) {
-        NLP[k] = function() {
+    S.each(DOM_INCLUDES_NORM, function (k) {
+        NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
-    S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
-        NLP[k] = function() {
+    S.each(DOM_INCLUDES_NORM_NODE_LIST, function (k) {
+        NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
-    S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
-        NLP[k] = function() {
+    S.each(DOM_INCLUDES_NORM_IF, function (index, k) {
+        NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
-    S.each(EVENT_INCLUDES, function(k) {
-        NLP[k] = function() {
-            var self=this,
+    S.each(EVENT_INCLUDES, function (k) {
+        NLP[k] = function () {
+            var self = this,
                 args = makeArray(arguments);
             args.unshift(self);
             Event[k].apply(Event, args);
@@ -143,7 +150,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom","event","./base"]
+    requires:["dom", "event", "./base"]
 });
 
 /**

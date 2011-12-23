@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 8 00:57
+build time: Dec 20 15:55
 */
 /**
  * KISSY Calendar
@@ -14,7 +14,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
         this._init(trigger, config);
     }
 
-    S.augment(Calendar, {
+    S.augment(Calendar, EventTarget,{
 
         /**
          * 日历构造函数
@@ -47,15 +47,6 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     'visibility':'hidden'
                 });
             }
-
-            //创建事件中心
-            //事件中心已经和Calendar合并
-            var EventFactory = function() {
-            };
-            S.augment(EventFactory, EventTarget);
-            var eventCenter = new EventFactory();
-            S.mix(self, eventCenter);
-
             self.render();
             self._buildEvent();
             return this;

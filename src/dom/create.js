@@ -178,7 +178,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * Remove the set of matched elements from the DOM.
              * 不要使用 innerHTML='' 来清除元素，可能会造成内存泄露，要使用 DOM.remove()
              * @param selector 选择器或元素集合
-             * @param {Boolean} keepData 删除元素时是否保留其上的数据，用于离线操作，提高性能
+             * @param {Boolean} [keepData=false] 删除元素时是否保留其上的数据，用于离线操作，提高性能
              */
             remove: function(selector, keepData) {
                 DOM.query(selector).each(function(el) {

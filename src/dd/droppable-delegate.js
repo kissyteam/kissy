@@ -4,6 +4,7 @@
  */
 KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
 
+
     function dragStart() {
         var self = this,
             container = self.get("container"),
@@ -11,6 +12,10 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
         self.__allNodes = container.all(selector);
     }
 
+    /**
+     * @memberOf DD
+     * @class delegate drop
+     */
     function DroppableDelegate() {
         var self = this;
         DroppableDelegate.superclass.constructor.apply(self, arguments);

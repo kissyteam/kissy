@@ -2,16 +2,23 @@
  * Model and Control for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
+KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
 
-    var KeyCodes = Event.KeyCodes,
-        Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
+    var KeyCodes = Event.KeyCodes;
+    /**
+     * @name Button
+     * @constructor
+     * @extends ModelControl
+     */
+    var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox],
+        /**@lends Button.prototype */
+        {
 
-            bindUI:function() {
+            bindUI:function () {
                 this.get("el").on("keyup", this._handleKeyEventInternal, this);
             },
 
-            _handleKeyEventInternal:function(e) {
+            _handleKeyEventInternal:function (e) {
                 if (e.keyCode == KeyCodes.ENTER &&
                     e.type == "keydown" ||
                     e.keyCode == KeyCodes.SPACE &&
@@ -25,7 +32,7 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
             },
 
             /* button 的默认行为就是触发 click*/
-            _performInternal:function() {
+            _performInternal:function () {
                 var self = this;
                 self.fire("click");
             }
@@ -59,5 +66,5 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
     return Button;
 
 }, {
-    requires:['event','uibase','component','./customrender']
+    requires:['event', 'uibase', 'component', './customrender']
 });

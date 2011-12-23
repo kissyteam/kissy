@@ -2,7 +2,7 @@
  *  mix loader into S and infer KISSy baseUrl if not set
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils) {
+(function (S, loader, utils) {
     if ("require" in this) {
         return;
     }
@@ -45,7 +45,7 @@
             }
             // combo after first
             else {
-                S.each(parts, function(part) {
+                S.each(parts, function (part) {
                     if (part.match(baseTestReg)) {
                         base += part.replace(baseReg, '$1');
                         return false;
@@ -56,11 +56,10 @@
         return base;
     }
 
-
     /**
      * Initializes loader.
      */
-    S.__initLoader = function() {
+    S.__initLoader = function () {
         var self = this;
         self.Env.mods = self.Env.mods || {}; // all added mods
     };
@@ -68,7 +67,7 @@
     S.Env._loadQueue = {}; // information for loading and loaded mods
     S.__initLoader();
 
-    (function() {
+    (function () {
         // get base from current script file path
         var scripts = document.getElementsByTagName('script'),
             currentScript = scripts[scripts.length - 1],
@@ -78,8 +77,20 @@
         S.Config.timeout = 10;
     })();
 
+    S.mix(S.configs, {
+        base:function (base) {
+            S.Config.base = utils.normalBasePath(base);
+        },
+        timeout:function (v) {
+            S.Config.timeout = v;
+        },
+        debug:function (v) {
+            S.Config.debug = v;
+        }
+    });
+
     // for S.app working properly
-    S.each(loader, function(v, k) {
+    S.each(loader, function (v, k) {
         S.__APP_MEMBERS.push(k);
     });
 

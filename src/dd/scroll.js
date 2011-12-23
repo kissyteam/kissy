@@ -2,15 +2,19 @@
  * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
+KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
         stamp = S.stamp,
-        RATE = [10,10],
+        RATE = [10, 10],
         ADJUST_DELAY = 100,
-        DIFF = [20,20],
+        DIFF = [20, 20],
         DESTRUCTORS = "__dd_scrolls";
 
+    /**
+     * @memberOf DD
+     * @class monitor scroll
+     */
     function Scroll() {
         var self = this;
         Scroll.superclass.constructor.apply(self, arguments);
@@ -20,10 +24,10 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
     Scroll.ATTRS = {
         node:{
             // value:window：不行，默认值一定是简单对象
-            valueFn : function() {
+            valueFn:function () {
                 return Node.one(window);
             },
-            setter : function(v) {
+            setter:function (v) {
                 return Node.one(v);
             }
         },
@@ -40,7 +44,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
     S.extend(Scroll, Base, {
 
-        getRegion:function(node) {
+        getRegion:function (node) {
             if (isWin(node[0])) {
                 return {
                     width:DOM.viewportWidth(),
@@ -54,7 +58,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
             }
         },
 
-        getOffset:function(node) {
+        getOffset:function (node) {
             if (isWin(node[0])) {
                 return {
                     left:DOM.scrollLeft(),
@@ -65,19 +69,19 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
             }
         },
 
-        getScroll:function(node) {
+        getScroll:function (node) {
             return {
                 left:node.scrollLeft(),
                 top:node.scrollTop()
             };
         },
 
-        setScroll:function(node, r) {
+        setScroll:function (node, r) {
             node.scrollLeft(r.left);
             node.scrollTop(r.top);
         },
 
-        unAttach:function(drag) {
+        unAttach:function (drag) {
             var tag,
                 destructors = this[DESTRUCTORS];
             if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
@@ -89,7 +93,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
             delete destructors[tag];
         },
 
-        destroy:function() {
+        destroy:function () {
             var self = this,
                 destructors = self[DESTRUCTORS];
             for (var d in destructors) {
@@ -97,7 +101,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
             }
         },
 
-        attach:function(drag) {
+        attach:function (drag) {
             var self = this,
                 tag = stamp(drag, 0, TAG_DRAG),
                 destructors = self[DESTRUCTORS];
@@ -144,7 +148,7 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
             destructors[tag] = {
                 drag:drag,
-                fn:function() {
+                fn:function () {
                     drag.detach("drag", dragging);
                     drag.detach("dragend", dragEnd);
                 }
@@ -216,5 +220,5 @@ KISSY.add("dd/scroll", function(S, Base, Node, DOM) {
 
     return Scroll;
 }, {
-    requires:['base','node','dom']
+    requires:['base', 'node', 'dom']
 });

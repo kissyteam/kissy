@@ -2,7 +2,7 @@
  * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRender) {
 
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
@@ -22,7 +22,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     }
 
     function getOldestMenu(self) {
-        var pre = self,now = self;
+        var pre = self, now = self;
         while (now) {
             pre = now;
             now = getAutoHideParentMenu(pre);
@@ -43,12 +43,16 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
         }
     }
 
+    /**
+     * @name PopMenu
+     * @constructor
+     */
     var PopMenu = UIBase.create(Menu, [
         UIBase.Position,
         UIBase.Align
     ], {
-        _clearLeaveHideTimers:function() {
-            var self = this,i,item,menu;
+        _clearLeaveHideTimers:function () {
+            var self = this, i, item, menu;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
@@ -64,12 +68,12 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
                 }
             }
         },
-        _handleMouseLeave:function() {
+        _handleMouseLeave:function () {
             var self = this;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
-            self._leaveHideTimer = setTimeout(function() {
+            self._leaveHideTimer = setTimeout(function () {
                 // only hide ancestor is enough , it will listen to its ancestor's hide event to hide
                 var oldMenu = getOldestMenu(self);
                 oldMenu.hide();
@@ -80,7 +84,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
             }, self.get("autoHideDelay"));
         },
 
-        _handleMouseEnter:function() {
+        _handleMouseEnter:function () {
             var self = this,
                 parent = getAutoHideParentMenu(self);
             if (parent) {
@@ -95,7 +99,7 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
          *  suppose it has focus (as a context menu),
          *  then it must hide when click document
          */
-        _handleBlur:function() {
+        _handleBlur:function () {
             var self = this;
             PopMenu.superclass._handleBlur.apply(self, arguments);
             self.hide();
@@ -125,5 +129,5 @@ KISSY.add("menu/popupmenu", function(S, UIBase, Component, Menu, PopupMenuRender
     return PopMenu;
 
 }, {
-    requires:['uibase','component','./menu','./popupmenurender']
+    requires:['uibase', 'component', './menu', './popupmenurender']
 });

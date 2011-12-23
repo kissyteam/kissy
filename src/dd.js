@@ -1,9 +1,21 @@
 /**
- * dd support for kissy
+ * @fileOverview dd support for kissy
  * @author  承玉<yiminghe@gmail.com>
  */
-KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate, Scroll) {
-    var dd = {
+KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate, Scroll) {
+
+    /**
+     * @exports Draggable as DD.Draggable
+     */
+
+    /**
+     * @exports Droppable as DD.Droppable
+     */
+
+    /**
+     * @name DD
+     */
+    return {
         Draggable:Draggable,
         Droppable:Droppable,
         DDM:DDM,
@@ -12,10 +24,6 @@ KISSY.add("dd", function(S, DDM, Draggable, Droppable, Proxy, Delegate, Droppabl
         DroppableDelegate:DroppableDelegate,
         Scroll:Scroll
     };
-
-    S.mix(S, dd);
-
-    return dd;
 }, {
     requires:["dd/ddm",
         "dd/draggable",

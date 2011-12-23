@@ -1,7 +1,7 @@
 /*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:46
 */
 KISSY.add("dd/ddm",function(m,q,r,k,l,d){function n(){n.superclass.constructor.apply(this,arguments)}function c(b,h){var s=b.get("activeDrag"),w=s.get("mode"),D=b.get("drops"),t,E=0,B=0,F=i(s.get("node")),G=a(F);m.each(D,function(C){var u;if(u=C.getNodeFromTarget(h,s.get("dragNode")[0],s.get("node")[0]))if(w=="point"){if(o(i(u),s.mousePos)){u=a(i(u));if(t){if(u<B){t=C;B=u}}else{t=C;B=u}}}else if(w=="intersect"){u=a(e(F,i(u)));if(u>B){B=u;t=C}}else if(w=="strict"){u=a(e(F,i(u)));if(u==G){t=C;return false}}});
 if((E=b.get("activeDrop"))&&E!=t){E._handleOut(h);s._handleOut(h)}b.set("activeDrop",t);if(t)E!=t?t._handleEnter(h):t._handleOver(h)}function g(b){var h=document;b._shim=(new l("<div style='background-color:red;position:"+(v?"absolute":"fixed")+";left:0;width:100%;height:100%;top:0;cursor:"+x.get("dragCursor")+";z-index:"+z+";'></div>")).prependTo(h.body||h.documentElement).css("opacity",0);g=f;v&&k.on(p,"resize scroll",y,b);f(b)}function f(b){var h=b.get("activeDrag").get("activeHandler"),s="auto";

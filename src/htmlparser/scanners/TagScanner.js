@@ -215,7 +215,6 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                     if (needFix) {
                         closeStackOpenTag(stack.length - 1, from - 1);
                     }
-
                 }
                 return needFix;
             }
@@ -245,6 +244,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                                 if (node.isSelfClosed) {
                                     tag.appendChild(node);
                                 } else {
+                                    // When the steps below require the UA to insert an HTML element for a token,
+                                    // the UA must first create an element for the token in the HTML namespace,
+                                    // and then append this node to the current node,
+                                    // and push it onto the stack of open elements so that it is the new current node.
+                                    // 一点改动：先放入栈中，等到结束标签再 appendChild
                                     // fake stack
                                     stack.push(tag);// <ul>
                                     //      <li>1
@@ -254,10 +258,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                                         stack.push(tag);
                                     }
                                     tag = node;
-
                                 }
                             }
-
                         } else if (node.isEndTag()) {
                             // encouter a end tag without open tag
                             // There are two cases...

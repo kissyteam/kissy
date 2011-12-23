@@ -2,13 +2,19 @@
  * animation framework for KISSY
  * @author   yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
+KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         _isElementNode = DOM._isElementNode,
-        specialVals = ["hide","show","toggle"],
+        specialVals = ["hide", "show", "toggle"],
         // shorthand css properties
         SHORT_HANDS = {
+            // http://www.w3.org/Style/CSS/Tracker/issues/9
+            // http://snook.ca/archives/html_and_css/background-position-x-y
+            // backgroundPositionX  backgroundPositionY does not support
+            background:[
+                "backgroundPosition"
+            ],
             border:[
                 "borderBottomWidth",
                 "borderLeftWidth",
@@ -38,8 +44,8 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             ]
         },
         defaultConfig = {
-            duration: 1,
-            easing: 'easeNone'
+            duration:1,
+            easing:'easeNone'
         },
         rfxnum = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
@@ -55,7 +61,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param callback
      */
     function Anim(elem, props, duration, easing, callback) {
-        var self = this,config;
+        var self = this, config;
 
         // ignore non-exist element
         if (!(elem = DOM.get(elem))) {
@@ -120,7 +126,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     function onComplete(e) {
         var self = this,
-            _backupProps = self._backupProps,
+            _backupProps,
             config = self.config;
 
         // only recover after complete anim
@@ -168,7 +174,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         // 分离 easing
-        S.each(props, function(val, prop) {
+        S.each(props, function (val, prop) {
             if (!props.hasOwnProperty(prop)) {
                 return;
             }
@@ -187,13 +193,13 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
 
         // 扩展分属性
-        S.each(SHORT_HANDS, function(shortHands, p) {
+        S.each(SHORT_HANDS, function (shortHands, p) {
             var sh,
                 origin,
                 val;
             if (val = props[p]) {
                 origin = {};
-                S.each(shortHands, function(sh) {
+                S.each(shortHands, function (sh) {
                     // 得到原始分属性之前值
                     origin[sh] = DOM.css(elem, sh);
                     specialEasing[sh] = specialEasing[p];
@@ -314,7 +320,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         /**
          * @type {boolean} 是否在运行
          */
-        isRunning:function() {
+        isRunning:function () {
             return isRunning(this);
         },
 
@@ -323,7 +329,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
         /**
          * 开始动画
          */
-        run: function() {
+        run:function () {
             var self = this,
                 queueName = self.config.queue;
 
@@ -337,16 +343,34 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             return self;
         },
 
-        _frame:function() {
+        _frame:function () {
 
             var self = this,
                 prop,
+                config = self.config,
                 end = 1,
+                c,
+                fx,
                 fxs = self._fxs;
 
             for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop)) {
-                    end &= fxs[prop].frame();
+                if (fxs.hasOwnProperty(prop) &&
+                    // 当前属性没有结束
+                    !((fx = fxs[prop]).finished)) {
+                    // 非短路
+                    if (config.frame) {
+                        c = config.frame(fx);
+                    }
+                    // 结束
+                    if (c == 1 ||
+                        // 不执行自带
+                        c == 0) {
+                        fx.finished = c;
+                        end &= c;
+                    }
+                    else {
+                        end &= fx.frame();
+                    }
                 }
             }
 
@@ -357,7 +381,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
             }
         },
 
-        stop: function(finish) {
+        stop:function (finish) {
             var self = this,
                 config = self.config,
                 queueName = config.queue,
@@ -432,7 +456,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param end
      * @param clearQueue
      */
-    Anim.stop = function(elem, end, clearQueue, queueName) {
+    Anim.stop = function (elem, end, clearQueue, queueName) {
         if (
         // default queue
             queueName === null ||
@@ -480,7 +504,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * whether elem is running anim
      * @param elem
      */
-    Anim['isRunning'] = function(elem) {
+    Anim['isRunning'] = function (elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
     };
@@ -491,7 +515,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires:["dom","event","./easing","ua","./manager","./fx","./queue"]
+    requires:["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
 });
 
 /**

@@ -3,7 +3,7 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
  */
-(function(S, undefined) {
+(function (S, undefined) {
 
     var host = S.__HOST,
         TRUE = true,
@@ -34,12 +34,12 @@
         class2type = {},
         // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
-            '&amp;': '&',
-            '&gt;': '>',
-            '&lt;': '<',
+            '&amp;':'&',
+            '&gt;':'>',
+            '&lt;':'<',
             '&#x60;':'`',
             '&#x2F;':'/',
-            '&quot;': '"',
+            '&quot;':'"',
             '&#x27;':"'"
         },
         reverseEntities = {},
@@ -47,9 +47,11 @@
         unEscapeReg,
         // - # $ ^ * ( ) + [ ] { } | \ , . ?
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
-    (function() {
+    (function () {
         for (var k in htmlEntities) {
-            reverseEntities[htmlEntities[k]] = k;
+            if (htmlEntities.hasOwnProperty(k)) {
+                reverseEntities[htmlEntities[k]] = k;
+            }
         }
     })();
 
@@ -58,7 +60,7 @@
             return escapeReg
         }
         var str = EMPTY;
-        S.each(htmlEntities, function(entity) {
+        S.each(htmlEntities, function (entity) {
             str += entity + '|';
         });
         str = str.slice(0, -1);
@@ -70,7 +72,7 @@
             return unEscapeReg
         }
         var str = EMPTY;
-        S.each(reverseEntities, function(entity) {
+        S.each(reverseEntities, function (entity) {
             str += entity + '|';
         });
         str += '&#(\\d{1,5});';
@@ -90,7 +92,7 @@
          * stamp a object by guid
          * @return guid associated with this object
          */
-        stamp:function(o, readOnly, marker) {
+        stamp:function (o, readOnly, marker) {
             if (!o) {
                 return o
             }
@@ -102,20 +104,20 @@
                 try {
                     guid = o[marker] = S.guid(marker);
                 }
-                catch(e) {
+                catch (e) {
                     guid = undefined;
                 }
             }
             return guid;
         },
 
-        noop:function() {
+        noop:function () {
         },
 
         /**
          * Determine the internal JavaScript [[Class]] of an object.
          */
-        type: function(o) {
+        type:function (o) {
             return nullOrUndefined(o) ?
                 String(o) :
                 class2type[toString.call(o)] || 'object';
@@ -123,18 +125,18 @@
 
         isNullOrUndefined:nullOrUndefined,
 
-        isNull: function(o) {
+        isNull:function (o) {
             return o === null;
         },
 
-        isUndefined: function(o) {
+        isUndefined:function (o) {
             return o === undefined;
         },
 
         /**
          * Checks to see if an object is empty.
          */
-        isEmptyObject: function(o) {
+        isEmptyObject:function (o) {
             for (var p in o) {
                 if (p !== undefined) {
                     return FALSE;
@@ -148,7 +150,7 @@
          * or "new Object()" or "new FunctionClass()").
          * Ref: http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
          */
-        isPlainObject: function(o) {
+        isPlainObject:function (o) {
             /**
              * note by yiminghe
              * isPlainObject(node=document.getElementById("xx")) -> false
@@ -160,7 +162,6 @@
         },
 
 
-
         /**
          * 两个目标是否内容相同
          *
@@ -169,7 +170,7 @@
          * @param [mismatchKeys] internal use
          * @param [mismatchValues] internal use
          */
-        equals : function(a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+        equals:function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
             // inspired by jasmine
             mismatchKeys = mismatchKeys || [];
             mismatchValues = mismatchValues || [];
@@ -201,17 +202,17 @@
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          * 稍微改改就和规范一样了 :)
          * @param input
-         * @param {Function} filter filter function
+         * @param {Function} [filter] filter function
          * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
-        clone: function(input, filter) {
+        clone:function (input, filter) {
             // Let memory be an association list of pairs of objects,
             // initially empty. This is used to handle duplicate references.
             // In each pair of objects, one is called the source object
             // and the other the destination object.
             var memory = {},
                 ret = cloneInternal(input, filter, memory);
-            S.each(memory, function(v) {
+            S.each(memory, function (v) {
                 // 清理在源对象上做的标记
                 v = v.input;
                 if (v[CLONE_MARKER]) {
@@ -223,18 +224,18 @@
                     }
                 }
             });
-            memory = undefined;
+            memory = null;
             return ret;
         },
 
         /**
          * Removes the whitespace from the beginning and end of a string.
          */
-        trim: trim ?
-            function(str) {
+        trim:trim ?
+            function (str) {
                 return nullOrUndefined(str) ? EMPTY : trim.call(str);
             } :
-            function(str) {
+            function (str) {
                 return nullOrUndefined(str) ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
             },
 
@@ -242,13 +243,13 @@
          * Substitutes keywords in a string using an object/array.
          * Removes undefined keywords and ignores escaped keywords.
          */
-        substitute: function(str, o, regexp) {
+        substitute:function (str, o, regexp) {
             if (!S.isString(str)
                 || !S.isPlainObject(o)) {
                 return str;
             }
 
-            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function(match, name) {
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }
@@ -261,9 +262,9 @@
          * @param object {Object} the object to iterate
          * @param fn {Function} the function to execute on each item. The function
          *        receives three arguments: the value, the index, the full array.
-         * @param context {Object} (opt)
+         * @param {Object} [context]
          */
-        each: function(object, fn, context) {
+        each:function (object, fn, context) {
             if (object) {
                 var key,
                     val,
@@ -275,7 +276,8 @@
 
                 if (isObj) {
                     for (key in object) {
-                        if (fn.call(context, object[key], key, object) === FALSE) {
+                        if (object.hasOwnProperty(key) &&
+                            fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
@@ -291,11 +293,11 @@
         /**
          * Search for a specified value within an array.
          */
-        indexOf: indexOf ?
-            function(item, arr) {
+        indexOf:indexOf ?
+            function (item, arr) {
                 return indexOf.call(arr, item);
             } :
-            function(item, arr) {
+            function (item, arr) {
                 for (var i = 0, len = arr.length; i < len; ++i) {
                     if (arr[i] === item) {
                         return i;
@@ -309,11 +311,11 @@
          * that contains the specified value, -1 if the
          * value isn't found.
          */
-        lastIndexOf: (lastIndexOf) ?
-            function(item, arr) {
+        lastIndexOf:(lastIndexOf) ?
+            function (item, arr) {
                 return lastIndexOf.call(arr, item);
             } :
-            function(item, arr) {
+            function (item, arr) {
                 for (var i = arr.length - 1; i >= 0; i--) {
                     if (arr[i] === item) {
                         break;
@@ -330,7 +332,7 @@
          *        if override is false, S.unique([a, b, a]) => [a, b]
          * @return {Array} a copy of the array with duplicate entries removed
          */
-        unique: function(a, override) {
+        unique:function (a, override) {
             var b = a.slice();
             if (override) {
                 b.reverse();
@@ -356,7 +358,7 @@
         /**
          * Search for a specified value index within an array.
          */
-        inArray: function(item, arr) {
+        inArray:function (item, arr) {
             return S.indexOf(item, arr) > -1;
         },
 
@@ -371,13 +373,13 @@
          *         returned true. If no items matched an empty array is
          *         returned.
          */
-        filter: filter ?
-            function(arr, fn, context) {
+        filter:filter ?
+            function (arr, fn, context) {
                 return filter.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var ret = [];
-                S.each(arr, function(item, i, arr) {
+                S.each(arr, function (item, i, arr) {
                     if (fn.call(context || this, item, i, arr)) {
                         ret.push(item);
                     }
@@ -386,10 +388,10 @@
             },
         // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
         map:map ?
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 return map.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var len = arr.length,
                     res = new Array(len);
                 for (var i = 0; i < len; i++) {
@@ -411,7 +413,7 @@
          NaN ?
          reduce ? function(arr, callback, initialValue) {
          return arr.reduce(callback, initialValue);
-         } : */function(arr, callback, initialValue) {
+         } : */function (arr, callback, initialValue) {
             var len = arr.length;
             if (typeof callback !== "function") {
                 throw new TypeError("callback is not function!");
@@ -454,10 +456,10 @@
         },
 
         every:every ?
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 return every.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var len = arr && arr.length || 0;
                 for (var i = 0; i < len; i++) {
                     if (i in arr && !fn.call(context, arr[i], i, arr)) {
@@ -468,10 +470,10 @@
             },
 
         some:some ?
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 return some.call(arr, fn, context || this);
             } :
-            function(arr, fn, context) {
+            function (arr, fn, context) {
                 var len = arr && arr.length || 0;
                 for (var i = 0; i < len; i++) {
                     if (i in arr && fn.call(context, arr[i], i, arr)) {
@@ -486,7 +488,7 @@
          * it is not same with native bind
          * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
-        bind:function(fn, obj) {
+        bind:function (fn, obj) {
             var slice = [].slice,
                 args = slice.call(arguments, 2),
                 fNOP = function () {
@@ -506,14 +508,14 @@
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
-        now: Date.now || function() {
+        now:Date.now || function () {
             return +new Date();
         },
         /**
          * frequently used in taobao cookie about nick
          */
-        fromUnicode:function(str) {
-            return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+        fromUnicode:function (str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
                 return  String.fromCharCode(parseInt(u, HEX_BASE));
             });
         },
@@ -523,13 +525,13 @@
          *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */
-        escapeHTML:function(str) {
-            return str.replace(getEscapeReg(), function(m) {
+        escapeHTML:function (str) {
+            return str.replace(getEscapeReg(), function (m) {
                 return reverseEntities[m];
             });
         },
 
-        escapeRegExp:function(str) {
+        escapeRegExp:function (str) {
             return str.replace(escapeRegExp, '\\$&');
         },
 
@@ -537,8 +539,8 @@
          * unescape html to string
          * @param str {string} html2text
          */
-        unEscapeHTML:function(str) {
-            return str.replace(getUnEscapeReg(), function(m, n) {
+        unEscapeHTML:function (str) {
+            return str.replace(getUnEscapeReg(), function (m, n) {
                 return htmlEntities[m] || String.fromCharCode(+n);
             });
         },
@@ -547,7 +549,7 @@
          * @param o {object|Array} array like object or array
          * @return {Array}
          */
-        makeArray: function(o) {
+        makeArray:function (o) {
             if (nullOrUndefined(o)) {
                 return [];
             }
@@ -560,7 +562,7 @@
                 return [o];
             }
             var ret = [];
-            for (var i = 0,l = o.length; i < l; i++) {
+            for (var i = 0, l = o.length; i < l; i++) {
                 ret[i] = o[i];
             }
             return ret;
@@ -576,7 +578,7 @@
          * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
          * </code>
          */
-        param: function(o, sep, eq, arr) {
+        param:function (o, sep, eq, arr) {
             if (!S.isPlainObject(o)) {
                 return EMPTY;
             }
@@ -587,24 +589,26 @@
             }
             var buf = [], key, val;
             for (key in o) {
-                val = o[key];
-                key = encode(key);
+                if (o.hasOwnProperty(key)) {
+                    val = o[key];
+                    key = encode(key);
 
-                // val is valid non-array value
-                if (isValidParamValue(val)) {
-                    buf.push(key, eq, encode(val + EMPTY), sep);
-                }
-                // val is not empty array
-                else if (S.isArray(val) && val.length) {
-                    for (var i = 0, len = val.length; i < len; ++i) {
-                        if (isValidParamValue(val[i])) {
-                            buf.push(key,
-                                (arr ? encode("[]") : EMPTY),
-                                eq, encode(val[i] + EMPTY), sep);
+                    // val is valid non-array value
+                    if (isValidParamValue(val)) {
+                        buf.push(key, eq, encode(val + EMPTY), sep);
+                    }
+                    // val is not empty array
+                    else if (S.isArray(val) && val.length) {
+                        for (var i = 0, len = val.length; i < len; ++i) {
+                            if (isValidParamValue(val[i])) {
+                                buf.push(key,
+                                    (arr ? encode("[]") : EMPTY),
+                                    eq, encode(val[i] + EMPTY), sep);
+                            }
                         }
                     }
+                    // ignore other cases, including empty array, Function, RegExp, Date etc.
                 }
-                // ignore other cases, including empty array, Function, RegExp, Date etc.
             }
             buf.pop();
             return buf.join(EMPTY);
@@ -619,7 +623,7 @@
          * 'id=45&raw'        // -> {id: '45', raw: ''}
          * </code>
          */
-        unparam: function(str, sep, eq) {
+        unparam:function (str, sep, eq) {
             if (typeof str !== 'string'
                 || (str = S.trim(str)).length === 0) {
                 return {};
@@ -636,7 +640,7 @@
                 key = decode(pair[0]);
                 try {
                     val = decode(pair[1] || EMPTY);
-                } catch(e) {
+                } catch (e) {
                     S.log(e + "decodeURIComponent error : " + pair[1], "error");
                     val = pair[1] || EMPTY;
                 }
@@ -647,7 +651,7 @@
                     if (S.isArray(ret[key])) {
                         ret[key].push(val);
                     } else {
-                        ret[key] = [ret[key],val];
+                        ret[key] = [ret[key], val];
                     }
                 } else {
                     ret[key] = val;
@@ -662,17 +666,17 @@
          * @param fn {Function|String} the function to execute or the name of the method in
          *        the 'o' object to execute.
          * @param when {Number} the number of milliseconds to wait until the fn is executed.
-         * @param periodic {Boolean} if true, executes continuously at supplied interval
+         * @param {Boolean} [periodic] if true, executes continuously at supplied interval
          *        until canceled.
-         * @param context {Object} the context object.
-         * @param data [Array] that is provided to the function. This accepts either a single
+         * @param {Object} [context] the context object.
+         * @param [data] that is provided to the function. This accepts either a single
          *        item or an array. If an array is provided, the function is executed with
          *        one parameter for each array item. If you need to pass a single array
          *        parameter, it needs to be wrapped in an array [myarray].
          * @return {Object} a timer object. Call the cancel() method on this object to stop
          *         the timer.
          */
-        later: function(fn, when, periodic, context, data) {
+        later:function (fn, when, periodic, context, data) {
             when = when || 0;
             var m = fn,
                 d = S.makeArray(data),
@@ -687,16 +691,16 @@
                 S.error('method undefined');
             }
 
-            f = function() {
+            f = function () {
                 m.apply(context, d);
             };
 
             r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
 
             return {
-                id: r,
-                interval: periodic,
-                cancel: function() {
+                id:r,
+                interval:periodic,
+                cancel:function () {
                     if (this.interval) {
                         clearInterval(r);
                     } else {
@@ -706,11 +710,11 @@
             };
         },
 
-        startsWith:function(str, prefix) {
+        startsWith:function (str, prefix) {
             return str.lastIndexOf(prefix, 0) === 0;
         },
 
-        endsWith:function(str, suffix) {
+        endsWith:function (str, suffix) {
             var ind = str.length - suffix.length;
             return ind >= 0 && str.indexOf(suffix, ind) == ind;
         },
@@ -719,23 +723,23 @@
          * Based on YUI3
          * Throttles a call to a method based on the time between calls.
          * @param  {function} fn The function call to throttle.
-         * @param {object} context ontext fn to run
-         * @param {Number} ms The number of milliseconds to throttle the method call.
+         * @param {object} [context] context fn to run
+         * @param {Number} [ms] The number of milliseconds to throttle the method call.
          *              Passing a -1 will disable the throttle. Defaults to 150.
          * @return {function} Returns a wrapped function that calls fn throttled.
          */
-        throttle:function(fn, ms, context) {
+        throttle:function (fn, ms, context) {
             ms = ms || 150;
 
             if (ms === -1) {
-                return (function() {
+                return (function () {
                     fn.apply(context || this, arguments);
                 });
             }
 
             var last = S.now();
 
-            return (function() {
+            return (function () {
                 var now = S.now();
                 if (now - last > ms) {
                     last = now;
@@ -747,14 +751,14 @@
         /**
          * buffers a call between  a fixed time
          * @param {function} fn
-         * @param {object} context
+         * @param {object} [context]
          * @param {Number} ms
          */
-        buffer:function(fn, ms, context) {
+        buffer:function (fn, ms, context) {
             ms = ms || 150;
 
             if (ms === -1) {
-                return (function() {
+                return (function () {
                     fn.apply(context || this, arguments);
                 });
             }
@@ -765,7 +769,7 @@
                 bufferTimer = S.later(fn, ms, FALSE, context || this);
             }
 
-            f.stop = function() {
+            f.stop = function () {
                 if (bufferTimer) {
                     bufferTimer.cancel();
                     bufferTimer = 0;
@@ -790,12 +794,12 @@
     });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
-        function(name, lc) {
+        function (name, lc) {
             // populate the class2type map
             class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
 
             // add isBoolean/isNumber/...
-            S['is' + name] = function(o) {
+            S['is' + name] = function (o) {
                 return S.type(o) == lc;
             }
         });
@@ -824,7 +828,7 @@
         } else if (typeof input === "object") {
             // 引用类型要先记录
             var constructor = input.constructor;
-            if (S.inArray(constructor, [Boolean,String,Number,Date,RegExp])) {
+            if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
                 destination = new constructor(input.valueOf());
             }
             // ImageData , File, Blob , FileList .. etc
@@ -838,7 +842,7 @@
             // 做标记
             input[CLONE_MARKER] = (stamp = S.guid());
             // 存储源对象以及克隆后的对象
-            memory[stamp] = {destination:destination,input:input};
+            memory[stamp] = {destination:destination, input:input};
         }
         // If input is an Array object or an Object object,
         // then, for each enumerable property in input,
@@ -854,10 +858,11 @@
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (k !== CLONE_MARKER &&
-                    input.hasOwnProperty(k) &&
-                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                    destination[k] = cloneInternal(input[k], f, memory);
+                if (input.hasOwnProperty(k)) {
+                    if (k !== CLONE_MARKER &&
+                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                        destination[k] = cloneInternal(input[k], f, memory);
+                    }
                 }
             }
         }
@@ -872,27 +877,33 @@
         }
         a[COMPARE_MARKER] = b;
         b[COMPARE_MARKER] = a;
-        var hasKey = function(obj, keyName) {
+        var hasKey = function (obj, keyName) {
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (!hasKey(a, property) && hasKey(b, property)) {
-                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+            if (b.hasOwnProperty(property)) {
+                if (!hasKey(a, property) && hasKey(b, property)) {
+                    mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+                }
             }
         }
         for (property in a) {
-            if (!hasKey(b, property) && hasKey(a, property)) {
-                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+            if (a.hasOwnProperty(property)) {
+                if (!hasKey(b, property) && hasKey(a, property)) {
+                    mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+                }
             }
         }
         for (property in b) {
-            if (property == COMPARE_MARKER) {
-                continue;
-            }
-            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                    + "' in expected, but was '" +
-                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            if (b.hasOwnProperty(property)) {
+                if (property == COMPARE_MARKER) {
+                    continue;
+                }
+                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                    mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                        + "' in expected, but was '" +
+                        (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+                }
             }
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {

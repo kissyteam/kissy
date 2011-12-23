@@ -14,11 +14,21 @@ Legend of version history:
 History:
 --------
 
+### v1.2.0 -> v1.3.0
+ - [+] Event 模块：on/detach 支持事件分组
+ - [+] Event 模块：fireHandler api 增加
+ - [+] Event.on 支持 data 绑定
+ - [*] submenuitem 支持 click 事件
+ - [*] anim 支持 backgroundPosition
+ - [x] dom 支持 css("backgroundPosition") in ie
+ - [+] datalazyload 增加 removeElements 与 destroy 接口
+
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
 
-### v1.1.6 -> v1.2.0 (2011/11/24)
- - [+] waterfall 添加 addComplete/adjustComplete 事件支持
+### v1.1.6 -> v1.2.0 (2011/12/12)
+ - [+] 详见 http://docs.kissyui.com/docs/html/changelog/1.2.0.html
+
  - [!] 静态 combo 引用组件代码时注意：组件代码层次减低 switchable/switchable-pkg.js -> switchable.js
 
  - [*] 借鉴 jquery 1.6,支持 w3c attribute, attr 方法对 checked='checked' 返回 "checked" 否则返回 undefined，增加 prop 方法 ，返回 prop('checked')==true
@@ -36,7 +46,7 @@ History:
  - [!] html()参数中的脚本会在调用后立即执行，请避免在脚本内部引用尚没添加到dom的根节点：DOM.html(DOM.create("<div>"),"<div id='t'><script>alert(document.getElementById('t'));</script></div>",true);
  - [+] append/insert 都可以指定是否执行脚本节点的代码
 
-  
+
 
  - [+] event 增加作用于 dom 节点的 delegate 方法
  - [+] event 增加作用于 dom 节点的 fire 方法
@@ -45,8 +55,8 @@ History:
  - [+] event 增加 valuechange ,hashchange 事件兼容处理
  - [*] Event.detach = Event.remove
  - [x] 修正 focusin/out 事件触发顺序,子元素先，父元素后
- - [!] 无论是通过 Event.on 还是 S.on("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
- - [!] 无论是通过 Event.on 还是 S.on("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
+ - [!] 无论是通过 Event.on 还是 S.one("#xx").on，回调 event.target 以及 event.relatedTarget 都为原生节点。
+ - [!] 无论是通过 Event.on 还是 S.one("#xx").on，如果不指定 scope 回调函数中 this 都指向原生 dom 节点。
  - [!] 字符串数组支持变化，例如 Event.on(['#xx','#yy'],...) 改写做 Event.on('#xx,#yy',...);
  - [+] 自定义事件增加冒泡支持，参见 publish api
  - [+] 兼容 mousewheel 事件：http://docs.kissyui.com/docs/html/api/core/event/mousewheel.html

@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20dev
+Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Nov 28 12:39
+build time: Dec 13 18:47
 */
 /**
  * UIBase.Align
@@ -1840,7 +1840,8 @@ KISSY.add("uibase/resize", function(S) {
         },
         _uiSetResize:function(v) {
 
-            var Resizable = S.require("resizable"),self = this;
+            var Resizable = S.require("resizable"),
+                self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
                 v.node = self.get("el");

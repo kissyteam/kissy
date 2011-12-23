@@ -2,18 +2,18 @@
  * jsonp transport based on script transport
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/jsonp", function(S, io) {
+KISSY.add("ajax/jsonp", function (S, io) {
 
     io.setupConfig({
         jsonp:"callback",
-        jsonpCallback:function() {
+        jsonpCallback:function () {
             //不使用 now() ，极端情况下可能重复
             return S.guid("jsonp");
         }
     });
 
-    io.on("start", function(e) {
-        var xhr = e.xhr,c = xhr.config;
+    io.on("start", function (e) {
+        var xhr = e.xhr, c = xhr.config;
         if (c.dataType[0] == "jsonp") {
             var response,
                 cJsonpCallback = c.jsonpCallback,
@@ -25,7 +25,7 @@ KISSY.add("ajax/jsonp", function(S, io) {
             c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
 
             // build temporary JSONP function
-            window[jsonpCallback] = function(r) {
+            window[jsonpCallback] = function (r) {
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
                 // jsonp 返回了数组
                 if (arguments.length > 1) {
@@ -35,12 +35,12 @@ KISSY.add("ajax/jsonp", function(S, io) {
             };
 
             // cleanup whether success or failure
-            xhr.on("complete", function() {
+            xhr.on("complete", function () {
                 window[ jsonpCallback ] = previous;
                 if (previous === undefined) {
                     try {
                         delete window[ jsonpCallback ];
-                    } catch(e) {
+                    } catch (e) {
                         //S.log("delete window variable error : ");
                         //S.log(e);
                     }
@@ -55,7 +55,12 @@ KISSY.add("ajax/jsonp", function(S, io) {
             xhr.converters.script = xhr.converters.script || {};
 
             // script -> jsonp ,jsonp need to see json not as script
-            xhr.converters.script.json = function() {
+            // if ie onload a 404 file or all browsers onload an invalid script
+            // 404/invalid will be caught here
+            // because response is undefined( jsonp callback is never called)
+            // error throwed will be caught in conversion step
+            // and KISSY will notify user by error callback
+            xhr.converters.script.json = function () {
                 if (!response) {
                     S.error(" not call jsonpCallback : " + jsonpCallback)
                 }
