@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 20 15:40
+build time: Dec 23 17:12
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Dec 20 15:40
          */
         version:'1.20',
 
-        buildTime:'20111220154012',
+        buildTime:'20111223171202',
 
         /**
          * Returns a new object containing all of the properties of
@@ -597,8 +597,8 @@ build time: Dec 20 15:40
 
                 if (isObj) {
                     for (key in object) {
-                        if (object.hasOwnProperty(key) &&
-                            fn.call(context, object[key], key, object) === FALSE) {
+                        // can not use hasOwnProperty
+                        if (fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
@@ -32187,7 +32187,7 @@ KISSY.add("validation", function(S, Validation) {
 /*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 30 19:02
+build time: Dec 23 12:08
 */
 /**
  * mvc base
@@ -33080,12 +33080,12 @@ KISSY.add('mvc/router', function(S, Event, Base) {
  * default sync for model
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/sync", function(S, io) {
+KISSY.add("mvc/sync", function (S, io, JSON) {
     var methodMap = {
-        'create': 'POST',
-        'update': 'POST', //'PUT'
-        'delete': 'POST', //'DELETE'
-        'read'  : 'GET'
+        'create':'POST',
+        'update':'POST', //'PUT'
+        'delete':'POST', //'DELETE'
+        'read':'GET'
     };
 
     function sync(self, method, options) {
@@ -33105,7 +33105,7 @@ KISSY.add("mvc/sync", function(S, io) {
         }
 
         if (method == 'create' || method == 'update') {
-            data.model = self.toJSON();
+            data.model = JSON.stringify(self.toJSON());
         }
 
         return io(ioParam);
@@ -33113,7 +33113,7 @@ KISSY.add("mvc/sync", function(S, io) {
 
     return sync;
 }, {
-    requires:['ajax']
+    requires:['ajax', 'json']
 });/**
  * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com

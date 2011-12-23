@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 20 15:40
+build time: Dec 23 17:12
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Dec 20 15:40
          */
         version:'1.20',
 
-        buildTime:'20111220154012',
+        buildTime:'20111223171202',
 
         /**
          * Returns a new object containing all of the properties of
@@ -597,8 +597,8 @@ build time: Dec 20 15:40
 
                 if (isObj) {
                     for (key in object) {
-                        if (object.hasOwnProperty(key) &&
-                            fn.call(context, object[key], key, object) === FALSE) {
+                        // can not use hasOwnProperty
+                        if (fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
