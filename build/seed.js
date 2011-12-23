@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 23 13:05
+build time: Dec 23 17:15
 */
 /*
- * a seed where KISSY grows up from , KISS Yeah !
+ * @fileOverview a seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -93,7 +93,7 @@ build time: Dec 23 13:05
          */
         version:'1.30dev',
 
-        buildTime:'20111223130500',
+        buildTime:'20111223171526',
 
         /**
          * Returns a new object containing all of the properties of
@@ -321,7 +321,7 @@ build time: Dec 23 13:05
 
 })('KISSY', undefined);
 /**
- * @module  lang
+ * @fileOverview   lang
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
  */
@@ -598,8 +598,8 @@ build time: Dec 23 13:05
 
                 if (isObj) {
                     for (key in object) {
-                        if (object.hasOwnProperty(key) &&
-                            fn.call(context, object[key], key, object) === FALSE) {
+                        // can not use hasOwnProperty
+                        if (fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
@@ -1238,7 +1238,7 @@ build time: Dec 23 13:05
 
 })(KISSY, undefined);
 /**
- * setup data structure for kissy loader
+ * @fileOverview setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function(S){
@@ -1249,7 +1249,7 @@ build time: Dec 23 13:05
     S.__loaderUtils={};
     S.__loaderData={};
 })(KISSY);/**
- * status constants
+ * @fileOverview status constants
  * @author yiminghe@gmail.com
  */
 (function(S, data) {
@@ -1266,7 +1266,7 @@ build time: Dec 23 13:05
         "ATTACHED" : 4
     });
 })(KISSY, KISSY.__loaderData);/**
- * utils for kissy loader
+ * @fileOverview utils for kissy loader
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
@@ -1394,7 +1394,7 @@ build time: Dec 23 13:05
     var startsWith = S.startsWith,normalizePath = utils.normalizePath;
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
- * script/css load across browser
+ * @fileOverview script/css load across browser
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
@@ -1520,7 +1520,7 @@ build time: Dec 23 13:05
             }
     });
 })(KISSY, KISSY.__loaderUtils);/**
- * getScript support for css and js callback after load
+ * @fileOverview getScript support for css and js callback after load
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, utils) {
@@ -1636,7 +1636,7 @@ build time: Dec 23 13:05
     });
 
 })(KISSY, KISSY.__loaderUtils);/**
- * add module definition
+ * @fileOverview add module definition
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader, utils, data) {
@@ -1792,7 +1792,7 @@ build time: Dec 23 13:05
  * @refer
  *  - https://github.com/amdjs/amdjs-api/wiki/AMD
  **//**
- * build full path from relative path and base path
+ * @fileOverview build full path from relative path and base path
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, loader, utils, data) {
@@ -1838,7 +1838,7 @@ build time: Dec 23 13:05
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
- * logic for config.global , mainly for kissy.editor
+ * @fileOverview logic for config.global , mainly for kissy.editor
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
@@ -1876,7 +1876,7 @@ build time: Dec 23 13:05
         }
     });
 })(KISSY, KISSY.__loader);/**
- * for ie ,find current executive script ,then infer module name
+ * @fileOverview for ie ,find current executive script ,then infer module name
  * @author yiminghe@gmail.com
  */
 (function (S, loader, utils) {
@@ -1937,7 +1937,7 @@ build time: Dec 23 13:05
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
- * load a single mod (js or css)
+ * @fileOverview load a single mod (js or css)
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
@@ -2069,9 +2069,9 @@ build time: Dec 23 13:05
     });
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
- * @module loader
+ * @fileOverview  loader
  * @author lifesinger@gmail.com,yiminghe@gmail.com,lijing00333@163.com
- * @description: constant member and common method holder
+ * @description constant member and common method holder
  */
 (function(S, loader, data) {
     if ("require" in this) {
@@ -2153,7 +2153,7 @@ build time: Dec 23 13:05
  */
 
 /**
- * package mechanism
+ * @fileOverview package mechanism
  * @author yiminghe@gmail.com
  */
 (function (S, loader, utils) {
@@ -2211,7 +2211,7 @@ build time: Dec 23 13:05
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
- * register module ,associate module name with module factory(definition)
+ * @fileOverview register module ,associate module name with module factory(definition)
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader,data) {
@@ -2245,7 +2245,7 @@ build time: Dec 23 13:05
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderData);/**
- * use and attach mod
+ * @fileOverview use and attach mod
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S, loader, utils, data) {
@@ -2506,7 +2506,7 @@ build time: Dec 23 13:05
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
- * map mechanism
+ * @fileOverview map mechanism
  * @author yiminghe@gmail.com
  */
 (function (S, loader) {
@@ -2542,7 +2542,7 @@ build time: Dec 23 13:05
     });
 
 })(KISSY, KISSY.__loader);/**
- * combine mechanism
+ * @fileOverview combine mechanism
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -2576,7 +2576,7 @@ build time: Dec 23 13:05
         }
     };
 })(KISSY);/**
- *  mix loader into S and infer KISSy baseUrl if not set
+ *  @fileOverview mix loader into S and infer KISSy baseUrl if not set
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, loader, utils) {
@@ -2674,7 +2674,7 @@ build time: Dec 23 13:05
     S.__APP_INIT_METHODS.push('__initLoader');
 
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils);/**
- * @module  web.js
+ * @fileOverview   web.js
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
@@ -2908,7 +2908,7 @@ build time: Dec 23 13:05
 
 })(KISSY, undefined);
 /**
- * 声明 kissy 核心中所包含的模块，动态加载时将直接从 core.js 中加载核心模块
+ * @fileOverview 声明 kissy 核心中所包含的模块，动态加载时将直接从 core.js 中加载核心模块
  * @description: 为了和 1.1.7 及以前版本保持兼容，务实与创新，兼容与革新 ！
  * @author yiminghe@gmail.com
  */

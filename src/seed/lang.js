@@ -276,8 +276,8 @@
 
                 if (isObj) {
                     for (key in object) {
-                        if (object.hasOwnProperty(key) &&
-                            fn.call(context, object[key], key, object) === FALSE) {
+                        // can not use hasOwnProperty
+                        if (fn.call(context, object[key], key, object) === FALSE) {
                             break;
                         }
                     }
