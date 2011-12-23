@@ -1,5 +1,5 @@
 /**
- * generate proxy drag object,
+ * @fileOverview generate proxy drag object,
  * @author yiminghe@gmail.com
  */
 KISSY.add("dd/proxy", function(S, Node) {

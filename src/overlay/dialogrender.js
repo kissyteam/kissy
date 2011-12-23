@@ -1,5 +1,5 @@
 /**
- * render for dialog
+ * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {

@@ -1,5 +1,5 @@
 /**
- * animate on single property
+ * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
 KISSY.add("anim/fx", function (S, DOM, undefined) {

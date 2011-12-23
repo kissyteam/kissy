@@ -1,5 +1,5 @@
 /**
- * register module ,associate module name with module factory(definition)
+ * @fileOverview register module ,associate module name with module factory(definition)
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader,data) {

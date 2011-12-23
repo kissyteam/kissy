@@ -1,5 +1,5 @@
 /**
- * add module definition
+ * @fileOverview add module definition
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader, utils, data) {

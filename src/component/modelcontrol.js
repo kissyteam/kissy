@@ -1,5 +1,5 @@
 /**
- * model and control base class for kissy
+ * @fileOverview model and control base class for kissy
  * @author yiminghe@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */

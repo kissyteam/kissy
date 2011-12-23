@@ -1,5 +1,5 @@
 /**
- * menu separator def
+ * @fileOverview menu separator def
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {

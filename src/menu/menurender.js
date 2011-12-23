@@ -1,5 +1,5 @@
 /**
- * render aria from menu according to current menuitem
+ * @fileOverview render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {

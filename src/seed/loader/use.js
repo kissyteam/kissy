@@ -1,5 +1,5 @@
 /**
- * use and attach mod
+ * @fileOverview use and attach mod
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S, loader, utils, data) {

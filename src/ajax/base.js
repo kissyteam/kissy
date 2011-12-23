@@ -1,13 +1,13 @@
 /**
- * a scalable client io framework
+ * @fileOverview a scalable client io framework
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
+KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
 
         var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
             rspace = /\s+/,
             rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-            mirror = function(s) {
+            mirror = function (s) {
                 return s;
             },
             HTTP_PORT = 80,
@@ -19,7 +19,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
         try {
             curLocation = location.href;
-        } catch(e) {
+        } catch (e) {
             S.log("ajax/base get curLocation error : ");
             S.log(e);
             // Use the href attribute of an A element
@@ -37,7 +37,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                 // isLocal:isLocal,
                 type:"GET",
                 // only support utf-8 when post, encoding can not be changed actually
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                contentType:"application/x-www-form-urlencoded; charset=UTF-8",
                 async:true,
                 // whether add []
                 serializeArray:true,
@@ -56,10 +56,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  cache: null,
                  mimeType:null,
                  xdr:{
-                     subDomain:{
-                        proxy:'http://xx.t.com/proxy.html'
-                     },
-                     src:''
+                 subDomain:{
+                 proxy:'http://xx.t.com/proxy.html'
+                 },
+                 src:''
                  },
                  headers: {},
                  xhrFields:{},
@@ -69,12 +69,12 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  forceScript:false,
                  */
 
-                accepts: {
-                    xml: "application/xml, text/xml",
-                    html: "text/html",
-                    text: "text/plain",
-                    json: "application/json, text/javascript",
-                    "*": "*/*"
+                accepts:{
+                    xml:"application/xml, text/xml",
+                    html:"text/html",
+                    text:"text/plain",
+                    json:"application/json, text/javascript",
+                    "*":"*/*"
                 },
                 converters:{
                     text:{
@@ -131,7 +131,36 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         }
 
         function fire(eventType, xhr) {
-            io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
+
+
+            /**
+             * @name io#complete
+             * @description 请求完成（成功或失败）后触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
+            /**
+             * @name io#success
+             * @description 请求成功后触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
+            /**
+             * @name io#error
+             * @description 请求失败后触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
+            io.fire(eventType, { ajaxConfig:xhr.config, xhr:xhr});
         }
 
         function handleXhrEvent(e) {
@@ -147,12 +176,30 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             fire(type, xhr);
         }
 
+        /**
+         * @name io
+         * @namespace
+         * @function
+         * @param {Object} c 发送请求配置选项
+         * @param {String} c.url 请求地址
+         */
         function io(c) {
             if (!c.url) {
                 return undefined;
             }
             c = setUpConfig(c);
             var xhr = new XhrObject(c);
+
+
+            /**
+             * @name io#start
+             * @description 生成请求对象前触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
             fire("start", xhr);
             var transportContructor = transports[c.dataType[0]] || transports["*"],
                 transport = new transportContructor(xhr);
@@ -180,11 +227,20 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
             xhr.readyState = 1;
 
+            /**
+             * @name io#send
+             * @description 发送请求前触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} xhr 当前请求对象
+             */
+
             fire("send", xhr);
 
             // Timeout
             if (c.async && c.timeout > 0) {
-                xhr.timeoutTimer = setTimeout(function() {
+                xhr.timeoutTimer = setTimeout(function () {
                     xhr.abort("timeout");
                 }, c.timeout * 1000);
             }
@@ -209,16 +265,16 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         S.mix(io, Event.Target);
         S.mix(io, {
             isLocal:isLocal,
-            setupConfig:function(setting) {
+            setupConfig:function (setting) {
                 S.mix(defaultConfig, setting, undefined, undefined, true);
             },
-            setupTransport:function(name, fn) {
+            setupTransport:function (name, fn) {
                 transports[name] = fn;
             },
-            getTransport:function(name) {
+            getTransport:function (name) {
                 return transports[name];
             },
-            getConfig:function() {
+            getConfig:function () {
                 return defaultConfig;
             }
         });
@@ -227,7 +283,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         return io;
     },
     {
-        requires:["json","event","./xhrobject"]
+        requires:["json", "event", "./xhrobject"]
     });
 
 /**

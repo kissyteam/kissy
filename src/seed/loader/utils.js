@@ -1,5 +1,5 @@
 /**
- * utils for kissy loader
+ * @fileOverview utils for kissy loader
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {

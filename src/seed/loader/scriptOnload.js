@@ -1,5 +1,5 @@
 /**
- * script/css load across browser
+ * @fileOverview script/css load across browser
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {

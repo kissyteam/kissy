@@ -1,5 +1,5 @@
 /**
- * collection of models
+ * @fileOverview collection of models
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {

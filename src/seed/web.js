@@ -1,5 +1,5 @@
 /**
- * @module  web.js
+ * @fileOverview   web.js
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */

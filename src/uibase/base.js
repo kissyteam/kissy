@@ -235,6 +235,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * @protected
+             * @function
              */
             renderUI:noop,
 
@@ -263,6 +264,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * @protected
+             * @function
              */
             bindUI:noop,
 
@@ -288,6 +290,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * protected
+             * @function
              */
             syncUI:noop,
 
@@ -302,7 +305,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             }
         },
         /**
-         * @lends UIBase#
+         * @lends UIBase
          */
         {
             /**

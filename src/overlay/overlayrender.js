@@ -1,5 +1,5 @@
 /**
- * KISSY Overlay
+ * @fileOverview KISSY Overlay
  * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {

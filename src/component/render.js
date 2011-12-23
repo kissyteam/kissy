@@ -1,5 +1,5 @@
 /**
- * render base class for kissy
+ * @fileOverview render base class for kissy
  * @author yiminghe@gmail.com
  * @refer http://martinfowler.com/eaaDev/uiArchs.html
  */

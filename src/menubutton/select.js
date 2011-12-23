@@ -1,5 +1,5 @@
 /**
- * manage a list of single-select options
+ * @fileOverview manage a list of single-select options
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, Menu, Option) {

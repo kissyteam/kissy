@@ -1,5 +1,5 @@
 /**
- * definition for node and nodelist
+ * @fileOverview definition for node and nodelist
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {

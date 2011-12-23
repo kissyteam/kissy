@@ -1,5 +1,5 @@
 /**
- * filter menu render
+ * @fileOverview filter menu render
  * 1.create filter input
  * 2.change menu contentelement
  * @author yiminghe@gmail.com

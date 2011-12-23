@@ -1,5 +1,5 @@
 /**
- * @module   将 swf 嵌入到页面中
+ * @fileOverview    将 swf 嵌入到页面中
  * @author   kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
  */
 KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {

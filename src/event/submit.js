@@ -1,5 +1,5 @@
 /**
- * patch for ie<9 submit : does not bubble !
+ * @fileOverview patch for ie<9 submit : does not bubble !
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/submit", function (S, UA, Event, DOM, special) {

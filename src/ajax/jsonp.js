@@ -1,5 +1,5 @@
 /**
- * jsonp transport based on script transport
+ * @fileOverview jsonp transport based on script transport
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function (S, io) {

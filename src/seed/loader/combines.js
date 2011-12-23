@@ -1,5 +1,5 @@
 /**
- * combine mechanism
+ * @fileOverview combine mechanism
  * @author yiminghe@gmail.com
  */
 (function (S) {

@@ -1,5 +1,5 @@
 /**
- * @module  lang
+ * @fileOverview   lang
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
  */

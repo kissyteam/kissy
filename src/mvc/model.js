@@ -1,5 +1,5 @@
 /**
- * enhanced base for model with sync
+ * @fileOverview enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/model", function(S, Base, mvc) {

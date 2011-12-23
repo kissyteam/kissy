@@ -1,5 +1,5 @@
 /**
- * mvc base
+ * @fileOverview mvc base
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/base", function(S, sync) {

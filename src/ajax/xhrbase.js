@@ -1,5 +1,5 @@
 /**
- * base for xhr and subdomain
+ * @fileOverview base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrbase", function (S, io) {

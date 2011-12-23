@@ -1,5 +1,5 @@
 /**
- * Model and Control for button
+ * @fileOverview Model and Control for button
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {

@@ -1,5 +1,5 @@
 /**
- * @module  selector
+ * @fileOverview   selector
  * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function(S, DOM, undefined) {

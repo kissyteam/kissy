@@ -1,5 +1,5 @@
 /**
- * @module  Base
+ * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('base/base', function (S, Attribute, Event) {

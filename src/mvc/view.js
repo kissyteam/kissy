@@ -1,5 +1,5 @@
 /**
- * view for kissy mvc : event delegation,el generator
+ * @fileOverview view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/view", function(S, Node, Base) {

@@ -1,5 +1,5 @@
 /**
- * @module  event-focusin
+ * @fileOverview   event-focusin
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {

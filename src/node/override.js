@@ -1,5 +1,5 @@
 /**
- * overrides methods in NodeList.prototype
+ * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add("node/override", function(S, DOM, Event, NodeList) {

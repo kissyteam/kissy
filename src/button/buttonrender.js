@@ -1,5 +1,5 @@
 /**
- * abstract view for button
+ * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {

@@ -49,12 +49,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     /**
      * 提供事件发布和订阅机制
      * @name Target
-     * @class
+     * @namespace
      * @memberOf Event
      */
     var Target =
     /**
-     * @lends Event.Target#
+     * @lends Event.Target
      */
     {
         /**

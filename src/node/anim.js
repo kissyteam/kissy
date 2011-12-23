@@ -1,5 +1,5 @@
 /**
- * @module  anim-node-plugin
+ * @fileOverview   anim-node-plugin
  * @author  yiminghe@gmail.com,
  *          lifesinger@gmail.com,
  *          qiaohua@taobao.com,

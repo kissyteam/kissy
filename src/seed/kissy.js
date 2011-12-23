@@ -1,5 +1,5 @@
 /*
- * a seed where KISSY grows up from , KISS Yeah !
+ * @fileOverview a seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, undefined) {

@@ -1,5 +1,5 @@
 /**
- * menu item ,child component for menu
+ * @fileOverview menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {

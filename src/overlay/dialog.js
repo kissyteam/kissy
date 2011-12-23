@@ -1,5 +1,5 @@
 /**
- * KISSY.Dialog
+ * @fileOverview KISSY.Dialog
  * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {

@@ -1,5 +1,5 @@
 /**
- * @module  dom
+ * @fileOverview style for ie
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
