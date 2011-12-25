@@ -21,6 +21,9 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                 if (!relatedTarget ||
                     (relatedTarget !== currentTarget &&
                         !DOM.contains(currentTarget, relatedTarget))) {
+                    // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
+                    // does not bubble
+                    event.stopPropagation();
                     return [handler.fn.call(handler.scope || currentTarget, event)];
                 }
                 return [];

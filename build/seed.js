@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 23 17:15
+build time: Dec 25 16:44
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -93,7 +93,7 @@ build time: Dec 23 17:15
          */
         version:'1.30dev',
 
-        buildTime:'20111223171526',
+        buildTime:'20111225164415',
 
         /**
          * Returns a new object containing all of the properties of
@@ -525,7 +525,7 @@ build time: Dec 23 17:15
          * 稍微改改就和规范一样了 :)
          * @param input
          * @param {Function} [filter] filter function
-         * @refer http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+         * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
          */
         clone:function (input, filter) {
             // Let memory be an association list of pairs of objects,
@@ -729,7 +729,7 @@ build time: Dec 23 17:15
             },
 
         /**
-         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          */
         reduce:/*
          NaN ?
@@ -808,7 +808,7 @@ build time: Dec 23 17:15
 
         /**
          * it is not same with native bind
-         * @refer https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          */
         bind:function (fn, obj) {
             var slice = [].slice,
@@ -826,7 +826,7 @@ build time: Dec 23 17:15
 
         /**
          * Gets current date in milliseconds.
-         * @refer  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
          * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
          * http://kangax.github.com/es5-compat-table/
          */
@@ -843,7 +843,7 @@ build time: Dec 23 17:15
         },
         /**
          * escape string to html
-         * @refer   http://yiminghe.javaeye.com/blog/788929
+         * @see   http://yiminghe.javaeye.com/blog/788929
          *          http://wonko.com/post/html-escaping
          * @param str {string} text2html show
          */
@@ -1489,7 +1489,7 @@ build time: Dec 23 17:15
         /**
          * monitor css onload across browsers
          * 暂时不考虑如何判断失败，如 404 等
-         * @refer
+         * @see
          *  - firefox 不可行（结论4错误）：
          *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
          *  - 全浏览器兼容
@@ -1789,7 +1789,7 @@ build time: Dec 23 17:15
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);
 
 /**
- * @refer
+ * @see
  *  - https://github.com/amdjs/amdjs-api/wiki/AMD
  **//**
  * @fileOverview build full path from relative path and base path

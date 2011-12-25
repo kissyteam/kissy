@@ -70,8 +70,8 @@ D:\code\kissy_git\kissy\src\core.js
 **/
 
 /**
- * @module  ua
- * @author  lifesinger@gmail.com
+ * @fileOverview ua
+ * @author lifesinger@gmail.com
  */
 KISSY.add('ua/base', function() {
 
@@ -247,8 +247,8 @@ KISSY.add('ua/base', function() {
  */
 
 /**
- * @module  ua-extra
- * @author  gonghao<gonghao@ghsky.com>
+ * @fileOverview ua-extra
+ * @author gonghao<gonghao@ghsky.com>
  */
 KISSY.add('ua/extra', function(S, UA) {
     var ua = navigator.userAgent,
@@ -301,6 +301,9 @@ KISSY.add('ua/extra', function(S, UA) {
     requires:["ua/base"]
 });
 
+/**
+ * @fileOverview ua
+ */
 KISSY.add("ua", function(S,UA) {
     return UA;
 }, {
@@ -1384,7 +1387,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param selector 选择器或单个元素
              * @param {Boolean} withDataAndEvent 复制节点是否包括和源节点同样的数据和事件
              * @param {Boolean} deepWithDataAndEvent 复制节点的子孙节点是否包括和源节点子孙节点同样的数据和事件
-             * @refer https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @returns 复制后的节点
              */
             clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
@@ -2183,7 +2186,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          * @param hscroll
          * @param {Boolean} auto whether adjust element automatically
          *                       (it only scrollIntoView when element is out of view)
-         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
@@ -4089,6 +4092,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
  *
  */
 
+/**
+ * @fileOverview dom
+ */
 KISSY.add("dom", function(S,DOM) {
     return DOM;
 }, {
@@ -5182,22 +5188,23 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * 监听事件
+         * @function
          * @param {String} type 事件名
          * @param {Function} fn 事件处理器
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on:attach("add")
+        on:attach("add"),
+        /**
+         * 取消监听事件
+         * @function
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
+        detach:attach("remove")
     };
-
-    /**
-     * 取消监听事件
-     * @param {String} type 事件名
-     * @param {Function} fn 事件处理器
-     * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-     * @returns 当前实例
-     */
-    Target.detach = attach("remove");
 
     return Target;
 }, {
@@ -5603,6 +5610,9 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                 if (!relatedTarget ||
                     (relatedTarget !== currentTarget &&
                         !DOM.contains(currentTarget, relatedTarget))) {
+                    // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
+                    // does not bubble
+                    event.stopPropagation();
                     return [handler.fn.call(handler.scope || currentTarget, event)];
                 }
                 return [];
@@ -6279,8 +6289,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
 });
 
 /**
- * KISSY Scalable Event Framework
- * @author yiminghe@gmail.com
+ * @fileOverview KISSY Scalable Event Framework
  */
 KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
     S.mix(Event, {
@@ -6355,7 +6364,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
-     * @constructor
+     * @class
+     * @name NodeList
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,
@@ -6447,7 +6457,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         /**
          * Applies the given function to each Node in the NodeList.
          * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-         * @param context An optional context to apply the function with Default context is the current NodeList instance
+         * @param [context] An optional context to apply the function with Default context is the current NodeList instance
          */
         each: function(fn, context) {
             var self = this;
@@ -8078,6 +8088,9 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
     requires:["dom", "./base", "./fx"]
 });
 
+/**
+ * @fileOverview anim
+ */
 KISSY.add("anim", function(S, Anim,Easing) {
     Anim.Easing=Easing;
     return Anim;
@@ -8182,6 +8195,10 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
  *  - anim needs queue mechanism ?
  */
 
+/**
+ * @fileOverview node
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("node", function(S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
     return Node;
@@ -8680,8 +8697,7 @@ KISSY.add("json/json2", function(S, UA) {
 }, {requires:['ua']});
 
 /**
- * adapt json2 to kissy
- * @author lifesinger@gmail.com
+ * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 
@@ -9153,7 +9169,8 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
 
         /**
          * @name io
-         * @namespace
+         * @description kissy io framework
+         * @namespace io framework
          * @function
          * @param {Object} c 发送请求配置选项
          * @param {String} c.url 请求地址
@@ -10177,6 +10194,10 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     requires:["dom","event","./base"]
 });
 
+/**
+ * @fileOverview io shortcut
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("ajax", function (S, serializer, io, XhrObject) {
     var undef = undefined;
     // some shortcut
@@ -10839,6 +10860,9 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     requires:["./attribute", "event"]
 });
 
+/**
+ * @fileOverview Attribute and Base
+ */
 KISSY.add("base", function(S, Base, Attribute) {
     Base.Attribute = Attribute;
     return Base;
@@ -10931,12 +10955,18 @@ KISSY.add('cookie/base', function(S) {
  *     独立成静态工具类的方式更优。
  */
 
+/**
+ * @fileOverview cookie
+ */
 KISSY.add("cookie", function(S,C) {
     return C;
 }, {
     requires:["cookie/base"]
 });
 
+/**
+ * @fileOverview core
+ */
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
     var re = {
         UA:UA,
@@ -10976,6 +11006,9 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         "cookie"
     ]
 });
+/**
+ * TODO need to be deleted in 1.30dev
+ **/
 
 
 

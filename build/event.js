@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 23 13:04
+build time: Dec 25 16:44
 */
 /**
  * @fileOverview responsible for registering event
@@ -36,160 +36,160 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
          * @lends Event
          */
         {
-        // single type , single target , fixed native
-        __add:function (isNativeTarget, target, type, fn, scope) {
-            var typedGroups = Utils.getTypedGroups(type);
-            type = typedGroups[0];
-            var groups = typedGroups[1],
-                eventDesc,
-                data,
-                s = specials[type],
-                // in case overwrite by delegateFix/onFix in specials events
-                // (mouseenter/leave,focusin/out)
-                originalType,
-                last,
-                selector;
-            if (S.isObject(fn)) {
-                last = fn.last;
-                scope = fn.scope;
-                data = fn.data;
-                selector = fn.selector;
-                fn = fn.fn;
-                if (selector) {
-                    if (s && s['delegateFix']) {
+            // single type , single target , fixed native
+            __add:function (isNativeTarget, target, type, fn, scope) {
+                var typedGroups = Utils.getTypedGroups(type);
+                type = typedGroups[0];
+                var groups = typedGroups[1],
+                    eventDesc,
+                    data,
+                    s = specials[type],
+                    // in case overwrite by delegateFix/onFix in specials events
+                    // (mouseenter/leave,focusin/out)
+                    originalType,
+                    last,
+                    selector;
+                if (S.isObject(fn)) {
+                    last = fn.last;
+                    scope = fn.scope;
+                    data = fn.data;
+                    selector = fn.selector;
+                    fn = fn.fn;
+                    if (selector) {
+                        if (s && s['delegateFix']) {
+                            originalType = type;
+                            type = s['delegateFix'];
+                        }
+                    }
+                }
+                if (!selector) {
+                    // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
+                    // TODO need evaluate!
+                    if (s && s['onFix']) {
                         originalType = type;
-                        type = s['delegateFix'];
+                        type = s['onFix'];
                     }
                 }
-            }
-            if (!selector) {
-                // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
-                // TODO need evaluate!
-                if (s && s['onFix']) {
-                    originalType = type;
-                    type = s['onFix'];
-                }
-            }
-            // 不是有效的 target 或 参数不对
-            if (!type ||
-                !target ||
-                !S.isFunction(fn) ||
-                (isNativeTarget && !isValidTarget(target))) {
-                return;
-            }
-            // 获取事件描述
-            eventDesc = Event._data(target);
-            if (!eventDesc) {
-                _protected._data(target, eventDesc = {});
-            }
-            //事件 listeners , similar to eventListeners in DOM3 Events
-            var events = eventDesc.events = eventDesc.events || {},
-                handlers = events[type] = events[type] || [],
-                handleObj = {
-                    fn:fn,
-                    scope:scope,
-                    selector:selector,
-                    last:last,
-                    data:data,
-                    groups:groups,
-                    originalType:originalType
-                },
-                eventHandler = eventDesc.handler;
-            // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-            if (!eventHandler) {
-                eventHandler = eventDesc.handler = function (event, data) {
-                    // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
-                    // 已经在 fire 中 bubble 过一次了
-                    // incase after page has unloaded
-                    if (typeof KISSY == "undefined" ||
-                        event && event.type == Utils.Event_Triggered) {
-                        return;
-                    }
-                    var currentTarget = eventHandler.target, type;
-                    if (!event || !event.fixed) {
-                        event = new EventObject(currentTarget, event);
-                    }
-                    type = event.type;
-                    if (S.isPlainObject(data)) {
-                        S.mix(event, data);
-                    }
-                    // protect type
-                    if (type) {
-                        event.type = type;
-                    }
-                    return handle(currentTarget, event);
-                };
-                // as for native dom event , this represents currentTarget !
-                eventHandler.target = target;
-            }
-
-            for (var i = handlers.length - 1; i >= 0; --i) {
-                /**
-                 * If multiple identical EventListeners are registered on the same EventTarget
-                 * with the same parameters the duplicate instances are discarded.
-                 * They do not cause the EventListener to be called twice
-                 * and since they are discarded
-                 * they do not need to be removed with the removeEventListener method.
-                 */
-                if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                // 不是有效的 target 或 参数不对
+                if (!type ||
+                    !target ||
+                    !S.isFunction(fn) ||
+                    (isNativeTarget && !isValidTarget(target))) {
                     return;
                 }
-            }
-
-            if (isNativeTarget) {
-                addDomEvent(target, type, eventHandler, handlers, handleObj);
-                //nullify to prevent memory leak in ie ?
-                target = null;
-            }
-
-            // 增加 listener
-            if (selector) {
-                var delegateIndex = handlers.delegateCount
-                    = handlers.delegateCount || 0;
-                handlers.splice(delegateIndex, 0, handleObj);
-                handlers.delegateCount++;
-            } else {
-                handlers.lastCount = handlers.lastCount || 0;
-                if (last) {
-                    handlers.push(handleObj);
-                    handlers.lastCount++;
-                } else {
-                    handlers.splice(handlers.length - handlers.lastCount,
-                        0, handleObj);
+                // 获取事件描述
+                eventDesc = Event._data(target);
+                if (!eventDesc) {
+                    _protected._data(target, eventDesc = {});
                 }
-            }
-        },
+                //事件 listeners , similar to eventListeners in DOM3 Events
+                var events = eventDesc.events = eventDesc.events || {},
+                    handlers = events[type] = events[type] || [],
+                    handleObj = {
+                        fn:fn,
+                        scope:scope,
+                        selector:selector,
+                        last:last,
+                        data:data,
+                        groups:groups,
+                        originalType:originalType
+                    },
+                    eventHandler = eventDesc.handler;
+                // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
+                if (!eventHandler) {
+                    eventHandler = eventDesc.handler = function (event, data) {
+                        // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
+                        // 已经在 fire 中 bubble 过一次了
+                        // incase after page has unloaded
+                        if (typeof KISSY == "undefined" ||
+                            event && event.type == Utils.Event_Triggered) {
+                            return;
+                        }
+                        var currentTarget = eventHandler.target, type;
+                        if (!event || !event.fixed) {
+                            event = new EventObject(currentTarget, event);
+                        }
+                        type = event.type;
+                        if (S.isPlainObject(data)) {
+                            S.mix(event, data);
+                        }
+                        // protect type
+                        if (type) {
+                            event.type = type;
+                        }
+                        return handle(currentTarget, event);
+                    };
+                    // as for native dom event , this represents currentTarget !
+                    eventHandler.target = target;
+                }
 
-        /**
-         * Adds an event listener.similar to addEventListener in DOM3 Events
-         * @param targets KISSY selector
-         * @param type {String} The type of event to append.
-         * @param fn {Function|Object} The event handler/listener.
-         * @param fn.scope
-         * @param fn.selector
-         * @param fn.fn
-         * @param  {Object} [scope] The scope (this reference) in which the handler function is executed.
-         */
-        add:function (targets, type, fn, scope) {
-            type = S.trim(type);
-            // data : 附加在回调后面的数据，delegate 检查使用
-            // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
+                for (var i = handlers.length - 1; i >= 0; --i) {
+                    /**
+                     * If multiple identical EventListeners are registered on the same EventTarget
+                     * with the same parameters the duplicate instances are discarded.
+                     * They do not cause the EventListener to be called twice
+                     * and since they are discarded
+                     * they do not need to be removed with the removeEventListener method.
+                     */
+                    if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                        return;
+                    }
+                }
+
+                if (isNativeTarget) {
+                    addDomEvent(target, type, eventHandler, handlers, handleObj);
+                    //nullify to prevent memory leak in ie ?
+                    target = null;
+                }
+
+                // 增加 listener
+                if (selector) {
+                    var delegateIndex = handlers.delegateCount
+                        = handlers.delegateCount || 0;
+                    handlers.splice(delegateIndex, 0, handleObj);
+                    handlers.delegateCount++;
+                } else {
+                    handlers.lastCount = handlers.lastCount || 0;
+                    if (last) {
+                        handlers.push(handleObj);
+                        handlers.lastCount++;
+                    } else {
+                        handlers.splice(handlers.length - handlers.lastCount,
+                            0, handleObj);
+                    }
+                }
+            },
+
+            /**
+             * Adds an event listener.similar to addEventListener in DOM3 Events
+             * @param targets KISSY selector
+             * @param type {String} The type of event to append.
+             * @param fn {Function|Object} The event handler/listener.
+             * @param fn.scope
+             * @param fn.selector
+             * @param fn.fn
+             * @param  {Object} [scope] The scope (this reference) in which the handler function is executed.
+             */
+            add:function (targets, type, fn, scope) {
+                type = S.trim(type);
+                // data : 附加在回调后面的数据，delegate 检查使用
+                // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
+                if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
+                    return targets;
+                }
+
+                DOM.query(targets).each(function (target) {
+                    Event.__add(true, target, type, fn, scope);
+                });
+
                 return targets;
             }
-
-            DOM.query(targets).each(function (target) {
-                Event.__add(true, target, type, fn, scope);
-            });
-
-            return targets;
-        }
-    });
+        });
 }, {
     requires:['./base', 'dom', './utils', './object', './handle', './protected', './special']
 });/**
- * scalable event framework for kissy (refer DOM3 Events)
- * how to fire event just like browser?
+ * @fileOverview scalable event framework for kissy (refer DOM3 Events)
+ *               how to fire event just like browser?
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
@@ -201,6 +201,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
+     * @namespace
      * @name Event
      */
     var Event =
@@ -403,7 +404,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
  *  - 增加 fire ，模拟冒泡处理 dom 事件
  */
 /**
- * change bubble and checkbox/radio fix patch for ie<9
+ * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/change", function (S, UA, Event, DOM, special) {
@@ -505,7 +506,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
 }, {
     requires:["ua", "./base", "dom", './special']
 });/**
- * @module  event-focusin
+ * @fileOverview   event-focusin
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
@@ -700,7 +701,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
 }, {
     requires:['dom', './protected', './special']
 });/**
- * @module  event-hashchange
+ * @fileOverview   event-hashchange
  * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
@@ -1118,7 +1119,7 @@ KISSY.add("event/keycodes", function() {
     return KeyCodes;
 
 });/**
- * @module  event-mouseenter
+ * @fileOverview   event-mouseenter
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
@@ -1140,6 +1141,9 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                 if (!relatedTarget ||
                     (relatedTarget !== currentTarget &&
                         !DOM.contains(currentTarget, relatedTarget))) {
+                    // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
+                    // does not bubble
+                    event.stopPropagation();
                     return [handler.fn.call(handler.scope || currentTarget, event)];
                 }
                 return [];
@@ -1161,7 +1165,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
  * - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
 /**
- * normalize mousewheel in gecko
+ * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _protected, special) {
@@ -1263,7 +1267,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
  http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
  **//**
- * @module  EventObject
+ * @fileOverview   EventObject
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('event/object', function (S, undefined) {
@@ -1679,13 +1683,13 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
 }, {
     requires:['./base', 'dom', './utils', './protected', './special']
 });/**
- * special house for special events
+ * @fileOverview special house for special events
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/special", function () {
     return {};
 });/**
- * patch for ie<9 submit : does not bubble !
+ * @fileOverview patch for ie<9 submit : does not bubble !
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
@@ -1807,12 +1811,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     /**
      * 提供事件发布和订阅机制
      * @name Target
-     * @class
+     * @namespace
      * @memberOf Event
      */
     var Target =
     /**
-     * @lends Event.Target#
+     * @lends Event.Target
      */
     {
         /**
@@ -1912,22 +1916,23 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * 监听事件
+         * @function
          * @param {String} type 事件名
          * @param {Function} fn 事件处理器
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on:attach("add")
+        on:attach("add"),
+        /**
+         * 取消监听事件
+         * @function
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
+        detach:attach("remove")
     };
-
-    /**
-     * 取消监听事件
-     * @param {String} type 事件名
-     * @param {Function} fn 事件处理器
-     * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-     * @returns 当前实例
-     */
-    Target.detach = attach("remove");
 
     return Target;
 }, {
@@ -1941,7 +1946,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
  *  yiminghe:2011-10-17
  *   - implement bubble for custom event
  **//**
- * utils for event
+ * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/utils", function (S, DOM) {
@@ -2058,7 +2063,7 @@ KISSY.add("event/utils", function (S, DOM) {
 }, {
     requires:['dom']
 });/**
- * inspired by yui3 :
+ * @fileOverview  inspired by yui3 :
  *
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
@@ -2147,8 +2152,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 }, {
     requires:["./base", "dom", "./special"]
 });/**
- * KISSY Scalable Event Framework
- * @author yiminghe@gmail.com
+ * @fileOverview KISSY Scalable Event Framework
  */
 KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
     S.mix(Event, {
