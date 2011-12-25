@@ -123,6 +123,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
             return;
         }
         // fragment 插入速度快点
+        // 而且能够一个操作达到批量插入
+        // refer: http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-B63ED1A3
         var newNode = DOM._nl2frag(newNodes),
             clonedNode;
         //fragment 一旦插入里面就空了，先复制下
