@@ -3,9 +3,6 @@
  * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
-
-    var POPUP_DELAY = 100;
-
     function Popup(container, config) {
         var self = this;
 
@@ -24,8 +21,11 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             setter:function(v) {
                 return S.one(v);
             }
-        },          // 触发器
-        triggerType: {value:'click'}    // 触发类型
+        },                              // 触发器
+        triggerType: {value:'click'},   // 触发类型
+        mouseDelay: {
+            value: 100                  // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
+        }
     };
 
     S.extend(Popup, Overlay, {
@@ -57,7 +57,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
-                }, POPUP_DELAY);
+                }, self.get('mouseDelay'));
             };
 
             trigger.on('mouseenter', self.__mouseEnterPopup);
@@ -86,7 +86,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             var self = this;
             self._hiddenTimer = S.later(function() {
                 self.hide();
-            }, POPUP_DELAY);
+            }, self.get('mouseDelay'));
         },
 
         _clearHiddenTimer: function() {
