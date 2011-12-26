@@ -42,7 +42,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
         // use alpha filter for IE opacity
         try {
-            if (S.isNullOrUndefined(docElem.style[OPACITY])) {
+            if (docElem.style[OPACITY] == null) {
 
                 CUSTOM_STYLES[OPACITY] = {
 
