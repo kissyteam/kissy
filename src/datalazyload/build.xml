@@ -3,14 +3,14 @@
 
 
     <property file="build.properties"/>
-    <property name="src.dir" location="."/>
+    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 
 
     <target name="concat">
         <concat destfile="datalazyload-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path location="impl.js"/>
+            <fileset dir="${src.dir}" includes="*.js"/>
             <path location="../datalazyload.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;" />

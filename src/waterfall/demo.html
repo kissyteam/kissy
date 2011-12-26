@@ -2,14 +2,14 @@
 <html>
 <head>
 <title>loader demo</title>
-<link rel="stylesheet" href="demo.css" type="text/css" media="all"/>
-<link href="../../button/assets/common.css" rel="stylesheet"/>
-<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<link rel="stylesheet" href="demo/demo.css" type="text/css" media="all"/>
+<link href="../button/assets/common.css" rel="stylesheet"/>
+<link href="../button/assets/custombutton.css" rel="stylesheet"/>
 
-<script src="../../../build/kissy.js"></script>
-<script src="../base.js"></script>
-<script src="../loader.js"></script>
-<script src="../../waterfall.js"></script>
+<script src="../../build/kissy.js"></script>
+<script src="./src/base.js"></script>
+<script src="./src/loader.js"></script>
+<script src="../waterfall.js"></script>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
     <div id="button_container"></div>
 
     <div id="article">
-        <div id="ColumnContainer"> </div>
+        <div id="ColumnContainer"></div>
         <a id="BackToTop" href="#">Scroll to Top</a>
         <div id="loadingPins"><img src="http://d3io1k5o0zdpqr.cloudfront.net/images/BouncingLoader.gif" alt="Pin Loader Image"/><span>Fetching pins&hellip;</span></div>
     </div>
@@ -26,12 +26,12 @@
 <script type="tpl" id="tpl">
     <div class="pin ks-waterfall" data-id="{{id}}">
         <a href="#" class="image">
-            <img height="{{height}}" alt="{{title}}" src="http://farm{{farm}}.static.flickr.com/{{server}}/{{id}}_{{secret}}_m.jpg" />
+            <img height="{{height}}" alt="{{title}}" src="http://farm{{farm}}.static.flickr.com/{{server}}/{{id}}_{{secret}}_m.jpg"/>
         </a>
         <p class="description">{{title}}</p>
     </div>
 </script>
-<script src="demo2.js"></script>
+<script src="demo/demo2.js"></script>
 
 </body>
 </html>

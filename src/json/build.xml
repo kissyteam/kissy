@@ -2,14 +2,14 @@
     <description>Component Build File</description>
 
     <property file="build.properties"/>
-    <property name="src.dir" location="."/>
+    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 
 
     <target name="concat">
         <concat destfile="json-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <path path="json2.js"/>
+            <fileset dir="${src.dir}" includes="*.js"/>
             <path path="../json.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;" />
