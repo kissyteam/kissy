@@ -2,7 +2,7 @@
  * @fileOverview dd support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate, Scroll) {
+KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
     /**
      * @name DD
      */
@@ -11,6 +11,7 @@ KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Delegate, Droppab
         Draggable:Draggable,
         Droppable:Droppable,
         DDM:DDM,
+        "Constrain":Constrain,
         Proxy:Proxy,
         DraggableDelegate:Delegate,
         DroppableDelegate:DroppableDelegate,
@@ -22,6 +23,7 @@ KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Delegate, Droppab
         "dd/draggable",
         "dd/droppable",
         "dd/proxy",
+        "dd/constrain",
         "dd/draggable-delegate",
         "dd/droppable-delegate",
         "dd/scroll"]

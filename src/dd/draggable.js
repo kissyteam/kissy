@@ -268,16 +268,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             },
 
             _fixDragStart:fixDragStart,
-            /**
-             * 销毁
-             */
-            destroy:function () {
-                var self = this,
-                    node = self.get('dragNode');
-                node.detach('mousedown', _handleMouseDown, self)
-                    .detach('dragstart', self._fixDragStart);
-                self.detach();
-            },
 
             /**
              *
@@ -370,7 +360,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
 
                 if (!self.get("dragging")) {
-                    var clickPixelThresh = self.get("clickPixelThresh"), l1, l2;
+                    var clickPixelThresh = self.get("clickPixelThresh");
                     // 鼠标经过了一定距离，立即开始
                     if (Math.abs(pageX - startMousePos.left) >= clickPixelThresh ||
                         Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
@@ -393,6 +383,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                     pageY:pageY,
                     drag:self
                 };
+
+                self.fire("dragalign", {
+                    info:ret
+                });
+
+                DDM.fire("dragalign", {
+                    info:ret
+                });
 
                 var def = 1;
 
@@ -470,7 +468,17 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 self.fire("dragstart", {
                     drag:self
                 });
+            },
 
+            /**
+             * 销毁
+             */
+            destroy:function () {
+                var self = this,
+                    node = self.get('dragNode');
+                node.detach('mousedown', _handleMouseDown, self)
+                    .detach('dragstart', self._fixDragStart);
+                self.detach();
             }
         });
 

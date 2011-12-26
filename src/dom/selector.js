@@ -2,11 +2,11 @@
  * @fileOverview   selector
  * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
-KISSY.add('dom/selector', function(S, DOM, undefined) {
+KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     var doc = document,
         filter = S.filter,
-        require = function(selector) {
+        require = function (selector) {
             return S.require(selector);
         },
         isArray = S.isArray,
@@ -34,10 +34,19 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             // optimize common usage
             contexts = context === undefined ? [doc] : tuneContext(context);
 
+        // 常见的选择器
+        // DOM.query("#x")
         if (isSelectorString) {
             selector = trim(selector);
             if (contexts.length == 1 && selector) {
                 ret = quickFindBySelectorStr(selector, contexts[0]);
+            }
+        }
+        // 常见的数组
+        // var x=DOM.query(".l");DOM.css(x,"color","red");
+        else if (isArray(selector)) {
+            if (contexts.length == 1 && contexts[0] == doc) {
+                ret = selector;
             }
         }
         if (!ret) {
@@ -59,8 +68,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             }
         }
         // attach each method
-        ret.each = function(f) {
-            var self = this,el,i;
+        ret.each = function (f) {
+            var self = this, el, i;
             for (i = 0; i < self.length; i++) {
                 el = self[i];
                 if (f(el, i) === false) {
@@ -117,7 +126,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     }
 
     function quickFindBySelectorStr(selector, context) {
-        var ret,t,match,id,tag,cls;
+        var ret, t, match, id, tag, cls;
         // selector 为 #id 是最常见的情况，特殊优化处理
         if (REG_ID.test(selector)) {
             t = getElementById(selector.slice(1), context);
@@ -173,7 +182,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         // 传入的 selector 是 NodeList 或已是 Array
         else if (selector && (isArray(selector) || isNodeList(selector))) {
             // 只能包含在 context 里面
-            ret = filter(selector, function(s) {
+            ret = filter(selector, function (s) {
                 return testByContext(s, context);
             });
         }
@@ -200,10 +209,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         return DOM.__contains(context, element);
     }
 
-    var unique;
-    (function() {
+    var unique = S.noop;
+    (function () {
         var sortOrder,
-            t,
             hasDuplicate,
             baseHasDuplicate = true;
 
@@ -211,7 +219,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 // optimization where it does not always call our comparision
 // function. If that is the case, discard the hasDuplicate value.
 //   Thus far that includes Google Chrome.
-        [0, 0].sort(function() {
+        [0, 0].sort(function () {
             baseHasDuplicate = false;
             return 0;
         });
@@ -223,7 +231,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 elements.sort(sortOrder);
 
                 if (hasDuplicate) {
-                    var i = 1,len = elements.length;
+                    var i = 1, len = elements.length;
                     while (i < len) {
                         if (elements[i] === elements[ i - 1 ]) {
                             elements.splice(i, 1);
@@ -238,7 +246,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
         // 貌似除了 ie 都有了...
         if (doc.documentElement.compareDocumentPosition) {
-            sortOrder = t = function(a, b) {
+            sortOrder = function (a, b) {
                 if (a == b) {
                     hasDuplicate = true;
                     return 0;
@@ -252,7 +260,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             };
 
         } else {
-            sortOrder = t = function(a, b) {
+            sortOrder = function (a, b) {
                 // The nodes are identical, we can exit early
                 if (a == b) {
                     hasDuplicate = true;
@@ -311,7 +319,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         return context && makeArray(context.getElementsByTagName(tag)) || [];
     }
 
-    (function() {
+    (function () {
         // Check to see if the browser returns only elements
         // when doing getElementsByTagName('*')
 
@@ -321,10 +329,10 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
         // Make sure no comments are found
         if (div.getElementsByTagName(ANY).length > 0) {
-            getElementsByTagName = function(tag, context) {
+            getElementsByTagName = function (tag, context) {
                 var ret = makeArray(context.getElementsByTagName(tag));
                 if (tag === ANY) {
-                    var t = [], i = 0,node;
+                    var t = [], i = 0, node;
                     while ((node = ret[i++])) {
                         // Filter out possible comments
                         if (node.nodeType === 1) {
@@ -339,7 +347,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
     })();
 
     // query .cls
-    var getElementsByClassName = doc.getElementsByClassName ? function(cls, tag, context) {
+    var getElementsByClassName = doc.getElementsByClassName ? function (cls, tag, context) {
         // query("#id1 xx","#id2")
         // #id2 内没有 #id1 , context 为 null , 这里防御下
         if (!context) {
@@ -363,10 +371,10 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             ret = makeArray(els);
         }
         return ret;
-    } : ( doc.querySelectorAll ? function(cls, tag, context) {
+    } : ( doc.querySelectorAll ? function (cls, tag, context) {
         // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
         return context && makeArray(context.querySelectorAll((tag ? tag : '') + '.' + cls)) || [];
-    } : function(cls, tag, context) {
+    } : function (cls, tag, context) {
         if (!context) {
             return [];
         }
@@ -395,9 +403,9 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
 
     S.mix(DOM, {
 
-        query: query,
+        query:query,
 
-        get: function(selector, context) {
+        get:function (selector, context) {
             return query(selector, context)[0] || null;
         },
 
@@ -407,7 +415,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
          * Filters an array of elements to only include matches of a filter.
          * @param filter selector or fn
          */
-        filter: function(selector, filter, context) {
+        filter:function (selector, filter, context) {
             var elems = query(selector, context),
                 sizzle = require("sizzle"),
                 match,
@@ -424,8 +432,8 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                 tag = match[2];
                 cls = match[3];
                 if (!id) {
-                    filter = function(elem) {
-                        var tagRe = true,clsRe = true;
+                    filter = function (elem) {
+                        var tagRe = true, clsRe = true;
 
                         // 指定 tag 才进行判断
                         if (tag) {
@@ -440,7 +448,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
                         return clsRe && tagRe;
                     }
                 } else if (id && !tag && !cls) {
-                    filter = function(elem) {
+                    filter = function (elem) {
                         return DOM.__attr(elem, "id") === id;
                     };
                 }
@@ -464,7 +472,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         /**
          * Returns true if the passed element(s) match the passed filter
          */
-        test: function(selector, filter, context) {
+        test:function (selector, filter, context) {
             var elements = query(selector, context);
             return elements.length && (DOM.filter(elements, filter, context).length === elements.length);
         }

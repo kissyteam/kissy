@@ -50,93 +50,91 @@ KISSY.add("dd/proxy", function (S, Node) {
              * 关联到某个拖对象
              * @param drag
              */
-        attach:function (drag) {
+            attach:function (drag) {
 
-            var self = this,
-                tag;
+                var self = this,
+                    tag = stamp(drag, 1, MARKER);
 
-            if (tag = stamp(drag, 1, MARKER) &&
-                self[DESTRUCTOR_ID][tag]
-                ) {
-                return;
-            }
+                if (tag && self[DESTRUCTOR_ID][tag]) {
+                    return;
+                }
 
-            function start() {
-                var node = self.get("node"),
-                    dragNode = drag.get("node");
+                function start() {
+                    var node = self.get("node"),
+                        dragNode = drag.get("node");
 
-                // cache proxy node
-                if (!self[PROXY_ATTR]) {
-                    if (S.isFunction(node)) {
-                        node = node(drag);
-                        node.addClass("ks-dd-proxy");
-                        node.css("position", "absolute");
-                        self[PROXY_ATTR] = node;
+                    // cache proxy node
+                    if (!self[PROXY_ATTR]) {
+                        if (S.isFunction(node)) {
+                            node = node(drag);
+                            node.addClass("ks-dd-proxy");
+                            node.css("position", "absolute");
+                            self[PROXY_ATTR] = node;
+                        }
+                    } else {
+                        node = self[PROXY_ATTR];
                     }
-                } else {
-                    node = self[PROXY_ATTR];
+                    dragNode.parent()
+                        .append(node);
+                    node.show();
+                    node.offset(dragNode.offset());
+                    drag.set("dragNode", dragNode);
+                    drag.set("node", node);
                 }
-                dragNode.parent()
-                    .append(node);
-                node.show();
-                node.offset(dragNode.offset());
-                drag.set("dragNode", dragNode);
-                drag.set("node", node);
-            }
 
-            function end() {
-                var node = self[PROXY_ATTR];
-                drag.get("dragNode").offset(node.offset());
-                node.hide();
-                if (self.get("destroyOnEnd")) {
-                    node.remove();
-                    self[PROXY_ATTR] = 0;
+                function end() {
+                    var node = self[PROXY_ATTR];
+                    drag.get("dragNode").offset(node.offset());
+                    node.hide();
+                    if (self.get("destroyOnEnd")) {
+                        node.remove();
+                        self[PROXY_ATTR] = 0;
+                    }
+                    drag.set("node", drag.get("dragNode"));
                 }
-                drag.set("node", drag.get("dragNode"));
-            }
 
-            drag.on("dragstart", start);
-            drag.on("dragend", end);
+                drag.on("dragstart", start);
+                drag.on("dragend", end);
 
-            tag = stamp(drag, 0, MARKER);
+                tag = stamp(drag, 0, MARKER);
 
-            self[DESTRUCTOR_ID][tag] = {
-                drag:drag,
-                fn:function () {
-                    drag.detach("dragstart", start);
-                    drag.detach("dragend", end);
-                }
-            };
-        },
+                self[DESTRUCTOR_ID][tag] = {
+                    drag:drag,
+                    fn:function () {
+                        drag.detach("dragstart", start);
+                        drag.detach("dragend", end);
+                    }
+                };
+            },
             /**
              * 取消关联
              * @param drag
              */
-        unAttach:function (drag) {
-            var self = this,
-                tag = stamp(drag, 1, MARKER),
-                destructors = self[DESTRUCTOR_ID];
-            if (tag && destructors[tag]) {
-                destructors[tag].fn();
-                delete destructors[tag];
-            }
-        },
+            unAttach:function (drag) {
+                var self = this,
+                    tag = stamp(drag, 1, MARKER),
+                    destructors = self[DESTRUCTOR_ID];
+                if (tag && destructors[tag]) {
+                    destructors[tag].fn();
+                    delete destructors[tag];
+                }
+            },
 
             /**
              * 销毁
              */
-        destroy:function () {
-            var self = this,
-                node = self.get("node"),
-                destructors = self[DESTRUCTOR_ID];
-            if (node && !S.isFunction(node)) {
-                node.remove();
+            destroy:function () {
+                var self = this,
+                    node = self.get("node"),
+                    destructors = self[DESTRUCTOR_ID];
+                if (node && !S.isFunction(node)) {
+                    node.remove();
+                }
+                for (var d in destructors) {
+                    this.unAttach(destructors[d].drag);
+                }
             }
-            for (var d in destructors) {
-                this.unAttach(destructors[d].drag);
-            }
-        }
-    });
+        });
 
     return Proxy;
 }, {
