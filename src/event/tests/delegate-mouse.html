@@ -20,27 +20,26 @@
 <script src="../../../build/dom.js"></script>
 <script src="../../../build/node.js"></script>
 <script src="../../../build/anim.js"></script>
-<script src="../base.js"></script>
-<script src="../object.js"></script>
-<script src="../target.js"></script>
-<script src="../focusin.js"></script>
-<script src="../mouseenter.js"></script>
-<script src="../add.js"></script>
-<script src="../remove.js"></script>
-<script src="../handle.js"></script>
-<script src="../protected.js"></script>
-<script src="../valuechange.js"></script>
-<script src="../hashchange.js"></script>
-<script src="../keycodes.js"></script>
-<script src="../submit.js"></script>
-<script src="../change.js"></script>
-<script src="../mousewheel.js"></script>
-<script src="../utils.js"></script>
-<script src="../special.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/object.js"></script>
+<script src="../src/target.js"></script>
+<script src="../src/focusin.js"></script>
+<script src="../src/mouseenter.js"></script>
+<script src="../src/add.js"></script>
+<script src="../src/remove.js"></script>
+<script src="../src/handle.js"></script>
+<script src="../src/protected.js"></script>
+<script src="../src/valuechange.js"></script>
+<script src="../src/hashchange.js"></script>
+<script src="../src/keycodes.js"></script>
+<script src="../src/submit.js"></script>
+<script src="../src/change.js"></script>
+<script src="../src/mousewheel.js"></script>
+<script src="../src/utils.js"></script>
+<script src="../src/special.js"></script>
 <script src="../../event.js"></script>
 <script>
     KISSY.Config.mappedRules = [];KISSY.Config.combines ={};
-    KISSY.Config.base = "../../";
     KISSY.use("node", function(S, Node) {
         var $ = Node.all;
         $('#i4').delegate('mouseenter mouseleave click', '.inner', function(e) {
