@@ -662,7 +662,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * 自定义属性不推荐使用，使用 .data
              * @param selector
              * @param name
-             * @param value
+             * @param [value]
              */
             prop:function (selector, name, value) {
                 // suports hash
@@ -921,7 +921,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             // handle most common string cases
                             ret.replace(rreturn, "") :
                             // handle cases where value is null/undefined or number
-                            S.isNullOrUndefined(ret) ? "" : ret;
+                            ret == null ? "" : ret;
                     }
 
                     return;
@@ -936,13 +936,13 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var val = value;
 
                     // Treat null/undefined as ""; convert numbers to string
-                    if (S.isNullOrUndefined(val)) {
+                    if (val==null) {
                         val = "";
                     } else if (typeof val === "number") {
                         val += "";
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return S.isNullOrUndefined(val) ? "" : value + "";
+                            return val==null ? "" : value + "";
                         });
                     }
 
@@ -2018,6 +2018,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
             return;
         }
         // fragment 插入速度快点
+        // 而且能够一个操作达到批量插入
+        // refer: http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-B63ED1A3
         var newNode = DOM._nl2frag(newNodes),
             clonedNode;
         //fragment 一旦插入里面就空了，先复制下
@@ -3051,7 +3053,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         // Fall back to computed then uncomputed css if necessary
         val = DOM._getComputedStyle(elem, name);
-        if (val < 0 || S.isNullOrUndefined(val)) {
+        if (val == null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
         // Normalize "", auto, and prepare for extra
@@ -3707,7 +3709,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
         // use alpha filter for IE opacity
         try {
-            if (S.isNullOrUndefined(docElem.style[OPACITY])) {
+            if (docElem.style[OPACITY] == null) {
 
                 CUSTOM_STYLES[OPACITY] = {
 
@@ -4775,15 +4777,14 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                     continue;
                 }
 
-
-                event.data = currentTargetHandler.data;
+                var data = currentTargetHandler.data;
 
                 // restore originalType if involving delegate/onFix handlers
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
                 if ((s = special[event.type]) && s.handle) {
-                    t = s.handle(event, currentTargetHandler);
+                    t = s.handle(event, currentTargetHandler, data);
                     // can handle
                     if (t.length > 0) {
                         ret = t[0];
@@ -4791,7 +4792,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                 } else {
                     ret = currentTargetHandler.fn.call(
                         currentTargetHandler.scope || currentTarget,
-                        event
+                        event, data
                     );
                 }
                 // 和 jQuery 逻辑保持一致
@@ -5601,7 +5602,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
             onFix:o.fix,
             // all browser need
             delegateFix:o.fix,
-            handle:function (event, handler) {
+            handle:function (event, handler, data) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -5613,7 +5614,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                     // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
                     // does not bubble
                     event.stopPropagation();
-                    return [handler.fn.call(handler.scope || currentTarget, event)];
+                    return [handler.fn.call(handler.scope || currentTarget, event, data)];
                 }
                 return [];
             }
@@ -8703,15 +8704,15 @@ KISSY.add('json', function (S, JSON) {
 
     return {
 
-        parse: function(text) {
+        parse:function (text) {
             // 当输入为 undefined / null / '' 时，返回 null
-            if (S.isNullOrUndefined(text) || text === '') {
+            if (text == null || text === '') {
                 return null;
             }
             return JSON.parse(text);
         },
 
-        stringify: JSON.stringify
+        stringify:JSON.stringify
     };
 }, {
     requires:["json/json2"]

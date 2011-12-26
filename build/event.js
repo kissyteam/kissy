@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 25 16:44
+build time: Dec 26 13:55
 */
 /**
  * @fileOverview responsible for registering event
@@ -662,15 +662,14 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                     continue;
                 }
 
-
-                event.data = currentTargetHandler.data;
+                var data = currentTargetHandler.data;
 
                 // restore originalType if involving delegate/onFix handlers
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
                 if ((s = special[event.type]) && s.handle) {
-                    t = s.handle(event, currentTargetHandler);
+                    t = s.handle(event, currentTargetHandler, data);
                     // can handle
                     if (t.length > 0) {
                         ret = t[0];
@@ -678,7 +677,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                 } else {
                     ret = currentTargetHandler.fn.call(
                         currentTargetHandler.scope || currentTarget,
-                        event
+                        event, data
                     );
                 }
                 // 和 jQuery 逻辑保持一致
@@ -1132,7 +1131,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
             onFix:o.fix,
             // all browser need
             delegateFix:o.fix,
-            handle:function (event, handler) {
+            handle:function (event, handler, data) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -1144,7 +1143,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                     // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
                     // does not bubble
                     event.stopPropagation();
-                    return [handler.fn.call(handler.scope || currentTarget, event)];
+                    return [handler.fn.call(handler.scope || currentTarget, event, data)];
                 }
                 return [];
             }

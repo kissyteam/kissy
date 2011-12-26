@@ -12,7 +12,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
             onFix:o.fix,
             // all browser need
             delegateFix:o.fix,
-            handle:function (event, handler) {
+            handle:function (event, handler, data) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -24,7 +24,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                     // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
                     // does not bubble
                     event.stopPropagation();
-                    return [handler.fn.call(handler.scope || currentTarget, event)];
+                    return [handler.fn.call(handler.scope || currentTarget, event, data)];
                 }
                 return [];
             }
