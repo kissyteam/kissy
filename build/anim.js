@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 21 12:48
+build time: Dec 26 16:05
 */
 /**
- * special patch for anim backgroundPosition
+ * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
@@ -79,7 +79,7 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
 }, {
     requires:["dom", "./base", "./fx"]
 });/**
- * animation framework for KISSY
+ * @fileOverview animation framework for KISSY
  * @author   yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
@@ -619,7 +619,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
  *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
  */
 /**
- * special patch for making color gradual change
+ * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
@@ -792,7 +792,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
  * 支持 hsla
  *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
  **//**
- * @module anim-easing
+ * @fileOverview easing equation from yui3
  */
 KISSY.add('anim/easing', function() {
 
@@ -1003,7 +1003,7 @@ KISSY.add('anim/easing', function() {
  *
  */
 /**
- * animate on single property
+ * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
 KISSY.add("anim/fx", function (S, DOM, undefined) {
@@ -1140,7 +1140,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
  *  - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
  *  - jq 插件: http://plugins.jquery.com/project/2d-transform
  **//**
- * single timer for the whole anim module
+ * @fileOverview single timer for the whole anim module
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
@@ -1211,7 +1211,7 @@ KISSY.add("anim/manager", function(S) {
         }
     };
 });/**
- * queue of anim objects
+ * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
 KISSY.add("anim/queue", function(S, DOM) {
@@ -1310,7 +1310,10 @@ KISSY.add("anim/queue", function(S, DOM) {
     return q;
 }, {
     requires:['dom']
-});KISSY.add("anim", function(S, Anim,Easing) {
+});/**
+ * @fileOverview anim
+ */
+KISSY.add("anim", function(S, Anim,Easing) {
     Anim.Easing=Easing;
     return Anim;
 }, {

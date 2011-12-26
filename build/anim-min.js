@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 21 12:48
+build time: Dec 26 16:05
 */
 KISSY.add("anim/backgroundPosition",function(c,b,g,j){function n(f){f=f.replace(/left|top/g,"0px").replace(/right|bottom/g,"100%").replace(/([0-9\.]+)(\s|\)|$)/g,"$1px$2");f=f.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);return[parseFloat(f[1]),f[2],parseFloat(f[3]),f[4]]}function a(){a.superclass.constructor.apply(this,arguments)}c.extend(a,j,{load:function(){a.superclass.load.apply(this,arguments);this.unit=["px","px"];if(this.from){var f=n(this.from);this.from=[f[0],f[2]]}else this.from=
 [0,0];if(this.to){f=n(this.to);this.to=[f[0],f[2]];this.unit=[f[1],f[3]]}else this.to=[0,0]},interpolate:function(f,d,i){var r=this.unit,s=a.superclass.interpolate;return s(f[0],d[0],i)+r[0]+" "+s(f[1],d[1],i)+r[1]},cur:function(){return b.css(this.elem,"backgroundPosition")},update:function(){var f=this.prop,d=this.elem,i=this.interpolate(this.from,this.to,this.pos);b.css(d,f,i)}});return j.Factories.backgroundPosition=a},{requires:["dom","./base","./fx"]});

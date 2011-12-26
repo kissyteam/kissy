@@ -122,13 +122,13 @@
 
             /**
              * Applies prototype properties from the supplier to the receiver.
-             * @param {Object} r received object
-             * @param {Object...} s1 object need to  augment
-             * @param {boolean} [ov=true] whether overwrite existing property
-             * @param {String[]} [wl] array of white-list properties
-             * @return {Object} the augmented object
+             * @param   {Object} r received object
+             * @param   {...Object} s1 object need to  augment
+             *          {boolean} [ov=true] whether overwrite existing property
+             *          {String[]} [wl] array of white-list properties
+             * @return  {Object} the augmented object
              */
-            augment:function (r, s1, ov, wl) {
+            augment:function (r, s1) {
                 var args = S.makeArray(arguments),
                     len = args.length - 2,
                     i = 1;

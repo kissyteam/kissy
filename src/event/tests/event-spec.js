@@ -13,7 +13,6 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             FIRST = '1',
             SECOND = '2',
             SEP = '-',
-
             // simulate mouse event on any element
             simulate = function (target, type, relatedTarget) {
                 if (typeof target === 'string') {
@@ -58,6 +57,33 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 waits(0);
                 runs(function () {
                     expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
+                    Event.remove(a);
+                });
+            });
+
+            it("should support data bind when on and unbind when remove", function () {
+                var a = DOM.get('#link-a'), data;
+                Event.on(a, "click", {
+                    fn:function (e, d) {
+                        data = d;
+                    },
+                    data:{
+                        y:1
+                    }
+                });
+                simulate(a, 'click');
+                waits(0);
+                runs(function () {
+                    expect(data.y).toBe(1);
+                    Event.remove(a);
+                });
+                runs(function () {
+                    data = null;
+                    simulate(a, 'click');
+                });
+                waits(0);
+                runs(function () {
+                    expect(data).toBe(null);
                 });
             });
 
@@ -87,7 +113,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
 
             it('should stop event\'s propagation.', function () {
                 var li_c = DOM.get('#li-c'), c1 = DOM.get('#link-c1'), c2 = DOM.get('#link-c2');
-                var result = [];
+                var result;
                 Event.on(c2, 'click', function (evt) {
                     evt.stopPropagation();
                 });
@@ -116,7 +142,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 });
             });
 
-            it('should stop event\'s propagation immediately.', function () {
+            it("should stop event's propagation immediately.", function () {
                 var li_d = DOM.get('#li-d'), d1 = DOM.get('#link-d1'), d2 = DOM.get('#link-d2');
                 var result = [];
                 Event.on(d1, 'click', function () {
@@ -233,15 +259,15 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
 
             it('should remove the specified event handler function and scope.', function () {
                 var f = DOM.get('#link-f');
-                var result = [],scope={};
+                var result = [], scope = {};
 
                 function foo() {
                     result = HAPPENED;
                 }
 
-                Event.on(f, 'click', foo,scope);
+                Event.on(f, 'click', foo, scope);
 
-                Event.remove(f, 'click', foo,scope);
+                Event.remove(f, 'click', foo, scope);
 
                 // click f
                 result = null;

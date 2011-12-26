@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 26 16:05
 */
 /**
- * @module  anim-node-plugin
+ * @fileOverview   anim-node-plugin
  * @author  yiminghe@gmail.com,
  *          lifesinger@gmail.com,
  *          qiaohua@taobao.com,
@@ -100,10 +100,10 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
  *  - anim needs queue mechanism ?
  */
 /**
- * import methods from DOM to NodeList.prototype
+ * @fileOverview import methods from DOM to NodeList.prototype
  * @author  yiminghe@gmail.com
  */
-KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
+KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
@@ -175,7 +175,14 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
             "data":1
         },
         // Event 添加到 NP 上的方法
-        EVENT_INCLUDES = ["on","detach","fire","delegate","undelegate"];
+        EVENT_INCLUDES = [
+            "on",
+            "detach",
+            "fire",
+            "fireHandler",
+            "delegate",
+            "undelegate"
+        ];
 
 
     function accessNorm(fn, self, args) {
@@ -212,30 +219,30 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         return accessNorm(fn, self, args);
     }
 
-    S.each(DOM_INCLUDES_NORM, function(k) {
-        NLP[k] = function() {
+    S.each(DOM_INCLUDES_NORM, function (k) {
+        NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNorm(k, this, args);
         };
     });
 
-    S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
-        NLP[k] = function() {
+    S.each(DOM_INCLUDES_NORM_NODE_LIST, function (k) {
+        NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormList(k, this, args);
         };
     });
 
-    S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
-        NLP[k] = function() {
+    S.each(DOM_INCLUDES_NORM_IF, function (index, k) {
+        NLP[k] = function () {
             var args = makeArray(arguments);
             return accessNormIf(k, this, index, args);
         };
     });
 
-    S.each(EVENT_INCLUDES, function(k) {
-        NLP[k] = function() {
-            var self=this,
+    S.each(EVENT_INCLUDES, function (k) {
+        NLP[k] = function () {
+            var self = this,
                 args = makeArray(arguments);
             args.unshift(self);
             Event[k].apply(Event, args);
@@ -244,7 +251,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom","event","./base"]
+    requires:["dom", "event", "./base"]
 });
 
 /**
@@ -257,7 +264,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
  *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
 /**
- * definition for node and nodelist
+ * @fileOverview definition for node and nodelist
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
@@ -268,7 +275,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
-     * @constructor
+     * @class
+     * @name NodeList
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,
@@ -360,7 +368,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         /**
          * Applies the given function to each Node in the NodeList.
          * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-         * @param context An optional context to apply the function with Default context is the current NodeList instance
+         * @param [context] An optional context to apply the function with Default context is the current NodeList instance
          */
         each: function(fn, context) {
             var self = this;
@@ -466,7 +474,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
  *     以说，技术成本会制约 api 设计。
  */
 /**
- * overrides methods in NodeList.prototype
+ * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add("node/override", function(S, DOM, Event, NodeList) {
@@ -504,7 +512,11 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
  * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
  * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
- */KISSY.add("node", function(S, Event, Node) {
+ *//**
+ * @fileOverview node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("node", function(S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
     return Node;
 }, {

@@ -15,8 +15,6 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             function handler(ev) {
                 prev = ev.prevVal;
                 newv = ev.newVal;
-
-                S.log(prev);
             }
 
             Event.on(input, "valuechange", handler);
@@ -58,7 +56,6 @@ KISSY.use("dom,event", function(S, DOM, Event) {
             runs(function() {
                 DOM.remove(input);
             });
-
         });
     });
 });

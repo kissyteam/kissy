@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 21 12:48
+build time: Dec 26 16:05
 */
 /**
- * @module  dom-attr
+ * @fileOverview   dom-attr
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
@@ -249,7 +249,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * 自定义属性不推荐使用，使用 .data
              * @param selector
              * @param name
-             * @param value
+             * @param [value]
              */
             prop:function (selector, name, value) {
                 // suports hash
@@ -508,7 +508,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             // handle most common string cases
                             ret.replace(rreturn, "") :
                             // handle cases where value is null/undefined or number
-                            S.isNullOrUndefined(ret) ? "" : ret;
+                            ret == null ? "" : ret;
                     }
 
                     return;
@@ -523,13 +523,13 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var val = value;
 
                     // Treat null/undefined as ""; convert numbers to string
-                    if (S.isNullOrUndefined(val)) {
+                    if (val==null) {
                         val = "";
                     } else if (typeof val === "number") {
                         val += "";
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return S.isNullOrUndefined(val) ? "" : value + "";
+                            return val==null ? "" : value + "";
                         });
                     }
 
@@ -600,7 +600,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
  *
  */
 /**
- * @module  dom
+ * @fileOverview   dom
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/base', function(S, UA, undefined) {
@@ -705,7 +705,7 @@ KISSY.add('dom/base', function(S, UA, undefined) {
  *  - 添加键盘枚举值，方便依赖程序清晰
  */
 /**
- * @module  dom-class
+ * @fileOverview   dom-class
  * @author  lifesinger@gmail.com
  */
 KISSY.add('dom/class', function(S, DOM, undefined) {
@@ -876,7 +876,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
  *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
  */
 /**
- * @module  dom-create
+ * @fileOverview   dom-create
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/create', function(S, DOM, UA, undefined) {
@@ -1077,7 +1077,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param selector 选择器或单个元素
              * @param {Boolean} withDataAndEvent 复制节点是否包括和源节点同样的数据和事件
              * @param {Boolean} deepWithDataAndEvent 复制节点的子孙节点是否包括和源节点子孙节点同样的数据和事件
-             * @refer https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @returns 复制后的节点
              */
             clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
@@ -1345,7 +1345,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
  *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */
 /**
- * @module  dom-data
+ * @fileOverview   dom-data
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/data', function(S, DOM, undefined) {
@@ -1581,7 +1581,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
  * 承玉：2011-05-31
  *  - 分层 ，节点和普通对象分开粗合理
  **//**
- * @module  dom-insertion
+ * @fileOverview   dom-insertion
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/insertion', function(S, UA, DOM) {
@@ -1705,6 +1705,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
             return;
         }
         // fragment 插入速度快点
+        // 而且能够一个操作达到批量插入
+        // refer: http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-B63ED1A3
         var newNode = DOM._nl2frag(newNodes),
             clonedNode;
         //fragment 一旦插入里面就空了，先复制下
@@ -1788,7 +1790,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
  *
  */
 /**
- * @module  dom-offset
+ * @fileOverview   dom-offset
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
@@ -1872,7 +1874,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          * @param hscroll
          * @param {Boolean} auto whether adjust element automatically
          *                       (it only scrollIntoView when element is out of view)
-         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
@@ -2200,7 +2202,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
  *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */
 /**
- * @module  selector
+ * @fileOverview   selector
  * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function(S, DOM, undefined) {
@@ -2760,7 +2762,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
 /**
- * @module  dom
+ * @fileOverview style for ie
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
@@ -2803,7 +2805,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
         // use alpha filter for IE opacity
         try {
-            if (S.isNullOrUndefined(docElem.style[OPACITY])) {
+            if (docElem.style[OPACITY] == null) {
 
                 CUSTOM_STYLES[OPACITY] = {
 
@@ -2954,10 +2956,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
  *
  */
 /**
- * @module  dom
+ * @fileOverview   dom/style
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('dom/style', function(S, DOM, UA, undefined) {
+KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     var doc = document,
         docElem = doc.documentElement,
@@ -2975,17 +2977,17 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         PARSEINT = parseInt,
         RE_NUMPX = /^-?\d+(?:px)?$/i,
         cssNumber = {
-            "fillOpacity": 1,
-            "fontWeight": 1,
-            "lineHeight": 1,
-            "opacity": 1,
-            "orphans": 1,
-            "widows": 1,
-            "zIndex": 1,
-            "zoom": 1
+            "fillOpacity":1,
+            "fontWeight":1,
+            "lineHeight":1,
+            "opacity":1,
+            "orphans":1,
+            "widows":1,
+            "zIndex":1,
+            "zoom":1
         },
         RE_DASH = /-([a-z])/ig,
-        CAMELCASE_FN = function(all, letter) {
+        CAMELCASE_FN = function (all, letter) {
             return letter.toUpperCase();
         },
         // 考虑 ie9 ...
@@ -3058,7 +3060,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                             +
                             "</head><body>");
                         defaultDisplayDetectIframeDoc.close();
-                    } catch(e) {
+                    } catch (e) {
                         // ie6 need a breath , such as alert(8) or setTimeout;
                         // 同时需要同步，所以无解，勉强返回
                         return "block";
@@ -3083,12 +3085,12 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     S.mix(DOM, {
         _camelCase:camelCase,
-        _cssNumber:cssNumber,
-        _CUSTOM_STYLES: CUSTOM_STYLES,
+        // _cssNumber:cssNumber,
+        _CUSTOM_STYLES:CUSTOM_STYLES,
         _cssProps:cssProps,
-        _getComputedStyle: function(elem, name) {
+        _getComputedStyle:function (elem, name) {
             var val = "",
-                computedStyle = {},
+                computedStyle,
                 d = elem.ownerDocument;
 
             name = name.replace(rupper, "-$1").toLowerCase();
@@ -3110,7 +3112,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          *  Get and set the style property on a DOM Node
          */
-        style:function(selector, name, val) {
+        style:function (selector, name, val) {
             // suports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
@@ -3119,13 +3121,13 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
             if (val === undefined) {
-                var elem = DOM.get(selector),ret = '';
+                var elem = DOM.get(selector), ret = '';
                 if (elem) {
                     ret = style(elem, name, val);
                 }
                 return ret;
             } else {
-                DOM.query(selector).each(function(elem) {
+                DOM.query(selector).each(function (elem) {
                     style(elem, name, val);
                 });
             }
@@ -3134,7 +3136,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * (Gets computed style) or (sets styles) on the matches elements.
          */
-        css: function(selector, name, val) {
+        css:function (selector, name, val) {
             // suports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
@@ -3167,9 +3169,9 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * Show the matched elements.
          */
-        show: function(selector) {
+        show:function (selector) {
 
-            DOM.query(selector).each(function(elem) {
+            DOM.query(selector).each(function (elem) {
 
                 elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
 
@@ -3186,8 +3188,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * Hide the matched elements.
          */
-        hide: function(selector) {
-            DOM.query(selector).each(function(elem) {
+        hide:function (selector) {
+            DOM.query(selector).each(function (elem) {
                 var style = elem[STYLE], old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {
@@ -3201,8 +3203,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         /**
          * Display or hide the matched elements.
          */
-        toggle: function(selector) {
-            DOM.query(selector).each(function(elem) {
+        toggle:function (selector) {
+            DOM.query(selector).each(function (elem) {
                 if (DOM.css(elem, DISPLAY) === NONE) {
                     DOM.show(elem);
                 } else {
@@ -3217,14 +3219,14 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
          * @param {String} cssText The text containing the css rules
          * @param {String} id An id to add to the stylesheet for later removal
          */
-        addStyleSheet: function(refWin, cssText, id) {
+        addStyleSheet:function (refWin, cssText, id) {
             if (S.isString(refWin)) {
                 id = cssText;
                 cssText = refWin;
                 refWin = window;
             }
             refWin = DOM.get(refWin);
-            var win = DOM._getWin(refWin),doc = win.document;
+            var win = DOM._getWin(refWin), doc = win.document;
             var elem;
 
             if (id && (id = id.replace('#', EMPTY))) {
@@ -3236,7 +3238,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 return;
             }
 
-            elem = DOM.create('<style>', { id: id }, doc);
+            elem = DOM.create('<style>', { id:id }, doc);
 
             // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
             DOM.get('head', doc).appendChild(elem);
@@ -3248,8 +3250,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             }
         },
 
-        unselectable:function(selector) {
-            DOM.query(selector).each(function(elem) {
+        unselectable:function (selector) {
+            DOM.query(selector).each(function (elem) {
                 if (UA['gecko']) {
                     elem[STYLE]['MozUserSelect'] = 'none';
                 }
@@ -3257,7 +3259,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     elem[STYLE]['KhtmlUserSelect'] = 'none';
                 } else {
                     if (UA['ie'] || UA['opera']) {
-                        var e,i = 0,
+                        var e, i = 0,
                             els = elem.getElementsByTagName("*");
                         elem.setAttribute("unselectable", 'on');
                         while (( e = els[ i++ ] )) {
@@ -3289,8 +3291,8 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     }
 
 
-    S.each([WIDTH,HEIGHT], function(name) {
-        DOM["inner" + capital(name)] = function(selector) {
+    S.each([WIDTH, HEIGHT], function (name) {
+        DOM["inner" + capital(name)] = function (selector) {
             var el = DOM.get(selector);
             if (el) {
                 return getWH(el, name, "padding");
@@ -3300,7 +3302,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         };
 
 
-        DOM["outer" + capital(name)] = function(selector, includeMargin) {
+        DOM["outer" + capital(name)] = function (selector, includeMargin) {
             var el = DOM.get(selector);
             if (el) {
                 return getWH(el, name, includeMargin ? "margin" : "border");
@@ -3309,7 +3311,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             }
         };
 
-        DOM[name] = function(selector, val) {
+        DOM[name] = function (selector, val) {
             var ret = DOM.css(selector, name, val);
             if (ret) {
                 ret = parseFloat(ret);
@@ -3319,27 +3321,27 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
     });
 
 
-    var cssShow = { position: "absolute", visibility: "hidden", display: "block" };
+    var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
 
     /**
      * css height,width 永远都是计算值
      */
-    S.each(["height", "width"], function(name) {
+    S.each(["height", "width"], function (name) {
         CUSTOM_STYLES[ name ] = {
-            get: function(elem, computed) {
+            get:function (elem, computed) {
                 var val;
                 if (computed) {
                     if (elem.offsetWidth !== 0) {
                         val = getWH(elem, name);
                     } else {
-                        swap(elem, cssShow, function() {
+                        swap(elem, cssShow, function () {
                             val = getWH(elem, name);
                         });
                     }
                     return val + "px";
                 }
             },
-            set: function(elem, value) {
+            set:function (elem, value) {
                 if (RE_NUMPX.test(value)) {
                     value = parseFloat(value);
                     if (value >= 0) {
@@ -3352,11 +3354,11 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
         };
     });
 
-    S.each(["left", "top"], function(name) {
+    S.each(["left", "top"], function (name) {
         CUSTOM_STYLES[ name ] = {
-            get: function(elem, computed) {
+            get:function (elem, computed) {
                 if (computed) {
-                    var val = DOM._getComputedStyle(elem, name),offset;
+                    var val = DOM._getComputedStyle(elem, name), offset;
 
                     // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
                     //    比如：firefox 返回 0, webkit/ie 返回 auto
@@ -3365,7 +3367,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                     // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
                     if (val === AUTO) {
                         val = 0;
-                        if (S.inArray(DOM.css(elem, 'position'), ['absolute','fixed'])) {
+                        if (S.inArray(DOM.css(elem, 'position'), ['absolute', 'fixed'])) {
                             offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                             // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
@@ -3414,7 +3416,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
             return undefined;
         }
         name = camelCase(name);
-        var ret,hook = CUSTOM_STYLES[name];
+        var ret, hook = CUSTOM_STYLES[name];
         name = cssProps[name] || name;
         // setter
         if (val !== undefined) {
@@ -3433,7 +3435,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 // ie 无效值报错
                 try {
                     elem[STYLE][name] = val;
-                } catch(e) {
+                } catch (e) {
                     S.log("css set error :" + e);
                 }
             }
@@ -3458,7 +3460,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
      * 得到元素的大小信息
      * @param elem
      * @param name
-     * @param {String} extra    "padding" : (css width) + padding
+     * @param {String} [extra]  "padding" : (css width) + padding
      *                          "border" : (css width) + padding + border
      *                          "margin" : (css width) + padding + border + margin
      */
@@ -3473,7 +3475,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
         if (val > 0) {
             if (extra !== "border") {
-                S.each(which, function(w) {
+                S.each(which, function (w) {
                     if (!extra) {
                         val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
                     }
@@ -3490,7 +3492,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
         // Fall back to computed then uncomputed css if necessary
         val = DOM._getComputedStyle(elem, name);
-        if (val < 0 || S.isNullOrUndefined(val)) {
+        if (val == null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
         // Normalize "", auto, and prepare for extra
@@ -3498,7 +3500,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
         // Add padding, border, margin
         if (extra) {
-            S.each(which, function(w) {
+            S.each(which, function (w) {
                 val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
                 if (extra !== "padding") {
                     val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
@@ -3514,10 +3516,14 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base","ua"]
+    requires:["dom/base", "ua"]
 });
 
 /**
+ * 2011-12-21
+ *  - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
+ *  - w3c 为准，这里不 fix 了
+ *
  *
  * 2011-08-19
  *  - 调整结构，减少耦合
@@ -3537,7 +3543,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
  *    依旧存在浏览器差异。
  */
 /**
- * @module  dom-traversal
+ * @fileOverview   dom-traversal
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {
@@ -3768,6 +3774,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
  *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
  *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
  *
+ */
+/**
+ * @fileOverview dom
  */
 KISSY.add("dom", function(S,DOM) {
     return DOM;
