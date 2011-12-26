@@ -1,3 +1,7 @@
+/**
+ * @fileOverview check node render
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",

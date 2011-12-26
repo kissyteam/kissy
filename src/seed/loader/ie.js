@@ -1,5 +1,5 @@
 /**
- * for ie ,find current executive script ,then infer module name
+ * @fileOverview for ie ,find current executive script ,then infer module name
  * @author yiminghe@gmail.com
  */
 (function (S, loader, utils) {

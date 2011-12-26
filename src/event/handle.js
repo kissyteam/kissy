@@ -97,15 +97,14 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                     continue;
                 }
 
-
-                event.data = currentTargetHandler.data;
+                var data = currentTargetHandler.data;
 
                 // restore originalType if involving delegate/onFix handlers
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
                 if ((s = special[event.type]) && s.handle) {
-                    t = s.handle(event, currentTargetHandler);
+                    t = s.handle(event, currentTargetHandler, data);
                     // can handle
                     if (t.length > 0) {
                         ret = t[0];
@@ -113,7 +112,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                 } else {
                     ret = currentTargetHandler.fn.call(
                         currentTargetHandler.scope || currentTarget,
-                        event
+                        event, data
                     );
                 }
                 // 和 jQuery 逻辑保持一致

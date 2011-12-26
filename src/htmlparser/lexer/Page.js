@@ -1,5 +1,5 @@
 /**
- * represent html source
+ * @fileOverview represent html source
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/lexer/Page", function(S, Index) {

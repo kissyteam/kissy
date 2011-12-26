@@ -1,8 +1,8 @@
 /**
- * getScript support for css and js callback after load
+ * @fileOverview getScript support for css and js callback after load
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, utils) {
+(function (S, utils) {
     if ("require" in this) {
         return;
     }
@@ -16,8 +16,9 @@
          * @param url css file url
          * @param success callback
          * @param charset
+         * @private
          */
-        getStyle:function(url, success, charset) {
+        getStyle:function (url, success, charset) {
             var doc = document,
                 head = utils.docHead(),
                 node = doc.createElement('link'),
@@ -44,6 +45,7 @@
         },
         /**
          * Load a JavaScript/Css file from the server using a GET HTTP request, then execute it.
+         * @example
          * <code>
          *  getScript(url, success, charset);
          *  or
@@ -54,8 +56,17 @@
          *      timeout: number
          *  });
          * </code>
+         * @param {String} url resource's url
+         * @param {Function|Object} [success] success callback or config
+         * @param {Function} [success.success] success callback
+         * @param {Function} [success.error] error callback
+         * @param {Number} [success.timeout] timeout (s)
+         * @param {String} [success.charset] charset of current resource
+         * @param {String} [charset] charset of current resource
+         * @returns {HTMLElement} script/style node
+         * @memberOf KISSY
          */
-        getScript:function(url, success, charset) {
+        getScript:function (url, success, charset) {
             if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
@@ -88,7 +99,7 @@
                 node.charset = charset;
             }
             if (success || error) {
-                scriptOnload(node, function() {
+                scriptOnload(node, function () {
                     clearTimer();
                     S.isFunction(success) && success.call(node);
                 });
@@ -97,13 +108,13 @@
 
                     //标准浏览器
                     if (doc.addEventListener) {
-                        node.addEventListener("error", function() {
+                        node.addEventListener("error", function () {
                             clearTimer();
                             error.call(node);
                         }, false);
                     }
 
-                    timer = S.later(function() {
+                    timer = S.later(function () {
                         timer = undefined;
                         error();
                     }, (timeout || this.Config.timeout) * MILLISECONDS_OF_SECOND);

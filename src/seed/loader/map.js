@@ -1,5 +1,5 @@
 /**
- * map mechanism
+ * @fileOverview map mechanism
  * @author yiminghe@gmail.com
  */
 (function (S, loader) {

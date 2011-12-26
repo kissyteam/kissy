@@ -1,5 +1,5 @@
 /**
- * menu model and controller for kissy,accommodate menu items
+ * @fileOverview menu model and controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menu", function (S, Event, UIBase, Component, MenuRender) {

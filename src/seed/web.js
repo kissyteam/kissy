@@ -1,9 +1,9 @@
 /**
- * @module  web.js
+ * @fileOverview   web.js
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
-(function(S, undefined) {
+(function (S, undefined) {
 
     var win = S.__HOST,
         doc = win['document'],
@@ -28,97 +28,106 @@
         RE_IDSTR = /^#?([\w-]+)$/,
 
         RE_NOT_WHITE = /\S/;
-    S.mix(S, {
 
-
+    S.mix(S,
         /**
-         * A crude way of determining if an object is a window
+         * @lends KISSY
          */
-        isWindow: function(o) {
-            return S.type(o) === 'object'
-                && 'setInterval' in o
-                && 'document' in o
-                && o.document.nodeType == 9;
-        },
+        {
 
 
-        parseXML: function(data) {
-            var xml;
-            try {
-                // Standard
-                if (window.DOMParser) {
-                    xml = new DOMParser().parseFromString(data, "text/xml");
-                } else { // IE
-                    xml = new ActiveXObject("Microsoft.XMLDOM");
-                    xml.async = "false";
-                    xml.loadXML(data);
-                }
-            } catch(e) {
-                S.log("parseXML error : ");
-                S.log(e);
-                xml = undefined;
-            }
-            if (!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
-                S.error("Invalid XML: " + data);
-            }
-            return xml;
-        },
+            /**
+             * A crude way of determining if an object is a window
+             */
+            isWindow:function (o) {
+                return S.type(o) === 'object'
+                    && 'setInterval' in o
+                    && 'document' in o
+                    && o.document.nodeType == 9;
+            },
 
-        /**
-         * Evalulates a script in a global context.
-         */
-        globalEval: function(data) {
-            if (data && RE_NOT_WHITE.test(data)) {
-                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                ( window.execScript || function(data) {
-                    window[ "eval" ].call(window, data);
-                } )(data);
-            }
-        },
 
-        /**
-         * Specify a function to execute when the DOM is fully loaded.
-         * @param fn {Function} A function to execute after the DOM is ready
-         * <code>
-         * KISSY.ready(function(S){ });
-         * </code>
-         * @return {KISSY}
-         */
-        ready: function(fn) {
-
-            // If the DOM is already ready
-            if (isReady) {
-                // Execute the function immediately
-                fn.call(win, this);
-            } else {
-                // Remember the function for later
-                readyList.push(fn);
-            }
-
-            return this;
-        },
-
-        /**
-         * Executes the supplied callback when the item with the supplied id is found.
-         * @param id <String> The id of the element, or an array of ids to look for.
-         * @param fn <Function> What to execute when the element is found.
-         */
-        available: function(id, fn) {
-            id = (id + EMPTY).match(RE_IDSTR)[1];
-            if (!id || !S.isFunction(fn)) {
-                return;
-            }
-
-            var retryCount = 1,
-                node,
-                timer = S.later(function() {
-                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                        ++retryCount > POLL_RETRYS) {
-                        timer.cancel();
+            /**
+             * get xml representation of data
+             * @param {String} data
+             */
+            parseXML:function (data) {
+                var xml;
+                try {
+                    // Standard
+                    if (window.DOMParser) {
+                        xml = new DOMParser().parseFromString(data, "text/xml");
+                    } else { // IE
+                        xml = new ActiveXObject("Microsoft.XMLDOM");
+                        xml.async = "false";
+                        xml.loadXML(data);
                     }
-                }, POLL_INTERVAL, true);
-        }
-    });
+                } catch (e) {
+                    S.log("parseXML error : ");
+                    S.log(e);
+                    xml = undefined;
+                }
+                if (!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
+                    S.error("Invalid XML: " + data);
+                }
+                return xml;
+            },
+
+            /**
+             * Evalulates a script in a global context.
+             */
+            globalEval:function (data) {
+                if (data && RE_NOT_WHITE.test(data)) {
+                    // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                    ( window.execScript || function (data) {
+                        window[ "eval" ].call(window, data);
+                    } )(data);
+                }
+            },
+
+            /**
+             * Specify a function to execute when the DOM is fully loaded.
+             * @param fn {Function} A function to execute after the DOM is ready
+             * <code>
+             * KISSY.ready(function(S){ });
+             * </code>
+             * @return {KISSY}
+             */
+            ready:function (fn) {
+
+                // If the DOM is already ready
+                if (isReady) {
+                    // Execute the function immediately
+                    fn.call(win, this);
+                } else {
+                    // Remember the function for later
+                    readyList.push(fn);
+                }
+
+                return this;
+            },
+
+            /**
+             * Executes the supplied callback when the item with the supplied id is found.
+             * @param id <String> The id of the element, or an array of ids to look for.
+             * @param fn <Function> What to execute when the element is found.
+             */
+            available:function (id, fn) {
+                id = (id + EMPTY).match(RE_IDSTR)[1];
+                if (!id || !S.isFunction(fn)) {
+                    return;
+                }
+
+                var retryCount = 1,
+                    node,
+                    timer = S.later(function () {
+                        if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                            ++retryCount > POLL_RETRYS) {
+                            timer.cancel();
+                        }
+                    }, POLL_INTERVAL, true);
+            }
+        });
 
 
     /**
@@ -128,7 +137,7 @@
         var doScroll = docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
-            fire = function() {
+            fire = function () {
                 _fireReady();
             };
 
@@ -171,7 +180,7 @@
 
             try {
                 notframe = (win['frameElement'] === null);
-            } catch(e) {
+            } catch (e) {
                 S.log("frameElement error : ");
                 S.log(e);
             }
@@ -182,7 +191,7 @@
                         // Ref: http://javascript.nwbox.com/IEContentLoaded/
                         doScroll('left');
                         fire();
-                    } catch(ex) {
+                    } catch (ex) {
                         //S.log("detect document ready : " + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }

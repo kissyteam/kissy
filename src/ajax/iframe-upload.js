@@ -1,5 +1,5 @@
 /**
- * non-refresh upload file with form by iframe
+ * @fileOverview non-refresh upload file with form by iframe
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {

@@ -1,5 +1,5 @@
 /**
- * definition for node and nodelist
+ * @fileOverview definition for node and nodelist
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
@@ -10,7 +10,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
-     * @constructor
+     * @class
+     * @name NodeList
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,
@@ -102,7 +103,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         /**
          * Applies the given function to each Node in the NodeList.
          * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-         * @param context An optional context to apply the function with Default context is the current NodeList instance
+         * @param [context] An optional context to apply the function with Default context is the current NodeList instance
          */
         each: function(fn, context) {
             var self = this;

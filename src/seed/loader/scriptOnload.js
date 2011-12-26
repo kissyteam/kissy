@@ -1,5 +1,5 @@
 /**
- * script/css load across browser
+ * @fileOverview script/css load across browser
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
@@ -94,7 +94,7 @@
         /**
          * monitor css onload across browsers
          * 暂时不考虑如何判断失败，如 404 等
-         * @refer
+         * @see
          *  - firefox 不可行（结论4错误）：
          *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
          *  - 全浏览器兼容

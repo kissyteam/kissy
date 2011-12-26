@@ -1,5 +1,5 @@
 /**
- * auto scroll for drag object's container
+ * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
 KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
@@ -21,7 +21,15 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
         self[DESTRUCTORS] = {};
     }
 
-    Scroll.ATTRS = {
+    Scroll.ATTRS =
+    /**
+     * @lends DD.Scroll#
+     */
+    {
+        /**
+         * 容器节点
+         * @type {window|String|HTMLElement}
+         */
         node:{
             // value:window：不行，默认值一定是简单对象
             valueFn:function () {
@@ -31,9 +39,17 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                 return Node.one(v);
             }
         },
+        /**
+         * 调整速度，二维数组
+         * @type number[]
+         */
         rate:{
             value:RATE
         },
+        /**
+         * 调整的临界值，二维数组
+         * @type number[]
+         */
         diff:{
             value:DIFF
         }
@@ -42,181 +58,211 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     var isWin = S.isWindow;
 
-    S.extend(Scroll, Base, {
+    S.extend(Scroll, Base,
+        /**
+         * @lends DD.Scroll#
+         */
+        {
+            /**
+             * @private
+             * @param node
+             */
+            getRegion:function (node) {
+                if (isWin(node[0])) {
+                    return {
+                        width:DOM.viewportWidth(),
+                        height:DOM.viewportHeight()
+                    };
+                } else {
+                    return {
+                        width:node.outerWidth(),
+                        height:node.outerHeight()
+                    };
+                }
+            },
 
-        getRegion:function (node) {
-            if (isWin(node[0])) {
+            /**
+             * @private
+             * @param node
+             */
+            getOffset:function (node) {
+                if (isWin(node[0])) {
+                    return {
+                        left:DOM.scrollLeft(),
+                        top:DOM.scrollTop()
+                    };
+                } else {
+                    return node.offset();
+                }
+            },
+
+            /**
+             * @private
+             * @param node
+             */
+            getScroll:function (node) {
                 return {
-                    width:DOM.viewportWidth(),
-                    height:DOM.viewportHeight()
+                    left:node.scrollLeft(),
+                    top:node.scrollTop()
                 };
-            } else {
-                return {
-                    width:node.outerWidth(),
-                    height:node.outerHeight()
-                };
-            }
-        },
+            },
 
-        getOffset:function (node) {
-            if (isWin(node[0])) {
-                return {
-                    left:DOM.scrollLeft(),
-                    top:DOM.scrollTop()
-                };
-            } else {
-                return node.offset();
-            }
-        },
+            /**
+             * @private
+             * @param node
+             */
+            setScroll:function (node, r) {
+                node.scrollLeft(r.left);
+                node.scrollTop(r.top);
+            },
 
-        getScroll:function (node) {
-            return {
-                left:node.scrollLeft(),
-                top:node.scrollTop()
-            };
-        },
-
-        setScroll:function (node, r) {
-            node.scrollLeft(r.left);
-            node.scrollTop(r.top);
-        },
-
-        unAttach:function (drag) {
-            var tag,
-                destructors = this[DESTRUCTORS];
-            if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
-                !destructors[tag]
-                ) {
-                return;
-            }
-            destructors[tag].fn();
-            delete destructors[tag];
-        },
-
-        destroy:function () {
-            var self = this,
-                destructors = self[DESTRUCTORS];
-            for (var d in destructors) {
-                self.unAttach(destructors[d].drag);
-            }
-        },
-
-        attach:function (drag) {
-            var self = this,
-                tag = stamp(drag, 0, TAG_DRAG),
-                destructors = self[DESTRUCTORS];
-            if (destructors[tag]) {
-                return;
-            }
-
-            var rate = self.get("rate"),
-                diff = self.get('diff'),
-                event,
-                /*
-                 目前相对 container 的偏移，container 为 window 时，相对于 viewport
-                 */
-                dxy,
-                timer = null;
-
-            function dragging(ev) {
-                // 给调用者的事件，框架不需要处理
-                // fake 也表示该事件不是因为 mouseover 产生的
-                if (ev.fake) {
+            /**
+             * 取消关联
+             * @param drag
+             */
+            unAttach:function (drag) {
+                var tag,
+                    destructors = this[DESTRUCTORS];
+                if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
+                    !destructors[tag]
+                    ) {
                     return;
                 }
-                // S.log("dragging");
-                // 更新当前鼠标相对于拖节点的相对位置
-                var node = self.get("node");
-                event = ev;
-                dxy = S.clone(drag.mousePos);
-                var offset = self.getOffset(node);
-                dxy.left -= offset.left;
-                dxy.top -= offset.top;
-                if (!timer) {
-                    checkAndScroll();
+                destructors[tag].fn();
+                delete destructors[tag];
+            },
+
+            /**
+             * 销毁
+             */
+            destroy:function () {
+                var self = this,
+                    destructors = self[DESTRUCTORS];
+                for (var d in destructors) {
+                    self.unAttach(destructors[d].drag);
                 }
-            }
+            },
 
-            function dragEnd() {
-                clearTimeout(timer);
-                timer = null;
-            }
-
-            drag.on("drag", dragging);
-
-            drag.on("dragend", dragEnd);
-
-            destructors[tag] = {
-                drag:drag,
-                fn:function () {
-                    drag.detach("drag", dragging);
-                    drag.detach("dragend", dragEnd);
-                }
-            };
-
-
-            function checkAndScroll() {
-                //S.log("******* scroll");
-                var node = self.get("node"),
-                    r = self.getRegion(node),
-                    nw = r.width,
-                    nh = r.height,
-                    scroll = self.getScroll(node),
-                    origin = S.clone(scroll),
-                    diffY = dxy.top - nh,
-                    adjust = false;
-
-                if (diffY >= -diff[1]) {
-                    scroll.top += rate[1];
-                    adjust = true;
+            /**
+             * 关联拖对象
+             * @param drag
+             */
+            attach:function (drag) {
+                var self = this,
+                    tag = stamp(drag, 0, TAG_DRAG),
+                    destructors = self[DESTRUCTORS];
+                if (destructors[tag]) {
+                    return;
                 }
 
-                var diffY2 = dxy.top;
-                //S.log(diffY2);
-                if (diffY2 <= diff[1]) {
-                    scroll.top -= rate[1];
-                    adjust = true;
-                }
+                var rate = self.get("rate"),
+                    diff = self.get('diff'),
+                    event,
+                    /*
+                     目前相对 container 的偏移，container 为 window 时，相对于 viewport
+                     */
+                    dxy,
+                    timer = null;
 
-
-                var diffX = dxy.left - nw;
-                //S.log(diffX);
-                if (diffX >= -diff[0]) {
-                    scroll.left += rate[0];
-                    adjust = true;
-                }
-
-                var diffX2 = dxy.left;
-                //S.log(diffX2);
-                if (diffX2 <= diff[0]) {
-                    scroll.left -= rate[0];
-                    adjust = true;
-                }
-
-                if (adjust) {
-                    self.setScroll(node, scroll);
-                    timer = setTimeout(checkAndScroll, ADJUST_DELAY);
-                    // 不希望更新相对值，特别对于相对 window 时，相对值如果不真正拖放触发的 drag，是不变的，
-                    // 不会因为程序 scroll 而改变相对值
-
-                    // 调整事件，不需要 scroll 监控，达到预期结果：元素随容器的持续不断滚动而自动调整位置.
-                    event.fake = true;
-                    if (isWin(node[0])) {
-                        // 当使 window 自动滚动时，也要使得拖放物体相对文档位置随 scroll 改变
-                        // 而相对 node 容器时，只需 node 容器滚动，拖动物体相对文档位置不需要改变
-                        scroll = self.getScroll(node);
-                        event.left += scroll.left - origin.left;
-                        event.top += scroll.top - origin.top;
+                function dragging(ev) {
+                    // 给调用者的事件，框架不需要处理
+                    // fake 也表示该事件不是因为 mouseover 产生的
+                    if (ev.fake) {
+                        return;
                     }
-                    // 容器滚动了，元素也要重新设置 left,top
-                    drag.fire("drag", event);
-                } else {
+                    // S.log("dragging");
+                    // 更新当前鼠标相对于拖节点的相对位置
+                    var node = self.get("node");
+                    event = ev;
+                    dxy = S.clone(drag.mousePos);
+                    var offset = self.getOffset(node);
+                    dxy.left -= offset.left;
+                    dxy.top -= offset.top;
+                    if (!timer) {
+                        checkAndScroll();
+                    }
+                }
+
+                function dragEnd() {
+                    clearTimeout(timer);
                     timer = null;
                 }
-            }
 
-        }
-    });
+                drag.on("drag", dragging);
+
+                drag.on("dragend", dragEnd);
+
+                destructors[tag] = {
+                    drag:drag,
+                    fn:function () {
+                        drag.detach("drag", dragging);
+                        drag.detach("dragend", dragEnd);
+                    }
+                };
+
+
+                function checkAndScroll() {
+                    //S.log("******* scroll");
+                    var node = self.get("node"),
+                        r = self.getRegion(node),
+                        nw = r.width,
+                        nh = r.height,
+                        scroll = self.getScroll(node),
+                        origin = S.clone(scroll),
+                        diffY = dxy.top - nh,
+                        adjust = false;
+
+                    if (diffY >= -diff[1]) {
+                        scroll.top += rate[1];
+                        adjust = true;
+                    }
+
+                    var diffY2 = dxy.top;
+                    //S.log(diffY2);
+                    if (diffY2 <= diff[1]) {
+                        scroll.top -= rate[1];
+                        adjust = true;
+                    }
+
+
+                    var diffX = dxy.left - nw;
+                    //S.log(diffX);
+                    if (diffX >= -diff[0]) {
+                        scroll.left += rate[0];
+                        adjust = true;
+                    }
+
+                    var diffX2 = dxy.left;
+                    //S.log(diffX2);
+                    if (diffX2 <= diff[0]) {
+                        scroll.left -= rate[0];
+                        adjust = true;
+                    }
+
+                    if (adjust) {
+                        self.setScroll(node, scroll);
+                        timer = setTimeout(checkAndScroll, ADJUST_DELAY);
+                        // 不希望更新相对值，特别对于相对 window 时，相对值如果不真正拖放触发的 drag，是不变的，
+                        // 不会因为程序 scroll 而改变相对值
+
+                        // 调整事件，不需要 scroll 监控，达到预期结果：元素随容器的持续不断滚动而自动调整位置.
+                        event.fake = true;
+                        if (isWin(node[0])) {
+                            // 当使 window 自动滚动时，也要使得拖放物体相对文档位置随 scroll 改变
+                            // 而相对 node 容器时，只需 node 容器滚动，拖动物体相对文档位置不需要改变
+                            scroll = self.getScroll(node);
+                            event.left += scroll.left - origin.left;
+                            event.top += scroll.top - origin.top;
+                        }
+                        // 容器滚动了，元素也要重新设置 left,top
+                        drag.fire("drag", event);
+                    } else {
+                        timer = null;
+                    }
+                }
+
+            }
+        });
 
     return Scroll;
 }, {

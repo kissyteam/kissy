@@ -1,5 +1,5 @@
 /**
- * package mechanism
+ * @fileOverview package mechanism
  * @author yiminghe@gmail.com
  */
 (function (S, loader, utils) {

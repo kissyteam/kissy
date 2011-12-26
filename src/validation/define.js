@@ -1,6 +1,6 @@
 /**
- * Validation默认配置和常量
- * @author: 常胤 (lzlu.com)
+ * @fileOverview  Validation默认配置和常量
+ * @author 常胤 (lzlu.com)
  */
 
 KISSY.add("validation/define",function(){

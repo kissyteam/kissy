@@ -1,5 +1,5 @@
 /**
- * @module  dom-create
+ * @fileOverview   dom-create
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/create', function(S, DOM, UA, undefined) {
@@ -200,7 +200,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param selector 选择器或单个元素
              * @param {Boolean} withDataAndEvent 复制节点是否包括和源节点同样的数据和事件
              * @param {Boolean} deepWithDataAndEvent 复制节点的子孙节点是否包括和源节点子孙节点同样的数据和事件
-             * @refer https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @returns 复制后的节点
              */
             clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {

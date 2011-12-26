@@ -1,5 +1,5 @@
 /**
- * @fileoverview KISSY.Template Node.
+ * @fileOverview  KISSY.Template Node.
  * @author 文河<wenhe@taobao.com>
  */
 KISSY.add('template/node', function(S, Template, Node) {

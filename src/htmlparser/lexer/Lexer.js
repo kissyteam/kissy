@@ -1,5 +1,5 @@
 /**
- * parse html string into Nodes
+ * @fileOverview parse html string into Nodes
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {

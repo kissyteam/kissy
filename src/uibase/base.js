@@ -1,7 +1,7 @@
 /**
- * @module  UIBase
+ * @fileOverview   UIBase
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
- * @refer http://martinfowler.com/eaaDev/uiArchs.html
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add('uibase/base', function (S, Base, Node) {
 
@@ -235,6 +235,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * @protected
+             * @function
              */
             renderUI:noop,
 
@@ -263,6 +264,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * @protected
+             * @function
              */
             bindUI:noop,
 
@@ -288,6 +290,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * protected
+             * @function
              */
             syncUI:noop,
 
@@ -302,7 +305,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             }
         },
         /**
-         * @lends UIBase#
+         * @lends UIBase
          */
         {
             /**

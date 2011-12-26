@@ -1,5 +1,5 @@
 /**
- * resizable support for kissy
+ * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  * @requires: dd
  */

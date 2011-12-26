@@ -1,5 +1,5 @@
 /**
- * constrain extension for kissy
+ * @fileOverview constrain extension for kissy
  * @author 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add("uibase/constrain", function(S, DOM, Node) {

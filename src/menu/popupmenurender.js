@@ -1,5 +1,5 @@
 /**
- * popup menu render
+ * @fileOverview popup menu render
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {

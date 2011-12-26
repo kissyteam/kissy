@@ -1,5 +1,5 @@
 /**
- *  menu where items can be filtered based on user keyboard input
+ *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
 KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRender) {

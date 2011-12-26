@@ -1,5 +1,5 @@
 /**
- * simple split button ,common usecase :button + menubutton
+ * @fileOverview simple split button ,common usecase :button + menubutton
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/split", function(S) {

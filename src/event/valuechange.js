@@ -1,5 +1,5 @@
 /**
- * inspired by yui3 :
+ * @fileOverview  inspired by yui3 :
  *
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or

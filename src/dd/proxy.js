@@ -1,8 +1,8 @@
 /**
- * generate proxy drag object,
+ * @fileOverview generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/proxy", function(S, Node) {
+KISSY.add("dd/proxy", function (S, Node) {
     var DESTRUCTOR_ID = "__proxy_destructors",
         stamp = S.stamp,
         MARKER = S.guid("__dd_proxy"),
@@ -18,26 +18,39 @@ KISSY.add("dd/proxy", function(S, Node) {
         self[DESTRUCTOR_ID] = {};
     }
 
-    Proxy.ATTRS = {
+    Proxy.ATTRS =
+    /**
+     * @lends DD.Proxy#
+     */
+    {
+        /**
+         * 如何生成替代节点
+         * @type {Function}
+         */
         node:{
-            /*
-             如何生成替代节点
-             @return {KISSY.Node} 替代节点
-             */
-            value:function(drag) {
+            value:function (drag) {
                 return new Node(drag.get("node").clone(true));
             }
         },
+        /**
+         * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
+         * @type {boolean}
+         */
         destroyOnEnd:{
-            /**
-             * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
-             */
             value:false
         }
     };
 
-    S.extend(Proxy, S.Base, {
-        attach:function(drag) {
+    S.extend(Proxy, S.Base,
+        /**
+         * @lends DD.Proxy#
+         */
+        {
+            /**
+             * 关联到某个拖对象
+             * @param drag
+             */
+        attach:function (drag) {
 
             var self = this,
                 tag;
@@ -89,13 +102,17 @@ KISSY.add("dd/proxy", function(S, Node) {
 
             self[DESTRUCTOR_ID][tag] = {
                 drag:drag,
-                fn:function() {
+                fn:function () {
                     drag.detach("dragstart", start);
                     drag.detach("dragend", end);
                 }
             };
         },
-        unAttach:function(drag) {
+            /**
+             * 取消关联
+             * @param drag
+             */
+        unAttach:function (drag) {
             var self = this,
                 tag = stamp(drag, 1, MARKER),
                 destructors = self[DESTRUCTOR_ID];
@@ -105,7 +122,10 @@ KISSY.add("dd/proxy", function(S, Node) {
             }
         },
 
-        destroy:function() {
+            /**
+             * 销毁
+             */
+        destroy:function () {
             var self = this,
                 node = self.get("node"),
                 destructors = self[DESTRUCTOR_ID];

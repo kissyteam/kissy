@@ -1,5 +1,5 @@
 /**
- * encapsulation of io object . as transaction object in yui3
+ * @fileOverview encapsulation of io object . as transaction object in yui3
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
@@ -89,6 +89,11 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
         xhr.responseData = responseData;
     }
 
+    /**
+     * @class 请求对象类型
+     * @memberOf io
+     * @param c 请求发送配置选项
+     */
     function XhrObject(c) {
         S.mix(this, {
             // 结构化数据，如 json

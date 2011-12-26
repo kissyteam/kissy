@@ -1,5 +1,5 @@
 /**
- * represent attribute node in tag node
+ * @fileOverview represent attribute node in tag node
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Attribute", function(S) {

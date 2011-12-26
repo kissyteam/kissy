@@ -1,5 +1,5 @@
 /**
- * dom text node
+ * @fileOverview dom text node
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Text", function(S, Node) {

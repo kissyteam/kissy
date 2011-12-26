@@ -1,6 +1,6 @@
 /**
- * 扩展类基类
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 扩展类基类
+ * @author 常胤 <lzlu.com>
  */
 
 KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {

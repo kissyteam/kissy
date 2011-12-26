@@ -1,3 +1,6 @@
+/**
+ * @fileOverview switchable
+ */
 KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay, autorender, Carousel, CAria, circular, countdown, effect, lazyload, Slide, SAria, Tabs, TAria) {
     S.Switchable = Switchable;
     var re = {

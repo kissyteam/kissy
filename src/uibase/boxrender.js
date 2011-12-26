@@ -1,5 +1,5 @@
 /**
- * UIBase.Box
+ * @fileOverview UIBase.Box
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/boxrender', function(S, Node) {

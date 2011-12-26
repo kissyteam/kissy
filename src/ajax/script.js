@@ -1,5 +1,5 @@
 /**
- * script transport for kissy io
+ * @fileOverview script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
  * @author  yiminghe@gmail.com
  */

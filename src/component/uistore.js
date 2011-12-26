@@ -1,3 +1,7 @@
+/**
+ * @fileOverview storage for component's css
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("component/uistore", function(S) {
     var uis = {
         // 不带前缀 prefixCls

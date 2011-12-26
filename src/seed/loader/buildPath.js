@@ -1,5 +1,5 @@
 /**
- * build full path from relative path and base path
+ * @fileOverview build full path from relative path and base path
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, loader, utils, data) {

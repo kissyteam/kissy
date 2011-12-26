@@ -1,6 +1,5 @@
 /**
- * 提示补全组件
- * @module   suggest
+ * @fileOverview 提示补全组件
  * @creator lifesinger@gmail.com
  */
 KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {

@@ -1,5 +1,5 @@
 /**
- * auto render
+ * @fileOverview auto render
  * @author  lifesinger@gmail.com
  */
 KISSY.add('imagezoom/autorender', function(S, DOM, JSON, ImageZoom) {

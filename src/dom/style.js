@@ -1,5 +1,5 @@
 /**
- * @module  dom
+ * @fileOverview   dom/style
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
@@ -535,7 +535,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         // Fall back to computed then uncomputed css if necessary
         val = DOM._getComputedStyle(elem, name);
-        if (val < 0 || S.isNullOrUndefined(val)) {
+        if (val == null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
         // Normalize "", auto, and prepare for extra

@@ -1,7 +1,7 @@
 /**
- * render base class for kissy
+ * @fileOverview render base class for kissy
  * @author yiminghe@gmail.com
- * @refer http://martinfowler.com/eaaDev/uiArchs.html
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/render", function(S, UIBase, UIStore) {
 

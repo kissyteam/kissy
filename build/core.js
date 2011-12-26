@@ -70,8 +70,8 @@ D:\code\kissy_git\kissy\src\core.js
 **/
 
 /**
- * @module  ua
- * @author  lifesinger@gmail.com
+ * @fileOverview ua
+ * @author lifesinger@gmail.com
  */
 KISSY.add('ua/base', function() {
 
@@ -247,8 +247,8 @@ KISSY.add('ua/base', function() {
  */
 
 /**
- * @module  ua-extra
- * @author  gonghao<gonghao@ghsky.com>
+ * @fileOverview ua-extra
+ * @author gonghao<gonghao@ghsky.com>
  */
 KISSY.add('ua/extra', function(S, UA) {
     var ua = navigator.userAgent,
@@ -301,6 +301,9 @@ KISSY.add('ua/extra', function(S, UA) {
     requires:["ua/base"]
 });
 
+/**
+ * @fileOverview ua
+ */
 KISSY.add("ua", function(S,UA) {
     return UA;
 }, {
@@ -308,7 +311,7 @@ KISSY.add("ua", function(S,UA) {
 });
 
 /**
- * @module  dom
+ * @fileOverview   dom
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/base', function(S, UA, undefined) {
@@ -414,7 +417,7 @@ KISSY.add('dom/base', function(S, UA, undefined) {
  */
 
 /**
- * @module  dom-attr
+ * @fileOverview   dom-attr
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
@@ -659,7 +662,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * 自定义属性不推荐使用，使用 .data
              * @param selector
              * @param name
-             * @param value
+             * @param [value]
              */
             prop:function (selector, name, value) {
                 // suports hash
@@ -918,7 +921,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             // handle most common string cases
                             ret.replace(rreturn, "") :
                             // handle cases where value is null/undefined or number
-                            S.isNullOrUndefined(ret) ? "" : ret;
+                            ret == null ? "" : ret;
                     }
 
                     return;
@@ -933,13 +936,13 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var val = value;
 
                     // Treat null/undefined as ""; convert numbers to string
-                    if (S.isNullOrUndefined(val)) {
+                    if (val==null) {
                         val = "";
                     } else if (typeof val === "number") {
                         val += "";
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return S.isNullOrUndefined(val) ? "" : value + "";
+                            return val==null ? "" : value + "";
                         });
                     }
 
@@ -1011,7 +1014,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
  */
 
 /**
- * @module  dom-class
+ * @fileOverview   dom-class
  * @author  lifesinger@gmail.com
  */
 KISSY.add('dom/class', function(S, DOM, undefined) {
@@ -1183,7 +1186,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
  */
 
 /**
- * @module  dom-create
+ * @fileOverview   dom-create
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/create', function(S, DOM, UA, undefined) {
@@ -1384,7 +1387,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param selector 选择器或单个元素
              * @param {Boolean} withDataAndEvent 复制节点是否包括和源节点同样的数据和事件
              * @param {Boolean} deepWithDataAndEvent 复制节点的子孙节点是否包括和源节点子孙节点同样的数据和事件
-             * @refer https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @returns 复制后的节点
              */
             clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
@@ -1653,7 +1656,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
  */
 
 /**
- * @module  dom-data
+ * @fileOverview   dom-data
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/data', function(S, DOM, undefined) {
@@ -1891,7 +1894,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
  **/
 
 /**
- * @module  dom-insertion
+ * @fileOverview   dom-insertion
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/insertion', function(S, UA, DOM) {
@@ -2015,6 +2018,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
             return;
         }
         // fragment 插入速度快点
+        // 而且能够一个操作达到批量插入
+        // refer: http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-B63ED1A3
         var newNode = DOM._nl2frag(newNodes),
             clonedNode;
         //fragment 一旦插入里面就空了，先复制下
@@ -2099,7 +2104,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
  */
 
 /**
- * @module  dom-offset
+ * @fileOverview   dom-offset
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
@@ -2183,7 +2188,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          * @param hscroll
          * @param {Boolean} auto whether adjust element automatically
          *                       (it only scrollIntoView when element is out of view)
-         * @refer http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+         * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
@@ -2512,7 +2517,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
  */
 
 /**
- * @module  dom
+ * @fileOverview   dom/style
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
@@ -3048,7 +3053,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         // Fall back to computed then uncomputed css if necessary
         val = DOM._getComputedStyle(elem, name);
-        if (val < 0 || S.isNullOrUndefined(val)) {
+        if (val == null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
         // Normalize "", auto, and prepare for extra
@@ -3100,7 +3105,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
  */
 
 /**
- * @module  selector
+ * @fileOverview   selector
  * @author  lifesinger@gmail.com , yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function(S, DOM, undefined) {
@@ -3661,7 +3666,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  */
 
 /**
- * @module  dom
+ * @fileOverview style for ie
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
@@ -3704,7 +3709,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
         // use alpha filter for IE opacity
         try {
-            if (S.isNullOrUndefined(docElem.style[OPACITY])) {
+            if (docElem.style[OPACITY] == null) {
 
                 CUSTOM_STYLES[OPACITY] = {
 
@@ -3856,7 +3861,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
  */
 
 /**
- * @module  dom-traversal
+ * @fileOverview   dom-traversal
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {
@@ -4089,6 +4094,9 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
  *
  */
 
+/**
+ * @fileOverview dom
+ */
 KISSY.add("dom", function(S,DOM) {
     return DOM;
 }, {
@@ -4105,7 +4113,7 @@ KISSY.add("dom", function(S,DOM) {
 });
 
 /**
- * utils for event
+ * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/utils", function (S, DOM) {
@@ -4479,7 +4487,7 @@ KISSY.add("event/keycodes", function() {
 });
 
 /**
- * @module  EventObject
+ * @fileOverview   EventObject
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('event/object', function (S, undefined) {
@@ -4663,7 +4671,7 @@ KISSY.add('event/object', function (S, undefined) {
  */
 
 /**
- * special house for special events
+ * @fileOverview special house for special events
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/special", function () {
@@ -4769,15 +4777,14 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                     continue;
                 }
 
-
-                event.data = currentTargetHandler.data;
+                var data = currentTargetHandler.data;
 
                 // restore originalType if involving delegate/onFix handlers
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
                 if ((s = special[event.type]) && s.handle) {
-                    t = s.handle(event, currentTargetHandler);
+                    t = s.handle(event, currentTargetHandler, data);
                     // can handle
                     if (t.length > 0) {
                         ret = t[0];
@@ -4785,7 +4792,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
                 } else {
                     ret = currentTargetHandler.fn.call(
                         currentTargetHandler.scope || currentTarget,
-                        event
+                        event, data
                     );
                 }
                 // 和 jQuery 逻辑保持一致
@@ -4810,8 +4817,8 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
 });
 
 /**
- * scalable event framework for kissy (refer DOM3 Events)
- * how to fire event just like browser?
+ * @fileOverview scalable event framework for kissy (refer DOM3 Events)
+ *               how to fire event just like browser?
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
@@ -4823,6 +4830,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
+     * @namespace
      * @name Event
      */
     var Event =
@@ -4831,8 +4839,12 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
      */
     {
         /**
-         * fire event,simulate bubble in browser.
-         * similar to dispatchEvent in DOM3 Events
+         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @memberOf Event
+         * @param targets html nodes
+         * @param {String|Event.Object} eventType event type
+         * @param [eventData] additional event data
+         * @param {boolean} [onlyHandlers] only fire handlers
          * @returns {boolean} The return value of fire/dispatchEvent indicates
          *                 whether any of the listeners which handled the event called preventDefault.
          *                 If preventDefault was called the value is false, else the value is true.
@@ -4886,7 +4898,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
          * does not cause default behavior to occur
          * does not bubble up the DOM hierarchy
          * @param targets
-         * @param {KISSY.Event.Object | String} eventType
+         * @param {Event.Object | String} eventType
          * @param [eventData]
          */
         fireHandler:function (targets, eventType, eventData) {
@@ -5072,7 +5084,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     /**
      * 提供事件发布和订阅机制
      * @name Target
-     * @constructor
+     * @namespace
      * @memberOf Event
      */
     var Target =
@@ -5177,22 +5189,23 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * 监听事件
+         * @function
          * @param {String} type 事件名
          * @param {Function} fn 事件处理器
          * @param {Object} scope 事件处理器内的 this 值，默认当前实例
          * @returns 当前实例
          */
-        on:attach("add")
+        on:attach("add"),
+        /**
+         * 取消监听事件
+         * @function
+         * @param {String} type 事件名
+         * @param {Function} fn 事件处理器
+         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
+         * @returns 当前实例
+         */
+        detach:attach("remove")
     };
-
-    /**
-     * 取消监听事件
-     * @param {String} type 事件名
-     * @param {Function} fn 事件处理器
-     * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-     * @returns 当前实例
-     */
-    Target.detach = attach("remove");
 
     return Target;
 }, {
@@ -5208,7 +5221,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
  **/
 
 /**
- * @module  event-focusin
+ * @fileOverview   event-focusin
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
@@ -5267,7 +5280,7 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
  */
 
 /**
- * @module  event-hashchange
+ * @fileOverview   event-hashchange
  * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
@@ -5485,7 +5498,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
  */
 
 /**
- * inspired by yui3 :
+ * @fileOverview  inspired by yui3 :
  *
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
@@ -5576,7 +5589,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 });
 
 /**
- * @module  event-mouseenter
+ * @fileOverview   event-mouseenter
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
@@ -5589,7 +5602,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
             onFix:o.fix,
             // all browser need
             delegateFix:o.fix,
-            handle:function (event, handler) {
+            handle:function (event, handler, data) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -5598,7 +5611,10 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                 if (!relatedTarget ||
                     (relatedTarget !== currentTarget &&
                         !DOM.contains(currentTarget, relatedTarget))) {
-                    return [handler.fn.call(handler.scope || currentTarget, event)];
+                    // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
+                    // does not bubble
+                    event.stopPropagation();
+                    return [handler.fn.call(handler.scope || currentTarget, event, data)];
                 }
                 return [];
             }
@@ -5620,7 +5636,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
  */
 
 /**
- * patch for ie<9 submit : does not bubble !
+ * @fileOverview patch for ie<9 submit : does not bubble !
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
@@ -5694,7 +5710,7 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
  **/
 
 /**
- * change bubble and checkbox/radio fix patch for ie<9
+ * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/change", function (S, UA, Event, DOM, special) {
@@ -5798,7 +5814,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
 });
 
 /**
- * normalize mousewheel in gecko
+ * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _protected, special) {
@@ -5934,155 +5950,155 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
          * @lends Event
          */
         {
-        // single type , single target , fixed native
-        __add:function (isNativeTarget, target, type, fn, scope) {
-            var typedGroups = Utils.getTypedGroups(type);
-            type = typedGroups[0];
-            var groups = typedGroups[1],
-                eventDesc,
-                data,
-                s = specials[type],
-                // in case overwrite by delegateFix/onFix in specials events
-                // (mouseenter/leave,focusin/out)
-                originalType,
-                last,
-                selector;
-            if (S.isObject(fn)) {
-                last = fn.last;
-                scope = fn.scope;
-                data = fn.data;
-                selector = fn.selector;
-                fn = fn.fn;
-                if (selector) {
-                    if (s && s['delegateFix']) {
+            // single type , single target , fixed native
+            __add:function (isNativeTarget, target, type, fn, scope) {
+                var typedGroups = Utils.getTypedGroups(type);
+                type = typedGroups[0];
+                var groups = typedGroups[1],
+                    eventDesc,
+                    data,
+                    s = specials[type],
+                    // in case overwrite by delegateFix/onFix in specials events
+                    // (mouseenter/leave,focusin/out)
+                    originalType,
+                    last,
+                    selector;
+                if (S.isObject(fn)) {
+                    last = fn.last;
+                    scope = fn.scope;
+                    data = fn.data;
+                    selector = fn.selector;
+                    fn = fn.fn;
+                    if (selector) {
+                        if (s && s['delegateFix']) {
+                            originalType = type;
+                            type = s['delegateFix'];
+                        }
+                    }
+                }
+                if (!selector) {
+                    // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
+                    // TODO need evaluate!
+                    if (s && s['onFix']) {
                         originalType = type;
-                        type = s['delegateFix'];
+                        type = s['onFix'];
                     }
                 }
-            }
-            if (!selector) {
-                // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
-                // TODO need evaluate!
-                if (s && s['onFix']) {
-                    originalType = type;
-                    type = s['onFix'];
-                }
-            }
-            // 不是有效的 target 或 参数不对
-            if (!type ||
-                !target ||
-                !S.isFunction(fn) ||
-                (isNativeTarget && !isValidTarget(target))) {
-                return;
-            }
-            // 获取事件描述
-            eventDesc = Event._data(target);
-            if (!eventDesc) {
-                _protected._data(target, eventDesc = {});
-            }
-            //事件 listeners , similar to eventListeners in DOM3 Events
-            var events = eventDesc.events = eventDesc.events || {},
-                handlers = events[type] = events[type] || [],
-                handleObj = {
-                    fn:fn,
-                    scope:scope,
-                    selector:selector,
-                    last:last,
-                    data:data,
-                    groups:groups,
-                    originalType:originalType
-                },
-                eventHandler = eventDesc.handler;
-            // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-            if (!eventHandler) {
-                eventHandler = eventDesc.handler = function (event, data) {
-                    // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
-                    // 已经在 fire 中 bubble 过一次了
-                    // incase after page has unloaded
-                    if (typeof KISSY == "undefined" ||
-                        event && event.type == Utils.Event_Triggered) {
-                        return;
-                    }
-                    var currentTarget = eventHandler.target, type;
-                    if (!event || !event.fixed) {
-                        event = new EventObject(currentTarget, event);
-                    }
-                    type = event.type;
-                    if (S.isPlainObject(data)) {
-                        S.mix(event, data);
-                    }
-                    // protect type
-                    if (type) {
-                        event.type = type;
-                    }
-                    return handle(currentTarget, event);
-                };
-                // as for native dom event , this represents currentTarget !
-                eventHandler.target = target;
-            }
-
-            for (var i = handlers.length - 1; i >= 0; --i) {
-                /**
-                 * If multiple identical EventListeners are registered on the same EventTarget
-                 * with the same parameters the duplicate instances are discarded.
-                 * They do not cause the EventListener to be called twice
-                 * and since they are discarded
-                 * they do not need to be removed with the removeEventListener method.
-                 */
-                if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                // 不是有效的 target 或 参数不对
+                if (!type ||
+                    !target ||
+                    !S.isFunction(fn) ||
+                    (isNativeTarget && !isValidTarget(target))) {
                     return;
                 }
-            }
-
-            if (isNativeTarget) {
-                addDomEvent(target, type, eventHandler, handlers, handleObj);
-                //nullify to prevent memory leak in ie ?
-                target = null;
-            }
-
-            // 增加 listener
-            if (selector) {
-                var delegateIndex = handlers.delegateCount
-                    = handlers.delegateCount || 0;
-                handlers.splice(delegateIndex, 0, handleObj);
-                handlers.delegateCount++;
-            } else {
-                handlers.lastCount = handlers.lastCount || 0;
-                if (last) {
-                    handlers.push(handleObj);
-                    handlers.lastCount++;
-                } else {
-                    handlers.splice(handlers.length - handlers.lastCount,
-                        0, handleObj);
+                // 获取事件描述
+                eventDesc = Event._data(target);
+                if (!eventDesc) {
+                    _protected._data(target, eventDesc = {});
                 }
-            }
-        },
+                //事件 listeners , similar to eventListeners in DOM3 Events
+                var events = eventDesc.events = eventDesc.events || {},
+                    handlers = events[type] = events[type] || [],
+                    handleObj = {
+                        fn:fn,
+                        scope:scope,
+                        selector:selector,
+                        last:last,
+                        data:data,
+                        groups:groups,
+                        originalType:originalType
+                    },
+                    eventHandler = eventDesc.handler;
+                // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
+                if (!eventHandler) {
+                    eventHandler = eventDesc.handler = function (event, data) {
+                        // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
+                        // 已经在 fire 中 bubble 过一次了
+                        // incase after page has unloaded
+                        if (typeof KISSY == "undefined" ||
+                            event && event.type == Utils.Event_Triggered) {
+                            return;
+                        }
+                        var currentTarget = eventHandler.target, type;
+                        if (!event || !event.fixed) {
+                            event = new EventObject(currentTarget, event);
+                        }
+                        type = event.type;
+                        if (S.isPlainObject(data)) {
+                            S.mix(event, data);
+                        }
+                        // protect type
+                        if (type) {
+                            event.type = type;
+                        }
+                        return handle(currentTarget, event);
+                    };
+                    // as for native dom event , this represents currentTarget !
+                    eventHandler.target = target;
+                }
 
-        /**
-         * Adds an event listener.similar to addEventListener in DOM3 Events
-         * @param targets KISSY selector
-         * @param type {String} The type of event to append.
-         * @param fn {Function|Object} The event handler/listener.
-         * @param fn.scope
-         * @param fn.selector
-         * @param fn.fn
-         * @param  {Object} [scope] The scope (this reference) in which the handler function is executed.
-         */
-        add:function (targets, type, fn, scope) {
-            type = S.trim(type);
-            // data : 附加在回调后面的数据，delegate 检查使用
-            // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
+                for (var i = handlers.length - 1; i >= 0; --i) {
+                    /**
+                     * If multiple identical EventListeners are registered on the same EventTarget
+                     * with the same parameters the duplicate instances are discarded.
+                     * They do not cause the EventListener to be called twice
+                     * and since they are discarded
+                     * they do not need to be removed with the removeEventListener method.
+                     */
+                    if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                        return;
+                    }
+                }
+
+                if (isNativeTarget) {
+                    addDomEvent(target, type, eventHandler, handlers, handleObj);
+                    //nullify to prevent memory leak in ie ?
+                    target = null;
+                }
+
+                // 增加 listener
+                if (selector) {
+                    var delegateIndex = handlers.delegateCount
+                        = handlers.delegateCount || 0;
+                    handlers.splice(delegateIndex, 0, handleObj);
+                    handlers.delegateCount++;
+                } else {
+                    handlers.lastCount = handlers.lastCount || 0;
+                    if (last) {
+                        handlers.push(handleObj);
+                        handlers.lastCount++;
+                    } else {
+                        handlers.splice(handlers.length - handlers.lastCount,
+                            0, handleObj);
+                    }
+                }
+            },
+
+            /**
+             * Adds an event listener.similar to addEventListener in DOM3 Events
+             * @param targets KISSY selector
+             * @param type {String} The type of event to append.
+             * @param fn {Function|Object} The event handler/listener.
+             * @param fn.scope
+             * @param fn.selector
+             * @param fn.fn
+             * @param  {Object} [scope] The scope (this reference) in which the handler function is executed.
+             */
+            add:function (targets, type, fn, scope) {
+                type = S.trim(type);
+                // data : 附加在回调后面的数据，delegate 检查使用
+                // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
+                if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
+                    return targets;
+                }
+
+                DOM.query(targets).each(function (target) {
+                    Event.__add(true, target, type, fn, scope);
+                });
+
                 return targets;
             }
-
-            DOM.query(targets).each(function (target) {
-                Event.__add(true, target, type, fn, scope);
-            });
-
-            return targets;
-        }
-    });
+        });
 }, {
     requires:['./base', 'dom', './utils', './object', './handle', './protected', './special']
 });
@@ -6166,7 +6182,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 len = handlers.length;
                 // 移除 fn
                 if ((fn || hasSelector || groupsRe ) && len) {
-                    scope = target || scope;
+                    scope = scope || target;
 
                     for (i = 0, j = 0, t = []; i < len; ++i) {
                         handler = handlers[i];
@@ -6274,8 +6290,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
 });
 
 /**
- * KISSY Scalable Event Framework
- * @author yiminghe@gmail.com
+ * @fileOverview KISSY Scalable Event Framework
  */
 KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
     S.mix(Event, {
@@ -6339,7 +6354,7 @@ KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
 });
 
 /**
- * definition for node and nodelist
+ * @fileOverview definition for node and nodelist
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add("node/base", function(S, DOM, undefined) {
@@ -6350,7 +6365,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     /**
      * The NodeList class provides a wrapper for manipulating DOM Node.
-     * @constructor
+     * @class
+     * @name NodeList
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,
@@ -6442,7 +6458,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         /**
          * Applies the given function to each Node in the NodeList.
          * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-         * @param context An optional context to apply the function with Default context is the current NodeList instance
+         * @param [context] An optional context to apply the function with Default context is the current NodeList instance
          */
         each: function(fn, context) {
             var self = this;
@@ -6549,7 +6565,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
  */
 
 /**
- * import methods from DOM to NodeList.prototype
+ * @fileOverview import methods from DOM to NodeList.prototype
  * @author  yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
@@ -6714,7 +6730,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  */
 
 /**
- * overrides methods in NodeList.prototype
+ * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add("node/override", function(S, DOM, Event, NodeList) {
@@ -6755,7 +6771,7 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  */
 
 /**
- * @module anim-easing
+ * @fileOverview easing equation from yui3
  */
 KISSY.add('anim/easing', function() {
 
@@ -6967,7 +6983,7 @@ KISSY.add('anim/easing', function() {
  */
 
 /**
- * single timer for the whole anim module
+ * @fileOverview single timer for the whole anim module
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/manager", function(S) {
@@ -7040,7 +7056,7 @@ KISSY.add("anim/manager", function(S) {
 });
 
 /**
- * animate on single property
+ * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
 KISSY.add("anim/fx", function (S, DOM, undefined) {
@@ -7179,7 +7195,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
  **/
 
 /**
- * queue of anim objects
+ * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
 KISSY.add("anim/queue", function(S, DOM) {
@@ -7281,7 +7297,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 });
 
 /**
- * animation framework for KISSY
+ * @fileOverview animation framework for KISSY
  * @author   yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
@@ -7822,7 +7838,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
  */
 
 /**
- * special patch for making color gradual change
+ * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
@@ -7997,7 +8013,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
  **/
 
 /**
- * special patch for anim backgroundPosition
+ * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
 KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
@@ -8073,6 +8089,9 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
     requires:["dom", "./base", "./fx"]
 });
 
+/**
+ * @fileOverview anim
+ */
 KISSY.add("anim", function(S, Anim,Easing) {
     Anim.Easing=Easing;
     return Anim;
@@ -8081,7 +8100,7 @@ KISSY.add("anim", function(S, Anim,Easing) {
 });
 
 /**
- * @module  anim-node-plugin
+ * @fileOverview   anim-node-plugin
  * @author  yiminghe@gmail.com,
  *          lifesinger@gmail.com,
  *          qiaohua@taobao.com,
@@ -8177,6 +8196,10 @@ KISSY.add('node/anim', function(S, DOM, Anim, Node, undefined) {
  *  - anim needs queue mechanism ?
  */
 
+/**
+ * @fileOverview node
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("node", function(S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
     return Node;
@@ -8675,29 +8698,28 @@ KISSY.add("json/json2", function(S, UA) {
 }, {requires:['ua']});
 
 /**
- * adapt json2 to kissy
- * @author lifesinger@gmail.com
+ * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 
     return {
 
-        parse: function(text) {
+        parse:function (text) {
             // 当输入为 undefined / null / '' 时，返回 null
-            if (S.isNullOrUndefined(text) || text === '') {
+            if (text == null || text === '') {
                 return null;
             }
             return JSON.parse(text);
         },
 
-        stringify: JSON.stringify
+        stringify:JSON.stringify
     };
 }, {
     requires:["json/json2"]
 });
 
 /**
- * form data  serialization util
+ * @fileOverview form data  serialization util
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/form-serializer", function(S, DOM) {
@@ -8753,7 +8775,7 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
 });
 
 /**
- * encapsulation of io object . as transaction object in yui3
+ * @fileOverview encapsulation of io object . as transaction object in yui3
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrobject", function(S, Event) {
@@ -8843,6 +8865,11 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
         xhr.responseData = responseData;
     }
 
+    /**
+     * @class 请求对象类型
+     * @memberOf io
+     * @param c 请求发送配置选项
+     */
     function XhrObject(c) {
         S.mix(this, {
             // 结构化数据，如 json
@@ -8964,15 +8991,15 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 });
 
 /**
- * a scalable client io framework
+ * @fileOverview a scalable client io framework
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
+KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
 
         var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
             rspace = /\s+/,
             rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-            mirror = function(s) {
+            mirror = function (s) {
                 return s;
             },
             HTTP_PORT = 80,
@@ -8984,7 +9011,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
         try {
             curLocation = location.href;
-        } catch(e) {
+        } catch (e) {
             S.log("ajax/base get curLocation error : ");
             S.log(e);
             // Use the href attribute of an A element
@@ -9002,7 +9029,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                 // isLocal:isLocal,
                 type:"GET",
                 // only support utf-8 when post, encoding can not be changed actually
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                contentType:"application/x-www-form-urlencoded; charset=UTF-8",
                 async:true,
                 // whether add []
                 serializeArray:true,
@@ -9021,10 +9048,10 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  cache: null,
                  mimeType:null,
                  xdr:{
-                     subDomain:{
-                        proxy:'http://xx.t.com/proxy.html'
-                     },
-                     src:''
+                 subDomain:{
+                 proxy:'http://xx.t.com/proxy.html'
+                 },
+                 src:''
                  },
                  headers: {},
                  xhrFields:{},
@@ -9034,12 +9061,12 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
                  forceScript:false,
                  */
 
-                accepts: {
-                    xml: "application/xml, text/xml",
-                    html: "text/html",
-                    text: "text/plain",
-                    json: "application/json, text/javascript",
-                    "*": "*/*"
+                accepts:{
+                    xml:"application/xml, text/xml",
+                    html:"text/html",
+                    text:"text/plain",
+                    json:"application/json, text/javascript",
+                    "*":"*/*"
                 },
                 converters:{
                     text:{
@@ -9096,7 +9123,36 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         }
 
         function fire(eventType, xhr) {
-            io.fire(eventType, { ajaxConfig: xhr.config ,xhr:xhr});
+
+
+            /**
+             * @name io#complete
+             * @description 请求完成（成功或失败）后触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
+            /**
+             * @name io#success
+             * @description 请求成功后触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
+            /**
+             * @name io#error
+             * @description 请求失败后触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
+            io.fire(eventType, { ajaxConfig:xhr.config, xhr:xhr});
         }
 
         function handleXhrEvent(e) {
@@ -9112,12 +9168,31 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
             fire(type, xhr);
         }
 
+        /**
+         * @name io
+         * @description kissy io framework
+         * @namespace io framework
+         * @function
+         * @param {Object} c 发送请求配置选项
+         * @param {String} c.url 请求地址
+         */
         function io(c) {
             if (!c.url) {
                 return undefined;
             }
             c = setUpConfig(c);
             var xhr = new XhrObject(c);
+
+
+            /**
+             * @name io#start
+             * @description 生成请求对象前触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} e.xhr 当前请求对象
+             */
+
             fire("start", xhr);
             var transportContructor = transports[c.dataType[0]] || transports["*"],
                 transport = new transportContructor(xhr);
@@ -9145,11 +9220,20 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
 
             xhr.readyState = 1;
 
+            /**
+             * @name io#send
+             * @description 发送请求前触发
+             * @event
+             * @param {Event.Object} e
+             * @param {Object} e.ajaxConfig 当前请求的配置
+             * @param {io.XhrObject} xhr 当前请求对象
+             */
+
             fire("send", xhr);
 
             // Timeout
             if (c.async && c.timeout > 0) {
-                xhr.timeoutTimer = setTimeout(function() {
+                xhr.timeoutTimer = setTimeout(function () {
                     xhr.abort("timeout");
                 }, c.timeout * 1000);
             }
@@ -9174,16 +9258,16 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         S.mix(io, Event.Target);
         S.mix(io, {
             isLocal:isLocal,
-            setupConfig:function(setting) {
+            setupConfig:function (setting) {
                 S.mix(defaultConfig, setting, undefined, undefined, true);
             },
-            setupTransport:function(name, fn) {
+            setupTransport:function (name, fn) {
                 transports[name] = fn;
             },
-            getTransport:function(name) {
+            getTransport:function (name) {
                 return transports[name];
             },
-            getConfig:function() {
+            getConfig:function () {
                 return defaultConfig;
             }
         });
@@ -9192,7 +9276,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
         return io;
     },
     {
-        requires:["json","event","./xhrobject"]
+        requires:["json", "event", "./xhrobject"]
     });
 
 /**
@@ -9207,7 +9291,7 @@ KISSY.add("ajax/base", function(S, JSON, Event, XhrObject) {
  **/
 
 /**
- * base for xhr and subdomain
+ * @fileOverview base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhrbase", function (S, io) {
@@ -9410,7 +9494,7 @@ KISSY.add("ajax/xhrbase", function (S, io) {
 });
 
 /**
- * solve io between sub domains using proxy page
+ * @fileOverview solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
@@ -9491,7 +9575,7 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
 });
 
 /**
- * use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
+ * @fileOverview use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xdr", function(S, io, DOM) {
@@ -9632,7 +9716,7 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
 });
 
 /**
- * ajax xhr transport class , route subdomain , xdr
+ * @fileOverview ajax xhr transport class , route subdomain , xdr
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
@@ -9655,6 +9739,7 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
                 return t.reverse().slice(0, 2).reverse().join('.');
             }
         }
+
 
         function XhrTransport(xhrObj) {
             var c = xhrObj.config,
@@ -9708,7 +9793,7 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
  **/
 
 /**
- * script transport for kissy io
+ * @fileOverview script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
  * @author  yiminghe@gmail.com
  */
@@ -9837,7 +9922,7 @@ KISSY.add("ajax/script", function(S, io) {
 });
 
 /**
- * jsonp transport based on script transport
+ * @fileOverview jsonp transport based on script transport
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function (S, io) {
@@ -9917,6 +10002,10 @@ KISSY.add("ajax/jsonp", function (S, io) {
     requires:['./base']
 });
 
+/**
+ * @fileOverview process form config
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
     io.on("start", function(e) {
@@ -9963,7 +10052,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
     });
 
 /**
- * non-refresh upload file with form by iframe
+ * @fileOverview non-refresh upload file with form by iframe
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
@@ -10106,84 +10195,128 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     requires:["dom","event","./base"]
 });
 
-KISSY.add("ajax", function(S, serializer, io) {
+/**
+ * @fileOverview io shortcut
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("ajax", function (S, serializer, io, XhrObject) {
     var undef = undefined;
     // some shortcut
-    S.mix(io, {
+    S.mix(io,
 
         /**
-         * form 序列化
-         * @param formElement {HTMLFormElement} 将要序列化的 form 元素
+         * @lends io
          */
-        serialize:serializer.serialize,
+        {
+            XhrObject:XhrObject,
+            /**
+             * form 序列化
+             * @param formElement {HTMLFormElement} 将要序列化的 form 元素
+             */
+            serialize:serializer.serialize,
 
-        get: function(url, data, callback, dataType, _t) {
-            // data 参数可省略
-            if (S.isFunction(data)) {
-                dataType = callback;
-                callback = data;
-                data = undef;
+            /**
+             * get 请求
+             * @param url
+             * @param data
+             * @param callback
+             * @param [dataType]
+             * @param [_t]
+             */
+            get:function (url, data, callback, dataType, _t) {
+                // data 参数可省略
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                    data = undef;
+                }
+
+                return io({
+                    type:_t || "get",
+                    url:url,
+                    data:data,
+                    success:callback,
+                    dataType:dataType
+                });
+            },
+
+            /**
+             * post 请求
+             * @param url
+             * @param data
+             * @param callback
+             * @param [dataType]
+             */
+            post:function (url, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                    data = undef;
+                }
+                return io.get(url, data, callback, dataType, "post");
+            },
+
+            /**
+             * jsonp 请求
+             * @param url
+             * @param data
+             * @param callback
+             */
+            jsonp:function (url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = undef;
+                }
+                return io.get(url, data, callback, "jsonp");
+            },
+
+            // 和 S.getScript 保持一致
+            // 更好的 getScript 可以用
+            /*
+             io({
+             dataType:'script'
+             });
+             */
+            getScript:S.getScript,
+
+            /**
+             * 获取 json 数据
+             * @param url
+             * @param data
+             * @param callback
+             */
+            getJSON:function (url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = undef;
+                }
+                return io.get(url, data, callback, "json");
+            },
+
+            /**
+             * 无刷新上传文件
+             * @param url
+             * @param form
+             * @param data
+             * @param callback
+             * @param [dataType]
+             */
+            upload:function (url, form, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                    data = undef;
+                }
+                return io({
+                    url:url,
+                    type:'post',
+                    dataType:dataType,
+                    form:form,
+                    data:data,
+                    success:callback
+                });
             }
-
-            return io({
-                type: _t || "get",
-                url: url,
-                data: data,
-                success: callback,
-                dataType: dataType
-            });
-        },
-
-        post: function(url, data, callback, dataType) {
-            if (S.isFunction(data)) {
-                dataType = callback;
-                callback = data;
-                data = undef;
-            }
-            return io.get(url, data, callback, dataType, "post");
-        },
-
-        jsonp: function(url, data, callback) {
-            if (S.isFunction(data)) {
-                callback = data;
-                data = undef;
-            }
-            return io.get(url, data, callback, "jsonp");
-        },
-
-        // 和 S.getScript 保持一致
-        // 更好的 getScript 可以用
-        /*
-         io({
-         dataType:'script'
-         });
-         */
-        getScript:S.getScript,
-
-        getJSON: function(url, data, callback) {
-            if (S.isFunction(data)) {
-                callback = data;
-                data = undef;
-            }
-            return io.get(url, data, callback, "json");
-        },
-
-        upload:function(url, form, data, callback, dataType) {
-            if (S.isFunction(data)) {
-                dataType = callback;
-                callback = data;
-                data = undef;
-            }
-            return io({
-                url:url,
-                type:'post',
-                dataType:dataType,
-                form:form,
-                data:data,
-                success:callback
-            });
-        }
-    });
+        });
 
     return io;
 }, {
@@ -10199,7 +10332,7 @@ KISSY.add("ajax", function(S, serializer, io) {
 });
 
 /**
- * @module  Attribute
+ * @fileOverview attribute management
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function(S, undef) {
@@ -10674,7 +10807,7 @@ KISSY.add('base/attribute', function(S, undef) {
  */
 
 /**
- * @module  Base
+ * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('base/base', function (S, Attribute, Event) {
@@ -10728,6 +10861,9 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     requires:["./attribute", "event"]
 });
 
+/**
+ * @fileOverview Attribute and Base
+ */
 KISSY.add("base", function(S, Base, Attribute) {
     Base.Attribute = Attribute;
     return Base;
@@ -10736,7 +10872,7 @@ KISSY.add("base", function(S, Base, Attribute) {
 });
 
 /**
- * @module  cookie
+ * @fileOverview   cookie
  * @author  lifesinger@gmail.com
  */
 KISSY.add('cookie/base', function(S) {
@@ -10820,12 +10956,18 @@ KISSY.add('cookie/base', function(S) {
  *     独立成静态工具类的方式更优。
  */
 
+/**
+ * @fileOverview cookie
+ */
 KISSY.add("cookie", function(S,C) {
     return C;
 }, {
     requires:["cookie/base"]
 });
 
+/**
+ * @fileOverview core
+ */
 KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
     var re = {
         UA:UA,
@@ -10865,6 +11007,9 @@ KISSY.add("core", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cook
         "cookie"
     ]
 });
+/**
+ * TODO need to be deleted in 1.30dev
+ **/
 
 
 

@@ -1,5 +1,5 @@
 /**
- * @module  dom-attr
+ * @fileOverview   dom-attr
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
@@ -244,7 +244,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * 自定义属性不推荐使用，使用 .data
              * @param selector
              * @param name
-             * @param value
+             * @param [value]
              */
             prop:function (selector, name, value) {
                 // suports hash
@@ -503,7 +503,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             // handle most common string cases
                             ret.replace(rreturn, "") :
                             // handle cases where value is null/undefined or number
-                            S.isNullOrUndefined(ret) ? "" : ret;
+                            ret == null ? "" : ret;
                     }
 
                     return;
@@ -518,13 +518,13 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var val = value;
 
                     // Treat null/undefined as ""; convert numbers to string
-                    if (S.isNullOrUndefined(val)) {
+                    if (val==null) {
                         val = "";
                     } else if (typeof val === "number") {
                         val += "";
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return S.isNullOrUndefined(val) ? "" : value + "";
+                            return val==null ? "" : value + "";
                         });
                     }
 

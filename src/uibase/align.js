@@ -1,5 +1,5 @@
 /**
- * UIBase.Align
+ * @fileOverview UIBase.Align
  * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
 KISSY.add('uibase/align', function(S, UA, DOM, Node) {
@@ -7,7 +7,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
     /**
      * inspired by closure library by Google
-     * @refer http://yiminghe.iteye.com/blog/1124720
+     * @see http://yiminghe.iteye.com/blog/1124720
      */
 
     /**

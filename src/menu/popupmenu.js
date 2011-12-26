@@ -1,5 +1,5 @@
 /**
- * positionable and not focusable menu
+ * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRender) {

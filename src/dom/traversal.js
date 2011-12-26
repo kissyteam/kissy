@@ -1,5 +1,5 @@
 /**
- * @module  dom-traversal
+ * @fileOverview   dom-traversal
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 KISSY.add('dom/traversal', function(S, DOM, undefined) {

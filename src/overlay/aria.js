@@ -1,5 +1,5 @@
 /**
- * http://www.w3.org/TR/wai-aria-practices/#trap_focus
+ * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/aria", function(S,Event) {

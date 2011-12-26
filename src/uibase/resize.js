@@ -1,5 +1,5 @@
 /**
- * resize extension using resizable
+ * @fileOverview resize extension using resizable
  * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/resize", function(S) {

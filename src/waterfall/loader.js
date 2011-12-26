@@ -1,5 +1,5 @@
 /**
- * load content
+ * @fileOverview load content
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/loader", function(S, Node, Intervein) {

@@ -1,16 +1,22 @@
 /*
- * a seed where KISSY grows up from , KISS Yeah !
+ * @fileOverview a seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, undefined) {
     /**
-     * @namespace KISSY
+     * @namespace
+     * @name KISSY
      */
 
     var host = this,
         meta = {
             /**
              * Copies all the properties of s to r.
+             * @memberOf KISSY
+             * @param {Object} r the augmented object
+             * @param {Object} s the object need to augment
+             * @param {boolean} [ov=true] whether overwrite existing property
+             * @param {String[]} [wl] array of white-list properties
              * @param deep {boolean} whether recursive mix if encounter object
              * @return {Object} the augmented object
              */
@@ -76,240 +82,259 @@
     // override previous kissy
     S = host[S] = meta.mix(seed, meta);
 
-    S.mix(S, {
-        configs:{},
-        // S.app() with these members.
-        __APP_MEMBERS:['namespace'],
-        __APP_INIT_METHODS:['__init'],
-
+    S.mix(S,
         /**
-         * The version of the library.
-         * @type {String}
+         * @lends KISSY
          */
-        version:'@VERSION@',
+        {
+            configs:{},
+            // S.app() with these members.
+            __APP_MEMBERS:['namespace'],
+            __APP_INIT_METHODS:['__init'],
 
-        buildTime:'@TIMESTAMP@',
+            /**
+             * The version of the library.
+             * @type {String}
+             */
+            version:'@VERSION@',
 
-        /**
-         * Returns a new object containing all of the properties of
-         * all the supplied objects. The properties from later objects
-         * will overwrite those in earlier objects. Passing in a
-         * single object will create a shallow copy of it.
-         * @return {Object} the new merged object
-         */
-        merge:function () {
-            var o = {}, i, l = arguments.length;
-            for (i = 0; i < l; i++) {
-                S.mix(o, arguments[i]);
-            }
-            return o;
-        },
+            /**
+             * The build time of the library
+             * @type {String}
+             */
+            buildTime:'@TIMESTAMP@',
 
-        /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @return {Object} the augmented object
-         */
-        augment:function (/*r, s1, s2, ..., ov, wl*/) {
-            var args = S.makeArray(arguments),
-                len = args.length - 2,
-                r = args[0],
-                ov = args[len],
-                wl = args[len + 1],
-                i = 1;
+            /**
+             * Returns a new object containing all of the properties of
+             * all the supplied objects. The properties from later objects
+             * will overwrite those in earlier objects. Passing in a
+             * single object will create a shallow copy of it.
+             * @param {Object...} m1 objects need to be merged
+             * @return {Object} the new merged object
+             */
+            merge:function (m1) {
+                var o = {}, i, l = arguments.length;
+                for (i = 0; i < l; i++) {
+                    S.mix(o, arguments[i]);
+                }
+                return o;
+            },
 
-            if (!S.isArray(wl)) {
-                ov = wl;
-                wl = undefined;
-                len++;
-            }
-            if (!S.isBoolean(ov)) {
-                ov = undefined;
-                len++;
-            }
+            /**
+             * Applies prototype properties from the supplier to the receiver.
+             * @param {Object} r received object
+             * @param {Object...} s1 object need to  augment
+             * @param {boolean} [ov=true] whether overwrite existing property
+             * @param {String[]} [wl] array of white-list properties
+             * @return {Object} the augmented object
+             */
+            augment:function (r, s1, ov, wl) {
+                var args = S.makeArray(arguments),
+                    len = args.length - 2,
+                    i = 1;
 
-            for (; i < len; i++) {
-                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
-            }
+                r = args[0];
+                ov = args[len];
+                wl = args[len + 1];
 
-            return r;
-        },
+                if (!S.isArray(wl)) {
+                    ov = wl;
+                    wl = undefined;
+                    len++;
+                }
+                if (!S.isBoolean(ov)) {
+                    ov = undefined;
+                    len++;
+                }
 
-        /**
-         * Utility to set up the prototype, constructor and superclass properties to
-         * support an inheritance strategy that can chain constructors and methods.
-         * Static members will not be inherited.
-         * @param r {Function} the object to modify
-         * @param s {Function} the object to inherit
-         * @param px {Object} prototype properties to add/override
-         * @param {Object} [sx] static properties to add/override
-         * @return r {Object}
-         */
-        extend:function (r, s, px, sx) {
-            if (!s || !r) {
+                for (; i < len; i++) {
+                    S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+                }
+
                 return r;
-            }
+            },
 
-            var create = Object.create ?
-                function (proto, c) {
-                    return Object.create(proto, {
-                        constructor:{
-                            value:c
+            /**
+             * Utility to set up the prototype, constructor and superclass properties to
+             * support an inheritance strategy that can chain constructors and methods.
+             * Static members will not be inherited.
+             * @param r {Function} the object to modify
+             * @param s {Function} the object to inherit
+             * @param px {Object} prototype properties to add/override
+             * @param {Object} [sx] static properties to add/override
+             * @return r {Object}
+             */
+            extend:function (r, s, px, sx) {
+                if (!s || !r) {
+                    return r;
+                }
+
+                var create = Object.create ?
+                    function (proto, c) {
+                        return Object.create(proto, {
+                            constructor:{
+                                value:c
+                            }
+                        });
+                    } :
+                    function (proto, c) {
+                        function F() {
                         }
-                    });
-                } :
-                function (proto, c) {
-                    function F() {
-                    }
 
-                    F.prototype = proto;
+                        F.prototype = proto;
 
-                    var o = new F();
-                    o.constructor = c;
-                    return o;
-                },
-                sp = s.prototype,
-                rp;
+                        var o = new F();
+                        o.constructor = c;
+                        return o;
+                    },
+                    sp = s.prototype,
+                    rp;
 
-            // add prototype chain
-            rp = create(sp, r);
-            r.prototype = S.mix(rp, r.prototype);
-            r.superclass = create(sp, s);
+                // add prototype chain
+                rp = create(sp, r);
+                r.prototype = S.mix(rp, r.prototype);
+                r.superclass = create(sp, s);
 
-            // add prototype overrides
-            if (px) {
-                S.mix(rp, px);
-            }
-
-            // add object overrides
-            if (sx) {
-                S.mix(r, sx);
-            }
-
-            return r;
-        },
-
-        /****************************************************************************************
-
-         *                            The KISSY System Framework                                *
-
-         ****************************************************************************************/
-
-        /**
-         * Initializes KISSY
-         */
-        __init:function () {
-            this.Config = this.Config || {};
-            this.Env = this.Env || {};
-
-            // NOTICE: '@DEBUG@' will replace with '' when compressing.
-            // So, if loading source file, debug is on by default.
-            // If loading min version, debug is turned off automatically.
-            this.Config.debug = '@DEBUG@';
-        },
-
-        /**
-         * Returns the namespace specified and creates it if it doesn't exist. Be careful
-         * when naming packages. Reserved words may work in some browsers and not others.
-         * <code>
-         * S.namespace('KISSY.app'); // returns KISSY.app
-         * S.namespace('app.Shop'); // returns KISSY.app.Shop
-         * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-         * </code>
-         * @return {Object}  A reference to the last namespace object created
-         */
-        namespace:function () {
-            var args = S.makeArray(arguments),
-                l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === true && l--);
-
-            for (i = 0; i < l; i++) {
-                p = (EMPTY + args[i]).split('.');
-                o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
+                // add prototype overrides
+                if (px) {
+                    S.mix(rp, px);
                 }
-            }
-            return o;
-        },
 
-        /**
-         * create app based on KISSY.
-         * @param name {String} the app name
-         * @param sx {Object} static properties to add/override
-         * <code>
-         * S.app('TB');
-         * TB.namespace('app'); // returns TB.app
-         * </code>
-         * @return {Object}  A reference to the app global object
-         */
-        app:function (name, sx) {
-            var isStr = S.isString(name),
-                O = isStr ? host[name] || {} : name,
-                i = 0,
-                len = S.__APP_INIT_METHODS.length;
+                // add object overrides
+                if (sx) {
+                    S.mix(r, sx);
+                }
 
-            S.mix(O, this, true, S.__APP_MEMBERS);
-            for (; i < len; i++) {
-                S[S.__APP_INIT_METHODS[i]].call(O);
-            }
+                return r;
+            },
 
-            S.mix(O, S.isFunction(sx) ? sx() : sx);
-            isStr && (host[name] = O);
+            /****************************************************************************************
 
-            return O;
-        },
+             *                            The KISSY System Framework                                *
 
+             ****************************************************************************************/
 
-        config:function (c) {
-            var configs, cfg, r;
-            for (var p in c) {
-                if (c.hasOwnProperty(p)) {
-                    if ((configs = this['configs']) &&
-                        (cfg = configs[p])) {
-                        r = cfg(c[p]);
+            /**
+             * Initializes KISSY
+             */
+            __init:function () {
+                this.Config = this.Config || {};
+                this.Env = this.Env || {};
+
+                // NOTICE: '@DEBUG@' will replace with '' when compressing.
+                // So, if loading source file, debug is on by default.
+                // If loading min version, debug is turned off automatically.
+                this.Config.debug = '@DEBUG@';
+            },
+
+            /**
+             * Returns the namespace specified and creates it if it doesn't exist. Be careful
+             * when naming packages. Reserved words may work in some browsers and not others.
+             * <code>
+             * S.namespace('KISSY.app'); // returns KISSY.app
+             * S.namespace('app.Shop'); // returns KISSY.app.Shop
+             * S.namespace('TB.app.Shop', true); // returns TB.app.Shop
+             * </code>
+             * @return {Object}  A reference to the last namespace object created
+             */
+            namespace:function () {
+                var args = S.makeArray(arguments),
+                    l = args.length,
+                    o = null, i, j, p,
+                    global = (args[l - 1] === true && l--);
+
+                for (i = 0; i < l; i++) {
+                    p = (EMPTY + args[i]).split('.');
+                    o = global ? host : this;
+                    for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                        o = o[p[j]] = o[p[j]] || { };
                     }
                 }
-            }
-            return r;
-        },
+                return o;
+            },
 
-        /**
-         * Prints debug info.
-         * @param msg {String} the message to log.
-         * @param {String} [cat] the log category for the message. Default
-         *        categories are "info", "warn", "error", "time" etc.
-         * @param {String} [src] the source of the the message (opt)
-         */
-        log:function (msg, cat, src) {
-            if (S.Config.debug) {
-                if (src) {
-                    msg = src + ': ' + msg;
+            /**
+             * create app based on KISSY.
+             * @param name {String} the app name
+             * @param sx {Object} static properties to add/override
+             * <code>
+             * S.app('TB');
+             * TB.namespace('app'); // returns TB.app
+             * </code>
+             * @return {Object}  A reference to the app global object
+             */
+            app:function (name, sx) {
+                var isStr = S.isString(name),
+                    O = isStr ? host[name] || {} : name,
+                    i = 0,
+                    len = S.__APP_INIT_METHODS.length;
+
+                S.mix(O, this, true, S.__APP_MEMBERS);
+                for (; i < len; i++) {
+                    S[S.__APP_INIT_METHODS[i]].call(O);
                 }
-                if (host['console'] !== undefined && console.log) {
-                    console[cat && console[cat] ? cat : 'log'](msg);
+
+                S.mix(O, S.isFunction(sx) ? sx() : sx);
+                isStr && (host[name] = O);
+
+                return O;
+            },
+
+            /**
+             * set KISSY config
+             * @param c
+             * @param {Object[]} c.packages
+             * @param {Array[]} c.map
+             */
+            config:function (c) {
+                var configs, cfg, r;
+                for (var p in c) {
+                    if (c.hasOwnProperty(p)) {
+                        if ((configs = this['configs']) &&
+                            (cfg = configs[p])) {
+                            r = cfg(c[p]);
+                        }
+                    }
                 }
-            }
-        },
+                return r;
+            },
 
-        /**
-         * Throws error message.
-         */
-        error:function (msg) {
-            if (S.Config.debug) {
-                throw msg;
-            }
-        },
+            /**
+             * Prints debug info.
+             * @param msg {String} the message to log.
+             * @param {String} [cat] the log category for the message. Default
+             *        categories are "info", "warn", "error", "time" etc.
+             * @param {String} [src] the source of the the message (opt)
+             */
+            log:function (msg, cat, src) {
+                if (S.Config.debug) {
+                    if (src) {
+                        msg = src + ': ' + msg;
+                    }
+                    if (host['console'] !== undefined && console.log) {
+                        console[cat && console[cat] ? cat : 'log'](msg);
+                    }
+                }
+            },
 
-        /*
-         * Generate a global unique id.
-         * @param {String} [pre] guid prefix
-         * @return {String} the guid
-         */
-        guid:function (pre) {
-            return (pre || EMPTY) + guid++;
-        }
-    });
+            /**
+             * Throws error message.
+             */
+            error:function (msg) {
+                if (S.Config.debug) {
+                    throw msg;
+                }
+            },
+
+            /*
+             * Generate a global unique id.
+             * @param {String} [pre] guid prefix
+             * @return {String} the guid
+             */
+            guid:function (pre) {
+                return (pre || EMPTY) + guid++;
+            }
+        });
 
     S.__init();
     return S;

@@ -1,7 +1,7 @@
 /**
- * @module loader
+ * @fileOverview  loader
  * @author lifesinger@gmail.com,yiminghe@gmail.com,lijing00333@163.com
- * @description: constant member and common method holder
+ * @description constant member and common method holder
  */
 (function(S, loader, data) {
     if ("require" in this) {

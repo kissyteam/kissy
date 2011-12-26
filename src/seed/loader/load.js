@@ -1,5 +1,5 @@
 /**
- * load a single mod (js or css)
+ * @fileOverview load a single mod (js or css)
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {

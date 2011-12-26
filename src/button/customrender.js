@@ -1,5 +1,5 @@
 /**
- * view for button , double div for pseudo-round corner
+ * @fileOverview view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {

@@ -1,5 +1,5 @@
 /**
- * use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
+ * @fileOverview use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/xdr", function(S, io, DOM) {

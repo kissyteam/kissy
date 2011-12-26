@@ -1,5 +1,5 @@
 /**
- * submenu render for kissy ,extend menuitem render with arrow
+ * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {

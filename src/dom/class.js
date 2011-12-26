@@ -1,5 +1,5 @@
 /**
- * @module  dom-class
+ * @fileOverview   dom-class
  * @author  lifesinger@gmail.com
  */
 KISSY.add('dom/class', function(S, DOM, undefined) {

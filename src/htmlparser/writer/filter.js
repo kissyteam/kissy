@@ -1,5 +1,5 @@
 /**
- * filter dom tree to html string form ,api designed by ckeditor
+ * @fileOverview filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/writer/filter", function (S) {

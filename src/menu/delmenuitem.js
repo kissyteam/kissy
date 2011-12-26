@@ -1,5 +1,5 @@
 /**
- * deletable menuitem
+ * @fileOverview deletable menuitem
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, DelMenuItemRender) {

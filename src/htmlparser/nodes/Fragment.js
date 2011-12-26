@@ -1,3 +1,7 @@
+/**
+ * @fileOverview fake document fragment
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {
     function Fragment() {
         this.childNodes = [];

@@ -1,5 +1,5 @@
 /**
- * combination of menu and button ,similar to native select
+ * @fileOverview combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/menubutton", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {

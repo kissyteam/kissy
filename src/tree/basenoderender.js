@@ -1,5 +1,5 @@
 /**
- * common render for node
+ * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {

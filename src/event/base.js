@@ -1,6 +1,6 @@
 /**
- * scalable event framework for kissy (refer DOM3 Events)
- * how to fire event just like browser?
+ * @fileOverview scalable event framework for kissy (refer DOM3 Events)
+ *               how to fire event just like browser?
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
@@ -12,6 +12,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
+     * @namespace
      * @name Event
      */
     var Event =
@@ -20,8 +21,12 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
      */
     {
         /**
-         * fire event,simulate bubble in browser.
-         * similar to dispatchEvent in DOM3 Events
+         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @memberOf Event
+         * @param targets html nodes
+         * @param {String|Event.Object} eventType event type
+         * @param [eventData] additional event data
+         * @param {boolean} [onlyHandlers] only fire handlers
          * @returns {boolean} The return value of fire/dispatchEvent indicates
          *                 whether any of the listeners which handled the event called preventDefault.
          *                 If preventDefault was called the value is false, else the value is true.
@@ -75,7 +80,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
          * does not cause default behavior to occur
          * does not bubble up the DOM hierarchy
          * @param targets
-         * @param {KISSY.Event.Object | String} eventType
+         * @param {Event.Object | String} eventType
          * @param [eventData]
          */
         fireHandler:function (targets, eventType, eventData) {

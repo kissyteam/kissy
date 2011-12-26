@@ -1,3 +1,6 @@
+/**
+ * @fileOverview dom
+ */
 KISSY.add("dom", function(S,DOM) {
     return DOM;
 }, {

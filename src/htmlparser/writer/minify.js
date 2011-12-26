@@ -1,5 +1,5 @@
 /**
- * write html into its minified form,thanks to kangax who minify algorithm comes from
+ * @fileOverview write html into its minified form,thanks to kangax where minify algorithm comes from
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {

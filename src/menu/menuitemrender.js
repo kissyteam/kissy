@@ -1,5 +1,5 @@
 /**
- * simple menuitem render
+ * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {

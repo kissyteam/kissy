@@ -1,5 +1,5 @@
 /**
- * status constants
+ * @fileOverview status constants
  * @author yiminghe@gmail.com
  */
 (function(S, data) {

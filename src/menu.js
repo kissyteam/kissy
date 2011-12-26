@@ -1,3 +1,7 @@
+/**
+ * @fileOverview menu
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu, DelMenuItem) {
     Menu.Render = Render;
     Menu.Item = Item;

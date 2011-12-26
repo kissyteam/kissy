@@ -1,5 +1,5 @@
 /**
- * @module  cookie
+ * @fileOverview   cookie
  * @author  lifesinger@gmail.com
  */
 KISSY.add('cookie/base', function(S) {

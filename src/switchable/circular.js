@@ -1,5 +1,5 @@
 /**
- * Switchable Circular Plugin
+ * @fileOverview Switchable Circular Plugin
  * @creator  lifesinger@gmail.com
  */
 KISSY.add('switchable/circular', function(S, DOM, Anim, Switchable) {

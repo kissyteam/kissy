@@ -1,5 +1,5 @@
 /**
- * effect applied when overlay shows or hides
+ * @fileOverview effect applied when overlay shows or hides
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/effect", function(S) {

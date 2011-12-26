@@ -1,5 +1,5 @@
 /**
- * @module  Attribute
+ * @fileOverview attribute management
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function(S, undef) {

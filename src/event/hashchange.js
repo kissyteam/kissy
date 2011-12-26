@@ -1,5 +1,5 @@
 /**
- * @module  event-hashchange
+ * @fileOverview   event-hashchange
  * @author  yiminghe@gmail.com , xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {

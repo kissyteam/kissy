@@ -1,5 +1,5 @@
 /**
- * solve io between sub domains using proxy page
+ * @fileOverview solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {

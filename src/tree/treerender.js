@@ -1,5 +1,5 @@
 /**
- * root node render
+ * @fileOverview root node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, TreeMgrRender) {

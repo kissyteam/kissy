@@ -1,5 +1,5 @@
 /**
- * tree component for kissy
+ * @fileOverview tree component for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {

@@ -1,6 +1,6 @@
 /**
- * Validation.Field
- * @author: 常胤 <lzlu.com>
+ * @fileOverview Validation.Field
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote, Warn) {
     var symbol = Define.Const.enumvalidsign,
