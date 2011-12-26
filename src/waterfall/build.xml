@@ -2,7 +2,7 @@
     <description>Component Build File</description>
 
     <property file="build.properties"/>
-    <property name="src.dir" location="."/>
+    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 
@@ -11,12 +11,10 @@
         <concat destfile="waterfall-pkg.js"
                 encoding="${charset}"
                 outputencoding="${charset}">
-            <fileset dir="${src.dir}">
-                <include name="*.js"/>
-            </fileset>
+            <fileset dir="${src.dir}" includes="*.js"/>
             <path location="../waterfall.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;" />
+                <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
         </concat>
     </target>

@@ -2,16 +2,16 @@
     <description>KISSY Css Build File</description>
 
     <property file="build.properties"/>
-    <property name="src.dir" location="."/>
+    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 
 
     <target name="concat">
         <concat destfile="base.css" encoding="${charset}" outputencoding="${charset}">
-            <path path="reset.css"/>
-            <path path="grids.css"/>
-            <path path="common.css"/>
+            <path path="${src.dir}/reset.css"/>
+            <path path="${src.dir}/grids.css"/>
+            <path path="${src.dir}/common.css"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
