@@ -173,6 +173,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          */
         halt:{
             value:true
+        },
+
+        /**
+         * groups this draggable object belongs to
+         * @type {Object}
+         */
+        groups:{
+            value:{}
         }
 
     };

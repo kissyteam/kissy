@@ -30,9 +30,30 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                     return Node.one(v);
                 }
             }
+        },
+
+        /**
+         * groups this droppable object belongs to
+         * @type {Object|boolean} true to match any group
+         * @default true
+         */
+        groups:{
+            value:true
         }
 
     };
+
+    function validDrop(dropGroups, dragGroups) {
+        if (dropGroups === true) {
+            return 1;
+        }
+        for (var d in dropGroups) {
+            if (dragGroups[d]) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 
     S.extend(Droppable, Base,
         /**
@@ -54,6 +75,33 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
 
             _init:function () {
                 DDM._regDrop(this);
+            },
+
+            _active:function () {
+                var self = this,
+                    drag = DDM.get("activeDrag"),
+                    node = self.get("node"),
+                    dropGroups = self.get("groups"),
+                    dragGroups = drag.get("groups"),
+                    prefixCls = DDM.get("prefixCls");
+                if (validDrop(dropGroups, dragGroups)) {
+                    DDM._addValidDrop(self);
+                    // 委托时取不到节点
+                    if (node) {
+                        node.addClass(prefixCls + "drop-active-valid");
+                    }
+                } else if (node) {
+                    node.addClass(prefixCls + "drop-active-invalid");
+                }
+            },
+
+            _deActive:function () {
+                var node = this.get("node"),
+                    prefixCls = DDM.get("prefixCls");
+                if (node) {
+                    node.removeClass(prefixCls + "drop-active-valid")
+                        .removeClass(prefixCls + "drop-active-invalid");
+                }
             },
 
             __getCustomEvt:function (ev) {
@@ -103,7 +151,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
             },
 
             destroy:function () {
-                DDM._unregDrop(this);
+                DDM._unRegDrop(this);
             }
         });
 

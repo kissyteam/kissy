@@ -15,6 +15,7 @@ History:
 --------
 
 ### v1.2.0 -> v1.3.0
+ - [*] 调整源码目录结构
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加
  - [+] Event.on 支持 data 绑定
@@ -22,6 +23,9 @@ History:
  - [*] anim 支持 backgroundPosition
  - [x] dom 支持 css("backgroundPosition") in ie
  - [+] datalazyload 增加 removeElements 与 destroy 接口
+ - [+] DD.Constrain 方便进行拖放范围限制
+ - [+] DD groups 支持拖放分组
+ - [!] 移除 core 模块，不要 use("core"),require("core"),只用你要用的
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

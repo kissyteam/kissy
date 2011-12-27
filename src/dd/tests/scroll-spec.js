@@ -2,9 +2,9 @@
  * @module  scroll-spec
  * @author  yiminghe@gmail.com
  */
-KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
+KISSY.use("dom,ua,node,dd", function(S, DOM,UA, Node, DD) {
     var Draggable = DD.Draggable,
-        DOM = S.DOM,
+        $=Node.all,
         Scroll = DD.Scroll;
     var ie = document['documentMode'] || UA['ie'];
 
@@ -13,8 +13,8 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
         var drag,dragNode,dragContainer,dragOffset,containerOffset,scrollTop = 0;
 
         runs(function() {
-            dragNode = S.one("#drag-scroll");
-            dragContainer = S.one("#drag_scroll_container");
+            dragNode = $("#drag-scroll");
+            dragContainer = $("#drag_scroll_container");
             drag = new Draggable({
                 node:dragNode
             });

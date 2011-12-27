@@ -2,7 +2,7 @@
  * @fileOverview generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/proxy", function (S, Node) {
+KISSY.add("dd/proxy", function (S, Node, Base) {
     var DESTRUCTOR_ID = "__proxy_destructors",
         stamp = S.stamp,
         MARKER = S.guid("__dd_proxy"),
@@ -26,6 +26,7 @@ KISSY.add("dd/proxy", function (S, Node) {
         /**
          * 如何生成替代节点
          * @type {Function}
+         * @default 深度克隆自身
          */
         node:{
             value:function (drag) {
@@ -35,13 +36,23 @@ KISSY.add("dd/proxy", function (S, Node) {
         /**
          * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
          * @type {boolean}
+         * @default false
          */
         destroyOnEnd:{
             value:false
+        },
+
+        /**
+         * 拖放结束是否移动本身到代理节点位置
+         * @type {boolean}
+         * @default true
+         */
+        moveOnEnd:{
+            value:true
         }
     };
 
-    S.extend(Proxy, S.Base,
+    S.extend(Proxy, Base,
         /**
          * @lends DD.Proxy#
          */
@@ -62,7 +73,6 @@ KISSY.add("dd/proxy", function (S, Node) {
                 function start() {
                     var node = self.get("node"),
                         dragNode = drag.get("node");
-
                     // cache proxy node
                     if (!self[PROXY_ATTR]) {
                         if (S.isFunction(node)) {
@@ -84,11 +94,14 @@ KISSY.add("dd/proxy", function (S, Node) {
 
                 function end() {
                     var node = self[PROXY_ATTR];
-                    drag.get("dragNode").offset(node.offset());
-                    node.hide();
+                    if (self.get("moveOnEnd")) {
+                        drag.get("dragNode").offset(node.offset());
+                    }
                     if (self.get("destroyOnEnd")) {
                         node.remove();
                         self[PROXY_ATTR] = 0;
+                    } else {
+                        node.hide();
                     }
                     drag.set("node", drag.get("dragNode"));
                 }
@@ -138,5 +151,5 @@ KISSY.add("dd/proxy", function (S, Node) {
 
     return Proxy;
 }, {
-    requires:['node']
+    requires:['node', 'base']
 });

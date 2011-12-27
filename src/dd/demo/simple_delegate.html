@@ -84,8 +84,9 @@
 
     var S = KISSY;
 
-    KISSY.use("node,dd", function(S, Node, DD) {
+    KISSY.use("node,dd", function (S, Node, DD) {
         var DDM = DD.DDM,
+                $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable,
@@ -96,12 +97,12 @@
         /**
          * 集中监听所有
          */
-        DDM.on("dragstart", function(ev) {
+        DDM.on("dragstart", function (ev) {
 
             var c = ev.drag;
             p = c.get("dragNode").css("position");
         });
-        DDM.on("dragend", function(ev) {
+        DDM.on("dragend", function (ev) {
             var c = ev.drag;
             c.get("dragNode").css("position", p);
         });
@@ -110,21 +111,22 @@
         /**
          * 委托拖放
          */
-        S.ready(function() {
+        S.ready(function () {
 
             var p = new Proxy({
                 /**
                  * 如何产生替代节点
                  * @param drag 当前拖对象
                  */
-                node:function(drag) {
-                    var n = S.one(drag.get("dragNode").clone(true));
+                node:function (drag) {
+                    var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
                 },
                 //每次都生成新节点
-                destroyOnEnd:true
+                destroyOnEnd:true,
+                moveOnEnd:0
             });
 
             var delegate = new DraggableDelegate({
@@ -140,7 +142,7 @@
                 node:"#drop3"
             });
             var c = 0;
-            S.one("#add_delegate").on("click", function() {
+            $("#add_delegate").on("click", function () {
                 new Node('<div class="component"><div class="cheader">拖动头</div>delegate'
                         + (++c) + '</div>')
                         .prependTo("#container3");

@@ -151,6 +151,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                 var self = this,
                     tag = stamp(drag, 0, TAG_DRAG),
                     destructors = self[DESTRUCTORS];
+
                 if (destructors[tag]) {
                     return;
                 }
@@ -200,7 +201,6 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     }
                 };
 
-
                 function checkAndScroll() {
                     //S.log("******* scroll");
                     var node = self.get("node"),
@@ -223,7 +223,6 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                         scroll.top -= rate[1];
                         adjust = true;
                     }
-
 
                     var diffX = dxy.left - nw;
                     //S.log(diffX);
@@ -255,6 +254,9 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                             event.top += scroll.top - origin.top;
                         }
                         // 容器滚动了，元素也要重新设置 left,top
+                        if (drag.get("move")) {
+                            drag.get("node").offset(event);
+                        }
                         drag.fire("drag", event);
                     } else {
                         timer = null;

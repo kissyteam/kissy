@@ -2,8 +2,8 @@
  * @module  delegate-spec
  * @author  yiminghe@gmail.com
  */
-KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
-    var DOM = S.DOM,
+KISSY.use("ua,node,dd,dom", function(S, UA, Node, DD,DOM) {
+    var $=Node.all,
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate,
         Proxy = DD.Proxy;
@@ -12,19 +12,19 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
 
     describe("delegate", function() {
-        var c1 = S.one("#c1"),
-            c2 = S.one("#c2"),
-            c3 = S.one("#c3");
+        var c1 = $("#c1"),
+            c2 = $("#c2"),
+            c3 = $("#c3");
 
         runs(function() {
-            // S.one("#container2").unselectable();
+            // $("#container2").unselectable();
             var proxy = new Proxy({
                 /**
                  * 如何产生替代节点
                  * @param drag 当前拖对象
                  */
                 node:function(drag) {
-                    var n = S.one(drag.get("dragNode").clone(true));
+                    var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
@@ -137,7 +137,7 @@ KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
 
             waits(100);
             runs(function() {
-                expect(S.one("#container2").children()[0]).toBe(c2[0]);
+                expect($("#container2").children()[0]).toBe(c2[0]);
             });
 
 

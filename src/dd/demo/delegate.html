@@ -101,6 +101,7 @@
     KISSY.use("node,dd", function(S, Node, DD) {
 
         var DDM = DD.DDM,
+                $=Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 DroppableDelegate = DD.DroppableDelegate,
                 Draggable = DD.Draggable,
@@ -120,12 +121,13 @@
                  * @param drag 当前拖对象
                  */
                 node:function(drag) {
-                    var n = S.one(drag.get("dragNode").clone(true));
+                    var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
                 },
-                destroyOnEnd:true
+                destroyOnEnd:true,
+                moveOnEnd:0
             });
 
             var dragDelegate = new DraggableDelegate({
@@ -187,9 +189,9 @@
 
             s.attach(dragDelegate);
 
-            var container = S.one("#container2");
+            var container = $("#container2");
             var id = 4;
-            S.one("#add").on("click", function() {
+            $("#add").on("click", function() {
                 new Node('<div class="component">' +
                         '<div class="cheader">拖动头</div>' +
                         '<span>drag proxy' + (id++) + '</span></div>').appendTo(container);

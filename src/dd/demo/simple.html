@@ -93,6 +93,7 @@
 
     KISSY.use("node,dd", function(S, Node, DD) {
         var DDM = DD.DDM,
+                $=Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable,
@@ -123,11 +124,12 @@
                  * @param drag 当前拖对象
                  */
                 node:function(drag) {
-                    var n = S.one(drag.get("dragNode").clone(true));
+                    var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
-                }
+                },
+                moveOnEnd:0
             });
             var c1 = new Draggable({
                 node:"#c1",

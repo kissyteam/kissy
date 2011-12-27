@@ -95,6 +95,11 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 } else {
                     superOver.call(self, ev);
                 }
+            },
+
+            _end:function () {
+                DroppableDelegate.superclass._end.apply(this, arguments);
+                this.set("node", 0);
             }
         },
         {

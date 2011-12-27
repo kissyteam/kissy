@@ -40,6 +40,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
         /**
          * shim 鼠标 icon (drag icon)
+         * @type {String}
          */
         dragCursor:{
             value:'move'
@@ -47,6 +48,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
         /***
          * 移动的像素值（用于启动拖放）
+         * @type {Number}
          */
         clickPixelThresh:{
             value:PIXEL_THRESH
@@ -54,23 +56,35 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
         /**
          * mousedown 后 buffer 触发时间  time threshold
+         * @type {Number}
          */
         bufferTime:{ value:BUFFER_TIME },
 
         /**
          * 当前激活的拖动对象，在同一时间只有一个值，所以不是数组
+         * @type {DD.Draggable}
          */
         activeDrag:{},
 
         /**
          * 当前激活的 drop 对象，在同一时间只有一个值
+         * @type {DD.Droppable}
          */
         activeDrop:{},
 
         /**
          * 所有注册的可放置对象，统一管理
+         * @type {DD.Droppable[]}
          */
         drops:{
+            value:[]
+        },
+
+        /**
+         * 对应当前 draggable 有效的 droppable 对象数组
+         * @type {DD.Droppable[]}
+         */
+        validDrops:{
             value:[]
         }
     };
@@ -105,7 +119,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
         var activeDrag = self.get("activeDrag"),
             mode = activeDrag.get("mode"),
-            drops = self.get("drops"),
+            drops = self.get("validDrops"),
             activeDrop = 0,
             oldDrop,
             vArea = 0,
@@ -226,7 +240,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     }, MOVE_DELAY);
 
     function showShim(self) {
-        // determin cursor according to activeHandler and dragCursor
+        // determine cursor according to activeHandler and dragCursor
         var ah = self.get("activeDrag").get('activeHandler'),
             cur = 'auto';
         if (ah) {
@@ -255,9 +269,26 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     /**
      * 结束时需要取消掉，防止平时无谓的监听
      */
-    function unregisterEvent(self) {
+    function unRegisterEvent(self) {
         Event.remove(doc, 'mousemove', _showShimMove, self);
         Event.remove(doc, 'mouseup', self._end, self);
+    }
+
+
+    function _activeDrops(self) {
+        var drops = self.get("drops");
+        self.set("validDrops", []);
+        S.each(drops, function (d) {
+            d._active();
+        });
+    }
+
+    function _deActiveDrops(self) {
+        var drops = self.get("drops");
+        self.set("validDrops", []);
+        S.each(drops, function (d) {
+            d._deActive();
+        });
     }
 
     /*
@@ -277,7 +308,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             this.get("drops").push(d);
         },
 
-        _unregDrop:function (d) {
+        _unRegDrop:function (d) {
             var self = this,
                 index = S.indexOf(d, self.get("drops"));
             if (index != -1) {
@@ -302,21 +333,25 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
          * 全局设置当前拖动对象，
          */
         _start:function () {
-
             var self = this,
+                drops = self.get("drops"),
                 drag = self.__activeToDrag;
 
             self.set('activeDrag', drag);
             // 预备役清掉
             self.__activeToDrag = 0;
             // 真正开始移动了才激活垫片
-
             if (drag.get("shim")) {
                 activeShim(self);
             }
+            _activeDrops(self);
             self.fire("dragstart", {
                 drag:drag
             });
+        },
+
+        _addValidDrop:function (drop) {
+            this.get("validDrops").push(drop);
         },
 
         /**
@@ -328,17 +363,20 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
                 activeDrop = self.get("activeDrop"),
                 ret = { drag:activeDrag,
                     drop:activeDrop};
-            unregisterEvent(self);
+            unRegisterEvent(self);
             // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
             if (self.__activeToDrag) {
                 self.__activeToDrag._end();
                 self.__activeToDrag = 0;
             }
-            self._shim && self._shim.hide();
+            if (self._shim) {
+                self._shim.hide();
+            }
             if (!activeDrag) {
                 return;
             }
             activeDrag._end();
+            _deActiveDrops(self);
             if (activeDrop) {
                 activeDrop._end();
                 self.fire("drophit", ret);
@@ -367,7 +405,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     }
 
     function inRegion(region, pointer) {
-
         return region.left <= pointer.left
             && region.right >= pointer.left
             && region.top <= pointer.top
