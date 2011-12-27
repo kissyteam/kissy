@@ -9,7 +9,7 @@
     <target name="concat">
         <copy file="${src.dir}/io.swf" tofile="${component.src.dir.tmp}/io.swf"/>
         <concat destfile="${component.src.dir.tmp}/ajax-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="*.js"/>
+            <fileset dir="${src.dir}" includes="**/*.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>

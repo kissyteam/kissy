@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 13:15
+build time: Dec 27 13:27
 */
 /**
  * @fileOverview validation
@@ -552,6 +552,348 @@ KISSY.add("validation/rule", function(S, Util, Rule) {
 
 
 /**
+ * @fileOverview 规则管理类
+ * @author 常胤 <lzlu.com>
+ */
+KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
+
+		/**
+		 * 规则对象
+		 */
+		return new function(){
+			var self = this, store = new Util.storage();
+			
+			/**
+			 * 增加规则
+			 * @param {String} name 规则名
+			 * @param {String} text 提示信息
+			 * @param {Function} fn 校验函数
+			 */
+			self.add = function(name,text,fn){
+				if(S.isFunction(fn)){
+					store.add(name,{
+						name: name,
+						fun: fn,
+						text: text
+					});
+				}
+			};
+			
+			/**
+			 * 获取规则
+			 * @param {String} name 规则名
+			 * @return {Object} 规则实例  
+			 */
+			self.get = function(name,param){
+				var r = store.get(name);
+				if(!r){
+					return null;
+				}
+				
+				var fun = r.fun, tip = r.text;
+				/**
+				 * 前台调用传参: [param1,param2..tips]
+				 * rule定义为: function(value,tips,param1,param2..)
+				 * 因此需要格式化参数 [[参数],提示信息]
+				 */
+				var argLen = fun.length-1, arg = [];
+				if(!param){
+					arg =  [tip];
+				}else if(S.isArray(param)){
+					if(param.length>=argLen){
+						arg.push(param[param.length-1]);
+						arg = arg.concat(param.slice(0,-1));
+					}else{
+						arg.push(tip);
+						arg = arg.concat(param);
+					}
+				}else{
+					if(argLen>0){
+						arg.push(tip);
+						arg.push(param);
+					}else{
+						arg.push(tip);
+					}
+				}
+				
+				//返回函数
+				return function(value){
+					return fun.apply(this,[value].concat(arg));
+				}	
+			};
+
+			/**
+			 * 辅助调试
+			 * @param {String} name 规则名
+			 * @return {string} 规则详细信息
+			 */
+			self.toString = function(name,template){
+				var r = store.get(name);
+					template = template || "【规则名】\n {0}\n\n【默认提示信息】\n {1}\n\n【函数体】\n {2}";
+				if(r){
+					return Util.format(template, r.name, r.text, r.fun.toString());
+				}else{
+					//return Util.format("规则[{0}]不存在",name);
+				}
+			};
+	
+		};
+
+	
+}, { requires: ['dom',"event","../utils"] });/**
+ * @fileOverview 增加常用校验规则
+ * @author 常胤 <lzlu.com>
+ */
+KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
+	
+	//自定义函数
+	Rule.add("func","校验失败。",function(value,text,fun){
+		var result = fun.call(this,value);
+
+		if(result===false){
+			return text;
+		}
+
+		if(!Util.isEmpty(result)){
+			return result;
+		}
+
+	});
+
+	//正则校验
+	Rule.add("regex","校验失败。",function(value,text,reg){
+		if(!new RegExp(reg).test(value)){
+			return text;
+		}
+	});
+	
+	
+	Rule.add("depend","该字段无需校验",function(value,text,fun){
+		return fun.call(this,value);
+	});
+	
+ 
+	//ajax校验
+//	Rule.add("remote","校验失败。",function(value,text,url){
+//
+//	});
+	//ajax校验
+	Rule.add("ajax","校验失败。",function(value,text,fun){
+		return fun.call(this,value);
+	});
+	
+	//为空校验
+	Rule.add("required","此项为必填项。",function(value,text,is){
+		if(S.isArray(value) && value.length==0){
+			return text;
+		}
+		if(Util.isEmpty(value) && is){
+			return text;
+		}
+	});
+
+	//重复校验
+	Rule.add("equalTo","两次输入不一致。",function(value,text,to){
+		if(value !== DOM.val(S.get(to))){
+			return text;
+		}
+	});
+
+	//长度校验
+	Rule.add("length","字符长度不能小于{0},且不能大于{1}",function(value,text,minLen,maxLen,realLength){
+		var len = Util.getStrLen(value,realLength),
+			minl = Util.toNumber(minLen), maxl = Util.toNumber(maxLen);
+		if(!(len>=minl && len<=maxl)){
+			return Util.format(text,minl,maxl);
+		}
+	});
+	
+	//最小长度校验
+	Rule.add("minLength","不能小于{0}个字符。",function(value,text,minLen,realLength){
+		var len = Util.getStrLen(value,realLength),
+			minl = Util.toNumber(minLen);
+		if(len<minl){
+			return Util.format(text,minl);
+		}
+	});
+	
+	//最大长度校验
+	Rule.add("maxLength","不能大于{0}个字符。",function(value,text,maxLen,realLength){
+		var len = Util.getStrLen(value,realLength),
+			maxl = Util.toNumber(maxLen);
+		if(len>maxl){
+			return Util.format(text,maxl);
+		}
+	});
+	
+	//允许格式
+	Rule.add("fiter","允许的格式{0}。",function(value,text,type){
+		if(!new RegExp( '^.+\.(?=EXT)(EXT)$'.replace(/EXT/g, type.split(/\s*,\s*/).join('|')), 'gi' ).test(value)){
+			return Util.format(text,type);
+		}
+	});
+	
+	//数值范围校验
+	Rule.add("range","只能在{0}至{1}之间。",function(value,text,min,max){
+		min = Util.toNumber(min), max = Util.toNumber(max);
+		if(value<min || value>max){
+			return Util.format(text,min,max);
+		}
+	});
+	
+	//checkbox数量校验
+	Rule.add("group","只能在{0}至{1}之间。",function(value,text,min,max){
+		if(S.isArray(value)){
+			var len = value.length;
+			if(!(len>=min && len<=max)){
+				return Util.format(text, min, max);
+			}
+		}
+	});
+	
+	//两端不含空格
+	Rule.add("trim","两端不能含有空格。",function(value,text){
+		if(/(^\s+)|(\s+$)/g.test(value)){
+			return text
+		}
+	});
+	
+	//左侧不能含有空格
+	Rule.add("ltrim","字符串最前面不能包含空格",function(value,text){
+		if(/^\s+/g.test(value)){
+			return text
+		}
+	});
+	
+	//右侧不能含有空格
+	Rule.add("rtrim","字符串末尾不能包含空格",function(value,text){
+		if(/\s+$/g.test(value)){
+			return text
+		}
+	});
+	
+	Rule.add("card","身份证号码不正确",function(value,text){
+		var iW = [7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2,1],
+			iSum = 0;
+		for( i=0;i<17;i++){
+			iSum += parseInt(value.charAt(i))* iW[i];
+		}
+		var sJYM = (12-(iSum % 11)) % 11;
+		if(sJYM == 10){
+			sJYM = 'x';
+		}
+		var cCheck = value.charAt(17).toLowerCase();
+		if( cCheck != sJYM ){
+			return text;
+		}
+	});
+	
+	
+	
+	S.each([["chinese",/^[\u0391-\uFFE5]+$/,"只能输入中文"],
+			["english",/^[A-Za-z]+$/,"只能输入英文字母"],
+			["currency",/^\d+(\.\d+)?$/,"金额格式不正确。"],
+			["phone",/^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/,"电话号码格式不正确。"],
+			["mobile",/^((\(\d{2,3}\))|(\d{3}\-))?13\d{9}$/,"手机号码格式不正确。"],
+			["url",/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]':+!]*([^<>""])*$/,"url格式不正确。"],
+			["email",/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,"请输入正确的email格式"]
+		],function(item){
+			Rule.add(item[0],item[2],function(value,text){
+				if(!new RegExp(item[1]).test(value)){
+					return text;
+				}
+			});
+		});
+
+
+
+}, { requires: ['dom',"event","../utils","./base"] });
+
+
+
+
+
+/**
+ * @fileOverview 远程校验
+ * @author 常胤 <lzlu.com>
+ */
+KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
+
+    function Remote(el, config, callback) {
+        var timer = null,
+            ajaxHandler = null,
+            cache = new Util.storage(),
+            elName = DOM.attr(el, "name"),
+            cfg = {
+                loading: "loading",
+                type: 'POST',
+                dataType: 'json',
+                data: {}
+            };
+
+        S.mix(cfg, config);
+
+        function success(val){
+            return function(data, textStatus, xhr) {
+                if (data && (data.state===true || data.state===false)) {
+                    callback(data.state, data.message);
+                    if(data.state) {
+                        cache.add(val, { est: data.state,msg: data.message});
+                    }
+                }else{
+                    callback(0,"failure");
+                }
+                //用户自定义回调方法
+                if (S.isFunction(config.success)) {
+                    config.success.call(this, data, textStatus, xhr);
+                }
+                ajaxHandler = null;
+            };
+        }
+
+        cfg.error = function(data, textStatus, xhr) {
+            if (S.isFunction(config.error)) {
+                config.success.call(this, data, textStatus, xhr);
+            }
+        };
+
+        function ajax(time, val) {
+            S.io(cfg);
+        }
+
+
+        this.check = function(val) {
+            //缓存
+            var r = cache.get(val);
+            if (r) {
+                return [r.msg,r.est];
+            }
+
+            //延迟校验
+            if (timer)timer.cancel();
+            timer = S.later(function() {
+                if(ajaxHandler){
+                    ajaxHandler.abort();
+                }
+                cfg.data[elName] = val;
+                cfg.success = success(val);
+                ajaxHandler = S.io(cfg);
+            }, 500);
+            return [cfg.loading,0];
+        }
+
+    }
+
+    return Remote;
+
+
+}, { requires: ['dom',"event","../utils"] });
+
+
+
+
+
+/**
  * @fileOverview 工具类
  * @author 常胤 <lzlu.com>
  */
@@ -735,4 +1077,443 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
     Warn.BaseClass = BaseClass;
     return Warn;
 
-}, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float"] });
+}, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float"] });/**
+ * @fileOverview 扩展提示类:alert
+ * @author 常胤 <lzlu.com>
+ */
+KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
+	var symbol = Define.Const.enumvalidsign;
+
+	function Alert(){
+		return {
+			init: function(){
+				this.single = true;
+			},
+			showMessage: function(estate,msg) {
+				var self = this;
+				if(estate == symbol.error){
+					self.invalidClass&&DOM.addClass(self.target,self.invalidClass);
+					alert(msg);
+					self.target.focus();
+					return false;
+				}else{
+					self.invalidClass&&DOM.removeClass(self.target, self.invalidClass);
+				}
+			},
+			style:{
+				alert:{
+					invalidClass:'vailInvalid'
+				}
+			}
+		}
+	}
+	
+	return Alert;
+
+}, { requires: ['dom',"event","../utils","../define"] });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+
+/**
+ * @fileOverview 提示类管理类
+ * @author 常胤 <lzlu.com>
+ */
+KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
+
+    var engine = new Util.storage();
+    var style = new Util.storage();
+
+    return{
+
+        /**
+         * 扩展你的信息提示类
+         * @param name 类名称
+         * @param extfun 类或对象
+         */
+        extend : function(name, extfun) {
+            var newwarn = function(target, config) {
+                    newwarn.superclass.constructor.call(this, target, config);
+                },
+                ext = S.isFunction(extfun) ? extfun() : extfun;
+
+            //保存样式
+            if (ext.style) {
+                for (var s in ext.style) {
+                    this.addStyle(s, S.merge(ext.style[s], {core:name}));
+                }
+                delete ext.style;
+            }
+
+            S.extend(newwarn, BaseClass, ext);
+            //保存类
+            engine.add(name, newwarn);
+            return newwarn;
+        },
+
+        /**
+         * 增加内置风格
+         */
+        addStyle : function(name, config) {
+            style.add(name, config);
+        },
+
+        /**
+         * 获取内置风格
+         */
+        getStyle : function(name) {
+            return style.get(name);
+        },
+
+        /**
+         * 获取提示类
+         */
+        get : function(name) {
+            return engine.get(name);
+        }
+
+    };
+
+
+}, { requires: ['dom',"event","../utils","./baseclass"] });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+
+/**
+ * @fileOverview 扩展类基类
+ * @author 常胤 <lzlu.com>
+ */
+
+KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
+
+    function BaseClass(target, config) {
+        var self = this;
+
+        /**
+         * 目标对象
+         * @type HTMLElement
+         */
+        self.target = S.isArray(target) ? target[target.length - 1] : target;
+        self.el = target;
+
+        self.single = false;
+
+        /**
+         * 合并配置
+         */
+        S.mix(self, config || {});
+
+        //初始化
+        self.init();
+    }
+
+    S.augment(BaseClass, S.EventTarget, {
+
+        /**
+         * init
+         */
+        init: function() {
+            //dosth
+        },
+
+        /**
+         * 给对象绑定事件
+         *     - checkbox，radiobox默认只能绑定click事件
+         *    - select默认只能绑定change事件
+         *     - 如果你有特殊需求也可以重写此方法
+         * @param {Element} el
+         * @param {String} evttype
+         * @param {Function} fun
+         */
+        _bindEvent: function(el, evttype, fun) {
+			if(S.get(el).tagName.toLowerCase()=="select"){
+				Event.on(el, "change", fun);
+			}else{
+				switch ((DOM.attr(el, 'type') || "input").toLowerCase()) {
+					case "radio":
+					case "checkbox":
+						Event.on(el, 'click', fun);
+						break;
+					case "file":
+						Event.on(el, "change", fun);
+						break;
+					default:
+						Event.on(el, evttype, fun);
+				}
+			}
+        },
+
+        /**
+         * 显示出错信息
+         * @param {Boolean} result
+         * @param {String} msg
+         */
+        showMessage: function(result, msg) {
+            result = 1;
+            msg = 1;
+            evttype = 1;
+        }
+
+    });
+
+    return BaseClass;
+
+}, { requires: ['dom',"event"]});/**
+ * @fileOverview 扩展提示类：float
+ * @author 常胤 <lzlu.com>
+ */
+KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
+	var symbol = Define.Const.enumvalidsign;
+
+	function Float(){
+		return {
+			//出错标记
+			invalidCls: "J_Invalid",
+			
+			//重写init
+			init: function(){
+				var self = this, tg = self.target,
+					panel = DOM.create(self.template),
+					msg = DOM.get('div.msg',panel);
+				
+				
+				S.ready(function(){
+					document.body.appendChild(panel);
+				});
+				S.mix(self,{
+					panel: S.one(panel),
+					msg: S.one(msg)
+				});
+
+				//绑定对象的focus,blur事件来显示隐藏消息面板
+				Event.on(self.el,"focus",function(ev){
+					if(DOM.hasClass(tg,self.invalidCls)){
+						self._toggleError(true,ev.target);
+					}
+				});
+				
+				Event.on(self.el,"blur",function(){
+					self._toggleError(false);
+				});
+			},
+
+			//处理校验结果
+			showMessage: function(result,msg,evttype,target) {
+				var self = this,tg = self.target,
+					div = self.msg;
+
+				if(symbol.ok==result){
+					DOM.removeClass(tg,self.invalidClass);
+					div.html('OK');
+				}else{
+					if(evttype!="submit"){
+						self._toggleError(true,target);
+					}
+					DOM.addClass(tg,self.invalidClass);
+					div.html(msg);
+				}
+			},
+			
+			//定位
+			_pos: function(target){
+				var self = this, offset = DOM.offset(target||self.target),
+				 ph = self.panel.height(),
+					pl = offset.left-10,pt = offset.top-ph-20;
+				self.panel.css('left',pl).css('top',pt);
+			},
+			
+			//显示错误
+			_toggleError: function(show,target){
+				var self = this,panel = self.panel;
+				if(show){
+					DOM.show(panel);
+					self._pos(target);
+				}else{
+					DOM.hide(panel);
+				}
+			},
+            
+			style:{
+				"float":{
+					template: '<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><'+'s>◥◤</s></div>',
+					event: 'focus blur',
+					invalidClass: 'vailInvalid'
+				}
+			}
+		}
+	}
+		
+	return Float;
+
+}, { requires: ['dom',"event","../utils","../define"] });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+
+/**
+ * @fileOverview 提示类：Static
+ * @author 常胤 <lzlu.com>
+ */
+KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
+    var symbol = Define.Const.enumvalidsign,
+        $ = Node.all;
+
+    function Static() {
+        return {
+            init: function(){
+                var self = this, tg = $(self.target), panel;
+
+                //伪属性配置的id
+                if(tg.attr("data-message")) {
+                    panel = $(tg.attr("data-messagebox"));
+                }
+                //配置的id
+                else if(self.messagebox) {
+                    panel = $(self.messagebox);
+                }
+                //从模版创建
+                else {
+                    panel = Node(self.template).appendTo(tg.parent());
+                }
+                
+                if(panel) {
+                    self.panel = panel;
+					self.panelheight = panel.css("height");
+                    self.estate = panel.one(".estate");
+                    self.label = panel.one(".label");
+                    if(!self.estate || !self.label) return;
+                    panel.hide();
+                }else{
+                    return;
+                }
+
+            },
+
+            showMessage: function(result, msg) {
+                var self = this, tg = $(self.el),
+                    panel = self.panel, estate = self.estate, label = self.label,
+                    time = S.isNumber(self.anim)?self.anim:0.1;
+
+                if (self.invalidClass) {
+                    if (result == symbol.ignore && result == symbol.ok) {
+                        tg.removeClass(self.invalidClass);
+                    } else {
+                        tg.addClass(self.invalidClass);
+                    }
+                }
+
+                var display = panel.css("display")=="none"?false:true,
+					ph = self.panelheight;
+                if (result == symbol.ignore) {
+                    display && panel.slideUp(time);
+                } else {
+                    estate.removeClass("ok tip error");
+                    if (result == symbol.error) {
+                        estate.addClass("error");
+                        label.html(msg);
+                        display || panel.height(ph).slideDown(time);
+                    } else if (result == symbol.ok) {
+                        if(self.isok===false) {
+                            display && panel.slideUp(time);
+                        }else{
+                            display || panel.height(ph).slideDown(time);
+                            estate.addClass("ok");
+                            label.html(self.oktext?self.oktext:msg);
+                        }
+                    } else if (result == symbol.hint) {
+                        estate.addClass("tip");
+                        label.html(msg);
+                        display || panel.height(ph).slideDown(time);
+                    }
+                }
+            },
+
+            style: {
+                text: {
+                    template: '<label class="valid-text"><span class="estate"><em class="label"></em></span></label>',
+                    event: 'focus blur keyup'
+                },
+                under: {
+                    template: '<div class="valid-under"><p class="estate"><span class="label"></span></p></div>',
+                    event: 'focus blur keyup'
+                }
+            }
+        }
+    }
+    return Static;
+
+}, { requires: ['node',"../utils","../define"] });
+

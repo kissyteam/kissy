@@ -8,7 +8,7 @@
 
     <target name="concat">
         <concat destfile="${component.src.dir.tmp}/node-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="*.js"/>
+            <fileset dir="${src.dir}" includes="**/*.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;" />
             </filterchain>
