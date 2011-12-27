@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:42
+build time: Dec 27 13:17
 */
 KISSY.add("calendar/base",function(k,l,h,m){function i(a,b){this._init(a,b)}var d=l.all;k.augment(i,h.Target,{_init:function(a,b){var f=d(a);this.id=this.C_Id=this._stamp(f);this._buildParam(b);if(this.popup){this.trigger=f;this.con=new l("<div>");d(document.body).append(this.con);this.C_Id=this._stamp(this.con);this.con.css({top:"0px",position:"absolute",background:"white",visibility:"hidden"})}else this.con=f;this.render();this._buildEvent();return this},render:function(a){var b=0,f,c;a=a||{};this._parseParam(a);
 this.ca=[];this.con.addClass("ks-cal-call ks-clearfix multi-"+this.pages);this.con.html("");b=0;for(c=[this.year,this.month];b<this.pages;b++){if(b===0)a=true;else{a=false;c=this._computeNextMonth(c)}f=b==this.pages-1;this.ca.push(new this.Page({year:c[0],month:c[1],prevArrow:a,nextArrow:f,showTime:this.showTime},this));this.ca[b].render()}return this},_stamp:function(a){a.attr("id")||a.attr("id",k.guid("K_Calendar"));return a.attr("id")},_showdate:function(a,b){var f=new Date(b-0+a*864E5);f=f.getFullYear()+

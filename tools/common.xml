@@ -31,8 +31,6 @@
     <!-- 清空与复制等准备工作 -->
     <target name="prepare">
 
-        <mkdir dir="${component.src.dir.tmp}"/>
-
         <delete dir="${component.build.dir}"/>
 
         <mkdir dir="${component.build.dir}"/>
@@ -205,7 +203,6 @@
             <fileset dir="${component.build.dir}" includes="*-pkg*"/>
             <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
         </move>
-
 
         <delete dir="${component.src.dir.tmp}"/>
 

@@ -8,6 +8,7 @@
 
 
     <target name="concat">
+
         <concat destfile="${component.src.dir.tmp}/validation-pkg.js"
                 encoding="${charset}"
                 outputencoding="${charset}">
@@ -16,6 +17,10 @@
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
         </concat>
+
+        <copy todir="${component.src.dir.tmp}">
+            <fileset dir="." includes="assets/**/*"/>
+        </copy>
     </target>
 
     <target name="build" depends="concat,common.build">
