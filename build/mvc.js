@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 27 12:14
 */
 /**
- * mvc base
+ * @fileOverview mvc base
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/base", function(S, sync) {
@@ -14,7 +14,7 @@ KISSY.add("mvc/base", function(S, sync) {
 }, {
     requires:['./sync']
 });/**
- * collection of models
+ * @fileOverview collection of models
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
@@ -234,7 +234,7 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
 }, {
     requires:['event','./model','./base','base']
 });/**
- * enhanced base for model with sync
+ * @fileOverview enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/model", function(S, Base, mvc) {
@@ -457,7 +457,20 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
 }, {
     requires:['base','./base']
 });/**
- * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
+ * @fileOverview KISSY's MVC Framework for Page Application (Backbone Style)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("mvc", function(S, MVC, Model, Collection, View, Router) {
+    return S.mix(MVC, {
+        Model:Model,
+        View:View,
+        Collection:Collection,
+        Router:Router
+    });
+}, {
+    requires:["mvc/base","mvc/model","mvc/collection","mvc/view","mvc/router"]
+});/**
+ * @fileOverview simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function(S, Event, Base) {
@@ -891,15 +904,15 @@ KISSY.add('mvc/router', function(S, Event, Base) {
  * http://www.w3.org/TR/html5/history.html
  * http://documentcloud.github.com/backbone/
  **//**
- * default sync for model
+ * @fileOverview default sync for model
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/sync", function(S, io) {
+KISSY.add("mvc/sync", function (S, io, JSON) {
     var methodMap = {
-        'create': 'POST',
-        'update': 'POST', //'PUT'
-        'delete': 'POST', //'DELETE'
-        'read'  : 'GET'
+        'create':'POST',
+        'update':'POST', //'PUT'
+        'delete':'POST', //'DELETE'
+        'read':'GET'
     };
 
     function sync(self, method, options) {
@@ -919,7 +932,7 @@ KISSY.add("mvc/sync", function(S, io) {
         }
 
         if (method == 'create' || method == 'update') {
-            data.model = self.toJSON();
+            data.model = JSON.stringify(self.toJSON());
         }
 
         return io(ioParam);
@@ -927,9 +940,9 @@ KISSY.add("mvc/sync", function(S, io) {
 
     return sync;
 }, {
-    requires:['ajax']
+    requires:['ajax', 'json']
 });/**
- * view for kissy mvc : event delegation,el generator
+ * @fileOverview view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/view", function(S, Node, Base) {
@@ -1026,17 +1039,4 @@ KISSY.add("mvc/view", function(S, Node, Base) {
 
 }, {
     requires:['node','base']
-});/**
- * KISSY's MVC Framework for Page Application (Backbone Style)
- * @author yiminghe@gmail.com
- */
-KISSY.add("mvc", function(S, MVC, Model, Collection, View, Router) {
-    return S.mix(MVC, {
-        Model:Model,
-        View:View,
-        Collection:Collection,
-        Router:Router
-    });
-}, {
-    requires:["mvc/base","mvc/model","mvc/collection","mvc/view","mvc/router"]
 });

@@ -43,7 +43,7 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
     return Dialog;
 
 }, {
-    requires:[ "component","overlay/overlay","uibase",'overlay/dialogrender','./aria']
+    requires:[ "component","overlay/base","uibase",'overlay/dialogrender','./aria']
 });
 
 /**

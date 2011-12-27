@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:47
+build time: Dec 27 12:27
 */
 /**
- * @module  ua
- * @author  lifesinger@gmail.com
+ * @fileOverview ua
+ * @author lifesinger@gmail.com
  */
 KISSY.add('ua/base', function() {
 
@@ -180,8 +180,8 @@ KISSY.add('ua/base', function() {
  *
  */
 /**
- * @module  ua-extra
- * @author  gonghao<gonghao@ghsky.com>
+ * @fileOverview ua-extra
+ * @author gonghao<gonghao@ghsky.com>
  */
 KISSY.add('ua/extra', function(S, UA) {
     var ua = navigator.userAgent,
@@ -233,6 +233,9 @@ KISSY.add('ua/extra', function(S, UA) {
 }, {
     requires:["ua/base"]
 });
+/**
+ * @fileOverview ua
+ */
 KISSY.add("ua", function(S,UA) {
     return UA;
 }, {

@@ -174,7 +174,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
     return Select;
 
 }, {
-    requires:['node','uibase','component','./menubutton','menu','./option']
+    requires:['node','uibase','component','./base','menu','./option']
 });
 
 /**

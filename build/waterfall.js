@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:47
+build time: Dec 27 12:29
 */
 /**
- * intervein elements dynamically
+ * @fileOverview intervein elements dynamically
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/base", function(S, Node, Base) {
@@ -167,8 +167,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         adjust:function(callback) {
             S.log("waterfall:adjust");
             var self = this,
-                items = self.get("container").all(".ks-waterfall"),
-                count = items.length;
+                items = self.get("container").all(".ks-waterfall");
             /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
             /* 正在调整中，取消上次调整，开始这次调整 */
             if (self.isAdjusting()) {
@@ -181,15 +180,14 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                 self._adjuster = 0;
                 callback && callback.call(self);
 
-                count && self.fire('adjustComplete', {
+                items.length && self.fire('adjustComplete', {
                     items:items
                 });
             });
         },
 
         addItems:function(items, callback) {
-            var self = this,
-                count = items.length;
+            var self = this;
 
             /* 正在调整中，直接这次加，和调整的节点一起处理 */
             /* 正在加，直接这次加，一起处理 */
@@ -202,7 +200,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
                     self._adder = 0;
                     callback && callback.call(self);
 
-                    count && self.fire('addComplete', {
+                    items.length && self.fire('addComplete', {
                         items:items
                     });
                 });
@@ -243,7 +241,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
 }, {
     requires:['node','base']
 });/**
- * load content
+ * @fileOverview load content
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/loader", function(S, Node, Intervein) {
@@ -353,7 +351,11 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
 
 }, {
     requires:['node','./base']
-});KISSY.add("waterfall", function(S, Intervein, Loader) {
+});/**
+ * @fileOverview waterfall
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("waterfall", function(S, Intervein, Loader) {
     Intervein.Loader = Loader;
     return Intervein;
 }, {

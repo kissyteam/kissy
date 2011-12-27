@@ -1,22 +1,29 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 27 11:36
 */
 /**
- * Model and Control for button
+ * @fileOverview Model and Control for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
+KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
 
-    var KeyCodes = Event.KeyCodes,
-        Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
+    var KeyCodes = Event.KeyCodes;
+    /**
+     * @name Button
+     * @constructor
+     * @extends ModelControl
+     */
+    var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox],
+        /**@lends Button.prototype */
+        {
 
-            bindUI:function() {
+            bindUI:function () {
                 this.get("el").on("keyup", this._handleKeyEventInternal, this);
             },
 
-            _handleKeyEventInternal:function(e) {
+            _handleKeyEventInternal:function (e) {
                 if (e.keyCode == KeyCodes.ENTER &&
                     e.type == "keydown" ||
                     e.keyCode == KeyCodes.SPACE &&
@@ -30,7 +37,7 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
             },
 
             /* button 的默认行为就是触发 click*/
-            _performInternal:function() {
+            _performInternal:function () {
                 var self = this;
                 self.fire("click");
             }
@@ -64,9 +71,19 @@ KISSY.add("button/base", function(S, Event, UIBase, Component, CustomRender) {
     return Button;
 
 }, {
-    requires:['event','uibase','component','./customrender']
+    requires:['event', 'uibase', 'component', './customrender']
 });/**
- * abstract view for button
+ * @fileOverview simulated button for kissy , inspired by goog button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("button", function(S, Button, Render, Split) {
+    Button.Render = Render;
+    Button.Split = Split;
+    return Button;
+}, {
+    requires:['button/base','button/customrender','button/split']
+});/**
+ * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/buttonrender", function(S, UIBase, Component) {
@@ -114,7 +131,7 @@ KISSY.add("button/buttonrender", function(S, UIBase, Component) {
 }, {
     requires:['uibase','component']
 });/**
- * view for button , double div for pseudo-round corner
+ * @fileOverview view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
@@ -170,7 +187,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
 }, {
     requires:['node','uibase','./buttonrender']
 });/**
- * simple split button ,common usecase :button + menubutton
+ * @fileOverview simple split button ,common usecase :button + menubutton
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/split", function(S) {
@@ -227,14 +244,4 @@ KISSY.add("button/split", function(S) {
 
 }, {
     requires:['base']
-});/**
- * simulated button for kissy , inspired by goog button
- * @author yiminghe@gmail.com
- */
-KISSY.add("button", function(S, Button, Render, Split) {
-    Button.Render = Render;
-    Button.Split = Split;
-    return Button;
-}, {
-    requires:['button/base','button/customrender','button/split']
 });

@@ -1,10 +1,49 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 19 12:07
+build time: Dec 27 11:42
 */
 /**
- * container can delegate event for its children
+ * @fileOverview mvc based component framework for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component",
+    /**
+     *
+     * @param KISSY
+     * @param ModelControl
+     * @param Render
+     * @param Container
+     * @param UIStore
+     * @param DelegateChildren  @link Component.DelegateChildren
+     * @param DecorateChildren
+     * @param DecorateChild
+     */
+    function(KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
+
+    /**
+     * @name Component
+     * @namespace
+     */
+    return {
+        ModelControl:ModelControl,
+        Render:Render,
+        Container:Container,
+        UIStore:UIStore,
+        DelegateChildren:DelegateChildren,
+        DecorateChild:DecorateChild,
+        DecorateChildren:DecorateChildren
+    };
+}, {
+    requires:['component/modelcontrol',
+        'component/render',
+        'component/container',
+        'component/uistore',
+        'component/delegatechildren',
+        'component/decoratechildren',
+        'component/decoratechild']
+});/**
+ * @fileOverview container can delegate event for its children
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/container", function (S, UIBase, ModelControl, UIStore, DelegateChildren, DecorateChildren) {
@@ -19,7 +58,7 @@ KISSY.add("component/container", function (S, UIBase, ModelControl, UIStore, Del
 }, {
     requires:['uibase', './modelcontrol', './uistore', './delegatechildren', './decoratechildren']
 });/**
- * decorate its children from one element
+ * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/decoratechild", function(S, DecorateChildren) {
@@ -177,9 +216,9 @@ KISSY.add("component/delegatechildren", function (S) {
 
     return DelegateChildren;
 });/**
- * model and control base class for kissy
+ * @fileOverview model and control base class for kissy
  * @author yiminghe@gmail.com
- * @refer http://martinfowler.com/eaaDev/uiArchs.html
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render) {
 
@@ -729,9 +768,9 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
  *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
  *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
  **//**
- * render base class for kissy
+ * @fileOverview render base class for kissy
  * @author yiminghe@gmail.com
- * @refer http://martinfowler.com/eaaDev/uiArchs.html
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/render", function(S, UIBase, UIStore) {
 
@@ -825,7 +864,11 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
     });
 }, {
     requires:['uibase','./uistore']
-});KISSY.add("component/uistore", function(S) {
+});/**
+ * @fileOverview storage for component's css
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/uistore", function(S) {
     var uis = {
         // 不带前缀 prefixCls
         /*
@@ -891,43 +934,4 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
             LEVEL6:60
         }
     };
-});/**
- * mvc based component framework for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add("component",
-    /**
-     *
-     * @param KISSY
-     * @param ModelControl
-     * @param Render
-     * @param Container
-     * @param UIStore
-     * @param DelegateChildren  @link Component.DelegateChildren
-     * @param DecorateChildren
-     * @param DecorateChild
-     */
-    function(KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
-
-    /**
-     * @name Component
-     * @namespace
-     */
-    return {
-        ModelControl:ModelControl,
-        Render:Render,
-        Container:Container,
-        UIStore:UIStore,
-        DelegateChildren:DelegateChildren,
-        DecorateChild:DecorateChild,
-        DecorateChildren:DecorateChildren
-    };
-}, {
-    requires:['component/modelcontrol',
-        'component/render',
-        'component/container',
-        'component/uistore',
-        'component/delegatechildren',
-        'component/decoratechildren',
-        'component/decoratechild']
 });

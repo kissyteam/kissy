@@ -1,26 +1,21 @@
 <project name="base.build" default="build" basedir=".">
-    <description>Component Build File</description>
+    <description>Base Build File</description>
 
-    <property file="build.properties"/>
+    <property name="component.name" value="base"/>
     <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 
     <target name="concat">
-        <concat destfile="base-pkg.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${component.src.dir.tmp}/base-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${src.dir}" includes="*.js"/>
-            <path location="../base.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;" />
             </filterchain>
         </concat>
     </target>
 
-    <target name="clean">
-        <delete file="base-pkg.js"/>
-    </target>
-
-    <target name="build" depends="concat,common.build,clean">
+    <target name="build" depends="concat,common.build">
     </target>
 </project>
 

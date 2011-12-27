@@ -1,35 +1,41 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 27 12:19
 */
 /**
- * KISSY Overlay
- * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
+ * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
-
-    function require(s) {
-        return S.require("uibase/" + s);
+KISSY.add("overlay/aria", function(S,Event) {
+    function Aria() {
     }
 
-    return UIBase.create(Component.Render, [
-        require("contentboxrender"),
-        require("positionrender"),
-        require("loadingrender"),
-        UA['ie'] === 6 ? require("shimrender") : null,
-        require("closerender"),
-        require("maskrender")
-    ]);
-}, {
-    requires: ["ua","uibase","component"]
-});
+    Aria.ATTRS = {
+        aria:{
+            view:true
+        }
+    };
 
-/**
- * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
- */
-/**
- * http://www.w3.org/TR/wai-aria-practices/#trap_focus
+    Aria.prototype = {
+
+        __bindUI:function() {
+            var self = this,el = self.get("el");
+            if (self.get("aria")) {
+                el.on("keydown", function(e) {
+                    if (e.keyCode === Event.KeyCodes.ESC) {
+                        self.hide();
+                        e.halt();
+                    }
+                });
+            }
+        }
+    };
+    return Aria;
+},{
+    requires:['event']
+});/**
+ * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/ariarender", function(S, Node) {
@@ -137,38 +143,128 @@ KISSY.add("overlay/ariarender", function(S, Node) {
 }, {
     requires:["node"]
 });/**
- * http://www.w3.org/TR/wai-aria-practices/#trap_focus
+ * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/aria", function(S,Event) {
-    function Aria() {
+KISSY.add("overlay/overlay", function (S, UIBase, Component, OverlayRender, Effect) {
+    function require(s) {
+        return S.require("uibase/" + s);
     }
 
-    Aria.ATTRS = {
-        aria:{
-            view:true
-        }
-    };
-
-    Aria.prototype = {
-
-        __bindUI:function() {
-            var self = this,el = self.get("el");
-            if (self.get("aria")) {
-                el.on("keydown", function(e) {
-                    if (e.keyCode === Event.KeyCodes.ESC) {
-                        self.hide();
-                        e.halt();
-                    }
-                });
+    var Overlay = UIBase.create(Component.ModelControl, [
+        require("contentbox"),
+        require("position"),
+        require("loading"),
+        require("align"),
+        require("close"),
+        require("resize"),
+        require("mask"),
+        Effect
+    ], {}, {
+        ATTRS:{
+            // 是否支持焦点处理
+            focusable:{
+                value:false
+            },
+            closable:{
+                // overlay 默认没 X
+                value:false
+            },
+            // 是否绑定鼠标事件
+            handleMouseEvents:{
+                value:false
+            },
+            allowTextSelection_:{
+                value:true
+            },
+            visibleMode:{
+                value:"visibility"
             }
         }
-    };
-    return Aria;
-},{
-    requires:['event']
+    });
+
+    Overlay.DefaultRender = OverlayRender;
+
+
+    Component.UIStore.setUIByClass("overlay", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:Overlay
+    });
+
+    return Overlay;
+}, {
+    requires:['uibase', 'component', './overlayrender', './effect']
 });/**
- * effect applied when overlay shows or hides
+ * @fileOverview KISSY.Dialog
+ * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ */
+KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
+
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
+
+    var Dialog = UIBase.create(Overlay, [
+        require("stdmod"),
+        require("drag"),
+        require("constrain"),
+        Aria
+    ], {
+    }, {
+        ATTRS:{
+            closable:{
+                value:true
+            },
+            handlers:{
+                valueFn:function() {
+                    var self = this;
+                    return [
+                        // 运行时取得拖放头
+                        function() {
+                            return self.get("view").get("header");
+                        }
+                    ];
+                }
+            }
+        }
+    });
+
+    Dialog.DefaultRender = DialogRender;
+
+    Component.UIStore.setUIByClass("dialog", {
+        priority:Component.UIStore.PRIORITY.LEVEL2,
+        ui:Dialog
+    });
+
+    return Dialog;
+
+}, {
+    requires:[ "component","overlay/base","uibase",'overlay/dialogrender','./aria']
+});
+
+/**
+ * 2010-11-10 承玉<yiminghe@gmail.com>重构，使用扩展类
+ */
+
+
+
+/**
+ * @fileOverview render for dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
+    function require(s) {
+        return S.require("uibase/" + s);
+    }
+
+    return UIBase.create(OverlayRender, [
+        require("stdmodrender"),
+        AriaRender
+    ]);
+}, {
+    requires:['uibase','./overlayrender','./ariarender']
+});/**
+ * @fileOverview effect applied when overlay shows or hides
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/effect", function(S) {
@@ -233,134 +329,50 @@ KISSY.add("overlay/effect", function(S) {
 }, {
     requires:['anim']
 });/**
- * model and control for overlay
+ * @fileOverview overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay", function(S, UIBase, Component, OverlayRender, Effect) {
-    function require(s) {
-        return S.require("uibase/" + s);
-    }
+KISSY.add("overlay", function(S, O, OR, D, DR, P) {
+    O.Render = OR;
+    D.Render = DR;
+    O.Dialog = D;
+    S.Overlay = O;
+    S.Dialog = D;
+    O.Popup = S.Popup = P;
 
-    var Overlay = UIBase.create(Component.ModelControl, [
-        require("contentbox"),
-        require("position"),
-        require("loading"),
-        require("align"),
-        require("close"),
-        require("resize"),
-        require("mask"),
-        Effect
-    ], {}, {
-        ATTRS:{
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            closable:{
-                // overlay 默认没 X
-                value:false
-            },
-            // 是否绑定鼠标事件
-            handleMouseEvents:{
-                value:false
-            },
-            allowTextSelection_:{
-                value:true
-            },
-            visibleMode:{
-                value:"visibility"
-            }
-        }
-    });
-
-    Overlay.DefaultRender = OverlayRender;
-
-
-    Component.UIStore.setUIByClass("overlay", {
-        priority:Component.UIStore.PRIORITY.LEVEL1,
-        ui:Overlay
-    });
-
-    return Overlay;
+    return O;
 }, {
-    requires:['uibase','component','./overlayrender','./effect']
+    requires:["overlay/base","overlay/overlayrender","overlay/dialog","overlay/dialogrender", "overlay/popup"]
 });/**
- * render for dialog
- * @author yiminghe@gmail.com
+ * @fileOverview KISSY Overlay
+ * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
  */
-KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender) {
+KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
+
     function require(s) {
         return S.require("uibase/" + s);
     }
 
-    return UIBase.create(OverlayRender, [
-        require("stdmodrender"),
-        AriaRender
+    return UIBase.create(Component.Render, [
+        require("contentboxrender"),
+        require("positionrender"),
+        require("loadingrender"),
+        UA['ie'] === 6 ? require("shimrender") : null,
+        require("closerender"),
+        require("maskrender")
     ]);
 }, {
-    requires:['uibase','./overlayrender','./ariarender']
-});/**
- * KISSY.Dialog
- * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
- */
-KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
-
-    function require(s) {
-        return S.require("uibase/" + s);
-    }
-
-    var Dialog = UIBase.create(Overlay, [
-        require("stdmod"),
-        require("drag"),
-        require("constrain"),
-        Aria
-    ], {
-    }, {
-        ATTRS:{
-            closable:{
-                value:true
-            },
-            handlers:{
-                valueFn:function() {
-                    var self = this;
-                    return [
-                        // 运行时取得拖放头
-                        function() {
-                            return self.get("view").get("header");
-                        }
-                    ];
-                }
-            }
-        }
-    });
-
-    Dialog.DefaultRender = DialogRender;
-
-    Component.UIStore.setUIByClass("dialog", {
-        priority:Component.UIStore.PRIORITY.LEVEL2,
-        ui:Dialog
-    });
-
-    return Dialog;
-
-}, {
-    requires:[ "component","overlay/overlay","uibase",'overlay/dialogrender','./aria']
+    requires: ["ua","uibase","component"]
 });
 
 /**
- * 2010-11-10 承玉<yiminghe@gmail.com>重构，使用扩展类
+ * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */
-
-
-
 /**
- * KISSY.Popup
+ * @fileOverview KISSY.Popup
  * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
  */
 KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
-
-    var POPUP_DELAY = 100;
-
     function Popup(container, config) {
         var self = this;
 
@@ -379,8 +391,11 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             setter:function(v) {
                 return S.one(v);
             }
-        },          // 触发器
-        triggerType: {value:'click'}    // 触发类型
+        },                              // 触发器
+        triggerType: {value:'click'},   // 触发类型
+        mouseDelay: {
+            value: 100                  // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
+        }
     };
 
     S.extend(Popup, Overlay, {
@@ -412,7 +427,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 timer = S.later(function() {
                     self.show();
                     timer = undefined;
-                }, POPUP_DELAY);
+                }, self.get('mouseDelay'));
             };
 
             trigger.on('mouseenter', self.__mouseEnterPopup);
@@ -441,7 +456,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             var self = this;
             self._hiddenTimer = S.later(function() {
                 self.hide();
-            }, POPUP_DELAY);
+            }, self.get('mouseDelay'));
         },
 
         _clearHiddenTimer: function() {
@@ -497,15 +512,4 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /**
  * 2011-05-17
  *  - 承玉：利用 initializer , destructor ,ATTRS
- **/KISSY.add("overlay", function(S, O, OR, D, DR, P) {
-    O.Render = OR;
-    D.Render = DR;
-    O.Dialog = D;
-    S.Overlay = O;
-    S.Dialog = D;
-    O.Popup = S.Popup = P;
-
-    return O;
-}, {
-    requires:["overlay/overlay","overlay/overlayrender","overlay/dialog","overlay/dialogrender", "overlay/popup"]
-});
+ **/

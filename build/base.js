@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:45
+build time: Dec 27 11:32
 */
 /**
- * @module  Attribute
+ * @fileOverview attribute management
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function(S, undef) {
@@ -478,17 +478,24 @@ KISSY.add('base/attribute', function(S, undef) {
  *    add validator
  */
 /**
- * @module  Base
+ * @fileOverview Attribute and Base
+ */
+KISSY.add("base", function(S, Base, Attribute) {
+    Base.Attribute = Attribute;
+    return Base;
+}, {
+    requires:["base/base2","base/attribute"]
+});/**
+ * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute, Event) {
+KISSY.add('base/base2', function (S, Attribute, Event) {
 
     /**
-     * Base for class-based component
      * @name Base
      * @extends Event.Target
      * @extends Attribute
-     * @class
+     * @class Base for class-based component
      */
     function Base(config) {
         var c = this.constructor;
@@ -530,11 +537,5 @@ KISSY.add('base/base', function (S, Attribute, Event) {
     S.augment(Base, Event.Target, Attribute);
     return Base;
 }, {
-    requires:["./attribute","event"]
-});
-KISSY.add("base", function(S, Base, Attribute) {
-    Base.Attribute = Attribute;
-    return Base;
-}, {
-    requires:["base/base","base/attribute"]
+    requires:["./attribute", "event"]
 });

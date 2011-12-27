@@ -1,9 +1,147 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 26 16:05
+build time: Dec 27 12:01
 */
-/**
+KISSY.add("dd/constrain", function (S, Base, Node) {
+
+    var $ = Node.all;
+
+    /**
+     * @class constrain draggable's region
+     * @name Constrain
+     * @memberOf DD
+     */
+    function Constrain() {
+        Constrain.superclass.constructor.apply(this, arguments);
+    }
+
+    function onDragStart(e) {
+        var self = this,
+            drag = e.drag,
+            l, t, lt,
+            dragNode = drag.get("dragNode"),
+            constrain = self.get("constrain");
+        if (constrain) {
+            if (constrain === true) {
+                var win = $(window);
+                self.__constrainRegion = {
+                    left:l = win.scrollLeft(),
+                    top:t = win.scrollTop(),
+                    right:l + win.width(),
+                    bottom:t + win.height()
+                };
+            }
+            if (constrain.nodeType || S.isString(constrain)) {
+                constrain = $(constrain);
+            }
+            if (constrain.getDOMNode) {
+                lt = constrain.offset();
+                self.__constrainRegion = {
+                    left:lt.left,
+                    top:lt.top,
+                    right:lt.left + constrain.outerWidth(),
+                    bottom:lt.top + constrain.outerHeight()
+                };
+            } else if (S.isPlainObject(constrain)) {
+                self.__constrainRegion = constrain;
+            }
+            if (self.__constrainRegion) {
+                self.__constrainRegion.right -= dragNode.outerWidth();
+                self.__constrainRegion.bottom -= dragNode.outerHeight();
+            }
+        }
+    }
+
+    function onDragAlign(e) {
+        var self = this,
+            info = e.info,
+            l = info.left,
+            t = info.top,
+            constrain = self.__constrainRegion;
+        if (constrain) {
+            info.left = Math.min(Math.max(constrain.left, l), constrain.right);
+            info.top = Math.min(Math.max(constrain.top, t), constrain.bottom);
+        }
+    }
+
+    function onDragEnd() {
+        this.__constrainRegion = null;
+    }
+
+    S.extend(Constrain, Base, {
+        __constrainRegion:null,
+
+        /**
+         * start monitoring drag
+         * @param {DD.Draggable} drag
+         */
+        attach:function (drag) {
+            var self = this;
+            drag.on("dragstart", onDragStart, self)
+                .on("dragend", onDragEnd, self)
+                .on("dragalign", onDragAlign, self);
+        },
+
+
+        /**
+         * stop monitoring drag
+         * @param {DD.Draggable} drag
+         */
+        unattach:function (drag) {
+            var self = this;
+            drag.detach("dragstart", onDragStart, self)
+                .detach("dragend", onDragEnd, self)
+                .detach("dragalign", onDragAlign, self);
+        }
+    }, {
+        ATTRS:/**
+         * @lends Constrain#
+         */
+        {
+            /**
+             * constrained container
+             * @type {boolean|HTMLElement|String}
+             */
+            constrain:{
+                value:true
+            }
+        }
+    });
+
+    return Constrain;
+}, {
+    requires:['base', 'node']
+});/**
+ * @fileOverview dd support for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
+    /**
+     * @name DD
+     */
+    var DD;
+    DD = {
+        Draggable:Draggable,
+        Droppable:Droppable,
+        DDM:DDM,
+        "Constrain":Constrain,
+        Proxy:Proxy,
+        DraggableDelegate:Delegate,
+        DroppableDelegate:DroppableDelegate,
+        Scroll:Scroll
+    };
+    return DD;
+}, {
+    requires:["dd/ddm",
+        "dd/draggable",
+        "dd/droppable",
+        "dd/proxy",
+        "dd/constrain",
+        "dd/draggable-delegate",
+        "dd/droppable-delegate",
+        "dd/scroll"]
+});/**
  * @fileOverview dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
@@ -417,6 +555,148 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
  *  - YUI3 dd
  */
 /**
+ * @fileOverview delegate all draggable nodes to one draggable object
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
+
+    /**
+     * @memberOf DD
+     * @class delegate drag
+     */
+    function DraggableDelegate() {
+        DraggableDelegate.superclass.constructor.apply(this, arguments);
+    }
+
+
+    /**
+     * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
+     *
+     * @param ev
+     */
+    function _handleMouseDown(ev) {
+        var self = this,
+            handler,
+            node;
+
+        if (!self._checkMouseDown(ev)) {
+            return;
+        }
+
+        var handlers = self.get("handlers"),
+            target = new Node(ev.target);
+
+        // 不需要像 Draggble 一样，判断 target 是否在 handler 内
+        // 委托时，直接从 target 开始往上找 handler
+        if (handlers.length) {
+            handler = self._getHandler(target);
+        } else {
+            handler = target;
+        }
+
+        if (handler) {
+            self.set("activeHandler", handler);
+            node = self._getNode(handler);
+        } else {
+            return;
+        }
+
+        // 找到 handler 确定 委托的 node ，就算成功了
+        self.set("node", node);
+        self.set("dragNode", node);
+        self._prepare(ev);
+    }
+
+    S.extend(DraggableDelegate, Draggable, {
+            _init:function () {
+                var self = this,
+                    node = self.get('container');
+                node.on('mousedown', _handleMouseDown, self)
+                    .on('dragstart', self._fixDragStart);
+            },
+
+            /**
+             * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
+             * @param target
+             */
+            _getHandler:function (target) {
+                var self = this,
+                    ret=undefined,
+                    node = self.get("container"),
+                    handlers = self.get('handlers');
+                while (target && target[0] !== node[0]) {
+                    S.each(handlers, function (h) {
+                        if (DOM.test(target[0], h)) {
+                            ret = target;
+                            return false;
+                        }
+                    });
+                    if (ret) {
+                        break;
+                    }
+                    target = target.parent();
+                }
+                return ret;
+            },
+
+            /**
+             * 找到真正应该移动的节点，对应 selector 属性选择器字符串
+             * @param h
+             */
+            _getNode:function (h) {
+                return h.closest(this.get("selector"), this.get("container"));
+            },
+
+            destroy:function () {
+                var self = this;
+                self.get("container")
+                    .detach('mousedown',
+                    _handleMouseDown,
+                    self)
+                    .detach('dragstart', self._fixDragStart);
+                self.detach();
+            }
+        },
+        {
+            ATTRS:/**
+             * @lends DD.DraggableDelegate#
+             */
+            {
+                /**
+                 * 用于委托的父容器
+                 * @type {HTMLElement|String}
+                 */
+                container:{
+                    setter:function (v) {
+                        return Node.one(v);
+                    }
+                },
+
+                /**
+                 * 实际拖放的节点选择器，一般用 tag.cls
+                 * @type {String}
+                 */
+                selector:{
+                },
+
+                /**
+                 * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
+                 * 不设则为 [ selector ]
+                 * @type {String[]}
+                 **/
+                handlers:{
+                    value:[],
+                    // 覆盖父类的 getter ，这里 normalize 成节点
+                    getter:0
+                }
+
+            }
+        });
+
+    return DraggableDelegate;
+}, {
+    requires:['./ddm', './draggable', 'dom', 'node']
+});/**
  * @fileOverview dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
@@ -686,16 +966,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             },
 
             _fixDragStart:fixDragStart,
-            /**
-             * 销毁
-             */
-            destroy:function () {
-                var self = this,
-                    node = self.get('dragNode');
-                node.detach('mousedown', _handleMouseDown, self)
-                    .detach('dragstart', self._fixDragStart);
-                self.detach();
-            },
 
             /**
              *
@@ -788,7 +1058,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
 
                 if (!self.get("dragging")) {
-                    var clickPixelThresh = self.get("clickPixelThresh"), l1, l2;
+                    var clickPixelThresh = self.get("clickPixelThresh");
                     // 鼠标经过了一定距离，立即开始
                     if (Math.abs(pageX - startMousePos.left) >= clickPixelThresh ||
                         Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
@@ -811,6 +1081,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                     pageY:pageY,
                     drag:self
                 };
+
+                self.fire("dragalign", {
+                    info:ret
+                });
+
+                DDM.fire("dragalign", {
+                    info:ret
+                });
 
                 var def = 1;
 
@@ -888,7 +1166,17 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 self.fire("dragstart", {
                     drag:self
                 });
+            },
 
+            /**
+             * 销毁
+             */
+            destroy:function () {
+                var self = this,
+                    node = self.get('dragNode');
+                node.detach('mousedown', _handleMouseDown, self)
+                    .detach('dragstart', self._fixDragStart);
+                self.detach();
             }
         });
 
@@ -898,6 +1186,144 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     requires:["ua", "node", "base", "./ddm"]
 });
 /**
+ * @fileOverview only one droppable instance for multiple droppable nodes
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
+
+
+    function dragStart() {
+        var self = this,
+            container = self.get("container"),
+            selector = self.get("selector");
+        self.__allNodes = container.all(selector);
+    }
+
+    /**
+     * @memberOf DD
+     * @class delegate drop
+     */
+    function DroppableDelegate() {
+        var self = this;
+        DroppableDelegate.superclass.constructor.apply(self, arguments);
+        // 提高性能，拖放开始时缓存代理节点
+        DDM.on("dragstart", dragStart, self);
+    }
+
+    S.extend(DroppableDelegate, Droppable, {
+
+            /**
+             * 根据鼠标位置得到真正的可放目标，暂时不考虑 mode，只考虑鼠标
+             * @param ev
+             */
+            getNodeFromTarget:function (ev, dragNode, proxyNode) {
+                var pointer = {
+                    left:ev.pageX,
+                    top:ev.pageY
+                },
+                    self = this,
+                    allNodes = self.__allNodes,
+                    ret = 0,
+                    vArea = Number.MAX_VALUE;
+
+
+                if (allNodes) {
+                    allNodes.each(function (n) {
+                        var domNode = n[0];
+                        // 排除当前拖放的元素以及代理节点
+                        if (domNode === proxyNode || domNode === dragNode) {
+                            return;
+                        }
+                        if (DDM.inRegion(DDM.region(n), pointer)) {
+                            // 找到面积最小的那个
+                            var a = DDM.area(DDM.region(n));
+                            if (a < vArea) {
+                                vArea = a;
+                                ret = n;
+                            }
+                        }
+                    });
+                }
+
+                if (ret) {
+                    self.set("lastNode", self.get("node"));
+                    self.set("node", ret);
+                }
+
+                return ret;
+            },
+
+            _handleOut:function () {
+                var self = this;
+                DroppableDelegate.superclass._handleOut.apply(self, arguments);
+                self.set("node", 0);
+                self.set("lastNode", 0);
+            },
+
+            _handleOver:function (ev) {
+                var self = this,
+                    node = self.get("node"),
+                    superOut = DroppableDelegate.superclass._handleOut,
+                    superOver = DroppableDelegate.superclass._handleOver,
+                    superEnter = DroppableDelegate.superclass._handleEnter,
+                    lastNode = self.get("lastNode");
+
+                if (lastNode[0] !== node[0]) {
+                    /**
+                     * 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
+                     */
+                    self.set("node", lastNode);
+                    superOut.apply(self, arguments);
+                    /**
+                     * 再通知这次的进入
+                     */
+                    self.set("node", node);
+                    superEnter.call(self, ev);
+                } else {
+                    superOver.call(self, ev);
+                }
+            }
+        },
+        {
+            ATTRS:/**
+             * @lends DD.DroppableDelegate#
+             */
+            {
+
+
+                // 继承自 Drappable ，当前正在委托的放节点目标
+
+
+                /**
+                 * 上一个成为放目标的委托节点
+                 * @private
+                 */
+                lastNode:{
+                },
+
+                /**
+                 * 放目标节点选择器
+                 * @type String
+                 */
+                selector:{
+                },
+
+                /**
+                 * 放目标所在区域
+                 * @type {String|HTMLElement}
+                 */
+                container:{
+                    setter:function (v) {
+                        return Node.one(v);
+                    }
+                }
+            }
+        });
+
+    return DroppableDelegate;
+}, {
+    requires:['./ddm', './droppable', 'dom', 'node']
+});/**
  * @fileOverview droppable for kissy
  * @author yiminghe@gmail.com
  */
@@ -1060,377 +1486,95 @@ KISSY.add("dd/proxy", function (S, Node) {
              * 关联到某个拖对象
              * @param drag
              */
-        attach:function (drag) {
+            attach:function (drag) {
 
-            var self = this,
-                tag;
+                var self = this,
+                    tag = stamp(drag, 1, MARKER);
 
-            if (tag = stamp(drag, 1, MARKER) &&
-                self[DESTRUCTOR_ID][tag]
-                ) {
-                return;
-            }
+                if (tag && self[DESTRUCTOR_ID][tag]) {
+                    return;
+                }
 
-            function start() {
-                var node = self.get("node"),
-                    dragNode = drag.get("node");
+                function start() {
+                    var node = self.get("node"),
+                        dragNode = drag.get("node");
 
-                // cache proxy node
-                if (!self[PROXY_ATTR]) {
-                    if (S.isFunction(node)) {
-                        node = node(drag);
-                        node.addClass("ks-dd-proxy");
-                        node.css("position", "absolute");
-                        self[PROXY_ATTR] = node;
+                    // cache proxy node
+                    if (!self[PROXY_ATTR]) {
+                        if (S.isFunction(node)) {
+                            node = node(drag);
+                            node.addClass("ks-dd-proxy");
+                            node.css("position", "absolute");
+                            self[PROXY_ATTR] = node;
+                        }
+                    } else {
+                        node = self[PROXY_ATTR];
                     }
-                } else {
-                    node = self[PROXY_ATTR];
+                    dragNode.parent()
+                        .append(node);
+                    node.show();
+                    node.offset(dragNode.offset());
+                    drag.set("dragNode", dragNode);
+                    drag.set("node", node);
                 }
-                dragNode.parent()
-                    .append(node);
-                node.show();
-                node.offset(dragNode.offset());
-                drag.set("dragNode", dragNode);
-                drag.set("node", node);
-            }
 
-            function end() {
-                var node = self[PROXY_ATTR];
-                drag.get("dragNode").offset(node.offset());
-                node.hide();
-                if (self.get("destroyOnEnd")) {
-                    node.remove();
-                    self[PROXY_ATTR] = 0;
+                function end() {
+                    var node = self[PROXY_ATTR];
+                    drag.get("dragNode").offset(node.offset());
+                    node.hide();
+                    if (self.get("destroyOnEnd")) {
+                        node.remove();
+                        self[PROXY_ATTR] = 0;
+                    }
+                    drag.set("node", drag.get("dragNode"));
                 }
-                drag.set("node", drag.get("dragNode"));
-            }
 
-            drag.on("dragstart", start);
-            drag.on("dragend", end);
+                drag.on("dragstart", start);
+                drag.on("dragend", end);
 
-            tag = stamp(drag, 0, MARKER);
+                tag = stamp(drag, 0, MARKER);
 
-            self[DESTRUCTOR_ID][tag] = {
-                drag:drag,
-                fn:function () {
-                    drag.detach("dragstart", start);
-                    drag.detach("dragend", end);
-                }
-            };
-        },
+                self[DESTRUCTOR_ID][tag] = {
+                    drag:drag,
+                    fn:function () {
+                        drag.detach("dragstart", start);
+                        drag.detach("dragend", end);
+                    }
+                };
+            },
             /**
              * 取消关联
              * @param drag
              */
-        unAttach:function (drag) {
-            var self = this,
-                tag = stamp(drag, 1, MARKER),
-                destructors = self[DESTRUCTOR_ID];
-            if (tag && destructors[tag]) {
-                destructors[tag].fn();
-                delete destructors[tag];
-            }
-        },
+            unAttach:function (drag) {
+                var self = this,
+                    tag = stamp(drag, 1, MARKER),
+                    destructors = self[DESTRUCTOR_ID];
+                if (tag && destructors[tag]) {
+                    destructors[tag].fn();
+                    delete destructors[tag];
+                }
+            },
 
             /**
              * 销毁
              */
-        destroy:function () {
-            var self = this,
-                node = self.get("node"),
-                destructors = self[DESTRUCTOR_ID];
-            if (node && !S.isFunction(node)) {
-                node.remove();
+            destroy:function () {
+                var self = this,
+                    node = self.get("node"),
+                    destructors = self[DESTRUCTOR_ID];
+                if (node && !S.isFunction(node)) {
+                    node.remove();
+                }
+                for (var d in destructors) {
+                    this.unAttach(destructors[d].drag);
+                }
             }
-            for (var d in destructors) {
-                this.unAttach(destructors[d].drag);
-            }
-        }
-    });
+        });
 
     return Proxy;
 }, {
     requires:['node']
-});/**
- * @fileOverview delegate all draggable nodes to one draggable object
- * @author yiminghe@gmail.com
- */
-KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
-
-    /**
-     * @memberOf DD
-     * @class delegate drag
-     */
-    function DraggableDelegate() {
-        DraggableDelegate.superclass.constructor.apply(this, arguments);
-    }
-
-
-    /**
-     * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-     *
-     * @param ev
-     */
-    function _handleMouseDown(ev) {
-        var self = this,
-            handler,
-            node;
-
-        if (!self._checkMouseDown(ev)) {
-            return;
-        }
-
-        var handlers = self.get("handlers"),
-            target = new Node(ev.target);
-
-        // 不需要像 Draggble 一样，判断 target 是否在 handler 内
-        // 委托时，直接从 target 开始往上找 handler
-        if (handlers.length) {
-            handler = self._getHandler(target);
-        } else {
-            handler = target;
-        }
-
-        if (handler) {
-            self.set("activeHandler", handler);
-            node = self._getNode(handler);
-        } else {
-            return;
-        }
-
-        // 找到 handler 确定 委托的 node ，就算成功了
-        self.set("node", node);
-        self.set("dragNode", node);
-        self._prepare(ev);
-    }
-
-    S.extend(DraggableDelegate, Draggable, {
-            _init:function () {
-                var self = this,
-                    node = self.get('container');
-                node.on('mousedown', _handleMouseDown, self)
-                    .on('dragstart', self._fixDragStart);
-            },
-
-            /**
-             * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
-             * @param target
-             */
-            _getHandler:function (target) {
-                var self = this,
-                    ret=undefined,
-                    node = self.get("container"),
-                    handlers = self.get('handlers');
-                while (target && target[0] !== node[0]) {
-                    S.each(handlers, function (h) {
-                        if (DOM.test(target[0], h)) {
-                            ret = target;
-                            return false;
-                        }
-                    });
-                    if (ret) {
-                        break;
-                    }
-                    target = target.parent();
-                }
-                return ret;
-            },
-
-            /**
-             * 找到真正应该移动的节点，对应 selector 属性选择器字符串
-             * @param h
-             */
-            _getNode:function (h) {
-                return h.closest(this.get("selector"), this.get("container"));
-            },
-
-            destroy:function () {
-                var self = this;
-                self.get("container")
-                    .detach('mousedown',
-                    _handleMouseDown,
-                    self)
-                    .detach('dragstart', self._fixDragStart);
-                self.detach();
-            }
-        },
-        {
-            ATTRS:/**
-             * @lends DD.DraggableDelegate#
-             */
-            {
-                /**
-                 * 用于委托的父容器
-                 * @type {HTMLElement|String}
-                 */
-                container:{
-                    setter:function (v) {
-                        return Node.one(v);
-                    }
-                },
-
-                /**
-                 * 实际拖放的节点选择器，一般用 tag.cls
-                 * @type {String}
-                 */
-                selector:{
-                },
-
-                /**
-                 * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
-                 * 不设则为 [ selector ]
-                 * @type {String[]}
-                 **/
-                handlers:{
-                    value:[],
-                    // 覆盖父类的 getter ，这里 normalize 成节点
-                    getter:0
-                }
-
-            }
-        });
-
-    return DraggableDelegate;
-}, {
-    requires:['./ddm', './draggable', 'dom', 'node']
-});/**
- * @fileOverview only one droppable instance for multiple droppable nodes
- * @author yiminghe@gmail.com
- */
-KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
-
-
-    function dragStart() {
-        var self = this,
-            container = self.get("container"),
-            selector = self.get("selector");
-        self.__allNodes = container.all(selector);
-    }
-
-    /**
-     * @memberOf DD
-     * @class delegate drop
-     */
-    function DroppableDelegate() {
-        var self = this;
-        DroppableDelegate.superclass.constructor.apply(self, arguments);
-        // 提高性能，拖放开始时缓存代理节点
-        DDM.on("dragstart", dragStart, self);
-    }
-
-    S.extend(DroppableDelegate, Droppable, {
-
-            /**
-             * 根据鼠标位置得到真正的可放目标，暂时不考虑 mode，只考虑鼠标
-             * @param ev
-             */
-            getNodeFromTarget:function (ev, dragNode, proxyNode) {
-                var pointer = {
-                    left:ev.pageX,
-                    top:ev.pageY
-                },
-                    self = this,
-                    allNodes = self.__allNodes,
-                    ret = 0,
-                    vArea = Number.MAX_VALUE;
-
-
-                if (allNodes) {
-                    allNodes.each(function (n) {
-                        var domNode = n[0];
-                        // 排除当前拖放的元素以及代理节点
-                        if (domNode === proxyNode || domNode === dragNode) {
-                            return;
-                        }
-                        if (DDM.inRegion(DDM.region(n), pointer)) {
-                            // 找到面积最小的那个
-                            var a = DDM.area(DDM.region(n));
-                            if (a < vArea) {
-                                vArea = a;
-                                ret = n;
-                            }
-                        }
-                    });
-                }
-
-                if (ret) {
-                    self.set("lastNode", self.get("node"));
-                    self.set("node", ret);
-                }
-
-                return ret;
-            },
-
-            _handleOut:function () {
-                var self = this;
-                DroppableDelegate.superclass._handleOut.apply(self, arguments);
-                self.set("node", 0);
-                self.set("lastNode", 0);
-            },
-
-            _handleOver:function (ev) {
-                var self = this,
-                    node = self.get("node"),
-                    superOut = DroppableDelegate.superclass._handleOut,
-                    superOver = DroppableDelegate.superclass._handleOver,
-                    superEnter = DroppableDelegate.superclass._handleEnter,
-                    lastNode = self.get("lastNode");
-
-                if (lastNode[0] !== node[0]) {
-                    /**
-                     * 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
-                     */
-                    self.set("node", lastNode);
-                    superOut.apply(self, arguments);
-                    /**
-                     * 再通知这次的进入
-                     */
-                    self.set("node", node);
-                    superEnter.call(self, ev);
-                } else {
-                    superOver.call(self, ev);
-                }
-            }
-        },
-        {
-            ATTRS:/**
-             * @lends DD.DroppableDelegate#
-             */
-            {
-
-
-                // 继承自 Drappable ，当前正在委托的放节点目标
-
-
-                /**
-                 * 上一个成为放目标的委托节点
-                 * @private
-                 */
-                lastNode:{
-                },
-
-                /**
-                 * 放目标节点选择器
-                 * @type String
-                 */
-                selector:{
-                },
-
-                /**
-                 * 放目标所在区域
-                 * @type {String|HTMLElement}
-                 */
-                container:{
-                    setter:function (v) {
-                        return Node.one(v);
-                    }
-                }
-            }
-        });
-
-    return DroppableDelegate;
-}, {
-    requires:['./ddm', './droppable', 'dom', 'node']
 });/**
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
@@ -1700,31 +1844,4 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
     return Scroll;
 }, {
     requires:['base', 'node', 'dom']
-});/**
- * @fileOverview dd support for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Delegate, DroppableDelegate, Scroll) {
-    /**
-     * @name DD
-     */
-    var DD;
-    DD = {
-        Draggable:Draggable,
-        Droppable:Droppable,
-        DDM:DDM,
-        Proxy:Proxy,
-        DraggableDelegate:Delegate,
-        DroppableDelegate:DroppableDelegate,
-        Scroll:Scroll
-    };
-    return DD;
-}, {
-    requires:["dd/ddm",
-        "dd/draggable",
-        "dd/droppable",
-        "dd/proxy",
-        "dd/draggable-delegate",
-        "dd/droppable-delegate",
-        "dd/scroll"]
 });

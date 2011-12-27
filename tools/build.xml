@@ -26,7 +26,7 @@
 
 
     <!--
-        打包 core kissy kissy-aio 以及 css 组件的合并
+        打包 core kissy kissy-aio
     -->
     <target name="build-packages">
         <subant target="" failonerror="false" inheritall="false">

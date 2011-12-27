@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 20 15:55
+build time: Dec 27 11:42
 */
 /**
- * KISSY Calendar
+ * @fileOverview KISSY Calendar
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function(S, Node, Event, undefined) {
@@ -478,8 +478,17 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
  *   - 日历日期的输出格式的定制
  *   - 多选日期的场景的交互设计
  */
-/*
- * Date Format 1.2.3
+/**
+ * @fileOverview calendar
+ */
+KISSY.add("calendar", function(S, C, Page, Time, Date) {
+    S.Calendar = C;
+    S.Date = Date;
+    return C;
+}, {
+    requires:["calendar/base","calendar/page","calendar/time","calendar/date"]
+});/*
+ * @fileOverview Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
  * MIT license
  *
@@ -658,22 +667,19 @@ KISSY.add('calendar/date', function(S) {
  *        - YUI的datetype花了大量精力对全球语种进行hack，似乎KISSY是不必要的，KISSY只对中文做hack即可
  */
 /**
- * @module     日历
+ * @fileOverview      日历
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 
     S.augment(Calendar, {
-
+        /**
+         * 子日历构造器
+         * @constructor
+         * @param {object} config 参数列表，需要指定子日历所需的年月
+         * @param {object} father 指向Y.Calendar实例的指针，需要共享父框的参数
+         */
         Page: function(config, father) {
-            /**
-             * 子日历构造器
-             * @constructor S.Calendar.Page
-             * @param {object} config ,参数列表，需要指定子日历所需的年月
-             * @param {object} father,指向Y.Calendar实例的指针，需要共享父框的参数
-             * @return 子日历的实例
-             */
-
             //属性
             this.father = father;
             this.month = Number(config.month);
@@ -1079,7 +1085,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
     return Calendar;
 }, { requires:["ua","node","calendar/base"] });
 /**
- * @module     日历
+ * @fileOverview      日历
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/time', function(S, Node,Calendar) {
@@ -1315,10 +1321,3 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
     return Calendar;
 
 }, { requires:["node","calendar/base"] });
-KISSY.add("calendar", function(S, C, Page, Time, Date) {
-    S.Calendar = C;
-    S.Date = Date;
-    return C;
-}, {
-    requires:["calendar/base","calendar/page","calendar/time","calendar/date"]
-});

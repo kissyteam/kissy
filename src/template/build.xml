@@ -1,26 +1,20 @@
 <project name="template.build" default="build" basedir=".">
-    <description>Component Build File</description>
+    <description>Template Build File</description>
 
-    <property file="build.properties"/>
+    <property name="component.name" value="template"/>
     <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 
-
     <target name="concat">
-        <concat destfile="template-pkg.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${component.src.dir.tmp}/template-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${src.dir}" includes="*.js"/>
-            <path path="../template.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;" />
             </filterchain>
         </concat>
     </target>
 
-    <target name="clean">
-        <delete file="template-pkg.js"/>
-    </target>
-
-    <target name="build" depends="concat,common.build,clean">
+    <target name="build" depends="concat,common.build">
     </target>
 </project>

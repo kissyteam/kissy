@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:47
+build time: Dec 27 12:25
 */
 /**
- * @fileoverview KISSY Template Engine.
+ * @fileOverview  KISSY Template Engine.
  * @author yyfrankyy@gmail.com
  */
 KISSY.add('template/base', function(S) {
@@ -230,7 +230,7 @@ KISSY.add('template/base', function(S) {
  *      - expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
  */
 /**
- * @fileoverview KISSY.Template Node.
+ * @fileOverview  KISSY.Template Node.
  * @author 文河<wenhe@taobao.com>
  */
 KISSY.add('template/node', function(S, Template, Node) {
@@ -242,6 +242,9 @@ KISSY.add('template/node', function(S, Template, Node) {
     });
 
 }, {requires:["./base",'node']});
+/**
+ * @fileOverview template
+ */
 KISSY.add("template", function(S, T) {
     S.Template = T;
     return T;

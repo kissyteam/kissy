@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 27 11:43
 */
 /**
- * @module  cookie
+ * @fileOverview   cookie
  * @author  lifesinger@gmail.com
  */
 KISSY.add('cookie/base', function(S) {
@@ -86,6 +86,9 @@ KISSY.add('cookie/base', function(S) {
  *     除了正则获取，还可以 split 字符串的方式来获取。
  *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  *     独立成静态工具类的方式更优。
+ */
+/**
+ * @fileOverview cookie
  */
 KISSY.add("cookie", function(S,C) {
     return C;

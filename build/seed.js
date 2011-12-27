@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 26 13:55
+build time: Dec 27 12:44
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -107,7 +107,7 @@ build time: Dec 26 13:55
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20111226135528',
+            buildTime:'20111227124400',
 
             /**
              * Returns a new object containing all of the properties of
@@ -127,13 +127,13 @@ build time: Dec 26 13:55
 
             /**
              * Applies prototype properties from the supplier to the receiver.
-             * @param {Object} r received object
-             * @param {Object...} s1 object need to  augment
-             * @param {boolean} [ov=true] whether overwrite existing property
-             * @param {String[]} [wl] array of white-list properties
-             * @return {Object} the augmented object
+             * @param   {Object} r received object
+             * @param   {...Object} s1 object need to  augment
+             *          {boolean} [ov=true] whether overwrite existing property
+             *          {String[]} [wl] array of white-list properties
+             * @return  {Object} the augmented object
              */
-            augment:function (r, s1, ov, wl) {
+            augment:function (r, s1) {
                 var args = S.makeArray(arguments),
                     len = args.length - 2,
                     i = 1;

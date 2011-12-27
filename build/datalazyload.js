@@ -1,12 +1,19 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 21 19:10
+build time: Dec 27 11:52
 */
 /**
- * 数据延迟加载组件
- * @module   datalazyload
- * @creator lifesinger@gmail.com
+ * @fileOverview datalazyload
+ */
+KISSY.add("datalazyload", function(S, D) {
+    S.DataLazyload = D;
+    return D;
+}, {
+    requires:["datalazyload/impl"]
+});/**
+ * @fileOverview 数据延迟加载组件
+ * @author lifesinger@gmail.com
  */
 KISSY.add('datalazyload/impl', function (S, DOM, Event, undefined) {
 
@@ -545,9 +552,3 @@ KISSY.add('datalazyload/impl', function (S, DOM, Event, undefined) {
  *   - 2010-04-05 yubo 重构，使得对 YUI 的依赖仅限于 YDOM
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
-KISSY.add("datalazyload", function(S, D) {
-    S.DataLazyload = D;
-    return D;
-}, {
-    requires:["datalazyload/impl"]
-});

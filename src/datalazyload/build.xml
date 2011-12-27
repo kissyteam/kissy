@@ -1,27 +1,21 @@
 <project name="datalazyload.build" default="build" basedir=".">
-    <description>Component Build File</description>
+    <description>Datalazyload Build File</description>
 
-
-    <property file="build.properties"/>
+    <property name="component.name" value="datalazyload"/>
     <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/common.xml"/>
 
 
     <target name="concat">
-        <concat destfile="datalazyload-pkg.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${component.src.dir.tmp}/datalazyload-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${src.dir}" includes="*.js"/>
-            <path location="../datalazyload.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;" />
+                <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
         </concat>
     </target>
 
-    <target name="clean">
-        <delete file="datalazyload-pkg.js"/>
-    </target>
-
-    <target name="build" depends="concat,common.build,clean">
+    <target name="build" depends="concat,common.build">
     </target>
 </project>

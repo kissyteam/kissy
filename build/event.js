@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 26 16:05
+build time: Dec 27 12:07
 */
 /**
  * @fileOverview responsible for registering event
@@ -505,6 +505,68 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
     }
 }, {
     requires:["ua", "./base", "dom", './special']
+});/**
+ * @fileOverview KISSY Scalable Event Framework
+ */
+KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
+    S.mix(Event, {
+        KeyCodes:KeyCodes,
+        Target:Target,
+        Object:Object,
+        on:Event.add,
+        detach:Event.remove,
+        /**
+         *
+         * @param targets
+         * @param {String} eventType
+         * @param {String|Function} selector
+         * @param {Object|Function} fn
+         * @param [scope]
+         */
+        delegate:function (targets, eventType, selector, fn, scope) {
+            return Event.add(targets, eventType, {
+                fn:fn,
+                scope:scope,
+                selector:selector
+            });
+        },
+        /**
+         *
+         * @param targets
+         * @param {String} [eventType]
+         * @param {String|Function} [selector]
+         * @param {Object|Function} [fn]
+         * @param [scope]
+         */
+        undelegate:function (targets, eventType, selector, fn, scope) {
+            return Event.remove(targets, eventType, {
+                fn:fn,
+                scope:scope,
+                selector:selector
+            });
+        }
+    });
+
+    S.mix(Event, _protected);
+
+    return Event;
+}, {
+    requires:[
+        "event/protected",
+        "event/keycodes",
+        "event/base",
+        "event/target",
+        "event/object",
+        "event/focusin",
+        "event/hashchange",
+        "event/valuechange",
+        "event/mouseenter",
+        "event/submit",
+        "event/change",
+        "event/mousewheel",
+        "event/add",
+        "event/remove"
+    ]
 });/**
  * @fileOverview   event-focusin
  * @author  yiminghe@gmail.com
@@ -2150,66 +2212,4 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
     return Event;
 }, {
     requires:["./base", "dom", "./special"]
-});/**
- * @fileOverview KISSY Scalable Event Framework
- */
-KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
-    S.mix(Event, {
-        KeyCodes:KeyCodes,
-        Target:Target,
-        Object:Object,
-        on:Event.add,
-        detach:Event.remove,
-        /**
-         *
-         * @param targets
-         * @param {String} eventType
-         * @param {String|Function} selector
-         * @param {Object|Function} fn
-         * @param [scope]
-         */
-        delegate:function (targets, eventType, selector, fn, scope) {
-            return Event.add(targets, eventType, {
-                fn:fn,
-                scope:scope,
-                selector:selector
-            });
-        },
-        /**
-         *
-         * @param targets
-         * @param {String} [eventType]
-         * @param {String|Function} [selector]
-         * @param {Object|Function} [fn]
-         * @param [scope]
-         */
-        undelegate:function (targets, eventType, selector, fn, scope) {
-            return Event.remove(targets, eventType, {
-                fn:fn,
-                scope:scope,
-                selector:selector
-            });
-        }
-    });
-
-    S.mix(Event, _protected);
-
-    return Event;
-}, {
-    requires:[
-        "event/protected",
-        "event/keycodes",
-        "event/base",
-        "event/target",
-        "event/object",
-        "event/focusin",
-        "event/hashchange",
-        "event/valuechange",
-        "event/mouseenter",
-        "event/submit",
-        "event/change",
-        "event/mousewheel",
-        "event/add",
-        "event/remove"
-    ]
 });

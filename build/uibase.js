@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:47
+build time: Dec 27 12:28
 */
 /**
- * UIBase.Align
+ * @fileOverview UIBase.Align
  * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
 KISSY.add('uibase/align', function(S, UA, DOM, Node) {
@@ -12,7 +12,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
     /**
      * inspired by closure library by Google
-     * @refer http://yiminghe.iteye.com/blog/1124720
+     * @see http://yiminghe.iteye.com/blog/1124720
      */
 
     /**
@@ -401,9 +401,9 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
  *  2011-07-13 承玉 note:
  *   - 增加智能对齐，以及大小调整选项
  **//**
- * @module  UIBase
+ * @fileOverview   UIBase
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
- * @refer http://martinfowler.com/eaaDev/uiArchs.html
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add('uibase/base', function (S, Base, Node) {
 
@@ -411,7 +411,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        noop = function() {
+        noop = function () {
         };
 
     function capitalFirst(s) {
@@ -423,7 +423,6 @@ KISSY.add('uibase/base', function (S, Base, Node) {
      * @class
      * @extends Base
      * @name UIBase
-     * @namespace
      */
     function UIBase(config) {
         // 读取用户设置的属性值并设置到自身
@@ -587,7 +586,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * 建立节点，先不放在 dom 树中，为了性能!
              */
-            create:function() {
+            create:function () {
                 var self = this;
                 // 是否生成过节点
                 if (!self.get("created")) {
@@ -602,7 +601,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * 渲染组件到 dom 结构
              */
-            render: function() {
+            render:function () {
                 var self = this;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
@@ -634,19 +633,20 @@ KISSY.add('uibase/base', function (S, Base, Node) {
             /**
              * 节点已经创建完毕，可以放在 document 中了
              */
-            _renderUI: noop,
+            _renderUI:noop,
 
             /**
              * @protected
+             * @function
              */
-            renderUI: noop,
+            renderUI:noop,
 
             /**
              * 根据属性变化设置 UI
              */
-            _bindUI: function() {
+            _bindUI:function () {
                 var self = this,
-                    attrs = self.__attrs,
+                    attrs = self['__attrs'],
                     attr, m;
 
                 for (attr in attrs) {
@@ -654,8 +654,8 @@ KISSY.add('uibase/base', function (S, Base, Node) {
                         m = UI_SET + capitalFirst(attr);
                         if (self[m]) {
                             // 自动绑定事件到对应函数
-                            (function(attr, m) {
-                                self.on('after' + capitalFirst(attr) + 'Change', function(ev) {
+                            (function (attr, m) {
+                                self.on('after' + capitalFirst(attr) + 'Change', function (ev) {
                                     self[m](ev.newVal, ev);
                                 });
                             })(attr, m);
@@ -666,15 +666,16 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * @protected
+             * @function
              */
-            bindUI: noop,
+            bindUI:noop,
 
             /**
              * 根据当前（初始化）状态来设置 UI
              */
-            _syncUI: function() {
+            _syncUI:function () {
                 var self = this,
-                    attrs = self.__attrs;
+                    attrs = self['__attrs'];
                 for (var a in attrs) {
                     if (attrs.hasOwnProperty(a)) {
                         var m = UI_SET + capitalFirst(a);
@@ -691,113 +692,116 @@ KISSY.add('uibase/base', function (S, Base, Node) {
 
             /**
              * protected
+             * @function
              */
-            syncUI: noop,
+            syncUI:noop,
 
 
             /**
              * 销毁组件
              */
-            destroy: function() {
+            destroy:function () {
                 destroyHierarchy(this);
                 this.fire('destroy');
                 this.detach();
             }
-        });
+        },
+        /**
+         * @lends UIBase
+         */
+        {
+            /**
+             * 根据基类以及扩展类得到新类
+             * @param {Function|Function[]} base 基类
+             * @param {Function[]} exts 扩展类
+             * @param {Object} px 原型 mix 对象
+             * @param {Object} sx 静态 mix 对象
+             * @returns {UIBase} 组合 后 的 新类
+             */
+            create:function (base, exts, px, sx) {
+                if (S.isArray(base)) {
+                    sx = px;
+                    px = exts;
+                    exts = /*@type Function[]*/base;
+                    base = UIBase;
+                }
+                base = base || UIBase;
+                if (S.isObject(exts)) {
+                    sx = px;
+                    px = exts;
+                    exts = [];
+                }
 
-    /**
-     * 根据基类以及扩展类得到新类
-     * @name UIBase.create
-     * @static
-     * @param {Function} base 基类
-     * @param {Function[]} exts 扩展类
-     * @param {Object} px 原型 mix 对象
-     * @param {Object} sx 静态 mix 对象
-     * @returns {UIBase} 组合 后 的 新类
-     */
-    UIBase.create = function(base, exts, px, sx) {
-        if (S.isArray(base)) {
-            sx = px;
-            px = exts;
-            exts = base;
-            base = UIBase;
-        }
-        base = base || UIBase;
-        if (S.isObject(exts)) {
-            sx = px;
-            px = exts;
-            exts = [];
-        }
+                function C() {
+                    UIBase.apply(this, arguments);
+                }
 
-        function C() {
-            UIBase.apply(this, arguments);
-        }
+                S.extend(C, base, px, sx);
 
-        S.extend(C, base, px, sx);
+                if (exts) {
 
-        if (exts) {
+                    C.__ks_exts = exts;
 
-            C.__ks_exts = exts;
+                    var desc = {
+                        // ATTRS:
+                        // HMTL_PARSER:
+                    }, constructors = exts.concat(C);
 
-            var desc = {
-                // ATTRS:
-                // HMTL_PARSER:
-            },constructors = exts.concat(C);
-
-            // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
-            // 主类最优先
-            S.each(constructors, function(ext) {
-                if (ext) {
-                    // 合并 ATTRS/HTML_PARSER 到主类
-                    S.each([ATTRS, HTML_PARSER], function(K) {
-                        if (ext[K]) {
-                            desc[K] = desc[K] || {};
-                            // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
-                            // 但是值是对象的话会深度合并
-                            // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
-                            S.mix(desc[K], ext[K], true, undefined, true);
+                    // [ex1,ex2],扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+                    // 主类最优先
+                    S.each(constructors, function (ext) {
+                        if (ext) {
+                            // 合并 ATTRS/HTML_PARSER 到主类
+                            S.each([ATTRS, HTML_PARSER], function (K) {
+                                if (ext[K]) {
+                                    desc[K] = desc[K] || {};
+                                    // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
+                                    // 但是值是对象的话会深度合并
+                                    // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题!
+                                    S.mix(desc[K], ext[K], true, undefined, true);
+                                }
+                            });
                         }
                     });
-                }
-            });
 
-            S.each(desc, function(v, k) {
-                C[k] = v;
-            });
+                    S.each(desc, function (v, k) {
+                        C[k] = v;
+                    });
 
-            var prototype = {};
+                    var prototype = {};
 
-            // 主类最优先
-            S.each(constructors, function(ext) {
-                if (ext) {
-                    var proto = ext.prototype;
-                    // 合并功能代码到主类，不覆盖
-                    for (var p in proto) {
-                        // 不覆盖主类，但是主类的父类还是覆盖吧
-                        if (proto.hasOwnProperty(p)) {
-                            prototype[p] = proto[p];
+                    // 主类最优先
+                    S.each(constructors, function (ext) {
+                        if (ext) {
+                            var proto = ext.prototype;
+                            // 合并功能代码到主类，不覆盖
+                            for (var p in proto) {
+                                // 不覆盖主类，但是主类的父类还是覆盖吧
+                                if (proto.hasOwnProperty(p)) {
+                                    prototype[p] = proto[p];
+                                }
+                            }
                         }
-                    }
-                }
-            });
+                    });
 
-            S.each(prototype, function(v, k) {
-                C.prototype[k] = v;
-            });
-        }
-        return C;
-    };
+                    S.each(prototype, function (v, k) {
+                        C.prototype[k] = v;
+                    });
+                }
+                return C;
+            }
+        });
 
     return UIBase;
 }, {
-    requires:["base","node"]
+    requires:["base", "node"]
 });
 /**
  * render 和 create 区别
  * render 包括 create ，以及把生成的节点放在 document 中
  * create 仅仅包括创建节点
  **//**
- * UIBase.Box
+ * @fileOverview UIBase.Box
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/box', function() {
@@ -901,7 +905,7 @@ KISSY.add('uibase/box', function() {
     return Box;
 });
 /**
- * UIBase.Box
+ * @fileOverview UIBase.Box
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add('uibase/boxrender', function(S, Node) {
@@ -1083,7 +1087,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
     requires:['node']
 });
 /**
- * close extension for kissy dialog
+ * @fileOverview close extension for kissy dialog
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/close", function() {
@@ -1120,7 +1124,7 @@ KISSY.add("uibase/close", function() {
     return Close;
 
 });/**
- * close extension for kissy dialog
+ * @fileOverview close extension for kissy dialog
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/closerender", function(S, Node) {
@@ -1187,7 +1191,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
 }, {
     requires:["node"]
 });/**
- * constrain extension for kissy
+ * @fileOverview constrain extension for kissy
  * @author 承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
  */
 KISSY.add("uibase/constrain", function(S, DOM, Node) {
@@ -1290,7 +1294,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
 }, {
     requires:["dom","node"]
 });/**
- * 里层包裹层定义，适合mask以及shim
+ * @fileOverview 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentbox", function() {
@@ -1323,7 +1327,7 @@ KISSY.add("uibase/contentbox", function() {
 
     return ContentBox;
 });/**
- * 里层包裹层定义，适合mask以及shim
+ * @fileOverview 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
@@ -1413,7 +1417,7 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
 }, {
     requires:["node","./boxrender"]
 });/**
- * drag extension for position
+ * @fileOverview drag extension for position
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/drag", function(S) {
@@ -1479,7 +1483,7 @@ KISSY.add("uibase/drag", function(S) {
     return Drag;
 
 });/**
- * loading mask support for overlay
+ * @fileOverview loading mask support for overlay
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loading", function() {
@@ -1500,7 +1504,7 @@ KISSY.add("uibase/loading", function() {
     return Loading;
 
 });/**
- * loading mask support for overlay
+ * @fileOverview loading mask support for overlay
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/loadingrender", function(S, Node) {
@@ -1540,7 +1544,7 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
 }, {
     requires:['node']
 });/**
- * mask extension for kissy
+ * @fileOverview mask extension for kissy
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/mask", function() {
@@ -1572,7 +1576,7 @@ KISSY.add("uibase/mask", function() {
 
     return Mask;
 }, {requires:["ua"]});/**
- * mask extension for kissy
+ * @fileOverview mask extension for kissy
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/maskrender", function(S, UA, Node) {
@@ -1698,7 +1702,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 }, {
     requires:["ua","node"]
 });/**
- * position and visible extension，可定位的隐藏层
+ * @fileOverview position and visible extension，可定位的隐藏层
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/position", function(S) {
@@ -1765,7 +1769,7 @@ KISSY.add("uibase/position", function(S) {
 
     return Position;
 });/**
- * position and visible extension，可定位的隐藏层
+ * @fileOverview position and visible extension，可定位的隐藏层
  * @author  承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/positionrender", function() {
@@ -1820,7 +1824,7 @@ KISSY.add("uibase/positionrender", function() {
 
     return Position;
 });/**
- * resize extension using resizable
+ * @fileOverview resize extension using resizable
  * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/resize", function(S) {
@@ -1857,7 +1861,7 @@ KISSY.add("uibase/resize", function(S) {
 
     return Resize;
 });/**
- * shim for ie6 ,require box-ext
+ * @fileOverview shim for ie6 ,require box-ext
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/shimrender", function(S, Node) {
@@ -1898,7 +1902,7 @@ KISSY.add("uibase/shimrender", function(S, Node) {
 }, {
     requires:['node']
 });/**
- * support standard mod for component
+ * @fileOverview support standard mod for component
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmod", function() {
@@ -1943,7 +1947,7 @@ KISSY.add("uibase/stdmod", function() {
     return StdMod;
 
 });/**
- * support standard mod for component
+ * @fileOverview support standard mod for component
  * @author 承玉<yiminghe@gmail.com>
  */
 KISSY.add("uibase/stdmodrender", function(S, Node) {
@@ -2040,7 +2044,11 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
 
 }, {
     requires:['node']
-});KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Contrain, Contentbox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+});/**
+ * @fileOverview uibase
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Contrain, Contentbox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;

@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 27 12:20
 */
 /**
- * resizable support for kissy
+ * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  * @requires: dd
  */
@@ -184,7 +184,7 @@ KISSY.add("resizable/base", function(S, Node, Base, D) {
 
 }, { requires:["node","base","dd"] });
 /**
- *  KISSY Resizable
+ *  @fileOverview KISSY Resizable
  *  @author yiminghe@gmail.com
  */
 KISSY.add("resizable", function(S, R) {

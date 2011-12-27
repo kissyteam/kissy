@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 14 14:48
+build time: Dec 27 12:08
 */
 /**
- * parse html to a hierarchy dom tree
+ * @fileOverview parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
@@ -205,7 +205,7 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
         './Scanner'
     ]
 });/**
- * declare and initiate sub scanners
+ * @fileOverview declare and initiate sub scanners
  * @author yiminghe@gmail.com
  */
 KISSY.add('htmlparser/Scanner', function(S, TagScanner, SpecialScanners) {
@@ -222,7 +222,7 @@ KISSY.add('htmlparser/Scanner', function(S, TagScanner, SpecialScanners) {
         './scanners/TextareaScanner'
     ]
 })/**
- * utils about language for html parser
+ * @fileOverview utils about language for html parser
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/Utils", function() {
@@ -234,7 +234,7 @@ KISSY.add("htmlparser/Utils", function() {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
         /**
-         * @refer http://www.w3.org/TR/html5/syntax.html#attributes-0
+         * @see http://www.w3.org/TR/html5/syntax.html#attributes-0
          */
         isValidAttributeNameStartChar:function(ch) {
             return !this.isWhitespace(ch) &&
@@ -269,7 +269,7 @@ KISSY.add("htmlparser/Utils", function() {
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 /**
- * modified by yiminghe , support html5 tag and dtd
+ * @fileOverview modified from ckeditor dtd by yiminghe , support html5 tag and dtd
  * @author yimingh@gmail.com
  */
 KISSY.add("htmlparser/dtd", function(KY) {
@@ -283,7 +283,6 @@ KISSY.add("htmlparser/dtd", function(KY) {
      *
      * Several special grouping properties are also available. Their names start
      * with the "$" character.
-     * @namespace
      * @example
      * // Check if "div" can be contained in a "p" element.
      * alert( !!dtd[ 'p' ][ 'div' ] );  "false"
@@ -599,7 +598,39 @@ KISSY.add("htmlparser/dtd", function(KY) {
     return ret;
 });
 /**
- * represent a cursor of page , it can advance and retreat
+ * @fileOverview HtmlParser for KISSY (Editor)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("htmlparser", function(S, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter) {
+    return {
+        Lexer:Lexer,
+        Parser:Parser,
+        BasicWriter:BasicWriter,
+        BeautifyWriter:BeautifyWriter,
+        MinifyWriter:MinifyWriter,
+        Filter:Filter
+    };
+}, {
+    requires:[
+        'htmlparser/lexer/Lexer',
+        'htmlparser/Parser',
+        'htmlparser/writer/basic',
+        'htmlparser/writer/beautify',
+        'htmlparser/writer/minify',
+        'htmlparser/writer/filter'
+    ]
+});
+
+/**
+ * refer
+ *  - http://htmlparser.sourceforge.net/
+ *  - http://www.w3.org/TR/html5/syntax.html
+ *  - http://www.w3.org/TR/html5/parsing.html
+ *
+ * TODO
+ *  - http://blogs.msdn.com/b/ie/archive/2010/09/13/interoperable-html-parsing-in-ie9.aspx
+ **//**
+ * @fileOverview represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/lexer/Cursor",function() {
@@ -619,7 +650,7 @@ KISSY.add("htmlparser/lexer/Cursor",function() {
 
     return Cursor;
 });/**
- * represent line index of each line
+ * @fileOverview represent line index of each line
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/lexer/Index",function() {
@@ -683,7 +714,7 @@ KISSY.add("htmlparser/lexer/Index",function() {
     return Index;
 
 });/**
- * parse html string into Nodes
+ * @fileOverview parse html string into Nodes
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
@@ -1441,7 +1472,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
         '../nodes/Tag',
         '../nodes/Comment'
     ]});/**
- * represent html source
+ * @fileOverview represent html source
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/lexer/Page", function(S, Index) {
@@ -1515,7 +1546,7 @@ KISSY.add("htmlparser/lexer/Page", function(S, Index) {
 }, {
     requires:['./Index']
 });/**
- * represent attribute node in tag node
+ * @fileOverview represent attribute node in tag node
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Attribute", function(S) {
@@ -1544,7 +1575,7 @@ KISSY.add("htmlparser/nodes/Attribute", function(S) {
     };
     return Attribute;
 });/**
- * dom text node
+ * @fileOverview dom text node
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/CData", function(S, Text) {
@@ -1568,7 +1599,7 @@ KISSY.add("htmlparser/nodes/CData", function(S, Text) {
 }, {
     requires:['./Text']
 });/**
- * comment node (<!-- content -->)
+ * @fileOverview comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
@@ -1591,7 +1622,11 @@ KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
     return Comment;
 }, {
     requires:['./Tag']
-});KISSY.add("htmlparser/nodes/Document", function (S, Tag) {
+});/**
+ * @fileOverview fake document node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("htmlparser/nodes/Document", function (S, Tag) {
     function Document() {
         this.childNodes = [];
         this.nodeType = 9;
@@ -1608,7 +1643,11 @@ KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
     return Document;
 }, {
     requires:['./Tag']
-});KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {
+});/**
+ * @fileOverview fake document fragment
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {
     function Fragment() {
         this.childNodes = [];
         this.nodeType = 9;
@@ -1630,7 +1669,7 @@ KISSY.add("htmlparser/nodes/Comment", function(S, Tag) {
 }, {
     requires:['./Tag']
 });/**
- * abstract class for tag and text , comment .. etc
+ * @fileOverview abstract class for tag and text , comment .. etc
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Node", function(S) {
@@ -1665,7 +1704,7 @@ KISSY.add("htmlparser/nodes/Node", function(S) {
 
     return Node;
 });/**
- * represent tag , it can nest other tag
+ * @fileOverview represent tag , it can nest other tag
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
@@ -1975,7 +2014,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
 }, {
     requires:['./Node', './Attribute', '../dtd']
 });/**
- * dom text node
+ * @fileOverview dom text node
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Text", function(S, Node) {
@@ -1998,7 +2037,11 @@ KISSY.add("htmlparser/nodes/Text", function(S, Node) {
     return Text;
 }, {
     requires:['./Node']
-});KISSY.add("htmlparser/scanners/CdataScanner", function() {
+});/**
+ * @fileOverview scanner cdata (script/textarea/style)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("htmlparser/scanners/CdataScanner", function() {
     return {
         scan:function(tag, lexer, opts) {
             // only terminate when encouter </tag>
@@ -2020,7 +2063,11 @@ KISSY.add("htmlparser/nodes/Text", function(S, Node) {
             }
         }
     };
-});KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd, SpecialScanners) {
+});/**
+ * @fileOverview scanner cdata (script/textarea/style) with quote smart
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd, SpecialScanners) {
     var ret = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
@@ -2037,13 +2084,13 @@ KISSY.add("htmlparser/nodes/Text", function(S, Node) {
 }, {
     requires:["./CdataScanner",'../dtd','./SpecialScanners']
 });/**
- * special scanners holder (textarea/style/script)
+ * @fileOverview special scanners holder (textarea/style/script)
  * @author yiminghe@gmail.com
  */
 KISSY.add('htmlparser/scanners/SpecialScanners', function() {
     return {};
 });/**
- * nest tag scanner recursively
+ * @fileOverview nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanners) {
@@ -2058,7 +2105,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
     };
 
     /**
-     * @refer http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+     * @see http://www.w3.org/TR/html5/tree-construction.html#tree-construction
      * When the steps below require the UA to generate implied end tags,
      * then, while the current node is a dd element,
      * a dt element, an li element, an option element,
@@ -2371,7 +2418,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
     };
 }, {
     requires:["../dtd","../nodes/Tag","./SpecialScanners"]
-});KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner, SpecialScanners) {
+});/**
+ * @fileOverview textarea data scanner
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner, SpecialScanners) {
     return SpecialScanners["textarea"] = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
@@ -2380,7 +2431,11 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
     };
 }, {
     requires:["./CdataScanner","./SpecialScanners"]
-});KISSY.add("htmlparser/writer/basic", function(S) {
+});/**
+ * @fileOverview basic writer for inheritance
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("htmlparser/writer/basic", function(S) {
 
     function escapeAttrValue(str) {
         return str.replace(/"/g, "&quote;");
@@ -2454,7 +2509,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
     return BasicWriter;
 
 });/**
- * format html prettily
+ * @fileOverview format html prettily
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
@@ -2648,7 +2703,7 @@ KISSY.add("htmlparser/writer/beautify", function(S, BasicWriter, dtd, Utils) {
 }, {
     requires:['./basic','../dtd','../Utils']
 });/**
- * filter dom tree to html string form ,api designed by ckeditor
+ * @fileOverview filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/writer/filter", function (S) {
@@ -2794,7 +2849,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
 
     return Filter;
 });/**
- * write html into its minified form,thanks to kangax who minify algorithm comes from
+ * @fileOverview write html into its minified form,thanks to kangax where minify algorithm comes from
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
@@ -3024,36 +3079,4 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
 /**
  * refer :
  *  - https://github.com/kangax/html-minifier/
- **//**
- * HtmlParser for KISSY (Editor)
- * @author yiminghe@gmail.com
- */
-KISSY.add("htmlparser", function(S, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter) {
-    return {
-        Lexer:Lexer,
-        Parser:Parser,
-        BasicWriter:BasicWriter,
-        BeautifyWriter:BeautifyWriter,
-        MinifyWriter:MinifyWriter,
-        Filter:Filter
-    };
-}, {
-    requires:[
-        'htmlparser/lexer/Lexer',
-        'htmlparser/Parser',
-        'htmlparser/writer/basic',
-        'htmlparser/writer/beautify',
-        'htmlparser/writer/minify',
-        'htmlparser/writer/filter'
-    ]
-});
-
-/**
- * refer
- *  - http://htmlparser.sourceforge.net/
- *  - http://www.w3.org/TR/html5/syntax.html
- *  - http://www.w3.org/TR/html5/parsing.html
- *
- * TODO
- *  - http://blogs.msdn.com/b/ie/archive/2010/09/13/interoperable-html-parsing-in-ie9.aspx
  **/

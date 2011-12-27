@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 26 16:05
+build time: Dec 27 12:14
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -474,6 +474,20 @@ KISSY.add("node/base", function(S, DOM, undefined) {
  *     以说，技术成本会制约 api 设计。
  */
 /**
+ * @fileOverview node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("node", function(S, Event, Node) {
+    Node.KeyCodes = Event.KeyCodes;
+    return Node;
+}, {
+    requires:[
+        "event",
+        "node/base",
+        "node/attach",
+        "node/override",
+        "node/anim"]
+});/**
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
@@ -512,18 +526,4 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
  * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
  * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
- *//**
- * @fileOverview node
- * @author yiminghe@gmail.com
  */
-KISSY.add("node", function(S, Event, Node) {
-    Node.KeyCodes = Event.KeyCodes;
-    return Node;
-}, {
-    requires:[
-        "event",
-        "node/base",
-        "node/attach",
-        "node/override",
-        "node/anim"]
-});

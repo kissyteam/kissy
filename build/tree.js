@@ -1,9 +1,46 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:47
+build time: Dec 27 12:26
 */
 /**
+ * @fileOverview root node represent a simple tree
+ * @author yiminghe@gmail.com
+ * @see http://www.w3.org/TR/wai-aria-practices/#TreeView
+ */
+KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
+
+    var TREE_CLS = TreeRender.TREE_CLS;
+
+    /*多继承
+     *1. 继承基节点（包括可装饰儿子节点功能）
+     *2. 继承 mixin 树管理功能
+     *3. 继承 mixin 儿子事件代理功能
+     */
+    var Tree = UIBase.create(BaseNode, [Component.DelegateChildren,TreeMgr], {
+    }, {
+        DefaultRender:TreeRender
+    });
+
+
+    Component.UIStore.setUIByClass(TREE_CLS, {
+        priority:Component.UIStore.PRIORITY.LEVEL3,
+        ui:Tree
+    });
+
+
+    return Tree;
+
+}, {
+    requires:['uibase','component','./basenode','./treerender','./treemgr']
+});
+
+/**
+ * note bug:
+ *
+ * 1. checked tree 根节点总是 selected ！
+ * 2. 根节点 hover 后取消不了了
+ **//**
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
@@ -359,7 +396,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 }, {
     requires:['node','uibase','component','./basenoderender']
 });/**
- * common render for node
+ * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
@@ -566,7 +603,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 }, {
     requires:['node','uibase','component']
 });/**
- * checkable tree node
+ * @fileOverview checkable tree node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, CheckNodeRender) {
@@ -681,7 +718,11 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
     return CheckNode;
 }, {
     requires:['node','uibase','component','./basenode','./checknoderender']
-});KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
+});/**
+ * @fileOverview check node render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         ICON_CLS = "tree-icon",
         CHECK_CLS = "tree-item-check",
@@ -715,7 +756,7 @@ KISSY.add("tree/checknode", function(S, Node, UIBase, Component, BaseNode, Check
 }, {
     requires:['node','uibase','component','./basenoderender']
 });/**
- * root node represent a check tree
+ * @fileOverview root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeRender, TreeMgr) {
@@ -736,7 +777,7 @@ KISSY.add("tree/checktree", function(S, UIBase, Component, CheckNode, CheckTreeR
 }, {
     requires:['uibase','component','./checknode','./checktreerender','./treemgr']
 });/**
- * root node render for checktree
+ * @fileOverview root node render for checktree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender, TreeMgrRender) {
@@ -748,44 +789,18 @@ KISSY.add("tree/checktreerender", function(S, UIBase, Component, CheckNodeRender
 }, {
     requires:['uibase','component','./checknoderender','./treemgrrender']
 });/**
- * root node represent a simple tree
+ * @fileOverview tree component for kissy
  * @author yiminghe@gmail.com
- * @refer http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
-KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
-
-    var TREE_CLS = TreeRender.TREE_CLS;
-
-    /*多继承
-     *1. 继承基节点（包括可装饰儿子节点功能）
-     *2. 继承 mixin 树管理功能
-     *3. 继承 mixin 儿子事件代理功能
-     */
-    var Tree = UIBase.create(BaseNode, [Component.DelegateChildren,TreeMgr], {
-    }, {
-        DefaultRender:TreeRender
-    });
-
-
-    Component.UIStore.setUIByClass(TREE_CLS, {
-        priority:Component.UIStore.PRIORITY.LEVEL3,
-        ui:Tree
-    });
-
-
+KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
+    Tree.Node = TreeNode;
+    Tree.CheckNode = CheckNode;
+    Tree.CheckTree = CheckTree;
     return Tree;
-
 }, {
-    requires:['uibase','component','./basenode','./treerender','./treemgr']
-});
-
-/**
- * note bug:
- *
- * 1. checked tree 根节点总是 selected ！
- * 2. 根节点 hover 后取消不了了
- **//**
- * tree management utils
+    requires:["tree/base","tree/basenode","tree/checknode","tree/checktree"]
+});/**
+ * @fileOverview tree management utils
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treemgr", function(S, Event) {
@@ -887,7 +902,7 @@ KISSY.add("tree/treemgr", function(S, Event) {
 }, {
     requires:['event']
 });/**
- * tree management utils render
+ * @fileOverview tree management utils render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treemgrrender", function(S) {
@@ -921,7 +936,7 @@ KISSY.add("tree/treemgrrender", function(S) {
 
     return TreeMgrRender;
 });/**
- * root node render
+ * @fileOverview root node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, TreeMgrRender) {
@@ -931,15 +946,4 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
     });
 }, {
     requires:['uibase','component','./basenoderender','./treemgrrender']
-});/**
- * tree component for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
-    Tree.Node = TreeNode;
-    Tree.CheckNode = CheckNode;
-    Tree.CheckTree = CheckTree;
-    return Tree;
-}, {
-    requires:["tree/tree","tree/basenode","tree/checknode","tree/checktree"]
 });

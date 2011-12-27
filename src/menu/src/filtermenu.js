@@ -197,5 +197,5 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
 
     return FilterMenu;
 }, {
-    requires:['uibase','component','./menu','./filtermenurender']
+    requires:['uibase','component','./base','./filtermenurender']
 });

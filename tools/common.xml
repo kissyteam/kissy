@@ -14,13 +14,11 @@
     <property name="version" value="1.30dev"/>
     <property name="charset" value="utf-8"/>
     <property name="copyright.files" value="**/*.css, **/*.js"/>
-
+    <property name="component.src.dir.tmp" location="tmp/"/>
+    <property name="component.files" value="**/*.*"/>
 
     <!-- 需要组件覆盖的属性 -->
     <property name="component.name" value="component.name.need.override"/>
-    <property name="component.files" value="component.files.need.override"/>
-    <property name="src.dir" value="src.file.need.override"/>
-
 
     <!-- 本 xml 需要的属性 -->
     <property name="component.build.dir" value="${kissy.build.dir}/${component.name}/"/>
@@ -33,31 +31,26 @@
     <!-- 清空与复制等准备工作 -->
     <target name="prepare">
 
+        <mkdir dir="${component.src.dir.tmp}"/>
+
         <delete dir="${component.build.dir}"/>
 
         <mkdir dir="${component.build.dir}"/>
 
         <copy todir="${component.build.dir}">
-            <fileset dir="${src.dir}" includes="${component.files}"/>
+            <fileset dir="${component.src.dir.tmp}" includes="${component.files}"/>
         </copy>
 
     </target>
 
     <!-- 压缩代码 -->
     <target name="compress">
-        <!-- 去除 S.log -->
-        <mkdir dir="${component.build.dir.tmp}"/>
-        <copy todir="${component.build.dir.tmp}">
-            <fileset dir="${component.build.dir}"
-                     includes="${component.files}"/>
-        </copy>
         <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
                        replace=""
                        flags="g"
                        byline="true"
                        encoding="${charset}">
-            <fileset dir="${component.build.dir}"
-                     includes="*.js"/>
+            <fileset dir="${component.build.dir}" includes="**/*.js"/>
         </replaceregexp>
 
         <!-- 用 YUICompressor 压缩 CSS -->
@@ -94,10 +87,9 @@
 
         <!-- 还原 debug 版本 -->
         <move todir="${component.build.dir}">
-            <fileset dir="${component.build.dir.tmp}"
+            <fileset dir="${component.src.dir.tmp}"
                      includes="${component.files}"/>
         </move>
-        <delete dir="${component.build.dir.tmp}"/>
     </target>
 
     <!-- 对 JS 文件 ASCII 化 -->
@@ -208,11 +200,14 @@
 
     <target name="common.build" depends="prepare,compress,native2ascii,copyright,fix-cr-lf">
 
-        <!-- 1.2 不需要 pkg -->
+        <!-- 1.2 不需要 pkg ,pkg 移到外围 -->
         <move encoding="${charset}" todir="${kissy.build.dir}">
             <fileset dir="${component.build.dir}" includes="*-pkg*"/>
             <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
         </move>
+
+
+        <delete dir="${component.src.dir.tmp}"/>
 
         <!-- 空组件文件夹直接删除 -->
         <condition property="empty.component.build.dir">

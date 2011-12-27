@@ -1,8 +1,28 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 13 18:46
+build time: Dec 27 12:11
 */
+/**
+ * @fileOverview adapt json2 to kissy
+ */
+KISSY.add('json', function (S, JSON) {
+
+    return {
+
+        parse:function (text) {
+            // 当输入为 undefined / null / '' 时，返回 null
+            if (text == null || text === '') {
+                return null;
+            }
+            return JSON.parse(text);
+        },
+
+        stringify:JSON.stringify
+    };
+}, {
+    requires:["json/json2"]
+});
 /*
  http://www.JSON.org/json2.js
  2010-08-25
@@ -487,24 +507,3 @@ KISSY.add("json/json2", function(S, UA) {
     }
     return JSON;
 }, {requires:['ua']});
-/**
- * adapt json2 to kissy
- * @author lifesinger@gmail.com
- */
-KISSY.add('json', function (S, JSON) {
-
-    return {
-
-        parse: function(text) {
-            // 当输入为 undefined / null / '' 时，返回 null
-            if (S.isNullOrUndefined(text) || text === '') {
-                return null;
-            }
-            return JSON.parse(text);
-        },
-
-        stringify: JSON.stringify
-    };
-}, {
-    requires:["json/json2"]
-});
