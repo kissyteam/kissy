@@ -28,12 +28,10 @@
             <path location="${src.dir}/loader/registerModule.js"/>
             <path location="${src.dir}/loader/use.js"/>
             <path location="${src.dir}/loader/map.js"/>
-            <path location="${src.dir}/loader/combines.js"/>
             <path location="${src.dir}/loader/init.js"/>
             <!--kissy loader end-->
 
             <path location="${src.dir}/web.js"/>
-            <path location="${src.dir}/mods.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;" />
             </filterchain>

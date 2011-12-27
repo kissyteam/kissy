@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:44
+build time: Dec 27 13:21
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -107,7 +107,7 @@ build time: Dec 27 12:44
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20111227124400',
+            buildTime:'20111227132129',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2371,9 +2371,7 @@ build time: Dec 27 12:44
             }
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                modName = self.config && self.config({
-                    combines:mod.name
-                }) || mod.name,
+                modName = mod.name,
                 packages = self.Config.packages || {},
                 pName = "",
                 p_def;
@@ -2541,11 +2539,8 @@ build time: Dec 27 12:44
                                 m = match[1];
                             }
                             return m + '-min.' + suffix;
-                        }, path = componentJsName(
-                        self.config && self.config({
-                            combines:modName
-                        }) || modName
-                    );
+                        },
+                        path = componentJsName(modName);
                     mod = {
                         path:path,
                         charset:'utf-8'
@@ -2741,40 +2736,6 @@ build time: Dec 27 12:44
     });
 
 })(KISSY, KISSY.__loader);/**
- * @fileOverview combine mechanism
- * @author yiminghe@gmail.com
- */
-(function (S) {
-    if ("require" in this) {
-        return;
-    }
-
-    var combines;
-
-    /**
-     * compress 'from module' to 'to module'
-     * {
-     *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
-     * }
-     */
-    combines = S.configs.combines = function (from, to) {
-        var cs;
-        if (S.isObject(from)) {
-            S.each(from, function (v, k) {
-                S.each(v, function (v2) {
-                    combines(v2, k);
-                });
-            });
-            return;
-        }
-        cs = S.Config.combines = S.Config.combines || {};
-        if (to) {
-            cs[from] = to;
-        } else {
-            return cs[from] || from;
-        }
-    };
-})(KISSY);/**
  *  @fileOverview mix loader into S and infer KISSy baseUrl if not set
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
@@ -3115,15 +3076,3 @@ build time: Dec 27 12:44
     _bindReady();
 
 })(KISSY, undefined);
-/**
- * @fileOverview 声明 kissy 核心中所包含的模块，动态加载时将直接从 core.js 中加载核心模块
- * @description: 为了和 1.1.7 及以前版本保持兼容，务实与创新，兼容与革新 ！
- * @author yiminghe@gmail.com
- */
-(function (S) {
-    S.config({
-        'combines':{
-            'core':['dom', 'ua', 'event', 'node', 'json', 'ajax', 'anim', 'base', 'cookie']
-        }
-    });
-})(KISSY);
