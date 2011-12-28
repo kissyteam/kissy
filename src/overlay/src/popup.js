@@ -25,7 +25,10 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
         triggerType: {value:'click'},   // 触发类型
         mouseDelay: {
             value: 100                  // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
-        }
+        },
+		toggle :{
+			value:false // triggerType 为 click 时, Popup 是否有toggle功能
+		}
     };
 
     S.extend(Popup, Overlay, {
@@ -101,7 +104,17 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             var self = this;
             self.__clickPopup = function(e) {
                 e.halt();
-                self.show();
+				if(self.get('toggle')){
+					if(self.get('el').css('visibility') == 'hidden'){
+						self.show();
+					}
+					else{
+						self.hide();
+					}
+				}
+				else{
+					self.show();
+				}
             };
             self.get("trigger").on('click', self.__clickPopup);
         },

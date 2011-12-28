@@ -12,6 +12,89 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
     function Droppable() {
         var self = this;
         Droppable.superclass.constructor.apply(self, arguments);
+        self.addTarget(DDM);
+        S.each([
+        /**
+         * @name DD.DDM#dropexit
+         * @description fired after a draggable leaves a droppable
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+
+        /**
+         * @name DD.Droppable#dropexit
+         * @description fired after a draggable leaves a droppable
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+            "dropexit",
+
+        /**
+         * @name DD.DDM#dropenter
+         * @description fired after a draggable object mouseenter a droppable object
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+
+        /**
+         * @name DD.Droppable#dropenter
+         * @description fired after a draggable object mouseenter a droppable object
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+
+            "dropenter",
+
+        /**
+         * @name DD.DDM#dropover
+         * @description fired after a draggable object mouseover a droppable object
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+
+        /**
+         * @name DD.Droppable#dropover
+         * @description fired after a draggable object mouseover a droppable object
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+            "dropover",
+
+        /**
+         * @name DD.DDM#drophit
+         * @description fired after drop a draggable onto a droppable object
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+
+        /**
+         * @name DD.Droppable#drophit
+         * @description fired after drop a draggable onto a droppable object
+         * @event
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+            "drophit"
+        ], function (e) {
+            self.publish(e, {
+                bubbles:1
+            });
+        });
         self._init();
     }
 
@@ -22,7 +105,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
     {
         /**
          * 放节点
-         * @type {String|HTMLElement}
+         * @type String|HTMLElement
          */
         node:{
             setter:function (v) {
@@ -34,7 +117,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
 
         /**
          * groups this droppable object belongs to
-         * @type {Object|boolean} true to match any group
+         * @type Object|boolean true to match any group
          * @default true
          */
         groups:{
@@ -119,8 +202,6 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                  * html5 => dragleave
                  */
                 self.fire("dropexit", ret);
-                DDM.fire("dropexit", ret);
-                DDM.fire("dragexit", ret);
             },
 
             _handleEnter:function (ev) {
@@ -128,9 +209,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                     e = self.__getCustomEvt(ev);
                 e.drag._handleEnter(e);
                 self.get("node").addClass(DDM.get("prefixCls") + "drop-over");
-                this.fire("dropenter", e);
-                DDM.fire("dragenter", e);
-                DDM.fire("dropenter", e);
+                self.fire("dropenter", e);
             },
 
 
@@ -139,8 +218,6 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                     e = self.__getCustomEvt(ev);
                 e.drag._handleOver(e);
                 self.fire("dropover", e);
-                DDM.fire("dragover", e);
-                DDM.fire("dropover", e);
             },
 
             _end:function () {

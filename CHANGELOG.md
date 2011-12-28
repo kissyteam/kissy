@@ -27,6 +27,7 @@ History:
  - [+] DD groups 支持拖放分组
  - [!] 移除 core 模块，不要 use("core"),require("core"),只用你要用的
  - [+] 左莫增强 calendar
+ - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
