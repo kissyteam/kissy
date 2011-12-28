@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 23 17:12
+build time: Dec 28 15:19
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -278,7 +278,7 @@ build time: Dec 23 17:12
          */
         version:'1.20',
 
-        buildTime:'20111223171202',
+        buildTime:'20111228151917',
 
         /**
          * Returns a new object containing all of the properties of
@@ -1434,6 +1434,84 @@ build time: Dec 23 17:12
     S.__loaderUtils={};
     S.__loaderData={};
 })(KISSY);/**
+ * map mechanism
+ * @author yiminghe@gmail.com
+ */
+(function (S, loader) {
+    if ("require" in this) {
+        return;
+    }
+    /**
+     * modify current module path
+     * @param rules
+     * @example
+     *      [
+     *          [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
+     *          [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
+     *              return m1+m2;
+     *          }]
+     *      ]
+     */
+    S.configs.map = function (rules) {
+        S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);
+    };
+
+    S.mix(loader, {
+        __getMappedPath:function (path) {
+            var __mappedRules = S.Config.mappedRules || [];
+            for (var i = 0; i < __mappedRules.length; i++) {
+                var m, rule = __mappedRules[i];
+                if (m = path.match(rule[0])) {
+                    return path.replace(rule[0], rule[1]);
+                }
+            }
+            return path;
+        }
+    });
+
+})(KISSY, KISSY.__loader);/**
+ * combine mechanism
+ * @author yiminghe@gmail.com
+ */
+(function (S, loader) {
+    if ("require" in this) {
+        return;
+    }
+
+    var combines;
+
+    /**
+     * compress 'from module' to 'to module'
+     * {
+     *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
+     * }
+     */
+    combines = S.configs.combines = function (from, to) {
+        var cs;
+        if (S.isObject(from)) {
+            S.each(from, function (v, k) {
+                S.each(v, function (v2) {
+                    combines(v2, k);
+                });
+            });
+            return;
+        }
+        cs = S.Config.combines = S.Config.combines || {};
+        if (to) {
+            cs[from] = to;
+        } else {
+            return cs[from] || from;
+        }
+    };
+
+    S.mix(loader, {
+        __getCombinedMod:function (modName) {
+            var cs;
+            cs = S.Config.combines = S.Config.combines || {};
+            return cs[modName] || modName;
+        }
+    });
+})(KISSY, KISSY.__loader);/**
  * status constants
  * @author yiminghe@gmail.com
  */
@@ -2369,9 +2447,7 @@ build time: Dec 23 17:12
             }
             var self = this,
                 //一个模块合并到了另一个模块文件中去
-                modName = self.config && self.config({
-                    combines:mod.name
-                }) || mod.name,
+                modName = S.__getCombinedMod(mod.name),
                 packages = self.Config.packages || {},
                 pName = "",
                 p_def;
@@ -2527,11 +2603,8 @@ build time: Dec 23 17:12
                             m = match[1];
                         }
                         return m + '-min.' + suffix;
-                    }, path = componentJsName(
-                    self.config && self.config({
-                        combines:modName
-                    }) || modName
-                );
+                    },
+                    path = componentJsName(S.__getCombinedMod(modName));
                 mod = {
                     path:path,
                     charset:'utf-8'
@@ -2690,76 +2763,6 @@ build time: Dec 23 17:12
         }
     });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);/**
- * map mechanism
- * @author yiminghe@gmail.com
- */
-(function (S, loader) {
-    if ("require" in this) {
-        return;
-    }
-    /**
-     * modify current module path
-     * @param rules
-     * @example
-     *      [
-     *          [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
-     *          [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
-     *              return m1+m2;
-     *          }]
-     *      ]
-     */
-    S.configs.map = function (rules) {
-        S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);
-    };
-
-    S.mix(loader, {
-        __getMappedPath:function (path) {
-            var __mappedRules = S.Config.mappedRules || [];
-            for (var i = 0; i < __mappedRules.length; i++) {
-                var m, rule = __mappedRules[i];
-                if (m = path.match(rule[0])) {
-                    return path.replace(rule[0], rule[1]);
-                }
-            }
-            return path;
-        }
-    });
-
-})(KISSY, KISSY.__loader);/**
- * combine mechanism
- * @author yiminghe@gmail.com
- */
-(function (S) {
-    if ("require" in this) {
-        return;
-    }
-
-    var combines;
-
-    /**
-     * compress 'from module' to 'to module'
-     * {
-     *   core:['dom','ua','event','node','json','ajax','anim','base','cookie']
-     * }
-     */
-    combines = S.configs.combines = function (from, to) {
-        var cs;
-        if (S.isObject(from)) {
-            S.each(from, function (v, k) {
-                S.each(v, function (v2) {
-                    combines(v2, k);
-                });
-            });
-            return;
-        }
-        cs = S.Config.combines = S.Config.combines || {};
-        if (to) {
-            cs[from] = to;
-        } else {
-            return cs[from] || from;
-        }
-    };
-})(KISSY);/**
  *  mix loader into S and infer KISSy baseUrl if not set
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */

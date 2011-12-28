@@ -2,7 +2,7 @@
  * combine mechanism
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, loader) {
     if ("require" in this) {
         return;
     }
@@ -32,4 +32,12 @@
             return cs[from] || from;
         }
     };
-})(KISSY);
+
+    S.mix(loader, {
+        __getCombinedMod:function (modName) {
+            var cs;
+            cs = S.Config.combines = S.Config.combines || {};
+            return cs[modName] || modName;
+        }
+    });
+})(KISSY, KISSY.__loader);
