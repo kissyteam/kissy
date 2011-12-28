@@ -1,5 +1,6 @@
 /**
- * @fileOverview      日历
+ * @module     日历
+
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/time', function(S, Node,Calendar) {
@@ -8,12 +9,14 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 
         /**
          * 时间选择构造器
+
          * @constructor S.Calendar.TimerSelector
          * @param {object} ft ,timer所在的容器
          * @param {object} father 指向S.Calendar实例的指针，需要共享父框的参数
          */
         TimeSelector:function(ft, father) {
             //属性
+
             this.father = father;
             this.fcon = ft.parent('.ks-cal-box');
             this.popupannel = this.fcon.one('.ks-selectime');//点选时间的弹出层
@@ -22,21 +25,29 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
             }
             this.time = father._time;
             this.status = 's';//当前选择的状态，'h','m','s'依次判断更新哪个值
+
             this.ctime = Node('<div class="ks-cal-time">时间：<span class="h">h</span>:<span class="m">m</span>:<span class="s">s</span><!--{{arrow--><div class="cta"><button class="u"></button><button class="d"></button></div><!--arrow}}--></div>');
             this.button = Node('<button class="ct-ok">确定</button>');
             //小时
+
             this.h_a = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
             //分钟
+
             this.m_a = ['00','10','20','30','40','50'];
             //秒
+
             this.s_a = ['00','10','20','30','40','50'];
 
 
             //方法
+
             /**
              * 创建相应的容器html，值均包含在a中
              * 参数：要拼装的数组
              * 返回：拼好的innerHTML,结尾还要带一个关闭的a
+
+
+
              *
              */
             this.parseSubHtml = function(a) {
@@ -50,6 +61,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
             /**
              * 显示ks-selectime容器
              * 参数，构造好的innerHTML
+
              */
             this.showPopup = function(instr) {
                 var self = this;
@@ -77,6 +89,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
             };
             /**
              * 不对其做更多的上下文假设，仅仅根据time显示出来
+
              */
             this.render = function() {
                 var self = this;
@@ -90,6 +103,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
                 return self;
             };
             //这里的set和get都只是对time的操作，并不对上下文做过多假设
+
             /**
              * set(status,v)
              * h:2,'2'
@@ -129,6 +143,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
             /**
              * add()
              * 状态值代表的变量增1
+
              */
             this.add = function() {
                 var self = this;
@@ -140,6 +155,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
             /**
              * minus()
              * 状态值代表的变量增1
+
              */
             this.minus = function() {
                 var self = this;
@@ -151,6 +167,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 
 
             //构造
+
             this._init = function() {
                 var self = this;
                 ft.html('').append(self.ctime);
@@ -167,8 +184,10 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
                     }
                 });
                 //确定的动作
+
                 self.button.on('click', function() {
                     //初始化读取父框的date
+
                     var d = typeof self.father.dt_date == 'undefined' ? self.father.date : self.father.dt_date;
                     d.setHours(self.get('h'));
                     d.setMinutes(self.get('m'));
@@ -182,6 +201,8 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
                 });
                 //ctime上的键盘事件，上下键，左右键的监听
                 //TODO 考虑是否去掉
+
+
                 self.ctime.on('keyup', function(e) {
                     if (e.keyCode == 38 || e.keyCode == 37) {//up or left
                         //e.stopPropagation();
@@ -195,28 +216,33 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
                     }
                 });
                 //上的箭头动作
+
                 self.ctime.one('.u').on('click', function() {
                     self.hidePopup();
                     self.add();
                 });
                 //下的箭头动作
+
                 self.ctime.one('.d').on('click', function() {
                     self.hidePopup();
                     self.minus();
                 });
                 //弹出选择小时
+
                 self.ctime.one('.h').on('click', function() {
                     var in_str = self.parseSubHtml(self.h_a);
                     self.status = 'h';
                     self.showPopup(in_str);
                 });
                 //弹出选择分钟
+
                 self.ctime.one('.m').on('click', function() {
                     var in_str = self.parseSubHtml(self.m_a);
                     self.status = 'm';
                     self.showPopup(in_str);
                 });
                 //弹出选择秒
+
                 self.ctime.one('.s').on('click', function() {
                     var in_str = self.parseSubHtml(self.s_a);
                     self.status = 's';

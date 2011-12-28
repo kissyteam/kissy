@@ -1,5 +1,5 @@
 /*
- * @fileOverview Date Format 1.2.3
+ * Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
  * MIT license
  *
@@ -17,10 +17,10 @@
  */
 KISSY.add('calendar/date', function(S) {
 
-    function dateParse(data) {
+    function dateParse(data,s) {
 
         var date = null;
-
+		s = s || '-';
         //Convert to date
         if (!(date instanceof Date)) {
             date = new Date(data);
@@ -34,8 +34,15 @@ KISSY.add('calendar/date', function(S) {
             return date;
         }
         else {
-            return null;
+			var arr = data.toString().split(s);
+			if(arr.length==3){
+				date = new Date(arr[0], (parseInt(arr[1], 10) - 1), arr[2]);
+				if (date instanceof Date && (date != "Invalid Date") && !isNaN(date)) {
+					return date;
+				}
+			}
         }
+		return null;
 
     }
 
@@ -164,16 +171,8 @@ KISSY.add('calendar/date', function(S) {
         format: function(date, mask, utc) {
             return dateFormat(date, mask, utc);
         },
-        parse: function(date) {
-            return dateParse(date);
+        parse: function(date,s) {
+            return dateParse(date,s);
         }
     };
 });
-
-/**
- * 2010-09-14 拔赤
- *        - 仅支持S.Date.format和S.Date.parse，format仅对常用格式进行支持（不超过10个），也可以自定义
- *        - kissy-lang中是否应当增加Lang.type(o)?或者isDate(d)?
- *        - 模块名称取为datetype还是直接用date? 我更倾向于用date
- *        - YUI的datetype花了大量精力对全球语种进行hack，似乎KISSY是不必要的，KISSY只对中文做hack即可
- */

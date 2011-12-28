@@ -10,70 +10,120 @@
 
 /*--日历--*/
 .ks-cal-call {background:white;height:auto;border:1px solid #9bc0e0;font-size:12px;font-family:Tahoma;}
-.ks-cal-call.multi-1 {width:189px !important;}
-.ks-cal-call.multi-2 {width:380px !important;_width:373px}
-.ks-cal-call.multi-3 {width:568px !important;_width:560px}
+.ks-cal-call-multi-1 {width:190px !important;}
+.ks-cal-call-multi-2 {width:380px !important;}
+.ks-cal-call-multi-3 {width:570px!important;}
 
 .ks-cal-call {
-    -moz-box-shadow: 2px 2px 0px #ccc;
-    -webkit-box-shadow: 2px 2px 0px #ccc;
-    -khtml-box-shadow: 2px 2px 0px #ccc;
-    -ms-box-shadow: 2px 2px 0px #ccc;
-    filter: progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = 0, OffY = 0);    
+    -moz-box-shadow: 1px 1px 0px #ccc;
+    -webkit-box-shadow: 1px 1px 0px #ccc;
+    -khtml-box-shadow: 1px 1px 0px #ccc;
+    -ms-box-shadow: 1px 1px 0px #ccc;
+    filter: progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 1), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = 0, OffY = 0);    
 }
 
-.ks-cal-call .ks-cal-box {margin:4px;_margin:4px 2px;height:auto;width:auto;float:left;*padding-bottom:5px;_padding-bottom:3px;position:relative;}
-.ks-cal-call .ks-cal-hd {background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -41px; width:181px;height:24px;background-color:#40a6ff;position:relative;}
-.ks-cal-call .ks-cal-hd a {}
-.ks-cal-call .ks-cal-hd a.ks-prev {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 4px; height:14px;width:10px;float:left;position:absolute;left:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
-.ks-cal-call .ks-cal-hd a.ks-next {overflow:hidden;text-indent:-100em;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') no-repeat 0 -15px; height:14px;width:10px;position:absolute;right:3px;top:3px;/*background-color:red;*/font-size:10px;text-decoration:none;color:white;}
+.ks-cal-call .ks-cal-box {padding:4px;height:auto;width:auto;float:left;position:relative;}
+
+.ks-cal-call .ks-cal-hd,.ks-cal-call .ks-cal-hd a{
+	background:url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png') repeat-x;
+	_background:url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png') repeat-x;
+	
+}
+
+.ks-cal-call .ks-cal-hd ,.ks-cal-call .ks-cal-hd a.ks-prev-year,.ks-cal-call .ks-cal-hd a.ks-prev-month,.ks-cal-call .ks-cal-hd a.ks-next-year,.ks-cal-call .ks-cal-hd a.ks-next-month,.ks-cal-call .ks-cal-hd a.ks-title:hover{
+ background-position:0 -240px;
+ width:182px;height:26px;position:relative;}
+ 
+.ks-cal-call .ks-cal-hd a.ks-prev-year,.ks-cal-call .ks-cal-hd a.ks-prev-month,.ks-cal-call .ks-cal-hd a.ks-next-year,.ks-cal-call .ks-cal-hd a.ks-next-month{
+	overflow:hidden;text-indent:-100em;font-size:0px;width:19px;height:19px;float:left;
+	position:absolute;
+	text-decoration:none;color:white;
+}
+.ks-cal-call .ks-cal-hd a.ks-prev-year{
+	background-position:0 -180px;
+	left:3px;top:4px;
+}
+.ks-cal-call .ks-cal-hd a.ks-prev-year:hover{
+	background-position:0 -200px;
+}
+.ks-cal-call .ks-cal-hd a.ks-prev-year:active{
+	background-position:0 -220px;
+}
+.ks-cal-call .ks-cal-hd a.ks-prev-month{
+	background-position:0 -60px;
+	left:24px;top:4px;
+}
+.ks-cal-call .ks-cal-hd a.ks-prev-month:hover{
+	background-position:0 -80px;
+}
+.ks-cal-call .ks-cal-hd a.ks-prev-month:active{
+	background-position:0 -100px;
+}
+.ks-cal-call .ks-cal-hd a.ks-next-year{
+	background-position:0 -120px;
+	right:3px;top:4px;
+}
+.ks-cal-call .ks-cal-hd a.ks-next-year:hover{
+	background-position:0 -140px;
+}
+.ks-cal-call .ks-cal-hd a.ks-next-year:active{
+	background-position:0 -160px;
+}
+.ks-cal-call .ks-cal-hd a.ks-next-month{
+	background-position:0 0;
+	right:24px;top:4px;
+}
+.ks-cal-call .ks-cal-hd a.ks-next-month:hover{
+	background-position:0 -20px;
+}
+.ks-cal-call .ks-cal-hd a.ks-next-month:active{
+	background-position:0 -40px;
+}
+
 
 .ks-cal-call .ks-cal-hd a.ks-title,
 .ks-cal-call .ks-cal-hd a.ks-title:link,
-.ks-cal-call .ks-cal-hd a.ks-title:visited {color:white;text-decoration:none;position:relative;margin-left:auto;margin-right:auto;width:77px;height:17px;line-height:17px;display:block;top:3px;text-align:center;}
-.ks-cal-call .ks-cal-hd a.ks-title:hover {border:1px solid #8cc6ff;top:2px;color:#f0ff00;background:url('http://img04.taobaocdn.com/tps/i4/T1aqNrXbFvXXXXXXXX-10-100.gif') repeat-x 0 -75px;}
+.ks-cal-call .ks-cal-hd a.ks-title:visited {color:white;text-decoration:none;position:relative;margin-left:auto;margin-right:auto;width:77px;height:16px;line-height:15px;display:block;top:5px;text-align:center;background-position:100px 100px}
+.ks-cal-call .ks-cal-hd a.ks-title:hover {border:1px solid #8cc6ff;top:4px;color:#f0ff00;background-position:0 -268px;}
 
 
-.ks-cal-call .ks-cal-bd {width:181px;}
-.ks-cal-call .ks-cal-bd .ks-whd {width:auto;height:19px;overflow:hidden;background-color:#cce7ff;margin-top:4px;*padding-left:2px;*width:179px;}
-.ks-cal-call .ks-cal-bd .ks-whd span {float:left;width:25.857px;text-align:center;line-height:19px;}
+.ks-cal-call .ks-cal-bd {width:182px;}
+.ks-cal-call .ks-cal-bd .ks-whd {width:auto;height:19px;overflow:hidden;margin-top:4px;border-bottom:1px dashed #c9c9c9;padding-bottom:2px;}
+.ks-cal-call .ks-cal-bd .ks-whd span {float:left;width:25px;text-align:center;line-height:19px;margin-right:1px;display:inline;}
 
-/*--hack for ff2 {{ --*/
-.ks-cal-call .ks-cal-bd .ks-whd span, x:-moz-any-link {width:25px;}
-.ks-cal-call .ks-cal-bd .ks-whd span, x:-moz-any-link, x:default {width:25.857px;}
-/*--hack for ff2 }} --*/
-
-.ks-cal-call .ks-cal-bd .ks-dbd {width:181px;height:auto;background-color:white;margin-top:4px;*padding-left:2px;*width:179px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a{-webkit-border-radius: 2px;
+-moz-border-radius: 2px;margin-bottom: 1px;margin-right:1px;display:inline;}
+.ks-cal-call .ks-cal-bd .ks-dbd {width:182px;height:auto;background-color:white;margin-top:4px;}
 .ks-cal-call .ks-cal-bd .ks-dbd a,
 .ks-cal-call .ks-cal-bd .ks-dbd a:link,
-.ks-cal-call .ks-cal-bd .ks-dbd a:visited {color:#004499;float:left;width:25.857px;text-align:center;line-height:22px;text-decoration:none;}
-.ks-cal-call .ks-cal-bd .ks-dbd a:hover {background-color:#ebf4fc;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:visited {color:#004499;float:left;width:23px;text-align:center;line-height:22px;text-decoration:none;border:1px solid #fff;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:hover {background-color:#f3f9ff;border-color:#88b1ea}
 
 /*--hack for ff2 {{ --*/
-.ks-cal-call .ks-cal-bd .ks-dbd a, x:-moz-any-link {width:25px;}
-.ks-cal-call .ks-cal-bd .ks-dbd a:link, x:-moz-any-link {width:25px;}
-.ks-cal-call .ks-cal-bd .ks-dbd a:visited, x:-moz-any-link {width:25px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a, x:-moz-any-link {width:23px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:link, x:-moz-any-link {width:23px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:visited, x:-moz-any-link {width:23px;}
 .ks-cal-call .ks-cal-bd .ks-dbd a,
 .ks-cal-call .ks-cal-bd .ks-dbd a:link,
-.ks-cal-call .ks-cal-bd .ks-dbd a:visited, x:-moz-any-link, x:default {width:25.857px;}
+.ks-cal-call .ks-cal-bd .ks-dbd a:visited, x:-moz-any-link, x:default {width:23px;}
 /*--hack for ff2 }} --*/
 
 /*--日期的状态--*/
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-null,
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-null:link,
-.ks-cal-call .ks-cal-bd .ks-dbd a.ks-null:visited {background:white;color:white;cursor:default;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-null:visited {background:white;color:white;cursor:default;border-color:#fff}
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-today,
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-today:link,
-.ks-cal-call .ks-cal-bd .ks-dbd a.ks-today:visited {color:#ff6600;font-weight:bold;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-today:visited {color:#357c00;border-color:#7dba4e}
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-selected,
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-selected:link,
-.ks-cal-call .ks-cal-bd .ks-dbd a.ks-selected:visited {background-color:#cce7ff;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-selected:visited {color:#fff;background-color:#4187e7;border-color:#4187e7;}
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-disabled,
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-disabled:link,
-.ks-cal-call .ks-cal-bd .ks-dbd a.ks-disabled:visited{color:#8c8c8c;cursor:default;background-color:white;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-disabled:visited{color:#999;cursor:default;background-color:#fff;border-color:#fff}
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-range,
 .ks-cal-call .ks-cal-bd .ks-dbd a.ks-range:link,
-.ks-cal-call .ks-cal-bd .ks-dbd a.ks-range:visited {background-color:#cce7ff;}
+.ks-cal-call .ks-cal-bd .ks-dbd a.ks-range:visited {color:#fff;background-color:#4187e7;border-color:#4187e7;}
 
 .ks-cal-call .ks-cal-ft {text-align:center;width:181px;}
 
@@ -92,6 +142,16 @@
 .ks-cal-time span {cursor:pointer;}
 .ks-cal-time span.on {padding:0 1px;background-color:#333;color:white}
 
+/*-- 时间不限--*/
+.ks-cal-notLimited{display:block;border:1px solid #88b1ea;background-color:#f3f9ff;text-align:center;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;cursor:pointer;color:#5e97d0;width:180px;margin-top:4px;}
+
+.ks-cal-notLimited:hover{text-decoration:none;}
+
+.ks-cal-notLimited-selected{background-color:#4187e7;color:#fff;border-color:#3375cf}
+.ks-cal-notLimited-showTime{margin-bottom:4px;}
+
+
+
 /*--时间列表--*/
 .ks-cal-timelist {position:absolute;height:auto;width:auto;_width:205px;border:1px solid #9bc0e0;background-color:#f2f2f2;z-index:100;}
 .ks-cal-timelist ul {width:50px;border-left:1px solid #9bc0e0;float:left;list-style:none;padding:0px;margin:5px 0px;}
@@ -104,12 +164,12 @@
 .ks-cal-timelist ul li a:hover {background-color:#cce7f2;color:#004499;}
 
 /*--选择月份容器--*/
-.ks-setime {position:absolute;left:0px;top:28px;right:0px;width:180px;background:#f2f2f2;border:1px solid #9bc0e0;text-align:center;vertical-align:middle;height:auto;padding-top:10px;padding-bottom:10px;}
+.ks-setime {position:absolute;left:4px;top:28px;width:180px;background:#f2f2f2;border:1px solid #9bc0e0;text-align:center;vertical-align:middle;height:auto;padding-top:10px;padding-bottom:10px;}
 .ks-setime p {height:30px;margin:0;padding:0;}
 .ks-setime select,.ks-setime input {width:80px;}
 
 /*--选择时间的容器--*/
-.ks-selectime {position:absolute;left:0px;bottom:28px;*bottom:32px;right:0px;width:180px;background:#f2f2f2;border:1px solid #9bc0e0;text-align:center;vertical-align:middle;height:auto;padding-top:10px;padding-bottom:10px;}
+.ks-selectime {position:absolute;left:4px;bottom:32px;right:0px;width:180px;background:#f2f2f2;border:1px solid #9bc0e0;text-align:center;vertical-align:middle;height:auto;padding-top:10px;padding-bottom:10px;}
 .ks-selectime a,
 .ks-selectime a:link,
 .ks-selectime a:visited {margin-left:10px;display:inline-block;*display:inline;float:left;text-decoration:none;color:#004499;}
@@ -120,3 +180,5 @@
 /*--日历选择组件--*/
 .ks-select-calendar{width:126px;height:20px;*width:122px;*height:18px;_width:124px;border:1px solid #ccc;background:url(http://img03.taobaocdn.com/tps/i3/T1cJ4PXfXGXXXXXXXX-16-13.gif) no-repeat 106px 4px;}
 .lot-calendar{position:absolute;top:0px;left:222px;z-index:100;}
+
+

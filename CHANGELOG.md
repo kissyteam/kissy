@@ -26,6 +26,7 @@ History:
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
  - [!] 移除 core 模块，不要 use("core"),require("core"),只用你要用的
+ - [+] 左莫增强 calendar
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

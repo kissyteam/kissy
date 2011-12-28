@@ -1,17 +1,27 @@
 /**
- * @fileOverview      日历
+ * 2010-09-14 拔赤
+ *        - 仅支持S.Date.format和S.Date.parse，format仅对常用格式进行支持（不超过10个），也可以自定义
+ *        - kissy-lang中是否应当增加Lang.type(o)?或者isDate(d)?
+ *        - 模块名称取为datetype还是直接用date? 我更倾向于用date
+ *        - YUI的datetype花了大量精力对全球语种进行hack，似乎KISSY是不必要的，KISSY只对中文做hack即可
+ */
+/**
+ * @module     日历
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
 
     S.augment(Calendar, {
-        /**
-         * 子日历构造器
-         * @constructor
-         * @param {object} config 参数列表，需要指定子日历所需的年月
-         * @param {object} father 指向Y.Calendar实例的指针，需要共享父框的参数
-         */
+
         Page: function(config, father) {
+            /**
+             * 子日历构造器
+             * @constructor S.Calendar.Page
+             * @param {object} config ,参数列表，需要指定子日历所需的年月
+             * @param {object} father,指向Y.Calendar实例的指针，需要共享父框的参数
+             * @return 子日历的实例
+             */
+
             //属性
             this.father = father;
             this.month = Number(config.month);
@@ -25,9 +35,9 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
             this.html = [
                 '<div class="ks-cal-box" id="{$id}">',
                 '<div class="ks-cal-hd">',
-                '<a href="javascript:void(0);" class="ks-prev {$prev}"><</a>',
+                '<a href="javascript:void(0);" class="ks-prev-year {$prev}"><</a><a href="javascript:void(0);" class="ks-prev-month {$prev}"><</a>',
                 '<a href="javascript:void(0);" class="ks-title">{$title}</a>',
-                '<a href="javascript:void(0);" class="ks-next {$next}">></a>',
+                '<a href="javascript:void(0);" class="ks-next-month {$next}">></a><a href="javascript:void(0);" class="ks-next-year {$next}">></a>',
                 '</div>',
                 '<div class="ks-cal-bd">',
                 '<div class="ks-whd">',
@@ -51,10 +61,12 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                  <a href="" class="ks-today">1</a>
                  <a href="">1</a>
                  */
+				'<div style="clear:both;"></div>',
                 '</div>',
                 '</div>',
                 '<div class="ks-setime hidden">',
                 '</div>',
+				'<div class="{$notlimited}"><a href="#" class="ks-cal-notLimited {$notlimitedCls}">不限</a></div>',
                 '<div class="ks-cal-ft {$showtime}">',
                 '<div class="ks-cal-time">',
                 '时间：00:00 &hearts;',
@@ -143,15 +155,27 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                 _o.next = '';
                 _o.title = '';
                 _o.ds = '';
+				_o.notlimited='';
+				_o.notlimitedClass='';
                 if (!cc.prevArrow) {
                     _o.prev = 'hidden';
                 }
                 if (!cc.nextArrow) {
                     _o.next = 'hidden';
                 }
-                if (!cc.father.showtime) {
+                if (!cc.father.showTime) {
                     _o.showtime = 'hidden';
                 }
+				if (!cc.father.notLimited) {
+                    _o.notlimited='hidden';
+                }
+				
+				if(cc.father.showTime&&cc.father.notLimited){
+					_o.notlimitedCls='ks-cal-notLimited-showTime';
+				}
+				if(cc.father.notLimited&&!cc.father.selected){
+					_o.notlimitedCls+=' ks-cal-notLimited-selected';
+				}
                 _o.id = cc.id = 'ks-cal-' + Math.random().toString().replace(/.\./i, '');
                 _o.title = cc.father._getHeadStr(cc.year, cc.month);
                 cc.createDS();
@@ -160,7 +184,6 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                 cc.node = Node.one('#' + cc.id);
                 if (cc.father.showTime) {
                     ft = cc.node.one('.ks-cal-ft');
-                    ft.removeClass('hidden');
                     cc.timmer = new cc.father.TimeSelector(ft, cc.father);
                 }
                 return this;
@@ -183,27 +206,25 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                     target:     con.one('div.ks-dbd'),
                     type:"click",
                     fn:   function(e) {
-                        //e.preventDefault();
+                        e.preventDefault();
+						if(e.target.tagName!='A'){
+							//如果不是点击在A标签上，直接return;
+							return;
+						}
                         e.target = Node(e.target);
+						
                         if (e.target.hasClass('ks-null')) {
                             return;
                         }
                         if (e.target.hasClass('ks-disabled')) {
                             return;
                         }
-                        var selectedd = Number(e.target.html());
-                        //如果当天是30日或者31日，设置2月份就会出问题
-                        var d = new Date('2010/01/01');
-                        d.setYear(cc.year);
-                        d.setMonth(cc.month);
-                        d.setDate(selectedd);
-                        //self.callback(d);
-                        //datetime的date
+                        var d = new Date(cc.year,cc.month,Number(e.target.html()));
                         cc.father.dt_date = d;
                         cc.father.fire('select', {
                             date:d
                         });
-                        if (cc.father.popup && cc.father.closable) {
+                        if (cc.father.popup && cc.father.closable&&!cc.father.showTime&&!cc.father.rangeSelect) {
                             cc.father.hide();
                         }
                         if (cc.father.rangeSelect) {
@@ -217,26 +238,31 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                 }
 
                 bindEventTev();
-                //向前
+                //向前一月
                 tev = cc.EV[1] = {
-                    target:con.one('a.ks-prev'),
+                    target:con.one('a.ks-prev-month'),
                     type:'click',
                     fn:function(e) {
                         e.preventDefault();
+						if(!cc.father.rangeLinkage){
+							cc._monthMinus();
+						}
                         cc.father._monthMinus().render();
                         cc.father.fire('monthChange', {
                             date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
                         });
-
                     }
                 };
                 bindEventTev();
-                //向后
+                //向后一月
                 tev = cc.EV[2] = {
-                    target:con.one('a.ks-next'),
+                    target:con.one('a.ks-next-month'),
                     type:'click',
                     fn: function(e) {
                         e.preventDefault();
+						if(!cc.father.rangeLinkage){
+							cc._monthAdd();
+						}
                         cc.father._monthAdd().render();
                         cc.father.fire('monthChange', {
                             date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
@@ -244,8 +270,40 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                     }
                 };
                 bindEventTev();
+				//向前一年
+                tev = cc.EV[3] = {
+                    target:con.one('a.ks-prev-year'),
+                    type:'click',
+                    fn:function(e) {
+                        e.preventDefault();
+						if(!cc.father.rangeLinkage){
+							cc._yearMinus();
+						}
+                        cc.father._yearMinus().render();
+                        cc.father.fire('monthChange', {
+                            date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
+                        });
+                    }
+                };
+                bindEventTev();
+                //向后一年
+                tev = cc.EV[4] = {
+                    target:con.one('a.ks-next-year'),
+                    type:'click',
+                    fn: function(e) {
+                        e.preventDefault();
+						if(!cc.father.rangeLinkage){
+							cc._yearAdd();
+						}
+                        cc.father._yearAdd().render();
+                        cc.father.fire('monthChange', {
+                            date:new Date(cc.father.year + '/' + (cc.father.month + 1) + '/01')
+                        });
+                    }
+                };
+                bindEventTev();
                 if (cc.father.navigator) {
-                    tev = cc.EV[3] = {
+                    tev = cc.EV[5] = {
                         target:con.one('a.ks-title'),
                         type:'click',
                         fn:function(e) {
@@ -294,7 +352,7 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                         }
                     };
                     bindEventTev();
-                    tev = cc.EV[4] = {
+                    tev = cc.EV[6] = {
                         target:con.one('.ks-setime'),
                         type:'click',
                         fn:function(e) {
@@ -323,9 +381,61 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                     };
                     bindEventTev();
                 }
+				
+				if(cc.father.notLimited){
+					tev = cc.EV[cc.EV.length] = {
+                        target:con.one('.ks-cal-notLimited'),
+                        type:'click',
+                        fn:function(e) {
+                            e.preventDefault();
+							cc.father.range={start:null,end:null};
+                            cc.father.fire('select',{date:null});
+							if (cc.father.popup && cc.father.closable) {
+								cc.father.hide();
+							}
+							cc.father.render({selected:null});
+                        }
+                    };
+                    bindEventTev();
+				}
                 return this;
 
             };
+			//月加
+        this._monthAdd=function() {
+            var self = this;
+            if (self.month == 11) {
+                self.year++;
+                self.month = 0;
+            } else {
+                self.month++;
+            }
+        },
+
+        //月减
+        this._monthMinus=function() {
+            var self = this;
+            if (self.month === 0) {
+                self.year--;
+                self.month = 11;
+            } else {
+                self.month--;
+            }
+        },
+		//年加
+        this._yearAdd=function() {
+            var self = this;
+            self.year++;
+        };
+
+        //年减
+        this._yearMinus=function() {
+            var self = this;
+            self.year--;
+        };
+			
+			
+			
             /**
              * 得到当前子日历的node引用
              */
@@ -339,65 +449,55 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
             this._getNumOfDays = function(year, month) {
                 return 32 - new Date(year, month - 1, 32).getDate();
             };
+			
+			this._isDisabled = function(arrDisabled,date){
+				if(arrDisabled&&arrDisabled.length>0){
+					for(var i=0;i<arrDisabled.length;i++){
+						var d = arrDisabled[i];
+						if(date.getFullYear()==d.getFullYear()&&date.getMonth()==d.getMonth()&&date.getDate()==d.getDate()){
+							return true;
+						}
+					}
+				}
+				return false;
+			}
             /**
              * 生成日期的html
+			 * 
              */
             this.createDS = function() {
                 var cc = this,
                     s = '',
-                    startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.father.startDay + 7) % 7,//当月第一天是星期几
-                    k = cc._getNumOfDays(cc.year, cc.month + 1) + startweekday,
+                    startOffset = (7-cc.father.startDay+new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay())%7,//当月第一天是星期几
+                    days = cc._getNumOfDays(cc.year, cc.month + 1),
+					selected = cc.father.selected,
+					today = new Date(),
                     i, _td_s;
 
-                for (i = 0; i < k; i++) {
-                    //prepare data {{
-                    if (/532/.test(UA['webkit'])) {//hack for chrome
-                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
-                    } else {
-                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 2 - startweekday).toString());
-                    }
-                    var _td_e = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
-                    //prepare data }}
-                    if (i < startweekday) {//null
-                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
-                    } else if (cc.father.minDate instanceof Date &&
-                        new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.father.minDate.getTime() + 1)) {//disabled
-                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
-
-                    } else if (cc.father.maxDate instanceof Date &&
-                        new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.father.maxDate.getTime()) {//disabled
-                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
-
-
-                    } else if ((cc.father.range.start !== null && cc.father.range.end !== null) && //日期选择范围
-                        (  _td_s.getTime() >= cc.father._showdate(1, cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1, cc.father.range.end).getTime())) {
-
-                        if (i == (startweekday + (new Date()).getDate() - 1) &&
-                            (new Date()).getFullYear() == cc.year &&
-                            (new Date()).getMonth() == cc.month) {//今天并被选择
-                            s += '<a href="javascript:void(0);" class="ks-range ks-today">' + (i - startweekday + 1) + '</a>';
-                        } else {
-                            s += '<a href="javascript:void(0);" class="ks-range">' + (i - startweekday + 1) + '</a>';
-                        }
-
-                    } else if (i == (startweekday + (new Date()).getDate() - 1) &&
-                        (new Date()).getFullYear() == cc.year &&
-                        (new Date()).getMonth() == cc.month) {//today
-                        s += '<a href="javascript:void(0);" class="ks-today">' + (i - startweekday + 1) + '</a>';
-
-                    } else if (i == (startweekday + cc.father.selected.getDate() - 1) &&
-                        cc.month == cc.father.selected.getMonth() &&
-                        cc.year == cc.father.selected.getFullYear()) {//selected
-                        s += '<a href="javascript:void(0);" class="ks-selected">' + (i - startweekday + 1) + '</a>';
-                    } else {//other
-                        s += '<a href="javascript:void(0);">' + (i - startweekday + 1) + '</a>';
-                    }
-                }
-                if (k % 7 !== 0) {
-                    for (i = 0; i < (7 - k % 7); i++) {
-                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
-                    }
-                }
+				
+				for(var i=0;i<startOffset;i++){
+					s += '<a href="javascript:void(0);" class="ks-null">0</a>';
+				}
+				//左莫优化了日历生成
+                for (i = 1; i <= days; i++) {
+					var cls = '';
+					var date = new Date(cc.year,cc.month, i);
+					if((cc.father.minDate&&date<cc.father.minDate) || (cc.father.maxDate&&date>cc.father.maxDate) ||cc._isDisabled(cc.father.disabled,date)){
+						cls = 'ks-disabled';
+					}
+					else if(cc.father.range&&date>=cc.father.range.start&&date<=cc.father.range.end){
+						cls = 'ks-range';
+					}
+					else if(selected&&selected.getFullYear() == cc.year&&selected.getMonth() == cc.month&&selected.getDate()==i){
+						cls = 'ks-selected';
+					}
+					
+					if(today.getFullYear() == cc.year&&today.getMonth() == cc.month&&today.getDate()==i){
+						cls += ' ks-today';
+					}
+					
+					s += '<a '+(cls?'class='+cls:'')+' href="javascript:void(0);">' + i + '</a>';
+				}
                 cc.ds = s;
                 return this;
             };
