@@ -149,7 +149,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
     return Popup;
 }, {
-    requires:[ "component","./overlay"]
+    requires:[ "component","./base"]
 });
 
 /**

@@ -10,15 +10,15 @@
 <script src="../../../tools/jasmine/event-simulate.js"></script>
 
 <script src="../../../build/kissy.js"></script>
-<script src="../ddm.js"></script>
-<script src="../draggable-delegate.js"></script>
-<script src="../draggable.js"></script>
-<script src="../droppable-delegate.js"></script>
-<script src="../droppable.js"></script>
-<script src="../proxy.js"></script>
-<script src="../scroll.js"></script>
-<script src="../constrain.js"></script>
-<script src="../../dd.js"></script>
+<script src="../src/ddm.js"></script>
+<script src="../src/draggable-delegate.js"></script>
+<script src="../src/draggable.js"></script>
+<script src="../src/droppable-delegate.js"></script>
+<script src="../src/droppable.js"></script>
+<script src="../src/proxy.js"></script>
+<script src="../src/scroll.js"></script>
+<script src="../src/constrain.js"></script>
+<script src="../src/dd.js"></script>
 <style>
     html, body {
         margin: 0;
@@ -238,7 +238,7 @@ for delegate-spec.js
 <script src="delegate-spec.js"></script>
 
 <script>
-    KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
+    KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
         if (UA.ie == 9) {
 
             if (parent && parent.jasmine.kissyNext) {
@@ -250,7 +250,7 @@ for delegate-spec.js
         }
 
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function() {
+        jasmine.getEnv().execute(function () {
             if (parent && parent.jasmine.kissyNext) {
                 parent.jasmine.kissyNext(this.results().failedCount);
             }

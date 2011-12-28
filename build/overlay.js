@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:19
+build time: Dec 28 15:58
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -146,7 +146,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
  * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay", function (S, UIBase, Component, OverlayRender, Effect) {
+KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect) {
     function require(s) {
         return S.require("uibase/" + s);
     }
@@ -342,7 +342,8 @@ KISSY.add("overlay", function(S, O, OR, D, DR, P) {
 
     return O;
 }, {
-    requires:["overlay/base","overlay/overlayrender","overlay/dialog","overlay/dialogrender", "overlay/popup"]
+    requires:["overlay/base","overlay/overlayrender",
+        "overlay/dialog","overlay/dialogrender", "overlay/popup"]
 });/**
  * @fileOverview KISSY Overlay
  * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
@@ -395,7 +396,10 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
         triggerType: {value:'click'},   // 触发类型
         mouseDelay: {
             value: 100                  // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
-        }
+        },
+		toggle :{
+			value:false // triggerType 为 click 时, Popup 是否有toggle功能
+		}
     };
 
     S.extend(Popup, Overlay, {
@@ -471,7 +475,17 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             var self = this;
             self.__clickPopup = function(e) {
                 e.halt();
-                self.show();
+				if(self.get('toggle')){
+					if(self.get('el').css('visibility') == 'hidden'){
+						self.show();
+					}
+					else{
+						self.hide();
+					}
+				}
+				else{
+					self.show();
+				}
             };
             self.get("trigger").on('click', self.__clickPopup);
         },
@@ -506,7 +520,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
     return Popup;
 }, {
-    requires:[ "component","./overlay"]
+    requires:[ "component","./base"]
 });
 
 /**

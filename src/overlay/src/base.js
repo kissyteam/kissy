@@ -2,7 +2,7 @@
  * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay", function (S, UIBase, Component, OverlayRender, Effect) {
+KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect) {
     function require(s) {
         return S.require("uibase/" + s);
     }
