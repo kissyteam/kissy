@@ -150,6 +150,7 @@
 
                 /**
                  * check cyclic dependency between mods
+                 * @private
                  */
                 function cyclicCheck() {
                     var __allRequires,

@@ -8,14 +8,17 @@
     }
     /**
      * modify current module path
+     * @private
      * @param rules
      * @example
+     * <code>
      *      [
      *          [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
      *          [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
      *              return m1+m2;
      *          }]
      *      ]
+     * </code>
      */
     S.configs.map = function (rules) {
         S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);

@@ -2,13 +2,18 @@
  * @fileOverview intervein elements dynamically
  * @author yiminghe@gmail.com
  */
-KISSY.add("waterfall/base", function(S, Node, Base) {
+KISSY.add("waterfall/base", function (S, Node, Base) {
 
     var $ = Node.all,
         RESIZE_DURATION = 50;
 
-    function Intervein() {
-        Intervein.superclass.constructor.apply(this, arguments);
+    /**
+     * @class
+     * @namespace
+     * @name Waterfall
+     */
+    function Waterfall() {
+        Waterfall.superclass.constructor.apply(this, arguments);
         this._init();
     }
 
@@ -18,7 +23,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             stopper = {},
             timer;
         if (todo.length > 0) {
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 var start = +new Date();
                 do {
                     var item = todo.shift();
@@ -35,7 +40,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             callback && S.later(callback, 0, false, context, [items]);
         }
 
-        stopper.stop = function() {
+        stopper.stop = function () {
             if (timer) {
                 clearTimeout(timer);
                 todo = [];
@@ -46,13 +51,17 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
     }
 
 
-    Intervein.ATTRS = {
+    Waterfall.ATTRS =
+    /**
+     * @lends Waterfall
+     */
+    {
         /**
          * 错乱节点容器
          * @type Node
          */
         container:{
-            setter:function(v) {
+            setter:function (v) {
                 return $(v);
             }
         },
@@ -99,7 +108,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         self._containerRegion = {
             width:containerWidth
         };
-        S.each(curColHeights, function(v, i) {
+        S.each(curColHeights, function (v, i) {
             curColHeights[i] = 0;
         });
     }
@@ -143,11 +152,15 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
         return item;
     }
 
-    S.extend(Intervein, Base, {
-        isAdjusting:function() {
+    S.extend(Waterfall, Base,
+        /**
+         * @lends Waterfall
+         */
+        {
+        isAdjusting:function () {
             return !!this._adjuster;
         },
-        _init:function() {
+        _init:function () {
             var self = this;
             // 一开始就 adjust 一次，可以对已有静态数据处理
             doResize.call(self);
@@ -159,7 +172,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
          * 调整所有的元素位置
          * @param callback
          */
-        adjust:function(callback) {
+        adjust:function (callback) {
             S.log("waterfall:adjust");
             var self = this,
                 items = self.get("container").all(".ks-waterfall");
@@ -170,7 +183,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }
             /*计算容器宽度等信息*/
             recalculate.call(self);
-            return self._adjuster = timedChunk(items, self._addItem, self, function() {
+            return self._adjuster = timedChunk(items, self._addItem, self, function () {
                 self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
                 self._adjuster = 0;
                 callback && callback.call(self);
@@ -181,7 +194,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             });
         },
 
-        addItems:function(items, callback) {
+        addItems:function (items, callback) {
             var self = this;
 
             /* 正在调整中，直接这次加，和调整的节点一起处理 */
@@ -189,7 +202,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             self._adder = timedChunk(items,
                 self._addItem,
                 self,
-                function() {
+                function () {
                     self.get("container").height(Math.max.apply(Math,
                         self.get("curColHeights")));
                     self._adder = 0;
@@ -203,7 +216,7 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             return self._adder;
         },
 
-        _addItem:function(itemRaw) {
+        _addItem:function (itemRaw) {
             var self = this,
                 curColHeights = self.get("curColHeights"),
                 container = self.get("container"),
@@ -219,20 +232,20 @@ KISSY.add("waterfall/base", function(S, Node, Base) {
             }, {
                 duration:effect.duration,
                 easing:effect.easing,
-                complete:function() {
+                complete:function () {
                     item.css("opacity", "");
                 }
             });
         },
 
-        destroy:function() {
+        destroy:function () {
             $(window).detach("resize", this.__onResize);
         }
     });
 
 
-    return Intervein;
+    return Waterfall;
 
 }, {
-    requires:['node','base']
+    requires:['node', 'base']
 });

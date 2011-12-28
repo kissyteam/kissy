@@ -106,19 +106,19 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
 
     /**
      * model and control for component
+     * @class
+     * @memberOf Component
      * @name ModelControl
-     * @constructor
      */
     var ModelControl = UIBase.create([UIBase.Box],
-        /** @lends ModelControl.prototype */
+        /** @lends Component.ModelControl.prototype */
         {
 
             getCls:UIStore.getCls,
 
             initializer:function () {
-                /**
-                 * 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
-                 */
+
+                // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
                 var self = this,
                     attrs = self['__attrs'] || {};
                 for (var attrName in attrs) {
@@ -460,9 +460,12 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
             }
         },
         {
-            ATTRS:{
-                /**
-                 *  session state
+            ATTRS:/**
+             * @lends Component.ModelControl#
+             */
+            {
+                /*
+                 session state
                  */
 
                 // 是否绑定鼠标事件
@@ -473,28 +476,28 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                 // 是否支持焦点处理
                 focusable:{
                     /*
-                     *  observer synchronization , model 分成两类：
-                     *view 负责监听 view 类 model 变化更新界面
-                     *control 负责监听 control 类变化改变逻辑
-                     *  problem : Observer behavior is hard to understand and debug because it's implicit behavior.
-                     *
-                     *  Keeping screen state and session state synchronized is an important task
-                     *  Data Binding
+                     observer synchronization , model 分成两类：
+                     view 负责监听 view 类 model 变化更新界面
+                     control 负责监听 control 类变化改变逻辑
+                     problem : Observer behavior is hard to understand and debug because it's implicit behavior.
+
+                     Keeping screen state and session state synchronized is an important task
+                     Data Binding
                      */
                     view:true,
                     value:true
-                    /**
-                     * In general data binding gets tricky
-                     * because if you have to avoid cycles where a change to the control,
-                     * changes the record set, which updates the control,
-                     * which updates the record set....
-                     * The flow of usage helps avoid these -
-                     * we load from the session state to the screen when the screen is opened,
-                     * after that any changes to the screen state propagate back to the session state.
-                     * It's unusual for the session state to be updated directly once the screen is up.
-                     * As a result data binding might not be entirely bi-directional -
-                     * just confined to initial upload and
-                     * then propagating changes from the controls to the session state.
+                    /*
+                     In general data binding gets tricky
+                     because if you have to avoid cycles where a change to the control,
+                     changes the record set, which updates the control,
+                     which updates the record set....
+                     The flow of usage helps avoid these -
+                     we load from the session state to the screen when the screen is opened,
+                     after that any changes to the screen state propagate back to the session state.
+                     It's unusual for the session state to be updated directly once the screen is up.
+                     As a result data binding might not be entirely bi-directional -
+                     just confined to initial upload and
+                     then propagating changes from the controls to the session state.
                      */
                     // sync
                 },

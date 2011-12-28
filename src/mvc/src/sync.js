@@ -10,6 +10,12 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
         'read':'GET'
     };
 
+    /**
+     * @memberOf MVC
+     * @param self
+     * @param method
+     * @param options
+     */
     function sync(self, method, options) {
         var type = methodMap[method],
             ioParam = S.merge({

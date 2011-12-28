@@ -54,11 +54,18 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * get a anim instance associate
-     * @param elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
-     * @param props
-     * @param duration
-     * @param easing
-     * @param callback
+     * @param {HTMLElement|window} elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
+     * @param {Object} props style map
+     * @param {Number|Object} [duration] duration(s) or anim config
+     * @param {String|Function} [duration.easing] easing fn or string
+     * @param {Function} [duration.complete] callback function when this animation is complete
+     * @param {Number} [duration.duration] duration(s)
+     * @param {String|Boolean} [duration.queue] current animation's queue, if false then no queue
+     * @param {Function|String} [easing] easing fn or string
+     * @param {Function} [callback] callback function when this animation is complete
+     * @extends Event.Target
+     * @name Anim
+     * @class
      */
     function Anim(elem, props, duration, easing, callback) {
         var self = this, config;
@@ -77,7 +84,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
          * the transition properties
          */
         if (S.isString(props)) {
-            props = S.unparam(props, ";", ":");
+            props = S.unparam(String(props), ";", ":");
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -315,109 +322,117 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    S.augment(Anim, Event.Target, {
-
+    S.augment(Anim, Event.Target,
         /**
-         * @type {boolean} 是否在运行
+         * @lends Anim.prototype
          */
-        isRunning:function () {
-            return isRunning(this);
-        },
+        {
 
-        _runInternal:runInternal,
+            /**
+             * @return {boolean} 是否在运行
+             */
+            isRunning:function () {
+                return isRunning(this);
+            },
 
-        /**
-         * 开始动画
-         */
-        run:function () {
-            var self = this,
-                queueName = self.config.queue;
+            _runInternal:runInternal,
 
-            if (queueName === false) {
-                runInternal.call(self);
-            } else {
-                // 当前动画对象加入队列
-                Q.queue(self);
-            }
+            /**
+             * 开始动画
+             */
+            run:function () {
+                var self = this,
+                    queueName = self.config.queue;
 
-            return self;
-        },
-
-        _frame:function () {
-
-            var self = this,
-                prop,
-                config = self.config,
-                end = 1,
-                c,
-                fx,
-                fxs = self._fxs;
-
-            for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop) &&
-                    // 当前属性没有结束
-                    !((fx = fxs[prop]).finished)) {
-                    // 非短路
-                    if (config.frame) {
-                        c = config.frame(fx);
-                    }
-                    // 结束
-                    if (c == 1 ||
-                        // 不执行自带
-                        c == 0) {
-                        fx.finished = c;
-                        end &= c;
-                    }
-                    else {
-                        end &= fx.frame();
-                    }
+                if (queueName === false) {
+                    runInternal.call(self);
+                } else {
+                    // 当前动画对象加入队列
+                    Q.queue(self);
                 }
-            }
 
-            if ((self.fire("step") === false) ||
-                end) {
-                // complete 事件只在动画到达最后一帧时才触发
-                self.stop(end);
-            }
-        },
+                return self;
+            },
 
-        stop:function (finish) {
-            var self = this,
-                config = self.config,
-                queueName = config.queue,
-                prop,
-                fxs = self._fxs;
+            _frame:function () {
 
-            // already stopped
-            if (!self.isRunning()) {
-                // 从自己的队列中移除
-                if (queueName !== false) {
-                    Q.remove(self);
-                }
-                return;
-            }
+                var self = this,
+                    prop,
+                    config = self.config,
+                    end = 1,
+                    c,
+                    fx,
+                    fxs = self._fxs;
 
-            if (finish) {
                 for (prop in fxs) {
-                    if (fxs.hasOwnProperty(prop)) {
-                        fxs[prop].frame(1);
+                    if (fxs.hasOwnProperty(prop) &&
+                        // 当前属性没有结束
+                        !((fx = fxs[prop]).finished)) {
+                        // 非短路
+                        if (config.frame) {
+                            c = config.frame(fx);
+                        }
+                        // 结束
+                        if (c == 1 ||
+                            // 不执行自带
+                            c == 0) {
+                            fx.finished = c;
+                            end &= c;
+                        }
+                        else {
+                            end &= fx.frame();
+                        }
                     }
                 }
-                self.fire("complete");
+
+                if ((self.fire("step") === false) ||
+                    end) {
+                    // complete 事件只在动画到达最后一帧时才触发
+                    self.stop(end);
+                }
+            },
+
+            /**
+             * 结束动画
+             * @param {boolean} finish whether jump to the last position of this animation
+             */
+            stop:function (finish) {
+                var self = this,
+                    config = self.config,
+                    queueName = config.queue,
+                    prop,
+                    fxs = self._fxs;
+
+                // already stopped
+                if (!self.isRunning()) {
+                    // 从自己的队列中移除
+                    if (queueName !== false) {
+                        Q.remove(self);
+                    }
+                    return;
+                }
+
+                if (finish) {
+                    for (prop in fxs) {
+                        if (fxs.hasOwnProperty(prop)) {
+                            fxs[prop].frame(1);
+                        }
+                    }
+                    self.fire("complete");
+                }
+
+                AM.stop(self);
+
+                removeRunning(self);
+
+                if (queueName !== false) {
+                    // notify next anim to run in the same queue
+                    Q.dequeue(self);
+                }
+
+                return self;
             }
-
-            AM.stop(self);
-
-            removeRunning(self);
-
-            if (queueName !== false) {
-                // notify next anim to run in the same queue
-                Q.dequeue(self);
-            }
-
-            return self;
-        }
-    });
+        });
 
     var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
 
@@ -452,9 +467,11 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * stop all the anims currently running
-     * @param elem element which anim belongs to
-     * @param end
-     * @param clearQueue
+     * @param {HTMLElement} elem element which anim belongs to
+     * @param {boolean} end whether jump to last position
+     * @param {boolean} clearQueue whether clean current queue
+     * @param {String|Boolean} queueName current queue's name to be cleared
+     * @private
      */
     Anim.stop = function (elem, end, clearQueue, queueName) {
         if (
@@ -485,6 +502,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param queueName queue'name if set to false only remove
      * @param end
      * @param clearQueue
+     * @private
      */
     function stopQueue(elem, end, clearQueue, queueName) {
         if (clearQueue && queueName !== false) {
@@ -502,9 +520,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * whether elem is running anim
-     * @param elem
+     * @param {HTMLElement} elem
+     * @private
      */
-    Anim['isRunning'] = function (elem) {
+    Anim.isRunning = function (elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
     };

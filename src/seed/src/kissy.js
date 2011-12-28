@@ -87,6 +87,9 @@
          * @lends KISSY
          */
         {
+            /**
+             * @private
+             */
             configs:{},
             // S.app() with these members.
             __APP_MEMBERS:['namespace'],
@@ -109,7 +112,7 @@
              * all the supplied objects. The properties from later objects
              * will overwrite those in earlier objects. Passing in a
              * single object will create a shallow copy of it.
-             * @param {Object...} m1 objects need to be merged
+             * @param {...} m1 objects need to be merged
              * @return {Object} the new merged object
              */
             merge:function (m1) {

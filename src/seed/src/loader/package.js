@@ -11,6 +11,7 @@
      * biz -> .
      * 表示遇到 biz/x
      * 在当前网页路径找 biz/x.js
+     * @private
      */
     S.configs.packages = function (cfgs) {
         var ps;

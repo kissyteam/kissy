@@ -366,11 +366,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
 
-    /**
-     * css height,width 永远都是计算值
+    /*
+     css height,width 永远都是计算值
      */
     S.each(["height", "width"], function (name) {
+        /**
+         * @ignore
+         */
         CUSTOM_STYLES[ name ] = {
+            /**
+             * @ignore
+             */
             get:function (elem, computed) {
                 var val;
                 if (computed) {
@@ -398,6 +404,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     });
 
     S.each(["left", "top"], function (name) {
+        /**
+         * @ignore
+         */
         CUSTOM_STYLES[ name ] = {
             get:function (elem, computed) {
                 if (computed) {

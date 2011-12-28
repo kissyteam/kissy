@@ -19,8 +19,9 @@ KISSY.add('uibase/base', function (S, Base, Node) {
     /**
      * UIBase for class-based component
      * @class
-     * @extends Base
+     * @namespace
      * @name UIBase
+     * @extends Base
      */
     function UIBase(config) {
         // 读取用户设置的属性值并设置到自身

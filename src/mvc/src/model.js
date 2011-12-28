@@ -2,7 +2,7 @@
  * @fileOverview enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/model", function(S, Base, mvc) {
+KISSY.add("mvc/model", function (S, Base, mvc) {
 
     var blacklist = [
         "idAttribute",
@@ -13,173 +13,198 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         "sync"
     ];
 
+    /**
+     * @class
+     * @memberOf MVC
+     */
     function Model() {
         var self = this;
         Model.superclass.constructor.apply(self, arguments);
-        /**
-         * should bubble to its collections
+        /*
+         should bubble to its collections
          */
         self.publish("*Change", {
             bubbles:1
         });
-        /**
-         * @Array mvc/collection collections this model belonged to
-         */
         self.collections = {};
     }
 
-    S.extend(Model, Base, {
-
-        addToCollection:function(c) {
-            this.collections[S.stamp(c)] = c;
-            this.addTarget(c);
-        },
-
-        removeFromCollection:function(c) {
-            delete this.collections[S.stamp(c)];
-            this.removeTarget(c);
-        },
-
-        getId:function() {
-            return this.get(this.get("idAttribute"));
-        },
-
-        setId:function(id) {
-            return this.set(this.get("idAttribute"), id);
-        },
-
+    S.extend(Model, Base,
         /**
-         * @override
+         * @lends MVC.Model#
          */
-        __set:function() {
-            this.__isModified = 1;
-            return Model.superclass.__set.apply(this, arguments);
-        },
+        {
 
-        /**
-         * whether it is newly created
-         */
-        isNew:function() {
-            return !this.getId();
-        },
-
-        /**
-         * whether has been modified since last save
-         */
-        isModified:function() {
-            return !!(this.isNew() || this.__isModified);
-        },
-
-        /**
-         * destroy this model
-         * @param opts
-         */
-        destroy:function(opts) {
-            var self = this;
-            opts = opts || {};
-            var success = opts.success;
-            opts.success = function(resp) {
-                var lists = self.collections;
-                if (resp) {
-                    self.set(resp, opts);
-                }
-                for (var l in lists) {
-                    lists[l].remove(self, opts);
-                    self.removeFromCollection(lists[l]);
-                }
-                self.fire("destroy");
-                success && success.apply(this, arguments);
-            };
-            if (!self.isNew() && opts['delete']) {
-                self.get("sync").call(self, self, 'delete', opts);
-            } else {
-                opts.success();
-                if (opts.complete) {
-                    opts.complete();
-                }
-            }
-
-            return self;
-        },
-
-        /**
-         * call sycn to load
-         * @param opts
-         */
-        load:function(opts) {
-            var self = this;
-            opts = opts || {};
-            var success = opts.success;
-            opts.success = function(resp) {
-                if (resp) {
-                    var v = self.get("parse").call(self, resp);
-                    if (v) {
-                        self.set(v, opts);
-                    }
-                }
-                self.__isModified = 0;
-                success && success.apply(this, arguments);
-            };
-            self.get("sync").call(self, self, 'read', opts);
-            return self;
-        },
-
-        save:function(opts) {
-            var self = this;
-            opts = opts || {};
-            var success = opts.success;
-            opts.success = function(resp) {
-                if (resp) {
-                    var v = self.get("parse").call(self, resp);
-                    if (v) {
-                        self.set(v, opts);
-                    }
-                }
-                self.__isModified = 0;
-                success && success.apply(this, arguments);
-            };
-            self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
-            return self;
-        },
-
-        toJSON:function() {
-            var ret = this.getAttrVals();
-            S.each(blacklist, function(b) {
-                delete ret[b];
-            });
-            return ret;
-        }
-
-    }, {
-        ATTRS:{
-            idAttribute:{
-                value:'id'
+            addToCollection:function (c) {
+                this.collections[S.stamp(c)] = c;
+                this.addTarget(c);
             },
-            clientId:{
-                valueFn:function() {
-                    return S.guid("mvc-client");
-                }
+
+            removeFromCollection:function (c) {
+                delete this.collections[S.stamp(c)];
+                this.removeTarget(c);
             },
-            url:{
-                value:url
+
+            getId:function () {
+                return this.get(this.get("idAttribute"));
             },
-            urlRoot:{
-                value:""
+
+            setId:function (id) {
+                return this.set(this.get("idAttribute"), id);
             },
-            sync:{
-                value:sync
+
+            __set:function () {
+                this.__isModified = 1;
+                return Model.superclass.__set.apply(this, arguments);
             },
-            parse:{
+
+            /**
+             * whether it is newly created
+             */
+            isNew:function () {
+                return !this.getId();
+            },
+
+            /**
+             * whether has been modified since last save
+             */
+            isModified:function () {
+                return !!(this.isNew() || this.__isModified);
+            },
+
+            /**
+             * destroy this model
+             * @param opts
+             * @param {Object} opts
+             * @param {Function} opts.success callback when action is done successfully
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            destroy:function (opts) {
+                var self = this;
+                opts = opts || {};
+                var success = opts.success;
                 /**
-                 * parse json from server to get attr/value pairs
-                 * @param resp
+                 * @ignore
                  */
-                value:function(resp) {
-                    return resp;
+                opts.success = function (resp) {
+                    var lists = self.collections;
+                    if (resp) {
+                        self.set(resp, opts);
+                    }
+                    for (var l in lists) {
+                        lists[l].remove(self, opts);
+                        self.removeFromCollection(lists[l]);
+                    }
+                    self.fire("destroy");
+                    success && success.apply(this, arguments);
+                };
+                if (!self.isNew() && opts['delete']) {
+                    self.get("sync").call(self, self, 'delete', opts);
+                } else {
+                    opts.success();
+                    if (opts.complete) {
+                        opts.complete();
+                    }
+                }
+
+                return self;
+            },
+
+            /**
+             * call sycn to load
+             * @param opts
+             * @param {Object} opts
+             * @param {Function} opts.success callback when action is done successfully
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            load:function (opts) {
+                var self = this;
+                opts = opts || {};
+                var success = opts.success;
+                /**
+                 * @ignore
+                 */
+                opts.success = function (resp) {
+                    if (resp) {
+                        var v = self.get("parse").call(self, resp);
+                        if (v) {
+                            self.set(v, opts);
+                        }
+                    }
+                    self.__isModified = 0;
+                    success && success.apply(this, arguments);
+                };
+                self.get("sync").call(self, self, 'read', opts);
+                return self;
+            },
+
+            /**
+             *
+             * @param {Object} opts
+             * @param {Function} opts.success callback when action is done successfully
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            save:function (opts) {
+                var self = this;
+                opts = opts || {};
+                var success = opts.success;
+                /**
+                 * @ignore
+                 */
+                opts.success = function (resp) {
+                    if (resp) {
+                        var v = self.get("parse").call(self, resp);
+                        if (v) {
+                            self.set(v, opts);
+                        }
+                    }
+                    self.__isModified = 0;
+                    success && success.apply(this, arguments);
+                };
+                self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
+                return self;
+            },
+
+            toJSON:function () {
+                var ret = this.getAttrVals();
+                S.each(blacklist, function (b) {
+                    delete ret[b];
+                });
+                return ret;
+            }
+
+        }, {
+            ATTRS:{
+                idAttribute:{
+                    value:'id'
+                },
+                clientId:{
+                    valueFn:function () {
+                        return S.guid("mvc-client");
+                    }
+                },
+                url:{
+                    value:url
+                },
+                urlRoot:{
+                    value:""
+                },
+                sync:{
+                    value:sync
+                },
+                parse:{
+                    /*
+                     parse json from server to get attr/value pairs
+                     */
+                    value:function (resp) {
+                        return resp;
+                    }
                 }
             }
-        }
-    });
+        });
 
     function getUrl(o) {
         var u;
@@ -220,5 +245,5 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
     return Model;
 
 }, {
-    requires:['base','./base']
+    requires:['base', './base']
 });

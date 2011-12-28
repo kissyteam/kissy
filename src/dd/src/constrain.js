@@ -4,7 +4,6 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
 
     /**
      * @class constrain draggable's region
-     * @name Constrain
      * @memberOf DD
      */
     function Constrain() {
@@ -64,45 +63,49 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
         this.__constrainRegion = null;
     }
 
-    S.extend(Constrain, Base, {
-        __constrainRegion:null,
-
+    S.extend(Constrain, Base,
         /**
-         * start monitoring drag
-         * @param {DD.Draggable} drag
-         */
-        attach:function (drag) {
-            var self = this;
-            drag.on("dragstart", onDragStart, self)
-                .on("dragend", onDragEnd, self)
-                .on("dragalign", onDragAlign, self);
-        },
-
-
-        /**
-         * stop monitoring drag
-         * @param {DD.Draggable} drag
-         */
-        unattach:function (drag) {
-            var self = this;
-            drag.detach("dragstart", onDragStart, self)
-                .detach("dragend", onDragEnd, self)
-                .detach("dragalign", onDragAlign, self);
-        }
-    }, {
-        ATTRS:/**
-         * @lends Constrain#
+         * @lends DD.Constrain#
          */
         {
+            __constrainRegion:null,
+
             /**
-             * constrained container
-             * @type {boolean|HTMLElement|String}
+             * start monitoring drag
+             * @param {DD.Draggable} drag
              */
-            constrain:{
-                value:true
+            attach:function (drag) {
+                var self = this;
+                drag.on("dragstart", onDragStart, self)
+                    .on("dragend", onDragEnd, self)
+                    .on("dragalign", onDragAlign, self);
+            },
+
+
+            /**
+             * stop monitoring drag
+             * @param {DD.Draggable} drag
+             */
+            unattach:function (drag) {
+                var self = this;
+                drag.detach("dragstart", onDragStart, self)
+                    .detach("dragend", onDragEnd, self)
+                    .detach("dragalign", onDragAlign, self);
             }
-        }
-    });
+        }, {
+            ATTRS:/**
+             * @lends DD.Constrain#
+             */
+            {
+                /**
+                 * constrained container
+                 * @type {boolean|HTMLElement|String}
+                 */
+                constrain:{
+                    value:true
+                }
+            }
+        });
 
     return Constrain;
 }, {

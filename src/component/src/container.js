@@ -5,9 +5,10 @@
 KISSY.add("component/container", function (S, UIBase, ModelControl, UIStore, DelegateChildren, DecorateChildren) {
     /**
      * 多继承，容器也是组件，具备代理儿子事件以及递归装饰儿子的功能
-     * @name Component.Container
+     * @name Container
      * @constructor
-     * @extends ModelControl
+     * @extends Component.ModelControl
+     * @memberOf Component
      */
     return UIBase.create(ModelControl, [DelegateChildren, DecorateChildren]);
 

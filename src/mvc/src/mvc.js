@@ -2,7 +2,13 @@
  * @fileOverview KISSY's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc", function(S, MVC, Model, Collection, View, Router) {
+KISSY.add("mvc", function (S, MVC, Model, Collection, View, Router) {
+
+    /**
+     * @namespace
+     * @name MVC
+     */
+
     return S.mix(MVC, {
         Model:Model,
         View:View,
@@ -10,5 +16,5 @@ KISSY.add("mvc", function(S, MVC, Model, Collection, View, Router) {
         Router:Router
     });
 }, {
-    requires:["mvc/base","mvc/model","mvc/collection","mvc/view","mvc/router"]
+    requires:["mvc/base", "mvc/model", "mvc/collection", "mvc/view", "mvc/router"]
 });

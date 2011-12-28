@@ -8,7 +8,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     /**
      * @name Button
      * @constructor
-     * @extends ModelControl
+     * @extends Component.ModelControl
      */
     var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox],
         /**@lends Button.prototype */

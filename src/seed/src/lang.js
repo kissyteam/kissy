@@ -95,8 +95,8 @@
             /**
              * stamp a object by guid
              * @param {Object} o object needed to be stamped
-             * @param {boolean} readOnly while set marker on o if marker does not exist
-             * @param {String} marker the marker will be set on Object
+             * @param {boolean} [readOnly] while set marker on o if marker does not exist
+             * @param {String} [marker] the marker will be set on Object
              * @return guid associated with this object
              */
             stamp:function (o, readOnly, marker) {
@@ -712,8 +712,7 @@
              * @returns {Object} json data
              */
             unparam:function (str, sep, eq) {
-                if (typeof str !== 'string'
-                    || (str = S.trim(str)).length === 0) {
+                if (!S.isString(str) || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;

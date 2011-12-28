@@ -2,11 +2,15 @@
  * @fileOverview load content
  * @author yiminghe@gmail.com
  */
-KISSY.add("waterfall/loader", function(S, Node, Intervein) {
+KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     var $ = Node.all,
         SCROLL_TIMER = 50;
 
+    /**
+     * @class
+     * @memberOf Waterfall
+     */
     function Loader() {
         Loader.superclass.constructor.apply(this, arguments);
     }
@@ -65,9 +69,13 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
 
     }
 
-    Loader.ATTRS = {
+    Loader.ATTRS =
+    /**
+     * @lends Waterfall#
+     */
+    {
         diff:{
-            getter:function(v) {
+            getter:function (v) {
                 return v || 0;
                 // 默认一屏内加载
                 //return $(window).height() / 4;
@@ -76,37 +84,41 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
     };
 
 
-    S.extend(Loader, Intervein, {
-        _init:function() {
-            var self = this;
-            Loader.superclass._init.apply(self, arguments);
-            self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
-            $(window).on("scroll", self.__onScroll);
-            doScroll.call(self);
-        },
+    S.extend(Loader, Waterfall,
+        /**
+         * @lends Waterfall#
+         */
+        {
+            _init:function () {
+                var self = this;
+                Loader.superclass._init.apply(self, arguments);
+                self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
+                $(window).on("scroll", self.__onScroll);
+                doScroll.call(self);
+            },
 
-        end:function() {
-            $(window).detach("scroll", this.__onScroll);
-        },
+            end:function () {
+                $(window).detach("scroll", this.__onScroll);
+            },
 
 
-        pause:function() {
-            this.__pause = 1;
-        },
+            pause:function () {
+                this.__pause = 1;
+            },
 
-        resume:function() {
-            this.__pause = 0;
-        },
+            resume:function () {
+                this.__pause = 0;
+            },
 
-        destroy:function() {
-            var self = this;
-            Loader.superclass.destroy.apply(self, arguments);
-            $(window).detach("scroll", self.__onScroll);
-        }
-    });
+            destroy:function () {
+                var self = this;
+                Loader.superclass.destroy.apply(self, arguments);
+                $(window).detach("scroll", self.__onScroll);
+            }
+        });
 
     return Loader;
 
 }, {
-    requires:['node','./base']
+    requires:['node', './base']
 });

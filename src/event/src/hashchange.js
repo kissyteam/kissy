@@ -97,10 +97,10 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         // ie6, 7, 覆盖一些function
         if (ie < 8) {
 
-            /**
-             * 前进后退 : start -> notifyHashChange
-             * 直接输入 : poll -> hashChange -> start
-             * iframe 内容和 url 同步
+            /*
+             前进后退 : start -> notifyHashChange
+             直接输入 : poll -> hashChange -> start
+             iframe 内容和 url 同步
              */
             setup = function () {
                 if (!iframe) {
@@ -143,11 +143,11 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                         }
                     };
 
-                    /**
-                     * 前进后退 ： onIframeLoad -> 触发
-                     * 直接输入 : timer -> hashChange -> onIframeLoad -> 触发
-                     * 触发统一在 start(load)
-                     * iframe 内容和 url 同步
+                    /*
+                     前进后退 ： onIframeLoad -> 触发
+                     直接输入 : timer -> hashChange -> onIframeLoad -> 触发
+                     触发统一在 start(load)
+                     iframe 内容和 url 同步
                      */
                     function onIframeLoad() {
                         // S.log('iframe start load..');

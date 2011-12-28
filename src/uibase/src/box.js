@@ -2,14 +2,22 @@
  * @fileOverview UIBase.Box
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase/box', function() {
+KISSY.add('uibase/box', function () {
 
-
+    /**
+     * @class
+     * @memberOf UIBase
+     * @namespace
+     */
     function Box() {
     }
 
-    Box.ATTRS = {
-        html: {
+    Box.ATTRS =
+    /**
+     * @lends UIBase.Box#
+     */
+    {
+        html:{
             view:true,
             sync:false
         },
@@ -63,8 +71,12 @@ KISSY.add('uibase/box', function() {
     };
 
 
-    Box.HTML_PARSER = {
-        el:function(srcNode) {
+    Box.HTML_PARSER =
+    /**
+     * @private
+     */
+    {
+        el:function (srcNode) {
             /**
              * 如果需要特殊的对现有元素的装饰行为
              */
@@ -75,9 +87,13 @@ KISSY.add('uibase/box', function() {
         }
     };
 
-    Box.prototype = {
+    Box.prototype =
+    /**
+     * @lends UIBase.Box#
+     */
+    {
 
-        _uiSetVisible:function(isVisible) {
+        _uiSetVisible:function (isVisible) {
             var self = this;
             self.fire(isVisible ? "show" : "hide");
         },
@@ -86,7 +102,7 @@ KISSY.add('uibase/box', function() {
         /**
          * 显示 Overlay
          */
-        show: function() {
+        show:function () {
             var self = this;
             self.render();
             self.set("visible", true);
@@ -95,7 +111,7 @@ KISSY.add('uibase/box', function() {
         /**
          * 隐藏
          */
-        hide: function() {
+        hide:function () {
             this.set("visible", false);
         }
     };

@@ -2,7 +2,7 @@
  * @fileOverview view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/view", function(S, Node, Base) {
+KISSY.add("mvc/view", function (S, Node, Base) {
 
     var $ = Node.all;
 
@@ -13,6 +13,10 @@ KISSY.add("mvc/view", function(S, Node, Base) {
         return f;
     }
 
+    /**
+     * @class
+     * @memberOf MVC
+     */
     function View() {
         View.superclass.constructor.apply(this, arguments);
         var events;
@@ -23,10 +27,14 @@ KISSY.add("mvc/view", function(S, Node, Base) {
         }
     }
 
-    View.ATTRS = {
+    View.ATTRS =
+    /**
+     * @lends MVC.View#
+     */
+    {
         el:{
             value:"<div />",
-            getter:function(s) {
+            getter:function (s) {
                 if (S.isString(s)) {
                     s = $(s);
                     this.__set("el", s);
@@ -48,52 +56,56 @@ KISSY.add("mvc/view", function(S, Node, Base) {
     };
 
 
-    S.extend(View, Base, {
-
-        _afterEventsChange:function(e) {
-            var prevVal = e.prevVal;
-            if (prevVal) {
-                this._removeEvents(prevVal);
-            }
-            this._addEvents(e.newVal);
-        },
-
-        _removeEvents:function(events) {
-            var el = this.get("el");
-            for (var selector in events) {
-                var event = events[selector];
-                for (var type in event) {
-                    var callback = normFn(this, event[type]);
-                    el.undelegate(type, selector, callback, this);
-                }
-            }
-        },
-
-        _addEvents:function(events) {
-            var el = this.get("el");
-            for (var selector in events) {
-                var event = events[selector];
-                for (var type in event) {
-                    var callback = normFn(this, event[type]);
-                    el.delegate(type, selector, callback, this);
-                }
-            }
-        },
+    S.extend(View, Base,
         /**
-         * user need to override
+         * @lends MVC.View#
          */
-        render:function() {
-            return this;
-        },
+        {
 
-        destroy:function() {
-            this.get("el").remove();
-        }
+            _afterEventsChange:function (e) {
+                var prevVal = e.prevVal;
+                if (prevVal) {
+                    this._removeEvents(prevVal);
+                }
+                this._addEvents(e.newVal);
+            },
 
-    });
+            _removeEvents:function (events) {
+                var el = this.get("el");
+                for (var selector in events) {
+                    var event = events[selector];
+                    for (var type in event) {
+                        var callback = normFn(this, event[type]);
+                        el.undelegate(type, selector, callback, this);
+                    }
+                }
+            },
+
+            _addEvents:function (events) {
+                var el = this.get("el");
+                for (var selector in events) {
+                    var event = events[selector];
+                    for (var type in event) {
+                        var callback = normFn(this, event[type]);
+                        el.delegate(type, selector, callback, this);
+                    }
+                }
+            },
+            /**
+             * user need to override
+             */
+            render:function () {
+                return this;
+            },
+
+            destroy:function () {
+                this.get("el").remove();
+            }
+
+        });
 
     return View;
 
 }, {
-    requires:['node','base']
+    requires:['node', 'base']
 });

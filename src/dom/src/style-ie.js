@@ -96,10 +96,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             S.log('IE filters ActiveX is disabled. ex = ' + ex);
         }
 
-        /**
-         * border fix
-         * ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
-         * (default is "medium")
+        /*
+         border fix
+         ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
+         (default is "medium")
          */
         var IE8 = UA['ie'] == 8,
             BORDER_MAP = {
@@ -111,6 +111,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         S.each(BORDERS, function (b) {
             var name = "border" + b + "Width",
                 styleName = "border" + b + "Style";
+
+            /**
+             * @ignore
+             */
             CUSTOM_STYLES[name] = {
                 get:function (elem, computed) {
                     // 只有需要计算样式的时候才转换，否则取原值
