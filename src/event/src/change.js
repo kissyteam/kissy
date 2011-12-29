@@ -54,7 +54,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     DOM.query("textarea,input,select", el).each(function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
-                            Event.remove(fel, "change", changeHandler);
+                            Event.remove(fel, "change", {fn:changeHandler, last:1});
                         }
                     });
                 }
@@ -79,15 +79,21 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
             var t = e.target;
             if (isFormElement(t) && !t.__changeHandler) {
                 t.__changeHandler = 1;
-                // lazy bind change
-                Event.on(t, "change", changeHandler);
+                // lazy bind change , always as last handler among user's handlers
+                Event.on(t, "change", {fn:changeHandler, last:1});
             }
         }
 
         function changeHandler(e) {
             var fel = this;
-            // checkbox/radio already bubble using another technique
-            if (isCheckBoxOrRadio(fel)) {
+
+            if (
+            // in case stopped by user's callback,same with submit
+            // http://bugs.jquery.com/ticket/11049
+            // see : test/change/bubble.html
+                e.isPropagationStopped ||
+                    // checkbox/radio already bubble using another technique
+                    isCheckBoxOrRadio(fel)) {
                 return;
             }
             var p;

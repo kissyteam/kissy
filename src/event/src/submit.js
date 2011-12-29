@@ -70,4 +70,5 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
 });
 /**
  * modified from jq ,fix submit in ie<9
+ *  - http://bugs.jquery.com/ticket/11049
  **/
