@@ -30,7 +30,7 @@
 
 
 <div class="note">
-	通过 KISSY.Validation.Warn.extend('name',func) 方法就能很容易的扩展一个你想要的提示类，个人化展示您的提示信息。
+	通过 Validation.Warn.extend('name',func) 方法就能很容易的扩展一个你想要的提示类，个人化展示您的提示信息。
 	<h4>两步步轻松扩展一个属于您的个性化提示类</h4>
 </div>
 
@@ -52,10 +52,10 @@ function mywarn(){
 }
 </pre>
 
-2.扩展 KISSY.Validation.Warn.extend("mywarn",mywarn);
+2.扩展 Validation.Warn.extend("mywarn",mywarn);
 <pre class='brush:javascript;'>
-	//调用Validation.Warn.extend方法
-	KISSY.Validation.Warn.extend("mywarn",mywarn);
+	// 调用Validation.Warn.extend方法
+	Validation.Warn.extend("mywarn",mywarn);
 	
 	
 	//然后你就可以使用您的信息提示类
