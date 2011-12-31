@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Dec 31 16:45
 */
 /**
  * @fileOverview UIBase.Align
@@ -2105,7 +2105,6 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
         Resize:Resize,
         StdMod:StdMod
     });
-    S.UIBase = UIBase;
     return UIBase;
 }, {
     requires:["uibase/base",

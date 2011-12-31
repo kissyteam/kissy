@@ -26,7 +26,6 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
         Resize:Resize,
         StdMod:StdMod
     });
-    S.UIBase = UIBase;
     return UIBase;
 }, {
     requires:["uibase/base",
