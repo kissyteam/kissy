@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 KISSY.add("imagezoom/autorender",function(l,m,g,j){j.autoRender=function(o,r){o="."+(o||"KS_Widget");m.query(o,r).each(function(k){var d;if(k.getAttribute("data-widget-type")==="ImageZoom")try{if(d=k.getAttribute("data-widget-config"))d=d.replace(/'/g,'"');new j(k,g.parse(d))}catch(p){}})}},{requires:["dom","json","imagezoom/base"]});
 KISSY.add("imagezoom/base",function(l,m,g,j,o,r,k,d,p){function e(a){return l.require("uibase/"+a)}return r.create([e("boxrender"),e("contentboxrender"),e("positionrender"),e("loadingrender"),j.ie==6?e("shimrender"):null,e("align"),e("maskrender"),d],{initializer:function(){var a=this,b;(b=a.image=a.get("imageNode"))&&d.__imgOnLoad(b,function(){if(!a.imageWrap){a._render();a._bind()}})},destructor:function(){this.image.detach()},_render:function(){var a=this.image,b=a.parent();if(b.css("display")!==

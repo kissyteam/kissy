@@ -2,7 +2,7 @@
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute, Event) {
+KISSY.add('base', function (S, Attribute, Event) {
 
     /**
      * @name Base
@@ -53,5 +53,5 @@ KISSY.add('base/base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires:["./attribute", "event"]
+    requires:["base/attribute", "event"]
 });

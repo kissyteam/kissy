@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview attribute management
@@ -493,7 +493,7 @@ KISSY.add('base/attribute', function (S, undef) {
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute, Event) {
+KISSY.add('base', function (S, Attribute, Event) {
 
     /**
      * @name Base
@@ -544,5 +544,5 @@ KISSY.add('base/base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires:["./attribute", "event"]
+    requires:["base/attribute", "event"]
 });

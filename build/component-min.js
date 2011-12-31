@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 KISSY.add("component",function(j,k,e,c,d,f,h,l){j={Render:e,Container:c,UIStore:d,DelegateChildren:f,DecorateChild:l,DecorateChildren:h};j.ModelControl=k;return j},{requires:["component/modelcontrol","component/render","component/container","component/uistore","component/delegatechildren","component/decoratechildren","component/decoratechild"]});KISSY.add("component/container",function(j,k,e,c,d,f){return k.create(e,[d,f])},{requires:["uibase","./modelcontrol","./uistore","./delegatechildren","./decoratechildren"]});
 KISSY.add("component/decoratechild",function(j,k){function e(){}j.augment(e,k,{decorateInternal:function(c){this.set("el",c);var d=this.get("decorateChildCls"),f=this.get("prefixCls");if(c=c.one("."+this.getCls(d)))(d=this._findUIByClass(c))?this.decorateChildrenInternal(d,c,f):this.decorateChildren(c)}});return e},{requires:["./decoratechildren"]});

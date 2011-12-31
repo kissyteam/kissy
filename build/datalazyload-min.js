@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 KISSY.add("datalazyload",function(f,e,k,n){function j(a,b){if(!(this instanceof j))return new j(a,b);if(b===n){b=a;a=[o]}f.isArray(a)||(a=[e.get(a)||o]);this.containers=a;this.config=f.merge(t,b);this.callbacks={els:[],fns:[]};this._init();return n}function p(a,b){var c=f.indexOf(a,b);c!=-1&&b.splice(c,1);return c}var l=window,u=0.1,o=document,q="scroll",r="resize",t={mod:"manual",diff:"default",placeholder:"none",execScript:true};f.augment(j,{_init:function(){this.threshold=this._getThreshold();
 this._filterItems();this._initLoadEvent()},_filterItems:function(){var a=this.containers,b,c,d,h=[],g=[];b=0;for(c=a.length;b<c;++b){d=e.query("img",a[b]);h=h.concat(f.filter(d,this._filterImg,this));d=e.query("textarea",a[b]);g=g.concat(f.filter(d,this._filterArea,this))}this.images=h;this.areaes=g},_filterImg:function(a){var b=a.getAttribute("data-ks-lazyload"),c=this.threshold,d=this.config.placeholder;if(this.config.mod==="manual"){if(b){if(d!=="none")a.src=d;return true}}else if(e.offset(a).top>

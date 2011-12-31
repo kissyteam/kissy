@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -296,7 +296,7 @@ build time: Dec 31 15:16
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20111231151608',
+            buildTime:'20111231152642',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3285,7 +3285,7 @@ build time: Dec 31 15:16
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview ua
@@ -3528,7 +3528,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview   dom-attr
@@ -7342,7 +7342,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview responsible for registering event
@@ -9565,7 +9565,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -10074,7 +10074,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview io shortcut
@@ -11670,7 +11670,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview   cookie
@@ -11759,7 +11759,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview attribute management
@@ -12251,7 +12251,7 @@ KISSY.add('base/attribute', function (S, undef) {
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute, Event) {
+KISSY.add('base', function (S, Attribute, Event) {
 
     /**
      * @name Base
@@ -12302,12 +12302,12 @@ KISSY.add('base/base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires:["./attribute", "event"]
+    requires:["base/attribute", "event"]
 });
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview anim
@@ -13655,7 +13655,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview   anim-node-plugin

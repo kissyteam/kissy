@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus

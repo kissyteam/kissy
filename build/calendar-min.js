@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 KISSY.add("calendar/base",function(m,n,k,l){function h(a,c){this._init(a,c)}k=k.Target;var e=n.all,b=e(window);m.augment(h,k,{_init:function(a,c){var f=e(a);this.id=this._stamp(f);this._buildParam(c);if(this.popup){this.trigger=f;this.con=new n("<div>");e(document.body).append(this.con);this.con.css({top:"0px",position:"absolute",background:"white",visibility:"hidden","z-index":99999999})}else this.con=f;this.C_Id=this._stamp(this.con);this.render();this._buildEvent();return this},render:function(a){var c,
 f,d,g;a=a||{};this._parseParam(a);this.con.addClass("ks-cal-call ks-clearfix ks-cal-call-multi-"+this.pages);this.con.html("");a=c=false;if(this.range){if(this.range.start)c=true;if(this.range.end)a=true}g=c&&!this.rangeLinkage?[this.range.start.getFullYear(),this.range.start.getMonth()]:[this.year,this.month];for(c=0;c<this.pages;c++){if(c===0)f=true;else if(this.rangeLinkage){f=false;g=this._computeNextMonth(g)}else{f=true;g=a&&c+1==this.pages?[this.range.end.getFullYear(),this.range.end.getMonth()]:

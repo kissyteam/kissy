@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 KISSY.add("suggest",function(h,d,j,u,m){function l(a,b,c){if(!(this instanceof l))return new l(a,b,c);this.textInput=d.get(a);this.config=c=h.merge(A,c);if(h.isString(b)){b+=b.indexOf("?")===-1?"?":"&";this.dataSource=b+c.callbackName+"="+(a=c.callbackFn);if(c.dataType===2)this.config.dataType=0;if(a!==v){b=a;c=b.split(".");a=c.length;if(a>1){b=b.replace(/^(.*)\..+$/,"$1");b=h.namespace(b,true);b[c[a-1]]=r}else s[b]=r}}else{this.dataSource=b;this.config.dataType=2}this.queryParams=this.query=k;this._dataCache=
 {};this._init();return 0}function w(a,b){if(b.nodeType===1){d.html(a,k);a.appendChild(b)}else d.html(a,b)}function r(a){l.focusInstance&&h.later(function(){l.focusInstance._handleResponse(a)},0)}var s=window,B=j.Target,o=document,p,x=d.get("head"),q=u.ie,y=q>=9,v="KISSY.Suggest.callback",k="",z=parseInt,C=/^(?:input|button|a)$/i,A={containerCls:k,resultFormat:"%result%",closeBtnText:"\u5173\u95ed",shim:q===6,submitOnSelect:true,offset:-1,charset:"utf-8",callbackName:"callback",callbackFn:v,queryName:"q",dataType:0};

@@ -34,35 +34,41 @@
 <div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
 
 <script>
-    
-    var S = KISSY, _log = S.log, c = S.get('#console'), T = S.Template;
-    S.log = function() {
-        c.innerHTML = arguments[0];
-        _log.apply(S, arguments);
-    };
+    KISSY.use("template", function (S, T) {
 
-    S.one('#clean').on('click', function() {
-        S.log('');
-    });
+        function tmpl(sel, data) {
+            return S.all(T(S.all(sel).html()).render(data));
+        }
 
-    S.one('#jsonp-yql').on('click', function() {
-        S.one('#console').html('真的在异步加载中...');
-        S.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
-                function(data) {
-                    S.one('#console').html('');
-                    S.tmpl('#ajax-template', data.query.results).appendTo('#console');
-                }
-                );
-    });
+        var _log = S.log, c = S.get('#console');
+        S.log = function () {
+            c.innerHTML = arguments[0];
+            _log.apply(S, arguments);
+        };
 
-    S.one('#jsonp-p4p').on('click', function() {
-        S.one('#console').html('真的在异步加载中...');
-        S.getScript(S.one('#ajax-template-p4p').attr('data-href'),
-                function() {
-                    S.one('#console').html('');
-                    S.tmpl('#ajax-template-p4p', {'p4p_sidebar': __p4p_sidebar__, 'p4p_bottom': __p4p_bottom__}).appendTo('#console');
-                }
-                );
+        S.one('#clean').on('click', function () {
+            S.log('');
+        });
+
+        S.one('#jsonp-yql').on('click', function () {
+            S.one('#console').html('真的在异步加载中...');
+            S.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
+                    function (data) {
+                        S.one('#console').html('');
+                        tmpl('#ajax-template', data.query.results).appendTo('#console');
+                    }
+            );
+        });
+
+        S.one('#jsonp-p4p').on('click', function () {
+            S.one('#console').html('真的在异步加载中...');
+            S.getScript(S.one('#ajax-template-p4p').attr('data-href'),
+                    function () {
+                        S.one('#console').html('');
+                        tmpl('#ajax-template-p4p', {'p4p_sidebar':__p4p_sidebar__, 'p4p_bottom':__p4p_bottom__}).appendTo('#console');
+                    }
+            );
+        });
     });
 </script>
 </body>

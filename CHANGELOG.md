@@ -28,6 +28,7 @@ History:
  - [!] 移除 core 模块，不要 use("core"),require("core"),只用你要用的
  - [+] 左莫增强 calendar
  - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
+ - [!] 去除 KISSY.XX 命名空间绑定，使用前先 use，从参数中取得模块使用
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

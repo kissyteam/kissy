@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Dec 31 15:16
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20111231151608',
+            buildTime:'20111231152642',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3099,7 +3099,7 @@ build time: Dec 31 15:16
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview ua
@@ -3342,7 +3342,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview   dom-attr
@@ -7156,7 +7156,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview responsible for registering event
@@ -9379,7 +9379,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -9888,7 +9888,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview io shortcut
@@ -11484,7 +11484,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview   cookie
@@ -11573,7 +11573,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview attribute management
@@ -12065,7 +12065,7 @@ KISSY.add('base/attribute', function (S, undef) {
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base', function (S, Attribute, Event) {
+KISSY.add('base', function (S, Attribute, Event) {
 
     /**
      * @name Base
@@ -12116,12 +12116,12 @@ KISSY.add('base/base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires:["./attribute", "event"]
+    requires:["base/attribute", "event"]
 });
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview anim
@@ -13469,7 +13469,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -14024,7 +14024,7 @@ query:DOM.query
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -15444,7 +15444,7 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -15990,21 +15990,21 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview  KISSY Template Engine.
  * @author yyfrankyy@gmail.com
  */
-KISSY.add('template', function(S) {
+KISSY.add('template', function (S) {
 
     var // Template Cache
         templateCache = {},
 
         // start/end tag mark
         tagStartEnd = {
-            '#': 'start',
-            '/': 'end'
+            '#':'start',
+            '/':'end'
         },
 
         // static string
@@ -16031,19 +16031,19 @@ KISSY.add('template', function(S) {
             KS_TEMPL + '.join("");',
 
         // restore double quote in logic template variable
-        restoreQuote = function(str) {
+        restoreQuote = function (str) {
             return str.replace(/\\"/g, '"');
         },
 
         // escape double quote in template
-        escapeQuote = function(str) {
+        escapeQuote = function (str) {
             return str.replace(/"/g, '\\"');
         },
 
         trim = S.trim,
 
         // build a static parser
-        buildParser = function(tpl) {
+        buildParser = function (tpl) {
             var _parser,
                 _empty_index;
             return escapeQuote(trim(tpl)
@@ -16052,7 +16052,7 @@ KISSY.add('template', function(S) {
                 // '{{y}}\\x{{/y}}' =>tmpl.push('\x'); => tmpl.push('\\x');
                 .replace(/\\/g, '\\\\'))
                 .replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,
-                function(all, expr, body) {
+                function (all, expr, body) {
                     _parser = "";
                     // must restore quote , if str is used as code directly
                     body = restoreQuote(trim(body));
@@ -16096,38 +16096,38 @@ KISSY.add('template', function(S) {
 
         // expression
         Statements = {
-            'if': {
-                start: 'if(' + KS_TEMPL_STAT_PARAM + '){',
-                end: '}'
+            'if':{
+                start:'if(' + KS_TEMPL_STAT_PARAM + '){',
+                end:'}'
             },
 
-            'else': {
-                start: '}else{'
+            'else':{
+                start:'}else{'
             },
 
-            'elseif': {
-                start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
+            'elseif':{
+                start:'}else if(' + KS_TEMPL_STAT_PARAM + '){'
             },
 
             // KISSY.each function wrap
-            'each': {
-                start: function(obj, as, v, k) {
+            'each':{
+                start:function (obj, as, v, k) {
                     var _ks_value = '_ks_value',
                         _ks_index = '_ks_index';
                     if (as === KS_AS && v) {
-                        _ks_value = v || _ks_value,
-                            _ks_index = k || _ks_index;
+                        _ks_value = v || _ks_value;
+                        _ks_index = k || _ks_index;
                     }
                     return 'KISSY.each(' + obj +
                         ', function(' + _ks_value +
                         ', ' + _ks_index + '){';
                 },
-                end: '});'
+                end:'});'
             },
 
             // comments
-            '!': {
-                start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
+            '!':{
+                start:'/*' + KS_TEMPL_STAT_PARAM + '*/'
             }
         };
 
@@ -16159,10 +16159,10 @@ KISSY.add('template', function(S) {
             }
 
             templateCache[tpl] = {
-                name: _ks_data,
+                name:_ks_data,
                 o:o,
-                parser: _parser.join(""),
-                render: func
+                parser:_parser.join(""),
+                render:func
             };
         }
         return templateCache[tpl];
@@ -16173,7 +16173,7 @@ KISSY.add('template', function(S) {
          * Logging Compiled Template Codes
          * @param {String} tpl template string.
          */
-        log: function(tpl) {
+        log:function (tpl) {
             if (tpl in templateCache) {
                 if ('js_beautify' in window) {
 //                        S.log(js_beautify(templateCache[tpl].parser, {
@@ -16198,7 +16198,7 @@ KISSY.add('template', function(S) {
          * @param {String} statement tag name.
          * @param {String} o extent tag object.
          */
-        addStatement: function(statement, o) {
+        addStatement:function (statement, o) {
             if (S.isString(statement)) {
                 Statements[statement] = o;
             } else {
@@ -16221,7 +16221,7 @@ KISSY.add('template', function(S) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview    Flash 全局静态类
@@ -16741,7 +16741,7 @@ KISSY.add('flash/ua', function(S, UA) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -18936,7 +18936,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview resizable support for kissy
@@ -19130,7 +19130,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview UIBase.Align
@@ -21261,7 +21261,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -22191,7 +22191,7 @@ KISSY.add("component/uistore", function(S) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview accordion aria support
@@ -24796,7 +24796,7 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -25323,7 +25323,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview 提示补全组件
@@ -26506,7 +26506,7 @@ KISSY.add('suggest', function(S, DOM, Event, UA, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview auto render
@@ -27142,7 +27142,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * KISSY Calendar
@@ -28714,7 +28714,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -30100,7 +30100,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:25
 */
 /**
  * @fileOverview Model and Control for button
@@ -30347,7 +30347,7 @@ KISSY.add("button/split", function(S) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -30913,7 +30913,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -31862,7 +31862,7 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -32250,7 +32250,7 @@ KISSY.add("waterfall", function (S, Waterfall, Loader) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:16
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview validation
@@ -33768,7 +33768,7 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:15
+build time: Dec 31 15:26
 */
 /**
  * @fileOverview mvc base
