@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:25
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview  KISSY Template Engine.
  * @author yyfrankyy@gmail.com
  */
-KISSY.add('template/base', function(S) {
+KISSY.add('template', function(S) {
 
     var // Template Cache
         templateCache = {},
@@ -229,25 +229,3 @@ KISSY.add('template/base', function(S) {
  *      - fix escape by escape
  *      - expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
  */
-/**
- * @fileOverview  KISSY.Template Node.
- * @author 文河<wenhe@taobao.com>
- */
-KISSY.add('template/node', function(S, Template, Node) {
-    var $ = Node.all;
-    S.mix(S, {
-        tmpl: function(selector, data) {
-            return $(Template($(selector).html()).render(data));
-        }
-    });
-
-}, {requires:["./base",'node']});
-/**
- * @fileOverview template
- */
-KISSY.add("template", function(S, T) {
-    S.Template = T;
-    return T;
-}, {
-    requires:["template/base","template/node"]
-});

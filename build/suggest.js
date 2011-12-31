@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:23
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview 提示补全组件
  * @creator lifesinger@gmail.com
  */
-KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
+KISSY.add('suggest', function(S, DOM, Event, UA, undefined) {
 
     var win = window,
         EventTarget = Event.Target,
@@ -1120,7 +1120,6 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
 
     Suggest.version = 1.1;
     Suggest.callback = callback;
-    S.Suggest = Suggest;
     return Suggest;
 
 }, { requires: ['dom','event','ua'] });
@@ -1182,13 +1181,3 @@ KISSY.add('suggest/base', function(S, DOM, Event, UA, undefined) {
  *                   1. 对于开放配置config.contentRenderer，接收content的渲染函数，返回渲染后的dom节点，规定item必须为li
  *                   2. 改进上下方向键选择item的代码逻辑
  */
-/**
- * @fileOverview suggest
- * @author lifesinger@gmail.com
- */
-KISSY.add("suggest", function(S, Sug) {
-    S.Suggest = Sug;
-    return Sug;
-}, {
-    requires:["suggest/base"]
-});

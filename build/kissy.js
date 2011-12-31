@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 13:21
+build time: Dec 31 15:16
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -92,6 +92,9 @@ build time: Dec 27 13:21
          * @lends KISSY
          */
         {
+            /**
+             * @private
+             */
             configs:{},
             // S.app() with these members.
             __APP_MEMBERS:['namespace'],
@@ -107,14 +110,14 @@ build time: Dec 27 13:21
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20111227132129',
+            buildTime:'20111231151608',
 
             /**
              * Returns a new object containing all of the properties of
              * all the supplied objects. The properties from later objects
              * will overwrite those in earlier objects. Passing in a
              * single object will create a shallow copy of it.
-             * @param {Object...} m1 objects need to be merged
+             * @param {...} m1 objects need to be merged
              * @return {Object} the new merged object
              */
             merge:function (m1) {
@@ -442,8 +445,8 @@ build time: Dec 27 13:21
             /**
              * stamp a object by guid
              * @param {Object} o object needed to be stamped
-             * @param {boolean} readOnly while set marker on o if marker does not exist
-             * @param {String} marker the marker will be set on Object
+             * @param {boolean} [readOnly] while set marker on o if marker does not exist
+             * @param {String} [marker] the marker will be set on Object
              * @return guid associated with this object
              */
             stamp:function (o, readOnly, marker) {
@@ -1059,8 +1062,7 @@ build time: Dec 27 13:21
              * @returns {Object} json data
              */
             unparam:function (str, sep, eq) {
-                if (typeof str !== 'string'
-                    || (str = S.trim(str)).length === 0) {
+                if (!S.isString(str) || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;
@@ -1410,6 +1412,19 @@ build time: Dec 27 13:21
 
 })(KISSY, undefined);
 /**
+ * implement Promise specification by KISSY
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+
+})(KISSY);
+
+/**
+ * refer
+ *  - http://wiki.commonjs.org/wiki/Promises
+ *  - https://github.com/kriskowal/q
+ **//**
  * @fileOverview setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
@@ -2352,6 +2367,7 @@ build time: Dec 27 13:21
      * biz -> .
      * 表示遇到 biz/x
      * 在当前网页路径找 biz/x.js
+     * @private
      */
     S.configs.packages = function (cfgs) {
         var ps;
@@ -2581,6 +2597,7 @@ build time: Dec 27 13:21
 
                 /**
                  * check cyclic dependency between mods
+                 * @private
                  */
                 function cyclicCheck() {
                     var __allRequires,
@@ -2709,14 +2726,17 @@ build time: Dec 27 13:21
     }
     /**
      * modify current module path
+     * @private
      * @param rules
      * @example
+     * <code>
      *      [
      *          [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
      *          [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
      *              return m1+m2;
      *          }]
      *      ]
+     * </code>
      */
     S.configs.map = function (rules) {
         S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);
@@ -3079,7 +3099,7 @@ build time: Dec 27 13:21
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:27
+build time: Dec 31 15:16
 */
 /**
  * @fileOverview ua
@@ -3322,7 +3342,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:04
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview   dom-attr
@@ -6204,10 +6224,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             S.log('IE filters ActiveX is disabled. ex = ' + ex);
         }
 
-        /**
-         * border fix
-         * ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
-         * (default is "medium")
+        /*
+         border fix
+         ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
+         (default is "medium")
          */
         var IE8 = UA['ie'] == 8,
             BORDER_MAP = {
@@ -6219,6 +6239,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         S.each(BORDERS, function (b) {
             var name = "border" + b + "Width",
                 styleName = "border" + b + "Style";
+
+            /**
+             * @ignore
+             */
             CUSTOM_STYLES[name] = {
                 get:function (elem, computed) {
                     // 只有需要计算样式的时候才转换，否则取原值
@@ -6668,11 +6692,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
 
-    /**
-     * css height,width 永远都是计算值
+    /*
+     css height,width 永远都是计算值
      */
     S.each(["height", "width"], function (name) {
+        /**
+         * @ignore
+         */
         CUSTOM_STYLES[ name ] = {
+            /**
+             * @ignore
+             */
             get:function (elem, computed) {
                 var val;
                 if (computed) {
@@ -6700,6 +6730,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     });
 
     S.each(["left", "top"], function (name) {
+        /**
+         * @ignore
+         */
         CUSTOM_STYLES[ name ] = {
             get:function (elem, computed) {
                 if (computed) {
@@ -7123,13 +7156,13 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:07
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview responsible for registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _protected, specials) {
+KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
     var simpleAdd = Utils.simpleAdd,
         isValidTarget = Utils.isValidTarget,
         isIdenticalHandler = Utils.isIdenticalHandler;
@@ -7202,7 +7235,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                 // 获取事件描述
                 eventDesc = Event._data(target);
                 if (!eventDesc) {
-                    _protected._data(target, eventDesc = {});
+                    _data._data(target, eventDesc = {});
                 }
                 //事件 listeners , similar to eventListeners in DOM3 Events
                 var events = eventDesc.events = eventDesc.events || {},
@@ -7308,13 +7341,13 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './object', './handle', './protected', './special']
+    requires:['./base', 'dom', './utils', './object', './handle', './data', './special']
 });/**
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
  *               how to fire event just like browser?
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
+KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
@@ -7331,6 +7364,28 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
      * @lends Event
      */
     {
+
+        _clone:function (src, dest) {
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
+                !_data._hasData(src)) {
+                return;
+            }
+            var eventDesc = _data._data(src),
+                events = eventDesc.events;
+            S.each(events, function (handlers, type) {
+                S.each(handlers, function (handler) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
+                    Event.on(dest, type, {
+                        fn:handler.fn,
+                        scope:handler.scope,
+                        data:handler.data,
+                        originalType:handler.originalType,
+                        selector:handler.selector
+                    });
+                });
+            });
+        },
+
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
          * @memberOf Event
@@ -7507,7 +7562,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
 
     return Event;
 }, {
-    requires:["dom", "./object", "./utils", './handle', './special']
+    requires:["dom", "./object", "./utils", './handle', './data', './special']
 });
 
 /**
@@ -7581,7 +7636,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     DOM.query("textarea,input,select", el).each(function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
-                            Event.remove(fel, "change", changeHandler);
+                            Event.remove(fel, "change", {fn:changeHandler, last:1});
                         }
                     });
                 }
@@ -7606,15 +7661,21 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
             var t = e.target;
             if (isFormElement(t) && !t.__changeHandler) {
                 t.__changeHandler = 1;
-                // lazy bind change
-                Event.on(t, "change", changeHandler);
+                // lazy bind change , always as last handler among user's handlers
+                Event.on(t, "change", {fn:changeHandler, last:1});
             }
         }
 
         function changeHandler(e) {
             var fel = this;
-            // checkbox/radio already bubble using another technique
-            if (isCheckBoxOrRadio(fel)) {
+
+            if (
+            // in case stopped by user's callback,same with submit
+            // http://bugs.jquery.com/ticket/11049
+            // see : test/change/bubble.html
+                e.isPropagationStopped ||
+                    // checkbox/radio already bubble using another technique
+                    isCheckBoxOrRadio(fel)) {
                 return;
             }
             var p;
@@ -7628,9 +7689,37 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
 }, {
     requires:["ua", "./base", "dom", './special']
 });/**
+ * @fileOverview for other kissy core usage
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("event/data", function (S, DOM, Utils) {
+    var EVENT_GUID = Utils.EVENT_GUID,
+        data,
+        makeArray = S.makeArray;
+    data = {
+        _hasData:function (elem) {
+            return DOM.hasData(elem, EVENT_GUID);
+        },
+
+        _data:function (elem) {
+            var args = makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.data.apply(DOM, args);
+        },
+
+        _removeData:function (elem) {
+            var args = makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.removeData.apply(DOM, args);
+        }
+    };
+    return data;
+}, {
+    requires:['dom', './utils']
+});/**
  * @fileOverview KISSY Scalable Event Framework
  */
-KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
+KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     S.mix(Event, {
         KeyCodes:KeyCodes,
         Target:Target,
@@ -7669,12 +7758,12 @@ KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
         }
     });
 
-    S.mix(Event, _protected);
+    S.mix(Event, _data);
 
     return Event;
 }, {
     requires:[
-        "event/protected",
+        "event/data",
         "event/keycodes",
         "event/base",
         "event/target",
@@ -7751,11 +7840,11 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
  * @fileOverview responsible for handling event from browser to KISSY Event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/handle", function (S, DOM, _protected, special) {
+KISSY.add("event/handle", function (S, DOM, _data, special) {
 
     function getEvents(target) {
         // 获取事件描述
-        var eventDesc = _protected._data(target);
+        var eventDesc = _data._data(target);
         return eventDesc && eventDesc.events;
     }
 
@@ -7882,7 +7971,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
         return gRet;
     }
 }, {
-    requires:['dom', './protected', './special']
+    requires:['dom', './data', './special']
 });/**
  * @fileOverview   event-hashchange
  * @author  yiminghe@gmail.com , xiaomacji@gmail.com
@@ -7982,10 +8071,10 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         // ie6, 7, 覆盖一些function
         if (ie < 8) {
 
-            /**
-             * 前进后退 : start -> notifyHashChange
-             * 直接输入 : poll -> hashChange -> start
-             * iframe 内容和 url 同步
+            /*
+             前进后退 : start -> notifyHashChange
+             直接输入 : poll -> hashChange -> start
+             iframe 内容和 url 同步
              */
             setup = function () {
                 if (!iframe) {
@@ -8028,11 +8117,11 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                         }
                     };
 
-                    /**
-                     * 前进后退 ： onIframeLoad -> 触发
-                     * 直接输入 : timer -> hashChange -> onIframeLoad -> 触发
-                     * 触发统一在 start(load)
-                     * iframe 内容和 url 同步
+                    /*
+                     前进后退 ： onIframeLoad -> 触发
+                     直接输入 : timer -> hashChange -> onIframeLoad -> 触发
+                     触发统一在 start(load)
+                     iframe 内容和 url 同步
                      */
                     function onIframeLoad() {
                         // S.log('iframe start load..');
@@ -8351,7 +8440,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
  * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _protected, special) {
+KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _data, special) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
@@ -8415,7 +8504,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
         setup:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _protected._data(el);
+                eventDesc = _data._data(el);
             // solve this in ie
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER] = S.bind(handler, el);
             simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
@@ -8423,7 +8512,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
         tearDown:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _protected._data(el);
+                eventDesc = _data._data(el);
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER];
             simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
@@ -8433,7 +8522,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
 }, {
     requires:['./base', 'ua', './utils',
         './object', './handle',
-        './protected', "./special"]
+        './data', "./special"]
 });
 
 /**
@@ -8633,59 +8722,10 @@ KISSY.add('event/object', function (S, undefined) {
  *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
  */
 /**
- * @fileOverview for other kissy core usage
- * @author yiminghe@gmail.com
- */
-KISSY.add("event/protected", function (S, DOM, Utils) {
-    var EVENT_GUID = Utils.EVENT_GUID,
-        _protected,
-        makeArray = S.makeArray;
-    _protected = {
-        _clone:function (src, dest) {
-            if (dest.nodeType !== DOM.ELEMENT_NODE ||
-                !_protected._hasData(src)) {
-                return;
-            }
-            var eventDesc = _protected._data(src),
-                events = eventDesc.events;
-            S.each(events, function (handlers, type) {
-                S.each(handlers, function (handler) {
-                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
-                    Event.on(dest, type, {
-                        fn:handler.fn,
-                        scope:handler.scope,
-                        data:handler.data,
-                        originalType:handler.originalType,
-                        selector:handler.selector
-                    });
-                });
-            });
-        },
-
-        _hasData:function (elem) {
-            return DOM.hasData(elem, EVENT_GUID);
-        },
-
-        _data:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.data.apply(DOM, args);
-        },
-
-        _removeData:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.removeData.apply(DOM, args);
-        }
-    };
-    return _protected;
-}, {
-    requires:['dom', './utils']
-});/**
  * @fileOverview responsible for un-registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPECIAL) {
+KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
     var isValidTarget = Utils.isValidTarget,
         simpleRemove = Utils.simpleRemove;
 
@@ -8724,7 +8764,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 }
             }
 
-            var eventDesc = _protected._data(target),
+            var eventDesc = _data._data(target),
                 events = eventDesc && eventDesc.events,
                 handlers,
                 handler,
@@ -8864,7 +8904,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
         }
     });
 }, {
-    requires:['./base', 'dom', './utils', './protected', './special']
+    requires:['./base', 'dom', './utils', './data', './special']
 });/**
  * @fileOverview special house for special events
  * @author yiminghe@gmail.com
@@ -8943,6 +8983,7 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
 });
 /**
  * modified from jq ,fix submit in ie<9
+ *  - http://bugs.jquery.com/ticket/11049
  **//**
  * @fileOverview 提供事件发布和订阅机制
  * @author  yiminghe@gmail.com
@@ -9338,7 +9379,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:11
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -9847,7 +9888,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:29
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview io shortcut
@@ -11443,13 +11484,13 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:43
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview   cookie
  * @author  lifesinger@gmail.com
  */
-KISSY.add('cookie/base', function(S) {
+KISSY.add('cookie', function (S) {
 
     var doc = document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
@@ -11467,7 +11508,7 @@ KISSY.add('cookie/base', function(S) {
          * 获取 cookie 值
          * @return {string} 如果 name 不存在，返回 undefined
          */
-        get: function(name) {
+        get:function (name) {
             var ret, m;
 
             if (isNotEmptyString(name)) {
@@ -11479,7 +11520,7 @@ KISSY.add('cookie/base', function(S) {
             return ret;
         },
 
-        set: function(name, val, expires, domain, path, secure) {
+        set:function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;
 
             // 从当前时间开始，多少天后过期
@@ -11511,7 +11552,7 @@ KISSY.add('cookie/base', function(S) {
             doc.cookie = name + '=' + text;
         },
 
-        remove: function(name, domain, path, secure) {
+        remove:function (name, domain, path, secure) {
             // 置空，并立刻过期
             this.set(name, '', -1, domain, path, secure);
         }
@@ -11529,24 +11570,16 @@ KISSY.add('cookie/base', function(S) {
  *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  *     独立成静态工具类的方式更优。
  */
-/**
- * @fileOverview cookie
- */
-KISSY.add("cookie", function(S,C) {
-    return C;
-}, {
-    requires:["cookie/base"]
-});
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:32
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview attribute management
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function(S, undef) {
+KISSY.add('base/attribute', function (S, undef) {
 
     // atomic flag
     Attribute.INVALID = {};
@@ -11573,10 +11606,10 @@ KISSY.add('base/attribute', function(S, undef) {
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
         return self.fire(when + capitalFirst(name) + 'Change', {
-            attrName: attrName,
+            attrName:attrName,
             subAttrName:subAttrName,
-            prevVal: prevVal,
-            newVal: newVal
+            prevVal:prevVal,
+            newVal:newVal
         });
     }
 
@@ -11585,7 +11618,7 @@ KISSY.add('base/attribute', function(S, undef) {
      *
      * @param obj
      * @param name
-     * @param create
+     * @param [create]
      * @return non-empty property value of obj
      */
     function ensureNonEmpty(obj, name, create) {
@@ -11638,7 +11671,7 @@ KISSY.add('base/attribute', function(S, undef) {
      * @param path
      */
     function getValueByPath(o, path) {
-        for (var i = 0,len = path.length;
+        for (var i = 0, len = path.length;
              o != undef && i < len;
              i++) {
             o = o[path[i]];
@@ -11743,263 +11776,275 @@ KISSY.add('base/attribute', function(S, undef) {
     function Attribute() {
     }
 
-    S.augment(Attribute, {
-
+    S.augment(Attribute,
         /**
-         * @return un-cloned attr config collections
+         * @lends Attribute.prototype
          */
-        getAttrs: function() {
-            return getAttrs(this);
-        },
+        {
 
-        /**
-         * @return un-cloned attr value collections
-         */
-        getAttrVals:function() {
-            var self = this,
-                o = {},
-                a,
-                attrs = getAttrs(self);
-            for (a in attrs) {
-                o[a] = self.get(a);
-            }
-            return o;
-        },
+            /**
+             * @return un-cloned attr config collections
+             */
+            getAttrs:function () {
+                return getAttrs(this);
+            },
 
-        /**
-         * Adds an attribute with the provided configuration to the host object.
-         * @param {String} name attrName
-         * @param {Object} attrConfig The config supports the following properties:
-         * {
-         *     value: 'the default value', // 最好不要使用自定义类生成的对象，这时使用 valueFn
-         *     valueFn: function //
-         *     setter: function
-         *     getter: function
-         * }
-         * @param {boolean} override whether override existing attribute config ,default true
-         */
-        addAttr: function(name, attrConfig, override) {
-            var self = this,
-                attrs = getAttrs(self),
-                cfg = S.clone(attrConfig);
-            if (!attrs[name]) {
-                attrs[name] = cfg;
-            } else {
-                S.mix(attrs[name], cfg, override);
-            }
-            return self;
-        },
+            /**
+             * @return un-cloned attr value collections
+             */
+            getAttrVals:function () {
+                var self = this,
+                    o = {},
+                    a,
+                    attrs = getAttrs(self);
+                for (a in attrs) {
+                    o[a] = self.get(a);
+                }
+                return o;
+            },
 
-        /**
-         * Configures a group of attributes, and sets initial values.
-         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-         * @param {Object} initialValues user defined initial values
-         */
-        addAttrs: function(attrConfigs, initialValues) {
-            var self = this;
-            S.each(attrConfigs, function(attrConfig, name) {
-                self.addAttr(name, attrConfig);
-            });
-            if (initialValues) {
-                self.set(initialValues);
-            }
-            return self;
-        },
+            /**
+             * Adds an attribute with the provided configuration to the host object.
+             * @param {String} name attrName
+             * @param {Object} attrConfig The config supports the following properties
+             * @param [attrConfig.value] simple object or system native object
+             * @param [attrConfig.valueFn] a function which can return current attribute's default value
+             * @param {Function(*)} [attrConfig.setter] call when set attribute's value
+             *                                          pass current attribute's value as parameter
+             *                                          if return value is not undefined,set returned value as real value
+             * @param {Function(*)} [attrConfig.getter] call when get attribute's value
+             *                                          pass current attribute's value as parameter
+             *                                          return getter's returned value to invoker
+             * @param {Function(*)} [attrConfig.validator]  call before set attribute's value
+             *                                              if return false,cancel this set action
+             * @param {boolean} [override] whether override existing attribute config ,default true
+             */
+            addAttr:function (name, attrConfig, override) {
+                var self = this,
+                    attrs = getAttrs(self),
+                    cfg = S.clone(attrConfig);
+                if (!attrs[name]) {
+                    attrs[name] = cfg;
+                } else {
+                    S.mix(attrs[name], cfg, override);
+                }
+                return self;
+            },
 
-        /**
-         * Checks if the given attribute has been added to the host.
-         */
-        hasAttr: function(name) {
-            return name && getAttrs(this).hasOwnProperty(name);
-        },
+            /**
+             * Configures a group of attributes, and sets initial values.
+             * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+             * @param {Object} initialValues user defined initial values
+             */
+            addAttrs:function (attrConfigs, initialValues) {
+                var self = this;
+                S.each(attrConfigs, function (attrConfig, name) {
+                    self.addAttr(name, attrConfig);
+                });
+                if (initialValues) {
+                    self.set(initialValues);
+                }
+                return self;
+            },
 
-        /**
-         * Removes an attribute from the host object.
-         */
-        removeAttr: function(name) {
-            var self = this;
+            /**
+             * Checks if the given attribute has been added to the host.
+             */
+            hasAttr:function (name) {
+                return name && getAttrs(this).hasOwnProperty(name);
+            },
 
-            if (self.hasAttr(name)) {
-                delete getAttrs(self)[name];
-                delete getAttrVals(self)[name];
-            }
+            /**
+             * Removes an attribute from the host object.
+             */
+            removeAttr:function (name) {
+                var self = this;
 
-            return self;
-        },
+                if (self.hasAttr(name)) {
+                    delete getAttrs(self)[name];
+                    delete getAttrVals(self)[name];
+                }
 
-        /**
-         * Sets the value of an attribute.
-         */
-        set: function(name, value, opts) {
-            var ret,self = this;
-            if (S.isPlainObject(name)) {
-                var all = name;
-                name = 0;
-                ret = true;
-                opts = value;
-                var attrs = [];
-                for (name in all) {
-                    ret = setInternal(self, name, all[name], opts, attrs);
-                    if (ret === false) {
-                        break;
+                return self;
+            },
+
+
+            /**
+             * Sets the value of an attribute.
+             * @param {String|Object} name attribute's name or attribute name and value map
+             * @param [value] attribute's value
+             * @param {Object} [opts] some options
+             * @param {boolean} [opts.silent] whether fire change event
+             * @returns {boolean} whether pass validator
+             */
+            set:function (name, value, opts) {
+                var ret, self = this;
+                if (S.isPlainObject(name)) {
+                    var all = Object(name);
+                    opts = value;
+                    var attrs = [];
+                    for (name in all) {
+                        ret = setInternal(self, name, all[name], opts, attrs);
+                        if (ret === false) {
+                            break;
+                        }
+                    }
+                    var attrNames = [],
+                        prevVals = [],
+                        newVals = [],
+                        subAttrNames = [];
+                    S.each(attrs, function (attr) {
+                        prevVals.push(attr.prevVal);
+                        newVals.push(attr.newVal);
+                        attrNames.push(attr.attrName);
+                        subAttrNames.push(attr.subAttrName);
+                    });
+                    if (attrNames.length) {
+                        __fireAttrChange(self,
+                            '',
+                            '*',
+                            prevVals,
+                            newVals,
+                            subAttrNames,
+                            attrNames);
+                    }
+                    return ret;
+                }
+                return setInternal(self, name, value, opts);
+            },
+
+            /**
+             * internal use, no event involved, just set.
+             * @protected overriden by mvc/model
+             */
+            __set:function (name, value) {
+                var self = this,
+                    setValue,
+                    // if host does not have meta info corresponding to (name,value)
+                    // then register on demand in order to collect all data meta info
+                    // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                    // 因为属性在声明注册前可以直接设置值
+                    attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+                    validator = attrConfig['validator'],
+                    setter = attrConfig['setter'];
+
+                // validator check
+                if (validator = normalFn(self, validator)) {
+                    if (validator.call(self, value, name) === false) {
+                        return false;
                     }
                 }
-                var attrNames = [],
-                    prevVals = [],
-                    newVals = [],
-                    subAttrNames = [];
-                S.each(attrs, function(attr) {
-                    prevVals.push(attr.prevVal);
-                    newVals.push(attr.newVal);
-                    attrNames.push(attr.attrName);
-                    subAttrNames.push(attr.subAttrName);
-                });
-                if (attrNames.length) {
-                    __fireAttrChange(self,
-                        '',
-                        '*',
-                        prevVals,
-                        newVals,
-                        subAttrNames,
-                        attrNames);
+
+                // if setter has effect
+                if (setter = normalFn(self, setter)) {
+                    setValue = setter.call(self, value, name);
                 }
-                return ret;
-            }
 
-            return setInternal(self, name, value, opts);
-
-
-        },
-
-        /**
-         * internal use, no event involved, just set.
-         * @protected overriden by mvc/model
-         */
-        __set: function(name, value) {
-            var self = this,
-                setValue,
-                // if host does not have meta info corresponding to (name,value)
-                // then register on demand in order to collect all data meta info
-                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                // 因为属性在声明注册前可以直接设置值
-                attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                validator = attrConfig['validator'],
-                setter = attrConfig['setter'];
-
-            // validator check
-            if (validator = normalFn(self, validator)) {
-                if (validator.call(self, value, name) === false) {
+                if (setValue === INVALID) {
                     return false;
                 }
-            }
 
-            // if setter has effect
-            if (setter = normalFn(self, setter)) {
-                setValue = setter.call(self, value, name);
-            }
-
-            if (setValue === INVALID) {
-                return false;
-            }
-
-            if (setValue !== undef) {
-                value = setValue;
-            }
-
-            // finally set
-            getAttrVals(self)[name] = value;
-        },
-
-        /**
-         * Gets the current value of the attribute.
-         */
-        get: function(name) {
-            var self = this,
-                dot = ".",
-                path,
-                attrConfig,
-                getter, ret;
-
-            if (name.indexOf(dot) !== -1) {
-                path = name.split(dot);
-                name = path.shift();
-            }
-
-            attrConfig = ensureNonEmpty(getAttrs(self), name);
-            getter = attrConfig['getter'];
-
-            // get user-set value or default value
-            //user-set value takes privilege
-            ret = name in getAttrVals(self) ?
-                getAttrVals(self)[name] :
-                self.__getDefAttrVal(name);
-
-            // invoke getter for this attribute
-            if (getter = normalFn(self, getter)) {
-                ret = getter.call(self, ret, name);
-            }
-
-            if (path) {
-                ret = getValueByPath(ret, path);
-            }
-
-            return ret;
-        },
-
-        /**
-         * get default attribute value from valueFn/value
-         * @private
-         * @param name
-         */
-        __getDefAttrVal: function(name) {
-            var self = this,
-                attrConfig = ensureNonEmpty(getAttrs(self), name),
-                valFn,
-                val;
-
-            if ((valFn = normalFn(self, attrConfig.valueFn))) {
-                val = valFn.call(self);
-                if (val !== undef) {
-                    attrConfig.value = val;
+                if (setValue !== undef) {
+                    value = setValue;
                 }
-                delete attrConfig.valueFn;
-                getAttrs(self)[name] = attrConfig;
-            }
 
-            return attrConfig.value;
-        },
+                // finally set
+                getAttrVals(self)[name] = value;
+            },
 
-        /**
-         * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-         * @param {String} name name of attribute
-         */
-        reset: function (name, opts) {
-            var self = this;
+            /**
+             * Gets the current value of the attribute.
+             * @param {String} name attribute's name
+             */
+            get:function (name) {
+                var self = this,
+                    dot = ".",
+                    path,
+                    attrConfig,
+                    getter, ret;
 
-            if (S.isString(name)) {
-                if (self.hasAttr(name)) {
-                    // if attribute does not have default value, then set to undefined.
-                    return self.set(name, self.__getDefAttrVal(name), opts);
+                if (name.indexOf(dot) !== -1) {
+                    path = name.split(dot);
+                    name = path.shift();
                 }
-                else {
-                    return self;
+
+                attrConfig = ensureNonEmpty(getAttrs(self), name);
+                getter = attrConfig['getter'];
+
+                // get user-set value or default value
+                //user-set value takes privilege
+                ret = name in getAttrVals(self) ?
+                    getAttrVals(self)[name] :
+                    self.__getDefAttrVal(name);
+
+                // invoke getter for this attribute
+                if (getter = normalFn(self, getter)) {
+                    ret = getter.call(self, ret, name);
                 }
+
+                if (path) {
+                    ret = getValueByPath(ret, path);
+                }
+
+                return ret;
+            },
+
+            /**
+             * get default attribute value from valueFn/value
+             * @private
+             * @param name
+             */
+            __getDefAttrVal:function (name) {
+                var self = this,
+                    attrConfig = ensureNonEmpty(getAttrs(self), name),
+                    valFn,
+                    val;
+
+                if ((valFn = normalFn(self, attrConfig.valueFn))) {
+                    val = valFn.call(self);
+                    if (val !== undef) {
+                        attrConfig.value = val;
+                    }
+                    delete attrConfig.valueFn;
+                    getAttrs(self)[name] = attrConfig;
+                }
+
+                return attrConfig.value;
+            },
+
+            /**
+             * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+             * @param {String} name name of attribute
+             * @param {Object} [opts] some options
+             * @param {boolean} [opts.silent] whether fire change event
+             */
+            reset:function (name, opts) {
+                var self = this;
+
+                if (S.isString(name)) {
+                    if (self.hasAttr(name)) {
+                        // if attribute does not have default value, then set to undefined.
+                        return self.set(name, self.__getDefAttrVal(name), opts);
+                    }
+                    else {
+                        return self;
+                    }
+                }
+
+                opts = name;
+
+                var attrs = getAttrs(self),
+                    values = {};
+
+                // reset all
+                for (name in attrs) {
+                    values[name] = self.__getDefAttrVal(name);
+                }
+
+                self.set(values, opts);
+                return self;
             }
-
-            opts = name;
-
-            var attrs = getAttrs(self),
-                values = {};
-
-            // reset all
-            for (name in attrs) {
-                values[name] = self.__getDefAttrVal(name);
-            }
-
-            self.set(values, opts);
-            return self;
-        }
-    });
+        });
 
     function capitalFirst(s) {
         return s.charAt(0).toUpperCase() + s.substring(1);
@@ -12017,18 +12062,10 @@ KISSY.add('base/attribute', function(S, undef) {
  *    add validator
  */
 /**
- * @fileOverview Attribute and Base
- */
-KISSY.add("base", function(S, Base, Attribute) {
-    Base.Attribute = Attribute;
-    return Base;
-}, {
-    requires:["base/base2","base/attribute"]
-});/**
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base2', function (S, Attribute, Event) {
+KISSY.add('base/base', function (S, Attribute, Event) {
 
     /**
      * @name Base
@@ -12074,6 +12111,9 @@ KISSY.add('base/base2', function (S, Attribute, Event) {
     }
 
     S.augment(Base, Event.Target, Attribute);
+
+    Base.Attribute = Attribute;
+
     return Base;
 }, {
     requires:["./attribute", "event"]
@@ -12081,7 +12121,7 @@ KISSY.add('base/base2', function (S, Attribute, Event) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:30
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview anim
@@ -12222,11 +12262,18 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * get a anim instance associate
-     * @param elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
-     * @param props
-     * @param duration
-     * @param easing
-     * @param callback
+     * @param {HTMLElement|window} elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
+     * @param {Object} props style map
+     * @param {Number|Object} [duration] duration(s) or anim config
+     * @param {String|Function} [duration.easing] easing fn or string
+     * @param {Function} [duration.complete] callback function when this animation is complete
+     * @param {Number} [duration.duration] duration(s)
+     * @param {String|Boolean} [duration.queue] current animation's queue, if false then no queue
+     * @param {Function|String} [easing] easing fn or string
+     * @param {Function} [callback] callback function when this animation is complete
+     * @extends Event.Target
+     * @name Anim
+     * @class
      */
     function Anim(elem, props, duration, easing, callback) {
         var self = this, config;
@@ -12245,7 +12292,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
          * the transition properties
          */
         if (S.isString(props)) {
-            props = S.unparam(props, ";", ":");
+            props = S.unparam(String(props), ";", ":");
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -12483,109 +12530,117 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    S.augment(Anim, Event.Target, {
-
+    S.augment(Anim, Event.Target,
         /**
-         * @type {boolean} 是否在运行
+         * @lends Anim.prototype
          */
-        isRunning:function () {
-            return isRunning(this);
-        },
+        {
 
-        _runInternal:runInternal,
+            /**
+             * @return {boolean} 是否在运行
+             */
+            isRunning:function () {
+                return isRunning(this);
+            },
 
-        /**
-         * 开始动画
-         */
-        run:function () {
-            var self = this,
-                queueName = self.config.queue;
+            _runInternal:runInternal,
 
-            if (queueName === false) {
-                runInternal.call(self);
-            } else {
-                // 当前动画对象加入队列
-                Q.queue(self);
-            }
+            /**
+             * 开始动画
+             */
+            run:function () {
+                var self = this,
+                    queueName = self.config.queue;
 
-            return self;
-        },
-
-        _frame:function () {
-
-            var self = this,
-                prop,
-                config = self.config,
-                end = 1,
-                c,
-                fx,
-                fxs = self._fxs;
-
-            for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop) &&
-                    // 当前属性没有结束
-                    !((fx = fxs[prop]).finished)) {
-                    // 非短路
-                    if (config.frame) {
-                        c = config.frame(fx);
-                    }
-                    // 结束
-                    if (c == 1 ||
-                        // 不执行自带
-                        c == 0) {
-                        fx.finished = c;
-                        end &= c;
-                    }
-                    else {
-                        end &= fx.frame();
-                    }
+                if (queueName === false) {
+                    runInternal.call(self);
+                } else {
+                    // 当前动画对象加入队列
+                    Q.queue(self);
                 }
-            }
 
-            if ((self.fire("step") === false) ||
-                end) {
-                // complete 事件只在动画到达最后一帧时才触发
-                self.stop(end);
-            }
-        },
+                return self;
+            },
 
-        stop:function (finish) {
-            var self = this,
-                config = self.config,
-                queueName = config.queue,
-                prop,
-                fxs = self._fxs;
+            _frame:function () {
 
-            // already stopped
-            if (!self.isRunning()) {
-                // 从自己的队列中移除
-                if (queueName !== false) {
-                    Q.remove(self);
-                }
-                return;
-            }
+                var self = this,
+                    prop,
+                    config = self.config,
+                    end = 1,
+                    c,
+                    fx,
+                    fxs = self._fxs;
 
-            if (finish) {
                 for (prop in fxs) {
-                    if (fxs.hasOwnProperty(prop)) {
-                        fxs[prop].frame(1);
+                    if (fxs.hasOwnProperty(prop) &&
+                        // 当前属性没有结束
+                        !((fx = fxs[prop]).finished)) {
+                        // 非短路
+                        if (config.frame) {
+                            c = config.frame(fx);
+                        }
+                        // 结束
+                        if (c == 1 ||
+                            // 不执行自带
+                            c == 0) {
+                            fx.finished = c;
+                            end &= c;
+                        }
+                        else {
+                            end &= fx.frame();
+                        }
                     }
                 }
-                self.fire("complete");
+
+                if ((self.fire("step") === false) ||
+                    end) {
+                    // complete 事件只在动画到达最后一帧时才触发
+                    self.stop(end);
+                }
+            },
+
+            /**
+             * 结束动画
+             * @param {boolean} finish whether jump to the last position of this animation
+             */
+            stop:function (finish) {
+                var self = this,
+                    config = self.config,
+                    queueName = config.queue,
+                    prop,
+                    fxs = self._fxs;
+
+                // already stopped
+                if (!self.isRunning()) {
+                    // 从自己的队列中移除
+                    if (queueName !== false) {
+                        Q.remove(self);
+                    }
+                    return;
+                }
+
+                if (finish) {
+                    for (prop in fxs) {
+                        if (fxs.hasOwnProperty(prop)) {
+                            fxs[prop].frame(1);
+                        }
+                    }
+                    self.fire("complete");
+                }
+
+                AM.stop(self);
+
+                removeRunning(self);
+
+                if (queueName !== false) {
+                    // notify next anim to run in the same queue
+                    Q.dequeue(self);
+                }
+
+                return self;
             }
-
-            AM.stop(self);
-
-            removeRunning(self);
-
-            if (queueName !== false) {
-                // notify next anim to run in the same queue
-                Q.dequeue(self);
-            }
-
-            return self;
-        }
-    });
+        });
 
     var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
 
@@ -12620,9 +12675,11 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * stop all the anims currently running
-     * @param elem element which anim belongs to
-     * @param end
-     * @param clearQueue
+     * @param {HTMLElement} elem element which anim belongs to
+     * @param {boolean} end whether jump to last position
+     * @param {boolean} clearQueue whether clean current queue
+     * @param {String|Boolean} queueName current queue's name to be cleared
+     * @private
      */
     Anim.stop = function (elem, end, clearQueue, queueName) {
         if (
@@ -12653,6 +12710,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param queueName queue'name if set to false only remove
      * @param end
      * @param clearQueue
+     * @private
      */
     function stopQueue(elem, end, clearQueue, queueName) {
         if (clearQueue && queueName !== false) {
@@ -12670,9 +12728,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * whether elem is running anim
-     * @param elem
+     * @param {HTMLElement} elem
+     * @private
      */
-    Anim['isRunning'] = function (elem) {
+    Anim.isRunning = function (elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
     };
@@ -12880,13 +12939,13 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
  * 支持 hsla
  *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
  **//**
- * @fileOverview easing equation from yui3
+ * @fileOverview Easing equation from yui3
  */
-KISSY.add('anim/easing', function() {
+KISSY.add('anim/easing', function () {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
-    // Preview: http://www.robertpenner.com/easing/easing_demo.html
+    // Preview: http://www.robertpenner.com/Easing/easing_demo.html
 
     /**
      * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
@@ -12899,183 +12958,174 @@ KISSY.add('anim/easing', function() {
     var PI = Math.PI,
         pow = Math.pow,
         sin = Math.sin,
-        BACK_CONST = 1.70158,
+        BACK_CONST = 1.70158;
+    /**
+     * Easing Functions
+     * @memberOf Anim
+     * @name Easing
+     * @namespace
+     */
+    var Easing =
+    /**
+     * @lends Anim.Easing
+     */
+    {
 
-        Easing = {
+        swing:function (t) {
+            return ( -Math.cos(t * PI) / 2 ) + 0.5;
+        },
 
-            swing:function(t) {
-                return ( -Math.cos(t * PI) / 2 ) + 0.5;
-            },
+        /**
+         * Uniform speed between points.
+         */
+        "easeNone":function (t) {
+            return t;
+        },
 
-            /**
-             * Uniform speed between points.
-             */
-            easeNone: function (t) {
-                return t;
-            },
+        /**
+         * Begins slowly and accelerates towards end. (quadratic)
+         */
+        "easeIn":function (t) {
+            return t * t;
+        },
 
-            /**
-             * Begins slowly and accelerates towards end. (quadratic)
-             */
-            easeIn: function (t) {
-                return t * t;
-            },
+        /**
+         * Begins quickly and decelerates towards end.  (quadratic)
+         */
+        easeOut:function (t) {
+            return ( 2 - t) * t;
+        },
 
-            /**
-             * Begins quickly and decelerates towards end.  (quadratic)
-             */
-            easeOut: function (t) {
-                return ( 2 - t) * t;
-            },
+        /**
+         * Begins slowly and decelerates towards end. (quadratic)
+         */
+        easeBoth:function (t) {
+            return (t *= 2) < 1 ?
+                .5 * t * t :
+                .5 * (1 - (--t) * (t - 2));
+        },
 
-            /**
-             * Begins slowly and decelerates towards end. (quadratic)
-             */
-            easeBoth: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t :
-                    .5 * (1 - (--t) * (t - 2));
-            },
+        /**
+         * Begins slowly and accelerates towards end. (quartic)
+         */
+        "easeInStrong":function (t) {
+            return t * t * t * t;
+        },
 
-            /**
-             * Begins slowly and accelerates towards end. (quartic)
-             */
-            easeInStrong: function (t) {
-                return t * t * t * t;
-            },
+        /**
+         * Begins quickly and decelerates towards end.  (quartic)
+         */
+        easeOutStrong:function (t) {
+            return 1 - (--t) * t * t * t;
+        },
 
-            /**
-             * Begins quickly and decelerates towards end.  (quartic)
-             */
-            easeOutStrong: function (t) {
-                return 1 - (--t) * t * t * t;
-            },
+        /**
+         * Begins slowly and decelerates towards end. (quartic)
+         */
+        "easeBothStrong":function (t) {
+            return (t *= 2) < 1 ?
+                .5 * t * t * t * t :
+                .5 * (2 - (t -= 2) * t * t * t);
+        },
 
-            /**
-             * Begins slowly and decelerates towards end. (quartic)
-             */
-            easeBothStrong: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t * t * t :
-                    .5 * (2 - (t -= 2) * t * t * t);
-            },
+        /**
+         * Snap in elastic effect.
+         */
 
-            /**
-             * Snap in elastic effect.
-             */
+        "elasticIn":function (t) {
+            var p = .3, s = p / 4;
+            if (t === 0 || t === 1) return t;
+            return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
+        },
 
-            elasticIn: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
-            },
+        /**
+         * Snap out elastic effect.
+         */
+        elasticOut:function (t) {
+            var p = .3, s = p / 4;
+            if (t === 0 || t === 1) return t;
+            return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
+        },
 
-            /**
-             * Snap out elastic effect.
-             */
-            elasticOut: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
-            },
+        /**
+         * Snap both elastic effect.
+         */
+        "elasticBoth":function (t) {
+            var p = .45, s = p / 4;
+            if (t === 0 || (t *= 2) === 2) return t;
 
-            /**
-             * Snap both elastic effect.
-             */
-            elasticBoth: function (t) {
-                var p = .45, s = p / 4;
-                if (t === 0 || (t *= 2) === 2) return t;
-
-                if (t < 1) {
-                    return -.5 * (pow(2, 10 * (t -= 1)) *
-                        sin((t - s) * (2 * PI) / p));
-                }
-                return pow(2, -10 * (t -= 1)) *
-                    sin((t - s) * (2 * PI) / p) * .5 + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction and moves to end.
-             */
-            backIn: function (t) {
-                if (t === 1) t -= .001;
-                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
-            },
-
-            /**
-             * Overshoots end, then reverses and comes back to end.
-             */
-            backOut: function (t) {
-                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction, overshoots end,
-             * then reverses and comes back to end.
-             */
-            backBoth: function (t) {
-                if ((t *= 2 ) < 1) {
-                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
-                }
-                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
-            },
-
-            /**
-             * Bounce off of start.
-             */
-            bounceIn: function (t) {
-                return 1 - Easing.bounceOut(1 - t);
-            },
-
-            /**
-             * Bounces off end.
-             */
-            bounceOut: function (t) {
-                var s = 7.5625, r;
-
-                if (t < (1 / 2.75)) {
-                    r = s * t * t;
-                }
-                else if (t < (2 / 2.75)) {
-                    r = s * (t -= (1.5 / 2.75)) * t + .75;
-                }
-                else if (t < (2.5 / 2.75)) {
-                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
-                }
-                else {
-                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
-                }
-
-                return r;
-            },
-
-            /**
-             * Bounces off start and end.
-             */
-            bounceBoth: function (t) {
-                if (t < .5) {
-                    return Easing.bounceIn(t * 2) * .5;
-                }
-                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+            if (t < 1) {
+                return -.5 * (pow(2, 10 * (t -= 1)) *
+                    sin((t - s) * (2 * PI) / p));
             }
-        };
+            return pow(2, -10 * (t -= 1)) *
+                sin((t - s) * (2 * PI) / p) * .5 + 1;
+        },
 
-    Easing.NativeTimeFunction = {
-        easeNone: 'linear',
-        ease: 'ease',
+        /**
+         * Backtracks slightly, then reverses direction and moves to end.
+         */
+        "backIn":function (t) {
+            if (t === 1) t -= .001;
+            return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
+        },
 
-        easeIn: 'ease-in',
-        easeOut: 'ease-out',
-        easeBoth: 'ease-in-out',
+        /**
+         * Overshoots end, then reverses and comes back to end.
+         */
+        backOut:function (t) {
+            return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
+        },
 
-        // Ref:
-        //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
-        //  2. http://www.robertpenner.com/easing/easing_demo.html
-        //  3. assets/cubic-bezier-timing-function.html
-        // 注：是模拟值，非精确推导值
-        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
-        easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
-        easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+        /**
+         * Backtracks slightly, then reverses direction, overshoots end,
+         * then reverses and comes back to end.
+         */
+        "backBoth":function (t) {
+            if ((t *= 2 ) < 1) {
+                return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+            }
+            return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+        },
+
+        /**
+         * Bounce off of start.
+         */
+        bounceIn:function (t) {
+            return 1 - Easing.bounceOut(1 - t);
+        },
+
+        /**
+         * Bounces off end.
+         */
+        bounceOut:function (t) {
+            var s = 7.5625, r;
+
+            if (t < (1 / 2.75)) {
+                r = s * t * t;
+            }
+            else if (t < (2 / 2.75)) {
+                r = s * (t -= (1.5 / 2.75)) * t + .75;
+            }
+            else if (t < (2.5 / 2.75)) {
+                r = s * (t -= (2.25 / 2.75)) * t + .9375;
+            }
+            else {
+                r = s * (t -= (2.625 / 2.75)) * t + .984375;
+            }
+
+            return r;
+        },
+
+        /**
+         * Bounces off start and end.
+         */
+        "bounceBoth":function (t) {
+            if (t < .5) {
+                return Easing.bounceIn(t * 2) * .5;
+            }
+            return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+        }
     };
 
     return Easing;
@@ -13083,12 +13133,29 @@ KISSY.add('anim/easing', function() {
 
 /**
  * TODO:
- *  - test-easing.html 详细的测试 + 曲线可视化
+ *  - test-Easing.html 详细的测试 + 曲线可视化
  *
  * NOTES:
- *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
+ *  - 综合比较 jQuery UI/scripty2/YUI 的 Easing 命名，还是觉得 YUI 的对用户
  *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
+ *  - 和原生对应关系：
+ *     Easing.NativeTimeFunction = {
+ *      easeNone: 'linear',
+ *      ease: 'ease',
  *
+ *      easeIn: 'ease-in',
+ *      easeOut: 'ease-out',
+ *      easeBoth: 'ease-in-out',
+ *
+ *      // Ref:
+ *      //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+ *      //  2. http://www.robertpenner.com/Easing/easing_demo.html
+ *      //  3. assets/cubic-bezier-timing-function.html
+ *      // 注：是模拟值，非精确推导值
+ *      easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+ *      easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
+ *      easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+ *    };
  */
 /**
  * @fileOverview animate on single property
@@ -13402,7 +13469,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:14
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview   anim-node-plugin

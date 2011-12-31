@@ -2,7 +2,7 @@
  * @fileOverview responsible for registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _protected, specials) {
+KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
     var simpleAdd = Utils.simpleAdd,
         isValidTarget = Utils.isValidTarget,
         isIdenticalHandler = Utils.isIdenticalHandler;
@@ -75,7 +75,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                 // 获取事件描述
                 eventDesc = Event._data(target);
                 if (!eventDesc) {
-                    _protected._data(target, eventDesc = {});
+                    _data._data(target, eventDesc = {});
                 }
                 //事件 listeners , similar to eventListeners in DOM3 Events
                 var events = eventDesc.events = eventDesc.events || {},
@@ -181,5 +181,5 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './object', './handle', './protected', './special']
+    requires:['./base', 'dom', './utils', './object', './handle', './data', './special']
 });

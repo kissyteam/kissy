@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:07
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview responsible for registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _protected, specials) {
+KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
     var simpleAdd = Utils.simpleAdd,
         isValidTarget = Utils.isValidTarget,
         isIdenticalHandler = Utils.isIdenticalHandler;
@@ -80,7 +80,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
                 // 获取事件描述
                 eventDesc = Event._data(target);
                 if (!eventDesc) {
-                    _protected._data(target, eventDesc = {});
+                    _data._data(target, eventDesc = {});
                 }
                 //事件 listeners , similar to eventListeners in DOM3 Events
                 var events = eventDesc.events = eventDesc.events || {},
@@ -186,13 +186,13 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _pro
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './object', './handle', './protected', './special']
+    requires:['./base', 'dom', './utils', './object', './handle', './data', './special']
 });/**
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
  *               how to fire event just like browser?
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
+KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
@@ -209,6 +209,28 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
      * @lends Event
      */
     {
+
+        _clone:function (src, dest) {
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
+                !_data._hasData(src)) {
+                return;
+            }
+            var eventDesc = _data._data(src),
+                events = eventDesc.events;
+            S.each(events, function (handlers, type) {
+                S.each(handlers, function (handler) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
+                    Event.on(dest, type, {
+                        fn:handler.fn,
+                        scope:handler.scope,
+                        data:handler.data,
+                        originalType:handler.originalType,
+                        selector:handler.selector
+                    });
+                });
+            });
+        },
+
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
          * @memberOf Event
@@ -385,7 +407,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
 
     return Event;
 }, {
-    requires:["dom", "./object", "./utils", './handle', './special']
+    requires:["dom", "./object", "./utils", './handle', './data', './special']
 });
 
 /**
@@ -459,7 +481,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     DOM.query("textarea,input,select", el).each(function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
-                            Event.remove(fel, "change", changeHandler);
+                            Event.remove(fel, "change", {fn:changeHandler, last:1});
                         }
                     });
                 }
@@ -484,15 +506,21 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
             var t = e.target;
             if (isFormElement(t) && !t.__changeHandler) {
                 t.__changeHandler = 1;
-                // lazy bind change
-                Event.on(t, "change", changeHandler);
+                // lazy bind change , always as last handler among user's handlers
+                Event.on(t, "change", {fn:changeHandler, last:1});
             }
         }
 
         function changeHandler(e) {
             var fel = this;
-            // checkbox/radio already bubble using another technique
-            if (isCheckBoxOrRadio(fel)) {
+
+            if (
+            // in case stopped by user's callback,same with submit
+            // http://bugs.jquery.com/ticket/11049
+            // see : test/change/bubble.html
+                e.isPropagationStopped ||
+                    // checkbox/radio already bubble using another technique
+                    isCheckBoxOrRadio(fel)) {
                 return;
             }
             var p;
@@ -506,9 +534,37 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
 }, {
     requires:["ua", "./base", "dom", './special']
 });/**
+ * @fileOverview for other kissy core usage
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("event/data", function (S, DOM, Utils) {
+    var EVENT_GUID = Utils.EVENT_GUID,
+        data,
+        makeArray = S.makeArray;
+    data = {
+        _hasData:function (elem) {
+            return DOM.hasData(elem, EVENT_GUID);
+        },
+
+        _data:function (elem) {
+            var args = makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.data.apply(DOM, args);
+        },
+
+        _removeData:function (elem) {
+            var args = makeArray(arguments);
+            args.splice(1, 0, EVENT_GUID);
+            return DOM.removeData.apply(DOM, args);
+        }
+    };
+    return data;
+}, {
+    requires:['dom', './utils']
+});/**
  * @fileOverview KISSY Scalable Event Framework
  */
-KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
+KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     S.mix(Event, {
         KeyCodes:KeyCodes,
         Target:Target,
@@ -547,12 +603,12 @@ KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
         }
     });
 
-    S.mix(Event, _protected);
+    S.mix(Event, _data);
 
     return Event;
 }, {
     requires:[
-        "event/protected",
+        "event/data",
         "event/keycodes",
         "event/base",
         "event/target",
@@ -629,11 +685,11 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
  * @fileOverview responsible for handling event from browser to KISSY Event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/handle", function (S, DOM, _protected, special) {
+KISSY.add("event/handle", function (S, DOM, _data, special) {
 
     function getEvents(target) {
         // 获取事件描述
-        var eventDesc = _protected._data(target);
+        var eventDesc = _data._data(target);
         return eventDesc && eventDesc.events;
     }
 
@@ -760,7 +816,7 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
         return gRet;
     }
 }, {
-    requires:['dom', './protected', './special']
+    requires:['dom', './data', './special']
 });/**
  * @fileOverview   event-hashchange
  * @author  yiminghe@gmail.com , xiaomacji@gmail.com
@@ -860,10 +916,10 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         // ie6, 7, 覆盖一些function
         if (ie < 8) {
 
-            /**
-             * 前进后退 : start -> notifyHashChange
-             * 直接输入 : poll -> hashChange -> start
-             * iframe 内容和 url 同步
+            /*
+             前进后退 : start -> notifyHashChange
+             直接输入 : poll -> hashChange -> start
+             iframe 内容和 url 同步
              */
             setup = function () {
                 if (!iframe) {
@@ -906,11 +962,11 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                         }
                     };
 
-                    /**
-                     * 前进后退 ： onIframeLoad -> 触发
-                     * 直接输入 : timer -> hashChange -> onIframeLoad -> 触发
-                     * 触发统一在 start(load)
-                     * iframe 内容和 url 同步
+                    /*
+                     前进后退 ： onIframeLoad -> 触发
+                     直接输入 : timer -> hashChange -> onIframeLoad -> 触发
+                     触发统一在 start(load)
+                     iframe 内容和 url 同步
                      */
                     function onIframeLoad() {
                         // S.log('iframe start load..');
@@ -1229,7 +1285,7 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
  * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _protected, special) {
+KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _data, special) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
@@ -1293,7 +1349,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
         setup:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _protected._data(el);
+                eventDesc = _data._data(el);
             // solve this in ie
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER] = S.bind(handler, el);
             simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
@@ -1301,7 +1357,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
         tearDown:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _protected._data(el);
+                eventDesc = _data._data(el);
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER];
             simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
@@ -1311,7 +1367,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
 }, {
     requires:['./base', 'ua', './utils',
         './object', './handle',
-        './protected', "./special"]
+        './data', "./special"]
 });
 
 /**
@@ -1511,59 +1567,10 @@ KISSY.add('event/object', function (S, undefined) {
  *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
  */
 /**
- * @fileOverview for other kissy core usage
- * @author yiminghe@gmail.com
- */
-KISSY.add("event/protected", function (S, DOM, Utils) {
-    var EVENT_GUID = Utils.EVENT_GUID,
-        _protected,
-        makeArray = S.makeArray;
-    _protected = {
-        _clone:function (src, dest) {
-            if (dest.nodeType !== DOM.ELEMENT_NODE ||
-                !_protected._hasData(src)) {
-                return;
-            }
-            var eventDesc = _protected._data(src),
-                events = eventDesc.events;
-            S.each(events, function (handlers, type) {
-                S.each(handlers, function (handler) {
-                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
-                    Event.on(dest, type, {
-                        fn:handler.fn,
-                        scope:handler.scope,
-                        data:handler.data,
-                        originalType:handler.originalType,
-                        selector:handler.selector
-                    });
-                });
-            });
-        },
-
-        _hasData:function (elem) {
-            return DOM.hasData(elem, EVENT_GUID);
-        },
-
-        _data:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.data.apply(DOM, args);
-        },
-
-        _removeData:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.removeData.apply(DOM, args);
-        }
-    };
-    return _protected;
-}, {
-    requires:['dom', './utils']
-});/**
  * @fileOverview responsible for un-registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPECIAL) {
+KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
     var isValidTarget = Utils.isValidTarget,
         simpleRemove = Utils.simpleRemove;
 
@@ -1602,7 +1609,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 }
             }
 
-            var eventDesc = _protected._data(target),
+            var eventDesc = _data._data(target),
                 events = eventDesc && eventDesc.events,
                 handlers,
                 handler,
@@ -1742,7 +1749,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
         }
     });
 }, {
-    requires:['./base', 'dom', './utils', './protected', './special']
+    requires:['./base', 'dom', './utils', './data', './special']
 });/**
  * @fileOverview special house for special events
  * @author yiminghe@gmail.com
@@ -1821,6 +1828,7 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
 });
 /**
  * modified from jq ,fix submit in ie<9
+ *  - http://bugs.jquery.com/ticket/11049
  **//**
  * @fileOverview 提供事件发布和订阅机制
  * @author  yiminghe@gmail.com

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 13:21
+build time: Dec 31 15:16
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -92,6 +92,9 @@ build time: Dec 27 13:21
          * @lends KISSY
          */
         {
+            /**
+             * @private
+             */
             configs:{},
             // S.app() with these members.
             __APP_MEMBERS:['namespace'],
@@ -107,14 +110,14 @@ build time: Dec 27 13:21
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20111227132129',
+            buildTime:'20111231151608',
 
             /**
              * Returns a new object containing all of the properties of
              * all the supplied objects. The properties from later objects
              * will overwrite those in earlier objects. Passing in a
              * single object will create a shallow copy of it.
-             * @param {Object...} m1 objects need to be merged
+             * @param {...} m1 objects need to be merged
              * @return {Object} the new merged object
              */
             merge:function (m1) {
@@ -442,8 +445,8 @@ build time: Dec 27 13:21
             /**
              * stamp a object by guid
              * @param {Object} o object needed to be stamped
-             * @param {boolean} readOnly while set marker on o if marker does not exist
-             * @param {String} marker the marker will be set on Object
+             * @param {boolean} [readOnly] while set marker on o if marker does not exist
+             * @param {String} [marker] the marker will be set on Object
              * @return guid associated with this object
              */
             stamp:function (o, readOnly, marker) {
@@ -1059,8 +1062,7 @@ build time: Dec 27 13:21
              * @returns {Object} json data
              */
             unparam:function (str, sep, eq) {
-                if (typeof str !== 'string'
-                    || (str = S.trim(str)).length === 0) {
+                if (!S.isString(str) || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;
@@ -1410,6 +1412,19 @@ build time: Dec 27 13:21
 
 })(KISSY, undefined);
 /**
+ * implement Promise specification by KISSY
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+
+})(KISSY);
+
+/**
+ * refer
+ *  - http://wiki.commonjs.org/wiki/Promises
+ *  - https://github.com/kriskowal/q
+ **//**
  * @fileOverview setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
@@ -2352,6 +2367,7 @@ build time: Dec 27 13:21
      * biz -> .
      * 表示遇到 biz/x
      * 在当前网页路径找 biz/x.js
+     * @private
      */
     S.configs.packages = function (cfgs) {
         var ps;
@@ -2581,6 +2597,7 @@ build time: Dec 27 13:21
 
                 /**
                  * check cyclic dependency between mods
+                 * @private
                  */
                 function cyclicCheck() {
                     var __allRequires,
@@ -2709,14 +2726,17 @@ build time: Dec 27 13:21
     }
     /**
      * modify current module path
+     * @private
      * @param rules
      * @example
+     * <code>
      *      [
      *          [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
      *          [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
      *              return m1+m2;
      *          }]
      *      ]
+     * </code>
      */
     S.configs.map = function (rules) {
         S.Config.mappedRules = (S.Config.mappedRules || []).concat(rules);

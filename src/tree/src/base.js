@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @see http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
-KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
+KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
 
     var TREE_CLS = TreeRender.TREE_CLS;
 

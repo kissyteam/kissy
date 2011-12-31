@@ -2,7 +2,7 @@
  * @fileOverview responsible for un-registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPECIAL) {
+KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
     var isValidTarget = Utils.isValidTarget,
         simpleRemove = Utils.simpleRemove;
 
@@ -41,7 +41,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
                 }
             }
 
-            var eventDesc = _protected._data(target),
+            var eventDesc = _data._data(target),
                 events = eventDesc && eventDesc.events,
                 handlers,
                 handler,
@@ -181,5 +181,5 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _protected, EVENT_SPEC
         }
     });
 }, {
-    requires:['./base', 'dom', './utils', './protected', './special']
+    requires:['./base', 'dom', './utils', './data', './special']
 });

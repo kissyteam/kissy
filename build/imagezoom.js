@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:10
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview auto render
@@ -236,7 +236,6 @@ KISSY.add('imagezoom/base', function(S, DOM, Event, UA, Anim, UIBase, Node, Zoom
  * @fileOverview imagezoom
  */
 KISSY.add("imagezoom", function(S, ImageZoom) {
-    S.ImageZoom = ImageZoom;
     return ImageZoom;
 }, {requires:[
     "imagezoom/base",

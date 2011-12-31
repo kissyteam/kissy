@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:26
+build time: Dec 31 15:16
 */
 /**
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
  * @see http://www.w3.org/TR/wai-aria-practices/#TreeView
  */
-KISSY.add("tree/tree", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
+KISSY.add("tree/base", function(S, UIBase, Component, BaseNode, TreeRender, TreeMgr) {
 
     var TREE_CLS = TreeRender.TREE_CLS;
 

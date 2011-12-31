@@ -1,4 +1,4 @@
-KISSY.use("template", function(S, T) {
+KISSY.use("template,dom", function(S, T,DOM) {
 
     describe('template', function() {
 
@@ -116,7 +116,7 @@ KISSY.use("template", function(S, T) {
                     '<div id="render">{{#each a}}{{_ks_value.a}}{{/each}}</div>',
                     '</script><div id="container"></div>'
                 ].join(''))).appendTo(document.body);
-                S.tmpl('#template', {
+                S.one(T(S.one('#template').html()).render({
                     a: [
                         {a: 1},
                         {a: 2},
@@ -127,7 +127,7 @@ KISSY.use("template", function(S, T) {
                         {a: 5},
                         {a: 6}
                     ]
-                }).appendTo('#container');
+                })).appendTo('#container');
                 expect(S.one('#render').html()).toEqual('123');
                 S.one('#container').html('');
             });
@@ -139,7 +139,7 @@ KISSY.use("template", function(S, T) {
         }); // }}}
         describe('nested', function() { // {{{
             it('supports nested', function() {
-                expect(KISSY.Template('Hello, {{#each users}}' +
+                expect(T('Hello, {{#each users}}' +
                     '{{#if _ks_value.show}}{{_ks_value.name}}{{/if}}' +
                     '{{#each _ks_value.friends}} <i>{{_ks_value.name}}</i> {{/each}} {{/each}}.')
                     .render({users: [
@@ -161,7 +161,7 @@ KISSY.use("template", function(S, T) {
                     ]})).toEqual('Hello,  <i>jolin</i>  <i>jolin2</i>  yyfrankyy <i>angela</i>  .');
             });
             it('supports nested with different each variable name', function() {
-                expect(KISSY.Template('Hello, {{#each users as user}}' +
+                expect(T('Hello, {{#each users as user}}' +
                     '{{#if user.show}}{{user.name}}{{/if}}' +
                     '{{#each user.friends as friend}} <i>{{friend.name}}</i> {{/each}} {{/each}}.')
                     .render({users: [

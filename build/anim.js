@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:30
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview anim
@@ -142,11 +142,18 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * get a anim instance associate
-     * @param elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
-     * @param props
-     * @param duration
-     * @param easing
-     * @param callback
+     * @param {HTMLElement|window} elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
+     * @param {Object} props style map
+     * @param {Number|Object} [duration] duration(s) or anim config
+     * @param {String|Function} [duration.easing] easing fn or string
+     * @param {Function} [duration.complete] callback function when this animation is complete
+     * @param {Number} [duration.duration] duration(s)
+     * @param {String|Boolean} [duration.queue] current animation's queue, if false then no queue
+     * @param {Function|String} [easing] easing fn or string
+     * @param {Function} [callback] callback function when this animation is complete
+     * @extends Event.Target
+     * @name Anim
+     * @class
      */
     function Anim(elem, props, duration, easing, callback) {
         var self = this, config;
@@ -165,7 +172,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
          * the transition properties
          */
         if (S.isString(props)) {
-            props = S.unparam(props, ";", ":");
+            props = S.unparam(String(props), ";", ":");
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -403,109 +410,117 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    S.augment(Anim, Event.Target, {
-
+    S.augment(Anim, Event.Target,
         /**
-         * @type {boolean} 是否在运行
+         * @lends Anim.prototype
          */
-        isRunning:function () {
-            return isRunning(this);
-        },
+        {
 
-        _runInternal:runInternal,
+            /**
+             * @return {boolean} 是否在运行
+             */
+            isRunning:function () {
+                return isRunning(this);
+            },
 
-        /**
-         * 开始动画
-         */
-        run:function () {
-            var self = this,
-                queueName = self.config.queue;
+            _runInternal:runInternal,
 
-            if (queueName === false) {
-                runInternal.call(self);
-            } else {
-                // 当前动画对象加入队列
-                Q.queue(self);
-            }
+            /**
+             * 开始动画
+             */
+            run:function () {
+                var self = this,
+                    queueName = self.config.queue;
 
-            return self;
-        },
-
-        _frame:function () {
-
-            var self = this,
-                prop,
-                config = self.config,
-                end = 1,
-                c,
-                fx,
-                fxs = self._fxs;
-
-            for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop) &&
-                    // 当前属性没有结束
-                    !((fx = fxs[prop]).finished)) {
-                    // 非短路
-                    if (config.frame) {
-                        c = config.frame(fx);
-                    }
-                    // 结束
-                    if (c == 1 ||
-                        // 不执行自带
-                        c == 0) {
-                        fx.finished = c;
-                        end &= c;
-                    }
-                    else {
-                        end &= fx.frame();
-                    }
+                if (queueName === false) {
+                    runInternal.call(self);
+                } else {
+                    // 当前动画对象加入队列
+                    Q.queue(self);
                 }
-            }
 
-            if ((self.fire("step") === false) ||
-                end) {
-                // complete 事件只在动画到达最后一帧时才触发
-                self.stop(end);
-            }
-        },
+                return self;
+            },
 
-        stop:function (finish) {
-            var self = this,
-                config = self.config,
-                queueName = config.queue,
-                prop,
-                fxs = self._fxs;
+            _frame:function () {
 
-            // already stopped
-            if (!self.isRunning()) {
-                // 从自己的队列中移除
-                if (queueName !== false) {
-                    Q.remove(self);
-                }
-                return;
-            }
+                var self = this,
+                    prop,
+                    config = self.config,
+                    end = 1,
+                    c,
+                    fx,
+                    fxs = self._fxs;
 
-            if (finish) {
                 for (prop in fxs) {
-                    if (fxs.hasOwnProperty(prop)) {
-                        fxs[prop].frame(1);
+                    if (fxs.hasOwnProperty(prop) &&
+                        // 当前属性没有结束
+                        !((fx = fxs[prop]).finished)) {
+                        // 非短路
+                        if (config.frame) {
+                            c = config.frame(fx);
+                        }
+                        // 结束
+                        if (c == 1 ||
+                            // 不执行自带
+                            c == 0) {
+                            fx.finished = c;
+                            end &= c;
+                        }
+                        else {
+                            end &= fx.frame();
+                        }
                     }
                 }
-                self.fire("complete");
+
+                if ((self.fire("step") === false) ||
+                    end) {
+                    // complete 事件只在动画到达最后一帧时才触发
+                    self.stop(end);
+                }
+            },
+
+            /**
+             * 结束动画
+             * @param {boolean} finish whether jump to the last position of this animation
+             */
+            stop:function (finish) {
+                var self = this,
+                    config = self.config,
+                    queueName = config.queue,
+                    prop,
+                    fxs = self._fxs;
+
+                // already stopped
+                if (!self.isRunning()) {
+                    // 从自己的队列中移除
+                    if (queueName !== false) {
+                        Q.remove(self);
+                    }
+                    return;
+                }
+
+                if (finish) {
+                    for (prop in fxs) {
+                        if (fxs.hasOwnProperty(prop)) {
+                            fxs[prop].frame(1);
+                        }
+                    }
+                    self.fire("complete");
+                }
+
+                AM.stop(self);
+
+                removeRunning(self);
+
+                if (queueName !== false) {
+                    // notify next anim to run in the same queue
+                    Q.dequeue(self);
+                }
+
+                return self;
             }
-
-            AM.stop(self);
-
-            removeRunning(self);
-
-            if (queueName !== false) {
-                // notify next anim to run in the same queue
-                Q.dequeue(self);
-            }
-
-            return self;
-        }
-    });
+        });
 
     var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
 
@@ -540,9 +555,11 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * stop all the anims currently running
-     * @param elem element which anim belongs to
-     * @param end
-     * @param clearQueue
+     * @param {HTMLElement} elem element which anim belongs to
+     * @param {boolean} end whether jump to last position
+     * @param {boolean} clearQueue whether clean current queue
+     * @param {String|Boolean} queueName current queue's name to be cleared
+     * @private
      */
     Anim.stop = function (elem, end, clearQueue, queueName) {
         if (
@@ -573,6 +590,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param queueName queue'name if set to false only remove
      * @param end
      * @param clearQueue
+     * @private
      */
     function stopQueue(elem, end, clearQueue, queueName) {
         if (clearQueue && queueName !== false) {
@@ -590,9 +608,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * whether elem is running anim
-     * @param elem
+     * @param {HTMLElement} elem
+     * @private
      */
-    Anim['isRunning'] = function (elem) {
+    Anim.isRunning = function (elem) {
         var allRunning = DOM.data(elem, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
     };
@@ -800,13 +819,13 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
  * 支持 hsla
  *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
  **//**
- * @fileOverview easing equation from yui3
+ * @fileOverview Easing equation from yui3
  */
-KISSY.add('anim/easing', function() {
+KISSY.add('anim/easing', function () {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
-    // Preview: http://www.robertpenner.com/easing/easing_demo.html
+    // Preview: http://www.robertpenner.com/Easing/easing_demo.html
 
     /**
      * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
@@ -819,183 +838,174 @@ KISSY.add('anim/easing', function() {
     var PI = Math.PI,
         pow = Math.pow,
         sin = Math.sin,
-        BACK_CONST = 1.70158,
+        BACK_CONST = 1.70158;
+    /**
+     * Easing Functions
+     * @memberOf Anim
+     * @name Easing
+     * @namespace
+     */
+    var Easing =
+    /**
+     * @lends Anim.Easing
+     */
+    {
 
-        Easing = {
+        swing:function (t) {
+            return ( -Math.cos(t * PI) / 2 ) + 0.5;
+        },
 
-            swing:function(t) {
-                return ( -Math.cos(t * PI) / 2 ) + 0.5;
-            },
+        /**
+         * Uniform speed between points.
+         */
+        "easeNone":function (t) {
+            return t;
+        },
 
-            /**
-             * Uniform speed between points.
-             */
-            easeNone: function (t) {
-                return t;
-            },
+        /**
+         * Begins slowly and accelerates towards end. (quadratic)
+         */
+        "easeIn":function (t) {
+            return t * t;
+        },
 
-            /**
-             * Begins slowly and accelerates towards end. (quadratic)
-             */
-            easeIn: function (t) {
-                return t * t;
-            },
+        /**
+         * Begins quickly and decelerates towards end.  (quadratic)
+         */
+        easeOut:function (t) {
+            return ( 2 - t) * t;
+        },
 
-            /**
-             * Begins quickly and decelerates towards end.  (quadratic)
-             */
-            easeOut: function (t) {
-                return ( 2 - t) * t;
-            },
+        /**
+         * Begins slowly and decelerates towards end. (quadratic)
+         */
+        easeBoth:function (t) {
+            return (t *= 2) < 1 ?
+                .5 * t * t :
+                .5 * (1 - (--t) * (t - 2));
+        },
 
-            /**
-             * Begins slowly and decelerates towards end. (quadratic)
-             */
-            easeBoth: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t :
-                    .5 * (1 - (--t) * (t - 2));
-            },
+        /**
+         * Begins slowly and accelerates towards end. (quartic)
+         */
+        "easeInStrong":function (t) {
+            return t * t * t * t;
+        },
 
-            /**
-             * Begins slowly and accelerates towards end. (quartic)
-             */
-            easeInStrong: function (t) {
-                return t * t * t * t;
-            },
+        /**
+         * Begins quickly and decelerates towards end.  (quartic)
+         */
+        easeOutStrong:function (t) {
+            return 1 - (--t) * t * t * t;
+        },
 
-            /**
-             * Begins quickly and decelerates towards end.  (quartic)
-             */
-            easeOutStrong: function (t) {
-                return 1 - (--t) * t * t * t;
-            },
+        /**
+         * Begins slowly and decelerates towards end. (quartic)
+         */
+        "easeBothStrong":function (t) {
+            return (t *= 2) < 1 ?
+                .5 * t * t * t * t :
+                .5 * (2 - (t -= 2) * t * t * t);
+        },
 
-            /**
-             * Begins slowly and decelerates towards end. (quartic)
-             */
-            easeBothStrong: function (t) {
-                return (t *= 2) < 1 ?
-                    .5 * t * t * t * t :
-                    .5 * (2 - (t -= 2) * t * t * t);
-            },
+        /**
+         * Snap in elastic effect.
+         */
 
-            /**
-             * Snap in elastic effect.
-             */
+        "elasticIn":function (t) {
+            var p = .3, s = p / 4;
+            if (t === 0 || t === 1) return t;
+            return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
+        },
 
-            elasticIn: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
-            },
+        /**
+         * Snap out elastic effect.
+         */
+        elasticOut:function (t) {
+            var p = .3, s = p / 4;
+            if (t === 0 || t === 1) return t;
+            return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
+        },
 
-            /**
-             * Snap out elastic effect.
-             */
-            elasticOut: function (t) {
-                var p = .3, s = p / 4;
-                if (t === 0 || t === 1) return t;
-                return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
-            },
+        /**
+         * Snap both elastic effect.
+         */
+        "elasticBoth":function (t) {
+            var p = .45, s = p / 4;
+            if (t === 0 || (t *= 2) === 2) return t;
 
-            /**
-             * Snap both elastic effect.
-             */
-            elasticBoth: function (t) {
-                var p = .45, s = p / 4;
-                if (t === 0 || (t *= 2) === 2) return t;
-
-                if (t < 1) {
-                    return -.5 * (pow(2, 10 * (t -= 1)) *
-                        sin((t - s) * (2 * PI) / p));
-                }
-                return pow(2, -10 * (t -= 1)) *
-                    sin((t - s) * (2 * PI) / p) * .5 + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction and moves to end.
-             */
-            backIn: function (t) {
-                if (t === 1) t -= .001;
-                return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
-            },
-
-            /**
-             * Overshoots end, then reverses and comes back to end.
-             */
-            backOut: function (t) {
-                return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
-            },
-
-            /**
-             * Backtracks slightly, then reverses direction, overshoots end,
-             * then reverses and comes back to end.
-             */
-            backBoth: function (t) {
-                if ((t *= 2 ) < 1) {
-                    return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
-                }
-                return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
-            },
-
-            /**
-             * Bounce off of start.
-             */
-            bounceIn: function (t) {
-                return 1 - Easing.bounceOut(1 - t);
-            },
-
-            /**
-             * Bounces off end.
-             */
-            bounceOut: function (t) {
-                var s = 7.5625, r;
-
-                if (t < (1 / 2.75)) {
-                    r = s * t * t;
-                }
-                else if (t < (2 / 2.75)) {
-                    r = s * (t -= (1.5 / 2.75)) * t + .75;
-                }
-                else if (t < (2.5 / 2.75)) {
-                    r = s * (t -= (2.25 / 2.75)) * t + .9375;
-                }
-                else {
-                    r = s * (t -= (2.625 / 2.75)) * t + .984375;
-                }
-
-                return r;
-            },
-
-            /**
-             * Bounces off start and end.
-             */
-            bounceBoth: function (t) {
-                if (t < .5) {
-                    return Easing.bounceIn(t * 2) * .5;
-                }
-                return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+            if (t < 1) {
+                return -.5 * (pow(2, 10 * (t -= 1)) *
+                    sin((t - s) * (2 * PI) / p));
             }
-        };
+            return pow(2, -10 * (t -= 1)) *
+                sin((t - s) * (2 * PI) / p) * .5 + 1;
+        },
 
-    Easing.NativeTimeFunction = {
-        easeNone: 'linear',
-        ease: 'ease',
+        /**
+         * Backtracks slightly, then reverses direction and moves to end.
+         */
+        "backIn":function (t) {
+            if (t === 1) t -= .001;
+            return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
+        },
 
-        easeIn: 'ease-in',
-        easeOut: 'ease-out',
-        easeBoth: 'ease-in-out',
+        /**
+         * Overshoots end, then reverses and comes back to end.
+         */
+        backOut:function (t) {
+            return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
+        },
 
-        // Ref:
-        //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
-        //  2. http://www.robertpenner.com/easing/easing_demo.html
-        //  3. assets/cubic-bezier-timing-function.html
-        // 注：是模拟值，非精确推导值
-        easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
-        easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
-        easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+        /**
+         * Backtracks slightly, then reverses direction, overshoots end,
+         * then reverses and comes back to end.
+         */
+        "backBoth":function (t) {
+            if ((t *= 2 ) < 1) {
+                return .5 * (t * t * (((BACK_CONST *= (1.525)) + 1) * t - BACK_CONST));
+            }
+            return .5 * ((t -= 2) * t * (((BACK_CONST *= (1.525)) + 1) * t + BACK_CONST) + 2);
+        },
+
+        /**
+         * Bounce off of start.
+         */
+        bounceIn:function (t) {
+            return 1 - Easing.bounceOut(1 - t);
+        },
+
+        /**
+         * Bounces off end.
+         */
+        bounceOut:function (t) {
+            var s = 7.5625, r;
+
+            if (t < (1 / 2.75)) {
+                r = s * t * t;
+            }
+            else if (t < (2 / 2.75)) {
+                r = s * (t -= (1.5 / 2.75)) * t + .75;
+            }
+            else if (t < (2.5 / 2.75)) {
+                r = s * (t -= (2.25 / 2.75)) * t + .9375;
+            }
+            else {
+                r = s * (t -= (2.625 / 2.75)) * t + .984375;
+            }
+
+            return r;
+        },
+
+        /**
+         * Bounces off start and end.
+         */
+        "bounceBoth":function (t) {
+            if (t < .5) {
+                return Easing.bounceIn(t * 2) * .5;
+            }
+            return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+        }
     };
 
     return Easing;
@@ -1003,12 +1013,29 @@ KISSY.add('anim/easing', function() {
 
 /**
  * TODO:
- *  - test-easing.html 详细的测试 + 曲线可视化
+ *  - test-Easing.html 详细的测试 + 曲线可视化
  *
  * NOTES:
- *  - 综合比较 jQuery UI/scripty2/YUI 的 easing 命名，还是觉得 YUI 的对用户
+ *  - 综合比较 jQuery UI/scripty2/YUI 的 Easing 命名，还是觉得 YUI 的对用户
  *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
+ *  - 和原生对应关系：
+ *     Easing.NativeTimeFunction = {
+ *      easeNone: 'linear',
+ *      ease: 'ease',
  *
+ *      easeIn: 'ease-in',
+ *      easeOut: 'ease-out',
+ *      easeBoth: 'ease-in-out',
+ *
+ *      // Ref:
+ *      //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+ *      //  2. http://www.robertpenner.com/Easing/easing_demo.html
+ *      //  3. assets/cubic-bezier-timing-function.html
+ *      // 注：是模拟值，非精确推导值
+ *      easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+ *      easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
+ *      easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+ *    };
  */
 /**
  * @fileOverview animate on single property

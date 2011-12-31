@@ -1,7 +1,7 @@
 /**
  * @fileOverview KISSY Scalable Event Framework
  */
-KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
+KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     S.mix(Event, {
         KeyCodes:KeyCodes,
         Target:Target,
@@ -40,12 +40,12 @@ KISSY.add("event", function (S, _protected, KeyCodes, Event, Target, Object) {
         }
     });
 
-    S.mix(Event, _protected);
+    S.mix(Event, _data);
 
     return Event;
 }, {
     requires:[
-        "event/protected",
+        "event/data",
         "event/keycodes",
         "event/base",
         "event/target",

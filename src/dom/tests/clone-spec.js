@@ -42,6 +42,7 @@ KISSY.use("dom,event", function(S, DOM, Event) {
         }
 
         it("works with data and event", function() {
+            debugger
             var div = DOM.create("<div><" + "/div>");
             DOM.append(div, "body");
             var x = {x:1};

@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:43
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview   cookie
  * @author  lifesinger@gmail.com
  */
-KISSY.add('cookie/base', function(S) {
+KISSY.add('cookie', function (S) {
 
     var doc = document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
@@ -25,7 +25,7 @@ KISSY.add('cookie/base', function(S) {
          * 获取 cookie 值
          * @return {string} 如果 name 不存在，返回 undefined
          */
-        get: function(name) {
+        get:function (name) {
             var ret, m;
 
             if (isNotEmptyString(name)) {
@@ -37,7 +37,7 @@ KISSY.add('cookie/base', function(S) {
             return ret;
         },
 
-        set: function(name, val, expires, domain, path, secure) {
+        set:function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;
 
             // 从当前时间开始，多少天后过期
@@ -69,7 +69,7 @@ KISSY.add('cookie/base', function(S) {
             doc.cookie = name + '=' + text;
         },
 
-        remove: function(name, domain, path, secure) {
+        remove:function (name, domain, path, secure) {
             // 置空，并立刻过期
             this.set(name, '', -1, domain, path, secure);
         }
@@ -87,11 +87,3 @@ KISSY.add('cookie/base', function(S) {
  *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
  *     独立成静态工具类的方式更优。
  */
-/**
- * @fileOverview cookie
- */
-KISSY.add("cookie", function(S,C) {
-    return C;
-}, {
-    requires:["cookie/base"]
-});

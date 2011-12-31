@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:28
+build time: Dec 31 15:16
 */
 /**
  * @fileOverview UIBase.Align
@@ -421,8 +421,9 @@ KISSY.add('uibase/base', function (S, Base, Node) {
     /**
      * UIBase for class-based component
      * @class
-     * @extends Base
+     * @namespace
      * @name UIBase
+     * @extends Base
      */
     function UIBase(config) {
         // 读取用户设置的属性值并设置到自身
@@ -804,14 +805,22 @@ KISSY.add('uibase/base', function (S, Base, Node) {
  * @fileOverview UIBase.Box
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase/box', function() {
+KISSY.add('uibase/box', function () {
 
-
+    /**
+     * @class
+     * @memberOf UIBase
+     * @namespace
+     */
     function Box() {
     }
 
-    Box.ATTRS = {
-        html: {
+    Box.ATTRS =
+    /**
+     * @lends UIBase.Box#
+     */
+    {
+        html:{
             view:true,
             sync:false
         },
@@ -865,8 +874,12 @@ KISSY.add('uibase/box', function() {
     };
 
 
-    Box.HTML_PARSER = {
-        el:function(srcNode) {
+    Box.HTML_PARSER =
+    /**
+     * @private
+     */
+    {
+        el:function (srcNode) {
             /**
              * 如果需要特殊的对现有元素的装饰行为
              */
@@ -877,9 +890,13 @@ KISSY.add('uibase/box', function() {
         }
     };
 
-    Box.prototype = {
+    Box.prototype =
+    /**
+     * @lends UIBase.Box#
+     */
+    {
 
-        _uiSetVisible:function(isVisible) {
+        _uiSetVisible:function (isVisible) {
             var self = this;
             self.fire(isVisible ? "show" : "hide");
         },
@@ -888,7 +905,7 @@ KISSY.add('uibase/box', function() {
         /**
          * 显示 Overlay
          */
-        show: function() {
+        show:function () {
             var self = this;
             self.render();
             self.set("visible", true);
@@ -897,7 +914,7 @@ KISSY.add('uibase/box', function() {
         /**
          * 隐藏
          */
-        hide: function() {
+        hide:function () {
             this.set("visible", false);
         }
     };
@@ -908,24 +925,32 @@ KISSY.add('uibase/box', function() {
  * @fileOverview UIBase.Box
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add('uibase/boxrender', function(S, Node) {
+KISSY.add('uibase/boxrender', function (S, Node) {
 
     var $ = S.all;
 
-    function Box() {
+    /**
+     * @class
+     * @memberOf UIBase.Box
+     */
+    function BoxRender() {
     }
 
-    Box.ATTRS = {
-        el: {
+    BoxRender.ATTRS =
+    /**
+     * @lends UIBase.Box.Render#
+     */
+    {
+        el:{
             //容器元素
-            setter:function(v) {
+            setter:function (v) {
                 return $(v);
             }
         },
-        elCls: {},
+        elCls:{},
         elStyle:{},
-        width: {},
-        height: {},
+        width:{},
+        height:{},
         elTagName:{
             // 生成标签名字
             value:"div"
@@ -933,14 +958,14 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         elAttrs:{},
         elBefore:{},
         render:{},
-        html: {
+        html:{
             sync:false
         },
         visible:{},
         visibleMode:{}
     };
 
-    Box.construct = constructEl;
+    BoxRender.construct = constructEl;
 
     function constructEl(cls, style, width, height, tag, attrs) {
         style = style || {};
@@ -975,16 +1000,24 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         //return ret;
     }
 
-    Box.HTML_PARSER = {
-        html:function(el) {
+    BoxRender.HTML_PARSER =
+    /**
+     * @ignore
+     */
+    {
+        html:function (el) {
             return el.html();
         }
     };
 
-    Box.prototype = {
+    BoxRender.prototype =
+    /**
+     * @lends UIBase.Box.Render#
+     */
+    {
 
 
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this;
             // 新建的节点才需要摆放定位
             if (self.__boxRenderNew) {
@@ -1007,7 +1040,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
          * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
          * 通过 render 来重建原有的内容
          */
-        __createDom:function() {
+        __createDom:function () {
 
             var self = this,
                 el = self.get("el");
@@ -1026,34 +1059,34 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             }
         },
 
-        _uiSetElAttrs:function(attrs) {
+        _uiSetElAttrs:function (attrs) {
             this.get("el").attr(attrs);
         },
 
-        _uiSetElCls:function(cls) {
+        _uiSetElCls:function (cls) {
             this.get("el").addClass(cls);
         },
 
-        _uiSetElStyle:function(style) {
+        _uiSetElStyle:function (style) {
 
             this.get("el").css(style);
         },
 
-        _uiSetWidth:function(w) {
+        _uiSetWidth:function (w) {
             this.get("el").width(w);
         },
 
-        _uiSetHeight:function(h) {
+        _uiSetHeight:function (h) {
             //S.log("_uiSetHeight");
             var self = this;
             self.get("el").height(h);
         },
 
-        _uiSetHtml:function(c) {
+        _uiSetHtml:function (c) {
             this.get("el").html(c);
         },
 
-        _uiSetVisible:function(isVisible) {
+        _uiSetVisible:function (isVisible) {
             var el = this.get("el"),
                 visibleMode = this.get("visibleMode");
             if (visibleMode == "visibility") {
@@ -1063,16 +1096,16 @@ KISSY.add('uibase/boxrender', function(S, Node) {
             }
         },
 
-        show:function() {
+        show:function () {
             var self = this;
             self.render();
             self.set("visible", true);
         },
-        hide:function() {
+        hide:function () {
             this.set("visible", false);
         },
 
-        __destructor:function() {
+        __destructor:function () {
             //S.log("box __destructor");
             var el = this.get("el");
             if (el) {
@@ -1082,7 +1115,7 @@ KISSY.add('uibase/boxrender', function(S, Node) {
         }
     };
 
-    return Box;
+    return BoxRender;
 }, {
     requires:['node']
 });

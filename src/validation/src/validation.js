@@ -5,7 +5,6 @@
  * @date 2011.06.21
  */
 KISSY.add("validation", function(S, Validation) {
-   		S.Validation = Validation;
 	    return Validation;
 	}, {
 		requires:["validation/base","validation/assets/base.css"]

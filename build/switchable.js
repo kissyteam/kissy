@@ -1,8 +1,427 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:24
+build time: Dec 31 15:15
 */
+/**
+ * @fileOverview accordion aria support
+ * @creator yiminghe@gmail.com
+ */
+KISSY.add('switchable/accordion/aria', function(S, DOM, Event, Aria, Accordion) {
+
+    var KEY_PAGEUP = 33;
+    var KEY_PAGEDOWN = 34;
+    var KEY_END = 35;
+    var KEY_HOME = 36;
+
+    var KEY_LEFT = 37;
+    var KEY_UP = 38;
+    var KEY_RIGHT = 39;
+    var KEY_DOWN = 40;
+    var KEY_TAB = 9;
+
+//    var DOM_EVENT = {originalEvent:{target:1}};
+
+    var KEY_SPACE = 32;
+//    var KEY_BACKSPACE = 8;
+//    var KEY_DELETE = 46;
+    var KEY_ENTER = 13;
+//    var KEY_INSERT = 45;
+//    var KEY_ESCAPE = 27;
+
+    S.mix(Accordion.Config, {
+            aria:true
+        });
+
+    Accordion.Plugins.push({
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var container = self.container,
+                    activeIndex = self.activeIndex;
+                DOM.attr(container, "aria-multiselectable",
+                    self.config.multiple ? "true" : "false");
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
+                var triggers = self.triggers,
+                    panels = self.panels;
+                var i = 0;
+                S.each(panels, function(panel) {
+                    if (!panel.id) {
+                        panel.id = S.guid("ks-accordion-tab-panel");
+                    }
+                });
+                S.each(triggers, function(trigger) {
+                    if (!trigger.id) {
+                        trigger.id = S.guid("ks-accordion-tab");
+                    }
+                });
+
+                S.each(triggers, function(trigger) {
+                    trigger.setAttribute("role", "tab");
+                    trigger.setAttribute("aria-expanded", activeIndex == i ? "true" : "false");
+                    trigger.setAttribute("aria-selected", activeIndex == i ? "true" : "false");
+                    trigger.setAttribute("aria-controls", panels[i].id);
+                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(panel) {
+                    var t = triggers[i];
+                    panel.setAttribute("role", "tabpanel");
+                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+                    panel.setAttribute("aria-labelledby", t.id);
+                    i++;
+                });
+
+                self.on("switch", _tabSwitch, self);
+
+                Event.on(container, "keydown", _tabKeydown, self);
+                /**
+                 * prevent firefox native tab switch
+                 */
+                Event.on(container, "keypress", _tabKeypress, self);
+
+            }
+        });
+
+    var setTabIndex = Aria.setTabIndex;
+
+    function _currentTabFromEvent(t) {
+        var triggers = this.triggers,
+            trigger;
+        S.each(triggers, function(ct) {
+            if (ct == t || DOM.contains(ct, t)) {
+                trigger = ct;
+            }
+        });
+        return trigger;
+    }
+
+
+    function _currentPanelFromEvent(t) {
+        var panels = this.panels,
+            panel;
+        S.each(panels, function(ct) {
+            if (ct == t || DOM.contains(ct, t)) {
+                panel = ct;
+            }
+        });
+        return panel;
+    }
+
+    function getTabFromPanel(panel) {
+        var triggers = this.triggers,
+            panels = this.panels;
+        return triggers[S.indexOf(panel, panels)];
+    }
+
+    function _currentTabByTarget(t) {
+        var self = this,
+            currentTarget = _currentTabFromEvent.call(self, t);
+        if (!currentTarget) {
+            currentTarget = getTabFromPanel.call(self,
+                _currentPanelFromEvent.call(self, t))
+        }
+        return currentTarget;
+    }
+
+    function _tabKeypress(e) {
+
+        switch (e.keyCode) {
+
+            case KEY_PAGEUP:
+            case KEY_PAGEDOWN:
+                if (e.ctrlKey && !e.altKey && !e.shiftKey) {
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                } // endif
+                break;
+
+        }
+    }
+
+    /**
+     * Keyboard commands for the Tab Panel
+     * @param e
+     */
+    function _tabKeydown(e) {
+        var t = e.target,
+            self = this,
+            currentTarget,
+            triggers = self.triggers;
+
+        // Save information about a modifier key being pressed
+        // May want to ignore keyboard events that include modifier keys
+        var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
+        var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
+
+        switch (e.keyCode) {
+
+            case KEY_ENTER:
+            case KEY_SPACE:
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
+                    && no_modifier_pressed_flag
+                    ) {
+
+                    enter.call(self, currentTarget);
+                    e.halt();
+                }
+                break;
+
+            case KEY_LEFT:
+            case KEY_UP:
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
+                // 争渡读屏器阻止了上下左右键
+                //&& no_modifier_pressed_flag
+                    ) {
+                    prev.call(self, currentTarget);
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_RIGHT:
+            case KEY_DOWN:
+                if ((currentTarget = _currentTabFromEvent.call(self, t))
+                //&& no_modifier_pressed_flag
+                    ) {
+                    next.call(self, currentTarget);
+                    e.halt();
+                } // endif
+                break;
+
+            case KEY_PAGEDOWN:
+                if (control_modifier_pressed_flag) {
+                    e.halt();
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    next.call(self, currentTarget);
+                }
+                break;
+
+            case KEY_PAGEUP:
+                if (control_modifier_pressed_flag) {
+                    e.halt();
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    prev.call(self, currentTarget);
+                }
+                break;
+
+            case KEY_HOME:
+                if (no_modifier_pressed_flag) {
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    switchTo.call(self, 0);
+                    e.halt();
+                }
+                break;
+
+            case KEY_END:
+                if (no_modifier_pressed_flag) {
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    switchTo.call(self, triggers.length - 1);
+                    e.halt();
+                }
+                break;
+
+            case KEY_TAB:
+                if (e.ctrlKey && !e.altKey) {
+                    e.halt();
+                    currentTarget = _currentTabByTarget.call(self, t);
+                    if (e.shiftKey)
+                        prev.call(self, currentTarget);
+                    else
+                        next.call(self, currentTarget);
+                }
+                break;
+        }
+    }
+
+    function focusTo(nextIndex, focusNext) {
+        var self = this,
+            triggers = self.triggers,
+            next = triggers[nextIndex];
+        S.each(triggers, function(cur) {
+            if (cur === next) return;
+            setTabIndex(cur, "-1");
+            DOM.removeClass(cur, "ks-switchable-select");
+            cur.setAttribute("aria-selected", "false");
+        });
+        if (focusNext) {
+            next.focus();
+        }
+        setTabIndex(next, "0");
+        DOM.addClass(next, "ks-switchable-select");
+        next.setAttribute("aria-selected", "true");
+    }
+
+    // trigger 焦点转移
+    function prev(trigger) {
+        var self = this,
+            triggers = self.triggers,
+            focusIndex = S.indexOf(trigger, triggers),
+            nFocusIndex = focusIndex == 0
+                ? triggers.length - 1 : focusIndex - 1;
+        focusTo.call(self, nFocusIndex, true);
+    }
+
+    function switchTo(index) {
+        focusTo.call(this, index, true)
+    }
+
+
+    // trigger 焦点转移
+    function next(trigger) {
+        var self = this,
+            triggers = self.triggers,
+            focusIndex = S.indexOf(trigger, triggers),
+            nFocusIndex = (focusIndex == triggers.length - 1
+                ? 0 : focusIndex + 1);
+        focusTo.call(self, nFocusIndex, true);
+    }
+
+    function enter(trigger) {
+        this.switchTo(S.indexOf(trigger, this.triggers));
+    }
+
+
+    // 显示 tabpanel
+    function _tabSwitch(ev) {
+
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
+            self = this,
+            multiple = self.config.multiple,
+            activeIndex = ev.currentIndex,
+            panels = self.panels,
+            triggers = self.triggers,
+            trigger = triggers[activeIndex],
+            panel = panels[activeIndex];
+
+        if (!multiple) {
+            S.each(panels, function(p) {
+                if (p !== panel) {
+                    p.setAttribute("aria-hidden", "true");
+                }
+            });
+            S.each(triggers, function(t) {
+                if (t !== trigger) {
+                    t.setAttribute("aria-hidden", "true");
+                }
+            });
+        }
+
+        var o = panel.getAttribute("aria-hidden");
+        panel.setAttribute("aria-hidden", o == "false" ? "true" : "false");
+        trigger.setAttribute("aria-expanded", o == "false" ? "false" : "true");
+        focusTo.call(self, activeIndex, domEvent);
+    }
+},
+    {
+        requires:["dom","event","../aria","./base"]
+    });
+
+/**
+
+ 承玉：2011.06.02 review switchable
+
+ 2011-05-08 承玉：add support for aria & keydown
+
+ <h2>键盘快捷键</h2>
+ <ul class="list">
+ <li>左/上键:当焦点在标签时转到上一个标签
+ <li>右/下键:当焦点在标签时转到下一个标签
+ <li>Home: 当焦点在标签时转到第一个标签
+ <li>End: 当焦点在标签时转到最后一个标签
+ <li>Control + PgUp and Control + Shift + Tab: 当然焦点在容器内时转到当前标签上一个标签
+ <li>Control + PgDn and Control + Tab: 当然焦点在容器内时转到当前标签下一个标签
+ </ul>
+ **/
+/**
+ * @fileOverview Accordion Widget
+ * @creator  沉鱼<fool2fish@gmail.com>,yiminghe@gmail.com
+ */
+KISSY.add('switchable/accordion/base', function(S, DOM, Switchable) {
+
+
+    /**
+     * Accordion Class
+     * @constructor
+     */
+    function Accordion(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Accordion)) {
+            return new Accordion(container, config);
+        }
+
+        Accordion.superclass.constructor.apply(self, arguments);
+    }
+
+    S.extend(Accordion, Switchable, {
+
+            _switchTrigger: function(fromTrigger, toTrigger/*, index*/) {
+                var self = this,
+                    cfg = self.config;
+                if (cfg.multiple) {
+                    DOM.toggleClass(toTrigger, cfg.activeTriggerCls);
+                } else {
+                    Accordion.superclass._switchTrigger.apply(self, arguments);
+                }
+            },
+
+            /**
+             * 重复触发时的有效判断
+             */
+            _triggerIsValid: function(index) {
+                // multiple 模式下，再次触发意味着切换展开/收缩状态
+                return this.config.multiple ||
+                    Accordion.superclass._triggerIsValid.call(this, index);
+            },
+
+            /**
+             * 切换视图
+             */
+            _switchView: function(fromPanels, toPanels, index, direction, ev, callback) {
+                var self = this,
+                    cfg = self.config,
+                    panel = toPanels[0];
+
+                if (cfg.multiple) {
+                    DOM.toggle(panel);
+                    this._fireOnSwitch(index, ev);
+                    callback && callback.call(this);
+                } else {
+                    Accordion.superclass._switchView.apply(self, arguments);
+                }
+            }
+        });
+
+    Accordion.Plugins = [];
+    Accordion.Config = {
+        markupType: 1,
+        triggerType: 'click',
+        multiple: false
+    };
+    return Accordion;
+
+}, { requires:["dom","../base"]});
+
+/**
+ * TODO:
+ *  - 支持动画
+ *
+ *  承玉：2011.06.02 review switchable
+ *
+ *  承玉：2011.05.10
+ *   - review ,prepare for aria
+ *
+ *
+ */
 /**
  * @fileOverview common aria for switchable and stop autoplay if necessary
  * @author yiminghe@gmail.com
@@ -675,6 +1094,475 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
  *
  */
 /**
+ * @fileOverview aria support for carousel
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
+
+//    var KEY_PAGEUP = 33;
+//    var KEY_PAGEDOWN = 34;
+//    var KEY_END = 35;
+//    var KEY_HOME = 36;
+
+    var KEY_LEFT = 37;
+    var KEY_UP = 38;
+    var KEY_RIGHT = 39;
+    var KEY_DOWN = 40;
+    //var KEY_TAB = 9;
+
+    var KEY_SPACE = 32;
+//    var KEY_BACKSPACE = 8;
+//    var KEY_DELETE = 46;
+    var KEY_ENTER = 13;
+//    var KEY_INSERT = 45;
+//    var KEY_ESCAPE = 27;
+    var setTabIndex = Aria.setTabIndex;
+    var DOM_EVENT = {originalEvent:{target:1}};
+    var FORWARD = 'forward',
+        BACKWARD = 'backward';
+
+    function _switch(ev) {
+        var self = this;
+        var steps = self.config.steps;
+        var index = ev.currentIndex;
+        var activeIndex = self.activeIndex;
+        var panels = self.panels;
+        var panel = panels[index * steps];
+        var triggers = self.triggers;
+        var trigger = triggers[index];
+
+        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+
+        // dom 事件触发
+        if (domEvent
+            // 初始化
+            || activeIndex == -1) {
+
+            S.each(triggers, function(t) {
+                setTabIndex(t, -1);
+            });
+
+            S.each(panels, function(t) {
+                setTabIndex(t, -1);
+            });
+
+            if (trigger) {
+                setTabIndex(trigger, 0);
+            }
+            setTabIndex(panel, 0);
+
+            //dom 事件触发时，才会进行聚焦，否则会干扰用户
+            if (domEvent) {
+                panel.focus();
+            }
+        }
+    }
+
+    function findTrigger(t) {
+        var r;
+        S.each(this.triggers, function(trigger) {
+            if (trigger == t
+                || DOM.contains(trigger, t)) {
+                r = trigger;
+                return false;
+            }
+        });
+        return r;
+    }
+
+    function next(c) {
+        var n = DOM.next(c),
+            triggers = this.triggers;
+        if (!n) {
+            n = triggers[0];
+        }
+        setTabIndex(c, -1);
+        if (n) {
+            setTabIndex(n, 0);
+            n.focus();
+        }
+    }
+
+
+    function prev(c) {
+        var n = DOM.prev(c),
+            triggers = this.triggers;
+        if (!n) {
+            n = triggers[triggers.length - 1];
+        }
+        setTabIndex(c, -1);
+        if (n) {
+            setTabIndex(n, 0);
+            n.focus();
+        }
+    }
+
+    function _navKeydown(e) {
+        var key = e.keyCode,t = e.target,
+            c;
+
+        switch (key) {
+            case KEY_DOWN:
+            case KEY_RIGHT:
+
+                c = findTrigger.call(this, t);
+                if (c) {
+                    next.call(this, c);
+                    e.halt();
+                }
+                break;
+
+            case KEY_UP:
+            case KEY_LEFT:
+
+                c = findTrigger.call(this, t);
+                if (c) {
+                    prev.call(this, c);
+                    e.halt();
+                }
+                break;
+
+            case KEY_ENTER:
+            case KEY_SPACE:
+                c = findTrigger.call(this, t);
+                if (c) {
+                    this.switchTo(S.indexOf(c, this.triggers), undefined, DOM_EVENT);
+                    e.halt();
+                }
+                break;
+        }
+    }
+
+    function findPanel(t) {
+        var r;
+        S.each(this.panels, function(p) {
+            if (p == t || DOM.contains(p, t)) {
+                r = p;
+                return false;
+            }
+        });
+        return r;
+    }
+
+
+    function nextPanel(c) {
+        var n = DOM.next(c),
+            panels = this.panels;
+        if (!n) {
+            n = panels[0];
+        }
+        setTabIndex(c, -1);
+        setTabIndex(n, 0);
+
+        if (checkPanel.call(this, n, FORWARD)) {
+            n.focus();
+        }
+    }
+
+
+    function prevPanel(c) {
+        var n = DOM.prev(c),
+            panels = this.panels;
+        if (!n) {
+            n = panels[panels.length - 1];
+        }
+        setTabIndex(c, -1);
+        setTabIndex(n, 0);
+        if (checkPanel.call(this, n, BACKWARD)) {
+            n.focus();
+        }
+    }
+
+    function checkPanel(p, direction) {
+        var index = S.indexOf(p, this.panels),
+            steps = this.config.steps,
+            dest = Math.floor(index / steps);
+        // 在同一个 panel 组，立即返回
+        if (dest == this.activeIndex) {
+            return 1;
+        }
+        if (index % steps == 0 || index % steps == steps - 1) {
+            //向前动画滚动中，focus，会不正常 ...
+            //传递事件，动画后异步 focus
+            this.switchTo(dest, direction, DOM_EVENT);
+            return 0;
+        }
+        return 1;
+    }
+
+
+    function _contentKeydown(e) {
+
+        var key = e.keyCode,
+            t = e.target,
+            c;
+
+        switch (key) {
+            case KEY_DOWN:
+            case KEY_RIGHT:
+
+                c = findPanel.call(this, t);
+                if (c) {
+                    nextPanel.call(this, c);
+                    e.halt();
+                }
+                break;
+
+
+            case KEY_UP:
+            case KEY_LEFT:
+
+                c = findPanel.call(this, t);
+                if (c) {
+                    prevPanel.call(this, c);
+                    e.halt();
+                }
+                break;
+
+            case KEY_ENTER:
+            case KEY_SPACE:
+
+                c = findPanel.call(this, t);
+                if (c) {
+                    this.fire('itemSelected', { item: c });
+                    e.halt();
+                }
+                break;
+        }
+    }
+
+    S.mix(Carousel.Config, {
+            aria:false
+        });
+
+    Carousel.Plugins.push({
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) {
+                    return;
+                }
+                var triggers = self.triggers;
+                var panels = self.panels;
+                var content = self.content;
+                var activeIndex = self.activeIndex;
+
+                if (!content.id) {
+                    content.id = S.guid("ks-switchbale-content");
+                }
+                content.setAttribute("role", "listbox");
+                var i = 0;
+                S.each(triggers, function(t) {
+                    setTabIndex(t, activeIndex == i ? "0" : "-1");
+                    t.setAttribute("role", "button");
+                    t.setAttribute("aria-controls", content.id);
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(t) {
+                    setTabIndex(t, "-1");
+                    t.setAttribute("role", "option");
+                    i++;
+                });
+
+                self.on("switch", _switch, self);
+                var nav = self.nav;
+
+                if (nav) {
+                    Event.on(nav, "keydown", _navKeydown, self);
+                }
+
+                Event.on(content, "keydown", _contentKeydown, self);
+
+                var prevBtn = self['prevBtn'],
+                    nextBtn = self['nextBtn'];
+
+                if (prevBtn) {
+                    setTabIndex(prevBtn, 0);
+                    prevBtn.setAttribute("role", "button");
+                    Event.on(prevBtn, "keydown", function(e) {
+                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                            self.prev(DOM_EVENT);
+                            e.preventDefault();
+                        }
+                    });
+                }
+
+                if (nextBtn) {
+                    setTabIndex(nextBtn, 0);
+                    nextBtn.setAttribute("role", "button");
+                    Event.on(nextBtn, "keydown", function(e) {
+                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                            self.next(DOM_EVENT);
+                            e.preventDefault();
+                        }
+                    });
+                }
+
+            }
+        });
+
+}, {
+        requires:["dom","event","../aria","./base"]
+    });
+
+/**
+ 承玉：2011.06.02 review switchable
+
+ 承玉:2011.05.12
+
+ <h2>键盘快捷键</h2>
+ <ul class="list">
+ <li><strong>当焦点在上一页 / 下一页时</strong>
+ <ul>
+ <li>
+ enter/space 旋转到上一屏下一屏，并且焦点转移到当前屏的第一个面板
+ </li>
+ </ul>
+ </li>
+
+ <li>
+ <strong> 当焦点在导航圆点时</strong>
+ <ul>
+ <li>
+ 上/左键：焦点转移到上一个导航圆点
+ </li>
+ <li>
+ 下/右键：焦点转移到下一个导航圆点
+ </li>
+ <li>
+ enter/space: 旋转到当前导航圆点代表的滚动屏，并且焦点转移到当前屏的第一个面板
+ </li>
+ </ul>
+ </li>
+
+
+ <li>
+ <strong>当焦点在底部滚动屏某个面板时</strong>
+ <ul>
+ <li>
+ 上/左键：焦点转移到上一个面板，必要时滚屏
+ </li>
+ <li>
+ 下/右键：焦点转移到下一个面板，必要时滚屏
+ </li>
+ <li>
+ enter/space: 触发 itemSelect 事件，item 为当前面板
+ </li>
+ </ul>
+ </li>
+ </ul>
+ **//**
+ * @fileOverview Carousel Widget
+ * @creator  lifesinger@gmail.com
+ */
+KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefined) {
+
+    var CLS_PREFIX = 'ks-switchable-',
+        DOT = '.',
+        PREV_BTN = 'prevBtn',
+        NEXT_BTN = 'nextBtn',
+        DOM_EVENT = {originalEvent:{target:1}};
+
+    /**
+     * Carousel Class
+     * @constructor
+     */
+    function Carousel(container, config) {
+
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Carousel)) {
+            return new Carousel(container, config);
+        }
+
+        // call super
+        Carousel.superclass.constructor.apply(self, arguments);
+    }
+
+    Carousel.Config = {
+        circular: true,
+        prevBtnCls: CLS_PREFIX + 'prev-btn',
+        nextBtnCls: CLS_PREFIX + 'next-btn',
+        disableBtnCls: CLS_PREFIX + 'disable-btn'
+    };
+
+    Carousel.Plugins = [];
+
+    S.extend(Carousel, Switchable, {
+            /**
+             * 插入 carousel 的初始化逻辑
+             *
+             * Carousel 的初始化逻辑
+             * 增加了:
+             *   self.prevBtn
+             *   self.nextBtn
+             */
+            _init:function() {
+                var self = this;
+                Carousel.superclass._init.call(self);
+                var cfg = self.config,
+                    disableCls = cfg.disableBtnCls;
+
+                // 获取 prev/next 按钮，并添加事件
+                S.each(['prev', 'next'], function(d) {
+                    var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
+
+                    Event.on(btn, 'mousedown', function(ev) {
+                        ev.preventDefault();
+                        if (!DOM.hasClass(btn, disableCls)) {
+                            self[d](DOM_EVENT);
+                        }
+                    });
+                });
+
+                // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
+                // circular = true 时，无需处理
+                if (!cfg.circular) {
+                    self.on('switch', function(ev) {
+                        var i = ev.currentIndex,
+                            disableBtn = (i === 0) ?
+                                self[PREV_BTN] :
+                                (i === self.length - 1) ? self[NEXT_BTN] :
+                                    undefined;
+
+                        DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
+
+                        if (disableBtn) {
+                            DOM.addClass(disableBtn, disableCls);
+                        }
+                    });
+                }
+
+                // 触发 itemSelected 事件
+                Event.on(self.panels, 'click', function() {
+                    self.fire('itemSelected', { item: this });
+                });
+            }
+        });
+
+
+    return Carousel;
+
+}, { requires:["dom","event","../base"]});
+
+
+/**
+ * NOTES:
+ *
+ * 承玉：2011.06.02 review switchable
+ *
+ * 承玉：2011.05
+ *  - 内部组件 init 覆盖父类而不是监听事件
+ *
+ * 2010.07
+ *  - 添加对 prevBtn/nextBtn 的支持
+ *  - 添加 itemSelected 事件
+ *
+ * TODO:
+ *  - itemSelected 时，自动居中的特性
+ */
+/**
  * @fileOverview Switchable Circular Plugin
  * @creator  lifesinger@gmail.com
  */
@@ -1277,17 +2165,163 @@ KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
 /**
  * 承玉：2011.06.02 review switchable
  *//**
+ * @fileOverview aria support for slide
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("switchable/slide/aria", function(S, DOM, Event, Aria, Slide) {
+
+//    var KEY_PAGEUP = 33;
+//    var KEY_PAGEDOWN = 34;
+//    var KEY_END = 35;
+//    var KEY_HOME = 36;
+
+    var KEY_LEFT = 37;
+    var KEY_UP = 38;
+    var KEY_RIGHT = 39;
+    var KEY_DOWN = 40;
+    // var KEY_TAB = 9;
+
+    // var KEY_SPACE = 32;
+//    var KEY_BACKSPACE = 8;
+//    var KEY_DELETE = 46;
+    // var KEY_ENTER = 13;
+//    var KEY_INSERT = 45;
+//    var KEY_ESCAPE = 27;
+
+    S.mix(Slide.Config, {
+            aria:false
+        });
+
+    var DOM_EVENT = {originalEvent:{target:1}};
+
+    var setTabIndex = Aria.setTabIndex;
+    Slide.Plugins.push({
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var triggers = self.triggers;
+                var panels = self.panels;
+                var i = 0;
+                var activeIndex = self.activeIndex;
+                S.each(triggers, function(t) {
+                    setTabIndex(t, "-1");
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(p) {
+                    setTabIndex(p, activeIndex == i ? "0" : "-1");
+                    DOM.attr(p, "role", "option");
+                    i++;
+                });
+
+                var content = self.content;
+
+                DOM.attr(content, "role", "listbox");
+
+                Event.on(content, "keydown", _contentKeydownProcess, self);
+
+                setTabIndex(panels[0], 0);
+
+                self.on("switch", function(ev) {
+                    var index = ev.currentIndex,
+                        domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
+                        last = self.completedIndex;
+
+                    if (last > -1) {
+                        setTabIndex(panels[last], -1);
+                    }
+                    setTabIndex(panels[index], 0);
+
+                    //dom 触发的事件，自动聚焦
+                    if (domEvent) {
+                        panels[index].focus();
+                    }
+                });
+            }
+        });
+
+    function _contentKeydownProcess(e) {
+        var self = this,
+            key = e.keyCode;
+        switch (key) {
+
+            case KEY_DOWN:
+            case KEY_RIGHT:
+                self.next(DOM_EVENT);
+                e.halt();
+                break;
+
+            case KEY_UP:
+            case KEY_LEFT:
+                self.prev(DOM_EVENT);
+                e.halt();
+                break;
+        }
+    }
+
+}, {
+        requires:["dom","event","../aria",'./base']
+    });
+/**
+ 2011-05-12 承玉：add support for aria & keydown
+
+ <h2>键盘操作</h2>
+ <ul class="list">
+ <li>tab 进入卡盘时，停止自动播放</li>
+ <li>上/左键：当焦点位于卡盘时，切换到上一个 slide 面板</li>
+ <li>下/右键：当焦点位于卡盘时，切换到下一个 slide 面板</li>
+ <li>tab 离开卡盘时，开始自动播放</li>
+ </ul>
+ **//**
+ * @fileOverview Tabs Widget
+ * @creator  lifesinger@gmail.com
+ */
+KISSY.add('switchable/slide/base', function(S, Switchable) {
+
+
+
+    /**
+     * Slide Class
+     * @constructor
+     */
+    function Slide(container, config) {
+
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Slide)) {
+            return new Slide(container, config);
+        }
+
+        Slide.superclass.constructor.apply(self, arguments);
+    }
+
+    Slide.Config={
+        autoplay: true,
+        circular: true
+    };
+
+    Slide.Plugins=[];
+
+    S.extend(Slide, Switchable);
+
+    return Slide;
+
+}, { requires:["../base"]});
+
+/**
+ * 承玉：2011.06.02 review switchable
+ */
+/**
  * @fileOverview switchable
  */
 KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay, autorender, Carousel, CAria, circular, countdown, effect, lazyload, Slide, SAria, Tabs, TAria) {
-    S.Switchable = Switchable;
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
         Slide:Slide,
         Tabs:Tabs
     };
-    S.mix(S, re);
     S.mix(Switchable, re);
     return Switchable;
 }, {
@@ -1309,4 +2343,263 @@ KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay
         "switchable/tabs/base",
         "switchable/tabs/aria"
     ]
+});/**
+ * @fileOverview Tabs aria support
+ * @creator yiminghe@gmail.com
+ */
+KISSY.add('switchable/tabs/aria', function(S, DOM, Event, Switchable, Aria, Tabs) {
+
+        var KEY_PAGEUP = 33;
+        var KEY_PAGEDOWN = 34;
+        var KEY_END = 35;
+        var KEY_HOME = 36;
+
+        var KEY_LEFT = 37;
+        var KEY_UP = 38;
+        var KEY_RIGHT = 39;
+        var KEY_DOWN = 40;
+        var KEY_TAB = 9;
+
+//    var KEY_SPACE = 32;
+//    var KEY_BACKSPACE = 8;
+//    var KEY_DELETE = 46;
+//    var KEY_ENTER = 13;
+//    var KEY_INSERT = 45;
+//    var KEY_ESCAPE = 27;
+
+        S.mix(Tabs.Config, {
+            aria:true
+        });
+
+        Tabs.Plugins.push({
+            name:"aria",
+            init:function(self) {
+                if (!self.config.aria) return;
+                var triggers = self.triggers,
+                    activeIndex = self.activeIndex,
+                    panels = self.panels;
+                var container = self.container;
+                if (self.nav) {
+                    DOM.attr(self.nav, "role", "tablist");
+                }
+                var i = 0;
+                S.each(triggers, function(trigger) {
+                    trigger.setAttribute("role", "tab");
+                    setTabIndex(trigger, activeIndex == i ? "0" : "-1");
+                    if (!trigger.id) {
+                        trigger.id = S.guid("ks-switchable");
+                    }
+                    i++;
+                });
+                i = 0;
+                S.each(panels, function(panel) {
+                    var t = triggers[i];
+                    panel.setAttribute("role", "tabpanel");
+                    panel.setAttribute("aria-hidden", activeIndex == i ? "false" : "true");
+                    panel.setAttribute("aria-labelledby", t.id);
+                    i++;
+                });
+
+                self.on("switch", _tabSwitch, self);
+
+
+                Event.on(container, "keydown", _tabKeydown, self);
+                /**
+                 * prevent firefox native tab switch
+                 */
+                Event.on(container, "keypress", _tabKeypress, self);
+
+            }
+        });
+
+        var setTabIndex = Aria.setTabIndex;
+
+
+        function _currentTabFromEvent(t) {
+            var triggers = this.triggers,
+                trigger;
+            S.each(triggers, function(ct) {
+                if (ct == t || DOM.contains(ct, t)) {
+                    trigger = ct;
+                }
+            });
+            return trigger;
+        }
+
+        function _tabKeypress(e) {
+
+            switch (e.keyCode) {
+
+                case KEY_PAGEUP:
+                case KEY_PAGEDOWN:
+                    if (e.ctrlKey && !e.altKey && !e.shiftKey) {
+                        e.halt();
+                    } // endif
+                    break;
+
+                case KEY_TAB:
+                    if (e.ctrlKey && !e.altKey) {
+                        e.halt();
+                    } // endif
+                    break;
+
+            }
+        }
+
+        var getDomEvent = Switchable.getDomEvent;
+
+        /**
+         * Keyboard commands for the Tab Panel
+         * @param e
+         */
+        function _tabKeydown(e) {
+            var t = e.target,self = this;
+            var triggers = self.triggers;
+
+            // Save information about a modifier key being pressed
+            // May want to ignore keyboard events that include modifier keys
+            var no_modifier_pressed_flag = !e.ctrlKey && !e.shiftKey && !e.altKey;
+            var control_modifier_pressed_flag = e.ctrlKey && !e.shiftKey && !e.altKey;
+
+            switch (e.keyCode) {
+
+                case KEY_LEFT:
+                case KEY_UP:
+                    if (_currentTabFromEvent.call(self, t)
+                    // 争渡读屏器阻止了上下左右键
+                    //&& no_modifier_pressed_flag
+                        ) {
+                        self.prev(getDomEvent(e));
+                        e.halt();
+                    } // endif
+                    break;
+
+                case KEY_RIGHT:
+                case KEY_DOWN:
+                    if (_currentTabFromEvent.call(self, t)
+                    //&& no_modifier_pressed_flag
+                        ) {
+                        self.next(getDomEvent(e));
+                        e.halt();
+                    } // endif
+                    break;
+
+                case KEY_PAGEDOWN:
+
+                    if (control_modifier_pressed_flag) {
+                        e.halt();
+                        self.next(getDomEvent(e));
+                    }
+                    break;
+
+                case KEY_PAGEUP:
+                    if (control_modifier_pressed_flag) {
+                        e.halt();
+                        self.prev(getDomEvent(e));
+                    }
+                    break;
+
+//            case KEY_HOME:
+//                if (no_modifier_pressed_flag) {
+//                    self.switchTo(0, undefined, getDomEvent(e));
+//                    e.halt();
+//                }
+//                break;
+//            case KEY_END:
+//                if (no_modifier_pressed_flag) {
+//                    self.switchTo(triggers.length - 1, undefined, getDomEvent(e));
+//                    e.halt();
+//                }
+//
+//                break;
+
+                case KEY_TAB:
+                    if (e.ctrlKey && !e.altKey) {
+                        e.halt();
+                        if (e.shiftKey)
+                            self.prev(getDomEvent(e));
+                        else
+                            self.next(getDomEvent(e));
+                    }
+                    break;
+            }
+        }
+
+        function _tabSwitch(ev) {
+            var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+
+            var self = this;
+            // 上一个激活 tab
+            var lastActiveIndex = self.completedIndex;
+
+            // 当前激活 tab
+            var activeIndex = ev.currentIndex;
+
+            if (lastActiveIndex == activeIndex) return;
+
+            var lastTrigger = self.triggers[lastActiveIndex];
+            var trigger = self.triggers[activeIndex];
+            var lastPanel = self.panels[lastActiveIndex];
+            var panel = self.panels[activeIndex];
+            if (lastTrigger) {
+                setTabIndex(lastTrigger, "-1");
+            }
+            setTabIndex(trigger, "0");
+
+            // move focus to current trigger if invoked by dom event
+            if (domEvent) {
+                trigger.focus();
+            }
+            if (lastPanel) {
+                lastPanel.setAttribute("aria-hidden", "true");
+            }
+            panel.setAttribute("aria-hidden", "false");
+        }
+
+
+    },
+    {
+        requires:["dom","event","../base","../aria","./base"]
+    });
+
+/**
+ * 2011-05-08 承玉：add support for aria & keydown
+ * <h2>键盘快捷键</h2>
+
+ <ul class="list">
+ <li>左/上键:当焦点在标签时转到上一个标签
+ <li>右/下键:当焦点在标签时转到下一个标签
+ <li>Home: 当焦点在标签时转到第一个标签 -- 去除
+ 输入框内 home 跳到输入框第一个字符前面 ，
+ end 跳到输入框最后一个字符后面 ，
+ 不应该拦截
+ <li>End: 当焦点在标签时转到最后一个标签 -- 去除
+ <li>Control + PgUp and Control + Shift + Tab: 当然焦点在容器内时转到当前标签上一个标签
+ <li>Control + PgDn and Control + Tab: 当然焦点在容器内时转到当前标签下一个标签
+ </ul>
+ */
+/**
+ * @fileOverview Tabs Widget
+ * @creator  lifesinger@gmail.com
+ */
+KISSY.add('switchable/tabs/base', function(S, Switchable) {
+    function Tabs(container, config) {
+        var self = this;
+
+        // factory or constructor
+        if (!(self instanceof Tabs)) {
+            return new Tabs(container, config);
+        }
+
+        Tabs.superclass.constructor.call(self, container, config);
+        return 0;
+    }
+
+    S.extend(Tabs, Switchable);
+
+    Tabs.Config = {};
+    Tabs.Plugins = [];
+    return Tabs;
+}, {
+    requires:["../base"]
 });

@@ -372,5 +372,5 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
     return Flash;
 
 
-}, { requires:["ua","dom","flash/base","json","flash/ua"] });
+}, { requires:["ua","dom","./base","json","./ua"] });
 

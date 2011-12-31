@@ -11,6 +11,7 @@
         <concat destfile="${component.src.dir.tmp}/seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path location="${src.dir}/kissy.js"/>
             <path location="${src.dir}/lang.js"/>
+            <path location="${src.dir}/promise.js"/>
 
             <!--kissy loader start-->
             <path location="${src.dir}/loader/base.js"/>
@@ -33,7 +34,7 @@
 
             <path location="${src.dir}/web.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;" />
+                <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
         </concat>
     </target>

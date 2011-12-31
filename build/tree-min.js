@@ -1,9 +1,9 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:26
+build time: Dec 31 15:16
 */
-KISSY.add("tree/tree",function(g,e,h,d,f,b){g=f.TREE_CLS;e=e.create(d,[h.DelegateChildren,b],{},{DefaultRender:f});h.UIStore.setUIByClass(g,{priority:h.UIStore.PRIORITY.LEVEL3,ui:e});return e},{requires:["uibase","component","./basenode","./treerender","./treemgr"]});
+KISSY.add("tree/base",function(g,e,h,d,f,b){g=f.TREE_CLS;e=e.create(d,[h.DelegateChildren,b],{},{DefaultRender:f});h.UIStore.setUIByClass(g,{priority:h.UIStore.PRIORITY.LEVEL3,ui:e});return e},{requires:["uibase","component","./basenode","./treerender","./treemgr"]});
 KISSY.add("tree/basenode",function(g,e,h,d,f){var b=e.all,k=f.ITEM_CLS,i=e.KeyCodes,l=h.create(d.ModelControl,[d.DecorateChild],{_keyNav:function(a){var c=true,j,m=this.get("children");switch(a.keyCode){case i.HOME:j=this.get("tree");break;case i.END:j=this.get("tree").getLastVisibleDescendant();break;case i.UP:j=this.getPreviousVisibleNode();break;case i.DOWN:j=this.getNextVisibleNode();break;case i.LEFT:if(this.get("expanded")&&(m.length||this.get("isLeaf")===false))this.set("expanded",false);else j=
 this.get("parent");break;case i.RIGHT:if(m.length||this.get("isLeaf")===false)this.get("expanded")?m[0].select():this.set("expanded",true);break;default:c=false}j&&j.select();return c},getLastVisibleDescendant:function(){var a=this.get("children");if(!this.get("expanded")||!a.length)return this;return a[a.length-1].getLastVisibleDescendant()},getNextVisibleNode:function(){var a=this.get("children"),c=this.get("parent");if(this.get("expanded")&&a.length)return a[0];for(a=this.next();c&&!a;){a=c.next();
 c=c.get("parent")}return a},getPreviousVisibleNode:function(){var a=this.prev();return a=a?a.getLastVisibleDescendant():this.get("parent")},next:function(){var a=this.get("parent");if(!a)return null;a=a.get("children");var c=g.indexOf(this,a);if(c==a.length-1)return null;return a[c+1]},prev:function(){var a=this.get("parent");if(!a)return null;a=a.get("children");var c=g.indexOf(this,a);if(c===0)return null;return a[c-1]},select:function(){this.get("tree").set("selectedItem",this)},_performInternal:function(a){var c=

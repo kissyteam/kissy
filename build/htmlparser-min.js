@@ -1,7 +1,7 @@
 /*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 13:27
+build time: Dec 31 15:15
 */
 KISSY.add("htmlparser/Parser",function(k,p,o,n,h,f,q,l){function i(a,d){this.originalHtml=a=k.trim(a);a=/^(<!doctype|<html|<body)/i.test(a)?"<document>"+a+"</document>":"<body>"+a+"</body>";this.lexer=new f(a);this.opts=d||{}}function m(a){var d=g(a,"body",3);if(d){a=d.parentNode;var j=a.childNodes,e=k.indexOf(d,j);if(e!=j.length-1){j=j.slice(e+1,j.length);for(e=0;e<j.length;e++){a.removeChild(j[e]);j[e].tagName=="body"?k.each(j[e].childNodes,function(r){d.appendChild(r)}):d.appendChild(j[e])}}}return d}
 function b(a){var d=a.childNodes,j,e,r=p.p,s=0;for(e=0;e<d.length;e++){j=d[e];if(j.nodeType==3||j.nodeType==1&&r[j.nodeName]){s=1;break}}if(s){s=[];var t=new o;t.nodeName=t.tagName="p";for(e=0;e<d.length;e++){j=d[e];if(j.nodeType==3||j.nodeType==1&&r[j.nodeName])t.appendChild(j);else{if(t.childNodes.length){s.push(t);t=t.clone()}s.push(j)}}t.childNodes.length&&s.push(t);a.empty();for(e=0;e<s.length;e++)a.appendChild(s[e])}}function g(a,d,j){if(j===0)return 0;k.isNumber(j)&&j--;var e=a.childNodes;

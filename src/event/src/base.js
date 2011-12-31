@@ -3,7 +3,7 @@
  *               how to fire event just like browser?
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
+KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
@@ -20,6 +20,28 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
      * @lends Event
      */
     {
+
+        _clone:function (src, dest) {
+            if (dest.nodeType !== DOM.ELEMENT_NODE ||
+                !_data._hasData(src)) {
+                return;
+            }
+            var eventDesc = _data._data(src),
+                events = eventDesc.events;
+            S.each(events, function (handlers, type) {
+                S.each(handlers, function (handler) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
+                    Event.on(dest, type, {
+                        fn:handler.fn,
+                        scope:handler.scope,
+                        data:handler.data,
+                        originalType:handler.originalType,
+                        selector:handler.selector
+                    });
+                });
+            });
+        },
+
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
          * @memberOf Event
@@ -196,7 +218,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, special) {
 
     return Event;
 }, {
-    requires:["dom", "./object", "./utils", './handle', './special']
+    requires:["dom", "./object", "./utils", './handle', './data', './special']
 });
 
 /**

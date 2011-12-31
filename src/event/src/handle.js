@@ -2,11 +2,11 @@
  * @fileOverview responsible for handling event from browser to KISSY Event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/handle", function (S, DOM, _protected, special) {
+KISSY.add("event/handle", function (S, DOM, _data, special) {
 
     function getEvents(target) {
         // 获取事件描述
-        var eventDesc = _protected._data(target);
+        var eventDesc = _data._data(target);
         return eventDesc && eventDesc.events;
     }
 
@@ -133,5 +133,5 @@ KISSY.add("event/handle", function (S, DOM, _protected, special) {
         return gRet;
     }
 }, {
-    requires:['dom', './protected', './special']
+    requires:['dom', './data', './special']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:04
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview   dom-attr
@@ -2883,10 +2883,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             S.log('IE filters ActiveX is disabled. ex = ' + ex);
         }
 
-        /**
-         * border fix
-         * ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
-         * (default is "medium")
+        /*
+         border fix
+         ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
+         (default is "medium")
          */
         var IE8 = UA['ie'] == 8,
             BORDER_MAP = {
@@ -2898,6 +2898,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         S.each(BORDERS, function (b) {
             var name = "border" + b + "Width",
                 styleName = "border" + b + "Style";
+
+            /**
+             * @ignore
+             */
             CUSTOM_STYLES[name] = {
                 get:function (elem, computed) {
                     // 只有需要计算样式的时候才转换，否则取原值
@@ -3347,11 +3351,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
 
-    /**
-     * css height,width 永远都是计算值
+    /*
+     css height,width 永远都是计算值
      */
     S.each(["height", "width"], function (name) {
+        /**
+         * @ignore
+         */
         CUSTOM_STYLES[ name ] = {
+            /**
+             * @ignore
+             */
             get:function (elem, computed) {
                 var val;
                 if (computed) {
@@ -3379,6 +3389,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     });
 
     S.each(["left", "top"], function (name) {
+        /**
+         * @ignore
+         */
         CUSTOM_STYLES[ name ] = {
             get:function (elem, computed) {
                 if (computed) {

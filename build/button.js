@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:36
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview Model and Control for button
@@ -13,7 +13,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     /**
      * @name Button
      * @constructor
-     * @extends ModelControl
+     * @extends Component.ModelControl
      */
     var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox],
         /**@lends Button.prototype */

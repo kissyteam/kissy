@@ -1,7 +1,7 @@
 ﻿KISSY.use("waterfall,ajax,template,node,button", function(S, Waterfall, io, Template, Node, Button) {
     var $ = Node.all;
 
-    var tpl = S.Template($('#tpl').html()),
+    var tpl = Template($('#tpl').html()),
         nextpage = 1,
         waterfall = new Waterfall.Loader({
         container:"#ColumnContainer",

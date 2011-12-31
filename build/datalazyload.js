@@ -1,21 +1,13 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:52
+build time: Dec 31 15:15
 */
 /**
- * @fileOverview datalazyload
- */
-KISSY.add("datalazyload", function(S, D) {
-    S.DataLazyload = D;
-    return D;
-}, {
-    requires:["datalazyload/impl"]
-});/**
  * @fileOverview 数据延迟加载组件
  * @author lifesinger@gmail.com
  */
-KISSY.add('datalazyload/impl', function (S, DOM, Event, undefined) {
+KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
     var win = window,
         DELAY = 0.1,

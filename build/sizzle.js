@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:22
+build time: Dec 31 15:15
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -9,7 +9,7 @@ build time: Dec 27 12:22
  *  Released under the MIT, BSD, and GPL Licenses.
  *  More information: http://sizzlejs.com/
  */
-KISSY.add('sizzle/impl', function(S) {
+KISSY.add('sizzle', function(S) {
 
     var chunker = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[^\[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?((?:.|\r|\n)*)/g,
         done = 0,
@@ -1418,11 +1418,3 @@ KISSY.add('sizzle/impl', function(S) {
     return Sizzle;
 });
 
-/**
- * @fileOverview sizzle support
- */
-KISSY.add("sizzle", function(S, sizzle) {
-    return sizzle;
-}, {
-    requires:["sizzle/impl"]
-});

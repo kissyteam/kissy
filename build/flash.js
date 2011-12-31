@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:07
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview    Flash 全局静态类
@@ -394,13 +394,12 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
     return Flash;
 
 
-}, { requires:["ua","dom","flash/base","json","flash/ua"] });
+}, { requires:["ua","dom","./base","json","./ua"] });
 
 /**
  * @fileOverview flash
  */
 KISSY.add("flash", function(S, F) {
-    S.Flash = F;
     return F;
 }, {
     requires:["flash/base","flash/embed"]

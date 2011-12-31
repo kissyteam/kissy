@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 13:27
+build time: Dec 31 15:16
 */
 /**
  * @fileOverview validation
@@ -1053,7 +1053,6 @@ KISSY.add("validation/utils", function(S, undefined) {
  * @date 2011.06.21
  */
 KISSY.add("validation", function(S, Validation) {
-   		S.Validation = Validation;
 	    return Validation;
 	}, {
 		requires:["validation/base","validation/assets/base.css"]

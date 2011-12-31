@@ -1,7 +1,7 @@
 /**
  * @fileOverview Easing equation from yui3
  */
-KISSY.add('anim/Easing', function () {
+KISSY.add('anim/easing', function () {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html

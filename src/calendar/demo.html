@@ -131,8 +131,6 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
 
 <script>
     var S=KISSY;
-    S.log(S.Calendar);
-    S.log(S.Date);
 
     var c = {};
     var showdate = function(n, d) {//计算d天的前几天或者后几天，返回date,注：chrome下不支持date构造时的天溢出
@@ -143,7 +141,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
 
 	KISSY.ready(function(S){
     KISSY.use('node,calendar', function(S, Node, Calendar) {
-        var S_Date = S.Date;
+        var S_Date = Calendar.Date;
         var i = 0;
         //静态日历,单击回调
         c = new Calendar('#J_Calendar').on('select', function(e) {

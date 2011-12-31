@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 12:14
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview mvc base
@@ -17,7 +17,7 @@ KISSY.add("mvc/base", function(S, sync) {
  * @fileOverview collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
+KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -33,20 +33,28 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         return i;
     }
 
+    /**
+     * @class
+     * @memberOf MVC
+     */
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);
     }
 
-    Collection.ATTRS = {
+    Collection.ATTRS =
+    /**
+     * @lends MVC.Collection#
+     */
+    {
         model:{
             value:Model
         },
         models:{
-            /**
-             * normalize model list
-             * @param models
+            /*
+              normalize model list
+              @param models
              */
-            setter:function(models) {
+            setter:function (models) {
                 var prev = this.get("models");
                 this.remove(prev, {silent:1});
                 this.add(models, {silent:1});
@@ -57,187 +65,218 @@ KISSY.add("mvc/collection", function(S, Event, Model, mvc, Base) {
         url:{value:S.noop},
         comparator:{},
         sync:{
-            value:function() {
+            value:function () {
                 mvc.sync.apply(this, arguments);
             }
         },
         parse:{
-            value:function(resp) {
+            value:function (resp) {
                 return resp;
             }
         }
     };
 
-    S.extend(Collection, Base, {
-        sort:function() {
-            var comparator = this.get("comparator");
-            if (comparator) {
-                this.get("models").sort(function(a, b) {
-                    return comparator(a) - comparator(b);
-                });
-            }
-        },
-
-        toJSON:function() {
-            return S.map(this.get("models"), function(m) {
-                return m.toJSON();
-            });
-        },
-
+    S.extend(Collection, Base,
         /**
-         *
-         * @param model
-         * @param opts
-         * @return  boolean flag
-         *          true:add success
-         *          false:validate error
+         * @lends MVC.Collection#
          */
-        add:function(model, opts) {
-            var self = this,
-                ret = true;
-            if (S.isArray(model)) {
-                var orig = [].concat(model);
-                S.each(orig, function(m) {
-                    var t = self._add(m, opts);
-                    ret = ret && t;
+        {
+            sort:function () {
+                var comparator = this.get("comparator");
+                if (comparator) {
+                    this.get("models").sort(function (a, b) {
+                        return comparator(a) - comparator(b);
+                    });
+                }
+            },
+
+            toJSON:function () {
+                return S.map(this.get("models"), function (m) {
+                    return m.toJSON();
                 });
-            } else {
-                ret = self._add(model, opts);
-            }
-            return ret;
-        },
+            },
 
-        remove:function(model, opts) {
-            var self = this;
-            if (S.isArray(model)) {
-                var orig = [].concat(model);
-                S.each(orig, function(m) {
-                    self._remove(m, opts);
-                });
-            } else if (model) {
-                self._remove(model, opts);
-            }
-        },
+            /**
+             *
+             * @param model
+             * @param {object} opts
+             * @param {Function} opts.success
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             * @return  boolean flag
+             *          true:add success
+             *          false:validate error
+             */
+            add:function (model, opts) {
+                var self = this,
+                    ret = true;
+                if (S.isArray(model)) {
+                    var orig = [].concat(model);
+                    S.each(orig, function (m) {
+                        var t = self._add(m, opts);
+                        ret = ret && t;
+                    });
+                } else {
+                    ret = self._add(model, opts);
+                }
+                return ret;
+            },
 
-        at:function(i) {
-            return this.get("models")[i];
-        },
+            /**
+             *
+             * @param model
+             * @param {object} opts
+             * @param {Function} opts.success
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            remove:function (model, opts) {
+                var self = this;
+                if (S.isArray(model)) {
+                    var orig = [].concat(model);
+                    S.each(orig, function (m) {
+                        self._remove(m, opts);
+                    });
+                } else if (model) {
+                    self._remove(model, opts);
+                }
+            },
 
-        _normModel:function(model) {
-            var ret = true;
-            if (!(model instanceof Model)) {
-                var data = model,
-                    modelConstructor = this.get("model");
-                model = new modelConstructor();
-                ret = model.set(data, {
-                    silent:1
-                });
-            }
-            return ret && model;
-        },
+            at:function (i) {
+                return this.get("models")[i];
+            },
 
-        load:function(opts) {
-            var self = this;
-            opts = opts || {};
-            var success = opts.success;
-            opts.success = function(resp) {
-                if (resp) {
-                    var v = self.get("parse").call(self, resp);
-                    if (v) {
-                        self.set("models", v, opts);
+            _normModel:function (model) {
+                var ret = true;
+                if (!(model instanceof Model)) {
+                    var data = model,
+                        modelConstructor = this.get("model");
+                    model = new modelConstructor();
+                    ret = model.set(data, {
+                        silent:1
+                    });
+                }
+                return ret && model;
+            },
+
+            /**
+             *
+             * @param {object} opts
+             * @param {Function} opts.success
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            load:function (opts) {
+                var self = this;
+                opts = opts || {};
+                var success = opts.success;
+                /**
+                 * @ignore
+                 */
+                opts.success = function (resp) {
+                    if (resp) {
+                        var v = self.get("parse").call(self, resp);
+                        if (v) {
+                            self.set("models", v, opts);
+                        }
+                    }
+                    success && success.apply(this, arguments);
+                };
+                self.get("sync").call(self, self, 'read', opts);
+                return self;
+            },
+
+            /**
+             *
+             * @param model
+             * @param {object} opts
+             * @param {Function} opts.success
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            create:function (model, opts) {
+                var self = this;
+                opts = opts || {};
+                model = this._normModel(model);
+                if (model) {
+                    model.addToCollection(self);
+                    var success = opts.success;
+                    opts.success = function () {
+                        self.add(model, opts);
+                        success && success();
+                    };
+                    model.save(opts);
+                }
+                return model;
+            },
+
+            _add:function (model, opts) {
+                model = this._normModel(model);
+                if (model) {
+                    opts = opts || {};
+                    var index = findModelIndex(this.get("models"), model, this.get("comparator"));
+                    this.get("models").splice(index, 0, model);
+                    model.addToCollection(this);
+                    if (!opts['silent']) {
+                        this.fire("add", {
+                            model:model
+                        });
                     }
                 }
-                success && success.apply(this, arguments);
-            };
-            self.get("sync").call(self, self, 'read', opts);
-            return self;
-        },
+                return model;
+            },
 
-        create:function(model, opts) {
-            var self = this;
-            opts = opts || {};
-            model = this._normModel(model);
-            if (model) {
-                model.addToCollection(self);
-                var success = opts.success;
-                opts.success = function() {
-                    self.add(model, opts);
-                    success && success();
-                };
-                model.save(opts);
-            }
-            return model;
-        },
-
-        _add:function(model, opts) {
-            model = this._normModel(model);
-            if (model) {
+            /**
+             * not call model.destroy ,maybe model belongs to multiple collections
+             * @private
+             */
+            _remove:function (model, opts) {
                 opts = opts || {};
-                var index = findModelIndex(this.get("models"), model, this.get("comparator"));
-                this.get("models").splice(index, 0, model);
-                model.addToCollection(this);
+                var index = S.indexOf(model, this.get("models"));
+                if (index != -1) {
+                    this.get("models").splice(index, 1);
+                    model.removeFromCollection(this);
+                }
                 if (!opts['silent']) {
-                    this.fire("add", {
+                    this.fire("remove", {
                         model:model
                     });
                 }
-            }
-            return model;
-        },
+            },
 
-        /**
-         * not call model.destroy ,maybe model belongs to multiple collections
-         * @private
-         * @param model
-         * @param opts
-         */
-        _remove:function(model, opts) {
-            opts = opts || {};
-            var index = S.indexOf(model, this.get("models"));
-            if (index != -1) {
-                this.get("models").splice(index, 1);
-                model.removeFromCollection(this);
-            }
-            if (!opts['silent']) {
-                this.fire("remove", {
-                    model:model
-                });
-            }
-        },
-
-        getById:function(id) {
-            var models = this.get("models");
-            for (var i = 0; i < models.length; i++) {
-                var model = models[i];
-                if (model.getId() === id) {
-                    return model;
+            getById:function (id) {
+                var models = this.get("models");
+                for (var i = 0; i < models.length; i++) {
+                    var model = models[i];
+                    if (model.getId() === id) {
+                        return model;
+                    }
                 }
-            }
-            return null;
-        },
+                return null;
+            },
 
-        getByCid:function(cid) {
-            var models = this.get("models");
-            for (var i = 0; i < models.length; i++) {
-                var model = models[i];
-                if (model.get("clientId") === cid) {
-                    return model;
+            getByCid:function (cid) {
+                var models = this.get("models");
+                for (var i = 0; i < models.length; i++) {
+                    var model = models[i];
+                    if (model.get("clientId") === cid) {
+                        return model;
+                    }
                 }
+                return null;
             }
-            return null;
-        }
 
-    });
+        });
 
     return Collection;
 
 }, {
-    requires:['event','./model','./base','base']
+    requires:['event', './model', './base', 'base']
 });/**
  * @fileOverview enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/model", function(S, Base, mvc) {
+KISSY.add("mvc/model", function (S, Base, mvc) {
 
     var blacklist = [
         "idAttribute",
@@ -248,173 +287,198 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
         "sync"
     ];
 
+    /**
+     * @class
+     * @memberOf MVC
+     */
     function Model() {
         var self = this;
         Model.superclass.constructor.apply(self, arguments);
-        /**
-         * should bubble to its collections
+        /*
+         should bubble to its collections
          */
         self.publish("*Change", {
             bubbles:1
         });
-        /**
-         * @Array mvc/collection collections this model belonged to
-         */
         self.collections = {};
     }
 
-    S.extend(Model, Base, {
-
-        addToCollection:function(c) {
-            this.collections[S.stamp(c)] = c;
-            this.addTarget(c);
-        },
-
-        removeFromCollection:function(c) {
-            delete this.collections[S.stamp(c)];
-            this.removeTarget(c);
-        },
-
-        getId:function() {
-            return this.get(this.get("idAttribute"));
-        },
-
-        setId:function(id) {
-            return this.set(this.get("idAttribute"), id);
-        },
-
+    S.extend(Model, Base,
         /**
-         * @override
+         * @lends MVC.Model#
          */
-        __set:function() {
-            this.__isModified = 1;
-            return Model.superclass.__set.apply(this, arguments);
-        },
+        {
 
-        /**
-         * whether it is newly created
-         */
-        isNew:function() {
-            return !this.getId();
-        },
-
-        /**
-         * whether has been modified since last save
-         */
-        isModified:function() {
-            return !!(this.isNew() || this.__isModified);
-        },
-
-        /**
-         * destroy this model
-         * @param opts
-         */
-        destroy:function(opts) {
-            var self = this;
-            opts = opts || {};
-            var success = opts.success;
-            opts.success = function(resp) {
-                var lists = self.collections;
-                if (resp) {
-                    self.set(resp, opts);
-                }
-                for (var l in lists) {
-                    lists[l].remove(self, opts);
-                    self.removeFromCollection(lists[l]);
-                }
-                self.fire("destroy");
-                success && success.apply(this, arguments);
-            };
-            if (!self.isNew() && opts['delete']) {
-                self.get("sync").call(self, self, 'delete', opts);
-            } else {
-                opts.success();
-                if (opts.complete) {
-                    opts.complete();
-                }
-            }
-
-            return self;
-        },
-
-        /**
-         * call sycn to load
-         * @param opts
-         */
-        load:function(opts) {
-            var self = this;
-            opts = opts || {};
-            var success = opts.success;
-            opts.success = function(resp) {
-                if (resp) {
-                    var v = self.get("parse").call(self, resp);
-                    if (v) {
-                        self.set(v, opts);
-                    }
-                }
-                self.__isModified = 0;
-                success && success.apply(this, arguments);
-            };
-            self.get("sync").call(self, self, 'read', opts);
-            return self;
-        },
-
-        save:function(opts) {
-            var self = this;
-            opts = opts || {};
-            var success = opts.success;
-            opts.success = function(resp) {
-                if (resp) {
-                    var v = self.get("parse").call(self, resp);
-                    if (v) {
-                        self.set(v, opts);
-                    }
-                }
-                self.__isModified = 0;
-                success && success.apply(this, arguments);
-            };
-            self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
-            return self;
-        },
-
-        toJSON:function() {
-            var ret = this.getAttrVals();
-            S.each(blacklist, function(b) {
-                delete ret[b];
-            });
-            return ret;
-        }
-
-    }, {
-        ATTRS:{
-            idAttribute:{
-                value:'id'
+            addToCollection:function (c) {
+                this.collections[S.stamp(c)] = c;
+                this.addTarget(c);
             },
-            clientId:{
-                valueFn:function() {
-                    return S.guid("mvc-client");
-                }
+
+            removeFromCollection:function (c) {
+                delete this.collections[S.stamp(c)];
+                this.removeTarget(c);
             },
-            url:{
-                value:url
+
+            getId:function () {
+                return this.get(this.get("idAttribute"));
             },
-            urlRoot:{
-                value:""
+
+            setId:function (id) {
+                return this.set(this.get("idAttribute"), id);
             },
-            sync:{
-                value:sync
+
+            __set:function () {
+                this.__isModified = 1;
+                return Model.superclass.__set.apply(this, arguments);
             },
-            parse:{
+
+            /**
+             * whether it is newly created
+             */
+            isNew:function () {
+                return !this.getId();
+            },
+
+            /**
+             * whether has been modified since last save
+             */
+            isModified:function () {
+                return !!(this.isNew() || this.__isModified);
+            },
+
+            /**
+             * destroy this model
+             * @param opts
+             * @param {Object} opts
+             * @param {Function} opts.success callback when action is done successfully
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            destroy:function (opts) {
+                var self = this;
+                opts = opts || {};
+                var success = opts.success;
                 /**
-                 * parse json from server to get attr/value pairs
-                 * @param resp
+                 * @ignore
                  */
-                value:function(resp) {
-                    return resp;
+                opts.success = function (resp) {
+                    var lists = self.collections;
+                    if (resp) {
+                        self.set(resp, opts);
+                    }
+                    for (var l in lists) {
+                        lists[l].remove(self, opts);
+                        self.removeFromCollection(lists[l]);
+                    }
+                    self.fire("destroy");
+                    success && success.apply(this, arguments);
+                };
+                if (!self.isNew() && opts['delete']) {
+                    self.get("sync").call(self, self, 'delete', opts);
+                } else {
+                    opts.success();
+                    if (opts.complete) {
+                        opts.complete();
+                    }
+                }
+
+                return self;
+            },
+
+            /**
+             * call sycn to load
+             * @param opts
+             * @param {Object} opts
+             * @param {Function} opts.success callback when action is done successfully
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            load:function (opts) {
+                var self = this;
+                opts = opts || {};
+                var success = opts.success;
+                /**
+                 * @ignore
+                 */
+                opts.success = function (resp) {
+                    if (resp) {
+                        var v = self.get("parse").call(self, resp);
+                        if (v) {
+                            self.set(v, opts);
+                        }
+                    }
+                    self.__isModified = 0;
+                    success && success.apply(this, arguments);
+                };
+                self.get("sync").call(self, self, 'read', opts);
+                return self;
+            },
+
+            /**
+             *
+             * @param {Object} opts
+             * @param {Function} opts.success callback when action is done successfully
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            save:function (opts) {
+                var self = this;
+                opts = opts || {};
+                var success = opts.success;
+                /**
+                 * @ignore
+                 */
+                opts.success = function (resp) {
+                    if (resp) {
+                        var v = self.get("parse").call(self, resp);
+                        if (v) {
+                            self.set(v, opts);
+                        }
+                    }
+                    self.__isModified = 0;
+                    success && success.apply(this, arguments);
+                };
+                self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
+                return self;
+            },
+
+            toJSON:function () {
+                var ret = this.getAttrVals();
+                S.each(blacklist, function (b) {
+                    delete ret[b];
+                });
+                return ret;
+            }
+
+        }, {
+            ATTRS:{
+                idAttribute:{
+                    value:'id'
+                },
+                clientId:{
+                    valueFn:function () {
+                        return S.guid("mvc-client");
+                    }
+                },
+                url:{
+                    value:url
+                },
+                urlRoot:{
+                    value:""
+                },
+                sync:{
+                    value:sync
+                },
+                parse:{
+                    /*
+                     parse json from server to get attr/value pairs
+                     */
+                    value:function (resp) {
+                        return resp;
+                    }
                 }
             }
-        }
-    });
+        });
 
     function getUrl(o) {
         var u;
@@ -455,12 +519,18 @@ KISSY.add("mvc/model", function(S, Base, mvc) {
     return Model;
 
 }, {
-    requires:['base','./base']
+    requires:['base', './base']
 });/**
  * @fileOverview KISSY's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc", function(S, MVC, Model, Collection, View, Router) {
+KISSY.add("mvc", function (S, MVC, Model, Collection, View, Router) {
+
+    /**
+     * @namespace
+     * @name MVC
+     */
+
     return S.mix(MVC, {
         Model:Model,
         View:View,
@@ -468,12 +538,12 @@ KISSY.add("mvc", function(S, MVC, Model, Collection, View, Router) {
         Router:Router
     });
 }, {
-    requires:["mvc/base","mvc/model","mvc/collection","mvc/view","mvc/router"]
+    requires:["mvc/base", "mvc/model", "mvc/collection", "mvc/view", "mvc/router"]
 });/**
  * @fileOverview simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
-KISSY.add('mvc/router', function(S, Event, Base) {
+KISSY.add('mvc/router', function (S, Event, Base) {
     var queryReg = /\?(.*)/,
         each = S.each,
         // take a breath to avoid duplicate hashchange
@@ -488,7 +558,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         __routerMap = "__routerMap";
 
     function findFirstCaptureGroupIndex(regStr) {
-        var r,i;
+        var r, i;
         for (i = 0;
              i < regStr.length;
              i++) {
@@ -610,11 +680,11 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
         path = fullPath.replace(queryReg, "");
         // user input : /xx/yy/zz
-        each(allRoutes, function(route) {
+        each(allRoutes, function (route) {
             var routeRegs = route[__routerMap],
                 // match exactly
                 exactlyMatch = 0;
-            each(routeRegs, function(desc) {
+            each(routeRegs, function (desc) {
                     var reg = desc.reg,
                         regStr = desc.regStr,
                         paramNames = desc.paramNames,
@@ -629,7 +699,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
                         function genParam() {
                             if (paramNames) {
                                 var params = {};
-                                each(m, function(sm, i) {
+                                each(m, function (sm, i) {
                                     params[paramNames[i]] = sm;
                                 });
                                 return params;
@@ -699,7 +769,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
 
         if (finalParam) {
             query = getQuery(fullPath);
-            finalCallback.apply(finalRoute, [finalParam,query]);
+            finalCallback.apply(finalRoute, [finalParam, query]);
             arg = {
                 name:name,
                 paths:finalParam,
@@ -724,7 +794,7 @@ KISSY.add('mvc/router', function(S, Event, Base) {
             // escape keyword from regexp
             str = S.escapeRegExp(str);
 
-            str = str.replace(grammar, function(m, g1, g2, g3, g4) {
+            str = str.replace(grammar, function (m, g1, g2, g3, g4) {
                 paramNames.push(g2 || g4);
                 // :name
                 if (g2) {
@@ -772,6 +842,10 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         self.addRoutes(e.newVal);
     }
 
+    /**
+     * @class
+     * @memberOf MVC
+     */
     function Router() {
         var self = this;
         Router.superclass.constructor.apply(self, arguments);
@@ -780,120 +854,142 @@ KISSY.add('mvc/router', function(S, Event, Base) {
         allRoutes.push(self);
     }
 
-    Router.ATTRS = {
-        /**
-         * @example
-         *   {
-         *     path:callback
-         *   }
+    Router.ATTRS =
+    /**
+     * @lends MVC.Router#
+     */
+    {
+        /*
+         {
+         path:callback
+         }
          */
         routes:{}
     };
 
-    S.extend(Router, Base, {
+    S.extend(Router, Base,
         /**
-         *
-         * @param routes
-         *         {
-         *           "/search/:param":"callback"
-         *           or
-         *           "search":{
-         *              reg:/xx/,
-         *              callback:fn
-         *           }
-         *         }
+         * @lends MVC.Router#
          */
-        addRoutes:function(routes) {
-            var self = this;
-            each(routes, function(callback, name) {
-                self[__routerMap][name] = transformRouterReg(self, name, normFn(self, callback));
-            });
-        }
-    }, {
-        navigate:function(path, opts) {
-            if (getFragment() !== path) {
-                if (Router.nativeHistory && supportNativeHistory) {
-                    history['pushState']({}, "", getFullPath(path));
-                    // pushState does not fire popstate event (unlike hashchange)
-                    // so popstate is not statechange
-                    // fire manually
-                    dispatch();
-                } else {
-                    location.hash = "!" + path;
-                }
-            } else if (opts && opts.triggerRoute) {
-                dispatch();
+        {
+            /**
+             *
+             * @param routes
+             * @example
+             * <code>
+             *   {
+             *     "/search/:param":"callback"
+             *     // or
+             *     "search":{
+             *       reg:/xx/,
+             *       callback:fn
+             *     }
+             *   }
+             * </code>
+             */
+            addRoutes:function (routes) {
+                var self = this;
+                each(routes, function (callback, name) {
+                    self[__routerMap][name] = transformRouterReg(self, name, normFn(self, callback));
+                });
             }
         },
-        start:function(opts) {
-            opts = opts || {};
+        /**
+         * @lends MVC.Router
+         */
+        {
 
-            opts.urlRoot = opts.urlRoot || "";
-
-            var urlRoot,
-                nativeHistory = opts.nativeHistory,
-                locPath = location.pathname,
-                hash = getFragment(),
-                hashIsValid = location.hash.match(/#!.+/);
-
-            urlRoot = Router.urlRoot = opts.urlRoot;
-            Router.nativeHistory = nativeHistory;
-
-            if (nativeHistory) {
-
-                if (supportNativeHistory) {
-                    // http://x.com/#!/x/y
-                    // =>
-                    // http://x.com/x/y
-                    // =>
-                    // process without refresh page and add history entry
-                    if (hashIsValid) {
-                        if (equalsIgnoreSlash(locPath, urlRoot)) {
-                            // put hash to path
-                            history['replaceState']({}, "", getFullPath(hash));
-                            opts.triggerRoute = 1;
-                        } else {
-                            S.error("location path must be same with urlRoot!");
-                        }
+            navigate:function (path, opts) {
+                if (getFragment() !== path) {
+                    if (Router.nativeHistory && supportNativeHistory) {
+                        history['pushState']({}, "", getFullPath(path));
+                        // pushState does not fire popstate event (unlike hashchange)
+                        // so popstate is not statechange
+                        // fire manually
+                        dispatch();
+                    } else {
+                        location.hash = "!" + path;
                     }
-                }
-                // http://x.com/x/y
-                // =>
-                // http://x.com/#!/x/y
-                // =>
-                // refresh page without add history entry
-                else if (!equalsIgnoreSlash(locPath, urlRoot)) {
-                    location.replace(addEndSlash(urlRoot) + "#!" + hash);
-                    return;
-                }
-
-            }
-
-            // prevent hashChange trigger on start
-            setTimeout(function() {
-                if (nativeHistory && supportNativeHistory) {
-                    Event.on(win, 'popstate', dispatch);
-                } else {
-                    Event.on(win, "hashchange", dispatch);
-                    opts.triggerRoute = 1;
-                }
-
-                // check initial hash on start
-                // in case server does not render initial state correctly
-                // when monitor hashchange ,client must be responsible for dispatching and rendering.
-                if (opts.triggerRoute) {
+                } else if (opts && opts.triggerRoute) {
                     dispatch();
                 }
-                opts.success && opts.success();
+            },
+            /**
+             *
+             * @param {object} opts
+             * @param {Function} opts.success
+             * @param {Function} opts.error
+             * @param {Function} opts.complete
+             */
+            start:function (opts) {
+                opts = opts || {};
 
-            }, BREATH_INTERVAL);
-        }
-    });
+                opts.urlRoot = opts.urlRoot || "";
+
+                var urlRoot,
+                    nativeHistory = opts.nativeHistory,
+                    locPath = location.pathname,
+                    hash = getFragment(),
+                    hashIsValid = location.hash.match(/#!.+/);
+
+                urlRoot = Router.urlRoot = opts.urlRoot;
+                Router.nativeHistory = nativeHistory;
+
+                if (nativeHistory) {
+
+                    if (supportNativeHistory) {
+                        // http://x.com/#!/x/y
+                        // =>
+                        // http://x.com/x/y
+                        // =>
+                        // process without refresh page and add history entry
+                        if (hashIsValid) {
+                            if (equalsIgnoreSlash(locPath, urlRoot)) {
+                                // put hash to path
+                                history['replaceState']({}, "", getFullPath(hash));
+                                opts.triggerRoute = 1;
+                            } else {
+                                S.error("location path must be same with urlRoot!");
+                            }
+                        }
+                    }
+                    // http://x.com/x/y
+                    // =>
+                    // http://x.com/#!/x/y
+                    // =>
+                    // refresh page without add history entry
+                    else if (!equalsIgnoreSlash(locPath, urlRoot)) {
+                        location.replace(addEndSlash(urlRoot) + "#!" + hash);
+                        return;
+                    }
+
+                }
+
+                // prevent hashChange trigger on start
+                setTimeout(function () {
+                    if (nativeHistory && supportNativeHistory) {
+                        Event.on(win, 'popstate', dispatch);
+                    } else {
+                        Event.on(win, "hashchange", dispatch);
+                        opts.triggerRoute = 1;
+                    }
+
+                    // check initial hash on start
+                    // in case server does not render initial state correctly
+                    // when monitor hashchange ,client must be responsible for dispatching and rendering.
+                    if (opts.triggerRoute) {
+                        dispatch();
+                    }
+                    opts.success && opts.success();
+
+                }, BREATH_INTERVAL);
+            }
+        });
 
     return Router;
 
 }, {
-    requires:['event','base']
+    requires:['event', 'base']
 });
 
 /**
@@ -915,6 +1011,12 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
         'read':'GET'
     };
 
+    /**
+     * @memberOf MVC
+     * @param self
+     * @param method
+     * @param options
+     */
     function sync(self, method, options) {
         var type = methodMap[method],
             ioParam = S.merge({
@@ -945,7 +1047,7 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
  * @fileOverview view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/view", function(S, Node, Base) {
+KISSY.add("mvc/view", function (S, Node, Base) {
 
     var $ = Node.all;
 
@@ -956,6 +1058,10 @@ KISSY.add("mvc/view", function(S, Node, Base) {
         return f;
     }
 
+    /**
+     * @class
+     * @memberOf MVC
+     */
     function View() {
         View.superclass.constructor.apply(this, arguments);
         var events;
@@ -966,10 +1072,14 @@ KISSY.add("mvc/view", function(S, Node, Base) {
         }
     }
 
-    View.ATTRS = {
+    View.ATTRS =
+    /**
+     * @lends MVC.View#
+     */
+    {
         el:{
             value:"<div />",
-            getter:function(s) {
+            getter:function (s) {
                 if (S.isString(s)) {
                     s = $(s);
                     this.__set("el", s);
@@ -991,52 +1101,56 @@ KISSY.add("mvc/view", function(S, Node, Base) {
     };
 
 
-    S.extend(View, Base, {
-
-        _afterEventsChange:function(e) {
-            var prevVal = e.prevVal;
-            if (prevVal) {
-                this._removeEvents(prevVal);
-            }
-            this._addEvents(e.newVal);
-        },
-
-        _removeEvents:function(events) {
-            var el = this.get("el");
-            for (var selector in events) {
-                var event = events[selector];
-                for (var type in event) {
-                    var callback = normFn(this, event[type]);
-                    el.undelegate(type, selector, callback, this);
-                }
-            }
-        },
-
-        _addEvents:function(events) {
-            var el = this.get("el");
-            for (var selector in events) {
-                var event = events[selector];
-                for (var type in event) {
-                    var callback = normFn(this, event[type]);
-                    el.delegate(type, selector, callback, this);
-                }
-            }
-        },
+    S.extend(View, Base,
         /**
-         * user need to override
+         * @lends MVC.View#
          */
-        render:function() {
-            return this;
-        },
+        {
 
-        destroy:function() {
-            this.get("el").remove();
-        }
+            _afterEventsChange:function (e) {
+                var prevVal = e.prevVal;
+                if (prevVal) {
+                    this._removeEvents(prevVal);
+                }
+                this._addEvents(e.newVal);
+            },
 
-    });
+            _removeEvents:function (events) {
+                var el = this.get("el");
+                for (var selector in events) {
+                    var event = events[selector];
+                    for (var type in event) {
+                        var callback = normFn(this, event[type]);
+                        el.undelegate(type, selector, callback, this);
+                    }
+                }
+            },
+
+            _addEvents:function (events) {
+                var el = this.get("el");
+                for (var selector in events) {
+                    var event = events[selector];
+                    for (var type in event) {
+                        var callback = normFn(this, event[type]);
+                        el.delegate(type, selector, callback, this);
+                    }
+                }
+            },
+            /**
+             * user need to override
+             */
+            render:function () {
+                return this;
+            },
+
+            destroy:function () {
+                this.get("el").remove();
+            }
+
+        });
 
     return View;
 
 }, {
-    requires:['node','base']
+    requires:['node', 'base']
 });

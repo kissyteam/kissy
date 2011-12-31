@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2011, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 27 11:32
+build time: Dec 31 15:15
 */
 /**
  * @fileOverview attribute management
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function(S, undef) {
+KISSY.add('base/attribute', function (S, undef) {
 
     // atomic flag
     Attribute.INVALID = {};
@@ -34,10 +34,10 @@ KISSY.add('base/attribute', function(S, undef) {
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
         return self.fire(when + capitalFirst(name) + 'Change', {
-            attrName: attrName,
+            attrName:attrName,
             subAttrName:subAttrName,
-            prevVal: prevVal,
-            newVal: newVal
+            prevVal:prevVal,
+            newVal:newVal
         });
     }
 
@@ -46,7 +46,7 @@ KISSY.add('base/attribute', function(S, undef) {
      *
      * @param obj
      * @param name
-     * @param create
+     * @param [create]
      * @return non-empty property value of obj
      */
     function ensureNonEmpty(obj, name, create) {
@@ -99,7 +99,7 @@ KISSY.add('base/attribute', function(S, undef) {
      * @param path
      */
     function getValueByPath(o, path) {
-        for (var i = 0,len = path.length;
+        for (var i = 0, len = path.length;
              o != undef && i < len;
              i++) {
             o = o[path[i]];
@@ -204,263 +204,275 @@ KISSY.add('base/attribute', function(S, undef) {
     function Attribute() {
     }
 
-    S.augment(Attribute, {
-
+    S.augment(Attribute,
         /**
-         * @return un-cloned attr config collections
+         * @lends Attribute.prototype
          */
-        getAttrs: function() {
-            return getAttrs(this);
-        },
+        {
 
-        /**
-         * @return un-cloned attr value collections
-         */
-        getAttrVals:function() {
-            var self = this,
-                o = {},
-                a,
-                attrs = getAttrs(self);
-            for (a in attrs) {
-                o[a] = self.get(a);
-            }
-            return o;
-        },
+            /**
+             * @return un-cloned attr config collections
+             */
+            getAttrs:function () {
+                return getAttrs(this);
+            },
 
-        /**
-         * Adds an attribute with the provided configuration to the host object.
-         * @param {String} name attrName
-         * @param {Object} attrConfig The config supports the following properties:
-         * {
-         *     value: 'the default value', // 最好不要使用自定义类生成的对象，这时使用 valueFn
-         *     valueFn: function //
-         *     setter: function
-         *     getter: function
-         * }
-         * @param {boolean} override whether override existing attribute config ,default true
-         */
-        addAttr: function(name, attrConfig, override) {
-            var self = this,
-                attrs = getAttrs(self),
-                cfg = S.clone(attrConfig);
-            if (!attrs[name]) {
-                attrs[name] = cfg;
-            } else {
-                S.mix(attrs[name], cfg, override);
-            }
-            return self;
-        },
+            /**
+             * @return un-cloned attr value collections
+             */
+            getAttrVals:function () {
+                var self = this,
+                    o = {},
+                    a,
+                    attrs = getAttrs(self);
+                for (a in attrs) {
+                    o[a] = self.get(a);
+                }
+                return o;
+            },
 
-        /**
-         * Configures a group of attributes, and sets initial values.
-         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-         * @param {Object} initialValues user defined initial values
-         */
-        addAttrs: function(attrConfigs, initialValues) {
-            var self = this;
-            S.each(attrConfigs, function(attrConfig, name) {
-                self.addAttr(name, attrConfig);
-            });
-            if (initialValues) {
-                self.set(initialValues);
-            }
-            return self;
-        },
+            /**
+             * Adds an attribute with the provided configuration to the host object.
+             * @param {String} name attrName
+             * @param {Object} attrConfig The config supports the following properties
+             * @param [attrConfig.value] simple object or system native object
+             * @param [attrConfig.valueFn] a function which can return current attribute's default value
+             * @param {Function(*)} [attrConfig.setter] call when set attribute's value
+             *                                          pass current attribute's value as parameter
+             *                                          if return value is not undefined,set returned value as real value
+             * @param {Function(*)} [attrConfig.getter] call when get attribute's value
+             *                                          pass current attribute's value as parameter
+             *                                          return getter's returned value to invoker
+             * @param {Function(*)} [attrConfig.validator]  call before set attribute's value
+             *                                              if return false,cancel this set action
+             * @param {boolean} [override] whether override existing attribute config ,default true
+             */
+            addAttr:function (name, attrConfig, override) {
+                var self = this,
+                    attrs = getAttrs(self),
+                    cfg = S.clone(attrConfig);
+                if (!attrs[name]) {
+                    attrs[name] = cfg;
+                } else {
+                    S.mix(attrs[name], cfg, override);
+                }
+                return self;
+            },
 
-        /**
-         * Checks if the given attribute has been added to the host.
-         */
-        hasAttr: function(name) {
-            return name && getAttrs(this).hasOwnProperty(name);
-        },
+            /**
+             * Configures a group of attributes, and sets initial values.
+             * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+             * @param {Object} initialValues user defined initial values
+             */
+            addAttrs:function (attrConfigs, initialValues) {
+                var self = this;
+                S.each(attrConfigs, function (attrConfig, name) {
+                    self.addAttr(name, attrConfig);
+                });
+                if (initialValues) {
+                    self.set(initialValues);
+                }
+                return self;
+            },
 
-        /**
-         * Removes an attribute from the host object.
-         */
-        removeAttr: function(name) {
-            var self = this;
+            /**
+             * Checks if the given attribute has been added to the host.
+             */
+            hasAttr:function (name) {
+                return name && getAttrs(this).hasOwnProperty(name);
+            },
 
-            if (self.hasAttr(name)) {
-                delete getAttrs(self)[name];
-                delete getAttrVals(self)[name];
-            }
+            /**
+             * Removes an attribute from the host object.
+             */
+            removeAttr:function (name) {
+                var self = this;
 
-            return self;
-        },
+                if (self.hasAttr(name)) {
+                    delete getAttrs(self)[name];
+                    delete getAttrVals(self)[name];
+                }
 
-        /**
-         * Sets the value of an attribute.
-         */
-        set: function(name, value, opts) {
-            var ret,self = this;
-            if (S.isPlainObject(name)) {
-                var all = name;
-                name = 0;
-                ret = true;
-                opts = value;
-                var attrs = [];
-                for (name in all) {
-                    ret = setInternal(self, name, all[name], opts, attrs);
-                    if (ret === false) {
-                        break;
+                return self;
+            },
+
+
+            /**
+             * Sets the value of an attribute.
+             * @param {String|Object} name attribute's name or attribute name and value map
+             * @param [value] attribute's value
+             * @param {Object} [opts] some options
+             * @param {boolean} [opts.silent] whether fire change event
+             * @returns {boolean} whether pass validator
+             */
+            set:function (name, value, opts) {
+                var ret, self = this;
+                if (S.isPlainObject(name)) {
+                    var all = Object(name);
+                    opts = value;
+                    var attrs = [];
+                    for (name in all) {
+                        ret = setInternal(self, name, all[name], opts, attrs);
+                        if (ret === false) {
+                            break;
+                        }
+                    }
+                    var attrNames = [],
+                        prevVals = [],
+                        newVals = [],
+                        subAttrNames = [];
+                    S.each(attrs, function (attr) {
+                        prevVals.push(attr.prevVal);
+                        newVals.push(attr.newVal);
+                        attrNames.push(attr.attrName);
+                        subAttrNames.push(attr.subAttrName);
+                    });
+                    if (attrNames.length) {
+                        __fireAttrChange(self,
+                            '',
+                            '*',
+                            prevVals,
+                            newVals,
+                            subAttrNames,
+                            attrNames);
+                    }
+                    return ret;
+                }
+                return setInternal(self, name, value, opts);
+            },
+
+            /**
+             * internal use, no event involved, just set.
+             * @protected overriden by mvc/model
+             */
+            __set:function (name, value) {
+                var self = this,
+                    setValue,
+                    // if host does not have meta info corresponding to (name,value)
+                    // then register on demand in order to collect all data meta info
+                    // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+                    // 因为属性在声明注册前可以直接设置值
+                    attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+                    validator = attrConfig['validator'],
+                    setter = attrConfig['setter'];
+
+                // validator check
+                if (validator = normalFn(self, validator)) {
+                    if (validator.call(self, value, name) === false) {
+                        return false;
                     }
                 }
-                var attrNames = [],
-                    prevVals = [],
-                    newVals = [],
-                    subAttrNames = [];
-                S.each(attrs, function(attr) {
-                    prevVals.push(attr.prevVal);
-                    newVals.push(attr.newVal);
-                    attrNames.push(attr.attrName);
-                    subAttrNames.push(attr.subAttrName);
-                });
-                if (attrNames.length) {
-                    __fireAttrChange(self,
-                        '',
-                        '*',
-                        prevVals,
-                        newVals,
-                        subAttrNames,
-                        attrNames);
+
+                // if setter has effect
+                if (setter = normalFn(self, setter)) {
+                    setValue = setter.call(self, value, name);
                 }
-                return ret;
-            }
 
-            return setInternal(self, name, value, opts);
-
-
-        },
-
-        /**
-         * internal use, no event involved, just set.
-         * @protected overriden by mvc/model
-         */
-        __set: function(name, value) {
-            var self = this,
-                setValue,
-                // if host does not have meta info corresponding to (name,value)
-                // then register on demand in order to collect all data meta info
-                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                // 因为属性在声明注册前可以直接设置值
-                attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                validator = attrConfig['validator'],
-                setter = attrConfig['setter'];
-
-            // validator check
-            if (validator = normalFn(self, validator)) {
-                if (validator.call(self, value, name) === false) {
+                if (setValue === INVALID) {
                     return false;
                 }
-            }
 
-            // if setter has effect
-            if (setter = normalFn(self, setter)) {
-                setValue = setter.call(self, value, name);
-            }
-
-            if (setValue === INVALID) {
-                return false;
-            }
-
-            if (setValue !== undef) {
-                value = setValue;
-            }
-
-            // finally set
-            getAttrVals(self)[name] = value;
-        },
-
-        /**
-         * Gets the current value of the attribute.
-         */
-        get: function(name) {
-            var self = this,
-                dot = ".",
-                path,
-                attrConfig,
-                getter, ret;
-
-            if (name.indexOf(dot) !== -1) {
-                path = name.split(dot);
-                name = path.shift();
-            }
-
-            attrConfig = ensureNonEmpty(getAttrs(self), name);
-            getter = attrConfig['getter'];
-
-            // get user-set value or default value
-            //user-set value takes privilege
-            ret = name in getAttrVals(self) ?
-                getAttrVals(self)[name] :
-                self.__getDefAttrVal(name);
-
-            // invoke getter for this attribute
-            if (getter = normalFn(self, getter)) {
-                ret = getter.call(self, ret, name);
-            }
-
-            if (path) {
-                ret = getValueByPath(ret, path);
-            }
-
-            return ret;
-        },
-
-        /**
-         * get default attribute value from valueFn/value
-         * @private
-         * @param name
-         */
-        __getDefAttrVal: function(name) {
-            var self = this,
-                attrConfig = ensureNonEmpty(getAttrs(self), name),
-                valFn,
-                val;
-
-            if ((valFn = normalFn(self, attrConfig.valueFn))) {
-                val = valFn.call(self);
-                if (val !== undef) {
-                    attrConfig.value = val;
+                if (setValue !== undef) {
+                    value = setValue;
                 }
-                delete attrConfig.valueFn;
-                getAttrs(self)[name] = attrConfig;
-            }
 
-            return attrConfig.value;
-        },
+                // finally set
+                getAttrVals(self)[name] = value;
+            },
 
-        /**
-         * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-         * @param {String} name name of attribute
-         */
-        reset: function (name, opts) {
-            var self = this;
+            /**
+             * Gets the current value of the attribute.
+             * @param {String} name attribute's name
+             */
+            get:function (name) {
+                var self = this,
+                    dot = ".",
+                    path,
+                    attrConfig,
+                    getter, ret;
 
-            if (S.isString(name)) {
-                if (self.hasAttr(name)) {
-                    // if attribute does not have default value, then set to undefined.
-                    return self.set(name, self.__getDefAttrVal(name), opts);
+                if (name.indexOf(dot) !== -1) {
+                    path = name.split(dot);
+                    name = path.shift();
                 }
-                else {
-                    return self;
+
+                attrConfig = ensureNonEmpty(getAttrs(self), name);
+                getter = attrConfig['getter'];
+
+                // get user-set value or default value
+                //user-set value takes privilege
+                ret = name in getAttrVals(self) ?
+                    getAttrVals(self)[name] :
+                    self.__getDefAttrVal(name);
+
+                // invoke getter for this attribute
+                if (getter = normalFn(self, getter)) {
+                    ret = getter.call(self, ret, name);
                 }
+
+                if (path) {
+                    ret = getValueByPath(ret, path);
+                }
+
+                return ret;
+            },
+
+            /**
+             * get default attribute value from valueFn/value
+             * @private
+             * @param name
+             */
+            __getDefAttrVal:function (name) {
+                var self = this,
+                    attrConfig = ensureNonEmpty(getAttrs(self), name),
+                    valFn,
+                    val;
+
+                if ((valFn = normalFn(self, attrConfig.valueFn))) {
+                    val = valFn.call(self);
+                    if (val !== undef) {
+                        attrConfig.value = val;
+                    }
+                    delete attrConfig.valueFn;
+                    getAttrs(self)[name] = attrConfig;
+                }
+
+                return attrConfig.value;
+            },
+
+            /**
+             * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
+             * @param {String} name name of attribute
+             * @param {Object} [opts] some options
+             * @param {boolean} [opts.silent] whether fire change event
+             */
+            reset:function (name, opts) {
+                var self = this;
+
+                if (S.isString(name)) {
+                    if (self.hasAttr(name)) {
+                        // if attribute does not have default value, then set to undefined.
+                        return self.set(name, self.__getDefAttrVal(name), opts);
+                    }
+                    else {
+                        return self;
+                    }
+                }
+
+                opts = name;
+
+                var attrs = getAttrs(self),
+                    values = {};
+
+                // reset all
+                for (name in attrs) {
+                    values[name] = self.__getDefAttrVal(name);
+                }
+
+                self.set(values, opts);
+                return self;
             }
-
-            opts = name;
-
-            var attrs = getAttrs(self),
-                values = {};
-
-            // reset all
-            for (name in attrs) {
-                values[name] = self.__getDefAttrVal(name);
-            }
-
-            self.set(values, opts);
-            return self;
-        }
-    });
+        });
 
     function capitalFirst(s) {
         return s.charAt(0).toUpperCase() + s.substring(1);
@@ -478,18 +490,10 @@ KISSY.add('base/attribute', function(S, undef) {
  *    add validator
  */
 /**
- * @fileOverview Attribute and Base
- */
-KISSY.add("base", function(S, Base, Attribute) {
-    Base.Attribute = Attribute;
-    return Base;
-}, {
-    requires:["base/base2","base/attribute"]
-});/**
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('base/base2', function (S, Attribute, Event) {
+KISSY.add('base/base', function (S, Attribute, Event) {
 
     /**
      * @name Base
@@ -535,6 +539,9 @@ KISSY.add('base/base2', function (S, Attribute, Event) {
     }
 
     S.augment(Base, Event.Target, Attribute);
+
+    Base.Attribute = Attribute;
+
     return Base;
 }, {
     requires:["./attribute", "event"]
