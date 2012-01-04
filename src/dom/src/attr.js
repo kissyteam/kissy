@@ -183,6 +183,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         }
                         catch (e) {
                             // It's a real failure only if setAttribute also fails.
+                            // http://msdn.microsoft.com/en-us/library/ms536739(v=vs.85).aspx
+                            // 0 : Match sAttrName regardless of case.
                             return elem.setAttribute(name, value, 0);
                         }
                     }
