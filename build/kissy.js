@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:29
+build time: Jan 4 20:38
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Jan 4 20:29
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120104202928',
+            buildTime:'20120104203821',
 
             /**
              * Returns a new object containing all of the properties of
@@ -7166,7 +7166,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:29
+build time: Jan 4 20:38
 */
 /**
  * @fileOverview responsible for registering event
@@ -9277,6 +9277,9 @@ KISSY.add("event/utils", function (S, DOM) {
         simpleAdd:simpleAdd,
         simpleRemove:simpleRemove,
         getTypedGroups:function (type) {
+            if (type.indexOf(".") < 0) {
+                return [type, ""];
+            }
             var m = type.match(/([^.]+)?(\..+)?$/),
                 t = m[1],
                 ret = [t],
@@ -11581,9 +11584,9 @@ KISSY.add('cookie', function (S) {
  *     独立成静态工具类的方式更优。
  */
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:25
+build time: Jan 4 20:38
 */
 /**
  * @fileOverview attribute management
@@ -11939,14 +11942,14 @@ KISSY.add('base/attribute', function (S, undef) {
                     setter = attrConfig['setter'];
 
                 // validator check
-                if (validator = normalFn(self, validator)) {
+                if (validator && (validator = normalFn(self, validator))) {
                     if (validator.call(self, value, name) === false) {
                         return false;
                     }
                 }
 
                 // if setter has effect
-                if (setter = normalFn(self, setter)) {
+                if (setter && (setter = normalFn(self, setter))) {
                     setValue = setter.call(self, value, name);
                 }
 
@@ -11970,6 +11973,7 @@ KISSY.add('base/attribute', function (S, undef) {
                 var self = this,
                     dot = ".",
                     path,
+                    attrVals = getAttrVals(self),
                     attrConfig,
                     getter, ret;
 
@@ -11983,12 +11987,12 @@ KISSY.add('base/attribute', function (S, undef) {
 
                 // get user-set value or default value
                 //user-set value takes privilege
-                ret = name in getAttrVals(self) ?
-                    getAttrVals(self)[name] :
+                ret = name in attrVals ?
+                    attrVals[name] :
                     self.__getDefAttrVal(name);
 
                 // invoke getter for this attribute
-                if (getter = normalFn(self, getter)) {
+                if (getter && (getter = normalFn(self, getter))) {
                     ret = getter.call(self, ret, name);
                 }
 
@@ -12006,17 +12010,18 @@ KISSY.add('base/attribute', function (S, undef) {
              */
             __getDefAttrVal:function (name) {
                 var self = this,
-                    attrConfig = ensureNonEmpty(getAttrs(self), name),
-                    valFn,
+                    attrs = getAttrs(self),
+                    attrConfig = ensureNonEmpty(attrs, name),
+                    valFn = attrConfig.valueFn,
                     val;
 
-                if ((valFn = normalFn(self, attrConfig.valueFn))) {
+                if (valFn && (valFn = normalFn(self, valFn))) {
                     val = valFn.call(self);
                     if (val !== undef) {
                         attrConfig.value = val;
                     }
                     delete attrConfig.valueFn;
-                    getAttrs(self)[name] = attrConfig;
+                    attrs[name] = attrConfig;
                 }
 
                 return attrConfig.value;

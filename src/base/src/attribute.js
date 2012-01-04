@@ -352,14 +352,14 @@ KISSY.add('base/attribute', function (S, undef) {
                     setter = attrConfig['setter'];
 
                 // validator check
-                if (validator = normalFn(self, validator)) {
+                if (validator && (validator = normalFn(self, validator))) {
                     if (validator.call(self, value, name) === false) {
                         return false;
                     }
                 }
 
                 // if setter has effect
-                if (setter = normalFn(self, setter)) {
+                if (setter && (setter = normalFn(self, setter))) {
                     setValue = setter.call(self, value, name);
                 }
 
@@ -383,6 +383,7 @@ KISSY.add('base/attribute', function (S, undef) {
                 var self = this,
                     dot = ".",
                     path,
+                    attrVals = getAttrVals(self),
                     attrConfig,
                     getter, ret;
 
@@ -396,12 +397,12 @@ KISSY.add('base/attribute', function (S, undef) {
 
                 // get user-set value or default value
                 //user-set value takes privilege
-                ret = name in getAttrVals(self) ?
-                    getAttrVals(self)[name] :
+                ret = name in attrVals ?
+                    attrVals[name] :
                     self.__getDefAttrVal(name);
 
                 // invoke getter for this attribute
-                if (getter = normalFn(self, getter)) {
+                if (getter && (getter = normalFn(self, getter))) {
                     ret = getter.call(self, ret, name);
                 }
 
@@ -419,17 +420,18 @@ KISSY.add('base/attribute', function (S, undef) {
              */
             __getDefAttrVal:function (name) {
                 var self = this,
-                    attrConfig = ensureNonEmpty(getAttrs(self), name),
-                    valFn,
+                    attrs = getAttrs(self),
+                    attrConfig = ensureNonEmpty(attrs, name),
+                    valFn = attrConfig.valueFn,
                     val;
 
-                if ((valFn = normalFn(self, attrConfig.valueFn))) {
+                if (valFn && (valFn = normalFn(self, valFn))) {
                     val = valFn.call(self);
                     if (val !== undef) {
                         attrConfig.value = val;
                     }
                     delete attrConfig.valueFn;
-                    getAttrs(self)[name] = attrConfig;
+                    attrs[name] = attrConfig;
                 }
 
                 return attrConfig.value;

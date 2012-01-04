@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:29
+build time: Jan 4 20:38
 */
 /**
  * @fileOverview responsible for registering event
@@ -2112,6 +2112,9 @@ KISSY.add("event/utils", function (S, DOM) {
         simpleAdd:simpleAdd,
         simpleRemove:simpleRemove,
         getTypedGroups:function (type) {
+            if (type.indexOf(".") < 0) {
+                return [type, ""];
+            }
             var m = type.match(/([^.]+)?(\..+)?$/),
                 t = m[1],
                 ret = [t],

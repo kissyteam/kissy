@@ -96,6 +96,9 @@ KISSY.add("event/utils", function (S, DOM) {
         simpleAdd:simpleAdd,
         simpleRemove:simpleRemove,
         getTypedGroups:function (type) {
+            if (type.indexOf(".") < 0) {
+                return [type, ""];
+            }
             var m = type.match(/([^.]+)?(\..+)?$/),
                 t = m[1],
                 ret = [t],
