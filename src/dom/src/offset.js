@@ -32,27 +32,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
         SCROLL_TOP = SCROLL + 'Top',
         GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect';
 
-//    ownerDocument 的判断不保证 elem 没有游离在 document 之外（比如 fragment）
-//    function inDocument(elem) {
-//        if (!elem) {
-//            return 0;
-//        }
-//        var doc = elem.ownerDocument;
-//        if (!doc) {
-//            return 0;
-//        }
-//        var html = doc.documentElement;
-//        if (html === elem) {
-//            return true;
-//        }
-//        else if (DOM.__contains(html, elem)) {
-//            return true;
-//        }
-//        return false;
-//    }
-
     S.mix(DOM, {
-
 
         /**
          * Gets the current coordinates of the element, relative to the document.

@@ -169,7 +169,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 var ret = false, elems = DOM.query(selector);
                 for (var i = 0; i < elems.length; i++) {
                     var elem = elems[i];
-                    if (checkIsNode(elem)) {
+                    if (elem.nodeType) {
                         ret = domOps.hasData(elem, name);
                     } else {
                         ret = objectOps.hasData(elem, name);
@@ -191,27 +191,31 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              *          当设置 data， name 那么进行设置操作，返回 undefined
              */
             data:function (selector, name, data) {
-                // suports hash
+
+                var elems = DOM.query(selector), elem = elems[0];
+
+                // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        DOM.data(selector, k, name[k]);
+                        DOM.data(elems, k, name[k]);
                     }
                     return undefined;
                 }
 
                 // getter
                 if (data === undefined) {
-                    var elem = DOM.get(selector);
-                    if (checkIsNode(elem)) {
-                        return domOps.data(elem, name, data);
-                    } else if (elem) {
-                        return objectOps.data(elem, name, data);
+                    if (elem) {
+                        if (elem.nodeType) {
+                            return domOps.data(elem, name, data);
+                        } else {
+                            return objectOps.data(elem, name, data);
+                        }
                     }
                 }
                 // setter
                 else {
-                    DOM.query(selector).each(function (elem) {
-                        if (checkIsNode(elem)) {
+                    elems.each(function (elem) {
+                        if (elem.nodeType) {
                             domOps.data(elem, name, data);
                         } else {
                             objectOps.data(elem, name, data);
@@ -228,7 +232,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              */
             removeData:function (selector, name) {
                 DOM.query(selector).each(function (elem) {
-                    if (checkIsNode(elem)) {
+                    if (elem.nodeType) {
                         domOps.removeData(elem, name);
                     } else {
                         objectOps.removeData(elem, name);
@@ -236,11 +240,6 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 });
             }
         });
-
-    function checkIsNode(elem) {
-        // note : 普通对象不要定义 nodeType 这种特殊属性!
-        return elem && elem.nodeType;
-    }
 
     return DOM;
 

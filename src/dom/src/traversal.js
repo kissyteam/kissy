@@ -2,70 +2,12 @@
  * @fileOverview   dom-traversal
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/traversal', function(S, DOM, undefined) {
+KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var isElementNode = DOM._isElementNode,
-        CONTAIN_MASK = 16;
-
-    S.mix(DOM, {
-
-        closest:function(selector, filter, context) {
-            return nth(selector, filter, 'parentNode', function(elem) {
-                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-            }, context, true);
-        },
-
-        /**
-         * Gets the parent node of the first matched element.
-         */
-        parent: function(selector, filter, context) {
-            return nth(selector, filter, 'parentNode', function(elem) {
-                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-            }, context);
-        },
-
-        first:function(selector, filter) {
-            var elem = DOM.get(selector);
-            return nth(elem && elem.firstChild, filter, 'nextSibling',
-                undefined, undefined, true);
-        },
-
-        last:function(selector, filter) {
-            var elem = DOM.get(selector);
-            return nth(elem && elem.lastChild, filter, 'previousSibling',
-                undefined, undefined, true);
-        },
-
-        /**
-         * Gets the following sibling of the first matched element.
-         */
-        next: function(selector, filter) {
-            return nth(selector, filter, 'nextSibling', undefined);
-        },
-
-        /**
-         * Gets the preceding sibling of the first matched element.
-         */
-        prev: function(selector, filter) {
-            return nth(selector, filter, 'previousSibling', undefined);
-        },
-
-        /**
-         * Gets the siblings of the first matched element.
-         */
-        siblings: function(selector, filter) {
-            return getSiblings(selector, filter, true);
-        },
-
-        /**
-         * Gets the children of the first matched element.
-         */
-        children: function(selector, filter) {
-            return getSiblings(selector, filter, undefined);
-        },
-
-        __contains:document.documentElement.contains ?
-            function(a, b) {
+        CONTAIN_MASK = 16,
+        __contains = document.documentElement.contains ?
+            function (a, b) {
                 if (a.nodeType == DOM.TEXT_NODE) {
                     return false;
                 }
@@ -87,26 +29,83 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
                 return precondition && (a.contains ? a.contains(b) : true);
             } : (
             document.documentElement.compareDocumentPosition ?
-                function(a, b) {
+                function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :
                 // it can not be true , pathetic browser
                 0
-            ),
+            );
+
+
+    S.mix(DOM, {
+
+        closest:function (selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function (elem) {
+                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+            }, context, true);
+        },
+
+        /**
+         * Gets the parent node of the first matched element.
+         */
+        parent:function (selector, filter, context) {
+            return nth(selector, filter, 'parentNode', function (elem) {
+                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+            }, context);
+        },
+
+        first:function (selector, filter) {
+            var elem = DOM.get(selector);
+            return nth(elem && elem.firstChild, filter, 'nextSibling',
+                undefined, undefined, true);
+        },
+
+        last:function (selector, filter) {
+            var elem = DOM.get(selector);
+            return nth(elem && elem.lastChild, filter, 'previousSibling',
+                undefined, undefined, true);
+        },
+
+        /**
+         * Gets the following sibling of the first matched element.
+         */
+        next:function (selector, filter) {
+            return nth(selector, filter, 'nextSibling', undefined);
+        },
+
+        /**
+         * Gets the preceding sibling of the first matched element.
+         */
+        prev:function (selector, filter) {
+            return nth(selector, filter, 'previousSibling', undefined);
+        },
+
+        /**
+         * Gets the siblings of the first matched element.
+         */
+        siblings:function (selector, filter) {
+            return getSiblings(selector, filter, true);
+        },
+
+        /**
+         * Gets the children of the first matched element.
+         */
+        children:function (selector, filter) {
+            return getSiblings(selector, filter, undefined);
+        },
 
         /**
          * Check to see if a DOM node is within another DOM node.
          */
-        contains:
-            function(a, b) {
-                a = DOM.get(a);
-                b = DOM.get(b);
-                if (a && b) {
-                    return DOM.__contains(a, b);
-                }
-            },
+        contains:function (a, b) {
+            a = DOM.get(a);
+            b = DOM.get(b);
+            if (a && b) {
+                return __contains(a, b);
+            }
+        },
 
-        equals:function(n1, n2) {
+        equals:function (n1, n2) {
             n1 = DOM.query(n1);
             n2 = DOM.query(n2);
             if (n1.length != n2.length) {
@@ -152,7 +151,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         if (S.isNumber(filter)) {
             fi = 0;
             flen = filter;
-            filter = function() {
+            filter = function () {
                 return ++fi === flen;
             };
         }
@@ -201,7 +200,7 @@ KISSY.add('dom/traversal', function(S, DOM, undefined) {
         }
 
         if (parentNode) {
-            for (j = 0,next = parentNode.firstChild;
+            for (j = 0, next = parentNode.firstChild;
                  next;
                  next = next.nextSibling) {
                 if (isElementNode(next)

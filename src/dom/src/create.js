@@ -2,7 +2,7 @@
  * @fileOverview   dom-create
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/create', function(S, DOM, UA, undefined) {
+KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         var doc = document,
             ie = UA['ie'],
@@ -37,16 +37,23 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             /**
              * Creates a new HTMLElement using the provided html string.
              */
-            create: function(html, props, ownerDoc, _trim/*internal*/) {
+            create:function (html, props, ownerDoc, _trim/*internal*/) {
 
-                if (isElementNode(html)
-                    || nodeTypeIs(html, DOM.TEXT_NODE)) {
+                var ret = null;
+
+                if (!html) {
+                    return ret;
+                }
+
+                if (html.nodeType) {
                     return DOM.clone(html);
                 }
-                var ret = null;
+
+
                 if (!isString(html)) {
                     return ret;
                 }
+
                 if (_trim === undefined) {
                     _trim = true;
                 }
@@ -55,9 +62,6 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     html = S.trim(html);
                 }
 
-                if (!html) {
-                    return ret;
-                }
 
                 var creators = DOM._creators,
                     holder,
@@ -106,8 +110,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 return attachProps(ret, props);
             },
 
-            _creators: {
-                div: function(html, ownerDoc) {
+            _creators:{
+                div:function (html, ownerDoc) {
                     var frag = ownerDoc && ownerDoc != doc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                     // html 为 <style></style> 时不行，必须有其他元素？
                     frag['innerHTML'] = "m<div>" + html + "<" + "/div>";
@@ -120,9 +124,10 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
              * @param {Function} callback (optional) For async script loading you can be notified when the update completes.
              */
-            html: function(selector, val, loadScripts, callback) {
+            html:function (selector, val, loadScripts, callback) {
                 // supports css selector/Node/NodeList
-                var els = DOM.query(selector),el = els[0];
+                var els = DOM.query(selector),
+                    el = els[0];
                 if (!el) {
                     return
                 }
@@ -142,19 +147,19 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                     val += "";
 
                     // faster
-                    if (! val.match(/<(?:script|style)/i) &&
+                    if (!val.match(/<(?:script|style)/i) &&
                         (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
-                        !creatorsMap[ (val.match(RE_TAG) || ["",""])[1].toLowerCase() ]) {
+                        !creatorsMap[ (val.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
 
                         try {
-                            els.each(function(elem) {
+                            els.each(function (elem) {
                                 if (isElementNode(elem)) {
                                     cleanData(getElementsByTagName(elem, "*"));
                                     elem.innerHTML = val;
                                 }
                             });
                             success = true;
-                        } catch(e) {
+                        } catch (e) {
                             // a <= "<a>"
                             // a.innerHTML='<p>1</p>';
                         }
@@ -163,7 +168,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
                     if (!success) {
                         val = DOM.create(val, 0, el.ownerDocument, false);
-                        els.each(function(elem) {
+                        els.each(function (elem) {
                             if (isElementNode(elem)) {
                                 DOM.empty(elem);
                                 DOM.append(val, elem, loadScripts);
@@ -180,8 +185,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @param selector 选择器或元素集合
              * @param {Boolean} [keepData=false] 删除元素时是否保留其上的数据，用于离线操作，提高性能
              */
-            remove: function(selector, keepData) {
-                DOM.query(selector).each(function(el) {
+            remove:function (selector, keepData) {
+                DOM.query(selector).each(function (el) {
                     if (!keepData && isElementNode(el)) {
                         // 清楚数据
                         var elChildren = getElementsByTagName(el, "*");
@@ -203,7 +208,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
              * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @returns 复制后的节点
              */
-            clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
+            clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
                 var elem = DOM.get(selector);
 
                 if (!elem) {
@@ -241,8 +246,8 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 return clone;
             },
 
-            empty:function(selector) {
-                DOM.query(selector).each(function(el) {
+            empty:function (selector) {
+                DOM.query(selector).each(function (el) {
                     DOM.remove(el.childNodes);
                 });
             },
@@ -378,7 +383,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
                 ownerDoc = ownerDoc || nodes[0].ownerDocument;
                 ret = ownerDoc.createDocumentFragment();
                 nodes = S.makeArray(nodes);
-                for (i = 0,len = nodes.length; i < len; i++) {
+                for (i = 0, len = nodes.length; i < len; i++) {
                     ret.appendChild(nodes[i]);
                 }
             }
@@ -398,24 +403,24 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             TABLE_CLOSE = '<' + '/table>',
             RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
             creatorsMap = {
-                option: 'select',
+                option:'select',
                 optgroup:'select',
                 area:'map',
                 thead:'table',
-                td: 'tr',
+                td:'tr',
                 th:'tr',
-                tr: 'tbody',
-                tbody: 'table',
+                tr:'tbody',
+                tbody:'table',
                 tfoot:'table',
                 caption:'table',
                 colgroup:'table',
-                col: 'colgroup',
-                legend: 'fieldset' // ie 支持，但 gecko 不支持
+                col:'colgroup',
+                legend:'fieldset' // ie 支持，但 gecko 不支持
             };
 
         for (var p in creatorsMap) {
-            (function(tag) {
-                creators[p] = function(html, ownerDoc) {
+            (function (tag) {
+                creators[p] = function (html, ownerDoc) {
                     return create('<' + tag + '>' + html + '<' + '/' + tag + '>', null, ownerDoc);
                 }
             })(creatorsMap[p]);
@@ -424,7 +429,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
         // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
         if (ie < 8) {
-            creators.tbody = function(html, ownerDoc) {
+            creators.tbody = function (html, ownerDoc) {
                 var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
                     tbody = frag.children['tags']('tbody')[0];
 
@@ -437,16 +442,16 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
         // fix table elements
         S.mix(creators, {
-            thead: creators.tbody,
-            tfoot: creators.tbody,
-            caption: creators.tbody,
-            colgroup: creators.tbody
+            thead:creators.tbody,
+            tfoot:creators.tbody,
+            caption:creators.tbody,
+            colgroup:creators.tbody
         });
         //}
         return DOM;
     },
     {
-        requires:["./base","ua"]
+        requires:["./base", "ua"]
     });
 
 /**

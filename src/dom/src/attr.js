@@ -247,14 +247,16 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * @param [value]
              */
             prop:function (selector, name, value) {
-                // suports hash
+                var elems = DOM.query(selector);
+
+                // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        DOM.prop(selector, k, name[k]);
+                        DOM.prop(elems, k, name[k]);
                     }
                     return;
                 }
-                var elems = DOM.query(selector);
+
                 // Try to normalize/fix the name
                 name = propFix[ name ] || name;
                 var hook = propHooks[ name ];
@@ -342,12 +344,15 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  - Trying to set an invalid name like ":" is supposed to throw an
                  error.  In IE[678] and Opera 10, it fails without an error.
                  */
-                // suports hash
+
+                var els = DOM.query(selector);
+
+                // supports hash
                 if (S.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
                         if (name.hasOwnProperty(k)) {
-                            DOM.attr(selector, k, name[k], pass);
+                            DOM.attr(els, k, name[k], pass);
                         }
                     }
                     return;
@@ -369,32 +374,14 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     return DOM[name](selector, val);
                 }
 
-                var els = DOM.query(selector);
-
-                if (val === undefined) {
-                    return DOM.__attr(els[0], name);
-                } else {
-                    els.each(function (el) {
-                        DOM.__attr(el, name, val);
-                    });
-                }
-            },
-
-            __attr:function (el, name, val) {
-                if (!isElementNode(el)) {
-                    return;
-                }
                 // custom attrs
                 name = attrFix[name] || name;
 
                 var attrNormalizer,
+                    el = els[0],
                     ret;
 
-                // browsers index elements by id/name on forms, give priority to attributes.
-                if (nodeName(el, "form")) {
-                    attrNormalizer = attrNodeHook;
-                }
-                else if (rboolean.test(name)) {
+                if (rboolean.test(name)) {
                     attrNormalizer = boolHook;
                 }
                 // only old ie?
@@ -404,27 +391,36 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     attrNormalizer = attrHooks[name];
                 }
 
-                // getter
+
                 if (val === undefined) {
+                    if (el) {
+                        // browsers index elements by id/name on forms, give priority to attributes.
+                        if (nodeName(el, "form")) {
+                            attrNormalizer = attrNodeHook;
+                        }
+                        if (attrNormalizer && attrNormalizer.get) {
+                            return attrNormalizer.get(el, name);
+                        }
 
-                    if (attrNormalizer && attrNormalizer.get) {
-                        return attrNormalizer.get(el, name);
+                        ret = el.getAttribute(name);
+
+                        // standard browser non-existing attribute return null
+                        // ie<8 will return undefined , because it return property
+                        // so norm to undefined
+                        return ret === null ? undefined : ret;
                     }
-
-                    ret = el.getAttribute(name);
-
-                    // standard browser non-existing attribute return null
-                    // ie<8 will return undefined , because it return property
-                    // so norm to undefined
-                    return ret === null ? undefined : ret;
                 } else {
-
-                    if (attrNormalizer && attrNormalizer.set) {
-                        attrNormalizer.set(el, val, name);
-                    } else {
-                        // convert the value to a string (all browsers do this but IE)
-                        el.setAttribute(name, EMPTY + val);
-                    }
+                    els.each(function (el) {
+                        if (nodeName(el, "form")) {
+                            attrNormalizer = attrNodeHook;
+                        }
+                        if (attrNormalizer && attrNormalizer.set) {
+                            attrNormalizer.set(el, val, name);
+                        } else {
+                            // convert the value to a string (all browsers do this but IE)
+                            el.setAttribute(name, EMPTY + val);
+                        }
+                    });
                 }
             },
 
@@ -518,13 +514,13 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var val = value;
 
                     // Treat null/undefined as ""; convert numbers to string
-                    if (val==null) {
+                    if (val == null) {
                         val = "";
                     } else if (typeof val === "number") {
                         val += "";
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return val==null ? "" : value + "";
+                            return val == null ? "" : value + "";
                         });
                     }
 

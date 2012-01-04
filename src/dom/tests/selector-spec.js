@@ -137,34 +137,36 @@ KISSY.use("dom", function(S, DOM) {
 
 
         it("should support node array form selector and unique works", function() {
+
+            var r;
             var c3 = S.query(".context-test-3");
-            expect(c3.length).toBe(3);
+            expect(r=c3.length).toBe(3);
 
             var c3j = $(".context-test-3");
-            expect(c3j.length).toBe(3);
+            expect(r=c3j.length).toBe(3);
 
             var c = S.query(".context-test");
-            expect(c.length).toBe(3);
+            expect(r=c.length).toBe(3);
 
             var cj = $(".context-test");
-            expect(cj.length).toBe(3);
+            expect(r=cj.length).toBe(3);
 
-            expect(S.query(c3, ".context-test").length).toBe(2);
-            expect(S.query(".context-test-3", c).length).toBe(2);
-            expect(S.query(c3, c).length).toBe(2);
-            expect(S.query(".context-test-3", ".context-test").length).toBe(2);
+            expect(r=S.query(c3, ".context-test").length).toBe(2);
+            expect(r=S.query(".context-test-3", c).length).toBe(2);
+            expect(r=S.query(c3, c).length).toBe(2);
+            expect(r=S.query(".context-test-3", ".context-test").length).toBe(2);
 
             /*jquery contrast test*/
             var t = $(c3j, ".context-test");
             // 上下文不对第一个参数是节点集合时生效
             expect(t.length).toBe(3);
-            expect($(".context-test-3", cj).length).toBe(2);
+            expect(r=$(".context-test-3", cj).length).toBe(2);
             // 上下文不对第一个参数是节点集合时生效
-            expect($(c3j, cj).length).toBe(3);
-            expect($(".context-test-3", ".context-test").length).toBe(2);
+            expect(r=$(c3j, cj).length).toBe(3);
+            expect(r=$(".context-test-3", ".context-test").length).toBe(2);
 
-            expect(cj.find(".context-test-3").length).toBe(2);
-            expect(cj.find(c3j).length).toBe(2);
+            expect(r=cj.find(".context-test-3").length).toBe(2);
+            expect(r=cj.find(c3j).length).toBe(2);
 
 
         });

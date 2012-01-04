@@ -144,7 +144,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
 
             // 还没有加入到 document，就取行内
-            if (val == "" && !DOM.__contains(d.documentElement, elem)) {
+            if (val == "" && !DOM.contains(d.documentElement, elem)) {
                 name = cssProps[name] || name;
                 val = elem[STYLE][name];
             }
@@ -156,21 +156,24 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          *  Get and set the style property on a DOM Node
          */
         style:function (selector, name, val) {
-            // suports hash
+            var els = DOM.query(selector), elem = els[0];
+            // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
-                    DOM.style(selector, k, name[k]);
+                    els.each(function (elem) {
+                        style(elem, k, name[k]);
+                    });
                 }
                 return;
             }
             if (val === undefined) {
-                var elem = DOM.get(selector), ret = '';
+                var ret = '';
                 if (elem) {
                     ret = style(elem, name, val);
                 }
                 return ret;
             } else {
-                DOM.query(selector).each(function (elem) {
+                els.each(function (elem) {
                     style(elem, name, val);
                 });
             }
@@ -180,10 +183,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * (Gets computed style) or (sets styles) on the matches elements.
          */
         css:function (selector, name, val) {
-            // suports hash
+            var els = DOM.query(selector), elem = els[0];
+            // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
-                    DOM.css(selector, k, name[k]);
+                    els.each(function (elem) {
+                        style(elem, k, name[k]);
+                    });
                 }
                 return;
             }
@@ -193,7 +199,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             // getter
             if (val === undefined) {
                 // supports css selector/Node/NodeList
-                var elem = DOM.get(selector), ret = '';
+                var ret = '';
                 if (elem) {
                     // If a hook was provided get the computed value from there
                     if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
@@ -205,7 +211,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
             // setter
             else {
-                DOM.style(selector, name, val);
+                els.each(function (elem) {
+                    style(elem, name, val);
+                });
             }
         },
 

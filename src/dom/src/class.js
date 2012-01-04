@@ -2,7 +2,7 @@
  * @fileOverview   dom-class
  * @author  lifesinger@gmail.com
  */
-KISSY.add('dom/class', function(S, DOM, undefined) {
+KISSY.add('dom/class', function (S, DOM, undefined) {
 
     var SPACE = ' ',
         REG_SPLIT = /[\.\s]\s*\.?/,
@@ -13,22 +13,11 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
     }
 
     S.mix(DOM, {
-
-        __hasClass:function(el, cls) {
-            var className = el.className;
-            if (className) {
-                className = norm(className);
-                return className.indexOf(SPACE + cls + SPACE) > -1;
-            } else {
-                return false;
-            }
-        },
-
         /**
          * Determine whether any of the matched elements are assigned the given class.
          */
-        hasClass: function(selector, value) {
-            return batch(selector, value, function(elem, classNames, cl) {
+        hasClass:function (selector, value) {
+            return batch(selector, value, function (elem, classNames, cl) {
                 var elemClass = elem.className;
                 if (elemClass) {
                     var className = norm(elemClass),
@@ -50,8 +39,8 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
         /**
          * Adds the specified class(es) to each of the set of matched elements.
          */
-        addClass: function(selector, value) {
-            batch(selector, value, function(elem, classNames, cl) {
+        addClass:function (selector, value) {
+            batch(selector, value, function (elem, classNames, cl) {
                 var elemClass = elem.className;
                 if (!elemClass) {
                     elem.className = value;
@@ -72,8 +61,8 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
         /**
          * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
          */
-        removeClass: function(selector, value) {
-            batch(selector, value, function(elem, classNames, cl) {
+        removeClass:function (selector, value) {
+            batch(selector, value, function (elem, classNames, cl) {
                 var elemClass = elem.className;
                 if (elemClass) {
                     if (!cl) {
@@ -99,7 +88,7 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
          * Replace a class with another class for matched elements.
          * If no oldClassName is present, the newClassName is simply added.
          */
-        replaceClass: function(selector, oldClassName, newClassName) {
+        replaceClass:function (selector, oldClassName, newClassName) {
             DOM.removeClass(selector, oldClassName);
             DOM.addClass(selector, newClassName);
         },
@@ -111,10 +100,10 @@ KISSY.add('dom/class', function(S, DOM, undefined) {
          * @param state {Boolean} optional boolean to indicate whether class
          *        should be added or removed regardless of current state.
          */
-        toggleClass: function(selector, value, state) {
+        toggleClass:function (selector, value, state) {
             var isBool = S.isBoolean(state), has;
 
-            batch(selector, value, function(elem, classNames, cl) {
+            batch(selector, value, function (elem, classNames, cl) {
                 var j = 0, className;
                 for (; j < cl; j++) {
                     className = classNames[j];
