@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 28 15:19
+build time: Jan 4 14:41
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Dec 28 15:19
          */
         version:'1.20',
 
-        buildTime:'20111228151917',
+        buildTime:'20120104144124',
 
         /**
          * Returns a new object containing all of the properties of
@@ -4565,14 +4565,14 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
  */
 
 /**
- * @module  dom-data
+ * @fileOverview   dom-data
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/data', function(S, DOM, undefined) {
+KISSY.add('dom/data', function (S, DOM, undefined) {
 
     var win = window,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
-        dataCache = { },       // 存储 node 节点的 data
+        dataCache = { }, // 存储 node 节点的 data
         winDataCache = { };    // 避免污染全局
 
 
@@ -4585,7 +4585,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
     noData['embed'] = 1;
 
     var commonOps = {
-        hasData:function(cache, name) {
+        hasData:function (cache, name) {
             if (cache) {
                 if (name !== undefined) {
                     if (name in cache) {
@@ -4600,7 +4600,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
     };
 
     var objectOps = {
-        hasData:function(ob, name) {
+        hasData:function (ob, name) {
             // 只判断当前窗口，iframe 窗口内数据直接放入全局变量
             if (ob == win) {
                 return objectOps.hasData(winDataCache, name);
@@ -4610,7 +4610,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             return commonOps.hasData(thisCache, name);
         },
 
-        data:function(ob, name, value) {
+        data:function (ob, name, value) {
             if (ob == win) {
                 return objectOps.data(winDataCache, name, value);
             }
@@ -4627,33 +4627,30 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
                 }
             }
         },
-        removeData:function(ob, name) {
+        removeData:function (ob, name) {
             if (ob == win) {
                 return objectOps.removeData(winDataCache, name);
             }
             var cache = ob[EXPANDO];
-            if (!cache) {
-                return;
-            }
             if (name !== undefined) {
                 delete cache[name];
                 if (S.isEmptyObject(cache)) {
-                    objectOps.removeData(ob, undefined);
+                    objectOps.removeData(ob);
                 }
             } else {
                 try {
                     // ob maybe window in iframe
                     // ie will throw error
                     delete ob[EXPANDO];
-                } catch(e) {
-                    ob[EXPANDO] = null;
+                } catch (e) {
+                    ob[EXPANDO] = undefined;
                 }
             }
         }
     };
 
     var domOps = {
-        hasData:function(elem, name) {
+        hasData:function (elem, name) {
             var key = elem[EXPANDO];
             if (!key) {
                 return false;
@@ -4662,16 +4659,21 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             return commonOps.hasData(thisCache, name);
         },
 
-        data:function(elem, name, value) {
+        data:function (elem, name, value) {
             if (noData[elem.nodeName.toLowerCase()]) {
-                return;
+                return undefined;
             }
-            var key = elem[EXPANDO];
+            var key = elem[EXPANDO], cache;
             if (!key) {
+                // 根本不用附加属性
+                if (name !== undefined &&
+                    value === undefined) {
+                    return undefined;
+                }
                 // 节点上关联键值也可以
                 key = elem[EXPANDO] = S.guid();
             }
-            var cache = dataCache[key];
+            cache = dataCache[key];
             if (value !== undefined) {
                 // 需要新建
                 cache = dataCache[key] = dataCache[key] || {};
@@ -4687,25 +4689,23 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
             }
         },
 
-        removeData:function(elem, name) {
-            var key = elem[EXPANDO];
+        removeData:function (elem, name) {
+            var key = elem[EXPANDO], cache;
             if (!key) {
                 return;
             }
-            var cache = dataCache[key];
-            if (!cache) {
-                return;
-            }
+            cache = dataCache[key];
             if (name !== undefined) {
                 delete cache[name];
                 if (S.isEmptyObject(cache)) {
-                    domOps.removeData(elem, undefined);
+                    domOps.removeData(elem);
                 }
             } else {
                 delete dataCache[key];
                 try {
                     delete elem[EXPANDO];
-                } catch(e) {
+                } catch (e) {
+                    elem[EXPANDO] = undefined;
                     //S.log("delete expando error : ");
                     //S.log(e);
                 }
@@ -4717,75 +4717,91 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
     };
 
 
-    S.mix(DOM, {
-
-        __EXPANDO:EXPANDO,
-
+    S.mix(DOM,
         /**
-         * whether any node has data
+         * @lends DOM
          */
-        hasData:function(selector, name) {
-            var ret = false,elems = DOM.query(selector);
-            for (var i = 0; i < elems.length; i++) {
-                var elem = elems[i];
-                if (checkIsNode(elem)) {
-                    ret = domOps.hasData(elem, name);
-                } else {
-                    ret = objectOps.hasData(elem, name);
-                }
-                if (ret) {
-                    return ret;
-                }
-            }
-            return ret;
-        },
+        {
 
-        /**
-         * Store arbitrary data associated with the matched elements.
-         */
-        data: function(selector, name, data) {
-            // suports hash
-            if (S.isPlainObject(name)) {
-                for (var k in name) {
-                    DOM.data(selector, k, name[k]);
-                }
-                return;
-            }
+            __EXPANDO:EXPANDO,
 
-            // getter
-            if (data === undefined) {
-                var elem = DOM.get(selector);
-                if (checkIsNode(elem)) {
-                    return domOps.data(elem, name, data);
-                } else if (elem) {
-                    return objectOps.data(elem, name, data);
-                }
-            }
-            // setter
-            else {
-                DOM.query(selector).each(function(elem) {
+            /**
+             * whether any node has data
+             * @param {HTMLElement[]|String} selector 选择器或节点数组
+             * @param {String} name 数据键名
+             * @returns {boolean} 节点是否有关联数据键名的值
+             */
+            hasData:function (selector, name) {
+                var ret = false, elems = DOM.query(selector);
+                for (var i = 0; i < elems.length; i++) {
+                    var elem = elems[i];
                     if (checkIsNode(elem)) {
-                        domOps.data(elem, name, data);
+                        ret = domOps.hasData(elem, name);
                     } else {
-                        objectOps.data(elem, name, data);
+                        ret = objectOps.hasData(elem, name);
+                    }
+                    if (ret) {
+                        return ret;
+                    }
+                }
+                return ret;
+            },
+
+            /**
+             * Store arbitrary data associated with the matched elements.
+             * @param {HTMLElement[]|String} selector 选择器或节点数组
+             * @param {String} [name] 数据键名
+             * @param {String} [data] 数据键值
+             * @returns 当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值
+             *          当不设置 data， name 那么返回： 节点的存储空间对象
+             *          当设置 data， name 那么进行设置操作，返回 undefined
+             */
+            data:function (selector, name, data) {
+                // suports hash
+                if (S.isPlainObject(name)) {
+                    for (var k in name) {
+                        DOM.data(selector, k, name[k]);
+                    }
+                    return undefined;
+                }
+
+                // getter
+                if (data === undefined) {
+                    var elem = DOM.get(selector);
+                    if (checkIsNode(elem)) {
+                        return domOps.data(elem, name, data);
+                    } else if (elem) {
+                        return objectOps.data(elem, name, data);
+                    }
+                }
+                // setter
+                else {
+                    DOM.query(selector).each(function (elem) {
+                        if (checkIsNode(elem)) {
+                            domOps.data(elem, name, data);
+                        } else {
+                            objectOps.data(elem, name, data);
+                        }
+                    });
+                }
+                return undefined;
+            },
+
+            /**
+             * Remove a previously-stored piece of data.
+             * @param {HTMLElement[]|String} selector 选择器或节点数组
+             * @param {String} [name] 数据键名，不设置时删除关联节点的所有键值对
+             */
+            removeData:function (selector, name) {
+                DOM.query(selector).each(function (elem) {
+                    if (checkIsNode(elem)) {
+                        domOps.removeData(elem, name);
+                    } else {
+                        objectOps.removeData(elem, name);
                     }
                 });
             }
-        },
-
-        /**
-         * Remove a previously-stored piece of data.
-         */
-        removeData: function(selector, name) {
-            DOM.query(selector).each(function(elem) {
-                if (checkIsNode(elem)) {
-                    domOps.removeData(elem, name);
-                } else {
-                    objectOps.removeData(elem, name);
-                }
-            });
-        }
-    });
+        });
 
     function checkIsNode(elem) {
         // note : 普通对象不要定义 nodeType 这种特殊属性!
@@ -4799,7 +4815,7 @@ KISSY.add('dom/data', function(S, DOM, undefined) {
 });
 /**
  * 承玉：2011-05-31
- *  - 分层 ，节点和普通对象分开粗合理
+ *  - 分层 ，节点和普通对象分开处理
  **/
 
 /**
