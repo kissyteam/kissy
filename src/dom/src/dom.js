@@ -1,7 +1,13 @@
 /**
  * @fileOverview dom
  */
-KISSY.add("dom", function(S,DOM) {
+KISSY.add("dom", function (S, DOM) {
+
+    /**
+     * @namespace
+     * @name DOM
+     */
+
     return DOM;
 }, {
     requires:["dom/attr",

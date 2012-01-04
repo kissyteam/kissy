@@ -2,10 +2,10 @@
  * test cases for data sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,dom", function(S, UA, DOM) {
-
-    describe("DOM.data", function() {
-        it("data should works", function() {
+KISSY.use("ua,dom", function (S, UA, DOM) {
+    var __EXPANDO = DOM.__EXPANDO;
+    describe("DOM.data", function () {
+        it("data should works", function () {
             var foo = document.body.appendChild(DOM.create("<div>"));
             DOM.data(foo, 'data-1', 'val-1');
             expect(DOM.data(foo, 'data-1')).toBe('val-1');
@@ -23,7 +23,7 @@ KISSY.use("ua,dom", function(S, UA, DOM) {
             var topOK = true;
             try {
                 DOM.data(top, 'data', 'val');
-            } catch(e) {
+            } catch (e) {
                 //不同域
                 topOK = false;
             }
@@ -40,8 +40,23 @@ KISSY.use("ua,dom", function(S, UA, DOM) {
             DOM.remove(foo);
         });
 
+        it("native data should not add unnecessary EXPANDO", function () {
+            var foo = document.body.appendChild(DOM.create("<div>"));
+            expect(DOM.data(foo, "d")).toBeUndefined();
+            expect(foo[__EXPANDO]).toBeUndefined();
+            DOM.removeData(foo);
+            expect(foo[__EXPANDO]).toBeUndefined();
+        });
 
-        it("removeData should works", function() {
+        it("custom data should not add unnecessary EXPANDO", function () {
+            var foo = {};
+            expect(DOM.data(foo, "d")).toBeUndefined();
+            expect(foo[__EXPANDO]).toBeUndefined();
+            DOM.removeData(foo);
+            expect(foo[__EXPANDO]).toBeUndefined();
+        });
+
+        it("removeData should works", function () {
             var foo = document.body.appendChild(DOM.create("<div><span></span><div>"));
             var bar = DOM.get("span", foo);
 
@@ -78,8 +93,7 @@ KISSY.use("ua,dom", function(S, UA, DOM) {
             expect(DOM.data(bar, "custom2")).toBe(undefined);
         });
 
-
-        it("hasData should works", function() {
+        it("hasData should works", function () {
 
             var p = DOM.create("<p>");
             // 给所有的段落节点设置扩展属性 ``x`` ，值为 ``y``
