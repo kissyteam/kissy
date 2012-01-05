@@ -1,6 +1,6 @@
 /**
  * @fileOverview support standard mod for component
- * @author 承玉<yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/stdmodrender", function(S, Node) {
 

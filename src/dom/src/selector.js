@@ -58,13 +58,18 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         }
         // 常见的单个元素
         // DOM.query(document.getElementById("xx"))
-        else if (simpleContext && (selector.nodeType || selector.setTimeout)) {
+        else if (simpleContext &&
+            (selector.nodeType || selector.setTimeout || S.isFunction(selector))) {
             ret = [selector];
         }
         // 常见的数组
         // var x=DOM.query(".l");DOM.css(x,"color","red");
         else if (simpleContext && isArray(selector)) {
             ret = selector;
+        }
+        // KISSY NodeList or with length
+        else if (simpleContext && "length" in selector) {
+            return selector;
         }
         if (!ret) {
             ret = [];

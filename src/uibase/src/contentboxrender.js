@@ -2,20 +2,20 @@
  * @fileOverview 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
+KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
 
     function ContentBox() {
     }
 
     ContentBox.ATTRS = {
-        //内容容器节点
+        // 内容容器节点
         contentEl:{},
         contentElAttrs:{},
-        contentElCls:{
-            value:""
-        },
+        contentElCls:{},
         contentElStyle:{},
-        contentTagName:{value:"div"},
+        contentTagName:{
+            value:"div"
+        },
         //层内容
         content:{
             sync:false
@@ -26,7 +26,7 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
      * ! contentEl 只能由组件动态生成
      */
     ContentBox.HTML_PARSER = {
-        content:function(el) {
+        content:function (el) {
             return el.html();
         }
     };
@@ -36,10 +36,10 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
     ContentBox.prototype = {
 
         // no need ,shift create work to __createDom
-        __renderUI:function() {
+        __renderUI:function () {
         },
 
-        __createDom:function() {
+        __createDom:function () {
             var self = this,
                 contentEl,
                 c,
@@ -47,45 +47,37 @@ KISSY.add("uibase/contentboxrender", function(S, Node, BoxRender) {
                 elChildren = S.makeArray(el[0].childNodes);
             contentEl = new Node(constructEl(
                 self.get("prefixCls") + "contentbox "
-                    + self.get("contentElCls"),
+                    + (self.get("contentElCls") || ""),
                 self.get("contentElStyle"),
                 undefined,
                 undefined,
                 self.get("contentTagName"),
-                self.get("contentElAttrs"))).appendTo(el);
-            self.set("contentEl", contentEl);
-            if (elChildren.length) {
-                for (var i = 0; i < elChildren.length; i++) {
+                self.get("contentElAttrs"),
+                c = self.get("content"))).appendTo(el);
+            self.__set("contentEl", contentEl);
+            // on content,then read from box el
+            if (!c && elChildren.length) {
+                for (var i = 0, l = elChildren.length; i < l; i++) {
                     contentEl.append(elChildren[i]);
                 }
-            } else if (c = self.get("content")) {
-                setContent(self, c);
             }
-
-
         },
 
-        _uiSetContentElCls:function(cls) {
+        _uiSetContentElCls:function (cls) {
             this.get("contentEl").addClass(cls);
         },
-        _uiSetContentElAttrs:function(attrs) {
+        _uiSetContentElAttrs:function (attrs) {
             this.get("contentEl").attr(attrs);
         },
-        _uiSetContentElStyle:function(v) {
+        _uiSetContentElStyle:function (v) {
             this.get("contentEl").css(v);
         },
-        _uiSetContent:function(c) {
-            setContent(this, c);
+        _uiSetContent:function (c) {
+            this.get("contentEl").html(c);
         }
     };
 
-    function setContent(self, c) {
-        var contentEl = self.get("contentEl");
-        contentEl.html("");
-        c && contentEl.append(c);
-    }
-
     return ContentBox;
 }, {
-    requires:["node","./boxrender"]
+    requires:["node", "./boxrender"]
 });

@@ -9,8 +9,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
         SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        noop = function () {
-        };
+        noop = S.noop;
 
     function capitalFirst(s) {
         return s.charAt(0).toUpperCase() + s.substring(1);
@@ -193,7 +192,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
                     self.fire('createDom');
                     callMethodByHierarchy(self, "createDom", "__createDom");
                     self.fire('afterCreateDom');
-                    self.set("created", true);
+                    self.__set("created", true);
                 }
             },
 
@@ -220,8 +219,9 @@ KISSY.add('uibase/base', function (S, Base, Node) {
                     self.fire('syncUI');
                     callMethodByHierarchy(self, "syncUI", "__syncUI");
                     self.fire('afterSyncUI');
-                    self.set("rendered", true);
+                    self.__set("rendered", true);
                 }
+                return self;
             },
 
             /**

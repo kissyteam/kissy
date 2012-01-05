@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 5 21:47
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -741,7 +741,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
+KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 
     var CHECK_CLS = "menuitem-checkbox",
         CONTENT_CLS = "menuitem-content";
@@ -759,17 +759,8 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
     }
 
     return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
-        renderUI:function() {
-            var self = this,
-                el = self.get("el");
-            el.attr("role", "menuitem");
-            self.get("contentEl").addClass(self.getCls(CONTENT_CLS));
-            if (!el.attr("id")) {
-                el.attr("id", S.guid("ks-menuitem"));
-            }
-        },
 
-        _setSelected:function(v, componentCls) {
+        _setSelected:function (v, componentCls) {
             var self = this,
                 tag = "-selected",
                 el = self.get("el"),
@@ -777,7 +768,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _setChecked:function(v, componentCls) {
+        _setChecked:function (v, componentCls) {
             var self = this,
                 tag = "-checked",
                 el = self.get("el"),
@@ -785,23 +776,36 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelectable:function(v) {
+        _uiSetSelectable:function (v) {
             this.get("el").attr("role", v ? 'menuitemradio' : 'menuitem');
         },
 
-        _uiSetCheckable:function(v) {
+        _uiSetCheckable:function (v) {
             if (v) {
                 setUpCheckEl(this);
             }
             this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
         },
 
-        containsElement:function(element) {
+        containsElement:function (element) {
             var el = this.get("el");
             return el[0] == element || el.contains(element);
         }
     }, {
         ATTRS:{
+            contentElCls:{
+                valueFn:function () {
+                    return this.getCls(CONTENT_CLS);
+                }
+            },
+            elAttrs:{
+                valueFn:function () {
+                    return {
+                        role:"menuitem",
+                        id:S.guid("ks-menuitem")
+                    };
+                }
+            },
             selected:{},
             // @inheritedDoc
             // content:{},
@@ -810,7 +814,7 @@ KISSY.add("menu/menuitemrender", function(S, Node, UIBase, Component) {
         }
     });
 }, {
-    requires:['node','uibase','component']
+    requires:['node', 'uibase', 'component']
 });/**
  * @fileOverview render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
@@ -1054,18 +1058,77 @@ KISSY.add(
     function (S, Event, UIBase, Component, MenuItem, SubMenuRender) {
 
 
+        function bindMenu(self, menu) {
+            /**
+             * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
+             */
+            var parentMenu = self.get("parent");
+
+            //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+            if (parentMenu) {
+
+                parentMenu.on("hide", self._onParentHide, self);
+
+                // 子菜单选中后也要通知父级菜单
+                // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
+                // 单个 menu 来看可能 selectedItem没有变化
+                menu.on("click", function (ev) {
+                    parentMenu.fire("click", {
+                        target:ev.target
+                    });
+                });
+
+                // if not bind doc click for parent menu
+                // if already bind, then if parent menu hide, menu will hide too
+                if (!parentMenu.__bindDocClickToHide) {
+                    Event.on(doc, "click", _onDocClick, self);
+                    menu.__bindDocClickToHide = 1;
+                }
+
+                // 通知父级菜单
+                menu.on("afterActiveItemChange", function (ev) {
+                    parentMenu.set("activeItem", ev.newVal);
+                });
+            }
+            // 访问子菜单，当前 submenu 不隐藏 menu
+            // leave submenuitem -> enter menuitem -> menu item highlight ->
+            // -> menu highlight -> onChildHighlight_ ->
+
+            // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
+            // 这里的 onChildHighlight_ 比 afterHighlightedItemChange 先执行
+            // 保险点用 beforeHighlightedItemChange
+            menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
+        }
+
+        function getMenu(self, init) {
+            var m = self.get("menu");
+            if (S.isFunction(m)) {
+                if (init) {
+                    m = m.call(self);
+                    self.__set("menu", m);
+                } else {
+                    return null;
+                }
+            }
+            if (m && m.get("parent") !== self) {
+                m.__set("parent", self);
+                bindMenu(self, m);
+            }
+            return m;
+        }
+
         function _onDocClick(e) {
             var self = this,
-                menu = self.get("menu"),
+                menu = getMenu(self),
                 target = e.target,
                 el = self.get("el");
             // only hide this menu, if click outside this menu and this menu's submenus
             if (
                 !el.contains(target) &&
                     el[0] !== target &&
-                    !menu.containsElement(target)
+                    (!menu || !menu.containsElement(target))
                 ) {
-                menu.hide();
+                menu && menu.hide();
                 // submenuitem should also hide
                 self.get("parent").set("highlightedItem", null);
             }
@@ -1080,54 +1143,9 @@ KISSY.add(
         var SubMenu = UIBase.create(MenuItem, [Component.DecorateChild], {
 
                 _onParentHide:function () {
-                    this.get("menu") && this.get("menu").hide();
+                    var menu = getMenu(this);
+                    menu && menu.hide();
                 },
-
-                bindUI:function () {
-                    /**
-                     * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
-                     */
-                    var self = this,
-                        parentMenu = self.get("parent"),
-                        menu = this.get("menu");
-
-                    //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
-                    if (parentMenu) {
-
-                        parentMenu.on("hide", self._onParentHide, self);
-
-                        // 子菜单选中后也要通知父级菜单
-                        // 不能使用 afterSelectedItemChange ，多个 menu 嵌套，可能有缓存
-                        // 单个 menu 来看可能 selectedItem没有变化
-                        menu.on("click", function (ev) {
-                            parentMenu.fire("click", {
-                                target:ev.target
-                            });
-                        });
-
-                        // if not bind doc click for parent menu
-                        // if already bind, then if parent menu hide, menu will hide too
-                        if (!parentMenu.__bindDocClickToHide) {
-                            Event.on(doc, "click", _onDocClick, self);
-                            menu.__bindDocClickToHide = 1;
-                        }
-
-                        // 通知父级菜单
-                        menu.on("afterActiveItemChange", function (ev) {
-                            parentMenu.set("activeItem", ev.newVal);
-                        });
-                    }
-                    // 访问子菜单，当前 submenu 不隐藏 menu
-                    // leave submenuitem -> enter menuitem -> menu item highlight ->
-                    // -> menu highlight -> onChildHighlight_ ->
-
-                    // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
-                    // 这里的 onChildHighlight_ 比 afterHighlightedItemChange 先执行
-                    // 保险点用 beforeHighlightedItemChange
-                    menu.on("beforeHighlightedItemChange", self.onChildHighlight_, self);
-                },
-
-
                 /**
                  * @inheritDoc
                  * Sets a timer to show the submenu
@@ -1139,26 +1157,28 @@ KISSY.add(
                     }
                     self.clearTimers();
                     self.showTimer_ = S.later(self.showMenu,
-                        this.get("menuDelay"), false, self);
+                        self.get("menuDelay"), false, self);
                 },
 
                 showMenu:function () {
-                    var self = this;
-                    var menu = self.get("menu");
-                    menu.set("align", S.mix({
-                        node:self.get("el"),
-                        points:['tr', 'tl']
-                    }, self.get("menuAlign")));
-                    menu.render();
-                    /**
-                     * If activation of your menuitem produces a popup menu,
-                     then the menuitem should have aria-haspopup set to the ID of the corresponding menu
-                     to allow the assistive technology to follow the menu hierarchy
-                     and assist the user in determining context during menu navigation.
-                     */
-                    self.get("el").attr("aria-haspopup",
-                        menu.get("el").attr("id"));
-                    menu.show();
+                    var self = this,
+                        menu = getMenu(self, 1);
+                    if (menu) {
+                        menu.set("align", S.mix({
+                            node:self.get("el"),
+                            points:['tr', 'tl']
+                        }, self.get("menuAlign")));
+                        menu.render();
+                        /**
+                         * If activation of your menuitem produces a popup menu,
+                         then the menuitem should have aria-haspopup set to the ID of the corresponding menu
+                         to allow the assistive technology to follow the menu hierarchy
+                         and assist the user in determining context during menu navigation.
+                         */
+                        self.get("el").attr("aria-haspopup",
+                            menu.get("el").attr("id"));
+                        menu.show();
+                    }
                 },
 
 
@@ -1186,17 +1206,15 @@ KISSY.add(
                  */
                 onChildHighlight_:function (e) {
                     if (e.newVal) {
-                        if (this.get("menu").get("parent") == this) {
-                            this.clearTimers();
-                            // superclass(menuitem)._handleMouseLeave 已经把自己 highlight 去掉了
-                            // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
-                            this.get("parent").set("highlightedItem", this);
-                        }
+                        this.clearTimers();
+                        // superclass(menuitem)._handleMouseLeave 已经把自己 highlight 去掉了
+                        // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
+                        this.get("parent").set("highlightedItem", this);
                     }
                 },
 
                 hideMenu:function () {
-                    var menu = this.get("menu");
+                    var menu = getMenu(this);
                     menu && menu.hide();
                 },
 
@@ -1218,7 +1236,7 @@ KISSY.add(
                  */
                 _handleKeydown:function (e) {
                     var self = this,
-                        menu = self.get("menu"),
+                        menu = getMenu(self),
                         hasKeyboardControl_ = menu && menu.get("visible"),
                         keyCode = e.keyCode;
 
@@ -1226,9 +1244,12 @@ KISSY.add(
                         // right
                         if (keyCode == KeyCodes.RIGHT) {
                             self.showMenu();
-                            var menuChildren = menu.get("children");
-                            if (menuChildren[0]) {
-                                menu.set("highlightedItem", menuChildren[0]);
+                            menu = getMenu(self);
+                            if (menu) {
+                                var menuChildren = menu.get("children");
+                                if (menuChildren[0]) {
+                                    menu.set("highlightedItem", menuChildren[0]);
+                                }
                             }
                         }
                         // enter as click
@@ -1272,7 +1293,7 @@ KISSY.add(
                 },
 
                 containsElement:function (element) {
-                    var menu = this.get("menu");
+                    var menu = getMenu(this);
                     return menu && menu.containsElement(element);
                 },
 
@@ -1292,7 +1313,7 @@ KISSY.add(
                 destructor:function () {
                     var self = this,
                         parentMenu = self.get("parent"),
-                        menu = this.get("menu");
+                        menu = getMenu(self);
 
                     self.clearTimers();
 
@@ -1302,7 +1323,7 @@ KISSY.add(
                     if (parentMenu) {
                         parentMenu.detach("hide", self._onParentHide, self);
                     }
-                    if (!self.get("externalSubMenu") && menu) {
+                    if (menu && !self.get("externalSubMenu")) {
                         menu.destroy();
                     }
                 }
@@ -1327,9 +1348,6 @@ KISSY.add(
                     },
                     menuAlign:{},
                     menu:{
-                        setter:function (m) {
-                            m.set("parent", this);
-                        }
                     },
                     decorateChildCls:{
                         value:"popupmenu"

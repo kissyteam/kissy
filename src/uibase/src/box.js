@@ -1,6 +1,6 @@
 /**
  * @fileOverview UIBase.Box
- * @author 承玉<yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add('uibase/box', function () {
 
@@ -18,8 +18,7 @@ KISSY.add('uibase/box', function () {
      */
     {
         html:{
-            view:true,
-            sync:false
+            view:true
         },
         // 宽度
         width:{
@@ -94,10 +93,8 @@ KISSY.add('uibase/box', function () {
     {
 
         _uiSetVisible:function (isVisible) {
-            var self = this;
-            self.fire(isVisible ? "show" : "hide");
+            this.fire(isVisible ? "show" : "hide");
         },
-
 
         /**
          * 显示 Overlay

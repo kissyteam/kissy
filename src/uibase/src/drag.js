@@ -1,6 +1,6 @@
 /**
  * @fileOverview drag extension for position
- * @author 承玉<yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add("uibase/drag", function(S) {
 

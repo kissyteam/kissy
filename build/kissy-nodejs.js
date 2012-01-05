@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 5 13:40
+build time: Jan 5 15:31
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -296,7 +296,7 @@ build time: Jan 5 13:40
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120105134050',
+            buildTime:'20120105153142',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3528,7 +3528,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 5 13:40
+build time: Jan 5 15:31
 */
 /**
  * @fileOverview   dom-attr
@@ -5158,7 +5158,7 @@ KISSY.add("dom", function (S, DOM) {
  * @fileOverview   dom-insertion
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add('dom/insertion', function(S, UA, DOM) {
+KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     var PARENT_NODE = 'parentNode',
         rformEls = /^(?:button|input|object|select|textarea)$/i,
@@ -5206,7 +5206,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
 
     // extract script nodes and execute alone later
     function filterScripts(nodes, scripts) {
-        var ret = [],i,el,nodeName;
+        var ret = [], i, el, nodeName;
         for (i = 0; nodes[i]; i++) {
             el = nodes[i];
             nodeName = el.nodeName.toLowerCase();
@@ -5234,7 +5234,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
                             tmp.push(s);
                         }
                     }
-                    nodes.splice.apply(nodes, [i + 1,0].concat(tmp));
+                    nodes.splice.apply(nodes, [i + 1, 0].concat(tmp));
                 }
                 ret.push(el);
             }
@@ -5256,7 +5256,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
 
     // fragment is easier than nodelist
     function insertion(newNodes, refNodes, fn, scripts) {
-        newNodes = DOM.query(newNodes);
+        newNodes = S.makeArray(newNodes);
 
         if (scripts) {
             scripts = [];
@@ -5286,6 +5286,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
         //fragment 一旦插入里面就空了，先复制下
         if (refNodesLength > 1) {
             clonedNode = DOM.clone(newNode, true);
+            refNodes = S.makeArray(refNodes)
         }
         for (var i = 0; i < refNodesLength; i++) {
             var refNode = refNodes[i];
@@ -5306,8 +5307,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
         /**
          * Inserts the new node as the previous sibling of the reference node.
          */
-        insertBefore: function(newNodes, refNodes, loadScripts) {
-            insertion(newNodes, refNodes, function(newNode, refNode) {
+        insertBefore:function (newNodes, refNodes, loadScripts) {
+            insertion(newNodes, refNodes, function (newNode, refNode) {
                 if (refNode[PARENT_NODE]) {
                     refNode[PARENT_NODE].insertBefore(newNode, refNode);
                 }
@@ -5317,8 +5318,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
         /**
          * Inserts the new node as the next sibling of the reference node.
          */
-        insertAfter: function(newNodes, refNodes, loadScripts) {
-            insertion(newNodes, refNodes, function(newNode, refNode) {
+        insertAfter:function (newNodes, refNodes, loadScripts) {
+            insertion(newNodes, refNodes, function (newNode, refNode) {
                 if (refNode[PARENT_NODE]) {
                     refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
                 }
@@ -5328,8 +5329,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
         /**
          * Inserts the new node as the last child.
          */
-        appendTo: function(newNodes, parents, loadScripts) {
-            insertion(newNodes, parents, function(newNode, parent) {
+        appendTo:function (newNodes, parents, loadScripts) {
+            insertion(newNodes, parents, function (newNode, parent) {
                 parent.appendChild(newNode);
             }, loadScripts);
         },
@@ -5337,8 +5338,8 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
         /**
          * Inserts the new node as the first child.
          */
-        prependTo:function(newNodes, parents, loadScripts) {
-            insertion(newNodes, parents, function(newNode, parent) {
+        prependTo:function (newNodes, parents, loadScripts) {
+            insertion(newNodes, parents, function (newNode, parent) {
                 parent.insertBefore(newNode, parent.firstChild);
             }, loadScripts);
         }
@@ -5354,7 +5355,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
     }
     return DOM;
 }, {
-    requires:["ua","./create"]
+    requires:["ua", "./create"]
 });
 
 /**
@@ -5817,13 +5818,18 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         }
         // 常见的单个元素
         // DOM.query(document.getElementById("xx"))
-        else if (simpleContext && (selector.nodeType || selector.setTimeout)) {
+        else if (simpleContext &&
+            (selector.nodeType || selector.setTimeout || S.isFunction(selector))) {
             ret = [selector];
         }
         // 常见的数组
         // var x=DOM.query(".l");DOM.css(x,"color","red");
         else if (simpleContext && isArray(selector)) {
             ret = selector;
+        }
+        // KISSY NodeList or with length
+        else if (simpleContext && "length" in selector) {
+            return selector;
         }
         if (!ret) {
             ret = [];

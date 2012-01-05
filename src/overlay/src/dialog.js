@@ -1,6 +1,6 @@
 /**
  * @fileOverview KISSY.Dialog
- * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
 
@@ -47,7 +47,7 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
 });
 
 /**
- * 2010-11-10 承玉<yiminghe@gmail.com>重构，使用扩展类
+ * 2010-11-10 yiminghe@gmail.com重构，使用扩展类
  */
 
 

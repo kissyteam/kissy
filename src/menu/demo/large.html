@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Menu Demo</title>
+<link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../assets/menu.css" rel="stylesheet"/>
+<link href="../assets/menuitem.css" rel="stylesheet"/>
+<link href="../assets/submenu.css" rel="stylesheet"/>
+<style>
+    .goog-menuitem-delete {
+        color: #000000;
+        left: auto;
+        padding-right: 6px;
+        position: absolute;
+        right: 0;
+        text-align: right;
+        border: 1px solid red;
+        margin-right: 5px;
+        padding: 0 5px;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="describe">large menu</h1>
+
+<div id="menuitem_container" style="width:200px;position:relative;height:150px;">
+
+</div>
+<script src="../../../build/kissy.js"></script>
+<script>
+
+    KISSY.Config.tag = Math.random();
+    KISSY.use("node,menu",
+            function (S, Node, Menu) {
+                var start = S.now();
+                var menu = new Menu({
+                    prefixCls:"goog-",
+                    render:"#menuitem_container"
+                });
+
+
+                for (var i = 0; i < 10; i++) {
+                    (function (i) {
+                        menu.addChild(new Menu.SubMenu({
+                            prefixCls:"goog-",
+                            content:"submenu-" + i,
+                            menu:function () {
+                                var start = S.now();
+                                var sb = new Menu.PopupMenu({
+                                    prefixCls:"goog-"
+                                });
+                                for (var j = 0; j < 10; j++) {
+                                    sb.addChild(new Menu.Item({
+                                        prefixCls:"goog-",
+                                        content:"submenu-" + i + "-" + j
+                                    }));
+                                }
+                                S.log(i + " create ok :" + (S.now() - start));
+                                return sb;
+                            }
+                        }));
+                    })(i);
+                }
+
+
+                menu.render();
+
+                S.log("render ok :" + (S.now() - start));
+
+                menu.on("click", function (ev) {
+                    S.log("selected : " + ev.target.get("content"));
+                });
+
+
+            });
+</script>
+</body>
+</html>

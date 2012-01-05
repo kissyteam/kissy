@@ -1,6 +1,6 @@
 /**
  * @fileOverview UIBase.Box
- * @author 承玉<yiminghe@gmail.com>
+ * @author yiminghe@gmail.com
  */
 KISSY.add('uibase/boxrender', function (S, Node) {
 
@@ -24,35 +24,52 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                 return $(v);
             }
         },
-        elCls:{},
-        elStyle:{},
-        width:{},
-        height:{},
+        // 构建时批量生成，不需要执行单个
+        elCls:{
+            sync:false
+        },
+        elStyle:{
+            sync:false
+        },
+        width:{
+            sync:false
+        },
+        height:{
+            sync:false
+        },
         elTagName:{
+            sync:false,
             // 生成标签名字
             value:"div"
         },
-        elAttrs:{},
-        elBefore:{},
-        render:{},
+        elAttrs:{
+            sync:false
+        },
         html:{
             sync:false
         },
-        visible:{},
-        visibleMode:{}
+        elBefore:{
+        },
+        render:{},
+        visible:{
+        },
+        visibleMode:{
+
+        }
     };
 
     BoxRender.construct = constructEl;
 
-    function constructEl(cls, style, width, height, tag, attrs) {
+    function constructEl(cls, style, width, height, tag, attrs, html) {
         style = style || {};
+        html = html || "";
 
         if (width) {
-            style.width = width;
+            style.width = typeof width == "number" ? (width + "px") : width;
         }
 
         if (height) {
-            style.height = height;
+            style.height = typeof height == "number" ? (height + "px") : height;
         }
 
         var styleStr = '';
@@ -73,7 +90,7 @@ KISSY.add('uibase/boxrender', function (S, Node) {
 
         return "<" + tag + (styleStr ? (" style='" + styleStr + "' ") : "")
             + attrStr + (cls ? (" class='" + cls + "' ") : "")
-            + "><" + "/" + tag + ">";
+            + ">" + html + "<" + "/" + tag + ">";
         //return ret;
     }
 
@@ -93,7 +110,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
      */
     {
 
-
         __renderUI:function () {
             var self = this;
             // 新建的节点才需要摆放定位
@@ -108,7 +124,7 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                     el.appendTo(render);
                 }
                 else {
-                    el.appendTo("body");
+                    el.appendTo(document.body);
                 }
             }
         },
@@ -118,7 +134,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
          * 通过 render 来重建原有的内容
          */
         __createDom:function () {
-
             var self = this,
                 el = self.get("el");
             if (!el) {
@@ -128,11 +143,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                     self.get("width"),
                     self.get("height"),
                     self.get("elTagName"),
-                    self.get("elAttrs")));
-                self.set("el", el);
-                if (self.get("html")) {
-                    el.html(self.get("html"));
-                }
+                    self.get("elAttrs"),
+                    self.get("html")));
+                self.__set("el", el);
             }
         },
 
@@ -145,7 +158,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
         },
 
         _uiSetElStyle:function (style) {
-
             this.get("el").css(style);
         },
 
@@ -154,7 +166,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
         },
 
         _uiSetHeight:function (h) {
-            //S.log("_uiSetHeight");
             var self = this;
             self.get("el").height(h);
         },
@@ -178,6 +189,7 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             self.render();
             self.set("visible", true);
         },
+
         hide:function () {
             this.set("visible", false);
         },

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 5 13:40
+build time: Jan 5 19:50
 */
 /**
  * @fileOverview   anim-node-plugin
