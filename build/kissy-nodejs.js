@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Jan 4 14:41
+build time: Jan 5 12:13
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -278,7 +278,7 @@ build time: Jan 4 14:41
          */
         version:'1.20',
 
-        buildTime:'20120104144124',
+        buildTime:'20120105121255',
 
         /**
          * Returns a new object containing all of the properties of
@@ -9490,6 +9490,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         DOM_INCLUDES_NORM_NODE_LIST = [
             "filter",
             "first",
+            "last",
             "parent",
             "closest",
             "next",

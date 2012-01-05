@@ -6382,6 +6382,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
         DOM_INCLUDES_NORM_NODE_LIST = [
             "filter",
             "first",
+            "last",
             "parent",
             "closest",
             "next",
