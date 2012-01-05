@@ -12,7 +12,7 @@ KISSY.add('imagezoom/autorender', function(S, DOM, JSON, ImageZoom) {
     ImageZoom.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');
 
-        DOM.query(hook, container).each(function(elem) {
+        S.each(DOM.query(hook, container),function(elem) {
             var type = elem.getAttribute('data-widget-type'), config;
 
             if (type === 'ImageZoom') {

@@ -162,7 +162,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             /**
              * whether any node has data
              * @param {HTMLElement[]|String} selector 选择器或节点数组
-             * @param {String} name 数据键名
+             * @param {String} [name] 数据键名
              * @returns {boolean} 节点是否有关联数据键名的值
              */
             hasData:function (selector, name) {
@@ -214,13 +214,14 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 }
                 // setter
                 else {
-                    elems.each(function (elem) {
+                    for (var i = elems.length - 1; i >= 0; i--) {
+                        elem = elems[i];
                         if (elem.nodeType) {
                             domOps.data(elem, name, data);
                         } else {
                             objectOps.data(elem, name, data);
                         }
-                    });
+                    }
                 }
                 return undefined;
             },
@@ -231,13 +232,15 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {String} [name] 数据键名，不设置时删除关联节点的所有键值对
              */
             removeData:function (selector, name) {
-                DOM.query(selector).each(function (elem) {
+                var els = DOM.query(selector), elem, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
                     if (elem.nodeType) {
                         domOps.removeData(elem, name);
                     } else {
                         objectOps.removeData(elem, name);
                     }
-                });
+                }
             }
         });
 

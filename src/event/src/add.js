@@ -172,11 +172,10 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
                     return targets;
                 }
-
-                DOM.query(targets).each(function (target) {
-                    Event.__add(true, target, type, fn, scope);
-                });
-
+                targets=DOM.query(targets);
+                for(var i=targets.length-1;i>=0;i--){
+                    Event.__add(true, targets[i], type, fn, scope);
+                }
                 return targets;
             }
         });

@@ -3,7 +3,7 @@
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
-
+    "use strict";
     var doc = document,
         docElem = doc.documentElement,
         isIE = UA['ie'],
@@ -156,13 +156,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          *  Get and set the style property on a DOM Node
          */
         style:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0];
+            var els = DOM.query(selector), elem = els[0], i;
             // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
-                    els.each(function (elem) {
-                        style(elem, k, name[k]);
-                    });
+                    for (i = els.length - 1; i >= 0; i--) {
+                        style(els[i], k, name[k]);
+                    }
                 }
                 return;
             }
@@ -173,9 +173,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
                 return ret;
             } else {
-                els.each(function (elem) {
-                    style(elem, name, val);
-                });
+                for (i = els.length - 1; i >= 0; i--) {
+                    style(els[i], name,val);
+                }
             }
         },
 
@@ -183,13 +183,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * (Gets computed style) or (sets styles) on the matches elements.
          */
         css:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0];
+            var els = DOM.query(selector), elem = els[0],i;
             // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
-                    els.each(function (elem) {
-                        style(elem, k, name[k]);
-                    });
+                    for (i = els.length - 1; i >= 0; i--) {
+                        style(els[i], k, name[k]);
+                    }
                 }
                 return;
             }
@@ -211,9 +211,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
             // setter
             else {
-                els.each(function (elem) {
-                    style(elem, name, val);
-                });
+                for (i = els.length - 1; i >= 0; i--) {
+                    style(els[i],name,val);
+                }
             }
         },
 
@@ -221,9 +221,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * Show the matched elements.
          */
         show:function (selector) {
-
-            DOM.query(selector).each(function (elem) {
-
+            var els = DOM.query(selector), elem, i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
 
                 // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
@@ -233,14 +233,16 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     DOM.data(elem, OLD_DISPLAY, old);
                     elem[STYLE][DISPLAY] = old;
                 }
-            });
+            }
         },
 
         /**
          * Hide the matched elements.
          */
         hide:function (selector) {
-            DOM.query(selector).each(function (elem) {
+            var els = DOM.query(selector), elem, i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 var style = elem[STYLE], old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {
@@ -248,20 +250,22 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     }
                     style[DISPLAY] = NONE;
                 }
-            });
+            }
         },
 
         /**
          * Display or hide the matched elements.
          */
         toggle:function (selector) {
-            DOM.query(selector).each(function (elem) {
+            var els = DOM.query(selector), elem, i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 if (DOM.css(elem, DISPLAY) === NONE) {
                     DOM.show(elem);
                 } else {
                     DOM.hide(elem);
                 }
-            });
+            }
         },
 
         /**
@@ -302,7 +306,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         },
 
         unselectable:function (selector) {
-            DOM.query(selector).each(function (elem) {
+            var _els = DOM.query(selector), elem, j;
+            for (j = _els.length - 1; j >= 0; j--) {
+                elem = _els[j];
                 if (UA['gecko']) {
                     elem[STYLE]['MozUserSelect'] = 'none';
                 }
@@ -327,7 +333,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         }
                     }
                 }
-            });
+            }
         },
         innerWidth:0,
         innerHeight:0,

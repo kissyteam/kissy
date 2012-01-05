@@ -243,7 +243,6 @@ KISSY.use("dom", function(S, DOM) {
 
             it("should set value correctly", function() {
                 // set value
-
                 DOM.val(a, 'test');
                 expect(DOM.val(a)).toBe('test');
                 DOM.removeAttr(a, 'value');

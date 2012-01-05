@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:38
+build time: Jan 5 13:40
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -296,7 +296,7 @@ build time: Jan 4 20:38
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120104203821',
+            buildTime:'20120105134050',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3528,7 +3528,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:29
+build time: Jan 5 13:40
 */
 /**
  * @fileOverview   dom-attr
@@ -3715,6 +3715,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         }
                         catch (e) {
                             // It's a real failure only if setAttribute also fails.
+                            // http://msdn.microsoft.com/en-us/library/ms536739(v=vs.85).aspx
+                            // 0 : Match sAttrName regardless of case.
                             return elem.setAttribute(name, value, 0);
                         }
                     }
@@ -3793,13 +3795,14 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 name = propFix[ name ] || name;
                 var hook = propHooks[ name ];
                 if (value !== undefined) {
-                    elems.each(function (elem) {
+                    for (var i = elems.length - 1; i >= 0; i--) {
+                        var elem = elems[i];
                         if (hook && hook.set) {
                             hook.set(elem, value, name);
                         } else {
                             elem[ name ] = value;
                         }
-                    });
+                    }
                 } else {
                     if (elems.length) {
                         return getProp(elems[0], name);
@@ -3830,15 +3833,17 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              */
             removeProp:function (selector, name) {
                 name = propFix[ name ] || name;
-                DOM.query(selector).each(function (el) {
+                var elems = DOM.query(selector);
+                for (var i = elems.length - 1; i >= 0; i--) {
+                    var el = elems[i];
                     try {
                         el[ name ] = undefined;
                         delete el[ name ];
                     } catch (e) {
-                        S.log("delete el property error : ");
-                        S.log(e);
+                        // S.log("delete el property error : ");
+                        //S.log(e);
                     }
-                });
+                }
             },
 
             /**
@@ -3942,7 +3947,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         return ret === null ? undefined : ret;
                     }
                 } else {
-                    els.each(function (el) {
+                    for (var i = els.length - 1; i >= 0; i--) {
+                        el = els[i];
                         if (nodeName(el, "form")) {
                             attrNormalizer = attrNodeHook;
                         }
@@ -3952,7 +3958,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             // convert the value to a string (all browsers do this but IE)
                             el.setAttribute(name, EMPTY + val);
                         }
-                    });
+                    }
                 }
             },
 
@@ -3962,7 +3968,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
             removeAttr:function (selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
-                DOM.query(selector).each(function (el) {
+                var els = DOM.query(selector), el, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    el = els[i];
                     if (isElementNode(el)) {
                         var propName;
                         el.removeAttribute(name);
@@ -3971,7 +3979,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             el[ propName ] = false;
                         }
                     }
-                });
+                }
             },
 
             /**
@@ -4037,8 +4045,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     return;
                 }
 
-                DOM.query(selector).each(function (elem) {
-
+                var els = DOM.query(selector), i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
                     if (elem.nodeType !== 1) {
                         return;
                     }
@@ -4052,7 +4061,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         val += "";
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return val == null ? "" : value + "";
+                            return value == null ? "" : value + "";
                         });
                     }
 
@@ -4062,7 +4071,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
                         elem.value = val;
                     }
-                });
+                }
             },
 
             /**
@@ -4086,14 +4095,16 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    DOM.query(selector).each(function (el) {
+                    var els = DOM.query(selector), i;
+                    for (i = els.length - 1; i >= 0; i--) {
+                        el = els[i];
                         if (isElementNode(el)) {
                             el[TEXT] = val;
                         }
                         else if (isTextNode(el)) {
                             el.nodeValue = val;
                         }
-                    });
+                    }
                 }
             }
         });
@@ -4532,7 +4543,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 // setter
                 else {
 
-                    var success = false;
+                    var success = false, i, elem;
                     val += "";
 
                     // faster
@@ -4541,12 +4552,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         !creatorsMap[ (val.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
 
                         try {
-                            els.each(function (elem) {
+                            for (i = els.length - 1; i >= 0; i--) {
+                                elem = els[i];
                                 if (isElementNode(elem)) {
                                     cleanData(getElementsByTagName(elem, "*"));
                                     elem.innerHTML = val;
                                 }
-                            });
+                            }
                             success = true;
                         } catch (e) {
                             // a <= "<a>"
@@ -4557,12 +4569,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                     if (!success) {
                         val = DOM.create(val, 0, el.ownerDocument, false);
-                        els.each(function (elem) {
+                        for (i = els.length - 1; i >= 0; i--) {
+                            elem = els[i];
                             if (isElementNode(elem)) {
                                 DOM.empty(elem);
                                 DOM.append(val, elem, loadScripts);
                             }
-                        });
+                        }
                     }
                     callback && callback();
                 }
@@ -4575,9 +4588,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
              * @param {Boolean} [keepData=false] 删除元素时是否保留其上的数据，用于离线操作，提高性能
              */
             remove:function (selector, keepData) {
-                DOM.query(selector).each(function (el) {
+                var el, els = DOM.query(selector), i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    el = els[i];
                     if (!keepData && isElementNode(el)) {
-                        // 清楚数据
+                        // 清理数据
                         var elChildren = getElementsByTagName(el, "*");
                         cleanData(elChildren);
                         cleanData(el);
@@ -4586,7 +4601,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     if (el.parentNode) {
                         el.parentNode.removeChild(el);
                     }
-                });
+                }
             },
 
             /**
@@ -4636,9 +4651,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             },
 
             empty:function (selector) {
-                DOM.query(selector).each(function (el) {
+                var els = DOM.query(selector), el, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    el = els[i];
                     DOM.remove(el.childNodes);
-                });
+                }
             },
 
             _nl2frag:nl2frag
@@ -5025,7 +5042,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             /**
              * whether any node has data
              * @param {HTMLElement[]|String} selector 选择器或节点数组
-             * @param {String} name 数据键名
+             * @param {String} [name] 数据键名
              * @returns {boolean} 节点是否有关联数据键名的值
              */
             hasData:function (selector, name) {
@@ -5077,13 +5094,14 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 }
                 // setter
                 else {
-                    elems.each(function (elem) {
+                    for (var i = elems.length - 1; i >= 0; i--) {
+                        elem = elems[i];
                         if (elem.nodeType) {
                             domOps.data(elem, name, data);
                         } else {
                             objectOps.data(elem, name, data);
                         }
-                    });
+                    }
                 }
                 return undefined;
             },
@@ -5094,13 +5112,15 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {String} [name] 数据键名，不设置时删除关联节点的所有键值对
              */
             removeData:function (selector, name) {
-                DOM.query(selector).each(function (elem) {
+                var els = DOM.query(selector), elem, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
                     if (elem.nodeType) {
                         domOps.removeData(elem, name);
                     } else {
                         objectOps.removeData(elem, name);
                     }
-                });
+                }
             }
         });
 
@@ -5347,7 +5367,7 @@ KISSY.add('dom/insertion', function(S, UA, DOM) {
  * @fileOverview   dom-offset
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
+KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     var win = window,
         doc = document,
@@ -5385,19 +5405,21 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *     is not in the ancestor frame chain of the element, we measure relative to
          *     the top-most window.
          */
-        offset: function(selector, val, relativeWin) {
+        offset:function (selector, val, relativeWin) {
             // getter
             if (val === undefined) {
-                var elem = DOM.get(selector),ret;
+                var elem = DOM.get(selector), ret;
                 if (elem) {
                     ret = getOffset(elem, relativeWin);
                 }
                 return ret;
             }
             // setter
-            DOM.query(selector).each(function(elem) {
+            var els = DOM.query(selector), i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 setOffset(elem, val);
-            });
+            }
         },
 
         /**
@@ -5412,7 +5434,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollIntoView: function(elem, container, top, hscroll, auto) {
+        scrollIntoView:function (elem, container, top, hscroll, auto) {
             if (!(elem = DOM.get(elem))) {
                 return;
             }
@@ -5460,11 +5482,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 };
                 // elem 相对 container 可视视窗的距离
                 diffTop = {
-                    left: elemOffset[LEFT] - winScroll[LEFT],
-                    top: elemOffset[TOP] - winScroll[TOP]
+                    left:elemOffset[LEFT] - winScroll[LEFT],
+                    top:elemOffset[TOP] - winScroll[TOP]
                 };
                 diffBottom = {
-                    left:  elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
+                    left:elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
                     top:elemOffset[TOP] + eh - (winScroll[TOP] + wh)
                 };
                 containerScroll = winScroll;
@@ -5480,15 +5502,15 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 // elem 相对 container 可视视窗的距离
                 // 注意边框 , offset 是边框到根节点
                 diffTop = {
-                    left: elemOffset[LEFT] - containerOffset[LEFT] -
+                    left:elemOffset[LEFT] - containerOffset[LEFT] -
                         (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                    top: elemOffset[TOP] - containerOffset[TOP] -
+                    top:elemOffset[TOP] - containerOffset[TOP] -
                         (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)
                 };
                 diffBottom = {
-                    left:  elemOffset[LEFT] + ew -
+                    left:elemOffset[LEFT] + ew -
                         (containerOffset[LEFT] + cw +
-                            (PARSEINT(DOM.css(container, 'borderRightWidth')) || 0)) ,
+                            (PARSEINT(DOM.css(container, 'borderRightWidth')) || 0)),
                     top:elemOffset[TOP] + eh -
                         (containerOffset[TOP] + ch +
                             (PARSEINT(DOM.css(container, 'borderBottomWidth')) || 0))
@@ -5541,10 +5563,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
     // http://www.quirksmode.org/dom/w3c_cssom.html
     // add ScrollLeft/ScrollTop getter/setter methods
-    S.each(['Left', 'Top'], function(name, i) {
+    S.each(['Left', 'Top'], function (name, i) {
         var method = SCROLL + name;
 
-        DOM[method] = function(elem, v) {
+        DOM[method] = function (elem, v) {
             if (isNumber(elem)) {
                 return arguments.callee(win, elem);
             }
@@ -5586,8 +5608,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     });
 
     // add docWidth/Height, viewportWidth/Height getter methods
-    S.each(['Width', 'Height'], function(name) {
-        DOM['doc' + name] = function(refWin) {
+    S.each(['Width', 'Height'], function (name) {
+        DOM['doc' + name] = function (refWin) {
             refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
@@ -5600,7 +5622,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 DOM[VIEWPORT + name](d));
         };
 
-        DOM[VIEWPORT + name] = function(refWin) {
+        DOM[VIEWPORT + name] = function (refWin) {
             refWin = DOM.get(refWin);
             var prop = CLIENT + name,
                 win = getWin(refWin),
@@ -5664,7 +5686,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             }
         }
 
-        return { left: x, top: y };
+        return { left:x, top:y };
     }
 
 
@@ -5678,7 +5700,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     // 获取 elem 相对 elem.ownerDocument 的坐标
     function getOffset(el, relativeWin) {
-        var position = {left:0,top:0};
+        var position = {left:0, top:0};
 
         // Iterate up the ancestor frame chain, keeping track of the current window
         // and the current element in that window.
@@ -5719,7 +5741,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["./base","ua"]
+    requires:["./base", "ua"]
 });
 
 /**
@@ -6518,7 +6540,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
-
+    "use strict";
     var doc = document,
         docElem = doc.documentElement,
         isIE = UA['ie'],
@@ -6671,13 +6693,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          *  Get and set the style property on a DOM Node
          */
         style:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0];
+            var els = DOM.query(selector), elem = els[0], i;
             // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
-                    els.each(function (elem) {
-                        style(elem, k, name[k]);
-                    });
+                    for (i = els.length - 1; i >= 0; i--) {
+                        style(els[i], k, name[k]);
+                    }
                 }
                 return;
             }
@@ -6688,9 +6710,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
                 return ret;
             } else {
-                els.each(function (elem) {
-                    style(elem, name, val);
-                });
+                for (i = els.length - 1; i >= 0; i--) {
+                    style(els[i], name,val);
+                }
             }
         },
 
@@ -6698,13 +6720,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * (Gets computed style) or (sets styles) on the matches elements.
          */
         css:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0];
+            var els = DOM.query(selector), elem = els[0],i;
             // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
-                    els.each(function (elem) {
-                        style(elem, k, name[k]);
-                    });
+                    for (i = els.length - 1; i >= 0; i--) {
+                        style(els[i], k, name[k]);
+                    }
                 }
                 return;
             }
@@ -6726,9 +6748,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
             // setter
             else {
-                els.each(function (elem) {
-                    style(elem, name, val);
-                });
+                for (i = els.length - 1; i >= 0; i--) {
+                    style(els[i],name,val);
+                }
             }
         },
 
@@ -6736,9 +6758,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * Show the matched elements.
          */
         show:function (selector) {
-
-            DOM.query(selector).each(function (elem) {
-
+            var els = DOM.query(selector), elem, i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
 
                 // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
@@ -6748,14 +6770,16 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     DOM.data(elem, OLD_DISPLAY, old);
                     elem[STYLE][DISPLAY] = old;
                 }
-            });
+            }
         },
 
         /**
          * Hide the matched elements.
          */
         hide:function (selector) {
-            DOM.query(selector).each(function (elem) {
+            var els = DOM.query(selector), elem, i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 var style = elem[STYLE], old = style[DISPLAY];
                 if (old !== NONE) {
                     if (old) {
@@ -6763,20 +6787,22 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     }
                     style[DISPLAY] = NONE;
                 }
-            });
+            }
         },
 
         /**
          * Display or hide the matched elements.
          */
         toggle:function (selector) {
-            DOM.query(selector).each(function (elem) {
+            var els = DOM.query(selector), elem, i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 if (DOM.css(elem, DISPLAY) === NONE) {
                     DOM.show(elem);
                 } else {
                     DOM.hide(elem);
                 }
-            });
+            }
         },
 
         /**
@@ -6817,7 +6843,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         },
 
         unselectable:function (selector) {
-            DOM.query(selector).each(function (elem) {
+            var _els = DOM.query(selector), elem, j;
+            for (j = _els.length - 1; j >= 0; j--) {
+                elem = _els[j];
                 if (UA['gecko']) {
                     elem[STYLE]['MozUserSelect'] = 'none';
                 }
@@ -6842,7 +6870,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         }
                     }
                 }
-            });
+            }
         },
         innerWidth:0,
         innerHeight:0,
@@ -7352,7 +7380,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:38
+build time: Jan 5 13:40
 */
 /**
  * @fileOverview responsible for registering event
@@ -7528,11 +7556,10 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
                     return targets;
                 }
-
-                DOM.query(targets).each(function (target) {
-                    Event.__add(true, target, type, fn, scope);
-                });
-
+                targets=DOM.query(targets);
+                for(var i=targets.length-1;i>=0;i--){
+                    Event.__add(true, targets[i], type, fn, scope);
+                }
                 return targets;
             }
         });
@@ -7629,12 +7656,13 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 _ks_groups:_ks_groups
             });
 
-            DOM.query(targets).each(function (target) {
-                r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
+            targets = DOM.query(targets);
+            for (var i = targets.length - 1; i >= 0; i--) {
+                r = fireDOMEvent(targets[i], eventType, eventData, onlyHandlers);
                 if (ret !== false) {
                     ret = r;
                 }
-            });
+            }
             return ret;
         },
 
@@ -7829,7 +7857,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     }
                 } else {
                     Event.remove(el, "beforeactivate", beforeActivate);
-                    DOM.query("textarea,input,select", el).each(function (fel) {
+                    S.each(DOM.query("textarea,input,select", el),function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
                             Event.remove(fel, "change", {fn:changeHandler, last:1});
@@ -9091,10 +9119,10 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 return targets;
             }
 
-            DOM.query(targets).each(function (target) {
-                Event.__remove(true, target, type, fn, scope);
-            });
-
+            targets = DOM.query(targets);
+            for (var i = targets.length - 1; i >= 0; i--) {
+                Event.__remove(true, targets[i], type, fn, scope);
+            }
             return targets;
 
         }
@@ -9134,7 +9162,7 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
                     return false;
                 }
                 Event.remove(el, "click keypress", detector);
-                DOM.query("form", el).each(function (form) {
+                S.each(DOM.query("form", el),function (form) {
                     if (form.__submit__fix) {
                         form.__submit__fix = 0;
                         Event.remove(form, "submit", {
@@ -13668,9 +13696,9 @@ KISSY.add("anim/queue", function(S, DOM) {
     requires:['dom']
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 5 13:40
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -13822,6 +13850,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
         DOM_INCLUDES_NORM_NODE_LIST = [
             "filter",
             "first",
+            "last",
             "parent",
             "closest",
             "next",

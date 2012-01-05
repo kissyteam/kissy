@@ -263,13 +263,14 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 name = propFix[ name ] || name;
                 var hook = propHooks[ name ];
                 if (value !== undefined) {
-                    elems.each(function (elem) {
+                    for (var i = elems.length - 1; i >= 0; i--) {
+                        var elem = elems[i];
                         if (hook && hook.set) {
                             hook.set(elem, value, name);
                         } else {
                             elem[ name ] = value;
                         }
-                    });
+                    }
                 } else {
                     if (elems.length) {
                         return getProp(elems[0], name);
@@ -300,15 +301,17 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              */
             removeProp:function (selector, name) {
                 name = propFix[ name ] || name;
-                DOM.query(selector).each(function (el) {
+                var elems = DOM.query(selector);
+                for (var i = elems.length - 1; i >= 0; i--) {
+                    var el = elems[i];
                     try {
                         el[ name ] = undefined;
                         delete el[ name ];
                     } catch (e) {
-                        S.log("delete el property error : ");
-                        S.log(e);
+                        // S.log("delete el property error : ");
+                        //S.log(e);
                     }
-                });
+                }
             },
 
             /**
@@ -412,7 +415,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         return ret === null ? undefined : ret;
                     }
                 } else {
-                    els.each(function (el) {
+                    for (var i = els.length - 1; i >= 0; i--) {
+                        el = els[i];
                         if (nodeName(el, "form")) {
                             attrNormalizer = attrNodeHook;
                         }
@@ -422,7 +426,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             // convert the value to a string (all browsers do this but IE)
                             el.setAttribute(name, EMPTY + val);
                         }
-                    });
+                    }
                 }
             },
 
@@ -432,7 +436,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
             removeAttr:function (selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
-                DOM.query(selector).each(function (el) {
+                var els = DOM.query(selector), el, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    el = els[i];
                     if (isElementNode(el)) {
                         var propName;
                         el.removeAttribute(name);
@@ -441,7 +447,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                             el[ propName ] = false;
                         }
                     }
-                });
+                }
             },
 
             /**
@@ -507,8 +513,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     return;
                 }
 
-                DOM.query(selector).each(function (elem) {
-
+                var els = DOM.query(selector), i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
                     if (elem.nodeType !== 1) {
                         return;
                     }
@@ -522,7 +529,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         val += "";
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return val == null ? "" : value + "";
+                            return value == null ? "" : value + "";
                         });
                     }
 
@@ -532,7 +539,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
                         elem.value = val;
                     }
-                });
+                }
             },
 
             /**
@@ -556,14 +563,16 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 }
                 // setter
                 else {
-                    DOM.query(selector).each(function (el) {
+                    var els = DOM.query(selector), i;
+                    for (i = els.length - 1; i >= 0; i--) {
+                        el = els[i];
                         if (isElementNode(el)) {
                             el[TEXT] = val;
                         }
                         else if (isTextNode(el)) {
                             el.nodeValue = val;
                         }
-                    });
+                    }
                 }
             }
         });

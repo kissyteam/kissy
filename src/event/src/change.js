@@ -51,7 +51,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     }
                 } else {
                     Event.remove(el, "beforeactivate", beforeActivate);
-                    DOM.query("textarea,input,select", el).each(function (fel) {
+                    S.each(DOM.query("textarea,input,select", el),function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
                             Event.remove(fel, "change", {fn:changeHandler, last:1});

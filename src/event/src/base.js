@@ -89,12 +89,13 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 _ks_groups:_ks_groups
             });
 
-            DOM.query(targets).each(function (target) {
-                r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
+            targets = DOM.query(targets);
+            for (var i = targets.length - 1; i >= 0; i--) {
+                r = fireDOMEvent(targets[i], eventType, eventData, onlyHandlers);
                 if (ret !== false) {
                     ret = r;
                 }
-            });
+            }
             return ret;
         },
 

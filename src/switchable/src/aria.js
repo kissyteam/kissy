@@ -37,7 +37,7 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 
         setTabIndex:function(root, v) {
             root.tabIndex = v;
-            DOM.query("*", root).each(function(n) {
+            S.each(DOM.query("*", root),function(n) {
                 var nodeName = n.nodeName.toLowerCase();
                 // a 需要被禁止或者恢复
                 if (S.inArray(nodeName, default_focus)) {

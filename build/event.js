@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:38
+build time: Jan 5 13:40
 */
 /**
  * @fileOverview responsible for registering event
@@ -177,11 +177,10 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
                     return targets;
                 }
-
-                DOM.query(targets).each(function (target) {
-                    Event.__add(true, target, type, fn, scope);
-                });
-
+                targets=DOM.query(targets);
+                for(var i=targets.length-1;i>=0;i--){
+                    Event.__add(true, targets[i], type, fn, scope);
+                }
                 return targets;
             }
         });
@@ -278,12 +277,13 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 _ks_groups:_ks_groups
             });
 
-            DOM.query(targets).each(function (target) {
-                r = fireDOMEvent(target, eventType, eventData, onlyHandlers);
+            targets = DOM.query(targets);
+            for (var i = targets.length - 1; i >= 0; i--) {
+                r = fireDOMEvent(targets[i], eventType, eventData, onlyHandlers);
                 if (ret !== false) {
                     ret = r;
                 }
-            });
+            }
             return ret;
         },
 
@@ -478,7 +478,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     }
                 } else {
                     Event.remove(el, "beforeactivate", beforeActivate);
-                    DOM.query("textarea,input,select", el).each(function (fel) {
+                    S.each(DOM.query("textarea,input,select", el),function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
                             Event.remove(fel, "change", {fn:changeHandler, last:1});
@@ -1740,10 +1740,10 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 return targets;
             }
 
-            DOM.query(targets).each(function (target) {
-                Event.__remove(true, target, type, fn, scope);
-            });
-
+            targets = DOM.query(targets);
+            for (var i = targets.length - 1; i >= 0; i--) {
+                Event.__remove(true, targets[i], type, fn, scope);
+            }
             return targets;
 
         }
@@ -1783,7 +1783,7 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
                     return false;
                 }
                 Event.remove(el, "click keypress", detector);
-                DOM.query("form", el).each(function (form) {
+                S.each(DOM.query("form", el),function (form) {
                     if (form.__submit__fix) {
                         form.__submit__fix = 0;
                         Event.remove(form, "submit", {

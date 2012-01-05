@@ -13,7 +13,7 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
          */
         serialize:function(forms) {
             var elements = [],data = {};
-            DOM.query(forms).each(function(el) {
+            S.each(DOM.query(forms),function(el) {
                 // form 取其表单元素集合
                 // 其他直接取自身
                 var subs = el.elements ? S.makeArray(el.elements) : [el];

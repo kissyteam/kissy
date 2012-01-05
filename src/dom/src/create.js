@@ -143,7 +143,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 // setter
                 else {
 
-                    var success = false;
+                    var success = false, i, elem;
                     val += "";
 
                     // faster
@@ -152,12 +152,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         !creatorsMap[ (val.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
 
                         try {
-                            els.each(function (elem) {
+                            for (i = els.length - 1; i >= 0; i--) {
+                                elem = els[i];
                                 if (isElementNode(elem)) {
                                     cleanData(getElementsByTagName(elem, "*"));
                                     elem.innerHTML = val;
                                 }
-                            });
+                            }
                             success = true;
                         } catch (e) {
                             // a <= "<a>"
@@ -168,12 +169,13 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                     if (!success) {
                         val = DOM.create(val, 0, el.ownerDocument, false);
-                        els.each(function (elem) {
+                        for (i = els.length - 1; i >= 0; i--) {
+                            elem = els[i];
                             if (isElementNode(elem)) {
                                 DOM.empty(elem);
                                 DOM.append(val, elem, loadScripts);
                             }
-                        });
+                        }
                     }
                     callback && callback();
                 }
@@ -186,9 +188,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
              * @param {Boolean} [keepData=false] 删除元素时是否保留其上的数据，用于离线操作，提高性能
              */
             remove:function (selector, keepData) {
-                DOM.query(selector).each(function (el) {
+                var el, els = DOM.query(selector), i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    el = els[i];
                     if (!keepData && isElementNode(el)) {
-                        // 清楚数据
+                        // 清理数据
                         var elChildren = getElementsByTagName(el, "*");
                         cleanData(elChildren);
                         cleanData(el);
@@ -197,7 +201,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     if (el.parentNode) {
                         el.parentNode.removeChild(el);
                     }
-                });
+                }
             },
 
             /**
@@ -247,9 +251,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             },
 
             empty:function (selector) {
-                DOM.query(selector).each(function (el) {
+                var els = DOM.query(selector), el, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    el = els[i];
                     DOM.remove(el.childNodes);
-                });
+                }
             },
 
             _nl2frag:nl2frag

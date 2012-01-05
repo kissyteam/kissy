@@ -2,7 +2,7 @@
  * @fileOverview   dom-offset
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
+KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     var win = window,
         doc = document,
@@ -40,19 +40,21 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *     is not in the ancestor frame chain of the element, we measure relative to
          *     the top-most window.
          */
-        offset: function(selector, val, relativeWin) {
+        offset:function (selector, val, relativeWin) {
             // getter
             if (val === undefined) {
-                var elem = DOM.get(selector),ret;
+                var elem = DOM.get(selector), ret;
                 if (elem) {
                     ret = getOffset(elem, relativeWin);
                 }
                 return ret;
             }
             // setter
-            DOM.query(selector).each(function(elem) {
+            var els = DOM.query(selector), i;
+            for (i = els.length - 1; i >= 0; i--) {
+                elem = els[i];
                 setOffset(elem, val);
-            });
+            }
         },
 
         /**
@@ -67,7 +69,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
          *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
          *        http://yiminghe.javaeye.com/blog/390732
          */
-        scrollIntoView: function(elem, container, top, hscroll, auto) {
+        scrollIntoView:function (elem, container, top, hscroll, auto) {
             if (!(elem = DOM.get(elem))) {
                 return;
             }
@@ -115,11 +117,11 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 };
                 // elem 相对 container 可视视窗的距离
                 diffTop = {
-                    left: elemOffset[LEFT] - winScroll[LEFT],
-                    top: elemOffset[TOP] - winScroll[TOP]
+                    left:elemOffset[LEFT] - winScroll[LEFT],
+                    top:elemOffset[TOP] - winScroll[TOP]
                 };
                 diffBottom = {
-                    left:  elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
+                    left:elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
                     top:elemOffset[TOP] + eh - (winScroll[TOP] + wh)
                 };
                 containerScroll = winScroll;
@@ -135,15 +137,15 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 // elem 相对 container 可视视窗的距离
                 // 注意边框 , offset 是边框到根节点
                 diffTop = {
-                    left: elemOffset[LEFT] - containerOffset[LEFT] -
+                    left:elemOffset[LEFT] - containerOffset[LEFT] -
                         (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
-                    top: elemOffset[TOP] - containerOffset[TOP] -
+                    top:elemOffset[TOP] - containerOffset[TOP] -
                         (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)
                 };
                 diffBottom = {
-                    left:  elemOffset[LEFT] + ew -
+                    left:elemOffset[LEFT] + ew -
                         (containerOffset[LEFT] + cw +
-                            (PARSEINT(DOM.css(container, 'borderRightWidth')) || 0)) ,
+                            (PARSEINT(DOM.css(container, 'borderRightWidth')) || 0)),
                     top:elemOffset[TOP] + eh -
                         (containerOffset[TOP] + ch +
                             (PARSEINT(DOM.css(container, 'borderBottomWidth')) || 0))
@@ -196,10 +198,10 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
     // http://www.quirksmode.org/dom/w3c_cssom.html
     // add ScrollLeft/ScrollTop getter/setter methods
-    S.each(['Left', 'Top'], function(name, i) {
+    S.each(['Left', 'Top'], function (name, i) {
         var method = SCROLL + name;
 
-        DOM[method] = function(elem, v) {
+        DOM[method] = function (elem, v) {
             if (isNumber(elem)) {
                 return arguments.callee(win, elem);
             }
@@ -241,8 +243,8 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
     });
 
     // add docWidth/Height, viewportWidth/Height getter methods
-    S.each(['Width', 'Height'], function(name) {
-        DOM['doc' + name] = function(refWin) {
+    S.each(['Width', 'Height'], function (name) {
+        DOM['doc' + name] = function (refWin) {
             refWin = DOM.get(refWin);
             var w = getWin(refWin),
                 d = w[DOCUMENT];
@@ -255,7 +257,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
                 DOM[VIEWPORT + name](d));
         };
 
-        DOM[VIEWPORT + name] = function(refWin) {
+        DOM[VIEWPORT + name] = function (refWin) {
             refWin = DOM.get(refWin);
             var prop = CLIENT + name,
                 win = getWin(refWin),
@@ -319,7 +321,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             }
         }
 
-        return { left: x, top: y };
+        return { left:x, top:y };
     }
 
 
@@ -333,7 +335,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     // 获取 elem 相对 elem.ownerDocument 的坐标
     function getOffset(el, relativeWin) {
-        var position = {left:0,top:0};
+        var position = {left:0, top:0};
 
         // Iterate up the ancestor frame chain, keeping track of the current window
         // and the current element in that window.
@@ -374,7 +376,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["./base","ua"]
+    requires:["./base", "ua"]
 });
 
 /**

@@ -363,9 +363,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         /**
          * 切换操作，对外 api
          * @param index 要切换的项
-         * @param direction 方向，用于 effect
-         * @param ev 引起该操作的事件
-         * @param callback 运行完回调，和绑定 switch 事件作用一样
+         * @param [direction] 方向，用于 effect
+         * @param [ev] 引起该操作的事件
+         * @param [callback] 运行完回调，和绑定 switch 事件作用一样
          */
         switchTo: function(index, direction, ev, callback) {
             var self = this,

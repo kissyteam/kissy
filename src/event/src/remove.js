@@ -172,10 +172,10 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 return targets;
             }
 
-            DOM.query(targets).each(function (target) {
-                Event.__remove(true, target, type, fn, scope);
-            });
-
+            targets = DOM.query(targets);
+            for (var i = targets.length - 1; i >= 0; i--) {
+                Event.__remove(true, targets[i], type, fn, scope);
+            }
             return targets;
 
         }
