@@ -16,20 +16,30 @@ History:
 
 ### v1.2.0 -> v1.3.0
  - [*] 调整源码目录结构
+ - [!] 移除 core 模块，不要 use("core"),require("core"),只用你要用的
+ - [!] 去除 KISSY.XX 命名空间绑定，使用前先 use，从参数中取得模块使用
+
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加
  - [+] Event.on 支持 data 绑定
- - [*] submenuitem 支持 click 事件
+
  - [*] anim 支持 backgroundPosition
+
  - [x] dom 支持 css("backgroundPosition") in ie
- - [+] datalazyload 增加 removeElements 与 destroy 接口
+ - [!] DOM.query 支持字符串/节点数组/单个节点，不要是KISSY或原生的NodeList
+
+
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
- - [!] 移除 core 模块，不要 use("core"),require("core"),只用你要用的
+
  - [+] 左莫增强 calendar
+
  - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
- - [!] 去除 KISSY.XX 命名空间绑定，使用前先 use，从参数中取得模块使用
- - [!] DOM.query 支持字符串/节点数组/单个节点，不要是KISSY或原生的NodeList
+
+ - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
+ - [*] submenuitem 支持 click 事件
+
+ - [+] datalazyload 增加 removeElements 与 destroy 接口
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

@@ -865,7 +865,7 @@
 
                 function f() {
                     f.stop();
-                    bufferTimer = S.later(fn, ms, FALSE, context || this);
+                    bufferTimer = S.later(fn, ms, FALSE, context || this, arguments);
                 }
 
                 f.stop = function () {

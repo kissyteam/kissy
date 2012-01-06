@@ -141,8 +141,14 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 
             containsElement:function (element) {
                 var self = this;
-                if (!self.get("view") ||
-                    self.get("view").containsElement(element)) {
+
+                // 隐藏当然不包含了
+                // self.get("visible") === undefined 相当于 true
+                if (self.get("visible") === false || !self.get("view")) {
+                    return false;
+                }
+
+                if (self.get("view").containsElement(element)) {
                     return true;
                 }
 
@@ -158,6 +164,13 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
 
                 return false;
             }
+
+            /*
+             hideAll :function(){
+             // 当前高亮项设置为 null，则全部子菜单都隐藏咯
+             this.set("highlightedItem",null);
+             }
+             */
         }, {
             ATTRS:{
                 // 普通菜单可聚焦
