@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 8 00:57
+build time: Jan 6 12:01
 */
 /**
  * KISSY Calendar
@@ -1324,10 +1324,11 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
     return Calendar;
 
 }, { requires:["node","calendar/base"] });
-KISSY.add("calendar", function(S, C, Page, Time, Date) {
+KISSY.add("calendar", function (S, C, Page, Time, Date) {
     S.Calendar = C;
     S.Date = Date;
+    C.Date = Date;
     return C;
 }, {
-    requires:["calendar/base","calendar/page","calendar/time","calendar/date"]
+    requires:["calendar/base", "calendar/page", "calendar/time", "calendar/date"]
 });
