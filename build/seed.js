@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 5 15:31
+build time: Jan 6 16:08
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Jan 5 15:31
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120105153142',
+            buildTime:'20120106160839',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1215,7 +1215,7 @@ build time: Jan 5 15:31
 
                 function f() {
                     f.stop();
-                    bufferTimer = S.later(fn, ms, FALSE, context || this);
+                    bufferTimer = S.later(fn, ms, FALSE, context || this, arguments);
                 }
 
                 f.stop = function () {

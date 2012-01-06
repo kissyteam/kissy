@@ -4,14 +4,30 @@
  */
 KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
+    function getMenu(self, init) {
+        var m = self.get("menu");
+        if (S.isFunction(m)) {
+            if (init) {
+                m = m.call(self);
+                self.__set("menu", m);
+            } else {
+                return null;
+            }
+        }
+        if (m && m.get("parent") !== self) {
+            m.__set("parent", self);
+            self.__bindMenu();
+        }
+        return m;
+    }
+
     function _reposition() {
         var self = this,
-            menu = self.get("menu"),
-            el = self.get("el");
+            menu = getMenu(self);
         if (menu &&
             menu.get("visible")) {
             menu.set("align", S.merge({
-                node:el
+                node:self.get("el")
             }, ALIGN, self.get("menuAlign")));
         }
     }
@@ -35,6 +51,10 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
             MenuButton =
             UIBase.create(Button, [Component.DecorateChild], {
 
+                _getMenu:function (init) {
+                    return getMenu(this, init);
+                },
+
                 initializer:function () {
                     this._reposition = S.buffer(_reposition, 50, this);
                 },
@@ -43,7 +63,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  * private
                  */
                 _hideMenu:function () {
-                    var menu = this.get("menu");
+                    var menu = getMenu(this);
                     if (menu) {
                         menu.hide();
                     }
@@ -55,7 +75,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 _showMenu:function () {
                     var self = this,
                         el = self.get("el"),
-                        menu = self.get("menu");
+                        menu = getMenu(self, 1);
                     if (menu && !menu.get("visible")) {
                         menu.set("align", S.merge({
                             node:el
@@ -79,7 +99,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  */
                 __bindMenu:function () {
                     var self = this,
-                        menu = this.get("menu");
+                        menu = getMenu(self);
                     if (menu) {
                         menu.on("afterActiveItemChange", function (ev) {
                             self.set("activeItem", ev.newVal);
@@ -100,10 +120,10 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  * @protected
                  */
                 _handleMenuClick:function (e) {
-                    this.fire("click", {
+                    var self = this;
+                    self.fire("click", {
                         target:e.target
                     });
-                    this.set("collapsed", true);
                 },
 
                 /**
@@ -118,7 +138,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  */
                 _handleKeyEventInternal:function (e) {
                     var self = this,
-                        menu = self.get("menu");
+                        menu = getMenu(self);
 
                     // space 只在 keyup 时处理
                     if (e.keyCode == KeyCodes.SPACE) {
@@ -155,24 +175,29 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  * handle click or enter key
                  */
                 _performInternal:function () {
-                    var self = this, menu = self.get("menu");
-                    if (menu) {
-                        if (menu.get("visible")) {
-                            // popup menu 监听 doc click ?
-                            self.set("collapsed", true);
-                        } else {
-                            self.set("collapsed", false);
-                        }
-                    }
+                    var self = this;
+                    self.set("collapsed", !self.get("collapsed"));
+
                 },
 
                 /**
                  * @inheritDoc
                  */
                 _handleBlur:function (e) {
-                    MenuButton.superclass._handleBlur.call(this, e);
+                    var self = this;
+                    MenuButton.superclass._handleBlur.call(self, e);
                     // such as : click the document
-                    this.set("collapsed", true);
+                    self.set("collapsed", true);
+                },
+
+                constructMenu:function () {
+                    var self = this,
+                        m = new Menu.PopupMenu(S.mix({
+                            prefixCls:self.get("prefixCls")
+                        }, self.get("menuCfg")));
+                    self.__set("menu", m);
+                    self.__bindMenu();
+                    return m;
                 },
 
                 /**
@@ -180,13 +205,10 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  * @private
                  */
                 getMenu:function () {
-                    var self = this, m = self.get("menu");
+                    var self = this,
+                        m = getMenu(self);
                     if (!m) {
-                        m = new Menu.PopupMenu(S.mix({
-                            prefixCls:this.get("prefixCls")
-                        }, self.get("menuCfg")));
-                        self.set("menu", m);
-                        self.__bindMenu();
+                        m = self._constructMenu();
                     }
                     return m;
                 },
@@ -203,24 +225,27 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     /**
                      * @type ModelControl
                      */
-                    var menu = this.get("menu");
+                    var menu = getMenu(this);
                     if (menu) {
                         menu.removeChild(c, destroy);
                     }
                 },
 
                 removeItems:function (destroy) {
-                    this.get("menu") && this.get("menu").removeChildren(destroy);
+                    var menu = getMenu(this);
+                    menu && menu.removeChildren(destroy);
                 },
 
                 getItemAt:function (index) {
-                    return this.get("menu") && this.get("menu").getChildAt(index);
+                    var menu = getMenu(this);
+                    return menu && menu.getChildAt(index);
                 },
 
                 // 禁用时关闭已显示菜单
                 _uiSetDisabled:function (v) {
-                    MenuButton.superclass._uiSetDisabled.apply(this, S.makeArray(arguments));
-                    !v && this.set("collapsed", true);
+                    var self = this;
+                    MenuButton.superclass._uiSetDisabled.apply(self, S.makeArray(arguments));
+                    !v && self.set("collapsed", true);
                 },
 
                 /**
@@ -230,20 +255,21 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     // 不能用 diaplay:none , menu 的隐藏是靠 visibility
                     // eg: menu.show(); menu.hide();
                     el.css("visibility", "hidden");
-                    var docBody = S.one(el[0].ownerDocument.body);
+                    var self = this,
+                        docBody = S.one(el[0].ownerDocument.body);
                     docBody.prepend(el);
                     var menu = new ui(S.mix({
                         srcNode:el,
                         prefixCls:cls
-                    }, this.get("menuCfg")));
-                    this.set("menu", menu);
+                    }, self.get("menuCfg")));
+                    self.set("menu", menu);
                 },
 
                 /**
                  * @private
                  */
                 destructor:function () {
-                    var self = this, menu = self.get("menu");
+                    var self = this, menu = getMenu(self);
                     $(window).detach("resize", self._reposition, self);
                     menu && menu.destroy();
                 }
@@ -262,11 +288,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     },
                     // 不关心选中元素 , 由 select 负责
                     // selectedItem
-                    menu:{
-                        setter:function (v) {
-                            v.set("parent", this);
-                        }
-                    },
+                    menu:{},
                     collapsed:{
                         value:true,
                         view:true

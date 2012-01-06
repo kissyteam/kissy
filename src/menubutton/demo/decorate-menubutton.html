@@ -21,6 +21,10 @@
         padding: 5px;
         border: 1px solid white;
     }
+
+    .goog-popupmenu {
+        position: absolute;
+    }
 </style>
 </head>
 <body>
@@ -97,8 +101,8 @@
 
 <script>
 
-    KISSY.ready(function(S) {
-        KISSY.use("menubutton,menu", function(S, MenuButton, Menu) {
+    KISSY.ready(function (S) {
+        KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
             var $ = S.all;
             //return;
             new MenuButton({

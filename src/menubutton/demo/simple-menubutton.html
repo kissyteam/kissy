@@ -84,7 +84,6 @@
 <label>禁用：<input type="checkbox" id='dis'/></label>
 <script src="../../../build/kissy.js"></script>
 <script>
-
     KISSY.Config.tag = Math.random();
 </script>
 <!--
@@ -93,10 +92,9 @@
 
 <script>
 
-    KISSY.ready(function(S) {
-        KISSY.use("menubutton,menu", function(S, MenuButton, Menu) {
+    KISSY.ready(function (S) {
+        KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
             var $ = S.all;
-
 
             var sb = new Menu.PopupMenu({
                 prefixCls:"goog-"
@@ -105,7 +103,7 @@
             sb.addChild(new Menu.Item({content:"已买到的宝贝",
                 prefixCls:"goog-"}));
             sb.addChild(new Menu.Item({content:"已卖出的宝贝",
-                prefixCls:"goog-",disabled:true}));
+                prefixCls:"goog-", disabled:true}));
 
 
             var sb2 = new Menu.PopupMenu({
@@ -128,33 +126,38 @@
                 prefixCls:"goog-"
             });
 
-            var alone = new Menu.Item({content:"我要买",prefixCls:"goog-"});
+            var alone = new Menu.Item({content:"我要买", prefixCls:"goog-"});
             var menu = new Menu.PopupMenu({
                 prefixCls:"goog-",
                 children:[b,
                     new Menu.Separator({prefixCls:"goog-"}),
                     alone,
-                    new Menu.Item({content:"我要卖",prefixCls:"goog-"})]
+                    new Menu.Item({content:"我要卖", prefixCls:"goog-"})]
             });
+
             //model and control
             //view as a parameter
             var bbbbb = new MenuButton({
                 prefixCls:"goog-",
                 content:"淘宝网",
                 describedby:"describe",
-                menu:menu,
+                menu:function () {
+                    return menu;
+                },
                 render:"#button_container"
             });
 
-            menu.on("click", function(ev) {
-                S.log("selected : " + ev.target.get("content"));
-            });
 
             bbbbb.render();
 
             var dis = $("#dis");
 
-            dis.on("click", function() {
+            bbbbb.on("click", function (ev) {
+                S.log("selected : " + ev.target.get("content"));
+                bbbbb.set("collapsed", true);
+            });
+
+            dis.on("click", function () {
                 if (dis[0].checked) {
                     bbbbb.set("disabled", true);
                 } else {

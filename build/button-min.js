@@ -1,13 +1,13 @@
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:25
+build time: Jan 6 16:06
 */
 KISSY.add("button/base",function(f,e,g,a,d){var b=e.KeyCodes;f=g.create(a.ModelControl,[g.Contentbox],{bindUI:function(){this.get("el").on("keyup",this._handleKeyEventInternal,this)},_handleKeyEventInternal:function(c){if(c.keyCode==b.ENTER&&c.type=="keydown"||c.keyCode==b.SPACE&&c.type=="keyup")return this._performInternal(c);return c.keyCode==b.SPACE},_performInternal:function(){this.fire("click")}},{ATTRS:{value:{},describedby:{view:true},tooltip:{view:true},collapseSide:{view:true}}});f.DefaultRender=
 d;a.UIStore.setUIByClass("button",{priority:a.UIStore.PRIORITY.LEVEL1,ui:f});return f},{requires:["event","uibase","component","./customrender"]});KISSY.add("button",function(f,e,g,a){e.Render=g;e.Split=a;return e},{requires:["button/base","button/customrender","button/split"]});
 KISSY.add("button/buttonrender",function(f,e,g){return e.create(g.Render,{createDom:function(){this.get("el").attr("role","button").addClass(this.getCls("inline-block button"))},_uiSetTooltip:function(a){this.get("el").attr("title",a)},_uiSetDescribedby:function(a){this.get("el").attr("aria-describedby",a)},_uiSetCollapseSide:function(a){var d=this.getCls("button-collapse-"),b=this.get("el");b.removeClass(d+"left "+d+"right");a&&b.addClass(d+a)}},{ATTRS:{describedby:{},tooltip:{},collapseSide:{}}})},
 {requires:["uibase","component"]});
-KISSY.add("button/customrender",function(f,e,g,a){return g.create(a,[g.Contentbox.Render],{createDom:function(){var d=this.get("el"),b=this.get("contentEl"),c=f.guid("ks-button-labelby");d.attr("aria-labelledby",c);b.addClass(this.getCls("button-outer-box"));d=f.makeArray(b[0].childNodes);b=(new e("<div id='"+c+"' class='"+this.getCls("button-inner-box")+"'/>")).appendTo(b);for(c=0;c<d.length;c++)b.append(d[c]);this.set("innerEl",b)},_uiSetContent:function(d){var b=this.get("innerEl");b.html("");
-d&&b.append(d)}},{innerEL:{}})},{requires:["node","uibase","./buttonrender"]});
+KISSY.add("button/customrender",function(f,e,g,a){return g.create(a,[g.Contentbox.Render],{createDom:function(){var d=this.get("el"),b=this.get("contentEl"),c=f.guid("ks-button-labelby");d.attr("aria-labelledby",c);b.addClass(this.getCls("button-outer-box"));d=f.makeArray(b[0].childNodes);b=(new e("<div id='"+c+"' class='"+this.getCls("button-inner-box")+"'/>")).appendTo(b);for(c=0;c<d.length;c++)b.append(d[c]);this.set("innerEl",b)},_uiSetContent:function(d){this.get("innerEl").html(d)}},{innerEl:{}})},
+{requires:["node","uibase","./buttonrender"]});
 KISSY.add("button/split",function(f){function e(){e.superclass.constructor.apply(this,arguments)}var g={content:function(a){a=a.target;this.set("content",a.get("content"));this.set("value",a.get("value"))},value:function(a){this.set("value",a.target.get("value"))}};e.ATTRS={first:{},second:{},eventType:{value:"click"},eventHandler:{value:"content"}};f.extend(e,f.Base,{render:function(){var a=this.get("eventType"),d=g[this.get("eventHandler")],b=this.get("first"),c=this.get("second");b.set("collapseSide",
 "right");c.set("collapseSide","left");b.render();c.render();a&&d&&c.on(a,d,b)}});return e},{requires:["base"]});

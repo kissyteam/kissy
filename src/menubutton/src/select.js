@@ -2,10 +2,12 @@
  * @fileOverview manage a list of single-select options
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, Menu, Option) {
+KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton, Menu, Option, undefined) {
 
     function getMenuChildren(self) {
-        return self.get("menu") && self.get("menu").get("children") || [];
+        // 需要初始化 menu
+        var m = self._getMenu(1);
+        return m && m.get("children") || [];
     }
 
 
@@ -14,9 +16,9 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             /**
              * @protected
              */
-            __bindMenu :function() {
+            __bindMenu:function () {
                 var self = this,
-                    menu = self.get("menu");
+                    menu = self._getMenu();
                 Select.superclass.__bindMenu.call(self);
                 if (menu) {
                     menu.on("show", self._handleMenuShow, self);
@@ -26,45 +28,44 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
              *  different from menubutton by highlighting the currently selected option
              *  on open menu.
              */
-            _handleMenuShow:function() {
-                var self = this;
-                self.get("menu").set("highlightedItem",
-                    self.get("selectedItem") || self.get("menu").getChildAt(0));
+            _handleMenuShow:function () {
+                var self = this, m = self.get("menu");
+                m.set("highlightedItem", self.get("selectedItem") || m.getChildAt(0));
             },
             /**
              * @private
              */
-            _updateCaption:function() {
+            _updateCaption:function () {
                 var self = this,
                     item = self.get("selectedItem");
                 self.set("content", item ? item.get("content") : self.get("defaultCaption"));
             },
-            _handleMenuClick:function(e) {
+            _handleMenuClick:function (e) {
                 var self = this;
                 self.set("selectedItem", e.target);
                 self.set("collapsed", true);
                 Select.superclass._handleMenuClick.call(self, e);
             },
 
-            removeItems:function() {
+            removeItems:function () {
                 var self = this;
                 Select.superclass.removeItems.apply(self, arguments);
                 self.set("selectedItem", null);
             },
-            removeItem:function(c) {
+            removeItem:function (c) {
                 var self = this;
                 Select.superclass.removeItem.apply(self, arguments);
                 if (c == self.get("selectedItem")) {
                     self.set("selectedItem", null);
                 }
             },
-            _uiSetSelectedItem:function(v, ev) {
+            _uiSetSelectedItem:function (v, ev) {
                 if (ev && ev.prevVal) {
                     ev.prevVal.set("selected", false);
                 }
                 this._updateCaption();
             },
-            _uiSetDefaultCaption:function() {
+            _uiSetDefaultCaption:function () {
                 this._updateCaption();
             }
         },
@@ -72,14 +73,14 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
             ATTRS:{
 
                 // 也是 selectedItem 的一个视图
-                value :{
-                    getter:function() {
+                value:{
+                    getter:function () {
                         var selectedItem = this.get("selectedItem");
                         return selectedItem && selectedItem.get("value");
                     },
-                    setter:function(v) {
-                        var self = this;
-                        var children = getMenuChildren(self);
+                    setter:function (v) {
+                        var self = this,
+                            children = getMenuChildren(self);
                         for (var i = 0; i < children.length; i++) {
                             var item = children[i];
                             if (item.get("value") == v) {
@@ -101,7 +102,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
 
                 // 只是 selectedItem 的一个视图，无状态
                 selectedIndex:{
-                    setter:function(index) {
+                    setter:function (index) {
                         var self = this,
                             children = getMenuChildren(self);
                         if (index < 0 || index >= children.length) {
@@ -111,7 +112,7 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
                         self.set("selectedItem", children[index]);
                     },
 
-                    getter:function() {
+                    getter:function () {
                         return S.indexOf(this.get("selectedItem"),
                             getMenuChildren(this));
                     }
@@ -124,37 +125,51 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
         }
     );
 
-    Select.decorate = function(element, cfg) {
+    Select.decorate = function (element, cfg) {
         element = S.one(element);
         cfg = cfg || {};
         cfg.elBefore = element;
-        var select = new Select(cfg),
-            name,
-            selectedItem,
+
+        var name,
+            allItems = [],
+            selectedItem = null,
             curValue = element.val(),
             options = element.all("option");
 
-        options.each(function(option) {
-            var item = new Option({
+        S.mix(cfg, {
+            menu:function () {
+                var m = this.constructMenu();
+                for (var i = 0; i < allItems.length; i++) {
+                    m.addChild(new Option(allItems[i]));
+                }
+                return m;
+            }
+        });
+
+        options.each(function (option) {
+            var item = {
                 content:option.text(),
                 prefixCls:cfg.prefixCls,
                 elCls:option.attr("class"),
                 value:option.val()
-            });
+            };
             if (curValue == option.val()) {
-                selectedItem = item;
+                selectedItem = {
+                    content:item.content,
+                    value:item.value
+                };
             }
-            select.addItem(item);
+            allItems.push(item);
         });
 
-        select.set("selectedItem", selectedItem);
+        var select = new Select(S.mix(cfg, selectedItem));
         select.render();
 
         if (name = element.attr("name")) {
             var input = new Node("<input type='hidden' name='" + name
-                + "' value='" + curValue + "'>").insertBefore(element);
+                + "' value='" + curValue + "'>").insertBefore(element, undefined);
 
-            select.on("afterSelectedItemChange", function(e) {
+            select.on("afterSelectedItemChange", function (e) {
                 if (e.newVal) {
                     input.val(e.newVal.get("value"));
                 } else {
@@ -171,10 +186,15 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
         ui:Select
     });
 
+
+    if (1 > 2) {
+        Select._uiSetDefaultCaption();
+    }
+
     return Select;
 
 }, {
-    requires:['node','uibase','component','./base','menu','./option']
+    requires:['node', 'uibase', 'component', './base', 'menu', './option']
 });
 
 /**

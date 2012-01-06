@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>large-select</title>
+<link href="../../button/assets/common.css" rel="stylesheet"/>
+<link href="../../button/assets/custombutton.css" rel="stylesheet"/>
+<link href="../assets/menubutton.css" rel="stylesheet"/>
+<link href="../../overlay/assets/cool.css" rel="stylesheet"/>
+<link href="../../menu/assets/menu.css" rel="stylesheet"/>
+<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../../menu/assets/submenu.css" rel="stylesheet"/>
+<link href="../../menu/assets/c2c-ui.css" rel="stylesheet"/>
+<style>
+    .ks-menu {
+        background: white;
+        border: 1px solid red;
+    }
+
+    li {
+        padding: 5px;
+        border: 1px solid white;
+    }
+
+    .c2c-menuitem-delete {
+        padding-left: 20px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="describe">菜单按钮性能演示</h1>
+
+<div id="holder">
+
+</div>
+
+<script src="../../../build/kissy.js"></script>
+<script>
+
+    KISSY.Config.tag = Math.random();
+</script>
+<!--
+<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
+-->
+
+<script>
+    KISSY.ready(function (S) {
+        var $ = S.all;
+        var holder = $("#holder");
+        KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
+            var start = S.now();
+            for (var i = 0; i < 50; i++) {
+                (function (i) {
+
+                    new MenuButton.Select({
+                        defaultCaption:"请选择",
+                        prefixCls:"c2c-",
+                        render:holder,
+                        menuAlign:{
+                            offset:[0, -1]
+                        },
+                        menuCfg:{
+                            width:82,
+                            height:150,
+                            elStyle:{
+                                overflow:"auto",
+                                overflowX:"hidden"
+                            }
+                        },
+                        menu:function () {
+                            var m = this.constructMenu();
+                            for (var j = 0; j < 10; j++) {
+                                m.addChild(new MenuButton.Option({
+                                    prefixCls:"c2c-",
+                                    content:"item-" + i + "-" + j,
+                                    value:i + "-" + j
+                                }));
+                            }
+                            return m;
+                        }
+                    }).render();
+                })(i);
+            }
+
+            alert(S.now() - start);
+        });
+    });
+</script>
+</body>
+</html>

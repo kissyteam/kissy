@@ -8,6 +8,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         rformEls = /^(?:button|input|object|select|textarea)$/i,
         nodeName = DOM._nodeName,
         makeArray = S.makeArray,
+        splice = [].splice,
         _isElementNode = DOM._isElementNode,
         NEXT_SIBLING = 'nextSibling';
 
@@ -78,7 +79,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                             tmp.push(s);
                         }
                     }
-                    nodes.splice.apply(nodes, [i + 1, 0].concat(tmp));
+                    splice.apply(nodes, [i + 1, 0].concat(tmp));
                 }
                 ret.push(el);
             }
@@ -100,7 +101,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     // fragment is easier than nodelist
     function insertion(newNodes, refNodes, fn, scripts) {
-        newNodes = S.makeArray(newNodes);
+        newNodes = DOM.query(newNodes);
 
         if (scripts) {
             scripts = [];
@@ -146,48 +147,52 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
     }
 
     // loadScripts default to false to prevent xss
-    S.mix(DOM, {
-
+    S.mix(DOM,
         /**
-         * Inserts the new node as the previous sibling of the reference node.
+         * @lends DOM
          */
-        insertBefore:function (newNodes, refNodes, loadScripts) {
-            insertion(newNodes, refNodes, function (newNode, refNode) {
-                if (refNode[PARENT_NODE]) {
-                    refNode[PARENT_NODE].insertBefore(newNode, refNode);
-                }
-            }, loadScripts);
-        },
+        {
 
-        /**
-         * Inserts the new node as the next sibling of the reference node.
-         */
-        insertAfter:function (newNodes, refNodes, loadScripts) {
-            insertion(newNodes, refNodes, function (newNode, refNode) {
-                if (refNode[PARENT_NODE]) {
-                    refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
-                }
-            }, loadScripts);
-        },
+            /**
+             * Inserts the new node as the previous sibling of the reference node.
+             */
+            insertBefore:function (newNodes, refNodes, loadScripts) {
+                insertion(newNodes, refNodes, function (newNode, refNode) {
+                    if (refNode[PARENT_NODE]) {
+                        refNode[PARENT_NODE].insertBefore(newNode, refNode);
+                    }
+                }, loadScripts);
+            },
 
-        /**
-         * Inserts the new node as the last child.
-         */
-        appendTo:function (newNodes, parents, loadScripts) {
-            insertion(newNodes, parents, function (newNode, parent) {
-                parent.appendChild(newNode);
-            }, loadScripts);
-        },
+            /**
+             * Inserts the new node as the next sibling of the reference node.
+             */
+            insertAfter:function (newNodes, refNodes, loadScripts) {
+                insertion(newNodes, refNodes, function (newNode, refNode) {
+                    if (refNode[PARENT_NODE]) {
+                        refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
+                    }
+                }, loadScripts);
+            },
 
-        /**
-         * Inserts the new node as the first child.
-         */
-        prependTo:function (newNodes, parents, loadScripts) {
-            insertion(newNodes, parents, function (newNode, parent) {
-                parent.insertBefore(newNode, parent.firstChild);
-            }, loadScripts);
-        }
-    });
+            /**
+             * Inserts the new node as the last child.
+             */
+            appendTo:function (newNodes, parents, loadScripts) {
+                insertion(newNodes, parents, function (newNode, parent) {
+                    parent.appendChild(newNode);
+                }, loadScripts);
+            },
+
+            /**
+             * Inserts the new node as the first child.
+             */
+            prependTo:function (newNodes, parents, loadScripts) {
+                insertion(newNodes, parents, function (newNode, parent) {
+                    parent.insertBefore(newNode, parent.firstChild);
+                }, loadScripts);
+            }
+        });
     var alias = {
         "prepend":"prependTo",
         "append":"appendTo",

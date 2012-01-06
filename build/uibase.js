@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 5 21:10
+build time: Jan 6 16:55
 */
 /**
  * @fileOverview UIBase.Align
@@ -1392,12 +1392,12 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         }
     };
 
-    /**
-     * ! contentEl 只能由组件动态生成
+    /*
+     ! contentEl 只能由组件动态生成
      */
     ContentBox.HTML_PARSER = {
         content:function (el) {
-            return el.html();
+            return el[0].innerHTML;
         }
     };
 
@@ -1412,9 +1412,20 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         __createDom:function () {
             var self = this,
                 contentEl,
-                c,
+                c = self.get("content"),
                 el = self.get("el"),
+                html = "",
                 elChildren = S.makeArray(el[0].childNodes);
+
+            if (elChildren.length) {
+                html = el[0].innerHTML
+            }
+
+            // el html 和 c 相同，直接 append el的子节点
+            if (c == html) {
+                c = "";
+            }
+
             contentEl = new Node(constructEl(
                 self.get("prefixCls") + "contentbox "
                     + (self.get("contentElCls") || ""),
@@ -1423,10 +1434,10 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 undefined,
                 self.get("contentTagName"),
                 self.get("contentElAttrs"),
-                c = self.get("content"))).appendTo(el);
+                c)).appendTo(el);
             self.__set("contentEl", contentEl);
             // on content,then read from box el
-            if (!c && elChildren.length) {
+            if (!c) {
                 for (var i = 0, l = elChildren.length; i < l; i++) {
                     contentEl.append(elChildren[i]);
                 }
@@ -1436,12 +1447,15 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         _uiSetContentElCls:function (cls) {
             this.get("contentEl").addClass(cls);
         },
+
         _uiSetContentElAttrs:function (attrs) {
             this.get("contentEl").attr(attrs);
         },
+
         _uiSetContentElStyle:function (v) {
             this.get("contentEl").css(v);
         },
+
         _uiSetContent:function (c) {
             this.get("contentEl").html(c);
         }

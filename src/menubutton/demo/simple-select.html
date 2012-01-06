@@ -133,6 +133,7 @@
         }
         KISSY.use("menubutton,menu", function(S, MenuButton, Menu) {
             var select = MenuButton.Select.decorate('#decorateSelect', {
+                defaultCaption:"请选择",
                 prefixCls:"c2c-",
                 elCls:"custom-xx",
                 menuAlign:{
@@ -154,9 +155,9 @@
 
             S.log(select.get("value"));
 
-            select.set("value", 18);
+            //select.set("value", 18);
 
-            S.log(select.get("value"));
+            //S.log(select.get("value"));
 
 
             $("#nativeSelect")[0].selectedIndex = 5;

@@ -2,7 +2,7 @@
  * @fileOverview view for button , double div for pseudo-round corner
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
+KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
 
     //双层 div 模拟圆角
     var CONTENT_CLS = "button-outer-box",
@@ -15,7 +15,7 @@ KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
              *  modelcontrol 会在 create 后进行 unselectable，
              *  需要所有的节点创建工作放在 createDom 中
              */
-            createDom:function() {
+            createDom:function () {
                 var self = this,
                     el = self.get("el"),
                     contentEl = self.get("contentEl"),
@@ -39,19 +39,17 @@ KISSY.add("button/customrender", function(S, Node, UIBase, ButtonRender) {
              * @override
              * @param v
              */
-            _uiSetContent:function(v) {
-                var innerEl = this.get("innerEl");
-                innerEl.html("");
-                v && innerEl.append(v);
+            _uiSetContent:function (v) {
+                this.get("innerEl").html(v);
             }
         }, {
             /**
              * @inheritedDoc
              * content:{}
              */
-            innerEL:{}
+            innerEl:{}
         }
     );
 }, {
-    requires:['node','uibase','./buttonrender']
+    requires:['node', 'uibase', './buttonrender']
 });
