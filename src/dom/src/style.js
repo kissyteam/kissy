@@ -174,7 +174,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 return ret;
             } else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i], name,val);
+                    style(els[i], name, val);
                 }
             }
         },
@@ -183,7 +183,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * (Gets computed style) or (sets styles) on the matches elements.
          */
         css:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0],i;
+            var els = DOM.query(selector), elem = els[0], i;
             // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
@@ -212,7 +212,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             // setter
             else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i],name,val);
+                    style(els[i], name, val);
                 }
             }
         },
@@ -500,10 +500,18 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             if (val !== undefined) {
                 // ie 无效值报错
                 try {
-                    elem[STYLE][name] = val;
+                    style[name] = val;
                 } catch (e) {
                     S.log("css set error :" + e);
                 }
+                // #80 fix,font-family
+                if (val == EMPTY && style.removeAttribute) {
+                    style.removeAttribute(name);
+                }
+            }
+
+            if (!style.cssText) {
+                elem.removeAttribute('style');
             }
             return undefined;
         }

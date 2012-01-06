@@ -398,7 +398,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
 
                 if (val === undefined) {
-                    if (el) {
+                    if (el && el.nodeType === DOM.ELEMENT_NODE) {
                         // browsers index elements by id/name on forms, give priority to attributes.
                         if (nodeName(el, "form")) {
                             attrNormalizer = attrNodeHook;
@@ -417,14 +417,16 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 } else {
                     for (var i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (nodeName(el, "form")) {
-                            attrNormalizer = attrNodeHook;
-                        }
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
+                        if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                            if (nodeName(el, "form")) {
+                                attrNormalizer = attrNodeHook;
+                            }
+                            if (attrNormalizer && attrNormalizer.set) {
+                                attrNormalizer.set(el, val, name);
+                            } else {
+                                // convert the value to a string (all browsers do this but IE)
+                                el.setAttribute(name, EMPTY + val);
+                            }
                         }
                     }
                 }

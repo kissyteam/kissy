@@ -2,24 +2,24 @@
  * test cases for style sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,ua", function(S, DOM, UA) {
-    describe("style", function() {
-        beforeEach(function() {
+KISSY.use("dom,ua", function (S, DOM, UA) {
+    describe("style", function () {
+        beforeEach(function () {
             this.addMatchers({
-                toBeAlmostEqual: function(expected) {
+                toBeAlmostEqual:function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                 },
 
 
-                toBeEqual: function(expected) {
+                toBeEqual:function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
                 },
 
-                toBeExactEqual: function(expected) {
+                toBeExactEqual:function (expected) {
                     return Math.abs(parseFloat(this.actual) - parseFloat(expected)) < 1;
                 },
 
-                toBeArrayEq:function(expected) {
+                toBeArrayEq:function (expected) {
                     var actual = this.actual;
                     if (expected.length != actual.length) return false;
                     for (var i = 0; i < expected.length; i++) {
@@ -29,7 +29,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
                 }
             });
         });
-        it("css works", function() {
+        it("css works", function () {
 
             var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2px; ' +
@@ -95,9 +95,9 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
 
 
             DOM.css(elem, {
-                marginLeft: '20px',
-                opacity: '0.8',
-                border: '2px solid #ccc'
+                marginLeft:'20px',
+                opacity:'0.8',
+                border:'2px solid #ccc'
             });
             expect(DOM.css(elem, 'opacity')).toBeExactEqual('0.8');
 
@@ -124,12 +124,12 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
                 expect(test_filter.currentStyle.filter).toBe("progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = -2, OffY = -2), alpha(opacity=50)");
             }
 
-            DOM.remove([elem,test_filter]);
+            DOM.remove([elem, test_filter]);
 
         });
 
 
-        it("width/height works", function() {
+        it("width/height works", function () {
             var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
@@ -146,7 +146,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
 
 
-        it("inner/outer width/height works", function() {
+        it("inner/outer width/height works", function () {
             var elem = DOM.create('<div ' +
                 'style="' +
                 'position:absolute;' +
@@ -177,7 +177,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
 
 
-        it("show/hide works", function() {
+        it("show/hide works", function () {
             //document.domain = 'ali.com';
             DOM.addStyleSheet("div {display:none;}", "test-display-style");
 
@@ -209,7 +209,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
 
 
-        it("toggle works", function() {
+        it("toggle works", function () {
             var elem = DOM.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
@@ -231,7 +231,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
 
 
-        it("addStyleSheet works", function() {
+        it("addStyleSheet works", function () {
             var elem = DOM.create("<div class='addStyleSheet'>12</div>");
             document.body.appendChild(elem);
             DOM.addStyleSheet(".addStyleSheet {width:100px}");
@@ -240,7 +240,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
 
 
-        it("float works inline or from stylehsheet", function() {
+        it("float works inline or from stylehsheet", function () {
 
             var tag = S.guid("float");
             DOM.addStyleSheet("." + tag + " {float:left}")
@@ -256,7 +256,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
 
 
-        it("float works inline or from stylehsheet", function() {
+        it("float works inline or from stylehsheet", function () {
 
             var tag = S.guid("float");
             DOM.addStyleSheet("." + tag + " {float:left}");
@@ -280,7 +280,7 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
         });
 
 
-        it("opacity works inline or from stylesheet", function() {
+        it("opacity works inline or from stylesheet", function () {
             var tag = S.guid("opacity");
             DOM.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }");
 
@@ -310,13 +310,23 @@ KISSY.use("dom,ua", function(S, DOM, UA) {
             DOM.remove(d);
         });
 
-        it("left works for auto in", function() {
+        it("left works for auto in", function () {
             var div = DOM.create("<div style='position:absolute;'></div>");
             DOM.append(div, document.body);
             expect(DOM.css(div, "left"))
                 .toBe((div.offsetLeft - document.documentElement.clientLeft) + "px");
+            DOM.remove(div);
         });
 
+
+        it("solve #80", function () {
+            var div = DOM.create("<div></div>");
+            DOM.append(div, document.body);
+            DOM.css(div, "font-family", "宋体");
+            DOM.css(div, "font-family", "");
+            expect(div.style.cssText).toBe("");
+            div.removeAttribute("style");
+        });
 
     });
 });

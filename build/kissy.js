@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 16:08
+build time: Jan 6 20:45
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Jan 6 16:08
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120106160839',
+            buildTime:'20120106204544',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3342,7 +3342,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 16:08
+build time: Jan 6 20:45
 */
 /**
  * @fileOverview   dom-attr
@@ -3744,7 +3744,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
 
                 if (val === undefined) {
-                    if (el) {
+                    if (el && el.nodeType === DOM.ELEMENT_NODE) {
                         // browsers index elements by id/name on forms, give priority to attributes.
                         if (nodeName(el, "form")) {
                             attrNormalizer = attrNodeHook;
@@ -3763,14 +3763,16 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 } else {
                     for (var i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (nodeName(el, "form")) {
-                            attrNormalizer = attrNodeHook;
-                        }
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
+                        if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                            if (nodeName(el, "form")) {
+                                attrNormalizer = attrNodeHook;
+                            }
+                            if (attrNormalizer && attrNormalizer.set) {
+                                attrNormalizer.set(el, val, name);
+                            } else {
+                                // convert the value to a string (all browsers do this but IE)
+                                el.setAttribute(name, EMPTY + val);
+                            }
                         }
                     }
                 }
@@ -6536,7 +6538,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 return ret;
             } else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i], name,val);
+                    style(els[i], name, val);
                 }
             }
         },
@@ -6545,7 +6547,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * (Gets computed style) or (sets styles) on the matches elements.
          */
         css:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0],i;
+            var els = DOM.query(selector), elem = els[0], i;
             // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
@@ -6574,7 +6576,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             // setter
             else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i],name,val);
+                    style(els[i], name, val);
                 }
             }
         },
@@ -6862,10 +6864,18 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             if (val !== undefined) {
                 // ie 无效值报错
                 try {
-                    elem[STYLE][name] = val;
+                    style[name] = val;
                 } catch (e) {
                     S.log("css set error :" + e);
                 }
+                // #80 fix,font-family
+                if (val == EMPTY && style.removeAttribute) {
+                    style.removeAttribute(name);
+                }
+            }
+
+            if (!style.cssText) {
+                elem.removeAttribute('style');
             }
             return undefined;
         }

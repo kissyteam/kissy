@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 16:08
+build time: Jan 6 20:45
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Jan 6 16:08
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120106160839',
+            buildTime:'20120106204544',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3342,7 +3342,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 16:08
+build time: Jan 6 20:45
 */
 /**
  * @fileOverview   dom-attr
@@ -3744,7 +3744,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
 
                 if (val === undefined) {
-                    if (el) {
+                    if (el && el.nodeType === DOM.ELEMENT_NODE) {
                         // browsers index elements by id/name on forms, give priority to attributes.
                         if (nodeName(el, "form")) {
                             attrNormalizer = attrNodeHook;
@@ -3763,14 +3763,16 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 } else {
                     for (var i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (nodeName(el, "form")) {
-                            attrNormalizer = attrNodeHook;
-                        }
-                        if (attrNormalizer && attrNormalizer.set) {
-                            attrNormalizer.set(el, val, name);
-                        } else {
-                            // convert the value to a string (all browsers do this but IE)
-                            el.setAttribute(name, EMPTY + val);
+                        if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                            if (nodeName(el, "form")) {
+                                attrNormalizer = attrNodeHook;
+                            }
+                            if (attrNormalizer && attrNormalizer.set) {
+                                attrNormalizer.set(el, val, name);
+                            } else {
+                                // convert the value to a string (all browsers do this but IE)
+                                el.setAttribute(name, EMPTY + val);
+                            }
                         }
                     }
                 }
@@ -6536,7 +6538,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 return ret;
             } else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i], name,val);
+                    style(els[i], name, val);
                 }
             }
         },
@@ -6545,7 +6547,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * (Gets computed style) or (sets styles) on the matches elements.
          */
         css:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0],i;
+            var els = DOM.query(selector), elem = els[0], i;
             // supports hash
             if (S.isPlainObject(name)) {
                 for (var k in name) {
@@ -6574,7 +6576,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             // setter
             else {
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i],name,val);
+                    style(els[i], name, val);
                 }
             }
         },
@@ -6862,10 +6864,18 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             if (val !== undefined) {
                 // ie 无效值报错
                 try {
-                    elem[STYLE][name] = val;
+                    style[name] = val;
                 } catch (e) {
                     S.log("css set error :" + e);
                 }
+                // #80 fix,font-family
+                if (val == EMPTY && style.removeAttribute) {
+                    style.removeAttribute(name);
+                }
+            }
+
+            if (!style.cssText) {
+                elem.removeAttribute('style');
             }
             return undefined;
         }
@@ -19185,7 +19195,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 15:59
+build time: Jan 6 17:21
 */
 /**
  * @fileOverview UIBase.Align
@@ -20167,6 +20177,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
     function constructEl(cls, style, width, height, tag, attrs, html) {
         style = style || {};
         html = html || "";
+        if (typeof html !== "string") {
+            html = "";
+        }
 
         if (width) {
             style.width = typeof width == "number" ? (width + "px") : width;
@@ -20558,11 +20571,23 @@ KISSY.add("uibase/contentbox", function() {
  */
 KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
 
-    function ContentBox() {
+    /**
+     * @class 内层容器渲染混元类
+     * @name Render
+     * @memberOf UIBase.ContentBox
+     */
+    function ContentBoxRender() {
     }
 
-    ContentBox.ATTRS = {
-        // 内容容器节点
+    ContentBoxRender.ATTRS =
+    /**
+     * @lends UIBase.ContentBox.Render
+     */
+    {
+        /**
+         * 内容容器节点
+         * @type String|Node
+         */
         contentEl:{},
         contentElAttrs:{},
         contentElCls:{},
@@ -20570,24 +20595,27 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         contentTagName:{
             value:"div"
         },
-        //层内容
+        /**
+         * 内层内容
+         * @type String|Node
+         */
         content:{
             sync:false
         }
     };
 
-    /**
-     * ! contentEl 只能由组件动态生成
+    /*
+     ! contentEl 只能由组件动态生成
      */
-    ContentBox.HTML_PARSER = {
+    ContentBoxRender.HTML_PARSER = {
         content:function (el) {
-            return el.html();
+            return el[0].innerHTML;
         }
     };
 
     var constructEl = BoxRender.construct;
 
-    ContentBox.prototype = {
+    ContentBoxRender.prototype = {
 
         // no need ,shift create work to __createDom
         __renderUI:function () {
@@ -20596,9 +20624,20 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         __createDom:function () {
             var self = this,
                 contentEl,
-                c,
+                c = self.get("content"),
                 el = self.get("el"),
+                html = "",
                 elChildren = S.makeArray(el[0].childNodes);
+
+            if (elChildren.length) {
+                html = el[0].innerHTML
+            }
+
+            // el html 和 c 相同，直接 append el的子节点
+            if (c == html) {
+                c = "";
+            }
+
             contentEl = new Node(constructEl(
                 self.get("prefixCls") + "contentbox "
                     + (self.get("contentElCls") || ""),
@@ -20607,31 +20646,40 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 undefined,
                 self.get("contentTagName"),
                 self.get("contentElAttrs"),
-                c = self.get("content"))).appendTo(el);
+                c)).appendTo(el);
             self.__set("contentEl", contentEl);
             // on content,then read from box el
-            if (!c && elChildren.length) {
+            if (!c) {
                 for (var i = 0, l = elChildren.length; i < l; i++) {
                     contentEl.append(elChildren[i]);
                 }
+            } else if (typeof c !== 'string') {
+                contentEl.append(c);
             }
         },
 
         _uiSetContentElCls:function (cls) {
             this.get("contentEl").addClass(cls);
         },
+
         _uiSetContentElAttrs:function (attrs) {
             this.get("contentEl").attr(attrs);
         },
+
         _uiSetContentElStyle:function (v) {
             this.get("contentEl").css(v);
         },
+
         _uiSetContent:function (c) {
-            this.get("contentEl").html(c);
+            if (typeof c == "string") {
+                this.get("contentEl").html(c);
+            } else {
+                this.get("contentEl").empty().append(c);
+            }
         }
     };
 
-    return ContentBox;
+    return ContentBoxRender;
 }, {
     requires:["node", "./boxrender"]
 });/**
@@ -30438,7 +30486,7 @@ KISSY.add("button/split", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 15:51
+build time: Jan 6 17:04
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -30493,6 +30541,10 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
             MenuButton =
             UIBase.create(Button, [Component.DecorateChild], {
 
+                _getMenu:function (init) {
+                    return getMenu(this, init);
+                },
+
                 initializer:function () {
                     this._reposition = S.buffer(_reposition, 50, this);
                 },
@@ -30513,7 +30565,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                 _showMenu:function () {
                     var self = this,
                         el = self.get("el"),
-                        menu = getMenu(self);
+                        menu = getMenu(self, 1);
                     if (menu && !menu.get("visible")) {
                         menu.set("align", S.merge({
                             node:el
@@ -30562,7 +30614,6 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     self.fire("click", {
                         target:e.target
                     });
-                    self.set("collapsed", true);
                 },
 
                 /**
@@ -30614,15 +30665,9 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  * handle click or enter key
                  */
                 _performInternal:function () {
-                    var self = this, menu = getMenu(self);
-                    if (menu) {
-                        if (menu.get("visible")) {
-                            // popup menu 监听 doc click ?
-                            self.set("collapsed", true);
-                        } else {
-                            self.set("collapsed", false);
-                        }
-                    }
+                    var self = this;
+                    self.set("collapsed", !self.get("collapsed"));
+
                 },
 
                 /**
@@ -30635,7 +30680,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     self.set("collapsed", true);
                 },
 
-                _constructMenu:function () {
+                constructMenu:function () {
                     var self = this,
                         m = new Menu.PopupMenu(S.mix({
                             prefixCls:self.get("prefixCls")
@@ -30850,7 +30895,9 @@ KISSY.add("menubutton/option", function(S, UIBase, Component, Menu) {
 KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton, Menu, Option, undefined) {
 
     function getMenuChildren(self) {
-        return self.get("menu") && self.get("menu").get("children") || [];
+        // 需要初始化 menu
+        var m = self._getMenu(1);
+        return m && m.get("children") || [];
     }
 
 
@@ -30861,7 +30908,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
              */
             __bindMenu:function () {
                 var self = this,
-                    menu = self.get("menu");
+                    menu = self._getMenu();
                 Select.superclass.__bindMenu.call(self);
                 if (menu) {
                     menu.on("show", self._handleMenuShow, self);
@@ -30872,9 +30919,8 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
              *  on open menu.
              */
             _handleMenuShow:function () {
-                var self = this;
-                self.get("menu").set("highlightedItem",
-                    self.get("selectedItem") || self.get("menu").getChildAt(0));
+                var self = this, m = self.get("menu");
+                m.set("highlightedItem", self.get("selectedItem") || m.getChildAt(0));
             },
             /**
              * @private
@@ -30982,7 +31028,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
 
         S.mix(cfg, {
             menu:function () {
-                var m = this._constructMenu();
+                var m = this.constructMenu();
                 for (var i = 0; i < allItems.length; i++) {
                     m.addChild(new Option(allItems[i]));
                 }
