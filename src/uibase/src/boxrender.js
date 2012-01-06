@@ -63,6 +63,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
     function constructEl(cls, style, width, height, tag, attrs, html) {
         style = style || {};
         html = html || "";
+        if (typeof html !== "string") {
+            html = "";
+        }
 
         if (width) {
             style.width = typeof width == "number" ? (width + "px") : width;

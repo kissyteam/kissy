@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 16:55
+build time: Jan 6 17:21
 */
 /**
  * @fileOverview UIBase.Align
@@ -983,6 +983,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
     function constructEl(cls, style, width, height, tag, attrs, html) {
         style = style || {};
         html = html || "";
+        if (typeof html !== "string") {
+            html = "";
+        }
 
         if (width) {
             style.width = typeof width == "number" ? (width + "px") : width;
@@ -1374,11 +1377,23 @@ KISSY.add("uibase/contentbox", function() {
  */
 KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
 
-    function ContentBox() {
+    /**
+     * @class 内层容器渲染混元类
+     * @name Render
+     * @memberOf UIBase.ContentBox
+     */
+    function ContentBoxRender() {
     }
 
-    ContentBox.ATTRS = {
-        // 内容容器节点
+    ContentBoxRender.ATTRS =
+    /**
+     * @lends UIBase.ContentBox.Render
+     */
+    {
+        /**
+         * 内容容器节点
+         * @type String|Node
+         */
         contentEl:{},
         contentElAttrs:{},
         contentElCls:{},
@@ -1386,7 +1401,10 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         contentTagName:{
             value:"div"
         },
-        //层内容
+        /**
+         * 内层内容
+         * @type String|Node
+         */
         content:{
             sync:false
         }
@@ -1395,7 +1413,7 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
     /*
      ! contentEl 只能由组件动态生成
      */
-    ContentBox.HTML_PARSER = {
+    ContentBoxRender.HTML_PARSER = {
         content:function (el) {
             return el[0].innerHTML;
         }
@@ -1403,7 +1421,7 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
 
     var constructEl = BoxRender.construct;
 
-    ContentBox.prototype = {
+    ContentBoxRender.prototype = {
 
         // no need ,shift create work to __createDom
         __renderUI:function () {
@@ -1441,6 +1459,8 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 for (var i = 0, l = elChildren.length; i < l; i++) {
                     contentEl.append(elChildren[i]);
                 }
+            } else if (typeof c !== 'string') {
+                contentEl.append(c);
             }
         },
 
@@ -1457,11 +1477,15 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         },
 
         _uiSetContent:function (c) {
-            this.get("contentEl").html(c);
+            if (typeof c == "string") {
+                this.get("contentEl").html(c);
+            } else {
+                this.get("contentEl").empty().append(c);
+            }
         }
     };
 
-    return ContentBox;
+    return ContentBoxRender;
 }, {
     requires:["node", "./boxrender"]
 });/**
