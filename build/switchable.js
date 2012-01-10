@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 10 17:49
 */
 /**
  * @fileOverview accordion aria support
@@ -461,7 +461,7 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 
         setTabIndex:function(root, v) {
             root.tabIndex = v;
-            DOM.query("*", root).each(function(n) {
+            S.each(DOM.query("*", root),function(n) {
                 var nodeName = n.nodeName.toLowerCase();
                 // a 需要被禁止或者恢复
                 if (S.inArray(nodeName, default_focus)) {
@@ -571,13 +571,16 @@ KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
     Switchable.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');
 
-        DOM.query(hook, container).each(function(elem) {
-            var type = elem.getAttribute('data-widget-type'), config;
+        S.each(DOM.query(hook, container),function(elem) {
+            var type = elem.getAttribute('data-widget-type'),
+                config;
             if (type && ('Switchable Tabs Slide Carousel Accordion'.indexOf(type) > -1)) {
                 try {
                     config = elem.getAttribute('data-widget-config');
-                    if (config) config = config.replace(/'/g, '"');
-                    new S[type](elem, JSON.parse(config));
+                    if (config) {
+                        config = config.replace(/'/g, '"');
+                    }
+                    new Switchable[type](elem, JSON.parse(config));
                 } catch(ex) {
                     S.log('Switchable.autoRender: ' + ex, 'warn');
                 }
@@ -951,9 +954,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         /**
          * 切换操作，对外 api
          * @param index 要切换的项
-         * @param direction 方向，用于 effect
-         * @param ev 引起该操作的事件
-         * @param callback 运行完回调，和绑定 switch 事件作用一样
+         * @param [direction] 方向，用于 effect
+         * @param [ev] 引起该操作的事件
+         * @param [callback] 运行完回调，和绑定 switch 事件作用一样
          */
         switchTo: function(index, direction, ev, callback) {
             var self = this,
@@ -2315,12 +2318,13 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
 /**
  * @fileOverview switchable
  */
-KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay, autorender, Carousel, CAria, circular, countdown, effect, lazyload, Slide, SAria, Tabs, TAria) {
+KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, autoplay, autorender, Carousel, CAria, circular, countdown, effect, lazyload, Slide, SAria, Tabs, TAria) {
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
         Slide:Slide,
-        Tabs:Tabs
+        Tabs:Tabs,
+        Switchable:Switchable
     };
     S.mix(Switchable, re);
     return Switchable;

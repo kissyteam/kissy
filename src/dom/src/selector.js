@@ -35,7 +35,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
      * @param {String|Array<HTMLElement>} selector
-     * @param {String|Array<HTMLElement>} context find elements matching selector under context
+     * @param {String|Array<HTMLElement>} [context] find elements matching selector under context
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
