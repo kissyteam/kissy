@@ -61,24 +61,26 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         }
         // 不写 context，就是包装一下
         else if (simpleContext) {
-            // 常见的单个元素
+            // 1.常见的单个元素
             // DOM.query(document.getElementById("xx"))
             if (selector.nodeType || selector.setTimeout) {
                 ret = [selector];
             }
-            // KISSY NodeList 特殊点直接返回，提高性能
+            // 2.KISSY NodeList 特殊点直接返回，提高性能
             else if (selector.getDOMNodes) {
                 return selector;
             }
-            // 常见的数组
+            // 3.常见的数组
             // var x=DOM.query(".l");
             // DOM.css(x,"color","red");
             else if (isArray(selector)) {
                 ret = selector;
             }
-            // selector.item
-            // document.createElement("select").item 已经在第一步处理了
+            // 4.selector.item
             // DOM.query(document.getElementsByTagName("a"))
+            // note:
+            // document.createElement("select").item 已经在 1 处理了
+            // S.all().item 已经在 2 处理了
             else if (isNodeList(selector)) {
                 ret = S.makeArray(selector);
             } else {
