@@ -63,7 +63,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         else if (simpleContext) {
             // 常见的单个元素
             // DOM.query(document.getElementById("xx"))
-            if (selector.nodeType || selector.setTimeout || S.isFunction(selector)) {
+            if (selector.nodeType || selector.setTimeout) {
                 ret = [selector];
             }
             // KISSY NodeList 特殊点直接返回，提高性能
