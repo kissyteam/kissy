@@ -127,7 +127,7 @@
         <button id="demo2-btn">stop autoplay</button>
         <script>
             KISSY.use("event,switchable", function(S, Event, Switchable) {
-                var Slide = S.Slide;
+                var Slide = Switchable.Slide;
 
                 S.ready(function(S) {
 
@@ -279,8 +279,8 @@
         </div>
         <script>
             KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
-                var Slide = S.Slide,
-                        Easing = S.Easing;
+                var Slide = Switchable.Slide,
+                        Easing = Anim.Easing;
 
                 S.ready(function(S) {
 
@@ -387,7 +387,7 @@
 
         <script>
             KISSY.use("event,switchable", function(S, Event, Switchable) {
-                var Slide = S.Slide;
+                var Slide = Switchable.Slide;
                 S.ready(function(S) {
                     Slide('#demo3', {
                         navCls: 'yslider-stick',
@@ -431,8 +431,8 @@
             </ul>
         </div>
         <script>
-            KISSY.use("event,switchable", function(S, Event) {
-                var Slide = S.Slide;
+            KISSY.use("event,switchable", function(S, Event,Switchable) {
+                var Slide = Switchable.Slide;
                 S.ready(function(S) {
                     Slide('#demo5', {
                         contentCls: 'news-items',

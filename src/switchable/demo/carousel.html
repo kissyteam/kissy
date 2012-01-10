@@ -132,8 +132,8 @@
                 <li>&bull;</li>
             </ul>
             <script>
-                KISSY.use("event,switchable,datalazyload", function(S, Event) {
-                    var Carousel = S.Carousel;
+                KISSY.use("event,switchable,datalazyload", function(S, Event,Switchable) {
+                    var Carousel = Switchable.Carousel;
 
                     S.ready(function(S) {
                         var carousel = new Carousel('#demo4', {
@@ -364,9 +364,9 @@
         <li class="ks-active">1</li>
     </ul>
     <script>
-        KISSY.use("switchable", function(S) {
+        KISSY.use("switchable", function(S,Switchable) {
             //右侧促销区slide切换
-            var tiny_slide = new S.Carousel('#J_TinySlide', {
+            var tiny_slide = new Switchable.Carousel('#J_TinySlide', {
                 activeIndex: 0,
                 effect: 'scrollx',
                 easing: 'easeOutStrong',

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 20:45
+build time: Jan 10 14:34
 */
 /**
  * @fileOverview   dom-attr
@@ -2250,6 +2250,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             return S.require(selector);
         },
         isArray = S.isArray,
+        isString = S.isString,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
         nodeName = DOM._nodeName,
@@ -2273,17 +2274,19 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
-     * @param {String|Array} selector
-     * @param {String|Array<HTMLElement>|NodeList} context find elements matching selector under context
+     * @param {String|Array<HTMLElement>} selector
+     * @param {String|Array<HTMLElement>} context find elements matching selector under context
      * @return {Array} The array of found HTMLElement
      */
     function query(selector, context) {
         var ret,
             i,
             simpleContext,
-            isSelectorString = typeof selector === 'string',
+            isSelectorString = isString(selector),
             // optimize common usage
-            contexts = (context === undefined && (simpleContext = 1)) ? [doc] : tuneContext(context);
+            contexts = (context === undefined && (simpleContext = 1)) ?
+                [doc] :
+                tuneContext(context);
         // 常见的空
         if (!selector) {
             ret = [];
@@ -2296,21 +2299,33 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 ret = quickFindBySelectorStr(selector, contexts[0]);
             }
         }
-        // 常见的单个元素
-        // DOM.query(document.getElementById("xx"))
-        else if (simpleContext &&
-            (selector.nodeType || selector.setTimeout || S.isFunction(selector))) {
-            ret = [selector];
+        // 不写 context，就是包装一下
+        else if (simpleContext) {
+            // 常见的单个元素
+            // DOM.query(document.getElementById("xx"))
+            if (selector.nodeType || selector.setTimeout || S.isFunction(selector)) {
+                ret = [selector];
+            }
+            // KISSY NodeList 特殊点直接返回，提高性能
+            else if (selector.getDOMNodes) {
+                return selector;
+            }
+            // 常见的数组
+            // var x=DOM.query(".l");
+            // DOM.css(x,"color","red");
+            else if (isArray(selector)) {
+                ret = selector;
+            }
+            // selector.item
+            // document.createElement("select").item 已经在第一步处理了
+            // DOM.query(document.getElementsByTagName("a"))
+            else if (isNodeList(selector)) {
+                ret = S.makeArray(selector);
+            } else {
+                ret = [ selector ];
+            }
         }
-        // 常见的数组
-        // var x=DOM.query(".l");DOM.css(x,"color","red");
-        else if (simpleContext && isArray(selector)) {
-            ret = selector;
-        }
-        // KISSY NodeList or with length
-        else if (simpleContext && "length" in selector) {
-            return selector;
-        }
+
         if (!ret) {
             ret = [];
             if (selector) {
@@ -2337,7 +2352,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     function queryByContexts(selector, context) {
         var ret = [],
-            isSelectorString = typeof selector === 'string';
+            isSelectorString = isString(selector);
         if (isSelectorString && selector.match(REG_QUERY) ||
             !isSelectorString) {
             // 简单选择器自己处理
@@ -2429,13 +2444,14 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     // 最简单情况了，单个选择器部分，单个上下文
     function queryBySimple(selector, context) {
         var ret,
-            isSelectorString = typeof selector === 'string';
+            isSelectorString = isString(selector);
         if (isSelectorString) {
             ret = quickFindBySelectorStr(selector, context) || [];
         }
         // 传入的 selector 是 NodeList 或已是 Array
         else if (isArray(selector) || isNodeList(selector)) {
             // 只能包含在 context 里面
+            // filter 会转换为 nodelist 为数组
             ret = filter(selector, function (s) {
                 return testByContext(s, context);
             });
@@ -2454,7 +2470,6 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         }
         // 防止 element 节点还没添加到 document ，但是也可以获取到 query(element) => [element]
         // document 的上下文一律放行
-
         // context == doc 意味着没有提供第二个参数，到这里只是想单纯包装原生节点，则不检测
         if (context == doc) {
             return true;
@@ -2675,7 +2690,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 ret = [];
 
             // 默认仅支持最简单的 tag.cls 或 #id 形式
-            if (typeof filter === 'string' &&
+            if (isString(filter) &&
                 (filter = trim(filter)) &&
                 (match = REG_QUERY.exec(filter))) {
                 id = match[1];

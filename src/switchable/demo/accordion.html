@@ -130,8 +130,8 @@
 
             <script>
                 KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
-                    var Accordion = S.Accordion,
-                            Easing = S.Easing;
+                    var Accordion = Switchable.Accordion,
+                            Easing = Anim.Easing;
 
                     S.ready(function(S) {
                         window.accordion = Accordion('#accordion1', {
@@ -231,7 +231,7 @@
 
             <script>
                 KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
-                    S.Accordion('#accordion2', {
+                    Switchable.Accordion('#accordion2', {
                         'triggerCls': 'trigger',
                         'panelCls': 'hesper-cats-list',
                         'multiple': 'true',
