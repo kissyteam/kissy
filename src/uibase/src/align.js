@@ -2,12 +2,12 @@
  * @fileOverview UIBase.Align
  * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
-KISSY.add('uibase/align', function(S, UA, DOM, Node) {
+KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
 
-    /**
-     * inspired by closure library by Google
-     * @see http://yiminghe.iteye.com/blog/1124720
+    /*
+     inspired by closure library by Google
+     see http://yiminghe.iteye.com/blog/1124720
      */
 
     /**
@@ -134,7 +134,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             el = self.get('el'),
             p2;
 
-        offset = offset || [0,0];
+        offset = offset || [0, 0];
         xy = el.offset();
 
         // p1 是 node 上 points[0] 的 offset
@@ -144,8 +144,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         diff = [p2.left - p1.left, p2.top - p1.top];
         xy = {
-            left: xy.left - diff[0] + (+offset[0]),
-            top: xy.top - diff[1] + (+offset[1])
+            left:xy.left - diff[0] + (+offset[0]),
+            top:xy.top - diff[1] + (+offset[1])
         };
 
         return positionAtCoordinate.call(self, xy, alignCfg);
@@ -153,9 +153,9 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
 
     function positionAtCoordinate(absolutePos, alignCfg) {
-        var self = this,el = self.get('el');
+        var self = this, el = self.get('el');
         var status = {};
-        var elSize = {width:el.outerWidth(),height:el.outerHeight()},
+        var elSize = {width:el.outerWidth(), height:el.outerHeight()},
             size = S.clone(elSize);
         if (!S.isEmptyObject(alignCfg.overflow)) {
             var viewport = getVisibleRectForElement(el[0]);
@@ -240,8 +240,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
     function flip(points, reg, map) {
         var ret = [];
-        S.each(points, function(p) {
-            ret.push(p.replace(reg, function(m) {
+        S.each(points, function (p) {
+            ret.push(p.replace(reg, function (m) {
                 return map[m];
             }));
         });
@@ -253,11 +253,40 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         return offset;
     }
 
+
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Align() {
     }
 
-    Align.ATTRS = {
-        align: {
+    Align.ATTRS =
+    /**
+     * @lends UIBase.Align.prototype
+     */
+    {
+
+        /**
+         * 对齐配置
+         * @type Object
+         * @field
+         * @example
+         * <code>
+         *     {
+         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+         *        offset: [0, 0]      // 有效值为 [n, m]
+         *     }
+         * </code>
+         */
+        align:{
+            setter:function (v) {
+                var n;
+                if (n = v.node) {
+                    v.node = Node.one(n);
+                }
+            }
             // 默认不是正中，可以实现自由动画 zoom
 //            value:{
 //                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
@@ -278,12 +307,11 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             offset, w, h, x, y;
 
         if (node) {
-            node = Node.one(node);
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
         } else {
-            offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+            offset = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
             w = DOM.viewportWidth();
             h = DOM.viewportHeight();
         }
@@ -303,29 +331,32 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             x += w;
         }
 
-        return { left: x, top: y };
+        return { left:x, top:y };
     }
 
-    Align.prototype = {
-
-        _uiSetAlign: function(v) {
-            if (S.isPlainObject(v)) {
-                this.align(v.node, v.points, v.offset, v.overflow);
-            }
+    Align.prototype =
+    /**
+     * @lends UIBase.Align.prototype
+     */
+    {
+        _uiSetAlign:function (v) {
+            this.align(v.node, v.points, v.offset, v.overflow);
         },
 
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         * @function
+         * @private
          * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
          * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
          */
-        align: function(node, points, offset, overflow) {
+        align:function (node, points, offset, overflow) {
             var self = this,
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
-            offset = offset && [].concat(offset) || [0,0];
+            offset = offset && [].concat(offset) || [0, 0];
             if (overflow.failX) {
                 flag.failX = 1;
             }
@@ -367,7 +398,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             if (isFailed(status)) {
                 delete overflow.failX;
                 delete overflow.failY;
-                status = positionAtAnchor.call(self, {
+                positionAtAnchor.call(self, {
                     node:node,
                     points:points,
                     offset:offset,
@@ -378,19 +409,20 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         /**
          * 居中显示到可视区域, 一次性居中
+         * @param {undefined|String|HTMLElement|Node} node 对其元素，falsy 表示窗口可视区域
          */
-        center: function(node) {
+        center:function (node) {
             this.set('align', {
-                node: node,
-                points: ["cc", "cc"],
-                offset: [0, 0]
+                node:node,
+                points:["cc", "cc"],
+                offset:[0, 0]
             });
         }
     };
 
     return Align;
 }, {
-    requires:["ua","dom","node"]
+    requires:["ua", "dom", "node"]
 });
 /**
  *  2011-07-13 承玉 note:

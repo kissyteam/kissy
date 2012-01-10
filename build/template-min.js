@@ -1,8 +1,8 @@
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 10 19:00
 */
 KISSY.add("template",function(g){function i(b){if(!h[b]){var d=g.guid(o),e,f,c=[p,d,q,f=r(b),s];try{e=new Function(d,c.join(""))}catch(a){c[3]=j+k+t+","+a.message+j+k;e=new Function(d,c.join(""))}h[b]={name:d,o:f,parser:c.join(""),render:e}}return h[b]}var h={},n={"#":"start","/":"end"},u=RegExp("KS_TEMPL_STAT_PARAM","g"),o="KS_DATA_",j='");',k='KS_TEMPL.push("',t="KISSY.Template: Syntax Error. ",p="var KS_TEMPL=[],KS_TEMPL_STAT_PARAM=false;with(",q='||{}){try{KS_TEMPL.push("',s='");}catch(e){KS_TEMPL=["KISSY.Template: Render Error. " + e.message]}};return KS_TEMPL.join("");',
-v=function(b){return b.replace(/"/g,'\\"')},l=g.trim,r=function(b){var d,e;return v(l(b).replace(/[\r\t\n]/g," ").replace(/\\/g,"\\\\")).replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,function(f,c,a){d="";a=l(a).replace(/\\"/g,'"');if(c){e=a.indexOf(" ");a=e===-1?[a,""]:[a.substring(0,e),a.substring(e)];f=a[0];a=l(a[1]);if((f=m[f])&&n[c]){c=f[n[c]];d=String(g.isFunction(c)?c.apply(this,a.split(/\s+/)):c.replace(u,a))}}else d="KS_TEMPL.push(typeof ("+a+') ==="undefined"?"":'+a+");";return j+d+k})},m={"if":{start:"if(KS_TEMPL_STAT_PARAM){",
+v=function(b){return b.replace(/"/g,'\\"')},l=g.trim,r=function(b){var d,e;return v(l(b).replace(/[\r\t\n]/g," ").replace(/\\/g,"\\\\")).replace(/\{\{([#/]?)(?!\}\})([^}]*)\}\}/g,function(f,c,a){d="";a=l(a).replace(/\\"/g,'"');if(c){e=a.indexOf(" ");a=e===-1?[a,""]:[a.substring(0,e),a.substring(e)];f=a[0];a=l(a[1]);if((f=m[f])&&n[c]){c=f[n[c]];d=String(g.isFunction(c)?c.apply(this,a.split(/\s+/)):c.replace(u,a))}}else d="KS_TEMPL.push(typeof ("+a+') ==="undefined"?"":'+a+");";return j+d+k})},m={"if":{start:'if(typeof (KS_TEMPL_STAT_PARAM) !=="undefined" && KS_TEMPL_STAT_PARAM){',
 end:"}"},"else":{start:"}else{"},elseif:{start:"}else if(KS_TEMPL_STAT_PARAM){"},each:{start:function(b,d,e,f){var c="_ks_value",a="_ks_index";if(d==="as"&&e){c=e||c;a=f||a}return"KISSY.each("+b+", function("+c+", "+a+"){"},end:"});"},"!":{start:"/*KS_TEMPL_STAT_PARAM*/"}};g.mix(i,{log:function(b){if(!(b in h)){i(b);this.log(b)}},addStatement:function(b,d){if(g.isString(b))m[b]=d;else g.mix(m,b)}});return i});

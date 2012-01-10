@@ -240,344 +240,359 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
             }
         }
 
-        S.mix(DOM, {
-
+        S.mix(DOM,
             /**
-             * 自定义属性不推荐使用，使用 .data
-             * @param selector
-             * @param name
-             * @param [value]
+             * @lends DOM
              */
-            prop:function (selector, name, value) {
-                var elems = DOM.query(selector);
+            {
 
-                // supports hash
-                if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.prop(elems, k, name[k]);
-                    }
-                    return;
-                }
-
-                // Try to normalize/fix the name
-                name = propFix[ name ] || name;
-                var hook = propHooks[ name ];
-                if (value !== undefined) {
-                    for (var i = elems.length - 1; i >= 0; i--) {
-                        var elem = elems[i];
-                        if (hook && hook.set) {
-                            hook.set(elem, value, name);
-                        } else {
-                            elem[ name ] = value;
-                        }
-                    }
-                } else {
-                    if (elems.length) {
-                        return getProp(elems[0], name);
-                    }
-                }
-            },
-
-            /**
-             * 是否其中一个元素包含指定 property
-             * @param selector
-             * @param name
-             */
-            hasProp:function (selector, name) {
-                var elems = DOM.query(selector);
-                for (var i = 0; i < elems.length; i++) {
-                    var el = elems[i];
-                    if (getProp(el, name) !== undefined) {
-                        return true;
-                    }
-                }
-                return false;
-            },
-
-            /**
-             * 不推荐使用，使用 .data .removeData
-             * @param selector
-             * @param name
-             */
-            removeProp:function (selector, name) {
-                name = propFix[ name ] || name;
-                var elems = DOM.query(selector);
-                for (var i = elems.length - 1; i >= 0; i--) {
-                    var el = elems[i];
-                    try {
-                        el[ name ] = undefined;
-                        delete el[ name ];
-                    } catch (e) {
-                        // S.log("delete el property error : ");
-                        //S.log(e);
-                    }
-                }
-            },
-
-            /**
-             * Gets the value of an attribute for the first element in the set of matched elements or
-             * Sets an attribute for the set of matched elements.
-             */
-            attr:function (selector, name, val, pass) {
-                /*
-                 Hazards From Caja Note:
-
-                 - In IE[67], el.setAttribute doesn't work for attributes like
-                 'class' or 'for'.  IE[67] expects you to set 'className' or
-                 'htmlFor'.  Caja use setAttributeNode solves this problem.
-
-                 - In IE[67], <input> elements can shadow attributes.  If el is a
-                 form that contains an <input> named x, then el.setAttribute(x, y)
-                 will set x's value rather than setting el's attribute.  Using
-                 setAttributeNode solves this problem.
-
-                 - In IE[67], the style attribute can only be modified by setting
-                 el.style.cssText.  Neither setAttribute nor setAttributeNode will
-                 work.  el.style.cssText isn't bullet-proof, since it can be
-                 shadowed by <input> elements.
-
-                 - In IE[67], you can never change the type of an <button> element.
-                 setAttribute('type') silently fails, but setAttributeNode
-                 throws an exception.  caja : the silent failure. KISSY throws error.
-
-                 - In IE[67], you can never change the type of an <input> element.
-                 setAttribute('type') throws an exception.  We want the exception.
-
-                 - In IE[67], setAttribute is case-sensitive, unless you pass 0 as a
-                 3rd argument.  setAttributeNode is case-insensitive.
-
-                 - Trying to set an invalid name like ":" is supposed to throw an
-                 error.  In IE[678] and Opera 10, it fails without an error.
+                /**
+                 * 读取第一个元素/设置全部元素 property，自定义属性不推荐使用，使用 .data
+                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param {String} name 属性名
+                 * @param [value] 属性值
                  */
+                prop:function (selector, name, value) {
+                    var elems = DOM.query(selector);
 
-                var els = DOM.query(selector);
-
-                // supports hash
-                if (S.isPlainObject(name)) {
-                    pass = val;
-                    for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.attr(els, k, name[k], pass);
+                    // supports hash
+                    if (S.isPlainObject(name)) {
+                        for (var k in name) {
+                            DOM.prop(elems, k, name[k]);
                         }
+                        return;
                     }
-                    return;
-                }
 
-                if (!(name = S.trim(name))) {
-                    return;
-                }
-
-                // attr functions
-                if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
-                }
-
-                // scrollLeft
-                name = name.toLowerCase();
-
-                if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
-                }
-
-                // custom attrs
-                name = attrFix[name] || name;
-
-                var attrNormalizer,
-                    el = els[0],
-                    ret;
-
-                if (rboolean.test(name)) {
-                    attrNormalizer = boolHook;
-                }
-                // only old ie?
-                else if (rinvalidChar.test(name)) {
-                    attrNormalizer = attrNodeHook;
-                } else {
-                    attrNormalizer = attrHooks[name];
-                }
-
-
-                if (val === undefined) {
-                    if (el && el.nodeType === DOM.ELEMENT_NODE) {
-                        // browsers index elements by id/name on forms, give priority to attributes.
-                        if (nodeName(el, "form")) {
-                            attrNormalizer = attrNodeHook;
-                        }
-                        if (attrNormalizer && attrNormalizer.get) {
-                            return attrNormalizer.get(el, name);
-                        }
-
-                        ret = el.getAttribute(name);
-
-                        // standard browser non-existing attribute return null
-                        // ie<8 will return undefined , because it return property
-                        // so norm to undefined
-                        return ret === null ? undefined : ret;
-                    }
-                } else {
-                    for (var i = els.length - 1; i >= 0; i--) {
-                        el = els[i];
-                        if (el && el.nodeType === DOM.ELEMENT_NODE) {
-                            if (nodeName(el, "form")) {
-                                attrNormalizer = attrNodeHook;
-                            }
-                            if (attrNormalizer && attrNormalizer.set) {
-                                attrNormalizer.set(el, val, name);
+                    // Try to normalize/fix the name
+                    name = propFix[ name ] || name;
+                    var hook = propHooks[ name ];
+                    if (value !== undefined) {
+                        for (var i = elems.length - 1; i >= 0; i--) {
+                            var elem = elems[i];
+                            if (hook && hook.set) {
+                                hook.set(elem, value, name);
                             } else {
-                                // convert the value to a string (all browsers do this but IE)
-                                el.setAttribute(name, EMPTY + val);
+                                elem[ name ] = value;
                             }
                         }
-                    }
-                }
-            },
-
-            /**
-             * Removes the attribute of the matched elements.
-             */
-            removeAttr:function (selector, name) {
-                name = name.toLowerCase();
-                name = attrFix[name] || name;
-                var els = DOM.query(selector), el, i;
-                for (i = els.length - 1; i >= 0; i--) {
-                    el = els[i];
-                    if (isElementNode(el)) {
-                        var propName;
-                        el.removeAttribute(name);
-                        // Set corresponding property to false for boolean attributes
-                        if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
-                            el[ propName ] = false;
+                    } else {
+                        if (elems.length) {
+                            return getProp(elems[0], name);
                         }
                     }
-                }
-            },
+                },
 
-            /**
-             * 是否其中一个元素包含指定属性
-             */
-            hasAttr:oldIE ?
-                function (selector, name) {
-                    name = name.toLowerCase();
-                    var elems = DOM.query(selector);
-                    // from ppk :http://www.quirksmode.org/dom/w3c_core.html
-                    // IE5-7 doesn't return the value of a style attribute.
-                    // var $attr = el.attributes[name];
-                    for (var i = 0; i < elems.length; i++) {
-                        var el = elems[i];
-                        var $attr = el.getAttributeNode(name);
-                        if ($attr && $attr.specified) {
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-                :
-                function (selector, name) {
+                /**
+                 * 是否其中一个元素包含指定 property
+                 * @param {Array<HTMLElement>|String} selector 元素
+                 * @param {String} name 属性名
+                 * @return {boolean} 元素集合中是否有一个元素存在该属性
+                 */
+                hasProp:function (selector, name) {
                     var elems = DOM.query(selector);
                     for (var i = 0; i < elems.length; i++) {
                         var el = elems[i];
-                        //使用原生实现
-                        if (el.hasAttribute(name)) {
+                        if (getProp(el, name) !== undefined) {
                             return true;
                         }
                     }
                     return false;
                 },
 
-            /**
-             * Gets the current value of the first element in the set of matched or
-             * Sets the value of each element in the set of matched elements.
-             */
-            val:function (selector, value) {
-                var hook, ret;
-
-                //getter
-                if (value === undefined) {
-
-                    var elem = DOM.get(selector);
-
-                    if (elem) {
-                        hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                        if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
-                            return ret;
+                /**
+                 * 删除元素指定的 property
+                 * 不推荐使用，使用 .data .removeData
+                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param {String} name 属性名
+                 */
+                removeProp:function (selector, name) {
+                    name = propFix[ name ] || name;
+                    var elems = DOM.query(selector);
+                    for (var i = elems.length - 1; i >= 0; i--) {
+                        var el = elems[i];
+                        try {
+                            el[ name ] = undefined;
+                            delete el[ name ];
+                        } catch (e) {
+                            // S.log("delete el property error : ");
+                            // S.log(e);
                         }
-
-                        ret = elem.value;
-
-                        return typeof ret === "string" ?
-                            // handle most common string cases
-                            ret.replace(rreturn, "") :
-                            // handle cases where value is null/undefined or number
-                            ret == null ? "" : ret;
                     }
+                },
 
-                    return;
-                }
+                /**
+                 * 获取元素集合第一个元素的属性值或者设置全部元素对应属性名的属性值
+                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param {String} name 属性名
+                 * @param [val] 属性值
+                 */
+                attr:function (selector, name, val, pass) {
+                    /*
+                     Hazards From Caja Note:
 
-                var els = DOM.query(selector), i;
-                for (i = els.length - 1; i >= 0; i--) {
-                    elem = els[i];
-                    if (elem.nodeType !== 1) {
+                     - In IE[67], el.setAttribute doesn't work for attributes like
+                     'class' or 'for'.  IE[67] expects you to set 'className' or
+                     'htmlFor'.  Caja use setAttributeNode solves this problem.
+
+                     - In IE[67], <input> elements can shadow attributes.  If el is a
+                     form that contains an <input> named x, then el.setAttribute(x, y)
+                     will set x's value rather than setting el's attribute.  Using
+                     setAttributeNode solves this problem.
+
+                     - In IE[67], the style attribute can only be modified by setting
+                     el.style.cssText.  Neither setAttribute nor setAttributeNode will
+                     work.  el.style.cssText isn't bullet-proof, since it can be
+                     shadowed by <input> elements.
+
+                     - In IE[67], you can never change the type of an <button> element.
+                     setAttribute('type') silently fails, but setAttributeNode
+                     throws an exception.  caja : the silent failure. KISSY throws error.
+
+                     - In IE[67], you can never change the type of an <input> element.
+                     setAttribute('type') throws an exception.  We want the exception.
+
+                     - In IE[67], setAttribute is case-sensitive, unless you pass 0 as a
+                     3rd argument.  setAttributeNode is case-insensitive.
+
+                     - Trying to set an invalid name like ":" is supposed to throw an
+                     error.  In IE[678] and Opera 10, it fails without an error.
+                     */
+
+                    var els = DOM.query(selector);
+
+                    // supports hash
+                    if (S.isPlainObject(name)) {
+                        pass = val;
+                        for (var k in name) {
+                            if (name.hasOwnProperty(k)) {
+                                DOM.attr(els, k, name[k], pass);
+                            }
+                        }
                         return;
                     }
 
-                    var val = value;
-
-                    // Treat null/undefined as ""; convert numbers to string
-                    if (val == null) {
-                        val = "";
-                    } else if (typeof val === "number") {
-                        val += "";
-                    } else if (S.isArray(val)) {
-                        val = S.map(val, function (value) {
-                            return value == null ? "" : value + "";
-                        });
+                    if (!(name = S.trim(name))) {
+                        return;
                     }
 
-                    hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
-
-                    // If set returns undefined, fall back to normal setting
-                    if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
-                        elem.value = val;
+                    // attr functions
+                    if (pass && attrFn[name]) {
+                        return DOM[name](selector, val);
                     }
-                }
-            },
 
-            /**
-             * Gets the text context of the first element in the set of matched elements or
-             * Sets the text content of the matched elements.
-             */
-            text:function (selector, val) {
-                // getter
-                if (val === undefined) {
-                    // supports css selector/Node/NodeList
-                    var el = DOM.get(selector);
+                    // scrollLeft
+                    name = name.toLowerCase();
 
-                    // only gets value on supported nodes
-                    if (isElementNode(el)) {
-                        return el[TEXT] || EMPTY;
+                    if (pass && attrFn[name]) {
+                        return DOM[name](selector, val);
                     }
-                    else if (isTextNode(el)) {
-                        return el.nodeValue;
+
+                    // custom attrs
+                    name = attrFix[name] || name;
+
+                    var attrNormalizer,
+                        el = els[0],
+                        ret;
+
+                    if (rboolean.test(name)) {
+                        attrNormalizer = boolHook;
                     }
-                    return undefined;
-                }
-                // setter
-                else {
-                    var els = DOM.query(selector), i;
+                    // only old ie?
+                    else if (rinvalidChar.test(name)) {
+                        attrNormalizer = attrNodeHook;
+                    } else {
+                        attrNormalizer = attrHooks[name];
+                    }
+
+
+                    if (val === undefined) {
+                        if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                            // browsers index elements by id/name on forms, give priority to attributes.
+                            if (nodeName(el, "form")) {
+                                attrNormalizer = attrNodeHook;
+                            }
+                            if (attrNormalizer && attrNormalizer.get) {
+                                return attrNormalizer.get(el, name);
+                            }
+
+                            ret = el.getAttribute(name);
+
+                            // standard browser non-existing attribute return null
+                            // ie<8 will return undefined , because it return property
+                            // so norm to undefined
+                            return ret === null ? undefined : ret;
+                        }
+                    } else {
+                        for (var i = els.length - 1; i >= 0; i--) {
+                            el = els[i];
+                            if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                                if (nodeName(el, "form")) {
+                                    attrNormalizer = attrNodeHook;
+                                }
+                                if (attrNormalizer && attrNormalizer.set) {
+                                    attrNormalizer.set(el, val, name);
+                                } else {
+                                    // convert the value to a string (all browsers do this but IE)
+                                    el.setAttribute(name, EMPTY + val);
+                                }
+                            }
+                        }
+                    }
+                },
+
+                /**
+                 * 删除元素的指定属性
+                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param {String} name 属性名
+                 */
+                removeAttr:function (selector, name) {
+                    name = name.toLowerCase();
+                    name = attrFix[name] || name;
+                    var els = DOM.query(selector), el, i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
                         if (isElementNode(el)) {
-                            el[TEXT] = val;
+                            var propName;
+                            el.removeAttribute(name);
+                            // Set corresponding property to false for boolean attributes
+                            if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
+                                el[ propName ] = false;
+                            }
+                        }
+                    }
+                },
+
+                /**
+                 * 是否其中一个元素包含指定属性
+                 * @function
+                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param {String} name 属性名
+                 */
+                hasAttr:oldIE ?
+                    function (selector, name) {
+                        name = name.toLowerCase();
+                        var elems = DOM.query(selector);
+                        // from ppk :http://www.quirksmode.org/dom/w3c_core.html
+                        // IE5-7 doesn't return the value of a style attribute.
+                        // var $attr = el.attributes[name];
+                        for (var i = 0; i < elems.length; i++) {
+                            var el = elems[i];
+                            var $attr = el.getAttributeNode(name);
+                            if ($attr && $attr.specified) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                    :
+                    function (selector, name) {
+                        var elems = DOM.query(selector);
+                        for (var i = 0; i < elems.length; i++) {
+                            var el = elems[i];
+                            //使用原生实现
+                            if (el.hasAttribute(name)) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    },
+
+                /**
+                 * 获取元素集合第一个元素的值或者设置全部元素的值
+                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param [value] 设置值
+                 */
+                val:function (selector, value) {
+                    var hook, ret;
+
+                    //getter
+                    if (value === undefined) {
+
+                        var elem = DOM.get(selector);
+
+                        if (elem) {
+                            hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                            if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
+                                return ret;
+                            }
+
+                            ret = elem.value;
+
+                            return typeof ret === "string" ?
+                                // handle most common string cases
+                                ret.replace(rreturn, "") :
+                                // handle cases where value is null/undefined or number
+                                ret == null ? "" : ret;
+                        }
+
+                        return;
+                    }
+
+                    var els = DOM.query(selector), i;
+                    for (i = els.length - 1; i >= 0; i--) {
+                        elem = els[i];
+                        if (elem.nodeType !== 1) {
+                            return;
+                        }
+
+                        var val = value;
+
+                        // Treat null/undefined as ""; convert numbers to string
+                        if (val == null) {
+                            val = "";
+                        } else if (typeof val === "number") {
+                            val += "";
+                        } else if (S.isArray(val)) {
+                            val = S.map(val, function (value) {
+                                return value == null ? "" : value + "";
+                            });
+                        }
+
+                        hook = valHooks[ elem.nodeName.toLowerCase() ] || valHooks[ elem.type ];
+
+                        // If set returns undefined, fall back to normal setting
+                        if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
+                            elem.value = val;
+                        }
+                    }
+                },
+
+                /**
+                 * 获取元素集合第一个元素的文本值或者设置全部元素的文本值
+                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param [val] 设置值
+                 */
+                text:function (selector, val) {
+                    // getter
+                    if (val === undefined) {
+                        // supports css selector/Node/NodeList
+                        var el = DOM.get(selector);
+
+                        // only gets value on supported nodes
+                        if (isElementNode(el)) {
+                            return el[TEXT] || EMPTY;
                         }
                         else if (isTextNode(el)) {
-                            el.nodeValue = val;
+                            return el.nodeValue;
+                        }
+                        return undefined;
+                    }
+                    // setter
+                    else {
+                        var els = DOM.query(selector), i;
+                        for (i = els.length - 1; i >= 0; i--) {
+                            el = els[i];
+                            if (isElementNode(el)) {
+                                el[TEXT] = val;
+                            }
+                            else if (isTextNode(el)) {
+                                el.nodeValue = val;
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
         return DOM;
     }, {
         requires:["./base", "ua"]

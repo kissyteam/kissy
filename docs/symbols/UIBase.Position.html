@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>UIBase</title>
+        <title>UIBase.Position</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,7 +156,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                UIBase
+                                UIBase.Position
                             </h2>
                             <!-- class title END-->
                             
@@ -168,16 +168,12 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     
-                                    <p>parents：
-                                        <a href="../symbols/Base.html">Base</a>
-                                    </p>                                                
-                                    
 
                                     
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html">base.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_position.js.html">position.js</a></p>
                                     
                                     
                                     
@@ -191,16 +187,16 @@ a.go-top:active{text-decoration:none;}
                             
                             <div class="box constructor-box">
                                 <div class="box-hd">
-                                    <h3>Namespace </h3>
+                                    <h3>Class </h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/UIBase.html#constructor">UIBase</a></b>
-                                                                            
+                                            <b class="name"><a href="../symbols/UIBase.Position.html#constructor">UIBase.Position</a></b>
+                                            <span class="param">()</span>                                
                                             
                                             
-                                            <span class="desc">UIBase for class-based component</span>                                            
+                                                                                        
                                         </li>
                                     </ul>
                                 </div>
@@ -209,6 +205,65 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
+                            
+                                
+                                
+                                <div class="box properties-box">
+                                    <div class="box-hd">
+                                        <h3>Properties</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.Position.html#x">x</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">横坐标值</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.Position.html#xy">xy</a></b>
+                                                <span class="type">{Number[]}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">横纵坐标值</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.Position.html#y">y</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">纵坐标值</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.Position.html#zIndex">zIndex</a></b>
+                                                <span class="type">{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">z-index 值</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                                    
                             
                             <!-- properties END -->
                             
@@ -225,79 +280,14 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/UIBase.html#bindUI">bindUI</a></b>
-                                                <span class="param">()</span>
+                                                <b class="name"><a href="../symbols/UIBase.Position.html#move">move</a></b>
+                                                <span class="param">(x, y)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc"></span>                                                
+                                                <span class="desc">移动到绝对位置上, move(x, y) or move(x) or move([x, y])</span>                                                
                                             </li>
                                             
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/UIBase.html#create">create</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">建立节点，先不放在 dom 树中，为了性能!</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                UIBase.
-                                                <b class="name"><a href="../symbols/UIBase.html#.create">create</a></b>
-                                                <span class="param">(base, exts, px, sx)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">根据基类以及扩展类得到新类</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/UIBase.html#destroy">destroy</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">销毁组件</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/UIBase.html#render">render</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">渲染组件到 dom 结构</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/UIBase.html#renderUI">renderUI</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc"></span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/UIBase.html#syncUI">syncUI</a></b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">protected</span>                                                
-                                            </li>
-                                            
-                                        </ul>
-                                        
-                                        <hr/>
-                                        <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a>, <a href="../symbols/Attribute.html#set">set</a></li>
                                         </ul>
                                         
                                     </div>
@@ -315,14 +305,14 @@ a.go-top:active{text-decoration:none;}
                             <div class="detail-box">
                                 <a name="constructor"></a>
                                 <div class="box-hd">
-                                    <h3>Namespace Detail</h3>
+                                    <h3>Class Detail</h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">UIBase</b>
-                                                
+                                                <b class="name">UIBase.Position</b>
+                                                <span class="param">()</span>
                                             </div>
                                             
                                             <div class="desc"></div>
@@ -353,6 +343,137 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Properties Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                    
+                                        <li class="li">
+                                            <a name="x"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">x</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    横坐标值
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="xy"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">xy</b>
+                                                <span>{Number[]}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    横纵坐标值
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="y"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">y</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    纵坐标值
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name="zIndex"> </a>
+                                            <div class="title">                                                
+                                                
+                                                <b class="name">zIndex</b>
+                                                <span>{Number}</span>
+                                                
+                                                
+                                                
+                                                
+                                                <span class="desc">
+                                                    z-index 值
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -365,97 +486,19 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="bindUI"> </a>
+                                            <a name="move"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">bindUI</b>
-                                                <span class="param">()</span>
+                                                <b class="name">move</b>
+                                                <span class="param">(x, y)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line270">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_position.js.html#line82">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="create"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">create</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line187">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                建立节点，先不放在 dom 树中，为了性能!
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".create"> </a>
-                                            <div class="title">
-                                                <span>UIBase.</span>
-                                                <b class="name">create</b>
-                                                <span class="param">(base, exts, px, sx)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line320">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                根据基类以及扩展类得到新类
+                                                移动到绝对位置上, move(x, y) or move(x) or move([x, y])
                                                 
                                                 
                                             </div>
@@ -469,210 +512,24 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">base</b>
+                                                            <b class="name">x</b>
                                                             
                                                             
-                                                            <span class="type">{Function|Function[]}</span> 
-                                                            <span class="desc">基类</span>
+                                                            <span class="type">{Number|Number[]}</span> 
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">exts</b>
+                                                            [ 
+                                                            <b class="name">y</b>
                                                             
-                                                            
-                                                            <span class="type">{Function[]}</span> 
-                                                            <span class="desc">扩展类</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">px</b>
-                                                            
-                                                            
-                                                            <span class="type">{Object}</span> 
-                                                            <span class="desc">原型 mix 对象</span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">sx</b>
-                                                            
-                                                            
-                                                            <span class="type">{Object}</span> 
-                                                            <span class="desc">静态 mix 对象</span>
+                                                             ]
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc"></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <dt>Returns</dt>
-                                                <dd>
-                                                    <ul class="list">
-                                                    
-                                                        <li class="li">
-                                                            <span class="type">{<a href="../symbols/UIBase.html">UIBase</a>}</span> 
-                                                            <span>组合 后 的 新类</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="destroy"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">destroy</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line302">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                销毁组件
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="render"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">render</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line202">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                渲染组件到 dom 结构
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="renderUI"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">renderUI</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line241">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="syncUI"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">syncUI</b>
-                                                <span class="param">()</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_base.js.html#line296">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                protected
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
                                                 
                                                 
                                                 

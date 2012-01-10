@@ -8,6 +8,7 @@ KISSY.use("template,dom", function(S, T,DOM) {
 
         it("should ignore undefined variable", function() {
             expect(T('{{#if typeof a === "undefined" || a === "a"}}{{b}}{{/if}}').render({})).toBe('');
+            expect(T('{{#if a}}{{a}}{{/if}}').render({})).toEqual('');
         });
 
         // KS_TEMPL.push(typeof (item.x||item.y) ==="undefined"?"":item.x||item.y)

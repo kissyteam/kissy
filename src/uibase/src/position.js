@@ -2,21 +2,41 @@
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/position", function(S) {
+KISSY.add("uibase/position", function (S) {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Position() {
     }
 
-    Position.ATTRS = {
-        x: {
+    Position.ATTRS =
+    /**
+     * @lends UIBase.Position.prototype
+     */
+    {
+        /**
+         * 横坐标值
+         * @type Number
+         */
+        x:{
             view:true
         },
-        y: {
+        /**
+         * 纵坐标值
+         * @type Number
+         */
+        y:{
             view:true
         },
-        xy: {
+        /**
+         * 横纵坐标值
+         * @type Number[]
+         */
+        xy:{
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
-            setter: function(v) {
+            setter:function (v) {
 
                 var self = this,
                     xy = S.makeArray(v);
@@ -35,33 +55,38 @@ KISSY.add("uibase/position", function(S) {
             /**
              * xy 纯中转作用
              */
-            getter:function() {
-                return [this.get("x"),this.get("y")];
+            getter:function () {
+                return [this.get("x"), this.get("y")];
             }
         },
-        zIndex: {
+        /**
+         * z-index 值
+         * @type Number
+         */
+        zIndex:{
             view:true
         }
     };
 
 
-    Position.prototype = {
-
+    Position.prototype =
+    /**
+     * @lends UIBase.Position.prototype
+     */
+    {
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
-         * @param {number|Array.<number>} x
-         * @param {number=} y
+         * @param {Number|Number[]} x
+         * @param {Number} [y]
          */
-        move: function(x, y) {
+        move:function (x, y) {
             var self = this;
             if (S.isArray(x)) {
                 y = x[1];
                 x = x[0];
             }
-            self.set("xy", [x,y]);
+            self.set("xy", [x, y]);
         }
-
-
     };
 
     return Position;

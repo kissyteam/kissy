@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>Component</title>
+        <title>UIBase.Align</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,7 +156,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                Component
+                                UIBase.Align
                             </h2>
                             <!-- class title END-->
                             
@@ -173,7 +173,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_component_src_component.js.html">component.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_align.js.html">align.js</a></p>
                                     
                                     
                                     
@@ -187,13 +187,13 @@ a.go-top:active{text-decoration:none;}
                             
                             <div class="box constructor-box">
                                 <div class="box-hd">
-                                    <h3>Namespace </h3>
+                                    <h3>Class </h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/Component.html#constructor">Component</a></b>
-                                                                            
+                                            <b class="name"><a href="../symbols/UIBase.Align.html#constructor">UIBase.Align</a></b>
+                                            <span class="param">()</span>                                
                                             
                                             
                                                                                         
@@ -216,14 +216,14 @@ a.go-top:active{text-decoration:none;}
                                         <ul class="list summary-list">
                                             
                                             <li class="li">                                                
-                                                Component.
-                                                <b class="name"><a href="../symbols/Component.html#.DelegateChildren">DelegateChildren</a></b>
-                                                <span class="type">{}</span>
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.Align.html#align">align</a></b>
+                                                <span class="type">{Object}</span>
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc"></span>                                                
+                                                
+                                                <span class="desc">对齐配置</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -236,6 +236,31 @@ a.go-top:active{text-decoration:none;}
                             
                             <!-- methods START -->
                             
+                                
+                                
+                                <div class="box methods-box">
+                                    <div class="box-hd">
+                                        <h3>Methods</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/UIBase.Align.html#center">center</a></b>
+                                                <span class="param">(node)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">居中显示到可视区域, 一次性居中</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                
+                            
                             <!-- methods END -->
                             
                             <!-- events START -->
@@ -247,14 +272,14 @@ a.go-top:active{text-decoration:none;}
                             <div class="detail-box">
                                 <a name="constructor"></a>
                                 <div class="box-hd">
-                                    <h3>Namespace Detail</h3>
+                                    <h3>Class Detail</h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">Component</b>
-                                                
+                                                <b class="name">UIBase.Align</b>
+                                                <span class="param">()</span>
                                             </div>
                                             
                                             <div class="desc"></div>
@@ -293,19 +318,17 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
-                                            <a name=".DelegateChildren"> </a>
+                                            <a name="align"> </a>
                                             <div class="title">                                                
-                                                <span>Component.</span>
-                                                <b class="name">DelegateChildren</b>
+                                                
+                                                <b class="name">align</b>
+                                                <span>{Object}</span>
                                                 
                                                 
                                                 
-                                                <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    
-                                                    
-                                                        <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_component_src_delegatechildren.js.html">delegatechildren.js</a>.
+                                                    对齐配置
                                                     
                                                     
                                                 </span>
@@ -314,6 +337,17 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             <dl>
+                                                
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                    <li class="li">
+                                                        <pre class="code"><code>    {       node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素       points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐       offset: [0, 0]      // 有效值为 [n, m]    }</code></pre>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -331,6 +365,72 @@ a.go-top:active{text-decoration:none;}
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
+                            
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Methods Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                        
+                                        <li class="li">
+                                            <a name="center"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">center</b>
+                                                <span class="param">(node)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_align.js.html#line414">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                居中显示到可视区域, 一次性居中
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">node</b>
+                                                            
+                                                            
+                                                            <span class="type">{undefined|String|HTMLElement|Node}</span> 
+                                                            <span class="desc">对其元素，falsy 表示窗口可视区域</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
                             
                             <!-- methods detail END -->
 

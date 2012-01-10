@@ -103,7 +103,7 @@ KISSY.add('template', function (S) {
         // expression
         Statements = {
             'if':{
-                start:'if(' + KS_TEMPL_STAT_PARAM + '){',
+                start: 'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
                 end:'}'
             },
 

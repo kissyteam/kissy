@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 10 19:00
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -108,7 +108,7 @@ KISSY.add('template', function (S) {
         // expression
         Statements = {
             'if':{
-                start:'if(' + KS_TEMPL_STAT_PARAM + '){',
+                start: 'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
                 end:'}'
             },
 
