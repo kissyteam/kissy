@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 10 14:34
+build time: Jan 12 19:59
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -296,7 +296,7 @@ build time: Jan 10 14:34
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120110143426',
+            buildTime:'20120112195942',
 
             /**
              * Returns a new object containing all of the properties of
@@ -11836,7 +11836,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:38
+build time: Jan 12 17:28
 */
 /**
  * @fileOverview attribute management

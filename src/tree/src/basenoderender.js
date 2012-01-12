@@ -80,7 +80,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
             rowEl = $("<div class='" + self.getCls(ROW_CLS) + "'/>");
             id = S.guid('tree-item');
-            self.set("rowEl", rowEl);
+            self.__set("rowEl", rowEl);
 
             var expandIconEl = $("<div/>")
                 .appendTo(rowEl);
@@ -89,7 +89,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
             if (!labelEl) {
                 labelEl = $("<span id='" + id + "' class='" + self.getCls(LABEL_CLS) + "'/>");
-                self.set("labelEl", labelEl);
+                self.__set("labelEl", labelEl);
             }
             labelEl.appendTo(rowEl);
 
@@ -98,8 +98,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 "aria-labelledby":id
             }).prepend(rowEl);
 
-            self.set("expandIconEl", expandIconEl);
-            self.set("iconEl", iconEl);
+            self.__set("expandIconEl", expandIconEl);
+            self.__set("iconEl", iconEl);
 
         },
 
@@ -159,7 +159,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             var c = $("<div " + (self.get("expanded") ? "" : "style='display:none'")
                 + " role='group'><" + "/div>")
                 .appendTo(self.get("el"));
-            self.set("childrenEl", c);
+            self.__set("childrenEl", c);
             return c;
         }
     }, {

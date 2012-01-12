@@ -190,8 +190,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 
             addChild:function(c) {
                 var self = this,tree = self.get("tree");
-                c.set("tree", tree);
-                c.set("depth", self.get('depth') + 1);
+                c.__set("tree", tree);
+                c.__set("depth", self.get('depth') + 1);
                 BaseNode.superclass.addChild.call(self, c);
                 self._updateRecursive();
                 tree._register(c);

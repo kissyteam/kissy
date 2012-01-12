@@ -15,7 +15,7 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
             var expandIconEl = self.get("expandIconEl"),
                 checkEl = $("<div class='" + self.getCls(INLINE_BLOCK + " " + " "
                     + ICON_CLS) + "'/>").insertAfter(expandIconEl);
-            self.set("checkEl", checkEl);
+            self.__set("checkEl", checkEl);
         },
 
         _uiSetCheckState:function(s) {

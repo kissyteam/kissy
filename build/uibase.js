@@ -1,18 +1,18 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 17:21
+build time: Jan 12 17:28
 */
 /**
  * @fileOverview UIBase.Align
  * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
-KISSY.add('uibase/align', function(S, UA, DOM, Node) {
+KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
 
-    /**
-     * inspired by closure library by Google
-     * @see http://yiminghe.iteye.com/blog/1124720
+    /*
+     inspired by closure library by Google
+     see http://yiminghe.iteye.com/blog/1124720
      */
 
     /**
@@ -139,7 +139,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             el = self.get('el'),
             p2;
 
-        offset = offset || [0,0];
+        offset = offset || [0, 0];
         xy = el.offset();
 
         // p1 是 node 上 points[0] 的 offset
@@ -149,8 +149,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         diff = [p2.left - p1.left, p2.top - p1.top];
         xy = {
-            left: xy.left - diff[0] + (+offset[0]),
-            top: xy.top - diff[1] + (+offset[1])
+            left:xy.left - diff[0] + (+offset[0]),
+            top:xy.top - diff[1] + (+offset[1])
         };
 
         return positionAtCoordinate.call(self, xy, alignCfg);
@@ -158,9 +158,9 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
 
     function positionAtCoordinate(absolutePos, alignCfg) {
-        var self = this,el = self.get('el');
+        var self = this, el = self.get('el');
         var status = {};
-        var elSize = {width:el.outerWidth(),height:el.outerHeight()},
+        var elSize = {width:el.outerWidth(), height:el.outerHeight()},
             size = S.clone(elSize);
         if (!S.isEmptyObject(alignCfg.overflow)) {
             var viewport = getVisibleRectForElement(el[0]);
@@ -245,8 +245,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
     function flip(points, reg, map) {
         var ret = [];
-        S.each(points, function(p) {
-            ret.push(p.replace(reg, function(m) {
+        S.each(points, function (p) {
+            ret.push(p.replace(reg, function (m) {
                 return map[m];
             }));
         });
@@ -258,11 +258,40 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         return offset;
     }
 
+
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Align() {
     }
 
-    Align.ATTRS = {
-        align: {
+    Align.ATTRS =
+    /**
+     * @lends UIBase.Align.prototype
+     */
+    {
+
+        /**
+         * 对齐配置
+         * @type Object
+         * @field
+         * @example
+         * <code>
+         *     {
+         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+         *        offset: [0, 0]      // 有效值为 [n, m]
+         *     }
+         * </code>
+         */
+        align:{
+            setter:function (v) {
+                var n;
+                if (n = v.node) {
+                    v.node = Node.one(n);
+                }
+            }
             // 默认不是正中，可以实现自由动画 zoom
 //            value:{
 //                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
@@ -283,12 +312,11 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             offset, w, h, x, y;
 
         if (node) {
-            node = Node.one(node);
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
         } else {
-            offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+            offset = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
             w = DOM.viewportWidth();
             h = DOM.viewportHeight();
         }
@@ -308,29 +336,32 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             x += w;
         }
 
-        return { left: x, top: y };
+        return { left:x, top:y };
     }
 
-    Align.prototype = {
-
-        _uiSetAlign: function(v) {
-            if (S.isPlainObject(v)) {
-                this.align(v.node, v.points, v.offset, v.overflow);
-            }
+    Align.prototype =
+    /**
+     * @lends UIBase.Align.prototype
+     */
+    {
+        _uiSetAlign:function (v) {
+            this.align(v.node, v.points, v.offset, v.overflow);
         },
 
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         * @function
+         * @private
          * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
          * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
          */
-        align: function(node, points, offset, overflow) {
+        align:function (node, points, offset, overflow) {
             var self = this,
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
-            offset = offset && [].concat(offset) || [0,0];
+            offset = offset && [].concat(offset) || [0, 0];
             if (overflow.failX) {
                 flag.failX = 1;
             }
@@ -372,7 +403,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             if (isFailed(status)) {
                 delete overflow.failX;
                 delete overflow.failY;
-                status = positionAtAnchor.call(self, {
+                positionAtAnchor.call(self, {
                     node:node,
                     points:points,
                     offset:offset,
@@ -383,19 +414,20 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         /**
          * 居中显示到可视区域, 一次性居中
+         * @param {undefined|String|HTMLElement|Node} node 对其元素，falsy 表示窗口可视区域
          */
-        center: function(node) {
+        center:function (node) {
             this.set('align', {
-                node: node,
-                points: ["cc", "cc"],
-                offset: [0, 0]
+                node:node,
+                points:["cc", "cc"],
+                offset:[0, 0]
             });
         }
     };
 
     return Align;
 }, {
-    requires:["ua","dom","node"]
+    requires:["ua", "dom", "node"]
 });
 /**
  *  2011-07-13 承玉 note:
@@ -1219,7 +1251,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
-                self.set("closeBtn", closeBtn);
+                self.__set("closeBtn", closeBtn);
             }
         },
 
@@ -1342,8 +1374,12 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
  * @fileOverview 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/contentbox", function() {
+KISSY.add("uibase/contentbox", function () {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function ContentBox() {
     }
 
@@ -1777,21 +1813,41 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/position", function(S) {
+KISSY.add("uibase/position", function (S) {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Position() {
     }
 
-    Position.ATTRS = {
-        x: {
+    Position.ATTRS =
+    /**
+     * @lends UIBase.Position.prototype
+     */
+    {
+        /**
+         * 横坐标值
+         * @type Number
+         */
+        x:{
             view:true
         },
-        y: {
+        /**
+         * 纵坐标值
+         * @type Number
+         */
+        y:{
             view:true
         },
-        xy: {
+        /**
+         * 横纵坐标值
+         * @type Number[]
+         */
+        xy:{
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
-            setter: function(v) {
+            setter:function (v) {
 
                 var self = this,
                     xy = S.makeArray(v);
@@ -1810,33 +1866,38 @@ KISSY.add("uibase/position", function(S) {
             /**
              * xy 纯中转作用
              */
-            getter:function() {
-                return [this.get("x"),this.get("y")];
+            getter:function () {
+                return [this.get("x"), this.get("y")];
             }
         },
-        zIndex: {
+        /**
+         * z-index 值
+         * @type Number
+         */
+        zIndex:{
             view:true
         }
     };
 
 
-    Position.prototype = {
-
+    Position.prototype =
+    /**
+     * @lends UIBase.Position.prototype
+     */
+    {
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
-         * @param {number|Array.<number>} x
-         * @param {number=} y
+         * @param {Number|Number[]} x
+         * @param {Number} [y]
          */
-        move: function(x, y) {
+        move:function (x, y) {
             var self = this;
             if (S.isArray(x)) {
                 y = x[1];
                 x = x[0];
             }
-            self.set("xy", [x,y]);
+            self.set("xy", [x, y]);
         }
-
-
     };
 
     return Position;
@@ -2068,7 +2129,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         if (!partEl) {
             partEl = new Node("<div class='" + self.get("prefixCls") + CLS_PREFIX + part + "'/>")
                 .appendTo(el);
-            self.set(part, partEl);
+            self.__set(part, partEl);
         }
     }
 

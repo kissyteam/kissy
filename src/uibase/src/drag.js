@@ -2,28 +2,44 @@
  * @fileOverview drag extension for position
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/drag", function(S) {
+KISSY.add("uibase/drag", function (S) {
 
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Drag() {
     }
 
-    Drag.ATTRS = {
+    Drag.ATTRS =
+
+    /**
+     * @lends UIBase.Drag
+     */
+    {
+        /**
+         * @see DD.Draggable#handlers
+         */
         handlers:{
             value:[]
         },
+        /**
+         * 是否可拖放
+         * @type boolean
+         */
         draggable:{value:true}
     };
 
     Drag.prototype = {
 
-        _uiSetHandlers:function(v) {
+        _uiSetHandlers:function (v) {
             if (v && v.length > 0 && this.__drag) {
                 this.__drag.set("handlers", v);
             }
         },
 
-        __bindUI:function() {
+        __bindUI:function () {
             var Draggable = S.require("dd/draggable");
             var self = this,
                 el = self.get("el");
@@ -34,7 +50,7 @@ KISSY.add("uibase/drag", function(S) {
             }
         },
 
-        _uiSetDraggable:function(v) {
+        _uiSetDraggable:function (v) {
 
             var self = this,
                 d = self.__drag;
@@ -49,13 +65,13 @@ KISSY.add("uibase/drag", function(S) {
             }
         },
 
-        _dragExtAction:function(offset) {
-            this.set("xy", [offset.left,offset.top])
+        _dragExtAction:function (offset) {
+            this.set("xy", [offset.left, offset.top])
         },
         /**
          *
          */
-        __destructor:function() {
+        __destructor:function () {
             //S.log("DragExt __destructor");
             var d = this.__drag;
             d && d.destroy();

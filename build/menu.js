@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 12:56
+build time: Jan 12 17:29
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -1320,7 +1320,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                     srcNode:el,
                     prefixCls:cls
                 });
-                this.set("menu", menu);
+                this.__set("menu", menu);
             },
 
             destructor:function () {

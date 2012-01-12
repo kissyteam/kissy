@@ -48,7 +48,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         if (!partEl) {
             partEl = new Node("<div class='" + self.get("prefixCls") + CLS_PREFIX + part + "'/>")
                 .appendTo(el);
-            self.set(part, partEl);
+            self.__set(part, partEl);
         }
     }
 

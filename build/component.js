@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 12 17:28
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -59,7 +59,7 @@ KISSY.add("component/decoratechild", function(S, DecorateChildren) {
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function(element) {
             var self = this;
-            self.set("el", element);
+            self.__set("el", element);
             var ui = self.get("decorateChildCls"),
                 prefixCls = self.get("prefixCls"),
                 child = element.one("." + self.getCls(ui));
@@ -92,7 +92,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
     S.augment(DecorateChildren, {
         decorateInternal:function(el) {
             var self = this;
-            self.set("el", el);
+            self.__set("el", el);
             self.decorateChildren(el);
         },
 
@@ -237,9 +237,9 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         // what we want).
         self.create();
         var contentEl = self.getContentElement();
-        c.set("parent", self);
-        c.set("render", contentEl);
-        c.set("elBefore", elBefore);
+        c.__set("parent", self);
+        c.__set("render", contentEl);
+        c.__set("elBefore", elBefore);
         // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
         if (self.get("rendered")) {
             c.render();
@@ -377,7 +377,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                 if (!self.get("allowTextSelection_")) {
                     view.get("el").unselectable();
                 }
-                self.set("view", view);
+                self.__set("view", view);
             },
 
             /**
@@ -429,7 +429,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                 S.each(t, function (c) {
                     self.removeChild(c, destroy);
                 });
-                self.set("children", []);
+                self.__set("children", []);
             },
 
             getChildAt:function (index) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 17:04
+build time: Jan 12 17:29
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -267,7 +267,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                         srcNode:el,
                         prefixCls:cls
                     }, self.get("menuCfg")));
-                    self.set("menu", menu);
+                    self.__set("menu", menu);
                 },
 
                 /**

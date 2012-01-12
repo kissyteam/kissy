@@ -442,7 +442,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                self.set("dragNode", node);
+                self.__set("dragNode", node);
                 node.on('mousedown', _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
@@ -462,7 +462,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                     if (handler.contains(t) ||
                         handler[0] == t) {
                         ret = 1;
-                        self.set("activeHandler", handler);
+                        self.__set("activeHandler", handler);
                         return false;
                     }
                 });
@@ -602,7 +602,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                             drag:self
                         });
                     }
-                    self.set("dragging", 0);
+                    self.__set("dragging", 0);
                     self.fire("dragend", {
                         drag:self
                     });
@@ -640,7 +640,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _start:function () {
                 var self = this;
                 self._clearBufferTimer();
-                self.set("dragging", 1);
+                self.__set("dragging", 1);
                 DDM._start();
                 self.fire("dragstart", {
                     drag:self

@@ -88,8 +88,8 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                         .append(node);
                     node.show();
                     node.offset(dragNode.offset());
-                    drag.set("dragNode", dragNode);
-                    drag.set("node", node);
+                    drag.__set("dragNode", dragNode);
+                    drag.__set("node", node);
                 }
 
                 function end() {
@@ -103,7 +103,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                     } else {
                         node.hide();
                     }
-                    drag.set("node", drag.get("dragNode"));
+                    drag.__set("node", drag.get("dragNode"));
                 }
 
                 drag.on("dragstart", start);

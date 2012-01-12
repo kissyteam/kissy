@@ -178,7 +178,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             oldDrop._handleOut(ev);
             activeDrag._handleOut(ev);
         }
-        self.set("activeDrop", activeDrop);
+        self.__set("activeDrop", activeDrop);
         if (activeDrop) {
             if (oldDrop != activeDrop) {
                 activeDrop._handleEnter(ev);
@@ -277,7 +277,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function _activeDrops(self) {
         var drops = self.get("drops");
-        self.set("validDrops", []);
+        self.__set("validDrops", []);
         S.each(drops, function (d) {
             d._active();
         });
@@ -285,7 +285,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function _deActiveDrops(self) {
         var drops = self.get("drops");
-        self.set("validDrops", []);
+        self.__set("validDrops", []);
         S.each(drops, function (d) {
             d._deActive();
         });
@@ -337,7 +337,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
                 drops = self.get("drops"),
                 drag = self.__activeToDrag;
 
-            self.set('activeDrag', drag);
+            self.__set('activeDrag', drag);
             // 预备役清掉
             self.__activeToDrag = 0;
             // 真正开始移动了才激活垫片
@@ -375,8 +375,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             if (activeDrop) {
                 activeDrop._end();
             }
-            self.set("activeDrag", null);
-            self.set("activeDrop", null);
+            self.__set("activeDrag", null);
+            self.__set("activeDrop", null);
         }
     });
 

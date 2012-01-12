@@ -10,7 +10,7 @@ KISSY.add("component/decoratechild", function(S, DecorateChildren) {
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function(element) {
             var self = this;
-            self.set("el", element);
+            self.__set("el", element);
             var ui = self.get("decorateChildCls"),
                 prefixCls = self.get("prefixCls"),
                 child = element.one("." + self.getCls(ui));

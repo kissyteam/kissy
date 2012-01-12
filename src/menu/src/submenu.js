@@ -257,7 +257,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                     srcNode:el,
                     prefixCls:cls
                 });
-                this.set("menu", menu);
+                this.__set("menu", menu);
             },
 
             destructor:function () {

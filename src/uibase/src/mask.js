@@ -2,13 +2,24 @@
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/mask", function() {
+KISSY.add("uibase/mask", function () {
 
-
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Mask() {
     }
 
-    Mask.ATTRS = {
+    Mask.ATTRS =
+    /**
+     * @lends UIBase.Mask.prototype
+     */
+    {
+        /**
+         * 是否显示时出现遮罩层
+         * @type boolean
+         */
         mask:{
             value:false
         }
@@ -16,7 +27,7 @@ KISSY.add("uibase/mask", function() {
 
     Mask.prototype = {
 
-        _uiSetMask:function(v) {
+        _uiSetMask:function (v) {
             var self = this;
             if (v) {
                 self.on("show", self.get("view")._maskExtShow, self.get("view"));

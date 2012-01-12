@@ -49,7 +49,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
-                self.set("closeBtn", closeBtn);
+                self.__set("closeBtn", closeBtn);
             }
         },
 

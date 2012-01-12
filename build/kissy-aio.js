@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 10 14:34
+build time: Jan 12 19:59
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Jan 10 14:34
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120110143426',
+            buildTime:'20120112195942',
 
             /**
              * Returns a new object containing all of the properties of
@@ -11650,7 +11650,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:38
+build time: Jan 12 17:28
 */
 /**
  * @fileOverview attribute management
@@ -16068,9 +16068,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
  *   - 2009-12-17 yubo 将 imglazyload 升级为 datalazyload, 支持 textarea 方式延迟和特定元素即将出现时的回调函数
  */
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 10 19:00
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -16177,7 +16177,7 @@ KISSY.add('template', function (S) {
         // expression
         Statements = {
             'if':{
-                start:'if(' + KS_TEMPL_STAT_PARAM + '){',
+                start: 'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
                 end:'}'
             },
 
@@ -19210,18 +19210,18 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 17:21
+build time: Jan 12 17:28
 */
 /**
  * @fileOverview UIBase.Align
  * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
-KISSY.add('uibase/align', function(S, UA, DOM, Node) {
+KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
 
-    /**
-     * inspired by closure library by Google
-     * @see http://yiminghe.iteye.com/blog/1124720
+    /*
+     inspired by closure library by Google
+     see http://yiminghe.iteye.com/blog/1124720
      */
 
     /**
@@ -19348,7 +19348,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             el = self.get('el'),
             p2;
 
-        offset = offset || [0,0];
+        offset = offset || [0, 0];
         xy = el.offset();
 
         // p1 是 node 上 points[0] 的 offset
@@ -19358,8 +19358,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         diff = [p2.left - p1.left, p2.top - p1.top];
         xy = {
-            left: xy.left - diff[0] + (+offset[0]),
-            top: xy.top - diff[1] + (+offset[1])
+            left:xy.left - diff[0] + (+offset[0]),
+            top:xy.top - diff[1] + (+offset[1])
         };
 
         return positionAtCoordinate.call(self, xy, alignCfg);
@@ -19367,9 +19367,9 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
 
     function positionAtCoordinate(absolutePos, alignCfg) {
-        var self = this,el = self.get('el');
+        var self = this, el = self.get('el');
         var status = {};
-        var elSize = {width:el.outerWidth(),height:el.outerHeight()},
+        var elSize = {width:el.outerWidth(), height:el.outerHeight()},
             size = S.clone(elSize);
         if (!S.isEmptyObject(alignCfg.overflow)) {
             var viewport = getVisibleRectForElement(el[0]);
@@ -19454,8 +19454,8 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
     function flip(points, reg, map) {
         var ret = [];
-        S.each(points, function(p) {
-            ret.push(p.replace(reg, function(m) {
+        S.each(points, function (p) {
+            ret.push(p.replace(reg, function (m) {
                 return map[m];
             }));
         });
@@ -19467,11 +19467,40 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
         return offset;
     }
 
+
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Align() {
     }
 
-    Align.ATTRS = {
-        align: {
+    Align.ATTRS =
+    /**
+     * @lends UIBase.Align.prototype
+     */
+    {
+
+        /**
+         * 对齐配置
+         * @type Object
+         * @field
+         * @example
+         * <code>
+         *     {
+         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+         *        offset: [0, 0]      // 有效值为 [n, m]
+         *     }
+         * </code>
+         */
+        align:{
+            setter:function (v) {
+                var n;
+                if (n = v.node) {
+                    v.node = Node.one(n);
+                }
+            }
             // 默认不是正中，可以实现自由动画 zoom
 //            value:{
 //                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
@@ -19492,12 +19521,11 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             offset, w, h, x, y;
 
         if (node) {
-            node = Node.one(node);
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
         } else {
-            offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+            offset = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
             w = DOM.viewportWidth();
             h = DOM.viewportHeight();
         }
@@ -19517,29 +19545,32 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             x += w;
         }
 
-        return { left: x, top: y };
+        return { left:x, top:y };
     }
 
-    Align.prototype = {
-
-        _uiSetAlign: function(v) {
-            if (S.isPlainObject(v)) {
-                this.align(v.node, v.points, v.offset, v.overflow);
-            }
+    Align.prototype =
+    /**
+     * @lends UIBase.Align.prototype
+     */
+    {
+        _uiSetAlign:function (v) {
+            this.align(v.node, v.points, v.offset, v.overflow);
         },
 
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         * @function
+         * @private
          * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
          * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
          */
-        align: function(node, points, offset, overflow) {
+        align:function (node, points, offset, overflow) {
             var self = this,
                 flag = {};
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
-            offset = offset && [].concat(offset) || [0,0];
+            offset = offset && [].concat(offset) || [0, 0];
             if (overflow.failX) {
                 flag.failX = 1;
             }
@@ -19581,7 +19612,7 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
             if (isFailed(status)) {
                 delete overflow.failX;
                 delete overflow.failY;
-                status = positionAtAnchor.call(self, {
+                positionAtAnchor.call(self, {
                     node:node,
                     points:points,
                     offset:offset,
@@ -19592,19 +19623,20 @@ KISSY.add('uibase/align', function(S, UA, DOM, Node) {
 
         /**
          * 居中显示到可视区域, 一次性居中
+         * @param {undefined|String|HTMLElement|Node} node 对其元素，falsy 表示窗口可视区域
          */
-        center: function(node) {
+        center:function (node) {
             this.set('align', {
-                node: node,
-                points: ["cc", "cc"],
-                offset: [0, 0]
+                node:node,
+                points:["cc", "cc"],
+                offset:[0, 0]
             });
         }
     };
 
     return Align;
 }, {
-    requires:["ua","dom","node"]
+    requires:["ua", "dom", "node"]
 });
 /**
  *  2011-07-13 承玉 note:
@@ -20428,7 +20460,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                     this.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
-                self.set("closeBtn", closeBtn);
+                self.__set("closeBtn", closeBtn);
             }
         },
 
@@ -20551,8 +20583,12 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
  * @fileOverview 里层包裹层定义，适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/contentbox", function() {
+KISSY.add("uibase/contentbox", function () {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function ContentBox() {
     }
 
@@ -20986,21 +21022,41 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/position", function(S) {
+KISSY.add("uibase/position", function (S) {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Position() {
     }
 
-    Position.ATTRS = {
-        x: {
+    Position.ATTRS =
+    /**
+     * @lends UIBase.Position.prototype
+     */
+    {
+        /**
+         * 横坐标值
+         * @type Number
+         */
+        x:{
             view:true
         },
-        y: {
+        /**
+         * 纵坐标值
+         * @type Number
+         */
+        y:{
             view:true
         },
-        xy: {
+        /**
+         * 横纵坐标值
+         * @type Number[]
+         */
+        xy:{
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
-            setter: function(v) {
+            setter:function (v) {
 
                 var self = this,
                     xy = S.makeArray(v);
@@ -21019,33 +21075,38 @@ KISSY.add("uibase/position", function(S) {
             /**
              * xy 纯中转作用
              */
-            getter:function() {
-                return [this.get("x"),this.get("y")];
+            getter:function () {
+                return [this.get("x"), this.get("y")];
             }
         },
-        zIndex: {
+        /**
+         * z-index 值
+         * @type Number
+         */
+        zIndex:{
             view:true
         }
     };
 
 
-    Position.prototype = {
-
+    Position.prototype =
+    /**
+     * @lends UIBase.Position.prototype
+     */
+    {
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
-         * @param {number|Array.<number>} x
-         * @param {number=} y
+         * @param {Number|Number[]} x
+         * @param {Number} [y]
          */
-        move: function(x, y) {
+        move:function (x, y) {
             var self = this;
             if (S.isArray(x)) {
                 y = x[1];
                 x = x[0];
             }
-            self.set("xy", [x,y]);
+            self.set("xy", [x, y]);
         }
-
-
     };
 
     return Position;
@@ -21277,7 +21338,7 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         if (!partEl) {
             partEl = new Node("<div class='" + self.get("prefixCls") + CLS_PREFIX + part + "'/>")
                 .appendTo(el);
-            self.set(part, partEl);
+            self.__set(part, partEl);
         }
     }
 
@@ -21377,9 +21438,9 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
         "uibase/stdmodrender"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 12 17:28
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -21437,7 +21498,7 @@ KISSY.add("component/decoratechild", function(S, DecorateChildren) {
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function(element) {
             var self = this;
-            self.set("el", element);
+            self.__set("el", element);
             var ui = self.get("decorateChildCls"),
                 prefixCls = self.get("prefixCls"),
                 child = element.one("." + self.getCls(ui));
@@ -21470,7 +21531,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
     S.augment(DecorateChildren, {
         decorateInternal:function(el) {
             var self = this;
-            self.set("el", el);
+            self.__set("el", el);
             self.decorateChildren(el);
         },
 
@@ -21615,9 +21676,9 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         // what we want).
         self.create();
         var contentEl = self.getContentElement();
-        c.set("parent", self);
-        c.set("render", contentEl);
-        c.set("elBefore", elBefore);
+        c.__set("parent", self);
+        c.__set("render", contentEl);
+        c.__set("elBefore", elBefore);
         // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
         if (self.get("rendered")) {
             c.render();
@@ -21755,7 +21816,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                 if (!self.get("allowTextSelection_")) {
                     view.get("el").unselectable();
                 }
-                self.set("view", view);
+                self.__set("view", view);
             },
 
             /**
@@ -21807,7 +21868,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                 S.each(t, function (c) {
                     self.removeChild(c, destroy);
                 });
-                self.set("children", []);
+                self.__set("children", []);
             },
 
             getChildAt:function (index) {
@@ -22307,9 +22368,9 @@ KISSY.add("component/uistore", function(S) {
     };
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 10 17:49
 */
 /**
  * @fileOverview accordion aria support
@@ -22769,7 +22830,7 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 
         setTabIndex:function(root, v) {
             root.tabIndex = v;
-            DOM.query("*", root).each(function(n) {
+            S.each(DOM.query("*", root),function(n) {
                 var nodeName = n.nodeName.toLowerCase();
                 // a 需要被禁止或者恢复
                 if (S.inArray(nodeName, default_focus)) {
@@ -22879,13 +22940,16 @@ KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
     Switchable.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');
 
-        DOM.query(hook, container).each(function(elem) {
-            var type = elem.getAttribute('data-widget-type'), config;
+        S.each(DOM.query(hook, container),function(elem) {
+            var type = elem.getAttribute('data-widget-type'),
+                config;
             if (type && ('Switchable Tabs Slide Carousel Accordion'.indexOf(type) > -1)) {
                 try {
                     config = elem.getAttribute('data-widget-config');
-                    if (config) config = config.replace(/'/g, '"');
-                    new S[type](elem, JSON.parse(config));
+                    if (config) {
+                        config = config.replace(/'/g, '"');
+                    }
+                    new Switchable[type](elem, JSON.parse(config));
                 } catch(ex) {
                     S.log('Switchable.autoRender: ' + ex, 'warn');
                 }
@@ -23259,9 +23323,9 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
         /**
          * 切换操作，对外 api
          * @param index 要切换的项
-         * @param direction 方向，用于 effect
-         * @param ev 引起该操作的事件
-         * @param callback 运行完回调，和绑定 switch 事件作用一样
+         * @param [direction] 方向，用于 effect
+         * @param [ev] 引起该操作的事件
+         * @param [callback] 运行完回调，和绑定 switch 事件作用一样
          */
         switchTo: function(index, direction, ev, callback) {
             var self = this,
@@ -24623,12 +24687,13 @@ KISSY.add('switchable/slide/base', function(S, Switchable) {
 /**
  * @fileOverview switchable
  */
-KISSY.add("switchable", function(S, Switchable, Aria, Accordion, AAria, autoplay, autorender, Carousel, CAria, circular, countdown, effect, lazyload, Slide, SAria, Tabs, TAria) {
+KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, autoplay, autorender, Carousel, CAria, circular, countdown, effect, lazyload, Slide, SAria, Tabs, TAria) {
     var re = {
         Accordion:Accordion,
         Carousel:Carousel,
         Slide:Slide,
-        Tabs:Tabs
+        Tabs:Tabs,
+        Switchable:Switchable
     };
     S.mix(Switchable, re);
     return Switchable;
@@ -28833,7 +28898,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 12:56
+build time: Jan 12 17:29
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -30152,7 +30217,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                     srcNode:el,
                     prefixCls:cls
                 });
-                this.set("menu", menu);
+                this.__set("menu", menu);
             },
 
             destructor:function () {
@@ -30501,7 +30566,7 @@ KISSY.add("button/split", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 17:04
+build time: Jan 12 17:29
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -30767,7 +30832,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                         srcNode:el,
                         prefixCls:cls
                     }, self.get("menuCfg")));
-                    self.set("menu", menu);
+                    self.__set("menu", menu);
                 },
 
                 /**
@@ -31107,9 +31172,9 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
  *  how to emulate multiple ?
  **/
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 12 17:29
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -31340,8 +31405,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 
             addChild:function(c) {
                 var self = this,tree = self.get("tree");
-                c.set("tree", tree);
-                c.set("depth", self.get('depth') + 1);
+                c.__set("tree", tree);
+                c.__set("depth", self.get('depth') + 1);
                 BaseNode.superclass.addChild.call(self, c);
                 self._updateRecursive();
                 tree._register(c);
@@ -31585,7 +31650,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
             rowEl = $("<div class='" + self.getCls(ROW_CLS) + "'/>");
             id = S.guid('tree-item');
-            self.set("rowEl", rowEl);
+            self.__set("rowEl", rowEl);
 
             var expandIconEl = $("<div/>")
                 .appendTo(rowEl);
@@ -31594,7 +31659,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
             if (!labelEl) {
                 labelEl = $("<span id='" + id + "' class='" + self.getCls(LABEL_CLS) + "'/>");
-                self.set("labelEl", labelEl);
+                self.__set("labelEl", labelEl);
             }
             labelEl.appendTo(rowEl);
 
@@ -31603,8 +31668,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 "aria-labelledby":id
             }).prepend(rowEl);
 
-            self.set("expandIconEl", expandIconEl);
-            self.set("iconEl", iconEl);
+            self.__set("expandIconEl", expandIconEl);
+            self.__set("iconEl", iconEl);
 
         },
 
@@ -31664,7 +31729,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             var c = $("<div " + (self.get("expanded") ? "" : "style='display:none'")
                 + " role='group'><" + "/div>")
                 .appendTo(self.get("el"));
-            self.set("childrenEl", c);
+            self.__set("childrenEl", c);
             return c;
         }
     }, {
@@ -31843,7 +31908,7 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
             var expandIconEl = self.get("expandIconEl"),
                 checkEl = $("<div class='" + self.getCls(INLINE_BLOCK + " " + " "
                     + ICON_CLS) + "'/>").insertAfter(expandIconEl);
-            self.set("checkEl", checkEl);
+            self.__set("checkEl", checkEl);
         },
 
         _uiSetCheckState:function(s) {

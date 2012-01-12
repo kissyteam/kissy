@@ -4,11 +4,23 @@
  */
 KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Constrain() {
 
     }
 
-    Constrain.ATTRS = {
+    Constrain.ATTRS =
+    /**
+     * @lends UIBase.Constrain.prototype
+     */
+    {
+        /**
+         * true:viewport限制，node:限制在该节点范围
+         * @type HTMLElement|boolean
+         */
         constrain:{
             //不限制
             //true:viewport限制

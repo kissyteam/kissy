@@ -39,15 +39,15 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
         }
 
         if (handler) {
-            self.set("activeHandler", handler);
+            self.__set("activeHandler", handler);
             node = self._getNode(handler);
         } else {
             return;
         }
 
         // 找到 handler 确定 委托的 node ，就算成功了
-        self.set("node", node);
-        self.set("dragNode", node);
+        self.__set("node", node);
+        self.__set("dragNode", node);
         self._prepare(ev);
     }
 

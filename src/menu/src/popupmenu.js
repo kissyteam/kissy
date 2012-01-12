@@ -45,6 +45,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
 
     /**
      * @name PopMenu
+     * @memberOf Menu
      * @constructor
      */
     var PopMenu = UIBase.create(Menu, [

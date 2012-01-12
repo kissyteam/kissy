@@ -30,9 +30,9 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         // what we want).
         self.create();
         var contentEl = self.getContentElement();
-        c.set("parent", self);
-        c.set("render", contentEl);
-        c.set("elBefore", elBefore);
+        c.__set("parent", self);
+        c.__set("render", contentEl);
+        c.__set("elBefore", elBefore);
         // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
         if (self.get("rendered")) {
             c.render();
@@ -109,6 +109,8 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
      * @class
      * @memberOf Component
      * @name ModelControl
+     * @extends UIBase
+     * @extends UIBase.Box
      */
     var ModelControl = UIBase.create([UIBase.Box],
         /** @lends Component.ModelControl.prototype */
@@ -170,7 +172,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                 if (!self.get("allowTextSelection_")) {
                     view.get("el").unselectable();
                 }
-                self.set("view", view);
+                self.__set("view", view);
             },
 
             /**
@@ -222,7 +224,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                 S.each(t, function (c) {
                     self.removeChild(c, destroy);
                 });
-                self.set("children", []);
+                self.__set("children", []);
             },
 
             getChildAt:function (index) {

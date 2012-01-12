@@ -7,6 +7,19 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
         return S.require("uibase/" + s);
     }
 
+    /**
+     * @class
+     * @namespace
+     * @name Overlay
+     * @extends Component.ModelControl
+     * @extends UIBase.ContentBox
+     * @extends UIBase.Position
+     * @extends UIBase.Loading
+     * @extends UIBase.Align
+     * @extends UIBase.Close
+     * @extends UIBase.Resize
+     * @extends UIBase.Mask
+     */
     var Overlay = UIBase.create(Component.ModelControl, [
         require("contentbox"),
         require("position"),

@@ -155,6 +155,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
             /**
              * Inserts the new node as the previous sibling of the reference node.
+             * @param {HTMLElement|HTMLElement[]} newNodes 将要插入的新节点
+             * @param {HTMLElement|HTMLElement[]|String} refNodes 插入的参照节点位置
              */
             insertBefore:function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -166,6 +168,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
             /**
              * Inserts the new node as the next sibling of the reference node.
+             * @param {HTMLElement|HTMLElement[]} newNodes 将要插入的新节点
+             * @param {HTMLElement|HTMLElement[]|String} refNodes 插入的参照节点位置
              */
             insertAfter:function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -177,6 +181,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
             /**
              * Inserts the new node as the last child.
+             * @param {HTMLElement|HTMLElement[]} newNodes 将要插入的新节点
+             * @param {HTMLElement|HTMLElement[]|String} parents 插入的参照父节点位置
              */
             appendTo:function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
@@ -186,6 +192,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
             /**
              * Inserts the new node as the first child.
+             * @param {HTMLElement|HTMLElement[]} newNodes 将要插入的新节点
+             * @param {HTMLElement|HTMLElement[]|String} parents 插入的参照父节点位置
              */
             prependTo:function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {

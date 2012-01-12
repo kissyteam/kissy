@@ -262,7 +262,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                         srcNode:el,
                         prefixCls:cls
                     }, self.get("menuCfg")));
-                    self.set("menu", menu);
+                    self.__set("menu", menu);
                 },
 
                 /**

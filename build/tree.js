@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Jan 12 17:29
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -232,8 +232,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
 
             addChild:function(c) {
                 var self = this,tree = self.get("tree");
-                c.set("tree", tree);
-                c.set("depth", self.get('depth') + 1);
+                c.__set("tree", tree);
+                c.__set("depth", self.get('depth') + 1);
                 BaseNode.superclass.addChild.call(self, c);
                 self._updateRecursive();
                 tree._register(c);
@@ -477,7 +477,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
             rowEl = $("<div class='" + self.getCls(ROW_CLS) + "'/>");
             id = S.guid('tree-item');
-            self.set("rowEl", rowEl);
+            self.__set("rowEl", rowEl);
 
             var expandIconEl = $("<div/>")
                 .appendTo(rowEl);
@@ -486,7 +486,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
 
             if (!labelEl) {
                 labelEl = $("<span id='" + id + "' class='" + self.getCls(LABEL_CLS) + "'/>");
-                self.set("labelEl", labelEl);
+                self.__set("labelEl", labelEl);
             }
             labelEl.appendTo(rowEl);
 
@@ -495,8 +495,8 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
                 "aria-labelledby":id
             }).prepend(rowEl);
 
-            self.set("expandIconEl", expandIconEl);
-            self.set("iconEl", iconEl);
+            self.__set("expandIconEl", expandIconEl);
+            self.__set("iconEl", iconEl);
 
         },
 
@@ -556,7 +556,7 @@ KISSY.add("tree/basenoderender", function(S, Node, UIBase, Component) {
             var c = $("<div " + (self.get("expanded") ? "" : "style='display:none'")
                 + " role='group'><" + "/div>")
                 .appendTo(self.get("el"));
-            self.set("childrenEl", c);
+            self.__set("childrenEl", c);
             return c;
         }
     }, {
@@ -735,7 +735,7 @@ KISSY.add("tree/checknoderender", function(S, Node, UIBase, Component, BaseNodeR
             var expandIconEl = self.get("expandIconEl"),
                 checkEl = $("<div class='" + self.getCls(INLINE_BLOCK + " " + " "
                     + ICON_CLS) + "'/>").insertAfter(expandIconEl);
-            self.set("checkEl", checkEl);
+            self.__set("checkEl", checkEl);
         },
 
         _uiSetCheckState:function(s) {

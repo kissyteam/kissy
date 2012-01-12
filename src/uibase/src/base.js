@@ -30,6 +30,13 @@ KISSY.add('uibase/base', function (S, Base, Node) {
         initHierarchy(this, config);
         // 是否自动渲染
         config && config.autoRender && this.render();
+
+        /**
+         * @name UIBase#afterRenderUI
+         * @description fired when root node is ready
+         * @event
+         * @param e
+         */
     }
 
     /**

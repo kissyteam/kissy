@@ -9,6 +9,7 @@ KISSY.add("component", function (KISSY, ModelControl, Render, Container, UIStore
      * @namespace
      */
     var Component = {
+        ModelControl:ModelControl,
         Render:Render,
         Container:Container,
         UIStore:UIStore,

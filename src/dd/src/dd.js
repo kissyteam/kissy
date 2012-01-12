@@ -5,6 +5,7 @@
 KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
     /**
      * @name DD
+     * @namespace
      */
     var DD;
     DD = {

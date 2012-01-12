@@ -34,9 +34,9 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     /**
      * Retrieves an Array of HTMLElement based on the given CSS selector.
-     * @param {String|Array<HTMLElement>} selector
-     * @param {String|Array<HTMLElement>} [context] find elements matching selector under context
-     * @return {Array} The array of found HTMLElement
+     * @param {String|HTMLElement[]} selector
+     * @param {String|HTMLElement[]} [context] find elements matching selector under context
+     * @return {HTMLElement[]} The array of found HTMLElement
      */
     function query(selector, context) {
         var ret,
@@ -428,82 +428,112 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         S.error('Unsupported selector: ' + msg);
     }
 
-    S.mix(DOM, {
-
-        query:query,
-
-        get:function (selector, context) {
-            return query(selector, context)[0] || null;
-        },
-
-        unique:unique,
-
+    S.mix(DOM,
         /**
-         * Filters an array of elements to only include matches of a filter.
-         * @param filter selector or fn
+         * @lends DOM
          */
-        filter:function (selector, filter, context) {
-            var elems = query(selector, context),
-                sizzle = require("sizzle"),
-                match,
-                tag,
-                id,
-                cls,
-                ret = [];
+        {
 
-            // 默认仅支持最简单的 tag.cls 或 #id 形式
-            if (isString(filter) &&
-                (filter = trim(filter)) &&
-                (match = REG_QUERY.exec(filter))) {
-                id = match[1];
-                tag = match[2];
-                cls = match[3];
-                if (!id) {
-                    filter = function (elem) {
-                        var tagRe = true, clsRe = true;
+            /**
+             * Retrieves an Array of HTMLElement based on the given CSS selector.
+             * @param {String|HTMLElement[]} selector
+             * @function
+             * @param {String|HTMLElement[]} [context] find elements matching selector under context
+             * @return {HTMLElement[]} The array of found HTMLElement
+             */
+            query:query,
 
-                        // 指定 tag 才进行判断
-                        if (tag) {
-                            tagRe = nodeName(elem, tag);
+            /**
+             * Retrieves an Array of HTMLElement based on the given CSS selector.
+             * @param {String|HTMLElement[]} selector
+             * @param {String|HTMLElement[]} [context] find elements matching selector under context
+             * @return {HTMLElement} the first element of array of found HTMLElement
+             */
+            get:function (selector, context) {
+                return query(selector, context)[0] || null;
+            },
+
+            /**
+             * 对一批元素集合去重
+             * @param {HTMLElement[]} elements
+             * @function
+             * @return {HTMLElement[]} 去重后的元素集合
+             */
+            unique:unique,
+
+            /**
+             * Filters an array of elements to only include matches of a filter.
+             * @param {String|HTMLElement[]} selector
+             * @param {String|Function} filter filter selector or filter function
+             * @param {String|HTMLElement[]} [context] find elements matching selector under context
+             * @return {HTMLElement[]} 过滤后的元素集合
+             */
+            filter:function (selector, filter, context) {
+                var elems = query(selector, context),
+                    sizzle = require("sizzle"),
+                    match,
+                    tag,
+                    id,
+                    cls,
+                    ret = [];
+
+                // 默认仅支持最简单的 tag.cls 或 #id 形式
+                if (isString(filter) &&
+                    (filter = trim(filter)) &&
+                    (match = REG_QUERY.exec(filter))) {
+                    id = match[1];
+                    tag = match[2];
+                    cls = match[3];
+                    if (!id) {
+                        filter = function (elem) {
+                            var tagRe = true, clsRe = true;
+
+                            // 指定 tag 才进行判断
+                            if (tag) {
+                                tagRe = nodeName(elem, tag);
+                            }
+
+                            // 指定 cls 才进行判断
+                            if (cls) {
+                                clsRe = hasClass(elem, cls);
+                            }
+
+                            return clsRe && tagRe;
                         }
-
-                        // 指定 cls 才进行判断
-                        if (cls) {
-                            clsRe = hasClass(elem, cls);
-                        }
-
-                        return clsRe && tagRe;
+                    } else if (id && !tag && !cls) {
+                        filter = function (elem) {
+                            return idEq(elem, id);
+                        };
                     }
-                } else if (id && !tag && !cls) {
-                    filter = function (elem) {
-                        return idEq(elem, id);
-                    };
                 }
-            }
 
-            if (S.isFunction(filter)) {
-                ret = S.filter(elems, filter);
-            }
-            // 其它复杂 filter, 采用外部选择器
-            else if (filter && sizzle) {
-                ret = sizzle.matches(filter, elems);
-            }
-            // filter 为空或不支持的 selector
-            else {
-                error(filter);
-            }
+                if (S.isFunction(filter)) {
+                    ret = S.filter(elems, filter);
+                }
+                // 其它复杂 filter, 采用外部选择器
+                else if (filter && sizzle) {
+                    ret = sizzle.matches(filter, elems);
+                }
+                // filter 为空或不支持的 selector
+                else {
+                    error(filter);
+                }
 
-            return ret;
-        },
+                return ret;
+            },
 
-        /**
-         * Returns true if the passed element(s) match the passed filter
-         */
-        test:function (selector, filter, context) {
-            var elements = query(selector, context);
-            return elements.length && (DOM.filter(elements, filter, context).length === elements.length);
-        }
-    });
+            /**
+             * Returns true if the passed element(s) match the passed filter
+             * @param {String|HTMLElement[]} selector
+             * @param {String|Function} filter filter selector or filter function
+             * @param {String|HTMLElement[]} [context] find elements matching selector under context
+             * @returns {Boolean}
+             */
+            test:function (selector, filter, context) {
+                var elements = query(selector, context);
+                return elements.length && (DOM.filter(elements, filter, context).length === elements.length);
+            }
+        });
 
 
     function idEq(elem, id) {

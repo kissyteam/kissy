@@ -7,12 +7,12 @@ KISSY.add("button/split", function(S) {
     var handles = {
         content:function(e) {
             var first = this,t = e.target;
-            first.set("content", t.get("content"));
-            first.set("value", t.get("value"));
+            first.__set("content", t.get("content"));
+            first.__set("value", t.get("value"));
         },
         value:function(e) {
             var first = this,t = e.target;
-            first.set("value", t.get("value"));
+            first.__set("value", t.get("value"));
         }
     };
 
@@ -42,8 +42,8 @@ KISSY.add("button/split", function(S) {
                 eventHandler = handles[self.get("eventHandler")],
                 first = self.get("first"),
                 second = self.get("second");
-            first.set("collapseSide", "right");
-            second.set("collapseSide", "left");
+            first.__set("collapseSide", "right");
+            second.__set("collapseSide", "left");
             first.render();
             second.render();
             if (eventType && eventHandler) {

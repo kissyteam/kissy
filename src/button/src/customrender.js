@@ -31,7 +31,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
                 for (var i = 0; i < elChildren.length; i++) {
                     innerEl.append(elChildren[i]);
                 }
-                self.set("innerEl", innerEl);
+                self.__set("innerEl", innerEl);
             },
 
             /**

@@ -10,7 +10,7 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
     S.augment(DecorateChildren, {
         decorateInternal:function(el) {
             var self = this;
-            self.set("el", el);
+            self.__set("el", el);
             self.decorateChildren(el);
         },
 

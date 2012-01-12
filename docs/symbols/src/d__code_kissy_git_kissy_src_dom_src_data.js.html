@@ -168,7 +168,7 @@
 <span id='line161' class='line'>161</span> 
 <span id='line162' class='line'>162</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line163' class='line'>163</span>              * whether any node has data
-<span id='line164' class='line'>164</span>              * @param {HTMLElement[]|String} selector 选择器或节点数组
+<span id='line164' class='line'>164</span>              * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
 <span id='line165' class='line'>165</span>              * @param {String} [name] 数据键名
 <span id='line166' class='line'>166</span>              * @returns {boolean} 节点是否有关联数据键名的值
 <span id='line167' class='line'>167</span>              */</span><span class="WHIT">
@@ -190,7 +190,7 @@
 <span id='line183' class='line'>183</span> 
 <span id='line184' class='line'>184</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line185' class='line'>185</span>              * Store arbitrary data associated with the matched elements.
-<span id='line186' class='line'>186</span>              * @param {HTMLElement[]|String} selector 选择器或节点数组
+<span id='line186' class='line'>186</span>              * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
 <span id='line187' class='line'>187</span>              * @param {String} [name] 数据键名
 <span id='line188' class='line'>188</span>              * @param {String} [data] 数据键值
 <span id='line189' class='line'>189</span>              * @returns 当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值
@@ -235,7 +235,7 @@
 <span id='line228' class='line'>228</span> 
 <span id='line229' class='line'>229</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line230' class='line'>230</span>              * Remove a previously-stored piece of data.
-<span id='line231' class='line'>231</span>              * @param {HTMLElement[]|String} selector 选择器或节点数组
+<span id='line231' class='line'>231</span>              * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
 <span id='line232' class='line'>232</span>              * @param {String} [name] 数据键名，不设置时删除关联节点的所有键值对
 <span id='line233' class='line'>233</span>              */</span><span class="WHIT">
 <span id='line234' class='line'>234</span> </span><span class="WHIT">            </span><span class="NAME">removeData</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">

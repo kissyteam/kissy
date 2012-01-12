@@ -59,8 +59,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 }
 
                 if (ret) {
-                    self.set("lastNode", self.get("node"));
-                    self.set("node", ret);
+                    self.__set("lastNode", self.get("node"));
+                    self.__set("node", ret);
                 }
 
                 return ret;
@@ -69,8 +69,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             _handleOut:function () {
                 var self = this;
                 DroppableDelegate.superclass._handleOut.apply(self, arguments);
-                self.set("node", 0);
-                self.set("lastNode", 0);
+                self.__set("node", 0);
+                self.__set("lastNode", 0);
             },
 
             _handleOver:function (ev) {
@@ -85,12 +85,12 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                     /**
                      * 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
                      */
-                    self.set("node", lastNode);
+                    self.__set("node", lastNode);
                     superOut.apply(self, arguments);
                     /**
                      * 再通知这次的进入
                      */
-                    self.set("node", node);
+                    self.__set("node", node);
                     superEnter.call(self, ev);
                 } else {
                     superOver.call(self, ev);
@@ -98,8 +98,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             },
 
             _end:function () {
-                DroppableDelegate.superclass._end.apply(this, arguments);
-                this.set("node", 0);
+                var self=this;
+                DroppableDelegate.superclass._end.apply(self, arguments);
+                self.__set("node", 0);
             }
         },
         {

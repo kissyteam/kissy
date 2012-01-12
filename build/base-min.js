@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 4 20:38
+build time: Jan 12 17:28
 */
 KISSY.add("base/attribute",function(h,l){function r(a,b){if(h.isString(b))return a[b];return b}function o(a,b,c,d,g,e,i){i=i||c;return a.fire(b+(c.charAt(0).toUpperCase()+c.substring(1))+"Change",{attrName:i,subAttrName:e,prevVal:d,newVal:g})}function k(a,b,c){var d=a[b]||{};if(c)a[b]=d;return d}function f(a){return k(a,"__attrs",true)}function m(a){return k(a,"__attrVals",true)}function p(a,b){for(var c=0,d=b.length;a!=l&&c<d;c++)a=a[b[c]];return a}function s(a,b,c,d,g){d=d||{};var e,i,j,q=b;if(b.indexOf(".")!==
 -1){e=b.split(".");b=e.shift()}j=a.get(b);if(e)i=p(j,e);if(!(!e&&j===c))if(!(e&&i===c)){if(e){var n=i=h.clone(j),v=e.length-1;if(v>=0){for(var u=0;u<v;u++)n=n[e[u]];if(n!=l)n[e[u]]=c}c=i}if(!d.silent)if(false===o(a,"before",b,j,c,q))return false;c=a.__set(b,c);if(c===false)return c;if(!d.silent){c=m(a)[b];o(a,"after",b,j,c,q);g?g.push({prevVal:j,newVal:c,attrName:b,subAttrName:q}):o(a,"","*",[j],[c],[q],[b])}return a}}function t(){}t.INVALID={};var w=t.INVALID;h.augment(t,{getAttrs:function(){return f(this)},
