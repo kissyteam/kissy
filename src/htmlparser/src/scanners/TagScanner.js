@@ -2,7 +2,7 @@
  * @fileOverview nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanners) {
+KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanners) {
 
     var /**
      * will create ul when encounter li and li's parent is not ul
@@ -46,7 +46,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
         var valid = 1,
             childNodes = [].concat(tag.childNodes);
 
-        S.each(childNodes, function(c) {
+        S.each(childNodes, function (c) {
             if (!canHasNodeAsChild(tag, c)) {
                 valid = 0;
                 return false;
@@ -57,14 +57,25 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
             return 0;
         }
 
-        var holder = tag.clone(),
+        var
+            // a valid element which will replace current invalid tag
+            // and move tag's children to holder validly !
+            holder = tag.clone(),
+            // last escape position that tag's children can be insertAfter
+            // escape from its parent if its parent can not include him :(
             prev = tag,
             recursives = [];
 
         function closeCurrentHolder() {
             if (holder.childNodes.length) {
+                // close current holder
                 holder.insertAfter(prev);
+                // if child can not be included in holder
+                // : <a><a></a></a>
+                // then will insertAfter last holder
                 prev = holder;
+                // open new holder to accommodate child which can reside in holder
+                // <a>1<a>2</a>3</a> => <a>1</a>(-<close holder)<a>2</a>(<-child can not be included in holder)<a>3</a>(<-new holder)
                 holder = tag.clone();
             }
         }
@@ -107,33 +118,34 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                     continue;
                 }
 
-                // only deal with inline element mistakenly wrap block element
-                if (dtd.$inline[tag.tagName]) {
-                    closeCurrentHolder();
-                    if (!c.equals(holder)) {
-                        // <a><p></p></a> => <p><a></a></p>
-                        if (canHasNodeAsChild(c, holder)) {
-                            holder = tag.clone();
-                            S.each(c.childNodes, function(cc) {
-                                holder.appendChild(cc);
-                            });
-                            c.empty();
-                            c.insertAfter(prev);
-                            prev = c;
-                            c.appendChild(holder);
-                            // recursive to a , lower
-                            recursives.push(holder);
-                            holder = tag.clone();
-                        } else {
-                            // <a href='1'> <a href='2'>2</a> </a>
-                            c.insertAfter(prev);
-                            prev = c;
-                        }
+                // only deal with inline element mistakenly wrap block element ?
+                // also consider <pre>1 \n<div>2\n 3\n</div> 4</pre> : 2012-01-13
+                // if (dtd.$inline[tag.tagName]) {
+                closeCurrentHolder();
+                if (!c.equals(holder)) {
+                    // <a><p></p></a> => <p><a></a></p>
+                    if (canHasNodeAsChild(c, holder)) {
+                        holder = tag.clone();
+                        S.each(c.childNodes, function (cc) {
+                            holder.appendChild(cc);
+                        });
+                        c.empty();
+                        c.insertAfter(prev);
+                        prev = c;
+                        c.appendChild(holder);
+                        // recursive to a,lower
+                        recursives.push(holder);
+                        holder = tag.clone();
                     } else {
+                        // <a href='1'> <a href='2'>2</a> </a>
                         c.insertAfter(prev);
                         prev = c;
                     }
+                } else {
+                    c.insertAfter(prev);
+                    prev = c;
                 }
+                // }
             }
         }
 
@@ -151,7 +163,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
         // <div><a><div>1</div></a></div>
 
         // => fixCloseTagByDtd("<a><div>1</div></a>")
-        S.each(recursives, function(r) {
+        S.each(recursives, function (r) {
             fixCloseTagByDtd(r, opts);
         });
 
@@ -177,12 +189,12 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
         if (node.nodeType == 3) {
             nodeName = '#';
         }
-        return !! dtd[tag.tagName][nodeName];
+        return !!dtd[tag.tagName][nodeName];
     }
 
 
     return {
-        scan:function(tag, lexer, opts) {
+        scan:function (tag, lexer, opts) {
 
             function closeStackOpenTag(end, from) {
                 for (i = end; i > from; i--) {
@@ -225,7 +237,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
             // http://www.w3.org/TR/html5/parsing.html#stack-of-open-elements
             // stack of open elements
             stack = opts.stack = opts.stack || [];
-            do{
+            do {
                 node = lexer.nextNode();
                 if (node) {
                     if (node.nodeType === 1) {
@@ -261,7 +273,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
                                 }
                             }
                         } else if (node.isEndTag()) {
-                            // encouter a end tag without open tag
+                            // encounter a end tag without open tag
                             // There are two cases...
                             // 1) The tag hasn't been registered, in which case
                             // we just add it as a simple child, like it's
@@ -322,9 +334,8 @@ KISSY.add("htmlparser/scanners/TagScanner", function(S, dtd, Tag, SpecialScanner
 
             // root tag fix
             fixCloseTagByDtd(tag, opts);
-
         }
     };
 }, {
-    requires:["../dtd","../nodes/Tag","./SpecialScanners"]
+    requires:["../dtd", "../nodes/Tag", "./SpecialScanners"]
 });
