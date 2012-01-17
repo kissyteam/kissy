@@ -468,6 +468,26 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
             self.switchTo(activeIndex < self.length - 1 ?
                 activeIndex + 1 :
                 0, FORWARD, ev);
+        },
+
+        destroy: function() {
+            // destroy self
+            // todo
+
+            var self = this,
+                pluginHost = self.constructor;
+
+            // destroy plugins by Hierarchy
+            while (pluginHost) {
+                S.each(pluginHost.Plugins, function(plugin) {
+                    if (plugin.destroy) {
+                        plugin.destroy(self);
+                    }
+                });
+                pluginHost = pluginHost.superclass ?
+                    pluginHost.superclass.constructor :
+                    null;
+            }
         }
     });
 
