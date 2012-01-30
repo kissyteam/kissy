@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 12 17:29
+build time: Jan 30 11:18
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -919,6 +919,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
 
     /**
      * @name PopMenu
+     * @memberOf Menu
      * @constructor
      */
     var PopMenu = UIBase.create(Menu, [

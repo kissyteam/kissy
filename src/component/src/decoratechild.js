@@ -2,15 +2,16 @@
  * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decoratechild", function(S, DecorateChildren) {
+KISSY.add("component/decoratechild", function (S, DecorateChildren) {
     function DecorateChild() {
 
     }
 
     S.augment(DecorateChild, DecorateChildren, {
-        decorateInternal:function(element) {
+        decorateInternal:function (element) {
             var self = this;
-            self.__set("el", element);
+            // 不用 __set , 通知 view 更新
+            self.set("el", element);
             var ui = self.get("decorateChildCls"),
                 prefixCls = self.get("prefixCls"),
                 child = element.one("." + self.getCls(ui));

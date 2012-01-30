@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 12 17:28
+build time: Jan 30 11:18
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -14,6 +14,7 @@ KISSY.add("component", function (KISSY, ModelControl, Render, Container, UIStore
      * @namespace
      */
     var Component = {
+        ModelControl:ModelControl,
         Render:Render,
         Container:Container,
         UIStore:UIStore,
@@ -51,15 +52,16 @@ KISSY.add("component/container", function (S, UIBase, ModelControl, UIStore, Del
  * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/decoratechild", function(S, DecorateChildren) {
+KISSY.add("component/decoratechild", function (S, DecorateChildren) {
     function DecorateChild() {
 
     }
 
     S.augment(DecorateChild, DecorateChildren, {
-        decorateInternal:function(element) {
+        decorateInternal:function (element) {
             var self = this;
-            self.__set("el", element);
+            // 不用 __set , 通知 view 更新
+            self.set("el", element);
             var ui = self.get("decorateChildCls"),
                 prefixCls = self.get("prefixCls"),
                 child = element.one("." + self.getCls(ui));
@@ -92,7 +94,8 @@ KISSY.add("component/decoratechildren", function(S, UIStore) {
     S.augment(DecorateChildren, {
         decorateInternal:function(el) {
             var self = this;
-            self.__set("el", el);
+            // 不用 __set , 通知 view 更新
+            self.set("el", el);
             self.decorateChildren(el);
         },
 
@@ -214,17 +217,18 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
-            var value = ev.newVal, self = this;
-            self.get("view") && self.get("view").set(attrName, value);
+            var value = ev.newVal,
+                self = this,
+                view = self.get("view");
+            view && view.set(attrName, value);
         };
     }
 
     function wrapperViewGetter(attrName) {
         return function (v) {
-            var self = this;
-            return v === undefined ?
-                self.get("view") && self.get("view").get(attrName) :
-                v;
+            var self = this,
+                view = self.get("view");
+            return v === undefined ? view && view.get(attrName) : v;
         };
     }
 
@@ -238,8 +242,9 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         self.create();
         var contentEl = self.getContentElement();
         c.__set("parent", self);
-        c.__set("render", contentEl);
-        c.__set("elBefore", elBefore);
+        // set 通知 view 也更新对应属性
+        c.set("render", contentEl);
+        c.set("elBefore", elBefore);
         // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
         if (self.get("rendered")) {
             c.render();
@@ -247,10 +252,10 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
         // 子组件和 parent 组件一起渲染
         else {
-// 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
+            // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
             c.create();
-            contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0] || null);
-
+            // 设置好，render 时插入到对应位置，这里不需要了
+            // contentEl[0].insertBefore(c.get("el")[0], elBefore && elBefore[0] || null);
         }
     }
 
@@ -316,6 +321,8 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
      * @class
      * @memberOf Component
      * @name ModelControl
+     * @extends UIBase
+     * @extends UIBase.Box
      */
     var ModelControl = UIBase.create([UIBase.Box],
         /** @lends Component.ModelControl.prototype */
@@ -332,13 +339,13 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
                     if (attrs.hasOwnProperty(attrName)) {
                         var attrCfg = attrs[attrName];
                         if (attrCfg.view) {
-// setter 不应该有实际操作，仅用于正规化比较好
-// attrCfg.setter = wrapperViewSetter(attrName);
+                            // setter 不应该有实际操作，仅用于正规化比较好
+                            // attrCfg.setter = wrapperViewSetter(attrName);
                             self.on("after" + capitalFirst(attrName) + "Change",
                                 wrapperViewSetter(attrName));
-// 逻辑层读值直接从 view 层读
-// 那么如果存在默认值也设置在 view 层
-// 逻辑层不要设置 getter
+                            // 逻辑层读值直接从 view 层读
+                            // 那么如果存在默认值也设置在 view 层
+                            // 逻辑层不要设置 getter
                             attrCfg.getter = wrapperViewGetter(attrName);
                         }
                     }
@@ -350,15 +357,16 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
              * finally，不能被 override
              */
             renderUI:function () {
-                var self = this;
+                var self = this, i, child;
                 self.get("view").render();
                 //then render my children
                 var children = self.get("children");
-                S.each(children, function (child) {
+                for (i = 0; i < children.length; i++) {
+                    child = children[i];
                     // 不在 Base 初始化设置属性时运行，防止和其他初始化属性冲突
                     initChild(self, child);
                     child.render();
-                });
+                }
             },
 
             /**
@@ -425,10 +433,11 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
 
             removeChildren:function (destroy) {
                 var self = this,
+                    i,
                     t = [].concat(self.get("children"));
-                S.each(t, function (c) {
-                    self.removeChild(c, destroy);
-                });
+                for (i = 0; i < t.length; i++) {
+                    self.removeChild(t[i], destroy);
+                }
                 self.__set("children", []);
             },
 
@@ -532,14 +541,14 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
              * @param ev
              */
             _handleMouseDown:function (ev) {
-                var self = this;
+                var self = this, el;
                 if (self.get("disabled")) {
                     return true;
                 }
                 if (ev.which == 1 && self.get("activeable")) {
                     self.set("active", true);
                 }
-                var el = self.getKeyEventTarget();
+                el = self.getKeyEventTarget();
                 // 左键，否则 unselectable 在 ie 下鼠标点击获得不到焦点
                 if (ev.which == 1 && el.attr("tabindex") >= 0) {
                     el[0].focus();
@@ -650,16 +659,17 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
              */
             _performInternal:function (e) {
                 if (0) {
-                    S.log(e);
+                    alert(e);
                 }
             },
 
             destructor:function () {
                 var self = this,
+                    i,
                     children = self.get("children");
-                S.each(children, function (child) {
-                    child.destroy();
-                });
+                for (i = 0; i < children.length; i++) {
+                    children[i].destroy();
+                }
                 var view = self.get("view");
                 if (view) {
                     view.destroy();
@@ -750,6 +760,10 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
 
             DefaultRender:Render
         });
+
+    if (0) {
+        ModelControl._uiSetHandleMouseEvents()._uiSetActive();
+    }
 
     return ModelControl;
 }, {
