@@ -208,7 +208,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                     var self = this,
                         m = getMenu(self);
                     if (!m) {
-                        m = self._constructMenu();
+                        m = self.constructMenu();
                     }
                     return m;
                 },
