@@ -1,24 +1,25 @@
 {
     "name": "kissy",
-    "version": "1.2",
+    "version": "1.2.0",
     "description": "KISSY on NodeJS",
     "author": "yiminghe <yiminghe@gmail.com>",
+    "homepage":"http://docs.kissyui.com",
     "bugs": {
-        "web" : "https://github.com/kissyteam/kissy/issues"
+        "url" : "https://github.com/kissyteam/kissy/issues"
     },
     "os": ["windows", "linux"],
     "contributors": [
         "Jayli <lijing00333@163.com>"
     ],
     "engines": {
-        "node" : ">=0.2.0"
+        "node" : ">=0.4.0"
     },
     "directories": {
         "lib" : "../../build"
     },
     "main": "../../build/kissy-nodejs.js",
     "dependencies": {
-        "jsdom": ">=0.2"
+        "jsdom": ">=0.1.10"
     },
     "licenses":[
         {
@@ -28,6 +29,6 @@
     ],
     "repository": {
         "type":"git",
-        "url":"https://github.com/kissyteam/kissy/tree/module_experiment"
+        "url":"http://github.com/kissyteam/kissy.git"
     }
 }

@@ -4,7 +4,7 @@
  */
 (function (S, loader, utils, data) {
 
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
 

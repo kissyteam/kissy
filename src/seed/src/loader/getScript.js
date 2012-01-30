@@ -3,7 +3,7 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,

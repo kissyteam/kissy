@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 (function(S, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     // 脚本(loadQueue)/模块(mod) 公用状态

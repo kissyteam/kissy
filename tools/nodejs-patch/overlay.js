@@ -41,5 +41,5 @@ S.use("overlay", function(S, Overlay) {
         "}" +
         "</style>";
     console.log(document.innerHTML);
-    fs.writeFile("demo.html", document.innerHTML);
+    fs.writeFile("./tools/nodejs-patch/overlay.html", document.innerHTML);
 });

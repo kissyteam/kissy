@@ -3,7 +3,7 @@
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader,data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var LOADED = data.LOADED,

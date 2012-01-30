@@ -4,7 +4,7 @@
  * @description constant member and common method holder
  */
 (function(S, loader, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var ATTACHED = data.ATTACHED,

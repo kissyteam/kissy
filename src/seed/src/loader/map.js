@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S, loader) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     /**

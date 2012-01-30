@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 13 15:55
+build time: Jan 30 20:09
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -95,7 +95,7 @@ build time: Jan 13 15:55
             /**
              * @private
              */
-            configs:{},
+            configs:(S.configs || {}),
             // S.app() with these members.
             __APP_MEMBERS:['namespace'],
             __APP_INIT_METHODS:['__init'],
@@ -110,7 +110,7 @@ build time: Jan 13 15:55
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120113155537',
+            buildTime:'20120130200903',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1429,7 +1429,7 @@ build time: Jan 13 15:55
  * @author yiminghe@gmail.com
  */
 (function(S){
-    if("require" in this) {
+    if(typeof require !== 'undefined') {
         return;
     }
     S.__loader={};
@@ -1440,7 +1440,7 @@ build time: Jan 13 15:55
  * @author yiminghe@gmail.com
  */
 (function(S, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     // 脚本(loadQueue)/模块(mod) 公用状态
@@ -1457,7 +1457,7 @@ build time: Jan 13 15:55
  * @author yiminghe@gmail.com
  */
 (function(S, loader, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var ua = navigator.userAgent,doc = document;
@@ -1585,7 +1585,7 @@ build time: Jan 13 15:55
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var CSS_POLL_INTERVAL = 30,
@@ -1711,7 +1711,7 @@ build time: Jan 13 15:55
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
@@ -1838,7 +1838,7 @@ build time: Jan 13 15:55
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function (S, loader, utils, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var IE = utils.IE,
@@ -1998,7 +1998,7 @@ build time: Jan 13 15:55
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, loader, utils, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     S.mix(loader, {
@@ -2044,7 +2044,7 @@ build time: Jan 13 15:55
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     S.mix(loader, {
@@ -2082,7 +2082,7 @@ build time: Jan 13 15:55
  * @author yiminghe@gmail.com
  */
 (function (S, loader, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     S.mix(loader, {
@@ -2143,7 +2143,7 @@ build time: Jan 13 15:55
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function(S, loader, utils, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var IE = utils.IE,
@@ -2276,7 +2276,7 @@ build time: Jan 13 15:55
  * @description constant member and common method holder
  */
 (function(S, loader, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var ATTACHED = data.ATTACHED,
@@ -2359,7 +2359,7 @@ build time: Jan 13 15:55
  * @author yiminghe@gmail.com
  */
 (function (S, loader, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     /**
@@ -2416,7 +2416,7 @@ build time: Jan 13 15:55
  * @author  yiminghe@gmail.com,lifesinger@gmail.com
  */
 (function(S, loader,data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var LOADED = data.LOADED,
@@ -2451,7 +2451,7 @@ build time: Jan 13 15:55
  */
 (function (S, loader, utils, data) {
 
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
 
@@ -2721,7 +2721,7 @@ build time: Jan 13 15:55
  * @author yiminghe@gmail.com
  */
 (function (S, loader) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     /**
@@ -2760,7 +2760,7 @@ build time: Jan 13 15:55
  *  @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, loader, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     S.mix(S, loader);

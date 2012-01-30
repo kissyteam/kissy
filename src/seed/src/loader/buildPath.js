@@ -3,7 +3,7 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
 (function (S, loader, utils, data) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     S.mix(loader, {

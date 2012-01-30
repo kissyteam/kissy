@@ -3,7 +3,7 @@
  * @author  yiminghe@gmail.com
  */
 (function(S, utils) {
-    if ("require" in this) {
+    if (typeof require !== 'undefined') {
         return;
     }
     var CSS_POLL_INTERVAL = 30,

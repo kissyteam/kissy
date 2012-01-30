@@ -90,7 +90,7 @@
             /**
              * @private
              */
-            configs:{},
+            configs:(S.configs || {}),
             // S.app() with these members.
             __APP_MEMBERS:['namespace'],
             __APP_INIT_METHODS:['__init'],
