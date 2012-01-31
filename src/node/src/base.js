@@ -92,17 +92,10 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         },
 
         slice:function (start, end) {
-            var args = [];
             // ie<9 : [1,2].slice(-2,undefined) => []
             // ie<9 : [1,2].slice(-2) => []
             // fix #85
-            S.each(arguments, function (a) {
-                if (a === undefined) {
-                    return false;
-                }
-                args.push(a);
-            });
-            return new NodeList(slice.apply(this, args));
+            return new NodeList(slice.apply(this, arguments));
         },
 
         /**

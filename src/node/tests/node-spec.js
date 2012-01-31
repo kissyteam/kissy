@@ -2,22 +2,22 @@
  * test cases for node about chained call and return value
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,node", function(S, DOM, Node) {
+KISSY.use("dom,node", function (S, DOM, Node) {
     S.one = Node.one;
     S.all = Node.all;
     var jq = jQuery;
     var $ = S.all;
     var NodeList = Node;
     //DOM 已经测试通过，通过 DOM 测 Node
-    describe("node", function() {
+    describe("node", function () {
 
-        it("setup", function() {
+        it("setup", function () {
             var textarea = $("textarea");
             $("body").append(textarea.val());
             textarea.hide();
         });
 
-        it("add works", function() {
+        it("add works", function () {
             var x = $();
             var y = x.add("<div></div><p></p>");
 
@@ -31,7 +31,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(q.item(0).getDOMNode().nodeName.toLowerCase()).toBe("b");
         });
 
-        it("should invoke dom method correctly on node", function() {
+        it("should invoke dom method correctly on node", function () {
             var n = new Node("<div id='testDiv' class='test-div'>ok</div>").appendTo(document.body);
             expect($("#testDiv")[0]).not.toBe(undefined);
             expect($("#testDiv2")[0]).toBe(undefined);
@@ -64,22 +64,22 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         });
 
 
-        it("should invoke dom method correctly on nodelist", function() {
+        it("should invoke dom method correctly on nodelist", function () {
 
             var nl = S.all(".test-div");
 
             //chain
             expect(nl.css("font-size", "20px")).toBe(nl);
 
-            nl.each(function(n) {
+            nl.each(function (n) {
                 expect(n.css("font-size")).toBe("20px");
             });
 
         });
 
 
-        it("should invoke method on window or document correctly", function() {
-            var win = S.one(window),doc = S.one(document);
+        it("should invoke method on window or document correctly", function () {
+            var win = S.one(window), doc = S.one(document);
 
             var e = DOM.viewportHeight();
 
@@ -92,7 +92,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
         });
 
-        it("should append/prepend correctly on node", function() {
+        it("should append/prepend correctly on node", function () {
             var body = S.one(document.body);
 
             var n = body.append("<div class='test-div' id='testDiv4'>ok4</div>");
@@ -107,7 +107,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         });
 
 
-        it("should append/prepend correctly on nodelist", function() {
+        it("should append/prepend correctly on nodelist", function () {
             var body = S.one(document.body);
             new Node("<div id='testDiv7' class='test-div'>ok7</div>" +
                 "<div id='testDiv8' class='test-div'>ok8</div>").appendTo(body);
@@ -150,10 +150,10 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         });
 
 
-        it("should insertBefore/insertAfter correctly", function() {
+        it("should insertBefore/insertAfter correctly", function () {
             var testDivs = S.all(".test-div");
 
-            (function() {
+            (function () {
                 S.all("<div class='test-insertafter'>insertafter1</div>" +
                     "<div class='test-insertafter2'>insertafter2</div>")
                     .insertAfter(testDivs);
@@ -168,7 +168,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
                 }
             })();
 
-            (function() {
+            (function () {
                 S.all("<div class='test-insertbefore'>insertbefore1</div>" +
                     "<div class='test-insertbefore2'>insertbefore2</div>")
                     .insertBefore(testDivs);
@@ -185,7 +185,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         });
 
 
-        it("one/all should select nodes ", function() {
+        it("one/all should select nodes ", function () {
             var body = S.one(document.body);
 
 
@@ -209,7 +209,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             }
         });
 
-        it("children should return nodelist", function() {
+        it("children should return nodelist", function () {
             var body = S.one(document.body);
             var dbivs = DOM.children(body[0], "div");
             var bdivnodes = body.children("div");
@@ -217,7 +217,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(dbivs.length).toBe(bdivnodes.length);
         });
 
-        it("one/all should create nodes", function() {
+        it("one/all should create nodes", function () {
 
             S.all("<div id='one-all-create'>one-all-create</div><div id='one-all-create2'>one-all-create2</div>")
                 .appendTo(S.one(document.body));
@@ -228,7 +228,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         });
 
 
-        it("context support Node or htmlelement", function() {
+        it("context support Node or htmlelement", function () {
 
             S.all("<div id='context-wrapper'>" +
                 "<div class='test-div'>context-wrapper : test-div</div>" +
@@ -239,9 +239,9 @@ KISSY.use("dom,node", function(S, DOM, Node) {
             expect(S.all(".test-div", DOM.get("#context-wrapper")).length).toBe(1);
         });
 
-        it("should on/detach event properly", function() {
+        it("should on/detach event properly", function () {
             var cb = S.one("#cb");
-            var handler = function() {
+            var handler = function () {
                 expect(this).toBe(cb.getDOMNode());
             };
             cb.on("click", handler);
@@ -250,11 +250,11 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
             waits(10);
 
-            runs(function() {
+            runs(function () {
                 cb.detach("click", handler);
             });
 
-            var h2 = function() {
+            var h2 = function () {
                 expect(this.className).toBe("test-div");
             };
 
@@ -262,23 +262,23 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
             var ps = body.all(".test-div");
 
-            runs(function() {
+            runs(function () {
                 ps.on("click", h2);
-                ps.each(function(n) {
+                ps.each(function (n) {
                     jasmine.simulate(n.getDOMNode(), "click");
                 });
             });
 
             waits(10);
 
-            runs(function() {
+            runs(function () {
                 ps.detach("click", h2);
             });
 
         });
 
 
-        it("should return value or chains correctly", function() {
+        it("should return value or chains correctly", function () {
             var n = new Node("<div>test return</div>").appendTo(document.body);
 
             var ret = n.attr("test", "5");
@@ -305,7 +305,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         });
 
 
-        it("should end correctly", function() {
+        it("should end correctly", function () {
             var html = $("<div id='end1'><div class='end2'></div><div class='end3'></div></div>").appendTo("body");
             html.all(".end2").text("end2").end().all(".end3").text("end3").end().append("<div class='end4'></div>");
             expect($("#end1 .end2").text()).toBe("end2");
@@ -314,7 +314,7 @@ KISSY.use("dom,node", function(S, DOM, Node) {
         });
     });
 
-    describe("selector context", function() {
+    describe("selector context", function () {
         var html = $(
             "<div id='context-test-1' class='context-test'>" +
                 "<div class='context-test-3' id='context-test-2'></div>" +
@@ -327,18 +327,18 @@ KISSY.use("dom,node", function(S, DOM, Node) {
                 "</div>" +
                 "</div>").appendTo("body");
 
-        it("should support #id", function() {
+        it("should support #id", function () {
             expect($(".context-test-3", "#context-test-1").length).toBe(1);
             expect($(".context-test-3").length).toBe(3);
             expect($(".context-test-3", "#context-test-1").attr("id")).toBe("context-test-2");
         });
 
-        it("should support other string form selector and unique works", function() {
+        it("should support other string form selector and unique works", function () {
             expect($(".context-test-3", ".context-test").length).toBe(2);
         });
 
 
-        it("should support node array form selector and unique works", function() {
+        it("should support node array form selector and unique works", function () {
             var c3 = $(".context-test-3");
             expect(c3.length).toBe(3);
             var c = $(".context-test");
@@ -353,7 +353,14 @@ KISSY.use("dom,node", function(S, DOM, Node) {
 
         });
 
-        runs(function() {
+        // #85
+        it("slice works", function () {
+            expect($("body").slice(-1)[0]).toBe(document.body);
+            expect($(".context-test-3").slice(-2).length).toBe(2);
+            expect($(".context-test-3").slice(-2, -1).length).toBe(1);
+        });
+
+        runs(function () {
             html.remove();
         });
     });
