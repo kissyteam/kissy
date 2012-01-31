@@ -37,88 +37,137 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             );
 
 
-    S.mix(DOM, {
-
-        closest:function (selector, filter, context) {
-            return nth(selector, filter, 'parentNode', function (elem) {
-                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-            }, context, true);
-        },
-
+    S.mix(DOM,
         /**
-         * Gets the parent node of the first matched element.
+         * @lends DOM
          */
-        parent:function (selector, filter, context) {
-            return nth(selector, filter, 'parentNode', function (elem) {
-                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-            }, context);
-        },
+        {
 
-        first:function (selector, filter) {
-            var elem = DOM.get(selector);
-            return nth(elem && elem.firstChild, filter, 'nextSibling',
-                undefined, undefined, true);
-        },
+            /**
+             * Get the matched node which is ancestor or is the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @param {HTMLElement|String} context dom node bounded for search
+             * @returns {HTMLElement}
+             */
+            closest:function (selector, filter, context) {
+                return nth(selector, filter, 'parentNode', function (elem) {
+                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                }, context, true);
+            },
 
-        last:function (selector, filter) {
-            var elem = DOM.get(selector);
-            return nth(elem && elem.lastChild, filter, 'previousSibling',
-                undefined, undefined, true);
-        },
+            /**
+             * Gets the ancestor of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @param {HTMLElement|String} context dom node bounded for search
+             * @returns {HTMLElement}
+             */
+            parent:function (selector, filter, context) {
+                return nth(selector, filter, 'parentNode', function (elem) {
+                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                }, context);
+            },
 
-        /**
-         * Gets the following sibling of the first matched element.
-         */
-        next:function (selector, filter) {
-            return nth(selector, filter, 'nextSibling', undefined);
-        },
+            /**
+             * Get the first child of the first matched element
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            first:function (selector, filter) {
+                var elem = DOM.get(selector);
+                return nth(elem && elem.firstChild, filter, 'nextSibling',
+                    undefined, undefined, true);
+            },
 
-        /**
-         * Gets the preceding sibling of the first matched element.
-         */
-        prev:function (selector, filter) {
-            return nth(selector, filter, 'previousSibling', undefined);
-        },
+            /**
+             * Get the last child of the first matched element
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            last:function (selector, filter) {
+                var elem = DOM.get(selector);
+                return nth(elem && elem.lastChild, filter, 'previousSibling',
+                    undefined, undefined, true);
+            },
 
-        /**
-         * Gets the siblings of the first matched element.
-         */
-        siblings:function (selector, filter) {
-            return getSiblings(selector, filter, true);
-        },
+            /**
+             * Gets the following sibling of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            next:function (selector, filter) {
+                return nth(selector, filter, 'nextSibling', undefined);
+            },
 
-        /**
-         * Gets the children of the first matched element.
-         */
-        children:function (selector, filter) {
-            return getSiblings(selector, filter, undefined);
-        },
+            /**
+             * Gets the preceding sibling of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            prev:function (selector, filter) {
+                return nth(selector, filter, 'previousSibling', undefined);
+            },
 
-        /**
-         * Check to see if a DOM node is within another DOM node.
-         */
-        contains:function (a, b) {
-            a = DOM.get(a);
-            b = DOM.get(b);
-            if (a && b) {
-                return __contains(a, b);
-            }
-        },
+            /**
+             * Gets the siblings of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement[]}
+             */
+            siblings:function (selector, filter) {
+                return getSiblings(selector, filter, true);
+            },
 
-        equals:function (n1, n2) {
-            n1 = DOM.query(n1);
-            n2 = DOM.query(n2);
-            if (n1.length != n2.length) {
+            /**
+             * Gets the children of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement[]}
+             */
+            children:function (selector, filter) {
+                return getSiblings(selector, filter, undefined);
+            },
+
+            /**
+             * Check to see if a DOM node is within another DOM node.
+             * @param {HTMLElement|String} a dom node or the first matched elements by selector
+             * @param {HTMLElement|String} b dom node or the first matched elements by selector
+             * @returns {Boolean} whether a contains b , note if a===b return false.
+             */
+            contains:function (a, b) {
+                a = DOM.get(a);
+                b = DOM.get(b);
+                if (a && b) {
+                    return __contains(a, b);
+                }
                 return false;
-            }
-            for (var i = n1.length; i >= 0; i--) {
-                if (n1[i] != n2[i]) {
+            },
+
+            /**
+             * whether a dom node or dom nodes is same as another dom node or dom nodes
+             * @param {HTMLElement|String|HTMLElement[]} n1
+             * @param {HTMLElement|String|HTMLElement[]} n2
+             * @returns {Boolean} whether n1 is equal as n2
+             */
+            equals:function (n1, n2) {
+                n1 = DOM.query(n1);
+                n2 = DOM.query(n2);
+                if (n1.length != n2.length) {
                     return false;
                 }
+                for (var i = n1.length; i >= 0; i--) {
+                    if (n1[i] != n2[i]) {
+                        return false;
+                    }
+                }
+                return true;
             }
-            return true;
-        }
-    });
+        });
 
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn array ，为数组时返回多个

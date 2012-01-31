@@ -126,7 +126,11 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         return defaultDisplay[ tagName ];
     }
 
-    S.mix(DOM, {
+    S.mix(DOM,
+        /**
+         * @lends DOM
+         */
+        {
         _camelCase:camelCase,
         // _cssNumber:cssNumber,
         _CUSTOM_STYLES:CUSTOM_STYLES,
@@ -153,7 +157,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         },
 
         /**
-         *  Get and set the style property on a DOM Node
+         *  Get style property from the first element of matched elements
+         *  or set the style property on all matched elements
+         *  @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         *  @param {String} name 样式名称
+         *  @param [val] 样式值
+         *  @returns 当不设置 val 时返回指定样式名对应的值
+         *           设置 val 时返回 undefined
          */
         style:function (selector, name, val) {
             var els = DOM.query(selector), elem = els[0], i;
@@ -164,7 +174,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         style(els[i], k, name[k]);
                     }
                 }
-                return;
+                return undefined;
             }
             if (val === undefined) {
                 var ret = '';
@@ -177,10 +187,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     style(els[i], name, val);
                 }
             }
+            return undefined;
         },
 
         /**
-         * (Gets computed style) or (sets styles) on the matches elements.
+         * Gets computed style from the first element of matched elements
+         * or sets styles on the matches elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @param {String} name 样式名称
+         * @param [val] 样式值
+         * @returns 当不设置 val 时返回指定样式名对应的值
+         *          设置 val 时返回 undefined
          */
         css:function (selector, name, val) {
             var els = DOM.query(selector), elem = els[0], i;
@@ -191,7 +208,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         style(els[i], k, name[k]);
                     }
                 }
-                return;
+                return undefined;
             }
 
             name = camelCase(name);
@@ -215,10 +232,12 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     style(els[i], name, val);
                 }
             }
+            return undefined;
         },
 
         /**
          * Show the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
          */
         show:function (selector) {
             var els = DOM.query(selector), elem, i;
@@ -238,6 +257,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         /**
          * Hide the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
          */
         hide:function (selector) {
             var els = DOM.query(selector), elem, i;
@@ -255,6 +275,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         /**
          * Display or hide the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
          */
         toggle:function (selector) {
             var els = DOM.query(selector), elem, i;
@@ -271,18 +292,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         /**
          * Creates a stylesheet from a text blob of rules.
          * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+         * @param [refWin] Window which will accept this stylesheet
          * @param {String} cssText The text containing the css rules
          * @param {String} id An id to add to the stylesheet for later removal
          */
         addStyleSheet:function (refWin, cssText, id) {
+            refWin = refWin || window;
             if (S.isString(refWin)) {
                 id = cssText;
                 cssText = refWin;
                 refWin = window;
             }
             refWin = DOM.get(refWin);
-            var win = DOM._getWin(refWin), doc = win.document;
-            var elem;
+            var win = DOM._getWin(refWin),
+                doc = win.document,
+                elem;
 
             if (id && (id = id.replace('#', EMPTY))) {
                 elem = DOM.get('#' + id, doc);
@@ -305,6 +329,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
         },
 
+        /**
+         * make matched elements unselectable
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         */
         unselectable:function (selector) {
             var _els = DOM.query(selector), elem, j;
             for (j = _els.length - 1; j >= 0; j--) {
@@ -335,11 +363,50 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             }
         },
+
+        /**
+         * Get innerWidth (css width + padding) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         innerWidth:0,
+        /**
+         * Get innerHeight (css height + padding) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         innerHeight:0,
+        /**
+         * Get outerWidth (css width + padding + border + margin?) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @param {Boolean} includeMargin whether include margin
+         * @returns {Number}
+         */
         outerWidth:0,
+        /**
+         * Get outerHeight (css height + padding + border + margin?) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @param {Boolean} includeMargin whether include margin
+         * @returns {Number}
+         */
         outerHeight:0,
+        /**
+         * Get css width from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         width:0,
+        /**
+         * Get css height from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         height:0
     });
 
@@ -351,11 +418,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     S.each([WIDTH, HEIGHT], function (name) {
         DOM["inner" + capital(name)] = function (selector) {
             var el = DOM.get(selector);
-            if (el) {
-                return getWH(el, name, "padding");
-            } else {
-                return null;
-            }
+            return el && getWH(el, name, "padding");
         };
 
 
