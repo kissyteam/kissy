@@ -41,6 +41,8 @@ History:
 
  - [+] datalazyload 增加 removeElements 与 destroy 接口
 
+ - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
+
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
 

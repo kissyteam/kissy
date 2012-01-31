@@ -11,6 +11,14 @@
 <link rel="stylesheet" href="../../../../kissy-dpl/base/build/css/form.css"/>
 
 <script src="../../../build/kissy.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/overlayrender.js"></script>
+<script src="../src/dialog.js"></script>
+<script src="../src/dialogrender.js"></script>
+<script src="../src/effect.js"></script>
+<script src="../src/popup.js"></script>
+<script src="../src/aria.js"></script>
+<script src="../src/ariarender.js"></script>
 
 <script src="../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
 </head>
@@ -332,6 +340,8 @@
         <script>
             KISSY.use("node, overlay", function(S, Node, O) {
                 var popup = new O.Popup({
+                    trigger: Node.all('#multi img'),
+                    triggerType: 'mouse',
                     elStyle:{
                         border:"2px solid gray",
                         lineHeight: 0
@@ -343,18 +353,12 @@
                         duration:0.5
                     }
                 });
-                // 注意：使用定制的显示/隐藏方式
-                Node.all('#multi img').each(function(t) {
-                    t.on("mouseenter", function() {
-                        popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
-                        popup.set('align', {
-                            node: t,
-                            points: ["tr","tl"]
-                        });
-                        popup.show();
-                    });
-                    t.on("mouseleave", function() {
-                        popup.hide();
+                popup.on('show', function() {
+                    var t = this.get('currentTrigger');
+                    popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
+                    popup.set('align', {
+                        node: t,
+                        points: ["tr","tl"]
                     });
                 });
             });
@@ -430,6 +434,7 @@
     <div class="s-demo">
         <button id="btn1" class="button">Show</button>
         <button id="btn2" class="button">Hide</button>
+        <button id="btn3" class="button">Toggle</button>
 
         <script>
             //最简单好用的！
@@ -453,7 +458,10 @@
                     effect: {
                         effect:"fade",
                         duration:0.5
-                    }
+                    },
+                    trigger: '#btn3',
+                    triggerType: 'click',
+                    toggle: true
                 });
                 Node.one('#btn1').on('click', function() {
                     popup.show();
