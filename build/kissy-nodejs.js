@@ -198,7 +198,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 30 20:09
+build time: Jan 31 11:58
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -307,7 +307,7 @@ build time: Jan 30 20:09
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120130200903',
+            buildTime:'20120131115822',
 
             /**
              * Returns a new object containing all of the properties of
@@ -13745,7 +13745,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 5 19:50
+build time: Jan 31 11:58
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -14012,9 +14012,11 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  * @fileOverview definition for node and nodelist
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add("node/base", function(S, DOM, undefined) {
+KISSY.add("node/base", function (S, DOM, undefined) {
 
     var AP = Array.prototype,
+        slice = AP.slice,
+        push = AP.push,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList;
 
@@ -14041,13 +14043,13 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === DOM.DOCUMENT_FRAGMENT_NODE) { // fragment
-                AP.push.apply(this, makeArray(domNode.childNodes));
+                push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
-            AP.push.apply(this, makeArray(html));
+            push.apply(this, makeArray(html));
             return undefined;
         }
 
@@ -14066,10 +14068,10 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         /**
          * 默认长度为 0
          */
-        length: 0,
+        length:0,
 
 
-        item: function(index) {
+        item:function (index) {
             var self = this;
             if (S.isNumber(index)) {
                 if (index >= self.length) {
@@ -14082,7 +14084,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             }
         },
 
-        add:function(selector, context, index) {
+        add:function (selector, context, index) {
             if (S.isNumber(context)) {
                 index = context;
                 context = undefined;
@@ -14090,24 +14092,31 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             var list = NodeList.all(selector, context).getDOMNodes(),
                 ret = new NodeList(this);
             if (index === undefined) {
-                AP.push.apply(ret, list);
+                push.apply(ret, list);
             } else {
-                var args = [index,0];
+                var args = [index, 0];
                 args.push.apply(args, list);
                 AP.splice.apply(ret, args);
             }
             return ret;
         },
 
-        slice:function(start, end) {
-            return new NodeList(AP.slice.call(this, start, end));
+        slice:function (start, end) {
+            var args = [];
+            S.each(arguments, function (a) {
+                if (a === undefined) {
+                    return false;
+                }
+                args.push(a);
+            });
+            return new NodeList(slice.apply(this, args));
         },
 
         /**
          * Retrieves the DOMNodes.
          */
-        getDOMNodes: function() {
-            return AP.slice.call(this);
+        getDOMNodes:function () {
+            return slice.call(this);
         },
 
         /**
@@ -14115,10 +14124,10 @@ KISSY.add("node/base", function(S, DOM, undefined) {
          * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
          * @param [context] An optional context to apply the function with Default context is the current NodeList instance
          */
-        each: function(fn, context) {
+        each:function (fn, context) {
             var self = this;
 
-            S.each(self, function(n, i) {
+            S.each(self, function (n, i) {
                 n = new NodeList(n);
                 return fn.call(context || n, n, i, self);
             });
@@ -14128,20 +14137,20 @@ KISSY.add("node/base", function(S, DOM, undefined) {
         /**
          * Retrieves the DOMNode.
          */
-        getDOMNode: function() {
+        getDOMNode:function () {
             return this[0];
         },
 
         /**
          * stack sub query
          */
-        end:function() {
+        end:function () {
             var self = this;
             return self.__parent || self;
         },
 
-        all:function(selector) {
-            var ret,self = this;
+        all:function (selector) {
+            var ret, self = this;
             if (self.length > 0) {
                 ret = NodeList.all(selector, self);
             } else {
@@ -14151,8 +14160,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             return ret;
         },
 
-        one:function(selector) {
-            var self = this,all = self.all(selector),
+        one:function (selector) {
+            var self = this, all = self.all(selector),
                 ret = all.length ? all.slice(0, 1) : null;
             if (ret) {
                 ret.__parent = self;
@@ -14168,7 +14177,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
          * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] 上下文定义
          * @returns {NodeList} 节点列表对象
          */
-        all:function(selector, context) {
+        all:function (selector, context) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
 
@@ -14190,7 +14199,7 @@ KISSY.add("node/base", function(S, DOM, undefined) {
             }
             return new NodeList(DOM.query(selector, context));
         },
-        one:function(selector, context) {
+        one:function (selector, context) {
             var all = NodeList.all(selector, context);
             return all.length ? all.slice(0, 1) : null;
         }
