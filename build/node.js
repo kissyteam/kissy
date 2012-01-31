@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 31 11:58
+build time: Jan 31 15:04
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -359,6 +359,9 @@ KISSY.add("node/base", function (S, DOM, undefined) {
 
         slice:function (start, end) {
             var args = [];
+            // ie<9 : [1,2].slice(-2,undefined) => []
+            // ie<9 : [1,2].slice(-2) => []
+            // fix #85
             S.each(arguments, function (a) {
                 if (a === undefined) {
                     return false;

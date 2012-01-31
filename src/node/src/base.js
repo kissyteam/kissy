@@ -95,6 +95,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             var args = [];
             // ie<9 : [1,2].slice(-2,undefined) => []
             // ie<9 : [1,2].slice(-2) => []
+            // fix #85
             S.each(arguments, function (a) {
                 if (a === undefined) {
                     return false;

@@ -14,6 +14,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             DEFAULT_DIV = doc.createElement(DIV),
             rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
             RE_TAG = /<([\w:]+)/,
+            rtbody = /<tbody/i,
             rleadingWhitespace = /^\s+/,
             lostLeadingWhitespace = ie && ie < 9,
             rhtml = /<|&#?\w+;/,
@@ -415,13 +416,10 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         // only for gecko and ie
         // 2010-10-22: 发现 chrome 也与 gecko 的处理一致了
-        //if (ie || UA['gecko'] || UA['webkit']) {
+        // if (ie || UA['gecko'] || UA['webkit']) {
         // 定义 creators, 处理浏览器兼容
         var creators = DOM._creators,
             create = DOM.create,
-            TABLE_OPEN = '<table>',
-            TABLE_CLOSE = '<' + '/table>',
-            RE_TBODY = /(?:\/(?:thead|tfoot|caption|col|colgroup)>)+\s*<tbody/,
             creatorsMap = {
                 option:'select',
                 optgroup:'select',
@@ -442,31 +440,31 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             (function (tag) {
                 creators[p] = function (html, ownerDoc) {
                     return create('<' + tag + '>' + html + '<' + '/' + tag + '>', null, ownerDoc);
-                }
+                };
             })(creatorsMap[p]);
         }
 
 
         // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
         if (ie < 8) {
-            creators.tbody = function (html, ownerDoc) {
-                var frag = create(TABLE_OPEN + html + TABLE_CLOSE, null, ownerDoc),
-                    tbody = frag.children['tags']('tbody')[0];
-
-                if (frag.children.length > 1 && tbody && !RE_TBODY.test(html)) {
-                    tbody[PARENT_NODE].removeChild(tbody); // strip extraneous tbody
+            // fix #88
+            // https://github.com/kissyteam/kissy/issues/88 : spurious tbody in ie<8
+            creators.table = function (html, ownerDoc) {
+                var frag = creators[DIV](html, ownerDoc),
+                    hasTBody = rtbody.test(html);
+                if (hasTBody) {
+                    return frag;
                 }
+                var table = frag.firstChild,
+                    tableChildren = S.makeArray(table.childNodes);
+                S.each(tableChildren, function (c) {
+                    if (DOM._nodeName(c, "tbody") && !c.childNodes.length) {
+                        table.removeChild(c);
+                    }
+                });
                 return frag;
             };
         }
-
-        // fix table elements
-        S.mix(creators, {
-            thead:creators.tbody,
-            tfoot:creators.tbody,
-            caption:creators.tbody,
-            colgroup:creators.tbody
-        });
         //}
         return DOM;
     },
@@ -475,6 +473,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
     });
 
 /**
+ * 2012-01-31
+ * remove spurious tbody
+ *
  * 2011-10-13
  * empty , html refactor
  *
