@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>UIBase.Align</title>
+        <title>KISSY.Promise</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,7 +156,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                UIBase.Align
+                                KISSY.Promise
                             </h2>
                             <!-- class title END-->
                             
@@ -173,7 +173,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_align.js.html">align.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html">promise.js</a></p>
                                     
                                     
                                     
@@ -192,11 +192,11 @@ a.go-top:active{text-decoration:none;}
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/UIBase.Align.html#constructor">UIBase.Align</a></b>
-                                            <span class="param">()</span>                                
+                                            <b class="name"><a href="../symbols/KISSY.Promise.html#constructor">KISSY.Promise</a></b>
+                                            <span class="param">(v)</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">Promise constructor , !Do Not New By Yourself!</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -205,32 +205,6 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
-                            
-                                
-                                
-                                <div class="box properties-box">
-                                    <div class="box-hd">
-                                        <h3>Properties</h3>
-                                    </div>
-                                    <div class="box-bd">
-                                        <ul class="list summary-list">
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/UIBase.Align.html#align">align</a></b>
-                                                <span class="type">{Object}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">对齐配置</span>                                                
-                                            </li>
-                                            
-                                        </ul>
-                                        
-                                    </div>
-                                </div>
-                                                    
                             
                             <!-- properties END -->
                             
@@ -247,12 +221,12 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/UIBase.Align.html#center">center</a></b>
-                                                <span class="param">(node)</span>
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#then">then</a></b>
+                                                <span class="param">(fulfilled, rejected)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">居中显示到可视区域, 一次性居中</span>                                                
+                                                <span class="desc">register callbacks when this promise object is resolved</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -278,8 +252,8 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">UIBase.Align</b>
-                                                <span class="param">()</span>
+                                                <b class="name">KISSY.Promise</b>
+                                                <span class="param">(v)</span>
                                             </div>
                                             
                                             <div class="desc"></div>
@@ -287,6 +261,22 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                                
                                                 
                                                 
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>v</b>
+                                                            
+                                                            
+                                                            <span class="type"></span>
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -310,58 +300,6 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
-                            <div class="box">
-                                <div class="box-hd">
-                                    <h3>Properties Detail</h3>
-                                </div>
-                                <div class="box-bd">
-                                    <ul class="list detail-list">
-                                    
-                                        <li class="li">
-                                            <a name="align"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">align</b>
-                                                <span>{Object}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    对齐配置
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                <dt>Example</dt>
-                                                <dd>
-                                                    <ul class="list">
-                                                    
-                                                    <li class="li">
-                                                        <pre class="code"><code>    {       node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素       points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐       offset: [0, 0]      // 有效值为 [n, m]    }</code></pre>
-                                                    </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                    </ul>
-                                </div>
-                            </div>
-                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -374,19 +312,19 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="center"> </a>
+                                            <a name="then"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">center</b>
-                                                <span class="param">(node)</span>
+                                                <b class="name">then</b>
+                                                <span class="param">(fulfilled, rejected)</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_uibase_src_align.js.html#line414">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line145">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                居中显示到可视区域, 一次性居中
+                                                register callbacks when this promise object is resolved
                                                 
                                                 
                                             </div>
@@ -400,11 +338,20 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">node</b>
+                                                            <b class="name">fulfilled</b>
                                                             
                                                             
-                                                            <span class="type">{undefined|String|HTMLElement|Node}</span> 
-                                                            <span class="desc">对其元素，falsy 表示窗口可视区域</span>
+                                                            <span class="type">{Function(*)}</span> 
+                                                            <span class="desc">called when resolved successfully,pass a resolved value to this function and                     return a value (could be promise object) for the new promise's resolved value.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">rejected</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Function(*)}</span> 
+                                                            <span class="desc">called when error occurs,pass error reason to this function and                     return a new reason for the new promise's error reason</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -417,6 +364,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{Promise}</span> 
+                                                            <span>a new promise object</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
