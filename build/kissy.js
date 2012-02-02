@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 31 15:21
+build time: Feb 2 14:01
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Jan 31 15:21
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120131152116',
+            buildTime:'20120202140140',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1415,8 +1415,121 @@ build time: Jan 31 15:21
  * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
+    var ALREADY_RESOLVED_OR_REJECTED = 1;
+
+    function nextTick(fn) {
+        setTimeout(fn, 0);
+    }
+
+    function Defer() {
+        this.promise = new Promise();
+    }
+
+    Defer.prototype = {
+        constructor:Defer,
+        resolve:function (value) {
+        },
+        reject:function (reason) {
+
+        }
+    };
+
+    function isPromise(obj) {
+        return  obj && obj instanceof Promise;
+    }
+
+    function Promise(v) {
+        // maybe internal value is also a promise
+        this._value = v;
+        if (arguments.length) {
+            this._state = ALREADY_RESOLVED_OR_REJECTED;
+        }
+        this._pendings = [];
+    }
+
+    Promise.prototype = {
+        constructor:Promise,
+        _when:function (fulfilled, rejected) {
+            var v = this._value,
+                pendings = this._pendings;
+            // unresolved
+            // pushed to pending list
+            if (v === undefined) {
+                pendings.push([fulfilled, rejected]);
+            }
+            // resolved but waiting for another promise
+            // then forward
+            // note: maybe a Reject
+            else if (isPromise(v)) {
+                nextTick(function () {
+                    v._when(fulfilled, rejected);
+                });
+            } else {
+                // normal value represents ok
+                // need return user's return value
+                // if return promise then forward
+                return fulfilled(v);
+            }
+        },
+        when:function (fulfilled, rejected) {
+
+        }
+    };
+
+    function Reject(reason) {
+        Promise.apply(this, arguments);
+    }
+
+    S.extend(Reject, Promise, {
+
+    });
+
+    function resolve(value) {
+        if (value instanceof Promise) {
+            return value;
+        }
+        return new Promise(value);
+    }
+
+    function when(value, fulfilled, rejected) {
+        var defer = new Defer(), done = 0;
+
+        function _fulfilled(value) {
+            try {
+                return fulfilled ? fulfilled(value) : value;
+            } catch (e) {
+                return new Reject(e);
+            }
+        }
+
+        function _rejected(reason) {
+            try {
+                return rejected ? rejected(reason) : new Reject(reason);
+            } catch (e) {
+                return new Reject(e);
+            }
+        }
+
+        nextTick(function () {
+            resolve(value)._when(function (value) {
+                if (done) {
+                    return;
+                }
+                // asset.not(value instanceof Promise);
+                done = 1;
+                // maybe resolve(promise)
+                defer.resolve(resolve(value)._when(_fulfilled, _rejected));
+            }, function (reason) {
+                if (done) {
+                    return;
+                }
+                done = 1;
+                defer.resolve(new Reject(reason));
+            });
+        });
+    }
 
 })(KISSY);
 
@@ -3342,7 +3455,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 31 15:21
+build time: Feb 2 14:00
 */
 /**
  * @fileOverview   dom-attr
@@ -4664,7 +4777,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         // only for gecko and ie
         // 2010-10-22: 发现 chrome 也与 gecko 的处理一致了
-        //if (ie || UA['gecko'] || UA['webkit']) {
+        // if (ie || UA['gecko'] || UA['webkit']) {
         // 定义 creators, 处理浏览器兼容
         var creators = DOM._creators,
             create = DOM.create,
@@ -4688,7 +4801,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             (function (tag) {
                 creators[p] = function (html, ownerDoc) {
                     return create('<' + tag + '>' + html + '<' + '/' + tag + '>', null, ownerDoc);
-                }
+                };
             })(creatorsMap[p]);
         }
 
@@ -4721,6 +4834,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
     });
 
 /**
+ * 2012-01-31
+ * remove spurious tbody
+ *
  * 2011-10-13
  * empty , html refactor
  *
@@ -6614,7 +6730,11 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         return defaultDisplay[ tagName ];
     }
 
-    S.mix(DOM, {
+    S.mix(DOM,
+        /**
+         * @lends DOM
+         */
+        {
         _camelCase:camelCase,
         // _cssNumber:cssNumber,
         _CUSTOM_STYLES:CUSTOM_STYLES,
@@ -6641,7 +6761,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         },
 
         /**
-         *  Get and set the style property on a DOM Node
+         *  Get style property from the first element of matched elements
+         *  or set the style property on all matched elements
+         *  @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         *  @param {String} name 样式名称
+         *  @param [val] 样式值
+         *  @returns 当不设置 val 时返回指定样式名对应的值
+         *           设置 val 时返回 undefined
          */
         style:function (selector, name, val) {
             var els = DOM.query(selector), elem = els[0], i;
@@ -6652,7 +6778,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         style(els[i], k, name[k]);
                     }
                 }
-                return;
+                return undefined;
             }
             if (val === undefined) {
                 var ret = '';
@@ -6665,10 +6791,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     style(els[i], name, val);
                 }
             }
+            return undefined;
         },
 
         /**
-         * (Gets computed style) or (sets styles) on the matches elements.
+         * Gets computed style from the first element of matched elements
+         * or sets styles on the matches elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @param {String} name 样式名称
+         * @param [val] 样式值
+         * @returns 当不设置 val 时返回指定样式名对应的值
+         *          设置 val 时返回 undefined
          */
         css:function (selector, name, val) {
             var els = DOM.query(selector), elem = els[0], i;
@@ -6679,7 +6812,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                         style(els[i], k, name[k]);
                     }
                 }
-                return;
+                return undefined;
             }
 
             name = camelCase(name);
@@ -6703,10 +6836,12 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     style(els[i], name, val);
                 }
             }
+            return undefined;
         },
 
         /**
          * Show the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
          */
         show:function (selector) {
             var els = DOM.query(selector), elem, i;
@@ -6726,6 +6861,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         /**
          * Hide the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
          */
         hide:function (selector) {
             var els = DOM.query(selector), elem, i;
@@ -6743,6 +6879,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         /**
          * Display or hide the matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
          */
         toggle:function (selector) {
             var els = DOM.query(selector), elem, i;
@@ -6759,18 +6896,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         /**
          * Creates a stylesheet from a text blob of rules.
          * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+         * @param [refWin] Window which will accept this stylesheet
          * @param {String} cssText The text containing the css rules
          * @param {String} id An id to add to the stylesheet for later removal
          */
         addStyleSheet:function (refWin, cssText, id) {
+            refWin = refWin || window;
             if (S.isString(refWin)) {
                 id = cssText;
                 cssText = refWin;
                 refWin = window;
             }
             refWin = DOM.get(refWin);
-            var win = DOM._getWin(refWin), doc = win.document;
-            var elem;
+            var win = DOM._getWin(refWin),
+                doc = win.document,
+                elem;
 
             if (id && (id = id.replace('#', EMPTY))) {
                 elem = DOM.get('#' + id, doc);
@@ -6793,6 +6933,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             }
         },
 
+        /**
+         * make matched elements unselectable
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         */
         unselectable:function (selector) {
             var _els = DOM.query(selector), elem, j;
             for (j = _els.length - 1; j >= 0; j--) {
@@ -6823,11 +6967,50 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             }
         },
+
+        /**
+         * Get innerWidth (css width + padding) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         innerWidth:0,
+        /**
+         * Get innerHeight (css height + padding) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         innerHeight:0,
+        /**
+         * Get outerWidth (css width + padding + border + margin?) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @param {Boolean} includeMargin whether include margin
+         * @returns {Number}
+         */
         outerWidth:0,
+        /**
+         * Get outerHeight (css height + padding + border + margin?) from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @param {Boolean} includeMargin whether include margin
+         * @returns {Number}
+         */
         outerHeight:0,
+        /**
+         * Get css width from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         width:0,
+        /**
+         * Get css height from the first element of matched elements
+         * @function
+         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+         * @returns {Number}
+         */
         height:0
     });
 
@@ -6839,11 +7022,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     S.each([WIDTH, HEIGHT], function (name) {
         DOM["inner" + capital(name)] = function (selector) {
             var el = DOM.get(selector);
-            if (el) {
-                return getWH(el, name, "padding");
-            } else {
-                return null;
-            }
+            return el && getWH(el, name, "padding");
         };
 
 
@@ -6993,7 +7172,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     S.log("css set error :" + e);
                 }
                 // #80 fix,font-family
-                if (val == EMPTY && style.removeAttribute) {
+                if (val === EMPTY && style.removeAttribute) {
                     style.removeAttribute(name);
                 }
             }
@@ -7143,88 +7322,137 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             );
 
 
-    S.mix(DOM, {
-
-        closest:function (selector, filter, context) {
-            return nth(selector, filter, 'parentNode', function (elem) {
-                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-            }, context, true);
-        },
-
+    S.mix(DOM,
         /**
-         * Gets the parent node of the first matched element.
+         * @lends DOM
          */
-        parent:function (selector, filter, context) {
-            return nth(selector, filter, 'parentNode', function (elem) {
-                return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
-            }, context);
-        },
+        {
 
-        first:function (selector, filter) {
-            var elem = DOM.get(selector);
-            return nth(elem && elem.firstChild, filter, 'nextSibling',
-                undefined, undefined, true);
-        },
+            /**
+             * Get the matched node which is ancestor or is the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @param {HTMLElement|String} context dom node bounded for search
+             * @returns {HTMLElement}
+             */
+            closest:function (selector, filter, context) {
+                return nth(selector, filter, 'parentNode', function (elem) {
+                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                }, context, true);
+            },
 
-        last:function (selector, filter) {
-            var elem = DOM.get(selector);
-            return nth(elem && elem.lastChild, filter, 'previousSibling',
-                undefined, undefined, true);
-        },
+            /**
+             * Gets the ancestor of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @param {HTMLElement|String} context dom node bounded for search
+             * @returns {HTMLElement}
+             */
+            parent:function (selector, filter, context) {
+                return nth(selector, filter, 'parentNode', function (elem) {
+                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                }, context);
+            },
 
-        /**
-         * Gets the following sibling of the first matched element.
-         */
-        next:function (selector, filter) {
-            return nth(selector, filter, 'nextSibling', undefined);
-        },
+            /**
+             * Get the first child of the first matched element
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            first:function (selector, filter) {
+                var elem = DOM.get(selector);
+                return nth(elem && elem.firstChild, filter, 'nextSibling',
+                    undefined, undefined, true);
+            },
 
-        /**
-         * Gets the preceding sibling of the first matched element.
-         */
-        prev:function (selector, filter) {
-            return nth(selector, filter, 'previousSibling', undefined);
-        },
+            /**
+             * Get the last child of the first matched element
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            last:function (selector, filter) {
+                var elem = DOM.get(selector);
+                return nth(elem && elem.lastChild, filter, 'previousSibling',
+                    undefined, undefined, true);
+            },
 
-        /**
-         * Gets the siblings of the first matched element.
-         */
-        siblings:function (selector, filter) {
-            return getSiblings(selector, filter, true);
-        },
+            /**
+             * Gets the following sibling of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            next:function (selector, filter) {
+                return nth(selector, filter, 'nextSibling', undefined);
+            },
 
-        /**
-         * Gets the children of the first matched element.
-         */
-        children:function (selector, filter) {
-            return getSiblings(selector, filter, undefined);
-        },
+            /**
+             * Gets the preceding sibling of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement}
+             */
+            prev:function (selector, filter) {
+                return nth(selector, filter, 'previousSibling', undefined);
+            },
 
-        /**
-         * Check to see if a DOM node is within another DOM node.
-         */
-        contains:function (a, b) {
-            a = DOM.get(a);
-            b = DOM.get(b);
-            if (a && b) {
-                return __contains(a, b);
-            }
-        },
+            /**
+             * Gets the siblings of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement[]}
+             */
+            siblings:function (selector, filter) {
+                return getSiblings(selector, filter, true);
+            },
 
-        equals:function (n1, n2) {
-            n1 = DOM.query(n1);
-            n2 = DOM.query(n2);
-            if (n1.length != n2.length) {
+            /**
+             * Gets the children of the first matched element.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {String|Function} filter filter function or string
+             * @returns {HTMLElement[]}
+             */
+            children:function (selector, filter) {
+                return getSiblings(selector, filter, undefined);
+            },
+
+            /**
+             * Check to see if a DOM node is within another DOM node.
+             * @param {HTMLElement|String} a dom node or the first matched elements by selector
+             * @param {HTMLElement|String} b dom node or the first matched elements by selector
+             * @returns {Boolean} whether a contains b , note if a===b return false.
+             */
+            contains:function (a, b) {
+                a = DOM.get(a);
+                b = DOM.get(b);
+                if (a && b) {
+                    return __contains(a, b);
+                }
                 return false;
-            }
-            for (var i = n1.length; i >= 0; i--) {
-                if (n1[i] != n2[i]) {
+            },
+
+            /**
+             * whether a dom node or dom nodes is same as another dom node or dom nodes
+             * @param {HTMLElement|String|HTMLElement[]} n1
+             * @param {HTMLElement|String|HTMLElement[]} n2
+             * @returns {Boolean} whether n1 is equal as n2
+             */
+            equals:function (n1, n2) {
+                n1 = DOM.query(n1);
+                n2 = DOM.query(n2);
+                if (n1.length != n2.length) {
                     return false;
                 }
+                for (var i = n1.length; i >= 0; i--) {
+                    if (n1[i] != n2[i]) {
+                        return false;
+                    }
+                }
+                return true;
             }
-            return true;
-        }
-    });
+        });
 
     // 获取元素 elem 在 direction 方向上满足 filter 的第一个元素
     // filter 可为 number, selector, fn array ，为数组时返回多个

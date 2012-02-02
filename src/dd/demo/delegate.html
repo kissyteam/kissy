@@ -167,14 +167,14 @@
                 var middleDropX = (dropNode.offset().left * 2 + dropNode.width()) / 2;
                 if (ev.pageX > middleDropX) {
                     var next = dropNode.next();
-                    if (next && next[0] == dragNode) {
+                    if (next && next[0] == dragNode[0]) {
 
                     } else {
                         dragNode.insertAfter(dropNode);
                     }
                 } else {
                     var prev = dropNode.prev();
-                    if (prev && prev[0] == dragNode) {
+                    if (prev && prev[0] == dragNode[0]) {
 
                     } else {
                         dragNode.insertBefore(dropNode);

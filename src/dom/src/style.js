@@ -568,7 +568,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     S.log("css set error :" + e);
                 }
                 // #80 fix,font-family
-                if (val == EMPTY && style.removeAttribute) {
+                if (val === EMPTY && style.removeAttribute) {
                     style.removeAttribute(name);
                 }
             }
