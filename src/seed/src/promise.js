@@ -8,9 +8,12 @@
 
     function nextTick(fn) {
         // for debug
-        fn();
-        // make parallel call in production
-        // setTimeout(fn, 0);
+        if (S.Config.debug) {
+            fn();
+        } else {
+            // make parallel call in production
+            setTimeout(fn, 0);
+        }
     }
 
     /**
@@ -119,16 +122,14 @@
             if (pendings) {
                 pendings.push([fulfilled, rejected]);
             }
-            // resolved but waiting for another promise
-            // then forward
-            // note: maybe a Reject
-            // or
-            // fulfill low level promise
+
+            // rejected or nested promise
             else if (isPromise(v)) {
                 nextTick(function () {
                     v._when(fulfilled, rejected);
                 });
             } else {
+                // fulfilled value
                 // normal value represents ok
                 // need return user's return value
                 // if return promise then forward
@@ -204,7 +205,10 @@
     S.extend(Reject, Promise, {
         // override,simply call rejected
         _when:function (fulfilled, rejected) {
-            // if there is a
+            // if there is a rejected , should always has! see when()
+            if (!rejected) {
+                S.error("no rejected callback!");
+            }
             return rejected ? rejected(this._value) : new Reject(this._value);
         }
     });
@@ -274,9 +278,17 @@
     }
 
     function isResolved(obj) {
-        return isPromise(obj) &&
+        // exclude Reject at first
+        return !isRejected(obj) &&
+            isPromise(obj) &&
             (obj._pendings === undefined) &&
-            !isPromise(obj._value);
+            (
+                // immediate value
+                !isPromise(obj._value) ||
+                    // resolved with a resolved promise !!! :)
+                    // Reject._value is string
+                    isResolved(obj._value)
+                );
     }
 
     function isRejected(obj) {
@@ -345,7 +357,10 @@
             }
         });
 
-})(KISSY);
+}
+
+    )
+    (KISSY);
 
 /**
  * refer:

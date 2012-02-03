@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 2 19:33
+build time: Feb 3 19:23
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 2 19:33
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120202193258',
+            buildTime:'20120203192321',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1416,13 +1416,17 @@ build time: Feb 2 19:33
  * @author yiminghe@gmail.com
  * @description thanks to https://github.com/kriskowal/q
  */
-(function (S, undefined) {
+(function (KISSY, undefined) {
+    var S = KISSY;
 
     function nextTick(fn) {
         // for debug
-        fn();
-        // make parallel call in production
-        // setTimeout(fn, 0);
+        if (S.Config.debug) {
+            fn();
+        } else {
+            // make parallel call in production
+            setTimeout(fn, 0);
+        }
     }
 
     /**
@@ -1437,10 +1441,20 @@ build time: Feb 2 19:33
         }
         // http://en.wikipedia.org/wiki/Object-capability_model
         // principal of least authority
+        /**
+         * @description defer object's promise
+         * @type KISSY.Promise
+         * @memberOf KISSY.Defer#
+         * @name promise
+         */
         self.promise = new Promise();
     }
 
-    Defer.prototype = {
+    Defer.prototype =
+    /**
+     * @lends KISSY.Defer.prototype
+     */
+    {
         constructor:Defer,
         /**
          * fulfill defer object's promise
@@ -1483,9 +1497,10 @@ build time: Feb 2 19:33
     }
 
     /**
-     * Promise constructor
-     * @class
-     * @param v
+     * Promise constructor , !Do Not New By Yourself!
+     * @constructor
+     * @namespace
+     * @param v promise's resolved value
      * @memberOf KISSY
      */
     function Promise(v) {
@@ -1497,7 +1512,11 @@ build time: Feb 2 19:33
         }
     }
 
-    Promise.prototype = {
+    Promise.prototype =
+    /**
+     * @lends KISSY.Promise.prototype
+     */
+    {
         constructor:Promise,
         /**
          * two effects:
@@ -1516,16 +1535,14 @@ build time: Feb 2 19:33
             if (pendings) {
                 pendings.push([fulfilled, rejected]);
             }
-            // resolved but waiting for another promise
-            // then forward
-            // note: maybe a Reject
-            // or
-            // fulfill low level promise
+
+            // rejected or nested promise
             else if (isPromise(v)) {
                 nextTick(function () {
                     v._when(fulfilled, rejected);
                 });
             } else {
+                // fulfilled value
                 // normal value represents ok
                 // need return user's return value
                 // if return promise then forward
@@ -1539,10 +1556,51 @@ build time: Feb 2 19:33
          *                      return a value (could be promise object) for the new promise's resolved value.
          * @param {Function(*)} [rejected] called when error occurs,pass error reason to this function and
          *                      return a new reason for the new promise's error reason
-         * @returns {Promise} a new promise object
+         * @returns {KISSY.Promise} a new promise object
          */
         then:function (fulfilled, rejected) {
             return when(this, fulfilled, rejected);
+        },
+        /**
+         * call rejected callback when this promise object is rejected
+         * @param {Function(*)} rejected called with rejected reason
+         * @returns {KISSY.Promise} a new promise object
+         */
+        fail:function (rejected) {
+            return when(this, 0, rejected);
+        },
+        /**
+         * call callback when this promise object is rejected or resolved
+         * @param {Function(*,Boolean)} callback the second parameter is
+         * true when resolved and false when rejected
+         * @@returns {KISSY.Promise} a new promise object
+         */
+        fin:function (callback) {
+            return when(this, function (value) {
+                return callback(value, true);
+            }, function (reason) {
+                return callback(reason, false);
+            });
+        },
+        /**
+         * whether the given object is a promise
+         */
+        isPromise:function () {
+            return isPromise(this);
+        },
+        /**
+         * whether the given object is a resolved promise
+         * if it is resolved with another promise,
+         * then that promise needs to be resolved as well.
+         */
+        isResolved:function () {
+            return isResolved(this);
+        },
+        /**
+         * whether the given object is a rejected promise
+         */
+        isRejected:function () {
+            return isRejected(this);
         }
     };
 
@@ -1560,7 +1618,10 @@ build time: Feb 2 19:33
     S.extend(Reject, Promise, {
         // override,simply call rejected
         _when:function (fulfilled, rejected) {
-            // if there is a
+            // if there is a rejected , should always has! see when()
+            if (!rejected) {
+                S.error("no rejected callback!");
+            }
             return rejected ? rejected(this._value) : new Reject(this._value);
         }
     });
@@ -1576,7 +1637,7 @@ build time: Feb 2 19:33
      * wrap for promise._when
      * @param value
      * @param fulfilled
-     * @param rejected
+     * @param [rejected]
      */
     function when(value, fulfilled, rejected) {
         var defer = new Defer(),
@@ -1593,8 +1654,7 @@ build time: Feb 2 19:33
 
         function _rejected(reason) {
             try {
-                reason = rejected ? rejected(reason) : reason;
-                return new Reject(reason);
+                return rejected ? rejected(reason) : new Reject(reason);
             } catch (e) {
                 return new Reject(e);
             }
@@ -1620,6 +1680,7 @@ build time: Feb 2 19:33
                     return;
                 }
                 done = 1;
+                // _reject may return non-Reject object for error recovery
                 defer.resolve(_rejected(reason));
             });
         });
@@ -1629,9 +1690,90 @@ build time: Feb 2 19:33
         return defer.promise;
     }
 
-    S.Defer = Defer;
+    function isResolved(obj) {
+        // exclude Reject at first
+        return !isRejected(obj) &&
+            isPromise(obj) &&
+            (obj._pendings === undefined) &&
+            (
+                // immediate value
+                !isPromise(obj._value) ||
+                    // resolved with a resolved promise !!! :)
+                    // Reject._value is string
+                    isResolved(obj._value)
+                );
+    }
 
-})(KISSY);
+    function isRejected(obj) {
+        return isPromise(obj) &&
+            (obj._pendings === undefined) &&
+            (obj._value instanceof Reject);
+    }
+
+    KISSY.Defer = Defer;
+    KISSY.Promise = Promise;
+
+    S.mix(Promise,
+        /**
+         * @lends KISSY.Promise
+         */
+        {
+            /**
+             * whether the given object is a promise
+             * @function
+             * @param obj the tested object
+             */
+            isPromise:isPromise,
+            /**
+             * whether the given object is a resolved promise
+             * @function
+             * @param obj the tested object
+             */
+            isResolved:isResolved,
+            /**
+             * whether the given object is a rejected promise
+             * @function
+             * @param obj the tested object
+             */
+            isRejected:isRejected,
+            /**
+             * return a new promise
+             * which is resolved when all promises is resolved
+             * and rejected when any one of promises is rejected
+             * @param {KISSY.Promise[]} promises list of promises
+             */
+            all:function (promises) {
+                return when([].concat(promises), function (promises) {
+                    var count = promises.length;
+                    if (!count) {
+                        return promises;
+                    }
+                    var defer = Defer();
+                    for (var i = 0; i < promises.length; i++) {
+                        (function (promise, i) {
+                            when(promise, function (value) {
+                                promises[i] = value;
+                                if (--count === 0) {
+                                    // if all is resolved
+                                    // then resolve final returned promise with all value
+                                    defer.resolve(promises);
+                                }
+                            }, function (r) {
+                                // if any one is rejected
+                                // then reject final return promise with first reason
+                                defer.reject(r);
+                            });
+                        })(promises[i], i);
+                    }
+                    return defer.promise;
+                });
+            }
+        });
+
+}
+
+    )
+    (KISSY);
 
 /**
  * refer:
@@ -29365,7 +29507,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 30 11:18
+build time: Feb 3 17:23
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -29682,18 +29824,18 @@ KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuIte
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
-    // 转义正则特殊字符，返回字符串用来构建正则表达式
+    // 转义正则特殊字符,返回字符串用来构建正则表达式
     function regExpEscape(s) {
         return s.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1').
             replace(/\x08/g, '\\x08');
     }
 
     var FilterMenu = UIBase.create(Menu, {
-            bindUI:function() {
+            bindUI:function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput");
@@ -29701,15 +29843,15 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
 
-            _handleMouseEnter:function() {
+            _handleMouseEnter:function () {
                 var self = this;
                 FilterMenu.superclass._handleMouseEnter.apply(self, arguments);
-                // 权益解决，filter input focus 后会滚动到牌聚焦处，select 则不会
-                // 如果 filtermenu 的菜单项被滚轮滚到后面，点击触发不了，会向前滚动到 filter input
+                // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
+                // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
                 self.getKeyEventTarget()[0].select();
             },
 
-            handleFilterEvent:function() {
+            handleFilterEvent:function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput"),
@@ -29725,37 +29867,37 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 }
             },
 
-            _uiSetFilterStr:function(v) {
+            _uiSetFilterStr:function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
             },
 
-            filterItems:function(str) {
+            filterItems:function (str) {
                 var self = this,
                     view = self.get("view"),
                     _labelEl = view.get("labelEl"),
                     filterInput = view.get("filterInput");
 
-                // 有过滤条件提示隐藏，否则提示显示
+                // 有过滤条件提示隐藏,否则提示显示
                 _labelEl[str ? "hide" : "show"]();
 
                 if (self.get("allowMultiple")) {
                     var enteredItems = [],
                         lastWord;
-
-                    var match = str.match(/(.+)[,，]\s*([^，,]*)/);
+                    // \uff0c => ，
+                    var match = str.match(/(.+)[,\uff0c]\s*([^\uff0c,]*)/);
                     // 已经确认的项
                     // , 号之前的项必定确认
 
                     var items = [];
 
                     if (match) {
-                        items = match[1].split(/[,，]/);
+                        items = match[1].split(/[,\uff0c]/);
                     }
 
                     // 逗号结尾
-                    // 如果可以补全，那么补全最后一项为第一个高亮项
-                    if (/[,，]$/.test(str)) {
+                    // 如果可以补全,那么补全最后一项为第一个高亮项
+                    if (/[,\uff0c]$/.test(str)) {
                         enteredItems = [];
                         if (match) {
                             enteredItems = items;
@@ -29772,7 +29914,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                         }
                         str = '';
                     } else {
-                        // 需要菜单过滤的过滤词，在最后一个 , 后面
+                        // 需要菜单过滤的过滤词,在最后一个 , 后面
                         if (match) {
                             str = match[2] || "";
                         }
@@ -29783,7 +29925,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                         enteredItems = items;
                     }
                     var oldEnteredItems = self.get("enteredItems");
-                    // 发生变化，长度变化和内容变化等同
+                    // 发生变化,长度变化和内容变化等同
                     if (oldEnteredItems.length != enteredItems.length) {
                         S.log("enteredItems : ");
                         S.log(enteredItems);
@@ -29797,7 +29939,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                     hit = this.getCls(HIT_CLS);
 
                 // 过滤所有子组件
-                S.each(children, function(c) {
+                S.each(children, function (c) {
                     var content = c.get("content");
                     if (!str) {
                         // 没有过滤条件
@@ -29811,7 +29953,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            c.get("contentEl").html(content.replace(strExp, function(m) {
+                            c.get("contentEl").html(content.replace(strExp, function (m) {
                                 return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
@@ -29823,7 +29965,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 });
             },
 
-            decorateInternal:function(el) {
+            decorateInternal:function (el) {
                 var self = this;
                 self.set("el", el);
                 var menuContent = el.one("." + self.getCls("menu-content"));
@@ -29831,9 +29973,9 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
             },
 
             /**
-             * 重置状态，用于重用
+             * 重置状态,用于重用
              */
-            reset:function() {
+            reset:function () {
                 var self = this,
                     view = self.get("view");
                 self.set("filterStr", "");
@@ -29842,7 +29984,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 filterInput && filterInput.val("");
             },
 
-            destructor:function() {
+            destructor:function () {
                 var view = this.get("view");
                 var filterInput = view && view.get("filterInput");
                 filterInput && filterInput.detach();
@@ -29877,7 +30019,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
 
     return FilterMenu;
 }, {
-    requires:['uibase','component','./base','./filtermenurender']
+    requires:['uibase', 'component', './base', './filtermenurender']
 });/**
  * @fileOverview filter menu render
  * 1.create filter input
@@ -30302,6 +30444,8 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
                 item = cs[i];
                 // 递归清除子菜单
                 if ((menu = item.get("menu")) &&
+                    // 不是懒加载函数
+                    !S.isFunction(menu) &&
                     menu.get(autoHideOnMouseLeave)) {
                     menu._clearLeaveHideTimers();
                 }

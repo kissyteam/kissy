@@ -1,10 +1,17 @@
 describe("KISSY.Defer", function () {
-    var S = KISSY;
+    var S = KISSY,
+        Promise = S.Promise;
 
     it("works simply when fulfilled", function () {
         var d = S.Defer(),
             p = d.promise,
             r;
+
+        expect(Promise.isPromise(d)).toBe(false);
+        expect(Promise.isPromise(p)).toBe(true);
+        expect(Promise.isResolved(p)).toBe(false);
+        expect(Promise.isRejected(p)).toBe(false);
+
 
         p.then(function (v) {
             r = v;
@@ -16,19 +23,43 @@ describe("KISSY.Defer", function () {
         waits(10);
         runs(function () {
             expect(r).toBe(1);
+            expect(Promise.isResolved(p)).toBe(true);
+        });
+    });
+
+    it("can transform returned value by chained promise", function () {
+        var d = S.Defer(),
+            p = d.promise,
+            r;
+
+        p.then(
+            function (v) {
+                return v + 1;
+            }).then(function (v) {
+                r = v;
+            });
+        waits(100);
+        runs(function () {
+            d.resolve(1);
+        });
+        waits(10);
+        runs(function () {
+            expect(r).toBe(2);
         });
     });
 
     it("should support promise chained promise", function () {
         var defer = S.Defer(),
+            p = defer.promise,
+            p2,
             v1, v2;
-        defer.promise.then(
+        p2 = p.then(
             function (v) {
                 v1 = v;
                 var d2 = S.Defer();
                 setTimeout(function () {
                     d2.resolve(1);
-                }, 10);
+                }, 50);
                 return d2.promise;
             }).then(
             function (v) {
@@ -39,10 +70,18 @@ describe("KISSY.Defer", function () {
         runs(function () {
             defer.resolve(2);
         });
+        waits(5);
+        runs(function () {
+            expect(Promise.isResolved(p)).toBe(true);
+            // p2 is waiting for d2
+            expect(Promise.isResolved(p2)).toBe(false);
+        });
         waits(100);
         runs(function () {
             expect(v1).toBe(2);
             expect(v2).toBe(1);
+            expect(Promise.isResolved(p)).toBe(true);
+            expect(Promise.isResolved(p2)).toBe(true);
         });
     });
 
@@ -83,6 +122,18 @@ describe("KISSY.Defer", function () {
         waits(100);
         runs(function () {
             d.resolve(1);
+        });
+        waits(50);
+        runs(function () {
+            expect(Promise.isRejected(p)).toBe(false);
+            expect(Promise.isResolved(p)).toBe(true);
+
+            expect(Promise.isRejected(p2)).toBe(true);
+            expect(Promise.isResolved(p2)).toBe(false);
+
+            // p2 rethrow
+            expect(Promise.isRejected(p3)).toBe(true);
+            expect(Promise.isResolved(p3)).toBe(false);
         });
         waits(100);
         runs(function () {
@@ -129,6 +180,18 @@ describe("KISSY.Defer", function () {
         runs(function () {
             d.resolve(1);
         });
+        waits(50);
+        runs(function () {
+            expect(Promise.isRejected(p)).toBe(false);
+            expect(Promise.isResolved(p)).toBe(true);
+
+            expect(Promise.isRejected(p2)).toBe(true);
+            expect(Promise.isResolved(p2)).toBe(false);
+
+            // p2.error recovery
+            expect(Promise.isRejected(p3)).toBe(false);
+            expect(Promise.isResolved(p3)).toBe(true);
+        });
         waits(100);
         runs(function () {
             expect(order).toEqual(['e1 :1', 'e4 :e1', 'e5 :e4'])
@@ -171,7 +234,41 @@ describe("KISSY.Defer", function () {
         runs(function () {
             expect(order).toEqual(['e1 :1', 'e6 :e1'])
         });
+    });
+
+
+    it("all works", function () {
+        var defer1 = S.Defer();
+        var defer2 = S.Defer();
+        var r = [];
+        var p = Promise.all([defer1.promise, defer2.promise]);
+        p.then(function (v) {
+            r = v;
+        });
+        waits(50);
+        runs(function () {
+            defer1.resolve(1);
+        });
+        waits(50);
+        runs(function () {
+            expect(Promise.isResolved(defer1.promise)).toBe(true);
+            expect(Promise.isResolved(defer2.promise)).toBe(false);
+            expect(r).toEqual([]);
+            expect(Promise.isResolved(p)).toBe(false);
+        });
+        waits(50);
+        runs(function () {
+            defer2.resolve(2);
+        });
+        waits(50);
+        runs(function () {
+            expect(Promise.isResolved(defer1.promise)).toBe(true);
+            expect(Promise.isResolved(defer2.promise)).toBe(true);
+            expect(r).toEqual([1, 2]);
+            expect(Promise.isResolved(p)).toBe(true);
+        });
 
     });
+
 
 });

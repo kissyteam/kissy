@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 3 17:02
+build time: Feb 3 19:23
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 3 17:02
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120203170221',
+            buildTime:'20120203192321',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1421,9 +1421,12 @@ build time: Feb 3 17:02
 
     function nextTick(fn) {
         // for debug
-        fn();
-        // make parallel call in production
-        // setTimeout(fn, 0);
+        if (S.Config.debug) {
+            fn();
+        } else {
+            // make parallel call in production
+            setTimeout(fn, 0);
+        }
     }
 
     /**
@@ -1532,16 +1535,14 @@ build time: Feb 3 17:02
             if (pendings) {
                 pendings.push([fulfilled, rejected]);
             }
-            // resolved but waiting for another promise
-            // then forward
-            // note: maybe a Reject
-            // or
-            // fulfill low level promise
+
+            // rejected or nested promise
             else if (isPromise(v)) {
                 nextTick(function () {
                     v._when(fulfilled, rejected);
                 });
             } else {
+                // fulfilled value
                 // normal value represents ok
                 // need return user's return value
                 // if return promise then forward
@@ -1617,7 +1618,10 @@ build time: Feb 3 17:02
     S.extend(Reject, Promise, {
         // override,simply call rejected
         _when:function (fulfilled, rejected) {
-            // if there is a
+            // if there is a rejected , should always has! see when()
+            if (!rejected) {
+                S.error("no rejected callback!");
+            }
             return rejected ? rejected(this._value) : new Reject(this._value);
         }
     });
@@ -1687,9 +1691,17 @@ build time: Feb 3 17:02
     }
 
     function isResolved(obj) {
-        return isPromise(obj) &&
+        // exclude Reject at first
+        return !isRejected(obj) &&
+            isPromise(obj) &&
             (obj._pendings === undefined) &&
-            !isPromise(obj._value);
+            (
+                // immediate value
+                !isPromise(obj._value) ||
+                    // resolved with a resolved promise !!! :)
+                    // Reject._value is string
+                    isResolved(obj._value)
+                );
     }
 
     function isRejected(obj) {
@@ -1758,7 +1770,10 @@ build time: Feb 3 17:02
             }
         });
 
-})(KISSY);
+}
+
+    )
+    (KISSY);
 
 /**
  * refer:
