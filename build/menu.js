@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Dec 19 13:01
+build time: Feb 3 13:35
 */
 /**
  * deletable menuitem
@@ -168,19 +168,19 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                     var enteredItems = [],
                         lastWord;
 
-                    var match = str.match(/(.+)[,，]\s*([^，,]*)/);
+                    var match = str.match(/(.+)[,\uff0c]\s*([^\uff0c,]*)/);
                     // 已经确认的项
                     // , 号之前的项必定确认
 
                     var items = [];
 
                     if (match) {
-                        items = match[1].split(/[,，]/);
+                        items = match[1].split(/[,\uff0c]/);
                     }
 
                     // 逗号结尾
                     // 如果可以补全，那么补全最后一项为第一个高亮项
-                    if (/[,，]$/.test(str)) {
+                    if (/[,\uff0c]$/.test(str)) {
                         enteredItems = [];
                         if (match) {
                             enteredItems = items;
