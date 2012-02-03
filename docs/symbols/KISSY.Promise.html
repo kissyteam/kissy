@@ -187,13 +187,13 @@ a.go-top:active{text-decoration:none;}
                             
                             <div class="box constructor-box">
                                 <div class="box-hd">
-                                    <h3>Class </h3>
+                                    <h3>Namespace </h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
                                             <b class="name"><a href="../symbols/KISSY.Promise.html#constructor">KISSY.Promise</a></b>
-                                            <span class="param">(v)</span>                                
+                                                                            
                                             
                                             
                                             <span class="desc">Promise constructor , !Do Not New By Yourself!</span>                                            
@@ -218,6 +218,96 @@ a.go-top:active{text-decoration:none;}
                                     </div>
                                     <div class="box-bd">
                                         <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                KISSY.Promise.
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#.all">all</a></b>
+                                                <span class="param">(promises)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">return a new promisewhich is resolved when all promises is resolvedand rejected when any one of promises is rejected</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#fail">fail</a></b>
+                                                <span class="param">(rejected)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">call rejected callback when this promise object is rejected</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#fin">fin</a></b>
+                                                <span class="param">(callback)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">call callback when this promise object is rejected or resolved</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                KISSY.Promise.
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#.isPromise">isPromise</a></b>
+                                                <span class="param">(obj)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">whether the given object is a promise</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#isPromise">isPromise</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">whether the given object is a promise</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#isRejected">isRejected</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">whether the given object is a rejected promise</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                KISSY.Promise.
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#.isRejected">isRejected</a></b>
+                                                <span class="param">(obj)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">whether the given object is a rejected promise</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#isResolved">isResolved</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">whether the given object is a resolved promiseif it is resolved with another promise,then that promise needs to be resolved as well.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                KISSY.Promise.
+                                                <b class="name"><a href="../symbols/KISSY.Promise.html#.isResolved">isResolved</a></b>
+                                                <span class="param">(obj)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">whether the given object is a resolved promise</span>                                                
+                                            </li>
                                             
                                             <li class="li">                                                
                                                 
@@ -246,14 +336,14 @@ a.go-top:active{text-decoration:none;}
                             <div class="detail-box">
                                 <a name="constructor"></a>
                                 <div class="box-hd">
-                                    <h3>Class Detail</h3>
+                                    <h3>Namespace Detail</h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
                                                 <b class="name">KISSY.Promise</b>
-                                                <span class="param">(v)</span>
+                                                
                                             </div>
                                             
                                             <div class="desc"></div>
@@ -272,7 +362,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type"></span>
-                                                            <span class="desc"></span>
+                                                            <span class="desc">promise's resolved value</span>
                                                         </li>
                                                         
                                                     </ul>
@@ -312,6 +402,465 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
+                                            <a name=".all"> </a>
+                                            <div class="title">
+                                                <span>KISSY.Promise.</span>
+                                                <b class="name">all</b>
+                                                <span class="param">(promises)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line320">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                return a new promisewhich is resolved when all promises is resolvedand rejected when any one of promises is rejected
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">promises</b>
+                                                            
+                                                            
+                                                            <span class="type">{<a href="../symbols/KISSY.Promise.html">KISSY.Promise</a>[]}</span> 
+                                                            <span class="desc">list of promises</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="fail"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">fail</b>
+                                                <span class="param">(rejected)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line155">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                call rejected callback when this promise object is rejected
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">rejected</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function(*)}</span> 
+                                                            <span class="desc">called with rejected reason</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/KISSY.Promise.html">KISSY.Promise</a>}</span> 
+                                                            <span>a new promise object</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="fin"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">fin</b>
+                                                <span class="param">(callback)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line164">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                call callback when this promise object is rejected or resolved
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">callback</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function(*|Boolean)}</span> 
+                                                            <span class="desc">the second parameter istrue when resolved and false when rejected</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".isPromise"> </a>
+                                            <div class="title">
+                                                <span>KISSY.Promise.</span>
+                                                <b class="name">isPromise</b>
+                                                <span class="param">(obj)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line301">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                whether the given object is a promise
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">obj</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">the tested object</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="isPromise"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">isPromise</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line174">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                whether the given object is a promise
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="isRejected"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">isRejected</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line188">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                whether the given object is a rejected promise
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".isRejected"> </a>
+                                            <div class="title">
+                                                <span>KISSY.Promise.</span>
+                                                <b class="name">isRejected</b>
+                                                <span class="param">(obj)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line313">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                whether the given object is a rejected promise
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">obj</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">the tested object</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="isResolved"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">isResolved</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line182">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                whether the given object is a resolved promiseif it is resolved with another promise,then that promise needs to be resolved as well.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".isResolved"> </a>
+                                            <div class="title">
+                                                <span>KISSY.Promise.</span>
+                                                <b class="name">isResolved</b>
+                                                <span class="param">(obj)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line307">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                whether the given object is a resolved promise
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">obj</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">the tested object</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
                                             <a name="then"> </a>
                                             <div class="title">
                                                 
@@ -320,7 +869,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line145">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_promise.js.html#line147">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -370,7 +919,7 @@ a.go-top:active{text-decoration:none;}
                                                     <ul class="list">
                                                     
                                                         <li class="li">
-                                                            <span class="type">{Promise}</span> 
+                                                            <span class="type">{<a href="../symbols/KISSY.Promise.html">KISSY.Promise</a>}</span> 
                                                             <span>a new promise object</span>
                                                         </li>
                                                     

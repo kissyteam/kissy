@@ -3,7 +3,8 @@
  * @author yiminghe@gmail.com
  * @description thanks to https://github.com/kriskowal/q
  */
-(function (S, undefined) {
+(function (KISSY, undefined) {
+    var S = KISSY;
 
     function nextTick(fn) {
         // for debug
@@ -81,8 +82,9 @@
 
     /**
      * Promise constructor , !Do Not New By Yourself!
-     * @class
-     * @param v
+     * @constructor
+     * @namespace
+     * @param v promise's resolved value
      * @memberOf KISSY
      */
     function Promise(v) {
@@ -140,10 +142,51 @@
          *                      return a value (could be promise object) for the new promise's resolved value.
          * @param {Function(*)} [rejected] called when error occurs,pass error reason to this function and
          *                      return a new reason for the new promise's error reason
-         * @returns {Promise} a new promise object
+         * @returns {KISSY.Promise} a new promise object
          */
         then:function (fulfilled, rejected) {
             return when(this, fulfilled, rejected);
+        },
+        /**
+         * call rejected callback when this promise object is rejected
+         * @param {Function(*)} rejected called with rejected reason
+         * @returns {KISSY.Promise} a new promise object
+         */
+        fail:function (rejected) {
+            return when(this, 0, rejected);
+        },
+        /**
+         * call callback when this promise object is rejected or resolved
+         * @param {Function(*,Boolean)} callback the second parameter is
+         * true when resolved and false when rejected
+         * @@returns {KISSY.Promise} a new promise object
+         */
+        fin:function (callback) {
+            return when(this, function (value) {
+                return callback(value, true);
+            }, function (reason) {
+                return callback(reason, false);
+            });
+        },
+        /**
+         * whether the given object is a promise
+         */
+        isPromise:function () {
+            return isPromise(this);
+        },
+        /**
+         * whether the given object is a resolved promise
+         * if it is resolved with another promise,
+         * then that promise needs to be resolved as well.
+         */
+        isResolved:function () {
+            return isResolved(this);
+        },
+        /**
+         * whether the given object is a rejected promise
+         */
+        isRejected:function () {
+            return isRejected(this);
         }
     };
 
@@ -177,7 +220,7 @@
      * wrap for promise._when
      * @param value
      * @param fulfilled
-     * @param rejected
+     * @param [rejected]
      */
     function when(value, fulfilled, rejected) {
         var defer = new Defer(),
@@ -194,8 +237,7 @@
 
         function _rejected(reason) {
             try {
-                reason = rejected ? rejected(reason) : reason;
-                return new Reject(reason);
+                return rejected ? rejected(reason) : new Reject(reason);
             } catch (e) {
                 return new Reject(e);
             }
@@ -221,6 +263,7 @@
                     return;
                 }
                 done = 1;
+                // _reject may return non-Reject object for error recovery
                 defer.resolve(_rejected(reason));
             });
         });
@@ -230,7 +273,77 @@
         return defer.promise;
     }
 
-    S.Defer = Defer;
+    function isResolved(obj) {
+        return isPromise(obj) &&
+            (obj._pendings === undefined) &&
+            !isPromise(obj._value);
+    }
+
+    function isRejected(obj) {
+        return isPromise(obj) &&
+            (obj._pendings === undefined) &&
+            (obj._value instanceof Reject);
+    }
+
+    KISSY.Defer = Defer;
+    KISSY.Promise = Promise;
+
+    S.mix(Promise,
+        /**
+         * @lends KISSY.Promise
+         */
+        {
+            /**
+             * whether the given object is a promise
+             * @function
+             * @param obj the tested object
+             */
+            isPromise:isPromise,
+            /**
+             * whether the given object is a resolved promise
+             * @function
+             * @param obj the tested object
+             */
+            isResolved:isResolved,
+            /**
+             * whether the given object is a rejected promise
+             * @function
+             * @param obj the tested object
+             */
+            isRejected:isRejected,
+            /**
+             * return a new promise
+             * which is resolved when all promises is resolved
+             * and rejected when any one of promises is rejected
+             * @param {KISSY.Promise[]} promises list of promises
+             */
+            all:function (promises) {
+                return when([].concat(promises), function (promises) {
+                    var count = promises.length;
+                    if (!count) {
+                        return promises;
+                    }
+                    var defer = Defer();
+                    for (var i = 0; i < promises.length; i++) {
+                        (function (promise, i) {
+                            when(promise, function (value) {
+                                promises[i] = value;
+                                if (--count === 0) {
+                                    // if all is resolved
+                                    // then resolve final returned promise with all value
+                                    defer.resolve(promises);
+                                }
+                            }, function (r) {
+                                // if any one is rejected
+                                // then reject final return promise with first reason
+                                defer.reject(r);
+                            });
+                        })(promises[i], i);
+                    }
+                    return defer.promise;
+                });
+            }
+        });
 
 })(KISSY);
 

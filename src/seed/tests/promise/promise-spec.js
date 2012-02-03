@@ -69,7 +69,7 @@ describe("KISSY.Defer", function () {
             },
             function (r) {
                 order.push("e4 :" + r);
-                return "e4";
+                throw "e4";
             });
 
         var p4 = p3.then(function (v) {
@@ -77,7 +77,7 @@ describe("KISSY.Defer", function () {
             throw "e5";
         }, function (r) {
             order.push("e6 :" + r);
-            return "e6";
+            throw "e6";
         });
 
         waits(100);
@@ -87,6 +87,51 @@ describe("KISSY.Defer", function () {
         waits(100);
         runs(function () {
             expect(order).toEqual(['e1 :1', 'e4 :e1', 'e6 :e4'])
+        });
+
+    });
+
+    it("should support error recovery", function () {
+
+        var d = S.Defer(),
+            order = [],
+            p = d.promise;
+
+        var p2 = p.then(
+            function (v) {
+                order.push("e1 :" + v);
+                throw "e1";
+            },
+            function (r) {
+                order.push("e2 :" + r);
+                return "e2";
+            });
+
+        var p3 = p2.then(
+            function (v) {
+                order.push("e3 :" + v);
+                throw "e3";
+            },
+            function (r) {
+                order.push("e4 :" + r);
+                return "e4";
+            });
+
+        var p4 = p3.then(function (v) {
+            order.push("e5 :" + v);
+            throw "e5";
+        }, function (r) {
+            order.push("e6 :" + r);
+            throw "e6";
+        });
+
+        waits(100);
+        runs(function () {
+            d.resolve(1);
+        });
+        waits(100);
+        runs(function () {
+            expect(order).toEqual(['e1 :1', 'e4 :e1', 'e5 :e4'])
         });
 
     });
@@ -115,7 +160,7 @@ describe("KISSY.Defer", function () {
             throw "e5";
         }, function (r) {
             order.push("e6 :" + r);
-            return "e6";
+            throw "e6";
         });
 
         waits(100);

@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>top menu 测试</title>
+<link href="../assets/menu.css" rel="stylesheet"/>
+<link href="../assets/menuitem.css" rel="stylesheet"/>
+<link href="../assets/submenu.css" rel="stylesheet"/>
+<link href="../assets/filtermenu.css" rel="stylesheet"/>
+<style>
+    #menuTest {
+        width: 300px;
+    }
+
+    .horizonal .goog-menuitem {
+        float: left;
+        width: 100px;
+        overflow: hidden;
+    }
+
+    .horizonal {
+        zoom: 1;
+        overflow: hidden;
+    }
+</style>
+</head>
+<body>
+<h1 style="text-align: center;">
+    顶部导航菜单
+</h1>
+<div id="context" style="width: 500px;margin:50px auto;">
+
+</div>
+<script src="../../../build/kissy.js"></script>
+<script>
+
+    var data = [
+        {
+            content:"submenu",
+            children:[
+                {
+                    content:"submenuitem1"
+
+                },
+                {
+                    sep:1
+                },
+                {
+                    content:"submenuitem2"
+                },
+                {
+                    content:"sub-sub-menu3",
+                    children:[
+                        {
+                            content:"sub-sub-menu31"
+                        },
+                        {
+                            content:"sub-sub-menu31"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            content:"submenu2"
+        }
+    ]
+
+    KISSY.use("menu", function (S, Menu) {
+        var context = S.all("#context");
+
+        function generatePopupMenu(items) {
+            var sb = new Menu.PopupMenu({
+                // boolean，是否鼠标脱离菜单后自动隐藏
+                autoHideOnMouseLeave:true,
+                // ms，鼠标脱离菜单多长时间后自动隐藏
+                autoHideDelay:300,
+                prefixCls:"goog-"
+            });
+            generateMenu(sb, items);
+            return sb;
+        }
+
+        function generateSubMenu(item, top) {
+            return new Menu.SubMenu(S.mix({
+                prefixCls:"goog-",
+                content:item.content,
+                menu:function () {
+                    return generatePopupMenu(item.children);
+                }
+            }, top ? {
+                menuAlign:{
+                    offset:[-1, 4],
+                    points:['bl', 'tl']
+                }
+            } : {
+
+            }));
+        }
+
+        function generateMenu(sb, items, top) {
+            S.each(items, function (item) {
+                if (item.children) {
+                    sb.addChild(generateSubMenu(item, top));
+                } else {
+                    if (item.sep) {
+                        sb.addChild(new Menu.Separator({
+                            prefixCls:"goog-"
+                        }));
+                    } else {
+                        sb.addChild(new Menu.Item({
+                            prefixCls:"goog-",
+                            content:item.content
+                        }));
+                    }
+                }
+            });
+        }
+
+        var menu = new Menu({
+            prefixCls:"goog-",
+            width:440,
+            render:'#context',
+            elCls:"horizonal"
+        });
+
+        generateMenu(menu, data, 1);
+
+        menu.render();
+
+        menu.on("click", function (e) {
+            alert(e.target.get("content"));
+        });
+    });
+
+</script>
+</body>
+</html>

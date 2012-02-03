@@ -64,6 +64,8 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
                 item = cs[i];
                 // 递归清除子菜单
                 if ((menu = item.get("menu")) &&
+                    // 不是懒加载函数
+                    !S.isFunction(menu) &&
                     menu.get(autoHideOnMouseLeave)) {
                     menu._clearLeaveHideTimers();
                 }
