@@ -2,18 +2,18 @@
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, UIBase, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
-    // 转义正则特殊字符，返回字符串用来构建正则表达式
+    // 转义正则特殊字符,返回字符串用来构建正则表达式
     function regExpEscape(s) {
         return s.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1').
             replace(/\x08/g, '\\x08');
     }
 
     var FilterMenu = UIBase.create(Menu, {
-            bindUI:function() {
+            bindUI:function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput");
@@ -21,15 +21,15 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
 
-            _handleMouseEnter:function() {
+            _handleMouseEnter:function () {
                 var self = this;
                 FilterMenu.superclass._handleMouseEnter.apply(self, arguments);
-                // 权益解决，filter input focus 后会滚动到牌聚焦处，select 则不会
-                // 如果 filtermenu 的菜单项被滚轮滚到后面，点击触发不了，会向前滚动到 filter input
+                // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
+                // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
                 self.getKeyEventTarget()[0].select();
             },
 
-            handleFilterEvent:function() {
+            handleFilterEvent:function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput"),
@@ -45,37 +45,37 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 }
             },
 
-            _uiSetFilterStr:function(v) {
+            _uiSetFilterStr:function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
             },
 
-            filterItems:function(str) {
+            filterItems:function (str) {
                 var self = this,
                     view = self.get("view"),
                     _labelEl = view.get("labelEl"),
                     filterInput = view.get("filterInput");
 
-                // 有过滤条件提示隐藏，否则提示显示
+                // 有过滤条件提示隐藏,否则提示显示
                 _labelEl[str ? "hide" : "show"]();
 
                 if (self.get("allowMultiple")) {
                     var enteredItems = [],
                         lastWord;
-
-                    var match = str.match(/(.+)[,，]\s*([^，,]*)/);
+                    // \uff0c => ，
+                    var match = str.match(/(.+)[,\uff0c]\s*([^\uff0c,]*)/);
                     // 已经确认的项
                     // , 号之前的项必定确认
 
                     var items = [];
 
                     if (match) {
-                        items = match[1].split(/[,，]/);
+                        items = match[1].split(/[,\uff0c]/);
                     }
 
                     // 逗号结尾
-                    // 如果可以补全，那么补全最后一项为第一个高亮项
-                    if (/[,，]$/.test(str)) {
+                    // 如果可以补全,那么补全最后一项为第一个高亮项
+                    if (/[,\uff0c]$/.test(str)) {
                         enteredItems = [];
                         if (match) {
                             enteredItems = items;
@@ -92,7 +92,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                         }
                         str = '';
                     } else {
-                        // 需要菜单过滤的过滤词，在最后一个 , 后面
+                        // 需要菜单过滤的过滤词,在最后一个 , 后面
                         if (match) {
                             str = match[2] || "";
                         }
@@ -103,7 +103,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                         enteredItems = items;
                     }
                     var oldEnteredItems = self.get("enteredItems");
-                    // 发生变化，长度变化和内容变化等同
+                    // 发生变化,长度变化和内容变化等同
                     if (oldEnteredItems.length != enteredItems.length) {
                         S.log("enteredItems : ");
                         S.log(enteredItems);
@@ -117,7 +117,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                     hit = this.getCls(HIT_CLS);
 
                 // 过滤所有子组件
-                S.each(children, function(c) {
+                S.each(children, function (c) {
                     var content = c.get("content");
                     if (!str) {
                         // 没有过滤条件
@@ -131,7 +131,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 wrap
-                            c.get("contentEl").html(content.replace(strExp, function(m) {
+                            c.get("contentEl").html(content.replace(strExp, function (m) {
                                 return "<span class='" + hit + "'>" + m + "<" + "/span>";
                             }));
                         } else {
@@ -143,7 +143,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 });
             },
 
-            decorateInternal:function(el) {
+            decorateInternal:function (el) {
                 var self = this;
                 self.set("el", el);
                 var menuContent = el.one("." + self.getCls("menu-content"));
@@ -151,9 +151,9 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
             },
 
             /**
-             * 重置状态，用于重用
+             * 重置状态,用于重用
              */
-            reset:function() {
+            reset:function () {
                 var self = this,
                     view = self.get("view");
                 self.set("filterStr", "");
@@ -162,7 +162,7 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
                 filterInput && filterInput.val("");
             },
 
-            destructor:function() {
+            destructor:function () {
                 var view = this.get("view");
                 var filterInput = view && view.get("filterInput");
                 filterInput && filterInput.detach();
@@ -197,5 +197,5 @@ KISSY.add("menu/filtermenu", function(S, UIBase, Component, Menu, FilterMenuRend
 
     return FilterMenu;
 }, {
-    requires:['uibase','component','./base','./filtermenurender']
+    requires:['uibase', 'component', './base', './filtermenurender']
 });
