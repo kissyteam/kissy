@@ -7,7 +7,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
     io.setupConfig({
         jsonp:"callback",
         jsonpCallback:function () {
-            //不使用 now() ，极端情况下可能重复
+            // 不使用 now() ，极端情况下可能重复
             return S.guid("jsonp");
         }
     });

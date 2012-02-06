@@ -111,12 +111,15 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
                 c.data = S.param(c.data, undefined, undefined, c.serializeArray);
             }
 
+            // fix #90 ie7 about "//x.htm"
+            c.url = c.url.replace(/^\/\//, curLocationParts[1] + "//");
             c.type = c.type.toUpperCase();
             c.hasContent = !rnoContent.test(c.type);
 
             if (!c.hasContent) {
                 if (c.data) {
                     c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
+                    delete c.data;
                 }
                 if (c.cache === false) {
                     c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());

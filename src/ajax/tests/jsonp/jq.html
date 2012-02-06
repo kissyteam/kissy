@@ -1,0 +1,14 @@
+<script src="../../../../tools/third-party/jquery.js"></script>
+<script type="text/javascript">
+    $.ajax({
+        type:"get",
+        url:'t.php',
+        data: {
+            my:2
+        },
+        success:function (d) {
+            alert(d);
+        },
+        dataType:"jsonp"
+    });
+</script>
