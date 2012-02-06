@@ -27,6 +27,46 @@ describe("KISSY.Defer", function () {
         });
     });
 
+    it("can access value after resolved", function () {
+        var d = S.Defer(),
+            r,
+            p = d.promise;
+        d.resolve(1);
+        waits(10);
+        runs(function () {
+            expect(Promise.isResolved(p)).toBe(true);
+            p.then(function (v) {
+                r = v;
+            });
+        });
+        waits(10);
+        runs(function () {
+            expect(r).toBe(1);
+            expect(Promise.isResolved(p)).toBe(true);
+        });
+    });
+
+    it("can access error after resolved", function () {
+        var d = S.Defer(),
+            r,
+            p = d.promise;
+        d.reject(1);
+        waits(10);
+        runs(function () {
+            expect(Promise.isResolved(p)).toBe(false);
+            expect(Promise.isRejected(p)).toBe(true);
+            p.fail(function (v) {
+                r = v;
+            });
+        });
+        waits(10);
+        runs(function () {
+            expect(r).toBe(1);
+            expect(Promise.isResolved(p)).toBe(false);
+            expect(Promise.isRejected(p)).toBe(true);
+        });
+    });
+
     it("can transform returned value by chained promise", function () {
         var d = S.Defer(),
             p = d.promise,

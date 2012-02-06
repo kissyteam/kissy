@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 3 19:23
+build time: Feb 6 14:00
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 3 19:23
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120203192321',
+            buildTime:'20120206140009',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1421,12 +1421,9 @@ build time: Feb 3 19:23
 
     function nextTick(fn) {
         // for debug
-        if (S.Config.debug) {
-            fn();
-        } else {
-            // make parallel call in production
-            setTimeout(fn, 0);
-        }
+        // fn();
+        // make parallel call in production
+        setTimeout(fn, 0);
     }
 
     /**
@@ -1535,7 +1532,6 @@ build time: Feb 3 19:23
             if (pendings) {
                 pendings.push([fulfilled, rejected]);
             }
-
             // rejected or nested promise
             else if (isPromise(v)) {
                 nextTick(function () {
@@ -3220,17 +3216,16 @@ build time: Feb 3 19:23
 (function (S, undefined) {
 
     var win = S.__HOST,
+
         doc = win['document'],
 
         docElem = doc.documentElement,
 
         EMPTY = '',
 
-        // Is the DOM ready to be used? Set to true once it occurs.
-        isReady = false,
+        readyDefer = new S.Defer(),
 
-        // The functions to execute on DOM ready.
-        readyList = [],
+        readyPromise = readyDefer.promise,
 
         // The number of poll times.
         POLL_RETRYS = 500,
@@ -3309,14 +3304,7 @@ build time: Feb 3 19:23
              */
             ready:function (fn) {
 
-                // If the DOM is already ready
-                if (isReady) {
-                    // Execute the function immediately
-                    fn.call(win, this);
-                } else {
-                    // Remember the function for later
-                    readyList.push(fn);
-                }
+                readyPromise.then(fn);
 
                 return this;
             },
@@ -3352,7 +3340,7 @@ build time: Feb 3 19:23
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function () {
-                _fireReady();
+                readyDefer.resolve(S)
             };
 
         // Catch cases where ready() is called after the
@@ -3382,7 +3370,8 @@ build time: Feb 3 19:23
                 }
             }
 
-            // ensure firing before onload, maybe late but safe also for iframes
+            // ensure firing before onload (but completed after all inner iframes is loaded)
+            // maybe late but safe also for iframes
             doc.attachEvent(eventType, stateChange);
 
             // A fallback to window.onload, that will always work.
@@ -3390,15 +3379,17 @@ build time: Feb 3 19:23
 
             // If IE and not a frame
             // continually check to see if the document is ready
-            var notframe = false;
+            var notframe;
 
             try {
                 notframe = (win['frameElement'] === null);
             } catch (e) {
-                S.log("frameElement error : ");
+                S.log("get frameElement error : ");
                 S.log(e);
+                notframe = false;
             }
 
+            // can not use in iframe,parent window is dom ready so doScoll is ready too
             if (doScroll && notframe) {
                 function readyScroll() {
                     try {
@@ -3415,30 +3406,6 @@ build time: Feb 3 19:23
             }
         }
         return 0;
-    }
-
-    /**
-     * Executes functions bound to ready event.
-     */
-    function _fireReady() {
-        if (isReady) {
-            return;
-        }
-
-        // Remember that the DOM is ready
-        isReady = true;
-
-        // If there are functions bound, to execute
-        if (readyList) {
-            // Execute all of them
-            var fn, i = 0;
-            while (fn = readyList[i++]) {
-                fn.call(win, S);
-            }
-
-            // Reset the list of functions
-            readyList = null;
-        }
     }
 
     // If url contains '?ks-debug', debug mode will turn on automatically.

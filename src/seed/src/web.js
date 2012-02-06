@@ -6,17 +6,16 @@
 (function (S, undefined) {
 
     var win = S.__HOST,
+
         doc = win['document'],
 
         docElem = doc.documentElement,
 
         EMPTY = '',
 
-        // Is the DOM ready to be used? Set to true once it occurs.
-        isReady = false,
+        readyDefer = new S.Defer(),
 
-        // The functions to execute on DOM ready.
-        readyList = [],
+        readyPromise = readyDefer.promise,
 
         // The number of poll times.
         POLL_RETRYS = 500,
@@ -95,14 +94,7 @@
              */
             ready:function (fn) {
 
-                // If the DOM is already ready
-                if (isReady) {
-                    // Execute the function immediately
-                    fn.call(win, this);
-                } else {
-                    // Remember the function for later
-                    readyList.push(fn);
-                }
+                readyPromise.then(fn);
 
                 return this;
             },
@@ -138,7 +130,7 @@
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function () {
-                _fireReady();
+                readyDefer.resolve(S)
             };
 
         // Catch cases where ready() is called after the
@@ -168,7 +160,8 @@
                 }
             }
 
-            // ensure firing before onload, maybe late but safe also for iframes
+            // ensure firing before onload (but completed after all inner iframes is loaded)
+            // maybe late but safe also for iframes
             doc.attachEvent(eventType, stateChange);
 
             // A fallback to window.onload, that will always work.
@@ -176,15 +169,17 @@
 
             // If IE and not a frame
             // continually check to see if the document is ready
-            var notframe = false;
+            var notframe;
 
             try {
                 notframe = (win['frameElement'] === null);
             } catch (e) {
-                S.log("frameElement error : ");
+                S.log("get frameElement error : ");
                 S.log(e);
+                notframe = false;
             }
 
+            // can not use in iframe,parent window is dom ready so doScoll is ready too
             if (doScroll && notframe) {
                 function readyScroll() {
                     try {
@@ -201,30 +196,6 @@
             }
         }
         return 0;
-    }
-
-    /**
-     * Executes functions bound to ready event.
-     */
-    function _fireReady() {
-        if (isReady) {
-            return;
-        }
-
-        // Remember that the DOM is ready
-        isReady = true;
-
-        // If there are functions bound, to execute
-        if (readyList) {
-            // Execute all of them
-            var fn, i = 0;
-            while (fn = readyList[i++]) {
-                fn.call(win, S);
-            }
-
-            // Reset the list of functions
-            readyList = null;
-        }
     }
 
     // If url contains '?ks-debug', debug mode will turn on automatically.

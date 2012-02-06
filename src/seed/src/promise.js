@@ -8,12 +8,9 @@
 
     function nextTick(fn) {
         // for debug
-        if (S.Config.debug) {
-            fn();
-        } else {
-            // make parallel call in production
-            setTimeout(fn, 0);
-        }
+        // fn();
+        // make parallel call in production
+        setTimeout(fn, 0);
     }
 
     /**
@@ -122,7 +119,6 @@
             if (pendings) {
                 pendings.push([fulfilled, rejected]);
             }
-
             // rejected or nested promise
             else if (isPromise(v)) {
                 nextTick(function () {
