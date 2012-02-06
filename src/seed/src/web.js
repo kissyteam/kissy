@@ -94,7 +94,17 @@
              */
             ready:function (fn) {
 
-                readyPromise.then(fn);
+                function f() {
+                    try {
+                        fn(S);
+                    } catch (e) {
+                        setTimeout(function () {
+                            throw e;
+                        }, 0);
+                    }
+                }
+
+                readyPromise.then(f);
 
                 return this;
             },

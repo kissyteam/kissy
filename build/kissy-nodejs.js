@@ -198,7 +198,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 6 14:00
+build time: Feb 6 14:07
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -307,7 +307,7 @@ build time: Feb 6 14:00
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120206140009',
+            buildTime:'20120206140701',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3501,7 +3501,17 @@ build time: Feb 6 14:00
              */
             ready:function (fn) {
 
-                readyPromise.then(fn);
+                function f() {
+                    try {
+                        fn(S);
+                    } catch (e) {
+                        setTimeout(function () {
+                            throw e;
+                        }, 0);
+                    }
+                }
+
+                readyPromise.then(f);
 
                 return this;
             },
