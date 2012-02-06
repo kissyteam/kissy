@@ -2,7 +2,7 @@
  * @fileOverview solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
+KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
         PROXY_PAGE = "/sub_domain_proxy.html",
@@ -11,22 +11,24 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
             // hostname:{iframe: , ready:}
         };
 
-    function SubDomain(xhrObj) {
+    function SubDomainTransport(xhrObj) {
         var self = this,
             c = xhrObj.config;
         self.xhrObj = xhrObj;
         var m = c.url.match(rurl);
-        self.__hostname = m[2];
-        self.__protocol = m[1];
+        self.hostname = m[2];
+        self.protocol = m[1];
         c.crossDomain = false;
     }
 
 
-    S.augment(SubDomain, XhrBase.proto, {
-        send:function() {
+    S.augment(SubDomainTransport, XhrTransportBase.proto, {
+        // get nativeXhr from iframe document
+        // not from current document directly like XhrTransport
+        send:function () {
             var self = this,
                 c = self.xhrObj.config,
-                hostname = self.__hostname,
+                hostname = self.hostname,
                 iframe,
                 iframeDesc = iframeMap[hostname];
 
@@ -37,14 +39,15 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
             }
 
             if (iframeDesc && iframeDesc.ready) {
-                self.xhr = XhrBase.xhr(0, iframeDesc.iframe.contentWindow);
-                if (self.xhr) {
+                self.nativeXhr = XhrTransportBase.nativeXhr(0, iframeDesc.iframe.contentWindow);
+                if (self.nativeXhr) {
                     self.sendInternal();
                 } else {
                     S.error("document.domain not set correctly!");
                 }
                 return;
             }
+
             if (!iframeDesc) {
                 iframeDesc = iframeMap[hostname] = {};
                 iframe = iframeDesc.iframe = document.createElement("iframe");
@@ -54,7 +57,7 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
                     top:'-9999px'
                 });
                 DOM.prepend(iframe, doc.body || doc.documentElement);
-                iframe.src = self.__protocol + "//" + hostname + proxy;
+                iframe.src = self.protocol + "//" + hostname + proxy;
             } else {
                 iframe = iframeDesc.iframe;
             }
@@ -66,15 +69,15 @@ KISSY.add("ajax/subdomain", function(S, XhrBase, Event, DOM) {
 
     function _onLoad() {
         var self = this,
-            hostname = self.__hostname,
+            hostname = self.hostname,
             iframeDesc = iframeMap[hostname];
         iframeDesc.ready = 1;
         Event.detach(iframeDesc.iframe, "load", _onLoad, self);
         self.send();
     }
 
-    return SubDomain;
+    return SubDomainTransport;
 
 }, {
-    requires:['./xhrbase','event','dom']
+    requires:['./XhrTransportBase', 'event', 'dom']
 });

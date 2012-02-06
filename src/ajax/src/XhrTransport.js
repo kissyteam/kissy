@@ -2,13 +2,11 @@
  * @fileOverview ajax xhr transport class , route subdomain , xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
+KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/;
-
-    var _XDomainRequest = window['XDomainRequest'];
-
-    var detectXhr = XhrBase.xhr();
+    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        _XDomainRequest = window['XDomainRequest'],
+        detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
 
@@ -34,7 +32,7 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
 
                 // 跨子域
                 if (getMainDomain(location.hostname) == getMainDomain(parts[2])) {
-                    return new SubDomain(xhrObj);
+                    return new SubDomainTransport(xhrObj);
                 }
 
                 /**
@@ -42,7 +40,7 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
                  */
                 if (!("withCredentials" in detectXhr) &&
                     (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
-                    return new XdrTransport(xhrObj);
+                    return new XdrFlashTransport(xhrObj);
                 }
             }
 
@@ -51,13 +49,13 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
             return undefined;
         }
 
-        S.augment(XhrTransport, XhrBase.proto, {
+        S.augment(XhrTransport, XhrTransportBase.proto, {
 
-            send:function() {
+            send:function () {
                 var self = this,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
-                self.xhr = XhrBase.xhr(c.crossDomain);
+                self.nativeXhr = XhrTransportBase.nativeXhr(c.crossDomain);
                 self.sendInternal();
             }
 
@@ -68,7 +66,7 @@ KISSY.add("ajax/xhr", function(S, io, XhrBase, SubDomain, XdrTransport) {
 
     return io;
 }, {
-    requires:["./base",'./xhrbase','./subdomain',"./xdr"]
+    requires:["./base", './XhrTransportBase', './SubDomainTransport', "./XdrFlashTransport"]
 });
 
 /**

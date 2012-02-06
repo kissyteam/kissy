@@ -62,7 +62,7 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
             /**
              * jsonp 请求
              * @param url
-             * @param data
+             * @param [data]
              * @param callback
              */
             jsonp:function (url, data, callback) {
@@ -124,12 +124,12 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
     return io;
 }, {
     requires:[
-        "ajax/form-serializer",
+        "ajax/FormSerializer",
         "ajax/base",
-        "ajax/xhrobject",
-        "ajax/xhr",
-        "ajax/script",
+        "ajax/XhrObject",
+        "ajax/XhrTransport",
+        "ajax/ScriptTransport",
         "ajax/jsonp",
         "ajax/form",
-        "ajax/iframe-upload"]
+        "ajax/IframeTransport"]
 });

@@ -2,11 +2,12 @@
  * @fileOverview non-refresh upload file with form by iframe
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
+KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
-    var doc = document;
-
-    var OK_CODE = 200,ERROR_CODE = 500,BREATH_INTERVAL = 30;
+    var doc = document,
+        OK_CODE = 200,
+        ERROR_CODE = 500,
+        BREATH_INTERVAL = 30;
 
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
@@ -14,10 +15,12 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             // iframe 到其他类型的转化和 text 一样
             iframe:io.getConfig().converters.text,
             text:{
-                iframe:function(text) {
+                iframe:function (text) {
                     return text;
                 }
-            }}});
+            }
+        }
+    });
 
     function createIframe(xhr) {
         var id = S.guid("ajax-iframe");
@@ -54,83 +57,86 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
         DOM.remove(fields);
     }
 
-    function IframeTransport(xhr) {
-        this.xhr = xhr;
+    function IframeTransport(xhrObject) {
+        this.xhrObject = xhrObject;
     }
 
     S.augment(IframeTransport, {
-        send:function() {
-            //debugger
-            var xhr = this.xhr,
-                c = xhr.config,
+        send:function () {
+
+            var self = this,
+                xhrObject = self.xhrObject,
+                c = xhrObject.config,
                 fields,
                 form = DOM.get(c.form);
 
-            this.attrs = {
+            self.attrs = {
                 target:DOM.attr(form, "target") || "",
                 action:DOM.attr(form, "action") || ""
             };
-            this.form = form;
+            self.form = form;
 
-            createIframe(xhr);
+            createIframe(xhrObject);
 
             // set target to iframe to avoid main page refresh
-            DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
+            DOM.attr(form, {
+                "target":xhrObject.iframeId,
+                "action":c.url
+            });
 
             if (c.data) {
                 fields = addDataToForm(c.data, form, c.serializeArray);
             }
 
-            this.fields = fields;
+            self.fields = fields;
 
-            var iframe = xhr.iframe;
+            var iframe = xhrObject.iframe;
 
-            Event.on(iframe, "load error", this._callback, this);
+            Event.on(iframe, "load error", self._callback, self);
 
             form.submit();
 
         },
 
-        _callback:function(event
-                           //, abort
-            ) {
+        _callback:function (event, abort) {
             //debugger
-            var form = this.form,
-                xhr = this.xhr,
+            var self=this,
+                form = self.form,
+                xhrObject = self.xhrObject,
                 eventType = event.type,
-                iframe = xhr.iframe;
+                iframe = xhrObject.iframe;
+
             // 防止重复调用 , 成功后 abort
             if (!iframe) {
                 return;
             }
 
-            DOM.attr(form, this.attrs);
+            DOM.attr(form, self.attrs);
 
             if (eventType == "load") {
                 var iframeDoc = iframe.contentWindow.document;
-                xhr.responseXML = iframeDoc;
-                xhr.responseText = DOM.text(iframeDoc.body);
-                xhr.callback(OK_CODE, "success");
+                xhrObject.responseXML = iframeDoc;
+                xhrObject.responseText = DOM.text(iframeDoc.body);
+                xhrObject._callback(OK_CODE, "success");
             } else if (eventType == 'error') {
-                xhr.callback(ERROR_CODE, "error");
+                xhrObject._callback(ERROR_CODE, "error");
             }
 
             removeFieldsFromData(this.fields);
 
-
             Event.detach(iframe);
 
-            setTimeout(function() {
+            setTimeout(function () {
                 // firefox will keep loading if not settimeout
                 DOM.remove(iframe);
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
-            xhr.iframe = null;
+            xhrObject.iframe = null;
         },
 
-        abort:function() {
-            this._callback(0, 1);
+        abort:function () {
+            this._callback({}, 1);
         }
     });
 
@@ -139,5 +145,5 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     return io;
 
 }, {
-    requires:["dom","event","./base"]
+    requires:["dom", "event", "./base"]
 });

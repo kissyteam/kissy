@@ -2,7 +2,7 @@
  * @fileOverview use flash to accomplish cross domain request , usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xdr", function(S, io, DOM) {
+KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
 
     var // current running request instances
         maps = {},
@@ -27,7 +27,7 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
             '<param name="FlashVars" value="yid=' +
             _ + '&uid=' +
             uid +
-            '&host=KISSY.io" />' +
+            '&host=KISSY.require(\'ajax\')" />' +
             '<param name="allowScriptAccess" value="always" />' +
             '</object>',
             c = doc.createElement('div');
@@ -35,14 +35,14 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
         c.innerHTML = o;
     }
 
-    function XdrTransport(xhrObj) {
+    function XdrFlashTransport(xhrObj) {
         S.log("use flash xdr");
         this.xhrObj = xhrObj;
     }
 
-    S.augment(XdrTransport, {
+    S.augment(XdrFlashTransport, {
         // rewrite send to support flash xdr
-        send:function() {
+        send:function () {
             var self = this,
                 xhrObj = self.xhrObj,
                 c = xhrObj.config;
@@ -52,7 +52,7 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
             // 简便起见，用轮训
             if (!flash) {
                 // S.log("detect xdr flash");
-                setTimeout(function() {
+                setTimeout(function () {
                     self.send();
                 }, 200);
                 return;
@@ -69,12 +69,12 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
             });
         },
 
-        abort:function() {
+        abort:function () {
             flash.abort(this._uid);
         },
 
-        _xdrResponse:function(e, o) {
-            // S.log(e);
+        _xdrResponse:function (e, o) {
+            S.log(e);
             var self = this,
                 ret,
                 xhrObj = self.xhrObj;
@@ -84,7 +84,7 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
 
             switch (e) {
                 case 'success':
-                    ret = { status: 200, statusText: "success" };
+                    ret = { status:200, statusText:"success" };
                     delete maps[o.id];
                     break;
                 case 'abort':
@@ -94,28 +94,28 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
                 case 'transport error':
                 case 'failure':
                     delete maps[o.id];
-                    ret = { status: 500, statusText: e };
+                    ret = { status:500, statusText:e };
                     break;
             }
             if (ret) {
-                xhrObj.callback(ret.status, ret.statusText);
+                xhrObj._callback(ret.status, ret.statusText);
             }
         }
     });
 
     /*called by flash*/
-    io['applyTo'] = function(_, cmd, args) {
+    io['applyTo'] = function (_, cmd, args) {
         // S.log(cmd + " execute");
-        var cmds = cmd.split("."),
-            func = S;
-        S.each(cmds, function(c) {
+        var cmds = cmd.split(".").slice(1),
+            func = io;
+        S.each(cmds, function (c) {
             func = func[c];
         });
         func.apply(null, args);
     };
 
     // when flash is loaded
-    io['xdrReady'] = function() {
+    io['xdrReady'] = function () {
         flash = doc.getElementById(ID);
     };
 
@@ -125,16 +125,13 @@ KISSY.add("ajax/xdr", function(S, io, DOM) {
      * @param o internal data
      * @param c internal data
      */
-    io['xdrResponse'] = function(e, o, c) {
+    io['xdrResponse'] = function (e, o, c) {
         var xhr = maps[o.uid];
         xhr && xhr._xdrResponse(e, o, c);
     };
 
-    // export io for flash to call
-    S.io = io;
-
-    return XdrTransport;
+    return XdrFlashTransport;
 
 }, {
-    requires:["./base",'dom']
+    requires:["./base", 'dom']
 });

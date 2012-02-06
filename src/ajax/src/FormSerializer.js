@@ -2,7 +2,7 @@
  * @fileOverview form data  serialization util
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/form-serializer", function(S, DOM) {
+KISSY.add("ajax/FormSerializer", function(S, DOM) {
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
         rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;

@@ -2,7 +2,7 @@
  * @fileOverview base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhrbase", function (S, io) {
+KISSY.add("ajax/XhrTransportBase", function (S, io) {
     var OK_CODE = 200,
         win = window,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -10,7 +10,7 @@ KISSY.add("ajax/xhrbase", function (S, io) {
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
-        XhrBase = {
+        XhrTransportBase = {
             proto:{}
         };
 
@@ -32,7 +32,7 @@ KISSY.add("ajax/xhrbase", function (S, io) {
         return undefined;
     }
 
-    XhrBase.xhr = win.ActiveXObject ? function (crossDomain, refWin) {
+    XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
         if (crossDomain && _XDomainRequest) {
             return new _XDomainRequest();
         }
@@ -44,34 +44,34 @@ KISSY.add("ajax/xhrbase", function (S, io) {
         return _XDomainRequest && (xhr instanceof _XDomainRequest);
     }
 
-    S.mix(XhrBase.proto, {
+    S.mix(XhrTransportBase.proto, {
         sendInternal:function () {
 
             var self = this,
                 xhrObj = self.xhrObj,
                 c = xhrObj.config;
 
-            var xhr = self.xhr,
+            var nativeXhr = self.nativeXhr,
                 xhrFields,
                 i;
 
             if (c['username']) {
-                xhr.open(c.type, c.url, c.async, c['username'], c.password)
+                nativeXhr.open(c.type, c.url, c.async, c['username'], c.password)
             } else {
-                xhr.open(c.type, c.url, c.async);
+                nativeXhr.open(c.type, c.url, c.async);
             }
 
             if (xhrFields = c['xhrFields']) {
                 for (i in xhrFields) {
                     if (xhrFields.hasOwnProperty(i)) {
-                        xhr[ i ] = xhrFields[ i ];
+                        nativeXhr[ i ] = xhrFields[ i ];
                     }
                 }
             }
 
             // Override mime type if supported
-            if (xhrObj.mimeType && xhr.overrideMimeType) {
-                xhr.overrideMimeType(xhrObj.mimeType);
+            if (xhrObj.mimeType && nativeXhr.overrideMimeType) {
+                nativeXhr.overrideMimeType(xhrObj.mimeType);
             }
             // yui3 and jquery both have
             if (!c.crossDomain && !xhrObj.requestHeaders["X-Requested-With"]) {
@@ -82,7 +82,7 @@ KISSY.add("ajax/xhrbase", function (S, io) {
                 // OPTIONS /xhr/r.php HTTP/1.1
                 if (!c.crossDomain) {
                     for (i in xhrObj.requestHeaders) {
-                        xhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
+                        nativeXhr.setRequestHeader(i, xhrObj.requestHeaders[ i ]);
                     }
                 }
             } catch (e) {
@@ -90,25 +90,25 @@ KISSY.add("ajax/xhrbase", function (S, io) {
                 S.log(e);
             }
 
-            xhr.send(c.hasContent && c.data || null);
+            nativeXhr.send(c.hasContent && c.data || null);
 
-            if (!c.async || xhr.readyState == 4) {
+            if (!c.async || nativeXhr.readyState == 4) {
                 self._callback();
             } else {
                 // _XDomainRequest 单独的回调机制
-                if (isInstanceOfXDomainRequest(xhr)) {
-                    xhr.onload = function () {
-                        xhr.readyState = 4;
-                        xhr.status = 200;
+                if (isInstanceOfXDomainRequest(nativeXhr)) {
+                    nativeXhr.onload = function () {
+                        nativeXhr.readyState = 4;
+                        nativeXhr.status = 200;
                         self._callback();
                     };
-                    xhr.onerror = function () {
-                        xhr.readyState = 4;
-                        xhr.status = 500;
+                    nativeXhr.onerror = function () {
+                        nativeXhr.readyState = 4;
+                        nativeXhr.status = 500;
                         self._callback();
                     };
                 } else {
-                    xhr.onreadystatechange = function () {
+                    nativeXhr.onreadystatechange = function () {
                         self._callback();
                     };
                 }
@@ -125,46 +125,46 @@ KISSY.add("ajax/xhrbase", function (S, io) {
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
             try {
                 var self = this,
-                    xhr = self.xhr,
+                    nativeXhr = self.nativeXhr,
                     xhrObj = self.xhrObj,
                     c = xhrObj.config;
                 //abort or complete
-                if (abort || xhr.readyState == 4) {
+                if (abort || nativeXhr.readyState == 4) {
 
                     // ie6 ActiveObject 设置不恰当属性导致出错
-                    if (isInstanceOfXDomainRequest(xhr)) {
-                        xhr.onerror = S.noop;
-                        xhr.onload = S.noop;
+                    if (isInstanceOfXDomainRequest(nativeXhr)) {
+                        nativeXhr.onerror = S.noop;
+                        nativeXhr.onload = S.noop;
                     } else {
                         // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
-                        xhr.onreadystatechange = S.noop;
+                        nativeXhr.onreadystatechange = S.noop;
                     }
 
                     if (abort) {
                         // 完成以后 abort 不要调用
-                        if (xhr.readyState !== 4) {
-                            xhr.abort();
+                        if (nativeXhr.readyState !== 4) {
+                            nativeXhr.abort();
                         }
                     } else {
-                        var status = xhr.status;
+                        var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头
-                        if (!isInstanceOfXDomainRequest(xhr)) {
-                            xhrObj.responseHeadersString = xhr.getAllResponseHeaders();
+                        if (!isInstanceOfXDomainRequest(nativeXhr)) {
+                            xhrObj.responseHeadersString = nativeXhr.getAllResponseHeaders();
                         }
 
-                        var xml = xhr.responseXML;
+                        var xml = nativeXhr.responseXML;
 
                         // Construct response list
                         if (xml && xml.documentElement /* #4958 */) {
                             xhrObj.responseXML = xml;
                         }
-                        xhrObj.responseText = xhr.responseText;
+                        xhrObj.responseText = nativeXhr.responseText;
 
                         // Firefox throws an exception when accessing
                         // statusText for faulty cross-domain requests
                         try {
-                            var statusText = xhr.statusText;
+                            var statusText = nativeXhr.statusText;
                         } catch (e) {
                             S.log("xhr statustext error : ");
                             S.log(e);
@@ -183,20 +183,20 @@ KISSY.add("ajax/xhrbase", function (S, io) {
                             status = NO_CONTENT_CODE;
                         }
 
-                        xhrObj.callback(status, statusText);
+                        xhrObj._callback(status, statusText);
 
                     }
                 }
             } catch (firefoxAccessException) {
-                xhr.onreadystatechange = S.noop;
+                nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    xhrObj.callback(-1, firefoxAccessException);
+                    xhrObj._callback(-1, firefoxAccessException);
                 }
             }
         }
     });
 
-    return XhrBase;
+    return XhrTransportBase;
 }, {
     requires:['./base']
 });

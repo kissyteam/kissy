@@ -2,7 +2,7 @@
  * @fileOverview encapsulation of io object . as transaction object in yui3
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/xhrobject", function(S, Event) {
+KISSY.add("ajax/XhrObject", function (S, undefined) {
 
     var OK_CODE = 200,
         MULTIPLE_CHOICES = 300,
@@ -10,14 +10,14 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
         // get individual response header from responseheader str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
-    function handleResponseData(xhr) {
+    function handleResponseData(xhrObject) {
 
         // text xml 是否原生转化支持
-        var text = xhr.responseText,
-            xml = xhr.responseXML,
-            c = xhr.config,
+        var text = xhrObject.responseText,
+            xml = xhrObject.responseXML,
+            c = xhrObject.config,
             cConverts = c.converters,
-            xConverts = xhr.converters || {},
+            xConverts = xhrObject.converters || {},
             type,
             responseData,
             contents = c.contents,
@@ -27,7 +27,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
         // jsonp 时还需要把 script 转换成 json，后面还得自己来
         if (text || xml) {
 
-            var contentType = xhr.mimeType || xhr.getResponseHeader("Content-Type");
+            var contentType = xhrObject.mimeType || xhrObject.getResponseHeader("Content-Type");
 
             // 去除无用的通用格式
             while (dataType[0] == "*") {
@@ -56,8 +56,8 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
-                // 看能否从 text xml 转换到合适数据
-                S.each(["text","xml"], function(prevType) {
+                // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
+                S.each(["text", "xml"], function (prevType) {
                     var type = dataType[0],
                         converter = xConverts[prevType] && xConverts[prevType][type] ||
                             cConverts[prevType] && cConverts[prevType][type];
@@ -86,7 +86,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             prevType = type;
         }
 
-        xhr.responseData = responseData;
+        xhrObject.responseData = responseData;
     }
 
     /**
@@ -110,69 +110,96 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
             state:0,
             statusText:null,
             status:0,
-            transport:null
+            transport:null,
+            _defer:new S.Defer()
         });
     }
 
-    S.augment(XhrObject, Event.Target, {
+    function spread(fn, context) {
+        return function (v) {
+            return fn.apply(context || this, v);
+        };
+    }
+
+    S.augment(XhrObject, {
             // Caches the header
-            setRequestHeader: function(name, value) {
-                this.requestHeaders[ name ] = value;
-                return this;
+            setRequestHeader:function (name, value) {
+                var self = this;
+                self.requestHeaders[ name ] = value;
+                return self;
             },
 
             // Raw string
-            getAllResponseHeaders: function() {
-                return this.state === 2 ? this.responseHeadersString : null;
+            getAllResponseHeaders:function () {
+                var self = this;
+                return self.state === 2 ? self.responseHeadersString : null;
             },
 
             // Builds headers hashtable if needed
-            getResponseHeader: function(key) {
-                var match;
-                if (this.state === 2) {
-                    if (!this.responseHeaders) {
-                        this.responseHeaders = {};
-                        while (( match = rheaders.exec(this.responseHeadersString) )) {
-                            this.responseHeaders[ match[1] ] = match[ 2 ];
+            getResponseHeader:function (key) {
+                var match, self = this;
+                if (self.state === 2) {
+                    if (!self.responseHeaders) {
+                        self.responseHeaders = {};
+                        while (( match = rheaders.exec(self.responseHeadersString) )) {
+                            self.responseHeaders[ match[1] ] = match[ 2 ];
                         }
                     }
-                    match = this.responseHeaders[ key];
+                    match = self.responseHeaders[ key];
                 }
                 return match === undefined ? null : match;
             },
 
             // Overrides response content-type header
-            overrideMimeType: function(type) {
-                if (!this.state) {
-                    this.mimeType = type;
+            overrideMimeType:function (type) {
+                var self = this;
+                if (!self.state) {
+                    self.mimeType = type;
                 }
-                return this;
+                return self;
             },
 
             // Cancel the request
-            abort: function(statusText) {
+            abort:function (statusText) {
+                var self = this;
                 statusText = statusText || "abort";
-                if (this.transport) {
-                    this.transport.abort(statusText);
+                if (self.transport) {
+                    self.transport.abort(statusText);
                 }
-                this.callback(0, statusText);
-                return this;
+                self._callback(0, statusText);
+                return self;
             },
 
-            callback:function(status, statusText) {
-                //debugger
-                var xhr = this;
+            then:function (success, error) {
+                var context = this.config.context;
+                success = success && spread(success, context);
+                error = error && spread(error, context);
+                return this._defer.promise.then(success, error);
+            },
+
+            fail:function (error) {
+                return this.then(null, error);
+            },
+
+            fin:function (fn) {
+                var self = this;
+                fn = spread(fn, self.config.context);
+                return self._defer.promise.fin(fn);
+            },
+
+            _callback:function (status, statusText) {
+                var self = this;
                 // 只能执行一次，防止重复执行
                 // 例如完成后，调用 abort
 
                 // 到这要么成功，调用success
                 // 要么失败，调用 error
                 // 最终都会调用 complete
-                if (xhr.state == 2) {
+                if (self.state == 2) {
                     return;
                 }
-                xhr.state = 2;
-                xhr.readyState = 4;
+                self.state = 2;
+                self.readyState = 4;
                 var isSuccess;
                 if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
 
@@ -181,10 +208,10 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
                         isSuccess = true;
                     } else {
                         try {
-                            handleResponseData(xhr);
+                            handleResponseData(self);
                             statusText = "success";
                             isSuccess = true;
-                        } catch(e) {
+                        } catch (e) {
                             statusText = "parsererror : " + e;
                         }
                     }
@@ -195,21 +222,15 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
                     }
                 }
 
-                xhr.status = status;
-                xhr.statusText = statusText;
+                self.status = status;
+                self.statusText = statusText;
 
-                if (isSuccess) {
-                    xhr.fire("success");
-                } else {
-                    xhr.fire("error");
-                }
-                xhr.fire("complete");
-                xhr.transport = undefined;
+                var defer = self._defer;
+                defer[isSuccess ? "resolve" : "reject"]([self.responseData, self.statusText, self]);
+                self.transport = undefined;
             }
         }
     );
 
     return XhrObject;
-}, {
-    requires:["event"]
 });

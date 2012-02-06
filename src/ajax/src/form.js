@@ -5,8 +5,8 @@
 KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
 
     io.on("start", function(e) {
-        var xhr = e.xhr,
-            c = xhr.config;
+        var xhrObject = e.xhr,
+            c = xhrObject.config;
         // serialize form if needed
         if (c.form) {
             var form = DOM.get(c.form),
@@ -44,5 +44,5 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
     return io;
 
 }, {
-        requires:['./base',"dom","./form-serializer"]
+        requires:['./base',"dom","./FormSerializer"]
     });

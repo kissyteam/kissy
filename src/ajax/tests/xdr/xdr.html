@@ -5,23 +5,26 @@
 <script src="../../../../build/anim.js"></script>
 <script src="../../../../build/node.js"></script>
 <script src="../../../../build/json.js"></script>
-<script src="../../base.js"></script>
-<script src="../../xhrobject.js"></script>
-<script src="../../iframe-upload.js"></script>
-<script src="../../form-serializer.js"></script>
-<script src="../../form.js"></script>
-<script src="../../jsonp.js"></script>
-<script src="../../script.js"></script>
-<script src="../../xhr.js"></script>
-<script src="../../xdr.js"></script>
-<script src="../../../ajax.js"></script>
+<script type="text/javascript" src="../.././src/base.js"></script>
+<script type="text/javascript" src="../../src/XhrObject.js"></script>
+<script type="text/javascript" src="../../src/IframeTransport.js"></script>
+<script type="text/javascript" src="../../src/FormSerializer.js"></script>
+<script type="text/javascript" src="../.././src/form.js"></script>
+<script type="text/javascript" src="../../src/jsonp.js"></script>
+<script type="text/javascript" src="../../src/ScriptTransport.js"></script>
+<script type="text/javascript" src="../../src/XhrTransportBase.js"></script>
+<script type="text/javascript" src="../../src/XhrTransport.js"></script>
+<script type="text/javascript" src="../../src/XdrFlashTransport.js"></script>
+<script type="text/javascript" src="../../src/SubDomainTransport.js"></script>
+<script type="text/javascript" src=".././../src/ajax.js"></script>
 <script>
-    KISSY.use("ajax", function(S, io) {
-        S.ready(function(S) {
+    KISSY.use("ajax", function (S, io) {
+        S.ready(function (S) {
             io({
                 headers:{
                     // cross domain 设置 header ie 无效
-                    // yiminghe:1
+                    // 原生 chrome.firefox 也不行，响应头也不能读
+                    yiminghe:1
                 },
                 dataType:'json',
                 url:'http://yiminghe.daily.taobao.net/' +
@@ -29,6 +32,9 @@
                 xhrFields:{
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
+                    // Access-Control-Allow-Origin:http://chengyu.taobao.ali.com
+                    // 必须设置完全 hostname 匹配
+
                     // firefox , chrome 携带 cookie
                     withCredentials:true
                 },
@@ -39,11 +45,14 @@
                 data:{
                     action:"x"
                 },
-                success:function(d, s, r) {
+                success:function (d, s, r) {
                     S.log("x : " + d.x);
+                    // 原生 chrome.firefox 也不行，响应头也不能读
                     S.log(r.getResponseHeader("X-Powered-By"));
                 }
             });
+
+            if (1)return;
 
             io({
                 headers:{
@@ -61,7 +70,7 @@
                 data:{
                     action:"y"
                 },
-                success:function(d, s, r) {
+                success:function (d, s, r) {
                     S.log("y : " + d.y);
                     S.log(r.getResponseHeader("X-Powered-By"));
                 }

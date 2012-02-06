@@ -3,11 +3,11 @@
  * @description: modified version of S.getScript , add abort ability
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/script", function(S, io) {
+KISSY.add("ajax/ScriptTransport", function (S, io) {
 
-    var doc = document;
-
-    var OK_CODE = 200,ERROR_CODE = 500;
+    var doc = document,
+        OK_CODE = 200,
+        ERROR_CODE = 500;
 
     io.setupConfig({
         accepts:{
@@ -25,7 +25,7 @@ KISSY.add("ajax/script", function(S, io) {
                 // 如果以 xhr+eval 需要下面的，
                 // 否则直接 script node 不需要，引擎自己执行了，
                 // 不需要手动 eval
-                script:function(text) {
+                script:function (text) {
                     S.globalEval(text);
                     return text;
                 }
@@ -44,7 +44,7 @@ KISSY.add("ajax/script", function(S, io) {
     }
 
     S.augment(ScriptTransport, {
-        send:function() {
+        send:function () {
             var self = this,
                 script,
                 xhrObj = this.xhrObj,
@@ -65,7 +65,7 @@ KISSY.add("ajax/script", function(S, io) {
 
             script.onerror =
                 script.onload =
-                    script.onreadystatechange = function(e) {
+                    script.onreadystatechange = function (e) {
                         e = e || window.event;
                         // firefox onerror 没有 type ?!
                         self._callback((e.type || "error").toLowerCase());
@@ -74,7 +74,7 @@ KISSY.add("ajax/script", function(S, io) {
             head.insertBefore(script, head.firstChild);
         },
 
-        _callback:function(event, abort) {
+        _callback:function (event, abort) {
             var script = this.script,
                 xhrObj = this.xhrObj,
                 head = this.head;
@@ -84,10 +84,11 @@ KISSY.add("ajax/script", function(S, io) {
                 return;
             }
 
-            if (abort ||
-                !script.readyState ||
-                /loaded|complete/.test(script.readyState)
-                || event == "error"
+            if (
+                abort ||
+                    !script.readyState ||
+                    /loaded|complete/.test(script.readyState) ||
+                    event == "error"
                 ) {
 
                 script['onerror'] = script.onload = script.onreadystatechange = null;
@@ -105,16 +106,16 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Callback if not abort
                 if (!abort && event != "error") {
-                    xhrObj.callback(OK_CODE, "success");
+                    xhrObj._callback(OK_CODE, "success");
                 }
                 // 非 ie<9 可以判断出来
                 else if (event == "error") {
-                    xhrObj.callback(ERROR_CODE, "scripterror");
+                    xhrObj._callback(ERROR_CODE, "scripterror");
                 }
             }
         },
 
-        abort:function() {
+        abort:function () {
             this._callback(0, 1);
         }
     });
@@ -124,5 +125,5 @@ KISSY.add("ajax/script", function(S, io) {
     return io;
 
 }, {
-    requires:['./base','./xhr']
+    requires:['./base', './XhrTransport']
 });

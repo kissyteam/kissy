@@ -2,7 +2,7 @@
  * @fileOverview a scalable client io framework
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
+KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
         var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
             rspace = /\s+/,
@@ -43,6 +43,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
                 serializeArray:true,
                 // whether param data
                 processData:true,
+
                 /*
                  url:"",
                  context:null,
@@ -133,9 +134,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
             return c;
         }
 
-        function fire(eventType, xhr) {
-
-
+        function fire(eventType, xhrObject) {
             /**
              * @name io#complete
              * @description 请求完成（成功或失败）后触发
@@ -162,21 +161,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
              * @param {Object} e.ajaxConfig 当前请求的配置
              * @param {io.XhrObject} e.xhr 当前请求对象
              */
-
-            io.fire(eventType, { ajaxConfig:xhr.config, xhr:xhr});
-        }
-
-        function handleXhrEvent(e) {
-            var xhr = this,
-                c = xhr.config,
-                type = e.type;
-            if (this.timeoutTimer) {
-                clearTimeout(this.timeoutTimer);
-            }
-            if (c[type]) {
-                c[type].call(c.context, xhr.responseData, xhr.statusText, xhr);
-            }
-            fire(type, xhr);
+            io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
         }
 
         /**
@@ -192,7 +177,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
                 return undefined;
             }
             c = setUpConfig(c);
-            var xhr = new XhrObject(c);
+            var xhrObject = new XhrObject(c);
 
 
             /**
@@ -204,18 +189,18 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
              * @param {io.XhrObject} e.xhr 当前请求对象
              */
 
-            fire("start", xhr);
+            fire("start", xhrObject);
             var transportContructor = transports[c.dataType[0]] || transports["*"],
-                transport = new transportContructor(xhr);
-            xhr.transport = transport;
+                transport = new transportContructor(xhrObject);
+            xhrObject.transport = transport;
 
             if (c.contentType) {
-                xhr.setRequestHeader("Content-Type", c.contentType);
+                xhrObject.setRequestHeader("Content-Type", c.contentType);
             }
             var dataType = c.dataType[0],
                 accepts = c.accepts;
             // Set the Accepts header for the server, depending on the dataType
-            xhr.setRequestHeader(
+            xhrObject.setRequestHeader(
                 "Accept",
                 dataType && accepts[dataType] ?
                     accepts[ dataType ] + (dataType === "*" ? "" : ", */*; q=0.01"  ) :
@@ -224,12 +209,26 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
 
             // Check for headers option
             for (var i in c.headers) {
-                xhr.setRequestHeader(i, c.headers[ i ]);
+                xhrObject.setRequestHeader(i, c.headers[ i ]);
             }
 
-            xhr.on("complete success error", handleXhrEvent);
+            function genHandler(handleStr) {
+                return function () {
+                    if (xhrObject.timeoutTimer) {
+                        clearTimeout(xhrObject.timeoutTimer);
+                        xhrObject.timeoutTimer = 0;
+                    }
+                    var h = c[handleStr];
+                    h && h.apply(this, arguments);
+                    fire(handleStr, xhrObject);
+                };
+            }
 
-            xhr.readyState = 1;
+            xhrObject.then(genHandler("success"), genHandler("error"));
+
+            xhrObject.fin(genHandler("complete"));
+
+            xhrObject.readyState = 1;
 
             /**
              * @name io#send
@@ -240,33 +239,34 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
              * @param {io.XhrObject} xhr 当前请求对象
              */
 
-            fire("send", xhr);
+            fire("send", xhrObject);
 
             // Timeout
             if (c.async && c.timeout > 0) {
-                xhr.timeoutTimer = setTimeout(function () {
-                    xhr.abort("timeout");
+                xhrObject.timeoutTimer = setTimeout(function () {
+                    xhrObject.abort("timeout");
                 }, c.timeout * 1000);
             }
 
             try {
                 // flag as sending
-                xhr.state = 1;
+                xhrObject.state = 1;
                 transport.send();
             } catch (e) {
                 // Propagate exception as error if not done
-                if (xhr.status < 2) {
-                    xhr.callback(-1, e);
+                if (xhrObject.status < 2) {
+                    xhrObject._callback(-1, e);
                     // Simply rethrow otherwise
                 } else {
                     S.error(e);
                 }
             }
 
-            return xhr;
+            return xhrObject;
         }
 
         S.mix(io, Event.Target);
+
         S.mix(io, {
             isLocal:isLocal,
             setupConfig:function (setting) {
@@ -283,11 +283,10 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject) {
             }
         });
 
-
         return io;
     },
     {
-        requires:["json", "event", "./xhrobject"]
+        requires:["json", "event", "./XhrObject"]
     });
 
 /**

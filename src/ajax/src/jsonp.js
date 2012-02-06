@@ -13,7 +13,8 @@ KISSY.add("ajax/jsonp", function (S, io) {
     });
 
     io.on("start", function (e) {
-        var xhr = e.xhr, c = xhr.config;
+        var xhrObject = e.xhr,
+            c = xhrObject.config;
         if (c.dataType[0] == "jsonp") {
             var response,
                 cJsonpCallback = c.jsonpCallback,
@@ -35,7 +36,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
             };
 
             // cleanup whether success or failure
-            xhr.on("complete", function () {
+            xhrObject.fin(function () {
                 window[ jsonpCallback ] = previous;
                 if (previous === undefined) {
                     try {
@@ -51,8 +52,8 @@ KISSY.add("ajax/jsonp", function (S, io) {
                 }
             });
 
-            xhr.converters = xhr.converters || {};
-            xhr.converters.script = xhr.converters.script || {};
+            xhrObject.converters = xhrObject.converters || {};
+            xhrObject.converters.script = xhrObject.converters.script || {};
 
             // script -> jsonp ,jsonp need to see json not as script
             // if ie onload a 404 file or all browsers onload an invalid script
@@ -60,7 +61,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
             // because response is undefined( jsonp callback is never called)
             // error throwed will be caught in conversion step
             // and KISSY will notify user by error callback
-            xhr.converters.script.json = function () {
+            xhrObject.converters.script.json = function () {
                 if (!response) {
                     S.error(" not call jsonpCallback : " + jsonpCallback)
                 }

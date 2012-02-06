@@ -322,8 +322,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * 获取元素集合第一个元素的属性值或者设置全部元素对应属性名的属性值
-                 * @param {Array<HTMLElement>|String} selector 元素集合
-                 * @param {String} name 属性名
+                 * @param {HTMLElement[]|HTMLElement|String|Element} selector 元素集合
+                 * @param {String|Object} name 属性名或属性键值对
                  * @param [val] 属性值
                  */
                 attr:function (selector, name, val, pass) {
@@ -560,7 +560,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                 /**
                  * 获取元素集合第一个元素的文本值或者设置全部元素的文本值
-                 * @param {Array<HTMLElement>|String} selector 元素集合
+                 * @param {HTMLElement[]|HTMLElement|String} selector 元素集合
                  * @param [val] 设置值
                  */
                 text:function (selector, val) {

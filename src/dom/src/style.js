@@ -131,284 +131,284 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          * @lends DOM
          */
         {
-        _camelCase:camelCase,
-        // _cssNumber:cssNumber,
-        _CUSTOM_STYLES:CUSTOM_STYLES,
-        _cssProps:cssProps,
-        _getComputedStyle:function (elem, name) {
-            var val = "",
-                computedStyle,
-                d = elem.ownerDocument;
+            _camelCase:camelCase,
+            // _cssNumber:cssNumber,
+            _CUSTOM_STYLES:CUSTOM_STYLES,
+            _cssProps:cssProps,
+            _getComputedStyle:function (elem, name) {
+                var val = "",
+                    computedStyle,
+                    d = elem.ownerDocument;
 
-            name = name.replace(rupper, "-$1").toLowerCase();
+                name = name.replace(rupper, "-$1").toLowerCase();
 
-            // https://github.com/kissyteam/kissy/issues/61
-            if (computedStyle = d.defaultView.getComputedStyle(elem, null)) {
-                val = computedStyle.getPropertyValue(name) || computedStyle[name];
-            }
+                // https://github.com/kissyteam/kissy/issues/61
+                if (computedStyle = d.defaultView.getComputedStyle(elem, null)) {
+                    val = computedStyle.getPropertyValue(name) || computedStyle[name];
+                }
 
-            // 还没有加入到 document，就取行内
-            if (val == "" && !DOM.contains(d.documentElement, elem)) {
-                name = cssProps[name] || name;
-                val = elem[STYLE][name];
-            }
+                // 还没有加入到 document，就取行内
+                if (val == "" && !DOM.contains(d.documentElement, elem)) {
+                    name = cssProps[name] || name;
+                    val = elem[STYLE][name];
+                }
 
-            return val;
-        },
+                return val;
+            },
 
-        /**
-         *  Get style property from the first element of matched elements
-         *  or set the style property on all matched elements
-         *  @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         *  @param {String} name 样式名称
-         *  @param [val] 样式值
-         *  @returns 当不设置 val 时返回指定样式名对应的值
-         *           设置 val 时返回 undefined
-         */
-        style:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0], i;
-            // supports hash
-            if (S.isPlainObject(name)) {
-                for (var k in name) {
+            /**
+             *  Get style property from the first element of matched elements
+             *  or set the style property on all matched elements
+             *  @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             *  @param {String} name 样式名称
+             *  @param [val] 样式值
+             *  @returns 当不设置 val 时返回指定样式名对应的值
+             *           设置 val 时返回 undefined
+             */
+            style:function (selector, name, val) {
+                var els = DOM.query(selector), elem = els[0], i;
+                // supports hash
+                if (S.isPlainObject(name)) {
+                    for (var k in name) {
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
+                        }
+                    }
+                    return undefined;
+                }
+                if (val === undefined) {
+                    var ret = '';
+                    if (elem) {
+                        ret = style(elem, name, val);
+                    }
+                    return ret;
+                } else {
                     for (i = els.length - 1; i >= 0; i--) {
-                        style(els[i], k, name[k]);
+                        style(els[i], name, val);
                     }
                 }
                 return undefined;
-            }
-            if (val === undefined) {
-                var ret = '';
-                if (elem) {
-                    ret = style(elem, name, val);
-                }
-                return ret;
-            } else {
-                for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i], name, val);
-                }
-            }
-            return undefined;
-        },
+            },
 
-        /**
-         * Gets computed style from the first element of matched elements
-         * or sets styles on the matches elements.
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         * @param {String} name 样式名称
-         * @param [val] 样式值
-         * @returns 当不设置 val 时返回指定样式名对应的值
-         *          设置 val 时返回 undefined
-         */
-        css:function (selector, name, val) {
-            var els = DOM.query(selector), elem = els[0], i;
-            // supports hash
-            if (S.isPlainObject(name)) {
-                for (var k in name) {
+            /**
+             * Gets computed style from the first element of matched elements
+             * or sets styles on the matches elements.
+             * @param {HTMLElement[]|String|HTMLElement|Element} selector 选择器或节点或节点数组
+             * @param {String|Object} name 样式名称或样式键值对
+             * @param [val] 样式值
+             * @returns 当不设置 val 时返回指定样式名对应的值
+             *          设置 val 时返回 undefined
+             */
+            css:function (selector, name, val) {
+                var els = DOM.query(selector), elem = els[0], i;
+                // supports hash
+                if (S.isPlainObject(name)) {
+                    for (var k in name) {
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
+                        }
+                    }
+                    return undefined;
+                }
+
+                name = camelCase(name);
+                var hook = CUSTOM_STYLES[name];
+                // getter
+                if (val === undefined) {
+                    // supports css selector/Node/NodeList
+                    var ret = '';
+                    if (elem) {
+                        // If a hook was provided get the computed value from there
+                        if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
+                        } else {
+                            ret = DOM._getComputedStyle(elem, name);
+                        }
+                    }
+                    return ret === undefined ? '' : ret;
+                }
+                // setter
+                else {
                     for (i = els.length - 1; i >= 0; i--) {
-                        style(els[i], k, name[k]);
+                        style(els[i], name, val);
                     }
                 }
                 return undefined;
-            }
+            },
 
-            name = camelCase(name);
-            var hook = CUSTOM_STYLES[name];
-            // getter
-            if (val === undefined) {
-                // supports css selector/Node/NodeList
-                var ret = '';
-                if (elem) {
-                    // If a hook was provided get the computed value from there
-                    if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
-                    } else {
-                        ret = DOM._getComputedStyle(elem, name);
-                    }
-                }
-                return ret === undefined ? '' : ret;
-            }
-            // setter
-            else {
+            /**
+             * Show the matched elements.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             */
+            show:function (selector) {
+                var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
-                    style(els[i], name, val);
-                }
-            }
-            return undefined;
-        },
+                    elem = els[i];
+                    elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
 
-        /**
-         * Show the matched elements.
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         */
-        show:function (selector) {
-            var els = DOM.query(selector), elem, i;
-            for (i = els.length - 1; i >= 0; i--) {
-                elem = els[i];
-                elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
-
-                // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
-                if (DOM.css(elem, DISPLAY) === NONE) {
-                    var tagName = elem.tagName.toLowerCase(),
-                        old = getDefaultDisplay(tagName);
-                    DOM.data(elem, OLD_DISPLAY, old);
-                    elem[STYLE][DISPLAY] = old;
-                }
-            }
-        },
-
-        /**
-         * Hide the matched elements.
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         */
-        hide:function (selector) {
-            var els = DOM.query(selector), elem, i;
-            for (i = els.length - 1; i >= 0; i--) {
-                elem = els[i];
-                var style = elem[STYLE], old = style[DISPLAY];
-                if (old !== NONE) {
-                    if (old) {
+                    // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
+                    if (DOM.css(elem, DISPLAY) === NONE) {
+                        var tagName = elem.tagName.toLowerCase(),
+                            old = getDefaultDisplay(tagName);
                         DOM.data(elem, OLD_DISPLAY, old);
+                        elem[STYLE][DISPLAY] = old;
                     }
-                    style[DISPLAY] = NONE;
                 }
-            }
-        },
+            },
 
-        /**
-         * Display or hide the matched elements.
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         */
-        toggle:function (selector) {
-            var els = DOM.query(selector), elem, i;
-            for (i = els.length - 1; i >= 0; i--) {
-                elem = els[i];
-                if (DOM.css(elem, DISPLAY) === NONE) {
-                    DOM.show(elem);
-                } else {
-                    DOM.hide(elem);
+            /**
+             * Hide the matched elements.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             */
+            hide:function (selector) {
+                var els = DOM.query(selector), elem, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
+                    var style = elem[STYLE], old = style[DISPLAY];
+                    if (old !== NONE) {
+                        if (old) {
+                            DOM.data(elem, OLD_DISPLAY, old);
+                        }
+                        style[DISPLAY] = NONE;
+                    }
                 }
-            }
-        },
+            },
 
-        /**
-         * Creates a stylesheet from a text blob of rules.
-         * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
-         * @param [refWin] Window which will accept this stylesheet
-         * @param {String} cssText The text containing the css rules
-         * @param {String} id An id to add to the stylesheet for later removal
-         */
-        addStyleSheet:function (refWin, cssText, id) {
-            refWin = refWin || window;
-            if (S.isString(refWin)) {
-                id = cssText;
-                cssText = refWin;
-                refWin = window;
-            }
-            refWin = DOM.get(refWin);
-            var win = DOM._getWin(refWin),
-                doc = win.document,
-                elem;
-
-            if (id && (id = id.replace('#', EMPTY))) {
-                elem = DOM.get('#' + id, doc);
-            }
-
-            // 仅添加一次，不重复添加
-            if (elem) {
-                return;
-            }
-
-            elem = DOM.create('<style>', { id:id }, doc);
-
-            // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
-            DOM.get('head', doc).appendChild(elem);
-
-            if (elem.styleSheet) { // IE
-                elem.styleSheet.cssText = cssText;
-            } else { // W3C
-                elem.appendChild(doc.createTextNode(cssText));
-            }
-        },
-
-        /**
-         * make matched elements unselectable
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         */
-        unselectable:function (selector) {
-            var _els = DOM.query(selector), elem, j;
-            for (j = _els.length - 1; j >= 0; j--) {
-                elem = _els[j];
-                if (UA['gecko']) {
-                    elem[STYLE]['MozUserSelect'] = 'none';
+            /**
+             * Display or hide the matched elements.
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             */
+            toggle:function (selector) {
+                var els = DOM.query(selector), elem, i;
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
+                    if (DOM.css(elem, DISPLAY) === NONE) {
+                        DOM.show(elem);
+                    } else {
+                        DOM.hide(elem);
+                    }
                 }
-                else if (UA['webkit']) {
-                    elem[STYLE]['KhtmlUserSelect'] = 'none';
-                } else {
-                    if (UA['ie'] || UA['opera']) {
-                        var e, i = 0,
-                            els = elem.getElementsByTagName("*");
-                        elem.setAttribute("unselectable", 'on');
-                        while (( e = els[ i++ ] )) {
-                            switch (e.tagName.toLowerCase()) {
-                                case 'iframe' :
-                                case 'textarea' :
-                                case 'input' :
-                                case 'select' :
-                                    /* Ignore the above tags */
-                                    break;
-                                default :
-                                    e.setAttribute("unselectable", 'on');
+            },
+
+            /**
+             * Creates a stylesheet from a text blob of rules.
+             * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * @param [refWin] Window which will accept this stylesheet
+             * @param {String} cssText The text containing the css rules
+             * @param {String} id An id to add to the stylesheet for later removal
+             */
+            addStyleSheet:function (refWin, cssText, id) {
+                refWin = refWin || window;
+                if (S.isString(refWin)) {
+                    id = cssText;
+                    cssText = refWin;
+                    refWin = window;
+                }
+                refWin = DOM.get(refWin);
+                var win = DOM._getWin(refWin),
+                    doc = win.document,
+                    elem;
+
+                if (id && (id = id.replace('#', EMPTY))) {
+                    elem = DOM.get('#' + id, doc);
+                }
+
+                // 仅添加一次，不重复添加
+                if (elem) {
+                    return;
+                }
+
+                elem = DOM.create('<style>', { id:id }, doc);
+
+                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
+                DOM.get('head', doc).appendChild(elem);
+
+                if (elem.styleSheet) { // IE
+                    elem.styleSheet.cssText = cssText;
+                } else { // W3C
+                    elem.appendChild(doc.createTextNode(cssText));
+                }
+            },
+
+            /**
+             * make matched elements unselectable
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             */
+            unselectable:function (selector) {
+                var _els = DOM.query(selector), elem, j;
+                for (j = _els.length - 1; j >= 0; j--) {
+                    elem = _els[j];
+                    if (UA['gecko']) {
+                        elem[STYLE]['MozUserSelect'] = 'none';
+                    }
+                    else if (UA['webkit']) {
+                        elem[STYLE]['KhtmlUserSelect'] = 'none';
+                    } else {
+                        if (UA['ie'] || UA['opera']) {
+                            var e, i = 0,
+                                els = elem.getElementsByTagName("*");
+                            elem.setAttribute("unselectable", 'on');
+                            while (( e = els[ i++ ] )) {
+                                switch (e.tagName.toLowerCase()) {
+                                    case 'iframe' :
+                                    case 'textarea' :
+                                    case 'input' :
+                                    case 'select' :
+                                        /* Ignore the above tags */
+                                        break;
+                                    default :
+                                        e.setAttribute("unselectable", 'on');
+                                }
                             }
                         }
                     }
                 }
-            }
-        },
+            },
 
-        /**
-         * Get innerWidth (css width + padding) from the first element of matched elements
-         * @function
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         * @returns {Number}
-         */
-        innerWidth:0,
-        /**
-         * Get innerHeight (css height + padding) from the first element of matched elements
-         * @function
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         * @returns {Number}
-         */
-        innerHeight:0,
-        /**
-         * Get outerWidth (css width + padding + border + margin?) from the first element of matched elements
-         * @function
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         * @param {Boolean} includeMargin whether include margin
-         * @returns {Number}
-         */
-        outerWidth:0,
-        /**
-         * Get outerHeight (css height + padding + border + margin?) from the first element of matched elements
-         * @function
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         * @param {Boolean} includeMargin whether include margin
-         * @returns {Number}
-         */
-        outerHeight:0,
-        /**
-         * Get css width from the first element of matched elements
-         * @function
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         * @returns {Number}
-         */
-        width:0,
-        /**
-         * Get css height from the first element of matched elements
-         * @function
-         * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-         * @returns {Number}
-         */
-        height:0
-    });
+            /**
+             * Get innerWidth (css width + padding) from the first element of matched elements
+             * @function
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @returns {Number}
+             */
+            innerWidth:0,
+            /**
+             * Get innerHeight (css height + padding) from the first element of matched elements
+             * @function
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @returns {Number}
+             */
+            innerHeight:0,
+            /**
+             * Get outerWidth (css width + padding + border + margin?) from the first element of matched elements
+             * @function
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {Boolean} includeMargin whether include margin
+             * @returns {Number}
+             */
+            outerWidth:0,
+            /**
+             * Get outerHeight (css height + padding + border + margin?) from the first element of matched elements
+             * @function
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {Boolean} includeMargin whether include margin
+             * @returns {Number}
+             */
+            outerHeight:0,
+            /**
+             * Get css width from the first element of matched elements
+             * @function
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @returns {Number}
+             */
+            width:0,
+            /**
+             * Get css height from the first element of matched elements
+             * @function
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @returns {Number}
+             */
+            height:0
+        });
 
     function capital(str) {
         return str.charAt(0).toUpperCase() + str.substring(1);
