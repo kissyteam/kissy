@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:39
+build time: Feb 7 14:08
 */
 /**
  * UIBase.Align
@@ -1123,7 +1123,7 @@ KISSY.add("uibase/close", function() {
  * close extension for kissy dialog
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/closerender", function(S, Node) {
+KISSY.add("uibase/closerender", function (S, Node) {
 
     var CLS_PREFIX = 'ext-';
 
@@ -1131,21 +1131,21 @@ KISSY.add("uibase/closerender", function(S, Node) {
     }
 
     Close.ATTRS = {
-        closable: {             // 是否需要关闭按钮
-            value: true
+        closable:{             // 是否需要关闭按钮
+            value:true
         },
         closeBtn:{
         }
     };
 
     Close.HTML_PARSER = {
-        closeBtn:function(el) {
+        closeBtn:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
         }
     };
 
     Close.prototype = {
-        _uiSetClosable:function(v) {
+        _uiSetClosable:function (v) {
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
@@ -1156,7 +1156,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                 }
             }
         },
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("el");
@@ -1164,6 +1164,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
             if (!closeBtn && el) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
+                    "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
                     "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
@@ -1174,7 +1175,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
             }
         },
 
-        __destructor:function() {
+        __destructor:function () {
 
             var self = this,
                 closeBtn = self.get("closeBtn");
@@ -1840,7 +1841,8 @@ KISSY.add("uibase/resize", function(S) {
         },
         _uiSetResize:function(v) {
 
-            var Resizable = S.require("resizable"),self = this;
+            var Resizable = S.require("resizable"),
+                self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
                 v.node = self.get("el");
