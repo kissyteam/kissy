@@ -183,14 +183,14 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                             status = NO_CONTENT_CODE;
                         }
 
-                        xhrObj._callback(status, statusText);
+                        xhrObj._xhrReady(status, statusText);
 
                     }
                 }
             } catch (firefoxAccessException) {
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    xhrObj._callback(-1, firefoxAccessException);
+                    xhrObj._xhrReady(-1, firefoxAccessException);
                 }
             }
         }

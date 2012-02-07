@@ -213,17 +213,17 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             }
 
             function genHandler(handleStr) {
-                return function () {
+                return function (v) {
                     if (xhrObject.timeoutTimer) {
                         clearTimeout(xhrObject.timeoutTimer);
                         xhrObject.timeoutTimer = 0;
                     }
                     var h = c[handleStr];
-                    h && h.apply(this, arguments);
+                    h && h.apply(c.context, v);
                     fire(handleStr, xhrObject);
                 };
             }
-
+            
             xhrObject.then(genHandler("success"), genHandler("error"));
 
             xhrObject.fin(genHandler("complete"));
@@ -255,7 +255,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             } catch (e) {
                 // Propagate exception as error if not done
                 if (xhrObject.status < 2) {
-                    xhrObject._callback(-1, e);
+                    xhrObject._xhrReady(-1, e);
                     // Simply rethrow otherwise
                 } else {
                     S.error(e);

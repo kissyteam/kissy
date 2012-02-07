@@ -98,7 +98,7 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
                     break;
             }
             if (ret) {
-                xhrObj._callback(ret.status, ret.statusText);
+                xhrObj._xhrReady(ret.status, ret.statusText);
             }
         }
     });

@@ -117,9 +117,9 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                 var iframeDoc = iframe.contentWindow.document;
                 xhrObject.responseXML = iframeDoc;
                 xhrObject.responseText = DOM.text(iframeDoc.body);
-                xhrObject._callback(OK_CODE, "success");
+                xhrObject._xhrReady(OK_CODE, "success");
             } else if (eventType == 'error') {
-                xhrObject._callback(ERROR_CODE, "error");
+                xhrObject._xhrReady(ERROR_CODE, "error");
             }
 
             removeFieldsFromData(this.fields);

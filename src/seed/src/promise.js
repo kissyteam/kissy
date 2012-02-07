@@ -18,10 +18,10 @@
      * @description Defer constructor
      * @memberOf KISSY
      */
-    function Defer() {
+    function Defer(promise) {
         var self = this;
         if (!(self instanceof Defer)) {
-            return new Defer();
+            return new Defer(promise);
         }
         // http://en.wikipedia.org/wiki/Object-capability_model
         // principal of least authority
@@ -31,7 +31,7 @@
          * @memberOf KISSY.Defer#
          * @name promise
          */
-        self.promise = new Promise();
+        self.promise = promise || new Promise();
     }
 
     Defer.prototype =

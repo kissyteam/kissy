@@ -106,11 +106,11 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
 
                 // Callback if not abort
                 if (!abort && event != "error") {
-                    xhrObj._callback(OK_CODE, "success");
+                    xhrObj._xhrReady(OK_CODE, "success");
                 }
                 // 非 ie<9 可以判断出来
                 else if (event == "error") {
-                    xhrObj._callback(ERROR_CODE, "scripterror");
+                    xhrObj._xhrReady(ERROR_CODE, "scripterror");
                 }
             }
         },
