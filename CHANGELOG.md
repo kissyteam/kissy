@@ -16,18 +16,26 @@ History:
 
 ### v1.2.0 -> v1.3.0
  - [*] 调整源码目录结构
- - [!] 移除 core 模块，不要 use("core"),require("core"),只用你要用的
+ - [!] 移除 core 模块，不要 use("core")/require("core"),只用你要用的
  - [!] 去除 KISSY.XX 命名空间绑定，使用前先 use，从参数中取得模块使用
+ - [+] 增加 S.Defer/Promise ，支持 Promise 规范
+
+ - [*] KISSY.ready 并行调用，互相不干扰
 
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加
  - [+] Event.on 支持 data 绑定
+ - [x] Event.delegate 重构，fix #76
+
+ - [+] io 调用返回 Promise 类型，可以进行链式操作
 
  - [*] anim 支持 backgroundPosition
 
  - [x] dom 支持 css("backgroundPosition") in ie
  - [!] DOM.query 支持字符串/节点数组/单个节点，不要是KISSY或原生的NodeList
+ - [x] fix #88，去除多余的 tbody
 
+ - [x] NodeList.prototype.slice 支持单个负数参数：fix #85
 
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
@@ -37,10 +45,9 @@ History:
  - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
 
  - [+] Menu.SubMenu menu 配置支持函数，用于延迟子菜单的生成
- - [*] submenuitem 支持 click 事件
+ - [*] SubMenu 支持 click 事件
 
  - [+] datalazyload 增加 removeElements 与 destroy 接口
-
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
 
 ### Happy 2nd Anniversary (2011/10/26)

@@ -43,5 +43,5 @@ Questions?
  - Bug：<http://github.com/kissyteam/kissy/issues>
  - 邮件：<kissyteam@gmail.com>
  - Twitter: <http://twitter.com/#!/kissyteam>
- * Blog: <http://kissyui.com/blog/>
+ - Google Group: <http://groups.google.com/group/kissy-ui>
 

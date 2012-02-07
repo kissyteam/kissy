@@ -95,8 +95,12 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         defaultConfig.converters.html = defaultConfig.converters.text;
 
         function setUpConfig(c) {
-            // deep mix
+            // deep mix,exclude context!
+            var context = c.context;
+            delete c.context;
             c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+            c.context = context;
+
             if (!S.isBoolean(c.crossDomain)) {
                 var parts = rurl.exec(c.url.toLowerCase());
                 c.crossDomain = !!( parts &&
@@ -223,7 +227,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
                     fire(handleStr, xhrObject);
                 };
             }
-            
+
             xhrObject.then(genHandler("success"), genHandler("error"));
 
             xhrObject.fin(genHandler("complete"));
@@ -290,6 +294,10 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     });
 
 /**
+ * 2012-2-07 yiminghe@gmail.com:
+ *
+ *  返回 Promise 类型对象，可以链式操作啦！
+ *
  * 借鉴 jquery，优化减少闭包使用
  *
  * TODO:
