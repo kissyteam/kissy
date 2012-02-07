@@ -29,6 +29,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             "zIndex":1,
             "zoom":1
         },
+        rmsPrefix = /^-ms-/,
         RE_DASH = /-([a-z])/ig,
         CAMELCASE_FN = function (all, letter) {
             return letter.toUpperCase();
@@ -50,7 +51,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     }
 
     function camelCase(name) {
-        return name.replace(RE_DASH, CAMELCASE_FN);
+        // fix #92, ms!
+        return name.replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
     }
 
     var defaultDisplayDetectIframe,

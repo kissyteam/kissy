@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Ajax Test Runner</title>
+<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+<script src="../../../../tools/jasmine/jasmine.js"></script>
+<script src="../../../../tools/jasmine/jasmine-html.js"></script>
+
+<script src="../../../../tools/third-party/jquery.js"></script>
+
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/dom.js"></script>
+<script src="../../../../build/event.js"></script>
+<script src="../../../../build/anim.js"></script>
+<script src="../../../../build/node.js"></script>
+<script src="../../../../build/json.js"></script>
+<script type="text/javascript" src=".././../src/base.js"></script>
+<script type="text/javascript" src="../../src/XhrObject.js"></script>
+<script type="text/javascript" src="../../src/IframeTransport.js"></script>
+<script type="text/javascript" src="../../src/FormSerializer.js"></script>
+<script type="text/javascript" src="../.././src/form.js"></script>
+<script type="text/javascript" src="../.././src/jsonp.js"></script>
+<script type="text/javascript" src="../../src/ScriptTransport.js"></script>
+<script type="text/javascript" src="../../src/XhrTransportBase.js"></script>
+<script type="text/javascript" src="../../src/XhrTransport.js"></script>
+<script type="text/javascript" src="../../src/XdrFlashTransport.js"></script>
+<script type="text/javascript" src="../../src/SubDomainTransport.js"></script>
+<script type="text/javascript" src=".././../src/ajax.js"></script>
+<script src="io-promise-spec.js"></script>
+</head>
+<body>
+<h1>KISSY.Ajax Test Cases</h1>
+<script>
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function () {
+        if (parent && parent.jasmine.kissyNext) {
+            parent.jasmine.kissyNext(this.results().failedCount);
+        }
+    });
+</script>
+</body>
+</html>

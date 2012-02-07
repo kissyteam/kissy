@@ -2,7 +2,7 @@
  * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/closerender", function(S, Node) {
+KISSY.add("uibase/closerender", function (S, Node) {
 
     var CLS_PREFIX = 'ext-';
 
@@ -10,21 +10,21 @@ KISSY.add("uibase/closerender", function(S, Node) {
     }
 
     Close.ATTRS = {
-        closable: {             // 是否需要关闭按钮
-            value: true
+        closable:{             // 是否需要关闭按钮
+            value:true
         },
         closeBtn:{
         }
     };
 
     Close.HTML_PARSER = {
-        closeBtn:function(el) {
+        closeBtn:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
         }
     };
 
     Close.prototype = {
-        _uiSetClosable:function(v) {
+        _uiSetClosable:function (v) {
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
@@ -35,7 +35,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                 }
             }
         },
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("el");
@@ -43,17 +43,18 @@ KISSY.add("uibase/closerender", function(S, Node) {
             if (!closeBtn && el) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
+                    "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
                     "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    this.get("prefixCls") + CLS_PREFIX + "close-x" +
+                    self.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
                 self.__set("closeBtn", closeBtn);
             }
         },
 
-        __destructor:function() {
+        __destructor:function () {
 
             var self = this,
                 closeBtn = self.get("closeBtn");

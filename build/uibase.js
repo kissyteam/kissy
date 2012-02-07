@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 12 17:28
+build time: Feb 7 14:02
 */
 /**
  * @fileOverview UIBase.Align
@@ -351,7 +351,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         /**
          * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
          * @function
-         * @private
+         * @ignore
          * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
          * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
@@ -464,6 +464,13 @@ KISSY.add('uibase/base', function (S, Base, Node) {
         initHierarchy(this, config);
         // 是否自动渲染
         config && config.autoRender && this.render();
+
+        /**
+         * @name UIBase#afterRenderUI
+         * @description fired when root node is ready
+         * @event
+         * @param e
+         */
     }
 
     /**
@@ -1167,15 +1174,33 @@ KISSY.add('uibase/boxrender', function (S, Node) {
  * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/close", function() {
+KISSY.add("uibase/close", function () {
+
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Close() {
     }
 
     var HIDE = "hide";
-    Close.ATTRS = {
-        closable: {
+    Close.ATTRS =
+    /**
+     * @lends UIBase.Close.prototype
+     */
+    {
+        /**
+         * 是否自带关闭按钮
+         * @type boolean
+         */
+        closable:{
             view:true
         },
+
+        /**
+         * 点击关闭按钮的动作，销毁("destroy")或隐藏("hide")
+         * @type string
+         */
         closeAction:{
             value:HIDE
         }
@@ -1188,11 +1213,11 @@ KISSY.add("uibase/close", function() {
 
     Close.prototype = {
 
-        __bindUI:function() {
+        __bindUI:function () {
 
             var self = this,
                 closeBtn = self.get("view").get("closeBtn");
-            closeBtn && closeBtn.on("click", function(ev) {
+            closeBtn && closeBtn.on("click", function (ev) {
                 self[actions[self.get("closeAction")] || HIDE]();
                 ev.preventDefault();
             });
@@ -1204,7 +1229,7 @@ KISSY.add("uibase/close", function() {
  * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/closerender", function(S, Node) {
+KISSY.add("uibase/closerender", function (S, Node) {
 
     var CLS_PREFIX = 'ext-';
 
@@ -1212,21 +1237,21 @@ KISSY.add("uibase/closerender", function(S, Node) {
     }
 
     Close.ATTRS = {
-        closable: {             // 是否需要关闭按钮
-            value: true
+        closable:{             // 是否需要关闭按钮
+            value:true
         },
         closeBtn:{
         }
     };
 
     Close.HTML_PARSER = {
-        closeBtn:function(el) {
+        closeBtn:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + 'close');
         }
     };
 
     Close.prototype = {
-        _uiSetClosable:function(v) {
+        _uiSetClosable:function (v) {
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
@@ -1237,7 +1262,7 @@ KISSY.add("uibase/closerender", function(S, Node) {
                 }
             }
         },
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this,
                 closeBtn = self.get("closeBtn"),
                 el = self.get("el");
@@ -1245,17 +1270,18 @@ KISSY.add("uibase/closerender", function(S, Node) {
             if (!closeBtn && el) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
+                    "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
                     "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
                     "<span class='" +
-                    this.get("prefixCls") + CLS_PREFIX + "close-x" +
+                    self.get("prefixCls") + CLS_PREFIX + "close-x" +
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
                 self.__set("closeBtn", closeBtn);
             }
         },
 
-        __destructor:function() {
+        __destructor:function () {
 
             var self = this,
                 closeBtn = self.get("closeBtn");
@@ -1273,11 +1299,23 @@ KISSY.add("uibase/closerender", function(S, Node) {
  */
 KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Constrain() {
 
     }
 
-    Constrain.ATTRS = {
+    Constrain.ATTRS =
+    /**
+     * @lends UIBase.Constrain.prototype
+     */
+    {
+        /**
+         * true:viewport限制，node:限制在该节点范围
+         * @type HTMLElement|boolean
+         */
         constrain:{
             //不限制
             //true:viewport限制
@@ -1528,28 +1566,44 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
  * @fileOverview drag extension for position
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/drag", function(S) {
+KISSY.add("uibase/drag", function (S) {
 
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Drag() {
     }
 
-    Drag.ATTRS = {
+    Drag.ATTRS =
+
+    /**
+     * @lends UIBase.Drag
+     */
+    {
+        /**
+         * @see DD.Draggable#handlers
+         */
         handlers:{
             value:[]
         },
+        /**
+         * 是否可拖放
+         * @type boolean
+         */
         draggable:{value:true}
     };
 
     Drag.prototype = {
 
-        _uiSetHandlers:function(v) {
+        _uiSetHandlers:function (v) {
             if (v && v.length > 0 && this.__drag) {
                 this.__drag.set("handlers", v);
             }
         },
 
-        __bindUI:function() {
+        __bindUI:function () {
             var Draggable = S.require("dd/draggable");
             var self = this,
                 el = self.get("el");
@@ -1560,7 +1614,7 @@ KISSY.add("uibase/drag", function(S) {
             }
         },
 
-        _uiSetDraggable:function(v) {
+        _uiSetDraggable:function (v) {
 
             var self = this,
                 d = self.__drag;
@@ -1575,13 +1629,13 @@ KISSY.add("uibase/drag", function(S) {
             }
         },
 
-        _dragExtAction:function(offset) {
-            this.set("xy", [offset.left,offset.top])
+        _dragExtAction:function (offset) {
+            this.set("xy", [offset.left, offset.top])
         },
         /**
          *
          */
-        __destructor:function() {
+        __destructor:function () {
             //S.log("DragExt __destructor");
             var d = this.__drag;
             d && d.destroy();
@@ -1594,17 +1648,25 @@ KISSY.add("uibase/drag", function(S) {
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/loading", function() {
+KISSY.add("uibase/loading", function () {
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Loading() {
     }
 
-    Loading.prototype = {
-        loading:function() {
+    Loading.prototype =
+    /**
+     * @lends UIBase.Loading.prototype
+     */
+    {
+        loading:function () {
             this.get("view").loading();
         },
 
-        unloading:function() {
+        unloading:function () {
             this.get("view").unloading();
         }
     };
@@ -1655,13 +1717,24 @@ KISSY.add("uibase/loadingrender", function(S, Node) {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/mask", function() {
+KISSY.add("uibase/mask", function () {
 
-
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Mask() {
     }
 
-    Mask.ATTRS = {
+    Mask.ATTRS =
+    /**
+     * @lends UIBase.Mask.prototype
+     */
+    {
+        /**
+         * 是否显示时出现遮罩层
+         * @type boolean
+         */
         mask:{
             value:false
         }
@@ -1669,7 +1742,7 @@ KISSY.add("uibase/mask", function() {
 
     Mask.prototype = {
 
-        _uiSetMask:function(v) {
+        _uiSetMask:function (v) {
             var self = this;
             if (v) {
                 self.on("show", self.get("view")._maskExtShow, self.get("view"));
@@ -1960,11 +2033,36 @@ KISSY.add("uibase/positionrender", function() {
  * @fileOverview resize extension using resizable
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/resize", function(S) {
+KISSY.add("uibase/resize", function (S) {
+
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function Resize() {
     }
 
-    Resize.ATTRS = {
+    Resize.ATTRS =
+    /**
+     * @lends UIBase.Resize.prototype
+     */
+    {
+        /**
+         * 调整大小的配置
+         * @example
+         * <code>
+         *  {
+         *    minWidth:100, //类型整数, 表示拖动调整大小的最小宽度
+         *    maxWidth:1000, //类型整数, 表示拖动调整大小的最大宽度
+         *    minHeight:100, //类型整数, 表示拖动调整大小的最小高度
+         *    maxHeight:1000, //类型整数, 表示拖动调整大小的最大高度
+         *    handlers:["b","t","r","l","tr","tl","br","bl"] //类型字符串数组, 取自上述 8 个值的集合.
+         *    // handlers 配置表示的数组元素可取上述八种值之一, t,b,l,r 分别表示 top,bottom,left,right,
+         *    // 加上组合共八种取值, 可在上, 下, 左, 右以及左上, 左下, 右上, 右下进行拖动.
+         *  }
+         * </code>
+         * @type Object
+         */
         resize:{
             value:{
             }
@@ -1972,19 +2070,18 @@ KISSY.add("uibase/resize", function(S) {
     };
 
     Resize.prototype = {
-        __destructor:function() {
+        __destructor:function () {
             this.resizer && this.resizer.destroy();
         },
-        _uiSetResize:function(v) {
+        _uiSetResize:function (v) {
 
             var Resizable = S.require("resizable"),
                 self = this;
             if (Resizable) {
                 self.resizer && self.resizer.destroy();
                 v.node = self.get("el");
-                v.autoRender = true;
                 if (v.handlers) {
-                    self.resizer = new Resizable(v);
+                    self.resizer = new Resizable(v).render();
                 }
             }
 
@@ -2038,37 +2135,82 @@ KISSY.add("uibase/shimrender", function(S, Node) {
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/stdmod", function() {
+KISSY.add("uibase/stdmod", function () {
 
 
+    /**
+     * @class
+     * @memberOf UIBase
+     */
     function StdMod() {
     }
 
-    StdMod.ATTRS = {
+    StdMod.ATTRS =
+
+    /**
+     * @lends UIBase.StdMod.prototype
+     */
+    {
+        /**
+         * 头元素，只读
+         * @type Node
+         */
         header:{
             view:true
         },
+        /**
+         * 体元素，只读
+         * @type Node
+         */
         body:{
             view:true
         },
+        /**
+         * 尾元素，只读
+         * @type Node
+         */
         footer:{
             view:true
         },
+        /**
+         * 体元素样式键值对
+         * @type Object
+         */
         bodyStyle:{
             view:true
         },
+        /**
+         * 尾元素样式键值对
+         * @type Object
+         */
         footerStyle:{
             view:true
         },
+        /**
+         * 头元素样式键值对
+         * @type Object
+         */
         headerStyle:{
             view:true
         },
+        /**
+         * 头元素内容值
+         * @type Node|String
+         */
         headerContent:{
             view:true
         },
+        /**
+         * 体元素内容值
+         * @type Node|String
+         */
         bodyContent:{
             view:true
         },
+        /**
+         * 尾元素内容值
+         * @type Node|String
+         */
         footerContent:{
             view:true
         }
@@ -2181,20 +2323,20 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Contrain, Contentbox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
     Position.Render = PositionRender;
     StdMod.Render = StdModRender;
     Box.Render = BoxRender;
-    Contentbox.Render = ContentboxRender;
+    ContentBox.Render = ContentboxRender;
     S.mix(UIBase, {
         Align:Align,
         Box:Box,
         Close:Close,
-        Contrain:Contrain,
-        Contentbox:Contentbox,
+        Constrain:Constrain,
+        ContentBox:ContentBox,
         Drag:Drag,
         Loading:Loading,
         Mask:Mask,
