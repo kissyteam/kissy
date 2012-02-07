@@ -82,6 +82,33 @@ KISSY.use("ajax", function (S, io) {
             }, 10000);
         });
 
+        it("should support chained value", function () {
+            var r = io({
+                url:'gen-json.php',
+                context:{},
+                data:{
+                    x:99
+                },
+                dataType:'json'
+            }), v2;
+
+            r.then(
+                function (v) {
+                    return v[0].x + 1;
+                }).then(function (v) {
+                    v2 = v;
+                });
+
+            waitsFor(function () {
+                return v2;
+            }, 2000);
+
+            runs(function () {
+                expect(v2).toBe(100);
+            });
+
+        });
+
     });
 
 });
