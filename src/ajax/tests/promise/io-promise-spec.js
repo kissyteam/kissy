@@ -1,5 +1,7 @@
 KISSY.use("ajax", function (S, io) {
 
+    var Promise = S.Promise;
+
     describe("S.io as a promise", function () {
 
         it('context should works as before', function () {
@@ -106,6 +108,72 @@ KISSY.use("ajax", function (S, io) {
             runs(function () {
                 expect(v2).toBe(100);
             });
+
+        });
+
+        it("should support nested promise", function () {
+            var r = io({
+                url:'gen-json.php',
+                context:{},
+                data:{
+                    x:99
+                },
+                dataType:'json'
+            }), ret;
+
+            r.then(function (v) {
+                expect(v[0].x).toBe(99);
+                return io({
+                    url:'gen-json.php',
+                    context:{},
+                    data:{
+                        x:101
+                    },
+                    dataType:'json'
+                });
+            })
+
+                .then(function (v) {
+                    expect(v[0].x).toBe(101);
+                    ret = 1;
+                });
+
+            waitsFor(function () {
+                return ret;
+            }, 2000);
+        });
+
+        it("should support Promise.all", function () {
+
+            var r = io({
+                url:'gen-json.php',
+                context:{},
+                data:{
+                    x:99
+                },
+                dataType:'json'
+            });
+
+            var r2 = io({
+                url:'gen-json.php',
+                context:{},
+                data:{
+                    x:101
+                },
+                dataType:'json'
+            });
+
+            var ret;
+
+            Promise.all([r, r2]).then(function (vs) {
+                expect(vs[0][0].x).toBe(99);
+                expect(vs[1][0].x).toBe(101);
+                ret = 1;
+            });
+
+            waitsFor(function () {
+                return ret;
+            }, 2000);
 
         });
 

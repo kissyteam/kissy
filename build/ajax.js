@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 6 19:33
+build time: Feb 7 16:32
 */
 /**
  * @fileOverview form data  serialization util
@@ -176,9 +176,9 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                 var iframeDoc = iframe.contentWindow.document;
                 xhrObject.responseXML = iframeDoc;
                 xhrObject.responseText = DOM.text(iframeDoc.body);
-                xhrObject._callback(OK_CODE, "success");
+                xhrObject._xhrReady(OK_CODE, "success");
             } else if (eventType == 'error') {
-                xhrObject._callback(ERROR_CODE, "error");
+                xhrObject._xhrReady(ERROR_CODE, "error");
             }
 
             removeFieldsFromData(this.fields);
@@ -313,11 +313,11 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
 
                 // Callback if not abort
                 if (!abort && event != "error") {
-                    xhrObj._callback(OK_CODE, "success");
+                    xhrObj._xhrReady(OK_CODE, "success");
                 }
                 // 非 ie<9 可以判断出来
                 else if (event == "error") {
-                    xhrObj._callback(ERROR_CODE, "scripterror");
+                    xhrObj._xhrReady(ERROR_CODE, "scripterror");
                 }
             }
         },
@@ -515,7 +515,7 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
                     break;
             }
             if (ret) {
-                xhrObj._callback(ret.status, ret.statusText);
+                xhrObj._xhrReady(ret.status, ret.statusText);
             }
         }
     });
@@ -558,6 +558,7 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
 KISSY.add("ajax/XhrObject", function (S, undefined) {
 
     var OK_CODE = 200,
+        Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
         // get individual response header from responseheader str
@@ -648,6 +649,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
      * @param c 请求发送配置选项
      */
     function XhrObject(c) {
+        Promise.call(this);
         S.mix(this, {
             // 结构化数据，如 json
             responseData:null,
@@ -664,17 +666,11 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             statusText:null,
             status:0,
             transport:null,
-            _defer:new S.Defer()
+            _defer:new S.Defer(this)
         });
     }
 
-    function spread(fn, context) {
-        return function (v) {
-            return fn.apply(context || this, v);
-        };
-    }
-
-    S.augment(XhrObject, {
+    S.extend(XhrObject, Promise, {
             // Caches the header
             setRequestHeader:function (name, value) {
                 var self = this;
@@ -719,28 +715,11 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 if (self.transport) {
                     self.transport.abort(statusText);
                 }
-                self._callback(0, statusText);
+                self._xhrReady(0, statusText);
                 return self;
             },
 
-            then:function (success, error) {
-                var context = this.config.context;
-                success = success && spread(success, context);
-                error = error && spread(error, context);
-                return this._defer.promise.then(success, error);
-            },
-
-            fail:function (error) {
-                return this.then(null, error);
-            },
-
-            fin:function (fn) {
-                var self = this;
-                fn = spread(fn, self.config.context);
-                return self._defer.promise.fin(fn);
-            },
-
-            _callback:function (status, statusText) {
+            _xhrReady:function (status, statusText) {
                 var self = this;
                 // 只能执行一次，防止重复执行
                 // 例如完成后，调用 abort
@@ -1044,14 +1023,14 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                             status = NO_CONTENT_CODE;
                         }
 
-                        xhrObj._callback(status, statusText);
+                        xhrObj._xhrReady(status, statusText);
 
                     }
                 }
             } catch (firefoxAccessException) {
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    xhrObj._callback(-1, firefoxAccessException);
+                    xhrObj._xhrReady(-1, firefoxAccessException);
                 }
             }
         }
@@ -1291,8 +1270,12 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         defaultConfig.converters.html = defaultConfig.converters.text;
 
         function setUpConfig(c) {
-            // deep mix
+            // deep mix,exclude context!
+            var context = c.context;
+            delete c.context;
             c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+            c.context = context;
+
             if (!S.isBoolean(c.crossDomain)) {
                 var parts = rurl.exec(c.url.toLowerCase());
                 c.crossDomain = !!( parts &&
@@ -1409,13 +1392,13 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             }
 
             function genHandler(handleStr) {
-                return function () {
+                return function (v) {
                     if (xhrObject.timeoutTimer) {
                         clearTimeout(xhrObject.timeoutTimer);
                         xhrObject.timeoutTimer = 0;
                     }
                     var h = c[handleStr];
-                    h && h.apply(this, arguments);
+                    h && h.apply(c.context, v);
                     fire(handleStr, xhrObject);
                 };
             }
@@ -1451,7 +1434,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             } catch (e) {
                 // Propagate exception as error if not done
                 if (xhrObject.status < 2) {
-                    xhrObject._callback(-1, e);
+                    xhrObject._xhrReady(-1, e);
                     // Simply rethrow otherwise
                 } else {
                     S.error(e);
@@ -1486,6 +1469,10 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     });
 
 /**
+ * 2012-2-07 yiminghe@gmail.com:
+ *
+ *  返回 Promise 类型对象，可以链式操作啦！
+ *
  * 借鉴 jquery，优化减少闭包使用
  *
  * TODO:
