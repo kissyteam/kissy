@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 14:02
+build time: Feb 7 17:57
 */
 /**
  * @fileOverview UIBase.Align
@@ -2323,14 +2323,14 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
     Position.Render = PositionRender;
     StdMod.Render = StdModRender;
     Box.Render = BoxRender;
-    ContentBox.Render = ContentboxRender;
+    ContentBox.Render = ContentBoxRender;
     S.mix(UIBase, {
         Align:Align,
         Box:Box,

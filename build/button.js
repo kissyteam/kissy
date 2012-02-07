@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 16:06
+build time: Feb 7 17:57
 */
 /**
  * @fileOverview Model and Control for button
@@ -15,7 +15,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @constructor
      * @extends Component.ModelControl
      */
-    var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox],
+    var Button = UIBase.create(Component.ModelControl, [UIBase.ContentBox],
         /**@lends Button.prototype */
         {
 
@@ -141,7 +141,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
         INNER_CLS = "button-inner-box";
 
 
-    return UIBase.create(ButtonRender, [UIBase.Contentbox.Render], {
+    return UIBase.create(ButtonRender, [UIBase.ContentBox.Render], {
 
             /**
              *  modelcontrol 会在 create 后进行 unselectable，
@@ -163,7 +163,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
                 for (var i = 0; i < elChildren.length; i++) {
                     innerEl.append(elChildren[i]);
                 }
-                self.set("innerEl", innerEl);
+                self.__set("innerEl", innerEl);
             },
 
             /**
@@ -193,12 +193,12 @@ KISSY.add("button/split", function(S) {
     var handles = {
         content:function(e) {
             var first = this,t = e.target;
-            first.set("content", t.get("content"));
-            first.set("value", t.get("value"));
+            first.__set("content", t.get("content"));
+            first.__set("value", t.get("value"));
         },
         value:function(e) {
             var first = this,t = e.target;
-            first.set("value", t.get("value"));
+            first.__set("value", t.get("value"));
         }
     };
 
@@ -228,8 +228,8 @@ KISSY.add("button/split", function(S) {
                 eventHandler = handles[self.get("eventHandler")],
                 first = self.get("first"),
                 second = self.get("second");
-            first.set("collapseSide", "right");
-            second.set("collapseSide", "left");
+            first.__set("collapseSide", "right");
+            second.__set("collapseSide", "left");
             first.render();
             second.render();
             if (eventType && eventHandler) {

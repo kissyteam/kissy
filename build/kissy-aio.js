@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 16:32
+build time: Feb 7 17:57
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 7 16:32
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120207163218',
+            buildTime:'20120207175741',
 
             /**
              * Returns a new object containing all of the properties of
@@ -19794,7 +19794,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 14:02
+build time: Feb 7 17:57
 */
 /**
  * @fileOverview UIBase.Align
@@ -22116,14 +22116,14 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
     Position.Render = PositionRender;
     StdMod.Render = StdModRender;
     Box.Render = BoxRender;
-    ContentBox.Render = ContentboxRender;
+    ContentBox.Render = ContentBoxRender;
     S.mix(UIBase, {
         Align:Align,
         Box:Box,
@@ -29638,7 +29638,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 3 17:23
+build time: Feb 7 17:57
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -30263,7 +30263,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var $ = S.all;
 
-    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
+    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.ContentBox], {
 
         _handleMouseEnter:function (e) {
             // 父亲不允许自己处理
@@ -30408,7 +30408,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.ContentBox.Render], {
 
         _setSelected:function (v, componentCls) {
             var self = this,
@@ -30472,7 +30472,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
     return UIBase.create(Component.Render, [
-        UIBase.Contentbox.Render
+        UIBase.ContentBox.Render
     ], {
 
         renderUI:function() {
@@ -31064,7 +31064,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 6 16:06
+build time: Feb 7 17:57
 */
 /**
  * @fileOverview Model and Control for button
@@ -31078,7 +31078,7 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
      * @constructor
      * @extends Component.ModelControl
      */
-    var Button = UIBase.create(Component.ModelControl, [UIBase.Contentbox],
+    var Button = UIBase.create(Component.ModelControl, [UIBase.ContentBox],
         /**@lends Button.prototype */
         {
 
@@ -31204,7 +31204,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
         INNER_CLS = "button-inner-box";
 
 
-    return UIBase.create(ButtonRender, [UIBase.Contentbox.Render], {
+    return UIBase.create(ButtonRender, [UIBase.ContentBox.Render], {
 
             /**
              *  modelcontrol 会在 create 后进行 unselectable，
@@ -31226,7 +31226,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
                 for (var i = 0; i < elChildren.length; i++) {
                     innerEl.append(elChildren[i]);
                 }
-                self.set("innerEl", innerEl);
+                self.__set("innerEl", innerEl);
             },
 
             /**
@@ -31256,12 +31256,12 @@ KISSY.add("button/split", function(S) {
     var handles = {
         content:function(e) {
             var first = this,t = e.target;
-            first.set("content", t.get("content"));
-            first.set("value", t.get("value"));
+            first.__set("content", t.get("content"));
+            first.__set("value", t.get("value"));
         },
         value:function(e) {
             var first = this,t = e.target;
-            first.set("value", t.get("value"));
+            first.__set("value", t.get("value"));
         }
     };
 
@@ -31291,8 +31291,8 @@ KISSY.add("button/split", function(S) {
                 eventHandler = handles[self.get("eventHandler")],
                 first = self.get("first"),
                 second = self.get("second");
-            first.set("collapseSide", "right");
-            second.set("collapseSide", "left");
+            first.__set("collapseSide", "right");
+            second.__set("collapseSide", "left");
             first.render();
             second.render();
             if (eventType && eventHandler) {

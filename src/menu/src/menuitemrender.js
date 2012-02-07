@@ -19,7 +19,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.ContentBox.Render], {
 
         _setSelected:function (v, componentCls) {
             var self = this,

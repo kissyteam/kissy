@@ -6,7 +6,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var $ = S.all;
 
-    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
+    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.ContentBox], {
 
         _handleMouseEnter:function (e) {
             // 父亲不允许自己处理

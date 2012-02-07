@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 3 17:23
+build time: Feb 7 17:57
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -626,7 +626,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var $ = S.all;
 
-    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.Contentbox], {
+    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.ContentBox], {
 
         _handleMouseEnter:function (e) {
             // 父亲不允许自己处理
@@ -771,7 +771,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
         return checkEl;
     }
 
-    return UIBase.create(Component.Render, [UIBase.Contentbox.Render], {
+    return UIBase.create(Component.Render, [UIBase.ContentBox.Render], {
 
         _setSelected:function (v, componentCls) {
             var self = this,
@@ -835,7 +835,7 @@ KISSY.add("menu/menuitemrender", function (S, Node, UIBase, Component) {
 KISSY.add("menu/menurender", function(S, UA, UIBase, Component) {
 
     return UIBase.create(Component.Render, [
-        UIBase.Contentbox.Render
+        UIBase.ContentBox.Render
     ], {
 
         renderUI:function() {

@@ -9,7 +9,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
         INNER_CLS = "button-inner-box";
 
 
-    return UIBase.create(ButtonRender, [UIBase.Contentbox.Render], {
+    return UIBase.create(ButtonRender, [UIBase.ContentBox.Render], {
 
             /**
              *  modelcontrol 会在 create 后进行 unselectable，

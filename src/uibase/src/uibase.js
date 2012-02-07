@@ -2,14 +2,14 @@
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentboxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRender, Constrain, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
     Close.Render = CloseRender;
     Loading.Render = LoadingRender;
     Mask.Render = MaskRender;
     Position.Render = PositionRender;
     StdMod.Render = StdModRender;
     Box.Render = BoxRender;
-    ContentBox.Render = ContentboxRender;
+    ContentBox.Render = ContentBoxRender;
     S.mix(UIBase, {
         Align:Align,
         Box:Box,
