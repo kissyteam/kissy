@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 5 21:11
+build time: Feb 8 16:47
 */
 /**
  * @fileOverview responsible for registering event
@@ -2156,8 +2156,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
         POLL_KEY = KEY + "/poll",
         interval = 50;
 
-    function stopPoll(target) {
-        DOM.removeData(target, HISTORY_KEY);
+    function clearPollTimer(target) {
         if (DOM.hasData(target, POLL_KEY)) {
             var poll = DOM.data(target, POLL_KEY);
             clearTimeout(poll);
@@ -2165,23 +2164,34 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
         }
     }
 
+    function stopPoll(target) {
+        DOM.removeData(target, HISTORY_KEY);
+        clearPollTimer(target);
+    }
+
     function stopPollHandler(ev) {
-        var target = ev.target;
-        stopPoll(target);
+        clearPollTimer(ev.target);
+    }
+
+    function checkChange(target) {
+        var v = target.value,
+            h = DOM.data(target, HISTORY_KEY);
+        if (v !== h) {
+            // 只触发自己绑定的 handler
+            Event.fire(target, VALUE_CHANGE, {
+                prevVal:h,
+                newVal:v
+            }, true);
+            DOM.data(target, HISTORY_KEY, v);
+        }
     }
 
     function startPoll(target) {
-        if (DOM.hasData(target, POLL_KEY)) return;
+        if (DOM.hasData(target, POLL_KEY)) {
+            return;
+        }
         DOM.data(target, POLL_KEY, setTimeout(function () {
-            var v = target.value, h = DOM.data(target, HISTORY_KEY);
-            if (v !== h) {
-                // 只触发自己绑定的 handler
-                Event.fire(target, VALUE_CHANGE, {
-                    prevVal:h,
-                    newVal:v
-                }, true);
-                DOM.data(target, HISTORY_KEY, v);
-            }
+            checkChange(target);
             DOM.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
         }, interval));
     }
@@ -2195,15 +2205,23 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
         startPoll(target);
     }
 
+    function webkitSpeechChangeHandler(e) {
+        checkChange(e.target);
+    }
+
     function monitor(target) {
         unmonitored(target);
         Event.on(target, "blur", stopPollHandler);
+        // fix #94
+        // see note 2012-02-08
+        Event.on(target, "webkitspeechchange", webkitSpeechChangeHandler);
         Event.on(target, "mousedown keyup keydown focus", startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
         Event.remove(target, "blur", stopPollHandler);
+        Event.remove(target, "webkitspeechchange", webkitSpeechChangeHandler);
         Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
     }
 
@@ -2224,3 +2242,11 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 }, {
     requires:["./base", "dom", "./special"]
 });
+
+/**
+ * 2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
+ *  当 input 没焦点立即点击语音
+ *   -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+ *  第二次：
+ *   -> mousedown -> blur -> webkitspeechchange -> focus
+ **/
