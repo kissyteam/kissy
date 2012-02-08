@@ -340,7 +340,7 @@
                 <form target="_top" name="search" action="http://s.taobao.com/search" id="J_TSearchForm">
                     <div class="tsearch-fields focus">
                         <label for="q9" class=""></label>
-                        <input type="text" accesskey="s" id="q9" name="q" autofocus="true" autocomplete="off"/>
+                        <input type="text" accesskey="s" id="q9" name="q" autofocus="true" autocomplete="off" x-webkit-speech="" x-webkit-grammar="builtin:translate"/>
 
                         <b class="rc-lb"></b>
                         <b class="rc-lt"></b>
@@ -444,7 +444,8 @@
                 function(ev) {
                     DOM.addClass(field, "focus");
                 }).on("blur", function(ev) {
-                    if (fp.trim(q.value) === '') {
+
+                    if (fp.trim(qNode.val()) === '') {
                         DOM.removeClass(field, "focus");
                     }
                 });
@@ -454,7 +455,7 @@
             e.preventDefault();
         });
 
-        var searchTab = new S.Tabs(DOM.get("#J_TSearchTabs").parentNode, {
+        var searchTab = new Switchable.Tabs(DOM.get("#J_TSearchTabs").parentNode, {
             aria:true,
             activeTriggerCls:'current',
             triggerType:'click'
@@ -494,5 +495,6 @@
         }, 0);
     });
 </script>
+<input class="gsfi" value="" title="Search" size="41" type="text" autocomplete="off" id="lst-ib" name="q" maxlength="2048" dir="ltr" spellcheck="false" x-webkit-speech="" x-webkit-grammar="builtin:search" lang="en">
 </body>
 </html>
