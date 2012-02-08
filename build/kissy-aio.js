@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 17:57
+build time: Feb 8 14:24
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 7 17:57
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120207175741',
+            buildTime:'20120208142401',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1714,6 +1714,33 @@ build time: Feb 7 17:57
          * @lends KISSY.Promise
          */
         {
+            /**
+             * register callbacks when obj as a promise is resolved
+             * or call fulfilled callback directly when obj is not a promise object
+             * @param {KISSY.Promise|*} obj a promise object or value of any type
+             * @param {Function(*)} fulfilled called when obj resolved successfully,pass a resolved value to this function and
+             *                      return a value (could be promise object) for the new promise's resolved value.
+             * @param {Function(*)} [rejected] called when error occurs in obj,pass error reason to this function and
+             *                      return a new reason for the new promise's error reason
+             * @returns {KISSY.Promise} a new promise object
+             * @example
+             * <code>
+             * function check(p){
+             *   S.Promise.when(p,function(v){
+             *     alert(v===1);
+             *   });
+             * }
+             *
+             * var defer=S.Defer();
+             * defer.resolve(1);
+             *
+             * check(1); // => alert(true)
+             *
+             * check(defer.promise); //=> alert(true);
+             * </code>
+             * @function
+             */
+            when:when,
             /**
              * whether the given object is a promise
              * @function

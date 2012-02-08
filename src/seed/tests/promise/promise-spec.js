@@ -2,6 +2,23 @@ describe("KISSY.Defer", function () {
     var S = KISSY,
         Promise = S.Promise;
 
+
+    it("works for simple value", function () {
+        var r, r2;
+
+        Promise.when(1,
+            function (v) {
+                r = v;
+                return r + 1;
+            }).then(function (v) {
+                r2 = v;
+            });
+
+        waitsFor(function () {
+            return r == 1 && r2 == 2;
+        }, 100);
+    });
+
     it("works simply when fulfilled", function () {
         var d = S.Defer(),
             p = d.promise,
