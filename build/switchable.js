@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 10 17:49
+build time: Feb 8 18:02
 */
 /**
  * @fileOverview accordion aria support
@@ -485,17 +485,29 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
  * @fileOverview Switchable Autoplay Plugin
  * @creator  lifesinger@gmail.com
  */
-KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
-
+KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
+    var DURATION = 200,
+        checkElemInViewport = function (elem) {
+            // 只计算上下位置是否在可视区域, 不计算左右
+            var scrollTop = DOM.scrollTop(),
+                vh = DOM.viewportHeight(),
+                elemOffset = DOM.offset(elem),
+                elemHeight = DOM.height(elem);
+            return elemOffset.top > scrollTop &&
+                elemOffset.top + elemHeight < scrollTop + vh;
+        };
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        autoplay: false,
-        interval: 5, // 自动播放间隔时间
-        pauseOnHover: true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
+        // 当 Switchable 对象不在可视区域中时停止动画切换
+        pauseOnScroll:false,
+        autoplay:false,
+        interval:5, // 自动播放间隔时间
+        pauseOnHover:true  // triggerType 为 mouse 时，鼠标悬停在 slide 上是否暂停自动播放
     });
+
 
     /**
      * 添加插件
@@ -504,19 +516,29 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
      */
     Switchable.Plugins.push({
 
-        name: 'autoplay',
+        name:'autoplay',
 
-        init: function(host) {
+        init:function (host) {
 
             var cfg = host.config,
                 interval = cfg.interval * 1000,
                 timer;
 
-            if (!cfg.autoplay) return;
+            if (!cfg.autoplay) {
+                return;
+            }
+
+            if (cfg.pauseOnScroll) {
+                host.__scrollDetect = S.buffer(function () {
+                    // 依次检查页面上所有 switchable 对象是否在可视区域内
+                    host[checkElemInViewport(host.container) ? 'start' : 'stop']();
+                }, DURATION);
+                Event.on(window, "scroll", host.__scrollDetect);
+            }
 
             function startAutoplay() {
                 // 设置自动播放
-                timer = S.later(function() {
+                timer = S.later(function () {
                     if (host.paused) return;
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
                     host.switchTo(host.activeIndex < host.length - 1 ?
@@ -529,7 +551,7 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
             startAutoplay();
 
             // 添加 stop 方法，使得外部可以停止自动播放
-            host.stop = function() {
+            host.stop = function () {
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
@@ -538,7 +560,7 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                 host.paused = true;
             };
 
-            host.start = function() {
+            host.start = function () {
                 if (timer) {
                     timer.cancel();
                     timer = undefined;
@@ -552,26 +574,36 @@ KISSY.add('switchable/autoplay', function(S, Event, Switchable, undefined) {
                 Event.on(host.container, 'mouseenter', host.stop, host);
                 Event.on(host.container, 'mouseleave', host.start, host);
             }
+        },
+
+        destroy:function (host) {
+            if (host.__scrollDetect) {
+                Event.remove(window, "scroll", host.__scrollDetect);
+            }
         }
     });
     return Switchable;
-}, { requires:["event","./base"]});
+}, { requires:["dom", "event", "./base"]});
 /**
- 承玉：2011.06.02 review switchable
+
+ - 承玉：2011.06.02 review switchable
+ - qiaohua chengyu 2011.02.08 supportpauseOnScroll
+ - - 当 Switchable 对象不在可视区域中时停止动画切换
+
  *//**
  * @fileOverview Switchable Autorender Plugin
  * @creator  lifesinger@gmail.com
  */
-KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
+KISSY.add('switchable/autorender', function (S, DOM, JSON, Switchable) {
 
     /**
      * 自动渲染 container 元素内的所有 Switchable 组件
      * 默认钩子：<div class="KS_Widget" data-widget-type="Tabs" data-widget-config="{...}">
      */
-    Switchable.autoRender = function(hook, container) {
+    Switchable.autoRender = function (hook, container) {
         hook = '.' + (hook || 'KS_Widget');
 
-        S.each(DOM.query(hook, container),function(elem) {
+        S.each(DOM.query(hook, container), function (elem) {
             var type = elem.getAttribute('data-widget-type'),
                 config;
             if (type && ('Switchable Tabs Slide Carousel Accordion'.indexOf(type) > -1)) {
@@ -580,15 +612,15 @@ KISSY.add('switchable/autorender', function(S,DOM,JSON,Switchable) {
                     if (config) {
                         config = config.replace(/'/g, '"');
                     }
-                    new Switchable[type](elem, JSON.parse(config));
-                } catch(ex) {
+                    new (type == "Switchable" ? Switchable : Switchable[type])(elem, JSON.parse(config));
+                } catch (ex) {
                     S.log('Switchable.autoRender: ' + ex, 'warn');
                 }
             }
         });
     }
 
-}, { requires:["dom","json","switchable/base"]});
+}, { requires:["dom", "json", "switchable/base"]});
 /**
  * @fileOverview Switchable
  * @creator  lifesinger@gmail.com,yiminghe@gmail.com
@@ -1059,6 +1091,26 @@ KISSY.add('switchable/base', function(S, DOM, Event, undefined) {
             self.switchTo(activeIndex < self.length - 1 ?
                 activeIndex + 1 :
                 0, FORWARD, ev);
+        },
+
+        destroy: function() {
+            // destroy self
+            // todo
+
+            var self = this,
+                pluginHost = self.constructor;
+
+            // destroy plugins by Hierarchy
+            while (pluginHost) {
+                S.each(pluginHost.Plugins, function(plugin) {
+                    if (plugin.destroy) {
+                        plugin.destroy(self);
+                    }
+                });
+                pluginHost = pluginHost.superclass ?
+                    pluginHost.superclass.constructor :
+                    null;
+            }
         }
     });
 
@@ -2323,8 +2375,7 @@ KISSY.add("switchable", function (S, Switchable, Aria, Accordion, AAria, autopla
         Accordion:Accordion,
         Carousel:Carousel,
         Slide:Slide,
-        Tabs:Tabs,
-        Switchable:Switchable
+        Tabs:Tabs
     };
     S.mix(Switchable, re);
     return Switchable;

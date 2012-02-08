@@ -17,7 +17,6 @@
 <script src="../src/accordion/base.js"></script>
 <script src="../src/accordion/aria.js"></script>
 <script src="../src/autoplay.js"></script>
-<script src="../src/scroll.js"></script>
 <script src="../src/autorender.js"></script>
 <script src="../src/carousel/base.js"></script>
 <script src="../src/carousel/aria.js"></script>
@@ -144,23 +143,27 @@
         </div>
         <button id="demo2-btn">stop autoplay</button>
         <script>
-            KISSY.use("event,switchable", function(S, Event, Switchable) {
+            KISSY.use("event,switchable", function (S, Event, Switchable) {
                 var Slide = Switchable.Slide;
 
-                S.ready(function(S) {
-
+                S.ready(function (S) {
                     var s = Slide('#demo2', {
-                        effect: 'scrolly',
+                        effect:'scrolly',
                         // slide特效组件其实不需要
                         aria:false,
-                        easing: 'easeOutStrong'
+                        pauseOnScroll:true,
+                        easing:'easeOutStrong'
                         //countdown: true,
                         //countdownFromStyle: 'width:18px'
                     });
 
                     window.slide = s;
 
-                    Event.on('#demo2-btn', 'click', function() {
+                    s.on("switch", function () {
+                        S.log("switch");
+                    });
+
+                    Event.on('#demo2-btn', 'click', function () {
                         s.stop();
                     })
                 });
@@ -296,30 +299,30 @@
             </div>
         </div>
         <script>
-            KISSY.use("dom,event,anim,switchable", function(S, DOM, Event, Anim, Switchable) {
+            KISSY.use("dom,event,anim,switchable", function (S, DOM, Event, Anim, Switchable) {
                 var Slide = Switchable.Slide,
                         Easing = Anim.Easing;
 
-                S.ready(function(S) {
+                S.ready(function (S) {
 
                     //var slide =
                     new Slide('#slideFocus', {
-                        contentCls: 'pic-list',
-                        navCls: 'thumbs-list',
-                        activeTriggerCls: 'current',
-                        effect: 'scrollx',
-                        easing: Easing.easeOutStrong
+                        contentCls:'pic-list',
+                        navCls:'thumbs-list',
+                        activeTriggerCls:'current',
+                        effect:'scrollx',
+                        easing:Easing.easeOutStrong
                     });
 
                     // window.slide = slide;
                     // 两个拼起来
                     new Slide('#slideFocus', {
-                        contentCls: 'desc-list',
-                        navCls: 'thumbs-list',
-                        activeTriggerCls: 'current',
+                        contentCls:'desc-list',
+                        navCls:'thumbs-list',
+                        activeTriggerCls:'current',
                         circular:true,
-                        effect: 'scrolly',
-                        easing: Easing.easeOutStrong
+                        effect:'scrolly',
+                        easing:Easing.easeOutStrong
                     });
 
                     // 或者监听事件
@@ -404,18 +407,18 @@
         </ul>
 
         <script>
-            KISSY.use("event,switchable", function(S, Event, Switchable) {
+            KISSY.use("event,switchable", function (S, Event, Switchable) {
                 var Slide = Switchable.Slide;
-                S.ready(function(S) {
+                S.ready(function (S) {
                     Slide('#demo3', {
-                        navCls: 'yslider-stick',
-                        contentCls: 'yslider-stage',
-                        activeTriggerCls: 'selected',
-                        delay: .2,
-                        effect: 'fade',
-                        easing: 'easeBoth',
-                        duration: .8,
-                        autoplay: false
+                        navCls:'yslider-stick',
+                        contentCls:'yslider-stage',
+                        activeTriggerCls:'selected',
+                        delay:.2,
+                        effect:'fade',
+                        easing:'easeBoth',
+                        duration:.8,
+                        autoplay:false
                     });
                 });
             });
@@ -449,16 +452,16 @@
             </ul>
         </div>
         <script>
-            KISSY.use("event,switchable", function(S, Event,Switchable) {
+            KISSY.use("event,switchable", function (S, Event, Switchable) {
                 var Slide = Switchable.Slide;
-                S.ready(function(S) {
+                S.ready(function (S) {
                     Slide('#demo5', {
-                        contentCls: 'news-items',
-                        hasTriggers: false,
-                        effect: 'scrolly',
-                        easing: 'easeOutStrong',
-                        interval: 3,
-                        duration: .2
+                        contentCls:'news-items',
+                        hasTriggers:false,
+                        effect:'scrolly',
+                        easing:'easeOutStrong',
+                        interval:3,
+                        duration:.2
                     });
                 });
             });

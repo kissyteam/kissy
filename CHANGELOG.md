@@ -26,6 +26,7 @@ History:
  - [+] Event 模块：fireHandler api 增加
  - [+] Event.on 支持 data 绑定
  - [x] Event.delegate 重构，fix #76
+ - [*] valuechange 透明支持 webkitspeechchange 事件
 
  - [+] io 调用返回 Promise 类型，可以进行链式操作
 
@@ -49,6 +50,8 @@ History:
 
  - [+] datalazyload 增加 removeElements 与 destroy 接口
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
+
+ - [+] switchable 增加 pauseOnScroll，只在可视窗口时才滚动
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
