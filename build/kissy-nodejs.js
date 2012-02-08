@@ -187,7 +187,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Jan 5 12:13
+build time: Feb 8 17:01
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -278,7 +278,7 @@ build time: Jan 5 12:13
          */
         version:'1.20',
 
-        buildTime:'20120105121255',
+        buildTime:'20120208170121',
 
         /**
          * Returns a new object containing all of the properties of
@@ -8595,7 +8595,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
  */
 
 /**
- * inspired by yui3 :
+ * @fileOverview  inspired by yui3 :
  *
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
@@ -8608,7 +8608,7 @@ KISSY.add('event/hashchange', function(S, Event, DOM, UA) {
  *
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/valuechange', function(S, Event, DOM) {
+KISSY.add('event/valuechange', function (S, Event, DOM, special) {
     var VALUE_CHANGE = "valuechange",
         nodeName = DOM._nodeName,
         KEY = "event/valuechange",
@@ -8616,8 +8616,7 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
         POLL_KEY = KEY + "/poll",
         interval = 50;
 
-    function stopPoll(target) {
-        DOM.removeData(target, HISTORY_KEY);
+    function clearPollTimer(target) {
         if (DOM.hasData(target, POLL_KEY)) {
             var poll = DOM.data(target, POLL_KEY);
             clearTimeout(poll);
@@ -8625,23 +8624,34 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
         }
     }
 
+    function stopPoll(target) {
+        DOM.removeData(target, HISTORY_KEY);
+        clearPollTimer(target);
+    }
+
     function stopPollHandler(ev) {
-        var target = ev.target;
-        stopPoll(target);
+        clearPollTimer(ev.target);
+    }
+
+    function checkChange(target) {
+        var v = target.value,
+            h = DOM.data(target, HISTORY_KEY);
+        if (v !== h) {
+            // 只触发自己绑定的 handler
+            Event.fire(target, VALUE_CHANGE, {
+                prevVal:h,
+                newVal:v
+            }, true);
+            DOM.data(target, HISTORY_KEY, v);
+        }
     }
 
     function startPoll(target) {
-        if (DOM.hasData(target, POLL_KEY)) return;
-        DOM.data(target, POLL_KEY, setTimeout(function() {
-            var v = target.value,h = DOM.data(target, HISTORY_KEY);
-            if (v !== h) {
-                // 只触发自己绑定的 handler
-                Event.fire(target, VALUE_CHANGE, {
-                    prevVal:h,
-                    newVal:v
-                }, true);
-                DOM.data(target, HISTORY_KEY, v);
-            }
+        if (DOM.hasData(target, POLL_KEY)) {
+            return;
+        }
+        DOM.data(target, POLL_KEY, setTimeout(function () {
+            checkChange(target);
             DOM.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
         }, interval));
     }
@@ -8655,35 +8665,51 @@ KISSY.add('event/valuechange', function(S, Event, DOM) {
         startPoll(target);
     }
 
+    function webkitSpeechChangeHandler(e) {
+        checkChange(e.target);
+    }
+
     function monitor(target) {
         unmonitored(target);
         Event.on(target, "blur", stopPollHandler);
+        // fix #94
+        // see note 2012-02-08
+        Event.on(target, "webkitspeechchange", webkitSpeechChangeHandler);
         Event.on(target, "mousedown keyup keydown focus", startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
         Event.remove(target, "blur", stopPollHandler);
+        Event.remove(target, "webkitspeechchange", webkitSpeechChangeHandler);
         Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
     }
 
-    Event.special[VALUE_CHANGE] = {
-        setup: function() {
+    special[VALUE_CHANGE] = {
+        setup:function () {
             var target = this;
             if (nodeName(target, "input")
                 || nodeName(target, "textarea")) {
                 monitor(target);
             }
         },
-        tearDown: function() {
+        tearDown:function () {
             var target = this;
             unmonitored(target);
         }
     };
     return Event;
 }, {
-    requires:["./base","dom"]
+    requires:["./base", "dom", "./special"]
 });
+
+/**
+ * 2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
+ *  当 input 没焦点立即点击语音
+ *   -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+ *  第二次：
+ *   -> mousedown -> blur -> webkitspeechchange -> focus
+ **/
 
 /**
  * kissy delegate for event module

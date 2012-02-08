@@ -10,7 +10,6 @@
     <target name="concat">
         <concat destfile="suggest-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path path="../suggest.js"/>
-            <path path="base.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;" />
             </filterchain>

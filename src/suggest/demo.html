@@ -8,7 +8,6 @@
 <link href="http://a.tbcdn.cn/p/fp/2011a/header/header-min.css" rel="stylesheet"/>
 
 <script src="../../build/kissy.js"></script>
-<script src="base.js"></script>
 <script src="../suggest.js"></script>
 
 <style>
@@ -341,7 +340,9 @@
                 <form target="_top" name="search" action="http://s.taobao.com/search" id="J_TSearchForm">
                     <div class="tsearch-fields focus">
                         <label for="q9" class=""></label>
-                        <input type="text" accesskey="s" id="q9" name="q" autofocus="true" autocomplete="off"/>
+                        <input type="text" accesskey="s" id="q9"
+                               x-webkit-speech="" x-webkit-grammar="builtin:search" lang="en"
+                               name="q" autofocus="true" autocomplete="off"/>
 
                         <b class="rc-lb"></b>
                         <b class="rc-lt"></b>
