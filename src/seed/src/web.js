@@ -98,7 +98,10 @@
                     try {
                         fn(S);
                     } catch (e) {
+                        // print stack info for firefox/chrome
+                        S.log(e.stack, "error");
                         setTimeout(function () {
+                            // lose stack info
                             throw e;
                         }, 0);
                     }
