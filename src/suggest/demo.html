@@ -372,7 +372,8 @@
     KISSY.use("dom,event,suggest,switchable,node", function(S, DOM, Event, Suggest, Switchable, Node) {
         var q = '#q9',
                 sug = new Suggest(DOM.get(q), 'http://suggest.taobao.com/sug?code=utf-8&extras=1', {
-                    resultFormat: '约%result%个宝贝'
+                    resultFormat: '约%result%个宝贝',
+                    hideDelay: 500
                 }),
                 fp = S,
                 that = this,
@@ -433,10 +434,13 @@
 
             if (n == 1) {
                 fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?area=b2c&code=utf-8&extras=1&callback=KISSY.Suggest.callback';
+                //fp.__fp_sug.query = "";
+                //fp.__fp_sug.start();
             } else {
                 fp.__fp_sug.dataSource = 'http://suggest.taobao.com/sug?code=utf-8&extras=1&callback=KISSY.Suggest.callback';
             }
             fp.__fp_sug._dataCache = {};
+
         };
 
         // on input focus / blur
@@ -495,6 +499,5 @@
         }, 0);
     });
 </script>
-<input class="gsfi" value="" title="Search" size="41" type="text" autocomplete="off" id="lst-ib" name="q" maxlength="2048" dir="ltr" spellcheck="false" x-webkit-speech="" x-webkit-grammar="builtin:search" lang="en">
 </body>
 </html>
