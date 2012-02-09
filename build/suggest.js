@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 16:22
+build time: Feb 9 11:04
 */
 /**
  * @fileOverview 提示补全组件
