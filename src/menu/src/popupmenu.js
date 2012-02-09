@@ -7,7 +7,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
             parentMenu;
-        if (subMenuItem && subMenuItem.get("menu") === self) {
+        if (subMenuItem && subMenuItem.get("menu") == self) {
             parentMenu = subMenuItem.get("parent");
         }
         return parentMenu;
@@ -19,18 +19,6 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             return parentMenu;
         }
         return 0;
-    }
-
-    function getOldestMenu(self) {
-        var pre = self, now = self;
-        while (now) {
-            pre = now;
-            now = getAutoHideParentMenu(pre);
-            if (!now) {
-                break;
-            }
-        }
-        return pre;
     }
 
     var autoHideOnMouseLeave = "autoHideOnMouseLeave";
@@ -72,29 +60,50 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             }
         },
         _handleMouseLeave:function () {
-            var self = this;
+            var self = this,
+                parent;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
             self._leaveHideTimer = setTimeout(function () {
-                // only hide ancestor is enough , it will listen to its ancestor's hide event to hide
-                var oldMenu = getOldestMenu(self);
-                oldMenu.hide();
-                var parentMenu = getParentMenu(oldMenu);
-                if (parentMenu) {
-                    parentMenu.set("highlightedItem", null);
+                self.hide();
+                var subMenuItem = self.get("parent"), m;
+                if (subMenuItem) {
+                    m = getParentMenu(self);
+                    // 过段时间仍然是父亲 submenu 仍然是他的兄弟中高亮，证明已经离开
+                    // 否则
+                    // 1.鼠标移到 submenu 的话，submenu mouseenter clearTimers,
+                    //   这个 timer 执行不了！
+                    //
+                    // 2.鼠标移到了 submenu 并列的其他 menuitem，
+                    //   导致其他 menuitem highlighted
+                    //   那么 当前所属 submenu unhighlighted
+                    //   执行 clearTimers ，这个 timer 仍然不执行
+
+                    // 那么只剩下一种情况，移除了整个嵌套的 menu，
+                    // 那么执行该 timer
+                    // menu hide 并且将其所属的 submenu 高亮去掉！
+                    if (m && m.get("highlightedItem") === subMenuItem) {
+                        m.set("highlightedItem", null);
+                    }
                 }
             }, self.get("autoHideDelay"));
+            parent = getAutoHideParentMenu(self);
+            if (parent) {
+                parent._handleMouseLeave();
+            }
         },
 
         _handleMouseEnter:function () {
-            var self = this,
-                parent = getAutoHideParentMenu(self);
-            if (parent) {
-                parent._clearLeaveHideTimers();
-            } else {
-                self._clearLeaveHideTimers();
+            var self = this;
+            if (!self.get(autoHideOnMouseLeave)) {
+                return;
             }
+            var parent = getAutoHideParentMenu(self);
+            if (parent) {
+                parent._handleMouseEnter();
+            }
+            self._clearLeaveHideTimers();
         },
 
 

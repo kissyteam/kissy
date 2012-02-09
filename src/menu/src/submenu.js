@@ -143,6 +143,12 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                     self.showTimer_.cancel();
                     self.showTimer_ = null;
                 }
+                var menu = getMenu(self);
+                // TODO 耦合 popmenu.js
+                if (menu._leaveHideTimer) {
+                    clearTimeout(menu._leaveHideTimer);
+                    menu._leaveHideTimer = 0;
+                }
             },
 
             /**
@@ -164,7 +170,9 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
 
             hideMenu:function () {
                 var menu = getMenu(this);
-                menu && menu.hide();
+                if (menu) {
+                    menu.hide();
+                }
             },
 
             // click ，立即显示
@@ -233,9 +241,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 var self = this;
                 SubMenu.superclass._uiSetHighlighted.call(self, highlight, ev);
                 if (!highlight) {
-                    if (self.dismissTimer_) {
-                        self.dismissTimer_.cancel();
-                    }
+                    self.clearTimers();
                     self.dismissTimer_ = S.later(self.hideMenu,
                         self.get("menuDelay"),
                         false, self);
@@ -280,8 +286,6 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 if (menu && !self.get("externalSubMenu")) {
                     menu.destroy();
                 }
-
-                // TODO if externalSubMenu is true i should call menu.detach("click") ...
             }
         },
         {

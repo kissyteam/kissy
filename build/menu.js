@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Feb 9 20:17
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -881,7 +881,7 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
     function getParentMenu(self) {
         var subMenuItem = self.get("parent"),
             parentMenu;
-        if (subMenuItem && subMenuItem.get("menu") === self) {
+        if (subMenuItem && subMenuItem.get("menu") == self) {
             parentMenu = subMenuItem.get("parent");
         }
         return parentMenu;
@@ -893,18 +893,6 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             return parentMenu;
         }
         return 0;
-    }
-
-    function getOldestMenu(self) {
-        var pre = self, now = self;
-        while (now) {
-            pre = now;
-            now = getAutoHideParentMenu(pre);
-            if (!now) {
-                break;
-            }
-        }
-        return pre;
     }
 
     var autoHideOnMouseLeave = "autoHideOnMouseLeave";
@@ -946,29 +934,50 @@ KISSY.add("menu/popupmenu", function (S, UIBase, Component, Menu, PopupMenuRende
             }
         },
         _handleMouseLeave:function () {
-            var self = this;
+            var self = this,
+                parent;
             if (!self.get(autoHideOnMouseLeave)) {
                 return;
             }
             self._leaveHideTimer = setTimeout(function () {
-                // only hide ancestor is enough , it will listen to its ancestor's hide event to hide
-                var oldMenu = getOldestMenu(self);
-                oldMenu.hide();
-                var parentMenu = getParentMenu(oldMenu);
-                if (parentMenu) {
-                    parentMenu.set("highlightedItem", null);
+                self.hide();
+                var subMenuItem = self.get("parent"), m;
+                if (subMenuItem) {
+                    m = getParentMenu(self);
+                    // 过段时间仍然是父亲 submenu 仍然是他的兄弟中高亮，证明已经离开
+                    // 否则
+                    // 1.鼠标移到 submenu 的话，submenu mouseenter clearTimers,
+                    //   这个 timer 执行不了！
+                    //
+                    // 2.鼠标移到了 submenu 并列的其他 menuitem，
+                    //   导致其他 menuitem highlighted
+                    //   那么 当前所属 submenu unhighlighted
+                    //   执行 clearTimers ，这个 timer 仍然不执行
+
+                    // 那么只剩下一种情况，移除了整个嵌套的 menu，
+                    // 那么执行该 timer
+                    // menu hide 并且将其所属的 submenu 高亮去掉！
+                    if (m && m.get("highlightedItem") === subMenuItem) {
+                        m.set("highlightedItem", null);
+                    }
                 }
             }, self.get("autoHideDelay"));
+            parent = getAutoHideParentMenu(self);
+            if (parent) {
+                parent._handleMouseLeave();
+            }
         },
 
         _handleMouseEnter:function () {
-            var self = this,
-                parent = getAutoHideParentMenu(self);
-            if (parent) {
-                parent._clearLeaveHideTimers();
-            } else {
-                self._clearLeaveHideTimers();
+            var self = this;
+            if (!self.get(autoHideOnMouseLeave)) {
+                return;
             }
+            var parent = getAutoHideParentMenu(self);
+            if (parent) {
+                parent._handleMouseEnter();
+            }
+            self._clearLeaveHideTimers();
         },
 
 
@@ -1209,6 +1218,12 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                     self.showTimer_.cancel();
                     self.showTimer_ = null;
                 }
+                var menu = getMenu(self);
+                // TODO 耦合 popmenu.js
+                if (menu._leaveHideTimer) {
+                    clearTimeout(menu._leaveHideTimer);
+                    menu._leaveHideTimer = 0;
+                }
             },
 
             /**
@@ -1230,7 +1245,9 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
 
             hideMenu:function () {
                 var menu = getMenu(this);
-                menu && menu.hide();
+                if (menu) {
+                    menu.hide();
+                }
             },
 
             // click ，立即显示
@@ -1299,9 +1316,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 var self = this;
                 SubMenu.superclass._uiSetHighlighted.call(self, highlight, ev);
                 if (!highlight) {
-                    if (self.dismissTimer_) {
-                        self.dismissTimer_.cancel();
-                    }
+                    self.clearTimers();
                     self.dismissTimer_ = S.later(self.hideMenu,
                         self.get("menuDelay"),
                         false, self);
@@ -1346,8 +1361,6 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 if (menu && !self.get("externalSubMenu")) {
                     menu.destroy();
                 }
-
-                // TODO if externalSubMenu is true i should call menu.detach("click") ...
             }
         },
         {
