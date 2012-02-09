@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Feb 8 17:01
+build time: Feb 9 11:05
 */
 /**
  * @fileOverview 提示补全组件
@@ -372,16 +372,15 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
                     self._submitForm();
                 }
                 // 非以上控制键，开启计时器
-                /// 更改为 input 的valuechange , 并且去掉 self._timer 定时器
-                ///else {
-                ///    if (!self._isRunning) {
+                else {
+                    if (!self._isRunning) {
                         // 1. 当网速较慢，suggest.js 还未下载和初始化完时，用户可能就已经开始输入
                         //    这时，focus 事件已经不会触发，需要在 keydown 里触发定时器
                         // 2. 非 DOWN/UP 等控制键时，需要激活定时器
-                ///        self.start();
-                ///    }
-                ///    isDowningOrUping = false;
-                ///}
+                        self.start();
+                    }
+                    isDowningOrUping = false;
+                }
 
                 /*
                  * fix 防止 chrome 下 键盘按键移动选中项后, 仍然触发 mousemove 事件
@@ -393,16 +392,6 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
                         self._keyTimer = undefined;
                     }, 500);
                 }
-            });
-
-            Event.on(input, 'valuechange', function(evt) {
-                if (!self._isRunning) {
-                    // 1. 当网速较慢，suggest.js 还未下载和初始化完时，用户可能就已经开始输入
-                    //    这时，focus 事件已经不会触发，需要在 keydown 里触发定时器
-                    // 2. 非 DOWN/UP 等控制键时，需要激活定时器
-                    self.start();
-                }
-                isDowningOrUping = false;
             });
 
             // reset pressingCount
@@ -696,10 +685,10 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
             Suggest.focusInstance = self;
 
-            //self._timer = S.later(function () {
+            self._timer = S.later(function () {
                 self._updateContent();
-            //    self._timer = S.later(arguments.callee, TIMER_DELAY);
-            //}, TIMER_DELAY);
+                self._timer = S.later(arguments.callee, TIMER_DELAY);
+            }, TIMER_DELAY);
 
             self._isRunning = true;
         },
@@ -711,7 +700,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
             var self = this;
 
             Suggest.focusInstance = undefined;
-            //if (self._timer) self._timer.cancel();
+            if (self._timer) self._timer.cancel();
             self._isRunning = false;
         },
 
@@ -758,7 +747,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
             var self = this, input = self.textInput, q;
 
             // 检测是否需要更新。注意：加入空格也算有变化
-            ///if (input.value == self.query) return;
+            if (input.value == self.query) return;
             q = self.query = input.value;
 
             // 1. 输入为空时，隐藏提示层
