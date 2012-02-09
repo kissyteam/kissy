@@ -121,6 +121,14 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
             }
         });
 
+    S.mix(S, {
+        "Ajax":io,
+        "IO":io,
+        ajax:io,
+        io:io,
+        jsonp:io.jsonp
+    });
+
     return io;
 }, {
     requires:[

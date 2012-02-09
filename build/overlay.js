@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -151,6 +151,19 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
         return S.require("uibase/" + s);
     }
 
+    /**
+     * @class
+     * @namespace
+     * @name Overlay
+     * @extends Component.ModelControl
+     * @extends UIBase.ContentBox
+     * @extends UIBase.Position
+     * @extends UIBase.Loading
+     * @extends UIBase.Align
+     * @extends UIBase.Close
+     * @extends UIBase.Resize
+     * @extends UIBase.Mask
+     */
     var Overlay = UIBase.create(Component.ModelControl, [
         require("contentbox"),
         require("position"),
@@ -196,7 +209,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
     requires:['uibase', 'component', './overlayrender', './effect']
 });/**
  * @fileOverview KISSY.Dialog
- * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
 
@@ -243,7 +256,7 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
 });
 
 /**
- * 2010-11-10 承玉<yiminghe@gmail.com>重构，使用扩展类
+ * 2010-11-10 yiminghe@gmail.com重构，使用扩展类
  */
 
 
@@ -344,7 +357,7 @@ KISSY.add("overlay", function(S, O, OR, D, DR, P) {
         "overlay/dialog","overlay/dialogrender", "overlay/popup"]
 });/**
  * @fileOverview KISSY Overlay
- * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author  yiminghe@gmail.com,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -365,11 +378,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 });
 
 /**
- * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
+ * 2010-11-09 2010-11-10 yiminghe@gmail.com重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */
 /**
  * @fileOverview KISSY.Popup
- * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
+ * @author  乔花<qiaohua@taobao.com> , yiminghe@gmail.com
  */
 KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
     function Popup(container, config) {
@@ -386,17 +399,20 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
     }
 
     Popup.ATTRS = {
-        trigger: {
+        trigger: {                          // 触发器
             setter:function(v) {
-                return S.one(v);
+                if (S.isString(v)) v = S.all(v);
+                return v;
             }
-        },                              // 触发器
-        triggerType: {value:'click'},   // 触发类型
+        },
+        triggerType: {value:'click'},       // 触发类型
+        currentTrigger: {
+        },
         mouseDelay: {
-            value: 100                  // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
+            value: 100                      // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
         },
 		toggle :{
-			value:false // triggerType 为 click 时, Popup 是否有toggle功能
+			value:false                     // triggerType 为 click 时, Popup 是否有toggle功能
 		}
     };
 
@@ -423,17 +439,18 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 trigger = self.get("trigger"),
                 timer;
 
-            self.__mouseEnterPopup = function() {
+            self.__mouseEnterPopup = function(ev) {
                 self._clearHiddenTimer();
 
                 timer = S.later(function() {
-                    self.show();
+                    self._showing(ev);
                     timer = undefined;
                 }, self.get('mouseDelay'));
             };
 
-            trigger.on('mouseenter', self.__mouseEnterPopup);
-
+            S.each(trigger, function(el) {
+                S.one(el).on('mouseenter', self.__mouseEnterPopup);
+            });
 
             self._mouseLeavePopup = function() {
                 if (timer) {
@@ -444,7 +461,9 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 self._setHiddenTimer();
             };
 
-            trigger.on('mouseleave', self._mouseLeavePopup);
+            S.each(trigger, function(el) {
+                S.one(el).on('mouseleave', self._mouseLeavePopup);
+            });
         },
 
         _bindContainerMouse: function() {
@@ -454,10 +473,10 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 .on('mouseenter', self._clearHiddenTimer, self);
         },
 
-        _setHiddenTimer: function() {
+        _setHiddenTimer: function(ev) {
             var self = this;
             self._hiddenTimer = S.later(function() {
-                self.hide();
+                self._hiding(ev);
             }, self.get('mouseDelay'));
         },
 
@@ -471,21 +490,24 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
         _bindTriggerClick: function() {
             var self = this;
-            self.__clickPopup = function(e) {
-                e.halt();
+            self.__clickPopup = function(ev) {
+                ev.halt();
 				if(self.get('toggle')){
-					if(self.get('el').css('visibility') == 'hidden'){
-						self.show();
-					}
-					else{
-						self.hide();
-					}
+                    self[self.get('visible')?'_hiding':'_showing'](ev);
 				}
-				else{
-					self.show();
-				}
+				else  self._showing(ev);
             };
-            self.get("trigger").on('click', self.__clickPopup);
+            S.each(self.get("trigger"), function(el) {
+                S.one(el).on('click', self.__clickPopup);
+            });
+        },
+        _showing: function(ev) {
+            this.set('currentTrigger', S.one(ev.target));
+            this.show();
+        },
+        _hiding: function(ev) {
+            this.set('currentTrigger', undefined);
+            this.hide();
         },
 
         destructor:function() {
@@ -493,14 +515,20 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             var t = self.get("trigger");
             if (t) {
                 if (self.__clickPopup) {
-                    t.detach('click', self.__clickPopup);
+                    S.each(t, function(el) {
+                        S.one(el).detach('click', self.__clickPopup);
+                    });
                 }
                 if (self.__mouseEnterPopup) {
-                    t.detach('mouseenter', self.__mouseEnterPopup);
+                    S.each(t, function(el) {
+                        S.one(el).detach('mouseenter', self.__mouseEnterPopup);
+                    });
                 }
 
                 if (self._mouseLeavePopup) {
-                    t.detach('mouseleave', self._mouseLeavePopup);
+                    S.each(t, function(el) {
+                        S.one(el).detach('mouseleave', self._mouseLeavePopup);
+                    });
                 }
             }
             if (self.get('el')) {

@@ -38,6 +38,9 @@ History:
 
  - [x] NodeList.prototype.slice 支持单个负数参数：fix #85
 
+ - [*] KISSY.Base : values should not be set if any validator occurs error
+ - [+] KISSY.Base.prototype.set opts 增加 error 属性，配置错误回调
+
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
 

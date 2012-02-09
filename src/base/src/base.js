@@ -51,6 +51,8 @@ KISSY.add('base', function (S, Attribute, Event) {
 
     Base.Attribute = Attribute;
 
+    S.Base = Base;
+
     return Base;
 }, {
     requires:["base/attribute", "event"]

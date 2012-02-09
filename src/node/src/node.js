@@ -2,8 +2,14 @@
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add("node", function(S, Event, Node) {
+KISSY.add("node", function (S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
+    S.mix(S, {
+        Node:Node,
+        NodeList:Node,
+        one:Node.one,
+        all:Node.all
+    });
     return Node;
 }, {
     requires:[

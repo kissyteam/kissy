@@ -198,7 +198,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:02
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -307,7 +307,7 @@ build time: Feb 9 10:58
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120209105812',
+            buildTime:'20120209180212',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3657,9 +3657,9 @@ build time: Feb 9 10:58
 
 })(KISSY, undefined);
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview ua
@@ -3894,7 +3894,8 @@ KISSY.add('ua/extra', function(S, UA) {
 /**
  * @fileOverview ua
  */
-KISSY.add("ua", function(S,UA) {
+KISSY.add("ua", function (S, UA) {
+    S.UA = UA;
     return UA;
 }, {
     requires:["ua/extra"]
@@ -3902,7 +3903,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   dom-attr
@@ -5564,6 +5565,11 @@ KISSY.add("dom", function (S, DOM) {
      * @namespace
      * @name DOM
      */
+    S.mix(S,{
+        DOM:DOM,
+        get:DOM.get,
+        query:DOM.query
+    });
 
     return DOM;
 }, {
@@ -8016,7 +8022,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 8 16:47
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview responsible for registering event
@@ -8619,6 +8625,12 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     });
 
     S.mix(Event, _data);
+
+    S.mix(S, {
+        Event:Event,
+        EventTarget:Event.Target,
+        EventObject:Event.Object
+    });
 
     return Event;
 }, {
@@ -10266,16 +10278,16 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
  *   -> mousedown -> blur -> webkitspeechchange -> focus
  **/
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 
-    return {
+    return S.JSON = {
 
         parse:function (text) {
             // 当输入为 undefined / null / '' 时，返回 null
@@ -10777,7 +10789,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 16:32
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview form data  serialization util
@@ -11938,6 +11950,14 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
             }
         });
 
+    S.mix(S, {
+        "Ajax":io,
+        "IO":io,
+        ajax:io,
+        io:io,
+        jsonp:io.jsonp
+    });
+
     return io;
 }, {
     requires:[
@@ -12386,9 +12406,9 @@ KISSY.add("ajax/jsonp", function (S, io) {
     requires:['./base']
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   cookie
@@ -12406,7 +12426,7 @@ KISSY.add('cookie', function (S) {
         return S.isString(val) && val !== '';
     }
 
-    return {
+    return S.Cookie={
 
         /**
          * 获取 cookie 值
@@ -12477,7 +12497,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 12 17:28
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview attribute management
@@ -12627,9 +12647,9 @@ KISSY.add('base/attribute', function (S, undef) {
 
         // if no change, just return
         if (!path && prevVal === value) {
-            return undefined;
+            return undef;
         } else if (path && subVal === value) {
-            return undefined;
+            return undef;
         }
 
         if (path) {
@@ -12645,7 +12665,7 @@ KISSY.add('base/attribute', function (S, undef) {
             }
         }
         // set it
-        ret = self.__set(name, value);
+        ret = self.__set(name, value, opts);
 
         if (ret === false) {
             return ret;
@@ -12782,16 +12802,28 @@ KISSY.add('base/attribute', function (S, undef) {
              * @returns {boolean} whether pass validator
              */
             set:function (name, value, opts) {
-                var ret, self = this;
+                var self = this;
                 if (S.isPlainObject(name)) {
-                    var all = Object(name);
                     opts = value;
-                    var attrs = [];
+                    var all = Object(name),
+                        attrs = [],
+                        e,
+                        errors = [];
                     for (name in all) {
-                        ret = setInternal(self, name, all[name], opts, attrs);
-                        if (ret === false) {
-                            break;
+                        // bulk validation
+                        // if any one failed,all values are not set
+                        if ((e = validate(self, name, all[name], all)) !== undef) {
+                            errors.push(e);
                         }
+                    }
+                    if (errors.length) {
+                        if (opts.error) {
+                            opts.error(errors);
+                        }
+                        return false;
+                    }
+                    for (name in all) {
+                        setInternal(self, name, all[name], opts, attrs);
                     }
                     var attrNames = [],
                         prevVals = [],
@@ -12812,7 +12844,7 @@ KISSY.add('base/attribute', function (S, undef) {
                             subAttrNames,
                             attrNames);
                     }
-                    return ret;
+                    return undef;
                 }
                 return setInternal(self, name, value, opts);
             },
@@ -12821,22 +12853,25 @@ KISSY.add('base/attribute', function (S, undef) {
              * internal use, no event involved, just set.
              * @protected overriden by mvc/model
              */
-            __set:function (name, value) {
+            __set:function (name, value, opts) {
                 var self = this,
                     setValue,
                     // if host does not have meta info corresponding to (name,value)
                     // then register on demand in order to collect all data meta info
                     // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
                     // 因为属性在声明注册前可以直接设置值
+                    e,
                     attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                    validator = attrConfig['validator'],
                     setter = attrConfig['setter'];
 
                 // validator check
-                if (validator && (validator = normalFn(self, validator))) {
-                    if (validator.call(self, value, name) === false) {
-                        return false;
+                e = validate(self, name, value);
+
+                if (e !== undef) {
+                    if (opts.error) {
+                        opts.error(e);
                     }
+                    return false;
                 }
 
                 // if setter has effect
@@ -12956,6 +12991,20 @@ KISSY.add('base/attribute', function (S, undef) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
+    function validate(self, name, value, all) {
+        var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+            e,
+            validator = attrConfig['validator'];
+        if (validator && (validator = normalFn(self, validator))) {
+            e = validator.call(self, value, name, all);
+            // undefined and true validate successfully
+            if (e !== undef && e !== true) {
+                return e;
+            }
+        }
+        return undef;
+    }
+
     if (undef) {
         Attribute.prototype.addAttrs = undef;
     }
@@ -13020,6 +13069,8 @@ KISSY.add('base', function (S, Attribute, Event) {
 
     Base.Attribute = Attribute;
 
+    S.Base = Base;
+
     return Base;
 }, {
     requires:["base/attribute", "event"]
@@ -13027,16 +13078,20 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview anim
  */
-KISSY.add("anim", function(S, Anim,Easing) {
-    Anim.Easing=Easing;
+KISSY.add("anim", function (S, Anim, Easing) {
+    Anim.Easing = Easing;
+    S.mix(S, {
+        Anim:Anim,
+        Easing:Anim.Easing
+    });
     return Anim;
 }, {
-    requires:["anim/base","anim/easing","anim/color","anim/backgroundPosition"]
+    requires:["anim/base", "anim/easing", "anim/color", "anim/backgroundPosition"]
 });/**
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
@@ -14383,7 +14438,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 31 15:04
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -14740,17 +14795,10 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         },
 
         slice:function (start, end) {
-            var args = [];
             // ie<9 : [1,2].slice(-2,undefined) => []
             // ie<9 : [1,2].slice(-2) => []
             // fix #85
-            S.each(arguments, function (a) {
-                if (a === undefined) {
-                    return false;
-                }
-                args.push(a);
-            });
-            return new NodeList(slice.apply(this, args));
+            return new NodeList(slice.apply(this, arguments));
         },
 
         /**
@@ -14872,8 +14920,14 @@ KISSY.add("node/base", function (S, DOM, undefined) {
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add("node", function(S, Event, Node) {
+KISSY.add("node", function (S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
+    S.mix(S, {
+        Node:Node,
+        NodeList:Node,
+        one:Node.one,
+        all:Node.all
+    });
     return Node;
 }, {
     requires:[
@@ -14923,28 +14977,4 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
 
-KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
-S.mix(S, {
-UA:UA,
-DOM:DOM,
-Event:Event,
-EventTarget:Event.Target,
-"EventObject":Event.Object,
-Node:Node,
-NodeList:Node,
-JSON:JSON,
-"Ajax":Ajax,
-"IO":Ajax,
-ajax:Ajax,
-io:Ajax,
-jsonp:Ajax.jsonp,
-Anim:Anim,
-Easing:Anim.Easing,
-Base:Base,
-"Cookie":Cookie,
-one:Node.one,
-all:Node.all,
-get:DOM.get,
-query:DOM.query
-});
-});
+KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");

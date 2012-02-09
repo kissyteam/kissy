@@ -14,7 +14,7 @@ KISSY.add('cookie', function (S) {
         return S.isString(val) && val !== '';
     }
 
-    return {
+    return S.Cookie={
 
         /**
          * 获取 cookie 值

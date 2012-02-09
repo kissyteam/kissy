@@ -3,7 +3,7 @@
  */
 KISSY.add('json', function (S, JSON) {
 
-    return {
+    return S.JSON = {
 
         parse:function (text) {
             // 当输入为 undefined / null / '' 时，返回 null

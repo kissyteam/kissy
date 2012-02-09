@@ -45,31 +45,7 @@
             <path path="${kissy.build.dir}/anim.js"/>
             <path path="${kissy.build.dir}/node.js"/>
             <footer filtering="no" trimleading="yes">
-                KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
-                S.mix(S, {
-                UA:UA,
-                DOM:DOM,
-                Event:Event,
-                EventTarget:Event.Target,
-                "EventObject":Event.Object,
-                Node:Node,
-                NodeList:Node,
-                JSON:JSON,
-                "Ajax":Ajax,
-                "IO":Ajax,
-                ajax:Ajax,
-                io:Ajax,
-                jsonp:Ajax.jsonp,
-                Anim:Anim,
-                Easing:Anim.Easing,
-                Base:Base,
-                "Cookie":Cookie,
-                one:Node.one,
-                all:Node.all,
-                get:DOM.get,
-                query:DOM.query
-                });
-                });
+                KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");
             </footer>
             <filterchain>
                 <deletecharacters chars="${bom}"/>

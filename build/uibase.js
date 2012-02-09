@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 17:57
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview UIBase.Align

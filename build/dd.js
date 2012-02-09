@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -122,6 +122,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
 KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
     /**
      * @name DD
+     * @namespace
      */
     var DD;
     DD = {
@@ -324,7 +325,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             oldDrop._handleOut(ev);
             activeDrag._handleOut(ev);
         }
-        self.set("activeDrop", activeDrop);
+        self.__set("activeDrop", activeDrop);
         if (activeDrop) {
             if (oldDrop != activeDrop) {
                 activeDrop._handleEnter(ev);
@@ -423,7 +424,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function _activeDrops(self) {
         var drops = self.get("drops");
-        self.set("validDrops", []);
+        self.__set("validDrops", []);
         S.each(drops, function (d) {
             d._active();
         });
@@ -431,7 +432,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function _deActiveDrops(self) {
         var drops = self.get("drops");
-        self.set("validDrops", []);
+        self.__set("validDrops", []);
         S.each(drops, function (d) {
             d._deActive();
         });
@@ -483,7 +484,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
                 drops = self.get("drops"),
                 drag = self.__activeToDrag;
 
-            self.set('activeDrag', drag);
+            self.__set('activeDrag', drag);
             // 预备役清掉
             self.__activeToDrag = 0;
             // 真正开始移动了才激活垫片
@@ -521,8 +522,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             if (activeDrop) {
                 activeDrop._end();
             }
-            self.set("activeDrag", null);
-            self.set("activeDrop", null);
+            self.__set("activeDrag", null);
+            self.__set("activeDrop", null);
         }
     });
 
@@ -621,15 +622,15 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
         }
 
         if (handler) {
-            self.set("activeHandler", handler);
+            self.__set("activeHandler", handler);
             node = self._getNode(handler);
         } else {
             return;
         }
 
         // 找到 handler 确定 委托的 node ，就算成功了
-        self.set("node", node);
-        self.set("dragNode", node);
+        self.__set("node", node);
+        self.__set("dragNode", node);
         self._prepare(ev);
     }
 
@@ -1166,7 +1167,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                self.set("dragNode", node);
+                self.__set("dragNode", node);
                 node.on('mousedown', _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
@@ -1186,7 +1187,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                     if (handler.contains(t) ||
                         handler[0] == t) {
                         ret = 1;
-                        self.set("activeHandler", handler);
+                        self.__set("activeHandler", handler);
                         return false;
                     }
                 });
@@ -1326,7 +1327,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                             drag:self
                         });
                     }
-                    self.set("dragging", 0);
+                    self.__set("dragging", 0);
                     self.fire("dragend", {
                         drag:self
                     });
@@ -1364,7 +1365,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _start:function () {
                 var self = this;
                 self._clearBufferTimer();
-                self.set("dragging", 1);
+                self.__set("dragging", 1);
                 DDM._start();
                 self.fire("dragstart", {
                     drag:self
@@ -1449,8 +1450,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 }
 
                 if (ret) {
-                    self.set("lastNode", self.get("node"));
-                    self.set("node", ret);
+                    self.__set("lastNode", self.get("node"));
+                    self.__set("node", ret);
                 }
 
                 return ret;
@@ -1459,8 +1460,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             _handleOut:function () {
                 var self = this;
                 DroppableDelegate.superclass._handleOut.apply(self, arguments);
-                self.set("node", 0);
-                self.set("lastNode", 0);
+                self.__set("node", 0);
+                self.__set("lastNode", 0);
             },
 
             _handleOver:function (ev) {
@@ -1475,12 +1476,12 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                     /**
                      * 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
                      */
-                    self.set("node", lastNode);
+                    self.__set("node", lastNode);
                     superOut.apply(self, arguments);
                     /**
                      * 再通知这次的进入
                      */
-                    self.set("node", node);
+                    self.__set("node", node);
                     superEnter.call(self, ev);
                 } else {
                     superOver.call(self, ev);
@@ -1488,8 +1489,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             },
 
             _end:function () {
-                DroppableDelegate.superclass._end.apply(this, arguments);
-                this.set("node", 0);
+                var self=this;
+                DroppableDelegate.superclass._end.apply(self, arguments);
+                self.__set("node", 0);
             }
         },
         {
@@ -1857,8 +1859,8 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                         .append(node);
                     node.show();
                     node.offset(dragNode.offset());
-                    drag.set("dragNode", dragNode);
-                    drag.set("node", node);
+                    drag.__set("dragNode", dragNode);
+                    drag.__set("node", node);
                 }
 
                 function end() {
@@ -1872,7 +1874,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                     } else {
                         node.hide();
                     }
-                    drag.set("node", drag.get("dragNode"));
+                    drag.__set("node", drag.get("dragNode"));
                 }
 
                 drag.on("dragstart", start);

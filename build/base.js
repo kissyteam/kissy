@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 12 17:28
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview attribute management
@@ -151,9 +151,9 @@ KISSY.add('base/attribute', function (S, undef) {
 
         // if no change, just return
         if (!path && prevVal === value) {
-            return undefined;
+            return undef;
         } else if (path && subVal === value) {
-            return undefined;
+            return undef;
         }
 
         if (path) {
@@ -169,7 +169,7 @@ KISSY.add('base/attribute', function (S, undef) {
             }
         }
         // set it
-        ret = self.__set(name, value);
+        ret = self.__set(name, value, opts);
 
         if (ret === false) {
             return ret;
@@ -306,16 +306,28 @@ KISSY.add('base/attribute', function (S, undef) {
              * @returns {boolean} whether pass validator
              */
             set:function (name, value, opts) {
-                var ret, self = this;
+                var self = this;
                 if (S.isPlainObject(name)) {
-                    var all = Object(name);
                     opts = value;
-                    var attrs = [];
+                    var all = Object(name),
+                        attrs = [],
+                        e,
+                        errors = [];
                     for (name in all) {
-                        ret = setInternal(self, name, all[name], opts, attrs);
-                        if (ret === false) {
-                            break;
+                        // bulk validation
+                        // if any one failed,all values are not set
+                        if ((e = validate(self, name, all[name], all)) !== undef) {
+                            errors.push(e);
                         }
+                    }
+                    if (errors.length) {
+                        if (opts.error) {
+                            opts.error(errors);
+                        }
+                        return false;
+                    }
+                    for (name in all) {
+                        setInternal(self, name, all[name], opts, attrs);
                     }
                     var attrNames = [],
                         prevVals = [],
@@ -336,7 +348,7 @@ KISSY.add('base/attribute', function (S, undef) {
                             subAttrNames,
                             attrNames);
                     }
-                    return ret;
+                    return undef;
                 }
                 return setInternal(self, name, value, opts);
             },
@@ -345,22 +357,25 @@ KISSY.add('base/attribute', function (S, undef) {
              * internal use, no event involved, just set.
              * @protected overriden by mvc/model
              */
-            __set:function (name, value) {
+            __set:function (name, value, opts) {
                 var self = this,
                     setValue,
                     // if host does not have meta info corresponding to (name,value)
                     // then register on demand in order to collect all data meta info
                     // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
                     // 因为属性在声明注册前可以直接设置值
+                    e,
                     attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                    validator = attrConfig['validator'],
                     setter = attrConfig['setter'];
 
                 // validator check
-                if (validator && (validator = normalFn(self, validator))) {
-                    if (validator.call(self, value, name) === false) {
-                        return false;
+                e = validate(self, name, value);
+
+                if (e !== undef) {
+                    if (opts.error) {
+                        opts.error(e);
                     }
+                    return false;
                 }
 
                 // if setter has effect
@@ -480,6 +495,20 @@ KISSY.add('base/attribute', function (S, undef) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
+    function validate(self, name, value, all) {
+        var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+            e,
+            validator = attrConfig['validator'];
+        if (validator && (validator = normalFn(self, validator))) {
+            e = validator.call(self, value, name, all);
+            // undefined and true validate successfully
+            if (e !== undef && e !== true) {
+                return e;
+            }
+        }
+        return undef;
+    }
+
     if (undef) {
         Attribute.prototype.addAttrs = undef;
     }
@@ -543,6 +572,8 @@ KISSY.add('base', function (S, Attribute, Event) {
     S.augment(Base, Event.Target, Attribute);
 
     Base.Attribute = Attribute;
+
+    S.Base = Base;
 
     return Base;
 }, {

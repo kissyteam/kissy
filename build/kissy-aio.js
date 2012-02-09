@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:02
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 9 10:58
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120209105812',
+            buildTime:'20120209180212',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3460,9 +3460,9 @@ build time: Feb 9 10:58
 
 })(KISSY, undefined);
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview ua
@@ -3697,7 +3697,8 @@ KISSY.add('ua/extra', function(S, UA) {
 /**
  * @fileOverview ua
  */
-KISSY.add("ua", function(S,UA) {
+KISSY.add("ua", function (S, UA) {
+    S.UA = UA;
     return UA;
 }, {
     requires:["ua/extra"]
@@ -3705,7 +3706,7 @@ KISSY.add("ua", function(S,UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   dom-attr
@@ -5367,6 +5368,11 @@ KISSY.add("dom", function (S, DOM) {
      * @namespace
      * @name DOM
      */
+    S.mix(S,{
+        DOM:DOM,
+        get:DOM.get,
+        query:DOM.query
+    });
 
     return DOM;
 }, {
@@ -7819,7 +7825,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 8 16:47
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview responsible for registering event
@@ -8422,6 +8428,12 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     });
 
     S.mix(Event, _data);
+
+    S.mix(S, {
+        Event:Event,
+        EventTarget:Event.Target,
+        EventObject:Event.Object
+    });
 
     return Event;
 }, {
@@ -10069,16 +10081,16 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
  *   -> mousedown -> blur -> webkitspeechchange -> focus
  **/
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 
-    return {
+    return S.JSON = {
 
         parse:function (text) {
             // 当输入为 undefined / null / '' 时，返回 null
@@ -10580,7 +10592,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 16:32
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview form data  serialization util
@@ -11741,6 +11753,14 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
             }
         });
 
+    S.mix(S, {
+        "Ajax":io,
+        "IO":io,
+        ajax:io,
+        io:io,
+        jsonp:io.jsonp
+    });
+
     return io;
 }, {
     requires:[
@@ -12189,9 +12209,9 @@ KISSY.add("ajax/jsonp", function (S, io) {
     requires:['./base']
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   cookie
@@ -12209,7 +12229,7 @@ KISSY.add('cookie', function (S) {
         return S.isString(val) && val !== '';
     }
 
-    return {
+    return S.Cookie={
 
         /**
          * 获取 cookie 值
@@ -12280,7 +12300,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 12 17:28
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview attribute management
@@ -12430,9 +12450,9 @@ KISSY.add('base/attribute', function (S, undef) {
 
         // if no change, just return
         if (!path && prevVal === value) {
-            return undefined;
+            return undef;
         } else if (path && subVal === value) {
-            return undefined;
+            return undef;
         }
 
         if (path) {
@@ -12448,7 +12468,7 @@ KISSY.add('base/attribute', function (S, undef) {
             }
         }
         // set it
-        ret = self.__set(name, value);
+        ret = self.__set(name, value, opts);
 
         if (ret === false) {
             return ret;
@@ -12585,16 +12605,28 @@ KISSY.add('base/attribute', function (S, undef) {
              * @returns {boolean} whether pass validator
              */
             set:function (name, value, opts) {
-                var ret, self = this;
+                var self = this;
                 if (S.isPlainObject(name)) {
-                    var all = Object(name);
                     opts = value;
-                    var attrs = [];
+                    var all = Object(name),
+                        attrs = [],
+                        e,
+                        errors = [];
                     for (name in all) {
-                        ret = setInternal(self, name, all[name], opts, attrs);
-                        if (ret === false) {
-                            break;
+                        // bulk validation
+                        // if any one failed,all values are not set
+                        if ((e = validate(self, name, all[name], all)) !== undef) {
+                            errors.push(e);
                         }
+                    }
+                    if (errors.length) {
+                        if (opts.error) {
+                            opts.error(errors);
+                        }
+                        return false;
+                    }
+                    for (name in all) {
+                        setInternal(self, name, all[name], opts, attrs);
                     }
                     var attrNames = [],
                         prevVals = [],
@@ -12615,7 +12647,7 @@ KISSY.add('base/attribute', function (S, undef) {
                             subAttrNames,
                             attrNames);
                     }
-                    return ret;
+                    return undef;
                 }
                 return setInternal(self, name, value, opts);
             },
@@ -12624,22 +12656,25 @@ KISSY.add('base/attribute', function (S, undef) {
              * internal use, no event involved, just set.
              * @protected overriden by mvc/model
              */
-            __set:function (name, value) {
+            __set:function (name, value, opts) {
                 var self = this,
                     setValue,
                     // if host does not have meta info corresponding to (name,value)
                     // then register on demand in order to collect all data meta info
                     // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
                     // 因为属性在声明注册前可以直接设置值
+                    e,
                     attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                    validator = attrConfig['validator'],
                     setter = attrConfig['setter'];
 
                 // validator check
-                if (validator && (validator = normalFn(self, validator))) {
-                    if (validator.call(self, value, name) === false) {
-                        return false;
+                e = validate(self, name, value);
+
+                if (e !== undef) {
+                    if (opts.error) {
+                        opts.error(e);
                     }
+                    return false;
                 }
 
                 // if setter has effect
@@ -12759,6 +12794,20 @@ KISSY.add('base/attribute', function (S, undef) {
         return s.charAt(0).toUpperCase() + s.substring(1);
     }
 
+    function validate(self, name, value, all) {
+        var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+            e,
+            validator = attrConfig['validator'];
+        if (validator && (validator = normalFn(self, validator))) {
+            e = validator.call(self, value, name, all);
+            // undefined and true validate successfully
+            if (e !== undef && e !== true) {
+                return e;
+            }
+        }
+        return undef;
+    }
+
     if (undef) {
         Attribute.prototype.addAttrs = undef;
     }
@@ -12823,6 +12872,8 @@ KISSY.add('base', function (S, Attribute, Event) {
 
     Base.Attribute = Attribute;
 
+    S.Base = Base;
+
     return Base;
 }, {
     requires:["base/attribute", "event"]
@@ -12830,16 +12881,20 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview anim
  */
-KISSY.add("anim", function(S, Anim,Easing) {
-    Anim.Easing=Easing;
+KISSY.add("anim", function (S, Anim, Easing) {
+    Anim.Easing = Easing;
+    S.mix(S, {
+        Anim:Anim,
+        Easing:Anim.Easing
+    });
     return Anim;
 }, {
-    requires:["anim/base","anim/easing","anim/color","anim/backgroundPosition"]
+    requires:["anim/base", "anim/easing", "anim/color", "anim/backgroundPosition"]
 });/**
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
@@ -14186,7 +14241,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 31 15:04
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -14543,17 +14598,10 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         },
 
         slice:function (start, end) {
-            var args = [];
             // ie<9 : [1,2].slice(-2,undefined) => []
             // ie<9 : [1,2].slice(-2) => []
             // fix #85
-            S.each(arguments, function (a) {
-                if (a === undefined) {
-                    return false;
-                }
-                args.push(a);
-            });
-            return new NodeList(slice.apply(this, args));
+            return new NodeList(slice.apply(this, arguments));
         },
 
         /**
@@ -14675,8 +14723,14 @@ KISSY.add("node/base", function (S, DOM, undefined) {
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add("node", function(S, Event, Node) {
+KISSY.add("node", function (S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
+    S.mix(S, {
+        Node:Node,
+        NodeList:Node,
+        one:Node.one,
+        all:Node.all
+    });
     return Node;
 }, {
     requires:[
@@ -14726,35 +14780,11 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
 
-KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie", function(S, UA, DOM, Event, Node, JSON, Ajax, Anim, Base, Cookie) {
-S.mix(S, {
-UA:UA,
-DOM:DOM,
-Event:Event,
-EventTarget:Event.Target,
-"EventObject":Event.Object,
-Node:Node,
-NodeList:Node,
-JSON:JSON,
-"Ajax":Ajax,
-"IO":Ajax,
-ajax:Ajax,
-io:Ajax,
-jsonp:Ajax.jsonp,
-Anim:Anim,
-Easing:Anim.Easing,
-Base:Base,
-"Cookie":Cookie,
-one:Node.one,
-all:Node.all,
-get:DOM.get,
-query:DOM.query
-});
-});
+KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -16172,9 +16202,9 @@ KISSY.add('sizzle', function(S) {
 });
 
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -16183,7 +16213,6 @@ build time: Dec 31 15:26
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
     var win = window,
-        DELAY = 0.1,
         doc = document,
 
         IMG_SRC_DATA = 'data-ks-lazyload',
@@ -16191,7 +16220,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         CUSTOM = '-custom',
         MANUAL = 'manual',
         DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
-        SCROLL = 'scroll', RESIZE = 'resize',
+        SCROLL = 'scroll', RESIZE = 'resize', DURATION = 100,
 
         defaultConfig = {
 
@@ -16278,7 +16307,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 开始延迟的 Y 坐标
          * @type number
          */
-            //self.threshold
+         //self.threshold
 
         self._init();
         return undefined;
@@ -16366,7 +16395,17 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * @protected
          */
         _initLoadEvent:function () {
-            var timer, self = this, resizeHandler;
+            var self = this, resizeHandler,
+                // 加载延迟项
+                loadItems = function () {
+                    self._loadItems();
+                    if (self._getItemsLength() === 0) {
+                        Event.remove(win, SCROLL, loader);
+                        Event.remove(win, RESIZE, resizeHandler);
+                    }
+                },
+                // 加载函数
+                loader = S.buffer(loadItems, DURATION, this);
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
@@ -16376,31 +16415,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             });
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
-            if (self._getItemsLength()) {
-                S.ready(function () {
-                    loadItems();
-                });
-            }
-
-            // 加载函数
-            function loader() {
-                if (timer) {
-                    return;
-                }
-                timer = S.later(function () {
-                    loadItems();
-                    timer = null;
-                }, DELAY); // 0.1s 内，用户感觉流畅
-            }
-
-            // 加载延迟项
-            function loadItems() {
-                self._loadItems();
-                if (self._getItemsLength() === 0) {
-                    Event.remove(win, SCROLL, loader);
-                    Event.remove(win, RESIZE, resizeHandler);
-                }
-            }
+            if (self._getItemsLength()) S.ready(loadItems);
         },
 
         /**
@@ -16426,12 +16441,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 监控滚动，处理图片
          */
         _loadImg:function (img) {
-            var self = this,
-                scrollTop = DOM.scrollTop(),
-                threshold = self.threshold + scrollTop,
-                offset = DOM.offset(img);
+            var self = this;
 
-            if (offset.top <= threshold) {
+            if (self.checkElemInViewport(img)) {
                 self._loadImgSrc(img);
             } else {
                 return true;
@@ -16465,14 +16477,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 监控滚动，处理 textarea
          */
         _loadArea:function (area) {
-            var self = this, top,
-                isHidden = DOM.css(area, DISPLAY) === NONE;
+            var self = this;
 
-            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来替代
-            top = DOM.offset(isHidden ? area.parentNode : area).top;
-
-            if (top <= self.threshold + DOM.scrollTop()) {
+            if (self.checkElemInViewport(area)) {
                 self._loadAreaData(area.parentNode, area, self.config.execScript);
             } else {
                 return true;
@@ -16502,12 +16509,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             var self = this,
                 callbacks = self.callbacks,
                 els = callbacks.els, fns = callbacks.fns,
-                scrollTop = DOM.scrollTop(),
-                threshold = self.threshold + scrollTop,
                 i, el, fn, remainEls = [], remainFns = [];
 
             for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (DOM.offset(el).top <= threshold) {
+                if (self.checkElemInViewport(el)) {
                     fn.call(el);
                 } else {
                     remainEls.push(el);
@@ -16637,6 +16642,17 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                         }
                 }
             });
+        },
+        checkElemInViewport: function(elem) {
+            var self = this,
+                isHidden = DOM.css(elem, DISPLAY) === NONE;
+
+            // 注：elem 可能处于 display: none 状态，DOM.offset(elem).top 返回 0
+            // 这种情况下用 elem.parentNode 的 Y 值来替代
+            var scrollTop = DOM.scrollTop(),
+                top = DOM.offset(isHidden ? elem.parentNode : elem).top;
+            return top < self.threshold + scrollTop && top > scrollTop;
+
         }
     });
 
@@ -16720,7 +16736,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 10 19:00
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -16949,9 +16965,9 @@ KISSY.add('template', function (S) {
  *      - expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
  */
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview    Flash 全局静态类
@@ -17469,9 +17485,9 @@ KISSY.add('flash/ua', function(S, UA) {
  *
  */
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -17592,6 +17608,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
 KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
     /**
      * @name DD
+     * @namespace
      */
     var DD;
     DD = {
@@ -17794,7 +17811,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             oldDrop._handleOut(ev);
             activeDrag._handleOut(ev);
         }
-        self.set("activeDrop", activeDrop);
+        self.__set("activeDrop", activeDrop);
         if (activeDrop) {
             if (oldDrop != activeDrop) {
                 activeDrop._handleEnter(ev);
@@ -17893,7 +17910,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function _activeDrops(self) {
         var drops = self.get("drops");
-        self.set("validDrops", []);
+        self.__set("validDrops", []);
         S.each(drops, function (d) {
             d._active();
         });
@@ -17901,7 +17918,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     function _deActiveDrops(self) {
         var drops = self.get("drops");
-        self.set("validDrops", []);
+        self.__set("validDrops", []);
         S.each(drops, function (d) {
             d._deActive();
         });
@@ -17953,7 +17970,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
                 drops = self.get("drops"),
                 drag = self.__activeToDrag;
 
-            self.set('activeDrag', drag);
+            self.__set('activeDrag', drag);
             // 预备役清掉
             self.__activeToDrag = 0;
             // 真正开始移动了才激活垫片
@@ -17991,8 +18008,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             if (activeDrop) {
                 activeDrop._end();
             }
-            self.set("activeDrag", null);
-            self.set("activeDrop", null);
+            self.__set("activeDrag", null);
+            self.__set("activeDrop", null);
         }
     });
 
@@ -18091,15 +18108,15 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
         }
 
         if (handler) {
-            self.set("activeHandler", handler);
+            self.__set("activeHandler", handler);
             node = self._getNode(handler);
         } else {
             return;
         }
 
         // 找到 handler 确定 委托的 node ，就算成功了
-        self.set("node", node);
-        self.set("dragNode", node);
+        self.__set("node", node);
+        self.__set("dragNode", node);
         self._prepare(ev);
     }
 
@@ -18636,7 +18653,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                self.set("dragNode", node);
+                self.__set("dragNode", node);
                 node.on('mousedown', _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
@@ -18656,7 +18673,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                     if (handler.contains(t) ||
                         handler[0] == t) {
                         ret = 1;
-                        self.set("activeHandler", handler);
+                        self.__set("activeHandler", handler);
                         return false;
                     }
                 });
@@ -18796,7 +18813,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                             drag:self
                         });
                     }
-                    self.set("dragging", 0);
+                    self.__set("dragging", 0);
                     self.fire("dragend", {
                         drag:self
                     });
@@ -18834,7 +18851,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             _start:function () {
                 var self = this;
                 self._clearBufferTimer();
-                self.set("dragging", 1);
+                self.__set("dragging", 1);
                 DDM._start();
                 self.fire("dragstart", {
                     drag:self
@@ -18919,8 +18936,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 }
 
                 if (ret) {
-                    self.set("lastNode", self.get("node"));
-                    self.set("node", ret);
+                    self.__set("lastNode", self.get("node"));
+                    self.__set("node", ret);
                 }
 
                 return ret;
@@ -18929,8 +18946,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             _handleOut:function () {
                 var self = this;
                 DroppableDelegate.superclass._handleOut.apply(self, arguments);
-                self.set("node", 0);
-                self.set("lastNode", 0);
+                self.__set("node", 0);
+                self.__set("lastNode", 0);
             },
 
             _handleOver:function (ev) {
@@ -18945,12 +18962,12 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                     /**
                      * 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
                      */
-                    self.set("node", lastNode);
+                    self.__set("node", lastNode);
                     superOut.apply(self, arguments);
                     /**
                      * 再通知这次的进入
                      */
-                    self.set("node", node);
+                    self.__set("node", node);
                     superEnter.call(self, ev);
                 } else {
                     superOver.call(self, ev);
@@ -18958,8 +18975,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             },
 
             _end:function () {
-                DroppableDelegate.superclass._end.apply(this, arguments);
-                this.set("node", 0);
+                var self=this;
+                DroppableDelegate.superclass._end.apply(self, arguments);
+                self.__set("node", 0);
             }
         },
         {
@@ -19327,8 +19345,8 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                         .append(node);
                     node.show();
                     node.offset(dragNode.offset());
-                    drag.set("dragNode", dragNode);
-                    drag.set("node", node);
+                    drag.__set("dragNode", dragNode);
+                    drag.__set("node", node);
                 }
 
                 function end() {
@@ -19342,7 +19360,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                     } else {
                         node.hide();
                     }
-                    drag.set("node", drag.get("dragNode"));
+                    drag.__set("node", drag.get("dragNode"));
                 }
 
                 drag.on("dragstart", start);
@@ -19664,9 +19682,9 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
     requires:['base', 'node', 'dom']
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview resizable support for kissy
@@ -19860,7 +19878,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 17:57
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview UIBase.Align
@@ -22232,7 +22250,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 30 11:18
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -23176,7 +23194,7 @@ KISSY.add("component/uistore", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 8 18:02
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview accordion aria support
@@ -25834,9 +25852,9 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
     requires:["../base"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -25986,6 +26004,19 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
         return S.require("uibase/" + s);
     }
 
+    /**
+     * @class
+     * @namespace
+     * @name Overlay
+     * @extends Component.ModelControl
+     * @extends UIBase.ContentBox
+     * @extends UIBase.Position
+     * @extends UIBase.Loading
+     * @extends UIBase.Align
+     * @extends UIBase.Close
+     * @extends UIBase.Resize
+     * @extends UIBase.Mask
+     */
     var Overlay = UIBase.create(Component.ModelControl, [
         require("contentbox"),
         require("position"),
@@ -26031,7 +26062,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
     requires:['uibase', 'component', './overlayrender', './effect']
 });/**
  * @fileOverview KISSY.Dialog
- * @author  承玉<yiminghe@gmail.com>, 乔花<qiaohua@taobao.com>
+ * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
 KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
 
@@ -26078,7 +26109,7 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
 });
 
 /**
- * 2010-11-10 承玉<yiminghe@gmail.com>重构，使用扩展类
+ * 2010-11-10 yiminghe@gmail.com重构，使用扩展类
  */
 
 
@@ -26179,7 +26210,7 @@ KISSY.add("overlay", function(S, O, OR, D, DR, P) {
         "overlay/dialog","overlay/dialogrender", "overlay/popup"]
 });/**
  * @fileOverview KISSY Overlay
- * @author  承玉<yiminghe@gmail.com>,乔花<qiaohua@taobao.com>
+ * @author  yiminghe@gmail.com,乔花<qiaohua@taobao.com>
  */
 KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 
@@ -26200,11 +26231,11 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
 });
 
 /**
- * 2010-11-09 2010-11-10 承玉<yiminghe@gmail.com>重构，attribute-base-uibase-Overlay ，采用 UIBase.create
+ * 2010-11-09 2010-11-10 yiminghe@gmail.com重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */
 /**
  * @fileOverview KISSY.Popup
- * @author  乔花<qiaohua@taobao.com> , 承玉<yiminghe@gmail.com>
+ * @author  乔花<qiaohua@taobao.com> , yiminghe@gmail.com
  */
 KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
     function Popup(container, config) {
@@ -26221,17 +26252,20 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
     }
 
     Popup.ATTRS = {
-        trigger: {
+        trigger: {                          // 触发器
             setter:function(v) {
-                return S.one(v);
+                if (S.isString(v)) v = S.all(v);
+                return v;
             }
-        },                              // 触发器
-        triggerType: {value:'click'},   // 触发类型
+        },
+        triggerType: {value:'click'},       // 触发类型
+        currentTrigger: {
+        },
         mouseDelay: {
-            value: 100                  // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
+            value: 100                      // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
         },
 		toggle :{
-			value:false // triggerType 为 click 时, Popup 是否有toggle功能
+			value:false                     // triggerType 为 click 时, Popup 是否有toggle功能
 		}
     };
 
@@ -26258,17 +26292,18 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 trigger = self.get("trigger"),
                 timer;
 
-            self.__mouseEnterPopup = function() {
+            self.__mouseEnterPopup = function(ev) {
                 self._clearHiddenTimer();
 
                 timer = S.later(function() {
-                    self.show();
+                    self._showing(ev);
                     timer = undefined;
                 }, self.get('mouseDelay'));
             };
 
-            trigger.on('mouseenter', self.__mouseEnterPopup);
-
+            S.each(trigger, function(el) {
+                S.one(el).on('mouseenter', self.__mouseEnterPopup);
+            });
 
             self._mouseLeavePopup = function() {
                 if (timer) {
@@ -26279,7 +26314,9 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 self._setHiddenTimer();
             };
 
-            trigger.on('mouseleave', self._mouseLeavePopup);
+            S.each(trigger, function(el) {
+                S.one(el).on('mouseleave', self._mouseLeavePopup);
+            });
         },
 
         _bindContainerMouse: function() {
@@ -26289,10 +26326,10 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
                 .on('mouseenter', self._clearHiddenTimer, self);
         },
 
-        _setHiddenTimer: function() {
+        _setHiddenTimer: function(ev) {
             var self = this;
             self._hiddenTimer = S.later(function() {
-                self.hide();
+                self._hiding(ev);
             }, self.get('mouseDelay'));
         },
 
@@ -26306,21 +26343,24 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
         _bindTriggerClick: function() {
             var self = this;
-            self.__clickPopup = function(e) {
-                e.halt();
+            self.__clickPopup = function(ev) {
+                ev.halt();
 				if(self.get('toggle')){
-					if(self.get('el').css('visibility') == 'hidden'){
-						self.show();
-					}
-					else{
-						self.hide();
-					}
+                    self[self.get('visible')?'_hiding':'_showing'](ev);
 				}
-				else{
-					self.show();
-				}
+				else  self._showing(ev);
             };
-            self.get("trigger").on('click', self.__clickPopup);
+            S.each(self.get("trigger"), function(el) {
+                S.one(el).on('click', self.__clickPopup);
+            });
+        },
+        _showing: function(ev) {
+            this.set('currentTrigger', S.one(ev.target));
+            this.show();
+        },
+        _hiding: function(ev) {
+            this.set('currentTrigger', undefined);
+            this.hide();
         },
 
         destructor:function() {
@@ -26328,14 +26368,20 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
             var t = self.get("trigger");
             if (t) {
                 if (self.__clickPopup) {
-                    t.detach('click', self.__clickPopup);
+                    S.each(t, function(el) {
+                        S.one(el).detach('click', self.__clickPopup);
+                    });
                 }
                 if (self.__mouseEnterPopup) {
-                    t.detach('mouseenter', self.__mouseEnterPopup);
+                    S.each(t, function(el) {
+                        S.one(el).detach('mouseenter', self.__mouseEnterPopup);
+                    });
                 }
 
                 if (self._mouseLeavePopup) {
-                    t.detach('mouseleave', self._mouseLeavePopup);
+                    S.each(t, function(el) {
+                        S.one(el).detach('mouseleave', self._mouseLeavePopup);
+                    });
                 }
             }
             if (self.get('el')) {
@@ -26361,9 +26407,9 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
  *  - 承玉：利用 initializer , destructor ,ATTRS
  **/
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 16:22
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview 提示补全组件
@@ -27545,9 +27591,9 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
  *                   2. 改进上下方向键选择item的代码逻辑
  */
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview auto render
@@ -27563,7 +27609,7 @@ KISSY.add('imagezoom/autorender', function(S, DOM, JSON, ImageZoom) {
     ImageZoom.autoRender = function(hook, container) {
         hook = '.' + (hook || 'KS_Widget');
 
-        DOM.query(hook, container).each(function(elem) {
+        S.each(DOM.query(hook, container),function(elem) {
             var type = elem.getAttribute('data-widget-type'), config;
 
             if (type === 'ImageZoom') {
@@ -28181,9 +28227,9 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
     requires:["node"]
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * KISSY Calendar
@@ -29755,7 +29801,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 17:57
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -31181,7 +31227,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 17:57
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview Model and Control for button
@@ -31426,7 +31472,7 @@ KISSY.add("button/split", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 30 11:18
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -32034,7 +32080,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 30 11:18
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -32981,9 +33027,9 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
     requires:['uibase','component','./basenoderender','./treemgrrender']
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -33369,9 +33415,9 @@ KISSY.add("waterfall", function (S, Waterfall, Loader) {
     requires:['waterfall/base', 'waterfall/loader']
 });
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview validation
@@ -34887,9 +34933,9 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
 }, { requires: ['node',"../utils","../define"] });
 
 /*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview mvc base
@@ -35252,7 +35298,10 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
                 opts.success = function (resp) {
                     var lists = self.collections;
                     if (resp) {
-                        self.set(resp, opts);
+                        var v = self.get("parse").call(self, resp);
+                        if (v) {
+                            self.set(v, opts);
+                        }
                     }
                     for (var l in lists) {
                         lists[l].remove(self, opts);

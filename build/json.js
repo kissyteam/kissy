@@ -1,14 +1,14 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 
-    return {
+    return S.JSON = {
 
         parse:function (text) {
             // 当输入为 undefined / null / '' 时，返回 null

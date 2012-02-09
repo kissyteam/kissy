@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 17:57
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items

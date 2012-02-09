@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:02
 */
 /**
  * @fileOverview ua
@@ -236,7 +236,8 @@ KISSY.add('ua/extra', function(S, UA) {
 /**
  * @fileOverview ua
  */
-KISSY.add("ua", function(S,UA) {
+KISSY.add("ua", function (S, UA) {
+    S.UA = UA;
     return UA;
 }, {
     requires:["ua/extra"]

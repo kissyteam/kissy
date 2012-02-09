@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   dom-attr
@@ -1663,6 +1663,11 @@ KISSY.add("dom", function (S, DOM) {
      * @namespace
      * @name DOM
      */
+    S.mix(S,{
+        DOM:DOM,
+        get:DOM.get,
+        query:DOM.query
+    });
 
     return DOM;
 }, {

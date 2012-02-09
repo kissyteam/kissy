@@ -7,6 +7,11 @@ KISSY.add("dom", function (S, DOM) {
      * @namespace
      * @name DOM
      */
+    S.mix(S,{
+        DOM:DOM,
+        get:DOM.get,
+        query:DOM.query
+    });
 
     return DOM;
 }, {

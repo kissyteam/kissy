@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview mvc base
@@ -364,7 +364,10 @@ KISSY.add("mvc/model", function (S, Base, mvc) {
                 opts.success = function (resp) {
                     var lists = self.collections;
                     if (resp) {
-                        self.set(resp, opts);
+                        var v = self.get("parse").call(self, resp);
+                        if (v) {
+                            self.set(v, opts);
+                        }
                     }
                     for (var l in lists) {
                         lists[l].remove(self, opts);

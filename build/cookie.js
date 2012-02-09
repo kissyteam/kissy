@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   cookie
@@ -19,7 +19,7 @@ KISSY.add('cookie', function (S) {
         return S.isString(val) && val !== '';
     }
 
-    return {
+    return S.Cookie={
 
         /**
          * 获取 cookie 值

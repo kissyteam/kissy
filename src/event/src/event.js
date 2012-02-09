@@ -42,6 +42,12 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
 
     S.mix(Event, _data);
 
+    S.mix(S, {
+        Event:Event,
+        EventTarget:Event.Target,
+        EventObject:Event.Object
+    });
+
     return Event;
 }, {
     requires:[

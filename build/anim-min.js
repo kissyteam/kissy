@@ -1,9 +1,9 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:01
 */
-KISSY.add("anim",function(c,b,g){b.Easing=g;return b},{requires:["anim/base","anim/easing","anim/color","anim/backgroundPosition"]});
+KISSY.add("anim",function(c,b,g){b.Easing=g;c.mix(c,{Anim:b,Easing:b.Easing});return b},{requires:["anim/base","anim/easing","anim/color","anim/backgroundPosition"]});
 KISSY.add("anim/backgroundPosition",function(c,b,g,j){function p(f){f=f.replace(/left|top/g,"0px").replace(/right|bottom/g,"100%").replace(/([0-9\.]+)(\s|\)|$)/g,"$1px$2");f=f.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);return[parseFloat(f[1]),f[2],parseFloat(f[3]),f[4]]}function a(){a.superclass.constructor.apply(this,arguments)}c.extend(a,j,{load:function(){a.superclass.load.apply(this,arguments);this.unit=["px","px"];if(this.from){var f=p(this.from);this.from=[f[0],f[2]]}else this.from=
 [0,0];if(this.to){f=p(this.to);this.to=[f[0],f[2]];this.unit=[f[1],f[3]]}else this.to=[0,0]},interpolate:function(f,d,i){var r=this.unit,s=a.superclass.interpolate;return s(f[0],d[0],i)+r[0]+" "+s(f[1],d[1],i)+r[1]},cur:function(){return b.css(this.elem,"backgroundPosition")},update:function(){var f=this.prop,d=this.elem,i=this.interpolate(this.from,this.to,this.pos);b.css(d,f,i)}});return j.Factories.backgroundPosition=a},{requires:["dom","./base","./fx"]});
 KISSY.add("anim/base",function(c,b,g,j,p,a,f,d){function i(h,k,e,q,l){if(h=b.get(h)){if(!(this instanceof i))return new i(h,k,e,q,l);k=c.isString(k)?c.unparam(String(k),";",":"):c.clone(k);for(var n in k){var w=m(c.trim(n));if(n!=w){k[w]=k[n];delete k[n]}}e=c.isPlainObject(e)?c.clone(e):{duration:parseFloat(e)||undefined,easing:q,complete:l};this.config=e=c.merge(M,e);e.duration*=1E3;this.elem=this.domEl=h;this.props=k;this._backupProps={};this._fxs={};this.on("complete",r)}}function r(h){var k,e=

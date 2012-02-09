@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 31 15:04
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -358,17 +358,10 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         },
 
         slice:function (start, end) {
-            var args = [];
             // ie<9 : [1,2].slice(-2,undefined) => []
             // ie<9 : [1,2].slice(-2) => []
             // fix #85
-            S.each(arguments, function (a) {
-                if (a === undefined) {
-                    return false;
-                }
-                args.push(a);
-            });
-            return new NodeList(slice.apply(this, args));
+            return new NodeList(slice.apply(this, arguments));
         },
 
         /**
@@ -490,8 +483,14 @@ KISSY.add("node/base", function (S, DOM, undefined) {
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add("node", function(S, Event, Node) {
+KISSY.add("node", function (S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
+    S.mix(S, {
+        Node:Node,
+        NodeList:Node,
+        one:Node.one,
+        all:Node.all
+    });
     return Node;
 }, {
     requires:[

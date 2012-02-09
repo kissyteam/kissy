@@ -1,16 +1,20 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 10:58
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview anim
  */
-KISSY.add("anim", function(S, Anim,Easing) {
-    Anim.Easing=Easing;
+KISSY.add("anim", function (S, Anim, Easing) {
+    Anim.Easing = Easing;
+    S.mix(S, {
+        Anim:Anim,
+        Easing:Anim.Easing
+    });
     return Anim;
 }, {
-    requires:["anim/base","anim/easing","anim/color","anim/backgroundPosition"]
+    requires:["anim/base", "anim/easing", "anim/color", "anim/backgroundPosition"]
 });/**
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com

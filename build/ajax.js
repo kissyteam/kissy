@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 7 16:32
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview form data  serialization util
@@ -1161,6 +1161,14 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
                 });
             }
         });
+
+    S.mix(S, {
+        "Ajax":io,
+        "IO":io,
+        ajax:io,
+        io:io,
+        jsonp:io.jsonp
+    });
 
     return io;
 }, {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 8 16:47
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview responsible for registering event
@@ -604,6 +604,12 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     });
 
     S.mix(Event, _data);
+
+    S.mix(S, {
+        Event:Event,
+        EventTarget:Event.Target,
+        EventObject:Event.Object
+    });
 
     return Event;
 }, {

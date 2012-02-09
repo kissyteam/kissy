@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:26
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -10,7 +10,6 @@ build time: Dec 31 15:26
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
     var win = window,
-        DELAY = 0.1,
         doc = document,
 
         IMG_SRC_DATA = 'data-ks-lazyload',
@@ -18,7 +17,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
         CUSTOM = '-custom',
         MANUAL = 'manual',
         DISPLAY = 'display', DEFAULT = 'default', NONE = 'none',
-        SCROLL = 'scroll', RESIZE = 'resize',
+        SCROLL = 'scroll', RESIZE = 'resize', DURATION = 100,
 
         defaultConfig = {
 
@@ -105,7 +104,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 开始延迟的 Y 坐标
          * @type number
          */
-            //self.threshold
+         //self.threshold
 
         self._init();
         return undefined;
@@ -193,7 +192,17 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * @protected
          */
         _initLoadEvent:function () {
-            var timer, self = this, resizeHandler;
+            var self = this, resizeHandler,
+                // 加载延迟项
+                loadItems = function () {
+                    self._loadItems();
+                    if (self._getItemsLength() === 0) {
+                        Event.remove(win, SCROLL, loader);
+                        Event.remove(win, RESIZE, resizeHandler);
+                    }
+                },
+                // 加载函数
+                loader = S.buffer(loadItems, DURATION, this);
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
@@ -203,31 +212,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             });
 
             // 需要立即加载一次，以保证第一屏的延迟项可见
-            if (self._getItemsLength()) {
-                S.ready(function () {
-                    loadItems();
-                });
-            }
-
-            // 加载函数
-            function loader() {
-                if (timer) {
-                    return;
-                }
-                timer = S.later(function () {
-                    loadItems();
-                    timer = null;
-                }, DELAY); // 0.1s 内，用户感觉流畅
-            }
-
-            // 加载延迟项
-            function loadItems() {
-                self._loadItems();
-                if (self._getItemsLength() === 0) {
-                    Event.remove(win, SCROLL, loader);
-                    Event.remove(win, RESIZE, resizeHandler);
-                }
-            }
+            if (self._getItemsLength()) S.ready(loadItems);
         },
 
         /**
@@ -253,12 +238,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 监控滚动，处理图片
          */
         _loadImg:function (img) {
-            var self = this,
-                scrollTop = DOM.scrollTop(),
-                threshold = self.threshold + scrollTop,
-                offset = DOM.offset(img);
+            var self = this;
 
-            if (offset.top <= threshold) {
+            if (self.checkElemInViewport(img)) {
                 self._loadImgSrc(img);
             } else {
                 return true;
@@ -292,14 +274,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 监控滚动，处理 textarea
          */
         _loadArea:function (area) {
-            var self = this, top,
-                isHidden = DOM.css(area, DISPLAY) === NONE;
+            var self = this;
 
-            // 注：area 可能处于 display: none 状态，DOM.offset(area).top 返回 0
-            // 这种情况下用 area.parentNode 的 Y 值来替代
-            top = DOM.offset(isHidden ? area.parentNode : area).top;
-
-            if (top <= self.threshold + DOM.scrollTop()) {
+            if (self.checkElemInViewport(area)) {
                 self._loadAreaData(area.parentNode, area, self.config.execScript);
             } else {
                 return true;
@@ -329,12 +306,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             var self = this,
                 callbacks = self.callbacks,
                 els = callbacks.els, fns = callbacks.fns,
-                scrollTop = DOM.scrollTop(),
-                threshold = self.threshold + scrollTop,
                 i, el, fn, remainEls = [], remainFns = [];
 
             for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                if (DOM.offset(el).top <= threshold) {
+                if (self.checkElemInViewport(el)) {
                     fn.call(el);
                 } else {
                     remainEls.push(el);
@@ -464,6 +439,17 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                         }
                 }
             });
+        },
+        checkElemInViewport: function(elem) {
+            var self = this,
+                isHidden = DOM.css(elem, DISPLAY) === NONE;
+
+            // 注：elem 可能处于 display: none 状态，DOM.offset(elem).top 返回 0
+            // 这种情况下用 elem.parentNode 的 Y 值来替代
+            var scrollTop = DOM.scrollTop(),
+                top = DOM.offset(isHidden ? elem.parentNode : elem).top;
+            return top < self.threshold + scrollTop && top > scrollTop;
+
         }
     });
 

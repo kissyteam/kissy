@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Jan 13 15:55
+build time: Feb 9 18:01
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -2159,8 +2159,14 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
 
         function closeCurrentHolder() {
             if (holder.childNodes.length) {
+                // close current holder
                 holder.insertAfter(prev);
+                // if child can not be included in holder
+                // : <a><a></a></a>
+                // then will insertAfter last holder
                 prev = holder;
+                // open new holder to accommodate child which can reside in holder
+                // <a>1<a>2</a>3</a> => <a>1</a>(-<close holder)<a>2</a>(<-child can not be included in holder)<a>3</a>(<-new holder)
                 holder = tag.clone();
             }
         }
