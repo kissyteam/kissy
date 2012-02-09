@@ -198,7 +198,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {HTMLElement[]|String|HTMLElement|Element} selector 选择器或节点或节点数组
              * @param {String|Object} name 样式名称或样式键值对
              * @param [val] 样式值
-             * @returns 当不设置 val 时返回指定样式名对应的值
+             * @returns {*} 当不设置 val 时返回指定样式名对应的值
              *          设置 val 时返回 undefined
              */
             css:function (selector, name, val) {

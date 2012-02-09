@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.30dev
+Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Dec 31 15:25
+build time: Feb 9 10:58
 */
 /**
  * @fileOverview anim
@@ -256,7 +256,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         if (_isElementNode(elem)) {
-            hidden = DOM.css(elem, "display") == "none";
+            hidden = (DOM.css(elem, "display") === "none");
             for (prop in props) {
                 val = props[prop];
                 // 直接结束
@@ -283,7 +283,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             if (S.isString(easing)) {
                 easing = specialEasing[prop] = Easing[easing];
             }
-            specialEasing[prop] = easing || Easing.easeNone;
+            specialEasing[prop] = easing || Easing['easeNone'];
         });
 
 
@@ -489,6 +489,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     config = self.config,
                     queueName = config.queue,
                     prop,
+                    fx,
                     fxs = self._fxs;
 
                 // already stopped
@@ -502,8 +503,15 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
                 if (finish) {
                     for (prop in fxs) {
-                        if (fxs.hasOwnProperty(prop)) {
-                            fxs[prop].frame(1);
+                        if (fxs.hasOwnProperty(prop) &&
+                            // 当前属性没有结束
+                            !((fx = fxs[prop]).finished)) {
+                            // 非短路
+                            if (config.frame) {
+                                config.frame(fx, 1);
+                            } else {
+                                fx.frame(1);
+                            }
                         }
                     }
                     self.fire("complete");

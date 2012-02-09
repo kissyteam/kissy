@@ -186,9 +186,9 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
              * @param {String} [name] 数据键名
              * @param {String} [data] 数据键值
-             * @returns 当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值
-             *          当不设置 data， name 那么返回： 节点的存储空间对象
-             *          当设置 data， name 那么进行设置操作，返回 undefined
+             * @returns {*} 当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值
+             *              当不设置 data， name 那么返回： 节点的存储空间对象
+             *              当设置 data， name 那么进行设置操作，返回 undefined
              */
             data:function (selector, name, data) {
 

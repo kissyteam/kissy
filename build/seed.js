@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 8 18:42
+build time: Feb 9 10:58
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 8 18:42
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120208184230',
+            buildTime:'20120209105812',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3332,8 +3332,8 @@ build time: Feb 8 18:42
                     try {
                         fn(S);
                     } catch (e) {
-                        // print stack info
-                        S.log(e.stack,"error");
+                        // print stack info for firefox/chrome
+                        S.log(e.stack, "error");
                         setTimeout(function () {
                             // lose stack info
                             throw e;

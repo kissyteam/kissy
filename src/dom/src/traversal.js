@@ -135,8 +135,8 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
             /**
              * Check to see if a DOM node is within another DOM node.
-             * @param {HTMLElement|String} a dom node or the first matched elements by selector
-             * @param {HTMLElement|String} b dom node or the first matched elements by selector
+             * @param {HTMLElement|String|Element} a dom node or the first matched elements by selector
+             * @param {HTMLElement|String|Element} b dom node or the first matched elements by selector
              * @returns {Boolean} whether a contains b , note if a===b return false.
              */
             contains:function (a, b) {
