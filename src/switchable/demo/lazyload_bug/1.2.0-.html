@@ -2,6 +2,49 @@
 <html>
 <head>
 <meta charset="utf-8"/>
+<style>
+    ul,li{
+        margin: 0;
+        border: 0;
+        list-style: none;
+    }
+
+    #demo1,#demo2 {
+        width: 750px;
+        padding-top: 29px;
+    }
+
+    #demo2 {
+        width: 500px;
+    }
+
+   .ks-switchable-nav {
+       zoom:1;
+       overflow: hidden;
+    }
+
+     .ks-switchable-nav li {
+        float: left;
+        width: 130px;
+        height: 21px;
+        line-height: 21px;
+        text-align: center;
+        background: url(../assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+
+   .ks-switchable-nav li.ks-active {
+        background-position: 0 -40px;
+        cursor: default;
+    }
+
+    .ks-switchable-content {
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</style>
 </head>
 <body>
 <div id="demo1" class="s-demo">
@@ -55,7 +98,8 @@
             var Tabs = Switchable.Tabs;
             window.tabs = new Tabs('#demo2', {
                 // aria:false 默认 true，支持 aria
-                switchTo:0
+                switchTo:0,
+                triggerType:"click"
             });
         });
 
@@ -63,7 +107,8 @@
             var Tabs = Switchable.Tabs;
             window.tabs2 = new Tabs('#demo1', {
                 // aria:false 默认 true，支持 aria
-                switchTo:0
+                switchTo:0,
+                triggerType:"click"
             });
         });
 
