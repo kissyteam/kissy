@@ -1,6 +1,5 @@
 /**
  * @fileOverview 数据延迟加载组件
- * @author lifesinger@gmail.com
  */
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
@@ -99,7 +98,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 开始延迟的 Y 坐标
          * @type number
          */
-         //self.threshold
+            //self.threshold
 
         self._init();
         return undefined;
@@ -288,7 +287,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             area.className = ''; // clear hook
 
             var content = DOM.create('<div>');
-            container.insertBefore(content, area);
+            // area 直接是 container 的儿子
+            area.parentNode.insertBefore(content, area);
             DOM.html(content, area.value, execScript === undefined ? true : execScript);
 
             //area.value = ''; // bug fix: 注释掉，不能清空，否则 F5 刷新，会丢内容
@@ -401,10 +401,13 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 加载自定义延迟数据
          * @static
          */
-        loadCustomLazyData:function (containers, type) {
-            var self = this, area, imgs;
+        loadCustomLazyData:function (containers, type, flag) {
+            var self = this,
+                imgs;
 
-            if (type === 'img-src') type = 'img';
+            if (type === 'img-src') {
+                type = 'img';
+            }
 
             // 支持数组
             if (!S.isArray(containers)) {
@@ -422,20 +425,20 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                         }
 
                         S.each(imgs, function (img) {
-                            self._loadImgSrc(img, IMG_SRC_DATA + CUSTOM);
+                            self._loadImgSrc(img, flag || (IMG_SRC_DATA + CUSTOM));
                         });
-
                         break;
 
                     default:
-                        area = DOM.get('textarea', container);
-                        if (area && DOM.hasClass(area, AREA_DATA_CLS + CUSTOM)) {
-                            self._loadAreaData(container, area);
-                        }
+                        DOM.query('textarea', container).each(function (area) {
+                            if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
+                                self._loadAreaData(container, area);
+                            }
+                        });
                 }
             });
         },
-        checkElemInViewport: function(elem) {
+        checkElemInViewport:function (elem) {
             var self = this,
                 isHidden = DOM.css(elem, DISPLAY) === NONE;
 

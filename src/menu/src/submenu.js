@@ -145,7 +145,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 }
                 var menu = getMenu(self);
                 // TODO 耦合 popmenu.js
-                if (menu._leaveHideTimer) {
+                if (menu && menu._leaveHideTimer) {
                     clearTimeout(menu._leaveHideTimer);
                     menu._leaveHideTimer = 0;
                 }
