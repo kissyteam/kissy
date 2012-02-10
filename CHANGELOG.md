@@ -54,6 +54,7 @@ History:
  - [+] datalazyload 增加 removeElements 与 destroy 接口
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
 
+ - [+] switchable 增加 lazyImgAttribute/lazyTextareaClass 解决嵌套 lazyload 问题 #98
  - [+] switchable 增加 pauseOnScroll，只在可视窗口时才滚动
 
 ### Happy 2nd Anniversary (2011/10/26)
