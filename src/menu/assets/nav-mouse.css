@@ -70,6 +70,8 @@
     border-color: #666 transparent transparent transparent;
     font-size: 0;
     line-height: 0;
+    /*http://goo.gl/jb0w0*/
+    -webkit-transform-style: preserve-3d;
     -webkit-transition: -webkit-transform 0.2s ease-in;
     -moz-transition: -moz-transform 0.2s ease-in;
     -o-transition: -o-transform 0.2s ease-in;
