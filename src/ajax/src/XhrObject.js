@@ -91,9 +91,9 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
     }
 
     /**
-     * @class 请求对象类型
-     * @memberOf io
-     * @param c 请求发送配置选项
+     * @class IO Request Object. !Do Not New By Yourself!
+     * @extends KISSY.Promise
+     * @memberOf IO
      */
     function XhrObject(c) {
         Promise.call(this);
@@ -102,22 +102,59 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             responseData:null,
             config:c || {},
             timeoutTimer:null,
+
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description String typed data returned from server
+             */
             responseText:null,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description xml typed data returned from server
+             */
             responseXML:null,
             responseHeadersString:"",
             responseHeaders:null,
             requestHeaders:{},
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description <br>
+             * readyState of current request<br>
+             * 0: initialized<br>
+             * 1: send <br>
+             * 4: completed<br>
+             */
             readyState:0,
-            //internal state
             state:0,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description HTTP statusText of current request
+             */
             statusText:null,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description <br> HTTP Status Code of current request <br>
+             * eg:<br>
+             * 200 : ok<br>
+             * 404 : Not Found<br>
+             * 500 : Server Error<br>
+             */
             status:0,
             transport:null,
             _defer:new S.Defer(this)
         });
     }
 
-    S.extend(XhrObject, Promise, {
+    S.extend(XhrObject, Promise,
+        /**
+         * @lends IO.XhrObject.prototype
+         */
+        {
             // Caches the header
             setRequestHeader:function (name, value) {
                 var self = this;
@@ -125,14 +162,21 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
-            // Raw string
+            /**
+             * get all response headers as string after request is completed
+             * @returns {String}
+             */
             getAllResponseHeaders:function () {
                 var self = this;
                 return self.state === 2 ? self.responseHeadersString : null;
             },
 
-            // Builds headers hashtable if needed
-            getResponseHeader:function (key) {
+            /**
+             * get header value in response to specified header name
+             * @param {String} name header name
+             * @return {String} header value
+             */
+            getResponseHeader:function (name) {
                 var match, self = this;
                 if (self.state === 2) {
                     if (!self.responseHeaders) {
@@ -141,7 +185,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             self.responseHeaders[ match[1] ] = match[ 2 ];
                         }
                     }
-                    match = self.responseHeaders[ key];
+                    match = self.responseHeaders[ name ];
                 }
                 return match === undefined ? null : match;
             },
@@ -155,7 +199,10 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
-            // Cancel the request
+            /**
+             * cancel this request
+             * @param {String} [statusText=abort] error reason as current request object's statusText
+             */
             abort:function (statusText) {
                 var self = this;
                 statusText = statusText || "abort";

@@ -166,12 +166,6 @@
             });
         },
         /**
-         * whether the given object is a promise
-         */
-        isPromise:function () {
-            return isPromise(this);
-        },
-        /**
          * whether the given object is a resolved promise
          * if it is resolved with another promise,
          * then that promise needs to be resolved as well.

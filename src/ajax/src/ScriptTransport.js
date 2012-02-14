@@ -35,8 +35,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
-        if (!xhrObj.config.crossDomain &&
-            !xhrObj.config['forceScript']) {
+        if (!xhrObj.config.crossDomain) {
             return new (io.getTransport("*"))(xhrObj);
         }
         this.xhrObj = xhrObj;

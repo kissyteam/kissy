@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>io</title>
+        <title>IO</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,15 +156,13 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                io
+                                IO
                             </h2>
                             <!-- class title END-->
                             
                             <!-- summary START -->
                             <div class="box summary-box">
                                 <div class="box-bd">    
-                                    
-                                    <p class="desc">io framework</p>
                                     
 
                                     
@@ -194,11 +192,11 @@ a.go-top:active{text-decoration:none;}
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/io.html#constructor">io</a></b>
+                                            <b class="name"><a href="../symbols/IO.html#constructor">IO</a></b>
                                             <span class="param">(c)</span>                                
                                             
                                             
-                                            <span class="desc">kissy io framework</span>                                            
+                                            <span class="desc">io is a utility that brokers HTTP requests through a simplified interface</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -218,14 +216,25 @@ a.go-top:active{text-decoration:none;}
                                         <ul class="list summary-list">
                                             
                                             <li class="li">                                                
-                                                io.
-                                                <b class="name"><a href="../symbols/io.html#.serialize">serialize</a></b>
-                                                <span class="type">{}</span>
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.get">get</a></b>
+                                                <span class="type">{IO.XhrObject}</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
-                                                <span class="desc">form 序列化</span>                                                
+                                                <span class="desc">perform a get request</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.isLocal">isLocal</a></b>
+                                                <span class="type">{Boolean}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">whether current application is a local application(protocal is file://,widget://,about://)</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -248,53 +257,73 @@ a.go-top:active{text-decoration:none;}
                                         <ul class="list summary-list">
                                             
                                             <li class="li">                                                
-                                                io.
-                                                <b class="name"><a href="../symbols/io.html#.get">get</a></b>
-                                                <span class="param">(url, data, callback, dataType, _t)</span>
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.getConfig">getConfig</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">get 请求</span>                                                
+                                                <span class="desc">get default config value for io request</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                io.
-                                                <b class="name"><a href="../symbols/io.html#.getJSON">getJSON</a></b>
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.getJSON">getJSON</a></b>
                                                 <span class="param">(url, data, callback)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">获取 json 数据</span>                                                
+                                                <span class="desc">perform a get request to fetch json data from server</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                io.
-                                                <b class="name"><a href="../symbols/io.html#.jsonp">jsonp</a></b>
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.jsonp">jsonp</a></b>
                                                 <span class="param">(url, data, callback)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">jsonp 请求</span>                                                
+                                                <span class="desc">preform a jsonp request</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                io.
-                                                <b class="name"><a href="../symbols/io.html#.post">post</a></b>
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.post">post</a></b>
                                                 <span class="param">(url, data, callback, dataType)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">post 请求</span>                                                
+                                                <span class="desc">preform a post request</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
-                                                io.
-                                                <b class="name"><a href="../symbols/io.html#.upload">upload</a></b>
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.serialize">serialize</a></b>
+                                                <span class="param">(formElement)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">form serialization</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.setupConfig">setupConfig</a></b>
+                                                <span class="param">(setting)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">name-value object that set default config value for io request</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.upload">upload</a></b>
                                                 <span class="param">(url, form, data, callback, dataType)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">无刷新上传文件</span>                                                
+                                                <span class="desc">submit form without page refresh</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -318,52 +347,52 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">
                                                 
-                                                <b class="name"><a href="../symbols/io.html#event:complete">complete</a></b>
+                                                <b class="name"><a href="../symbols/IO.html#event:complete">complete</a></b>
                                                 <span class="param">(e)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">请求完成（成功或失败）后触发</span>
+                                                <span class="desc">fired after request completes (success or error)</span>
                                             </li>
                                             
                                             <li class="li">
                                                 
-                                                <b class="name"><a href="../symbols/io.html#event:error">error</a></b>
+                                                <b class="name"><a href="../symbols/IO.html#event:error">error</a></b>
                                                 <span class="param">(e)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">请求失败后触发</span>
+                                                <span class="desc">fired after request occurs error</span>
                                             </li>
                                             
                                             <li class="li">
                                                 
-                                                <b class="name"><a href="../symbols/io.html#event:send">send</a></b>
-                                                <span class="param">(e, xhr)</span>
-                                                
-                                                
-                                                
-                                                <span class="desc">发送请求前触发</span>
-                                            </li>
-                                            
-                                            <li class="li">
-                                                
-                                                <b class="name"><a href="../symbols/io.html#event:start">start</a></b>
+                                                <b class="name"><a href="../symbols/IO.html#event:send">send</a></b>
                                                 <span class="param">(e)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">生成请求对象前触发</span>
+                                                <span class="desc">fired before sending request</span>
                                             </li>
                                             
                                             <li class="li">
                                                 
-                                                <b class="name"><a href="../symbols/io.html#event:success">success</a></b>
+                                                <b class="name"><a href="../symbols/IO.html#event:start">start</a></b>
                                                 <span class="param">(e)</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">请求成功后触发</span>
+                                                <span class="desc">fired before generating request object</span>
+                                            </li>
+                                            
+                                            <li class="li">
+                                                
+                                                <b class="name"><a href="../symbols/IO.html#event:success">success</a></b>
+                                                <span class="param">(e)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">fired after request succeeds</span>
                                             </li>
                                             
                                         </ul>
@@ -385,11 +414,11 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">io</b>
+                                                <b class="name">IO</b>
                                                 <span class="param">(c)</span>
                                             </div>
                                             
-                                            <div class="desc">io framework</div>
+                                            <div class="desc"></div>
                                             
                                             <dl>                                                
                                                 
@@ -405,7 +434,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type"><span class="light fixedFont">{Object}</span> </span>
-                                                            <span class="desc">发送请求配置选项</span>
+                                                            <span class="desc"><br/>name-value of object to config this io request.<br/> all values are optional.<br/> default value can be set through io.setupConfig<br/></span>
                                                         </li>
                                                         
                                                         <li class="li">
@@ -414,7 +443,277 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type"><span class="light fixedFont">{String}</span> </span>
-                                                            <span class="desc">请求地址</span>
+                                                            <span class="desc"><br/>request destination</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.type</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>request type.eg: "get","post"<br/>Default: "get"<br/></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.contentType</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>Default: "application/x-www-form-urlencoded; charset=UTF-8"<br/>Data will always be transmitted to the server using UTF-8 charset<br/></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.accepts</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>Default: depends on DataType.<br/>The content type sent in request header that tells the server<br/>what kind of response it will accept in return.<br/>It is recommended to do so once in the io.setupConfig</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.async</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Boolean}</span> </span>
+                                                            <span class="desc"><br/>Default: true<br/>whether request is sent asynchronously<br/></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.cache</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Boolean}</span> </span>
+                                                            <span class="desc"><br/>Default: true ,false for dataType "script" and "jsonp"<br/>if set false,will append _ksTs=Date.now() to url automatically<br/></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.contents</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>a name-regexp map to determine request data's dataType<br/>It is recommended to do so once in the io.setupConfig<br/></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.context</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>specify the context of this request's callback (success,error,complete)</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.converters</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>Default:{text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}<br/>specified how to transform one dataType to another dataType<br/>It is recommended to do so once in the io.setupConfig</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.crossDomain</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Boolean}</span> </span>
+                                                            <span class="desc"><br/>Default: false for same-domain request,true for cross-domain request<br/>if server-side jsonp redirect to another domain ,you should set this to true</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.data</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>Data sent to server.if processData is true,data will be serialized to String type.<br/>if value if an Array, serialization will be based on serializeArray.</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.dataType</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>return data as a specified type<br/>Default: Based on server contentType header<br/>"xml" : a XML document<br/>"text"/"html": raw server data <br/>"script": evaluate the return data as script<br/>"json": parse the return data as json and return the result as final data<br/>"jsonp": load json data via jsonp</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.headers</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>additional name-value header to send along with this request.</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.jsonp</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>Default: "callback"<br/>Override the callback function name in a jsonp request. eg:<br/>set "callback2" , then jsonp url will append  "callback2=?".</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.jsonpCallback</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>Specify the callback function name for a jsonp request.<br/>set this value will replace the auto generated function name.<br/>eg:<br/>set "customCall" , then jsonp url will append "callback=customCall"</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.mimeType</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>override xhr's mime type</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.processData</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Boolean}</span> </span>
+                                                            <span class="desc"><br/>Default: true<br/>whether data will be serialized as String</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.scriptCharset</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>only for dataType "jsonp" and "script" and "get" type.<br/>force the script to certain charset.</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.success</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Function}</span> </span>
+                                                            <span class="desc"><br/>success(data,textStatus,xhr)<br/>callback function called if the request succeeds.this function has 3 arguments<br/>1. data returned from this request with type specified by dataType<br/>2. status of this request with type String<br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.error</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Function}</span> </span>
+                                                            <span class="desc"><br/>success(data,textStatus,xhr) <br/>callback function called if the request occurs error.this function has 3 arguments<br/>1. null value<br/>2. status of this request with type String,such as "timeout","Not Found","parsererror:..."<br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.complete</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Function}</span> </span>
+                                                            <span class="desc"><br/>success(data,textStatus,xhr)<br/>callback function called if the request finished(success or error).this function has 3 arguments<br/>1. null value if error occurs or data returned from server<br/>2. status of this request with type String,such as success:"ok",error:"timeout","Not Found","parsererror:..."<br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.timeout</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Number}</span> </span>
+                                                            <span class="desc"><br/>Set a timeout(in seconds) for this request.if will call error when timeout</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.serializeArray</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Boolean}</span> </span>
+                                                            <span class="desc"><br/>whether add [] to data's name when data's value is array in serialization</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.xhrFields</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>name-value to set to native xhr.set as xhrFields:{withCredentials:true}</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.username</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>a username tobe used in response to HTTP access authentication request</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.password</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>a password tobe used in response to HTTP access authentication request</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.xdr</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>cross domain request config object</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.xdr.src</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>Default: kissy's flash urlflash sender url</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.xdr.use</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>if set to "use", it will always use flash for cross domain request even in chrome/firefox</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.xdr.subDomain</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{Object}</span> </span>
+                                                            <span class="desc"><br/>cross sub domain request config object</span>
+                                                        </li>
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>c.xdr.subDomain.proxy</b>
+                                                            
+                                                            
+                                                            <span class="type"><span class="light fixedFont">{String}</span> </span>
+                                                            <span class="desc"><br/>proxy page,eg:<br/>a.t.cn/a.htm send request to b.t.cn/b.htm: <br/>1. a.htm set document.domain='t.cn'<br/>2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script><br/>3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})</span>
                                                         </li>
                                                         
                                                     </ul>
@@ -427,6 +726,18 @@ a.go-top:active{text-decoration:none;}
 
                                                 
 
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul>
+                                                    
+                                                        <li>
+                                                            <span>{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                            <span class="desc">current request object</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
 
                                                 
@@ -450,19 +761,49 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
-                                            <a name=".serialize"> </a>
+                                            <a name=".get"> </a>
                                             <div class="title">                                                
-                                                <span>io.</span>
-                                                <b class="name">serialize</b>
-                                                
+                                                <span>IO.</span>
+                                                <b class="name">get</b>
+                                                <span>{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 
                                                 <span class="desc">
-                                                    form 序列化
+                                                    perform a get request
                                                     
                                                         <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
+                                            <a name=".isLocal"> </a>
+                                            <div class="title">                                                
+                                                <span>IO.</span>
+                                                <b class="name">isLocal</b>
+                                                <span>{Boolean}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    whether current application is a local application(protocal is file://,widget://,about://)
                                                     
                                                     
                                                 </span>
@@ -497,21 +838,19 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name=".get"> </a>
+                                            <a name=".getConfig"> </a>
                                             <div class="title">
-                                                <span>io.</span>
-                                                <b class="name">get</b>
-                                                <span class="param">(url, data, callback, dataType, _t)</span>
+                                                <span>IO.</span>
+                                                <b class="name">getConfig</b>
+                                                <span class="param">()</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line29">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line420">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                get 请求
-                                                
-                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
+                                                get default config value for io request
                                                 
                                                 
                                             </div>
@@ -519,65 +858,25 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                            
                                                 
                                                 
-                                                <dt>Parameters</dt>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
                                                 <dd>
-                                                    <ul class="list param-list">
+                                                    <ul class="list">
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">url</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">data</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">callback</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            [ 
-                                                            <b class="name">dataType</b>
-                                                            
-                                                             ]
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            [ 
-                                                            <b class="name">_t</b>
-                                                            
-                                                             ]
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Object}</span> 
+                                                            <span></span>
                                                         </li>
                                                     
                                                     </ul>
                                                 </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
                                                 
                                                 
                                                 
@@ -592,17 +891,17 @@ a.go-top:active{text-decoration:none;}
                                         <li class="li">
                                             <a name=".getJSON"> </a>
                                             <div class="title">
-                                                <span>io.</span>
+                                                <span>IO.</span>
                                                 <b class="name">getJSON</b>
                                                 <span class="param">(url, data, callback)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line91">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line120">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                获取 json 数据
+                                                perform a get request to fetch json data from server
                                                 
                                                     <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
                                                 
@@ -621,17 +920,17 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">url</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">request destination</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">data</b>
                                                             
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">name-value object associated with this request</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -639,8 +938,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">callback</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Function()}</span> 
+                                                            <span class="desc"><br/>success callback when this request is done<br/>with parameter<br/>1. data returned from this request with type JSON<br/>2. status of this request with type String<br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -653,6 +952,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -667,17 +978,17 @@ a.go-top:active{text-decoration:none;}
                                         <li class="li">
                                             <a name=".jsonp"> </a>
                                             <div class="title">
-                                                <span>io.</span>
+                                                <span>IO.</span>
                                                 <b class="name">jsonp</b>
                                                 <span class="param">(url, data, callback)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line68">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line92">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                jsonp 请求
+                                                preform a jsonp request
                                                 
                                                     <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
                                                 
@@ -696,8 +1007,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">url</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">request destination</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -705,8 +1016,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">data</b>
                                                             
                                                              ]
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">name-value object associated with this request</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -714,8 +1025,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">callback</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Function()}</span> 
+                                                            <span class="desc"><br/>success callback when this request is done<br/>with parameter<br/>1. data returned from this request with type specified by dataType<br/>2. status of this request with type String<br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
                                                         </li>
                                                     
                                                     </ul>
@@ -728,6 +1039,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -742,17 +1065,17 @@ a.go-top:active{text-decoration:none;}
                                         <li class="li">
                                             <a name=".post"> </a>
                                             <div class="title">
-                                                <span>io.</span>
+                                                <span>IO.</span>
                                                 <b class="name">post</b>
                                                 <span class="param">(url, data, callback, dataType)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line53">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line71">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                post 请求
+                                                preform a post request
                                                 
                                                     <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
                                                 
@@ -771,17 +1094,17 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">url</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">request destination</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">data</b>
                                                             
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">name-value object associated with this request</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -789,8 +1112,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">callback</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Function()}</span> 
+                                                            <span class="desc"><br/>success callback when this request is done<br/>with parameter<br/>1. data returned from this request with type specified by dataType<br/>2. status of this request with type String<br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -798,8 +1121,144 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">dataType</b>
                                                             
                                                              ]
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">the type of data returns from this request("xml" or "json" or "text")</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".serialize"> </a>
+                                            <div class="title">
+                                                <span>IO.</span>
+                                                <b class="name">serialize</b>
+                                                <span class="param">(formElement)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line39">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                form serialization
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">formElement</b>
                                                             
-                                                            <span class="desc"></span>
+                                                            
+                                                            
+                                                            <span class="desc">{HTMLElement[]|HTMLElement|NodeList} form elements</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{String}</span> 
+                                                            <span>serialized string represent form elements</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".setupConfig"> </a>
+                                            <div class="title">
+                                                <span>IO.</span>
+                                                <b class="name">setupConfig</b>
+                                                <span class="param">(setting)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line401">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                name-value object that set default config value for io request
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">setting</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">for details see io</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -826,17 +1285,17 @@ a.go-top:active{text-decoration:none;}
                                         <li class="li">
                                             <a name=".upload"> </a>
                                             <div class="title">
-                                                <span>io.</span>
+                                                <span>IO.</span>
                                                 <b class="name">upload</b>
                                                 <span class="param">(url, form, data, callback, dataType)</span>
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line107">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line142">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                无刷新上传文件
+                                                submit form without page refresh
                                                 
                                                     <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
                                                 
@@ -855,8 +1314,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">url</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">request destination</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -864,17 +1323,17 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">form</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{HTMLElement|<a href="../symbols/NodeList.html">NodeList</a>}</span> 
+                                                            <span class="desc">element tobe submited</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">data</b>
                                                             
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">name-value object associated with this request</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -882,8 +1341,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">callback</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{Function()}</span> 
+                                                            <span class="desc"><br/>success callback when this request is done<br/>with parameter<br/>1. data returned from this request with type specified by dataType<br/>2. status of this request with type String<br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -891,8 +1350,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">dataType</b>
                                                             
                                                              ]
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">the type of data returns from this request("xml" or "json" or "text")</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -905,6 +1364,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -942,11 +1413,11 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line149">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line121">view source</a>
                                         </div>
                                         
                                         <div class="desc">
-                                            请求完成（成功或失败）后触发
+                                            fired after request completes (success or error)
                                             
                                             
                                         </div>
@@ -972,7 +1443,7 @@ a.go-top:active{text-decoration:none;}
                                                         
                                                         
                                                         <span class="type">{Object}</span> 
-                                                        <span class="desc">当前请求的配置</span>
+                                                        <span class="desc">current request 's config</span>
                                                     </li>
                                                 
                                                     <li class="li">
@@ -980,8 +1451,8 @@ a.go-top:active{text-decoration:none;}
                                                         <b class="name">e.xhr</b>
                                                         
                                                         
-                                                        <span class="type">{<a href="../symbols/io.XhrObject.html">io.XhrObject</a>}</span> 
-                                                        <span class="desc">当前请求对象</span>
+                                                        <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                        <span class="desc">current xhr object</span>
                                                     </li>
                                                 
                                                 </ul>
@@ -1016,11 +1487,11 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line167">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line139">view source</a>
                                         </div>
                                         
                                         <div class="desc">
-                                            请求失败后触发
+                                            fired after request occurs error
                                             
                                             
                                         </div>
@@ -1046,7 +1517,7 @@ a.go-top:active{text-decoration:none;}
                                                         
                                                         
                                                         <span class="type">{Object}</span> 
-                                                        <span class="desc">当前请求的配置</span>
+                                                        <span class="desc">current request 's config</span>
                                                     </li>
                                                 
                                                     <li class="li">
@@ -1054,8 +1525,8 @@ a.go-top:active{text-decoration:none;}
                                                         <b class="name">e.xhr</b>
                                                         
                                                         
-                                                        <span class="type">{<a href="../symbols/io.XhrObject.html">io.XhrObject</a>}</span> 
-                                                        <span class="desc">当前请求对象</span>
+                                                        <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                        <span class="desc">current xhr object</span>
                                                     </li>
                                                 
                                                 </ul>
@@ -1085,16 +1556,16 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             <b class="name">send</b>
-                                            <span class="param">(e, xhr)</span>
+                                            <span class="param">(e)</span>
                                             
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line244">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line355">view source</a>
                                         </div>
                                         
                                         <div class="desc">
-                                            发送请求前触发
+                                            fired before sending request
                                             
                                             
                                         </div>
@@ -1120,16 +1591,16 @@ a.go-top:active{text-decoration:none;}
                                                         
                                                         
                                                         <span class="type">{Object}</span> 
-                                                        <span class="desc">当前请求的配置</span>
+                                                        <span class="desc">current request 's config</span>
                                                     </li>
                                                 
                                                     <li class="li">
                                                         &nbsp;
-                                                        <b class="name">xhr</b>
+                                                        <b class="name">e.xhr</b>
                                                         
                                                         
-                                                        <span class="type">{<a href="../symbols/io.XhrObject.html">io.XhrObject</a>}</span> 
-                                                        <span class="desc">当前请求对象</span>
+                                                        <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                        <span class="desc">current xhr object</span>
                                                     </li>
                                                 
                                                 </ul>
@@ -1164,11 +1635,11 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line194">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line305">view source</a>
                                         </div>
                                         
                                         <div class="desc">
-                                            生成请求对象前触发
+                                            fired before generating request object
                                             
                                             
                                         </div>
@@ -1194,7 +1665,7 @@ a.go-top:active{text-decoration:none;}
                                                         
                                                         
                                                         <span class="type">{Object}</span> 
-                                                        <span class="desc">当前请求的配置</span>
+                                                        <span class="desc">current request 's config</span>
                                                     </li>
                                                 
                                                     <li class="li">
@@ -1202,8 +1673,8 @@ a.go-top:active{text-decoration:none;}
                                                         <b class="name">e.xhr</b>
                                                         
                                                         
-                                                        <span class="type">{<a href="../symbols/io.XhrObject.html">io.XhrObject</a>}</span> 
-                                                        <span class="desc">当前请求对象</span>
+                                                        <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                        <span class="desc">current xhr object</span>
                                                     </li>
                                                 
                                                 </ul>
@@ -1238,11 +1709,11 @@ a.go-top:active{text-decoration:none;}
                                             
                                             
                                             
-                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line158">view source</a>
+                                            <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_base.js.html#line130">view source</a>
                                         </div>
                                         
                                         <div class="desc">
-                                            请求成功后触发
+                                            fired after request succeeds
                                             
                                             
                                         </div>
@@ -1268,7 +1739,7 @@ a.go-top:active{text-decoration:none;}
                                                         
                                                         
                                                         <span class="type">{Object}</span> 
-                                                        <span class="desc">当前请求的配置</span>
+                                                        <span class="desc">current request 's config</span>
                                                     </li>
                                                 
                                                     <li class="li">
@@ -1276,8 +1747,8 @@ a.go-top:active{text-decoration:none;}
                                                         <b class="name">e.xhr</b>
                                                         
                                                         
-                                                        <span class="type">{<a href="../symbols/io.XhrObject.html">io.XhrObject</a>}</span> 
-                                                        <span class="desc">当前请求对象</span>
+                                                        <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                        <span class="desc">current xhr object</span>
                                                     </li>
                                                 
                                                 </ul>
@@ -1342,6 +1813,9 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
             
             
+            <li><a href="../symbols/Cookie.html">Cookie</a></li>
+            
+            
             <li><a href="../symbols/DD.html">DD</a></li>
             
             
@@ -1381,10 +1855,10 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Event.Target.html">Event.Target</a></li>
             
             
-            <li><a href="../symbols/io.html">io</a></li>
+            <li><a href="../symbols/IO.html">IO</a></li>
             
             
-            <li><a href="../symbols/io.XhrObject.html">io.XhrObject</a></li>
+            <li><a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></li>
             
             
             <li><a href="../symbols/KISSY.html">KISSY</a></li>
@@ -1483,8 +1957,7 @@ a.go-top:active{text-decoration:none;}
             
             <div id="footer">
     <div>
-        Documentation generated by<a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a><br/>
-        Copyright 2010, Powered By <a href="http://fool2fish.cn" target="_blank">fool2fish.cn</a>
+        Copyright 2010-2012 , <a href="http://docs.kissyui.com" target="_blank">kissyteam</a>
     </div>
 </div>
 <a class="go-top" href="#page">Top</a>

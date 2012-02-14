@@ -1477,7 +1477,7 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">a</b>
                                                             
                                                             
-                                                            <span class="type">{HTMLElement|String}</span> 
+                                                            <span class="type">{HTMLElement|String|Element}</span> 
                                                             <span class="desc">dom node or the first matched elements by selector</span>
                                                         </li>
                                                     
@@ -1486,7 +1486,7 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">b</b>
                                                             
                                                             
-                                                            <span class="type">{HTMLElement|String}</span> 
+                                                            <span class="type">{HTMLElement|String|Element}</span> 
                                                             <span class="desc">dom node or the first matched elements by selector</span>
                                                         </li>
                                                     
@@ -1689,7 +1689,7 @@ a.go-top:active{text-decoration:none;}
                                                     <ul class="list">
                                                     
                                                         <li class="li">
-                                                            
+                                                            <span class="type">{*}</span> 
                                                             <span>当不设置 val 时返回指定样式名对应的值         设置 val 时返回 undefined</span>
                                                         </li>
                                                     
@@ -1776,8 +1776,8 @@ a.go-top:active{text-decoration:none;}
                                                     <ul class="list">
                                                     
                                                         <li class="li">
-                                                            
-                                                            <span>当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值         当不设置 data， name 那么返回： 节点的存储空间对象         当设置 data， name 那么进行设置操作，返回 undefined</span>
+                                                            <span class="type">{*}</span> 
+                                                            <span>当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值             当不设置 data， name 那么返回： 节点的存储空间对象             当设置 data， name 那么进行设置操作，返回 undefined</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -2239,7 +2239,7 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">selector</b>
                                                             
                                                             
-                                                            <span class="type">{String|HTMLElement[]}</span> 
+                                                            <span class="type">{String|HTMLElement[]|HTMLElement}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -2248,7 +2248,7 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">context</b>
                                                             
                                                              ]
-                                                            <span class="type">{String|HTMLElement[]}</span> 
+                                                            <span class="type">{String|HTMLElement[]|HTMLElement}</span> 
                                                             <span class="desc">find elements matching selector under context</span>
                                                         </li>
                                                     
@@ -5309,6 +5309,9 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
             
             
+            <li><a href="../symbols/Cookie.html">Cookie</a></li>
+            
+            
             <li><a href="../symbols/DD.html">DD</a></li>
             
             
@@ -5348,10 +5351,10 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Event.Target.html">Event.Target</a></li>
             
             
-            <li><a href="../symbols/io.html">io</a></li>
+            <li><a href="../symbols/IO.html">IO</a></li>
             
             
-            <li><a href="../symbols/io.XhrObject.html">io.XhrObject</a></li>
+            <li><a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></li>
             
             
             <li><a href="../symbols/KISSY.html">KISSY</a></li>
@@ -5450,8 +5453,7 @@ a.go-top:active{text-decoration:none;}
             
             <div id="footer">
     <div>
-        Documentation generated by<a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a><br/>
-        Copyright 2010, Powered By <a href="http://fool2fish.cn" target="_blank">fool2fish.cn</a>
+        Copyright 2010-2012 , <a href="http://docs.kissyui.com" target="_blank">kissyteam</a>
     </div>
 </div>
 <a class="go-top" href="#page">Top</a>

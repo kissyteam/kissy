@@ -158,12 +158,9 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
             /**
              * Adds an event listener.similar to addEventListener in DOM3 Events
              * @param targets KISSY selector
-             * @param type {String} The type of event to append.
-             * @param fn {Function|Object} The event handler/listener.
-             * @param fn.scope
-             * @param fn.selector
-             * @param fn.fn
-             * @param  {Object} [scope] The scope (this reference) in which the handler function is executed.
+             * @param type {String} The type of event to append.use space to separate multiple event types.
+             * @param fn {Function} The event handler/listener.
+             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
             add:function (targets, type, fn, scope) {
                 type = S.trim(type);

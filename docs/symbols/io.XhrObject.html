@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>io.XhrObject</title>
+        <title>IO.XhrObject</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,7 +156,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                io.XhrObject
+                                IO.XhrObject
                             </h2>
                             <!-- class title END-->
                             
@@ -164,11 +164,15 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
-                                    <p class="desc">请求对象类型</p>
+                                    <p class="desc">IO Request Object. !Do Not New By Yourself!</p>
                                     
 
                                     
                                     
+                                    
+                                    <p>parents：
+                                        <a href="../symbols/KISSY.Promise.html">KISSY.Promise</a>
+                                    </p>                                                
                                     
 
                                     
@@ -194,7 +198,7 @@ a.go-top:active{text-decoration:none;}
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/io.XhrObject.html#constructor">io.XhrObject</a></b>
+                                            <b class="name"><a href="../symbols/IO.XhrObject.html#constructor">IO.XhrObject</a></b>
                                             <span class="param">(c)</span>                                
                                             
                                             
@@ -211,6 +215,56 @@ a.go-top:active{text-decoration:none;}
                             <!-- properties END -->
                             
                             <!-- methods START -->
+                            
+                                
+                                
+                                <div class="box methods-box">
+                                    <div class="box-hd">
+                                        <h3>Methods</h3>
+                                    </div>
+                                    <div class="box-bd">
+                                        <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/IO.XhrObject.html#abort">abort</a></b>
+                                                <span class="param">(statusText)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">cancel this request</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/IO.XhrObject.html#getAllResponseHeaders">getAllResponseHeaders</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">get all response headers as string after request is completed</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/IO.XhrObject.html#getResponseHeader">getResponseHeader</a></b>
+                                                <span class="param">(name)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">get header value in response to specified header name</span>                                                
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        <hr/>
+                                        <ul class="summary-list">
+                                        <li>Methods borrowed from class <a href="../symbols/KISSY.Promise.html">KISSY.Promise</a>: <a href="../symbols/KISSY.Promise.html#fail">fail</a>, <a href="../symbols/KISSY.Promise.html#fin">fin</a>, <a href="../symbols/KISSY.Promise.html#isRejected">isRejected</a>, <a href="../symbols/KISSY.Promise.html#isResolved">isResolved</a>, <a href="../symbols/KISSY.Promise.html#then">then</a></li>
+                                        </ul>
+                                        
+                                    </div>
+                                </div>
+                                
                             
                             <!-- methods END -->
                             
@@ -229,11 +283,11 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">io.XhrObject</b>
+                                                <b class="name">IO.XhrObject</b>
                                                 <span class="param">(c)</span>
                                             </div>
                                             
-                                            <div class="desc">请求对象类型</div>
+                                            <div class="desc">IO Request Object. !Do Not New By Yourself!</div>
                                             
                                             <dl>                                                
                                                 
@@ -249,7 +303,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type"></span>
-                                                            <span class="desc">请求发送配置选项</span>
+                                                            <span class="desc"></span>
                                                         </li>
                                                         
                                                     </ul>
@@ -280,6 +334,190 @@ a.go-top:active{text-decoration:none;}
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
+                            
+                            <div class="box">
+                                <div class="box-hd">
+                                    <h3>Methods Detail</h3>
+                                </div>
+                                <div class="box-bd">
+                                    <ul class="list detail-list">
+                                        
+                                        <li class="li">
+                                            <a name="abort"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">abort</b>
+                                                <span class="param">(statusText)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_XhrObject.js.html#line206">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                cancel this request
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">statusText</b>
+                                                            = abort
+                                                             ]
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">error reason as current request object's statusText</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getAllResponseHeaders"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getAllResponseHeaders</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_XhrObject.js.html#line169">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                get all response headers as string after request is completed
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getResponseHeader"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getResponseHeader</b>
+                                                <span class="param">(name)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_XhrObject.js.html#line179">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                get header value in response to specified header name
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">name</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">header name</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{String}</span> 
+                                                            <span>header value</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
                             
                             <!-- methods detail END -->
 
@@ -322,6 +560,9 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
             
             
+            <li><a href="../symbols/Cookie.html">Cookie</a></li>
+            
+            
             <li><a href="../symbols/DD.html">DD</a></li>
             
             
@@ -361,10 +602,10 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Event.Target.html">Event.Target</a></li>
             
             
-            <li><a href="../symbols/io.html">io</a></li>
+            <li><a href="../symbols/IO.html">IO</a></li>
             
             
-            <li><a href="../symbols/io.XhrObject.html">io.XhrObject</a></li>
+            <li><a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></li>
             
             
             <li><a href="../symbols/KISSY.html">KISSY</a></li>
@@ -463,8 +704,7 @@ a.go-top:active{text-decoration:none;}
             
             <div id="footer">
     <div>
-        Documentation generated by<a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a><br/>
-        Copyright 2010, Powered By <a href="http://fool2fish.cn" target="_blank">fool2fish.cn</a>
+        Copyright 2010-2012 , <a href="http://docs.kissyui.com" target="_blank">kissyteam</a>
     </div>
 </div>
 <a class="go-top" href="#page">Top</a>

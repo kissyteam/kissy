@@ -234,6 +234,16 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 Event.
+                                                <b class="name"><a href="../symbols/Event.html#.delegate">delegate</a></b>
+                                                <span class="param">(targets, eventType, selector, fn, scope)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc"></span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Event.
                                                 <b class="name"><a href="../symbols/Event.html#.fire">fire</a></b>
                                                 <span class="param">(targets, eventType, eventData, onlyHandlers)</span>
                                                 
@@ -250,6 +260,26 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 <span class="desc">does not cause default behavior to occurdoes not bubble up the DOM hierarchy</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Event.
+                                                <b class="name"><a href="../symbols/Event.html#.remove">remove</a></b>
+                                                <span class="param">(targets, type, fn, scope)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Detach an event or set of events from an element.</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Event.
+                                                <b class="name"><a href="../symbols/Event.html#.undelegate">undelegate</a></b>
+                                                <span class="param">(targets, eventType, selector, fn, scope)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc"></span>                                                
                                             </li>
                                             
                                         </ul>
@@ -327,7 +357,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_add.js.html#line168">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_add.js.html#line165">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -360,7 +390,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             
-                                                            <span class="desc">{String} The type of event to append.</span>
+                                                            <span class="desc">{String} The type of event to append.use space to separate multiple event types.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -369,34 +399,100 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             
-                                                            <span class="desc">{Function|Object} The event handler/listener.</span>
+                                                            <span class="desc">{Function} The event handler/listener.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">scope</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">The scope (this reference) in which the handler function is executed.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".delegate"> </a>
+                                            <div class="title">
+                                                <span>Event.</span>
+                                                <b class="name">delegate</b>
+                                                <span class="param">(targets, eventType, selector, fn, scope)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_event.js.html#line24">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_event_src_event.js.html">event.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">targets</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">KISSY selector</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">eventType</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The type of event to delegate.use space to separate multiple event types.</span>
                                                         </li>
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">fn.scope</b>
+                                                            <b class="name">selector</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String|Function}</span> 
+                                                            <span class="desc">filter selector string or function to find right element</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">fn.selector</b>
+                                                            [ 
+                                                            <b class="name">fn</b>
                                                             
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">fn.fn</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                             ]
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">The event handler/listener.</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -596,6 +692,183 @@ a.go-top:active{text-decoration:none;}
                                             </dl>                                            
                                         </li>
                                         
+                                        <li class="li">
+                                            <a name=".remove"> </a>
+                                            <div class="title">
+                                                <span>Event.</span>
+                                                <b class="name">remove</b>
+                                                <span class="param">(targets, type, fn, scope)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_remove.js.html#line172">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_event_src_remove.js.html">remove.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">targets</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">KISSY selector</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">type</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The type of event to remove.use space to separate multiple event types.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">fn</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">The event handler/listener.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">scope</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">The scope (this reference) in which the handler function is executed.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".undelegate"> </a>
+                                            <div class="title">
+                                                <span>Event.</span>
+                                                <b class="name">undelegate</b>
+                                                <span class="param">(targets, eventType, selector, fn, scope)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_event.js.html#line39">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_event_src_event.js.html">event.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">targets</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">KISSY selector</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">eventType</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The type of event to undelegate.use space to separate multiple event types.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">selector</b>
+                                                            
+                                                            
+                                                            <span class="type">{String|Function}</span> 
+                                                            <span class="desc">filter selector string or function to find right element</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">fn</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">The event handler/listener.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">scope</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">The scope (this reference) in which the handler function is executed.</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -641,6 +914,9 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
             
             
+            <li><a href="../symbols/Cookie.html">Cookie</a></li>
+            
+            
             <li><a href="../symbols/DD.html">DD</a></li>
             
             
@@ -680,10 +956,10 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Event.Target.html">Event.Target</a></li>
             
             
-            <li><a href="../symbols/io.html">io</a></li>
+            <li><a href="../symbols/IO.html">IO</a></li>
             
             
-            <li><a href="../symbols/io.XhrObject.html">io.XhrObject</a></li>
+            <li><a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></li>
             
             
             <li><a href="../symbols/KISSY.html">KISSY</a></li>
@@ -782,8 +1058,7 @@ a.go-top:active{text-decoration:none;}
             
             <div id="footer">
     <div>
-        Documentation generated by<a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a><br/>
-        Copyright 2010, Powered By <a href="http://fool2fish.cn" target="_blank">fool2fish.cn</a>
+        Copyright 2010-2012 , <a href="http://docs.kissyui.com" target="_blank">kissyteam</a>
     </div>
 </div>
 <a class="go-top" href="#page">Top</a>

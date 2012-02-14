@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>DD.Proxy</title>
+        <title>Cookie</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,15 +156,13 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                DD.Proxy
+                                Cookie
                             </h2>
                             <!-- class title END-->
                             
                             <!-- summary START -->
                             <div class="box summary-box">
                                 <div class="box-bd">    
-                                    
-                                    <p class="desc">proxy drag</p>
                                     
 
                                     
@@ -175,7 +173,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html">proxy.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_cookie_src_cookie.js.html">cookie.js</a></p>
                                     
                                     
                                     
@@ -189,13 +187,13 @@ a.go-top:active{text-decoration:none;}
                             
                             <div class="box constructor-box">
                                 <div class="box-hd">
-                                    <h3>Class </h3>
+                                    <h3>Namespace </h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/DD.Proxy.html#constructor">DD.Proxy</a></b>
-                                            <span class="param">()</span>                                
+                                            <b class="name"><a href="../symbols/Cookie.html#constructor">Cookie</a></b>
+                                                                            
                                             
                                             
                                                                                         
@@ -207,54 +205,6 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
-                            
-                                
-                                
-                                <div class="box properties-box">
-                                    <div class="box-hd">
-                                        <h3>Properties</h3>
-                                    </div>
-                                    <div class="box-bd">
-                                        <ul class="list summary-list">
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#destroyOnEnd">destroyOnEnd</a></b>
-                                                <span class="type">{}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">是否每次都生成新节点/拖放完毕是否销毁当前代理节点</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#moveOnEnd">moveOnEnd</a></b>
-                                                <span class="type">{}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">拖放结束是否移动本身到代理节点位置</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#node">node</a></b>
-                                                <span class="type">{}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">如何生成替代节点</span>                                                
-                                            </li>
-                                            
-                                        </ul>
-                                        
-                                    </div>
-                                </div>
-                                                    
                             
                             <!-- properties END -->
                             
@@ -270,33 +220,33 @@ a.go-top:active{text-decoration:none;}
                                         <ul class="list summary-list">
                                             
                                             <li class="li">                                                
+                                                Cookie.
+                                                <b class="name"><a href="../symbols/Cookie.html#.get">get</a></b>
+                                                <span class="param">(name)</span>
                                                 
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#attach">attach</a></b>
-                                                <span class="param">(drag)</span>
                                                 
-                                                
-                                                
-                                                <span class="desc">关联到某个拖对象</span>                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Returns the cookie value for given name</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
+                                                Cookie.
+                                                <b class="name"><a href="../symbols/Cookie.html#.remove">remove</a></b>
+                                                <span class="param">(name, domain, path, secure)</span>
                                                 
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#destroy">destroy</a></b>
-                                                <span class="param">()</span>
                                                 
-                                                
-                                                
-                                                <span class="desc">销毁</span>                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Remove a cookie from the machine by setting its expiration date to sometime in the past</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
+                                                Cookie.
+                                                <b class="name"><a href="../symbols/Cookie.html#.set">set</a></b>
+                                                <span class="param">(name, val, expires, domain, path, secure)</span>
                                                 
-                                                <b class="name"><a href="../symbols/DD.Proxy.html#unAttach">unAttach</a></b>
-                                                <span class="param">(drag)</span>
                                                 
-                                                
-                                                
-                                                <span class="desc">取消关联</span>                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Set a cookie with a given name and value</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -316,17 +266,17 @@ a.go-top:active{text-decoration:none;}
                             <div class="detail-box">
                                 <a name="constructor"></a>
                                 <div class="box-hd">
-                                    <h3>Class Detail</h3>
+                                    <h3>Namespace Detail</h3>
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">DD.Proxy</b>
-                                                <span class="param">()</span>
+                                                <b class="name">Cookie</b>
+                                                
                                             </div>
                                             
-                                            <div class="desc">proxy drag</div>
+                                            <div class="desc"></div>
                                             
                                             <dl>                                                
                                                 
@@ -354,122 +304,6 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
-                            <div class="box">
-                                <div class="box-hd">
-                                    <h3>Properties Detail</h3>
-                                </div>
-                                <div class="box-bd">
-                                    <ul class="list detail-list">
-                                    
-                                        <li class="li">
-                                            <a name="destroyOnEnd"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">destroyOnEnd</b>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    是否每次都生成新节点/拖放完毕是否销毁当前代理节点
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    false
-                                                </dd>
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="moveOnEnd"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">moveOnEnd</b>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    拖放结束是否移动本身到代理节点位置
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    true
-                                                </dd>
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="node"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">node</b>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    如何生成替代节点
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    深度克隆自身
-                                                </dd>
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                    </ul>
-                                </div>
-                            </div>
-                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -482,19 +316,19 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="attach"> </a>
+                                            <a name=".get"> </a>
                                             <div class="title">
+                                                <span>Cookie.</span>
+                                                <b class="name">get</b>
+                                                <span class="param">(name)</span>
                                                 
-                                                <b class="name">attach</b>
-                                                <span class="param">(drag)</span>
                                                 
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line64">view source</a>
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_cookie_src_cookie.js.html#line32">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                关联到某个拖对象
+                                                Returns the cookie value for given name
                                                 
                                                 
                                             </div>
@@ -508,11 +342,105 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">drag</b>
+                                                            <b class="name">name</b>
                                                             
                                                             
                                                             
                                                             <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{String}</span> 
+                                                            <span>name The name of the cookie to retrieve</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".remove"> </a>
+                                            <div class="title">
+                                                <span>Cookie.</span>
+                                                <b class="name">remove</b>
+                                                <span class="param">(name, domain, path, secure)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_cookie_src_cookie.js.html#line92">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Remove a cookie from the machine by setting its expiration date to sometime in the past
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">name</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The name of the cookie to remove.</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">domain</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The cookie's domain</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">path</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The cookie's path</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">secure</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The cookie's secure option</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -537,58 +465,19 @@ a.go-top:active{text-decoration:none;}
                                         </li>
                                         
                                         <li class="li">
-                                            <a name="destroy"> </a>
+                                            <a name=".set"> </a>
                                             <div class="title">
+                                                <span>Cookie.</span>
+                                                <b class="name">set</b>
+                                                <span class="param">(name, val, expires, domain, path, secure)</span>
                                                 
-                                                <b class="name">destroy</b>
-                                                <span class="param">()</span>
                                                 
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line139">view source</a>
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_cookie_src_cookie.js.html#line54">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                销毁
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name="unAttach"> </a>
-                                            <div class="title">
-                                                
-                                                <b class="name">unAttach</b>
-                                                <span class="param">(drag)</span>
-                                                
-                                                
-                                                
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_proxy.js.html#line126">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                取消关联
+                                                Set a cookie with a given name and value
                                                 
                                                 
                                             </div>
@@ -602,11 +491,56 @@ a.go-top:active{text-decoration:none;}
                                                     
                                                         <li class="li">
                                                             &nbsp;
-                                                            <b class="name">drag</b>
+                                                            <b class="name">name</b>
                                                             
                                                             
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The name of the cookie to set</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">val</b>
                                                             
-                                                            <span class="desc"></span>
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The value to set for cookie</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">expires</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number|Date}</span> 
+                                                            <span class="desc">if Number secified how many days this cookie will expire</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">domain</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">set cookie's domain</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">path</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">set cookie's path</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">secure</b>
+                                                            
+                                                            
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc">whether this cookie can only be sent to server on https</span>
                                                         </li>
                                                     
                                                     </ul>

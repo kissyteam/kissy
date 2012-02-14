@@ -4,6 +4,11 @@
  */
 KISSY.add('cookie', function (S) {
 
+    /**
+     * @name Cookie
+     * @namespace
+     */
+
     var doc = document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
@@ -14,11 +19,15 @@ KISSY.add('cookie', function (S) {
         return S.isString(val) && val !== '';
     }
 
-    return S.Cookie={
+    return S.Cookie =
+    /**
+     * @lends Cookie
+     */
+    {
 
         /**
-         * 获取 cookie 值
-         * @return {string} 如果 name 不存在，返回 undefined
+         * Returns the cookie value for given name
+         * @return {String} name The name of the cookie to retrieve
          */
         get:function (name) {
             var ret, m;
@@ -32,6 +41,16 @@ KISSY.add('cookie', function (S) {
             return ret;
         },
 
+        /**
+         * Set a cookie with a given name and value
+         * @param {String} name The name of the cookie to set
+         * @param {String} val The value to set for cookie
+         * @param {Number|Date} expires
+         * if Number secified how many days this cookie will expire
+         * @param {String} domain set cookie's domain
+         * @param {String} path set cookie's path
+         * @param {Boolean} secure whether this cookie can only be sent to server on https
+         */
         set:function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;
 
@@ -60,12 +79,17 @@ KISSY.add('cookie', function (S) {
                 text += '; secure';
             }
 
-            //S.log(text);
             doc.cookie = name + '=' + text;
         },
 
+        /**
+         * Remove a cookie from the machine by setting its expiration date to sometime in the past
+         * @param {String} name The name of the cookie to remove.
+         * @param {String} domain The cookie's domain
+         * @param {String} path The cookie's path
+         * @param {String} secure The cookie's secure option
+         */
         remove:function (name, domain, path, secure) {
-            // 置空，并立刻过期
             this.set(name, '', -1, domain, path, secure);
         }
     };
@@ -73,7 +97,8 @@ KISSY.add('cookie', function (S) {
 });
 
 /**
- * NOTES:
+ *  2012.02.14 yiminghe@gmail.com
+ *   - jsdoc added
  *
  *  2010.04
  *   - get 方法要考虑 ie 下，
