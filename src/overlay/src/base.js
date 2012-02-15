@@ -3,11 +3,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect) {
+
     function require(s) {
         return S.require("uibase/" + s);
     }
 
     /**
+     * KISSY Overlay Component
      * @class
      * @namespace
      * @name Overlay
@@ -19,6 +21,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @extends UIBase.Close
      * @extends UIBase.Resize
      * @extends UIBase.Mask
+     * @param {Object} config config object to set properties of its parent class
      */
     var Overlay = UIBase.create(Component.ModelControl, [
         require("contentbox"),
@@ -29,31 +32,63 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
         require("resize"),
         require("mask"),
         Effect
-    ], {}, {
-        ATTRS:{
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            closable:{
-                // overlay 默认没 X
-                value:false
-            },
-            // 是否绑定鼠标事件
-            handleMouseEvents:{
-                value:false
-            },
-            allowTextSelection_:{
-                value:true
-            },
-            visibleMode:{
-                value:"visibility"
+    ],
+        /**
+         * @lends Overlay#
+         */
+        {
+            /**
+             * see {@link UIBase.Box#show}
+             * @function
+             * @name Overlay#show
+             */
+        }, {
+            ATTRS:/**
+             * @lends Overlay#
+             */
+            {
+                /**
+                 * whether this component can be focused. Default:false
+                 * @type Boolean
+                 */
+                focusable:{
+                    value:false
+                },
+
+                /**
+                 * whether this component can be closed. Default:false
+                 * @type Boolean
+                 */
+                closable:{
+                    value:false
+                },
+
+                /**
+                 * whether this component can be responsive to mouse. Default:false
+                 * @type Boolean
+                 */
+                handleMouseEvents:{
+                    value:false
+                },
+
+                /**
+                 * whether this component's text content can be selected. Default:true
+                 * @type Boolean
+                 */
+                allowTextSelection_:{
+                    value:true
+                },
+
+                /**
+                 * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
+                 */
+                visibleMode:{
+                    value:"visibility"
+                }
             }
-        }
-    });
+        });
 
     Overlay.DefaultRender = OverlayRender;
-
 
     Component.UIStore.setUIByClass("overlay", {
         priority:Component.UIStore.PRIORITY.LEVEL1,

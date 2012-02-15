@@ -5,6 +5,7 @@
 KISSY.add("uibase/close", function () {
 
     /**
+     * config detail of close action
      * @class
      * @memberOf UIBase
      */

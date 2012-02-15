@@ -6,6 +6,7 @@ KISSY.add("uibase/stdmod", function () {
 
 
     /**
+     * generate head,body,foot for component
      * @class
      * @memberOf UIBase
      */

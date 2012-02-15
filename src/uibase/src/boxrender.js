@@ -6,18 +6,11 @@ KISSY.add('uibase/boxrender', function (S, Node) {
 
     var $ = S.all;
 
-    /**
-     * @class
-     * @memberOf UIBase.Box
-     */
+
     function BoxRender() {
     }
 
-    BoxRender.ATTRS =
-    /**
-     * @lends UIBase.Box.Render#
-     */
-    {
+    BoxRender.ATTRS = {
         el:{
             //容器元素
             setter:function (v) {

@@ -86,7 +86,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * stop monitoring drag
              * @param {DD.Draggable} drag
              */
-            unattach:function (drag) {
+            unAttach:function (drag) {
                 var self = this;
                 drag.detach("dragstart", onDragStart, self)
                     .detach("dragend", onDragEnd, self)

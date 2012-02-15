@@ -5,6 +5,7 @@
 KISSY.add("uibase/mask", function () {
 
     /**
+     * make component can show with mask
      * @class
      * @memberOf UIBase
      */
@@ -17,7 +18,7 @@ KISSY.add("uibase/mask", function () {
      */
     {
         /**
-         * 是否显示时出现遮罩层
+         * whether show mask layer when component shows
          * @type boolean
          */
         mask:{

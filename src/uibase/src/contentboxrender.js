@@ -4,23 +4,11 @@
  */
 KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
 
-    /**
-     * @class 内层容器渲染混元类
-     * @name Render
-     * @memberOf UIBase.ContentBox
-     */
+
     function ContentBoxRender() {
     }
 
-    ContentBoxRender.ATTRS =
-    /**
-     * @lends UIBase.ContentBox.Render
-     */
-    {
-        /**
-         * 内容容器节点
-         * @type String|Node
-         */
+    ContentBoxRender.ATTRS = {
         contentEl:{},
         contentElAttrs:{},
         contentElCls:{},
@@ -28,10 +16,6 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
         contentTagName:{
             value:"div"
         },
-        /**
-         * 内层内容
-         * @type String|Node
-         */
         content:{
             sync:false
         }

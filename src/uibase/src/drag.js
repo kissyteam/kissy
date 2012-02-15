@@ -6,6 +6,7 @@ KISSY.add("uibase/drag", function (S) {
 
 
     /**
+     * config drag options
      * @class
      * @memberOf UIBase
      */
@@ -19,7 +20,7 @@ KISSY.add("uibase/drag", function (S) {
      */
     {
         /**
-         * @see DD.Draggable#handlers
+         * see {@link DD.Draggable#handlers}
          */
         handlers:{
             value:[]

@@ -5,6 +5,7 @@
 KISSY.add("uibase/position", function (S) {
 
     /**
+     * make component positionable
      * @class
      * @memberOf UIBase
      */

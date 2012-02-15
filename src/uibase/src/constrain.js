@@ -2,9 +2,10 @@
  * @fileOverview constrain extension for kissy
  * @author yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
-KISSY.add("uibase/constrain", function(S, DOM, Node) {
+KISSY.add("uibase/constrain", function (S, DOM, Node) {
 
     /**
+     * constrain component to specified region
      * @class
      * @memberOf UIBase
      */
@@ -18,7 +19,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
      */
     {
         /**
-         * true:viewport限制，node:限制在该节点范围
+         * <br>true:viewport限制 <br> node:限制在该节点范围
          * @type HTMLElement|boolean
          */
         constrain:{
@@ -43,8 +44,8 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             constrain = Node.one(constrain);
             ret = constrain.offset();
             S.mix(ret, {
-                maxLeft: ret.left + constrain.outerWidth() - el.outerWidth(),
-                maxTop: ret.top + constrain.outerHeight() - el.outerHeight()
+                maxLeft:ret.left + constrain.outerWidth() - el.outerWidth(),
+                maxTop:ret.top + constrain.outerHeight() - el.outerHeight()
             });
         }
         // 没有指定 constrain, 表示受限于可视区域
@@ -56,10 +57,10 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
             //excluding the size of a rendered scroll bar (if any)
             //  if the element is the root element 
             var vWidth = document.documentElement.clientWidth;
-            ret = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
+            ret = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
             S.mix(ret, {
-                maxLeft: ret.left + vWidth - el.outerWidth(),
-                maxTop: ret.top + DOM.viewportHeight() - el.outerHeight()
+                maxLeft:ret.left + vWidth - el.outerWidth(),
+                maxTop:ret.top + DOM.viewportHeight() - el.outerHeight()
             });
         }
 
@@ -68,14 +69,14 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
 
     Constrain.prototype = {
 
-        __renderUI:function() {
+        __renderUI:function () {
             var self = this,
                 attrs = self.getAttrs(),
                 xAttr = attrs["x"],
                 yAttr = attrs["y"],
                 oriXSetter = xAttr["setter"],
                 oriYSetter = yAttr["setter"];
-            xAttr.setter = function(v) {
+            xAttr.setter = function (v) {
                 var r = oriXSetter && oriXSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
@@ -89,7 +90,7 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
                     _ConstrainExtRegion.left),
                     _ConstrainExtRegion.maxLeft);
             };
-            yAttr.setter = function(v) {
+            yAttr.setter = function (v) {
                 var r = oriYSetter && oriYSetter.call(self, v);
                 if (r === undefined) {
                     r = v;
@@ -112,5 +113,5 @@ KISSY.add("uibase/constrain", function(S, DOM, Node) {
     return Constrain;
 
 }, {
-    requires:["dom","node"]
+    requires:["dom", "node"]
 });

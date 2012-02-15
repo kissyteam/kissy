@@ -5,6 +5,7 @@
 KISSY.add("uibase/resize", function (S) {
 
     /**
+     * make component resizable
      * @class
      * @memberOf UIBase
      */

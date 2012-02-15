@@ -5,6 +5,7 @@
 KISSY.add("uibase/loading", function () {
 
     /**
+     * make component can mask loading
      * @class
      * @memberOf UIBase
      */
@@ -16,10 +17,16 @@ KISSY.add("uibase/loading", function () {
      * @lends UIBase.Loading.prototype
      */
     {
+        /**
+         * mask component as loading
+         */
         loading:function () {
             this.get("view").loading();
         },
 
+        /**
+         * unmask component as loading
+         */
         unloading:function () {
             this.get("view").unloading();
         }

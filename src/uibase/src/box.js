@@ -5,6 +5,7 @@
 KISSY.add('uibase/box', function () {
 
     /**
+     * Box Implementation
      * @class
      * @memberOf UIBase
      * @namespace
@@ -14,56 +15,95 @@ KISSY.add('uibase/box', function () {
 
     Box.ATTRS =
     /**
-     * @lends UIBase.Box#
+     * @lends UIBase.Box.prototype
      */
     {
+        /**
+         * component's html content
+         * @type String
+         */
         html:{
             view:true
         },
-        // 宽度
+        /**
+         * component's width
+         * @type Number|String
+         */
         width:{
             view:true
         },
-        // 高度
+        /**
+         * component's height
+         * @type Number|String
+         */
         height:{
             view:true
         },
-        // 容器的 class
+        /**
+         * css class of component's root element
+         * @type String
+         */
         elCls:{
             view:true
         },
-        // 容器的行内样式
+        /**
+         * name-value pair css style of component's root element
+         * @type Object
+         */
         elStyle:{
             view:true
         },
-        // 其他属性
+        /**
+         * name-value pair attribute of component's root element
+         * @type Object
+         */
         elAttrs:{
-            //其他属性
             view:true
         },
-        // 插入到该元素前
+        /**
+         * archor element where component insert before
+         * @type NodeList
+         */
         elBefore:{
             view:true
         },
+        /**
+         * readonly. root element of current component
+         * @type NodeList
+         */
         el:{
             view:true
         },
 
-        // 渲染该组件的目的容器
+        /**
+         * archor element where component append to
+         * @type NodeList
+         */
         render:{
             view:true
         },
 
+        /**
+         * component's visibleMode,use css "display" or "visibility" to show this component
+         * @type String
+         */
         visibleMode:{
             value:"display",
             view:true
         },
-        // 默认显示，但不触发事件
+
+        /**
+         * whether this component is visible
+         * @type Boolean
+         */
         visible:{
             view:true
         },
 
-        // 从已存在节点开始渲染
+        /**
+         * the node to parse for configuration values,passed to component's HTML_PARSER definition
+         * @type NodeList
+         */
         srcNode:{
             view:true
         }
@@ -91,13 +131,15 @@ KISSY.add('uibase/box', function () {
      * @lends UIBase.Box#
      */
     {
-
+        /**
+         * @private
+         */
         _uiSetVisible:function (isVisible) {
             this.fire(isVisible ? "show" : "hide");
         },
 
         /**
-         * 显示 Overlay
+         * show component
          */
         show:function () {
             var self = this;
@@ -106,7 +148,7 @@ KISSY.add('uibase/box', function () {
         },
 
         /**
-         * 隐藏
+         * hide component
          */
         hide:function () {
             this.set("visible", false);
