@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Feb 15 17:22
 */
 /**
  * @fileOverview   dom-attr
@@ -169,8 +169,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 get:function (elem, name) {
                     var ret;
                     ret = elem.getAttributeNode(name);
-                    // Return undefined if nodeValue is empty string
-                    return ret && ret.nodeValue !== "" ?
+                    // Return undefined if attribute node specified by user
+                    return ret && ret.specified ?
                         ret.nodeValue :
                         undefined;
                 },

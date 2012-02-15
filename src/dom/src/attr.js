@@ -164,8 +164,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 get:function (elem, name) {
                     var ret;
                     ret = elem.getAttributeNode(name);
-                    // Return undefined if nodeValue is empty string
-                    return ret && ret.nodeValue !== "" ?
+                    // Return undefined if attribute node specified by user
+                    return ret && ret.specified ?
                         ret.nodeValue :
                         undefined;
                 },

@@ -198,7 +198,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 15 16:35
+build time: Feb 15 17:22
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -307,7 +307,7 @@ build time: Feb 15 16:35
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120215163529',
+            buildTime:'20120215172258',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3898,7 +3898,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Feb 15 17:22
 */
 /**
  * @fileOverview   dom-attr
@@ -4066,8 +4066,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 get:function (elem, name) {
                     var ret;
                     ret = elem.getAttributeNode(name);
-                    // Return undefined if nodeValue is empty string
-                    return ret && ret.nodeValue !== "" ?
+                    // Return undefined if attribute node specified by user
+                    return ret && ret.specified ?
                         ret.nodeValue :
                         undefined;
                 },
