@@ -134,11 +134,9 @@
             augment:function (r, s1) {
                 var args = S.makeArray(arguments),
                     len = args.length - 2,
-                    i = 1;
-
-                r = args[0];
-                ov = args[len];
-                wl = args[len + 1];
+                    i = 1,
+                    ov = args[len],
+                    wl = args[len + 1];
 
                 if (!S.isArray(wl)) {
                     ov = wl;
@@ -221,13 +219,16 @@
              * Initializes KISSY
              */
             __init:function () {
-                this.Config = this.Config || {};
-                this.Env = this.Env || {};
+                var self = this,
+                    c;
+
+                c = self.Config = self.Config || {};
+                self.Env = self.Env || {};
 
                 // NOTICE: '@DEBUG@' will replace with '' when compressing.
                 // So, if loading source file, debug is on by default.
                 // If loading min version, debug is turned off automatically.
-                this.Config.debug = '@DEBUG@';
+                c.debug = '@DEBUG@';
             },
 
             /**

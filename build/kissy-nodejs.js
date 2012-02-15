@@ -198,7 +198,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 20:17
+build time: Feb 15 16:35
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -307,7 +307,7 @@ build time: Feb 9 20:17
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120209201757',
+            buildTime:'20120215163529',
 
             /**
              * Returns a new object containing all of the properties of
@@ -336,11 +336,9 @@ build time: Feb 9 20:17
             augment:function (r, s1) {
                 var args = S.makeArray(arguments),
                     len = args.length - 2,
-                    i = 1;
-
-                r = args[0];
-                ov = args[len];
-                wl = args[len + 1];
+                    i = 1,
+                    ov = args[len],
+                    wl = args[len + 1];
 
                 if (!S.isArray(wl)) {
                     ov = wl;
@@ -423,13 +421,16 @@ build time: Feb 9 20:17
              * Initializes KISSY
              */
             __init:function () {
-                this.Config = this.Config || {};
-                this.Env = this.Env || {};
+                var self = this,
+                    c;
+
+                c = self.Config = self.Config || {};
+                self.Env = self.Env || {};
 
                 // NOTICE: '@DEBUG@' will replace with '' when compressing.
                 // So, if loading source file, debug is on by default.
                 // If loading min version, debug is turned off automatically.
-                this.Config.debug = '@DEBUG@';
+                c.debug = '@DEBUG@';
             },
 
             /**
@@ -1774,12 +1775,6 @@ build time: Feb 9 20:17
             }, function (reason) {
                 return callback(reason, false);
             });
-        },
-        /**
-         * whether the given object is a promise
-         */
-        isPromise:function () {
-            return isPromise(this);
         },
         /**
          * whether the given object is a resolved promise

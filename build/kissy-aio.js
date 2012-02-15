@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 20:17
+build time: Feb 15 16:35
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,7 @@ build time: Feb 9 20:17
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120209201757',
+            buildTime:'20120215163529',
 
             /**
              * Returns a new object containing all of the properties of
@@ -139,11 +139,9 @@ build time: Feb 9 20:17
             augment:function (r, s1) {
                 var args = S.makeArray(arguments),
                     len = args.length - 2,
-                    i = 1;
-
-                r = args[0];
-                ov = args[len];
-                wl = args[len + 1];
+                    i = 1,
+                    ov = args[len],
+                    wl = args[len + 1];
 
                 if (!S.isArray(wl)) {
                     ov = wl;
@@ -226,13 +224,16 @@ build time: Feb 9 20:17
              * Initializes KISSY
              */
             __init:function () {
-                this.Config = this.Config || {};
-                this.Env = this.Env || {};
+                var self = this,
+                    c;
+
+                c = self.Config = self.Config || {};
+                self.Env = self.Env || {};
 
                 // NOTICE: '@DEBUG@' will replace with '' when compressing.
                 // So, if loading source file, debug is on by default.
                 // If loading min version, debug is turned off automatically.
-                this.Config.debug = '@DEBUG@';
+                c.debug = '@DEBUG@';
             },
 
             /**
@@ -1577,12 +1578,6 @@ build time: Feb 9 20:17
             }, function (reason) {
                 return callback(reason, false);
             });
-        },
-        /**
-         * whether the given object is a promise
-         */
-        isPromise:function () {
-            return isPromise(this);
         },
         /**
          * whether the given object is a resolved promise
@@ -16204,11 +16199,10 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Feb 10 15:00
 */
 /**
  * @fileOverview 数据延迟加载组件
- * @author lifesinger@gmail.com
  */
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
@@ -16307,7 +16301,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 开始延迟的 Y 坐标
          * @type number
          */
-         //self.threshold
+            //self.threshold
 
         self._init();
         return undefined;
@@ -16496,7 +16490,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
             area.className = ''; // clear hook
 
             var content = DOM.create('<div>');
-            container.insertBefore(content, area);
+            // area 直接是 container 的儿子
+            area.parentNode.insertBefore(content, area);
             DOM.html(content, area.value, execScript === undefined ? true : execScript);
 
             //area.value = ''; // bug fix: 注释掉，不能清空，否则 F5 刷新，会丢内容
@@ -16609,10 +16604,13 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
          * 加载自定义延迟数据
          * @static
          */
-        loadCustomLazyData:function (containers, type) {
-            var self = this, area, imgs;
+        loadCustomLazyData:function (containers, type, flag) {
+            var self = this,
+                imgs;
 
-            if (type === 'img-src') type = 'img';
+            if (type === 'img-src') {
+                type = 'img';
+            }
 
             // 支持数组
             if (!S.isArray(containers)) {
@@ -16630,20 +16628,20 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
                         }
 
                         S.each(imgs, function (img) {
-                            self._loadImgSrc(img, IMG_SRC_DATA + CUSTOM);
+                            self._loadImgSrc(img, flag || (IMG_SRC_DATA + CUSTOM));
                         });
-
                         break;
 
                     default:
-                        area = DOM.get('textarea', container);
-                        if (area && DOM.hasClass(area, AREA_DATA_CLS + CUSTOM)) {
-                            self._loadAreaData(container, area);
-                        }
+                        DOM.query('textarea', container).each(function (area) {
+                            if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
+                                self._loadAreaData(container, area);
+                            }
+                        });
                 }
             });
         },
-        checkElemInViewport: function(elem) {
+        checkElemInViewport:function (elem) {
             var self = this,
                 isHidden = DOM.css(elem, DISPLAY) === NONE;
 
@@ -23194,7 +23192,7 @@ KISSY.add("component/uistore", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Feb 10 15:00
 */
 /**
  * @fileOverview accordion aria support
@@ -25329,87 +25327,99 @@ KISSY.add('switchable/effect', function(S, DOM, Event, Anim, Switchable, undefin
  * @fileOverview Switchable Lazyload Plugin
  * @creator  lifesinger@gmail.com
  */
-KISSY.add('switchable/lazyload', function(S, DOM, Switchable) {
+KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
     var EVENT_BEFORE_SWITCH = 'beforeSwitch',
         IMG_SRC = 'img',
         AREA_DATA = 'textarea',
-        FLAGS = { };
+        FLAGS = {};
 
-    FLAGS[IMG_SRC] = 'data-ks-lazyload-custom';
-    FLAGS[AREA_DATA] = 'ks-datalazyload-custom';
+    FLAGS[IMG_SRC] = 'lazyImgAttribute';
+    FLAGS[AREA_DATA] = 'lazyTextareaClass';
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-            lazyDataType: AREA_DATA // or IMG_SRC
-        });
+        lazyImgAttribute:"data-ks-lazyload-custom",
+        lazyTextareaClass:"ks-datalazyload-custom",
+        lazyDataType:AREA_DATA // or IMG_SRC
+    });
 
     /**
      * 织入初始化函数
      */
     Switchable.Plugins.push({
 
-            name: 'lazyload',
+        name:'lazyload',
 
-            init: function(host) {
-                var DataLazyload = S.require("datalazyload"),
-                    cfg = host.config,
-                    type, flag;
-                if (cfg.lazyDataType === 'img-src') cfg.lazyDataType = IMG_SRC;
-                if (cfg.lazyDataType === 'area-data') cfg.lazyDataType = AREA_DATA;
-                
-                type = cfg.lazyDataType;
-                flag = FLAGS[type];
-                // 没有延迟项
-                if (!DataLazyload || !type || !flag) {
-                    return;
-                }
+        init:function (host) {
+            var DataLazyload = S.require("datalazyload"),
+                cfg = host.config,
+                type,
+                flag;
 
-                host.on(EVENT_BEFORE_SWITCH, loadLazyData);
+            if (cfg.lazyDataType === 'img-src') {
+                cfg.lazyDataType = IMG_SRC;
+            }
+            if (cfg.lazyDataType === 'area-data') {
+                cfg.lazyDataType = AREA_DATA;
+            }
 
-                /**
-                 * 加载延迟数据
-                 */
-                function loadLazyData(ev) {
-                    var steps = cfg.steps,
-                        from = ev.toIndex * steps ,
-                        to = from + steps;
+            type = cfg.lazyDataType;
+            flag = cfg[FLAGS[type]];
+            // 没有延迟项
+            if (!DataLazyload || !type || !flag) {
+                return;
+            }
 
-                    DataLazyload.loadCustomLazyData(host.panels.slice(from, to), type);
-                    if (isAllDone()) {
-                        host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
-                    }
-                }
+            host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
-                /**
-                 * 是否都已加载完成
-                 */
-                function isAllDone() {
-                    var elems,
-                        isImgSrc = type === IMG_SRC,
-                        tagName = isImgSrc ? 'img' : (type === AREA_DATA ? 'textarea' : '');
-
-                    if (tagName) {
-                        elems = DOM.query(tagName, host.container);
-                        for (var i = 0,len = elems.length; i < len; i++) {
-                            var el = elems[i];
-                            if (isImgSrc ?
-                                DOM.attr(el, flag) :
-                                DOM.hasClass(el, flag)) {
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
+            /**
+             * 加载延迟数据
+             */
+            function loadLazyData(ev) {
+                var steps = cfg.steps,
+                    from = ev.toIndex * steps ,
+                    to = from + steps;
+                DataLazyload.loadCustomLazyData(host.panels.slice(from, to),
+                    type, flag);
+                if (isAllDone()) {
+                    host.detach(EVENT_BEFORE_SWITCH, loadLazyData);
                 }
             }
-        });
+
+            /**
+             * 是否都已加载完成
+             */
+            function isAllDone() {
+                var elems,
+                    i,
+                    el,
+                    len,
+                    isImgSrc = type === IMG_SRC,
+                    tagName = isImgSrc ? 'img' : (type === AREA_DATA ?
+                        'textarea' : '');
+
+                if (tagName) {
+                    elems = DOM.query(tagName, host.container);
+                    for (i = 0, len = elems.length; i < len; i++) {
+                        el = elems[i];
+                        if (isImgSrc ?
+                            DOM.attr(el, flag) :
+                            DOM.hasClass(el, flag)) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+    });
 
     return Switchable;
 
-}, { requires:["dom","./base"]});
+}, { requires:["dom", "./base"]});
 /**
  * 承玉：2011.06.02 review switchable
  *//**
@@ -29801,7 +29811,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 20:17
+build time: Feb 10 15:00
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -31020,7 +31030,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
                 }
                 var menu = getMenu(self);
                 // TODO 耦合 popmenu.js
-                if (menu._leaveHideTimer) {
+                if (menu && menu._leaveHideTimer) {
                     clearTimeout(menu._leaveHideTimer);
                     menu._leaveHideTimer = 0;
                 }
@@ -33042,7 +33052,7 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Feb 13 14:41
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -33131,14 +33141,19 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             }
         },
 
-        colWidth:{}
+        colWidth:{},
+
+        colItems:{
+            value:[]
+        }
     };
 
     function doResize() {
         var self = this,
             containerRegion = self._containerRegion;
         // 宽度没变就没必要调整
-        if (containerRegion && self.get("container").width() === containerRegion.width) {
+        if (containerRegion &&
+            self.get("container").width() === containerRegion.width) {
             return
         }
         self.adjust();
@@ -33157,6 +33172,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         S.each(curColHeights, function (v, i) {
             curColHeights[i] = 0;
         });
+        self.set("colItems", []);
     }
 
     function adjustItem(itemRaw) {
@@ -33181,7 +33197,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         // 元素保持间隔不变，居中
         var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
         item.css({
-            //left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
+            // left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
             //    + containerRegion.left,
             // 元素间固定间隔好点
             left:dest * self.get("colWidth") + margin,
@@ -33195,7 +33211,33 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             container.append(item);
         }
         curColHeights[dest] += item.outerHeight(true);
+        var colItems = self.get("colItems");
+        colItems[dest] = colItems[dest] || [];
+        colItems[dest].push(item);
+        item.attr("data-waterfall-col", dest);
         return item;
+    }
+
+    function addItem(itemRaw) {
+        var self = this,
+            curColHeights = self.get("curColHeights"),
+            container = self.get("container"),
+            item = adjustItem.call(self, itemRaw),
+            effect = self.get("effect");
+        if (!effect.effect ||
+            effect.effect !== "fadeIn") {
+            return;
+        }
+        // only allow fadeIn temporary
+        item.animate({
+            opacity:1
+        }, {
+            duration:effect.duration,
+            easing:effect.easing,
+            complete:function () {
+                item.css("opacity", "");
+            }
+        });
     }
 
     S.extend(Waterfall, Base,
@@ -33203,91 +33245,148 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * @lends Waterfall
          */
         {
-        isAdjusting:function () {
-            return !!this._adjuster;
-        },
-        _init:function () {
-            var self = this;
-            // 一开始就 adjust 一次，可以对已有静态数据处理
-            doResize.call(self);
-            self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
-            $(window).on("resize", self.__onResize);
-        },
+            isAdjusting:function () {
+                return !!this._adjuster;
+            },
 
-        /**
-         * 调整所有的元素位置
-         * @param callback
-         */
-        adjust:function (callback) {
-            S.log("waterfall:adjust");
-            var self = this,
-                items = self.get("container").all(".ks-waterfall");
-            /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
-            /* 正在调整中，取消上次调整，开始这次调整 */
-            if (self.isAdjusting()) {
-                self._adjuster.stop();
-            }
-            /*计算容器宽度等信息*/
-            recalculate.call(self);
-            return self._adjuster = timedChunk(items, self._addItem, self, function () {
-                self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
-                self._adjuster = 0;
-                callback && callback.call(self);
+            _init:function () {
+                var self = this;
+                // 一开始就 adjust 一次，可以对已有静态数据处理
+                doResize.call(self);
+                self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
+                $(window).on("resize", self.__onResize);
+            },
 
-                items.length && self.fire('adjustComplete', {
-                    items:items
+            adjustItem:function (item, cfg) {
+                var self = this;
+
+                if (self.isAdjusting()) {
+                    return;
+                }
+
+                var originalOuterHeight = item.outerHeight(true),
+                    outerHeight,
+                    remove = false;
+                if (cfg.process) {
+                    remove = cfg.process.call(self);
+                }
+                if (remove) {
+                    outerHeight = 0;
+                } else {
+                    outerHeight = item.outerHeight(true);
+                }
+                var diff = outerHeight - originalOuterHeight,
+                    curColHeights = self.get("curColHeights"),
+                    dest = parseInt(item.attr("data-waterfall-col")),
+                    colItems = self.get("colItems")[dest],
+                    items = [],
+                    original = Math.max.apply(Math, curColHeights),
+                    now;
+
+                for (var i = 0; i < colItems.length; i++) {
+                    if (colItems[i][0] === item[0]) {
+                        break;
+                    }
+                }
+
+                i++;
+
+                while (i < colItems.length) {
+                    items.push(colItems[i]);
+                    i++;
+                }
+
+                curColHeights[dest] += diff;
+
+                now = Math.max.apply(Math, curColHeights);
+
+                if (now != original) {
+                    self.get("container").height(now);
+                }
+
+                return self._adjuster = timedChunk(items, function (item) {
+                    item.css("top", parseInt(item.css("top")) + diff);
+                }, null, function () {
+                    self._adjuster = 0;
+                    cfg && cfg.callback && cfg.callback.call(self);
                 });
-            });
-        },
+            },
 
-        addItems:function (items, callback) {
-            var self = this;
+            removeItem:function (item, cfg) {
+                var self = this;
+                self.adjustItem(item, {
+                    process:function () {
+                        item.remove();
+                        return true;
+                    },
+                    callback:function () {
+                        var dest = parseInt(item.attr("data-waterfall-col")),
+                            colItems = self.get("colItems")[dest];
+                        for (var i = 0; i < colItems.length; i++) {
+                            if (colItems[i][0] == item[0]) {
+                                colItems.splice(i, 1);
+                                break;
+                            }
+                        }
+                        if (cfg && cfg.callback) {
+                            cfg.callback.call(self);
+                        }
+                    }
+                });
+            },
 
-            /* 正在调整中，直接这次加，和调整的节点一起处理 */
-            /* 正在加，直接这次加，一起处理 */
-            self._adder = timedChunk(items,
-                self._addItem,
-                self,
-                function () {
-                    self.get("container").height(Math.max.apply(Math,
-                        self.get("curColHeights")));
-                    self._adder = 0;
+            /**
+             * 调整所有的元素位置
+             * @param [callback]
+             */
+            adjust:function (callback) {
+                S.log("waterfall:adjust");
+                var self = this,
+                    items = self.get("container").all(".ks-waterfall");
+                /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
+                /* 正在调整中，取消上次调整，开始这次调整 */
+                if (self.isAdjusting()) {
+                    self._adjuster.stop();
+                }
+                /*计算容器宽度等信息*/
+                recalculate.call(self);
+                return self._adjuster = timedChunk(items, addItem, self, function () {
+                    self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
+                    self._adjuster = 0;
                     callback && callback.call(self);
 
-                    items.length && self.fire('addComplete', {
+                    items.length && self.fire('adjustComplete', {
                         items:items
                     });
                 });
+            },
 
-            return self._adder;
-        },
+            addItems:function (items, callback) {
+                var self = this;
 
-        _addItem:function (itemRaw) {
-            var self = this,
-                curColHeights = self.get("curColHeights"),
-                container = self.get("container"),
-                item = adjustItem.call(self, itemRaw),
-                effect = self.get("effect");
-            if (!effect.effect ||
-                effect.effect !== "fadeIn") {
-                return;
+                /* 正在调整中，直接这次加，和调整的节点一起处理 */
+                /* 正在加，直接这次加，一起处理 */
+                self._adder = timedChunk(items,
+                    addItem,
+                    self,
+                    function () {
+                        self.get("container").height(Math.max.apply(Math,
+                            self.get("curColHeights")));
+                        self._adder = 0;
+                        callback && callback.call(self);
+
+                        items.length && self.fire('addComplete', {
+                            items:items
+                        });
+                    });
+
+                return self._adder;
+            },
+
+            destroy:function () {
+                $(window).detach("resize", this.__onResize);
             }
-            // only allow fadeIn temporary
-            item.animate({
-                opacity:1
-            }, {
-                duration:effect.duration,
-                easing:effect.easing,
-                complete:function () {
-                    item.css("opacity", "");
-                }
-            });
-        },
-
-        destroy:function () {
-            $(window).detach("resize", this.__onResize);
-        }
-    });
+        });
 
 
     return Waterfall;
