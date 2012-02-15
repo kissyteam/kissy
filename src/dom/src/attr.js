@@ -165,7 +165,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var ret;
                     ret = elem.getAttributeNode(name);
                     // Return undefined if attribute node specified by user
-                    return ret && ret.specified ?
+                    return ret && (
+                        // fix #100
+                        ret.specified
+                            // input.attr("value")
+                            || ret.nodeValue) ?
                         ret.nodeValue :
                         undefined;
                 },
