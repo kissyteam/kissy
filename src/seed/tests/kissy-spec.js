@@ -1,14 +1,14 @@
-describe('kissy.js', function() {
+describe('kissy.js', function () {
 
     var S = KISSY,
         host = S.__HOST;
 
-    it('S.mix', function() {
-        var o1 = { a: 1, b: 2 },
-            o2 = { a: 1, b: 2 },
-            o3 = { a: 1, b: 2 },
+    it('S.mix', function () {
+        var o1 = { a:1, b:2 },
+            o2 = { a:1, b:2 },
+            o3 = { a:1, b:2 },
             //o4 = { a: 1, b: 2 },
-            o = { a: 'a', c: true };
+            o = { a:'a', c:true };
 
         S.mix(o1, o);
         expect(o1.a).toBe('a');
@@ -28,16 +28,16 @@ describe('kissy.js', function() {
             y:{
                 z:1
             },
-            q:[2,5]
+            q:[2, 5]
         };
 
         S.mix(r, {
-                x:2,
-                y:{
-                    s:1
-                },
-                q:[6]
-            });
+            x:2,
+            y:{
+                s:1
+            },
+            q:[6]
+        });
 
         expect(r.x).toBe(2);
         expect(r.y.s).toBe(1);
@@ -50,39 +50,52 @@ describe('kissy.js', function() {
             y:{
                 z:1
             },
-            q:[2,5]
+            q:[2, 5]
         };
 
         S.mix(r, {
-                x:2,
-                y:{
-                    s:1
-                },
-                q:[undefined,6]
-            }, undefined, undefined, true);
+            x:2,
+            y:{
+                s:1
+            },
+            q:[undefined, 6]
+        }, undefined, undefined, true);
 
         expect(r.x).toBe(2);
         expect(r.y.s).toBe(1);
         expect(r.y.z).toBe(1);
-        expect(r.q + "").toBe([2,6] + "");
+        expect(r.q + "").toBe([2, 6] + "");
 
 
     });
 
-    it('S.merge', function() {
+
+    it('S.mix solve JsEnumBug', function () {
+        var v = {
+            toString:function () {
+                return 1;
+            }
+        };
+
+        var z = {};
+        S.mix(z, v);
+        expect(z.toString()).toBe(1);
+    });
+
+    it('S.merge', function () {
         var a = {
-            'bool' : false,
-            'num'  : 0,
-            'nul'  : null,
-            'undef': undefined,
-            'str'  : 'blabber'
+            'bool':false,
+            'num':0,
+            'nul':null,
+            'undef':undefined,
+            'str':'blabber'
         },
             b = {
-                'bool' : 'oops',
-                'num'  : 'oops',
-                'nul'  : 'oops',
-                'undef': 'oops',
-                'str'  : 'oops'
+                'bool':'oops',
+                'num':'oops',
+                'nul':'oops',
+                'undef':'oops',
+                'str':'oops'
             };
 
         var c = S.merge(a, b);
@@ -94,16 +107,16 @@ describe('kissy.js', function() {
         expect(c.str).toBe('oops');
     });
 
-    it('S.augment', function() {
+    it('S.augment', function () {
         function Bird(name) {
             this.name = name;
         }
 
         Bird.prototype = {
-            getName: function() {
+            getName:function () {
                 return this.name;
             },
-            fly: function() {
+            fly:function () {
             }
         };
 
@@ -111,8 +124,8 @@ describe('kissy.js', function() {
             this.name = name;
         }
 
-        S.augment(Pig, Bird, { prop: 'test prop' });
-        S.augment(Pig, { weight: '100kg' });
+        S.augment(Pig, Bird, { prop:'test prop' });
+        S.augment(Pig, { weight:'100kg' });
         var pig = new Pig('Babe');
 
         expect(typeof pig.fly).toBe('function');
@@ -120,13 +133,13 @@ describe('kissy.js', function() {
         expect(pig.weight).toBe('100kg');
     });
 
-    it('S.extend', function() {
+    it('S.extend', function () {
         function Bird(name) {
             this.name = name;
         }
 
         Bird.prototype = {
-            getName: function() {
+            getName:function () {
                 return this.name;
             }
         };
@@ -144,7 +157,7 @@ describe('kissy.js', function() {
         expect(chicken.featcher).toBe(2); // keep existed prototype members
     });
 
-    it('S.namespace', function() {
+    it('S.namespace', function () {
         var ns;
 
         // normal
@@ -175,13 +188,13 @@ describe('kissy.js', function() {
         try {
             delete host['TB'];
             delete host['Global'];
-        } catch(e) {
+        } catch (e) {
             host['TB'] = undefined;
             host['Global'] = undefined;
         }
     });
 
-    it('S.app', function() {
+    it('S.app', function () {
         S.app('TB');
 
         // check Env
@@ -194,24 +207,24 @@ describe('kissy.js', function() {
         // clear
         try {
             delete host['TB'];
-        } catch(e) {
+        } catch (e) {
             host['TB'] = undefined;
         }
     });
 
-    it('S.log', function() {
+    it('S.log', function () {
         //S.log('test log');
     });
 
-    it('S.error', function() {
+    it('S.error', function () {
         try {
             S.error('wrong');
-        } catch(e) {
+        } catch (e) {
             expect(e).toBe('wrong');
         }
     });
 
-    it('S.guid', function() {
+    it('S.guid', function () {
         expect(typeof S.guid()).toBe('string');
         expect(S.guid() - S.guid()).toBe(-1);
     });

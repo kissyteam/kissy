@@ -199,7 +199,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 16 16:52
+build time: Feb 16 17:44
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -212,6 +212,16 @@ build time: Feb 16 16:52
      */
 
     var host = this,
+        hasEnumBug = !({toString:1}.propertyIsEnumerable('toString')),
+        hasOwn = Object.prototype.hasOwnProperty,
+        emumProperties = [
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'toString',
+            'toLocaleString',
+            'valueOf'
+        ],
         meta = {
             /**
              * Copies all the properties of s to r.
@@ -251,6 +261,17 @@ build time: Feb 16 16:52
                         // no hasOwnProperty judge !
                         _mix(p, r, s, ov, deep);
                     }
+
+                    // fix #101
+                    if (hasEnumBug) {
+                        for (var j = 0; j < emumProperties.length; j++) {
+                            p = emumProperties[j];
+                            if (ov && hasOwn.call(s, p)) {
+                                r[p] = s[p];
+                            }
+                        }
+                    }
+
                 }
                 return r;
             }
@@ -315,7 +336,7 @@ build time: Feb 16 16:52
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120216165209',
+            buildTime:'20120216174411',
 
             /**
              * Returns a new object containing all of the properties of

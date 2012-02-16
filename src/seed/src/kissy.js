@@ -9,6 +9,16 @@
      */
 
     var host = this,
+        hasEnumBug = !({toString:1}.propertyIsEnumerable('toString')),
+        hasOwn = Object.prototype.hasOwnProperty,
+        emumProperties = [
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'toString',
+            'toLocaleString',
+            'valueOf'
+        ],
         meta = {
             /**
              * Copies all the properties of s to r.
@@ -48,6 +58,17 @@
                         // no hasOwnProperty judge !
                         _mix(p, r, s, ov, deep);
                     }
+
+                    // fix #101
+                    if (hasEnumBug) {
+                        for (var j = 0; j < emumProperties.length; j++) {
+                            p = emumProperties[j];
+                            if (ov && hasOwn.call(s, p)) {
+                                r[p] = s[p];
+                            }
+                        }
+                    }
+
                 }
                 return r;
             }

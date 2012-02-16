@@ -37,7 +37,7 @@ describe("KISSY.Defer", function () {
         runs(function () {
             d.resolve(1);
         });
-        waits(10);
+        waits(100);
         runs(function () {
             expect(r).toBe(1);
             expect(Promise.isResolved(p)).toBe(true);
@@ -49,14 +49,14 @@ describe("KISSY.Defer", function () {
             r,
             p = d.promise;
         d.resolve(1);
-        waits(10);
+        waits(100);
         runs(function () {
             expect(Promise.isResolved(p)).toBe(true);
             p.then(function (v) {
                 r = v;
             });
         });
-        waits(10);
+        waits(100);
         runs(function () {
             expect(r).toBe(1);
             expect(Promise.isResolved(p)).toBe(true);
@@ -68,7 +68,7 @@ describe("KISSY.Defer", function () {
             r,
             p = d.promise;
         d.reject(1);
-        waits(10);
+        waits(100);
         runs(function () {
             expect(Promise.isResolved(p)).toBe(false);
             expect(Promise.isRejected(p)).toBe(true);
@@ -76,7 +76,7 @@ describe("KISSY.Defer", function () {
                 r = v;
             });
         });
-        waits(10);
+        waits(100);
         runs(function () {
             expect(r).toBe(1);
             expect(Promise.isResolved(p)).toBe(false);
@@ -99,7 +99,7 @@ describe("KISSY.Defer", function () {
         runs(function () {
             d.resolve(1);
         });
-        waits(10);
+        waits(100);
         runs(function () {
             expect(r).toBe(2);
         });
@@ -127,7 +127,7 @@ describe("KISSY.Defer", function () {
         runs(function () {
             defer.resolve(2);
         });
-        waits(5);
+        waits(50);
         runs(function () {
             expect(Promise.isResolved(p)).toBe(true);
             // p2 is waiting for d2
