@@ -199,7 +199,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 16 13:09
+build time: Feb 16 16:52
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -220,8 +220,15 @@ build time: Feb 16 13:09
              * @param {Object} s the object need to augment
              * @param {boolean} [ov=true] whether overwrite existing property
              * @param {String[]} [wl] array of white-list properties
-             * @param deep {boolean} whether recursive mix if encounter object
+             * @param deep {boolean} whether recursive mix if encounter object,
+             * if deep is set true,then ov should set true too!
              * @return {Object} the augmented object
+             * @example
+             * <code>
+             * var t={};
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1,0,1) =>{x:{y:3,z:4,a:{}}} , a!==t
+             * S.mix({x:{y:2,z:4}},{x:{y:3,a:t}},1) => {x:{y:3,a:t}}
+             * </code>
              */
             mix:function (r, s, ov, wl, deep) {
                 if (!s || !r) {
@@ -308,7 +315,7 @@ build time: Feb 16 13:09
              * The build time of the library
              * @type {String}
              */
-            buildTime:'20120216130941',
+            buildTime:'20120216165209',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1185,7 +1192,12 @@ build time: Feb 16 13:09
                 }
 
                 // The strings and functions also have 'length'
-                if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                if (typeof o.length !== 'number'
+                    // element
+                    || o.nodeName
+                    // window
+                    || o.alert
+                    || S.isString(o) || S.isFunction(o)) {
                     return [o];
                 }
                 var ret = [];

@@ -636,7 +636,12 @@
                 }
 
                 // The strings and functions also have 'length'
-                if (typeof o.length !== 'number' || S.isString(o) || S.isFunction(o)) {
+                if (typeof o.length !== 'number'
+                    // element
+                    || o.nodeName
+                    // window
+                    || o.alert
+                    || S.isString(o) || S.isFunction(o)) {
                     return [o];
                 }
                 var ret = [];
