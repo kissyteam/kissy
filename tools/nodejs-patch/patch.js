@@ -61,8 +61,9 @@
     var mods = S.Env.mods;
 
     mix(S, {
+
         Config:{
-            base:__filename.replace(/[^\\/]*$/i, "").replace(/\\/g, "/")
+            base:__dirname.replace(/\\/g, "/") + "/"
         },
 
         add:function (name, def, cfg) {
@@ -192,7 +193,7 @@
         } else {
             ret = depName;
         }
-        return ret.replace(/\\/, "/");
+        return ret.replace(/\\/g, "/");
     }
 
 })(KISSY);
