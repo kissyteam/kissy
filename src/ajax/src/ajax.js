@@ -40,6 +40,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
 
             /**
              * perform a get request
+             * @function
              * @param {String} url request destination
              * @param {Object} [data] name-value object associated with this request
              * @param {Function()} callback <br/>

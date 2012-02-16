@@ -217,17 +217,6 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 IO.
-                                                <b class="name"><a href="../symbols/IO.html#.get">get</a></b>
-                                                <span class="type">{IO.XhrObject}</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">perform a get request</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                IO.
                                                 <b class="name"><a href="../symbols/IO.html#.isLocal">isLocal</a></b>
                                                 <span class="type">{Boolean}</span>
                                                 
@@ -255,6 +244,16 @@ a.go-top:active{text-decoration:none;}
                                     </div>
                                     <div class="box-bd">
                                         <ul class="list summary-list">
+                                            
+                                            <li class="li">                                                
+                                                IO.
+                                                <b class="name"><a href="../symbols/IO.html#.get">get</a></b>
+                                                <span class="param">(url, data, callback, dataType)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">perform a get request</span>                                                
+                                            </li>
                                             
                                             <li class="li">                                                
                                                 IO.
@@ -761,38 +760,6 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
-                                            <a name=".get"> </a>
-                                            <div class="title">                                                
-                                                <span>IO.</span>
-                                                <b class="name">get</b>
-                                                <span>{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                
-                                                <span class="desc">
-                                                    perform a get request
-                                                    
-                                                        <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
                                             <a name=".isLocal"> </a>
                                             <div class="title">                                                
                                                 <span>IO.</span>
@@ -836,6 +803,102 @@ a.go-top:active{text-decoration:none;}
                                 </div>
                                 <div class="box-bd">
                                     <ul class="list detail-list">
+                                        
+                                        <li class="li">
+                                            <a name=".get"> </a>
+                                            <div class="title">
+                                                <span>IO.</span>
+                                                <b class="name">get</b>
+                                                <span class="param">(url, data, callback, dataType)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line56">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                perform a get request
+                                                
+                                                    <br />Defined in:<a href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html">ajax.js</a>.
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">url</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">request destination</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">data</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">name-value object associated with this request</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">callback</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function()}</span> 
+                                                            <span class="desc"><br/>success callback when this request is donewith parameter <br/>1. data returned from this request with type specified by dataType <br/>2. status of this request with type String <br/>3. XhrObject of this request , for details <a href="../symbols/IO.XhrObject.html">IO.XhrObject</a></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">dataType</b>
+                                                            
+                                                             ]
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">the type of data returns from this request("xml" or "json" or "text")</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{<a href="../symbols/IO.XhrObject.html">IO.XhrObject</a>}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
                                         
                                         <li class="li">
                                             <a name=".getConfig"> </a>
@@ -897,7 +960,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line120">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line121">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -984,7 +1047,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line92">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line93">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1071,7 +1134,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line71">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line72">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -1291,7 +1354,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line142">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_ajax_src_ajax.js.html#line143">view source</a>
                                             </div>
 
                                             <div class="desc">
