@@ -1,0 +1,46 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; }
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
+<span id='line2' class='line'>  2</span>  * @fileOverview logic for config.global , mainly for kissy.editor
+<span id='line3' class='line'>  3</span>  * @author  lifesinger@gmail.com,yiminghe@gmail.com
+<span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">loader</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">require</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line7' class='line'>  7</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line8' class='line'>  8</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">loader</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line10' class='line'> 10</span> 
+<span id='line11' class='line'> 11</span> </span><span class="WHIT">        </span><span class="COMM">// 按需从 global 迁移模块定义到当前 loader 实例，并根据 global 设置 fullpath</span><span class="WHIT">
+<span id='line12' class='line'> 12</span> </span><span class="WHIT">        </span><span class="NAME">__mixMod</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">global</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line13' class='line'> 13</span> </span><span class="WHIT">            </span><span class="COMM">// 从 __mixMods 调用过来时，可能本实例没有该模块的数据结构</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line15' class='line'> 15</span> </span><span class="WHIT">                </span><span class="NAME">mods</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self.Env.mods</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line16' class='line'> 16</span> </span><span class="WHIT">                </span><span class="NAME">gMods</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">global.Env.mods</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line17' class='line'> 17</span> </span><span class="WHIT">                </span><span class="NAME">mod</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mods</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line18' class='line'> 18</span> </span><span class="WHIT">                </span><span class="NAME">status</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mod.status</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line19' class='line'> 19</span> 
+<span id='line20' class='line'> 20</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">gMods</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line21' class='line'> 21</span> 
+<span id='line22' class='line'> 22</span> </span><span class="WHIT">                </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">mod</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">S.clone</span><span class="PUNC">(</span><span class="NAME">gMods</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line23' class='line'> 23</span> 
+<span id='line24' class='line'> 24</span> </span><span class="WHIT">                </span><span class="COMM">// status 属于实例，当有值时，不能被覆盖。</span><span class="WHIT">
+<span id='line25' class='line'> 25</span> </span><span class="WHIT">                </span><span class="COMM">// 1. 只有没有初始值时，才从 global 上继承</span><span class="WHIT">
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">                </span><span class="COMM">// 2. 初始值为 0 时，也从 global 上继承</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> </span><span class="WHIT">                </span><span class="COMM">// 其他都保存自己的状态</span><span class="WHIT">
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">status</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line29' class='line'> 29</span> </span><span class="WHIT">                    </span><span class="NAME">mod.status</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">status</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line30' class='line'> 30</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line32' class='line'> 32</span> 
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">            </span><span class="COMM">// 来自 global 的 mod, path 也应该基于 global</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> </span><span class="WHIT">            </span><span class="NAME">self.__buildPath</span><span class="PUNC">(</span><span class="NAME">mod</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">global.Config.base</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line35' class='line'> 35</span> 
+<span id='line36' class='line'> 36</span> </span><span class="WHIT">            </span><span class="NAME">mods</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mod</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line37' class='line'> 37</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="NAME">KISSY</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">KISSY.__loader</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

@@ -1,0 +1,118 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; }
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
+<span id='line2' class='line'>  2</span>  * @fileOverview view for kissy mvc : event delegation,el generator
+<span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
+<span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"mvc/view"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Node</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Base</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> 
+<span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Node.all</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line8' class='line'>  8</span> 
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">normFn</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">f</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line10' class='line'> 10</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isString</span><span class="PUNC">(</span><span class="NAME">f</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line11' class='line'> 11</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">self</span><span class="PUNC">[</span><span class="NAME">f</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line12' class='line'> 12</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line13' class='line'> 13</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">f</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line15' class='line'> 15</span> 
+<span id='line16' class='line'> 16</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line17' class='line'> 17</span>      * @class
+<span id='line18' class='line'> 18</span>      * @memberOf MVC
+<span id='line19' class='line'> 19</span>      */</span><span class="WHIT">
+<span id='line20' class='line'> 20</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">View</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line21' class='line'> 21</span> </span><span class="WHIT">        </span><span class="NAME">View.superclass.constructor.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line22' class='line'> 22</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">events</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line23' class='line'> 23</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">events</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"events"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line24' class='line'> 24</span> </span><span class="WHIT">            </span><span class="NAME">this._afterEventsChange</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line25' class='line'> 25</span> </span><span class="WHIT">                </span><span class="NAME">newVal</span><span class="PUNC">:</span><span class="NAME">events</span><span class="WHIT">
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line29' class='line'> 29</span> 
+<span id='line30' class='line'> 30</span> </span><span class="WHIT">    </span><span class="NAME">View.ATTRS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line32' class='line'> 32</span>      * @lends MVC.View#
+<span id='line33' class='line'> 33</span>      */</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> </span><span class="WHIT">    </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line35' class='line'> 35</span> </span><span class="WHIT">        </span><span class="NAME">el</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line36' class='line'> 36</span> </span><span class="WHIT">            </span><span class="NAME">value</span><span class="PUNC">:</span><span class="STRN">"&lt;div />"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line37' class='line'> 37</span> </span><span class="WHIT">            </span><span class="NAME">getter</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">s</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isString</span><span class="PUNC">(</span><span class="NAME">s</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">                    </span><span class="NAME">s</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">s</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">                    </span><span class="NAME">this.__set</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">s</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">s</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line43' class='line'> 43</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line44' class='line'> 44</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line45' class='line'> 45</span> 
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line47' class='line'> 47</span>          * events:{
+<span id='line48' class='line'> 48</span>          *   selector:{
+<span id='line49' class='line'> 49</span>          *     eventType:callback
+<span id='line50' class='line'> 50</span>          *   }
+<span id='line51' class='line'> 51</span>          * }
+<span id='line52' class='line'> 52</span>          */</span><span class="WHIT">
+<span id='line53' class='line'> 53</span> </span><span class="WHIT">        </span><span class="NAME">events</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line54' class='line'> 54</span> 
+<span id='line55' class='line'> 55</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line56' class='line'> 56</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line57' class='line'> 57</span> 
+<span id='line58' class='line'> 58</span> 
+<span id='line59' class='line'> 59</span> </span><span class="WHIT">    </span><span class="NAME">S.extend</span><span class="PUNC">(</span><span class="NAME">View</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Base</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line60' class='line'> 60</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line61' class='line'> 61</span>          * @lends MVC.View#
+<span id='line62' class='line'> 62</span>          */</span><span class="WHIT">
+<span id='line63' class='line'> 63</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line64' class='line'> 64</span> 
+<span id='line65' class='line'> 65</span> </span><span class="WHIT">            </span><span class="NAME">_afterEventsChange</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prevVal</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">e.prevVal</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">prevVal</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">                    </span><span class="NAME">this._removeEvents</span><span class="PUNC">(</span><span class="NAME">prevVal</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line70' class='line'> 70</span> </span><span class="WHIT">                </span><span class="NAME">this._addEvents</span><span class="PUNC">(</span><span class="NAME">e.newVal</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line71' class='line'> 71</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line72' class='line'> 72</span> 
+<span id='line73' class='line'> 73</span> </span><span class="WHIT">            </span><span class="NAME">_removeEvents</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">events</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line74' class='line'> 74</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">el</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> </span><span class="WHIT">                </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">selector</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">events</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line76' class='line'> 76</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">events</span><span class="PUNC">[</span><span class="NAME">selector</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line77' class='line'> 77</span> </span><span class="WHIT">                    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">type</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line78' class='line'> 78</span> </span><span class="WHIT">                        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">normFn</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">event</span><span class="PUNC">[</span><span class="NAME">type</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line79' class='line'> 79</span> </span><span class="WHIT">                        </span><span class="NAME">el.undelegate</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line80' class='line'> 80</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line81' class='line'> 81</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line82' class='line'> 82</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line83' class='line'> 83</span> 
+<span id='line84' class='line'> 84</span> </span><span class="WHIT">            </span><span class="NAME">_addEvents</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">events</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line85' class='line'> 85</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">el</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line86' class='line'> 86</span> </span><span class="WHIT">                </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">selector</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">events</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line87' class='line'> 87</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">events</span><span class="PUNC">[</span><span class="NAME">selector</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line88' class='line'> 88</span> </span><span class="WHIT">                    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">type</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line89' class='line'> 89</span> </span><span class="WHIT">                        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">normFn</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">event</span><span class="PUNC">[</span><span class="NAME">type</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line90' class='line'> 90</span> </span><span class="WHIT">                        </span><span class="NAME">el.delegate</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line91' class='line'> 91</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line92' class='line'> 92</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line93' class='line'> 93</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line94' class='line'> 94</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line95' class='line'> 95</span>              * user need to override
+<span id='line96' class='line'> 96</span>              */</span><span class="WHIT">
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">            </span><span class="NAME">render</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line99' class='line'> 99</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line100' class='line'>100</span> 
+<span id='line101' class='line'>101</span> </span><span class="WHIT">            </span><span class="NAME">destroy</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line102' class='line'>102</span> </span><span class="WHIT">                </span><span class="NAME">this.get</span><span class="PUNC">(</span><span class="STRN">"el"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">remove</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line103' class='line'>103</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line104' class='line'>104</span> 
+<span id='line105' class='line'>105</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line106' class='line'>106</span> 
+<span id='line107' class='line'>107</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">View</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line108' class='line'>108</span> 
+<span id='line109' class='line'>109</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line110' class='line'>110</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">'node'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'base'</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line111' class='line'>111</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

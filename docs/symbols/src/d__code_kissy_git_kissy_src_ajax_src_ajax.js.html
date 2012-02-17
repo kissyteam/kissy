@@ -1,0 +1,186 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; }
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
+<span id='line2' class='line'>  2</span>  * @fileOverview io shortcut
+<span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
+<span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"ajax"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">serializer</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">IO</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">XhrObject</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">undef</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line7' class='line'>  7</span> 
+<span id='line8' class='line'>  8</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">get</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_t</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">        </span><span class="COMM">// data 参数可省略</span><span class="WHIT">
+<span id='line10' class='line'> 10</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isFunction</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line11' class='line'> 11</span> </span><span class="WHIT">            </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line12' class='line'> 12</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line13' class='line'> 13</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undef</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line15' class='line'> 15</span> 
+<span id='line16' class='line'> 16</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IO</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line17' class='line'> 17</span> </span><span class="WHIT">            </span><span class="NAME">type</span><span class="PUNC">:</span><span class="NAME">_t</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">"get"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line18' class='line'> 18</span> </span><span class="WHIT">            </span><span class="NAME">url</span><span class="PUNC">:</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line19' class='line'> 19</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="PUNC">:</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line20' class='line'> 20</span> </span><span class="WHIT">            </span><span class="NAME">success</span><span class="PUNC">:</span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line21' class='line'> 21</span> </span><span class="WHIT">            </span><span class="NAME">dataType</span><span class="PUNC">:</span><span class="NAME">dataType</span><span class="WHIT">
+<span id='line22' class='line'> 22</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line23' class='line'> 23</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line24' class='line'> 24</span> 
+<span id='line25' class='line'> 25</span> </span><span class="WHIT">    </span><span class="COMM">// some shortcut</span><span class="WHIT">
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">IO</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> 
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line29' class='line'> 29</span>          * @lends IO
+<span id='line30' class='line'> 30</span>          */</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line32' class='line'> 32</span> </span><span class="WHIT">            </span><span class="NAME">XhrObject</span><span class="PUNC">:</span><span class="NAME">XhrObject</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line34' class='line'> 34</span>              * form serialization
+<span id='line35' class='line'> 35</span>              * @function
+<span id='line36' class='line'> 36</span>              * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
+<span id='line37' class='line'> 37</span>              * @returns {String} serialized string represent form elements
+<span id='line38' class='line'> 38</span>              */</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">            </span><span class="NAME">serialize</span><span class="PUNC">:</span><span class="NAME">serializer.serialize</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> 
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line42' class='line'> 42</span>              * perform a get request
+<span id='line43' class='line'> 43</span>              * @function
+<span id='line44' class='line'> 44</span>              * @param {String} url request destination
+<span id='line45' class='line'> 45</span>              * @param {Object} [data] name-value object associated with this request
+<span id='line46' class='line'> 46</span>              * @param {Function()} callback &lt;br/>
+<span id='line47' class='line'> 47</span>              * success callback when this request is done
+<span id='line48' class='line'> 48</span>              * with parameter &lt;br/>
+<span id='line49' class='line'> 49</span>              * 1. data returned from this request with type specified by dataType &lt;br/>
+<span id='line50' class='line'> 50</span>              * 2. status of this request with type String &lt;br/>
+<span id='line51' class='line'> 51</span>              * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line52' class='line'> 52</span>              * @param {String} [dataType] the type of data returns from this request
+<span id='line53' class='line'> 53</span>              * ("xml" or "json" or "text")
+<span id='line54' class='line'> 54</span>              * @returns {IO.XhrObject}
+<span id='line55' class='line'> 55</span>              */</span><span class="WHIT">
+<span id='line56' class='line'> 56</span> </span><span class="WHIT">            </span><span class="NAME">get</span><span class="PUNC">:</span><span class="NAME">get</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line57' class='line'> 57</span> 
+<span id='line58' class='line'> 58</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line59' class='line'> 59</span>              * preform a post request
+<span id='line60' class='line'> 60</span>              * @param {String} url request destination
+<span id='line61' class='line'> 61</span>              * @param {Object} [data] name-value object associated with this request
+<span id='line62' class='line'> 62</span>              * @param {Function()} callback &lt;br/>
+<span id='line63' class='line'> 63</span>              * success callback when this request is done&lt;br/>
+<span id='line64' class='line'> 64</span>              * with parameter&lt;br/>
+<span id='line65' class='line'> 65</span>              * 1. data returned from this request with type specified by dataType&lt;br/>
+<span id='line66' class='line'> 66</span>              * 2. status of this request with type String&lt;br/>
+<span id='line67' class='line'> 67</span>              * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line68' class='line'> 68</span>              * @param {String} [dataType] the type of data returns from this request
+<span id='line69' class='line'> 69</span>              * ("xml" or "json" or "text")
+<span id='line70' class='line'> 70</span>              * @returns {IO.XhrObject}
+<span id='line71' class='line'> 71</span>              */</span><span class="WHIT">
+<span id='line72' class='line'> 72</span> </span><span class="WHIT">            </span><span class="NAME">post</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line73' class='line'> 73</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isFunction</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line74' class='line'> 74</span> </span><span class="WHIT">                    </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> </span><span class="WHIT">                    </span><span class="NAME">callback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line76' class='line'> 76</span> </span><span class="WHIT">                    </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undef</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line77' class='line'> 77</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line78' class='line'> 78</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">get</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"post"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line79' class='line'> 79</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line80' class='line'> 80</span> 
+<span id='line81' class='line'> 81</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line82' class='line'> 82</span>              * preform a jsonp request
+<span id='line83' class='line'> 83</span>              * @param {String} url request destination
+<span id='line84' class='line'> 84</span>              * @param {Object} [data] name-value object associated with this request
+<span id='line85' class='line'> 85</span>              * @param {Function()} callback
+<span id='line86' class='line'> 86</span>              *  &lt;br/>success callback when this request is done&lt;br/>
+<span id='line87' class='line'> 87</span>              * with parameter&lt;br/>
+<span id='line88' class='line'> 88</span>              * 1. data returned from this request with type specified by dataType&lt;br/>
+<span id='line89' class='line'> 89</span>              * 2. status of this request with type String&lt;br/>
+<span id='line90' class='line'> 90</span>              * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line91' class='line'> 91</span>              * @returns {IO.XhrObject}
+<span id='line92' class='line'> 92</span>              */</span><span class="WHIT">
+<span id='line93' class='line'> 93</span> </span><span class="WHIT">            </span><span class="NAME">jsonp</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line94' class='line'> 94</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isFunction</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line95' class='line'> 95</span> </span><span class="WHIT">                    </span><span class="NAME">callback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line96' class='line'> 96</span> </span><span class="WHIT">                    </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undef</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line97' class='line'> 97</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line98' class='line'> 98</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">get</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"jsonp"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line99' class='line'> 99</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line100' class='line'>100</span> 
+<span id='line101' class='line'>101</span> </span><span class="WHIT">            </span><span class="COMM">// 和 S.getScript 保持一致</span><span class="WHIT">
+<span id='line102' class='line'>102</span> </span><span class="WHIT">            </span><span class="COMM">// 更好的 getScript 可以用</span><span class="WHIT">
+<span id='line103' class='line'>103</span> </span><span class="WHIT">            </span><span class="COMM">/*
+<span id='line104' class='line'>104</span>              IO({
+<span id='line105' class='line'>105</span>              dataType:'script'
+<span id='line106' class='line'>106</span>              });
+<span id='line107' class='line'>107</span>              */</span><span class="WHIT">
+<span id='line108' class='line'>108</span> </span><span class="WHIT">            </span><span class="NAME">getScript</span><span class="PUNC">:</span><span class="NAME">S.getScript</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line109' class='line'>109</span> 
+<span id='line110' class='line'>110</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line111' class='line'>111</span>              * perform a get request to fetch json data from server
+<span id='line112' class='line'>112</span>              * @param {String} url request destination
+<span id='line113' class='line'>113</span>              * @param {Object} [data] name-value object associated with this request
+<span id='line114' class='line'>114</span>              * @param {Function()} callback  &lt;br/>success callback when this request is done&lt;br/>
+<span id='line115' class='line'>115</span>              * with parameter&lt;br/>
+<span id='line116' class='line'>116</span>              * 1. data returned from this request with type JSON&lt;br/>
+<span id='line117' class='line'>117</span>              * 2. status of this request with type String&lt;br/>
+<span id='line118' class='line'>118</span>              * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line119' class='line'>119</span>              * @returns {IO.XhrObject}
+<span id='line120' class='line'>120</span>              */</span><span class="WHIT">
+<span id='line121' class='line'>121</span> </span><span class="WHIT">            </span><span class="NAME">getJSON</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line122' class='line'>122</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isFunction</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line123' class='line'>123</span> </span><span class="WHIT">                    </span><span class="NAME">callback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line124' class='line'>124</span> </span><span class="WHIT">                    </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undef</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line125' class='line'>125</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line126' class='line'>126</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">get</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"json"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line127' class='line'>127</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line128' class='line'>128</span> 
+<span id='line129' class='line'>129</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line130' class='line'>130</span>              * submit form without page refresh
+<span id='line131' class='line'>131</span>              * @param {String} url request destination
+<span id='line132' class='line'>132</span>              * @param {HTMLElement|NodeList} form element tobe submited
+<span id='line133' class='line'>133</span>              * @param {Object} [data] name-value object associated with this request
+<span id='line134' class='line'>134</span>              * @param {Function()} callback  &lt;br/>success callback when this request is done&lt;br/>
+<span id='line135' class='line'>135</span>              * with parameter&lt;br/>
+<span id='line136' class='line'>136</span>              * 1. data returned from this request with type specified by dataType&lt;br/>
+<span id='line137' class='line'>137</span>              * 2. status of this request with type String&lt;br/>
+<span id='line138' class='line'>138</span>              * 3. XhrObject of this request , for details {@link IO.XhrObject}
+<span id='line139' class='line'>139</span>              * @param {String} [dataType] the type of data returns from this request
+<span id='line140' class='line'>140</span>              * ("xml" or "json" or "text")
+<span id='line141' class='line'>141</span>              * @returns {IO.XhrObject}
+<span id='line142' class='line'>142</span>              */</span><span class="WHIT">
+<span id='line143' class='line'>143</span> </span><span class="WHIT">            </span><span class="NAME">upload</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">form</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dataType</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line144' class='line'>144</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S.isFunction</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line145' class='line'>145</span> </span><span class="WHIT">                    </span><span class="NAME">dataType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line146' class='line'>146</span> </span><span class="WHIT">                    </span><span class="NAME">callback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line147' class='line'>147</span> </span><span class="WHIT">                    </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undef</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line148' class='line'>148</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line149' class='line'>149</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IO</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line150' class='line'>150</span> </span><span class="WHIT">                    </span><span class="NAME">url</span><span class="PUNC">:</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line151' class='line'>151</span> </span><span class="WHIT">                    </span><span class="NAME">type</span><span class="PUNC">:</span><span class="STRN">'post'</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line152' class='line'>152</span> </span><span class="WHIT">                    </span><span class="NAME">dataType</span><span class="PUNC">:</span><span class="NAME">dataType</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line153' class='line'>153</span> </span><span class="WHIT">                    </span><span class="NAME">form</span><span class="PUNC">:</span><span class="NAME">form</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line154' class='line'>154</span> </span><span class="WHIT">                    </span><span class="NAME">data</span><span class="PUNC">:</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line155' class='line'>155</span> </span><span class="WHIT">                    </span><span class="NAME">success</span><span class="PUNC">:</span><span class="NAME">callback</span><span class="WHIT">
+<span id='line156' class='line'>156</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line157' class='line'>157</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line158' class='line'>158</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line159' class='line'>159</span> 
+<span id='line160' class='line'>160</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line161' class='line'>161</span> </span><span class="WHIT">        </span><span class="NAME">Ajax</span><span class="PUNC">:</span><span class="NAME">IO</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line162' class='line'>162</span> </span><span class="WHIT">        </span><span class="NAME">IO</span><span class="PUNC">:</span><span class="NAME">IO</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line163' class='line'>163</span> </span><span class="WHIT">        </span><span class="NAME">ajax</span><span class="PUNC">:</span><span class="NAME">IO</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line164' class='line'>164</span> </span><span class="WHIT">        </span><span class="NAME">io</span><span class="PUNC">:</span><span class="NAME">IO</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line165' class='line'>165</span> </span><span class="WHIT">        </span><span class="NAME">jsonp</span><span class="PUNC">:</span><span class="NAME">IO.jsonp</span><span class="WHIT">
+<span id='line166' class='line'>166</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line167' class='line'>167</span> 
+<span id='line168' class='line'>168</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IO</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line169' class='line'>169</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line170' class='line'>170</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="WHIT">
+<span id='line171' class='line'>171</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/FormSerializer"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line172' class='line'>172</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/base"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line173' class='line'>173</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/XhrObject"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line174' class='line'>174</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/XhrTransport"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line175' class='line'>175</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/ScriptTransport"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line176' class='line'>176</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/jsonp"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line177' class='line'>177</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/form"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line178' class='line'>178</span> </span><span class="WHIT">        </span><span class="STRN">"ajax/IframeTransport"</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line179' class='line'>179</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

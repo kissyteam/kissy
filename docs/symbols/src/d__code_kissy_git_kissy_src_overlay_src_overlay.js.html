@@ -1,0 +1,22 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; }
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
+<span id='line2' class='line'>  2</span>  * @fileOverview overlay
+<span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
+<span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"overlay"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">O</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">OR</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">D</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">DR</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">P</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> </span><span class="WHIT">    </span><span class="NAME">O.Render</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">OR</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="NAME">D.Render</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">DR</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line8' class='line'>  8</span> </span><span class="WHIT">    </span><span class="NAME">O.Dialog</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">D</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">    </span><span class="NAME">S.Dialog</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">D</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line10' class='line'> 10</span> </span><span class="WHIT">    </span><span class="NAME">O.Popup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.Popup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">P</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line11' class='line'> 11</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">O</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line12' class='line'> 12</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line13' class='line'> 13</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="STRN">"overlay/base"</span><span class="PUNC">,</span><span class="STRN">"overlay/overlayrender"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">        </span><span class="STRN">"overlay/dialog"</span><span class="PUNC">,</span><span class="STRN">"overlay/dialogrender"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"overlay/popup"</span><span class="PUNC">]</span><span class="WHIT">
+<span id='line15' class='line'> 15</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

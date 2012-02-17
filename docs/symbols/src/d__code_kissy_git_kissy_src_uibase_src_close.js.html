@@ -1,0 +1,64 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; }
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
+<span id='line2' class='line'>  2</span>  * @fileOverview close extension for kissy dialog
+<span id='line3' class='line'>  3</span>  * @author yiminghe@gmail.com
+<span id='line4' class='line'>  4</span>  */</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"uibase/close"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> 
+<span id='line7' class='line'>  7</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line8' class='line'>  8</span>      * config detail of close action
+<span id='line9' class='line'>  9</span>      * @class
+<span id='line10' class='line'> 10</span>      * @memberOf UIBase
+<span id='line11' class='line'> 11</span>      */</span><span class="WHIT">
+<span id='line12' class='line'> 12</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Close</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line13' class='line'> 13</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> 
+<span id='line15' class='line'> 15</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">HIDE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"hide"</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line16' class='line'> 16</span> </span><span class="WHIT">    </span><span class="NAME">Close.ATTRS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span id='line17' class='line'> 17</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span id='line18' class='line'> 18</span>      * @lends UIBase.Close.prototype
+<span id='line19' class='line'> 19</span>      */</span><span class="WHIT">
+<span id='line20' class='line'> 20</span> </span><span class="WHIT">    </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line21' class='line'> 21</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line22' class='line'> 22</span>          * 是否自带关闭按钮
+<span id='line23' class='line'> 23</span>          * @type boolean
+<span id='line24' class='line'> 24</span>          */</span><span class="WHIT">
+<span id='line25' class='line'> 25</span> </span><span class="WHIT">        </span><span class="NAME">closable</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">            </span><span class="NAME">view</span><span class="PUNC">:</span><span class="KEYW">true</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line28' class='line'> 28</span> 
+<span id='line29' class='line'> 29</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line30' class='line'> 30</span>          * 点击关闭按钮的动作，销毁("destroy")或隐藏("hide")
+<span id='line31' class='line'> 31</span>          * @type string
+<span id='line32' class='line'> 32</span>          */</span><span class="WHIT">
+<span id='line33' class='line'> 33</span> </span><span class="WHIT">        </span><span class="NAME">closeAction</span><span class="PUNC">:</span><span class="PUNC">{</span><span class="WHIT">
+<span id='line34' class='line'> 34</span> </span><span class="WHIT">            </span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">HIDE</span><span class="WHIT">
+<span id='line35' class='line'> 35</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line36' class='line'> 36</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line37' class='line'> 37</span> 
+<span id='line38' class='line'> 38</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">actions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">        </span><span class="NAME">hide</span><span class="PUNC">:</span><span class="NAME">HIDE</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">        </span><span class="NAME">destroy</span><span class="PUNC">:</span><span class="STRN">"destroy"</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> 
+<span id='line43' class='line'> 43</span> </span><span class="WHIT">    </span><span class="NAME">Close.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line44' class='line'> 44</span> 
+<span id='line45' class='line'> 45</span> </span><span class="WHIT">        </span><span class="NAME">__bindUI</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> 
+<span id='line47' class='line'> 47</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line48' class='line'> 48</span> </span><span class="WHIT">                </span><span class="NAME">closeBtn</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"view"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">get</span><span class="PUNC">(</span><span class="STRN">"closeBtn"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line49' class='line'> 49</span> </span><span class="WHIT">            </span><span class="NAME">closeBtn</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">closeBtn.on</span><span class="PUNC">(</span><span class="STRN">"click"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ev</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line50' class='line'> 50</span> </span><span class="WHIT">                </span><span class="NAME">self</span><span class="PUNC">[</span><span class="NAME">actions</span><span class="PUNC">[</span><span class="NAME">self.get</span><span class="PUNC">(</span><span class="STRN">"closeAction"</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">HIDE</span><span class="PUNC">]</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line51' class='line'> 51</span> </span><span class="WHIT">                </span><span class="NAME">ev.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line52' class='line'> 52</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line53' class='line'> 53</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line54' class='line'> 54</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line55' class='line'> 55</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Close</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line56' class='line'> 56</span> 
+<span id='line57' class='line'> 57</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

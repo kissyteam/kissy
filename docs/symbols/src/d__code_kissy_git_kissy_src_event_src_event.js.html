@@ -1,0 +1,87 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; }
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span id='line1' class='line'>  1</span> <span class="COMM">/**
+<span id='line2' class='line'>  2</span>  * @fileOverview KISSY Scalable Event Framework
+<span id='line3' class='line'>  3</span>  */</span><span class="WHIT">
+<span id='line4' class='line'>  4</span> </span><span class="NAME">KISSY.add</span><span class="PUNC">(</span><span class="STRN">"event"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">KeyCodes</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Target</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Object</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line5' class='line'>  5</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">Event</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line6' class='line'>  6</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span id='line7' class='line'>  7</span>          * @lends Event
+<span id='line8' class='line'>  8</span>          */</span><span class="WHIT">
+<span id='line9' class='line'>  9</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line10' class='line'> 10</span> </span><span class="WHIT">            </span><span class="NAME">KeyCodes</span><span class="PUNC">:</span><span class="NAME">KeyCodes</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line11' class='line'> 11</span> </span><span class="WHIT">            </span><span class="NAME">Target</span><span class="PUNC">:</span><span class="NAME">Target</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line12' class='line'> 12</span> </span><span class="WHIT">            </span><span class="NAME">Object</span><span class="PUNC">:</span><span class="NAME">Object</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line13' class='line'> 13</span> </span><span class="WHIT">            </span><span class="NAME">on</span><span class="PUNC">:</span><span class="NAME">Event.add</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line14' class='line'> 14</span> </span><span class="WHIT">            </span><span class="NAME">detach</span><span class="PUNC">:</span><span class="NAME">Event.remove</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line15' class='line'> 15</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line16' class='line'> 16</span>              *
+<span id='line17' class='line'> 17</span>              * @param targets KISSY selector
+<span id='line18' class='line'> 18</span>              * @param {String} [eventType] The type of event to delegate.
+<span id='line19' class='line'> 19</span>              * use space to separate multiple event types.
+<span id='line20' class='line'> 20</span>              * @param {String|Function} selector filter selector string or function to find right element
+<span id='line21' class='line'> 21</span>              * @param {Function} [fn] The event handler/listener.
+<span id='line22' class='line'> 22</span>              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+<span id='line23' class='line'> 23</span>              */</span><span class="WHIT">
+<span id='line24' class='line'> 24</span> </span><span class="WHIT">            </span><span class="NAME">delegate</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">targets</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">scope</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line25' class='line'> 25</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Event.add</span><span class="PUNC">(</span><span class="NAME">targets</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line26' class='line'> 26</span> </span><span class="WHIT">                    </span><span class="NAME">fn</span><span class="PUNC">:</span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line27' class='line'> 27</span> </span><span class="WHIT">                    </span><span class="NAME">scope</span><span class="PUNC">:</span><span class="NAME">scope</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line28' class='line'> 28</span> </span><span class="WHIT">                    </span><span class="NAME">selector</span><span class="PUNC">:</span><span class="NAME">selector</span><span class="WHIT">
+<span id='line29' class='line'> 29</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line30' class='line'> 30</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line31' class='line'> 31</span> </span><span class="WHIT">            </span><span class="COMM">/**
+<span id='line32' class='line'> 32</span>              * @param targets KISSY selector
+<span id='line33' class='line'> 33</span>              * @param {String} [eventType] The type of event to undelegate.
+<span id='line34' class='line'> 34</span>              * use space to separate multiple event types.
+<span id='line35' class='line'> 35</span>              * @param {String|Function} selector filter selector string or function to find right element
+<span id='line36' class='line'> 36</span>              * @param {Function} [fn] The event handler/listener.
+<span id='line37' class='line'> 37</span>              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+<span id='line38' class='line'> 38</span>              */</span><span class="WHIT">
+<span id='line39' class='line'> 39</span> </span><span class="WHIT">            </span><span class="NAME">undelegate</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">targets</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">scope</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line40' class='line'> 40</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Event.remove</span><span class="PUNC">(</span><span class="NAME">targets</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">eventType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line41' class='line'> 41</span> </span><span class="WHIT">                    </span><span class="NAME">fn</span><span class="PUNC">:</span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line42' class='line'> 42</span> </span><span class="WHIT">                    </span><span class="NAME">scope</span><span class="PUNC">:</span><span class="NAME">scope</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line43' class='line'> 43</span> </span><span class="WHIT">                    </span><span class="NAME">selector</span><span class="PUNC">:</span><span class="NAME">selector</span><span class="WHIT">
+<span id='line44' class='line'> 44</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line45' class='line'> 45</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span id='line46' class='line'> 46</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line47' class='line'> 47</span> 
+<span id='line48' class='line'> 48</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">Event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line49' class='line'> 49</span> 
+<span id='line50' class='line'> 50</span> </span><span class="WHIT">    </span><span class="NAME">S.mix</span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line51' class='line'> 51</span> </span><span class="WHIT">        </span><span class="NAME">Event</span><span class="PUNC">:</span><span class="NAME">Event</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line52' class='line'> 52</span> </span><span class="WHIT">        </span><span class="NAME">EventTarget</span><span class="PUNC">:</span><span class="NAME">Event.Target</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line53' class='line'> 53</span> </span><span class="WHIT">        </span><span class="NAME">EventObject</span><span class="PUNC">:</span><span class="NAME">Event.Object</span><span class="WHIT">
+<span id='line54' class='line'> 54</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line55' class='line'> 55</span> 
+<span id='line56' class='line'> 56</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line57' class='line'> 57</span> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line58' class='line'> 58</span> </span><span class="WHIT">    </span><span class="NAME">requires</span><span class="PUNC">:</span><span class="PUNC">[</span><span class="WHIT">
+<span id='line59' class='line'> 59</span> </span><span class="WHIT">        </span><span class="STRN">"event/data"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line60' class='line'> 60</span> </span><span class="WHIT">        </span><span class="STRN">"event/keycodes"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line61' class='line'> 61</span> </span><span class="WHIT">        </span><span class="STRN">"event/base"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line62' class='line'> 62</span> </span><span class="WHIT">        </span><span class="STRN">"event/target"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line63' class='line'> 63</span> </span><span class="WHIT">        </span><span class="STRN">"event/object"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line64' class='line'> 64</span> </span><span class="WHIT">        </span><span class="STRN">"event/focusin"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line65' class='line'> 65</span> </span><span class="WHIT">        </span><span class="STRN">"event/hashchange"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line66' class='line'> 66</span> </span><span class="WHIT">        </span><span class="STRN">"event/valuechange"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line67' class='line'> 67</span> </span><span class="WHIT">        </span><span class="STRN">"event/mouseenter"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line68' class='line'> 68</span> </span><span class="WHIT">        </span><span class="STRN">"event/submit"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line69' class='line'> 69</span> </span><span class="WHIT">        </span><span class="STRN">"event/change"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line70' class='line'> 70</span> </span><span class="WHIT">        </span><span class="STRN">"event/mousewheel"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line71' class='line'> 71</span> </span><span class="WHIT">        </span><span class="STRN">"event/add"</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line72' class='line'> 72</span> </span><span class="WHIT">        </span><span class="STRN">"event/remove"</span><span class="WHIT">
+<span id='line73' class='line'> 73</span> </span><span class="WHIT">    </span><span class="PUNC">]</span><span class="WHIT">
+<span id='line74' class='line'> 74</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line75' class='line'> 75</span> 
+<span id='line76' class='line'> 76</span> </span><span class="COMM">/**
+<span id='line77' class='line'> 77</span>  *  2012-02-12 yiminghe@gmail.com note:
+<span id='line78' class='line'> 78</span>  *   - 普通 remove() 不管 selector 都会查，如果 fn scope 相等就移除
+<span id='line79' class='line'> 79</span>  *   - undelegate() selector 为 ""，那么去除所有委托绑定的 handler
+<span id='line80' class='line'> 80</span>  */</span></pre></body></html>
