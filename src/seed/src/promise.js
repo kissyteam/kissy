@@ -81,7 +81,9 @@
     }
 
     /**
-     * Promise constructor , !Do Not New By Yourself!
+     * Promise constructor.
+     * This class should not be instantiated manually.
+     * Instances will be created and returned as needed by {@link KISSY.Defer#promise}
      * @constructor
      * @namespace
      * @param v promise's resolved value
