@@ -2,7 +2,8 @@
  * @fileOverview calendar
  */
 KISSY.add("calendar", function (S, C, Page, Time, Date) {
-    C.Date = Date;
+    S.Date = C.Date = Date;
+    S.Calendar = C;
     return C;
 }, {
     requires:["calendar/base", "calendar/page", "calendar/time", "calendar/date"]

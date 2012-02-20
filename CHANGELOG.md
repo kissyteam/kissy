@@ -44,7 +44,7 @@ History:
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
 
- - [+] 左莫增强 calendar
+ - [+] 左莫增强 calendar：新的 ui,增加 destroy 方法
 
  - [+] popup 增加 toggle(左莫),mouseDelay(乔花) 配置
 
