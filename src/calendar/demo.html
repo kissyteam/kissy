@@ -43,7 +43,7 @@
 <hr size=1/>
 <h3>静态日历，以及单击回调</h3>
 
-<div id="J_Calendar"></div>
+<div id="J_Calendar"></div><a id="J_CalendarRemove">J_CalendarRemove</a>
 <hr size=1/>
 <h3>静态双月日历,默认选中某日</h3>
 <div id="J_MultiPage_1"></div>
@@ -134,11 +134,14 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
         var S_Date = S.Date;
         var i = 0;
         //静态日历,单击回调
-        c = new Calendar('#J_Calendar').on('select', function(e) {
+        cr = new Calendar('#J_Calendar').on('select', function(e) {
+			debugger;
             alert(e.date);
+			//c.destroy();
         }, {
             popup:false
         });
+		S.one('#J_CalendarRemove').on('click',function(){cr.destroy();});
         S.log(++i);
         //静态双月日历,默认选中某日
         c = new Calendar('#J_MultiPage_1', {
@@ -146,6 +149,7 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
             selected:showdate(-2, new Date()),
             popup:false
         });
+		
         S.log(++i);
         //静态三月日历
         new Calendar('#J_MultiPage_2', {

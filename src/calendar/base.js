@@ -63,10 +63,16 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
 
             o = o || {};
             self._parseParam(o);
-            self.ca = [];
 
             self.con.addClass('ks-cal-call ks-clearfix multi-' + self.pages);
+			
+			self.ca = self.ca ||[];
+			for(var i=0;i<self.ca.length;i++){
+				self.ca[i].detachEvent();
+			}
             self.con.html('');
+			//重置日历的个数
+			self.ca.length = self.pages;
 
             for (i = 0,_oym = [self.year,self.month]; i < self.pages; i++) {
                 if (i === 0) {
@@ -76,13 +82,13 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
                     _oym = self._computeNextMonth(_oym);
                 }
                 _next = i == (self.pages - 1);
-                self.ca.push(new self.Page({
+                self.ca[i]=new self.Page({
                     year:_oym[0],
                     month:_oym[1],
                     prevArrow:_prev,
                     nextArrow:_next,
                     showTime:self.showTime
-                }, self));
+                }, self);
 
 
                 self.ca[i].render();
@@ -90,7 +96,19 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             return this;
 
         },
-
+		destroy:function(){
+			//在清空html前，移除绑定的事件
+			var self = this;
+			for(var i=0;i<self.ca.length;i++){
+				self.ca[i].detachEvent();
+			}
+			
+			S.each(self.EV, function(tev) {
+                if (tev) {
+                    tev.target.detach(tev.type, tev.fn);
+            }});
+            self.con.remove();
+		},
         /**
          * 用以给容器打上id的标记,容器有id则返回
          * @method _stamp

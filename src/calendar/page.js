@@ -168,6 +168,16 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
                 }
                 return this;
             };
+			this.detachEvent = function(){
+				var cc = this;
+				cc.EV = cc.EV || [];
+				//flush event
+                S.each(cc.EV, function(tev) {
+                    if (tev) {
+                        tev.target.detach(tev.type, tev.fn);
+                    }
+                });
+			}
             /**
              * 创建子日历的事件
              */
@@ -348,59 +358,37 @@ KISSY.add('calendar/page', function(S, UA, Node, Calendar) {
             this.createDS = function() {
                 var cc = this,
                     s = '',
-                    startweekday = (new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay() + cc.father.startDay + 7) % 7,//当月第一天是星期几
-                    k = cc._getNumOfDays(cc.year, cc.month + 1) + startweekday,
+                    startOffset = (7-cc.father.startDay+new Date(cc.year + '/' + (cc.month + 1) + '/01').getDay())%7,//当月第一天是星期几
+                    days = cc._getNumOfDays(cc.year, cc.month + 1),
+					selected = cc.father.selected,
+					today = new Date(),
                     i, _td_s;
 
-                for (i = 0; i < k; i++) {
-                    //prepare data {{
-                    if (/532/.test(UA['webkit'])) {//hack for chrome
-                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
-                    } else {
-                        _td_s = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 2 - startweekday).toString());
-                    }
-                    var _td_e = new Date(cc.year + '/' + Number(cc.month + 1) + '/' + (i + 1 - startweekday).toString());
-                    //prepare data }}
-                    if (i < startweekday) {//null
-                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
-                    } else if (cc.father.minDate instanceof Date &&
-                        new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 2 - startweekday)).getTime() < (cc.father.minDate.getTime() + 1)) {//disabled
-                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
-
-                    } else if (cc.father.maxDate instanceof Date &&
-                        new Date(cc.year + '/' + (cc.month + 1) + '/' + (i + 1 - startweekday)).getTime() > cc.father.maxDate.getTime()) {//disabled
-                        s += '<a href="javascript:void(0);" class="ks-disabled">' + (i - startweekday + 1) + '</a>';
-
-
-                    } else if ((cc.father.range.start !== null && cc.father.range.end !== null) && //日期选择范围
-                        (  _td_s.getTime() >= cc.father._showdate(1, cc.father.range.start).getTime() && _td_e.getTime() < cc.father._showdate(1, cc.father.range.end).getTime())) {
-
-                        if (i == (startweekday + (new Date()).getDate() - 1) &&
-                            (new Date()).getFullYear() == cc.year &&
-                            (new Date()).getMonth() == cc.month) {//今天并被选择
-                            s += '<a href="javascript:void(0);" class="ks-range ks-today">' + (i - startweekday + 1) + '</a>';
-                        } else {
-                            s += '<a href="javascript:void(0);" class="ks-range">' + (i - startweekday + 1) + '</a>';
-                        }
-
-                    } else if (i == (startweekday + (new Date()).getDate() - 1) &&
-                        (new Date()).getFullYear() == cc.year &&
-                        (new Date()).getMonth() == cc.month) {//today
-                        s += '<a href="javascript:void(0);" class="ks-today">' + (i - startweekday + 1) + '</a>';
-
-                    } else if (i == (startweekday + cc.father.selected.getDate() - 1) &&
-                        cc.month == cc.father.selected.getMonth() &&
-                        cc.year == cc.father.selected.getFullYear()) {//selected
-                        s += '<a href="javascript:void(0);" class="ks-selected">' + (i - startweekday + 1) + '</a>';
-                    } else {//other
-                        s += '<a href="javascript:void(0);">' + (i - startweekday + 1) + '</a>';
-                    }
-                }
-                if (k % 7 !== 0) {
-                    for (i = 0; i < (7 - k % 7); i++) {
-                        s += '<a href="javascript:void(0);" class="ks-null">0</a>';
-                    }
-                }
+				
+				for(var i=0;i<startOffset;i++){
+					s += '<a href="javascript:void(0);" class="ks-null">0</a>';
+				}
+				//左莫优化了日历生成
+                for (i = 1; i <= days; i++) {
+					var cls = '';
+					var date = new Date(cc.year,cc.month, i);
+					//minDate 和 maxDate都包含当天
+					if((cc.father.minDate&&new Date(cc.year,cc.month, i+1)<cc.father.minDate) || (cc.father.maxDate&&date>cc.father.maxDate)){
+						cls = 'ks-disabled';
+					}
+					else if(cc.father.range&&date>=cc.father.range.start&&date<=cc.father.range.end){
+						cls = 'ks-range';
+					}
+					else if(selected&&selected.getFullYear() == cc.year&&selected.getMonth() == cc.month&&selected.getDate()==i){
+						cls = 'ks-selected';
+					}
+					
+					if(today.getFullYear() == cc.year&&today.getMonth() == cc.month&&today.getDate()==i){
+						cls += ' ks-today';
+					}
+					
+					s += '<a '+(cls?'class='+cls:'')+' href="javascript:void(0);">' + i + '</a>';
+				}
                 cc.ds = s;
                 return this;
             };
