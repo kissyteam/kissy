@@ -17,6 +17,7 @@
             <path location="${src.dir}/loader/base.js"/>
             <path location="${src.dir}/loader/status.js"/>
             <path location="${src.dir}/loader/utils.js"/>
+            <path location="${src.dir}/loader/ComboLoader.js"/>
             <path location="${src.dir}/loader/scriptOnload.js"/>
             <path location="${src.dir}/loader/getScript.js"/>
             <path location="${src.dir}/loader/add.js"/>

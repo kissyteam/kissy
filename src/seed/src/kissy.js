@@ -322,9 +322,12 @@
                 var configs, cfg, r;
                 for (var p in c) {
                     if (c.hasOwnProperty(p)) {
-                        if ((configs = this['configs']) &&
-                            (cfg = configs[p])) {
+                        // some filter
+                        if ((configs = this['configs']) && (cfg = configs[p])) {
                             r = cfg(c[p]);
+                        } else {
+                            // or set directly
+                            S.Config[p] = c[p];
                         }
                     }
                 }

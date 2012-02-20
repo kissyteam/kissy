@@ -7,10 +7,8 @@
     if (typeof require !== 'undefined') {
         return;
     }
-    var ATTACHED = data.ATTACHED,
-        mix = S.mix;
 
-    mix(loader, {
+    S.mix(loader, {
 
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
@@ -25,20 +23,7 @@
         __startLoadTime:0,
 
         //ie6,7,8开始载入脚本对应的模块名
-        __startLoadModuleName:null,
-
-        __isAttached: function(modNames) {
-            var mods = this.Env.mods,
-                ret = true;
-            S.each(modNames, function(name) {
-                var mod = mods[name];
-                if (!mod || mod.status !== ATTACHED) {
-                    ret = false;
-                    return ret;
-                }
-            });
-            return ret;
-        }
+        __startLoadModuleName:null
     });
 
 

@@ -32,6 +32,10 @@
             base,
             part0 = parts[0],
             index = part0.indexOf(prefix);
+
+        S.Config.comboPrefix = prefix;
+        S.Config.comboSep = sep;
+
         // no combo
         if (index == -1) {
             base = src.replace(baseReg, '$1');
@@ -77,17 +81,9 @@
         S.Config.timeout = 10;
     })();
 
-    S.mix(S.configs, {
-        base:function (base) {
-            S.Config.base = utils.normalBasePath(base);
-        },
-        timeout:function (v) {
-            S.Config.timeout = v;
-        },
-        debug:function (v) {
-            S.Config.debug = v;
-        }
-    });
+    S.configs.base = function (base) {
+        S.Config.base = utils.normalBasePath(base);
+    };
 
     // for S.app working properly
     S.each(loader, function (v, k) {

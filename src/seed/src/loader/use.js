@@ -29,18 +29,17 @@
              * @param {Object} cfg special config for this use
              */
             use:function (modNames, callback, cfg) {
-                if (S.isString(modNames)) {
-                    modNames = modNames.replace(/\s+/g, "").split(',');
-                }
-                utils.indexMapping(modNames);
+
+                modNames = utils.normalizeModNamesInUse(modNames);
+
                 cfg = cfg || {};
 
                 var self = this,
                     fired;
 
                 // 已经全部 attached, 直接执行回调即可
-                if (self.__isAttached(modNames)) {
-                    var mods = self.__getModules(modNames);
+                if (utils.isAttached(self, modNames)) {
+                    var mods = utils.getModules(self, modNames);
                     callback && callback.apply(self, mods);
                     return;
                 }
@@ -50,27 +49,15 @@
                     // 从 name 开始调用，防止不存在模块
                     self.__attachModByName(modName, function () {
                         if (!fired &&
-                            self.__isAttached(modNames)) {
+                            utils.isAttached(self, modNames)) {
                             fired = true;
-                            var mods = self.__getModules(modNames);
+                            var mods = utils.getModules(self, modNames);
                             callback && callback.apply(self, mods);
                         }
                     }, cfg);
                 });
 
                 return self;
-            },
-
-            __getModules:function (modNames) {
-                var self = this,
-                    mods = [self];
-
-                S.each(modNames, function (modName) {
-                    if (!utils.isCss(modName)) {
-                        mods.push(self.require(modName));
-                    }
-                });
-                return mods;
             },
 
             /**
@@ -91,34 +78,11 @@
 
             // 加载指定模块名模块，如果不存在定义默认定义为内部模块
             __attachModByName:function (modName, callback, cfg) {
+
+                utils.generateModulePath(this, modName);
+
                 var self = this,
-                    mods = self.Env.mods;
-
-                var mod = mods[modName];
-                //没有模块定义
-                if (!mod) {
-                    // 默认 js/css 名字
-                    // 不指定 .js 默认为 js
-                    // 指定为 css 载入 .css
-                    var componentJsName = self.Config['componentJsName'] ||
-                        function (m) {
-                            var suffix = "js", match;
-                            if (match = m.match(/(.+)\.(js|css)$/i)) {
-                                suffix = match[2];
-                                m = match[1];
-                            }
-                            return m + '-min.' + suffix;
-                        },
-                        path = componentJsName(modName);
-                    mod = {
-                        path:path,
-                        charset:'utf-8'
-                    };
-                    //添加模块定义
-                    mods[modName] = mod;
-                }
-
-                mod.name = modName;
+                    mod = self.Env.mods[modName];
 
                 if (mod && mod.status === ATTACHED) {
                     callback();
@@ -199,7 +163,7 @@
                 }
 
                 // load and attach this module
-                self.__buildPath(mod, self.__getPackagePath(mod));
+                self.__buildPath(mod, utils.getPackagePath(mod));
 
                 self.__load(mod, function () {
 
@@ -236,11 +200,9 @@
                 }, cfg);
 
                 function fn() {
-                    if (!attached &&
-                        self.__isAttached(mod['requires'])) {
-
+                    if (!attached && utils.isAttached(self, mod['requires'])) {
                         if (mod.status === LOADED) {
-                            self.__attachMod(mod);
+                            utils.attachMod(self, mod);
                         }
                         if (mod.status === ATTACHED) {
                             attached = 1;
@@ -248,25 +210,6 @@
                         }
                     }
                 }
-            },
-
-            __attachMod:function (mod) {
-                var self = this,
-                    fns = mod.fns;
-
-                if (fns) {
-                    S.each(fns, function (fn) {
-                        var value;
-                        if (S.isFunction(fn)) {
-                            value = fn.apply(self, self.__getModules(mod['requires']));
-                        } else {
-                            value = fn;
-                        }
-                        mod.value = mod.value || value;
-                    });
-                }
-
-                mod.status = ATTACHED;
             }
         });
 })(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);

@@ -72,7 +72,7 @@
                             //S.error("module " + host + " can not be found !");
                             return self;
                         }
-                        if (self.__isAttached(host)) {
+                        if (utils.isAttached(self,host)) {
                             def.call(self, self);
                         } else {
                             //该 host 模块纯虚！
@@ -82,7 +82,7 @@
                         return self;
                     }
 
-                    self.__registerModule(name, def, config);
+                    utils.registerModule(self,name, def, config);
                     //显示指定 add 不 attach
                     if (config && config['attach'] === false) {
                         return self;
@@ -90,9 +90,9 @@
                     // 和 1.1.7 以前版本保持兼容，不得已而为之
                     var mod = mods[name];
                     var requires = utils.normalDepModuleName(name, mod.requires);
-                    if (self.__isAttached(requires)) {
+                    if (utils.isAttached(self,requires)) {
                         //S.log(mod.name + " is attached when add !");
-                        self.__attachMod(mod);
+                        utils.attachMod(self,mod);
                     }
                     //调试用，为什么不在 add 时 attach
                     else if (this.Config.debug && !mod) {
@@ -137,7 +137,7 @@
                         // use onload to get module name is not right in ie
                         name = self.__findModuleNameByInteractive();
                         S.log("old_ie get modname by interactive : " + name);
-                        self.__registerModule(name, def, config);
+                        utils.registerModule(self,name, def, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
                     } else {

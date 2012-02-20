@@ -2,7 +2,7 @@
  * @fileOverview load a single mod (js or css)
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function(S, loader, utils, data) {
+(function (S, loader, utils, data) {
     if (typeof require !== 'undefined') {
         return;
     }
@@ -16,7 +16,7 @@
         /**
          * Load a single module.
          */
-        __load: function(mod, callback, cfg) {
+        __load:function (mod, callback, cfg) {
 
             var self = this,
                 url = mod['fullpath'],
@@ -48,7 +48,7 @@
                     self.__startLoadTime = Number(+new Date());
                 }
                 node = S.getScript(url, {
-                    success: function() {
+                    success:function () {
                         if (isCss) {
 
                         } else {
@@ -56,7 +56,8 @@
                             //标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
                             if (self.__currentModule) {
                                 S.log("standard browser get modname after load : " + mod.name);
-                                self.__registerModule(mod.name, self.__currentModule.def,
+                                utils.registerModule(self,
+                                    mod.name, self.__currentModule.def,
                                     self.__currentModule.config);
                                 self.__currentModule = null;
                             }
@@ -73,11 +74,11 @@
                         }
                         _scriptOnComplete();
                     },
-                    error: function() {
+                    error:function () {
                         _modError();
                         _scriptOnComplete();
                     },
-                    charset: mod.charset
+                    charset:mod.charset
                 });
 
                 loadQueque[url] = node;
@@ -85,7 +86,7 @@
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
             else if (mod.status === LOADING) {
-                utils.scriptOnload(node, function() {
+                utils.scriptOnload(node, function () {
                     // 模块载入后，如果需要也要混入对应 global 上模块定义
                     mixGlobal();
                     _scriptOnComplete();
