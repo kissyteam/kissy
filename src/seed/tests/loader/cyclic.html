@@ -9,7 +9,9 @@
 <script src="../../../../build/seed.js"></script>
 
 <script>
-    KISSY.Config.base = "./";
+    KISSY.config({
+        base:"./"
+    });
     KISSY.use("a", function() {
         alert(1);
     });

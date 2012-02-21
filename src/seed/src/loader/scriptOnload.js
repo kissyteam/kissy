@@ -2,11 +2,12 @@
  * @fileOverview script/css load across browser
  * @author  yiminghe@gmail.com
  */
-(function (S, utils) {
+(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
     var CSS_POLL_INTERVAL = 30,
+        utils = S.Loader.Utils,
         /**
          * central poll for link node
          */
@@ -125,4 +126,4 @@
                 startCssTimer();
             }
     });
-})(KISSY, KISSY.__loaderUtils);
+})(KISSY);

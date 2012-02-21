@@ -15,25 +15,18 @@
 
             <!--kissy loader start-->
             <path location="${src.dir}/loader/base.js"/>
-            <path location="${src.dir}/loader/status.js"/>
             <path location="${src.dir}/loader/utils.js"/>
-            <path location="${src.dir}/loader/ComboLoader.js"/>
             <path location="${src.dir}/loader/scriptOnload.js"/>
             <path location="${src.dir}/loader/getScript.js"/>
-            <path location="${src.dir}/loader/add.js"/>
-            <path location="${src.dir}/loader/buildPath.js"/>
-            <path location="${src.dir}/loader/global.js"/>
-            <path location="${src.dir}/loader/ie.js"/>
-            <path location="${src.dir}/loader/load.js"/>
+            <path location="${src.dir}/loader/configs.js"/>
             <path location="${src.dir}/loader/loader.js"/>
-            <path location="${src.dir}/loader/package.js"/>
-            <path location="${src.dir}/loader/registerModule.js"/>
             <path location="${src.dir}/loader/use.js"/>
-            <path location="${src.dir}/loader/map.js"/>
+            <path location="${src.dir}/loader/ComboLoader.js"/>
             <path location="${src.dir}/loader/init.js"/>
-            <!--kissy loader end-->
 
+            <!--kissy loader end-->
             <path location="${src.dir}/web.js"/>
+            <path location="${src.dir}/meta.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>

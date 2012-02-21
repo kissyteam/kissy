@@ -125,4 +125,4 @@
         }
     });
 
-})(KISSY, KISSY.__loaderUtils);
+})(KISSY, KISSY.Loader.Utils);

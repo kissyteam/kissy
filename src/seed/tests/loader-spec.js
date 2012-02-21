@@ -4,7 +4,9 @@
  */
 (function (S) {
     var d = window.location.href.replace(/[^/]*$/, "");
-    S.Config.base = "../../";
+    S.config({
+        base:"../../"
+    });
 
     function getStyle(elem, name) {
         if (document.defaultView) {
@@ -143,7 +145,7 @@
 
         it("detect cyclic dependency", function () {
             var old = KISSY.Config.base;
-            KISSY.Config.base = "./loader/";
+            KISSY.config({base : "./loader/"});
             var oldError = S.error, err = '';
             S.error = function (args) {
                 err = args;

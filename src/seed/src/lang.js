@@ -5,8 +5,7 @@
  */
 (function (S, undefined) {
 
-    var host = S.__HOST,
-        TRUE = true,
+    var TRUE = true,
         FALSE = false,
         OP = Object.prototype,
         toString = OP.toString,
@@ -290,7 +289,7 @@
                         length = object && object.length,
                         isObj = length === undefined || S.type(object) === 'function';
 
-                    context = context || host;
+                    context = context || null;
 
                     if (isObj) {
                         for (key in object) {

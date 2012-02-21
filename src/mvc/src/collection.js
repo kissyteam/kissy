@@ -36,8 +36,8 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
         },
         models:{
             /*
-              normalize model list
-              @param models
+             normalize model list
+             @param models
              */
             setter:function (models) {
                 var prev = this.get("models");

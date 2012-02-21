@@ -4,6 +4,10 @@
  */
 (function (S, utils) {
 
+    if (typeof require !== 'undefined') {
+        return;
+    }
+
     function loadScripts(urls, callback) {
         var count = urls && urls.length;
         if (!count) {
@@ -91,10 +95,11 @@
             use:function (modNames, callback) {
                 var self = this,
                     fn = function () {
-                        self.loading = 0;
+                        // KISSY.use in callback will be queued
                         if (callback) {
                             callback.apply(this, arguments);
                         }
+                        self.loading = 0;
                         self.next();
                     };
 
@@ -115,7 +120,7 @@
                 }
 
                 if (!countJss) {
-                    fn.apply(utils.getModules(self.SS, modNames));
+                    fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
                 }
 
@@ -124,7 +129,7 @@
                         if (!(--countJss)) {
                             self.attachMods(modNames);
                             if (utils.isAttached(self.SS, modNames)) {
-                                fn.apply(utils.getModules(self.SS, modNames))
+                                fn.apply(null, utils.getModules(self.SS, modNames))
                             } else {
                                 // new require is introduced by KISSY.add
                                 // run again
@@ -137,31 +142,16 @@
 
             add:function (name, def, config) {
                 var self = this,
-                    mods = self.SS.Env.mods,
-                    o;
-                // S.add(name, config) => S.add( { name: config } )
-                if (S.isString(name)
-                    && !config
-                    && S.isPlainObject(def)) {
-                    o = {};
-                    o[name] = def;
-                    name = o;
-                }
+                    requires,
+                    SS = self.SS;
 
-                // S.add( { name: config } )
-                if (S.isPlainObject(name)) {
-                    S.each(name, function (v, k) {
-                        v.name = k;
-                        if (mods[k]) {
-                            // 保留之前添加的配置
-                            S.mix(v, mods[k], false);
-                        }
-                    });
-                    S.mix(mods, name);
-                    return self;
+                if (utils.normAdd(SS, name, def, config)) {
+                    return;
                 }
-
-                utils.registerModule(self.SS, name, def, config);
+                if (config && (requires = config.requires)) {
+                    utils.normalDepModuleName(name, requires);
+                }
+                utils.registerModule(SS, name, def, config);
             },
 
 
@@ -222,7 +212,7 @@
                 S.each(modNames, function (modName) {
                     utils.generateModulePath(self.SS, modName);
                     mod = self.getModInfo(modName);
-                    packagePath = utils.getPackagePath(mod);
+                    packagePath = utils.getPackagePath(self.SS, mod);
                     var type = utils.isCss(mod.path) ? "css" : "js";
                     combos[packagePath] = combos[packagePath] || {};
                     combos[packagePath][type] = combos[packagePath][type] || [];
@@ -237,7 +227,7 @@
 
                 var comboPrefix = S.Config.comboPrefix,
                     comboSep = S.Config.comboSep,
-                    maxUrlLength = KISSY.Config['comboMaxUrlLength'] || MAX_URL_LENGTH;
+                    maxUrlLength = S.Config['comboMaxUrlLength'] || MAX_URL_LENGTH;
 
                 for (packagePath in combos) {
                     for (var type in combos[packagePath]) {
@@ -271,7 +261,10 @@
             },
 
             getComboUrl:function (prefix, t, comboSep, tag) {
-                return prefix + t.join(comboSep) + (S.Config.withTag ? ("?t=" + tag) : "");
+                return utils.getMappedPath(
+                    this.SS,
+                    prefix + t.join(comboSep) + (tag ? ("?t=" + tag) : "")
+                );
             },
 
             getModInfo:function (modName) {
@@ -281,10 +274,12 @@
 
             // get requires mods need to be loaded dynamically
             getRequires:function (modName) {
-                var mod = this.getModInfo(modName),
+                var self = this,
+                    SS = self.SS,
+                    mod = self.getModInfo(modName),
                     ret = {};
                 // if this mod is attached then its require is attached too!
-                if (mod && !utils.isAttached(this.SS, modName)) {
+                if (mod && !utils.isAttached(SS, modName)) {
                     var requires = mod.requires || [],
                         allRequires = mod.__allRequires || (mod.__allRequires = {});
                     for (var i = 0; i < requires.length; i++) {
@@ -296,10 +291,12 @@
                         }
 
                         // if not load into page yet
-                        if (!utils.isLoaded(this.SS, r)) {
+                        if (!utils.isLoaded(SS, r)
+                            // and not attached
+                            && !utils.isAttached(SS, r)) {
                             ret[r] = 1;
                         }
-                        var ret2 = this.getRequires(r);
+                        var ret2 = self.getRequires(r);
                         S.mix(ret, ret2);
                     }
                 }
@@ -310,7 +307,7 @@
     S.namespace("Loader");
     S.Loader.Combo = ComboLoader;
 
-})(KISSY, KISSY.__loaderUtils);
+})(KISSY, KISSY.Loader.Utils);
 /**
  * 2012-02-20 yiminghe note:
  *  - three status

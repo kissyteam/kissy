@@ -5,7 +5,7 @@
  */
 (function (S, undefined) {
 
-    var win = S.__HOST,
+    var win = window,
 
         doc = win['document'],
 

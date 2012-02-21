@@ -355,6 +355,9 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         align:function (node, points, offset, overflow) {
             var self = this,
                 flag = {};
+            if (node) {
+                node = Node.one(node);
+            }
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
             offset = offset && [].concat(offset) || [0, 0];

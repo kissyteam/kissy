@@ -121,7 +121,7 @@
             configs:(S.configs || {}),
             // S.app() with these members.
             __APP_MEMBERS:['namespace'],
-            __APP_INIT_METHODS:['__init'],
+            __APP_INIT_METHODS:[init],
 
             /**
              * The version of the library.
@@ -133,7 +133,7 @@
              * The build time of the library
              * @type {String}
              */
-            buildTime:'@TIMESTAMP@',
+            __BUILD_TIME:'@TIMESTAMP@',
 
             /**
              * Returns a new object containing all of the properties of
@@ -243,21 +243,6 @@
 
              ****************************************************************************************/
 
-            /**
-             * Initializes KISSY
-             */
-            __init:function () {
-                var self = this,
-                    c;
-
-                c = self.Config = self.Config || {};
-                self.Env = self.Env || {};
-
-                // NOTICE: '@DEBUG@' will replace with '' when compressing.
-                // So, if loading source file, debug is on by default.
-                // If loading min version, debug is turned off automatically.
-                c.debug = '@DEBUG@';
-            },
 
             /**
              * Returns the namespace specified and creates it if it doesn't exist. Be careful
@@ -299,11 +284,12 @@
                 var isStr = S.isString(name),
                     O = isStr ? host[name] || {} : name,
                     i = 0,
-                    len = S.__APP_INIT_METHODS.length;
+                    __APP_INIT_METHODS=S.__APP_INIT_METHODS,
+                    len = __APP_INIT_METHODS.length;
 
                 S.mix(O, this, true, S.__APP_MEMBERS);
                 for (; i < len; i++) {
-                    S[S.__APP_INIT_METHODS[i]].call(O);
+                    __APP_INIT_METHODS[i].call(O);
                 }
 
                 S.mix(O, S.isFunction(sx) ? sx() : sx);
@@ -371,7 +357,23 @@
             }
         });
 
-    S.__init();
+    /**
+     * Initializes
+     */
+    function init() {
+        var self = this,
+            c;
+
+        c = self.Config = self.Config || {};
+        self.Env = self.Env || {};
+
+        // NOTICE: '@DEBUG@' will replace with '' when compressing.
+        // So, if loading source file, debug is on by default.
+        // If loading min version, debug is turned off automatically.
+        c.debug = '@DEBUG@';
+    }
+
+    init.call(S);
     return S;
 
 })('KISSY', undefined);

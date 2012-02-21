@@ -2,11 +2,21 @@
  * @fileOverview utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S, loader, utils, data) {
+(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
-    var ua = navigator.userAgent, doc = document;
+    var ua = navigator.userAgent,
+        data = S.Loader.STATUS,
+        utils = {},
+        mix = S.mix,
+        doc = document,
+        // 当前页面所在的目录
+        // http://xx.com/y/z.htm#!/f/g
+        // ->
+        // http://xx.com/y/
+        __pagePath = location.href.replace(location.hash, "").replace(/[^/]*$/i, "");
+
     S.mix(utils, {
 
         docHead:function () {
@@ -81,7 +91,7 @@
             }
         },
 
-        //去除后缀名，要考虑时间戳?
+        //去除后缀名，要考虑时间戳!
         removePostfix:function (path) {
             return path.replace(/(-min)?\.js[^/]*$/i, "");
         },
@@ -106,7 +116,7 @@
              */
             if (!path.match(/^(http(s)?)|(file):/i)
                 && !startsWith(path, "/")) {
-                path = loader.__pagePath + path;
+                path = __pagePath + path;
             }
             return normalizePath(path);
         },
@@ -131,16 +141,15 @@
             return names;
         },
 
-        getPackagePath:function (mod) {
-
+        getPackagePath:function (self, mod) {
             //缓存包路径，未申明的包的模块都到核心模块中找
-            if (mod.packagepath) {
-                return mod.packagepath;
+            if (mod.packagePath) {
+                return mod.packagePath;
             }
 
             var //一个模块合并到了另一个模块文件中去
                 modName = mod.name,
-                packages = S.Config.packages || {},
+                packages = self.Config.packages || {},
                 pName = "",
                 p_def;
 
@@ -161,10 +170,10 @@
                 mod.tag = p_def.tag;
             } else {
                 // kissy 自身组件的事件戳后缀
-                mod.tag = encodeURIComponent(S.Config.tag || S.buildTime);
+                mod.tag = encodeURIComponent(self.Config.tag || S.__BUILD_TIME);
             }
 
-            return mod.packagepath = (p_def && p_def.path) || S.Config.base;
+            return mod.packagePath = (p_def && p_def.path) || self.Config.base;
         },
 
         generateModulePath:function (self, modName) {
@@ -193,7 +202,7 @@
             mod = S.mix({
                 path:path,
                 charset:'utf-8'
-            }, mods[modName], true);
+            }, mods[modName]);
 
             //添加模块定义
             mods[modName] = mod;
@@ -226,18 +235,16 @@
                 return;
             }
 
-            var fns = mod.fns;
+            var fn = mod.fn, value;
 
-            if (fns) {
-                S.each(fns, function (fn) {
-                    var value;
-                    if (S.isFunction(fn)) {
-                        value = fn.apply(self, utils.getModules(self, mod.requires));
-                    } else {
-                        value = fn;
-                    }
-                    mod.value = mod.value || value;
-                });
+            if (fn) {
+                if (S.isFunction(fn)) {
+                    // context is mod info
+                    value = fn.apply(mod, utils.getModules(self, mod.requires));
+                } else {
+                    value = fn;
+                }
+                mod.value = value;
             }
 
             mod.status = data.ATTACHED;
@@ -255,6 +262,7 @@
         //注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, def, config) {
             config = config || {};
+
             var mods = self.Env.mods,
                 mod = mods[name] || {};
 
@@ -262,15 +270,45 @@
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(mod, { name:name, status:data.LOADED });
 
-            if (mod.fns && mod.fns.length) {
+            if (mod.fn) {
                 S.log(name + " is defined more than once");
-                //S.error(name + " is defined more than once");
+                return;
             }
 
-            //支持 host，一个模块多个 add factory
-            mod.fns = mod.fns || [];
-            mod.fns.push(def);
+            mod.fn = def;
+
             S.mix((mods[name] = mod), config);
+        },
+
+        normAdd:function (self, name, def, config) {
+            var mods = self.Env.mods,
+                o;
+
+            // S.add(name, config) => S.add( { name: config } )
+            if (S.isString(name)
+                && !config
+                && S.isPlainObject(def)) {
+                o = {};
+                o[name] = def;
+                name = o;
+            }
+
+            // S.add( { name: config } )
+            if (S.isPlainObject(name)) {
+                mix(mods, name, 1, 0, 1);
+                return true;
+            }
+        },
+
+        getMappedPath:function (self, path) {
+            var __mappedRules = self.Config.mappedRules || [];
+            for (var i = 0; i < __mappedRules.length; i++) {
+                var m, rule = __mappedRules[i];
+                if (m = path.match(rule[0])) {
+                    return path.replace(rule[0], rule[1]);
+                }
+            }
+            return path;
         }
 
     });
@@ -289,6 +327,9 @@
         return ret;
     }
 
-    var startsWith = S.startsWith, normalizePath = utils.normalizePath;
+    var startsWith = S.startsWith,
+        normalizePath = utils.normalizePath;
 
-})(KISSY, KISSY.__loader, KISSY.__loaderUtils, KISSY.__loaderData);
+    S.Loader.Utils = utils;
+
+})(KISSY);

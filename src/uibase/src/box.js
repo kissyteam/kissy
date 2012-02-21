@@ -2,7 +2,7 @@
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('uibase/box', function () {
+KISSY.add('uibase/box', function (S) {
 
     /**
      * Box Implementation
@@ -119,8 +119,9 @@ KISSY.add('uibase/box', function () {
             /**
              * 如果需要特殊的对现有元素的装饰行为
              */
-            if (this.decorateInternal) {
-                this.decorateInternal(srcNode);
+            var self = this;
+            if (self.decorateInternal) {
+                self.decorateInternal(S.one(srcNode));
             }
             return srcNode;
         }

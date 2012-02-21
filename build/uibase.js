@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 16 16:52
+build time: Feb 21 19:59
 */
 /**
  * @fileOverview UIBase.Align
@@ -360,6 +360,9 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
         align:function (node, points, offset, overflow) {
             var self = this,
                 flag = {};
+            if (node) {
+                node = Node.one(node);
+            }
             // 后面会改的，先保存下
             overflow = S.clone(overflow || {});
             offset = offset && [].concat(offset) || [0, 0];
@@ -845,7 +848,7 @@ KISSY.add('uibase/base', function (S, Base, Node) {
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('uibase/box', function () {
+KISSY.add('uibase/box', function (S) {
 
     /**
      * Box Implementation
@@ -962,8 +965,9 @@ KISSY.add('uibase/box', function () {
             /**
              * 如果需要特殊的对现有元素的装饰行为
              */
-            if (this.decorateInternal) {
-                this.decorateInternal(srcNode);
+            var self = this;
+            if (self.decorateInternal) {
+                self.decorateInternal(S.one(srcNode));
             }
             return srcNode;
         }
