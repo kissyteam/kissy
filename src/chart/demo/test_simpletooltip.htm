@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.1.7/kissy.js"></script>
+  <script type="text/javascript" src="../src/js/app.js"></script>
+  <script type="text/javascript" src="../src/js/m~simpletooltip.js"></script>
+</head>
+<style type="text/css">
+    html,body{height:100%;}
+    .ks-chart-tooltip{
+        box-shadow:1px 1px 2px #555;
+        padding:3px;
+        position:absolute;background:#333; opacity:.6; color:#fff;}
+</style>
+<body>
+    <div style="height:2000px;"></div>
+    <script>
+        var P = KISSY.chart;
+        var st = new P.SimpleTooltip();
+        var actions = [
+            function(){
+                st.show("msg1");
+            },
+            function(){
+                st.hide();
+            },
+            function(){
+                st.show("msg2");
+            },
+            function(){
+                st.show("msg3");
+            }
+        ];
+
+        KISSY.one(document.body).on("click",function(){
+            if(actions.length < 1) return;
+            var act = actions.shift();
+            act();
+        });
+    </script>
+</body>
+</html>
