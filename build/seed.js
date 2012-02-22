@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 21 19:55
+build time: Feb 22 11:41
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -138,7 +138,7 @@ build time: Feb 21 19:55
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120221195550',
+            __BUILD_TIME:'20120222114149',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2927,7 +2927,7 @@ build time: Feb 21 19:55
             });
 
             function fn() {
-                if (!attached && utils.isAttached(self, mod['requires'])) {
+                if (!attached && utils.isAttached(SS, mod['requires'])) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }

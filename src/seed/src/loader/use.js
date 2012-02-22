@@ -216,7 +216,7 @@
             });
 
             function fn() {
-                if (!attached && utils.isAttached(self, mod['requires'])) {
+                if (!attached && utils.isAttached(SS, mod['requires'])) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }

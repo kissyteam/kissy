@@ -157,7 +157,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         val += "";
 
                         // faster
-                        if (!val.match(/<(?:script|style)/i) &&
+                        // fix #103,some html element can not be set through innerHTML
+                        if (!val.match(/<(?:script|style|link)/i) &&
                             (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
                             !creatorsMap[ (val.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
 
