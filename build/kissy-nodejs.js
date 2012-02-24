@@ -199,7 +199,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 22 11:41
+build time: Feb 24 11:32
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -336,7 +336,7 @@ build time: Feb 22 11:41
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120222114149',
+            __BUILD_TIME:'20120224113220',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2986,21 +2986,23 @@ build time: Feb 22 11:41
             }
 
             function build(fullpath, path) {
-                if (!mod[fullpath] && mod[path]) {
+                var flag = "__" + fullpath + "Ready",
+                    t,
+                    p = mod[fullpath],
+                    sp = mod[path];
+                if (mod[flag]) {
+                    return;
+                }
+                if (!p && sp) {
                     //如果是 ./ 或 ../ 则相对当前模块路径
-                    mod[path] = utils.normalDepModuleName(mod.name, mod[path]);
-                    mod[fullpath] = base + mod[path];
+                    sp = mod[path] = utils.normalDepModuleName(mod.name, sp);
+                    p = base + sp;
                 }
                 // debug 模式下，加载非 min 版
-                if (mod[fullpath]) {
-                    if (Config.debug) {
-                        mod[fullpath] = mod[fullpath].replace(/-min/ig, "");
-                    }
-                    //刷新客户端缓存，加时间戳 tag
-                    if (mod.tag) {
-                        mod[fullpath] += "?t=" + mod.tag;
-                    }
-                    mod[fullpath] = utils.getMappedPath(SS, mod[fullpath]);
+                if (p) {
+                    mod[fullpath] = utils.getMappedPath(SS, p +
+                        ((t = mod.tag) ? ("?t=" + t) : ""));
+                    mod[flag] = 1;
                 }
             }
         },
@@ -3008,16 +3010,13 @@ build time: Feb 22 11:41
         // 加载指定模块名模块，如果不存在定义默认定义为内部模块
         __attachModByName:function (modName, callback, cfg) {
             var self = this,
-                SS = self.SS,
-                mod = SS.Env.mods[modName];
-
+                SS = self.SS;
             utils.generateModulePath(SS, modName);
-
+            var mod = SS.Env.mods[modName];
             if (mod && mod.status === ATTACHED) {
                 callback();
                 return;
             }
-
             self.__attach(mod, callback, cfg);
         },
 
@@ -3088,7 +3087,7 @@ build time: Feb 22 11:41
             }
 
             // load and attach this module
-            self.__buildPath(mod, utils.getPackagePath(SS,mod));
+            self.__buildPath(mod, utils.getPackagePath(SS, mod));
 
             self.__load(mod, function () {
 
@@ -3144,6 +3143,7 @@ build time: Feb 22 11:41
 
             var self = this,
                 SS = self,
+                cssfullpath,
                 url = mod['fullpath'],
                 isCss = utils.isCss(url),
                 // 这个是全局的，防止多实例对同一模块的重复下载
@@ -3161,8 +3161,8 @@ build time: Feb 22 11:41
 
             // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
             // 仅发出请求，不做任何其它处理
-            if (S.isString(mod["cssfullpath"])) {
-                S.getScript(mod["cssfullpath"]);
+            if (cssfullpath = mod["cssfullpath"]) {
+                S.getScript(cssfullpath);
                 mod["cssfullpath"] = mod.csspath = LOADED;
             }
 
