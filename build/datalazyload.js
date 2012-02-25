@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:38
+build time: Feb 25 23:15
 */
 /**
  * 数据延迟加载组件
@@ -198,7 +198,7 @@ KISSY.add('datalazyload/impl', function(S, DOM, Event, undefined) {
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, function() {
+            Event.on(win, RESIZE, resizeHandler=function() {
                 self.threshold = self._getThreshold();
                 loader();
             });
