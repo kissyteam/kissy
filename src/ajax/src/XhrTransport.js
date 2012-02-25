@@ -37,6 +37,8 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
 
                 /**
                  * ie>7 强制使用 flash xdr
+                 * 使用 withCredentials 检测是否支持 CORS
+                 * http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
                  */
                 if (!("withCredentials" in detectXhr) &&
                     (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
@@ -71,4 +73,5 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
 
 /**
  * 借鉴 jquery，优化使用原型替代闭包
+ * CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
  **/
