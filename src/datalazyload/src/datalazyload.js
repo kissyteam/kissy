@@ -200,7 +200,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
             // scroll 和 resize 时，加载图片
             Event.on(win, SCROLL, loader);
-            Event.on(win, RESIZE, function () {
+            Event.on(win, RESIZE, resizeHandler = function () {
                 self.threshold = self._getThreshold();
                 loader();
             });
