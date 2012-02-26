@@ -86,7 +86,10 @@
                 for (p in css) {
                     loadScripts(css[p], function () {
                         if (!(--countCss)) {
-                            self._useJs(comboUrls, fn);
+                            S.each(modNames, function (name) {
+                                utils.attachMod(self.SS, self.getModInfo(name));
+                            });
+                            self._useJs(comboUrls, fn, modNames);
                         }
                     });
                 }
