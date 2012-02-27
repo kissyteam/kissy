@@ -12,8 +12,9 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
         DESTRUCTORS = "__dd_scrolls";
 
     /**
+     * make parent node scroll while dragging
      * @memberOf DD
-     * @class monitor scroll
+     * @class
      */
     function Scroll() {
         var self = this;
@@ -27,7 +28,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
      */
     {
         /**
-         * 容器节点
+         * node to be scrolled while dragging
          * @type {window|String|HTMLElement}
          */
         node:{
@@ -40,14 +41,15 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             }
         },
         /**
-         * 调整速度，二维数组
-         * @type number[]
+         * adjust velocity. default:[10,10]. larger faster
+         * @type Number[]
          */
         rate:{
             value:RATE
         },
         /**
-         * 调整的临界值，二维数组
+         * the margin to make node scroll. default: [20,20].
+         * easier to scroll for node if larger.
          * @type number[]
          */
         diff:{
@@ -117,8 +119,8 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 取消关联
-             * @param drag
+             * make node not to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
              */
             unAttach:function (drag) {
                 var tag,
@@ -133,7 +135,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 销毁
+             * make node not to scroll at all
              */
             destroy:function () {
                 var self = this,
@@ -144,8 +146,8 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 关联拖对象
-             * @param drag
+             * make node to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
              */
             attach:function (drag) {
                 var self = this,

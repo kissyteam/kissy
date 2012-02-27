@@ -22,13 +22,14 @@
         meta = {
             /**
              * Copies all the properties of s to r.
-             * @memberOf KISSY
+             * @name KISSY.mix
+             * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
              * @param {boolean} [ov=true] whether overwrite existing property
              * @param {String[]} [wl] array of white-list properties
              * @param deep {boolean} whether recursive mix if encounter object,
-             * if deep is set true,then ov should set true too!
+             * if deep is set true,then ov should be set true too!
              * @return {Object} the augmented object
              * @example
              * <code>
@@ -110,7 +111,7 @@
     // override previous kissy
     S = host[S] = meta.mix(seed, meta);
 
-    S.mix(S,
+    S.mix(KISSY,
         /**
          * @lends KISSY
          */
@@ -279,12 +280,13 @@
              * TB.namespace('app'); // returns TB.app
              * </code>
              * @return {Object}  A reference to the app global object
+             * @deprecated recommended using packages
              */
             app:function (name, sx) {
                 var isStr = S.isString(name),
                     O = isStr ? host[name] || {} : name,
                     i = 0,
-                    __APP_INIT_METHODS=S.__APP_INIT_METHODS,
+                    __APP_INIT_METHODS = S.__APP_INIT_METHODS,
                     len = __APP_INIT_METHODS.length;
 
                 S.mix(O, this, true, S.__APP_MEMBERS);
@@ -299,10 +301,40 @@
             },
 
             /**
-             * set KISSY config
-             * @param c
+             * set KISSY configuration
+             * @param c detail configs
              * @param {Object[]} c.packages
-             * @param {Array[]} c.map
+             * @param {String} c.packages.0.name package name
+             * @param {String} c.packages.0.path package path
+             * @param {String} c.packages.0.tag timestamp for this package's module file
+             * @param {Array[]} c.map file map configs
+             * @param {Array[]} c.map.0 a single map rule
+             * @param {RegExp} c.map.0.0 a regular expression to match url
+             * @param {String|Function} c.map.0.1 provide replacement for String.replace
+             * @param {boolean} c.combine whether to enable combo
+             * @param {String} c.base set base for kissy loader.use with caution!
+             * @param {boolean} c.debug whether to enable debug mod
+             * @example
+             * // use gallery from cdn
+             * <code>
+             * KISSY.config({
+             *      combine:true,
+             *      packages:[{
+             *          name:"gallery",
+             *          path:"http://a.tbcdn.cn/s/kissy/gallery/"
+             *      }]
+             * });
+             * </code>
+             * // use map to reduce connection count
+             * <code>
+             * S.config({
+             * map:[
+             * [
+             *  /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
+             *  "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]
+             * ]
+             * });
+             * </code>
              */
             config:function (c) {
                 var configs, cfg, r;

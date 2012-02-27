@@ -229,18 +229,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">激活 drag 的 handler</span>                                                
+                                                <span class="desc">the handler which fired the drag event.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 
                                                 <b class="name"><a href="../symbols/DD.Draggable.html#bufferTime">bufferTime</a></b>
-                                                <span class="type">{Number 毫秒}</span>
+                                                <span class="type">{Number}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">启动拖放的移动的临界延迟</span>                                                
+                                                <span class="desc">the number of milliseconds to start a drag operation after mousedown,default is 1000</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -251,7 +251,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">启动拖放的移动的临界元素数</span>                                                
+                                                <span class="desc">the number of pixels to move to start a drag operation,default is 3.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -262,7 +262,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">拖无效</span>                                                
+                                                <span class="desc">set to disable this draggable so that it can not be dragged.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -273,7 +273,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">当前拖对象是否开始运行，用于调用者监听 change 事件</span>                                                
+                                                <span class="desc">indicate whether this draggable object is being dragged</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -284,7 +284,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">真实的节点</span>                                                
+                                                <span class="desc">the draggable element</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -306,7 +306,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">whether halt mousedown</span>                                                
+                                                <span class="desc">whether halt mousedown event.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -317,18 +317,18 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">handler 数组，注意暂时必须在 node 里面</span>                                                
+                                                <span class="desc">valid handlers to initiate a drag operation</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
                                                 
                                                 <b class="name"><a href="../symbols/DD.Draggable.html#mode">mode</a></b>
-                                                <span class="type">{Number}</span>
+                                                <span class="type">{String}</span>
                                                 
                                                 
                                                 
                                                 
-                                                <span class="desc">拖放模式</span>                                                
+                                                <span class="desc"><pre>can be set 'point' or 'intersect' or 'strict'In point mode, a Drop is targeted by the cursor being over the TargetIn intersect mode, a Drop is targeted by "part" of the drag node being over the TargetIn strict mode, a Drop is targeted by the "entire" drag node being over the Target</pre></span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -339,7 +339,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">whether the node moves with drag object</span>                                                
+                                                <span class="desc">whether the drag node moves with cursor.default:false,can be used to resize element.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -350,7 +350,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">拖放节点，可能指向 proxy node</span>                                                
+                                                <span class="desc">the dragged node.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -361,7 +361,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">only left button of mouse trigger drag?</span>                                                
+                                                <span class="desc">whether a drag operation can only be trigged by primary(left) mouse button.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -372,29 +372,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">是否需要遮罩跨越 iframe 以及其他阻止 mousemove 事件的元素</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/DD.Draggable.html#startMousePos">startMousePos</a></b>
-                                                <span class="type">{Object}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">开始拖时鼠标所在位置，例如 {x:100,y:200}</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/DD.Draggable.html#startNodePos">startNodePos</a></b>
-                                                <span class="type">{Object}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">开始拖时节点所在位置，例如 {x:100,y:200}</span>                                                
+                                                <span class="desc">use protective shim to cross iframe.default:true</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -428,14 +406,14 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">销毁</span>                                                
+                                                <span class="desc">make the drag node undraggable</span>                                                
                                             </li>
                                             
                                         </ul>
                                         
                                         <hr/>
                                         <ul class="summary-list">
-                                        <li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a>, <a href="../symbols/Attribute.html#set">set</a></li>
+                                        <li>Methods borrowed from class <a href="../symbols/Base.html">Base</a>: <a href="../symbols/Base.html#set">set</a></li><li>Methods borrowed from class <a href="../symbols/Attribute.html">Attribute</a>: <a href="../symbols/Attribute.html#addAttr">addAttr</a>, <a href="../symbols/Attribute.html#addAttrs">addAttrs</a>, <a href="../symbols/Attribute.html#get">get</a>, <a href="../symbols/Attribute.html#getAttrs">getAttrs</a>, <a href="../symbols/Attribute.html#getAttrVals">getAttrVals</a>, <a href="../symbols/Attribute.html#hasAttr">hasAttr</a>, <a href="../symbols/Attribute.html#removeAttr">removeAttr</a>, <a href="../symbols/Attribute.html#reset">reset</a></li>
                                         </ul>
                                         
                                     </div>
@@ -619,7 +597,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    激活 drag 的 handler
+                                                    the handler which fired the drag event.
                                                     
                                                     
                                                 </span>
@@ -643,13 +621,13 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">                                                
                                                 
                                                 <b class="name">bufferTime</b>
-                                                <span>{Number 毫秒}</span>
+                                                <span>{Number}</span>
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    启动拖放的移动的临界延迟
+                                                    the number of milliseconds to start a drag operation after mousedown,default is 1000
                                                     
                                                     
                                                 </span>
@@ -679,7 +657,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    启动拖放的移动的临界元素数
+                                                    the number of pixels to move to start a drag operation,default is 3.
                                                     
                                                     
                                                 </span>
@@ -709,7 +687,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    拖无效
+                                                    set to disable this draggable so that it can not be dragged. default:false
                                                     
                                                     
                                                 </span>
@@ -739,7 +717,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    当前拖对象是否开始运行，用于调用者监听 change 事件
+                                                    indicate whether this draggable object is being dragged
                                                     
                                                     
                                                 </span>
@@ -769,7 +747,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    真实的节点
+                                                    the draggable element
                                                     
                                                     
                                                 </span>
@@ -809,6 +787,17 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <dl>
                                                 
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                    <li class="li">
+                                                        <pre class="code"><code>{    "group1":1,    "group2":1}</code></pre>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
                                                 
                                                 
                                                 
@@ -829,7 +818,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    whether halt mousedown
+                                                    whether halt mousedown event. default:true
                                                     
                                                     
                                                 </span>
@@ -845,11 +834,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    true
-                                                </dd>
-                                                
                                             </dl>
                                         </li>
                                     
@@ -864,7 +848,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    handler 数组，注意暂时必须在 node 里面
+                                                    valid handlers to initiate a drag operation
                                                     
                                                     
                                                 </span>
@@ -888,13 +872,13 @@ a.go-top:active{text-decoration:none;}
                                             <div class="title">                                                
                                                 
                                                 <b class="name">mode</b>
-                                                <span>{Number}</span>
+                                                <span>{String}</span>
                                                 
                                                 
                                                 
                                                 
                                                 <span class="desc">
-                                                    拖放模式
+                                                    <pre>can be set 'point' or 'intersect' or 'strict'In point mode, a Drop is targeted by the cursor being over the TargetIn intersect mode, a Drop is targeted by "part" of the drag node being over the TargetIn strict mode, a Drop is targeted by the "entire" drag node being over the Target</pre>
                                                     
                                                     
                                                 </span>
@@ -924,7 +908,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    whether the node moves with drag object
+                                                    whether the drag node moves with cursor.default:false,can be used to resize element.
                                                     
                                                     
                                                 </span>
@@ -954,7 +938,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    拖放节点，可能指向 proxy node
+                                                    the dragged node. maybe a proxy node.
                                                     
                                                     
                                                 </span>
@@ -984,7 +968,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    only left button of mouse trigger drag?
+                                                    whether a drag operation can only be trigged by primary(left) mouse button.Setting false will allow for all mousedown events to trigger drag.
                                                     
                                                     
                                                 </span>
@@ -1014,67 +998,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    是否需要遮罩跨越 iframe 以及其他阻止 mousemove 事件的元素
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="startMousePos"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">startMousePos</b>
-                                                <span>{Object}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    开始拖时鼠标所在位置，例如 {x:100,y:200}
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                        <li class="li">
-                                            <a name="startNodePos"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">startNodePos</b>
-                                                <span>{Object}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    开始拖时节点所在位置，例如 {x:100,y:200}
+                                                    use protective shim to cross iframe.default:true
                                                     
                                                     
                                                 </span>
@@ -1117,11 +1041,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_draggable.js.html#line653">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_draggable.js.html#line660">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                销毁
+                                                make the drag node undraggable
                                                 
                                                 
                                             </div>
@@ -1876,6 +1800,12 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/KISSY.Defer.html">KISSY.Defer</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.html">KISSY.Loader</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Module.html">KISSY.Loader.Module</a></li>
             
             
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>

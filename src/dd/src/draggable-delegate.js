@@ -5,8 +5,9 @@
 KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
     /**
+     * drag multiple nodes under a container element using only one draggable instance as a delegate.
      * @memberOf DD
-     * @class delegate drag
+     * @class
      */
     function DraggableDelegate() {
         DraggableDelegate.superclass.constructor.apply(this, arguments);
@@ -15,7 +16,6 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
     /**
      * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-     *
      * @param ev
      */
     function _handleMouseDown(ev) {
@@ -65,7 +65,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
              */
             _getHandler:function (target) {
                 var self = this,
-                    ret=undefined,
+                    ret = undefined,
                     node = self.get("container"),
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
@@ -107,7 +107,8 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
              */
             {
                 /**
-                 * 用于委托的父容器
+                 * a selector query to get the container to listen for mousedown events on.
+                 * All "draggable selector" should be a child of this container
                  * @type {HTMLElement|String}
                  */
                 container:{
@@ -117,15 +118,17 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 },
 
                 /**
-                 * 实际拖放的节点选择器，一般用 tag.cls
+                 * a selector query to get the children of container to make draggable elements from.
+                 * usually as for tag.cls.
                  * @type {String}
                  */
                 selector:{
                 },
 
                 /**
-                 * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
-                 * 不设则为 [ selector ]
+                 * handlers to initiate drag operation.
+                 * can only be as form of tag.cls.
+                 * default:[selector]
                  * @type {String[]}
                  **/
                 handlers:{

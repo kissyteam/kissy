@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="generator" content="JsDoc Toolkit" />
         
-        <title>MVC.View</title>
+        <title>KISSY.Loader.Module</title>
         <style>
             /*************************************************************************************
  * Reset
@@ -156,7 +156,7 @@ a.go-top:active{text-decoration:none;}
                             <!-- class title START-->
                             <h2 class="class-title">
                                 
-                                MVC.View
+                                KISSY.Loader.Module
                             </h2>
                             <!-- class title END-->
                             
@@ -173,7 +173,7 @@ a.go-top:active{text-decoration:none;}
                                     
                                     
                                     <p>defined in：
-                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_view.js.html">view.js</a></p>
+                                    <a href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_base.js.html">base.js</a></p>
                                     
                                     
                                     
@@ -192,11 +192,11 @@ a.go-top:active{text-decoration:none;}
                                 <div class="box-bd">
                                     <ul class="list summary-list">
                                         <li class="li">                                            
-                                            <b class="name"><a href="../symbols/MVC.View.html#constructor">MVC.View</a></b>
-                                            <span class="param">()</span>                                
+                                            <b class="name"><a href="../symbols/KISSY.Loader.Module.html#constructor">KISSY.Loader.Module</a></b>
+                                            <span class="param">(ps)</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">KISSY Module constructorThis class should not be instantiated manually.</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -205,32 +205,6 @@ a.go-top:active{text-decoration:none;}
                             <!-- constructor END -->
                             
                             <!-- properties START -->
-                            
-                                
-                                
-                                <div class="box properties-box">
-                                    <div class="box-hd">
-                                        <h3>Properties</h3>
-                                    </div>
-                                    <div class="box-bd">
-                                        <ul class="list summary-list">
-                                            
-                                            <li class="li">                                                
-                                                
-                                                <b class="name"><a href="../symbols/MVC.View.html#events">events</a></b>
-                                                <span class="type">{}</span>
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">events:{  selector:{    eventType:callback  }}</span>                                                
-                                            </li>
-                                            
-                                        </ul>
-                                        
-                                    </div>
-                                </div>
-                                                    
                             
                             <!-- properties END -->
                             
@@ -247,12 +221,32 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/MVC.View.html#render">render</a></b>
+                                                <b class="name"><a href="../symbols/KISSY.Loader.Module.html#getName">getName</a></b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">user need to override</span>                                                
+                                                <span class="desc">get the name of current module</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Loader.Module.html#getValue">getValue</a></b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">get the value of current module</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                
+                                                <b class="name"><a href="../symbols/KISSY.Loader.Module.html#setValue">setValue</a></b>
+                                                <span class="param">(v)</span>
+                                                
+                                                
+                                                
+                                                <span class="desc">set the value of current module</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -278,8 +272,8 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         <li class="li">
                                             <div class="title">
-                                                <b class="name">MVC.View</b>
-                                                <span class="param">()</span>
+                                                <b class="name">KISSY.Loader.Module</b>
+                                                <span class="param">(ps)</span>
                                             </div>
                                             
                                             <div class="desc"></div>
@@ -287,6 +281,22 @@ a.go-top:active{text-decoration:none;}
                                             <dl>                                                
                                                 
                                                 
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                        
+                                                        <li class="li">
+                                                            &nbsp;
+                                                                <b>ps</b>
+                                                            
+                                                            
+                                                            <span class="type"></span>
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 
@@ -310,47 +320,6 @@ a.go-top:active{text-decoration:none;}
 
                             <!-- properties details START -->
                             
-                            <div class="box">
-                                <div class="box-hd">
-                                    <h3>Properties Detail</h3>
-                                </div>
-                                <div class="box-bd">
-                                    <ul class="list detail-list">
-                                    
-                                        <li class="li">
-                                            <a name="events"> </a>
-                                            <div class="title">                                                
-                                                
-                                                <b class="name">events</b>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <span class="desc">
-                                                    events:{  selector:{    eventType:callback  }}
-                                                    
-                                                    
-                                                </span>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <dl>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </dl>
-                                        </li>
-                                    
-                                    </ul>
-                                </div>
-                            </div>
-                            
                             <!-- properties detail END -->
 
                             <!-- methods detail START -->
@@ -363,25 +332,131 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="render"> </a>
+                                            <a name="getName"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">render</b>
+                                                <b class="name">getName</b>
                                                 <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_mvc_src_view.js.html#line97">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_base.js.html#line61">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                user need to override
+                                                get the name of current module
                                                 
                                                 
                                             </div>
                                             
                                             <dl>                                            
                                                 
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <dt>Returns</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                        <li class="li">
+                                                            <span class="type">{String}</span> 
+                                                            <span></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="getValue"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">getValue</b>
+                                                <span class="param">()</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_base.js.html#line54">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                get the value of current module
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name="setValue"> </a>
+                                            <div class="title">
+                                                
+                                                <b class="name">setValue</b>
+                                                <span class="param">(v)</span>
+                                                
+                                                
+                                                
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_seed_src_loader_base.js.html#line48">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                set the value of current module
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">v</b>
+                                                            
+                                                            
+                                                            
+                                                            <span class="desc">value to be set</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
                                                 
                                                 
                                                 

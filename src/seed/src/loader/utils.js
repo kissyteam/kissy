@@ -6,8 +6,10 @@
     if (typeof require !== 'undefined') {
         return;
     }
-    var ua = navigator.userAgent,
-        data = S.Loader.STATUS,
+    var Loader = S.Loader,
+        ua = navigator.userAgent,
+        startsWith = S.startsWith,
+        data = Loader.STATUS,
         utils = {},
         mix = S.mix,
         doc = document,
@@ -184,30 +186,16 @@
                 return;
             }
 
-            // 默认 js/css 名字
-            // 不指定 .js 默认为 js
-            // 指定为 css 载入 .css
-            var componentJsName = self.Config['componentJsName'] ||
-                function (m) {
-                    var suffix = "js", match;
-                    if (match = m.match(/(.+)\.(js|css)$/i)) {
-                        suffix = match[2];
-                        m = match[1];
-                    }
-                    return m + (S.Config.debug ? '' : '-min') + "." + suffix;
-                },
-                path = componentJsName(modName);
+            if (!mod) {
+                mods[modName] = mod = new Loader.Module();
+            }
 
             // 用户配置的 path优先
-            mod = S.mix({
-                path:path,
+            S.mix(mod, {
+                name:modName,
+                path:defaultComponentJsName(modName),
                 charset:'utf-8'
-            }, mods[modName]);
-
-            //添加模块定义
-            mods[modName] = mod;
-
-            mod.name = modName;
+            }, false);
         },
 
         isAttached:function (self, modNames) {
@@ -235,7 +223,8 @@
                 return;
             }
 
-            var fn = mod.fn, value;
+            var fn = mod.fn,
+                value;
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -248,6 +237,10 @@
             }
 
             mod.status = data.ATTACHED;
+
+            self.getLoader().fire("afterModAttached", {
+                mod:mod
+            });
         },
 
         normalizeModNamesInUse:function (modNames) {
@@ -264,7 +257,7 @@
             config = config || {};
 
             var mods = self.Env.mods,
-                mod = mods[name] || {};
+                mod = mods[name] || new Loader.Module();
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
@@ -278,6 +271,8 @@
             mod.fn = def;
 
             S.mix((mods[name] = mod), config);
+
+            S.log(name + " is loaded");
         },
 
         normAdd:function (self, name, def, config) {
@@ -313,6 +308,15 @@
 
     });
 
+    function defaultComponentJsName(m) {
+        var suffix = "js", match;
+        if (match = m.match(/(.+)\.(js|css)$/i)) {
+            suffix = match[2];
+            m = match[1];
+        }
+        return m + (S.Config.debug ? '' : '-min') + "." + suffix;
+    }
+
     function isStatus(self, modNames, status) {
         var mods = self.Env.mods,
             ret = true;
@@ -327,9 +331,8 @@
         return ret;
     }
 
-    var startsWith = S.startsWith,
-        normalizePath = utils.normalizePath;
+    var normalizePath = utils.normalizePath;
 
-    S.Loader.Utils = utils;
+    Loader.Utils = utils;
 
 })(KISSY);

@@ -7,11 +7,63 @@
         return;
     }
 
+    /**
+     * KISSY Loader constructor
+     * This class should not be instantiated manually.
+     * @class
+     * @memberOf KISSY
+     */
     function Loader(SS) {
         this.SS = SS;
+        /**
+         * @name KISSY.Loader#afterModAttached
+         * @description fired after a module is attached
+         * @event
+         * @param e
+         * @param {KISSY.Loader.Module} e.mod current module object
+         */
     }
 
-    S.Loader = Loader;
+    KISSY.Loader = Loader;
+
+    /**
+     * KISSY Module constructor
+     * This class should not be instantiated manually.
+     * @class
+     * @memberOf KISSY.Loader
+     */
+    function Module(ps) {
+        S.mix(this, ps);
+    }
+
+    S.augment(Module,
+        /**
+         * @lends KISSY.Loader.Module#
+         */
+        {
+            /**
+             * set the value of current module
+             * @param v value to be set
+             */
+            setValue:function (v) {
+                this.v = v;
+            },
+            /**
+             * get the value of current module
+             */
+            getValue:function () {
+                return this.v;
+            },
+            /**
+             * get the name of current module
+             * @returns {String}
+             */
+            getName:function () {
+                return this.name;
+            }
+        });
+
+    Loader.Module = Module;
 
     // 脚本(loadQueue)/模块(mod) 公用状态
     Loader.STATUS = {

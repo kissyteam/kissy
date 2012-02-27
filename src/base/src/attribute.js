@@ -192,7 +192,8 @@ KISSY.add('base/attribute', function (S, undef) {
     }
 
     /**
-     * 提供属性管理机制
+     * provide attribute management.
+     * recommended extending {@link Base}.
      * @name Attribute
      * @class
      */

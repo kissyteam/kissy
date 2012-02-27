@@ -54,7 +54,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * get a anim instance associate
-     * @param {HTMLElement|window} elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
+     * @param {HTMLElement|window} elem 元素或者 window
+     * (window can only animate scrollTop/scrollLeft)
      * @param {Object} props style map
      * @param {Number|Object} [duration] duration(s) or anim config
      * @param {String|Function} [duration.easing] easing fn or string
@@ -329,7 +330,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         {
 
             /**
-             * @return {boolean} 是否在运行
+             * @return {boolean} whether this animation is running
              */
             isRunning:function () {
                 return isRunning(this);
@@ -338,7 +339,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             _runInternal:runInternal,
 
             /**
-             * 开始动画
+             * start this animation
              */
             run:function () {
                 var self = this,
@@ -393,7 +394,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             },
 
             /**
-             * 结束动画
+             * stop this animation
              * @param {boolean} finish whether jump to the last position of this animation
              */
             stop:function (finish) {

@@ -281,9 +281,6 @@
                                 _modError();
                             }
                         }
-                        if (mod.status != ERROR) {
-                            S.log(mod.name + ' is loaded.', 'info');
-                        }
                         _scriptOnComplete();
                     },
                     error:function () {

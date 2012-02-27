@@ -5,9 +5,9 @@
 KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
 
     /**
+     * make a node droppable
      * @memberOf DD
-     * @class make a node droppable
-     * @since version 1.2.0
+     * @class
      */
     function Droppable() {
         var self = this;
@@ -104,7 +104,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
      */
     {
         /**
-         * 放节点
+         * droppable element
          * @type String|HTMLElement
          */
         node:{
@@ -116,9 +116,8 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
         },
 
         /**
-         * groups this droppable object belongs to
+         * groups this droppable object belongs to. Default:true
          * @type Object|boolean true to match any group
-         * @default true
          */
         groups:{
             value:true
@@ -144,8 +143,8 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
          */
         {
             /**
-             * 用于被 droppable-delegate override
-             * @protected
+             * override by droppable-delegate override
+             * @private
              */
             getNodeFromTarget:function (ev, dragNode, proxyNode) {
                 var node = this.get("node"),
@@ -227,6 +226,9 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                 self.fire('drophit', ret);
             },
 
+            /**
+             * make this droppable' element undroppable
+             */
             destroy:function () {
                 DDM._unRegDrop(this);
             }

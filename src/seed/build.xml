@@ -15,6 +15,7 @@
 
             <!--kissy loader start-->
             <path location="${src.dir}/loader/base.js"/>
+            <path location="${src.dir}/loader/target.js"/>
             <path location="${src.dir}/loader/utils.js"/>
             <path location="${src.dir}/loader/scriptOnload.js"/>
             <path location="${src.dir}/loader/getScript.js"/>

@@ -12,35 +12,72 @@
         utils = Loader.Utils,
         ComboLoader = S.Loader.Combo;
 
-    S.mix(S, {
-        add:function (name, def, cfg) {
-            var self = this;
-            if (self.Config.combine) {
-                self.__comboLoader.add(name, def, cfg);
-            } else {
-                self.__loader.add(name, def, cfg);
-            }
-        },
-        use:function (names, fn) {
-            var self = this;
-            if (self.Config.combine) {
-                self.__comboLoader.use(names, fn);
-            } else {
-                self.__loader.use(names, fn);
-            }
-        },
+    S.mix(S,
         /**
-         * get module's value defined by define function
-         * @param {string} moduleName
-         * @private
+         * @lends KISSY
          */
-        require:function (moduleName) {
-            var self = this,
-                mods = self.Env.mods,
-                mod = mods[moduleName];
-            return mod && mod.value;
-        }
-    });
+        {
+            /**
+             * Registers a module with the KISSY global.
+             * @param {String} [name] module name.
+             * it must be set if combine is true in {@link KISSY.config}
+             * @param {Function} def module definition function that is used to return
+             * this module value
+             * @param {KISSY} def.S KISSY global instance
+             * @param def.x... this module's required modules' value
+             * @param {Object} [cfg] module optional config data
+             * @param {String[]} cfg.requires this module's required module name list
+             * @example
+             * // dom module's definition
+             * <code>
+             * KISSY.add("dom",function(S,UA){
+             *  return { css:function(el,name,val){} };
+             * },{
+             *  requires:["ua"]
+             * });
+             * </code>
+             */
+            add:function (name, def, cfg) {
+                this.getLoader().add(name, def, cfg);
+            },
+            /**
+             * Attached one or more modules to global KISSY instance.
+             * @param {String} names moduleNames. 1-n modules to bind(use comma to separate)
+             * @param {Function} callback callback function executed
+             * when KISSY has the required functionality.
+             * @param {KISSY} callback.S KISSY instance
+             * @param callback.x... used module values
+             * @example
+             * // loads and attached overlay,dd and its dependencies
+             * KISSY.use("overlay,dd",function(S,Overlay){});
+             */
+            use:function (names, callback) {
+                this.getLoader().use(names, callback);
+            },
+            /**
+             * get KISSY's loader instance
+             * @returns {KISSY.Loader}
+             */
+            getLoader:function () {
+                var self = this;
+                if (self.Config.combine) {
+                    return self.__comboLoader;
+                } else {
+                    return self.__loader;
+                }
+            },
+            /**
+             * get module value defined by define function
+             * @param {string} moduleName
+             * @private
+             */
+            require:function (moduleName) {
+                var self = this,
+                    mods = self.Env.mods,
+                    mod = mods[moduleName];
+                return mod && mod.value;
+            }
+        });
 
 
     // notice: timestamp
@@ -51,13 +88,16 @@
      * get base from src
      * @param script script node
      * @return base for kissy
+     * @private
      * @example
+     * <pre>
      *   http://a.tbcdn.cn/s/kissy/1.1.6/??kissy-min.js,suggest/suggest-pkg-min.js
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
      *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
-     * @notice custom combo rules, such as yui3:
-     *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
+     *  note about custom combo rules, such as yui3:
+     *   <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
+     * <pre>
      */
     function getBaseUrl(script) {
         var src = utils.absoluteFilePath(script.src),

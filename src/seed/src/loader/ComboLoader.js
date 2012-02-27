@@ -24,7 +24,8 @@
         }
     }
 
-    var MAX_URL_LENGTH = 1024;
+    var MAX_URL_LENGTH = 1024,
+        Loader = S.Loader;
 
     /**
      * using combo to load module files
@@ -40,6 +41,7 @@
     }
 
     S.augment(ComboLoader,
+        Loader.Target,
         /**
          * @lends ComboLoader#
          */
@@ -307,8 +309,7 @@
             }
         });
 
-    S.namespace("Loader");
-    S.Loader.Combo = ComboLoader;
+    Loader.Combo = ComboLoader;
 
 })(KISSY, KISSY.Loader.Utils);
 /**

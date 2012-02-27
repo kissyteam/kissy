@@ -164,8 +164,6 @@ a.go-top:active{text-decoration:none;}
                             <div class="box summary-box">
                                 <div class="box-bd">    
                                     
-                                    <p class="desc">make a node droppable</p>
-                                    
 
                                     
                                     
@@ -198,7 +196,7 @@ a.go-top:active{text-decoration:none;}
                                             <span class="param">()</span>                                
                                             
                                             
-                                                                                        
+                                            <span class="desc">make a node droppable</span>                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -225,7 +223,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">groups this droppable object belongs to</span>                                                
+                                                <span class="desc">groups this droppable object belongs to.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -236,7 +234,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <span class="desc">放节点</span>                                                
+                                                <span class="desc">droppable element</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -260,12 +258,12 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 
-                                                <b class="name"><a href="../symbols/DD.Droppable.html#getNodeFromTarget">getNodeFromTarget</a></b>
-                                                <span class="param">(ev, dragNode, proxyNode)</span>
+                                                <b class="name"><a href="../symbols/DD.Droppable.html#destroy">destroy</a></b>
+                                                <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <span class="desc">用于被 droppable-delegate override</span>                                                
+                                                <span class="desc">make this droppable' element undroppable</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -350,7 +348,7 @@ a.go-top:active{text-decoration:none;}
                                                 <span class="param">()</span>
                                             </div>
                                             
-                                            <div class="desc">make a node droppable</div>
+                                            <div class="desc"></div>
                                             
                                             <dl>                                                
                                                 
@@ -359,10 +357,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
 
-                                                
-                                                <dt>Since</dt>
-                                                <dd>version 1.2.0</dd>
-                                                </div>
                                                 
 
                                                 
@@ -400,7 +394,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    groups this droppable object belongs to
+                                                    groups this droppable object belongs to. Default:true
                                                     
                                                     
                                                 </span>
@@ -416,11 +410,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                <dt>Default Value</dt>
-                                                <dd>
-                                                    true
-                                                </dd>
-                                                
                                             </dl>
                                         </li>
                                     
@@ -435,7 +424,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="desc">
-                                                    放节点
+                                                    droppable element
                                                     
                                                     
                                                 </span>
@@ -470,59 +459,25 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                         
                                         <li class="li">
-                                            <a name="getNodeFromTarget"> </a>
+                                            <a name="destroy"> </a>
                                             <div class="title">
                                                 
-                                                <b class="name">getNodeFromTarget</b>
-                                                <span class="param">(ev, dragNode, proxyNode)</span>
+                                                <b class="name">destroy</b>
+                                                <span class="param">()</span>
                                                 
                                                 
                                                 
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html#line150">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_dd_src_droppable.js.html#line232">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                用于被 droppable-delegate override
+                                                make this droppable' element undroppable
                                                 
                                                 
                                             </div>
                                             
                                             <dl>                                            
                                                 
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">ev</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">dragNode</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">proxyNode</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
                                                 
                                                 
                                                 
@@ -946,6 +901,12 @@ a.go-top:active{text-decoration:none;}
             
             
             <li><a href="../symbols/KISSY.Defer.html">KISSY.Defer</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.html">KISSY.Loader</a></li>
+            
+            
+            <li><a href="../symbols/KISSY.Loader.Module.html">KISSY.Loader.Module</a></li>
             
             
             <li><a href="../symbols/KISSY.Promise.html">KISSY.Promise</a></li>

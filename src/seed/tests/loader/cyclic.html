@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <title>test iframe</title>
+<meta charset="utf-8"/>
+<title>test iframe</title>
 </head>
 <body>
 
@@ -12,7 +12,10 @@
     KISSY.config({
         base:"./"
     });
-    KISSY.use("a", function() {
+    KISSY.getLoader().on("afterModAttached", function (e) {
+        S.log(e.mod.name + " : attached");
+    });
+    KISSY.use("a", function () {
         alert(1);
     });
 </script>

@@ -34,12 +34,16 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      * @lends DD.DDM
      */
     {
+        /**
+         * default prefix class name for dd related state (such as dragging,drag-over).
+         * @type String
+         */
         prefixCls:{
             value:"ks-dd-"
         },
 
         /**
-         * shim 鼠标 icon (drag icon)
+         * cursor style when dragging,if shimmed the shim will get the cursor.
          * @type String
          */
         dragCursor:{
@@ -47,7 +51,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         },
 
         /***
-         * 移动的像素值（用于启动拖放）
+         * the number of pixels to move to start a drag operation,default is 3.
          * @type Number
          */
         clickPixelThresh:{
@@ -55,25 +59,25 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         },
 
         /**
-         * mousedown 后 buffer 触发时间  time threshold
+         * the number of milliseconds to start a drag operation after mousedown,default is 1000
          * @type Number
          */
         bufferTime:{ value:BUFFER_TIME },
 
         /**
-         * 当前激活的拖动对象，在同一时间只有一个值，所以不是数组
+         * currently active draggable object
          * @type DD.Draggable
          */
         activeDrag:{},
 
         /**
-         * 当前激活的 drop 对象，在同一时间只有一个值
+         * currently active droppable object
          * @type DD.Droppable
          */
         activeDrop:{},
 
         /**
-         * 所有注册的可放置对象，统一管理
+         * a array of drop targets
          * @type DD.Droppable[]
          */
         drops:{
@@ -81,7 +85,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         },
 
         /**
-         * 对应当前 draggable 有效的 droppable 对象数组
+         * a array of the valid drop targets for this interaction
          * @type DD.Droppable[]
          */
         validDrops:{

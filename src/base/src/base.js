@@ -22,6 +22,15 @@ KISSY.add('base', function (S, Attribute, Event) {
         initAttrs(this, config);
     }
 
+
+    /**
+     * see {@link Attribute#set}
+     * @name set
+     * @memberOf Base#
+     * @function
+     */
+
+
     function addAttrs(host, attrs) {
         if (attrs) {
             for (var attr in attrs) {
