@@ -100,10 +100,9 @@
                     } catch (e) {
                         // print stack info for firefox/chrome
                         S.log(e.stack, "error");
-                        setTimeout(function () {
-                            // lose stack info
+                        if (S.Config.debug) {
                             throw e;
-                        }, 0);
+                        }
                     }
                 }
 

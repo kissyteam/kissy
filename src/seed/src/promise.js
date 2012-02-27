@@ -10,7 +10,9 @@
         // for debug
         // fn();
         // make parallel call in production
-        setTimeout(fn, 0);
+        // setTimeout(fn, 0);
+        // sync,same with event
+        fn();
     }
 
     /**

@@ -1,0 +1,34 @@
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/ua.js"></script>
+<script src="../../../../build/dom.js"></script>
+<script src="../../../../build/event.js"></script>
+<script src="../../../../build/anim.js"></script>
+<script src="../../../../build/node.js"></script>
+<script src="../../../../build/json.js"></script>
+<script type="text/javascript" src=".././../src/base.js"></script>
+<script type="text/javascript" src="../../src/XhrObject.js"></script>
+<script type="text/javascript" src="../../src/IframeTransport.js"></script>
+<script type="text/javascript" src="../../src/FormSerializer.js"></script>
+<script type="text/javascript" src="../.././src/form.js"></script>
+<script type="text/javascript" src="../.././src/jsonp.js"></script>
+<script type="text/javascript" src="../../src/ScriptTransport.js"></script>
+<script type="text/javascript" src="../../src/XhrTransportBase.js"></script>
+<script type="text/javascript" src="../../src/XhrTransport.js"></script>
+<script type="text/javascript" src="../../src/XdrFlashTransport.js"></script>
+<script type="text/javascript" src="../../src/SubDomainTransport.js"></script>
+<script type="text/javascript" src=".././../src/ajax.js"></script>
+<script type="text/javascript">
+    KISSY.use("ajax", function (S, io) {
+
+        io({
+            url:"./gen-json.php",
+            async:false,
+            data:{
+                x:999
+            }, success:function (d) {
+                S.log(d.x);
+            }
+        });
+        S.log("end");
+    });
+</script>

@@ -199,7 +199,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 26 20:16
+build time: Feb 27 12:18
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -336,7 +336,7 @@ build time: Feb 26 20:16
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120226201641',
+            __BUILD_TIME:'20120227121855',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1659,7 +1659,9 @@ build time: Feb 26 20:16
         // for debug
         // fn();
         // make parallel call in production
-        setTimeout(fn, 0);
+        // setTimeout(fn, 0);
+        // sync,same with event
+        fn();
     }
 
     /**
@@ -3784,10 +3786,9 @@ build time: Feb 26 20:16
                     } catch (e) {
                         // print stack info for firefox/chrome
                         S.log(e.stack, "error");
-                        setTimeout(function () {
-                            // lose stack info
+                        if (S.Config.debug) {
                             throw e;
-                        }, 0);
+                        }
                     }
                 }
 
