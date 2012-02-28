@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 27 14:20
+build time: Feb 28 11:46
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -27,13 +27,14 @@ build time: Feb 27 14:20
         meta = {
             /**
              * Copies all the properties of s to r.
-             * @memberOf KISSY
+             * @name KISSY.mix
+             * @function
              * @param {Object} r the augmented object
              * @param {Object} s the object need to augment
              * @param {boolean} [ov=true] whether overwrite existing property
              * @param {String[]} [wl] array of white-list properties
              * @param deep {boolean} whether recursive mix if encounter object,
-             * if deep is set true,then ov should set true too!
+             * if deep is set true,then ov should be set true too!
              * @return {Object} the augmented object
              * @example
              * <code>
@@ -115,7 +116,7 @@ build time: Feb 27 14:20
     // override previous kissy
     S = host[S] = meta.mix(seed, meta);
 
-    S.mix(S,
+    S.mix(KISSY,
         /**
          * @lends KISSY
          */
@@ -138,7 +139,7 @@ build time: Feb 27 14:20
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120227142001',
+            __BUILD_TIME:'20120228114636',
 
             /**
              * Returns a new object containing all of the properties of
@@ -284,12 +285,13 @@ build time: Feb 27 14:20
              * TB.namespace('app'); // returns TB.app
              * </code>
              * @return {Object}  A reference to the app global object
+             * @deprecated recommended using packages
              */
             app:function (name, sx) {
                 var isStr = S.isString(name),
                     O = isStr ? host[name] || {} : name,
                     i = 0,
-                    __APP_INIT_METHODS=S.__APP_INIT_METHODS,
+                    __APP_INIT_METHODS = S.__APP_INIT_METHODS,
                     len = __APP_INIT_METHODS.length;
 
                 S.mix(O, this, true, S.__APP_MEMBERS);
@@ -304,10 +306,40 @@ build time: Feb 27 14:20
             },
 
             /**
-             * set KISSY config
-             * @param c
+             * set KISSY configuration
+             * @param c detail configs
              * @param {Object[]} c.packages
-             * @param {Array[]} c.map
+             * @param {String} c.packages.0.name package name
+             * @param {String} c.packages.0.path package path
+             * @param {String} c.packages.0.tag timestamp for this package's module file
+             * @param {Array[]} c.map file map configs
+             * @param {Array[]} c.map.0 a single map rule
+             * @param {RegExp} c.map.0.0 a regular expression to match url
+             * @param {String|Function} c.map.0.1 provide replacement for String.replace
+             * @param {boolean} c.combine whether to enable combo
+             * @param {String} c.base set base for kissy loader.use with caution!
+             * @param {boolean} c.debug whether to enable debug mod
+             * @example
+             * // use gallery from cdn
+             * <code>
+             * KISSY.config({
+             *      combine:true,
+             *      packages:[{
+             *          name:"gallery",
+             *          path:"http://a.tbcdn.cn/s/kissy/gallery/"
+             *      }]
+             * });
+             * </code>
+             * // use map to reduce connection count
+             * <code>
+             * S.config({
+             * map:[
+             * [
+             *  /http:\/\/a.tbcdn.cn\/s\/kissy\/1.2.0\/(?:overlay|component|uibase|switchable)-min.js(.+)$/,
+             *  "http://a.tbcdn.cn/s/kissy/1.2.0/??overlay-min.js,component-min.js,uibase-min.js,switchable-min.js$1"]
+             * ]
+             * });
+             * </code>
              */
             config:function (c) {
                 var configs, cfg, r;
@@ -1848,11 +1880,63 @@ build time: Feb 27 14:20
         return;
     }
 
+    /**
+     * KISSY Loader constructor
+     * This class should not be instantiated manually.
+     * @class
+     * @memberOf KISSY
+     */
     function Loader(SS) {
         this.SS = SS;
+        /**
+         * @name KISSY.Loader#afterModAttached
+         * @description fired after a module is attached
+         * @event
+         * @param e
+         * @param {KISSY.Loader.Module} e.mod current module object
+         */
     }
 
-    S.Loader = Loader;
+    KISSY.Loader = Loader;
+
+    /**
+     * KISSY Module constructor
+     * This class should not be instantiated manually.
+     * @class
+     * @memberOf KISSY.Loader
+     */
+    function Module(ps) {
+        S.mix(this, ps);
+    }
+
+    S.augment(Module,
+        /**
+         * @lends KISSY.Loader.Module#
+         */
+        {
+            /**
+             * set the value of current module
+             * @param v value to be set
+             */
+            setValue:function (v) {
+                this.v = v;
+            },
+            /**
+             * get the value of current module
+             */
+            getValue:function () {
+                return this.v;
+            },
+            /**
+             * get the name of current module
+             * @returns {String}
+             */
+            getName:function () {
+                return this.name;
+            }
+        });
+
+    Loader.Module = Module;
 
     // 脚本(loadQueue)/模块(mod) 公用状态
     Loader.STATUS = {
@@ -1868,7 +1952,8 @@ build time: Feb 27 14:20
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    var time = S.now(), p = "__events__" + time;
+    var time = S.now(),
+        p = "__events__" + time;
 
     function getHolder(self) {
         return self[p] || (self[p] = {});
@@ -1882,24 +1967,51 @@ build time: Feb 27 14:20
         return holder[name];
     }
 
-    S.Loader.Target = {
-        on:function (name, fn) {
-            getEventHolder(this, name, 1).push(fn);
+    S.Loader.Target =
+    /**
+     * @lends KISSY.Loader#
+     */
+    {
+        /**
+         * register callback for specified eventName from loader
+         * @param {String} eventName event name from kissy loader
+         * @param {Function} callback function to be executed when event of eventName is fired
+         */
+        on:function (eventName, callback) {
+            getEventHolder(this, eventName, 1).push(callback);
         },
-        detach:function (name, fn) {
-            var fns = getEventHolder(this, name);
+
+        /**
+         * remove callback for specified eventName from loader
+         * @param {String} [eventName] eventName from kissy loader.
+         * if undefined remove all callbacks for all events
+         * @param {Function } [callback] function to be executed when event of eventName is fired.
+         * if undefined remove all callbacks fro this event
+         */
+        detach:function (eventName, callback) {
+            if (!eventName) {
+                delete this[p];
+                return;
+            }
+            var fns = getEventHolder(this, eventName);
             if (fns) {
-                var index = S.indexOf(fn, fns);
-                if (index != -1) {
-                    fns.splice(index, 1);
+                if (callback) {
+                    var index = S.indexOf(callback, fns);
+                    if (index != -1) {
+                        fns.splice(index, 1);
+                    }
                 }
-                if (!fns.length) {
-                    delete getHolder(this)[name];
+                if (!callback || !fns.length) {
+                    delete getHolder(this)[eventName];
                 }
             }
         },
-        fire:function (name, obj) {
-            var fns = getEventHolder(this, name);
+
+        /**
+         * @private
+         */
+        fire:function (eventName, obj) {
+            var fns = getEventHolder(this, eventName);
             S.each(fns, function (f) {
                 f.call(null, obj);
             });
@@ -1913,8 +2025,10 @@ build time: Feb 27 14:20
     if (typeof require !== 'undefined') {
         return;
     }
-    var ua = navigator.userAgent,
-        data = S.Loader.STATUS,
+    var Loader = S.Loader,
+        ua = navigator.userAgent,
+        startsWith = S.startsWith,
+        data = Loader.STATUS,
         utils = {},
         mix = S.mix,
         doc = document,
@@ -2091,30 +2205,16 @@ build time: Feb 27 14:20
                 return;
             }
 
-            // 默认 js/css 名字
-            // 不指定 .js 默认为 js
-            // 指定为 css 载入 .css
-            var componentJsName = self.Config['componentJsName'] ||
-                function (m) {
-                    var suffix = "js", match;
-                    if (match = m.match(/(.+)\.(js|css)$/i)) {
-                        suffix = match[2];
-                        m = match[1];
-                    }
-                    return m + (S.Config.debug ? '' : '-min') + "." + suffix;
-                },
-                path = componentJsName(modName);
+            if (!mod) {
+                mods[modName] = mod = new Loader.Module();
+            }
 
             // 用户配置的 path优先
-            mod = S.mix({
-                path:path,
+            S.mix(mod, {
+                name:modName,
+                path:defaultComponentJsName(modName),
                 charset:'utf-8'
-            }, mods[modName]);
-
-            //添加模块定义
-            mods[modName] = mod;
-
-            mod.name = modName;
+            }, false);
         },
 
         isAttached:function (self, modNames) {
@@ -2176,7 +2276,7 @@ build time: Feb 27 14:20
             config = config || {};
 
             var mods = self.Env.mods,
-                mod = mods[name] || {};
+                mod = mods[name] || new Loader.Module();
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
@@ -2227,6 +2327,15 @@ build time: Feb 27 14:20
 
     });
 
+    function defaultComponentJsName(m) {
+        var suffix = "js", match;
+        if (match = m.match(/(.+)\.(js|css)$/i)) {
+            suffix = match[2];
+            m = match[1];
+        }
+        return m + (S.Config.debug ? '' : '-min') + "." + suffix;
+    }
+
     function isStatus(self, modNames, status) {
         var mods = self.Env.mods,
             ret = true;
@@ -2241,10 +2350,9 @@ build time: Feb 27 14:20
         return ret;
     }
 
-    var startsWith = S.startsWith,
-        normalizePath = utils.normalizePath;
+    var normalizePath = utils.normalizePath;
 
-    S.Loader.Utils = utils;
+    Loader.Utils = utils;
 
 })(KISSY);/**
  * @fileOverview script/css load across browser
@@ -2256,6 +2364,7 @@ build time: Feb 27 14:20
     }
     var CSS_POLL_INTERVAL = 30,
         utils = S.Loader.Utils,
+        jsCallbacks = {},
         /**
          * central poll for link node
          */
@@ -2317,6 +2426,19 @@ build time: Feb 27 14:20
         }
     }
 
+    function onreadystatechange() {
+        var self = this, rs = self.readyState;
+        if (/loaded|complete/i.test(rs)) {
+            self.onreadystatechange = null;
+            var src = self.src,
+                callbacks = jsCallbacks[src];
+            delete jsCallbacks[src];
+            S.each(callbacks, function (callback) {
+                callback.call(self);
+            });
+        }
+    }
+
     S.mix(utils, {
         scriptOnload:document.addEventListener ?
             function (node, callback) {
@@ -2329,15 +2451,12 @@ build time: Feb 27 14:20
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
                 }
-                var oldCallback = node.onreadystatechange;
-                node.onreadystatechange = function () {
-                    var rs = node.readyState;
-                    if (/loaded|complete/i.test(rs)) {
-                        node.onreadystatechange = null;
-                        oldCallback && oldCallback();
-                        callback.call(this);
-                    }
-                };
+                var src = node.src,
+                    callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
+                callbacks.push(callback);
+                if (callbacks.length == 1) {
+                    node.onreadystatechange = onreadystatechange;
+                }
             },
 
         /**
@@ -3425,33 +3544,72 @@ build time: Feb 27 14:20
         utils = Loader.Utils,
         ComboLoader = S.Loader.Combo;
 
-    S.mix(S, {
-        add:function (name, def, cfg) {
-            this.getLoader().add(name, def, cfg);
-        },
-        use:function (names, fn) {
-            this.getLoader().use(names, fn);
-        },
-        getLoader:function () {
-            var self = this;
-            if (self.Config.combine) {
-                return self.__comboLoader;
-            } else {
-                return self.__loader;
-            }
-        },
+    S.mix(S,
         /**
-         * get module's value defined by define function
-         * @param {string} moduleName
-         * @private
+         * @lends KISSY
          */
-        require:function (moduleName) {
-            var self = this,
-                mods = self.Env.mods,
-                mod = mods[moduleName];
-            return mod && mod.value;
-        }
-    });
+        {
+            /**
+             * Registers a module with the KISSY global.
+             * @param {String} [name] module name.
+             * it must be set if combine is true in {@link KISSY.config}
+             * @param {Function} def module definition function that is used to return
+             * this module value
+             * @param {KISSY} def.S KISSY global instance
+             * @param def.x... this module's required modules' value
+             * @param {Object} [cfg] module optional config data
+             * @param {String[]} cfg.requires this module's required module name list
+             * @example
+             * // dom module's definition
+             * <code>
+             * KISSY.add("dom",function(S,UA){
+             *  return { css:function(el,name,val){} };
+             * },{
+             *  requires:["ua"]
+             * });
+             * </code>
+             */
+            add:function (name, def, cfg) {
+                this.getLoader().add(name, def, cfg);
+            },
+            /**
+             * Attached one or more modules to global KISSY instance.
+             * @param {String} names moduleNames. 1-n modules to bind(use comma to separate)
+             * @param {Function} callback callback function executed
+             * when KISSY has the required functionality.
+             * @param {KISSY} callback.S KISSY instance
+             * @param callback.x... used module values
+             * @example
+             * // loads and attached overlay,dd and its dependencies
+             * KISSY.use("overlay,dd",function(S,Overlay){});
+             */
+            use:function (names, callback) {
+                this.getLoader().use(names, callback);
+            },
+            /**
+             * get KISSY's loader instance
+             * @returns {KISSY.Loader}
+             */
+            getLoader:function () {
+                var self = this;
+                if (self.Config.combine) {
+                    return self.__comboLoader;
+                } else {
+                    return self.__loader;
+                }
+            },
+            /**
+             * get module value defined by define function
+             * @param {string} moduleName
+             * @private
+             */
+            require:function (moduleName) {
+                var self = this,
+                    mods = self.Env.mods,
+                    mod = mods[moduleName];
+                return mod && mod.value;
+            }
+        });
 
 
     // notice: timestamp
@@ -3462,13 +3620,16 @@ build time: Feb 27 14:20
      * get base from src
      * @param script script node
      * @return base for kissy
+     * @private
      * @example
+     * <pre>
      *   http://a.tbcdn.cn/s/kissy/1.1.6/??kissy-min.js,suggest/suggest-pkg-min.js
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,s/kissy/1.1.5/suggest/suggest-pkg-min.js
      *   http://a.tbcdn.cn/??s/kissy/1.1.6/suggest/suggest-pkg-min.js,s/kissy/1.1.5/kissy-min.js
      *   http://a.tbcdn.cn/s/kissy/1.1.6/kissy-min.js?t=20101215.js
-     * @notice custom combo rules, such as yui3:
-     *  <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
+     *  note about custom combo rules, such as yui3:
+     *   <script src="path/to/kissy" data-combo-prefix="combo?" data-combo-sep="&"></script>
+     * <pre>
      */
     function getBaseUrl(script) {
         var src = utils.absoluteFilePath(script.src),

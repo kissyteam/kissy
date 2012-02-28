@@ -127,7 +127,7 @@ describe("KISSY.Defer", function () {
         runs(function () {
             defer.resolve(2);
         });
-        waits(50);
+        waits(20);
         runs(function () {
             expect(Promise.isResolved(p)).toBe(true);
             // p2 is waiting for d2
