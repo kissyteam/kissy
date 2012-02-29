@@ -251,6 +251,19 @@
             return modNames;
         },
 
+        unalias:function (self, modNames) {
+            var ret = [],
+                mods = self.Env.mods;
+            S.each(modNames, function (name) {
+                var alias, m;
+                if ((m = mods[name]) && (alias = m.alias)) {
+                    ret.push.apply(ret, alias);
+                } else {
+                    ret.push(name);
+                }
+            });
+            return ret;
+        },
 
         //注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, def, config) {

@@ -39,21 +39,21 @@
 
             var self = this,
                 SS = self.SS,
-                fired;
+                fired,
+                unaliasModNames = utils.unalias(self.SS, modNames);
 
             // 已经全部 attached, 直接执行回调即可
-            if (utils.isAttached(SS, modNames)) {
+            if (utils.isAttached(SS, unaliasModNames)) {
                 var mods = utils.getModules(SS, modNames);
                 callback && callback.apply(SS, mods);
                 return;
             }
 
             // 有尚未 attached 的模块
-            S.each(modNames, function (modName) {
+            S.each(unaliasModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function () {
-                    if (!fired &&
-                        utils.isAttached(SS, modNames)) {
+                    if (!fired && utils.isAttached(SS, unaliasModNames)) {
                         fired = true;
                         var mods = utils.getModules(SS, modNames);
                         callback && callback.apply(SS, mods);
@@ -123,9 +123,7 @@
                 attached = 0,
                 mods = SS.Env.mods,
                 //复制一份当前的依赖项出来，防止 add 后修改！
-                requires = (mod['requires'] || []).concat();
-
-            mod['requires'] = requires;
+                requires = utils.unalias(SS, mod['requires']);
 
             /**
              * check cyclic dependency between mods
@@ -139,8 +137,7 @@
                     r__allRequires,
                     requires = mod.requires;
 
-                for (var i = 0; i < requires.length; i++) {
-                    r = requires[i];
+                S.each(requires, function (r) {
                     rmod = mods[r];
                     __allRequires[r] = 1;
                     if (rmod && (r__allRequires = rmod.__allRequires)) {
@@ -150,7 +147,8 @@
                             }
                         }
                     }
-                }
+                });
+
                 if (__allRequires[myName]) {
                     var t = [];
                     for (r in __allRequires) {
@@ -183,9 +181,7 @@
             self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
-                mod['requires'] = mod['requires'] || [];
-
-                var newRequires = mod['requires'],
+                var newRequires = utils.unalias(SS, mod['requires']),
                     needToLoad = [];
 
                 //本模块下载成功后串行下载 require
@@ -215,7 +211,8 @@
             });
 
             function fn() {
-                if (!attached && utils.isAttached(SS, mod['requires'])) {
+                var unalias = utils.unalias(SS, mod['requires']);
+                if (!attached && utils.isAttached(SS, unalias)) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }

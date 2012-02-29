@@ -69,10 +69,13 @@
 
                 modNames = utils.normalizeModNamesInUse(modNames);
 
-                var allModNames = self.calculate(modNames),
+                var unaliasModNames = utils.unalias(self.SS, modNames);
+
+                var allModNames = self.calculate(unaliasModNames),
                     comboUrls = self.getComboUrls(allModNames);
 
-                // css first to avoid page blink
+
+                // load css first to avoid page blink
                 var css = comboUrls.css,
                     countCss = 0;
 
@@ -88,7 +91,7 @@
                 for (p in css) {
                     loadScripts(css[p], function () {
                         if (!(--countCss)) {
-                            S.each(modNames, function (name) {
+                            S.each(unaliasModNames, function (name) {
                                 utils.attachMod(self.SS, self.getModInfo(name));
                             });
                             self._useJs(comboUrls, fn, modNames);
@@ -120,6 +123,7 @@
                     jss = comboUrls.js,
                     countJss = 0;
 
+
                 for (var p in jss) {
                     countJss++;
                 }
@@ -132,8 +136,9 @@
                 for (p in jss) {
                     loadScripts(jss[p], function () {
                         if (!(--countJss)) {
-                            self.attachMods(modNames);
-                            if (utils.isAttached(self.SS, modNames)) {
+                            var unaliasModNames = utils.unalias(self.SS, modNames);
+                            self.attachMods(unaliasModNames);
+                            if (utils.isAttached(self.SS, unaliasModNames)) {
                                 fn.apply(null, utils.getModules(self.SS, modNames))
                             } else {
                                 // new require is introduced by KISSY.add
@@ -177,7 +182,7 @@
                         utils.isAttached(SS, modName)) {
                     return;
                 }
-                var requires = mod.requires || [];
+                var requires = utils.unalias(SS, mod.requires);
                 for (var i = 0; i < requires.length; i++) {
                     this.attachMod(requires[i]);
                 }
@@ -285,7 +290,7 @@
                     ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
-                    var requires = mod.requires || [],
+                    var requires = utils.unalias(SS, mod.requires),
                         allRequires = mod.__allRequires || (mod.__allRequires = {});
                     for (var i = 0; i < requires.length; i++) {
                         var r = utils.normalDepModuleName(modName, requires[i]);

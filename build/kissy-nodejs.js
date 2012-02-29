@@ -199,7 +199,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 28 11:46
+build time: Feb 29 17:51
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -337,7 +337,7 @@ build time: Feb 28 11:46
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120228114636',
+            __BUILD_TIME:'20120229175109',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2468,6 +2468,19 @@ build time: Feb 28 11:46
             return modNames;
         },
 
+        unalias:function (self, modNames) {
+            var ret = [],
+                mods = self.Env.mods;
+            S.each(modNames, function (name) {
+                var alias, m;
+                if ((m = mods[name]) && (alias = m.alias)) {
+                    ret.push.apply(ret, alias);
+                } else {
+                    ret.push(name);
+                }
+            });
+            return ret;
+        },
 
         //注册模块，将模块和定义 factory 关联起来
         registerModule:function (self, name, def, config) {
@@ -3119,21 +3132,21 @@ build time: Feb 28 11:46
 
             var self = this,
                 SS = self.SS,
-                fired;
+                fired,
+                unaliasModNames = utils.unalias(self.SS, modNames);
 
             // 已经全部 attached, 直接执行回调即可
-            if (utils.isAttached(SS, modNames)) {
+            if (utils.isAttached(SS, unaliasModNames)) {
                 var mods = utils.getModules(SS, modNames);
                 callback && callback.apply(SS, mods);
                 return;
             }
 
             // 有尚未 attached 的模块
-            S.each(modNames, function (modName) {
+            S.each(unaliasModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function () {
-                    if (!fired &&
-                        utils.isAttached(SS, modNames)) {
+                    if (!fired && utils.isAttached(SS, unaliasModNames)) {
                         fired = true;
                         var mods = utils.getModules(SS, modNames);
                         callback && callback.apply(SS, mods);
@@ -3203,9 +3216,7 @@ build time: Feb 28 11:46
                 attached = 0,
                 mods = SS.Env.mods,
                 //复制一份当前的依赖项出来，防止 add 后修改！
-                requires = (mod['requires'] || []).concat();
-
-            mod['requires'] = requires;
+                requires = utils.unalias(SS, mod['requires']);
 
             /**
              * check cyclic dependency between mods
@@ -3219,8 +3230,7 @@ build time: Feb 28 11:46
                     r__allRequires,
                     requires = mod.requires;
 
-                for (var i = 0; i < requires.length; i++) {
-                    r = requires[i];
+                S.each(requires, function (r) {
                     rmod = mods[r];
                     __allRequires[r] = 1;
                     if (rmod && (r__allRequires = rmod.__allRequires)) {
@@ -3230,7 +3240,8 @@ build time: Feb 28 11:46
                             }
                         }
                     }
-                }
+                });
+
                 if (__allRequires[myName]) {
                     var t = [];
                     for (r in __allRequires) {
@@ -3263,9 +3274,7 @@ build time: Feb 28 11:46
             self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
-                mod['requires'] = mod['requires'] || [];
-
-                var newRequires = mod['requires'],
+                var newRequires = utils.unalias(SS, mod['requires']),
                     needToLoad = [];
 
                 //本模块下载成功后串行下载 require
@@ -3295,7 +3304,8 @@ build time: Feb 28 11:46
             });
 
             function fn() {
-                if (!attached && utils.isAttached(SS, mod['requires'])) {
+                var unalias = utils.unalias(SS, mod['requires']);
+                if (!attached && utils.isAttached(SS, unalias)) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }
@@ -3479,10 +3489,13 @@ build time: Feb 28 11:46
 
                 modNames = utils.normalizeModNamesInUse(modNames);
 
-                var allModNames = self.calculate(modNames),
+                var unaliasModNames = utils.unalias(self.SS, modNames);
+
+                var allModNames = self.calculate(unaliasModNames),
                     comboUrls = self.getComboUrls(allModNames);
 
-                // css first to avoid page blink
+
+                // load css first to avoid page blink
                 var css = comboUrls.css,
                     countCss = 0;
 
@@ -3498,7 +3511,7 @@ build time: Feb 28 11:46
                 for (p in css) {
                     loadScripts(css[p], function () {
                         if (!(--countCss)) {
-                            S.each(modNames, function (name) {
+                            S.each(unaliasModNames, function (name) {
                                 utils.attachMod(self.SS, self.getModInfo(name));
                             });
                             self._useJs(comboUrls, fn, modNames);
@@ -3530,6 +3543,7 @@ build time: Feb 28 11:46
                     jss = comboUrls.js,
                     countJss = 0;
 
+
                 for (var p in jss) {
                     countJss++;
                 }
@@ -3542,8 +3556,9 @@ build time: Feb 28 11:46
                 for (p in jss) {
                     loadScripts(jss[p], function () {
                         if (!(--countJss)) {
-                            self.attachMods(modNames);
-                            if (utils.isAttached(self.SS, modNames)) {
+                            var unaliasModNames = utils.unalias(self.SS, modNames);
+                            self.attachMods(unaliasModNames);
+                            if (utils.isAttached(self.SS, unaliasModNames)) {
                                 fn.apply(null, utils.getModules(self.SS, modNames))
                             } else {
                                 // new require is introduced by KISSY.add
@@ -3587,7 +3602,7 @@ build time: Feb 28 11:46
                         utils.isAttached(SS, modName)) {
                     return;
                 }
-                var requires = mod.requires || [];
+                var requires = utils.unalias(SS, mod.requires);
                 for (var i = 0; i < requires.length; i++) {
                     this.attachMod(requires[i]);
                 }
@@ -3695,7 +3710,7 @@ build time: Feb 28 11:46
                     ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
-                    var requires = mod.requires || [],
+                    var requires = utils.unalias(SS, mod.requires),
                         allRequires = mod.__allRequires || (mod.__allRequires = {});
                     for (var i = 0; i < requires.length; i++) {
                         var r = utils.normalDepModuleName(modName, requires[i]);
@@ -4134,7 +4149,7 @@ build time: Feb 28 11:46
             requires:["dom"]
         },
         "ajax":{
-            requires:["dom", "event"]
+            requires:["dom", "event","json"]
         },
         "anim":{
             requires:["dom", "event"]
@@ -4144,6 +4159,9 @@ build time: Feb 28 11:46
         },
         "node":{
             requires:["dom", "event", "anim"]
+        },
+        core:{
+            alias:["dom", "event", "ajax", "anim", "base", "node","json"]
         },
 
         /******************************
@@ -4190,7 +4208,7 @@ build time: Feb 28 11:46
             requires:["dom", "event"]
         },
         "switchable":{
-            requires:["dom", "event", "anim","json"]
+            requires:["dom", "event", "anim", "json"]
         },
         "calendar":{
             requires:["node"]

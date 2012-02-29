@@ -15,7 +15,7 @@
             requires:["dom"]
         },
         "ajax":{
-            requires:["dom", "event"]
+            requires:["dom", "event","json"]
         },
         "anim":{
             requires:["dom", "event"]
@@ -25,6 +25,9 @@
         },
         "node":{
             requires:["dom", "event", "anim"]
+        },
+        core:{
+            alias:["dom", "event", "ajax", "anim", "base", "node","json"]
         },
 
         /******************************
@@ -71,7 +74,7 @@
             requires:["dom", "event"]
         },
         "switchable":{
-            requires:["dom", "event", "anim","json"]
+            requires:["dom", "event", "anim", "json"]
         },
         "calendar":{
             requires:["node"]
