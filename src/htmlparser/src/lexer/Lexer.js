@@ -2,7 +2,7 @@
  * @fileOverview parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
+KISSY.add("htmlparser/lexer/Lexer", function (S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
 
     function Lexer(text) {
         var self = this;
@@ -13,15 +13,15 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
 
     Lexer.prototype = {
 
-        setPosition:function(p) {
+        setPosition:function (p) {
             this.cursor.position = p;
         },
 
-        getPosition:function() {
+        getPosition:function () {
             return this.cursor.position;
         },
 
-        nextNode:function(quoteSmart) {
+        nextNode:function (quoteSmart) {
             var start ,
                 ch,
                 ret,
@@ -42,7 +42,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
                     } else if (ch == '/' || Utils.isLetter(ch)) {
                         page.ungetChar(cursor);
                         ret = this.parseTag(start);
-                    } else if ('!' == ch) {
+                    } else if ('!' == ch || '?' == ch) {
                         ch = page.getChar(cursor);
                         if (ch == -1) {
                             ret = this.makeString(start, cursor.position);
@@ -51,9 +51,11 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
                                 ret = this.makeComment(start, cursor.position);
                             } else {
                                 page.ungetChar(cursor); // remark/tag need this char
-                                if ('-' == ch)
+                                if ('-' == ch) {
                                     ret = this.parseComment(start, quoteSmart);
-                                else {
+                                } else {
+                                    // <!DOCTYPE html>
+                                    // <?xml:namespace>
                                     page.ungetChar(cursor); // tag needs prior one too
                                     ret = this.parseTag(start);
                                 }
@@ -74,7 +76,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
         },
 
         makeComment:function (start, end) {
-            var length,ret;
+            var length, ret;
 
             length = end - start;
             if (0 != length) {   // return tag based on second character, '/', '%', Letter (ch), '!'
@@ -90,8 +92,8 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
             return (ret);
         },
 
-        makeString:function(start, end) {
-            var ret = null,l;
+        makeString:function (start, end) {
+            var ret = null, l;
             l = end - start;
             if (l > 0) {
                 ret = this.nodeFactory.createStringNode(this.page, start, end);
@@ -104,8 +106,8 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
          * @param start
          * @param end
          */
-        makeCData:function(start, end) {
-            var ret = null,l;
+        makeCData:function (start, end) {
+            var ret = null, l;
             l = end - start;
             if (l > 0) {
                 ret = this.nodeFactory.createCDataNode(this.page, start, end);
@@ -113,7 +115,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
             return ret;
         },
 
-        makeTag:function(start, end, attributes) {
+        makeTag:function (start, end, attributes) {
             var length,
                 ret;
             length = end - start;
@@ -130,19 +132,19 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
             return ret;
         },
 
-        createTagNode:function(page, start, end, attributes) {
+        createTagNode:function (page, start, end, attributes) {
             return new TagNode(page, start, end, attributes);
         },
 
-        createStringNode:function(page, start, end) {
+        createStringNode:function (page, start, end) {
             return new TextNode(page, start, end);
         },
 
-        createCDataNode:function(page, start, end) {
+        createCDataNode:function (page, start, end) {
             return new CData(page, start, end);
         },
 
-        createCommentNode:function(page, start, end) {
+        createCommentNode:function (page, start, end) {
             return new CommentNode(page, start, end);
         },
 
@@ -156,7 +158,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
          * state 5 - within double quoted attribute value</li>
          * state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0</li>
          */
-        parseTag:function(start) {
+        parseTag:function (start) {
             var done,
                 bookmarks = [],
                 attributes = [],
@@ -194,7 +196,8 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
                                     state = 1;
                                 }
                             }
-                            else if (Utils.isValidAttributeNameStartChar(ch)) {
+                            // <img />
+                            else if (ch == "/" || Utils.isValidAttributeNameStartChar(ch)) {
                                 state = 1;
                             }
                         }
@@ -325,7 +328,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
          * @param start
          * @param quoteSmart
          */
-        parseComment:function(start, quoteSmart) {
+        parseComment:function (start, quoteSmart) {
             var done,
                 ch,
                 page = this.page,
@@ -411,7 +414,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
          * @param start
          * @param quoteSmart strings ignore quoted contents
          */
-        parseString:function(start, quoteSmart) {
+        parseString:function (start, quoteSmart) {
             var done = 0,
                 ch,
                 page = this.page,
@@ -450,14 +453,14 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
                         done = 1;
                     }
                     else if ('/' == ch) {
-                        do{
+                        do {
                             ch = page.getChar(cursor);
                         } while ((-1 != ch) && ('\n' != ch));
                     }
                     else if ('*' == ch) {
                         do
                         {
-                            do{
+                            do {
                                 ch = page.getChar(cursor);
                             } while ((-1 != ch) && ('*' != ch));
                             ch = page.getChar(cursor);
@@ -479,7 +482,9 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
                     // the order of these tests might be optimized for speed:
                     else if ('/' == ch ||
                         Utils.isLetter(ch) ||
-                        '!' == ch) {
+                        '!' == ch ||
+                        // <?xml:namespace
+                        '?' == ch) {
                         done = 1;
                         page.ungetChar(cursor);
                         page.ungetChar(cursor);
@@ -499,7 +504,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
          * parse cdata such as code in script
          * @param quoteSmart if set true end tag in quote (but not in comment mode) does not end current tag ( <script>x="<a>taobao</a>"</script> )
          */
-        parseCDATA:function(quoteSmart, tagName) {
+        parseCDATA:function (quoteSmart, tagName) {
             var start,
                 state,
                 done,
@@ -707,7 +712,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
          * @param attributes The list so far.
          * @param bookmarks The array of positions.
          */
-        single_quote :function(attributes, bookmarks) {
+        single_quote:function (attributes, bookmarks) {
             var page = this.page;
             attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2]), "=", page.getText(bookmarks[4] + 1, bookmarks[5]), "'"));
         },
@@ -728,7 +733,7 @@ KISSY.add("htmlparser/lexer/Lexer", function(S, Cursor, Page, TextNode, CData, U
          * @param attributes The list so far.
          * @param bookmarks The array of positions.
          */
-        standalone:function(attributes, bookmarks) {
+        standalone:function (attributes, bookmarks) {
             var page = this.page;
             attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2])));
         },

@@ -4,43 +4,54 @@
  */
 KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
 
+    function createTag(self, tagName, attrs) {
+        self.nodeName = self.tagName = tagName.toLowerCase();
+        self._updateSelfClosed();
+        S.each(attrs, function (v, n) {
+            self.setAttribute(n, v);
+        });
+    }
+
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
-        Tag.superclass.constructor.apply(self, arguments);
+
         self.childNodes = [];
         self.firstChild = null;
         self.lastChild = null;
         self.attributes = attributes || [];
         self.nodeType = 1;
-        attributes = self.attributes;
-        // first attribute is actually nodeName
 
-        if (attributes[0]) {
-            self.nodeName = attributes[0].name.toLowerCase();
-            // note :
-            // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
-            self.tagName = self.nodeName.replace(/\//, "");
-            // <br> <img> <input> , just recognize them immediately
-            self.isSelfClosed = !!(Dtd.$empty[self.nodeName]);
-            if (!self.isSelfClosed) {
-                self.isSelfClosed = /\/$/.test(self.nodeName);
+        if (S.isString(page)) {
+            Tag.superclass.constructor.apply(self);
+            createTag.apply(null, [self].concat(S.makeArray(arguments)));
+        } else {
+            Tag.superclass.constructor.apply(self, arguments);
+
+            attributes = self.attributes;
+            // first attribute is actually nodeName
+
+            if (attributes[0]) {
+                self.nodeName = attributes[0].name.toLowerCase();
+                // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
+                self.tagName = self.nodeName.replace(/\//, "");
+                self._updateSelfClosed();
+                attributes.splice(0, 1);
             }
-            attributes.splice(0, 1);
+
+            var lastAttr = attributes[attributes.length - 1],
+                lastSlash = !!(lastAttr && /\/$/.test(lastAttr.name));
+
+            if (lastSlash) {
+                attributes.length = attributes.length - 1;
+            }
+
+            // self-closing flag
+            self.isSelfClosed = self.isSelfClosed || lastSlash;
+
+            // whether has been closed by its end tag
+            // !TODO how to set closed position correctly
+            self['closed'] = self.isSelfClosed;
         }
-
-        var lastAttr = attributes[attributes.length - 1],
-            lastSlash = !!(lastAttr && /\/$/.test(lastAttr.name));
-
-        if (lastSlash) {
-            attributes.length = attributes.length - 1;
-        }
-
-        // self-closing flag
-        self.isSelfClosed = self.isSelfClosed || lastSlash;
-
-        // whether has been closed by its end tag
-        // !TODO how to set closed position correctly
-        self['closed'] = self.isSelfClosed;
         self['closedStartPosition'] = -1;
         self['closedEndPosition'] = -1;
     }
@@ -53,7 +64,6 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
             c[0].nextSibling = c[0].nextSibling = null;
             c[0].parentNode = self;
         }
-
         if (c.length > 1) {
             for (var i = 0; i < c.length - 1; i++) {
                 c[i].nextSibling = c[i + 1];
@@ -65,6 +75,16 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
     }
 
     S.extend(Tag, Node, {
+
+        _updateSelfClosed:function () {
+            var self = this;
+            // <br> <img> <input> , just recognize them immediately
+            self.isSelfClosed = !!(Dtd.$empty[self.nodeName]);
+            if (!self.isSelfClosed) {
+                self.isSelfClosed = /\/$/.test(self.nodeName);
+            }
+            self['closed'] = self.isSelfClosed;
+        },
 
         clone:function () {
             var ret = new Tag(),
@@ -86,6 +106,12 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
                 closedEndPosition:this.closedEndPosition
             });
             return ret;
+        },
+
+        setTagName:function (v) {
+            var self = this;
+            self.nodeName = self.tagName = v;
+            self._updateSelfClosed();
         },
 
         equals:function (tag) {
@@ -259,11 +285,11 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
                 attrName = attr.name;
                 if (filter) {
                     // filtered directly by name
-                    if (!(attrName = filter.onAttributeName(attrName))) {
+                    if (!(attrName = filter.onAttributeName(attrName, el))) {
                         continue;
                     }
                     // filtered by value and node
-                    if (filter.onAttribute(attr) === false) {
+                    if (filter.onAttribute(attr, el) === false) {
                         continue;
                     }
                 }
@@ -286,9 +312,10 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
          * @protected
          */
         _writeChildrenHtml:function (writer) {
-            var filter = this.isChildrenFiltered ? 0 : this.__filter;
+            var self = this,
+                filter = self.isChildrenFiltered ? 0 : self.__filter;
             // process its children recursively
-            S.each(this.childNodes, function (child) {
+            S.each(self.childNodes, function (child) {
                 child.writeHtml(writer, filter);
             });
         }

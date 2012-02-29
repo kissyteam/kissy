@@ -44,6 +44,17 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         return _default;
     }
 
+    function filterAttr(arr, attrNode, el, _default) {
+        for (var i = 0; i < arr.length; i++) {
+            var item = arr[i].value,
+                name = attrNode.name;
+            if (item[name] && item[name].call(null, attrNode.value, el) === false) {
+                return false;
+            }
+        }
+        return _default;
+    }
+
     Filter.prototype = {
 
         /**
@@ -52,10 +63,15 @@ KISSY.add("htmlparser/writer/filter", function (S) {
          * {
          *   tagNames:[ [/^ke/,''] ],
          *   attributeNames:[[^on],''],
-         *   tags:{p:function(element){}}
+         *   tags:{
+         *      p:function(element){},
+         *      ^:function(element){},
+         *      $:function(element){}
+         *   }
          *   comments:function(){},
          *   attributes:function(){},
-         *   texts:function(){}
+         *   texts:function(){},
+         *   root:function(){}
          * }
          * @param {Number} [priority] 值越小，优先级越高 ,最低 1
          */
@@ -93,8 +109,8 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             return filterFn(this.cdatas, [el.toHtml(), el], el);
         },
 
-        onAttribute:function (el, attrNode) {
-            return filterFn(this.attributes, [attrNode, el], attrNode);
+        onAttribute:function (attrNode, el) {
+            return filterAttr(this.attributes, attrNode, el, attrNode);
         },
 
         onComment:function (el) {
@@ -106,9 +122,9 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             if (t === 1) {
                 return this.onTag(el);
             } else if (t === 3) {
-                return this.onText(el.toHtml(), el);
+                return this.onText(el);
             } else if (t === 8) {
-                return this.onComment(el.toHtml(), el);
+                return this.onComment(el);
             }
         },
 
