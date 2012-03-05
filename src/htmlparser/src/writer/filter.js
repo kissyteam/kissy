@@ -8,9 +8,9 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         this.tagNames = [];
         this.attributeNames = [];
         this.tags = [];
-        this.comments = [];
-        this.texts = [];
-        this.cdatas = [];
+        this.comment = [];
+        this.text = [];
+        this.cdata = [];
         this.attributes = [];
         this.root = [];
     }
@@ -68,9 +68,9 @@ KISSY.add("htmlparser/writer/filter", function (S) {
          *      ^:function(element){},
          *      $:function(element){}
          *   }
-         *   comments:function(){},
-         *   attributes:function(){},
-         *   texts:function(){},
+         *   comment:function(){},
+         *   attributes:{style:function(){}},
+         *   text:function(){},
          *   root:function(){}
          * }
          * @param {Number} [priority] 值越小，优先级越高 ,最低 1
@@ -102,11 +102,11 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onText:function (el) {
-            return filterFn(this.texts, [el.toHtml(), el], el);
+            return filterFn(this.text, [el.toHtml(), el], el);
         },
 
         onCData:function (el) {
-            return filterFn(this.cdatas, [el.toHtml(), el], el);
+            return filterFn(this.cdata, [el.toHtml(), el], el);
         },
 
         onAttribute:function (attrNode, el) {
@@ -114,7 +114,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onComment:function (el) {
-            return filterFn(this.comments, [el.toHtml(), el], el);
+            return filterFn(this.comment, [el.toHtml(), el], el);
         },
 
         onNode:function (el) {

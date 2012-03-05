@@ -22,32 +22,29 @@
 </label>
 <script>
 
-    KISSY.use("htmlparser", function(S, HtmlParser) {
+    KISSY.use("htmlparser", function (S, HtmlParser) {
         var $ = S.all;
         var start = $("#start");
-        start.on("click", function() {
+        start.on("click", function () {
             var basicWriter = new HtmlParser.BasicWriter(),
                     filter = new HtmlParser.Filter(),
                     before = S.trim($("#before").val()),
-                    nodes = new HtmlParser.Parser(before).parse();
+                    n = new HtmlParser.Parser(before).parse();
 
             filter.addRules({
                 tags:{
-                    $:function(el) {
+                    $:function (el) {
                         S.log(el.tagName);
                     }
                 },
-                texts:function(v) {
+                text:function (v) {
                     S.log(v);
                 },
-                comments:function(v) {
+                comment:function (v) {
                     S.log(v);
                 }
             });
-
-            S.each(nodes, function(n) {
-                n.writeHtml(basicWriter, filter);
-            });
+            n.writeHtml(basicWriter, filter);
 
             $("#after").val(basicWriter.getHtml());
         });
