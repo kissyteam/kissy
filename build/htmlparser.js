@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 14:16
+build time: Mar 5 19:21
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -2789,7 +2789,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     }
 
     function findIndexToInsert(arr, p) {
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; arr && i < arr.length; i++) {
             if (arr[i].priority > p) {
                 return i;
             }
@@ -2798,7 +2798,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     }
 
     function filterName(arr, v) {
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; arr && i < arr.length; i++) {
             var items = arr[i].value;
             S.each(items, function (item) {
                 v = v.replace(item[0], item[1]);
@@ -2808,7 +2808,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     }
 
     function filterFn(arr, args, _default) {
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; arr && i < arr.length; i++) {
             var item = arr[i].value;
             if (item.apply(null, args) === false) {
                 return false;
@@ -2818,7 +2818,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     }
 
     function filterAttr(arr, attrNode, el, _default) {
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; arr && i < arr.length; i++) {
             var item = arr[i].value,
                 name = attrNode.name;
             if (item[name] && item[name].call(null, attrNode.value, el) === false) {
@@ -2852,12 +2852,14 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             priority = priority || 10;
             for (var r in rules) {
                 if (rules.hasOwnProperty(r)) {
-                    var holder = this[r],
-                        index = findIndexToInsert(holder, priority);
-                    holder.splice(index, 0, {
-                        value:rules[r],
-                        priority:priority
-                    });
+                    var holder = this[r];
+                    if (holder) {
+                        var index = findIndexToInsert(holder, priority);
+                        holder.splice(index, 0, {
+                            value:rules[r],
+                            priority:priority
+                        });
+                    }
                 }
             }
         },

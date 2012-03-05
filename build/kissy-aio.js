@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 29 17:51
+build time: Mar 5 19:57
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -139,7 +139,7 @@ build time: Feb 29 17:51
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120229175109',
+            __BUILD_TIME:'20120305195735',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3951,7 +3951,7 @@ build time: Feb 29 17:51
             requires:["dom"]
         },
         "ajax":{
-            requires:["dom", "event","json"]
+            requires:["dom", "event", "json"]
         },
         "anim":{
             requires:["dom", "event"]
@@ -3963,7 +3963,7 @@ build time: Feb 29 17:51
             requires:["dom", "event", "anim"]
         },
         core:{
-            alias:["dom", "event", "ajax", "anim", "base", "node","json"]
+            alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
         },
 
         /******************************
@@ -4026,6 +4026,9 @@ build time: Feb 29 17:51
         },
         "imagezoom":{
             requires:["node", "uibase"]
+        },
+        "editor":{
+            requires:['htmlparser', 'core']
         }
     });
 
@@ -4036,43 +4039,48 @@ build time: Feb 29 17:51
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 5 19:07
 */
 /**
  * @fileOverview ua
  * @author lifesinger@gmail.com
  */
-KISSY.add('ua/base', function() {
+KISSY.add('ua/base', function (S, undefined) {
 
     var ua = navigator.userAgent,
-        EMPTY = '', MOBILE = 'mobile',
-        core = EMPTY, shell = EMPTY, m,
-        IE_DETECT_RANGE = [6, 9], v, end,
+        EMPTY = '',
+        MOBILE = 'mobile',
+        core = EMPTY,
+        shell = EMPTY, m,
+        IE_DETECT_RANGE = [6, 9],
+        v,
+        end,
         VERSION_PLACEHOLDER = '{{version}}',
-        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><s></s><![endif]-->',
-        div = document.createElement('div'), s,
+        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
+        div = document.createElement('div'),
+        s,
         o = {
             // browser core type
-            //webkit: 0,
-            //trident: 0,
-            //gecko: 0,
-            //presto: 0,
+            webkit:undefined,
+            trident:undefined,
+            gecko:undefined,
+            presto:undefined,
 
             // browser type
-            //chrome: 0,
-            //safari: 0,
-            //firefox:  0,
-            //ie: 0,
-            //opera: 0
+            chrome:undefined,
+            safari:undefined,
+            firefox:undefined,
+            ie:undefined,
+            opera:undefined,
 
-            //mobile: '',
-            //core: '',
-            //shell: ''
+            mobile:undefined,
+            core:undefined,
+            shell:undefined
         },
-        numberify = function(s) {
+        numberify = function (s) {
             var c = 0;
             // convert '1.2.3.4' to 1.234
-            return parseFloat(s.replace(/\./g, function() {
+            return parseFloat(s.replace(/\./g, function () {
                 return (c++ === 0) ? '.' : '';
             }));
         };
@@ -4098,7 +4106,7 @@ KISSY.add('ua/base', function() {
         //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
         //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
         //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-        for (v = IE_DETECT_RANGE[0],end = IE_DETECT_RANGE[1]; v <= end; v++) {
+        for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
             if (s.length > 0) {
                 o[shell] = v;
@@ -8404,7 +8412,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 5 19:52
 */
 /**
  * @fileOverview responsible for registering event
@@ -8566,12 +8574,9 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
             /**
              * Adds an event listener.similar to addEventListener in DOM3 Events
              * @param targets KISSY selector
-             * @param type {String} The type of event to append.
-             * @param fn {Function|Object} The event handler/listener.
-             * @param fn.scope
-             * @param fn.selector
-             * @param fn.fn
-             * @param  {Object} [scope] The scope (this reference) in which the handler function is executed.
+             * @param type {String} The type of event to append.use space to separate multiple event types.
+             * @param fn {Function} The event handler/listener.
+             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
             add:function (targets, type, fn, scope) {
                 type = S.trim(type);
@@ -8968,43 +8973,48 @@ KISSY.add("event/data", function (S, DOM, Utils) {
  * @fileOverview KISSY Scalable Event Framework
  */
 KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
-    S.mix(Event, {
-        KeyCodes:KeyCodes,
-        Target:Target,
-        Object:Object,
-        on:Event.add,
-        detach:Event.remove,
+    S.mix(Event,
         /**
-         *
-         * @param targets
-         * @param {String} eventType
-         * @param {String|Function} selector
-         * @param {Object|Function} fn
-         * @param [scope]
+         * @lends Event
          */
-        delegate:function (targets, eventType, selector, fn, scope) {
-            return Event.add(targets, eventType, {
-                fn:fn,
-                scope:scope,
-                selector:selector
-            });
-        },
-        /**
-         *
-         * @param targets
-         * @param {String} [eventType]
-         * @param {String|Function} [selector]
-         * @param {Object|Function} [fn]
-         * @param [scope]
-         */
-        undelegate:function (targets, eventType, selector, fn, scope) {
-            return Event.remove(targets, eventType, {
-                fn:fn,
-                scope:scope,
-                selector:selector
-            });
-        }
-    });
+        {
+            KeyCodes:KeyCodes,
+            Target:Target,
+            Object:Object,
+            on:Event.add,
+            detach:Event.remove,
+            /**
+             *
+             * @param targets KISSY selector
+             * @param {String} [eventType] The type of event to delegate.
+             * use space to separate multiple event types.
+             * @param {String|Function} selector filter selector string or function to find right element
+             * @param {Function} [fn] The event handler/listener.
+             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+             */
+            delegate:function (targets, eventType, selector, fn, scope) {
+                return Event.add(targets, eventType, {
+                    fn:fn,
+                    scope:scope,
+                    selector:selector
+                });
+            },
+            /**
+             * @param targets KISSY selector
+             * @param {String} [eventType] The type of event to undelegate.
+             * use space to separate multiple event types.
+             * @param {String|Function} selector filter selector string or function to find right element
+             * @param {Function} [fn] The event handler/listener.
+             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+             */
+            undelegate:function (targets, eventType, selector, fn, scope) {
+                return Event.remove(targets, eventType, {
+                    fn:fn,
+                    scope:scope,
+                    selector:selector
+                });
+            }
+        });
 
     S.mix(Event, _data);
 
@@ -9032,7 +9042,13 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
         "event/add",
         "event/remove"
     ]
-});/**
+});
+
+/**
+ *  2012-02-12 yiminghe@gmail.com note:
+ *   - 普通 remove() 不管 selector 都会查，如果 fn scope 相等就移除
+ *   - undelegate() selector 为 ""，那么去除所有委托绑定的 handler
+ *//**
  * @fileOverview   event-focusin
  * @author  yiminghe@gmail.com
  */
@@ -9948,7 +9964,7 @@ KISSY.add('event/object', function (S, undefined) {
         /**
          * Stops the event propagation and prevents the default
          * event behavior.
-         * @param immediate {boolean} if TRUE additional listeners
+         * @param [immediate] {boolean} if TRUE additional listeners
          * on the current target will not be executed
          */
         halt:function (immediate) {
@@ -9983,180 +9999,187 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
     var isValidTarget = Utils.isValidTarget,
         simpleRemove = Utils.simpleRemove;
 
-    S.mix(Event, {
-        // single target, single type, fixed native
-        __remove:function (isNativeTarget, target, type, fn, scope) {
-
-            if (!target || (isNativeTarget && !isValidTarget(target))) {
-                return;
-            }
-
-            var typedGroups = Utils.getTypedGroups(type);
-            type = typedGroups[0];
-            var groups = typedGroups[1],
-                selector,
-                // in case type is undefined
-                originalFn = fn,
-                originalScope = scope,
-                hasSelector, s = EVENT_SPECIAL[type];
-
-            if (S.isObject(fn)) {
-                scope = fn.scope;
-                hasSelector = ("selector" in fn);
-                selector = fn.selector;
-                fn = fn.fn;
-                if (selector) {
-                    if (s && s['delegateFix']) {
-                        type = s['delegateFix'];
-                    }
-                }
-            }
-
-            if (!selector) {
-                if (s && s['onFix']) {
-                    type = s['onFix'];
-                }
-            }
-
-            var eventDesc = _data._data(target),
-                events = eventDesc && eventDesc.events,
-                handlers,
-                handler,
-                len,
-                i,
-                j,
-                t,
-                special = (isNativeTarget && EVENT_SPECIAL[type]) || { };
-
-            if (!events) {
-                return;
-            }
-
-            // remove all types of event
-            if (!type) {
-                for (type in events) {
-                    if (events.hasOwnProperty(type)) {
-                        Event.__remove(isNativeTarget,
-                            target, type + groups, originalFn,
-                            originalScope);
-                    }
-                }
-                return;
-            }
-
-            var groupsRe;
-
-            if (groups) {
-                groupsRe = Utils.getGroupsRe(groups);
-            }
-
-            if ((handlers = events[type])) {
-                len = handlers.length;
-                // 移除 fn
-                if ((fn || hasSelector || groupsRe ) && len) {
-                    scope = scope || target;
-
-                    for (i = 0, j = 0, t = []; i < len; ++i) {
-                        handler = handlers[i];
-                        var handlerScope = handler.scope || target;
-                        if (
-                            (scope != handlerScope) ||
-                                // 指定了函数，函数不相等，保留
-                                (fn && fn != handler.fn) ||
-                                // 1.没指定函数
-                                // 1.1 没有指定选择器,删掉 else2
-                                // 1.2 指定选择器,字符串为空
-                                // 1.2.1 指定选择器,字符串为空,待比较 handler 有选择器,删掉 else
-                                // 1.2.2 指定选择器,字符串为空,待比较 handler 没有选择器,保留
-                                // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
-                                // 1.4 指定选择器,字符串不为空,字符串不相等,保留
-                                // 2.指定了函数且函数相等
-                                // 2.1 没有指定选择器,删掉 else
-                                // 2.2 指定选择器,字符串为空
-                                // 2.2.1 指定选择器,字符串为空,待比较 handler 有选择器,删掉 else
-                                // 2.2.2 指定选择器,字符串为空,待比较 handler 没有选择器,保留
-                                // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
-                                // 2.4 指定选择器,字符串不为空,字符串不相等,保留
-                                (
-                                    hasSelector &&
-                                        (
-                                            (selector && selector != handler.selector) ||
-                                                (!selector && !handler.selector)
-                                            )
-                                    ) ||
-
-                                // 指定了删除的某些组，而该 handler 不属于这些组，保留，否则删除
-                                (groupsRe && !handler.groups.match(groupsRe))
-
-                            ) {
-                            t[j++] = handler;
-                        }
-                        else {
-                            if (handler.selector && handlers.delegateCount) {
-                                handlers.delegateCount--;
-                            }
-                            if (handler.last && handlers.lastCount) {
-                                handlers.lastCount--;
-                            }
-                            if (special.remove) {
-                                special.remove.call(target, handler);
-                            }
-                        }
-                    }
-                    t.delegateCount = handlers.delegateCount;
-                    t.lastCount = handlers.lastCount;
-                    events[type] = t;
-                    len = t.length;
-                } else {
-                    // 全部删除
-                    len = 0;
-                }
-
-                if (!len) {
-                    // remove(el, type) or fn 已移除光
-                    // dom node need to detach handler from dom node
-                    if (isNativeTarget &&
-                        (!special['tearDown'] ||
-                            special['tearDown'].call(target) === false)) {
-                        simpleRemove(target, type, eventDesc.handler);
-                    }
-                    // remove target's single event description
-                    delete events[type];
-                }
-            }
-
-            // remove target's  all events description
-            if (S.isEmptyObject(events)) {
-                eventDesc.handler.target = null;
-                delete eventDesc.handler;
-                delete eventDesc.events;
-                Event._removeData(target);
-            }
-        },
-
+    S.mix(Event,
         /**
-         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
-         * @param targets KISSY selector
-         * @param {String} [type] The type of event to append.
-         * @param {Object|Function} [fn] The event handler/listener.
-         * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+         * @lends Event
          */
-        remove:function (targets, type, fn, scope) {
+        {
+            // single target, single type, fixed native
+            __remove:function (isNativeTarget, target, type, fn, scope) {
 
-            type = S.trim(type);
+                if (!target || (isNativeTarget && !isValidTarget(target))) {
+                    return;
+                }
 
-            if (Utils.batchForType(Event.remove, targets, type, fn, scope)) {
+                var typedGroups = Utils.getTypedGroups(type);
+                type = typedGroups[0];
+                var groups = typedGroups[1],
+                    selector,
+                    // in case type is undefined
+                    originalFn = fn,
+                    originalScope = scope,
+                    hasSelector, s = EVENT_SPECIAL[type];
+
+                if (S.isObject(fn)) {
+                    scope = fn.scope;
+                    hasSelector = ("selector" in fn);
+                    selector = fn.selector;
+                    fn = fn.fn;
+                    if (selector) {
+                        if (s && s['delegateFix']) {
+                            type = s['delegateFix'];
+                        }
+                    }
+                }
+
+                if (!selector) {
+                    if (s && s['onFix']) {
+                        type = s['onFix'];
+                    }
+                }
+
+                var eventDesc = _data._data(target),
+                    events = eventDesc && eventDesc.events,
+                    handlers,
+                    handler,
+                    len,
+                    i,
+                    j,
+                    t,
+                    special = (isNativeTarget && EVENT_SPECIAL[type]) || { };
+
+                if (!events) {
+                    return;
+                }
+
+                // remove all types of event
+                if (!type) {
+                    for (type in events) {
+                        if (events.hasOwnProperty(type)) {
+                            Event.__remove(isNativeTarget,
+                                target, type + groups, originalFn,
+                                originalScope);
+                        }
+                    }
+                    return;
+                }
+
+                var groupsRe;
+
+                if (groups) {
+                    groupsRe = Utils.getGroupsRe(groups);
+                }
+
+                if ((handlers = events[type])) {
+                    len = handlers.length;
+                    // 移除 fn
+                    if ((fn || hasSelector || groupsRe ) && len) {
+                        scope = scope || target;
+
+                        for (i = 0, j = 0, t = []; i < len; ++i) {
+                            handler = handlers[i];
+                            var handlerScope = handler.scope || target;
+                            if (
+                                (scope != handlerScope) ||
+                                    // 指定了函数，函数不相等，保留
+                                    (fn && fn != handler.fn) ||
+                                    // 1.没指定函数
+                                    // 1.1 没有指定选择器,删掉 else2
+                                    // 1.2 指定选择器,字符串为空
+                                    // 1.2.1 指定选择器,字符串为空,待比较 handler 有选择器,删掉 else
+                                    // 1.2.2 指定选择器,字符串为空,待比较 handler 没有选择器,保留
+                                    // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
+                                    // 1.4 指定选择器,字符串不为空,字符串不相等,保留
+                                    // 2.指定了函数且函数相等
+                                    // 2.1 没有指定选择器,删掉 else
+                                    // 2.2 指定选择器,字符串为空
+                                    // 2.2.1 指定选择器,字符串为空,待比较 handler 有选择器,删掉 else
+                                    // 2.2.2 指定选择器,字符串为空,待比较 handler 没有选择器,保留
+                                    // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
+                                    // 2.4 指定选择器,字符串不为空,字符串不相等,保留
+                                    (
+                                        hasSelector &&
+                                            (
+                                                (selector && selector != handler.selector) ||
+                                                    (!selector && !handler.selector)
+                                                )
+                                        ) ||
+
+                                    // 指定了删除的某些组，而该 handler 不属于这些组，保留，否则删除
+                                    (groupsRe && !handler.groups.match(groupsRe))
+
+                                ) {
+                                t[j++] = handler;
+                            }
+                            else {
+                                if (handler.selector && handlers.delegateCount) {
+                                    handlers.delegateCount--;
+                                }
+                                if (handler.last && handlers.lastCount) {
+                                    handlers.lastCount--;
+                                }
+                                if (special.remove) {
+                                    special.remove.call(target, handler);
+                                }
+                            }
+                        }
+                        t.delegateCount = handlers.delegateCount;
+                        t.lastCount = handlers.lastCount;
+                        events[type] = t;
+                        len = t.length;
+                    } else {
+                        // 全部删除
+                        len = 0;
+                    }
+
+                    if (!len) {
+                        // remove(el, type) or fn 已移除光
+                        // dom node need to detach handler from dom node
+                        if (isNativeTarget &&
+                            (!special['tearDown'] ||
+                                special['tearDown'].call(target) === false)) {
+                            simpleRemove(target, type, eventDesc.handler);
+                        }
+                        // remove target's single event description
+                        delete events[type];
+                    }
+                }
+
+                // remove target's  all events description
+                if (S.isEmptyObject(events)) {
+                    eventDesc.handler.target = null;
+                    delete eventDesc.handler;
+                    delete eventDesc.events;
+                    Event._removeData(target);
+                }
+            },
+
+            /**
+             * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+             * @param targets KISSY selector
+             * @param {String} [type] The type of event to remove.
+             * use space to separate multiple event types.
+             * @param {Function} [fn] The event handler/listener.
+             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+             */
+            remove:function (targets, type, fn, scope) {
+
+                type = S.trim(type);
+
+                if (Utils.batchForType(Event.remove, targets, type, fn, scope)) {
+                    return targets;
+                }
+
+                targets = DOM.query(targets);
+
+                for (var i = targets.length - 1; i >= 0; i--) {
+                    Event.__remove(true, targets[i], type, fn, scope);
+                }
+
                 return targets;
-            }
 
-            targets = DOM.query(targets);
-            for (var i = targets.length - 1; i >= 0; i--) {
-                Event.__remove(true, targets[i], type, fn, scope);
             }
-            return targets;
-
-        }
-    });
+        });
 }, {
     requires:['./base', 'dom', './utils', './data', './special']
 });/**
@@ -23838,7 +23861,7 @@ KISSY.add("component/uistore", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 10 15:00
+build time: Mar 5 15:18
 */
 /**
  * @fileOverview accordion aria support
@@ -24422,11 +24445,10 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
     return Switchable;
 }, { requires:["dom", "event", "./base"]});
 /**
-
- - 承玉：2011.06.02 review switchable
- - qiaohua chengyu 2011.02.08 supportpauseOnScroll
- - - 当 Switchable 对象不在可视区域中时停止动画切换
-
+ * - 乔花 承玉：2012.02.08 support pauseOnScroll
+ *  当 Switchable 对象不在可视区域中时停止动画切换
+ *
+ * - 承玉：2011.06.02 review switchable
  *//**
  * @fileOverview Switchable Autorender Plugin
  * @creator  lifesinger@gmail.com
@@ -25347,7 +25369,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
  * @fileOverview Carousel Widget
  * @creator  lifesinger@gmail.com
  */
-KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefined) {
+KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable, undefined) {
 
     var CLS_PREFIX = 'ks-switchable-',
         DOT = '.',
@@ -25373,70 +25395,70 @@ KISSY.add('switchable/carousel/base', function(S, DOM, Event, Switchable, undefi
     }
 
     Carousel.Config = {
-        circular: true,
-        prevBtnCls: CLS_PREFIX + 'prev-btn',
-        nextBtnCls: CLS_PREFIX + 'next-btn',
-        disableBtnCls: CLS_PREFIX + 'disable-btn'
+        circular:true,
+        prevBtnCls:CLS_PREFIX + 'prev-btn',
+        nextBtnCls:CLS_PREFIX + 'next-btn',
+        disableBtnCls:CLS_PREFIX + 'disable-btn'
     };
 
     Carousel.Plugins = [];
 
     S.extend(Carousel, Switchable, {
-            /**
-             * 插入 carousel 的初始化逻辑
-             *
-             * Carousel 的初始化逻辑
-             * 增加了:
-             *   self.prevBtn
-             *   self.nextBtn
-             */
-            _init:function() {
-                var self = this;
-                Carousel.superclass._init.call(self);
-                var cfg = self.config,
-                    disableCls = cfg.disableBtnCls;
+        /**
+         * 插入 carousel 的初始化逻辑
+         *
+         * Carousel 的初始化逻辑
+         * 增加了:
+         *   self.prevBtn
+         *   self.nextBtn
+         */
+        _init:function () {
+            var self = this;
+            Carousel.superclass._init.call(self);
+            var cfg = self.config,
+                disableCls = cfg.disableBtnCls;
 
-                // 获取 prev/next 按钮，并添加事件
-                S.each(['prev', 'next'], function(d) {
-                    var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
+            // 获取 prev/next 按钮，并添加事件
+            S.each(['prev', 'next'], function (d) {
+                var btn = self[d + 'Btn'] = DOM.get(DOT + cfg[d + 'BtnCls'], self.container);
 
-                    Event.on(btn, 'mousedown', function(ev) {
-                        ev.preventDefault();
-                        if (!DOM.hasClass(btn, disableCls)) {
-                            self[d](DOM_EVENT);
-                        }
-                    });
+                Event.on(btn, 'mousedown', function (ev) {
+                    ev.preventDefault();
+                    if (!DOM.hasClass(btn, disableCls)) {
+                        self[d](DOM_EVENT);
+                    }
                 });
+            });
 
-                // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
-                // circular = true 时，无需处理
-                if (!cfg.circular) {
-                    self.on('switch', function(ev) {
-                        var i = ev.currentIndex,
-                            disableBtn = (i === 0) ?
-                                self[PREV_BTN] :
-                                (i === self.length - 1) ? self[NEXT_BTN] :
-                                    undefined;
+            // 注册 switch 事件，处理 prevBtn/nextBtn 的 disable 状态
+            // circular = true 时，无需处理
+            if (!cfg.circular) {
+                self.on('switch', function (ev) {
+                    var i = ev.currentIndex;
 
-                        DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
+                    DOM.removeClass([self[PREV_BTN], self[NEXT_BTN]], disableCls);
 
-                        if (disableBtn) {
-                            DOM.addClass(disableBtn, disableCls);
-                        }
-                    });
-                }
+                    if (i == 0) {
+                        DOM.addClass(self[PREV_BTN], disableCls);
+                    }
 
-                // 触发 itemSelected 事件
-                Event.on(self.panels, 'click', function() {
-                    self.fire('itemSelected', { item: this });
+                    if (i == self.length - 1) {
+                        DOM.addClass(self[NEXT_BTN], disableCls);
+                    }
                 });
             }
-        });
+
+            // 触发 itemSelected 事件
+            Event.on(self.panels, 'click', function () {
+                self.fire('itemSelected', { item:this });
+            });
+        }
+    });
 
 
     return Carousel;
 
-}, { requires:["dom","event","../base"]});
+}, { requires:["dom", "event", "../base"]});
 
 
 /**

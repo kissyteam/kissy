@@ -1,43 +1,48 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 5 19:07
 */
 /**
  * @fileOverview ua
  * @author lifesinger@gmail.com
  */
-KISSY.add('ua/base', function() {
+KISSY.add('ua/base', function (S, undefined) {
 
     var ua = navigator.userAgent,
-        EMPTY = '', MOBILE = 'mobile',
-        core = EMPTY, shell = EMPTY, m,
-        IE_DETECT_RANGE = [6, 9], v, end,
+        EMPTY = '',
+        MOBILE = 'mobile',
+        core = EMPTY,
+        shell = EMPTY, m,
+        IE_DETECT_RANGE = [6, 9],
+        v,
+        end,
         VERSION_PLACEHOLDER = '{{version}}',
-        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><s></s><![endif]-->',
-        div = document.createElement('div'), s,
+        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
+        div = document.createElement('div'),
+        s,
         o = {
             // browser core type
-            //webkit: 0,
-            //trident: 0,
-            //gecko: 0,
-            //presto: 0,
+            webkit:undefined,
+            trident:undefined,
+            gecko:undefined,
+            presto:undefined,
 
             // browser type
-            //chrome: 0,
-            //safari: 0,
-            //firefox:  0,
-            //ie: 0,
-            //opera: 0
+            chrome:undefined,
+            safari:undefined,
+            firefox:undefined,
+            ie:undefined,
+            opera:undefined,
 
-            //mobile: '',
-            //core: '',
-            //shell: ''
+            mobile:undefined,
+            core:undefined,
+            shell:undefined
         },
-        numberify = function(s) {
+        numberify = function (s) {
             var c = 0;
             // convert '1.2.3.4' to 1.234
-            return parseFloat(s.replace(/\./g, function() {
+            return parseFloat(s.replace(/\./g, function () {
                 return (c++ === 0) ? '.' : '';
             }));
         };
@@ -63,7 +68,7 @@ KISSY.add('ua/base', function() {
         //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
         //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
         //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-        for (v = IE_DETECT_RANGE[0],end = IE_DETECT_RANGE[1]; v <= end; v++) {
+        for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
             if (s.length > 0) {
                 o[shell] = v;

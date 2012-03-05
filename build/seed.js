@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 29 17:51
+build time: Mar 5 19:57
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -139,7 +139,7 @@ build time: Feb 29 17:51
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120229175109',
+            __BUILD_TIME:'20120305195735',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3951,7 +3951,7 @@ build time: Feb 29 17:51
             requires:["dom"]
         },
         "ajax":{
-            requires:["dom", "event","json"]
+            requires:["dom", "event", "json"]
         },
         "anim":{
             requires:["dom", "event"]
@@ -3963,7 +3963,7 @@ build time: Feb 29 17:51
             requires:["dom", "event", "anim"]
         },
         core:{
-            alias:["dom", "event", "ajax", "anim", "base", "node","json"]
+            alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
         },
 
         /******************************
@@ -4026,6 +4026,9 @@ build time: Feb 29 17:51
         },
         "imagezoom":{
             requires:["node", "uibase"]
+        },
+        "editor":{
+            requires:['htmlparser', 'core']
         }
     });
 

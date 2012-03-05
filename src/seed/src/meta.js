@@ -15,7 +15,7 @@
             requires:["dom"]
         },
         "ajax":{
-            requires:["dom", "event","json"]
+            requires:["dom", "event", "json"]
         },
         "anim":{
             requires:["dom", "event"]
@@ -27,7 +27,7 @@
             requires:["dom", "event", "anim"]
         },
         core:{
-            alias:["dom", "event", "ajax", "anim", "base", "node","json"]
+            alias:["dom", "event", "ajax", "anim", "base", "node", "json"]
         },
 
         /******************************
@@ -90,6 +90,9 @@
         },
         "imagezoom":{
             requires:["node", "uibase"]
+        },
+        "editor":{
+            requires:['htmlparser', 'core']
         }
     });
 
