@@ -306,8 +306,36 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             var n = new HtmlParser.Parser(before).parse();
 
             n.writeHtml(writer, filter);
-            S.log(writer.getHtml());
+            expect(writer.getHtml()).toBe("<p>&nbsp;</p>");
 
+        });
+
+
+        it("filter will run only once", function () {
+            var count = 0;
+            var rules = {
+                tags:{
+                    p:function (el) {
+                        el.filterChildren();
+                    },
+                    span:function () {
+                        count++;
+                    }
+                }
+            };
+
+            var filter = new HtmlParser.Filter();
+            filter.addRules(rules);
+
+            var writer = new HtmlParser.BasicWriter();
+
+            var before = "<p><span></span></p>";
+
+            var n = new HtmlParser.Parser(before).parse();
+
+            n.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<p><span></span></p>");
+            expect(count).toBe(1);
         });
 
     });

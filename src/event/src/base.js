@@ -171,7 +171,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             // Bubble up to document, then to window
             cur = cur.parentNode ||
                 cur.ownerDocument ||
-                cur === target.ownerDocument && win;
+                (cur === target.ownerDocument) && win;
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {

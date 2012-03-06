@@ -144,13 +144,16 @@ KISSY.add("htmlparser/writer/filter", function (S) {
                 for (var j = 0; j < tags.length; j++) {
                     var element = tags[j].value;
                     if (element[filter]) {
+                        // node is removed with its children
                         if ((ret = element[filter](el)) === false) {
                             return false;
                         }
-                        if (ret && ret != element) {
+                        // node is replaced with another node
+                        if (ret && ret != el) {
                             return this.onNode(ret);
                         }
-                        if (!el.name) {
+                        // node is removed (children preserved)
+                        if (!el.tagName) {
                             return el;
                         }
                     }
