@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -185,7 +185,7 @@ KISSY.add('json', function (S, JSON) {
 // methods in a closure to avoid creating global variables.
 
 KISSY.add("json/json2", function(S, UA) {
-    var win = window,JSON = win.JSON;
+    var win = S.Env.host,JSON = win.JSON;
     // ie 8.0.7600.16315@win7 json 有问题
     if (!JSON || UA['ie'] < 9) {
         JSON = win.JSON = {};

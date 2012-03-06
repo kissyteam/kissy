@@ -4,7 +4,7 @@
  */
 KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote, Warn) {
     var symbol = Define.Const.enumvalidsign,
-        doc = document;
+        doc = S.Env.host.document;
 
     /**
      * @constructor

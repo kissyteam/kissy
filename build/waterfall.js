@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 13 14:41
+build time: Mar 6 16:05
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -10,6 +10,7 @@ build time: Feb 13 14:41
 KISSY.add("waterfall/base", function (S, Node, Base) {
 
     var $ = Node.all,
+        win=S.Env.host,
         RESIZE_DURATION = 50;
 
     /**
@@ -203,7 +204,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 // 一开始就 adjust 一次，可以对已有静态数据处理
                 doResize.call(self);
                 self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
-                $(window).on("resize", self.__onResize);
+                $(win).on("resize", self.__onResize);
             },
 
             adjustItem:function (item, cfg) {
@@ -333,7 +334,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             },
 
             destroy:function () {
-                $(window).detach("resize", this.__onResize);
+                $(win).detach("resize", this.__onResize);
             }
         });
 
@@ -349,6 +350,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     var $ = Node.all,
+        win=S.Env.host,
         SCROLL_TIMER = 50;
 
     /**
@@ -386,7 +388,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         }
         // 动态载
         // 最小高度(或被用户看到了)低于预加载线
-        if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
+        if (diff + $(win).scrollTop() + $(win).height() > colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
         }
@@ -437,12 +439,12 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
                 var self = this;
                 Loader.superclass._init.apply(self, arguments);
                 self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
-                $(window).on("scroll", self.__onScroll);
+                $(win).on("scroll", self.__onScroll);
                 doScroll.call(self);
             },
 
             end:function () {
-                $(window).detach("scroll", this.__onScroll);
+                $(win).detach("scroll", this.__onScroll);
             },
 
 
@@ -457,7 +459,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             destroy:function () {
                 var self = this;
                 Loader.superclass.destroy.apply(self, arguments);
-                $(window).detach("scroll", self.__onScroll);
+                $(win).detach("scroll", self.__onScroll);
             }
         });
 

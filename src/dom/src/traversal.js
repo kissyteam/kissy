@@ -5,8 +5,9 @@
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var isElementNode = DOM._isElementNode,
+        doc = S.Env.host.document,
         CONTAIN_MASK = 16,
-        __contains = document.documentElement.contains ?
+        __contains = doc.documentElement.contains ?
             function (a, b) {
                 if (a.nodeType == DOM.TEXT_NODE) {
                     return false;
@@ -28,7 +29,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 // 注意原生 contains 判断时 a===b 也返回 true
                 return precondition && (a.contains ? a.contains(b) : true);
             } : (
-            document.documentElement.compareDocumentPosition ?
+            doc.documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :

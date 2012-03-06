@@ -4,7 +4,8 @@
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     "use strict";
-    var doc = document,
+    var WINDOW=S.Env.host,
+        doc = WINDOW.document,
         docElem = doc.documentElement,
         isIE = UA['ie'],
         STYLE = 'style',
@@ -299,11 +300,11 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {String} id An id to add to the stylesheet for later removal
              */
             addStyleSheet:function (refWin, cssText, id) {
-                refWin = refWin || window;
+                refWin = refWin || WINDOW;
                 if (S.isString(refWin)) {
                     id = cssText;
                     cssText = refWin;
-                    refWin = window;
+                    refWin = WINDOW;
                 }
                 refWin = DOM.get(refWin);
                 var win = DOM._getWin(refWin),
@@ -502,7 +503,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                             offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                             // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                            if (isIE && document['documentMode'] != 9 || UA['opera']) {
+                            if (isIE && doc['documentMode'] != 9 || UA['opera']) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop

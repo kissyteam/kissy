@@ -3,7 +3,7 @@
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function (S, io) {
-
+    var win = S.Env.host;
     io.setupConfig({
         jsonp:"callback",
         jsonpCallback:function () {
@@ -21,12 +21,12 @@ KISSY.add("ajax/jsonp", function (S, io) {
                 jsonpCallback = S.isFunction(cJsonpCallback) ?
                     cJsonpCallback() :
                     cJsonpCallback,
-                previous = window[ jsonpCallback ];
+                previous = win[ jsonpCallback ];
 
             c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
 
             // build temporary JSONP function
-            window[jsonpCallback] = function (r) {
+            win[jsonpCallback] = function (r) {
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
                 // jsonp 返回了数组
                 if (arguments.length > 1) {
@@ -37,10 +37,10 @@ KISSY.add("ajax/jsonp", function (S, io) {
 
             // cleanup whether success or failure
             xhrObject.fin(function () {
-                window[ jsonpCallback ] = previous;
+                win[ jsonpCallback ] = previous;
                 if (previous === undefined) {
                     try {
-                        delete window[ jsonpCallback ];
+                        delete win[ jsonpCallback ];
                     } catch (e) {
                         //S.log("delete window variable error : ");
                         //S.log(e);

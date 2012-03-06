@@ -5,6 +5,7 @@
 KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
+        win=S.Env.host,
         stamp = S.stamp,
         RATE = [10, 10],
         ADJUST_DELAY = 100,
@@ -34,7 +35,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
         node:{
             // value:window：不行，默认值一定是简单对象
             valueFn:function () {
-                return Node.one(window);
+                return Node.one(win);
             },
             setter:function (v) {
                 return Node.one(v);

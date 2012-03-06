@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
         winDataCache = { };    // 避免污染全局

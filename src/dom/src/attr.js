@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
-        var doc = document,
+        var doc = S.Env.host.document,
             docElement = doc.documentElement,
             oldIE = !docElement.hasAttribute,
             TEXT = docElement.textContent === undefined ?

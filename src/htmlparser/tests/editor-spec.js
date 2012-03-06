@@ -188,7 +188,7 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             n.writeHtml(writer, filter);
 
-            expect(writer.getHtml()).toBe("<div>1</div><b>2</b><span>3</span>");
+            expect(writer.getHtml()).toBe("<div>1</div><" + "b>2</b><span>3</span>");
         });
 
         it("can modify html structure on fly", function () {
@@ -270,12 +270,44 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             var n = new HtmlParser.Parser(before).parse();
 
             n.writeHtml(writer, filter);
-            S.log(writer.getHtml());
             if (UA['ie']) {
                 expect(writer.getHtml()).toBe("<p>\xa0</p><p>1</p>");
             } else {
                 expect(writer.getHtml()).toBe("<p>&nbsp;<br /></p><p>1</p>");
             }
+        });
+
+        it("filter children works while modify html", function () {
+            var rules = {
+                tags:{
+
+                    p:function (el) {
+                        el.filterChildren();
+                    }
+                }
+            };
+
+            var rules2 = {
+                tags:{
+                    p:function (el) {
+                        el.appendChild(new HtmlParser.Text("&nbsp;"));
+                    }
+                }
+            };
+
+            var filter = new HtmlParser.Filter();
+            filter.addRules(rules);
+            filter.addRules(rules2);
+
+            var writer = new HtmlParser.BasicWriter();
+
+            var before = "<p></p>";
+
+            var n = new HtmlParser.Parser(before).parse();
+
+            n.writeHtml(writer, filter);
+            S.log(writer.getHtml());
+
         });
 
     });

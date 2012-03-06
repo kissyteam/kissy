@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 19:57
+build time: Mar 6 16:48
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,8 @@ build time: Mar 5 19:57
 
     // The host of runtime environment. specify by user's seed or <this>,
     // compatibled for  '<this> is null' in unknown engine.
-    host = seed.__HOST || (seed.__HOST = host || {});
+    seed.Env = seed.Env || {};
+    host = seed.Env.host || (seed.Env.host = host || {});
 
     // shortcut and meta for seed.
     // override previous kissy
@@ -139,7 +140,7 @@ build time: Mar 5 19:57
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120305195735',
+            __BUILD_TIME:'20120306164811',
 
             /**
              * Returns a new object containing all of the properties of
@@ -400,10 +401,8 @@ build time: Mar 5 19:57
     function init() {
         var self = this,
             c;
-
-        c = self.Config = self.Config || {};
         self.Env = self.Env || {};
-
+        c = self.Config = self.Config || {};
         // NOTICE: '@DEBUG@' will replace with '' when compressing.
         // So, if loading source file, debug is on by default.
         // If loading min version, debug is turned off automatically.
@@ -2031,7 +2030,7 @@ build time: Mar 5 19:57
         data = Loader.STATUS,
         utils = {},
         mix = S.mix,
-        doc = document,
+        doc = S.Env.host.document,
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
         // ->
@@ -2376,6 +2375,7 @@ build time: Mar 5 19:57
         return;
     }
     var CSS_POLL_INTERVAL = 30,
+        win=S.Env.host,
         utils = S.Loader.Utils,
         jsCallbacks = {},
         /**
@@ -2453,7 +2453,7 @@ build time: Mar 5 19:57
     }
 
     S.mix(utils, {
-        scriptOnload:document.addEventListener ?
+        scriptOnload:S.Env.host.document.addEventListener ?
             function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
@@ -2484,7 +2484,7 @@ build time: Mar 5 19:57
          *    - http://www.zachleat.com/web/load-css-dynamically/
          *  </pre>
          */
-        styleOnload:window.attachEvent ?
+        styleOnload:win.attachEvent ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?
@@ -2515,6 +2515,7 @@ build time: Mar 5 19:57
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
+        doc=S.Env.host.document,
         scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -2527,8 +2528,7 @@ build time: Mar 5 19:57
          * @private
          */
         getStyle:function (url, success, charset) {
-            var doc = document,
-                head = utils.docHead(),
+            var head = utils.docHead(),
                 node = doc.createElement('link'),
                 config = success;
 
@@ -2578,8 +2578,7 @@ build time: Mar 5 19:57
             if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
-            var doc = document,
-                head = doc.head || doc.getElementsByTagName("head")[0],
+            var head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('script'),
                 config = success,
                 error,
@@ -2803,7 +2802,7 @@ build time: Mar 5 19:57
                 var self = this,
                     SS = self.SS,
                     base,
-                    scripts = document.getElementsByTagName("script"),
+                    scripts = S.Env.host.document.getElementsByTagName("script"),
                     re,
                     script;
 
@@ -3608,9 +3607,9 @@ build time: Mar 5 19:57
             getLoader:function () {
                 var self = this;
                 if (self.Config.combine) {
-                    return self.__comboLoader;
+                    return self.Env._comboLoader;
                 } else {
-                    return self.__loader;
+                    return self.Env._loader;
                 }
             },
             /**
@@ -3683,14 +3682,14 @@ build time: Mar 5 19:57
      * Initializes loader.
      */
     function initLoader() {
-        var self = this;
-        self.Env.mods = self.Env.mods || {}; // all added mods
-        self.__loader = new Loader(self);
-        self.__comboLoader = new ComboLoader(self);
+        var self = this, env = self.Env;
+        env.mods = env.mods || {}; // all added mods
+        env._loader = new Loader(self);
+        env._comboLoader = new ComboLoader(self);
     }
 
     // get base from current script file path
-    var scripts = document.getElementsByTagName('script');
+    var scripts = S.Env.host.document.getElementsByTagName('script');
 
     S.config({
         base:getBaseUrl(scripts[scripts.length - 1])
@@ -3715,7 +3714,7 @@ build time: Mar 5 19:57
  */
 (function (S, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
 
         doc = win['document'],
 
@@ -3764,7 +3763,7 @@ build time: Mar 5 19:57
                 var xml;
                 try {
                     // Standard
-                    if (window.DOMParser) {
+                    if (win.DOMParser) {
                         xml = new DOMParser().parseFromString(data, "text/xml");
                     } else { // IE
                         xml = new ActiveXObject("Microsoft.XMLDOM");
@@ -3788,8 +3787,8 @@ build time: Mar 5 19:57
             globalEval:function (data) {
                 if (data && RE_NOT_WHITE.test(data)) {
                     // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                    ( window.execScript || function (data) {
-                        window[ "eval" ].call(window, data);
+                    ( win.execScript || function (data) {
+                        win[ "eval" ].call(win, data);
                     } )(data);
                 }
             },
@@ -3933,6 +3932,13 @@ build time: Mar 5 19:57
      */
     _bindReady();
 
+    if (navigator.userAgent.match(/MSIE/)) {
+        try {
+            doc.execCommand("BackgroundImageCache", false, true);
+        } catch (e) {
+        }
+    }
+
 })(KISSY, undefined);
 /**
  * module meta info for auto combo
@@ -4039,7 +4045,7 @@ build time: Mar 5 19:57
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 19:07
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview ua
@@ -4057,7 +4063,7 @@ KISSY.add('ua/base', function (S, undefined) {
         end,
         VERSION_PLACEHOLDER = '{{version}}',
         IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = document.createElement('div'),
+        div = S.Env.host.document.createElement('div'),
         s,
         o = {
             // browser core type
@@ -4228,6 +4234,7 @@ KISSY.add('ua/base', function (S, undefined) {
  */
 KISSY.add('ua/extra', function(S, UA) {
     var ua = navigator.userAgent,
+        win=S.Env.host,
         m, external, shell,
         o = { },
         numberify = UA._numberify;
@@ -4245,7 +4252,7 @@ KISSY.add('ua/extra', function(S, UA) {
         o[shell = 'se360'] = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
     }
     // Maxthon
-    else if ((m = ua.match(/Maxthon/)) && (external = window.external)) {
+    else if ((m = ua.match(/Maxthon/)) && (external = win.external)) {
         // issue: Maxthon 3.x in IE-Core cannot be recognised and it doesn't have exact version number
         // but other maxthon versions all have exact version number
         shell = 'maxthon';
@@ -4288,7 +4295,7 @@ KISSY.add("ua", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 22 11:41
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview   dom-attr
@@ -4296,7 +4303,7 @@ build time: Feb 22 11:41
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
-        var doc = document,
+        var doc = S.Env.host.document,
             docElement = doc.documentElement,
             oldIE = !docElement.hasAttribute,
             TEXT = docElement.textContent === undefined ?
@@ -4920,6 +4927,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
  */
 KISSY.add('dom/base', function (S, UA, undefined) {
 
+    var WINDOW=S.Env.host;
+
     function nodeTypeIs(node, val) {
         return node && node.nodeType === val;
     }
@@ -4946,7 +4955,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     var DOM = {
 
         _isCustomDomain:function (win) {
-            win = win || window;
+            win = win || WINDOW;
             var domain = win.document.domain,
                 hostname = win.location.hostname;
             return domain != hostname &&
@@ -4954,7 +4963,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         },
 
         _genEmptyIframeSrc:function (win) {
-            win = win || window;
+            win = win || WINDOW;
             if (UA['ie'] && DOM._isCustomDomain(win)) {
                 return  'javascript:void(function(){' + encodeURIComponent("" +
                     "document.open();" +
@@ -4987,7 +4996,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 nodeTypeIs(elem, DOM.DOCUMENT_NODE) ?
                     elem.defaultView || elem.parentWindow :
                     (elem === undefined || elem === null) ?
-                        window : false;
+                        WINDOW : false;
         },
 
         _nodeTypeIs:nodeTypeIs,
@@ -5202,7 +5211,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
  */
 KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
-        var doc = document,
+        var doc = S.Env.host.document,
             ie = UA['ie'],
             nodeTypeIs = DOM._nodeTypeIs,
             isElementNode = DOM._isElementNode,
@@ -5698,7 +5707,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
  */
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
         winDataCache = { };    // 避免污染全局
@@ -6202,8 +6211,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
  */
 KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = S.Env.host,
+        doc = win.document,
         isIE = UA['ie'],
         docElem = doc.documentElement,
         isElementNode = DOM._isElementNode,
@@ -6621,7 +6630,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
  */
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);
@@ -7261,7 +7270,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         return DOM;
     }
 
-    var doc = document,
+    var doc = S.Env.host.document,
         docElem = doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',
@@ -7451,7 +7460,8 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     "use strict";
-    var doc = document,
+    var WINDOW=S.Env.host,
+        doc = WINDOW.document,
         docElem = doc.documentElement,
         isIE = UA['ie'],
         STYLE = 'style',
@@ -7746,11 +7756,11 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {String} id An id to add to the stylesheet for later removal
              */
             addStyleSheet:function (refWin, cssText, id) {
-                refWin = refWin || window;
+                refWin = refWin || WINDOW;
                 if (S.isString(refWin)) {
                     id = cssText;
                     cssText = refWin;
-                    refWin = window;
+                    refWin = WINDOW;
                 }
                 refWin = DOM.get(refWin);
                 var win = DOM._getWin(refWin),
@@ -7949,7 +7959,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                             offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                             // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                            if (isIE && document['documentMode'] != 9 || UA['opera']) {
+                            if (isIE && doc['documentMode'] != 9 || UA['opera']) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop
@@ -8135,8 +8145,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var isElementNode = DOM._isElementNode,
+        doc = S.Env.host.document,
         CONTAIN_MASK = 16,
-        __contains = document.documentElement.contains ?
+        __contains = doc.documentElement.contains ?
             function (a, b) {
                 if (a.nodeType == DOM.TEXT_NODE) {
                     return false;
@@ -8158,7 +8169,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 // 注意原生 contains 判断时 a===b 也返回 true
                 return precondition && (a.contains ? a.contains(b) : true);
             } : (
-            document.documentElement.compareDocumentPosition ?
+            doc.documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :
@@ -8412,7 +8423,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 19:52
+build time: Mar 6 16:38
 */
 /**
  * @fileOverview responsible for registering event
@@ -8749,6 +8760,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         var cur = target,
             t,
+            win = DOM._getWin(cur.ownerDocument || cur),
             ontype = "on" + eventType;
 
         //bubble up dom tree
@@ -8766,7 +8778,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             // Bubble up to document, then to window
             cur = cur.parentNode ||
                 cur.ownerDocument ||
-                cur === target.ownerDocument && window;
+                cur === target.ownerDocument && win;
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
@@ -8838,7 +8850,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/change", function (S, UA, Event, DOM, special) {
-    var mode = document['documentMode'];
+    var mode = S.Env.host.document['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
 
@@ -8886,7 +8898,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     }
                 } else {
                     Event.remove(el, "beforeactivate", beforeActivate);
-                    S.each(DOM.query("textarea,input,select", el),function (fel) {
+                    S.each(DOM.query("textarea,input,select", el), function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
                             Event.remove(fel, "change", {fn:changeHandler, last:1});
@@ -9053,27 +9065,30 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
-
+    var key = S.guid("attaches_" + S.now() + "_")
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
             { name:'focusin', fix:'focus' },
             { name:'focusout', fix:'blur' }
         ], function (o) {
-            var attaches = 0;
             special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
                 // refer: http://yiminghe.iteye.com/blog/813255
                 setup:function () {
-                    if (attaches++ === 0) {
-                        document.addEventListener(o.fix, handler, true);
+                    var doc = this.ownerDocument;
+                    doc[key] += 1;
+                    if (doc[key] === 1) {
+                        doc.addEventListener(o.fix, handler, true);
                     }
                 },
 
                 tearDown:function () {
-                    if (--attaches === 0) {
-                        document.removeEventListener(o.fix, handler, true);
+                    var doc = this.ownerDocument;
+                    doc[key] -= 1;
+                    if (doc[key] === 0) {
+                        doc.removeEventListener(o.fix, handler, true);
                     }
                 }
             };
@@ -9248,7 +9263,8 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
-    var doc = document,
+    var win=S.Env.host,
+        doc = win.document,
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
@@ -9258,7 +9274,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
     // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
     // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
-    if ((!( 'on' + HASH_CHANGE in window)) || ie && ie < 8) {
+    if ((!( 'on' + HASH_CHANGE in win)) || ie && ie < 8) {
 
 
         function getIframeDoc(iframe) {
@@ -9266,7 +9282,6 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         var POLL_INTERVAL = 50,
-            win = window,
             IFRAME_TEMPLATE = "<html><head><title>" + (doc.title || "") +
                 " - {hash}</title>{head}</head><body>{hash}</body></html>",
 
@@ -9814,7 +9829,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
  */
 KISSY.add('event/object', function (S, undefined) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         TRUE = true,
         FALSE = false,
         props = ('altKey attrChange attrName bubbles button cancelable ' +
@@ -9874,7 +9889,7 @@ KISSY.add('event/object', function (S, undefined) {
 
             // fix target property, if necessary
             if (!self.target) {
-                self.target = self.srcElement || doc; // srcElement might not be defined either
+                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
             }
 
             // check if target is a textnode (safari)
@@ -10193,7 +10208,7 @@ KISSY.add("event/special", function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
-    var mode = document['documentMode'];
+    var mode = S.Env.host.document['documentMode'];
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
         var nodeName = DOM._nodeName;
         special['submit'] = {
@@ -10504,8 +10519,7 @@ KISSY.add("event/utils", function (S, DOM) {
         S.each(type.split(/\s+/), fn);
     }
 
-
-    var doc = document,
+    var doc = S.Env.host.document,
         simpleAdd = doc.addEventListener ?
             function (el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -10685,7 +10699,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -10869,7 +10883,7 @@ KISSY.add('json', function (S, JSON) {
 // methods in a closure to avoid creating global variables.
 
 KISSY.add("json/json2", function(S, UA) {
-    var win = window,JSON = win.JSON;
+    var win = S.Env.host,JSON = win.JSON;
     // ie 8.0.7600.16315@win7 json 有问题
     if (!JSON || UA['ie'] < 9) {
         JSON = win.JSON = {};
@@ -11194,7 +11208,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview form data  serialization util
@@ -11256,7 +11270,7 @@ KISSY.add("ajax/FormSerializer", function(S, DOM) {
  */
 KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30;
@@ -11405,7 +11419,8 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
  */
 KISSY.add("ajax/ScriptTransport", function (S, io) {
 
-    var doc = document,
+    var win = S.Env.host,
+        doc = win.document,
         OK_CODE = 200,
         ERROR_CODE = 500;
 
@@ -11435,8 +11450,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
 
     function ScriptTransport(xhrObj) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
-        if (!xhrObj.config.crossDomain &&
-            !xhrObj.config['forceScript']) {
+        if (!xhrObj.config.crossDomain) {
             return new (io.getTransport("*"))(xhrObj);
         }
         this.xhrObj = xhrObj;
@@ -11466,7 +11480,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io) {
             script.onerror =
                 script.onload =
                     script.onreadystatechange = function (e) {
-                        e = e || window.event;
+                        e = e || win.event;
                         // firefox onerror 没有 type ?!
                         self._callback((e.type || "error").toLowerCase());
                     };
@@ -11534,7 +11548,7 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
         PROXY_PAGE = "/sub_domain_proxy.html",
-        doc = document,
+        doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}
         };
@@ -11578,7 +11592,7 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
 
             if (!iframeDesc) {
                 iframeDesc = iframeMap[hostname] = {};
-                iframe = iframeDesc.iframe = document.createElement("iframe");
+                iframe = iframeDesc.iframe = doc.createElement("iframe");
                 DOM.css(iframe, {
                     position:'absolute',
                     left:'-9999px',
@@ -11619,7 +11633,7 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         ID = "io_swf",
         // flash transporter
         flash,
-        doc = document,
+        doc = S.Env.host.document,
         // whether create the flash transporter
         init = false;
 
@@ -11837,9 +11851,9 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
     }
 
     /**
-     * @class 请求对象类型
-     * @memberOf io
-     * @param c 请求发送配置选项
+     * @class IO Request Object. !Do Not New By Yourself!
+     * @extends KISSY.Promise
+     * @memberOf IO
      */
     function XhrObject(c) {
         Promise.call(this);
@@ -11848,22 +11862,59 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             responseData:null,
             config:c || {},
             timeoutTimer:null,
+
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description String typed data returned from server
+             */
             responseText:null,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description xml typed data returned from server
+             */
             responseXML:null,
             responseHeadersString:"",
             responseHeaders:null,
             requestHeaders:{},
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description <br>
+             * readyState of current request<br>
+             * 0: initialized<br>
+             * 1: send <br>
+             * 4: completed<br>
+             */
             readyState:0,
-            //internal state
             state:0,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description HTTP statusText of current request
+             */
             statusText:null,
+            /**
+             * @field
+             * @memberOf IO.XhrObject#
+             * @description <br> HTTP Status Code of current request <br>
+             * eg:<br>
+             * 200 : ok<br>
+             * 404 : Not Found<br>
+             * 500 : Server Error<br>
+             */
             status:0,
             transport:null,
             _defer:new S.Defer(this)
         });
     }
 
-    S.extend(XhrObject, Promise, {
+    S.extend(XhrObject, Promise,
+        /**
+         * @lends IO.XhrObject.prototype
+         */
+        {
             // Caches the header
             setRequestHeader:function (name, value) {
                 var self = this;
@@ -11871,14 +11922,21 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
-            // Raw string
+            /**
+             * get all response headers as string after request is completed
+             * @returns {String}
+             */
             getAllResponseHeaders:function () {
                 var self = this;
                 return self.state === 2 ? self.responseHeadersString : null;
             },
 
-            // Builds headers hashtable if needed
-            getResponseHeader:function (key) {
+            /**
+             * get header value in response to specified header name
+             * @param {String} name header name
+             * @return {String} header value
+             */
+            getResponseHeader:function (name) {
                 var match, self = this;
                 if (self.state === 2) {
                     if (!self.responseHeaders) {
@@ -11887,7 +11945,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             self.responseHeaders[ match[1] ] = match[ 2 ];
                         }
                     }
-                    match = self.responseHeaders[ key];
+                    match = self.responseHeaders[ name ];
                 }
                 return match === undefined ? null : match;
             },
@@ -11901,7 +11959,10 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 return self;
             },
 
-            // Cancel the request
+            /**
+             * cancel this request
+             * @param {String} [statusText=abort] error reason as current request object's statusText
+             */
             abort:function (statusText) {
                 var self = this;
                 statusText = statusText || "abort";
@@ -11965,7 +12026,8 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        _XDomainRequest = window['XDomainRequest'],
+        win=S.Env.host,
+        _XDomainRequest = win['XDomainRequest'],
         detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
@@ -11997,6 +12059,8 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
 
                 /**
                  * ie>7 强制使用 flash xdr
+                 * 使用 withCredentials 检测是否支持 CORS
+                 * http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
                  */
                 if (!("withCredentials" in detectXhr) &&
                     (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
@@ -12031,13 +12095,14 @@ KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTrans
 
 /**
  * 借鉴 jquery，优化使用原型替代闭包
+ * CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
  **//**
  * @fileOverview base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/XhrTransportBase", function (S, io) {
     var OK_CODE = 200,
-        win = window,
+        win = S.Env.host,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
@@ -12236,53 +12301,72 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
  * @fileOverview io shortcut
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax", function (S, serializer, io, XhrObject) {
+KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
     var undef = undefined;
+
+    function get(url, data, callback, dataType, _t) {
+        // data 参数可省略
+        if (S.isFunction(data)) {
+            dataType = callback;
+            callback = data;
+            data = undef;
+        }
+
+        return IO({
+            type:_t || "get",
+            url:url,
+            data:data,
+            success:callback,
+            dataType:dataType
+        });
+    }
+
     // some shortcut
-    S.mix(io,
+    S.mix(IO,
 
         /**
-         * @lends io
+         * @lends IO
          */
         {
             XhrObject:XhrObject,
             /**
-             * form 序列化
-             * @param formElement {HTMLFormElement} 将要序列化的 form 元素
+             * form serialization
+             * @function
+             * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
+             * @returns {String} serialized string represent form elements
              */
             serialize:serializer.serialize,
 
             /**
-             * get 请求
-             * @param url
-             * @param data
-             * @param callback
-             * @param [dataType]
-             * @param [_t]
+             * perform a get request
+             * @function
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback <br/>
+             * success callback when this request is done
+             * with parameter <br/>
+             * 1. data returned from this request with type specified by dataType <br/>
+             * 2. status of this request with type String <br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @param {String} [dataType] the type of data returns from this request
+             * ("xml" or "json" or "text")
+             * @returns {IO.XhrObject}
              */
-            get:function (url, data, callback, dataType, _t) {
-                // data 参数可省略
-                if (S.isFunction(data)) {
-                    dataType = callback;
-                    callback = data;
-                    data = undef;
-                }
-
-                return io({
-                    type:_t || "get",
-                    url:url,
-                    data:data,
-                    success:callback,
-                    dataType:dataType
-                });
-            },
+            get:get,
 
             /**
-             * post 请求
-             * @param url
-             * @param data
-             * @param callback
-             * @param [dataType]
+             * preform a post request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback <br/>
+             * success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type specified by dataType<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @param {String} [dataType] the type of data returns from this request
+             * ("xml" or "json" or "text")
+             * @returns {IO.XhrObject}
              */
             post:function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -12290,53 +12374,70 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
                     callback = data;
                     data = undef;
                 }
-                return io.get(url, data, callback, dataType, "post");
+                return get(url, data, callback, dataType, "post");
             },
 
             /**
-             * jsonp 请求
-             * @param url
-             * @param [data]
-             * @param callback
+             * preform a jsonp request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback
+             *  <br/>success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type specified by dataType<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @returns {IO.XhrObject}
              */
             jsonp:function (url, data, callback) {
                 if (S.isFunction(data)) {
                     callback = data;
                     data = undef;
                 }
-                return io.get(url, data, callback, "jsonp");
+                return get(url, data, callback, "jsonp");
             },
 
             // 和 S.getScript 保持一致
             // 更好的 getScript 可以用
             /*
-             io({
+             IO({
              dataType:'script'
              });
              */
             getScript:S.getScript,
 
             /**
-             * 获取 json 数据
-             * @param url
-             * @param data
-             * @param callback
+             * perform a get request to fetch json data from server
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback  <br/>success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type JSON<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @returns {IO.XhrObject}
              */
             getJSON:function (url, data, callback) {
                 if (S.isFunction(data)) {
                     callback = data;
                     data = undef;
                 }
-                return io.get(url, data, callback, "json");
+                return get(url, data, callback, "json");
             },
 
             /**
-             * 无刷新上传文件
-             * @param url
-             * @param form
-             * @param data
-             * @param callback
-             * @param [dataType]
+             * submit form without page refresh
+             * @param {String} url request destination
+             * @param {HTMLElement|NodeList} form element tobe submited
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function()} callback  <br/>success callback when this request is done<br/>
+             * with parameter<br/>
+             * 1. data returned from this request with type specified by dataType<br/>
+             * 2. status of this request with type String<br/>
+             * 3. XhrObject of this request , for details {@link IO.XhrObject}
+             * @param {String} [dataType] the type of data returns from this request
+             * ("xml" or "json" or "text")
+             * @returns {IO.XhrObject}
              */
             upload:function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -12344,7 +12445,7 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
                     callback = data;
                     data = undef;
                 }
-                return io({
+                return IO({
                     url:url,
                     type:'post',
                     dataType:dataType,
@@ -12356,14 +12457,14 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
         });
 
     S.mix(S, {
-        "Ajax":io,
-        "IO":io,
-        ajax:io,
-        io:io,
-        jsonp:io.jsonp
+        "Ajax":IO,
+        "IO":IO,
+        ajax:IO,
+        io:IO,
+        jsonp:IO.jsonp
     });
 
-    return io;
+    return IO;
 }, {
     requires:[
         "ajax/FormSerializer",
@@ -12380,294 +12481,429 @@ KISSY.add("ajax", function (S, serializer, io, XhrObject) {
  */
 KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
-        var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
-            rspace = /\s+/,
-            rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-            mirror = function (s) {
-                return s;
+    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget):$/,
+        rspace = /\s+/,
+        rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
+        mirror = function (s) {
+            return s;
+        },
+        HTTP_PORT = 80,
+        HTTPS_PORT = 443,
+        rnoContent = /^(?:GET|HEAD)$/,
+        curLocation,
+        doc=S.Env.host.document,
+        curLocationParts;
+
+    try {
+        curLocation = location.href;
+    } catch (e) {
+        S.log("ajax/base get curLocation error : ");
+        S.log(e);
+        // Use the href attribute of an A element
+        // since IE will modify it given document.location
+        curLocation = doc.createElement("a");
+        curLocation.href = "";
+        curLocation = curLocation.href;
+    }
+
+    curLocationParts = rurl.exec(curLocation);
+
+    var isLocal = rlocalProtocol.test(curLocationParts[1]),
+        transports = {},
+        defaultConfig = {
+            type:"GET",
+            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+            async:true,
+            serializeArray:true,
+            processData:true,
+            accepts:{
+                xml:"application/xml, text/xml",
+                html:"text/html",
+                text:"text/plain",
+                json:"application/json, text/javascript",
+                "*":"*/*"
             },
-            HTTP_PORT = 80,
-            HTTPS_PORT = 443,
-            rnoContent = /^(?:GET|HEAD)$/,
-            curLocation,
-            curLocationParts;
+            converters:{
+                text:{
+                    json:JSON.parse,
+                    html:mirror,
+                    text:mirror,
+                    xml:S.parseXML
+                }
+            },
+            contents:{
+                xml:/xml/,
+                html:/html/,
+                json:/json/
+            }
+        };
 
+    defaultConfig.converters.html = defaultConfig.converters.text;
 
-        try {
-            curLocation = location.href;
-        } catch (e) {
-            S.log("ajax/base get curLocation error : ");
-            S.log(e);
-            // Use the href attribute of an A element
-            // since IE will modify it given document.location
-            curLocation = document.createElement("a");
-            curLocation.href = "";
-            curLocation = curLocation.href;
+    function setUpConfig(c) {
+        // deep mix,exclude context!
+        var context = c.context;
+        delete c.context;
+        c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
+        c.context = context;
+
+        if (!("crossDomain" in c)) {
+            var parts = rurl.exec(c.url.toLowerCase());
+            c.crossDomain = !!( parts &&
+                ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
+                    ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) )
+                        !=
+                        ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) ) )
+                );
         }
 
-        curLocationParts = rurl.exec(curLocation);
-
-        var isLocal = rlocalProtocol.test(curLocationParts[1]),
-            transports = {},
-            defaultConfig = {
-                // isLocal:isLocal,
-                type:"GET",
-                // only support utf-8 when post, encoding can not be changed actually
-                contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-                async:true,
-                // whether add []
-                serializeArray:true,
-                // whether param data
-                processData:true,
-
-                /*
-                 url:"",
-                 context:null,
-                 // 单位秒!!
-                 timeout: 0,
-                 data: null,
-                 // 可取json | jsonp | script | xml | html | text | null | undefined
-                 dataType: null,
-                 username: null,
-                 password: null,
-                 cache: null,
-                 mimeType:null,
-                 xdr:{
-                 subDomain:{
-                 proxy:'http://xx.t.com/proxy.html'
-                 },
-                 src:''
-                 },
-                 headers: {},
-                 xhrFields:{},
-                 // jsonp script charset
-                 scriptCharset:null,
-                 crossdomain:false,
-                 forceScript:false,
-                 */
-
-                accepts:{
-                    xml:"application/xml, text/xml",
-                    html:"text/html",
-                    text:"text/plain",
-                    json:"application/json, text/javascript",
-                    "*":"*/*"
-                },
-                converters:{
-                    text:{
-                        json:JSON.parse,
-                        html:mirror,
-                        text:mirror,
-                        xml:S.parseXML
-                    }
-                },
-                contents:{
-                    xml:/xml/,
-                    html:/html/,
-                    json:/json/
-                }
-            };
-
-        defaultConfig.converters.html = defaultConfig.converters.text;
-
-        function setUpConfig(c) {
-            // deep mix,exclude context!
-            var context = c.context;
-            delete c.context;
-            c = S.mix(S.clone(defaultConfig), c || {}, undefined, undefined, true);
-            c.context = context;
-
-            if (!S.isBoolean(c.crossDomain)) {
-                var parts = rurl.exec(c.url.toLowerCase());
-                c.crossDomain = !!( parts &&
-                    ( parts[ 1 ] != curLocationParts[ 1 ] || parts[ 2 ] != curLocationParts[ 2 ] ||
-                        ( parts[ 3 ] || ( parts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) )
-                            !=
-                            ( curLocationParts[ 3 ] || ( curLocationParts[ 1 ] === "http:" ? HTTP_PORT : HTTPS_PORT ) ) )
-                    );
-            }
-
-            if (c.processData && c.data && !S.isString(c.data)) {
-                // 必须 encodeURIComponent 编码 utf-8
-                c.data = S.param(c.data, undefined, undefined, c.serializeArray);
-            }
-
-            // fix #90 ie7 about "//x.htm"
-            c.url = c.url.replace(/^\/\//, curLocationParts[1] + "//");
-            c.type = c.type.toUpperCase();
-            c.hasContent = !rnoContent.test(c.type);
-
-            if (!c.hasContent) {
-                if (c.data) {
-                    c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
-                    delete c.data;
-                }
-                if (c.cache === false) {
-                    c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
-                }
-            }
-
-            // 数据类型处理链，一步步将前面的数据类型转化成最后一个
-            c.dataType = S.trim(c.dataType || "*").split(rspace);
-
-            c.context = c.context || c;
-            return c;
+        if (c.processData && c.data && !S.isString(c.data)) {
+            // 必须 encodeURIComponent 编码 utf-8
+            c.data = S.param(c.data, undefined, undefined, c.serializeArray);
         }
 
-        function fire(eventType, xhrObject) {
-            /**
-             * @name io#complete
-             * @description 请求完成（成功或失败）后触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
+        // fix #90 ie7 about "//x.htm"
+        c.url = c.url.replace(/^\/\//, curLocationParts[1] + "//");
+        c.type = c.type.toUpperCase();
+        c.hasContent = !rnoContent.test(c.type);
 
-            /**
-             * @name io#success
-             * @description 请求成功后触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
+        // 数据类型处理链，一步步将前面的数据类型转化成最后一个
+        c.dataType = S.trim(c.dataType || "*").split(rspace);
 
-            /**
-             * @name io#error
-             * @description 请求失败后触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
-            io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
+        if (!("cache" in c) && S.inArray(c.dataType[0], ["script", "jsonp"])) {
+            c.cache = false;
         }
+
+        if (!c.hasContent) {
+            if (c.data) {
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.data;
+                delete c.data;
+            }
+            if (c.cache === false) {
+                c.url += ( /\?/.test(c.url) ? "&" : "?" ) + "_ksTS=" + (S.now() + "_" + S.guid());
+            }
+        }
+
+        c.context = c.context || c;
+        return c;
+    }
+
+    function fire(eventType, xhrObject) {
+        /**
+         * @name IO#complete
+         * @description fired after request completes (success or error)
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
 
         /**
-         * @name io
-         * @description kissy io framework
-         * @namespace io framework
-         * @function
-         * @param {Object} c 发送请求配置选项
-         * @param {String} c.url 请求地址
+         * @name IO#success
+         * @description  fired after request succeeds
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
          */
-        function io(c) {
-            if (!c.url) {
-                return undefined;
-            }
-            c = setUpConfig(c);
-            var xhrObject = new XhrObject(c);
+
+        /**
+         * @name IO#error
+         * @description fired after request occurs error
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
+        io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
+    }
+
+    /**
+     * @name IO
+     * @description io is a utility that brokers HTTP requests through a simplified interface
+     * @namespace
+     * @function
+     *
+     * @param {Object} c <br/>name-value of object to config this io request.<br/>
+     *  all values are optional.<br/>
+     *  default value can be set through {@link io.setupConfig}<br/>
+     *
+     * @param {String} c.url <br/>request destination
+     *
+     * @param {String} c.type <br/>request type.
+     * eg: "get","post"<br/>
+     * Default: "get"<br/>
+     *
+     * @param {String} c.contentType <br/>
+     * Default: "application/x-www-form-urlencoded; charset=UTF-8"<br/>
+     * Data will always be transmitted to the server using UTF-8 charset<br/>
+     *
+     * @param {Object} c.accepts <br/>
+     * Default: depends on DataType.<br/>
+     * The content type sent in request header that tells the server<br/>
+     * what kind of response it will accept in return.<br/>
+     * It is recommended to do so once in the {@link io.setupConfig}
+     *
+     * @param {Boolean} c.async <br/>
+     * Default: true<br/>
+     * whether request is sent asynchronously<br/>
+     *
+     * @param {Boolean} c.cache <br/>
+     * Default: true ,false for dataType "script" and "jsonp"<br/>
+     * if set false,will append _ksTs=Date.now() to url automatically<br/>
+     *
+     * @param {Object} c.contents <br/>
+     * a name-regexp map to determine request data's dataType<br/>
+     * It is recommended to do so once in the {@link io.setupConfig}<br/>
+     *
+     * @param {Object} c.context <br/>
+     * specify the context of this request's callback (success,error,complete)
+     *
+     * @param {Object} c.converters <br/>
+     * Default:{text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}<br/>
+     * specified how to transform one dataType to another dataType<br/>
+     * It is recommended to do so once in the {@link io.setupConfig}
+     *
+     * @param {Boolean} c.crossDomain <br/>
+     * Default: false for same-domain request,true for cross-domain request<br/>
+     * if server-side jsonp redirect to another domain ,you should set this to true
+     *
+     * @param {Object} c.data <br/>
+     * Data sent to server.if processData is true,data will be serialized to String type.<br/>
+     * if value if an Array, serialization will be based on serializeArray.
+     *
+     * @param {String} c.dataType <br/>
+     * return data as a specified type<br/>
+     * Default: Based on server contentType header<br/>
+     * "xml" : a XML document<br/>
+     * "text"/"html": raw server data <br/>
+     * "script": evaluate the return data as script<br/>
+     * "json": parse the return data as json and return the result as final data<br/>
+     * "jsonp": load json data via jsonp
+     *
+     * @param {Object} c.headers <br/>
+     * additional name-value header to send along with this request.
+     *
+     * @param {String} c.jsonp <br/>
+     * Default: "callback"<br/>
+     * Override the callback function name in a jsonp request. eg:<br/>
+     * set "callback2" , then jsonp url will append  "callback2=?".
+     *
+     * @param {String} c.jsonpCallback <br/>
+     * Specify the callback function name for a jsonp request.<br/>
+     * set this value will replace the auto generated function name.<br/>
+     * eg:<br/>
+     * set "customCall" , then jsonp url will append "callback=customCall"
+     *
+     * @param {String} c.mimeType <br/>
+     * override xhr's mime type
+     *
+     * @param {Boolean} c.processData <br/>
+     * Default: true<br/>
+     * whether data will be serialized as String
+     *
+     * @param {String} c.scriptCharset <br/>
+     * only for dataType "jsonp" and "script" and "get" type.<br/>
+     * force the script to certain charset.
+     *
+     * @param {Function} c.success <br/>
+     * success(data,textStatus,xhr)<br/>
+     * callback function called if the request succeeds.this function has 3 arguments<br/>
+     * 1. data returned from this request with type specified by dataType<br/>
+     * 2. status of this request with type String<br/>
+     * 3. XhrObject of this request , for details {@link IO.XhrObject}
+     *
+     * @param {Function} c.error <br/>
+     * success(data,textStatus,xhr) <br/>
+     * callback function called if the request occurs error.this function has 3 arguments<br/>
+     * 1. null value<br/>
+     * 2. status of this request with type String,such as "timeout","Not Found","parsererror:..."<br/>
+     * 3. XhrObject of this request , for details {@link IO.XhrObject}
+     *
+     * @param {Function} c.complete <br/>
+     * success(data,textStatus,xhr)<br/>
+     * callback function called if the request finished(success or error).this function has 3 arguments<br/>
+     * 1. null value if error occurs or data returned from server<br/>
+     * 2. status of this request with type String,such as success:"ok",
+     * error:"timeout","Not Found","parsererror:..."<br/>
+     * 3. XhrObject of this request , for details {@link IO.XhrObject}
+     *
+     * @param {Number} c.timeout <br/>
+     * Set a timeout(in seconds) for this request.if will call error when timeout
+     *
+     * @param {Boolean} c.serializeArray <br/>
+     * whether add [] to data's name when data's value is array in serialization
+     *
+     * @param {Object} c.xhrFields <br/>
+     * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
+     *
+     * @param {String} c.username <br/>
+     * a username tobe used in response to HTTP access authentication request
+     *
+     * @param {String} c.password <br/>
+     * a password tobe used in response to HTTP access authentication request
+     *
+     * @param {Object} c.xdr <br/>
+     * cross domain request config object
+     *
+     * @param {String} c.xdr.src <br/>
+     * Default: kissy's flash url
+     * flash sender url
+     *
+     * @param {String} c.xdr.use <br/>
+     * if set to "use", it will always use flash for cross domain request even in chrome/firefox
+     *
+     * @param {Object} c.xdr.subDomain <br/>
+     * cross sub domain request config object
+     *
+     * @param {String} c.xdr.subDomain.proxy <br/>
+     * proxy page,eg:<br/>
+     * a.t.cn/a.htm send request to b.t.cn/b.htm: <br/>
+     * 1. a.htm set document.domain='t.cn'<br/>
+     * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script><br/>
+     * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
+     *
+     * @returns {IO.XhrObject} current request object
+     */
+    function io(c) {
+        if (!c.url) {
+            return undefined;
+        }
+        c = setUpConfig(c);
+        var xhrObject = new XhrObject(c);
 
 
-            /**
-             * @name io#start
-             * @description 生成请求对象前触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} e.xhr 当前请求对象
-             */
+        /**
+         * @name IO#start
+         * @description fired before generating request object
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
 
-            fire("start", xhrObject);
-            var transportContructor = transports[c.dataType[0]] || transports["*"],
-                transport = new transportContructor(xhrObject);
-            xhrObject.transport = transport;
+        fire("start", xhrObject);
+        var transportContructor = transports[c.dataType[0]] || transports["*"],
+            transport = new transportContructor(xhrObject);
+        xhrObject.transport = transport;
 
-            if (c.contentType) {
-                xhrObject.setRequestHeader("Content-Type", c.contentType);
-            }
-            var dataType = c.dataType[0],
-                accepts = c.accepts;
-            // Set the Accepts header for the server, depending on the dataType
-            xhrObject.setRequestHeader(
-                "Accept",
-                dataType && accepts[dataType] ?
-                    accepts[ dataType ] + (dataType === "*" ? "" : ", */*; q=0.01"  ) :
-                    accepts[ "*" ]
-            );
+        if (c.contentType) {
+            xhrObject.setRequestHeader("Content-Type", c.contentType);
+        }
+        var dataType = c.dataType[0],
+            accepts = c.accepts;
+        // Set the Accepts header for the server, depending on the dataType
+        xhrObject.setRequestHeader(
+            "Accept",
+            dataType && accepts[dataType] ?
+                accepts[ dataType ] + (dataType === "*" ? "" : ", */*; q=0.01"  ) :
+                accepts[ "*" ]
+        );
 
-            // Check for headers option
-            for (var i in c.headers) {
-                xhrObject.setRequestHeader(i, c.headers[ i ]);
-            }
-
-            function genHandler(handleStr) {
-                return function (v) {
-                    if (xhrObject.timeoutTimer) {
-                        clearTimeout(xhrObject.timeoutTimer);
-                        xhrObject.timeoutTimer = 0;
-                    }
-                    var h = c[handleStr];
-                    h && h.apply(c.context, v);
-                    fire(handleStr, xhrObject);
-                };
-            }
-
-            xhrObject.then(genHandler("success"), genHandler("error"));
-
-            xhrObject.fin(genHandler("complete"));
-
-            xhrObject.readyState = 1;
-
-            /**
-             * @name io#send
-             * @description 发送请求前触发
-             * @event
-             * @param {Event.Object} e
-             * @param {Object} e.ajaxConfig 当前请求的配置
-             * @param {io.XhrObject} xhr 当前请求对象
-             */
-
-            fire("send", xhrObject);
-
-            // Timeout
-            if (c.async && c.timeout > 0) {
-                xhrObject.timeoutTimer = setTimeout(function () {
-                    xhrObject.abort("timeout");
-                }, c.timeout * 1000);
-            }
-
-            try {
-                // flag as sending
-                xhrObject.state = 1;
-                transport.send();
-            } catch (e) {
-                // Propagate exception as error if not done
-                if (xhrObject.status < 2) {
-                    xhrObject._xhrReady(-1, e);
-                    // Simply rethrow otherwise
-                } else {
-                    S.error(e);
-                }
-            }
-
-            return xhrObject;
+        // Check for headers option
+        for (var i in c.headers) {
+            xhrObject.setRequestHeader(i, c.headers[ i ]);
         }
 
-        S.mix(io, Event.Target);
+        function genHandler(handleStr) {
+            return function (v) {
+                if (xhrObject.timeoutTimer) {
+                    clearTimeout(xhrObject.timeoutTimer);
+                    xhrObject.timeoutTimer = 0;
+                }
+                var h = c[handleStr];
+                h && h.apply(c.context, v);
+                fire(handleStr, xhrObject);
+            };
+        }
 
-        S.mix(io, {
+        xhrObject.then(genHandler("success"), genHandler("error"));
+
+        xhrObject.fin(genHandler("complete"));
+
+        xhrObject.readyState = 1;
+
+        /**
+         * @name IO#send
+         * @description fired before sending request
+         * @event
+         * @param {Event.Object} e
+         * @param {Object} e.ajaxConfig current request 's config
+         * @param {IO.XhrObject} e.xhr current xhr object
+         */
+
+        fire("send", xhrObject);
+
+        // Timeout
+        if (c.async && c.timeout > 0) {
+            xhrObject.timeoutTimer = setTimeout(function () {
+                xhrObject.abort("timeout");
+            }, c.timeout * 1000);
+        }
+
+        try {
+            // flag as sending
+            xhrObject.state = 1;
+            transport.send();
+        } catch (e) {
+            // Propagate exception as error if not done
+            if (xhrObject.state < 2) {
+                xhrObject._xhrReady(-1, e);
+                // Simply rethrow otherwise
+            } else {
+                S.error(e);
+            }
+        }
+
+        return xhrObject;
+    }
+
+    S.mix(io, Event.Target);
+
+    S.mix(io,
+        /**
+         * @lends IO
+         */
+        {
+            /**
+             * whether current application is a local application
+             * (protocal is file://,widget://,about://)
+             * @type Boolean
+             * @field
+             */
             isLocal:isLocal,
+            /**
+             * name-value object that set default config value for io request
+             * @param {Object} setting for details see {@link io}
+             */
             setupConfig:function (setting) {
                 S.mix(defaultConfig, setting, undefined, undefined, true);
             },
+            /**
+             * @private
+             */
             setupTransport:function (name, fn) {
                 transports[name] = fn;
             },
+            /**
+             * @private
+             */
             getTransport:function (name) {
                 return transports[name];
             },
+            /**
+             * get default config value for io request
+             * @returns {Object}
+             */
             getConfig:function () {
                 return defaultConfig;
             }
         });
 
-        return io;
-    },
-    {
-        requires:["json", "event", "./XhrObject"]
-    });
+    return io;
+}, {
+    requires:["json", "event", "./XhrObject"]
+});
 
 /**
  * 2012-2-07 yiminghe@gmail.com:
@@ -12734,7 +12970,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add("ajax/jsonp", function (S, io) {
-
+    var win = S.Env.host;
     io.setupConfig({
         jsonp:"callback",
         jsonpCallback:function () {
@@ -12752,12 +12988,12 @@ KISSY.add("ajax/jsonp", function (S, io) {
                 jsonpCallback = S.isFunction(cJsonpCallback) ?
                     cJsonpCallback() :
                     cJsonpCallback,
-                previous = window[ jsonpCallback ];
+                previous = win[ jsonpCallback ];
 
             c.url += ( /\?/.test(c.url) ? "&" : "?" ) + c.jsonp + "=" + jsonpCallback;
 
             // build temporary JSONP function
-            window[jsonpCallback] = function (r) {
+            win[jsonpCallback] = function (r) {
                 // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
                 // jsonp 返回了数组
                 if (arguments.length > 1) {
@@ -12768,10 +13004,10 @@ KISSY.add("ajax/jsonp", function (S, io) {
 
             // cleanup whether success or failure
             xhrObject.fin(function () {
-                window[ jsonpCallback ] = previous;
+                win[ jsonpCallback ] = previous;
                 if (previous === undefined) {
                     try {
-                        delete window[ jsonpCallback ];
+                        delete win[ jsonpCallback ];
                     } catch (e) {
                         //S.log("delete window variable error : ");
                         //S.log(e);
@@ -12813,7 +13049,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview   cookie
@@ -12821,7 +13057,12 @@ build time: Feb 9 18:01
  */
 KISSY.add('cookie', function (S) {
 
-    var doc = document,
+    /**
+     * @name Cookie
+     * @namespace
+     */
+
+    var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
         decode = decodeURIComponent;
@@ -12831,11 +13072,15 @@ KISSY.add('cookie', function (S) {
         return S.isString(val) && val !== '';
     }
 
-    return S.Cookie={
+    return S.Cookie =
+    /**
+     * @lends Cookie
+     */
+    {
 
         /**
-         * 获取 cookie 值
-         * @return {string} 如果 name 不存在，返回 undefined
+         * Returns the cookie value for given name
+         * @return {String} name The name of the cookie to retrieve
          */
         get:function (name) {
             var ret, m;
@@ -12849,6 +13094,16 @@ KISSY.add('cookie', function (S) {
             return ret;
         },
 
+        /**
+         * Set a cookie with a given name and value
+         * @param {String} name The name of the cookie to set
+         * @param {String} val The value to set for cookie
+         * @param {Number|Date} expires
+         * if Number secified how many days this cookie will expire
+         * @param {String} domain set cookie's domain
+         * @param {String} path set cookie's path
+         * @param {Boolean} secure whether this cookie can only be sent to server on https
+         */
         set:function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;
 
@@ -12877,12 +13132,17 @@ KISSY.add('cookie', function (S) {
                 text += '; secure';
             }
 
-            //S.log(text);
             doc.cookie = name + '=' + text;
         },
 
+        /**
+         * Remove a cookie from the machine by setting its expiration date to sometime in the past
+         * @param {String} name The name of the cookie to remove.
+         * @param {String} domain The cookie's domain
+         * @param {String} path The cookie's path
+         * @param {String} secure The cookie's secure option
+         */
         remove:function (name, domain, path, secure) {
-            // 置空，并立刻过期
             this.set(name, '', -1, domain, path, secure);
         }
     };
@@ -12890,7 +13150,8 @@ KISSY.add('cookie', function (S) {
 });
 
 /**
- * NOTES:
+ *  2012.02.14 yiminghe@gmail.com
+ *   - jsdoc added
  *
  *  2010.04
  *   - get 方法要考虑 ie 下，
@@ -12902,7 +13163,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:16
 */
 /**
  * @fileOverview attribute management
@@ -13098,7 +13359,8 @@ KISSY.add('base/attribute', function (S, undef) {
     }
 
     /**
-     * 提供属性管理机制
+     * provide attribute management.
+     * recommended extending {@link Base}.
      * @name Attribute
      * @class
      */
@@ -13249,7 +13511,7 @@ KISSY.add('base/attribute', function (S, undef) {
                             subAttrNames,
                             attrNames);
                     }
-                    return undef;
+                    return self;
                 }
                 return setInternal(self, name, value, opts);
             },
@@ -13445,6 +13707,15 @@ KISSY.add('base', function (S, Attribute, Event) {
         initAttrs(this, config);
     }
 
+
+    /**
+     * see {@link Attribute#set}
+     * @name set
+     * @memberOf Base#
+     * @function
+     */
+
+
     function addAttrs(host, attrs) {
         if (attrs) {
             for (var attr in attrs) {
@@ -13483,7 +13754,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview anim
@@ -13628,7 +13899,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * get a anim instance associate
-     * @param {HTMLElement|window} elem 元素或者 window （ window 时只能动画 scrollTop/scrollLeft ）
+     * @param {HTMLElement|window} elem 元素或者 window
+     * (window can only animate scrollTop/scrollLeft)
      * @param {Object} props style map
      * @param {Number|Object} [duration] duration(s) or anim config
      * @param {String|Function} [duration.easing] easing fn or string
@@ -13903,7 +14175,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         {
 
             /**
-             * @return {boolean} 是否在运行
+             * @return {boolean} whether this animation is running
              */
             isRunning:function () {
                 return isRunning(this);
@@ -13912,7 +14184,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             _runInternal:runInternal,
 
             /**
-             * 开始动画
+             * start this animation
              */
             run:function () {
                 var self = this,
@@ -13967,7 +14239,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             },
 
             /**
-             * 结束动画
+             * stop this animation
              * @param {boolean} finish whether jump to the last position of this animation
              */
             stop:function (finish) {
@@ -14843,7 +15115,7 @@ KISSY.add("anim/queue", function(S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 21 19:59
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview   anim-node-plugin
@@ -15386,7 +15658,7 @@ KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /*!
  * Sizzle CSS Selector Engine
@@ -16806,15 +17078,15 @@ KISSY.add('sizzle', function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 25 23:13
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview 数据延迟加载组件
  */
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = S.Env.host,
+        doc = win.document,
 
         IMG_SRC_DATA = 'data-ks-lazyload',
         AREA_DATA_CLS = 'ks-datalazyload',
@@ -17341,7 +17613,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview  KISSY Template Engine.
@@ -17448,7 +17720,7 @@ KISSY.add('template', function (S) {
         // expression
         Statements = {
             'if':{
-                start: 'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
+                start:'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
                 end:'}'
             },
 
@@ -17526,7 +17798,7 @@ KISSY.add('template', function (S) {
          */
         log:function (tpl) {
             if (tpl in templateCache) {
-                if ('js_beautify' in window) {
+                //     if ('js_beautify' in window) {
 //                        S.log(js_beautify(templateCache[tpl].parser, {
 //                            indent_size: 4,
 //                            indent_char: ' ',
@@ -17535,9 +17807,9 @@ KISSY.add('template', function (S) {
 //                            keep_array_indentation: false,
 //                            space_after_anon_function: true
 //                        }), 'info');
-                } else {
-                    S.log(templateCache[tpl].parser, 'info');
-                }
+                // } else {
+                S.log(templateCache[tpl].parser, 'info');
+                // }
             } else {
                 Template(tpl);
                 this.log(tpl);
@@ -17572,7 +17844,7 @@ KISSY.add('template', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview    Flash 全局静态类
@@ -17682,7 +17954,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             // 1. target 元素未找到 则自行创建一个容器
             if (!(target = DOM.get(target))) {
 				target = DOM.create('<div id='+ id +'/>');
-				DOM.prepend(target,document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
+				DOM.prepend(target,S.Env.host.document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
 				//document.body.appendChild(target);
             }
 
@@ -17980,7 +18252,7 @@ KISSY.add("flash", function(S, F) {
  */
 KISSY.add('flash/ua', function(S, UA) {
 
-    var fpv, fpvF, firstRun = true;
+    var fpv, fpvF, firstRun = true,win=S.Env.host;
 
     /**
      * 获取 Flash 版本号
@@ -17994,7 +18266,7 @@ KISSY.add('flash/ua', function(S, UA) {
             ver = (navigator.plugins['Shockwave Flash'] || 0).description;
         }
         // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (window.ActiveXObject) {
+        else if (win.ActiveXObject) {
             try {
                 ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
             } catch(ex) {
@@ -18092,11 +18364,11 @@ KISSY.add('flash/ua', function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
-    var $ = Node.all;
+    var $ = Node.all,WIN=S.Env.host;
 
     /**
      * @class constrain draggable's region
@@ -18114,7 +18386,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             constrain = self.get("constrain");
         if (constrain) {
             if (constrain === true) {
-                var win = $(window);
+                var win = $(WIN);
                 self.__constrainRegion = {
                     left:l = win.scrollLeft(),
                     top:t = win.scrollTop(),
@@ -18182,7 +18454,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * stop monitoring drag
              * @param {DD.Draggable} drag
              */
-            unattach:function (drag) {
+            unAttach:function (drag) {
                 var self = this;
                 drag.detach("dragstart", onDragStart, self)
                     .detach("dragend", onDragEnd, self)
@@ -18242,9 +18514,8 @@ KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delega
  */
 KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
-    var doc = document,
-        win = window,
-
+    var win = S.Env.host,
+        doc = win.document,
         ie6 = UA['ie'] === 6,
 
         // prevent collision with click , only start when move
@@ -18272,12 +18543,16 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      * @lends DD.DDM
      */
     {
+        /**
+         * default prefix class name for dd related state (such as dragging,drag-over).
+         * @type String
+         */
         prefixCls:{
             value:"ks-dd-"
         },
 
         /**
-         * shim 鼠标 icon (drag icon)
+         * cursor style when dragging,if shimmed the shim will get the cursor.
          * @type String
          */
         dragCursor:{
@@ -18285,7 +18560,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         },
 
         /***
-         * 移动的像素值（用于启动拖放）
+         * the number of pixels to move to start a drag operation,default is 3.
          * @type Number
          */
         clickPixelThresh:{
@@ -18293,25 +18568,25 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         },
 
         /**
-         * mousedown 后 buffer 触发时间  time threshold
+         * the number of milliseconds to start a drag operation after mousedown,default is 1000
          * @type Number
          */
         bufferTime:{ value:BUFFER_TIME },
 
         /**
-         * 当前激活的拖动对象，在同一时间只有一个值，所以不是数组
+         * currently active draggable object
          * @type DD.Draggable
          */
         activeDrag:{},
 
         /**
-         * 当前激活的 drop 对象，在同一时间只有一个值
+         * currently active droppable object
          * @type DD.Droppable
          */
         activeDrop:{},
 
         /**
-         * 所有注册的可放置对象，统一管理
+         * a array of drop targets
          * @type DD.Droppable[]
          */
         drops:{
@@ -18319,7 +18594,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         },
 
         /**
-         * 对应当前 draggable 有效的 droppable 对象数组
+         * a array of the valid drop targets for this interaction
          * @type DD.Droppable[]
          */
         validDrops:{
@@ -18432,7 +18707,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      * 垫片只需创建一次
      */
     function activeShim(self) {
-        var doc = document;
         //创造垫片，防止进入iframe，外面document监听不到 mousedown/up/move
         self._shim = new Node("<div " +
             "style='" +
@@ -18679,8 +18953,9 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
     /**
+     * drag multiple nodes under a container element using only one draggable instance as a delegate.
      * @memberOf DD
-     * @class delegate drag
+     * @class
      */
     function DraggableDelegate() {
         DraggableDelegate.superclass.constructor.apply(this, arguments);
@@ -18689,7 +18964,6 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
 
     /**
      * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-     *
      * @param ev
      */
     function _handleMouseDown(ev) {
@@ -18739,7 +19013,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
              */
             _getHandler:function (target) {
                 var self = this,
-                    ret=undefined,
+                    ret = undefined,
                     node = self.get("container"),
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
@@ -18781,7 +19055,8 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
              */
             {
                 /**
-                 * 用于委托的父容器
+                 * a selector query to get the container to listen for mousedown events on.
+                 * All "draggable selector" should be a child of this container
                  * @type {HTMLElement|String}
                  */
                 container:{
@@ -18791,15 +19066,17 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                 },
 
                 /**
-                 * 实际拖放的节点选择器，一般用 tag.cls
+                 * a selector query to get the children of container to make draggable elements from.
+                 * usually as for tag.cls.
                  * @type {String}
                  */
                 selector:{
                 },
 
                 /**
-                 * 继承来的 handlers : 拖放句柄选择器数组，一般用 [ tag.cls ]
-                 * 不设则为 [ selector ]
+                 * handlers to initiate drag operation.
+                 * can only be as form of tag.cls.
+                 * default:[selector]
                  * @type {String[]}
                  **/
                 handlers:{
@@ -18823,7 +19100,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     var each = S.each,
         ie = UA['ie'],
         NULL = null,
-        doc = document;
+        doc = S.Env.host.document;
 
     /**
      * @extends Base
@@ -19023,7 +19300,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     {
 
         /**
-         * @description 拖放节点，可能指向 proxy node
+         * the dragged node. maybe a proxy node.
          * @type HTMLElement
          */
         node:{
@@ -19033,7 +19310,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 启动拖放的移动的临界元素数
+         * the number of pixels to move to start a drag operation,default is 3.
          * @type Number
          */
         clickPixelThresh:{
@@ -19043,8 +19320,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 启动拖放的移动的临界延迟
-         * @type Number 毫秒
+         * the number of milliseconds to start a drag operation after mousedown,default is 1000
+         * @type Number
          */
         bufferTime:{
             valueFn:function () {
@@ -19053,13 +19330,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 真实的节点
+         * the draggable element
          * @type HTMLElement
          */
         dragNode:{},
 
         /**
-         * 是否需要遮罩跨越 iframe 以及其他阻止 mousemove 事件的元素
+         * use protective shim to cross iframe.default:true
          * @type boolean
          */
         shim:{
@@ -19067,7 +19344,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * handler 数组，注意暂时必须在 node 里面
+         * valid handlers to initiate a drag operation
          * @type HTMLElement[]|Function[]|String[]
          */
         handlers:{
@@ -19092,13 +19369,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 激活 drag 的 handler
+         * the handler which fired the drag event.
          * @type NodeList
          */
         activeHandler:{},
 
         /**
-         * 当前拖对象是否开始运行，用于调用者监听 change 事件
+         * indicate whether this draggable object is being dragged
          * @type boolean
          */
         dragging:{
@@ -19111,22 +19388,20 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * 拖放模式
-         * @type Number
+         * <pre>
+         * can be set 'point' or 'intersect' or 'strict'
+         * In point mode, a Drop is targeted by the cursor being over the Target
+         * In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
+         * In strict mode, a Drop is targeted by the "entire" drag node being over the Target
+         * </pre>
+         * @type String
          */
         mode:{
-            /**
-             * @enum point,intersect,strict
-             * @description
-             *  In point mode, a Drop is targeted by the cursor being over the Target
-             *  In intersect mode, a Drop is targeted by "part" of the drag node being over the Target
-             *  In strict mode, a Drop is targeted by the "entire" drag node being over the Target             *
-             */
             value:'point'
         },
 
         /**
-         * 拖无效
+         * set to disable this draggable so that it can not be dragged. default:false
          * @type boolean
          */
         disabled:{
@@ -19139,7 +19414,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * whether the node moves with drag object
+         * whether the drag node moves with cursor.default:false,can be used to resize element.
          * @type boolean
          */
         move:{
@@ -19147,7 +19422,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * only left button of mouse trigger drag?
+         * whether a drag operation can only be trigged by primary(left) mouse button.
+         * Setting false will allow for all mousedown events to trigger drag.
          * @type boolean
          */
         primaryButtonOnly:{
@@ -19155,9 +19431,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         },
 
         /**
-         * whether halt mousedown
+         * whether halt mousedown event. default:true
          * @type boolean
-         * @default true
          */
         halt:{
             value:true
@@ -19166,6 +19441,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         /**
          * groups this draggable object belongs to
          * @type Object
+         * @example
+         * <code>
+         * {
+         *     "group1":1,
+         *     "group2":1
+         * }
+         * </code>
          */
         groups:{
             value:{}
@@ -19235,6 +19517,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              * 开始拖时鼠标所在位置，例如
              *  {x:100,y:200}
              * @type Object
+             * @private
              */
             startMousePos:NULL,
 
@@ -19242,6 +19525,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              * 开始拖时节点所在位置，例如
              *  {x:100,y:200}
              * @type Object
+             * @private
              */
             startNodePos:NULL,
 
@@ -19464,7 +19748,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
             },
 
             /**
-             * 销毁
+             * make the drag node undraggable
              */
             destroy:function () {
                 var self = this,
@@ -19495,8 +19779,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
     }
 
     /**
+     * make multiple nodes droppable under a container using only one droppable instance
      * @memberOf DD
-     * @class delegate drop
+     * @class
      */
     function DroppableDelegate() {
         var self = this;
@@ -19510,6 +19795,8 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             /**
              * 根据鼠标位置得到真正的可放目标，暂时不考虑 mode，只考虑鼠标
              * @param ev
+             * @private
+             * @override
              */
             getNodeFromTarget:function (ev, dragNode, proxyNode) {
                 var pointer = {
@@ -19580,7 +19867,7 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
             },
 
             _end:function () {
-                var self=this;
+                var self = this;
                 DroppableDelegate.superclass._end.apply(self, arguments);
                 self.__set("node", 0);
             }
@@ -19603,14 +19890,16 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 },
 
                 /**
-                 * 放目标节点选择器
+                 * a selector query to get the children of container to make droppable elements from.
+                 * usually as for tag.cls.
                  * @type String
                  */
                 selector:{
                 },
 
                 /**
-                 * 放目标所在区域
+                 * a selector query to get the container to listen for mousedown events on.
+                 * All "draggable selector" should be a child of this container
                  * @type {String|HTMLElement}
                  */
                 container:{
@@ -19631,9 +19920,9 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
 KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
 
     /**
+     * make a node droppable
      * @memberOf DD
-     * @class make a node droppable
-     * @since version 1.2.0
+     * @class
      */
     function Droppable() {
         var self = this;
@@ -19730,7 +20019,7 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
      */
     {
         /**
-         * 放节点
+         * droppable element
          * @type String|HTMLElement
          */
         node:{
@@ -19742,9 +20031,8 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
         },
 
         /**
-         * groups this droppable object belongs to
+         * groups this droppable object belongs to. Default:true
          * @type Object|boolean true to match any group
-         * @default true
          */
         groups:{
             value:true
@@ -19770,8 +20058,8 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
          */
         {
             /**
-             * 用于被 droppable-delegate override
-             * @protected
+             * override by droppable-delegate override
+             * @private
              */
             getNodeFromTarget:function (ev, dragNode, proxyNode) {
                 var node = this.get("node"),
@@ -19853,6 +20141,9 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                 self.fire('drophit', ret);
             },
 
+            /**
+             * make this droppable' element undroppable
+             */
             destroy:function () {
                 DDM._unRegDrop(this);
             }
@@ -19871,8 +20162,10 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
         PROXY_ATTR = "__proxy";
 
     /**
+     * provide abilities for draggable tp create a proxy drag node,
+     * instead of dragging the original node.
      * @memberOf DD
-     * @class proxy drag
+     * @class
      */
     function Proxy() {
         var self = this;
@@ -19886,9 +20179,8 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
      */
     {
         /**
-         * 如何生成替代节点
+         * how to get the proxy node. default:clone the node itself deeply.
          * @type {Function}
-         * @default 深度克隆自身
          */
         node:{
             value:function (drag) {
@@ -19896,18 +20188,16 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
             }
         },
         /**
-         * 是否每次都生成新节点/拖放完毕是否销毁当前代理节点
+         * destroy the proxy node at the end of this drag. default:false
          * @type {boolean}
-         * @default false
          */
         destroyOnEnd:{
             value:false
         },
 
         /**
-         * 拖放结束是否移动本身到代理节点位置
+         * move the original node at the end of the drag. default:true
          * @type {boolean}
-         * @default true
          */
         moveOnEnd:{
             value:true
@@ -19920,8 +20210,8 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
          */
         {
             /**
-             * 关联到某个拖对象
-             * @param drag
+             * make this draggable object can be proxied.
+             * @param {DD.Draggable} drag
              */
             attach:function (drag) {
 
@@ -19982,8 +20272,8 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                 };
             },
             /**
-             * 取消关联
-             * @param drag
+             * make this draggable object unproxied
+             * @param {DD.Draggable} drag
              */
             unAttach:function (drag) {
                 var self = this,
@@ -19996,7 +20286,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
             },
 
             /**
-             * 销毁
+             * make all draggable object associated with this proxy object unproxied
              */
             destroy:function () {
                 var self = this,
@@ -20021,6 +20311,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
 KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
+        win=S.Env.host,
         stamp = S.stamp,
         RATE = [10, 10],
         ADJUST_DELAY = 100,
@@ -20028,8 +20319,9 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
         DESTRUCTORS = "__dd_scrolls";
 
     /**
+     * make parent node scroll while dragging
      * @memberOf DD
-     * @class monitor scroll
+     * @class
      */
     function Scroll() {
         var self = this;
@@ -20043,27 +20335,28 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
      */
     {
         /**
-         * 容器节点
+         * node to be scrolled while dragging
          * @type {window|String|HTMLElement}
          */
         node:{
             // value:window：不行，默认值一定是简单对象
             valueFn:function () {
-                return Node.one(window);
+                return Node.one(win);
             },
             setter:function (v) {
                 return Node.one(v);
             }
         },
         /**
-         * 调整速度，二维数组
-         * @type number[]
+         * adjust velocity. default:[10,10]. larger faster
+         * @type Number[]
          */
         rate:{
             value:RATE
         },
         /**
-         * 调整的临界值，二维数组
+         * the margin to make node scroll. default: [20,20].
+         * easier to scroll for node if larger.
          * @type number[]
          */
         diff:{
@@ -20133,8 +20426,8 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 取消关联
-             * @param drag
+             * make node not to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
              */
             unAttach:function (drag) {
                 var tag,
@@ -20149,7 +20442,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 销毁
+             * make node not to scroll at all
              */
             destroy:function () {
                 var self = this,
@@ -20160,8 +20453,8 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
             },
 
             /**
-             * 关联拖对象
-             * @param drag
+             * make node to scroll while this drag object is dragging
+             * @param {DD.Draggable} drag
              */
             attach:function (drag) {
                 var self = this,
@@ -20289,7 +20582,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview resizable support for kissy
@@ -20483,7 +20776,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 21 19:59
+build time: Mar 6 16:25
 */
 /**
  * @fileOverview UIBase.Align
@@ -21492,7 +21785,7 @@ KISSY.add('uibase/box', function (S) {
  */
 KISSY.add('uibase/boxrender', function (S, Node) {
 
-    var $ = S.all;
+    var $ = S.all, doc = S.Env.host.document;
 
 
     function BoxRender() {
@@ -21608,7 +21901,7 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                     el.appendTo(render);
                 }
                 else {
-                    el.appendTo(document.body);
+                    el.appendTo(doc.body);
                 }
             }
         },
@@ -21619,17 +21912,42 @@ KISSY.add('uibase/boxrender', function (S, Node) {
          */
         __createDom:function () {
             var self = this,
+                elCls = self.get("elCls"),
+                elStyle = self.get("elStyle"),
+                width = self.get("width"),
+                height = self.get("height"),
+                html = self.get("html"),
+                elAttrs = self.get("elAttrs"),
                 el = self.get("el");
             if (!el) {
                 self.__boxRenderNew = true;
-                el = new Node(constructEl(self.get("elCls"),
-                    self.get("elStyle"),
-                    self.get("width"),
-                    self.get("height"),
+                el = new Node(constructEl(elCls,
+                    elStyle,
+                    width,
+                    height,
                     self.get("elTagName"),
-                    self.get("elAttrs"),
-                    self.get("html")));
+                    elAttrs,
+                    html));
                 self.__set("el", el);
+            } else {
+                if (elCls) {
+                    el.addClass(elCls);
+                }
+                if (elStyle) {
+                    el.css(elStyle);
+                }
+                if (width !== undefined) {
+                    el.width(width);
+                }
+                if (height !== undefined) {
+                    el.height(height);
+                }
+                if (html !== undefined) {
+                    el.html(html);
+                }
+                if (elAttrs) {
+                    el.attr(elAttrs);
+                }
             }
         },
 
@@ -21874,7 +22192,7 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
             //On getting, the clientWidth attribute returns the viewport width
             //excluding the size of a rendered scroll bar (if any)
             //  if the element is the root element 
-            var vWidth = document.documentElement.clientWidth;
+            var vWidth = S.Env.host.document.documentElement.clientWidth;
             ret = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
             S.mix(ret, {
                 maxLeft:ret.left + vWidth - el.outerWidth(),
@@ -22309,8 +22627,9 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
         ie6 = (UA['ie'] === 6),
         px = "px",
         $ = Node.all,
-        win = $(window),
-        doc = $(document),
+        WINDOW=S.Env.host,
+        win = $(S.Env.host),
+        doc = $(WINDOW.document),
         iframe,
         num = 0;
 
@@ -22917,7 +23236,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -23861,7 +24180,7 @@ KISSY.add("component/uistore", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 15:18
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview accordion aria support
@@ -24347,6 +24666,7 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,
+        win=S.Env.host,
         checkElemInViewport = function (elem) {
             // 只计算上下位置是否在可视区域, 不计算左右
             var scrollTop = DOM.scrollTop(),
@@ -24393,7 +24713,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
                     // 依次检查页面上所有 switchable 对象是否在可视区域内
                     host[checkElemInViewport(host.container) ? 'start' : 'stop']();
                 }, DURATION);
-                Event.on(window, "scroll", host.__scrollDetect);
+                Event.on(win, "scroll", host.__scrollDetect);
             }
 
             function startAutoplay() {
@@ -24438,7 +24758,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
 
         destroy:function (host) {
             if (host.__scrollDetect) {
-                Event.remove(window, "scroll", host.__scrollDetect);
+                Event.remove(win, "scroll", host.__scrollDetect);
             }
         }
     });
@@ -26532,7 +26852,7 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -26656,7 +26976,7 @@ KISSY.add("overlay/ariarender", function(S, Node) {
                     lastActive;
                 self.on("afterVisibleChange", function(ev) {
                     if (ev.newVal) {
-                        lastActive = document.activeElement;
+                        lastActive = el[0].ownerDocument.activeElement;
                         el[0].focus();
                         el.attr("aria-hidden", "false");
                         el.on("keydown", _onKey, self);
@@ -26678,11 +26998,13 @@ KISSY.add("overlay/ariarender", function(S, Node) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect) {
+
     function require(s) {
         return S.require("uibase/" + s);
     }
 
     /**
+     * KISSY Overlay Component
      * @class
      * @namespace
      * @name Overlay
@@ -26694,6 +27016,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @extends UIBase.Close
      * @extends UIBase.Resize
      * @extends UIBase.Mask
+     * @param {Object} config config object to set properties of its parent class
      */
     var Overlay = UIBase.create(Component.ModelControl, [
         require("contentbox"),
@@ -26704,31 +27027,63 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
         require("resize"),
         require("mask"),
         Effect
-    ], {}, {
-        ATTRS:{
-            // 是否支持焦点处理
-            focusable:{
-                value:false
-            },
-            closable:{
-                // overlay 默认没 X
-                value:false
-            },
-            // 是否绑定鼠标事件
-            handleMouseEvents:{
-                value:false
-            },
-            allowTextSelection_:{
-                value:true
-            },
-            visibleMode:{
-                value:"visibility"
+    ],
+        /**
+         * @lends Overlay#
+         */
+        {
+            /**
+             * see {@link UIBase.Box#show}
+             * @function
+             * @name Overlay#show
+             */
+        }, {
+            ATTRS:/**
+             * @lends Overlay#
+             */
+            {
+                /**
+                 * whether this component can be focused. Default:false
+                 * @type Boolean
+                 */
+                focusable:{
+                    value:false
+                },
+
+                /**
+                 * whether this component can be closed. Default:false
+                 * @type Boolean
+                 */
+                closable:{
+                    value:false
+                },
+
+                /**
+                 * whether this component can be responsive to mouse. Default:false
+                 * @type Boolean
+                 */
+                handleMouseEvents:{
+                    value:false
+                },
+
+                /**
+                 * whether this component's text content can be selected. Default:true
+                 * @type Boolean
+                 */
+                allowTextSelection_:{
+                    value:true
+                },
+
+                /**
+                 * see {@linl UIBase.Box#visibleMode}. Default:"visibility"
+                 */
+                visibleMode:{
+                    value:"visibility"
+                }
             }
-        }
-    });
+        });
 
     Overlay.DefaultRender = OverlayRender;
-
 
     Component.UIStore.setUIByClass("overlay", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -26742,36 +27097,70 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
  * @fileOverview KISSY.Dialog
  * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
  */
-KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function (S, Component, Overlay, UIBase, DialogRender, Aria) {
 
     function require(s) {
         return S.require("uibase/" + s);
     }
 
+    /**
+     * KISSY Dialog Component
+     * @class
+     * @name Dialog
+     * @memberOf Overlay
+     * @extends Overlay
+     * @extends UIBase.StdMod
+     * @extends UIBase.Drag
+     * @extends UIBase.Constrain
+     */
     var Dialog = UIBase.create(Overlay, [
         require("stdmod"),
         require("drag"),
         require("constrain"),
         Aria
-    ], {
-    }, {
-        ATTRS:{
-            closable:{
-                value:true
-            },
-            handlers:{
-                valueFn:function() {
-                    var self = this;
-                    return [
-                        // 运行时取得拖放头
-                        function() {
-                            return self.get("view").get("header");
-                        }
-                    ];
+    ],
+        /**
+         * @lends Overlay.Dialog#
+         */
+        {
+            /**
+             * see {@link UIBase.Box#show}
+             * @name Overlay.Dialog#show
+             * @function
+             */
+        },
+
+        {
+            ATTRS:/**
+             * @lends Overlay.Dialog#
+             */
+            {
+
+                /**
+                 * whether this component can be closed. Default:true
+                 * @type Boolean
+                 */
+                closable:{
+                    value:true
+                },
+
+                /**
+                 * Default: Dialog's header element
+                 * see {@link DD.Draggable#handlers}
+                 */
+                handlers:{
+                    valueFn:function () {
+                        var self = this;
+                        return [
+                            // 运行时取得拖放头
+                            function () {
+                                return self.get("view").get("header");
+                            }
+                        ];
+                    }
                 }
             }
-        }
-    });
+        });
 
     Dialog.DefaultRender = DialogRender;
 
@@ -26783,7 +27172,7 @@ KISSY.add('overlay/dialog', function(S, Component, Overlay, UIBase, DialogRender
     return Dialog;
 
 }, {
-    requires:[ "component","overlay/base","uibase",'overlay/dialogrender','./aria']
+    requires:[ "component", "overlay/base", "uibase", 'overlay/dialogrender', './aria']
 });
 
 /**
@@ -26811,23 +27200,34 @@ KISSY.add("overlay/dialogrender", function(S, UIBase, OverlayRender, AriaRender)
  * @fileOverview effect applied when overlay shows or hides
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/effect", function(S) {
+KISSY.add("overlay/effect", function (S) {
     var NONE = 'none',
         DURATION = 0.5,
-        effects = {fade:["Out","In"],slide:["Up","Down"]},
-        displays = ['block','none'];
+        effects = {fade:["Out", "In"], slide:["Up", "Down"]},
+        displays = ['block', 'none'];
 
     function Effect() {
     }
 
-    Effect.ATTRS = {
+    Effect.ATTRS =
+    /**
+     * @leads Overlay#
+     */
+    {
+        /**
+         * set v as overlay's show effect <br>
+         * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
+         * v.duration (Number): in seconds. Default:0.5. <br>
+         * v.easing (String): see {@link Anim.Easing} <br>
+         * @type Object
+         */
         effect:{
             value:{
                 effect:NONE,
                 duration:DURATION,
                 easing:'easeOut'
             },
-            setter:function(v) {
+            setter:function (v) {
                 var effect = v.effect;
                 if (S.isString(effect) && !effects[effect]) {
                     v.effect = NONE;
@@ -26839,9 +27239,9 @@ KISSY.add("overlay/effect", function(S) {
 
     Effect.prototype = {
 
-        __bindUI:function() {
+        __bindUI:function () {
             var self = this;
-            self.on("afterVisibleChange", function(ev) {
+            self.on("afterVisibleChange", function (ev) {
                 var effect = self.get("effect").effect;
                 if (effect == NONE) {
                     return;
@@ -26853,15 +27253,15 @@ KISSY.add("overlay/effect", function(S) {
                 // 队列中的也要移去
                 el.stop(1, 1);
                 el.css({
-                    "visibility": "visible",
+                    "visibility":"visible",
                     "display":displays[index]
                 });
 
                 var m = effect + effects[effect][index];
-                el[m](self.get("effect").duration, function() {
+                el[m](self.get("effect").duration, function () {
                     el.css({
-                        "display": displays[0],
-                        "visibility": v ? "visible" : "hidden"
+                        "display":displays[0],
+                        "visibility":v ? "visible" : "hidden"
                     });
                 }, self.get("effect").easing, false);
 
@@ -26915,7 +27315,16 @@ KISSY.add("overlay/overlayrender", function(S, UA, UIBase, Component) {
  * @fileOverview KISSY.Popup
  * @author  乔花<qiaohua@taobao.com> , yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
+KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
+
+    /**
+     * KISSY Popup Component
+     * @class
+     * @memberOf Overlay
+     * @extends Overlay
+     * @param {NodeList} [container] existing dom node
+     * @param {Object} config see {@link Overlay}
+     */
     function Popup(container, config) {
         var self = this;
 
@@ -26929,145 +27338,178 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
         Popup.superclass.constructor.call(self, config);
     }
 
-    Popup.ATTRS = {
-        trigger: {                          // 触发器
-            setter:function(v) {
-                if (S.isString(v)) v = S.all(v);
+    Popup.ATTRS =
+    /**
+     * @lends Overlay.Popup#
+     */
+    {
+        /**
+         * trigger element to show popup
+         * @type NodeList
+         */
+        trigger:{                          // 触发器
+            setter:function (v) {
+                if (S.isString(v)) {
+                    v = S.all(v);
+                }
                 return v;
             }
         },
-        triggerType: {value:'click'},       // 触发类型
-        currentTrigger: {
+        /**
+         * how do activate trigger element. "click" or "mouse",Default:"click"
+         * @type String
+         */
+        triggerType:{value:'click'}, // 触发类型
+        currentTrigger:{},
+        /**
+         * when trigger type is mouse, the delayed time to show popup. Default:100,in milliseconds
+         * @type Number
+         */
+        mouseDelay:{
+            value:100                      // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
         },
-        mouseDelay: {
-            value: 100                      // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
-        },
-		toggle :{
-			value:false                     // triggerType 为 click 时, Popup 是否有toggle功能
-		}
+        /**
+         * when trigger type is click, whether support toggle. Default:false
+         * @type Boolean
+         */
+        toggle:{
+            value:false                     // triggerType 为 click 时, Popup 是否有toggle功能
+        }
     };
 
-    S.extend(Popup, Overlay, {
-        initializer: function() {
-            var self = this;
-            // 获取相关联的 DOM 节点
-            var trigger = self.get("trigger");
-            if (trigger) {
-                if (self.get("triggerType") === 'mouse') {
-                    self._bindTriggerMouse();
+    S.extend(Popup, Overlay,
+        /**
+         * @lends Overlay.Popup#
+         */
+        {
+            /**
+             * see {@link UIBase.Box#show}
+             * @name Overlay.Popup#show
+             * @function
+             */
 
-                    self.on('bindUI', function() {
-                        self._bindContainerMouse();
-                    });
-                } else {
-                    self._bindTriggerClick();
+
+
+            initializer:function () {
+                var self = this;
+                // 获取相关联的 DOM 节点
+                var trigger = self.get("trigger");
+                if (trigger) {
+                    if (self.get("triggerType") === 'mouse') {
+                        self._bindTriggerMouse();
+
+                        self.on('bindUI', function () {
+                            self._bindContainerMouse();
+                        });
+                    } else {
+                        self._bindTriggerClick();
+                    }
                 }
-            }
-        },
+            },
 
-        _bindTriggerMouse: function() {
-            var self = this,
-                trigger = self.get("trigger"),
-                timer;
+            _bindTriggerMouse:function () {
+                var self = this,
+                    trigger = self.get("trigger"),
+                    timer;
 
-            self.__mouseEnterPopup = function(ev) {
-                self._clearHiddenTimer();
+                self.__mouseEnterPopup = function (ev) {
+                    self._clearHiddenTimer();
 
-                timer = S.later(function() {
-                    self._showing(ev);
-                    timer = undefined;
+                    timer = S.later(function () {
+                        self._showing(ev);
+                        timer = undefined;
+                    }, self.get('mouseDelay'));
+                };
+
+                S.each(trigger, function (el) {
+                    S.one(el).on('mouseenter', self.__mouseEnterPopup);
+                });
+
+                self._mouseLeavePopup = function () {
+                    if (timer) {
+                        timer.cancel();
+                        timer = undefined;
+                    }
+
+                    self._setHiddenTimer();
+                };
+
+                S.each(trigger, function (el) {
+                    S.one(el).on('mouseleave', self._mouseLeavePopup);
+                });
+            },
+
+            _bindContainerMouse:function () {
+                var self = this;
+
+                self.get('el').on('mouseleave', self._setHiddenTimer, self)
+                    .on('mouseenter', self._clearHiddenTimer, self);
+            },
+
+            _setHiddenTimer:function (ev) {
+                var self = this;
+                self._hiddenTimer = S.later(function () {
+                    self._hiding(ev);
                 }, self.get('mouseDelay'));
-            };
+            },
 
-            S.each(trigger, function(el) {
-                S.one(el).on('mouseenter', self.__mouseEnterPopup);
-            });
-
-            self._mouseLeavePopup = function() {
-                if (timer) {
-                    timer.cancel();
-                    timer = undefined;
+            _clearHiddenTimer:function () {
+                var self = this;
+                if (self._hiddenTimer) {
+                    self._hiddenTimer.cancel();
+                    self._hiddenTimer = undefined;
                 }
+            },
 
-                self._setHiddenTimer();
-            };
+            _bindTriggerClick:function () {
+                var self = this;
+                self.__clickPopup = function (ev) {
+                    ev.halt();
+                    if (self.get('toggle')) {
+                        self[self.get('visible') ? '_hiding' : '_showing'](ev);
+                    }
+                    else  self._showing(ev);
+                };
+                S.each(self.get("trigger"), function (el) {
+                    S.one(el).on('click', self.__clickPopup);
+                });
+            },
+            _showing:function (ev) {
+                this.set('currentTrigger', S.one(ev.target));
+                this.show();
+            },
+            _hiding:function (ev) {
+                this.set('currentTrigger', undefined);
+                this.hide();
+            },
 
-            S.each(trigger, function(el) {
-                S.one(el).on('mouseleave', self._mouseLeavePopup);
-            });
-        },
+            destructor:function () {
+                var self = this;
+                var t = self.get("trigger");
+                if (t) {
+                    if (self.__clickPopup) {
+                        S.each(t, function (el) {
+                            S.one(el).detach('click', self.__clickPopup);
+                        });
+                    }
+                    if (self.__mouseEnterPopup) {
+                        S.each(t, function (el) {
+                            S.one(el).detach('mouseenter', self.__mouseEnterPopup);
+                        });
+                    }
 
-        _bindContainerMouse: function() {
-            var self = this;
-
-            self.get('el').on('mouseleave', self._setHiddenTimer, self)
-                .on('mouseenter', self._clearHiddenTimer, self);
-        },
-
-        _setHiddenTimer: function(ev) {
-            var self = this;
-            self._hiddenTimer = S.later(function() {
-                self._hiding(ev);
-            }, self.get('mouseDelay'));
-        },
-
-        _clearHiddenTimer: function() {
-            var self = this;
-            if (self._hiddenTimer) {
-                self._hiddenTimer.cancel();
-                self._hiddenTimer = undefined;
-            }
-        },
-
-        _bindTriggerClick: function() {
-            var self = this;
-            self.__clickPopup = function(ev) {
-                ev.halt();
-				if(self.get('toggle')){
-                    self[self.get('visible')?'_hiding':'_showing'](ev);
-				}
-				else  self._showing(ev);
-            };
-            S.each(self.get("trigger"), function(el) {
-                S.one(el).on('click', self.__clickPopup);
-            });
-        },
-        _showing: function(ev) {
-            this.set('currentTrigger', S.one(ev.target));
-            this.show();
-        },
-        _hiding: function(ev) {
-            this.set('currentTrigger', undefined);
-            this.hide();
-        },
-
-        destructor:function() {
-            var self = this;
-            var t = self.get("trigger");
-            if (t) {
-                if (self.__clickPopup) {
-                    S.each(t, function(el) {
-                        S.one(el).detach('click', self.__clickPopup);
-                    });
+                    if (self._mouseLeavePopup) {
+                        S.each(t, function (el) {
+                            S.one(el).detach('mouseleave', self._mouseLeavePopup);
+                        });
+                    }
                 }
-                if (self.__mouseEnterPopup) {
-                    S.each(t, function(el) {
-                        S.one(el).detach('mouseenter', self.__mouseEnterPopup);
-                    });
-                }
-
-                if (self._mouseLeavePopup) {
-                    S.each(t, function(el) {
-                        S.one(el).detach('mouseleave', self._mouseLeavePopup);
-                    });
+                if (self.get('el')) {
+                    self.get('el').detach('mouseleave', self._setHiddenTimer, self)
+                        .detach('mouseenter', self._clearHiddenTimer, self);
                 }
             }
-            if (self.get('el')) {
-                self.get('el').detach('mouseleave', self._setHiddenTimer, self)
-                    .detach('mouseenter', self._clearHiddenTimer, self);
-            }
-        }
-    });
+        });
 
 
     Component.UIStore.setUIByClass("popup", {
@@ -27077,7 +27519,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 
     return Popup;
 }, {
-    requires:[ "component","./base"]
+    requires:[ "component", "./base"]
 });
 
 /**
@@ -27087,7 +27529,7 @@ KISSY.add('overlay/popup', function(S, Component, Overlay, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview 提示补全组件
@@ -27095,9 +27537,9 @@ build time: Feb 9 18:02
  */
 KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EventTarget = Event.Target,
-        doc = document, bd, head = DOM.get('head'),
+        doc = win.document, bd, head = DOM.get('head'),
         ie = UA['ie'],
         ie6 = (ie === 6),
         ie9 = (ie >= 9),
@@ -28271,7 +28713,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview auto render
@@ -28532,7 +28974,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
         // 两种显示效果切换标志
         self._isInner = self.get('type') === INNER;
-        body = new Node(document.body);
+        body = new Node(S.Env.host.document.body);
     }
 
     Zoomer.ATTRS = {
@@ -28907,14 +29349,14 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 20 10:27
+build time: Mar 6 16:04
 */
 /**
  * KISSY Calendar
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function(S, Node, Event, undefined) {
-    var EventTarget = Event.Target,$ = Node.all;
+    var EventTarget = Event.Target,$ = Node.all,doc=S.Env.host.document;
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
@@ -28943,7 +29385,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             } else {
                 self.trigger = trigger;
                 self.con = new Node('<div>');
-                $(document.body).append(self.con);
+                $(doc.body).append(self.con);
                 
                 self.con.css({
                     'top':'0px',
@@ -29086,7 +29528,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             });
             self.EV = self.EV || [];
             tev = self.EV[0] = {
-                target:$(document),
+                target:$(doc),
                 type:'click'
             };
             tev.fn = function(e) {
@@ -30693,7 +31135,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 10 15:00
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -31850,7 +32292,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
     }
 
     var KeyCodes = Event.KeyCodes,
-        doc = document,
+        doc = S.Env.host.document,
         MENU_DELAY = 300;
     /**
      * Class representing a submenu that can be added as an item to other menus.
@@ -32132,7 +32574,7 @@ KISSY.add("menu/submenurender", function(S, UIBase, MenuItemRender) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview Model and Control for button
@@ -32377,13 +32819,15 @@ KISSY.add("button/split", function(S) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender, Menu, Component, undefined) {
+
+    var win=S.Env.host;
 
     function getMenu(self, init) {
         var m = self.get("menu");
@@ -32489,7 +32933,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                         menu.on("click", self._handleMenuClick, self);
 
                         //窗口改变大小，重新调整
-                        $(window).on("resize", self._reposition, self);
+                        $(win).on("resize", self._reposition, self);
                         /*
                          bind 与 getMenu 都可能调用，时序不定
                          */
@@ -32651,7 +33095,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
                  */
                 destructor:function () {
                     var self = this, menu = getMenu(self);
-                    $(window).detach("resize", self._reposition, self);
+                    $(win).detach("resize", self._reposition, self);
                     menu && menu.destroy();
                 }
 
@@ -32985,7 +33429,7 @@ KISSY.add("menubutton/select", function (S, Node, UIBase, Component, MenuButton,
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -33934,7 +34378,7 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 13 14:41
+build time: Mar 6 16:05
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -33943,6 +34387,7 @@ build time: Feb 13 14:41
 KISSY.add("waterfall/base", function (S, Node, Base) {
 
     var $ = Node.all,
+        win=S.Env.host,
         RESIZE_DURATION = 50;
 
     /**
@@ -34136,7 +34581,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 // 一开始就 adjust 一次，可以对已有静态数据处理
                 doResize.call(self);
                 self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
-                $(window).on("resize", self.__onResize);
+                $(win).on("resize", self.__onResize);
             },
 
             adjustItem:function (item, cfg) {
@@ -34266,7 +34711,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             },
 
             destroy:function () {
-                $(window).detach("resize", this.__onResize);
+                $(win).detach("resize", this.__onResize);
             }
         });
 
@@ -34282,6 +34727,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     var $ = Node.all,
+        win=S.Env.host,
         SCROLL_TIMER = 50;
 
     /**
@@ -34319,7 +34765,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         }
         // 动态载
         // 最小高度(或被用户看到了)低于预加载线
-        if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
+        if (diff + $(win).scrollTop() + $(win).height() > colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
         }
@@ -34370,12 +34816,12 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
                 var self = this;
                 Loader.superclass._init.apply(self, arguments);
                 self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
-                $(window).on("scroll", self.__onScroll);
+                $(win).on("scroll", self.__onScroll);
                 doScroll.call(self);
             },
 
             end:function () {
-                $(window).detach("scroll", this.__onScroll);
+                $(win).detach("scroll", this.__onScroll);
             },
 
 
@@ -34390,7 +34836,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             destroy:function () {
                 var self = this;
                 Loader.superclass.destroy.apply(self, arguments);
-                $(window).detach("scroll", self.__onScroll);
+                $(win).detach("scroll", self.__onScroll);
             }
         });
 
@@ -34411,7 +34857,7 @@ KISSY.add("waterfall", function (S, Waterfall, Loader) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 6 16:05
 */
 /**
  * @fileOverview validation
@@ -34646,7 +35092,7 @@ KISSY.add("validation/define",function(){
  */
 KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote, Warn) {
     var symbol = Define.Const.enumvalidsign,
-        doc = document;
+        doc = S.Env.host.document;
 
     /**
      * @constructor
@@ -35720,90 +36166,90 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
  * @fileOverview 扩展提示类：float
  * @author 常胤 <lzlu.com>
  */
-KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
-	var symbol = Define.Const.enumvalidsign;
+KISSY.add("validation/warn/float", function (S, DOM, Event, Util, Define) {
+    var symbol = Define.Const.enumvalidsign;
 
-	function Float(){
-		return {
-			//出错标记
-			invalidCls: "J_Invalid",
-			
-			//重写init
-			init: function(){
-				var self = this, tg = self.target,
-					panel = DOM.create(self.template),
-					msg = DOM.get('div.msg',panel);
-				
-				
-				S.ready(function(){
-					document.body.appendChild(panel);
-				});
-				S.mix(self,{
-					panel: S.one(panel),
-					msg: S.one(msg)
-				});
+    function Float() {
+        return {
+            //出错标记
+            invalidCls:"J_Invalid",
 
-				//绑定对象的focus,blur事件来显示隐藏消息面板
-				Event.on(self.el,"focus",function(ev){
-					if(DOM.hasClass(tg,self.invalidCls)){
-						self._toggleError(true,ev.target);
-					}
-				});
-				
-				Event.on(self.el,"blur",function(){
-					self._toggleError(false);
-				});
-			},
+            //重写init
+            init:function () {
+                var self = this, tg = self.target,
+                    panel = DOM.create(self.template),
+                    msg = DOM.get('div.msg', panel);
 
-			//处理校验结果
-			showMessage: function(result,msg,evttype,target) {
-				var self = this,tg = self.target,
-					div = self.msg;
 
-				if(symbol.ok==result){
-					DOM.removeClass(tg,self.invalidClass);
-					div.html('OK');
-				}else{
-					if(evttype!="submit"){
-						self._toggleError(true,target);
-					}
-					DOM.addClass(tg,self.invalidClass);
-					div.html(msg);
-				}
-			},
-			
-			//定位
-			_pos: function(target){
-				var self = this, offset = DOM.offset(target||self.target),
-				 ph = self.panel.height(),
-					pl = offset.left-10,pt = offset.top-ph-20;
-				self.panel.css('left',pl).css('top',pt);
-			},
-			
-			//显示错误
-			_toggleError: function(show,target){
-				var self = this,panel = self.panel;
-				if(show){
-					DOM.show(panel);
-					self._pos(target);
-				}else{
-					DOM.hide(panel);
-				}
-			},
-            
-			style:{
-				"float":{
-					template: '<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><'+'s>◥◤</s></div>',
-					event: 'focus blur',
-					invalidClass: 'vailInvalid'
-				}
-			}
-		}
-	}
-		
-	return Float;
+                S.ready(function () {
+                    S.Env.host.document.body.appendChild(panel);
+                });
+                S.mix(self, {
+                    panel:S.one(panel),
+                    msg:S.one(msg)
+                });
 
-}, { requires: ['dom',"event","../utils","../define"] });
+                //绑定对象的focus,blur事件来显示隐藏消息面板
+                Event.on(self.el, "focus", function (ev) {
+                    if (DOM.hasClass(tg, self.invalidCls)) {
+                        self._toggleError(true, ev.target);
+                    }
+                });
+
+                Event.on(self.el, "blur", function () {
+                    self._toggleError(false);
+                });
+            },
+
+            //处理校验结果
+            showMessage:function (result, msg, evttype, target) {
+                var self = this, tg = self.target,
+                    div = self.msg;
+
+                if (symbol.ok == result) {
+                    DOM.removeClass(tg, self.invalidClass);
+                    div.html('OK');
+                } else {
+                    if (evttype != "submit") {
+                        self._toggleError(true, target);
+                    }
+                    DOM.addClass(tg, self.invalidClass);
+                    div.html(msg);
+                }
+            },
+
+            //定位
+            _pos:function (target) {
+                var self = this, offset = DOM.offset(target || self.target),
+                    ph = self.panel.height(),
+                    pl = offset.left - 10, pt = offset.top - ph - 20;
+                self.panel.css('left', pl).css('top', pt);
+            },
+
+            //显示错误
+            _toggleError:function (show, target) {
+                var self = this, panel = self.panel;
+                if (show) {
+                    DOM.show(panel);
+                    self._pos(target);
+                } else {
+                    DOM.hide(panel);
+                }
+            },
+
+            style:{
+                "float":{
+                    template:'<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><' + 's>◥◤</s></div>',
+                    event:'focus blur',
+                    invalidClass:'vailInvalid'
+                }
+            }
+        }
+    }
+
+    return Float;
+
+}, { requires:['dom', "event", "../utils", "../define"] });
 
 
 
@@ -35929,7 +36375,7 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview mvc base
@@ -35979,8 +36425,8 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
         },
         models:{
             /*
-              normalize model list
-              @param models
+             normalize model list
+             @param models
              */
             setter:function (models) {
                 var prev = this.get("models");
@@ -36482,7 +36928,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
         // all registered route instance
         allRoutes = [],
-        win = window,
+        win = S.Env.host,
         location = win.location,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),

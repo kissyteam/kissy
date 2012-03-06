@@ -7,6 +7,7 @@
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
+        doc=S.Env.host.document,
         scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -19,8 +20,7 @@
          * @private
          */
         getStyle:function (url, success, charset) {
-            var doc = document,
-                head = utils.docHead(),
+            var head = utils.docHead(),
                 node = doc.createElement('link'),
                 config = success;
 
@@ -70,8 +70,7 @@
             if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
-            var doc = document,
-                head = doc.head || doc.getElementsByTagName("head")[0],
+            var head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('script'),
                 config = success,
                 error,

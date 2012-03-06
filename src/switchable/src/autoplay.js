@@ -4,6 +4,7 @@
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,
+        win=S.Env.host,
         checkElemInViewport = function (elem) {
             // 只计算上下位置是否在可视区域, 不计算左右
             var scrollTop = DOM.scrollTop(),
@@ -50,7 +51,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
                     // 依次检查页面上所有 switchable 对象是否在可视区域内
                     host[checkElemInViewport(host.container) ? 'start' : 'stop']();
                 }, DURATION);
-                Event.on(window, "scroll", host.__scrollDetect);
+                Event.on(win, "scroll", host.__scrollDetect);
             }
 
             function startAutoplay() {
@@ -95,7 +96,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
 
         destroy:function (host) {
             if (host.__scrollDetect) {
-                Event.remove(window, "scroll", host.__scrollDetect);
+                Event.remove(win, "scroll", host.__scrollDetect);
             }
         }
     });

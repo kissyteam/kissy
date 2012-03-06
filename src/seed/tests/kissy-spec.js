@@ -1,7 +1,7 @@
 describe('kissy.js', function () {
 
     var S = KISSY,
-        host = S.__HOST;
+        host = S.Env.host;
 
     it('S.mix', function () {
         var o1 = { a:1, b:2 },

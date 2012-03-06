@@ -89,7 +89,7 @@ KISSY.add('flash/embed', function(S,UA,DOM,Flash,JSON) {
             // 1. target 元素未找到 则自行创建一个容器
             if (!(target = DOM.get(target))) {
 				target = DOM.create('<div id='+ id +'/>');
-				DOM.prepend(target,document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
+				DOM.prepend(target,S.Env.host.document.body); // 在可视区域 才能有激活 flash 默认行为更改至直接激活
 				//document.body.appendChild(target);
             }
 

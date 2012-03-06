@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 19:07
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview ua
@@ -19,7 +19,7 @@ KISSY.add('ua/base', function (S, undefined) {
         end,
         VERSION_PLACEHOLDER = '{{version}}',
         IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = document.createElement('div'),
+        div = S.Env.host.document.createElement('div'),
         s,
         o = {
             // browser core type
@@ -190,6 +190,7 @@ KISSY.add('ua/base', function (S, undefined) {
  */
 KISSY.add('ua/extra', function(S, UA) {
     var ua = navigator.userAgent,
+        win=S.Env.host,
         m, external, shell,
         o = { },
         numberify = UA._numberify;
@@ -207,7 +208,7 @@ KISSY.add('ua/extra', function(S, UA) {
         o[shell = 'se360'] = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
     }
     // Maxthon
-    else if ((m = ua.match(/Maxthon/)) && (external = window.external)) {
+    else if ((m = ua.match(/Maxthon/)) && (external = win.external)) {
         // issue: Maxthon 3.x in IE-Core cannot be recognised and it doesn't have exact version number
         // but other maxthon versions all have exact version number
         shell = 'maxthon';

@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);

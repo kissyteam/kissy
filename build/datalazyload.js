@@ -1,15 +1,15 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 25 23:13
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview 数据延迟加载组件
  */
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = S.Env.host,
+        doc = win.document,
 
         IMG_SRC_DATA = 'data-ks-lazyload',
         AREA_DATA_CLS = 'ks-datalazyload',

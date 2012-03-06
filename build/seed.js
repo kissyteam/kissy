@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 19:57
+build time: Mar 6 16:48
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -110,7 +110,8 @@ build time: Mar 5 19:57
 
     // The host of runtime environment. specify by user's seed or <this>,
     // compatibled for  '<this> is null' in unknown engine.
-    host = seed.__HOST || (seed.__HOST = host || {});
+    seed.Env = seed.Env || {};
+    host = seed.Env.host || (seed.Env.host = host || {});
 
     // shortcut and meta for seed.
     // override previous kissy
@@ -139,7 +140,7 @@ build time: Mar 5 19:57
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120305195735',
+            __BUILD_TIME:'20120306164811',
 
             /**
              * Returns a new object containing all of the properties of
@@ -400,10 +401,8 @@ build time: Mar 5 19:57
     function init() {
         var self = this,
             c;
-
-        c = self.Config = self.Config || {};
         self.Env = self.Env || {};
-
+        c = self.Config = self.Config || {};
         // NOTICE: '@DEBUG@' will replace with '' when compressing.
         // So, if loading source file, debug is on by default.
         // If loading min version, debug is turned off automatically.
@@ -2031,7 +2030,7 @@ build time: Mar 5 19:57
         data = Loader.STATUS,
         utils = {},
         mix = S.mix,
-        doc = document,
+        doc = S.Env.host.document,
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
         // ->
@@ -2376,6 +2375,7 @@ build time: Mar 5 19:57
         return;
     }
     var CSS_POLL_INTERVAL = 30,
+        win=S.Env.host,
         utils = S.Loader.Utils,
         jsCallbacks = {},
         /**
@@ -2453,7 +2453,7 @@ build time: Mar 5 19:57
     }
 
     S.mix(utils, {
-        scriptOnload:document.addEventListener ?
+        scriptOnload:S.Env.host.document.addEventListener ?
             function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
@@ -2484,7 +2484,7 @@ build time: Mar 5 19:57
          *    - http://www.zachleat.com/web/load-css-dynamically/
          *  </pre>
          */
-        styleOnload:window.attachEvent ?
+        styleOnload:win.attachEvent ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?
@@ -2515,6 +2515,7 @@ build time: Mar 5 19:57
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
+        doc=S.Env.host.document,
         scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -2527,8 +2528,7 @@ build time: Mar 5 19:57
          * @private
          */
         getStyle:function (url, success, charset) {
-            var doc = document,
-                head = utils.docHead(),
+            var head = utils.docHead(),
                 node = doc.createElement('link'),
                 config = success;
 
@@ -2578,8 +2578,7 @@ build time: Mar 5 19:57
             if (utils.isCss(url)) {
                 return S.getStyle(url, success, charset);
             }
-            var doc = document,
-                head = doc.head || doc.getElementsByTagName("head")[0],
+            var head = doc.head || doc.getElementsByTagName("head")[0],
                 node = doc.createElement('script'),
                 config = success,
                 error,
@@ -2803,7 +2802,7 @@ build time: Mar 5 19:57
                 var self = this,
                     SS = self.SS,
                     base,
-                    scripts = document.getElementsByTagName("script"),
+                    scripts = S.Env.host.document.getElementsByTagName("script"),
                     re,
                     script;
 
@@ -3608,9 +3607,9 @@ build time: Mar 5 19:57
             getLoader:function () {
                 var self = this;
                 if (self.Config.combine) {
-                    return self.__comboLoader;
+                    return self.Env._comboLoader;
                 } else {
-                    return self.__loader;
+                    return self.Env._loader;
                 }
             },
             /**
@@ -3683,14 +3682,14 @@ build time: Mar 5 19:57
      * Initializes loader.
      */
     function initLoader() {
-        var self = this;
-        self.Env.mods = self.Env.mods || {}; // all added mods
-        self.__loader = new Loader(self);
-        self.__comboLoader = new ComboLoader(self);
+        var self = this, env = self.Env;
+        env.mods = env.mods || {}; // all added mods
+        env._loader = new Loader(self);
+        env._comboLoader = new ComboLoader(self);
     }
 
     // get base from current script file path
-    var scripts = document.getElementsByTagName('script');
+    var scripts = S.Env.host.document.getElementsByTagName('script');
 
     S.config({
         base:getBaseUrl(scripts[scripts.length - 1])
@@ -3715,7 +3714,7 @@ build time: Mar 5 19:57
  */
 (function (S, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
 
         doc = win['document'],
 
@@ -3764,7 +3763,7 @@ build time: Mar 5 19:57
                 var xml;
                 try {
                     // Standard
-                    if (window.DOMParser) {
+                    if (win.DOMParser) {
                         xml = new DOMParser().parseFromString(data, "text/xml");
                     } else { // IE
                         xml = new ActiveXObject("Microsoft.XMLDOM");
@@ -3788,8 +3787,8 @@ build time: Mar 5 19:57
             globalEval:function (data) {
                 if (data && RE_NOT_WHITE.test(data)) {
                     // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                    ( window.execScript || function (data) {
-                        window[ "eval" ].call(window, data);
+                    ( win.execScript || function (data) {
+                        win[ "eval" ].call(win, data);
                     } )(data);
                 }
             },
@@ -3932,6 +3931,13 @@ build time: Mar 5 19:57
      * worst case no callback at all
      */
     _bindReady();
+
+    if (navigator.userAgent.match(/MSIE/)) {
+        try {
+            doc.execCommand("BackgroundImageCache", false, true);
+        } catch (e) {
+        }
+    }
 
 })(KISSY, undefined);
 /**

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 21 19:59
+build time: Mar 6 16:04
 */
 KISSY.add("node/anim",function(c,i,f,e,k){function g(j,d,a){var b=[],h={};for(a=a||0;a<d;a++)b.push.apply(b,l[a]);for(a=0;a<b.length;a++)h[b[a]]=j;return h}var l=[["height","marginTop","marginBottom","paddingTop","paddingBottom"],["width","marginLeft","marginRight","paddingLeft","paddingRight"],["opacity"]];c.augment(e,{animate:function(){var j=c.makeArray(arguments);c.each(this,function(d){f.apply(k,[d].concat(j)).run()});return this},stop:function(j,d,a){c.each(this,function(b){f.stop(b,j,d,a)});
 return this},isRunning:function(){for(var j=0;j<this.length;j++)if(f.isRunning(this[j]))return 1;return 0}});c.each({show:g("show",3),hide:g("hide",3),toggle:g("toggle",3),fadeIn:g("show",3,2),fadeOut:g("hide",3,2),fadeToggle:g("toggle",3,2),slideDown:g("show",1),slideUp:g("hide",1),slideToggle:g("toggle",1)},function(j,d){e.prototype[d]=function(a,b,h){i[d]&&!a?i[d](this):c.each(this,function(m){f(m,j,a,h||"easeOut",b).run()});return this}})},{requires:["dom","anim","./base"]});

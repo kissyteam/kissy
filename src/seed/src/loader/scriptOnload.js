@@ -7,6 +7,7 @@
         return;
     }
     var CSS_POLL_INTERVAL = 30,
+        win=S.Env.host,
         utils = S.Loader.Utils,
         jsCallbacks = {},
         /**
@@ -84,7 +85,7 @@
     }
 
     S.mix(utils, {
-        scriptOnload:document.addEventListener ?
+        scriptOnload:S.Env.host.document.addEventListener ?
             function (node, callback) {
                 if (utils.isLinkNode(node)) {
                     return utils.styleOnload(node, callback);
@@ -115,7 +116,7 @@
          *    - http://www.zachleat.com/web/load-css-dynamically/
          *  </pre>
          */
-        styleOnload:window.attachEvent ?
+        styleOnload:win.attachEvent ?
             // ie/opera
             function (node, callback) {
                 // whether to detach using function wrapper?

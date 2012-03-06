@@ -10,7 +10,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
         // all registered route instance
         allRoutes = [],
-        win = window,
+        win = S.Env.host,
         location = win.location,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),

@@ -11,8 +11,9 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
         ie6 = (UA['ie'] === 6),
         px = "px",
         $ = Node.all,
-        win = $(window),
-        doc = $(document),
+        WINDOW=S.Env.host,
+        win = $(S.Env.host),
+        doc = $(WINDOW.document),
         iframe,
         num = 0;
 

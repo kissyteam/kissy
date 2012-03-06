@@ -5,6 +5,7 @@
 KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     var $ = Node.all,
+        win=S.Env.host,
         SCROLL_TIMER = 50;
 
     /**
@@ -42,7 +43,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         }
         // 动态载
         // 最小高度(或被用户看到了)低于预加载线
-        if (diff + $(window).scrollTop() + $(window).height() > colHeight) {
+        if (diff + $(win).scrollTop() + $(win).height() > colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
         }
@@ -93,12 +94,12 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
                 var self = this;
                 Loader.superclass._init.apply(self, arguments);
                 self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
-                $(window).on("scroll", self.__onScroll);
+                $(win).on("scroll", self.__onScroll);
                 doScroll.call(self);
             },
 
             end:function () {
-                $(window).detach("scroll", this.__onScroll);
+                $(win).detach("scroll", this.__onScroll);
             },
 
 
@@ -113,7 +114,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             destroy:function () {
                 var self = this;
                 Loader.superclass.destroy.apply(self, arguments);
-                $(window).detach("scroll", self.__onScroll);
+                $(win).detach("scroll", self.__onScroll);
             }
         });
 

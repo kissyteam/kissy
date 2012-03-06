@@ -83,7 +83,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
     }
 
     var KeyCodes = Event.KeyCodes,
-        doc = document,
+        doc = S.Env.host.document,
         MENU_DELAY = 300;
     /**
      * Class representing a submenu that can be added as an item to other menus.

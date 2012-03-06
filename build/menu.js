@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 10 15:00
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -1158,7 +1158,7 @@ KISSY.add("menu/submenu", function (S, Event, UIBase, Component, MenuItem, SubMe
     }
 
     var KeyCodes = Event.KeyCodes,
-        doc = document,
+        doc = S.Env.host.document,
         MENU_DELAY = 300;
     /**
      * Class representing a submenu that can be added as an item to other menus.

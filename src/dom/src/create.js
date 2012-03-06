@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
-        var doc = document,
+        var doc = S.Env.host.document,
             ie = UA['ie'],
             nodeTypeIs = DOM._nodeTypeIs,
             isElementNode = DOM._isElementNode,

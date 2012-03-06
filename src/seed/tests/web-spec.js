@@ -1,7 +1,7 @@
 describe('web.js', function () {
 
     var S = KISSY,
-        host = S.__HOST,
+        host = S.Env.host,
         fn = function () {
         };
 

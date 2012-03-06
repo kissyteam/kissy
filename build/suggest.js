@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:02
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview 提示补全组件
@@ -9,9 +9,9 @@ build time: Feb 9 18:02
  */
 KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EventTarget = Event.Target,
-        doc = document, bd, head = DOM.get('head'),
+        doc = win.document, bd, head = DOM.get('head'),
         ie = UA['ie'],
         ie6 = (ie === 6),
         ie9 = (ie >= 9),

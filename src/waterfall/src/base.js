@@ -5,6 +5,7 @@
 KISSY.add("waterfall/base", function (S, Node, Base) {
 
     var $ = Node.all,
+        win=S.Env.host,
         RESIZE_DURATION = 50;
 
     /**
@@ -198,7 +199,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 // 一开始就 adjust 一次，可以对已有静态数据处理
                 doResize.call(self);
                 self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
-                $(window).on("resize", self.__onResize);
+                $(win).on("resize", self.__onResize);
             },
 
             adjustItem:function (item, cfg) {
@@ -328,7 +329,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             },
 
             destroy:function () {
-                $(window).detach("resize", this.__onResize);
+                $(win).detach("resize", this.__onResize);
             }
         });
 

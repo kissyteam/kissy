@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview auto render
@@ -262,7 +262,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
         // 两种显示效果切换标志
         self._isInner = self.get('type') === INNER;
-        body = new Node(document.body);
+        body = new Node(S.Env.host.document.body);
     }
 
     Zoomer.ATTRS = {

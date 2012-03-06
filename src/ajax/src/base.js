@@ -14,6 +14,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
+        doc=S.Env.host.document,
         curLocationParts;
 
     try {
@@ -23,7 +24,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         S.log(e);
         // Use the href attribute of an A element
         // since IE will modify it given document.location
-        curLocation = document.createElement("a");
+        curLocation = doc.createElement("a");
         curLocation.href = "";
         curLocation = curLocation.href;
     }

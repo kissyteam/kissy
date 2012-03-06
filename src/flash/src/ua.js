@@ -4,7 +4,7 @@
  */
 KISSY.add('flash/ua', function(S, UA) {
 
-    var fpv, fpvF, firstRun = true;
+    var fpv, fpvF, firstRun = true,win=S.Env.host;
 
     /**
      * 获取 Flash 版本号
@@ -18,7 +18,7 @@ KISSY.add('flash/ua', function(S, UA) {
             ver = (navigator.plugins['Shockwave Flash'] || 0).description;
         }
         // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (window.ActiveXObject) {
+        else if (win.ActiveXObject) {
             try {
                 ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
             } catch(ex) {

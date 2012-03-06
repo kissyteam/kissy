@@ -160,7 +160,7 @@
 // methods in a closure to avoid creating global variables.
 
 KISSY.add("json/json2", function(S, UA) {
-    var win = window,JSON = win.JSON;
+    var win = S.Env.host,JSON = win.JSON;
     // ie 8.0.7600.16315@win7 json 有问题
     if (!JSON || UA['ie'] < 9) {
         JSON = win.JSON = {};

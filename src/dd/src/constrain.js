@@ -1,6 +1,6 @@
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
-    var $ = Node.all;
+    var $ = Node.all,WIN=S.Env.host;
 
     /**
      * @class constrain draggable's region
@@ -18,7 +18,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             constrain = self.get("constrain");
         if (constrain) {
             if (constrain === true) {
-                var win = $(window);
+                var win = $(WIN);
                 self.__constrainRegion = {
                     left:l = win.scrollLeft(),
                     top:t = win.scrollTop(),

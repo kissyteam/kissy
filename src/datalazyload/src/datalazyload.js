@@ -3,8 +3,8 @@
  */
 KISSY.add('datalazyload', function (S, DOM, Event, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = S.Env.host,
+        doc = win.document,
 
         IMG_SRC_DATA = 'data-ks-lazyload',
         AREA_DATA_CLS = 'ks-datalazyload',

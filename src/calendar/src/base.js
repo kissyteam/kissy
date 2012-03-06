@@ -3,7 +3,7 @@
  * @creator  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function(S, Node, Event, undefined) {
-    var EventTarget = Event.Target,$ = Node.all;
+    var EventTarget = Event.Target,$ = Node.all,doc=S.Env.host.document;
 
     function Calendar(trigger, config) {
         this._init(trigger, config);
@@ -32,7 +32,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             } else {
                 self.trigger = trigger;
                 self.con = new Node('<div>');
-                $(document.body).append(self.con);
+                $(doc.body).append(self.con);
                 
                 self.con.css({
                     'top':'0px',
@@ -175,7 +175,7 @@ KISSY.add('calendar/base', function(S, Node, Event, undefined) {
             });
             self.EV = self.EV || [];
             tev = self.EV[0] = {
-                target:$(document),
+                target:$(doc),
                 type:'click'
             };
             tev.fn = function(e) {

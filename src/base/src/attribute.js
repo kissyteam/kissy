@@ -344,7 +344,7 @@ KISSY.add('base/attribute', function (S, undef) {
                             subAttrNames,
                             attrNames);
                     }
-                    return undef;
+                    return self;
                 }
                 return setInternal(self, name, value, opts);
             },

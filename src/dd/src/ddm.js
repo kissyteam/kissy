@@ -4,9 +4,8 @@
  */
 KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
-    var doc = document,
-        win = window,
-
+    var win = S.Env.host,
+        doc = win.document,
         ie6 = UA['ie'] === 6,
 
         // prevent collision with click , only start when move
@@ -198,7 +197,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
      * 垫片只需创建一次
      */
     function activeShim(self) {
-        var doc = document;
         //创造垫片，防止进入iframe，外面document监听不到 mousedown/up/move
         self._shim = new Node("<div " +
             "style='" +

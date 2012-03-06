@@ -4,8 +4,8 @@
  */
 KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = S.Env.host,
+        doc = win.document,
         isIE = UA['ie'],
         docElem = doc.documentElement,
         isElementNode = DOM._isElementNode,

@@ -56,7 +56,7 @@ KISSY.add("uibase/constrain", function (S, DOM, Node) {
             //On getting, the clientWidth attribute returns the viewport width
             //excluding the size of a rendered scroll bar (if any)
             //  if the element is the root element 
-            var vWidth = document.documentElement.clientWidth;
+            var vWidth = S.Env.host.document.documentElement.clientWidth;
             ret = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
             S.mix(ret, {
                 maxLeft:ret.left + vWidth - el.outerWidth(),

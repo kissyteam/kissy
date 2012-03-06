@@ -105,7 +105,8 @@
 
     // The host of runtime environment. specify by user's seed or <this>,
     // compatibled for  '<this> is null' in unknown engine.
-    host = seed.__HOST || (seed.__HOST = host || {});
+    seed.Env = seed.Env || {};
+    host = seed.Env.host || (seed.Env.host = host || {});
 
     // shortcut and meta for seed.
     // override previous kissy
@@ -395,10 +396,8 @@
     function init() {
         var self = this,
             c;
-
-        c = self.Config = self.Config || {};
         self.Env = self.Env || {};
-
+        c = self.Config = self.Config || {};
         // NOTICE: '@DEBUG@' will replace with '' when compressing.
         // So, if loading source file, debug is on by default.
         // If loading min version, debug is turned off automatically.

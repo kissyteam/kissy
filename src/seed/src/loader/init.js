@@ -61,9 +61,9 @@
             getLoader:function () {
                 var self = this;
                 if (self.Config.combine) {
-                    return self.__comboLoader;
+                    return self.Env._comboLoader;
                 } else {
-                    return self.__loader;
+                    return self.Env._loader;
                 }
             },
             /**
@@ -136,14 +136,14 @@
      * Initializes loader.
      */
     function initLoader() {
-        var self = this;
-        self.Env.mods = self.Env.mods || {}; // all added mods
-        self.__loader = new Loader(self);
-        self.__comboLoader = new ComboLoader(self);
+        var self = this, env = self.Env;
+        env.mods = env.mods || {}; // all added mods
+        env._loader = new Loader(self);
+        env._comboLoader = new ComboLoader(self);
     }
 
     // get base from current script file path
-    var scripts = document.getElementsByTagName('script');
+    var scripts = S.Env.host.document.getElementsByTagName('script');
 
     S.config({
         base:getBaseUrl(scripts[scripts.length - 1])

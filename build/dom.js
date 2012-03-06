@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 22 11:41
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview   dom-attr
@@ -9,7 +9,7 @@ build time: Feb 22 11:41
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
-        var doc = document,
+        var doc = S.Env.host.document,
             docElement = doc.documentElement,
             oldIE = !docElement.hasAttribute,
             TEXT = docElement.textContent === undefined ?
@@ -633,6 +633,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
  */
 KISSY.add('dom/base', function (S, UA, undefined) {
 
+    var WINDOW=S.Env.host;
+
     function nodeTypeIs(node, val) {
         return node && node.nodeType === val;
     }
@@ -659,7 +661,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     var DOM = {
 
         _isCustomDomain:function (win) {
-            win = win || window;
+            win = win || WINDOW;
             var domain = win.document.domain,
                 hostname = win.location.hostname;
             return domain != hostname &&
@@ -667,7 +669,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         },
 
         _genEmptyIframeSrc:function (win) {
-            win = win || window;
+            win = win || WINDOW;
             if (UA['ie'] && DOM._isCustomDomain(win)) {
                 return  'javascript:void(function(){' + encodeURIComponent("" +
                     "document.open();" +
@@ -700,7 +702,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 nodeTypeIs(elem, DOM.DOCUMENT_NODE) ?
                     elem.defaultView || elem.parentWindow :
                     (elem === undefined || elem === null) ?
-                        window : false;
+                        WINDOW : false;
         },
 
         _nodeTypeIs:nodeTypeIs,
@@ -915,7 +917,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
  */
 KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
-        var doc = document,
+        var doc = S.Env.host.document,
             ie = UA['ie'],
             nodeTypeIs = DOM._nodeTypeIs,
             isElementNode = DOM._isElementNode,
@@ -1411,7 +1413,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
  */
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
         winDataCache = { };    // 避免污染全局
@@ -1915,8 +1917,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
  */
 KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
-    var win = window,
-        doc = document,
+    var win = S.Env.host,
+        doc = win.document,
         isIE = UA['ie'],
         docElem = doc.documentElement,
         isElementNode = DOM._isElementNode,
@@ -2334,7 +2336,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
  */
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);
@@ -2974,7 +2976,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         return DOM;
     }
 
-    var doc = document,
+    var doc = S.Env.host.document,
         docElem = doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',
@@ -3164,7 +3166,8 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     "use strict";
-    var doc = document,
+    var WINDOW=S.Env.host,
+        doc = WINDOW.document,
         docElem = doc.documentElement,
         isIE = UA['ie'],
         STYLE = 'style',
@@ -3459,11 +3462,11 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {String} id An id to add to the stylesheet for later removal
              */
             addStyleSheet:function (refWin, cssText, id) {
-                refWin = refWin || window;
+                refWin = refWin || WINDOW;
                 if (S.isString(refWin)) {
                     id = cssText;
                     cssText = refWin;
-                    refWin = window;
+                    refWin = WINDOW;
                 }
                 refWin = DOM.get(refWin);
                 var win = DOM._getWin(refWin),
@@ -3662,7 +3665,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                             offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                             // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                            if (isIE && document['documentMode'] != 9 || UA['opera']) {
+                            if (isIE && doc['documentMode'] != 9 || UA['opera']) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop
@@ -3848,8 +3851,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var isElementNode = DOM._isElementNode,
+        doc = S.Env.host.document,
         CONTAIN_MASK = 16,
-        __contains = document.documentElement.contains ?
+        __contains = doc.documentElement.contains ?
             function (a, b) {
                 if (a.nodeType == DOM.TEXT_NODE) {
                     return false;
@@ -3871,7 +3875,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 // 注意原生 contains 判断时 a===b 也返回 true
                 return precondition && (a.contains ? a.contains(b) : true);
             } : (
-            document.documentElement.compareDocumentPosition ?
+            doc.documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) & CONTAIN_MASK);
                 } :

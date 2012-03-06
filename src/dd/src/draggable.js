@@ -7,7 +7,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     var each = S.each,
         ie = UA['ie'],
         NULL = null,
-        doc = document;
+        doc = S.Env.host.document;
 
     /**
      * @extends Base

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 5 19:52
+build time: Mar 6 16:38
 */
 /**
  * @fileOverview responsible for registering event
@@ -338,6 +338,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         var cur = target,
             t,
+            win = DOM._getWin(cur.ownerDocument || cur),
             ontype = "on" + eventType;
 
         //bubble up dom tree
@@ -355,7 +356,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             // Bubble up to document, then to window
             cur = cur.parentNode ||
                 cur.ownerDocument ||
-                cur === target.ownerDocument && window;
+                cur === target.ownerDocument && win;
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
@@ -427,7 +428,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/change", function (S, UA, Event, DOM, special) {
-    var mode = document['documentMode'];
+    var mode = S.Env.host.document['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
 
@@ -475,7 +476,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     }
                 } else {
                     Event.remove(el, "beforeactivate", beforeActivate);
-                    S.each(DOM.query("textarea,input,select", el),function (fel) {
+                    S.each(DOM.query("textarea,input,select", el), function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
                             Event.remove(fel, "change", {fn:changeHandler, last:1});
@@ -642,27 +643,30 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
-
+    var key = S.guid("attaches_" + S.now() + "_")
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
             { name:'focusin', fix:'focus' },
             { name:'focusout', fix:'blur' }
         ], function (o) {
-            var attaches = 0;
             special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
                 // refer: http://yiminghe.iteye.com/blog/813255
                 setup:function () {
-                    if (attaches++ === 0) {
-                        document.addEventListener(o.fix, handler, true);
+                    var doc = this.ownerDocument;
+                    doc[key] += 1;
+                    if (doc[key] === 1) {
+                        doc.addEventListener(o.fix, handler, true);
                     }
                 },
 
                 tearDown:function () {
-                    if (--attaches === 0) {
-                        document.removeEventListener(o.fix, handler, true);
+                    var doc = this.ownerDocument;
+                    doc[key] -= 1;
+                    if (doc[key] === 0) {
+                        doc.removeEventListener(o.fix, handler, true);
                     }
                 }
             };
@@ -837,7 +841,8 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
-    var doc = document,
+    var win=S.Env.host,
+        doc = win.document,
         docMode = doc['documentMode'],
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
@@ -847,7 +852,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
     // 1. 不支持 hashchange 事件，支持 hash 导航(opera??)：定时器监控
     // 2. 不支持 hashchange 事件，不支持 hash 导航(ie67) : iframe + 定时器
-    if ((!( 'on' + HASH_CHANGE in window)) || ie && ie < 8) {
+    if ((!( 'on' + HASH_CHANGE in win)) || ie && ie < 8) {
 
 
         function getIframeDoc(iframe) {
@@ -855,7 +860,6 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         var POLL_INTERVAL = 50,
-            win = window,
             IFRAME_TEMPLATE = "<html><head><title>" + (doc.title || "") +
                 " - {hash}</title>{head}</head><body>{hash}</body></html>",
 
@@ -1403,7 +1407,7 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
  */
 KISSY.add('event/object', function (S, undefined) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         TRUE = true,
         FALSE = false,
         props = ('altKey attrChange attrName bubbles button cancelable ' +
@@ -1463,7 +1467,7 @@ KISSY.add('event/object', function (S, undefined) {
 
             // fix target property, if necessary
             if (!self.target) {
-                self.target = self.srcElement || doc; // srcElement might not be defined either
+                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
             }
 
             // check if target is a textnode (safari)
@@ -1782,7 +1786,7 @@ KISSY.add("event/special", function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
-    var mode = document['documentMode'];
+    var mode = S.Env.host.document['documentMode'];
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
         var nodeName = DOM._nodeName;
         special['submit'] = {
@@ -2093,8 +2097,7 @@ KISSY.add("event/utils", function (S, DOM) {
         S.each(type.split(/\s+/), fn);
     }
 
-
-    var doc = document,
+    var doc = S.Env.host.document,
         simpleAdd = doc.addEventListener ?
             function (el, type, fn, capture) {
                 if (el.addEventListener) {

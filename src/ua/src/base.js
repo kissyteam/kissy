@@ -14,7 +14,7 @@ KISSY.add('ua/base', function (S, undefined) {
         end,
         VERSION_PLACEHOLDER = '{{version}}',
         IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = document.createElement('div'),
+        div = S.Env.host.document.createElement('div'),
         s,
         o = {
             // browser core type

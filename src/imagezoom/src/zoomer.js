@@ -20,7 +20,7 @@ KISSY.add("imagezoom/zoomer", function(S, Node, undefined) {
 
         // 两种显示效果切换标志
         self._isInner = self.get('type') === INNER;
-        body = new Node(document.body);
+        body = new Node(S.Env.host.document.body);
     }
 
     Zoomer.ATTRS = {

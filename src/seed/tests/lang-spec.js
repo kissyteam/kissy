@@ -21,7 +21,7 @@ describe('lang.js', function() {
         });
     });
     var S = KISSY,
-        host = S.__HOST,
+        host = S.Env.host,
         doc = host['document'],
         web = host['setInterval'],
         fn = function() {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:16
 */
 /**
  * @fileOverview attribute management
@@ -197,7 +197,8 @@ KISSY.add('base/attribute', function (S, undef) {
     }
 
     /**
-     * 提供属性管理机制
+     * provide attribute management.
+     * recommended extending {@link Base}.
      * @name Attribute
      * @class
      */
@@ -348,7 +349,7 @@ KISSY.add('base/attribute', function (S, undef) {
                             subAttrNames,
                             attrNames);
                     }
-                    return undef;
+                    return self;
                 }
                 return setInternal(self, name, value, opts);
             },
@@ -543,6 +544,15 @@ KISSY.add('base', function (S, Attribute, Event) {
         // initial
         initAttrs(this, config);
     }
+
+
+    /**
+     * see {@link Attribute#set}
+     * @name set
+     * @memberOf Base#
+     * @function
+     */
+
 
     function addAttrs(host, attrs) {
         if (attrs) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 9 18:01
+build time: Mar 6 16:04
 */
 /**
  * @fileOverview mvc base
@@ -51,8 +51,8 @@ KISSY.add("mvc/collection", function (S, Event, Model, mvc, Base) {
         },
         models:{
             /*
-              normalize model list
-              @param models
+             normalize model list
+             @param models
              */
             setter:function (models) {
                 var prev = this.get("models");
@@ -554,7 +554,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g,
         // all registered route instance
         allRoutes = [],
-        win = window,
+        win = S.Env.host,
         location = win.location,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),

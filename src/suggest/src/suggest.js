@@ -4,9 +4,9 @@
  */
 KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
-    var win = window,
+    var win = S.Env.host,
         EventTarget = Event.Target,
-        doc = document, bd, head = DOM.get('head'),
+        doc = win.document, bd, head = DOM.get('head'),
         ie = UA['ie'],
         ie6 = (ie === 6),
         ie9 = (ie >= 9),

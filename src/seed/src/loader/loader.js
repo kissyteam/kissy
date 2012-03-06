@@ -126,7 +126,7 @@
                 var self = this,
                     SS = self.SS,
                     base,
-                    scripts = document.getElementsByTagName("script"),
+                    scripts = S.Env.host.document.getElementsByTagName("script"),
                     re,
                     script;
 

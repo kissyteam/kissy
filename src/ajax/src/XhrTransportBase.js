@@ -4,7 +4,7 @@
  */
 KISSY.add("ajax/XhrTransportBase", function (S, io) {
     var OK_CODE = 200,
-        win = window,
+        win = S.Env.host,
         // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = win['XDomainRequest'],
         NO_CONTENT_CODE = 204,

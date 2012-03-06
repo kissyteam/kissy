@@ -12,7 +12,7 @@
         data = Loader.STATUS,
         utils = {},
         mix = S.mix,
-        doc = document,
+        doc = S.Env.host.document,
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
         // ->

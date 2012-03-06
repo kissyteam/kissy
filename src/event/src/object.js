@@ -4,7 +4,7 @@
  */
 KISSY.add('event/object', function (S, undefined) {
 
-    var doc = document,
+    var doc = S.Env.host.document,
         TRUE = true,
         FALSE = false,
         props = ('altKey attrChange attrName bubbles button cancelable ' +
@@ -64,7 +64,7 @@ KISSY.add('event/object', function (S, undefined) {
 
             // fix target property, if necessary
             if (!self.target) {
-                self.target = self.srcElement || doc; // srcElement might not be defined either
+                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
             }
 
             // check if target is a textnode (safari)
