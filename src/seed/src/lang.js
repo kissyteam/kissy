@@ -258,7 +258,7 @@
              * Removes undefined keywords and ignores escaped keywords.
              * @param {String} str template string
              * @param {Object} o json data
-             * @param {RegExp} regexp to match a piece of template string
+             * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute:function (str, o, regexp) {
                 if (!S.isString(str)
