@@ -4,7 +4,7 @@
 KISSY.add("dom", function (S, DOM) {
 
     /**
-     * @namespace
+     * @namespace Provides DOM helper methods
      * @name DOM
      */
     S.mix(S,{

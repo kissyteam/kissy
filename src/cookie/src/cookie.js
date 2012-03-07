@@ -6,7 +6,7 @@ KISSY.add('cookie', function (S) {
 
     /**
      * @name Cookie
-     * @namespace
+     * @namespace Provide Cookie utilities.
      */
 
     var doc = S.Env.host.document,

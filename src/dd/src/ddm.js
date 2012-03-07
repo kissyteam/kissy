@@ -21,7 +21,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     /**
      * @memberOf DD
      * @field
-     * @namespace
+     * @namespace Manager for Drag and Drop.
      */
     function DDM() {
         var self = this;

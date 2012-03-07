@@ -20,10 +20,9 @@ KISSY.add('anim/easing', function () {
         sin = Math.sin,
         BACK_CONST = 1.70158;
     /**
-     * Easing Functions
      * @memberOf Anim
      * @name Easing
-     * @namespace
+     * @namespace Provides methods for customizing how an animation behaves during each run.
      */
     var Easing =
     /**

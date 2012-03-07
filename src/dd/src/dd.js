@@ -5,7 +5,7 @@
 KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
     /**
      * @name DD
-     * @namespace
+     * @namespace Provide the ability to make node draggable and droppable.
      */
     var DD;
     DD = {

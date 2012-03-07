@@ -4,7 +4,18 @@
  */
 (function (S, undefined) {
     /**
-     * @namespace
+     * @namespace The KISSY global namespace object. you can use
+     * <code>
+     *     KISSY.each/mix
+     * </code>
+     * to do basic operation.
+     * or
+     * <code>
+     *      KISSY.use("overlay,node",function(S,Overlay,Node){
+     *          //
+     *      })
+     * </code>
+     * to do complex task with modules.
      * @name KISSY
      */
 

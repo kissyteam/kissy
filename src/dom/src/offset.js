@@ -39,17 +39,22 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         {
 
             /**
-             * Get or set the current coordinates of the element, relative to the document.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {Object} [val] 偏移对象,包括两个属性 left ,top,格式同获取偏移的返回值.
+             * Get the current coordinates of the first element in the set of matched elements, relative to the document.
+             * or
+             * Set the current coordinates of every element in the set of matched elements, relative to the document.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {Object} [coordinates ] An object containing the properties top and left,
+             * which are integers indicating the new top and left coordinates for the elements.
+             * @param {Number} [coordinates.left ] the new top and left coordinates for the elements.
+             * @param {Number} [coordinates.top ] the new top and top coordinates for the elements.
              * @param {window} [relativeWin] The window to measure relative to. If relativeWin
              *     is not in the ancestor frame chain of the element, we measure relative to
              *     the top-most window.
-             * @returns {Object} 格式同 val
+             * @returns {Object|undefined} if Get, the format of returned value is same with coordinates.
              */
-            offset:function (selector, val, relativeWin) {
+            offset:function (selector, coordinates, relativeWin) {
                 // getter
-                if (val === undefined) {
+                if (coordinates === undefined) {
                     var elem = DOM.get(selector), ret;
                     if (elem) {
                         ret = getOffset(elem, relativeWin);
@@ -60,25 +65,27 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 var els = DOM.query(selector), i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
-                    setOffset(elem, val);
+                    setOffset(elem, coordinates);
                 }
                 return undefined;
             },
 
             /**
-             * Makes the first elem matched selector visible in the container
-             * @param {HTMLElement[]|String|HTMLElement} elem 选择器或节点或节点数组
-             * @param {String|HTMLElement} [container] 容器节点，默认当前窗口
-             * @param {Boolean} [top] 是否顶部对齐
-             * @param {Boolean} [hscroll] 是否触发横向滚动
-             * @param {Boolean} [auto] whether adjust element automatically
-             *                         (it only scrollIntoView when element is out of view)
+             * Makes the first of matched elements visible in the container
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|HTMLElement} [container=window] Container element
+             * @param {Boolean} [top=true] Whether align with top of container.
+             * @param {Boolean} [hscroll=true] Whether trigger horizontal scroll.
+             * @param {Boolean} [auto=false] Whether adjust element automatically
+             * (only scrollIntoView when element is out of view)
              * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
-            scrollIntoView:function (elem, container, top, hscroll, auto) {
-                if (!(elem = DOM.get(elem))) {
+            scrollIntoView:function (selector, container, top, hscroll, auto) {
+                var elem;
+
+                if (!(elem = DOM.get(selector))) {
                     return;
                 }
 
@@ -195,29 +202,47 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 }
             },
             /**
-             * 取得当前文档宽度
-             * @param {window} [win] 当前视窗
+             * Get the width of document
+             * @param {window} [win=window] Window to be referred.
              * @function
              */
             docWidth:0,
             /**
-             * 取得当前文档高度
-             * @param {window} [win] 当前视窗
+             * Get the height of document
+             * @param {window} [win=window] Window to be referred.
              * @function
              */
             docHeight:0,
             /**
-             * 取得当前视窗高度
-             * @param {window} [win] 当前视窗
+             * Get the height of window
+             * @param {window} [win=window] Window to be referred.
              * @function
              */
             viewportHeight:0,
             /**
-             * 取得当前视窗宽度
-             * @param {window} [win] 当前视窗
+             * Get the width of document
+             * @param {window} [win=window] Window to be referred.
              * @function
              */
-            viewportWidth:0
+            viewportWidth:0,
+            /**
+             * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
+             * or
+             * Set the current vertical position of the scroll bar for each of the set of matched elements.
+             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+             * @param {Number} value An integer indicating the new position to set the scroll bar to.
+             * @function
+             */
+            scrollTop:0,
+            /**
+             * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
+             * or
+             * Set the current horizontal position of the scroll bar for each of the set of matched elements.
+             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+             * @param {Number} value An integer indicating the new position to set the scroll bar to.
+             * @function
+             */
+            scrollLeft:0
         });
 
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html

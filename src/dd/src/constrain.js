@@ -1,9 +1,9 @@
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
-    var $ = Node.all,WIN=S.Env.host;
+    var $ = Node.all, WIN = S.Env.host;
 
     /**
-     * @class constrain draggable's region
+     * @class Provide ability to constrain draggable to specified region
      * @memberOf DD
      */
     function Constrain() {

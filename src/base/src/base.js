@@ -8,7 +8,12 @@ KISSY.add('base', function (S, Attribute, Event) {
      * @name Base
      * @extends Event.Target
      * @extends Attribute
-     * @class Base for class-based component
+     * @class <p>
+     * A base class which objects requiring attributes and custom event support can
+     * extend. attributes configured
+     * through the static {@link Base.ATTRS} property for each class
+     * in the hierarchy will be initialized by Base.
+     * </p>
      */
     function Base(config) {
         var c = this.constructor;
@@ -21,6 +26,18 @@ KISSY.add('base', function (S, Attribute, Event) {
         // initial
         initAttrs(this, config);
     }
+
+
+    /**
+     * The default set of attributes which will be available for instances of this class, and
+     * their configuration
+     *
+     * By default if the value is an object literal or an array it will be "shallow" cloned, to
+     * protect the default value.
+     *
+     * @name Base.ATTRS
+     * @type Object
+     */
 
 
     /**

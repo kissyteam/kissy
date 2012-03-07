@@ -40,11 +40,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             {
 
                 /**
-                 * Creates a new HTMLElement using the provided html string.
-                 * @param {String} html 将要构建的节点 html 字符串
-                 * @param {Object} [props] 属性键值对
-                 * @param {Document} [ownerDoc] 节点所属文档
-                 * @returns {DocumentFragment|HTMLElement} 创建出的 dom 节点或碎片列表
+                 * Creates DOM elements on the fly from the provided string of raw HTML.
+                 * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
+                 * @param {Object} [props] An map of attributes on the newly-created element.
+                 * @param {Document} [ownerDoc] A document in which the new elements will be created
+                 * @returns {DocumentFragment|HTMLElement}
                  */
                 create:function (html, props, ownerDoc, _trim/*internal*/) {
 
@@ -129,12 +129,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * Gets/Sets the HTML contents of the HTMLElement.
-                 * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-                 * @param {String} val 将要设置的 html 值
-                 * @param {Boolean} loadScripts (optional) True to look for and process scripts (defaults to false).
+                 * Get the HTML contents of the first element in the set of matched elements.
+                 * or
+                 * Set the HTML contents of each element in the set of matched elements.
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+                 * @param {String} htmlString  A string of HTML to set as the content of each matched element.
+                 * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
-                html:function (selector, val, loadScripts, callback) {
+                html:function (selector, htmlString, loadScripts, callback) {
                     // supports css selector/Node/NodeList
                     var els = DOM.query(selector),
                         el = els[0];
@@ -142,7 +144,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         return
                     }
                     // getter
-                    if (val === undefined) {
+                    if (htmlString === undefined) {
                         // only gets value on the first of element nodes
                         if (isElementNode(el)) {
                             return el['innerHTML'];
@@ -154,20 +156,20 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     else {
 
                         var success = false, i, elem;
-                        val += "";
+                        htmlString += "";
 
                         // faster
                         // fix #103,some html element can not be set through innerHTML
-                        if (!val.match(/<(?:script|style|link)/i) &&
-                            (!lostLeadingWhitespace || !val.match(rleadingWhitespace)) &&
-                            !creatorsMap[ (val.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
+                        if (!htmlString.match(/<(?:script|style|link)/i) &&
+                            (!lostLeadingWhitespace || !htmlString.match(rleadingWhitespace)) &&
+                            !creatorsMap[ (htmlString.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
 
                             try {
                                 for (i = els.length - 1; i >= 0; i--) {
                                     elem = els[i];
                                     if (isElementNode(elem)) {
                                         cleanData(getElementsByTagName(elem, "*"));
-                                        elem.innerHTML = val;
+                                        elem.innerHTML = htmlString;
                                     }
                                 }
                                 success = true;
@@ -179,7 +181,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         }
 
                         if (!success) {
-                            var valNode = DOM.create(val, null, el.ownerDocument, false);
+                            var valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
                             for (i = els.length - 1; i >= 0; i--) {
                                 elem = els[i];
                                 if (isElementNode(elem)) {
@@ -194,9 +196,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove the set of matched elements from the DOM.
-                 * 不要使用 innerHTML='' 来清除元素，可能会造成内存泄露，要使用 DOM.remove()
-                 * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-                 * @param {Boolean} [keepData=false] 删除元素时是否保留其上的数据，用于离线操作，提高性能
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+                 * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
                  */
                 remove:function (selector, keepData) {
                     var el, els = DOM.query(selector), i;
@@ -216,13 +217,16 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * clone node across browsers for the first node in selector
-                 * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
-                 * @param {Boolean} deep 是否深 copy
-                 * @param {Boolean} withDataAndEvent 复制节点是否包括和源节点同样的数据和事件
-                 * @param {Boolean} deepWithDataAndEvent 复制节点的子孙节点是否包括和源节点子孙节点同样的数据和事件
+                 * Create a deep copy of the first of matched elements.
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+                 * @param {Boolean} [deep=false] whether perform deep copy
+                 * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
+                 * whether event handlers and data should be copied along with the elements.
+                 * @param {Boolean} [deepWithDataAndEvent=false]
+                 * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
+                 * if set true then deep argument must be set true as well.
                  * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
-                 * @returns {HTMLElement} 复制后的节点
+                 * @returns {HTMLElement}
                  */
                 clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
                     var elem = DOM.get(selector);
@@ -263,8 +267,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 },
 
                 /**
-                 * 清除节点的所有子孙节点以及子孙节点上的事件和 {@link DOM.data} 信息
-                 * @param {HTMLElement|String|HTMLElement[]} selector 节点元素结合
+                 * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  */
                 empty:function (selector) {
                     var els = DOM.query(selector), el, i;

@@ -196,7 +196,7 @@ a.go-top:active{text-decoration:none;}
                                                                             
                                             
                                             
-                                            <span class="desc">提供事件发布和订阅机制</span>                                            
+                                                                                        
                                         </li>
                                     </ul>
                                 </div>
@@ -226,17 +226,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">add target which bubblable event bubbles towards</span>                                                
-                                            </li>
-                                            
-                                            <li class="li">                                                
-                                                Event.Target.
-                                                <b class="name"><a href="../symbols/Event.Target.html#.bubble">bubble</a></b>
-                                                <span class="param">(type, eventData)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">bubble event to its targets</span>                                                
+                                                <span class="desc">Registers another EventTarget as a bubble target.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -246,7 +236,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">取消监听事件</span>                                                
+                                                <span class="desc">Detach one or more listeners the from the specified event</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -256,7 +246,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">触发事件</span>                                                
+                                                <span class="desc">Fire a custom event by name.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -266,7 +256,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">监听事件</span>                                                
+                                                <span class="desc">Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.</span>                                                
                                             </li>
                                             
                                             <li class="li">                                                
@@ -276,7 +266,17 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <span class="desc">defined event config</span>                                                
+                                                <span class="desc">Creates a new custom event of the specified type</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Event.Target.
+                                                <b class="name"><a href="../symbols/Event.Target.html#.removeTarget">removeTarget</a></b>
+                                                <span class="param">(target)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">Removes a bubble target</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -354,11 +354,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line143">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line149">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                add target which bubblable event bubbles towards
+                                                Registers another EventTarget as a bubble target.
                                                 
                                                 
                                             </div>
@@ -375,72 +375,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">target</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc">another EventTarget instance</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                
-                                                
-                                                
-                                                
-                                            </dl>                                            
-                                        </li>
-                                        
-                                        <li class="li">
-                                            <a name=".bubble"> </a>
-                                            <div class="title">
-                                                <span>Event.Target.</span>
-                                                <b class="name">bubble</b>
-                                                <span class="param">(type, eventData)</span>
-                                                
-                                                
-                                                <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line126">view source</a>
-                                            </div>
-
-                                            <div class="desc">
-                                                bubble event to its targets
-                                                
-                                                
-                                            </div>
-                                            
-                                            <dl>                                            
-                                                
-                                                
-                                                <dt>Parameters</dt>
-                                                <dd>
-                                                    <ul class="list param-list">
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">type</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
-                                                        </li>
-                                                    
-                                                        <li class="li">
-                                                            &nbsp;
-                                                            <b class="name">eventData</b>
-                                                            
-                                                            
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{<a href="../symbols/Event.Target.html">Event.Target</a>}</span> 
+                                                            <span class="desc">Another EventTarget instance to add</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -473,11 +409,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line172">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line180">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                取消监听事件
+                                                Detach one or more listeners the from the specified event
                                                 
                                                 
                                             </div>
@@ -495,25 +431,25 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{String}</span> 
-                                                            <span class="desc">事件名</span>
+                                                            <span class="desc">The name of the event</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">fn</b>
                                                             
-                                                            
+                                                             ]
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">事件处理器</span>
+                                                            <span class="desc">The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">scope</b>
                                                             
-                                                            
+                                                             ]
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">事件处理器内的 this 值，默认当前实例</span>
+                                                            <span class="desc">The custom object passed to subscribe.</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -526,18 +462,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                
-                                                <dt>Returns</dt>
-                                                <dd>
-                                                    <ul class="list">
-                                                    
-                                                        <li class="li">
-                                                            
-                                                            <span>当前实例</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
                                                 
                                                 
                                                 
@@ -558,11 +482,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line66">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line72">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                触发事件
+                                                Fire a custom event by name.The callback functions will be executed from the context specified when the event was created,and the <a href="../symbols/Event.Object.html">Event.Object</a> created will be mixed with eventData
                                                 
                                                 
                                             </div>
@@ -580,7 +504,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{String}</span> 
-                                                            <span class="desc">事件名</span>
+                                                            <span class="desc">The type of the event</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -589,7 +513,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                              ]
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">事件附加信息对象</span>
+                                                            <span class="desc">The data will be mixed with <a href="../symbols/Event.Object.html">Event.Object</a> created</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -608,8 +532,8 @@ a.go-top:active{text-decoration:none;}
                                                     <ul class="list">
                                                     
                                                         <li class="li">
-                                                            
-                                                            <span>如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.</span>
+                                                            <span class="type">{Boolean|*}</span> 
+                                                            <span>If any listen returns false, then the returned value is false. else return the last listener's returned value</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -634,11 +558,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line163">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line172">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                监听事件
+                                                Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
                                                 
                                                 
                                             </div>
@@ -656,7 +580,7 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{String}</span> 
-                                                            <span class="desc">事件名</span>
+                                                            <span class="desc">The name of the event</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -665,16 +589,16 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                             
                                                             <span class="type">{Function}</span> 
-                                                            <span class="desc">事件处理器</span>
+                                                            <span class="desc">The callback to execute in response to the event</span>
                                                         </li>
                                                     
                                                         <li class="li">
-                                                            &nbsp;
+                                                            [ 
                                                             <b class="name">scope</b>
                                                             
-                                                            
+                                                             ]
                                                             <span class="type">{Object}</span> 
-                                                            <span class="desc">事件处理器内的 this 值，默认当前实例</span>
+                                                            <span class="desc">this object in callback</span>
                                                         </li>
                                                     
                                                     </ul>
@@ -687,18 +611,6 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 
-                                                
-                                                <dt>Returns</dt>
-                                                <dd>
-                                                    <ul class="list">
-                                                    
-                                                        <li class="li">
-                                                            
-                                                            <span>当前实例</span>
-                                                        </li>
-                                                    
-                                                    </ul>
-                                                </dd>
                                                 
                                                 
                                                 
@@ -719,11 +631,11 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line112">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line117">view source</a>
                                             </div>
 
                                             <div class="desc">
-                                                defined event config
+                                                Creates a new custom event of the specified type
                                                 
                                                 
                                             </div>
@@ -740,8 +652,8 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">type</b>
                                                             
                                                             
-                                                            
-                                                            <span class="desc"></span>
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc">The type of the event</span>
                                                         </li>
                                                     
                                                         <li class="li">
@@ -749,8 +661,72 @@ a.go-top:active{text-decoration:none;}
                                                             <b class="name">cfg</b>
                                                             
                                                             
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">Config params</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            [ 
+                                                            <b class="name">cfg.bubbles</b>
+                                                            = false
+                                                             ]
+                                                            <span class="type">{Boolean}</span> 
+                                                            <span class="desc">whether or not this event bubbles</span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".removeTarget"> </a>
+                                            <div class="title">
+                                                <span>Event.Target.</span>
+                                                <b class="name">removeTarget</b>
+                                                <span class="param">(target)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_event_src_target.js.html#line159">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                Removes a bubble target
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">target</b>
                                                             
-                                                            <span class="desc">example { bubbles: true}       default bubbles: false</span>
+                                                            
+                                                            <span class="type">{<a href="../symbols/Event.Target.html">Event.Target</a>}</span> 
+                                                            <span class="desc">Another EventTarget instance to remove</span>
                                                         </li>
                                                     
                                                     </ul>

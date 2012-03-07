@@ -8,9 +8,8 @@
     }
 
     /**
-     * KISSY Loader constructor
+     * @class KISSY Loader constructor
      * This class should not be instantiated manually.
-     * @class
      * @memberOf KISSY
      */
     function Loader(SS) {
@@ -27,9 +26,8 @@
     KISSY.Loader = Loader;
 
     /**
-     * KISSY Module constructor
+     * @class KISSY Module constructor
      * This class should not be instantiated manually.
-     * @class
      * @memberOf KISSY.Loader
      */
     function Module(ps) {

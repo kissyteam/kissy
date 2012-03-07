@@ -59,6 +59,7 @@ History:
 
  - [+] switchable 增加 lazyImgAttribute/lazyTextareaClass 解决嵌套 lazyload 问题 #98
  - [+] switchable 增加 pauseOnScroll，只在可视窗口时才滚动
+ - [+] switchable 增加 add/remove/destroy
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

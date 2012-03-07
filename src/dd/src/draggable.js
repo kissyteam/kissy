@@ -11,7 +11,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
     /**
      * @extends Base
-     * @class make a node draggable
+     * @class Provide abilities to make specified node draggable
      * @memberOf DD
      */
     function Draggable() {

@@ -14,7 +14,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
-        doc=S.Env.host.document,
+        doc = S.Env.host.document,
         curLocationParts;
 
     try {
@@ -143,8 +143,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
     /**
      * @name IO
-     * @description io is a utility that brokers HTTP requests through a simplified interface
-     * @namespace
+     * @namespace Provides utility that brokers HTTP requests through a simplified interface
      * @function
      *
      * @param {Object} c <br/>name-value of object to config this io request.<br/>

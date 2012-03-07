@@ -45,10 +45,11 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         {
 
             /**
-             * Get the matched node which is ancestor or is the first matched element.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
-             * @param {HTMLElement|String} context dom node bounded for search
+             * Get the first element that matches the filter,
+             * beginning at the first element of matched elements and progressing up through the DOM tree.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} filter Selector string or filter function
+             * @param {HTMLElement|String|Document|HTMLElement[]} [context] Search bound element
              * @returns {HTMLElement}
              */
             closest:function (selector, filter, context) {
@@ -58,10 +59,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Gets the ancestor of the first matched element.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
-             * @param {HTMLElement|String} context dom node bounded for search
+             * Get the parent of the first element in the current set of matched elements, optionally filtered by a selector.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} [filter] Selector string or filter function
+             * @param {HTMLElement|String|Document|HTMLElement[]} [context] Search bound element
              * @returns {HTMLElement}
              */
             parent:function (selector, filter, context) {
@@ -71,9 +72,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Get the first child of the first matched element
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
+             * Get the first child of the first element in the set of matched elements.
+             * If a filter is provided, it retrieves the next child only if it matches that filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
             first:function (selector, filter) {
@@ -83,9 +85,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Get the last child of the first matched element
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
+             * Get the last child of the first element in the set of matched elements.
+             * If a filter is provided, it retrieves the previous child only if it matches that filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
             last:function (selector, filter) {
@@ -95,9 +98,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Gets the following sibling of the first matched element.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
+             * Get the immediately following sibling of the first element in the set of matched elements.
+             * If a filter is provided, it retrieves the next child only if it matches that filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
             next:function (selector, filter) {
@@ -105,9 +109,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Gets the preceding sibling of the first matched element.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
+             * Get the immediately preceding  sibling of the first element in the set of matched elements.
+             * If a filter is provided, it retrieves the previous child only if it matches that filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement}
              */
             prev:function (selector, filter) {
@@ -115,9 +120,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Gets the siblings of the first matched element.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
+             * Get the siblings of the first element in the set of matched elements, optionally filtered by a filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} filter Selector string or filter function
              * @returns {HTMLElement[]}
              */
             siblings:function (selector, filter) {
@@ -125,9 +130,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Gets the children of the first matched element.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {String|Function} filter filter function or string
+             * Get the children of the first element in the set of matched elements, optionally filtered by a filter.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Function} filter Selector string or filter function
              * @returns {HTMLElement[]}
              */
             children:function (selector, filter) {
@@ -136,24 +141,24 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
             /**
              * Check to see if a DOM node is within another DOM node.
-             * @param {HTMLElement|String|Element} a dom node or the first matched elements by selector
-             * @param {HTMLElement|String|Element} b dom node or the first matched elements by selector
-             * @returns {Boolean} whether a contains b , note if a===b return false.
+             * @param {HTMLElement|String|Element} container The DOM element that may contain the other element.
+             * @param {HTMLElement|String|Element} contained The DOM element that may be contained by the other element.
+             * @returns {Boolean}
              */
-            contains:function (a, b) {
-                a = DOM.get(a);
-                b = DOM.get(b);
-                if (a && b) {
-                    return __contains(a, b);
+            contains:function (container, contained) {
+                container = DOM.get(container);
+                contained = DOM.get(contained);
+                if (container && contained) {
+                    return __contains(container, contained);
                 }
                 return false;
             },
 
             /**
-             * whether a dom node or dom nodes is same as another dom node or dom nodes
-             * @param {HTMLElement|String|HTMLElement[]} n1
-             * @param {HTMLElement|String|HTMLElement[]} n2
-             * @returns {Boolean} whether n1 is equal as n2
+             * Check to see if a DOM node is equal with another DOM node.
+             * @param {HTMLElement|String|Element} n1
+             * @param {HTMLElement|String|Element} n2
+             * @returns {Boolean}
              */
             equals:function (n1, n2) {
                 n1 = DOM.query(n1);

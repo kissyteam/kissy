@@ -192,10 +192,27 @@ KISSY.add('base/attribute', function (S, undef) {
     }
 
     /**
-     * provide attribute management.
-     * recommended extending {@link Base}.
+     * @class <p>
+     * Attribute provides configurable attribute support along with attribute change events. It is designed to be
+     * augmented on to a host class, and provides the host with the ability to configure attributes to store and retrieve state,
+     * along with attribute change events.
+     * </p>
+     * <p>For example, attributes added to the host can be configured:</p>
+     * <ul>
+     *     <li>With a setter function, which can be used to manipulate
+     *     values passed to Attribute's {@link Attribute#set} method, before they are stored.</li>
+     *     <li>With a getter function, which can be used to manipulate stored values,
+     *     before they are returned by Attribute's {@link Attribute#get} method.</li>
+     *     <li>With a validator function, to validate values before they are stored.</li>
+     * </ul>
+     *
+     * <p>See the {@link Attribute#addAttr} method, for the complete set of configuration
+     * options available for attributes</p>.
+     *
+     * <p><strong>NOTE:</strong> Most implementations will be better off extending the {@link Base} class,
+     * instead of augmenting Attribute directly. Base augments Attribute and will handle the initial configuration
+     * of attributes for derived classes, accounting for values passed into the constructor.</p>
      * @name Attribute
-     * @class
      */
     function Attribute() {
     }

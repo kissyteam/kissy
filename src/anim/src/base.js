@@ -53,8 +53,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
 
     /**
-     * get a anim instance associate
-     * @param {HTMLElement|window} elem 元素或者 window
+     * @class A class for constructing animation instances.
+     * @param {HTMLElement|window} elem Html dom node or window
      * (window can only animate scrollTop/scrollLeft)
      * @param {Object} props style map
      * @param {Number|Object} [duration] duration(s) or anim config
@@ -66,7 +66,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param {Function} [callback] callback function when this animation is complete
      * @extends Event.Target
      * @name Anim
-     * @class
+     *
      */
     function Anim(elem, props, duration, easing, callback) {
         var self = this, config;

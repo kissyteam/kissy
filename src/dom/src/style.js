@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     "use strict";
-    var WINDOW=S.Env.host,
+    var WINDOW = S.Env.host,
         doc = WINDOW.document,
         docElem = doc.documentElement,
         isIE = UA['ie'],
@@ -160,13 +160,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             },
 
             /**
-             *  Get style property from the first element of matched elements
-             *  or set the style property on all matched elements
-             *  @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             *  @param {String} name 样式名称
-             *  @param [val] 样式值
-             *  @returns 当不设置 val 时返回指定样式名对应的值
-             *           设置 val 时返回 undefined
+             *  Get inline style property from the first element of matched elements
+             *  or
+             *  Set one or more CSS properties for the set of matched elements.
+             *  @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             *  @param {String|Object} name A CSS property. or A map of property-value pairs to set.
+             *  @param [val] A value to set for the property.
+             *  @returns {undefined|String}
              */
             style:function (selector, name, val) {
                 var els = DOM.query(selector), elem = els[0], i;
@@ -194,16 +194,18 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             },
 
             /**
-             * Gets computed style from the first element of matched elements
-             * or sets styles on the matches elements.
+             * Get the computed value of a style property for the first element in the set of matched elements.
+             * or
+             * Set one or more CSS properties for the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement|Element} selector 选择器或节点或节点数组
-             * @param {String|Object} name 样式名称或样式键值对
-             * @param [val] 样式值
-             * @returns {*} 当不设置 val 时返回指定样式名对应的值
-             *          设置 val 时返回 undefined
+             * @param {String|Object} name A CSS property. or A map of property-value pairs to set.
+             * @param [val] A value to set for the property.
+             * @returns {undefined|String}
              */
             css:function (selector, name, val) {
-                var els = DOM.query(selector), elem = els[0], i;
+                var els = DOM.query(selector),
+                    elem = els[0],
+                    i;
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
@@ -239,8 +241,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             },
 
             /**
-             * Show the matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * Display the matched elements.
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             show:function (selector) {
                 var els = DOM.query(selector), elem, i;
@@ -260,7 +262,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
             /**
              * Hide the matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             hide:function (selector) {
                 var els = DOM.query(selector), elem, i;
@@ -278,7 +280,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
             /**
              * Display or hide the matched elements.
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             toggle:function (selector) {
                 var els = DOM.query(selector), elem, i;
@@ -295,9 +297,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
-             * @param [refWin] Window which will accept this stylesheet
+             * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} cssText The text containing the css rules
-             * @param {String} id An id to add to the stylesheet for later removal
+             * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet:function (refWin, cssText, id) {
                 refWin = refWin || WINDOW;
@@ -333,8 +335,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             },
 
             /**
-             * make matched elements unselectable
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * Make matched elements unselectable
+             * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
             unselectable:function (selector) {
                 var _els = DOM.query(selector), elem, j;
@@ -368,47 +370,55 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             },
 
             /**
-             * Get innerWidth (css width + padding) from the first element of matched elements
+             * Get the current computed width for the first element in the set of matched elements, including padding but not border.
              * @function
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @returns {Number}
              */
             innerWidth:0,
             /**
-             * Get innerHeight (css height + padding) from the first element of matched elements
+             * Get the current computed height for the first element in the set of matched elements, including padding but not border.
              * @function
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @returns {Number}
              */
             innerHeight:0,
             /**
-             * Get outerWidth (css width + padding + border + margin?) from the first element of matched elements
+             *  Get the current computed width for the first element in the set of matched elements, including padding and border, and optionally margin.
              * @function
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {Boolean} includeMargin whether include margin
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
              * @returns {Number}
              */
             outerWidth:0,
             /**
-             * Get outerHeight (css height + padding + border + margin?) from the first element of matched elements
+             * Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin.
              * @function
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @param {Boolean} includeMargin whether include margin
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
              * @returns {Number}
              */
             outerHeight:0,
             /**
-             * Get css width from the first element of matched elements
+             * Get the current computed width for the first element in the set of matched elements.
+             * or
+             * Set the CSS width of each element in the set of matched elements.
              * @function
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @returns {Number}
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Number} [value]
+             * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
+             * @returns {Number|undefined}
              */
             width:0,
             /**
-             * Get css height from the first element of matched elements
+             * Get the current computed height for the first element in the set of matched elements.
+             * or
+             * Set the CSS height of each element in the set of matched elements.
              * @function
-             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
-             * @returns {Number}
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {String|Number} [value]
+             * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
+             * @returns {Number|undefined}
              */
             height:0
         });

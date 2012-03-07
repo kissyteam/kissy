@@ -15,12 +15,11 @@ KISSY.add('event/object', function (S, undefined) {
             'target toElement view wheelDelta which axis').split(' ');
 
     /**
-     * KISSY's event system normalizes the event object according to
+     * @class KISSY's event system normalizes the event object according to
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      * @name Object
-     * @constructor
      * @memberOf Event
      */
     function EventObject(currentTarget, domEvent, type) {
@@ -43,130 +42,145 @@ KISSY.add('event/object', function (S, undefined) {
         self.fixed = TRUE;
     }
 
-    S.augment(EventObject, {
-
-        isDefaultPrevented:FALSE,
-        isPropagationStopped:FALSE,
-        isImmediatePropagationStopped:FALSE,
-
-        _fix:function () {
-            var self = this,
-                originalEvent = self.originalEvent,
-                l = props.length, prop,
-                ct = self.currentTarget,
-                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
-
-            // clone properties of the original event object
-            while (l) {
-                prop = props[--l];
-                self[prop] = originalEvent[prop];
-            }
-
-            // fix target property, if necessary
-            if (!self.target) {
-                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
-            }
-
-            // check if target is a textnode (safari)
-            if (self.target.nodeType === 3) {
-                self.target = self.target.parentNode;
-            }
-
-            // add relatedTarget, if necessary
-            if (!self.relatedTarget && self.fromElement) {
-                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
-            }
-
-            // calculate pageX/Y if missing and clientX/Y available
-            if (self.pageX === undefined && self.clientX !== undefined) {
-                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-            }
-
-            // add which for key events
-            if (self.which === undefined) {
-                self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
-            }
-
-            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-            if (self.metaKey === undefined) {
-                self.metaKey = self.ctrlKey;
-            }
-
-            // add which for click: 1 === left; 2 === middle; 3 === right
-            // Note: button is not normalized, so don't use it
-            if (!self.which && self.button !== undefined) {
-                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-            }
-        },
-
+    S.augment(EventObject,
         /**
-         * Prevents the event's default behavior
+         * @lends Event.Object#
          */
-        preventDefault:function () {
-            var e = this.originalEvent;
+        {
 
-            // if preventDefault exists run it on the original event
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            // otherwise set the returnValue property of the original event to FALSE (IE)
-            else {
-                e.returnValue = FALSE;
-            }
+            /**
+             * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+             * @type Boolean
+             */
+            isDefaultPrevented:FALSE,
+            /**
+             * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+             * @type Boolean
+             */
+            isPropagationStopped:FALSE,
+            /**
+             * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+             * @type Boolean
+             */
+            isImmediatePropagationStopped:FALSE,
 
-            this.isDefaultPrevented = TRUE;
-        },
+            _fix:function () {
+                var self = this,
+                    originalEvent = self.originalEvent,
+                    l = props.length, prop,
+                    ct = self.currentTarget,
+                    ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
-        /**
-         * Stops the propagation to the next bubble target
-         */
-        stopPropagation:function () {
-            var e = this.originalEvent;
+                // clone properties of the original event object
+                while (l) {
+                    prop = props[--l];
+                    self[prop] = originalEvent[prop];
+                }
 
-            // if stopPropagation exists run it on the original event
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            // otherwise set the cancelBubble property of the original event to TRUE (IE)
-            else {
-                e.cancelBubble = TRUE;
-            }
+                // fix target property, if necessary
+                if (!self.target) {
+                    self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
+                }
 
-            this.isPropagationStopped = TRUE;
-        },
+                // check if target is a textnode (safari)
+                if (self.target.nodeType === 3) {
+                    self.target = self.target.parentNode;
+                }
+
+                // add relatedTarget, if necessary
+                if (!self.relatedTarget && self.fromElement) {
+                    self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+                }
+
+                // calculate pageX/Y if missing and clientX/Y available
+                if (self.pageX === undefined && self.clientX !== undefined) {
+                    var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
+                    self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
+                    self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+                }
+
+                // add which for key events
+                if (self.which === undefined) {
+                    self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
+                }
+
+                // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+                if (self.metaKey === undefined) {
+                    self.metaKey = self.ctrlKey;
+                }
+
+                // add which for click: 1 === left; 2 === middle; 3 === right
+                // Note: button is not normalized, so don't use it
+                if (!self.which && self.button !== undefined) {
+                    self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+                }
+            },
+
+            /**
+             * Prevents the event's default behavior
+             */
+            preventDefault:function () {
+                var e = this.originalEvent;
+
+                // if preventDefault exists run it on the original event
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                // otherwise set the returnValue property of the original event to FALSE (IE)
+                else {
+                    e.returnValue = FALSE;
+                }
+
+                this.isDefaultPrevented = TRUE;
+            },
+
+            /**
+             * Stops the propagation to the next bubble target
+             */
+            stopPropagation:function () {
+                var e = this.originalEvent;
+
+                // if stopPropagation exists run it on the original event
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                // otherwise set the cancelBubble property of the original event to TRUE (IE)
+                else {
+                    e.cancelBubble = TRUE;
+                }
+
+                this.isPropagationStopped = TRUE;
+            },
 
 
-        /**
-         * Stops the propagation to the next bubble target and
-         * prevents any additional listeners from being exectued
-         * on the current target.
-         */
-        stopImmediatePropagation:function () {
-            var self = this;
-            self.isImmediatePropagationStopped = TRUE;
-            // fixed 1.2
-            // call stopPropagation implicitly
-            self.stopPropagation();
-        },
-
-        /**
-         * Stops the event propagation and prevents the default
-         * event behavior.
-         * @param [immediate] {boolean} if TRUE additional listeners
-         * on the current target will not be executed
-         */
-        halt:function (immediate) {
-            var self = this;
-            if (immediate) {
-                self.stopImmediatePropagation();
-            } else {
+            /**
+             * Stops the propagation to the next bubble target and
+             * prevents any additional listeners from being exectued
+             * on the current target.
+             */
+            stopImmediatePropagation:function () {
+                var self = this;
+                self.isImmediatePropagationStopped = TRUE;
+                // fixed 1.2
+                // call stopPropagation implicitly
                 self.stopPropagation();
+            },
+
+            /**
+             * Stops the event propagation and prevents the default
+             * event behavior.
+             * @param  {boolean} [immediate] if true additional listeners on the current target will not be executed
+             */
+            halt:function (immediate) {
+                var self = this;
+                if (immediate) {
+                    self.stopImmediatePropagation();
+                } else {
+                    self.stopPropagation();
+                }
+                self.preventDefault();
             }
-            self.preventDefault();
-        }
-    });
+        });
 
     return EventObject;
 

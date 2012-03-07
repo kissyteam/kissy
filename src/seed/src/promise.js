@@ -16,8 +16,7 @@
     }
 
     /**
-     * @class
-     * @description Defer constructor
+     * @class Defer constructor For KISSY,implement Promise specification.
      * @memberOf KISSY
      */
     function Defer(promise) {
@@ -83,10 +82,9 @@
     }
 
     /**
-     * Promise constructor.
+     * @class Promise constructor.
      * This class should not be instantiated manually.
      * Instances will be created and returned as needed by {@link KISSY.Defer#promise}
-     * @constructor
      * @namespace
      * @param v promise's resolved value
      * @memberOf KISSY
