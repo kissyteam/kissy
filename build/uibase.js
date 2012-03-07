@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:25
+build time: Mar 7 19:03
 */
 /**
  * @fileOverview UIBase.Align
@@ -349,13 +349,13 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             this.align(v.node, v.points, v.offset, v.overflow);
         },
 
-        /**
-         * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         * @function
-         * @ignore
-         * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
-         * @param {String[]} points 对齐方式
-         * @param {Number[]} [offset] 偏移
+        /*
+         对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         @function
+         @ignore
+         @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         @param {String[]} points 对齐方式
+         @param {Number[]} [offset] 偏移
          */
         align:function (node, points, offset, overflow) {
             var self = this,
@@ -1044,7 +1044,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
         elAttrs:{
             sync:false
         },
+
         html:{
+            // !! srcNode 和 html 不能同时设置
             sync:false
         },
         elBefore:{
@@ -1154,7 +1156,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                     elAttrs,
                     html));
                 self.__set("el", el);
-            } else {
+            }
+            // 通过 srcNode 过来的
+            else {
                 if (elCls) {
                     el.addClass(elCls);
                 }
@@ -1167,9 +1171,13 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                 if (height !== undefined) {
                     el.height(height);
                 }
-                if (html !== undefined) {
-                    el.html(html);
-                }
+// srcNode 就是原来的内容，也可以不用设置 html
+//                if (html !== undefined &&
+//                    // 防止冲掉 el 原来的子元素引用 !!
+//
+//                    html !== el.html()) {
+//                    el.html(html);
+//                }
                 if (elAttrs) {
                     el.attr(elAttrs);
                 }
@@ -1600,7 +1608,10 @@ KISSY.add("uibase/contentboxrender", function (S, Node, BoxRender) {
                 undefined,
                 self.get("contentTagName"),
                 self.get("contentElAttrs"),
-                c)).appendTo(el);
+                c));
+
+            contentEl.appendTo(el);
+
             self.__set("contentEl", contentEl);
             // on content,then read from box el
             if (!c) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 7 19:03
 */
 /**
  * @fileOverview mvc based component framework for kissy

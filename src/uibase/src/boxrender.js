@@ -38,7 +38,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
         elAttrs:{
             sync:false
         },
+
         html:{
+            // !! srcNode 和 html 不能同时设置
             sync:false
         },
         elBefore:{
@@ -148,7 +150,9 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                     elAttrs,
                     html));
                 self.__set("el", el);
-            } else {
+            }
+            // 通过 srcNode 过来的
+            else {
                 if (elCls) {
                     el.addClass(elCls);
                 }
@@ -161,9 +165,13 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                 if (height !== undefined) {
                     el.height(height);
                 }
-                if (html !== undefined) {
-                    el.html(html);
-                }
+// srcNode 就是原来的内容，也可以不用设置 html
+//                if (html !== undefined &&
+//                    // 防止冲掉 el 原来的子元素引用 !!
+//
+//                    html !== el.html()) {
+//                    el.html(html);
+//                }
                 if (elAttrs) {
                     el.attr(elAttrs);
                 }
