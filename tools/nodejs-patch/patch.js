@@ -19,7 +19,9 @@
      * note : this === exports !== global
      */
     KISSY = exports.KISSY = window.KISSY = exports;
-    KISSY.Env.host = window;
+    KISSY.Env = {
+        host:window
+    };
 })();
 
 /**

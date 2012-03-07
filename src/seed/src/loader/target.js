@@ -3,6 +3,11 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+
+    if (typeof require !== 'undefined') {
+        return;
+    }
+
     var time = S.now(),
         p = "__events__" + time;
 

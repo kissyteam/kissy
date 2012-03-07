@@ -2,12 +2,13 @@
  * @fileOverview getScript support for css and js callback after load
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function (S, utils) {
+(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
-        doc=S.Env.host.document,
+        doc = S.Env.host.document,
+        utils = S.Loader.Utils,
         scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -124,4 +125,4 @@
         }
     });
 
-})(KISSY, KISSY.Loader.Utils);
+})(KISSY);

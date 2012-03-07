@@ -2,7 +2,7 @@
  * using combo to load module files
  * @author yiminghe@gmail.com
  */
-(function (S, utils) {
+(function (S) {
 
     if (typeof require !== 'undefined') {
         return;
@@ -25,7 +25,8 @@
     }
 
     var MAX_URL_LENGTH = 1024,
-        Loader = S.Loader;
+        Loader = S.Loader,
+        utils = Loader.Utils;
 
     /**
      * using combo to load module files
@@ -316,7 +317,7 @@
 
     Loader.Combo = ComboLoader;
 
-})(KISSY, KISSY.Loader.Utils);
+})(KISSY);
 /**
  * 2012-02-20 yiminghe note:
  *  - three status

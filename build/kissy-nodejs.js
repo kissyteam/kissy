@@ -19,7 +19,9 @@
      * note : this === exports !== global
      */
     KISSY = exports.KISSY = window.KISSY = exports;
-    KISSY.Env.host = window;
+    KISSY.Env = {
+        host:window
+    };
 })();
 
 /**
@@ -198,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:48
+build time: Mar 7 10:40
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -337,7 +339,7 @@ build time: Mar 6 16:48
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120306164811',
+            __BUILD_TIME:'20120307104053',
 
             /**
              * Returns a new object containing all of the properties of
@@ -870,7 +872,7 @@ build time: Mar 6 16:48
              * Removes undefined keywords and ignores escaped keywords.
              * @param {String} str template string
              * @param {Object} o json data
-             * @param {RegExp} regexp to match a piece of template string
+             * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute:function (str, o, regexp) {
                 if (!S.isString(str)
@@ -2148,6 +2150,11 @@ build time: Mar 6 16:48
  * @author yiminghe@gmail.com
  */
 (function (S) {
+
+    if (typeof require !== 'undefined') {
+        return;
+    }
+
     var time = S.now(),
         p = "__events__" + time;
 
@@ -2707,12 +2714,13 @@ build time: Mar 6 16:48
  * @fileOverview getScript support for css and js callback after load
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  */
-(function (S, utils) {
+(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
-        doc=S.Env.host.document,
+        doc = S.Env.host.document,
+        utils = S.Loader.Utils,
         scriptOnload = utils.scriptOnload;
 
     S.mix(S, {
@@ -2829,7 +2837,7 @@ build time: Mar 6 16:48
         }
     });
 
-})(KISSY, KISSY.Loader.Utils);(function (S) {
+})(KISSY);(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
@@ -3420,7 +3428,7 @@ build time: Mar 6 16:48
  * using combo to load module files
  * @author yiminghe@gmail.com
  */
-(function (S, utils) {
+(function (S) {
 
     if (typeof require !== 'undefined') {
         return;
@@ -3443,7 +3451,8 @@ build time: Mar 6 16:48
     }
 
     var MAX_URL_LENGTH = 1024,
-        Loader = S.Loader;
+        Loader = S.Loader,
+        utils = Loader.Utils;
 
     /**
      * using combo to load module files
@@ -3734,7 +3743,7 @@ build time: Mar 6 16:48
 
     Loader.Combo = ComboLoader;
 
-})(KISSY, KISSY.Loader.Utils);
+})(KISSY);
 /**
  * 2012-02-20 yiminghe note:
  *  - three status
