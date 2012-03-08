@@ -414,13 +414,19 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             self._resetLength();
             var page = self._getLength(index + 1) - 1;
             // 重置当前活动项
-            if (self.activeIndex >= page) {
-                self.activeIndex += 1;
-            }
 
-            // 注意 completedIndex 也得复制
-            if (self.completedIndex >= page) {
-                self.completedIndex += 1;
+            if (self.config.steps == 1) {
+                // step =1 时 ，相同的 activeIndex 需要拍后
+                if (self.activeIndex >= page) {
+                    self.activeIndex += 1;
+                }
+
+                // 注意 completedIndex 也得复制
+                if (self.completedIndex >= page) {
+                    self.completedIndex += 1;
+                }
+            } else {
+                // step >1 时 ，activeIndex 不排后
             }
 
             // 保持原来的在视窗
