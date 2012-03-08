@@ -395,7 +395,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             /**
              * stop this animation
-             * @param {boolean} finish whether jump to the last position of this animation
+             * @param {Boolean} [finish] whether jump to the last position of this animation
              */
             stop:function (finish) {
                 var self = this,

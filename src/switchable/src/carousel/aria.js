@@ -2,7 +2,7 @@
  * @fileOverview aria support for carousel
  * @author yiminghe@gmail.com
  */
-KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
+KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel) {
 
 //    var KEY_PAGEUP = 33;
 //    var KEY_PAGEDOWN = 34;
@@ -43,11 +43,11 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
             // 初始化
             || activeIndex == -1) {
 
-            S.each(triggers, function(t) {
+            S.each(triggers, function (t) {
                 setTabIndex(t, -1);
             });
 
-            S.each(panels, function(t) {
+            S.each(panels, function (t) {
                 setTabIndex(t, -1);
             });
 
@@ -64,8 +64,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     function findTrigger(t) {
-        var r;
-        S.each(this.triggers, function(trigger) {
+        var r = null;
+        S.each(this.triggers, function (trigger) {
             if (trigger == t
                 || DOM.contains(trigger, t)) {
                 r = trigger;
@@ -103,7 +103,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     function _navKeydown(e) {
-        var key = e.keyCode,t = e.target,
+        var key = e.keyCode, t = e.target,
             c;
 
         switch (key) {
@@ -139,8 +139,8 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     function findPanel(t) {
-        var r;
-        S.each(this.panels, function(p) {
+        var r = null;
+        S.each(this.panels, function (p) {
             if (p == t || DOM.contains(p, t)) {
                 r = p;
                 return false;
@@ -229,7 +229,7 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
 
                 c = findPanel.call(this, t);
                 if (c) {
-                    this.fire('itemSelected', { item: c });
+                    this.fire('itemSelected', { item:c });
                     e.halt();
                 }
                 break;
@@ -237,78 +237,78 @@ KISSY.add("switchable/carousel/aria", function(S, DOM, Event, Aria, Carousel) {
     }
 
     S.mix(Carousel.Config, {
-            aria:false
-        });
+        aria:false
+    });
 
     Carousel.Plugins.push({
-            name:"aria",
-            init:function(self) {
-                if (!self.config.aria) {
-                    return;
-                }
-                var triggers = self.triggers;
-                var panels = self.panels;
-                var content = self.content;
-                var activeIndex = self.activeIndex;
-
-                if (!content.id) {
-                    content.id = S.guid("ks-switchbale-content");
-                }
-                content.setAttribute("role", "listbox");
-                var i = 0;
-                S.each(triggers, function(t) {
-                    setTabIndex(t, activeIndex == i ? "0" : "-1");
-                    t.setAttribute("role", "button");
-                    t.setAttribute("aria-controls", content.id);
-                    i++;
-                });
-                i = 0;
-                S.each(panels, function(t) {
-                    setTabIndex(t, "-1");
-                    t.setAttribute("role", "option");
-                    i++;
-                });
-
-                self.on("switch", _switch, self);
-                var nav = self.nav;
-
-                if (nav) {
-                    Event.on(nav, "keydown", _navKeydown, self);
-                }
-
-                Event.on(content, "keydown", _contentKeydown, self);
-
-                var prevBtn = self['prevBtn'],
-                    nextBtn = self['nextBtn'];
-
-                if (prevBtn) {
-                    setTabIndex(prevBtn, 0);
-                    prevBtn.setAttribute("role", "button");
-                    Event.on(prevBtn, "keydown", function(e) {
-                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                            self.prev(DOM_EVENT);
-                            e.preventDefault();
-                        }
-                    });
-                }
-
-                if (nextBtn) {
-                    setTabIndex(nextBtn, 0);
-                    nextBtn.setAttribute("role", "button");
-                    Event.on(nextBtn, "keydown", function(e) {
-                        if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
-                            self.next(DOM_EVENT);
-                            e.preventDefault();
-                        }
-                    });
-                }
-
+        name:"aria",
+        init:function (self) {
+            if (!self.config.aria) {
+                return;
             }
-        });
+            var triggers = self.triggers;
+            var panels = self.panels;
+            var content = self.content;
+            var activeIndex = self.activeIndex;
+
+            if (!content.id) {
+                content.id = S.guid("ks-switchbale-content");
+            }
+            content.setAttribute("role", "listbox");
+            var i = 0;
+            S.each(triggers, function (t) {
+                setTabIndex(t, activeIndex == i ? "0" : "-1");
+                t.setAttribute("role", "button");
+                t.setAttribute("aria-controls", content.id);
+                i++;
+            });
+            i = 0;
+            S.each(panels, function (t) {
+                setTabIndex(t, "-1");
+                t.setAttribute("role", "option");
+                i++;
+            });
+
+            self.on("switch", _switch, self);
+            var nav = self.nav;
+
+            if (nav) {
+                Event.on(nav, "keydown", _navKeydown, self);
+            }
+
+            Event.on(content, "keydown", _contentKeydown, self);
+
+            var prevBtn = self['prevBtn'],
+                nextBtn = self['nextBtn'];
+
+            if (prevBtn) {
+                setTabIndex(prevBtn, 0);
+                prevBtn.setAttribute("role", "button");
+                Event.on(prevBtn, "keydown", function (e) {
+                    if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                        self.prev(DOM_EVENT);
+                        e.preventDefault();
+                    }
+                });
+            }
+
+            if (nextBtn) {
+                setTabIndex(nextBtn, 0);
+                nextBtn.setAttribute("role", "button");
+                Event.on(nextBtn, "keydown", function (e) {
+                    if (e.keyCode == KEY_ENTER || e.keyCode == KEY_SPACE) {
+                        self.next(DOM_EVENT);
+                        e.preventDefault();
+                    }
+                });
+            }
+
+        }
+    });
 
 }, {
-        requires:["dom","event","../aria","./base"]
-    });
+    requires:["dom", "event", "../aria", "./base"]
+});
 
 /**
  承玉：2011.06.02 review switchable

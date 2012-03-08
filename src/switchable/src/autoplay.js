@@ -4,7 +4,7 @@
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,
-        win=S.Env.host,
+        win = S.Env.host,
         checkElemInViewport = function (elem) {
             // 只计算上下位置是否在可视区域, 不计算左右
             var scrollTop = DOM.scrollTop(),

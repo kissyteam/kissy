@@ -50,9 +50,12 @@
 
     <pre class="s-section">
 功能：Slide
-源码：<a href="../slide/base.js">../slide/base.js</a></pre>
+源码：<a href="../src/base.js">../slide/base.js</a></pre>
 
 <h3 class="s-title">Slide - 淘宝首页卡盘</h3>
+<p>
+    单击图片动态删除
+</p>
 <div class="s-section">
     <style>
         #demo2 {
@@ -122,29 +125,20 @@
     <div class="s-demo">
         <div id="demo2" class="section loading">
             <ol class="ks-switchable-content">
-                <li><a href="http://www.taobao.com" target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
-                <li class="hidden"><a target="_blank" href="http://www.taobao.com"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
-                <li class="hidden"><a target="_blank" href="http://www.taobao.com"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
-                <li class="hidden"><a href="http://www.taobao.com" target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
-                <li class="hidden">
-                    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="470" height="150" class="holiday-logo">
-                        <param name="movie" value="http://img04.taobaocdn.com/tps/i4/T1bblrXfBrXXXXXXXX.swf"/>
-                        <param name="quality" value="high"/>
-                        <param name="swfversion" value="8.0.0"/>
-                        <param name="wmode" value="opaque"/>
-                        <!--[if !IE]>-->
-                        <object type="application/x-shockwave-flash" data="http://img04.taobaocdn.com/tps/i4/T1bblrXfBrXXXXXXXX.swf" width="470" height="150" name="holiday-logo" class="holiday-logo">
-                            <param name="wmode" value="opaque"/>
-                        </object>
-                        <!--<![endif]-->
-                    </object>
-                </li>
+                <li><a target="_blank"><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+                <li class="hidden"><a target="_blank"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
+                <li class="hidden"><a target="_blank"><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
+                <li class="hidden"><a target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+                <li class="hidden"><a target="_blank"><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
             </ol>
         </div>
         <button id="demo2-btn">stop autoplay</button>
+        <button id="demo2-add-btn">动态添加</button>
         <script>
             KISSY.use("event,switchable", function (S, Event, Switchable) {
                 var Slide = Switchable.Slide;
+
+                var DOM = S.DOM;
 
                 S.ready(function (S) {
                     var s = Slide('#demo2', {
@@ -160,7 +154,21 @@
                     window.slide = s;
 
                     s.on("switch", function () {
-                        S.log("switch");
+                        //S.log("switch");
+                    });
+
+                    S.one("#demo2").delegate("click", "li", function (e) {
+                        s.remove(e.currentTarget);
+                    });
+                    var i = 7;
+                    Event.on("#demo2-add-btn", 'click', function () {
+                        s.add({
+                            trigger:DOM.create("<li>" + i + "</li>"),
+                            panel:DOM.create("<li>" + i + "</li>"),
+                            index:s.activeIndex,
+                            activated:1
+                        });
+                        i++;
                     });
 
                     Event.on('#demo2-btn', 'click', function () {

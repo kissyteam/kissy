@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 8 20:57
 */
 /**
  * @fileOverview form data  serialization util
@@ -644,7 +644,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
     }
 
     /**
-     * @class IO Request Object. !Do Not New By Yourself!
+     * @class A class for constructing io request instances. !Do Not New By Yourself!
      * @extends KISSY.Promise
      * @memberOf IO
      */
@@ -1284,7 +1284,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
-        doc=S.Env.host.document,
+        doc = S.Env.host.document,
         curLocationParts;
 
     try {
@@ -1413,8 +1413,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
     /**
      * @name IO
-     * @description io is a utility that brokers HTTP requests through a simplified interface
-     * @namespace
+     * @namespace Provides utility that brokers HTTP requests through a simplified interface
      * @function
      *
      * @param {Object} c <br/>name-value of object to config this io request.<br/>

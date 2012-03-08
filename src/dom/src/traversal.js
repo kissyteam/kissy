@@ -122,7 +122,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             /**
              * Get the siblings of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} filter Selector string or filter function
+             * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement[]}
              */
             siblings:function (selector, filter) {
@@ -132,7 +132,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             /**
              * Get the children of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} filter Selector string or filter function
+             * @param {String|Function} [filter] Selector string or filter function
              * @returns {HTMLElement[]}
              */
             children:function (selector, filter) {
