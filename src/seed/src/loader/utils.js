@@ -19,6 +19,13 @@
         // http://xx.com/y/
         __pagePath = location.href.replace(location.hash, "").replace(/[^/]*$/i, "");
 
+    function indexMap(s) {
+        if (/\/$/.test(s)) {
+            return s + "index";
+        }
+        return s;
+    }
+
     S.mix(utils, {
 
         docHead:function () {
@@ -84,12 +91,12 @@
                 if ((index = moduleName.lastIndexOf("/")) != -1) {
                     anchor = moduleName.substring(0, index + 1);
                 }
-                return normalizePath(anchor + depName);
+                return indexMap(normalizePath(anchor + depName));
             } else if (depName.indexOf("./") != -1
                 || depName.indexOf("../") != -1) {
-                return normalizePath(depName);
+                return indexMap(normalizePath(depName));
             } else {
-                return depName;
+                return indexMap(depName);
             }
         },
 
@@ -136,9 +143,7 @@
         //如果模块名以 / 结尾，自动加 index
         indexMapping:function (names) {
             for (var i = 0; i < names.length; i++) {
-                if (names[i].match(/\/$/)) {
-                    names[i] += "index";
-                }
+                names[i] = indexMap(names[i]);
             }
             return names;
         },

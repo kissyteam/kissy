@@ -55,7 +55,5 @@ KISSY.add("uibase/contentbox", function () {
         }
     };
 
-    ContentBox.prototype = {    };
-
     return ContentBox;
 });

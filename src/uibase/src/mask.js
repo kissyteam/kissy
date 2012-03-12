@@ -27,7 +27,6 @@ KISSY.add("uibase/mask", function () {
     };
 
     Mask.prototype = {
-
         _uiSetMask:function (v) {
             var self = this;
             if (v) {

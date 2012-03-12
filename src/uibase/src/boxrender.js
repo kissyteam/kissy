@@ -165,13 +165,14 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                 if (height !== undefined) {
                     el.height(height);
                 }
-// srcNode 就是原来的内容，也可以不用设置 html
-//                if (html !== undefined &&
-//                    // 防止冲掉 el 原来的子元素引用 !!
-//
-//                    html !== el.html()) {
-//                    el.html(html);
-//                }
+                /*
+                 srcNode 就是原来的内容，也可以不用设置 html
+                 if (html !== undefined &&
+                 // 防止冲掉 el 原来的子元素引用 !!
+                 html !== el.html()) {
+                 el.html(html);
+                 }
+                 */
                 if (elAttrs) {
                     el.attr(elAttrs);
                 }
@@ -227,7 +228,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             //S.log("box __destructor");
             var el = this.get("el");
             if (el) {
-                el.detach();
                 el.remove();
             }
         }

@@ -36,10 +36,11 @@
 
 <h1>KISSY.Overlay Test Cases</h1>
 <script src="overlay-spec.js"></script>
+<script src="dialog-spec.js"></script>
 <script>
-    KISSY.use("overlay,resizable,dd", function() {
+    KISSY.use("overlay,resizable,dd", function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function() {
+        jasmine.getEnv().execute(function () {
             if (parent && parent.jasmine.kissyNext) {
                 parent.jasmine.kissyNext(this.results().failedCount);
             }

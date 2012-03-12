@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 7 10:40
+build time: Mar 12 11:59
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -9,7 +9,18 @@ build time: Mar 7 10:40
  */
 (function (S, undefined) {
     /**
-     * @namespace
+     * @namespace The KISSY global namespace object. you can use
+     * <code>
+     *     KISSY.each/mix
+     * </code>
+     * to do basic operation.
+     * or
+     * <code>
+     *      KISSY.use("overlay,node",function(S,Overlay,Node){
+     *          //
+     *      })
+     * </code>
+     * to do complex task with modules.
      * @name KISSY
      */
 
@@ -140,7 +151,7 @@ build time: Mar 7 10:40
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120307104053',
+            __BUILD_TIME:'20120312115923',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1498,8 +1509,7 @@ build time: Mar 7 10:40
     }
 
     /**
-     * @class
-     * @description Defer constructor
+     * @class Defer constructor For KISSY,implement Promise specification.
      * @memberOf KISSY
      */
     function Defer(promise) {
@@ -1565,10 +1575,9 @@ build time: Mar 7 10:40
     }
 
     /**
-     * Promise constructor.
+     * @class Promise constructor.
      * This class should not be instantiated manually.
      * Instances will be created and returned as needed by {@link KISSY.Defer#promise}
-     * @constructor
      * @namespace
      * @param v promise's resolved value
      * @memberOf KISSY
@@ -1880,9 +1889,8 @@ build time: Mar 7 10:40
     }
 
     /**
-     * KISSY Loader constructor
+     * @class KISSY Loader constructor
      * This class should not be instantiated manually.
-     * @class
      * @memberOf KISSY
      */
     function Loader(SS) {
@@ -1899,9 +1907,8 @@ build time: Mar 7 10:40
     KISSY.Loader = Loader;
 
     /**
-     * KISSY Module constructor
+     * @class KISSY Module constructor
      * This class should not be instantiated manually.
-     * @class
      * @memberOf KISSY.Loader
      */
     function Module(ps) {
@@ -2042,6 +2049,13 @@ build time: Mar 7 10:40
         // http://xx.com/y/
         __pagePath = location.href.replace(location.hash, "").replace(/[^/]*$/i, "");
 
+    function indexMap(s) {
+        if (/\/$/.test(s)) {
+            return s + "index";
+        }
+        return s;
+    }
+
     S.mix(utils, {
 
         docHead:function () {
@@ -2107,12 +2121,12 @@ build time: Mar 7 10:40
                 if ((index = moduleName.lastIndexOf("/")) != -1) {
                     anchor = moduleName.substring(0, index + 1);
                 }
-                return normalizePath(anchor + depName);
+                return indexMap(normalizePath(anchor + depName));
             } else if (depName.indexOf("./") != -1
                 || depName.indexOf("../") != -1) {
-                return normalizePath(depName);
+                return indexMap(normalizePath(depName));
             } else {
-                return depName;
+                return indexMap(depName);
             }
         },
 
@@ -2159,9 +2173,7 @@ build time: Mar 7 10:40
         //如果模块名以 / 结尾，自动加 index
         indexMapping:function (names) {
             for (var i = 0; i < names.length; i++) {
-                if (names[i].match(/\/$/)) {
-                    names[i] += "index";
-                }
+                names[i] = indexMap(names[i]);
             }
             return names;
         },
@@ -11215,7 +11227,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 8 20:57
 */
 /**
  * @fileOverview form data  serialization util
@@ -11858,7 +11870,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
     }
 
     /**
-     * @class IO Request Object. !Do Not New By Yourself!
+     * @class A class for constructing io request instances. !Do Not New By Yourself!
      * @extends KISSY.Promise
      * @memberOf IO
      */
@@ -12498,7 +12510,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         HTTPS_PORT = 443,
         rnoContent = /^(?:GET|HEAD)$/,
         curLocation,
-        doc=S.Env.host.document,
+        doc = S.Env.host.document,
         curLocationParts;
 
     try {
@@ -12627,8 +12639,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
 
     /**
      * @name IO
-     * @description io is a utility that brokers HTTP requests through a simplified interface
-     * @namespace
+     * @namespace Provides utility that brokers HTTP requests through a simplified interface
      * @function
      *
      * @param {Object} c <br/>name-value of object to config this io request.<br/>

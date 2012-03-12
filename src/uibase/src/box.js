@@ -30,6 +30,7 @@ KISSY.add('uibase/box', function (S) {
          * @type Number|String
          */
         width:{
+            // 没有 _uiSetWidth，所以不需要设置 sync:false
             view:true
         },
         /**

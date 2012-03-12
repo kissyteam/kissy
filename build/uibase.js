@@ -1,14 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 7 19:03
+build time: Mar 12 21:14
 */
 /**
  * @fileOverview UIBase.Align
  * @author yiminghe@gmail.com , qiaohua@taobao.com
  */
 KISSY.add('uibase/align', function (S, UA, DOM, Node) {
-
 
     /*
      inspired by closure library by Google
@@ -72,7 +71,6 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
 
         for (var el = element; el = getOffsetParent(el);) {
 
-
             var clientWidth = el.clientWidth;
 
             if (
@@ -83,7 +81,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             // overflow 不为 visible 则可以限定其内元素
             // && (scrollWidth != clientWidth || scrollHeight != clientHeight)
             // offsetParent 已经判断过了
-            //&& DOM.css(el, 'overflow') != 'visible'
+            // && DOM.css(el, 'overflow') != 'visible'
                 ) {
                 var clientLeft = el.clientLeft,
                     clientTop = el.clientTop,
@@ -293,12 +291,6 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
                     v.node = Node.one(n);
                 }
             }
-            // 默认不是正中，可以实现自由动画 zoom
-//            value:{
-//                node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
-//                points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
-//                offset: [0, 0]      // 有效值为 [n, m]
-//            }
         }
     };
 
@@ -876,6 +868,7 @@ KISSY.add('uibase/box', function (S) {
          * @type Number|String
          */
         width:{
+            // 没有 _uiSetWidth，所以不需要设置 sync:false
             view:true
         },
         /**
@@ -1171,13 +1164,14 @@ KISSY.add('uibase/boxrender', function (S, Node) {
                 if (height !== undefined) {
                     el.height(height);
                 }
-// srcNode 就是原来的内容，也可以不用设置 html
-//                if (html !== undefined &&
-//                    // 防止冲掉 el 原来的子元素引用 !!
-//
-//                    html !== el.html()) {
-//                    el.html(html);
-//                }
+                /*
+                 srcNode 就是原来的内容，也可以不用设置 html
+                 if (html !== undefined &&
+                 // 防止冲掉 el 原来的子元素引用 !!
+                 html !== el.html()) {
+                 el.html(html);
+                 }
+                 */
                 if (elAttrs) {
                     el.attr(elAttrs);
                 }
@@ -1233,7 +1227,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             //S.log("box __destructor");
             var el = this.get("el");
             if (el) {
-                el.detach();
                 el.remove();
             }
         }
@@ -1312,7 +1305,8 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.ATTRS = {
         closable:{             // 是否需要关闭按钮
-            value:true
+            value:true,
+            sync:false
         },
         closeBtn:{
         }
@@ -1326,24 +1320,18 @@ KISSY.add("uibase/closerender", function (S, Node) {
 
     Close.prototype = {
         _uiSetClosable:function (v) {
-            var self = this,
-                closeBtn = self.get("closeBtn");
-            if (closeBtn) {
-                if (v) {
-                    closeBtn.css("display", "");
-                } else {
-                    closeBtn.css("display", "none");
-                }
-            }
+            this.get("closeBtn")[v ? "show" : "hide"]();
         },
-        __renderUI:function () {
+        __createDom:function () {
             var self = this,
                 closeBtn = self.get("closeBtn"),
+                closable = self.get("closable"),
                 el = self.get("el");
 
-            if (!closeBtn && el) {
+            if (!closeBtn) {
                 closeBtn = new Node("<a " +
                     "tabindex='0' " +
+                    (closable ? "" : "style='display:none'") +
                     "href='javascript:void(\"关闭\")' " +
                     "role='button' " +
                     "class='" + this.get("prefixCls") + CLS_PREFIX + "close" + "'>" +
@@ -1352,11 +1340,12 @@ KISSY.add("uibase/closerender", function (S, Node) {
                     "'>关闭<" + "/span>" +
                     "<" + "/a>").appendTo(el);
                 self.__set("closeBtn", closeBtn);
+            } else {
+                closeBtn[closable ? "show" : "hide"]();
             }
         },
 
         __destructor:function () {
-
             var self = this,
                 closeBtn = self.get("closeBtn");
             closeBtn && closeBtn.detach();
@@ -1539,8 +1528,6 @@ KISSY.add("uibase/contentbox", function () {
             view:true
         }
     };
-
-    ContentBox.prototype = {    };
 
     return ContentBox;
 });/**
@@ -1835,7 +1822,6 @@ KISSY.add("uibase/mask", function () {
     };
 
     Mask.prototype = {
-
         _uiSetMask:function (v) {
             var self = this;
             if (v) {
@@ -2074,7 +2060,7 @@ KISSY.add("uibase/position", function (S) {
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author  yiminghe@gmail.com
  */
-KISSY.add("uibase/positionrender", function() {
+KISSY.add("uibase/positionrender", function () {
 
     var ZINDEX = 9999;
 
@@ -2082,42 +2068,44 @@ KISSY.add("uibase/positionrender", function() {
     }
 
     Position.ATTRS = {
-        x: {
+        x:{
             // 水平方向绝对位置
-            valueFn:function() {
+            valueFn:function () {
                 // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
                 // el 不在 dom 树中 offset 报错的
                 // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
                 return this.get("el") && this.get("el").offset().left;
             }
         },
-        y: {
+        y:{
             // 垂直方向绝对位置
-            valueFn:function() {
+            valueFn:function () {
                 return this.get("el") && this.get("el").offset().top;
             }
         },
-        zIndex: {
-            value: ZINDEX
+        zIndex:{
+            value:ZINDEX
         }
     };
 
 
     Position.prototype = {
 
-        __renderUI:function() {
+        __createDom:function () {
             this.get("el").addClass(this.get("prefixCls") + "ext-position");
         },
 
-        _uiSetZIndex:function(x) {
+        _uiSetZIndex:function (x) {
             this.get("el").css("z-index", x);
         },
-        _uiSetX:function(x) {
+
+        _uiSetX:function (x) {
             this.get("el").offset({
                 left:x
             });
         },
-        _uiSetY:function(y) {
+
+        _uiSetY:function (y) {
             this.get("el").offset({
                 top:y
             });
@@ -2172,7 +2160,6 @@ KISSY.add("uibase/resize", function (S) {
             r && r.destroy();
         },
         _uiSetResize:function (v) {
-
             var Resizable = S.require("resizable"),
                 self = this;
             if (Resizable) {
@@ -2182,7 +2169,6 @@ KISSY.add("uibase/resize", function (S) {
                     self.resizer = new Resizable(v);
                 }
             }
-
         }
     };
 
@@ -2195,15 +2181,14 @@ KISSY.add("uibase/resize", function (S) {
 KISSY.add("uibase/shimrender", function(S, Node) {
 
     function Shim() {
-        //S.log("shim init");
     }
-
 
     Shim.ATTRS = {
         shim:{
             value:true
         }
     };
+
     Shim.prototype = {
 
         _uiSetShim:function(v) {
@@ -2251,63 +2236,63 @@ KISSY.add("uibase/stdmod", function () {
      */
     {
         /**
-         * 头元素，只读
+         * Header element of dialog. Readonly
          * @type Node
          */
         header:{
             view:true
         },
         /**
-         * 体元素，只读
+         * Body element of dialog. Readonly
          * @type Node
          */
         body:{
             view:true
         },
         /**
-         * 尾元素，只读
+         * Footer element of dialog. Readonly
          * @type Node
          */
         footer:{
             view:true
         },
         /**
-         * 体元素样式键值对
+         * Key-value map of body element's style.
          * @type Object
          */
         bodyStyle:{
             view:true
         },
         /**
-         * 尾元素样式键值对
+         * Key-value map of footer element's style.
          * @type Object
          */
         footerStyle:{
             view:true
         },
         /**
-         * 头元素样式键值对
+         * Key-value map of header element's style.
          * @type Object
          */
         headerStyle:{
             view:true
         },
         /**
-         * 头元素内容值
+         * Html content of header element.
          * @type Node|String
          */
         headerContent:{
             view:true
         },
         /**
-         * 体元素内容值
+         * Html content of body element.
          * @type Node|String
          */
         bodyContent:{
             view:true
         },
         /**
-         * 尾元素内容值
+         * Html content of footer element.
          * @type Node|String
          */
         footerContent:{
@@ -2315,16 +2300,13 @@ KISSY.add("uibase/stdmod", function () {
         }
     };
 
-
-    StdMod.prototype = {};
-
     return StdMod;
 
 });/**
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/stdmodrender", function(S, Node) {
+KISSY.add("uibase/stdmodrender", function (S, Node) {
 
 
     var CLS_PREFIX = "stdmod-";
@@ -2340,77 +2322,114 @@ KISSY.add("uibase/stdmodrender", function(S, Node) {
         footer:{
         },
         bodyStyle:{
+            sync:false
         },
         footerStyle:{
-
+            sync:false
         },
         headerStyle:{
-
+            sync:false
         },
-        headerContent:{},
-        bodyContent:{},
-        footerContent:{}
+        headerContent:{
+            sync:false
+        },
+        bodyContent:{
+            sync:false
+        },
+        footerContent:{
+            sync:false
+        }
     };
 
+    function serialize(css) {
+        var str = "";
+        if (css) {
+            for (var i in css) {
+                if (css.hasOwnProperty(i)) {
+                    str += i + ":" + css[i] + ";"
+                }
+            }
+        }
+        return str;
+    }
+
     StdMod.HTML_PARSER = {
-        header:function(el) {
+        header:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + "header");
         },
-        body:function(el) {
+        body:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + "body");
         },
-        footer:function(el) {
+        footer:function (el) {
             return el.one("." + this.get("prefixCls") + CLS_PREFIX + "footer");
         }
     };
 
     function renderUI(self, part) {
         var el = self.get("contentEl"),
+            style = self.get(part + "Style"),
+            content = self.get(part + "Content"),
+            isString = S.isString(content),
             partEl = self.get(part);
         if (!partEl) {
-            partEl = new Node("<div class='" + self.get("prefixCls") + CLS_PREFIX + part + "'/>")
-                .appendTo(el);
+            style = serialize(style);
+            partEl = new Node("<div class='" + self.get("prefixCls") +
+                CLS_PREFIX + part + "'" +
+                " " +
+                (style ? ("style='" + style + "'") : "") +
+                " >" +
+                (isString ? content : "") +
+                "</div>");
+            if (!isString) {
+                partEl.append(content);
+            }
+            partEl.appendTo(el);
             self.__set(part, partEl);
+        } else if (style) {
+            partEl.css(style);
+        }
+    }
+
+
+    function _setStdModContent(self, part, v) {
+        part = self.get(part);
+        if (S.isString(v)) {
+            part.html(v);
+        } else {
+            part.html("")
+                .append(v);
         }
     }
 
     StdMod.prototype = {
 
-        _setStdModContent:function(part, v) {
-            if (S.isString(v)) {
-                this.get(part).html(v);
-            } else {
-                this.get(part).html("");
-                this.get(part).append(v);
-            }
-        },
-        _uiSetBodyStyle:function(v) {
-
-            this.get("body").css(v);
-
-        },
-        _uiSetHeaderStyle:function(v) {
-
-            this.get("header").css(v);
-
-        },
-        _uiSetFooterStyle:function(v) {
-
-            this.get("footer").css(v);
-        },
-        _uiSetBodyContent:function(v) {
-            this._setStdModContent("body", v);
-        },
-        _uiSetHeaderContent:function(v) {
-            this._setStdModContent("header", v);
-        },
-        _uiSetFooterContent:function(v) {
-            this._setStdModContent("footer", v);
-        },
-        __renderUI:function() {
+        __createDom:function () {
             renderUI(this, "header");
             renderUI(this, "body");
             renderUI(this, "footer");
+        },
+
+        _uiSetBodyStyle:function (v) {
+            this.get("body").css(v);
+        },
+
+        _uiSetHeaderStyle:function (v) {
+            this.get("header").css(v);
+        },
+        _uiSetFooterStyle:function (v) {
+            this.get("footer").css(v);
+        },
+
+        _uiSetBodyContent:function (v) {
+            _setStdModContent(this, "body", v);
+        },
+
+        _uiSetHeaderContent:function (v) {
+            _setStdModContent(this, "header", v);
+        },
+
+        _uiSetFooterContent:function (v) {
+            _setStdModContent(this, "footer", v);
         }
     };
 

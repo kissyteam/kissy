@@ -5,15 +5,14 @@
 KISSY.add("uibase/shimrender", function(S, Node) {
 
     function Shim() {
-        //S.log("shim init");
     }
-
 
     Shim.ATTRS = {
         shim:{
             value:true
         }
     };
+
     Shim.prototype = {
 
         _uiSetShim:function(v) {

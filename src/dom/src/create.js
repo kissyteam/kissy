@@ -132,7 +132,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Get the HTML contents of the first element in the set of matched elements.
                  * or
                  * Set the HTML contents of each element in the set of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
                  * @param {String} htmlString  A string of HTML to set as the content of each matched element.
                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
@@ -196,7 +196,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove the set of matched elements from the DOM.
-                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
                  * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
                  */
                 remove:function (selector, keepData) {
@@ -218,7 +218,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Create a deep copy of the first of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
                  * @param {Boolean} [deep=false] whether perform deep copy
                  * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
                  * whether event handlers and data should be copied along with the elements.
@@ -268,7 +268,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
-                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
                  */
                 empty:function (selector) {
                     var els = DOM.query(selector), el, i;

@@ -45,7 +45,6 @@ KISSY.add("uibase/resize", function (S) {
             r && r.destroy();
         },
         _uiSetResize:function (v) {
-
             var Resizable = S.require("resizable"),
                 self = this;
             if (Resizable) {
@@ -55,7 +54,6 @@ KISSY.add("uibase/resize", function (S) {
                     self.resizer = new Resizable(v);
                 }
             }
-
         }
     };
 
