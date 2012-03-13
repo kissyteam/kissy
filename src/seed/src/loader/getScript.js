@@ -128,3 +128,9 @@
     });
 
 })(KISSY);
+/**
+ * yiminghe@gmail.com 2012-03-13
+ *  - getScript
+ *      - 404 in ie<9 trigger success , others trigger error
+ *      - syntax error in all trigger success
+ **/

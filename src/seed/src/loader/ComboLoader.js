@@ -26,6 +26,7 @@
 
     var MAX_URL_LENGTH = 1024,
         Loader = S.Loader,
+        data = Loader.STATUS,
         utils = Loader.Utils;
 
     /**
@@ -64,17 +65,17 @@
             },
 
             _use:function (modNames, fn) {
-                var self = this;
+                var self = this, SS = self.SS;
 
                 self.loading = 1;
 
                 modNames = utils.getModNamesAsArray(modNames);
 
-                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
-                var allModNames = self.calculate(unaliasModNames),
-                    comboUrls = self.getComboUrls(allModNames);
+                var allModNames = self.calculate(unaliasModNames);
 
+                var comboUrls = self.getComboUrls(allModNames);
 
                 // load css first to avoid page blink
                 var css = comboUrls.css,
@@ -133,21 +134,35 @@
                     fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
                 }
-
+                var success = 1;
                 for (p in jss) {
-                    loadScripts(jss[p], function () {
-                        if (!(--countJss)) {
-                            var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
-                            self.attachMods(unaliasModNames);
-                            if (utils.isAttached(self.SS, unaliasModNames)) {
-                                fn.apply(null, utils.getModules(self.SS, modNames))
-                            } else {
-                                // new require is introduced by KISSY.add
-                                // run again
-                                self._use(modNames, fn)
+                    (function (p) {
+                        loadScripts(jss[p], function () {
+                            var mods = jss[p].mods;
+                            for (var i = 0; i < mods.length; i++) {
+                                var mod = mods[i];
+                                // fix #111
+                                // https://github.com/kissyteam/kissy/issues/111
+                                if (!mod.fn) {
+                                    S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                                    mod.status = data.ERROR;
+                                    success = 0;
+                                    return;
+                                }
                             }
-                        }
-                    });
+                            if (success && !(--countJss)) {
+                                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                                self.attachMods(unaliasModNames);
+                                if (utils.isAttached(self.SS, unaliasModNames)) {
+                                    fn.apply(null, utils.getModules(self.SS, modNames))
+                                } else {
+                                    // new require is introduced by KISSY.add
+                                    // run again
+                                    self._use(modNames, fn)
+                                }
+                            }
+                        });
+                    })(p);
                 }
             },
 
@@ -179,8 +194,7 @@
                 if (
                 // new require after add
                 // not register yet!
-                    !mod ||
-                        utils.isAttached(SS, modName)) {
+                    !mod || utils.isAttached(SS, modName)) {
                     return;
                 }
                 var requires = utils.normalizeModNames(SS, mod.requires, modName);
@@ -226,8 +240,20 @@
                     var type = utils.isCss(mod.path) ? "css" : "js";
                     combos[packagePath] = combos[packagePath] || {};
                     combos[packagePath][type] = combos[packagePath][type] || [];
-                    combos[packagePath][type].tag = mod.tag;
-                    combos[packagePath][type].push(mod.path);
+                    combos[packagePath][type].tag = combos[packagePath][type].tag || mod.tag;
+                    combos[packagePath][type].packageTag = mod.packageTag;
+                    combos[packagePath][type].push(mod);
+                });
+
+                S.each(combos, function (v) {
+                    var js, css;
+                    if (js = v["js"]) {
+                        // module level tag is superior to package level tag
+                        js.tag = js.tag || js.packageTag;
+                    }
+                    if (css = v["css"]) {
+                        css.tag = css.tag || css.packageTag;
+                    }
                 });
 
                 var res = {
@@ -244,10 +270,13 @@
                         t = [];
                         var jss = combos[packagePath][type];
                         res[type][packagePath] = [];
+                        // current package's mods
+                        res[type][packagePath].mods = [];
                         var prefix = packagePath + comboPrefix,
                             l = prefix.length;
                         for (i = 0; i < jss.length; i++) {
-                            t.push(jss[i]);
+                            t.push(jss[i].path);
+                            res[type][packagePath].mods.push(jss[i]);
                             if (l + t.join(comboSep).length > maxUrlLength) {
                                 t.pop();
                                 res[type][packagePath].push(self.getComboUrl(

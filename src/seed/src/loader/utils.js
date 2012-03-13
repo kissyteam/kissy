@@ -166,10 +166,10 @@
             mod.charset = p_def && p_def.charset || mod.charset;
 
             if (p_def) {
-                mod.tag = mod.tag || p_def.tag;
+                mod.packageTag = p_def.tag;
             } else {
                 // kissy 自身组件的事件戳后缀
-                mod.tag = mod.tag || encodeURIComponent(self.Config.tag);
+                mod.packageTag = encodeURIComponent(self.Config.tag);
             }
 
             return mod.packagePath = (p_def && p_def.path) || self.Config.base;

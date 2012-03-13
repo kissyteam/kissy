@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 13 18:35
+build time: Mar 13 20:24
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 13 18:35
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120313183528',
+            __BUILD_TIME:'20120313202403',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1939,6 +1939,12 @@ build time: Mar 13 18:35
              */
             getName:function () {
                 return this.name;
+            },
+            /**
+             * @private
+             */
+            getUrlTag:function () {
+                return this.tag || this.packageTag;
             }
         });
 
@@ -2196,10 +2202,10 @@ build time: Mar 13 18:35
             mod.charset = p_def && p_def.charset || mod.charset;
 
             if (p_def) {
-                mod.tag = mod.tag || p_def.tag;
+                mod.packageTag = p_def.tag;
             } else {
                 // kissy 自身组件的事件戳后缀
-                mod.tag = mod.tag || encodeURIComponent(self.Config.tag);
+                mod.packageTag = encodeURIComponent(self.Config.tag);
             }
 
             return mod.packagePath = (p_def && p_def.path) || self.Config.base;
@@ -2684,7 +2690,13 @@ build time: Mar 13 18:35
         }
     });
 
-})(KISSY);(function (S) {
+})(KISSY);
+/**
+ * yiminghe@gmail.com 2012-03-13
+ *  - getScript
+ *      - 404 in ie<9 trigger success , others trigger error
+ *      - syntax error in all trigger success
+ **/(function (S) {
     if (typeof require !== 'undefined') {
         return;
     }
@@ -3035,7 +3047,7 @@ build time: Mar 13 18:35
                 // debug 模式下，加载非 min 版
                 if (p) {
                     mod[fullpath] = utils.getMappedPath(SS, p +
-                        ((t = mod.tag) ? ("?t=" + t) : ""));
+                        ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
                     mod[flag] = 1;
                 }
             }
@@ -3094,7 +3106,7 @@ build time: Mar 13 18:35
                     if (JSON) {
                         error = JSON.stringify(__allRequires);
                     }
-                    S.error("find cyclic dependency by mod " +myName + " between mods : " + error);
+                    S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
 
                 }
             }
@@ -3190,6 +3202,8 @@ build time: Mar 13 18:35
                     self.__startLoadTime = Number(+new Date());
                 }
                 node = S.getScript(url, {
+                    // syntaxError in all browser will trigger this
+                    // same as #111 : https://github.com/kissyteam/kissy/issues/111
                     success:function () {
                         if (isCss) {
                         } else {
@@ -3276,6 +3290,7 @@ build time: Mar 13 18:35
 
     var MAX_URL_LENGTH = 1024,
         Loader = S.Loader,
+        data = Loader.STATUS,
         utils = Loader.Utils;
 
     /**
@@ -3314,17 +3329,17 @@ build time: Mar 13 18:35
             },
 
             _use:function (modNames, fn) {
-                var self = this;
+                var self = this, SS = self.SS;
 
                 self.loading = 1;
 
                 modNames = utils.getModNamesAsArray(modNames);
 
-                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
-                var allModNames = self.calculate(unaliasModNames),
-                    comboUrls = self.getComboUrls(allModNames);
+                var allModNames = self.calculate(unaliasModNames);
 
+                var comboUrls = self.getComboUrls(allModNames);
 
                 // load css first to avoid page blink
                 var css = comboUrls.css,
@@ -3383,21 +3398,35 @@ build time: Mar 13 18:35
                     fn.apply(null, utils.getModules(self.SS, modNames));
                     return;
                 }
-
+                var success = 1;
                 for (p in jss) {
-                    loadScripts(jss[p], function () {
-                        if (!(--countJss)) {
-                            var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
-                            self.attachMods(unaliasModNames);
-                            if (utils.isAttached(self.SS, unaliasModNames)) {
-                                fn.apply(null, utils.getModules(self.SS, modNames))
-                            } else {
-                                // new require is introduced by KISSY.add
-                                // run again
-                                self._use(modNames, fn)
+                    (function (p) {
+                        loadScripts(jss[p], function () {
+                            var mods = jss[p].mods;
+                            for (var i = 0; i < mods.length; i++) {
+                                var mod = mods[i];
+                                // fix #111
+                                // https://github.com/kissyteam/kissy/issues/111
+                                if (!mod.fn) {
+                                    S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                                    mod.status = data.ERROR;
+                                    success = 0;
+                                    return;
+                                }
                             }
-                        }
-                    });
+                            if (success && !(--countJss)) {
+                                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
+                                self.attachMods(unaliasModNames);
+                                if (utils.isAttached(self.SS, unaliasModNames)) {
+                                    fn.apply(null, utils.getModules(self.SS, modNames))
+                                } else {
+                                    // new require is introduced by KISSY.add
+                                    // run again
+                                    self._use(modNames, fn)
+                                }
+                            }
+                        });
+                    })(p);
                 }
             },
 
@@ -3429,8 +3458,7 @@ build time: Mar 13 18:35
                 if (
                 // new require after add
                 // not register yet!
-                    !mod ||
-                        utils.isAttached(SS, modName)) {
+                    !mod || utils.isAttached(SS, modName)) {
                     return;
                 }
                 var requires = utils.normalizeModNames(SS, mod.requires, modName);
@@ -3476,8 +3504,20 @@ build time: Mar 13 18:35
                     var type = utils.isCss(mod.path) ? "css" : "js";
                     combos[packagePath] = combos[packagePath] || {};
                     combos[packagePath][type] = combos[packagePath][type] || [];
-                    combos[packagePath][type].tag = mod.tag;
-                    combos[packagePath][type].push(mod.path);
+                    combos[packagePath][type].tag = combos[packagePath][type].tag || mod.tag;
+                    combos[packagePath][type].packageTag = mod.packageTag;
+                    combos[packagePath][type].push(mod);
+                });
+
+                S.each(combos, function (v) {
+                    var js, css;
+                    if (js = v["js"]) {
+                        // module level tag is superior to package level tag
+                        js.tag = js.tag || js.packageTag;
+                    }
+                    if (css = v["css"]) {
+                        css.tag = css.tag || css.packageTag;
+                    }
                 });
 
                 var res = {
@@ -3494,10 +3534,13 @@ build time: Mar 13 18:35
                         t = [];
                         var jss = combos[packagePath][type];
                         res[type][packagePath] = [];
+                        // current package's mods
+                        res[type][packagePath].mods = [];
                         var prefix = packagePath + comboPrefix,
                             l = prefix.length;
                         for (i = 0; i < jss.length; i++) {
-                            t.push(jss[i]);
+                            t.push(jss[i].path);
+                            res[type][packagePath].mods.push(jss[i]);
                             if (l + t.join(comboSep).length > maxUrlLength) {
                                 t.pop();
                                 res[type][packagePath].push(self.getComboUrl(

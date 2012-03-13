@@ -24,7 +24,7 @@ describe("loader", function () {
             });
 
             runs(function () {
-                expect(mods["timestamp/x"].tag).toBe("b");
+                expect(mods["timestamp/x"].getUrlTag()).toBe("b");
                 expect(window.TIMESTAMP_X).toBe(1);
             });
 
@@ -39,8 +39,8 @@ describe("loader", function () {
             });
 
             runs(function () {
-                expect(mods["timestamp/x"].tag).toBe("b");
-                expect(mods["timestamp/y"].tag).toBe("a");
+                expect(mods["timestamp/x"].getUrlTag()).toBe("b");
+                expect(mods["timestamp/y"].getUrlTag()).toBe("a");
                 expect(window.TIMESTAMP_X).toBe(1);
             });
         });

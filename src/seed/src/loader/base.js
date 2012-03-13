@@ -58,6 +58,12 @@
              */
             getName:function () {
                 return this.name;
+            },
+            /**
+             * @private
+             */
+            getUrlTag:function () {
+                return this.tag || this.packageTag;
             }
         });
 

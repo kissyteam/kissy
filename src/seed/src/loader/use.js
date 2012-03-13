@@ -90,7 +90,7 @@
                 // debug 模式下，加载非 min 版
                 if (p) {
                     mod[fullpath] = utils.getMappedPath(SS, p +
-                        ((t = mod.tag) ? ("?t=" + t) : ""));
+                        ((t = mod.getUrlTag()) ? ("?t=" + t) : ""));
                     mod[flag] = 1;
                 }
             }
@@ -245,6 +245,8 @@
                     self.__startLoadTime = Number(+new Date());
                 }
                 node = S.getScript(url, {
+                    // syntaxError in all browser will trigger this
+                    // same as #111 : https://github.com/kissyteam/kissy/issues/111
                     success:function () {
                         if (isCss) {
                         } else {
