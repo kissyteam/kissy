@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 12 11:59
+build time: Mar 13 18:19
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -350,7 +350,7 @@ build time: Mar 12 11:59
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120312115923',
+            __BUILD_TIME:'20120313181901',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2231,7 +2231,7 @@ build time: Mar 12 11:59
  * @fileOverview utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
     if (typeof require !== 'undefined') {
         return;
     }
@@ -2240,7 +2240,6 @@ build time: Mar 12 11:59
         startsWith = S.startsWith,
         data = Loader.STATUS,
         utils = {},
-        mix = S.mix,
         doc = S.Env.host.document,
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
@@ -2248,9 +2247,11 @@ build time: Mar 12 11:59
         // http://xx.com/y/
         __pagePath = location.href.replace(location.hash, "").replace(/[^/]*$/i, "");
 
+    // http://wiki.commonjs.org/wiki/Packages/Mappings/A
+    // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
-        if (/\/$/.test(s)) {
-            return s + "index";
+        if (/(.+\/)(\?t=.+)?$/.test(s)) {
+            return RegExp.$1 + "index" + RegExp.$2;
         }
         return s;
     }
@@ -2304,13 +2305,13 @@ build time: Mar 12 11:59
          * @return {string|Array} 依赖模块的绝对路径
          * @description similar to path.resolve in nodejs
          */
-        normalDepModuleName:function normalDepModuleName(moduleName, depName) {
+        normalDepModuleName:function (moduleName, depName) {
             if (!depName) {
                 return depName;
             }
             if (S.isArray(depName)) {
                 for (var i = 0; i < depName.length; i++) {
-                    depName[i] = normalDepModuleName(moduleName, depName[i]);
+                    depName[i] = utils.normalDepModuleName(moduleName, depName[i]);
                 }
                 return depName;
             }
@@ -2320,12 +2321,12 @@ build time: Mar 12 11:59
                 if ((index = moduleName.lastIndexOf("/")) != -1) {
                     anchor = moduleName.substring(0, index + 1);
                 }
-                return indexMap(normalizePath(anchor + depName));
+                return normalizePath(anchor + depName);
             } else if (depName.indexOf("./") != -1
                 || depName.indexOf("../") != -1) {
-                return indexMap(normalizePath(depName));
+                return normalizePath(depName);
             } else {
-                return indexMap(depName);
+                return depName;
             }
         },
 
@@ -2368,15 +2369,6 @@ build time: Mar 12 11:59
             return path.substring(0, path.length - 1);
         },
 
-        //http://wiki.commonjs.org/wiki/Packages/Mappings/A
-        //如果模块名以 / 结尾，自动加 index
-        indexMapping:function (names) {
-            for (var i = 0; i < names.length; i++) {
-                names[i] = indexMap(names[i]);
-            }
-            return names;
-        },
-
         getPackagePath:function (self, mod) {
             //缓存包路径，未申明的包的模块都到核心模块中找
             if (mod.packagePath) {
@@ -2403,21 +2395,35 @@ build time: Mar 12 11:59
             mod.charset = p_def && p_def.charset || mod.charset;
 
             if (p_def) {
-                mod.tag = p_def.tag;
+                mod.tag = mod.tag || p_def.tag;
             } else {
                 // kissy 自身组件的事件戳后缀
-                mod.tag = encodeURIComponent(self.Config.tag || S.__BUILD_TIME);
+                mod.tag = mod.tag || encodeURIComponent(self.Config.tag);
             }
 
             return mod.packagePath = (p_def && p_def.path) || self.Config.base;
         },
 
-        generateModulePath:function (self, modName) {
+        createModuleInfo:function (self, modName) {
+
+            var tag = undefined,
+                m,
+                withTagReg = /([^?]+)(?:\?t=(.+))/;
+
+            if (m = modName.match(withTagReg)) {
+                modName = m[1];
+                tag = m[2];
+            }
+
+            // js do not need suffix
+            modName = modName.replace(/\.js$/i, "");
+
             var mods = self.Env.mods,
                 mod = mods[modName];
 
             if (mod && mod.path && mod.charset) {
-                return;
+                mod.tag = mod.tag || tag;
+                return mod;
             }
 
             if (!mod) {
@@ -2428,8 +2434,10 @@ build time: Mar 12 11:59
             S.mix(mod, {
                 name:modName,
                 path:defaultComponentJsName(modName),
-                charset:'utf-8'
+                charset:'utf-8',
+                tag:tag
             }, false);
+            return mod;
         },
 
         isAttached:function (self, modNames) {
@@ -2477,24 +2485,43 @@ build time: Mar 12 11:59
             });
         },
 
-        normalizeModNamesInUse:function (modNames) {
+        getModNamesAsArray:function (modNames) {
             if (S.isString(modNames)) {
                 modNames = modNames.replace(/\s+/g, "").split(',');
             }
-            utils.indexMapping(modNames);
             return modNames;
         },
 
-        unalias:function (self, modNames) {
+        /**
+         * Three effects:
+         * 1. add index : / => /index
+         * 2. unalias : core => dom,event,ua
+         * 3. relative to absolute : ./x => y/x
+         * 4. create module info with tag : core.js?t=xx => core , .tag=xx         *
+         * @param {KISSY} self Global KISSY instance
+         * @param {String|String[]} modNames Array of module names or module names string separated by comma
+         */
+        normalizeModNames:function (self, modNames, refModName) {
             var ret = [],
                 mods = self.Env.mods;
             S.each(modNames, function (name) {
                 var alias, m;
+                // 1. index map
+                name = indexMap(name);
+                // 2. un alias
                 if ((m = mods[name]) && (alias = m.alias)) {
-                    ret.push.apply(ret, alias);
+                    ret.push.apply(ret, indexMap(alias));
                 } else {
                     ret.push(name);
                 }
+            });
+            // 3. relative to absolute (optional)
+            if (refModName) {
+                ret = utils.normalDepModuleName(refModName, ret);
+            }
+            // 4. create module info with tag
+            S.each(ret, function (name, i) {
+                ret[i] = utils.createModuleInfo(self, name).name;
             });
             return ret;
         },
@@ -2503,8 +2530,10 @@ build time: Mar 12 11:59
         registerModule:function (self, name, def, config) {
             config = config || {};
 
+            utils.createModuleInfo(self, name);
+
             var mods = self.Env.mods,
-                mod = mods[name] || new Loader.Module();
+                mod = mods[name];
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
@@ -2537,7 +2566,10 @@ build time: Mar 12 11:59
 
             // S.add( { name: config } )
             if (S.isPlainObject(name)) {
-                mix(mods, name, 1, 0, 1);
+                S.each(name, function (modCfg, modName) {
+                    utils.createModuleInfo(self, modName);
+                    S.mix(mods[modName], modCfg);
+                });
                 return true;
             }
         },
@@ -2556,12 +2588,12 @@ build time: Mar 12 11:59
     });
 
     function defaultComponentJsName(m) {
-        var suffix = "js", match;
-        if (match = m.match(/(.+)\.(js|css)$/i)) {
+        var suffix = ".js", match;
+        if (match = m.match(/(.+)(\.css)$/i)) {
             suffix = match[2];
             m = match[1];
         }
-        return m + (S.Config.debug ? '' : '-min') + "." + suffix;
+        return m + (S.Config.debug ? '' : '-min') + suffix;
     }
 
     function isStatus(self, modNames, status) {
@@ -2838,10 +2870,12 @@ build time: Mar 12 11:59
                         }, false);
                     }
 
-                    timer = S.later(function () {
-                        timer = undefined;
-                        error();
-                    }, (timeout || this.Config.timeout) * MILLISECONDS_OF_SECOND);
+                    if (timeout) {
+                        timer = S.later(function () {
+                            timer = undefined;
+                            error();
+                        }, timeout * MILLISECONDS_OF_SECOND);
+                    }
                 }
             }
             head.insertBefore(node, head.firstChild);
@@ -2953,15 +2987,14 @@ build time: Mar 12 11:59
 
                     utils.registerModule(SS, name, def, config);
 
+                    mod = mods[name];
+
                     // 显示指定 add 不 attach
                     if (config && config['attach'] === false) {
                         return;
                     }
 
-                    // 和 1.1.7 以前版本保持兼容，不得已而为之
-                    mod = mods[name];
-
-                    requires = utils.normalDepModuleName(name, mod.requires);
+                    mod.requires = requires = utils.normalizeModNames(SS, mod.requires, name);
 
                     if (utils.isAttached(SS, requires)) {
                         utils.attachMod(SS, mod);
@@ -3139,37 +3172,35 @@ build time: Mar 12 11:59
          * </code>
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
-         *                   with KISSY as first argument and mod's value as the following argumwnts
-         * @param {Object} cfg special config for this use
+         *                   with KISSY as first argument and mod's value as the following arguments
          */
-        use:function (modNames, callback, cfg) {
+        use:function (modNames, callback) {
 
-            modNames = utils.normalizeModNamesInUse(modNames);
-
-            cfg = cfg || {};
+            modNames = utils.getModNamesAsArray(modNames);
 
             var self = this,
                 SS = self.SS,
-                fired,
-                unaliasModNames = utils.unalias(self.SS, modNames);
+                normalizedModNames = utils.normalizeModNames(SS, modNames),
+                count = normalizedModNames.length,
+                currentIndex = 0;
 
             // 已经全部 attached, 直接执行回调即可
-            if (utils.isAttached(SS, unaliasModNames)) {
+            if (utils.isAttached(SS, normalizedModNames)) {
                 var mods = utils.getModules(SS, modNames);
                 callback && callback.apply(SS, mods);
                 return;
             }
 
             // 有尚未 attached 的模块
-            S.each(unaliasModNames, function (modName) {
+            S.each(normalizedModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function () {
-                    if (!fired && utils.isAttached(SS, unaliasModNames)) {
-                        fired = true;
+                    currentIndex++;
+                    if (currentIndex == count) {
                         var mods = utils.getModules(SS, modNames);
                         callback && callback.apply(SS, mods);
                     }
-                }, cfg);
+                });
             });
 
             return self;
@@ -3210,22 +3241,21 @@ build time: Mar 12 11:59
         },
 
         // 加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName:function (modName, callback, cfg) {
+        __attachModByName:function (modName, callback) {
             var self = this,
-                SS = self.SS;
-            utils.generateModulePath(SS, modName);
-            var mod = SS.Env.mods[modName];
-            if (mod && mod.status === ATTACHED) {
+                SS = self.SS,
+                mod = SS.Env.mods[modName];
+            if (mod.status === ATTACHED) {
                 callback();
                 return;
             }
-            self.__attach(mod, callback, cfg);
+            self.__attach(mod, callback);
         },
 
         /**
          * Attach a module and all required modules.
          */
-        __attach:function (mod, callback, cfg) {
+        __attach:function (mod, callback) {
             var self = this,
                 SS = self.SS,
                 r,
@@ -3234,7 +3264,7 @@ build time: Mar 12 11:59
                 attached = 0,
                 mods = SS.Env.mods,
                 //复制一份当前的依赖项出来，防止 add 后修改！
-                requires = utils.unalias(SS, mod['requires']);
+                requires = mod.requires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
             /**
              * check cyclic dependency between mods
@@ -3244,7 +3274,7 @@ build time: Mar 12 11:59
                 // one mod's all requires mods to run its callback
                 var __allRequires = mod.__allRequires = mod.__allRequires || {},
                     myName = mod.name,
-                    r, r2, rmod,
+                    rmod,
                     r__allRequires,
                     requires = mod.requires;
 
@@ -3252,22 +3282,16 @@ build time: Mar 12 11:59
                     rmod = mods[r];
                     __allRequires[r] = 1;
                     if (rmod && (r__allRequires = rmod.__allRequires)) {
-                        for (r2 in r__allRequires) {
-                            if (r__allRequires.hasOwnProperty(r2)) {
-                                __allRequires[r2] = 1;
-                            }
-                        }
+                        S.mix(__allRequires, r__allRequires);
                     }
                 });
 
                 if (__allRequires[myName]) {
-                    var t = [];
-                    for (r in __allRequires) {
-                        if (__allRequires.hasOwnProperty(r)) {
-                            t.push(r);
-                        }
-                    }
-                    S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
+                    S.log(__allRequires, "error");
+                    var JSON=window.JSON;
+                    S.error("find cyclic dependency by mod " +
+                        myName + " between mods : " +(JSON && JSON.stringify(__allRequires)));
+
                 }
             }
 
@@ -3277,12 +3301,12 @@ build time: Mar 12 11:59
 
             // attach all required modules
             for (i = 0; i < requires.length; i++) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                r = requires[i];
                 rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
-                    self.__attachModByName(r, fn, cfg);
+                    self.__attachModByName(r, fn);
                 }
             }
 
@@ -3292,17 +3316,17 @@ build time: Mar 12 11:59
             self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
-                var newRequires = utils.unalias(SS, mod['requires']),
+                var newRequires = mod.requires =
+                    utils.normalizeModNames(SS, mod.requires, mod.name),
                     needToLoad = [];
 
                 //本模块下载成功后串行下载 require
                 for (i = 0; i < newRequires.length; i++) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
+                    r = newRequires[i];
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod &&
-                        rMod.status === ATTACHED
+                    if (rMod && rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
@@ -3314,7 +3338,7 @@ build time: Mar 12 11:59
 
                 if (needToLoad.length) {
                     for (i = 0; i < needToLoad.length; i++) {
-                        self.__attachModByName(needToLoad[i], fn, cfg);
+                        self.__attachModByName(needToLoad[i], fn);
                     }
                 } else {
                     fn();
@@ -3322,8 +3346,7 @@ build time: Mar 12 11:59
             });
 
             function fn() {
-                var unalias = utils.unalias(SS, mod['requires']);
-                if (!attached && utils.isAttached(SS, unalias)) {
+                if (!attached && utils.isAttached(SS, mod.requires)) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }
@@ -3345,18 +3368,9 @@ build time: Mar 12 11:59
                 cssfullpath,
                 url = mod['fullpath'],
                 isCss = utils.isCss(url),
-                // 这个是全局的，防止多实例对同一模块的重复下载
-                loadQueque = S.Env._loadQueue,
-                status = loadQueque[url],
-                node = status;
+                node = mod.domNode;
 
             mod.status = mod.status || INIT;
-
-            // 可能已经由其它模块触发加载
-            if (mod.status < LOADING && status) {
-                // 该模块是否已经载入到 global ?
-                mod.status = status === LOADED ? LOADED : LOADING;
-            }
 
             // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
             // 仅发出请求，不做任何其它处理
@@ -3397,8 +3411,7 @@ build time: Mar 12 11:59
                     },
                     charset:mod.charset
                 });
-
-                loadQueque[url] = node;
+                mod.domNode = node;
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
@@ -3410,7 +3423,6 @@ build time: Mar 12 11:59
             }
             // 是内嵌代码，或者已经 loaded
             else {
-                // 也要混入对应 global 上模块定义
                 callback();
             }
 
@@ -3420,17 +3432,13 @@ build time: Mar 12 11:59
             }
 
             function _scriptOnComplete() {
-                loadQueque[url] = LOADED;
-
                 if (mod.status !== ERROR) {
-
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach,
                     // 比如编辑器里动态加载时，被依赖的模块会重复
-                    if (mod.status !== ATTACHED) {
+                    if (mod.status != ATTACHED) {
                         mod.status = LOADED;
                     }
-
                     callback();
                 }
             }
@@ -3506,9 +3514,9 @@ build time: Mar 12 11:59
 
                 self.loading = 1;
 
-                modNames = utils.normalizeModNamesInUse(modNames);
+                modNames = utils.getModNamesAsArray(modNames);
 
-                var unaliasModNames = utils.unalias(self.SS, modNames);
+                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
 
                 var allModNames = self.calculate(unaliasModNames),
                     comboUrls = self.getComboUrls(allModNames);
@@ -3575,7 +3583,7 @@ build time: Mar 12 11:59
                 for (p in jss) {
                     loadScripts(jss[p], function () {
                         if (!(--countJss)) {
-                            var unaliasModNames = utils.unalias(self.SS, modNames);
+                            var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
                             self.attachMods(unaliasModNames);
                             if (utils.isAttached(self.SS, unaliasModNames)) {
                                 fn.apply(null, utils.getModules(self.SS, modNames))
@@ -3621,7 +3629,7 @@ build time: Mar 12 11:59
                         utils.isAttached(SS, modName)) {
                     return;
                 }
-                var requires = utils.unalias(SS, mod.requires);
+                var requires = utils.normalizeModNames(SS, mod.requires, modName);
                 for (var i = 0; i < requires.length; i++) {
                     this.attachMod(requires[i]);
                 }
@@ -3659,7 +3667,6 @@ build time: Mar 12 11:59
                     combos = {};
 
                 S.each(modNames, function (modName) {
-                    utils.generateModulePath(self.SS, modName);
                     mod = self.getModInfo(modName);
                     packagePath = utils.getPackagePath(self.SS, mod);
                     var type = utils.isCss(mod.path) ? "css" : "js";
@@ -3729,16 +3736,27 @@ build time: Mar 12 11:59
                     ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
-                    var requires = utils.unalias(SS, mod.requires),
-                        allRequires = mod.__allRequires || (mod.__allRequires = {});
-                    for (var i = 0; i < requires.length; i++) {
-                        var r = utils.normalDepModuleName(modName, requires[i]);
-                        requires[i] = r;
-                        if (S.Config.debug && allRequires[r]) {
+                    var requires = mod.requires = utils.normalizeModNames(SS, mod.requires, modName);
+                    // circular dependency check
+                    if (S.Config.debug) {
+                        var allRequires = mod.__allRequires || (mod.__allRequires = {});
+                        if (allRequires[modName]) {
                             S.error("detect circular dependency among : ");
                             S.error(allRequires);
                         }
-
+                    }
+                    for (var i = 0; i < requires.length; i++) {
+                        var r = requires[i];
+                        if (S.Config.debug) {
+                            // circular dependency check
+                            var rMod = self.getModInfo(r);
+                            allRequires[r] = 1;
+                            if (rMod && rMod.__allRequires) {
+                                S.each(rMod.__allRequires, function (_, r2) {
+                                    allRequires[r2] = 1;
+                                });
+                            }
+                        }
                         // if not load into page yet
                         if (!utils.isLoaded(SS, r)
                             // and not attached
@@ -3916,7 +3934,7 @@ build time: Mar 12 11:59
     // the default timeout for getScript
     S.Config.timeout = 10;
 
-    S.Env._loadQueue = {}; // information for loading and loaded mods
+    S.Config.tag = S.__BUILD_TIME;
 
     initLoader.call(S);
 

@@ -114,10 +114,12 @@
                         }, false);
                     }
 
-                    timer = S.later(function () {
-                        timer = undefined;
-                        error();
-                    }, (timeout || this.Config.timeout) * MILLISECONDS_OF_SECOND);
+                    if (timeout) {
+                        timer = S.later(function () {
+                            timer = undefined;
+                            error();
+                        }, timeout * MILLISECONDS_OF_SECOND);
+                    }
                 }
             }
             head.insertBefore(node, head.firstChild);

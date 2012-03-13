@@ -29,7 +29,8 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         curLocation = curLocation.href;
     }
 
-    curLocationParts = rurl.exec(curLocation);
+    // fix on nodejs , curLocation == "/xx/yy/kissy-nodejs.js"
+    curLocationParts = rurl.exec(curLocation) || ["", "", "", ""];
 
     var isLocal = rlocalProtocol.test(curLocationParts[1]),
         transports = {},

@@ -22,6 +22,7 @@ History:
 
  - [+] S.config 增加 combine 配置，支持自动 combo
  - [x] KISSY.add(fn) fn 中 this 为模块对象
+ - [*] Support tag for individual module : #110
 
  - [*] KISSY.ready 并行调用，互相不干扰
 

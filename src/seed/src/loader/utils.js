@@ -2,7 +2,7 @@
  * @fileOverview utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
     if (typeof require !== 'undefined') {
         return;
     }
@@ -11,7 +11,6 @@
         startsWith = S.startsWith,
         data = Loader.STATUS,
         utils = {},
-        mix = S.mix,
         doc = S.Env.host.document,
         // 当前页面所在的目录
         // http://xx.com/y/z.htm#!/f/g
@@ -19,9 +18,11 @@
         // http://xx.com/y/
         __pagePath = location.href.replace(location.hash, "").replace(/[^/]*$/i, "");
 
+    // http://wiki.commonjs.org/wiki/Packages/Mappings/A
+    // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
-        if (/\/$/.test(s)) {
-            return s + "index";
+        if (/(.+\/)(\?t=.+)?$/.test(s)) {
+            return RegExp.$1 + "index" + RegExp.$2;
         }
         return s;
     }
@@ -75,13 +76,13 @@
          * @return {string|Array} 依赖模块的绝对路径
          * @description similar to path.resolve in nodejs
          */
-        normalDepModuleName:function normalDepModuleName(moduleName, depName) {
+        normalDepModuleName:function (moduleName, depName) {
             if (!depName) {
                 return depName;
             }
             if (S.isArray(depName)) {
                 for (var i = 0; i < depName.length; i++) {
-                    depName[i] = normalDepModuleName(moduleName, depName[i]);
+                    depName[i] = utils.normalDepModuleName(moduleName, depName[i]);
                 }
                 return depName;
             }
@@ -91,12 +92,12 @@
                 if ((index = moduleName.lastIndexOf("/")) != -1) {
                     anchor = moduleName.substring(0, index + 1);
                 }
-                return indexMap(normalizePath(anchor + depName));
+                return normalizePath(anchor + depName);
             } else if (depName.indexOf("./") != -1
                 || depName.indexOf("../") != -1) {
-                return indexMap(normalizePath(depName));
+                return normalizePath(depName);
             } else {
-                return indexMap(depName);
+                return depName;
             }
         },
 
@@ -139,15 +140,6 @@
             return path.substring(0, path.length - 1);
         },
 
-        //http://wiki.commonjs.org/wiki/Packages/Mappings/A
-        //如果模块名以 / 结尾，自动加 index
-        indexMapping:function (names) {
-            for (var i = 0; i < names.length; i++) {
-                names[i] = indexMap(names[i]);
-            }
-            return names;
-        },
-
         getPackagePath:function (self, mod) {
             //缓存包路径，未申明的包的模块都到核心模块中找
             if (mod.packagePath) {
@@ -174,21 +166,35 @@
             mod.charset = p_def && p_def.charset || mod.charset;
 
             if (p_def) {
-                mod.tag = p_def.tag;
+                mod.tag = mod.tag || p_def.tag;
             } else {
                 // kissy 自身组件的事件戳后缀
-                mod.tag = encodeURIComponent(self.Config.tag || S.__BUILD_TIME);
+                mod.tag = mod.tag || encodeURIComponent(self.Config.tag);
             }
 
             return mod.packagePath = (p_def && p_def.path) || self.Config.base;
         },
 
-        generateModulePath:function (self, modName) {
+        createModuleInfo:function (self, modName) {
+
+            var tag = undefined,
+                m,
+                withTagReg = /([^?]+)(?:\?t=(.+))/;
+
+            if (m = modName.match(withTagReg)) {
+                modName = m[1];
+                tag = m[2];
+            }
+
+            // js do not need suffix
+            modName = modName.replace(/\.js$/i, "");
+
             var mods = self.Env.mods,
                 mod = mods[modName];
 
             if (mod && mod.path && mod.charset) {
-                return;
+                mod.tag = mod.tag || tag;
+                return mod;
             }
 
             if (!mod) {
@@ -199,8 +205,10 @@
             S.mix(mod, {
                 name:modName,
                 path:defaultComponentJsName(modName),
-                charset:'utf-8'
+                charset:'utf-8',
+                tag:tag
             }, false);
+            return mod;
         },
 
         isAttached:function (self, modNames) {
@@ -248,24 +256,43 @@
             });
         },
 
-        normalizeModNamesInUse:function (modNames) {
+        getModNamesAsArray:function (modNames) {
             if (S.isString(modNames)) {
                 modNames = modNames.replace(/\s+/g, "").split(',');
             }
-            utils.indexMapping(modNames);
             return modNames;
         },
 
-        unalias:function (self, modNames) {
+        /**
+         * Three effects:
+         * 1. add index : / => /index
+         * 2. unalias : core => dom,event,ua
+         * 3. relative to absolute : ./x => y/x
+         * 4. create module info with tag : core.js?t=xx => core , .tag=xx         *
+         * @param {KISSY} self Global KISSY instance
+         * @param {String|String[]} modNames Array of module names or module names string separated by comma
+         */
+        normalizeModNames:function (self, modNames, refModName) {
             var ret = [],
                 mods = self.Env.mods;
             S.each(modNames, function (name) {
                 var alias, m;
+                // 1. index map
+                name = indexMap(name);
+                // 2. un alias
                 if ((m = mods[name]) && (alias = m.alias)) {
-                    ret.push.apply(ret, alias);
+                    ret.push.apply(ret, indexMap(alias));
                 } else {
                     ret.push(name);
                 }
+            });
+            // 3. relative to absolute (optional)
+            if (refModName) {
+                ret = utils.normalDepModuleName(refModName, ret);
+            }
+            // 4. create module info with tag
+            S.each(ret, function (name, i) {
+                ret[i] = utils.createModuleInfo(self, name).name;
             });
             return ret;
         },
@@ -274,8 +301,10 @@
         registerModule:function (self, name, def, config) {
             config = config || {};
 
+            utils.createModuleInfo(self, name);
+
             var mods = self.Env.mods,
-                mod = mods[name] || new Loader.Module();
+                mod = mods[name];
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
@@ -308,7 +337,10 @@
 
             // S.add( { name: config } )
             if (S.isPlainObject(name)) {
-                mix(mods, name, 1, 0, 1);
+                S.each(name, function (modCfg, modName) {
+                    utils.createModuleInfo(self, modName);
+                    S.mix(mods[modName], modCfg);
+                });
                 return true;
             }
         },
@@ -327,12 +359,12 @@
     });
 
     function defaultComponentJsName(m) {
-        var suffix = "js", match;
-        if (match = m.match(/(.+)\.(js|css)$/i)) {
+        var suffix = ".js", match;
+        if (match = m.match(/(.+)(\.css)$/i)) {
             suffix = match[2];
             m = match[1];
         }
-        return m + (S.Config.debug ? '' : '-min') + "." + suffix;
+        return m + (S.Config.debug ? '' : '-min') + suffix;
     }
 
     function isStatus(self, modNames, status) {

@@ -28,37 +28,35 @@
          * </code>
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
-         *                   with KISSY as first argument and mod's value as the following argumwnts
-         * @param {Object} cfg special config for this use
+         *                   with KISSY as first argument and mod's value as the following arguments
          */
-        use:function (modNames, callback, cfg) {
+        use:function (modNames, callback) {
 
-            modNames = utils.normalizeModNamesInUse(modNames);
-
-            cfg = cfg || {};
+            modNames = utils.getModNamesAsArray(modNames);
 
             var self = this,
                 SS = self.SS,
-                fired,
-                unaliasModNames = utils.unalias(self.SS, modNames);
+                normalizedModNames = utils.normalizeModNames(SS, modNames),
+                count = normalizedModNames.length,
+                currentIndex = 0;
 
             // 已经全部 attached, 直接执行回调即可
-            if (utils.isAttached(SS, unaliasModNames)) {
+            if (utils.isAttached(SS, normalizedModNames)) {
                 var mods = utils.getModules(SS, modNames);
                 callback && callback.apply(SS, mods);
                 return;
             }
 
             // 有尚未 attached 的模块
-            S.each(unaliasModNames, function (modName) {
+            S.each(normalizedModNames, function (modName) {
                 // 从 name 开始调用，防止不存在模块
                 self.__attachModByName(modName, function () {
-                    if (!fired && utils.isAttached(SS, unaliasModNames)) {
-                        fired = true;
+                    currentIndex++;
+                    if (currentIndex == count) {
                         var mods = utils.getModules(SS, modNames);
                         callback && callback.apply(SS, mods);
                     }
-                }, cfg);
+                });
             });
 
             return self;
@@ -99,22 +97,21 @@
         },
 
         // 加载指定模块名模块，如果不存在定义默认定义为内部模块
-        __attachModByName:function (modName, callback, cfg) {
+        __attachModByName:function (modName, callback) {
             var self = this,
-                SS = self.SS;
-            utils.generateModulePath(SS, modName);
-            var mod = SS.Env.mods[modName];
-            if (mod && mod.status === ATTACHED) {
+                SS = self.SS,
+                mod = SS.Env.mods[modName];
+            if (mod.status === ATTACHED) {
                 callback();
                 return;
             }
-            self.__attach(mod, callback, cfg);
+            self.__attach(mod, callback);
         },
 
         /**
          * Attach a module and all required modules.
          */
-        __attach:function (mod, callback, cfg) {
+        __attach:function (mod, callback) {
             var self = this,
                 SS = self.SS,
                 r,
@@ -123,7 +120,7 @@
                 attached = 0,
                 mods = SS.Env.mods,
                 //复制一份当前的依赖项出来，防止 add 后修改！
-                requires = utils.unalias(SS, mod['requires']);
+                requires = mod.requires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
             /**
              * check cyclic dependency between mods
@@ -133,7 +130,7 @@
                 // one mod's all requires mods to run its callback
                 var __allRequires = mod.__allRequires = mod.__allRequires || {},
                     myName = mod.name,
-                    r, r2, rmod,
+                    rmod,
                     r__allRequires,
                     requires = mod.requires;
 
@@ -141,22 +138,16 @@
                     rmod = mods[r];
                     __allRequires[r] = 1;
                     if (rmod && (r__allRequires = rmod.__allRequires)) {
-                        for (r2 in r__allRequires) {
-                            if (r__allRequires.hasOwnProperty(r2)) {
-                                __allRequires[r2] = 1;
-                            }
-                        }
+                        S.mix(__allRequires, r__allRequires);
                     }
                 });
 
                 if (__allRequires[myName]) {
-                    var t = [];
-                    for (r in __allRequires) {
-                        if (__allRequires.hasOwnProperty(r)) {
-                            t.push(r);
-                        }
-                    }
-                    S.error("find cyclic dependency by mod " + myName + " between mods : " + t.join(","));
+                    S.log(__allRequires, "error");
+                    var JSON=window.JSON;
+                    S.error("find cyclic dependency by mod " +
+                        myName + " between mods : " +(JSON && JSON.stringify(__allRequires)));
+
                 }
             }
 
@@ -166,12 +157,12 @@
 
             // attach all required modules
             for (i = 0; i < requires.length; i++) {
-                r = requires[i] = utils.normalDepModuleName(mod.name, requires[i]);
+                r = requires[i];
                 rMod = mods[r];
                 if (rMod && rMod.status === ATTACHED) {
                     //no need
                 } else {
-                    self.__attachModByName(r, fn, cfg);
+                    self.__attachModByName(r, fn);
                 }
             }
 
@@ -181,17 +172,17 @@
             self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
-                var newRequires = utils.unalias(SS, mod['requires']),
+                var newRequires = mod.requires =
+                    utils.normalizeModNames(SS, mod.requires, mod.name),
                     needToLoad = [];
 
                 //本模块下载成功后串行下载 require
                 for (i = 0; i < newRequires.length; i++) {
-                    r = newRequires[i] = utils.normalDepModuleName(mod.name, newRequires[i]);
+                    r = newRequires[i];
                     var rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod &&
-                        rMod.status === ATTACHED
+                    if (rMod && rMod.status === ATTACHED
                         //已经正在处理了
                         || inA) {
                         //no need
@@ -203,7 +194,7 @@
 
                 if (needToLoad.length) {
                     for (i = 0; i < needToLoad.length; i++) {
-                        self.__attachModByName(needToLoad[i], fn, cfg);
+                        self.__attachModByName(needToLoad[i], fn);
                     }
                 } else {
                     fn();
@@ -211,8 +202,7 @@
             });
 
             function fn() {
-                var unalias = utils.unalias(SS, mod['requires']);
-                if (!attached && utils.isAttached(SS, unalias)) {
+                if (!attached && utils.isAttached(SS, mod.requires)) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }
@@ -234,18 +224,9 @@
                 cssfullpath,
                 url = mod['fullpath'],
                 isCss = utils.isCss(url),
-                // 这个是全局的，防止多实例对同一模块的重复下载
-                loadQueque = S.Env._loadQueue,
-                status = loadQueque[url],
-                node = status;
+                node = mod.domNode;
 
             mod.status = mod.status || INIT;
-
-            // 可能已经由其它模块触发加载
-            if (mod.status < LOADING && status) {
-                // 该模块是否已经载入到 global ?
-                mod.status = status === LOADED ? LOADED : LOADING;
-            }
 
             // 1.20 兼容 1.1x 处理：加载 cssfullpath 配置的 css 文件
             // 仅发出请求，不做任何其它处理
@@ -286,8 +267,7 @@
                     },
                     charset:mod.charset
                 });
-
-                loadQueque[url] = node;
+                mod.domNode = node;
             }
             // 已经在加载中，需要添加回调到 script onload 中
             // 注意：没有考虑 error 情形
@@ -299,7 +279,6 @@
             }
             // 是内嵌代码，或者已经 loaded
             else {
-                // 也要混入对应 global 上模块定义
                 callback();
             }
 
@@ -309,17 +288,13 @@
             }
 
             function _scriptOnComplete() {
-                loadQueque[url] = LOADED;
-
                 if (mod.status !== ERROR) {
-
                     // 注意：当多个模块依赖同一个下载中的模块A下，模块A仅需 attach 一次
                     // 因此要加上下面的 !== 判断，否则会出现重复 attach,
                     // 比如编辑器里动态加载时，被依赖的模块会重复
-                    if (mod.status !== ATTACHED) {
+                    if (mod.status != ATTACHED) {
                         mod.status = LOADED;
                     }
-
                     callback();
                 }
             }

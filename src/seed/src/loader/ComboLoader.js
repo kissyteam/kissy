@@ -68,9 +68,9 @@
 
                 self.loading = 1;
 
-                modNames = utils.normalizeModNamesInUse(modNames);
+                modNames = utils.getModNamesAsArray(modNames);
 
-                var unaliasModNames = utils.unalias(self.SS, modNames);
+                var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
 
                 var allModNames = self.calculate(unaliasModNames),
                     comboUrls = self.getComboUrls(allModNames);
@@ -137,7 +137,7 @@
                 for (p in jss) {
                     loadScripts(jss[p], function () {
                         if (!(--countJss)) {
-                            var unaliasModNames = utils.unalias(self.SS, modNames);
+                            var unaliasModNames = utils.normalizeModNames(self.SS, modNames);
                             self.attachMods(unaliasModNames);
                             if (utils.isAttached(self.SS, unaliasModNames)) {
                                 fn.apply(null, utils.getModules(self.SS, modNames))
@@ -183,7 +183,7 @@
                         utils.isAttached(SS, modName)) {
                     return;
                 }
-                var requires = utils.unalias(SS, mod.requires);
+                var requires = utils.normalizeModNames(SS, mod.requires, modName);
                 for (var i = 0; i < requires.length; i++) {
                     this.attachMod(requires[i]);
                 }
@@ -221,7 +221,6 @@
                     combos = {};
 
                 S.each(modNames, function (modName) {
-                    utils.generateModulePath(self.SS, modName);
                     mod = self.getModInfo(modName);
                     packagePath = utils.getPackagePath(self.SS, mod);
                     var type = utils.isCss(mod.path) ? "css" : "js";
@@ -291,16 +290,27 @@
                     ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
-                    var requires = utils.unalias(SS, mod.requires),
-                        allRequires = mod.__allRequires || (mod.__allRequires = {});
-                    for (var i = 0; i < requires.length; i++) {
-                        var r = utils.normalDepModuleName(modName, requires[i]);
-                        requires[i] = r;
-                        if (S.Config.debug && allRequires[r]) {
+                    var requires = mod.requires = utils.normalizeModNames(SS, mod.requires, modName);
+                    // circular dependency check
+                    if (S.Config.debug) {
+                        var allRequires = mod.__allRequires || (mod.__allRequires = {});
+                        if (allRequires[modName]) {
                             S.error("detect circular dependency among : ");
                             S.error(allRequires);
                         }
-
+                    }
+                    for (var i = 0; i < requires.length; i++) {
+                        var r = requires[i];
+                        if (S.Config.debug) {
+                            // circular dependency check
+                            var rMod = self.getModInfo(r);
+                            allRequires[r] = 1;
+                            if (rMod && rMod.__allRequires) {
+                                S.each(rMod.__allRequires, function (_, r2) {
+                                    allRequires[r2] = 1;
+                                });
+                            }
+                        }
                         // if not load into page yet
                         if (!utils.isLoaded(SS, r)
                             // and not attached

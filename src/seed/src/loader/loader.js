@@ -60,15 +60,14 @@
 
                     utils.registerModule(SS, name, def, config);
 
+                    mod = mods[name];
+
                     // 显示指定 add 不 attach
                     if (config && config['attach'] === false) {
                         return;
                     }
 
-                    // 和 1.1.7 以前版本保持兼容，不得已而为之
-                    mod = mods[name];
-
-                    requires = utils.normalDepModuleName(name, mod.requires);
+                    mod.requires = requires = utils.normalizeModNames(SS, mod.requires, name);
 
                     if (utils.isAttached(SS, requires)) {
                         utils.attachMod(SS, mod);

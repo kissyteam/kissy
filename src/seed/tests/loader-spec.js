@@ -128,25 +128,24 @@
             });
 
             var ok = false;
+
             S.use("1.2/mod", function (S, Mod) {
                 ok = true;
-                runs(function () {
-                    expect(Mod).toBe(2);
-                    var mod12;
-                    var scripts = document.getElementsByTagName("script");
-                    for (var i = 0; i < scripts.length; i++) {
-                        var script = scripts[i];
-                        if (script.src.indexOf("1.2/mod.js") > -1) {
-                            mod12 = script;
-                            break;
-                        }
+                expect(Mod).toBe(2);
+                var mod12;
+                var scripts = document.getElementsByTagName("script");
+                for (var i = 0; i < scripts.length; i++) {
+                    var script = scripts[i];
+                    if (script.src.indexOf("1.2/mod.js") > -1) {
+                        mod12 = script;
+                        break;
                     }
+                }
 
-                    expect(mod12.async).toBe(true);
-                    expect(mod12.charset).toBe("utf-8");
-                    S.use("node", function (S, N) {
-                        expect(N.one("#k12").css("width")).toBe('111px');
-                    });
+                expect(mod12.async).toBe(true);
+                expect(mod12.charset).toBe("utf-8");
+                S.use("node", function (S, N) {
+                    expect(N.one("#k12").css("width")).toBe('111px');
                 });
             });
 
@@ -159,16 +158,26 @@
 
         it("detect cyclic dependency", function () {
             var old = KISSY.Config.base;
-            KISSY.config({base:"./loader/"});
-            var oldError = S.error, err = '';
+            KISSY.config({
+                packages:[
+                    {
+                        name:"cyclic",
+                        path:"./loader/"
+                    }
+                ]
+
+            });
+            var oldError = S.error, err = [];
             S.error = function (args) {
-                err = args;
+                err.push(args);
                 oldError(args);
             };
-            KISSY.use("a");
+            KISSY.use("cyclic/a");
 
             waitsFor(function () {
-                return err == 'find cyclic dependency by mod b between mods : c,a,b';
+                if (err.length == 1) {
+                    return err[0] == 'find cyclic dependency by mod cyclic/b between mods : {"cyclic/c":1,"cyclic/a":1,"cyclic/b":1}';
+                }
             }, 10000);
             runs(function () {
                 S.error = oldError;
@@ -180,7 +189,6 @@
 
             S.Config.packages = {};
             S.Config.mappedRules = [];
-            S.Config.combines = {};
             S.Env._loadQueue = {};
             S.Env.mods = {};
 
@@ -214,14 +222,10 @@
         it("load core when use dom", function () {
             S.Config.packages = {};
             S.Config.mappedRules = [];
-            S.Config.combines = {};
             S.Env._loadQueue = {};
             S.Env.mods = {};
 
             S.config({
-                'combines':{
-                    'core':['dom', 'ua', 'event', 'node', 'json', 'ajax', 'anim', 'base', 'cookie']
-                },
                 debug:0,
                 base:"../../../build/"
             });

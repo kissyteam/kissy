@@ -152,7 +152,7 @@
     // the default timeout for getScript
     S.Config.timeout = 10;
 
-    S.Env._loadQueue = {}; // information for loading and loaded mods
+    S.Config.tag = S.__BUILD_TIME;
 
     initLoader.call(S);
 
