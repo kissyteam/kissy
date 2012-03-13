@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 8 20:57
+build time: Mar 13 18:34
 */
 /**
  * @fileOverview form data  serialization util
@@ -1299,7 +1299,8 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
         curLocation = curLocation.href;
     }
 
-    curLocationParts = rurl.exec(curLocation);
+    // fix on nodejs , curLocation == "/xx/yy/kissy-nodejs.js"
+    curLocationParts = rurl.exec(curLocation) || ["", "", "", ""];
 
     var isLocal = rlocalProtocol.test(curLocationParts[1]),
         transports = {},

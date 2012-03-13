@@ -144,9 +144,12 @@
 
                 if (__allRequires[myName]) {
                     S.log(__allRequires, "error");
-                    var JSON=window.JSON;
-                    S.error("find cyclic dependency by mod " +
-                        myName + " between mods : " +(JSON && JSON.stringify(__allRequires)));
+                    var JSON = window.JSON,
+                        error = "";
+                    if (JSON) {
+                        error = JSON.stringify(__allRequires);
+                    }
+                    S.error("find cyclic dependency by mod " + myName + " between mods : " + error);
 
                 }
             }

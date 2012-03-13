@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 13 18:19
+build time: Mar 13 18:35
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 13 18:19
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120313181901',
+            __BUILD_TIME:'20120313183528',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3089,9 +3089,12 @@ build time: Mar 13 18:19
 
                 if (__allRequires[myName]) {
                     S.log(__allRequires, "error");
-                    var JSON=window.JSON;
-                    S.error("find cyclic dependency by mod " +
-                        myName + " between mods : " +(JSON && JSON.stringify(__allRequires)));
+                    var JSON = window.JSON,
+                        error = "";
+                    if (JSON) {
+                        error = JSON.stringify(__allRequires);
+                    }
+                    S.error("find cyclic dependency by mod " +myName + " between mods : " + error);
 
                 }
             }
