@@ -368,4 +368,4 @@ KISSY.add("chart/data",function(S){
     P.Data = Data;
 
     return Data;
-},{requires : ["./color"]});
+},{requires : ["chart/color"]});

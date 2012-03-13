@@ -52,7 +52,7 @@ KISSY.add("chart/simpletooltip",function(S){
             this.n_c
                 .html(msg)
                 .css("display","block")
-                .offset(this._offset)
+                //.offset(this._offset)
 
         },
         /**

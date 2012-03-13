@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Feb 22 00:09
+build time: Mar 6 10:14
 */
 KISSY.add("chart/anim",function(S){
     var P = S.namespace("Chart"),
@@ -1451,7 +1451,7 @@ KISSY.add("chart/data",function(S){
     P.Data = Data;
 
     return Data;
-},{requires : ["./color"]});
+},{requires : ["chart/color"]});
 KISSY.add("chart/element",function(S){
     var P = S.namespace("Chart"),
         Dom = S.DOM,

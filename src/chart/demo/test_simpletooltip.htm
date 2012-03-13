@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title></title>
-  <script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.1.7/kissy.js"></script>
-  <script type="text/javascript" src="../src/js/app.js"></script>
-  <script type="text/javascript" src="../src/js/m~simpletooltip.js"></script>
+  <title>Test SimpleTooltip</title>
+  <link rel="stylesheet" href="http://a.tbcdn.cn/s/kissy/1.2.0/cssreset-min.css" />
+  <script src="../../../build/kissy.js"></script>
+  <script src="../chart/simpletooltip.js"></script>
 </head>
 <style type="text/css">
     html,body{height:100%;}
@@ -17,27 +17,11 @@
 <body>
     <div style="height:2000px;"></div>
     <script>
-        var P = KISSY.chart;
-        var st = new P.SimpleTooltip();
-        var actions = [
-            function(){
-                st.show("msg1");
-            },
-            function(){
-                st.hide();
-            },
-            function(){
-                st.show("msg2");
-            },
-            function(){
-                st.show("msg3");
-            }
-        ];
-
-        KISSY.one(document.body).on("click",function(){
-            if(actions.length < 1) return;
-            var act = actions.shift();
-            act();
+        var Chart = KISSY.namespace("Chart");
+        console.log(Chart);
+        var st = new Chart.SimpleTooltip();
+        KISSY.one(document.body).on("click",function(ev){
+            st.show(ev.clientX + ',' + ev.clientY);
         });
     </script>
 </body>
