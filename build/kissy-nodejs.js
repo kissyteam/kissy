@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 13 20:26
+build time: Mar 14 12:20
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -350,7 +350,7 @@ build time: Mar 13 20:26
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120313202641',
+            __BUILD_TIME:'20120314122021',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3471,7 +3471,7 @@ build time: Mar 13 20:26
         return;
     }
 
-    function loadScripts(urls, callback) {
+    function loadScripts(urls, callback, charset) {
         var count = urls && urls.length;
         if (!count) {
             callback();
@@ -3483,7 +3483,7 @@ build time: Mar 13 20:26
                 if (!(--count)) {
                     callback();
                 }
-            });
+            }, charset || "utf-8");
         }
     }
 
@@ -3561,7 +3561,7 @@ build time: Mar 13 20:26
                             });
                             self._useJs(comboUrls, fn, modNames);
                         }
-                    });
+                    }, css[p].charset);
                 }
             },
 
@@ -3624,7 +3624,7 @@ build time: Mar 13 20:26
                                     self._use(modNames, fn)
                                 }
                             }
-                        });
+                        }, jss[p].charset);
                     })(p);
                 }
             },
@@ -3705,6 +3705,7 @@ build time: Mar 13 20:26
                     combos[packagePath][type] = combos[packagePath][type] || [];
                     combos[packagePath][type].tag = combos[packagePath][type].tag || mod.tag;
                     combos[packagePath][type].packageTag = mod.packageTag;
+                    combos[packagePath][type].charset = mod.charset;
                     combos[packagePath][type].push(mod);
                 });
 
@@ -3733,6 +3734,7 @@ build time: Mar 13 20:26
                         t = [];
                         var jss = combos[packagePath][type];
                         res[type][packagePath] = [];
+                        res[type][packagePath].charset = jss.charset;
                         // current package's mods
                         res[type][packagePath].mods = [];
                         var prefix = packagePath + comboPrefix,

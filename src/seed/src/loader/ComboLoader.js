@@ -8,7 +8,7 @@
         return;
     }
 
-    function loadScripts(urls, callback) {
+    function loadScripts(urls, callback, charset) {
         var count = urls && urls.length;
         if (!count) {
             callback();
@@ -20,7 +20,7 @@
                 if (!(--count)) {
                     callback();
                 }
-            });
+            }, charset || "utf-8");
         }
     }
 
@@ -98,7 +98,7 @@
                             });
                             self._useJs(comboUrls, fn, modNames);
                         }
-                    });
+                    }, css[p].charset);
                 }
             },
 
@@ -161,7 +161,7 @@
                                     self._use(modNames, fn)
                                 }
                             }
-                        });
+                        }, jss[p].charset);
                     })(p);
                 }
             },
@@ -242,6 +242,7 @@
                     combos[packagePath][type] = combos[packagePath][type] || [];
                     combos[packagePath][type].tag = combos[packagePath][type].tag || mod.tag;
                     combos[packagePath][type].packageTag = mod.packageTag;
+                    combos[packagePath][type].charset = mod.charset;
                     combos[packagePath][type].push(mod);
                 });
 
@@ -270,6 +271,7 @@
                         t = [];
                         var jss = combos[packagePath][type];
                         res[type][packagePath] = [];
+                        res[type][packagePath].charset = jss.charset;
                         // current package's mods
                         res[type][packagePath].mods = [];
                         var prefix = packagePath + comboPrefix,
