@@ -75,6 +75,12 @@ KISSY.add("uibase/position", function (S) {
      * @lends UIBase.Position.prototype
      */
     {
+        __bindUI:function () {
+            // fix #112
+            this.on("hide", function () {
+                this.set("xy", [-9999, -9999]);
+            });
+        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {Number|Number[]} x
