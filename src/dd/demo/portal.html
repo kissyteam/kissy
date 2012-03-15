@@ -27,7 +27,7 @@
         border: 1px solid purple;
     }
 
-    .header {
+    .col .header {
         border-bottom: 1px solid purple;
         cursor: move;
     }
@@ -52,7 +52,9 @@
 </p>
 
 <div id="cols">
-
+    <div class="header">
+        dfasdfasdf
+    </div>
     <div id="leftCol" class="col" style=" width: 350px;height: 500px;">
 
         <div class="header">
@@ -96,7 +98,7 @@
 <script src="../src/dd.js"></script>
 <script>
 
-    KISSY.use("dd,node", function(S, DD, Node) {
+    KISSY.use("dd,node", function (S, DD, Node) {
 
 
         var DDM = DD.DDM,
@@ -113,7 +115,7 @@
              * 如何产生替代节点
              * @param drag 当前拖对象
              */
-            node:function(drag) {
+            node:function (drag) {
                 var n = $(drag.get("dragNode").clone(true));
                 n.attr("id", S.guid("ks-dd-proxy"));
                 n.css("opacity", 0.2);
@@ -126,7 +128,7 @@
             container:"#cols",
             move:1,
             handlers:['.header'],
-            selector:function(el) {
+            selector:function (el) {
                 el = $(el);
                 return el.hasClass('col') || el.hasClass('component');
             }
@@ -154,17 +156,17 @@
         /**
          * 集中监听所有
          */
-        dragDelegate.on("dragstart", function(ev) {
+        dragDelegate.on("dragstart", function (ev) {
             var c = this;
             p = c.get("dragNode").css("position");
         });
 
-        dragDelegate.on("dragend", function(ev) {
+        dragDelegate.on("dragend", function (ev) {
             var c = this;
             c.get("dragNode").css("position", p);
         });
 
-        dragDelegate.on("dragover", function(ev) {
+        dragDelegate.on("dragover", function (ev) {
             var drag = ev.drag;
             var drop = ev.drop;
             var dragNode = drag.get("dragNode"),

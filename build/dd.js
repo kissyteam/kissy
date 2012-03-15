@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 15 18:08
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
-    var $ = Node.all,WIN=S.Env.host;
+    var $ = Node.all, WIN = S.Env.host;
 
     /**
-     * @class constrain draggable's region
+     * @class Provide ability to constrain draggable to specified region
      * @memberOf DD
      */
     function Constrain() {
@@ -122,7 +122,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
 KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
     /**
      * @name DD
-     * @namespace
+     * @namespace Provide the ability to make node draggable and droppable.
      */
     var DD;
     DD = {
@@ -168,7 +168,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     /**
      * @memberOf DD
      * @field
-     * @namespace
+     * @namespace Manager for Drag and Drop.
      */
     function DDM() {
         var self = this;
@@ -624,11 +624,16 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
         }
 
         if (handler) {
-            self.__set("activeHandler", handler);
             node = self._getNode(handler);
-        } else {
+        }
+
+        // can not find handler or can not find matched node from handler
+        // just return !
+        if (!node) {
             return;
         }
+
+        self.__set("activeHandler", handler);
 
         // 找到 handler 确定 委托的 node ，就算成功了
         self.__set("node", node);
@@ -741,7 +746,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
     /**
      * @extends Base
-     * @class make a node draggable
+     * @class Provide abilities to make specified node draggable
      * @memberOf DD
      */
     function Draggable() {
