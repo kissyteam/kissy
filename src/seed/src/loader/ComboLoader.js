@@ -71,6 +71,8 @@
 
                 modNames = utils.getModNamesAsArray(modNames);
 
+                modNames= utils.normalizeModNamesWithAlias(modNames);
+
                 var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
                 var allModNames = self.calculate(unaliasModNames);
@@ -321,7 +323,7 @@
                     ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
-                    var requires = mod.requires = utils.normalizeModNames(SS, mod.requires, modName);
+                    var requires = utils.normalizeModNames(SS, mod.requires, modName);
                     // circular dependency check
                     if (S.Config.debug) {
                         var allRequires = mod.__allRequires || (mod.__allRequires = {});

@@ -42,7 +42,7 @@
             },
             /**
              * Attached one or more modules to global KISSY instance.
-             * @param {String} names moduleNames. 1-n modules to bind(use comma to separate)
+             * @param {String|String[]} names moduleNames. 1-n modules to bind(use comma to separate)
              * @param {Function} callback callback function executed
              * when KISSY has the required functionality.
              * @param {KISSY} callback.S KISSY instance

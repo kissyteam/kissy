@@ -33,6 +33,7 @@
         use:function (modNames, callback) {
 
             modNames = utils.getModNamesAsArray(modNames);
+            modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
             var self = this,
                 SS = self.SS,
@@ -118,9 +119,12 @@
                 rMod,
                 i,
                 attached = 0,
-                mods = SS.Env.mods,
-                //复制一份当前的依赖项出来，防止 add 后修改！
-                requires = mod.requires = utils.normalizeModNames(SS, mod.requires, mod.name);
+                // 最终有效的 require ，add 处声明为准
+                newRequires,
+                mods = SS.Env.mods;
+
+            //复制一份当前的依赖项出来，防止 add 后修改！
+            var requires = newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
             /**
              * check cyclic dependency between mods
@@ -131,8 +135,7 @@
                 var __allRequires = mod.__allRequires = mod.__allRequires || {},
                     myName = mod.name,
                     rmod,
-                    r__allRequires,
-                    requires = mod.requires;
+                    r__allRequires;
 
                 S.each(requires, function (r) {
                     rmod = mods[r];
@@ -175,14 +178,14 @@
             self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
-                var newRequires = mod.requires =
-                    utils.normalizeModNames(SS, mod.requires, mod.name),
-                    needToLoad = [];
+                newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
+
+                var needToLoad = [];
 
                 //本模块下载成功后串行下载 require
                 for (i = 0; i < newRequires.length; i++) {
-                    r = newRequires[i];
-                    var rMod = mods[r],
+                    var r = newRequires[i],
+                        rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
                     if (rMod && rMod.status === ATTACHED
@@ -205,7 +208,7 @@
             });
 
             function fn() {
-                if (!attached && utils.isAttached(SS, mod.requires)) {
+                if (!attached && utils.isAttached(SS, newRequires)) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }

@@ -67,7 +67,7 @@
                         return;
                     }
 
-                    mod.requires = requires = utils.normalizeModNames(SS, mod.requires, name);
+                    requires = utils.normalizeModNames(SS, mod.requires, name);
 
                     if (utils.isAttached(SS, requires)) {
                         utils.attachMod(SS, mod);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 14 12:20
+build time: Mar 15 12:36
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 14 12:20
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120314122021',
+            __BUILD_TIME:'20120315123624',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2063,6 +2063,25 @@ build time: Mar 14 12:20
         return s;
     }
 
+
+    function removeSuffixAndTagFromModName(modName) {
+        var tag = undefined,
+            m,
+            withTagReg = /([^?]+)(?:\?t=(.+))/;
+
+        if (m = modName.match(withTagReg)) {
+            modName = m[1];
+            tag = m[2];
+        }
+
+        // js do not need suffix
+        modName = modName.replace(/\.js$/i, "");
+        return {
+            modName:modName,
+            tag:tag
+        };
+    }
+
     S.mix(utils, {
 
         docHead:function () {
@@ -2211,19 +2230,13 @@ build time: Mar 14 12:20
             return mod.packagePath = (p_def && p_def.path) || self.Config.base;
         },
 
+
         createModuleInfo:function (self, modName) {
 
-            var tag = undefined,
-                m,
-                withTagReg = /([^?]+)(?:\?t=(.+))/;
+            var info = removeSuffixAndTagFromModName(modName),
+                tag = info.tag;
 
-            if (m = modName.match(withTagReg)) {
-                modName = m[1];
-                tag = m[2];
-            }
-
-            // js do not need suffix
-            modName = modName.replace(/\.js$/i, "");
+            modName = info.modName;
 
             var mods = self.Env.mods,
                 mod = mods[modName];
@@ -2274,6 +2287,9 @@ build time: Mar 14 12:20
 
             var fn = mod.fn,
                 value;
+
+            // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
+            mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -2329,6 +2345,25 @@ build time: Mar 14 12:20
             // 4. create module info with tag
             S.each(ret, function (name, i) {
                 ret[i] = utils.createModuleInfo(self, name).name;
+            });
+            return ret;
+        },
+
+        normalizeModNamesWithAlias:function (self, modNames, refModName) {
+            var ret = [];
+            S.each(modNames, function (name) {
+                var alias, m;
+                // 1. index map
+                name = indexMap(name);
+                ret.push(name);
+            });
+            // 2. relative to absolute (optional)
+            if (refModName) {
+                ret = utils.normalDepModuleName(refModName, ret);
+            }
+            // 3. create module info with tag
+            S.each(ret, function (name, i) {
+                ret[i] = removeSuffixAndTagFromModName(name).modName;
             });
             return ret;
         },
@@ -2807,7 +2842,7 @@ build time: Mar 14 12:20
                         return;
                     }
 
-                    mod.requires = requires = utils.normalizeModNames(SS, mod.requires, name);
+                    requires = utils.normalizeModNames(SS, mod.requires, name);
 
                     if (utils.isAttached(SS, requires)) {
                         utils.attachMod(SS, mod);
@@ -2990,6 +3025,7 @@ build time: Mar 14 12:20
         use:function (modNames, callback) {
 
             modNames = utils.getModNamesAsArray(modNames);
+            modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
             var self = this,
                 SS = self.SS,
@@ -3075,9 +3111,12 @@ build time: Mar 14 12:20
                 rMod,
                 i,
                 attached = 0,
-                mods = SS.Env.mods,
-                //复制一份当前的依赖项出来，防止 add 后修改！
-                requires = mod.requires = utils.normalizeModNames(SS, mod.requires, mod.name);
+                // 最终有效的 require ，add 处声明为准
+                newRequires,
+                mods = SS.Env.mods;
+
+            //复制一份当前的依赖项出来，防止 add 后修改！
+            var requires = newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
             /**
              * check cyclic dependency between mods
@@ -3088,8 +3127,7 @@ build time: Mar 14 12:20
                 var __allRequires = mod.__allRequires = mod.__allRequires || {},
                     myName = mod.name,
                     rmod,
-                    r__allRequires,
-                    requires = mod.requires;
+                    r__allRequires;
 
                 S.each(requires, function (r) {
                     rmod = mods[r];
@@ -3132,14 +3170,14 @@ build time: Mar 14 12:20
             self.__load(mod, function () {
 
                 // add 可能改了 config，这里重新取下
-                var newRequires = mod.requires =
-                    utils.normalizeModNames(SS, mod.requires, mod.name),
-                    needToLoad = [];
+                newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
+
+                var needToLoad = [];
 
                 //本模块下载成功后串行下载 require
                 for (i = 0; i < newRequires.length; i++) {
-                    r = newRequires[i];
-                    var rMod = mods[r],
+                    var r = newRequires[i],
+                        rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
                     if (rMod && rMod.status === ATTACHED
@@ -3162,7 +3200,7 @@ build time: Mar 14 12:20
             });
 
             function fn() {
-                if (!attached && utils.isAttached(SS, mod.requires)) {
+                if (!attached && utils.isAttached(SS, newRequires)) {
                     if (mod.status === LOADED) {
                         utils.attachMod(SS, mod);
                     }
@@ -3334,6 +3372,8 @@ build time: Mar 14 12:20
                 self.loading = 1;
 
                 modNames = utils.getModNamesAsArray(modNames);
+
+                modNames= utils.normalizeModNamesWithAlias(modNames);
 
                 var unaliasModNames = utils.normalizeModNames(SS, modNames);
 
@@ -3585,7 +3625,7 @@ build time: Mar 14 12:20
                     ret = {};
                 // if this mod is attached then its require is attached too!
                 if (mod && !utils.isAttached(SS, modName)) {
-                    var requires = mod.requires = utils.normalizeModNames(SS, mod.requires, modName);
+                    var requires = utils.normalizeModNames(SS, mod.requires, modName);
                     // circular dependency check
                     if (S.Config.debug) {
                         var allRequires = mod.__allRequires || (mod.__allRequires = {});
@@ -3673,7 +3713,7 @@ build time: Mar 14 12:20
             },
             /**
              * Attached one or more modules to global KISSY instance.
-             * @param {String} names moduleNames. 1-n modules to bind(use comma to separate)
+             * @param {String|String[]} names moduleNames. 1-n modules to bind(use comma to separate)
              * @param {Function} callback callback function executed
              * when KISSY has the required functionality.
              * @param {KISSY} callback.S KISSY instance

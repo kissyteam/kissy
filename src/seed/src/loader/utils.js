@@ -27,6 +27,25 @@
         return s;
     }
 
+
+    function removeSuffixAndTagFromModName(modName) {
+        var tag = undefined,
+            m,
+            withTagReg = /([^?]+)(?:\?t=(.+))/;
+
+        if (m = modName.match(withTagReg)) {
+            modName = m[1];
+            tag = m[2];
+        }
+
+        // js do not need suffix
+        modName = modName.replace(/\.js$/i, "");
+        return {
+            modName:modName,
+            tag:tag
+        };
+    }
+
     S.mix(utils, {
 
         docHead:function () {
@@ -175,19 +194,13 @@
             return mod.packagePath = (p_def && p_def.path) || self.Config.base;
         },
 
+
         createModuleInfo:function (self, modName) {
 
-            var tag = undefined,
-                m,
-                withTagReg = /([^?]+)(?:\?t=(.+))/;
+            var info = removeSuffixAndTagFromModName(modName),
+                tag = info.tag;
 
-            if (m = modName.match(withTagReg)) {
-                modName = m[1];
-                tag = m[2];
-            }
-
-            // js do not need suffix
-            modName = modName.replace(/\.js$/i, "");
+            modName = info.modName;
 
             var mods = self.Env.mods,
                 mod = mods[modName];
@@ -238,6 +251,9 @@
 
             var fn = mod.fn,
                 value;
+
+            // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
+            mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -293,6 +309,25 @@
             // 4. create module info with tag
             S.each(ret, function (name, i) {
                 ret[i] = utils.createModuleInfo(self, name).name;
+            });
+            return ret;
+        },
+
+        normalizeModNamesWithAlias:function (self, modNames, refModName) {
+            var ret = [];
+            S.each(modNames, function (name) {
+                var alias, m;
+                // 1. index map
+                name = indexMap(name);
+                ret.push(name);
+            });
+            // 2. relative to absolute (optional)
+            if (refModName) {
+                ret = utils.normalDepModuleName(refModName, ret);
+            }
+            // 3. create module info with tag
+            S.each(ret, function (name, i) {
+                ret[i] = removeSuffixAndTagFromModName(name).modName;
             });
             return ret;
         },
