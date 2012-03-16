@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 15 12:36
+build time: Mar 16 17:03
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 15 12:36
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120315123624',
+            __BUILD_TIME:'20120316170345',
 
             /**
              * Returns a new object containing all of the properties of
@@ -2289,7 +2289,7 @@ build time: Mar 15 12:36
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            mod.requires = utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
+            mod.requires = utils.normalizeModNamesWithAlias(mod.requires, mod.name);
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -2349,10 +2349,9 @@ build time: Mar 15 12:36
             return ret;
         },
 
-        normalizeModNamesWithAlias:function (self, modNames, refModName) {
+        normalizeModNamesWithAlias:function (modNames, refModName) {
             var ret = [];
             S.each(modNames, function (name) {
-                var alias, m;
                 // 1. index map
                 name = indexMap(name);
                 ret.push(name);
@@ -3023,13 +3022,13 @@ build time: Mar 15 12:36
          *                   with KISSY as first argument and mod's value as the following arguments
          */
         use:function (modNames, callback) {
+            var self = this,
+                SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(SS, modNames);
+            modNames = utils.normalizeModNamesWithAlias(modNames);
 
-            var self = this,
-                SS = self.SS,
-                normalizedModNames = utils.normalizeModNames(SS, modNames),
+            var normalizedModNames = utils.normalizeModNames(SS, modNames),
                 count = normalizedModNames.length,
                 currentIndex = 0;
 
@@ -3110,13 +3109,14 @@ build time: Mar 15 12:36
                 r,
                 rMod,
                 i,
-                attached = 0,
+                callbackBeCalled = 0,
                 // 最终有效的 require ，add 处声明为准
                 newRequires,
                 mods = SS.Env.mods;
 
-            //复制一份当前的依赖项出来，防止 add 后修改！
-            var requires = newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
+            // 复制一份当前的依赖项出来，防止 add 后修改！
+            // 事先配置的 require ，同 newRequires 有区别
+            var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
             /**
              * check cyclic dependency between mods
@@ -3169,7 +3169,7 @@ build time: Mar 15 12:36
 
             self.__load(mod, function () {
 
-                // add 可能改了 config，这里重新取下
+                // KISSY.add 可能改了 config，这里重新取下
                 newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
                 var needToLoad = [];
@@ -3180,9 +3180,10 @@ build time: Mar 15 12:36
                         rMod = mods[r],
                         inA = S.inArray(r, requires);
                     //已经处理过了或将要处理
-                    if (rMod && rMod.status === ATTACHED
+                    if (rMod &&
+                        rMod.status === ATTACHED ||
                         //已经正在处理了
-                        || inA) {
+                        inA) {
                         //no need
                     } else {
                         //新增的依赖项
@@ -3200,12 +3201,25 @@ build time: Mar 15 12:36
             });
 
             function fn() {
-                if (!attached && utils.isAttached(SS, newRequires)) {
-                    if (mod.status === LOADED) {
+                if (
+                // 前提条件，本模块 script onload 已经调用
+                // ie 下 add 与 script onload 并不连续！！
+                // attach 以 newRequires 为准
+                    newRequires &&
+                        !callbackBeCalled &&
+                        // 2012-03-16 by yiminghe@gmail.com
+                        // add 与 onload ie 下不连续
+                        // c 依赖 a
+                        // a 模块 add 时进行 attach
+                        // a add 后 c 模块 onload 触发
+                        // 检测到 a 已经 attach 则调用该函数
+                        // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
+                        utils.isAttached(SS, newRequires)) {
+                    if (mod.status == LOADED) {
                         utils.attachMod(SS, mod);
                     }
-                    if (mod.status === ATTACHED) {
-                        attached = 1;
+                    if (mod.status == ATTACHED) {
+                        callbackBeCalled = 1;
                         callback();
                     }
                 }
@@ -18489,14 +18503,14 @@ KISSY.add('flash/ua', function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 15 18:08
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
-    var $ = Node.all,WIN=S.Env.host;
+    var $ = Node.all, WIN = S.Env.host;
 
     /**
-     * @class constrain draggable's region
+     * @class Provide ability to constrain draggable to specified region
      * @memberOf DD
      */
     function Constrain() {
@@ -18610,7 +18624,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
 KISSY.add("dd", function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
     /**
      * @name DD
-     * @namespace
+     * @namespace Provide the ability to make node draggable and droppable.
      */
     var DD;
     DD = {
@@ -18656,7 +18670,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     /**
      * @memberOf DD
      * @field
-     * @namespace
+     * @namespace Manager for Drag and Drop.
      */
     function DDM() {
         var self = this;
@@ -19112,11 +19126,16 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
         }
 
         if (handler) {
-            self.__set("activeHandler", handler);
             node = self._getNode(handler);
-        } else {
+        }
+
+        // can not find handler or can not find matched node from handler
+        // just return !
+        if (!node) {
             return;
         }
+
+        self.__set("activeHandler", handler);
 
         // 找到 handler 确定 委托的 node ，就算成功了
         self.__set("node", node);
@@ -19229,7 +19248,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
     /**
      * @extends Base
-     * @class make a node draggable
+     * @class Provide abilities to make specified node draggable
      * @memberOf DD
      */
     function Draggable() {
