@@ -214,16 +214,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             }
         },
 
-        show:function () {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        hide:function () {
-            this.set("visible", false);
-        },
-
         __destructor:function () {
             //S.log("box __destructor");
             var el = this.get("el");

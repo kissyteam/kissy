@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 14 11:42
+build time: Mar 19 17:07
 */
 /**
  * @fileOverview UIBase.Align
@@ -983,8 +983,14 @@ KISSY.add('uibase/box', function (S) {
          */
         show:function () {
             var self = this;
-            self.render();
-            self.set("visible", true);
+            if (!self.get("rendered")) {
+                // 防止初始设置 false，导致触发 hide 事件
+                // show 里面的初始一定是 true，触发 show 事件
+                self.__set("visible", true);
+                self.render();
+            } else {
+                self.set("visible", true);
+            }
         },
 
         /**
@@ -1211,16 +1217,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             } else {
                 el.css("display", isVisible ? "" : "none");
             }
-        },
-
-        show:function () {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        hide:function () {
-            this.set("visible", false);
         },
 
         __destructor:function () {

@@ -145,8 +145,14 @@ KISSY.add('uibase/box', function (S) {
          */
         show:function () {
             var self = this;
-            self.render();
-            self.set("visible", true);
+            if (!self.get("rendered")) {
+                // 防止初始设置 false，导致触发 hide 事件
+                // show 里面的初始一定是 true，触发 show 事件
+                self.__set("visible", true);
+                self.render();
+            } else {
+                self.set("visible", true);
+            }
         },
 
         /**
