@@ -78,7 +78,7 @@
         3 point drag with proxy
     </div>
 </div>
-<script src="../../../build/seed.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../src/ddm.js"></script>
 <script src="../src/draggable-delegate.js"></script>
 <script src="../src/draggable.js"></script>
@@ -99,21 +99,6 @@
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable,
                 Proxy = DD.Proxy;
-
-
-        var p;
-        /**
-         * 集中监听所有
-         */
-        DDM.on("dragstart", function (ev) {
-
-            var c = ev.drag;
-            p = c.get("dragNode").css("position");
-        });
-        DDM.on("dragend", function (ev) {
-            var c = ev.drag;
-            c.get("dragNode").css("position", p);
-        });
 
         /**
          * 拖放排序
@@ -167,6 +152,11 @@
 
             function onDropHit(ev) {
                 var drag = ev.drag, drop = ev.drop;
+                drag.get("dragNode").css({
+                    position:"",
+                    left:"",
+                    top:""
+                });
                 var tmp = $("<div>").insertBefore(drop.get("node"));
                 var dropParent = drop.get("node")[0].parentNode;
                 drag.get("dragNode")[0].parentNode.replaceChild(drop.get("node")[0],
@@ -179,6 +169,15 @@
             c21.on("dragdrophit", onDropHit);
             c11.on("dragdrophit", onDropHit);
             c31.on("dragdrophit", onDropHit);
+
+            DDM.on("dragdropmiss", function (ev) {
+                var drag = ev.drag;
+                drag.get("dragNode").css({
+                    position:"",
+                    left:"",
+                    top:""
+                });
+            });
 
         });
 

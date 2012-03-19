@@ -68,7 +68,7 @@
     <div id="c3" class="component" style="width:250px;line-height: 1;height: 110px;">
         strict drag with proxy
         <img height="100"
-                src="http://img.alimama.cn/adbrand/adboard/picture/2011-09-20/126792650001110920134440.jpg"/>
+             src="http://img.alimama.cn/adbrand/adboard/picture/2011-09-20/126792650001110920134440.jpg"/>
     </div>
 
 
@@ -77,7 +77,7 @@
     </div>
 </div>
 
-<script src="../../../build/seed.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../src/ddm.js"></script>
 <script src="../src/draggable-delegate.js"></script>
 <script src="../src/draggable.js"></script>
@@ -91,39 +91,24 @@
 
     var S = KISSY;
 
-    KISSY.use("node,dd", function(S, Node, DD) {
+    KISSY.use("node,dd", function (S, Node, DD) {
         var DDM = DD.DDM,
-                $=Node.all,
+                $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable,
                 Proxy = DD.Proxy;
 
-
-        var p;
-        /**
-         * 集中监听所有
-         */
-        DDM.on("dragstart", function(ev) {
-
-            var c = ev.drag;
-            p = c.get("dragNode").css("position");
-        });
-        DDM.on("dragend", function(ev) {
-            var c = ev.drag;
-            c.get("dragNode").css("position", p);
-        });
-
         /**
          * 简单拖放
          */
-        S.ready(function(S) {
+        S.ready(function (S) {
             var p = new Proxy({
                 /**
                  * 如何产生替代节点
                  * @param drag 当前拖对象
                  */
-                node:function(drag) {
+                node:function (drag) {
                     var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
@@ -162,44 +147,56 @@
                 node:"#drop"
             });
 
-            c1.on("dragenter", function(ev) {
+            c1.on("dragenter", function (ev) {
 
                 S.log(ev.drag.get("node").attr("id") + " dragenter "
                         + ev.drop.get("node").attr("id"));
             });
 
-            c1.on("dragover", function(ev) {
+            c1.on("dragover", function (ev) {
                 S.log(ev.drag.get("node").attr("id") + " dragover "
                         + ev.drop.get("node").attr("id"));
             });
 
-            c1.on("dragexit", function(ev) {
+            c1.on("dragexit", function (ev) {
                 S.log(ev.drag.get("node").attr("id") + " dragexit "
                         + ev.drop.get("node").attr("id"));
             });
 
             function onhit(ev) {
-                ev.drag.get("node").css("margin", "5px 10px");
-                ev.drag.get("node").appendTo(ev.drop.get("node"));
+                var node = ev.drag.get("node");
+                node.css({
+                    position:"",
+                    left:"",
+                    top:""
+                });
+                node.css("margin", "5px 10px");
+                node.appendTo(ev.drop.get("node"));
                 ev.drag.destroy();
             }
 
-            c1.on("dragdropmiss", function(ev) {
-                S.log(ev.drag.get("node").attr("id") + " dragdropmiss ");
+            DDM.on("dragdropmiss", function (ev) {
+                var node = ev.drag.get("node");
+                S.log(node.attr("id") + " dragdropmiss ");
+                node.css({
+                    position:"",
+                    left:"",
+                    top:""
+                });
             });
 
 
-            drop.on("dropenter", function(ev) {
+            drop.on("dropenter", function (ev) {
                 S.log(ev.drag.get("node").attr("id") + " dropenter "
                         + ev.drop.get("node").attr("id"));
             });
 
-            drop.on("dropover", function(ev) {
+            drop.on("dropover", function (ev) {
                 S.log(ev.drag.get("node").attr("id") + " dropover "
                         + ev.drop.get("node").attr("id"));
             });
 
-            drop.on("dropexit", function(ev) {
+            drop.on("dropexit", function (ev) {
                 S.log(ev.drag.get("node").attr("id") + " dropexit "
                         + ev.drop.get("node").attr("id"));
             });

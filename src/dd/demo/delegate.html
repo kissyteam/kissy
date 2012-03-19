@@ -84,7 +84,7 @@
     </div>
 </div>
 
-<script src="../../../build/seed.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../src/ddm.js"></script>
 <script src="../src/draggable-delegate.js"></script>
 <script src="../src/draggable.js"></script>
@@ -143,20 +143,6 @@
             var dropDelegate = new DroppableDelegate({
                 container:"#container2",
                 selector:'.component'
-            });
-
-
-            var p;
-            /**
-             * 集中监听所有
-             */
-            dragDelegate.on("dragstart", function(ev) {
-                var c = this;
-                p = c.get("dragNode").css("position");
-            });
-            dragDelegate.on("dragend", function(ev) {
-                var c = this;
-                c.get("dragNode").css("position", p);
             });
 
             dragDelegate.on("dragover", function(ev) {

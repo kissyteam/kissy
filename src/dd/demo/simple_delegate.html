@@ -70,7 +70,7 @@
     </div>
 </div>
 
-<script src="../../../build/seed.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../src/ddm.js"></script>
 <script src="../src/draggable-delegate.js"></script>
 <script src="../src/draggable.js"></script>
@@ -91,22 +91,6 @@
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable,
                 Proxy = DD.Proxy;
-
-
-        var p;
-        /**
-         * 集中监听所有
-         */
-        DDM.on("dragstart", function (ev) {
-
-            var c = ev.drag;
-            p = c.get("dragNode").css("position");
-        });
-        DDM.on("dragend", function (ev) {
-            var c = ev.drag;
-            c.get("dragNode").css("position", p);
-        });
-
 
         /**
          * 委托拖放
@@ -141,6 +125,7 @@
             var drop = new Droppable({
                 node:"#drop3"
             });
+
             var c = 0;
             $("#add_delegate").on("click", function () {
                 new Node('<div class="component"><div class="cheader">拖动头</div>delegate'

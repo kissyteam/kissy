@@ -86,7 +86,7 @@
 </div>
 
 
-<script src="../../../build/seed.js"></script>
+<script src="../../../build/kissy.js"></script>
 <script src="../src/ddm.js"></script>
 <script src="../src/draggable-delegate.js"></script>
 <script src="../src/draggable.js"></script>
@@ -121,6 +121,7 @@
                 n.css("opacity", 0.2);
                 return n;
             },
+            moveOnEnd:false,
             destroyOnEnd:true
         });
 
@@ -150,20 +151,6 @@
         new DroppableDelegate({
             container:"#cols",
             selector:'.component'
-        });
-
-        var p;
-        /**
-         * 集中监听所有
-         */
-        dragDelegate.on("dragstart", function (ev) {
-            var c = this;
-            p = c.get("dragNode").css("position");
-        });
-
-        dragDelegate.on("dragend", function (ev) {
-            var c = this;
-            c.get("dragNode").css("position", p);
         });
 
         dragDelegate.on("dragover", function (ev) {
