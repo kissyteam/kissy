@@ -200,7 +200,7 @@
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 16 17:03
+build time: Mar 19 15:39
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -350,7 +350,7 @@ build time: Mar 16 17:03
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120316170345',
+            __BUILD_TIME:'20120319153942',
 
             /**
              * Returns a new object containing all of the properties of
@@ -3431,7 +3431,7 @@ build time: Mar 16 17:03
         __load:function (mod, callback) {
 
             var self = this,
-                SS = self,
+                SS = self.SS,
                 cssfullpath,
                 url = mod['fullpath'],
                 isCss = utils.isCss(url),

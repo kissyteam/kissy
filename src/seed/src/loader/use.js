@@ -241,7 +241,7 @@
         __load:function (mod, callback) {
 
             var self = this,
-                SS = self,
+                SS = self.SS,
                 cssfullpath,
                 url = mod['fullpath'],
                 isCss = utils.isCss(url),
