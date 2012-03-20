@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 7 19:03
+build time: Mar 20 21:04
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -375,11 +375,6 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
             createDom:function () {
                 var self = this;
                 var view = self.get("view") || getDefaultView.call(self);
-                if (!view) {
-                    S.error("no view for");
-                    S.error(self.constructor);
-                    return;
-                }
                 view.create();
                 view._renderCls(getClsByHierarchy(self));
                 if (!self.get("allowTextSelection_")) {
