@@ -307,9 +307,10 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              * 销毁组件
              */
             destroy:function () {
-                destroyHierarchy(this);
-                this.fire('destroy');
-                this.detach();
+                var self = this;
+                destroyHierarchy(self);
+                self.fire('destroy');
+                self.detach();
             }
         },
         /**

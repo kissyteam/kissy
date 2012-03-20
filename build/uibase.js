@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 19 17:07
+build time: Mar 20 18:33
 */
 /**
  * @fileOverview UIBase.Align
@@ -278,7 +278,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
          * @example
          * <code>
          *     {
-         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
          *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
          *        offset: [0, 0]      // 有效值为 [n, m]
          *     }
@@ -304,7 +304,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             H = align.charAt(1),
             offset, w, h, x, y;
 
-        if (node) {
+        if (node && !S.isWindow(node)) {
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
@@ -338,7 +338,9 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            this.align(v.node, v.points, v.offset, v.overflow);
+            if (v) {
+                this.align(v.node, v.points, v.offset, v.overflow);
+            }
         },
 
         /*
@@ -737,9 +739,10 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              * 销毁组件
              */
             destroy:function () {
-                destroyHierarchy(this);
-                this.fire('destroy');
-                this.detach();
+                var self = this;
+                destroyHierarchy(self);
+                self.fire('destroy');
+                self.detach();
             }
         },
         /**
@@ -1836,7 +1839,7 @@ KISSY.add("uibase/mask", function () {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/maskrender", function(S, UA, Node) {
+KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -1845,32 +1848,29 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
         ie6 = (UA['ie'] === 6),
         px = "px",
         $ = Node.all,
-        WINDOW=S.Env.host,
-        win = $(S.Env.host),
+        WINDOW = S.Env.host,
         doc = $(WINDOW.document),
         iframe,
         num = 0;
 
     function docWidth() {
-        return  ie6 ? (doc.width() + px) : "100%";
+        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
     }
 
     function docHeight() {
-        return ie6 ? (doc.height() + px) : "100%";
+        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
     function initMask() {
         mask = $("<div " +
-            //"tabindex='-1' " +
+            " style='width:" + docWidth() + ";height:" + docHeight() + ";' " +
             "class='" +
             this.get("prefixCls") + "ext-mask'/>")
-            .prependTo("body");
+            .prependTo(WINDOW.document.body);
         mask.css({
             "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
             left:0,
-            top:0,
-            width: docWidth(),
-            "height": docHeight()
+            top:0
         });
         if (ie6) {
             //ie6 下最好和 mask 平行
@@ -1890,7 +1890,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function(e) {
+        mask.on("mousedown click", function (e) {
             e.halt();
         });
     }
@@ -1898,25 +1898,16 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
     function Mask() {
     }
 
-    var resizeMask = S.throttle(function() {
-        var v = {
-            width : docWidth(),
-            height : docHeight()
-        };
-        mask.css(v);
-        iframe && iframe.css(v);
-    }, 50);
-
 
     Mask.prototype = {
 
-        _maskExtShow:function() {
+        _maskExtShow:function () {
             var self = this;
             if (!mask) {
                 initMask.call(self);
             }
             var zIndex = {
-                "z-index": self.get("zIndex") - 1
+                "z-index":self.get("zIndex") - 1
             },
                 display = {
                     "display":""
@@ -1927,13 +1918,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             if (num == 1) {
                 mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.on("resize scroll", resizeMask);
-                }
             }
         },
 
-        _maskExtHide:function() {
+        _maskExtHide:function () {
             num--;
             if (num <= 0) {
                 num = 0;
@@ -1944,13 +1932,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                 };
                 mask && mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.detach("resize scroll", resizeMask);
-                }
             }
         },
 
-        __destructor:function() {
+        __destructor:function () {
             this._maskExtHide();
         }
 
@@ -1958,7 +1943,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua","node"]
+    requires:["ua", "node"]
 });/**
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
@@ -2036,12 +2021,29 @@ KISSY.add("uibase/position", function (S) {
      * @lends UIBase.Position.prototype
      */
     {
-        __bindUI:function () {
-            // fix #112
-            this.on("hide", function () {
-                this.set("xy", [-9999, -9999]);
-            });
-        },
+        //! #112 和 effect 冲突，不好控制，delay
+//        __bindUI:function () {
+//            // fix #112
+//            var self = this,
+//                el = self.get("el");
+//            // show hide event is earlier than afterVisibleChange
+//            self.on("hide", function () {
+//                self.set("hideLeft", el.css("left"));
+//                self.set("hideTop", el.css("top"));
+//                el.css({
+//                    left:HIDE_INDICATOR_PX,
+//                    top:HIDE_INDICATOR_PX
+//                });
+//            });
+//            self.on("show", function () {
+//                if (el.style("left") == HIDE_INDICATOR_PX) {
+//                    el.css("left", self.get("hideLeft"));
+//                }
+//                if (el.style("top") == HIDE_INDICATOR_PX) {
+//                    el.css("top", self.get("hideTop"));
+//                }
+//            });
+//        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {Number|Number[]} x
@@ -2073,16 +2075,18 @@ KISSY.add("uibase/positionrender", function () {
         x:{
             // 水平方向绝对位置
             valueFn:function () {
+                var self=this;
                 // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
                 // el 不在 dom 树中 offset 报错的
                 // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
-                return this.get("el") && this.get("el").offset().left;
+                return self.get("el") && self.get("el").offset().left;
             }
         },
         y:{
             // 垂直方向绝对位置
             valueFn:function () {
-                return this.get("el") && this.get("el").offset().top;
+                var self=this;
+                return self.get("el") && self.get("el").offset().top;
             }
         },
         zIndex:{

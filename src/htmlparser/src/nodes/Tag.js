@@ -288,6 +288,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
                     if (!(attrName = filter.onAttributeName(attrName, el))) {
                         continue;
                     }
+                    attr.name=attrName;
                     // filtered by value and node
                     if (filter.onAttribute(attr, el) === false) {
                         continue;

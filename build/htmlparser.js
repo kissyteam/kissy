@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 18:05
+build time: Mar 20 11:03
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -2010,6 +2010,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
                     if (!(attrName = filter.onAttributeName(attrName, el))) {
                         continue;
                     }
+                    attr.name=attrName;
                     // filtered by value and node
                     if (filter.onAttribute(attr, el) === false) {
                         continue;

@@ -273,7 +273,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
          * @example
          * <code>
          *     {
-         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
          *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
          *        offset: [0, 0]      // 有效值为 [n, m]
          *     }
@@ -299,7 +299,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             H = align.charAt(1),
             offset, w, h, x, y;
 
-        if (node) {
+        if (node && !S.isWindow(node)) {
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
@@ -333,7 +333,9 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            this.align(v.node, v.points, v.offset, v.overflow);
+            if (v) {
+                this.align(v.node, v.points, v.offset, v.overflow);
+            }
         },
 
         /*

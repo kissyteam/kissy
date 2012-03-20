@@ -338,5 +338,33 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             expect(count).toBe(1);
         });
 
+        it("can filter attributeNames", function () {
+            var rules = {
+                attributeNames:[
+                    // 把保存的作为真正的属性，替换掉原来的
+                    // replace(/^_ke_saved_/,"")
+                    // _ke_saved_href -> href
+                    [ ( /^_ke_saved_/ ), '' ],
+                    [ ( /^ke_on/ ), 'on' ],
+                    [ ( /^_ke.*/ ), '' ],
+                    //!TODO 不知道怎么回事会引入
+                    [ ( /^_ks.*/ ), '' ],
+                    [ ( /^ke:.*$/ ), '' ]
+                ]
+            };
+
+            var filter = new HtmlParser.Filter();
+            filter.addRules(rules);
+
+            var writer = new HtmlParser.BasicWriter();
+
+            var before = "<p _ke_saved_src='y'>x</p>";
+
+            var n = new HtmlParser.Parser(before).parse();
+
+            n.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<p src=\"y\">x</p>");
+        });
+
     });
 });

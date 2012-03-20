@@ -16,15 +16,13 @@ History:
 
 ### v1.2.0 -> v1.3.0
  - [*] 调整源码目录结构
- - [!] 移除 core 模块，不要 use("core")/require("core"),只用你要用的
- - [!] 去除 KISSY.XX 命名空间绑定，使用前先 use，从参数中取得模块使用
  - [+] 增加 S.Defer/Promise ，支持 Promise 规范
 
  - [+] S.config 增加 combine 配置，支持自动 combo
  - [x] KISSY.add(fn) fn 中 this 为模块对象
  - [*] Support tag for individual module : #110
 
- - [*] KISSY.ready 并行调用，互相不干扰
+ - [*] KISSY.ready try catch 达到互不影响的效果
 
  - [+] Event 模块：on/detach 支持事件分组
  - [+] Event 模块：fireHandler api 增加

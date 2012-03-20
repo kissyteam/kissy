@@ -75,12 +75,29 @@ KISSY.add("uibase/position", function (S) {
      * @lends UIBase.Position.prototype
      */
     {
-        __bindUI:function () {
-            // fix #112
-            this.on("hide", function () {
-                this.set("xy", [-9999, -9999]);
-            });
-        },
+        //! #112 和 effect 冲突，不好控制，delay
+//        __bindUI:function () {
+//            // fix #112
+//            var self = this,
+//                el = self.get("el");
+//            // show hide event is earlier than afterVisibleChange
+//            self.on("hide", function () {
+//                self.set("hideLeft", el.css("left"));
+//                self.set("hideTop", el.css("top"));
+//                el.css({
+//                    left:HIDE_INDICATOR_PX,
+//                    top:HIDE_INDICATOR_PX
+//                });
+//            });
+//            self.on("show", function () {
+//                if (el.style("left") == HIDE_INDICATOR_PX) {
+//                    el.css("left", self.get("hideLeft"));
+//                }
+//                if (el.style("top") == HIDE_INDICATOR_PX) {
+//                    el.css("top", self.get("hideTop"));
+//                }
+//            });
+//        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {Number|Number[]} x

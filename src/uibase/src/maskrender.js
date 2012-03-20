@@ -2,7 +2,7 @@
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/maskrender", function(S, UA, Node) {
+KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -11,32 +11,29 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
         ie6 = (UA['ie'] === 6),
         px = "px",
         $ = Node.all,
-        WINDOW=S.Env.host,
-        win = $(S.Env.host),
+        WINDOW = S.Env.host,
         doc = $(WINDOW.document),
         iframe,
         num = 0;
 
     function docWidth() {
-        return  ie6 ? (doc.width() + px) : "100%";
+        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
     }
 
     function docHeight() {
-        return ie6 ? (doc.height() + px) : "100%";
+        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
     function initMask() {
         mask = $("<div " +
-            //"tabindex='-1' " +
+            " style='width:" + docWidth() + ";height:" + docHeight() + ";' " +
             "class='" +
             this.get("prefixCls") + "ext-mask'/>")
-            .prependTo("body");
+            .prependTo(WINDOW.document.body);
         mask.css({
             "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
             left:0,
-            top:0,
-            width: docWidth(),
-            "height": docHeight()
+            top:0
         });
         if (ie6) {
             //ie6 下最好和 mask 平行
@@ -56,7 +53,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function(e) {
+        mask.on("mousedown click", function (e) {
             e.halt();
         });
     }
@@ -64,25 +61,16 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
     function Mask() {
     }
 
-    var resizeMask = S.throttle(function() {
-        var v = {
-            width : docWidth(),
-            height : docHeight()
-        };
-        mask.css(v);
-        iframe && iframe.css(v);
-    }, 50);
-
 
     Mask.prototype = {
 
-        _maskExtShow:function() {
+        _maskExtShow:function () {
             var self = this;
             if (!mask) {
                 initMask.call(self);
             }
             var zIndex = {
-                "z-index": self.get("zIndex") - 1
+                "z-index":self.get("zIndex") - 1
             },
                 display = {
                     "display":""
@@ -93,13 +81,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             if (num == 1) {
                 mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.on("resize scroll", resizeMask);
-                }
             }
         },
 
-        _maskExtHide:function() {
+        _maskExtHide:function () {
             num--;
             if (num <= 0) {
                 num = 0;
@@ -110,13 +95,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                 };
                 mask && mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.detach("resize scroll", resizeMask);
-                }
             }
         },
 
-        __destructor:function() {
+        __destructor:function () {
             this._maskExtHide();
         }
 
@@ -124,5 +106,5 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua","node"]
+    requires:["ua", "node"]
 });

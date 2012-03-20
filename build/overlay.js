@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 14 11:47
+build time: Mar 20 18:33
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -386,54 +386,44 @@ KISSY.add("overlay/effect", function (S) {
         }
     };
 
+    function processEffect(self, show) {
+        var el = self.get("el"),
+            effectCfg = self.get("effect"),
+            effect = effectCfg.effect,
+            duration = effectCfg.duration,
+            easing = effectCfg.easing;
+        if (effect == NONE) {
+            return;
+        }
+        var v = show,
+            index = v ? 1 : 0;
+        // 队列中的也要移去
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+        var restore = {
+            "visibility":"visible",
+            "display":displays[index]
+        };
+        el.css(restore);
+        var m = effect + effects[effect][index];
+        el[m](duration, function () {
+            var r2 = {
+                "display":displays[0],
+                "visibility":v ? "visible" : "hidden"
+            };
+            el.css(r2);
+        }, easing);
+    }
+
     Effect.prototype = {
 
         __bindUI:function () {
-            var self = this,
-                saveXy,
-                el = self.get("el");
-            self.on("beforeVisibleChange", function (ev) {
-                if (!ev.newVal) {
-                    saveXy = {
-                        left:el.css("left"),
-                        top:el.css("top")
-                    };
-                }
+            var self = this
+            self.on("hide", function (ev) {
+                processEffect(self, 0);
             });
-            self.on("afterVisibleChange", function (ev) {
-                var effectCfg = self.get("effect"),
-                    effect = effectCfg.effect,
-                    duration = effectCfg.duration,
-                    easing = effectCfg.easing;
-                if (effect == NONE) {
-                    return;
-                }
-                var v = ev.newVal,
-                    index = v ? 1 : 0;
-                // 队列中的也要移去
-                // run complete fn to restore window's original height
-                el.stop(1, 1);
-                var restore = {
-                    "visibility":"visible",
-                    "display":displays[index]
-                };
-                if (!v) {
-                    // #112 , restore position to animate hide
-                    S.mix(restore, saveXy);
-                }
-                el.css(restore);
-                var m = effect + effects[effect][index];
-                el[m](duration, function () {
-                    var r2 = {
-                        "display":displays[0],
-                        "visibility":v ? "visible" : "hidden"
-                    };
-                    if (!v) {
-                        r2.left = -9999;
-                        r2.top = -9999;
-                    }
-                    el.css(r2);
-                }, easing);
+            self.on("show", function (ev) {
+                processEffect(self, 1);
             });
         }
     };
@@ -615,10 +605,10 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                     .on('mouseenter', self._clearHiddenTimer, self);
             },
 
-            _setHiddenTimer:function (ev) {
+            _setHiddenTimer:function () {
                 var self = this;
                 self._hiddenTimer = S.later(function () {
-                    self._hiding(ev);
+                    self._hiding();
                 }, self.get('mouseDelay'));
             },
 
@@ -644,10 +634,11 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                 });
             },
             _showing:function (ev) {
-                this.set('currentTrigger', S.one(ev.target));
-                this.show();
+                var self = this;
+                self.set('currentTrigger', S.one(ev.target));
+                self.show();
             },
-            _hiding:function (ev) {
+            _hiding:function () {
                 this.set('currentTrigger', undefined);
                 this.hide();
             },

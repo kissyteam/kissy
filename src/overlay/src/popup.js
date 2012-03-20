@@ -133,10 +133,10 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                     .on('mouseenter', self._clearHiddenTimer, self);
             },
 
-            _setHiddenTimer:function (ev) {
+            _setHiddenTimer:function () {
                 var self = this;
                 self._hiddenTimer = S.later(function () {
-                    self._hiding(ev);
+                    self._hiding();
                 }, self.get('mouseDelay'));
             },
 
@@ -162,10 +162,11 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                 });
             },
             _showing:function (ev) {
-                this.set('currentTrigger', S.one(ev.target));
-                this.show();
+                var self = this;
+                self.set('currentTrigger', S.one(ev.target));
+                self.show();
             },
-            _hiding:function (ev) {
+            _hiding:function () {
                 this.set('currentTrigger', undefined);
                 this.hide();
             },
