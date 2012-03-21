@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:05
+build time: Mar 21 21:34
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -10,7 +10,7 @@ build time: Mar 6 16:05
 KISSY.add("waterfall/base", function (S, Node, Base) {
 
     var $ = Node.all,
-        win=S.Env.host,
+        win = S.Env.host,
         RESIZE_DURATION = 50;
 
     /**
@@ -50,6 +50,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             if (timer) {
                 clearTimeout(timer);
                 todo = [];
+                items.each(function (item) {
+                    item.stop();
+                });
             }
         };
 
@@ -95,7 +98,18 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         colItems:{
             value:[]
-        }
+        },
+
+        /**
+         * 调整时的特效
+         * @since 1.3
+         * @example
+         * {
+         *   duration:1,
+         *   easing:"none"
+         * }
+         */
+        adjustEffect:{}
     };
 
     function doResize() {
@@ -125,9 +139,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         self.set("colItems", []);
     }
 
-    function adjustItem(itemRaw) {
-        var self = this,
-            effect = self.get("effect"),
+    function adjustItemAction(self, add, itemRaw, callback) {
+        var effect = self.get("effect"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -135,59 +148,75 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             dest = 0,
             containerRegion = self._containerRegion,
             guard = Number.MAX_VALUE;
+
         for (var i = 0; i < curColCount; i++) {
             if (curColHeights[i] < guard) {
                 guard = curColHeights[i];
                 dest = i;
             }
         }
+
         if (!curColCount) {
             guard = 0;
         }
+
         // 元素保持间隔不变，居中
-        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
-        item.css({
-            // left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
-            //    + containerRegion.left,
-            // 元素间固定间隔好点
-            left:dest * self.get("colWidth") + margin,
-            top:guard
-        });
-        /*不在容器里，就加上*/
-        if (!container.contains(item)) {
-            if (effect && effect.effect == "fadeIn") {
-                item.css("opacity", 0);
+        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2,
+            destProp = {
+                // left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
+                //    + containerRegion.left,
+                // 元素间固定间隔好点
+                left:dest * self.get("colWidth") + margin,
+                top:guard
+            };
+
+        /*
+         不在容器里，就加上
+         */
+        if (add) {
+            // 初始需要动画，那么先把透明度换成 0
+            item.css(destProp);
+            if (effect && effect.effect) {
+                item.css("visibility", "hidden");
             }
             container.append(item);
+            callback && callback();
         }
+        // 否则调整，需要动画
+        else {
+            var adjustEffect = self.get("adjustEffect");
+            if (adjustEffect) {
+                item.animate(destProp, adjustEffect.duration, adjustEffect.easing, callback);
+            } else {
+                item.css(destProp);
+                callback && callback();
+            }
+        }
+
+        // 加入到 dom 树才能取得高度
         curColHeights[dest] += item.outerHeight(true);
         var colItems = self.get("colItems");
         colItems[dest] = colItems[dest] || [];
         colItems[dest].push(item);
         item.attr("data-waterfall-col", dest);
+
         return item;
     }
 
     function addItem(itemRaw) {
         var self = this,
-            curColHeights = self.get("curColHeights"),
-            container = self.get("container"),
-            item = adjustItem.call(self, itemRaw),
+            item = adjustItemAction(self, true, itemRaw),
             effect = self.get("effect");
-        if (!effect.effect ||
-            effect.effect !== "fadeIn") {
-            return;
+        if (effect && effect.effect) {
+            // 先隐藏才能调用 fadeIn slideDown
+            item.hide();
+            item.css("visibility", "");
+            item[effect.effect](
+                effect.duration,
+                0,
+                effect.easing
+            );
         }
-        // only allow fadeIn temporary
-        item.animate({
-            opacity:1
-        }, {
-            duration:effect.duration,
-            easing:effect.easing,
-            complete:function () {
-                item.css("opacity", "");
-            }
-        });
     }
 
     S.extend(Waterfall, Base,
@@ -207,6 +236,20 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 $(win).on("resize", self.__onResize);
             },
 
+
+            /**
+             * 调整一个元素的高度
+             * @param {Node} item 待调整的元素
+             * @param {Object} cfg 控制配置
+             * @param {Function} cfg.callback 调整结束后的回调
+             * @param {Function} cfg.process
+             * 用于做调整操作的函数，
+             * 可以返回数字表示调整后的高度，
+             * 不返回的话直接取调整后元素的高度
+             * @param {Object} cfg.effect 其他元素配合调整位置的特效配置
+             * @param {Number} cfg.effect.duration
+             * @param {String} cfg.effect.easing
+             */
             adjustItem:function (item, cfg) {
                 var self = this;
 
@@ -215,16 +258,16 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 }
 
                 var originalOuterHeight = item.outerHeight(true),
-                    outerHeight,
-                    remove = false;
+                    outerHeight;
+
                 if (cfg.process) {
-                    remove = cfg.process.call(self);
+                    outerHeight = cfg.process.call(self);
                 }
-                if (remove) {
-                    outerHeight = 0;
-                } else {
+
+                if (outerHeight === undefined) {
                     outerHeight = item.outerHeight(true);
                 }
+
                 var diff = outerHeight - originalOuterHeight,
                     curColHeights = self.get("curColHeights"),
                     dest = parseInt(item.attr("data-waterfall-col")),
@@ -254,20 +297,58 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                     self.get("container").height(now);
                 }
 
+                var effect = cfg.effect,
+                    num = items.length;
+
+                if (effect === undefined) {
+                    effect = self.get("adjustEffect");
+                }
+
+                function check() {
+                    num--;
+                    if (num <= 0) {
+                        self._adjuster = 0;
+                        cfg && cfg.callback && cfg.callback.call(self);
+                    }
+                }
+
+                if (!num) {
+                    return check();
+                }
+
                 return self._adjuster = timedChunk(items, function (item) {
-                    item.css("top", parseInt(item.css("top")) + diff);
-                }, null, function () {
-                    self._adjuster = 0;
-                    cfg && cfg.callback && cfg.callback.call(self);
+                    if (effect) {
+                        item.animate({
+                                top:parseInt(item.css("top")) + diff
+                            },
+                            effect.duration,
+                            effect.easing,
+                            check);
+                    } else {
+                        item.css("top", parseInt(item.css("top")) + diff);
+                        check();
+                    }
                 });
             },
 
+            /**
+             * 删除一个元素
+             * @param {Node} item 待删除的元素
+             * @param {Object} cfg 控制配置
+             * @param {Function} cfg.callback 删除结束后的回调
+             * @param {Function} cfg.process 用于做删除操作的函数
+             * @param {Object} cfg.effect 删除后其他元素调整位置特效配置
+             * @param {Number} cfg.effect.duration
+             * @param {String} cfg.effect.easing
+             */
             removeItem:function (item, cfg) {
-                var self = this;
-                self.adjustItem(item, {
+                cfg = cfg || {};
+                var self = this,
+                    callback = cfg.callback;
+                self.adjustItem(item, S.mix(cfg, {
                     process:function () {
                         item.remove();
-                        return true;
+                        return 0;
                     },
                     callback:function () {
                         var dest = parseInt(item.attr("data-waterfall-col")),
@@ -278,11 +359,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                                 break;
                             }
                         }
-                        if (cfg && cfg.callback) {
-                            cfg.callback.call(self);
-                        }
+                        callback && callback();
                     }
-                });
+                }));
             },
 
             /**
@@ -297,17 +376,30 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 /* 正在调整中，取消上次调整，开始这次调整 */
                 if (self.isAdjusting()) {
                     self._adjuster.stop();
+                    self._adjuster = 0;
                 }
                 /*计算容器宽度等信息*/
                 recalculate.call(self);
-                return self._adjuster = timedChunk(items, addItem, self, function () {
-                    self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
-                    self._adjuster = 0;
-                    callback && callback.call(self);
+                var num = items.length;
 
-                    items.length && self.fire('adjustComplete', {
-                        items:items
-                    });
+                function check() {
+                    num--;
+                    if (num <= 0) {
+                        self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
+                        self._adjuster = 0;
+                        callback && callback.call(self);
+                        items.length && self.fire('adjustComplete', {
+                            items:items
+                        });
+                    }
+                }
+
+                if (!num) {
+                    return check();
+                }
+
+                return self._adjuster = timedChunk(items, function (item) {
+                    adjustItemAction(self, false, item, check);
                 });
             },
 
@@ -324,7 +416,6 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                             self.get("curColHeights")));
                         self._adder = 0;
                         callback && callback.call(self);
-
                         items.length && self.fire('addComplete', {
                             items:items
                         });
@@ -343,7 +434,12 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
 }, {
     requires:['node', 'base']
-});/**
+});
+/**
+ * 2012-03-21 yiminghe@gmail.com
+ *  - 增加动画特效
+ *  - 增加删除/调整接口
+ **//**
  * @fileOverview load content
  * @author yiminghe@gmail.com
  */
