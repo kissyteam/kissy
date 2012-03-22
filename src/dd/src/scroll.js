@@ -2,7 +2,7 @@
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
+KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
         win = S.Env.host,
@@ -173,8 +173,14 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                 // dragDelegate 时 可能一个 dragDelegate对应多个 scroll
                 // check container
                 function checkContainer() {
-                    var dragNode = drag.get("dragNode");
-                    if (!node.contains(dragNode)) {
+                    if (isWin(node[0])) {
+                        return 0;
+                    }
+                    // 判断 proxyNode，不对 dragNode 做大的改变
+                    var mousePos = drag.mousePos,
+                        r = DDM.region(node);
+
+                    if (!DDM.inRegion(r, mousePos)) {
                         clearTimeout(timer);
                         timer = 0;
                         return 1;
@@ -194,7 +200,6 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     }
 
                     // 更新当前鼠标相对于拖节点的相对位置
-                    S.log("dragging");
                     event = ev;
                     dxy = S.clone(drag.mousePos);
                     var offset = self.getOffset(node);
@@ -223,7 +228,6 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                 };
 
                 function checkAndScroll() {
-                    //S.log("******* scroll");
                     if (checkContainer()) {
                         return;
                     }
@@ -242,21 +246,21 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     }
 
                     var diffY2 = dxy.top;
-                    //S.log(diffY2);
+
                     if (diffY2 <= diff[1]) {
                         scroll.top -= rate[1];
                         adjust = true;
                     }
 
                     var diffX = dxy.left - nw;
-                    //S.log(diffX);
+
                     if (diffX >= -diff[0]) {
                         scroll.left += rate[0];
                         adjust = true;
                     }
 
                     var diffX2 = dxy.left;
-                    //S.log(diffX2);
+
                     if (diffX2 <= diff[0]) {
                         scroll.left -= rate[0];
                         adjust = true;
@@ -292,5 +296,5 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     return Scroll;
 }, {
-    requires:['base', 'node', 'dom']
+    requires:['./ddm', 'base', 'node', 'dom']
 });

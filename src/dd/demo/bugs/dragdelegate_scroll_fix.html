@@ -79,17 +79,6 @@ width: 300px;height: 200px;left:450px;top:50px;overflow: auto;
             node:"#col1"
         }).attach(d);
 
-        var drop = new DD.DroppableDelegate({
-            container:"#container",
-            selector:".col"
-        });
-
-
-        drop.on("dropenter", function (e) {
-            S.log("dropenter : " + e.drop.get("node")[0].id);
-            e.drag.get("dragNode").appendTo(e.drop.get("node"));
-        })
-
         new DD.Scroll({
             node:"#col2"
         }).attach(d);
