@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 15 18:08
+build time: Mar 22 12:23
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -1953,7 +1953,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
 KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
-        win=S.Env.host,
+        win = S.Env.host,
         stamp = S.stamp,
         RATE = [10, 10],
         ADJUST_DELAY = 100,
@@ -2125,6 +2125,12 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     // S.log("dragging");
                     // 更新当前鼠标相对于拖节点的相对位置
                     var node = self.get("node");
+                    // fix https://github.com/kissyteam/kissy/issues/115
+                    // dragDelegate 时 可能一个 dragDelegate对应多个 scroll
+                    var dragNode = drag.get("dragNode");
+                    if (!node.contains(dragNode)) {
+                        return;
+                    }
                     event = ev;
                     dxy = S.clone(drag.mousePos);
                     var offset = self.getOffset(node);
