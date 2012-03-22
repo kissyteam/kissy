@@ -26,9 +26,11 @@
                         var current = stack[stack.length - 1];
                         if (!current || current.tagName != node.tagName) {
                             alert("结束标签没有开始标签 : \n" + node);
-                            alert("周围 html ： \n\n" + inp
-                                    .substring(node.startPosition - 100,
-                                    node.endPosition + 100));
+                            if (inp.length > 250) {
+                                alert("周围 html ： \n\n" + inp
+                                        .substring(node.startPosition - 100,
+                                        node.endPosition + 100));
+                            }
                             return;
                         } else {
                             stack.length = stack.length - 1;
