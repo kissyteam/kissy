@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Mar 22 12:25
+build time: Mar 22 14:50
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -1318,7 +1318,7 @@ KISSY.add("dd/droppable-delegate", function(S, DDM, Droppable, DOM, Node) {
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
+KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
         win = S.Env.host,
@@ -1468,6 +1468,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
              */
             attach:function (drag) {
                 var self = this,
+                    node = self.get("node"),
                     tag = stamp(drag, 0, TAG_DRAG),
                     destructors = self[DESTRUCTORS];
 
@@ -1484,21 +1485,37 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     dxy,
                     timer = null;
 
+                // fix https://github.com/kissyteam/kissy/issues/115
+                // dragDelegate 时 可能一个 dragDelegate对应多个 scroll
+                // check container
+                function checkContainer() {
+                    if (isWin(node[0])) {
+                        return 0;
+                    }
+                    // 判断 proxyNode，不对 dragNode 做大的改变
+                    var mousePos = drag.mousePos,
+                        r = DDM.region(node);
+
+                    if (!DDM.inRegion(r, mousePos)) {
+                        clearTimeout(timer);
+                        timer = 0;
+                        return 1;
+                    }
+                    return 0;
+                }
+
                 function dragging(ev) {
                     // 给调用者的事件，框架不需要处理
                     // fake 也表示该事件不是因为 mouseover 产生的
                     if (ev.fake) {
                         return;
                     }
-                    // S.log("dragging");
-                    // 更新当前鼠标相对于拖节点的相对位置
-                    var node = self.get("node");
-                    // fix https://github.com/kissyteam/kissy/issues/115
-                    // dragDelegate 时 可能一个 dragDelegate对应多个 scroll
-                    var dragNode = drag.get("dragNode");
-                    if (!node.contains(dragNode)) {
+
+                    if (checkContainer()) {
                         return;
                     }
+
+                    // 更新当前鼠标相对于拖节点的相对位置
                     event = ev;
                     dxy = S.clone(drag.mousePos);
                     var offset = self.getOffset(node);
@@ -1527,9 +1544,11 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                 };
 
                 function checkAndScroll() {
-                    //S.log("******* scroll");
-                    var node = self.get("node"),
-                        r = self.getRegion(node),
+                    if (checkContainer()) {
+                        return;
+                    }
+
+                    var r = self.getRegion(node),
                         nw = r.width,
                         nh = r.height,
                         scroll = self.getScroll(node),
@@ -1543,21 +1562,21 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     }
 
                     var diffY2 = dxy.top;
-                    //S.log(diffY2);
+
                     if (diffY2 <= diff[1]) {
                         scroll.top -= rate[1];
                         adjust = true;
                     }
 
                     var diffX = dxy.left - nw;
-                    //S.log(diffX);
+
                     if (diffX >= -diff[0]) {
                         scroll.left += rate[0];
                         adjust = true;
                     }
 
                     var diffX2 = dxy.left;
-                    //S.log(diffX2);
+
                     if (diffX2 <= diff[0]) {
                         scroll.left -= rate[0];
                         adjust = true;
@@ -1593,7 +1612,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     return Scroll;
 }, {
-    requires:['base', 'node', 'dom']
+    requires:['./ddm', 'base', 'node', 'dom']
 });/**
  * dd support for kissy
  * @author  承玉<yiminghe@gmail.com>
