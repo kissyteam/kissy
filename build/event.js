@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:38
+build time: Mar 22 20:56
 */
 /**
  * @fileOverview responsible for registering event
@@ -197,7 +197,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
-     * @namespace
+     * @namespace The event utility provides functions to add and remove event listeners.
      * @name Event
      */
     var Event =
@@ -356,7 +356,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             // Bubble up to document, then to window
             cur = cur.parentNode ||
                 cur.ownerDocument ||
-                cur === target.ownerDocument && win;
+                (cur === target.ownerDocument) && win;
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
@@ -643,19 +643,23 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
-    var key = S.guid("attaches_" + S.now() + "_")
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
             { name:'focusin', fix:'focus' },
             { name:'focusout', fix:'blur' }
         ], function (o) {
+            var key = S.guid("attaches_" + S.now() + "_")
             special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
                 // refer: http://yiminghe.iteye.com/blog/813255
                 setup:function () {
-                    var doc = this.ownerDocument;
+                    // this maybe document
+                    var doc = this.ownerDocument || this;
+                    if (!(key in doc)) {
+                        doc[key] = 0;
+                    }
                     doc[key] += 1;
                     if (doc[key] === 1) {
                         doc.addEventListener(o.fix, handler, true);
@@ -663,7 +667,7 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
                 },
 
                 tearDown:function () {
-                    var doc = this.ownerDocument;
+                    var doc = this.ownerDocument || this;
                     doc[key] -= 1;
                     if (doc[key] === 0) {
                         doc.removeEventListener(o.fix, handler, true);
@@ -1418,12 +1422,11 @@ KISSY.add('event/object', function (S, undefined) {
             'target toElement view wheelDelta which axis').split(' ');
 
     /**
-     * KISSY's event system normalizes the event object according to
+     * @class KISSY's event system normalizes the event object according to
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      * @name Object
-     * @constructor
      * @memberOf Event
      */
     function EventObject(currentTarget, domEvent, type) {
@@ -1446,130 +1449,145 @@ KISSY.add('event/object', function (S, undefined) {
         self.fixed = TRUE;
     }
 
-    S.augment(EventObject, {
-
-        isDefaultPrevented:FALSE,
-        isPropagationStopped:FALSE,
-        isImmediatePropagationStopped:FALSE,
-
-        _fix:function () {
-            var self = this,
-                originalEvent = self.originalEvent,
-                l = props.length, prop,
-                ct = self.currentTarget,
-                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
-
-            // clone properties of the original event object
-            while (l) {
-                prop = props[--l];
-                self[prop] = originalEvent[prop];
-            }
-
-            // fix target property, if necessary
-            if (!self.target) {
-                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
-            }
-
-            // check if target is a textnode (safari)
-            if (self.target.nodeType === 3) {
-                self.target = self.target.parentNode;
-            }
-
-            // add relatedTarget, if necessary
-            if (!self.relatedTarget && self.fromElement) {
-                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
-            }
-
-            // calculate pageX/Y if missing and clientX/Y available
-            if (self.pageX === undefined && self.clientX !== undefined) {
-                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-            }
-
-            // add which for key events
-            if (self.which === undefined) {
-                self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
-            }
-
-            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-            if (self.metaKey === undefined) {
-                self.metaKey = self.ctrlKey;
-            }
-
-            // add which for click: 1 === left; 2 === middle; 3 === right
-            // Note: button is not normalized, so don't use it
-            if (!self.which && self.button !== undefined) {
-                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-            }
-        },
-
+    S.augment(EventObject,
         /**
-         * Prevents the event's default behavior
+         * @lends Event.Object#
          */
-        preventDefault:function () {
-            var e = this.originalEvent;
+        {
 
-            // if preventDefault exists run it on the original event
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            // otherwise set the returnValue property of the original event to FALSE (IE)
-            else {
-                e.returnValue = FALSE;
-            }
+            /**
+             * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+             * @type Boolean
+             */
+            isDefaultPrevented:FALSE,
+            /**
+             * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+             * @type Boolean
+             */
+            isPropagationStopped:FALSE,
+            /**
+             * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+             * @type Boolean
+             */
+            isImmediatePropagationStopped:FALSE,
 
-            this.isDefaultPrevented = TRUE;
-        },
+            _fix:function () {
+                var self = this,
+                    originalEvent = self.originalEvent,
+                    l = props.length, prop,
+                    ct = self.currentTarget,
+                    ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
-        /**
-         * Stops the propagation to the next bubble target
-         */
-        stopPropagation:function () {
-            var e = this.originalEvent;
+                // clone properties of the original event object
+                while (l) {
+                    prop = props[--l];
+                    self[prop] = originalEvent[prop];
+                }
 
-            // if stopPropagation exists run it on the original event
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            // otherwise set the cancelBubble property of the original event to TRUE (IE)
-            else {
-                e.cancelBubble = TRUE;
-            }
+                // fix target property, if necessary
+                if (!self.target) {
+                    self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
+                }
 
-            this.isPropagationStopped = TRUE;
-        },
+                // check if target is a textnode (safari)
+                if (self.target.nodeType === 3) {
+                    self.target = self.target.parentNode;
+                }
+
+                // add relatedTarget, if necessary
+                if (!self.relatedTarget && self.fromElement) {
+                    self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+                }
+
+                // calculate pageX/Y if missing and clientX/Y available
+                if (self.pageX === undefined && self.clientX !== undefined) {
+                    var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
+                    self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
+                    self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+                }
+
+                // add which for key events
+                if (self.which === undefined) {
+                    self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
+                }
+
+                // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+                if (self.metaKey === undefined) {
+                    self.metaKey = self.ctrlKey;
+                }
+
+                // add which for click: 1 === left; 2 === middle; 3 === right
+                // Note: button is not normalized, so don't use it
+                if (!self.which && self.button !== undefined) {
+                    self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+                }
+            },
+
+            /**
+             * Prevents the event's default behavior
+             */
+            preventDefault:function () {
+                var e = this.originalEvent;
+
+                // if preventDefault exists run it on the original event
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                // otherwise set the returnValue property of the original event to FALSE (IE)
+                else {
+                    e.returnValue = FALSE;
+                }
+
+                this.isDefaultPrevented = TRUE;
+            },
+
+            /**
+             * Stops the propagation to the next bubble target
+             */
+            stopPropagation:function () {
+                var e = this.originalEvent;
+
+                // if stopPropagation exists run it on the original event
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                // otherwise set the cancelBubble property of the original event to TRUE (IE)
+                else {
+                    e.cancelBubble = TRUE;
+                }
+
+                this.isPropagationStopped = TRUE;
+            },
 
 
-        /**
-         * Stops the propagation to the next bubble target and
-         * prevents any additional listeners from being exectued
-         * on the current target.
-         */
-        stopImmediatePropagation:function () {
-            var self = this;
-            self.isImmediatePropagationStopped = TRUE;
-            // fixed 1.2
-            // call stopPropagation implicitly
-            self.stopPropagation();
-        },
-
-        /**
-         * Stops the event propagation and prevents the default
-         * event behavior.
-         * @param [immediate] {boolean} if TRUE additional listeners
-         * on the current target will not be executed
-         */
-        halt:function (immediate) {
-            var self = this;
-            if (immediate) {
-                self.stopImmediatePropagation();
-            } else {
+            /**
+             * Stops the propagation to the next bubble target and
+             * prevents any additional listeners from being exectued
+             * on the current target.
+             */
+            stopImmediatePropagation:function () {
+                var self = this;
+                self.isImmediatePropagationStopped = TRUE;
+                // fixed 1.2
+                // call stopPropagation implicitly
                 self.stopPropagation();
+            },
+
+            /**
+             * Stops the event propagation and prevents the default
+             * event behavior.
+             * @param  {boolean} [immediate] if true additional listeners on the current target will not be executed
+             */
+            halt:function (immediate) {
+                var self = this;
+                if (immediate) {
+                    self.stopImmediatePropagation();
+                } else {
+                    self.stopPropagation();
+                }
+                self.preventDefault();
             }
-            self.preventDefault();
-        }
-    });
+        });
 
     return EventObject;
 
@@ -1903,9 +1921,13 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     }
 
     /**
-     * 提供事件发布和订阅机制
-     * @name Target
+     * @class EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
+     * and also allows other EventTargets to target the object with events sourced from the other object.
+     * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
+     * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
+     * or will not be created at all.
      * @namespace
+     * @name Target
      * @memberOf Event
      */
     var Target =
@@ -1914,10 +1936,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
      */
     {
         /**
-         * 触发事件
-         * @param {String} type 事件名
-         * @param {Object} [eventData] 事件附加信息对象
-         * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
+         * Fire a custom event by name.
+         * The callback functions will be executed from the context specified when the event was created,
+         * and the {@link Event.Object} created will be mixed with eventData
+         * @param {String} type The type of the event
+         * @param {Object} [eventData] The data will be mixed with {@link Event.Object} created
+         * @returns {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
          */
         fire:function (type, eventData) {
             var self = this,
@@ -1959,11 +1983,10 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * defined event config
-         * @param type
-         * @param cfg
-         *        example { bubbles: true}
-         *        default bubbles: false
+         * Creates a new custom event of the specified type
+         * @param {String} type The type of the event
+         * @param {Object} cfg Config params
+         * @param {Boolean} [cfg.bubbles=false] whether or not this event bubbles
          */
         publish:function (type, cfg) {
             var self = this,
@@ -1978,6 +2001,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * bubble event to its targets
          * @param type
          * @param eventData
+         * @private
          */
         bubble:function (type, eventData) {
             var self = this,
@@ -1993,8 +2017,8 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * add target which bubblable event bubbles towards
-         * @param target another EventTarget instance
+         * Registers another EventTarget as a bubble target.
+         * @param {Event.Target} target Another EventTarget instance to add
          */
         addTarget:function (target) {
             var self = this,
@@ -2002,6 +2026,10 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
             targets[S.stamp(target)] = target;
         },
 
+        /**
+         * Removes a bubble target
+         * @param {Event.Target} target Another EventTarget instance to remove
+         */
         removeTarget:function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
@@ -2009,31 +2037,25 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * 监听事件
+         * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
          * @function
-         * @param {String} type 事件名
-         * @param {Function} fn 事件处理器
-         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-         * @returns 当前实例
+         * @param {String} type The name of the event
+         * @param {Function} fn The callback to execute in response to the event
+         * @param {Object} [scope] this object in callback
          */
         on:attach("add"),
         /**
-         * 取消监听事件
+         * Detach one or more listeners the from the specified event
          * @function
-         * @param {String} type 事件名
-         * @param {Function} fn 事件处理器
-         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-         * @returns 当前实例
+         * @param {String} type The name of the event
+         * @param {Function} [fn] The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.
+         * @param {Object} [scope] The custom object passed to subscribe.
          */
         detach:attach("remove")
     };
 
     return Target;
 }, {
-    /*
-     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-     否则会导致build打包文件 dom 和 dom-data 重复载入
-     */
     requires:["./base", './object', './utils', './handle']
 });
 /**

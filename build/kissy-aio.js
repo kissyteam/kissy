@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 19 15:39
+build time: Mar 22 20:56
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 19 15:39
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120319153942',
+            __BUILD_TIME:'20120322205612',
 
             /**
              * Returns a new object containing all of the properties of
@@ -8562,7 +8562,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:38
+build time: Mar 22 20:56
 */
 /**
  * @fileOverview responsible for registering event
@@ -8758,7 +8758,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
-     * @namespace
+     * @namespace The event utility provides functions to add and remove event listeners.
      * @name Event
      */
     var Event =
@@ -8917,7 +8917,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             // Bubble up to document, then to window
             cur = cur.parentNode ||
                 cur.ownerDocument ||
-                cur === target.ownerDocument && win;
+                (cur === target.ownerDocument) && win;
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
@@ -9204,19 +9204,23 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
  * @author  yiminghe@gmail.com
  */
 KISSY.add('event/focusin', function (S, UA, Event, special) {
-    var key = S.guid("attaches_" + S.now() + "_")
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
             { name:'focusin', fix:'focus' },
             { name:'focusout', fix:'blur' }
         ], function (o) {
+            var key = S.guid("attaches_" + S.now() + "_")
             special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
                 // refer: http://yiminghe.iteye.com/blog/813255
                 setup:function () {
-                    var doc = this.ownerDocument;
+                    // this maybe document
+                    var doc = this.ownerDocument || this;
+                    if (!(key in doc)) {
+                        doc[key] = 0;
+                    }
                     doc[key] += 1;
                     if (doc[key] === 1) {
                         doc.addEventListener(o.fix, handler, true);
@@ -9224,7 +9228,7 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
                 },
 
                 tearDown:function () {
-                    var doc = this.ownerDocument;
+                    var doc = this.ownerDocument || this;
                     doc[key] -= 1;
                     if (doc[key] === 0) {
                         doc.removeEventListener(o.fix, handler, true);
@@ -9979,12 +9983,11 @@ KISSY.add('event/object', function (S, undefined) {
             'target toElement view wheelDelta which axis').split(' ');
 
     /**
-     * KISSY's event system normalizes the event object according to
+     * @class KISSY's event system normalizes the event object according to
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
      * @name Object
-     * @constructor
      * @memberOf Event
      */
     function EventObject(currentTarget, domEvent, type) {
@@ -10007,130 +10010,145 @@ KISSY.add('event/object', function (S, undefined) {
         self.fixed = TRUE;
     }
 
-    S.augment(EventObject, {
-
-        isDefaultPrevented:FALSE,
-        isPropagationStopped:FALSE,
-        isImmediatePropagationStopped:FALSE,
-
-        _fix:function () {
-            var self = this,
-                originalEvent = self.originalEvent,
-                l = props.length, prop,
-                ct = self.currentTarget,
-                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
-
-            // clone properties of the original event object
-            while (l) {
-                prop = props[--l];
-                self[prop] = originalEvent[prop];
-            }
-
-            // fix target property, if necessary
-            if (!self.target) {
-                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
-            }
-
-            // check if target is a textnode (safari)
-            if (self.target.nodeType === 3) {
-                self.target = self.target.parentNode;
-            }
-
-            // add relatedTarget, if necessary
-            if (!self.relatedTarget && self.fromElement) {
-                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
-            }
-
-            // calculate pageX/Y if missing and clientX/Y available
-            if (self.pageX === undefined && self.clientX !== undefined) {
-                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-            }
-
-            // add which for key events
-            if (self.which === undefined) {
-                self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
-            }
-
-            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-            if (self.metaKey === undefined) {
-                self.metaKey = self.ctrlKey;
-            }
-
-            // add which for click: 1 === left; 2 === middle; 3 === right
-            // Note: button is not normalized, so don't use it
-            if (!self.which && self.button !== undefined) {
-                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-            }
-        },
-
+    S.augment(EventObject,
         /**
-         * Prevents the event's default behavior
+         * @lends Event.Object#
          */
-        preventDefault:function () {
-            var e = this.originalEvent;
+        {
 
-            // if preventDefault exists run it on the original event
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            // otherwise set the returnValue property of the original event to FALSE (IE)
-            else {
-                e.returnValue = FALSE;
-            }
+            /**
+             * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+             * @type Boolean
+             */
+            isDefaultPrevented:FALSE,
+            /**
+             * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+             * @type Boolean
+             */
+            isPropagationStopped:FALSE,
+            /**
+             * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+             * @type Boolean
+             */
+            isImmediatePropagationStopped:FALSE,
 
-            this.isDefaultPrevented = TRUE;
-        },
+            _fix:function () {
+                var self = this,
+                    originalEvent = self.originalEvent,
+                    l = props.length, prop,
+                    ct = self.currentTarget,
+                    ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
-        /**
-         * Stops the propagation to the next bubble target
-         */
-        stopPropagation:function () {
-            var e = this.originalEvent;
+                // clone properties of the original event object
+                while (l) {
+                    prop = props[--l];
+                    self[prop] = originalEvent[prop];
+                }
 
-            // if stopPropagation exists run it on the original event
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            // otherwise set the cancelBubble property of the original event to TRUE (IE)
-            else {
-                e.cancelBubble = TRUE;
-            }
+                // fix target property, if necessary
+                if (!self.target) {
+                    self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
+                }
 
-            this.isPropagationStopped = TRUE;
-        },
+                // check if target is a textnode (safari)
+                if (self.target.nodeType === 3) {
+                    self.target = self.target.parentNode;
+                }
+
+                // add relatedTarget, if necessary
+                if (!self.relatedTarget && self.fromElement) {
+                    self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+                }
+
+                // calculate pageX/Y if missing and clientX/Y available
+                if (self.pageX === undefined && self.clientX !== undefined) {
+                    var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
+                    self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
+                    self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+                }
+
+                // add which for key events
+                if (self.which === undefined) {
+                    self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
+                }
+
+                // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+                if (self.metaKey === undefined) {
+                    self.metaKey = self.ctrlKey;
+                }
+
+                // add which for click: 1 === left; 2 === middle; 3 === right
+                // Note: button is not normalized, so don't use it
+                if (!self.which && self.button !== undefined) {
+                    self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+                }
+            },
+
+            /**
+             * Prevents the event's default behavior
+             */
+            preventDefault:function () {
+                var e = this.originalEvent;
+
+                // if preventDefault exists run it on the original event
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                // otherwise set the returnValue property of the original event to FALSE (IE)
+                else {
+                    e.returnValue = FALSE;
+                }
+
+                this.isDefaultPrevented = TRUE;
+            },
+
+            /**
+             * Stops the propagation to the next bubble target
+             */
+            stopPropagation:function () {
+                var e = this.originalEvent;
+
+                // if stopPropagation exists run it on the original event
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                // otherwise set the cancelBubble property of the original event to TRUE (IE)
+                else {
+                    e.cancelBubble = TRUE;
+                }
+
+                this.isPropagationStopped = TRUE;
+            },
 
 
-        /**
-         * Stops the propagation to the next bubble target and
-         * prevents any additional listeners from being exectued
-         * on the current target.
-         */
-        stopImmediatePropagation:function () {
-            var self = this;
-            self.isImmediatePropagationStopped = TRUE;
-            // fixed 1.2
-            // call stopPropagation implicitly
-            self.stopPropagation();
-        },
-
-        /**
-         * Stops the event propagation and prevents the default
-         * event behavior.
-         * @param [immediate] {boolean} if TRUE additional listeners
-         * on the current target will not be executed
-         */
-        halt:function (immediate) {
-            var self = this;
-            if (immediate) {
-                self.stopImmediatePropagation();
-            } else {
+            /**
+             * Stops the propagation to the next bubble target and
+             * prevents any additional listeners from being exectued
+             * on the current target.
+             */
+            stopImmediatePropagation:function () {
+                var self = this;
+                self.isImmediatePropagationStopped = TRUE;
+                // fixed 1.2
+                // call stopPropagation implicitly
                 self.stopPropagation();
+            },
+
+            /**
+             * Stops the event propagation and prevents the default
+             * event behavior.
+             * @param  {boolean} [immediate] if true additional listeners on the current target will not be executed
+             */
+            halt:function (immediate) {
+                var self = this;
+                if (immediate) {
+                    self.stopImmediatePropagation();
+                } else {
+                    self.stopPropagation();
+                }
+                self.preventDefault();
             }
-            self.preventDefault();
-        }
-    });
+        });
 
     return EventObject;
 
@@ -10464,9 +10482,13 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
     }
 
     /**
-     * 提供事件发布和订阅机制
-     * @name Target
+     * @class EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
+     * and also allows other EventTargets to target the object with events sourced from the other object.
+     * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
+     * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
+     * or will not be created at all.
      * @namespace
+     * @name Target
      * @memberOf Event
      */
     var Target =
@@ -10475,10 +10497,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
      */
     {
         /**
-         * 触发事件
-         * @param {String} type 事件名
-         * @param {Object} [eventData] 事件附加信息对象
-         * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
+         * Fire a custom event by name.
+         * The callback functions will be executed from the context specified when the event was created,
+         * and the {@link Event.Object} created will be mixed with eventData
+         * @param {String} type The type of the event
+         * @param {Object} [eventData] The data will be mixed with {@link Event.Object} created
+         * @returns {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
          */
         fire:function (type, eventData) {
             var self = this,
@@ -10520,11 +10544,10 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * defined event config
-         * @param type
-         * @param cfg
-         *        example { bubbles: true}
-         *        default bubbles: false
+         * Creates a new custom event of the specified type
+         * @param {String} type The type of the event
+         * @param {Object} cfg Config params
+         * @param {Boolean} [cfg.bubbles=false] whether or not this event bubbles
          */
         publish:function (type, cfg) {
             var self = this,
@@ -10539,6 +10562,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * bubble event to its targets
          * @param type
          * @param eventData
+         * @private
          */
         bubble:function (type, eventData) {
             var self = this,
@@ -10554,8 +10578,8 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * add target which bubblable event bubbles towards
-         * @param target another EventTarget instance
+         * Registers another EventTarget as a bubble target.
+         * @param {Event.Target} target Another EventTarget instance to add
          */
         addTarget:function (target) {
             var self = this,
@@ -10563,6 +10587,10 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
             targets[S.stamp(target)] = target;
         },
 
+        /**
+         * Removes a bubble target
+         * @param {Event.Target} target Another EventTarget instance to remove
+         */
         removeTarget:function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
@@ -10570,31 +10598,25 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         },
 
         /**
-         * 监听事件
+         * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
          * @function
-         * @param {String} type 事件名
-         * @param {Function} fn 事件处理器
-         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-         * @returns 当前实例
+         * @param {String} type The name of the event
+         * @param {Function} fn The callback to execute in response to the event
+         * @param {Object} [scope] this object in callback
          */
         on:attach("add"),
         /**
-         * 取消监听事件
+         * Detach one or more listeners the from the specified event
          * @function
-         * @param {String} type 事件名
-         * @param {Function} fn 事件处理器
-         * @param {Object} scope 事件处理器内的 this 值，默认当前实例
-         * @returns 当前实例
+         * @param {String} type The name of the event
+         * @param {Function} [fn] The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.
+         * @param {Object} [scope] The custom object passed to subscribe.
          */
         detach:attach("remove")
     };
 
     return Target;
 }, {
-    /*
-     实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
-     否则会导致build打包文件 dom 和 dom-data 重复载入
-     */
     requires:["./base", './object', './utils', './handle']
 });
 /**
@@ -18503,7 +18525,7 @@ KISSY.add('flash/ua', function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 15 18:08
+build time: Mar 22 14:46
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -20452,10 +20474,10 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
+KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
 
     var TAG_DRAG = "__dd-scroll-id-",
-        win=S.Env.host,
+        win = S.Env.host,
         stamp = S.stamp,
         RATE = [10, 10],
         ADJUST_DELAY = 100,
@@ -20602,6 +20624,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
              */
             attach:function (drag) {
                 var self = this,
+                    node = self.get("node"),
                     tag = stamp(drag, 0, TAG_DRAG),
                     destructors = self[DESTRUCTORS];
 
@@ -20618,15 +20641,37 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     dxy,
                     timer = null;
 
+                // fix https://github.com/kissyteam/kissy/issues/115
+                // dragDelegate 时 可能一个 dragDelegate对应多个 scroll
+                // check container
+                function checkContainer() {
+                    if (isWin(node[0])) {
+                        return 0;
+                    }
+                    // 判断 proxyNode，不对 dragNode 做大的改变
+                    var mousePos = drag.mousePos,
+                        r = DDM.region(node);
+
+                    if (!DDM.inRegion(r, mousePos)) {
+                        clearTimeout(timer);
+                        timer = 0;
+                        return 1;
+                    }
+                    return 0;
+                }
+
                 function dragging(ev) {
                     // 给调用者的事件，框架不需要处理
                     // fake 也表示该事件不是因为 mouseover 产生的
                     if (ev.fake) {
                         return;
                     }
-                    // S.log("dragging");
+
+                    if (checkContainer()) {
+                        return;
+                    }
+
                     // 更新当前鼠标相对于拖节点的相对位置
-                    var node = self.get("node");
                     event = ev;
                     dxy = S.clone(drag.mousePos);
                     var offset = self.getOffset(node);
@@ -20655,9 +20700,11 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                 };
 
                 function checkAndScroll() {
-                    //S.log("******* scroll");
-                    var node = self.get("node"),
-                        r = self.getRegion(node),
+                    if (checkContainer()) {
+                        return;
+                    }
+
+                    var r = self.getRegion(node),
                         nw = r.width,
                         nh = r.height,
                         scroll = self.getScroll(node),
@@ -20671,21 +20718,21 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
                     }
 
                     var diffY2 = dxy.top;
-                    //S.log(diffY2);
+
                     if (diffY2 <= diff[1]) {
                         scroll.top -= rate[1];
                         adjust = true;
                     }
 
                     var diffX = dxy.left - nw;
-                    //S.log(diffX);
+
                     if (diffX >= -diff[0]) {
                         scroll.left += rate[0];
                         adjust = true;
                     }
 
                     var diffX2 = dxy.left;
-                    //S.log(diffX2);
+
                     if (diffX2 <= diff[0]) {
                         scroll.left -= rate[0];
                         adjust = true;
@@ -20721,7 +20768,7 @@ KISSY.add("dd/scroll", function (S, Base, Node, DOM) {
 
     return Scroll;
 }, {
-    requires:['base', 'node', 'dom']
+    requires:['./ddm', 'base', 'node', 'dom']
 });
 /*
 Copyright 2012, KISSY UI Library v1.30dev
@@ -20920,7 +20967,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 14 11:42
+build time: Mar 20 18:33
 */
 /**
  * @fileOverview UIBase.Align
@@ -21197,7 +21244,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
          * @example
          * <code>
          *     {
-         *        node: null,         // 参考元素, falsy 值为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
          *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
          *        offset: [0, 0]      // 有效值为 [n, m]
          *     }
@@ -21223,7 +21270,7 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
             H = align.charAt(1),
             offset, w, h, x, y;
 
-        if (node) {
+        if (node && !S.isWindow(node)) {
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
@@ -21257,7 +21304,9 @@ KISSY.add('uibase/align', function (S, UA, DOM, Node) {
      */
     {
         _uiSetAlign:function (v) {
-            this.align(v.node, v.points, v.offset, v.overflow);
+            if (v) {
+                this.align(v.node, v.points, v.offset, v.overflow);
+            }
         },
 
         /*
@@ -21656,9 +21705,10 @@ KISSY.add('uibase/base', function (S, Base, Node) {
              * 销毁组件
              */
             destroy:function () {
-                destroyHierarchy(this);
-                this.fire('destroy');
-                this.detach();
+                var self = this;
+                destroyHierarchy(self);
+                self.fire('destroy');
+                self.detach();
             }
         },
         /**
@@ -21902,8 +21952,14 @@ KISSY.add('uibase/box', function (S) {
          */
         show:function () {
             var self = this;
-            self.render();
-            self.set("visible", true);
+            if (!self.get("rendered")) {
+                // 防止初始设置 false，导致触发 hide 事件
+                // show 里面的初始一定是 true，触发 show 事件
+                self.__set("visible", true);
+                self.render();
+            } else {
+                self.set("visible", true);
+            }
         },
 
         /**
@@ -22130,16 +22186,6 @@ KISSY.add('uibase/boxrender', function (S, Node) {
             } else {
                 el.css("display", isVisible ? "" : "none");
             }
-        },
-
-        show:function () {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-        },
-
-        hide:function () {
-            this.set("visible", false);
         },
 
         __destructor:function () {
@@ -22759,7 +22805,7 @@ KISSY.add("uibase/mask", function () {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("uibase/maskrender", function(S, UA, Node) {
+KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -22768,32 +22814,29 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
         ie6 = (UA['ie'] === 6),
         px = "px",
         $ = Node.all,
-        WINDOW=S.Env.host,
-        win = $(S.Env.host),
+        WINDOW = S.Env.host,
         doc = $(WINDOW.document),
         iframe,
         num = 0;
 
     function docWidth() {
-        return  ie6 ? (doc.width() + px) : "100%";
+        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
     }
 
     function docHeight() {
-        return ie6 ? (doc.height() + px) : "100%";
+        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
     function initMask() {
         mask = $("<div " +
-            //"tabindex='-1' " +
+            " style='width:" + docWidth() + ";height:" + docHeight() + ";' " +
             "class='" +
             this.get("prefixCls") + "ext-mask'/>")
-            .prependTo("body");
+            .prependTo(WINDOW.document.body);
         mask.css({
             "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
             left:0,
-            top:0,
-            width: docWidth(),
-            "height": docHeight()
+            top:0
         });
         if (ie6) {
             //ie6 下最好和 mask 平行
@@ -22813,7 +22856,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function(e) {
+        mask.on("mousedown click", function (e) {
             e.halt();
         });
     }
@@ -22821,25 +22864,16 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
     function Mask() {
     }
 
-    var resizeMask = S.throttle(function() {
-        var v = {
-            width : docWidth(),
-            height : docHeight()
-        };
-        mask.css(v);
-        iframe && iframe.css(v);
-    }, 50);
-
 
     Mask.prototype = {
 
-        _maskExtShow:function() {
+        _maskExtShow:function () {
             var self = this;
             if (!mask) {
                 initMask.call(self);
             }
             var zIndex = {
-                "z-index": self.get("zIndex") - 1
+                "z-index":self.get("zIndex") - 1
             },
                 display = {
                     "display":""
@@ -22850,13 +22884,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             if (num == 1) {
                 mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.on("resize scroll", resizeMask);
-                }
             }
         },
 
-        _maskExtHide:function() {
+        _maskExtHide:function () {
             num--;
             if (num <= 0) {
                 num = 0;
@@ -22867,13 +22898,10 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                 };
                 mask && mask.css(display);
                 iframe && iframe.css(display);
-                if (ie6) {
-                    win.detach("resize scroll", resizeMask);
-                }
             }
         },
 
-        __destructor:function() {
+        __destructor:function () {
             this._maskExtHide();
         }
 
@@ -22881,7 +22909,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua","node"]
+    requires:["ua", "node"]
 });/**
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
@@ -22959,12 +22987,29 @@ KISSY.add("uibase/position", function (S) {
      * @lends UIBase.Position.prototype
      */
     {
-        __bindUI:function () {
-            // fix #112
-            this.on("hide", function () {
-                this.set("xy", [-9999, -9999]);
-            });
-        },
+        //! #112 和 effect 冲突，不好控制，delay
+//        __bindUI:function () {
+//            // fix #112
+//            var self = this,
+//                el = self.get("el");
+//            // show hide event is earlier than afterVisibleChange
+//            self.on("hide", function () {
+//                self.set("hideLeft", el.css("left"));
+//                self.set("hideTop", el.css("top"));
+//                el.css({
+//                    left:HIDE_INDICATOR_PX,
+//                    top:HIDE_INDICATOR_PX
+//                });
+//            });
+//            self.on("show", function () {
+//                if (el.style("left") == HIDE_INDICATOR_PX) {
+//                    el.css("left", self.get("hideLeft"));
+//                }
+//                if (el.style("top") == HIDE_INDICATOR_PX) {
+//                    el.css("top", self.get("hideTop"));
+//                }
+//            });
+//        },
         /**
          * 移动到绝对位置上, move(x, y) or move(x) or move([x, y])
          * @param {Number|Number[]} x
@@ -22996,16 +23041,18 @@ KISSY.add("uibase/positionrender", function () {
         x:{
             // 水平方向绝对位置
             valueFn:function () {
+                var self=this;
                 // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
                 // el 不在 dom 树中 offset 报错的
                 // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
-                return this.get("el") && this.get("el").offset().left;
+                return self.get("el") && self.get("el").offset().left;
             }
         },
         y:{
             // 垂直方向绝对位置
             valueFn:function () {
-                return this.get("el") && this.get("el").offset().top;
+                var self=this;
+                return self.get("el") && self.get("el").offset().top;
             }
         },
         zIndex:{
@@ -23416,7 +23463,7 @@ KISSY.add("uibase", function(S, UIBase, Align, Box, BoxRender, Close, CloseRende
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 7 19:03
+build time: Mar 20 21:04
 */
 /**
  * @fileOverview mvc based component framework for kissy
@@ -23790,11 +23837,6 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
             createDom:function () {
                 var self = this;
                 var view = self.get("view") || getDefaultView.call(self);
-                if (!view) {
-                    S.error("no view for");
-                    S.error(self.constructor);
-                    return;
-                }
                 view.create();
                 view._renderCls(getClsByHierarchy(self));
                 if (!self.get("allowTextSelection_")) {
@@ -27370,7 +27412,7 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 14 11:47
+build time: Mar 20 18:33
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -27755,54 +27797,44 @@ KISSY.add("overlay/effect", function (S) {
         }
     };
 
+    function processEffect(self, show) {
+        var el = self.get("el"),
+            effectCfg = self.get("effect"),
+            effect = effectCfg.effect,
+            duration = effectCfg.duration,
+            easing = effectCfg.easing;
+        if (effect == NONE) {
+            return;
+        }
+        var v = show,
+            index = v ? 1 : 0;
+        // 队列中的也要移去
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+        var restore = {
+            "visibility":"visible",
+            "display":displays[index]
+        };
+        el.css(restore);
+        var m = effect + effects[effect][index];
+        el[m](duration, function () {
+            var r2 = {
+                "display":displays[0],
+                "visibility":v ? "visible" : "hidden"
+            };
+            el.css(r2);
+        }, easing);
+    }
+
     Effect.prototype = {
 
         __bindUI:function () {
-            var self = this,
-                saveXy,
-                el = self.get("el");
-            self.on("beforeVisibleChange", function (ev) {
-                if (!ev.newVal) {
-                    saveXy = {
-                        left:el.css("left"),
-                        top:el.css("top")
-                    };
-                }
+            var self = this
+            self.on("hide", function (ev) {
+                processEffect(self, 0);
             });
-            self.on("afterVisibleChange", function (ev) {
-                var effectCfg = self.get("effect"),
-                    effect = effectCfg.effect,
-                    duration = effectCfg.duration,
-                    easing = effectCfg.easing;
-                if (effect == NONE) {
-                    return;
-                }
-                var v = ev.newVal,
-                    index = v ? 1 : 0;
-                // 队列中的也要移去
-                // run complete fn to restore window's original height
-                el.stop(1, 1);
-                var restore = {
-                    "visibility":"visible",
-                    "display":displays[index]
-                };
-                if (!v) {
-                    // #112 , restore position to animate hide
-                    S.mix(restore, saveXy);
-                }
-                el.css(restore);
-                var m = effect + effects[effect][index];
-                el[m](duration, function () {
-                    var r2 = {
-                        "display":displays[0],
-                        "visibility":v ? "visible" : "hidden"
-                    };
-                    if (!v) {
-                        r2.left = -9999;
-                        r2.top = -9999;
-                    }
-                    el.css(r2);
-                }, easing);
+            self.on("show", function (ev) {
+                processEffect(self, 1);
             });
         }
     };
@@ -27984,10 +28016,10 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                     .on('mouseenter', self._clearHiddenTimer, self);
             },
 
-            _setHiddenTimer:function (ev) {
+            _setHiddenTimer:function () {
                 var self = this;
                 self._hiddenTimer = S.later(function () {
-                    self._hiding(ev);
+                    self._hiding();
                 }, self.get('mouseDelay'));
             },
 
@@ -28013,10 +28045,11 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
                 });
             },
             _showing:function (ev) {
-                this.set('currentTrigger', S.one(ev.target));
-                this.show();
+                var self = this;
+                self.set('currentTrigger', S.one(ev.target));
+                self.show();
             },
-            _hiding:function (ev) {
+            _hiding:function () {
                 this.set('currentTrigger', undefined);
                 this.hide();
             },
@@ -34925,7 +34958,7 @@ KISSY.add("tree/treerender", function(S, UIBase, Component, BaseNodeRender, Tree
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:05
+build time: Mar 21 21:34
 */
 /**
  * @fileOverview intervein elements dynamically
@@ -34934,7 +34967,7 @@ build time: Mar 6 16:05
 KISSY.add("waterfall/base", function (S, Node, Base) {
 
     var $ = Node.all,
-        win=S.Env.host,
+        win = S.Env.host,
         RESIZE_DURATION = 50;
 
     /**
@@ -34974,6 +35007,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             if (timer) {
                 clearTimeout(timer);
                 todo = [];
+                items.each(function (item) {
+                    item.stop();
+                });
             }
         };
 
@@ -35019,7 +35055,18 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         colItems:{
             value:[]
-        }
+        },
+
+        /**
+         * 调整时的特效
+         * @since 1.3
+         * @example
+         * {
+         *   duration:1,
+         *   easing:"none"
+         * }
+         */
+        adjustEffect:{}
     };
 
     function doResize() {
@@ -35049,9 +35096,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         self.set("colItems", []);
     }
 
-    function adjustItem(itemRaw) {
-        var self = this,
-            effect = self.get("effect"),
+    function adjustItemAction(self, add, itemRaw, callback) {
+        var effect = self.get("effect"),
             item = $(itemRaw),
             curColHeights = self.get("curColHeights"),
             container = self.get("container"),
@@ -35059,59 +35105,75 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             dest = 0,
             containerRegion = self._containerRegion,
             guard = Number.MAX_VALUE;
+
         for (var i = 0; i < curColCount; i++) {
             if (curColHeights[i] < guard) {
                 guard = curColHeights[i];
                 dest = i;
             }
         }
+
         if (!curColCount) {
             guard = 0;
         }
+
         // 元素保持间隔不变，居中
-        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2;
-        item.css({
-            // left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
-            //    + containerRegion.left,
-            // 元素间固定间隔好点
-            left:dest * self.get("colWidth") + margin,
-            top:guard
-        });
-        /*不在容器里，就加上*/
-        if (!container.contains(item)) {
-            if (effect && effect.effect == "fadeIn") {
-                item.css("opacity", 0);
+        var margin = Math.max(containerRegion.width - curColCount * self.get("colWidth"), 0) / 2,
+            destProp = {
+                // left:dest * Math.max(containerRegion.width / curColCount, self.get("colWidth"))
+                //    + containerRegion.left,
+                // 元素间固定间隔好点
+                left:dest * self.get("colWidth") + margin,
+                top:guard
+            };
+
+        /*
+         不在容器里，就加上
+         */
+        if (add) {
+            // 初始需要动画，那么先把透明度换成 0
+            item.css(destProp);
+            if (effect && effect.effect) {
+                item.css("visibility", "hidden");
             }
             container.append(item);
+            callback && callback();
         }
+        // 否则调整，需要动画
+        else {
+            var adjustEffect = self.get("adjustEffect");
+            if (adjustEffect) {
+                item.animate(destProp, adjustEffect.duration, adjustEffect.easing, callback);
+            } else {
+                item.css(destProp);
+                callback && callback();
+            }
+        }
+
+        // 加入到 dom 树才能取得高度
         curColHeights[dest] += item.outerHeight(true);
         var colItems = self.get("colItems");
         colItems[dest] = colItems[dest] || [];
         colItems[dest].push(item);
         item.attr("data-waterfall-col", dest);
+
         return item;
     }
 
     function addItem(itemRaw) {
         var self = this,
-            curColHeights = self.get("curColHeights"),
-            container = self.get("container"),
-            item = adjustItem.call(self, itemRaw),
+            item = adjustItemAction(self, true, itemRaw),
             effect = self.get("effect");
-        if (!effect.effect ||
-            effect.effect !== "fadeIn") {
-            return;
+        if (effect && effect.effect) {
+            // 先隐藏才能调用 fadeIn slideDown
+            item.hide();
+            item.css("visibility", "");
+            item[effect.effect](
+                effect.duration,
+                0,
+                effect.easing
+            );
         }
-        // only allow fadeIn temporary
-        item.animate({
-            opacity:1
-        }, {
-            duration:effect.duration,
-            easing:effect.easing,
-            complete:function () {
-                item.css("opacity", "");
-            }
-        });
     }
 
     S.extend(Waterfall, Base,
@@ -35131,6 +35193,20 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 $(win).on("resize", self.__onResize);
             },
 
+
+            /**
+             * 调整一个元素的高度
+             * @param {Node} item 待调整的元素
+             * @param {Object} cfg 控制配置
+             * @param {Function} cfg.callback 调整结束后的回调
+             * @param {Function} cfg.process
+             * 用于做调整操作的函数，
+             * 可以返回数字表示调整后的高度，
+             * 不返回的话直接取调整后元素的高度
+             * @param {Object} cfg.effect 其他元素配合调整位置的特效配置
+             * @param {Number} cfg.effect.duration
+             * @param {String} cfg.effect.easing
+             */
             adjustItem:function (item, cfg) {
                 var self = this;
 
@@ -35139,16 +35215,16 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 }
 
                 var originalOuterHeight = item.outerHeight(true),
-                    outerHeight,
-                    remove = false;
+                    outerHeight;
+
                 if (cfg.process) {
-                    remove = cfg.process.call(self);
+                    outerHeight = cfg.process.call(self);
                 }
-                if (remove) {
-                    outerHeight = 0;
-                } else {
+
+                if (outerHeight === undefined) {
                     outerHeight = item.outerHeight(true);
                 }
+
                 var diff = outerHeight - originalOuterHeight,
                     curColHeights = self.get("curColHeights"),
                     dest = parseInt(item.attr("data-waterfall-col")),
@@ -35178,20 +35254,58 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                     self.get("container").height(now);
                 }
 
+                var effect = cfg.effect,
+                    num = items.length;
+
+                if (effect === undefined) {
+                    effect = self.get("adjustEffect");
+                }
+
+                function check() {
+                    num--;
+                    if (num <= 0) {
+                        self._adjuster = 0;
+                        cfg && cfg.callback && cfg.callback.call(self);
+                    }
+                }
+
+                if (!num) {
+                    return check();
+                }
+
                 return self._adjuster = timedChunk(items, function (item) {
-                    item.css("top", parseInt(item.css("top")) + diff);
-                }, null, function () {
-                    self._adjuster = 0;
-                    cfg && cfg.callback && cfg.callback.call(self);
+                    if (effect) {
+                        item.animate({
+                                top:parseInt(item.css("top")) + diff
+                            },
+                            effect.duration,
+                            effect.easing,
+                            check);
+                    } else {
+                        item.css("top", parseInt(item.css("top")) + diff);
+                        check();
+                    }
                 });
             },
 
+            /**
+             * 删除一个元素
+             * @param {Node} item 待删除的元素
+             * @param {Object} cfg 控制配置
+             * @param {Function} cfg.callback 删除结束后的回调
+             * @param {Function} cfg.process 用于做删除操作的函数
+             * @param {Object} cfg.effect 删除后其他元素调整位置特效配置
+             * @param {Number} cfg.effect.duration
+             * @param {String} cfg.effect.easing
+             */
             removeItem:function (item, cfg) {
-                var self = this;
-                self.adjustItem(item, {
+                cfg = cfg || {};
+                var self = this,
+                    callback = cfg.callback;
+                self.adjustItem(item, S.mix(cfg, {
                     process:function () {
                         item.remove();
-                        return true;
+                        return 0;
                     },
                     callback:function () {
                         var dest = parseInt(item.attr("data-waterfall-col")),
@@ -35202,11 +35316,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                                 break;
                             }
                         }
-                        if (cfg && cfg.callback) {
-                            cfg.callback.call(self);
-                        }
+                        callback && callback();
                     }
-                });
+                }));
             },
 
             /**
@@ -35221,17 +35333,30 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 /* 正在调整中，取消上次调整，开始这次调整 */
                 if (self.isAdjusting()) {
                     self._adjuster.stop();
+                    self._adjuster = 0;
                 }
                 /*计算容器宽度等信息*/
                 recalculate.call(self);
-                return self._adjuster = timedChunk(items, addItem, self, function () {
-                    self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
-                    self._adjuster = 0;
-                    callback && callback.call(self);
+                var num = items.length;
 
-                    items.length && self.fire('adjustComplete', {
-                        items:items
-                    });
+                function check() {
+                    num--;
+                    if (num <= 0) {
+                        self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
+                        self._adjuster = 0;
+                        callback && callback.call(self);
+                        items.length && self.fire('adjustComplete', {
+                            items:items
+                        });
+                    }
+                }
+
+                if (!num) {
+                    return check();
+                }
+
+                return self._adjuster = timedChunk(items, function (item) {
+                    adjustItemAction(self, false, item, check);
                 });
             },
 
@@ -35248,7 +35373,6 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                             self.get("curColHeights")));
                         self._adder = 0;
                         callback && callback.call(self);
-
                         items.length && self.fire('addComplete', {
                             items:items
                         });
@@ -35267,7 +35391,12 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
 }, {
     requires:['node', 'base']
-});/**
+});
+/**
+ * 2012-03-21 yiminghe@gmail.com
+ *  - 增加动画特效
+ *  - 增加删除/调整接口
+ **//**
  * @fileOverview load content
  * @author yiminghe@gmail.com
  */
