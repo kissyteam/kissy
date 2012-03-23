@@ -191,6 +191,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 bubbles:1
             });
         });
+        // dragNode is equal to node in single mode
+        self.__set("dragNode", self.get("node"));
+        self.on("afterDisabledChange", self._uiSetDisabledChange, self);
+        var disabled;
+        if (disabled = self.get("disabled")) {
+            self._uiSetDisabledChange(disabled);
+        }
         self._init();
     }
 
@@ -312,12 +319,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @type boolean
          */
         disabled:{
-            value:false,
-            setter:function (d) {
-                this.get("dragNode")[d ? 'addClass' :
-                    'removeClass'](DDM.get("prefixCls") + '-disabled');
-                return d;
-            }
+            value:false
         },
 
         /**
@@ -446,10 +448,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              */
             _bufferTimer:NULL,
 
+            _uiSetDisabledChange:function (d) {
+                this.get("dragNode")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+            },
+
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                self.__set("dragNode", node);
                 node.on('mousedown', _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },

@@ -57,6 +57,12 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
     }
 
     S.extend(DraggableDelegate, Draggable, {
+
+            _uiSetDisabledChange:function (d) {
+                this.get("container")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+            },
+
             _init:function () {
                 var self = this,
                     node = self.get('container');
@@ -141,7 +147,6 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                     // 覆盖父类的 getter ，这里 normalize 成节点
                     getter:0
                 }
-
             }
         });
 

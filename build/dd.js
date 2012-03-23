@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 23 18:32
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -642,6 +642,12 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
     }
 
     S.extend(DraggableDelegate, Draggable, {
+
+            _uiSetDisabledChange:function (d) {
+                this.get("container")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+            },
+
             _init:function () {
                 var self = this,
                     node = self.get('container');
@@ -726,7 +732,6 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                     // 覆盖父类的 getter ，这里 normalize 成节点
                     getter:0
                 }
-
             }
         });
 
@@ -926,6 +931,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 bubbles:1
             });
         });
+        // dragNode is equal to node in single mode
+        self.__set("dragNode", self.get("node"));
+        self.on("afterDisabledChange", self._uiSetDisabledChange, self);
+        var disabled;
+        if (disabled = self.get("disabled")) {
+            self._uiSetDisabledChange(disabled);
+        }
         self._init();
     }
 
@@ -1047,12 +1059,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @type boolean
          */
         disabled:{
-            value:false,
-            setter:function (d) {
-                this.get("dragNode")[d ? 'addClass' :
-                    'removeClass'](DDM.get("prefixCls") + '-disabled');
-                return d;
-            }
+            value:false
         },
 
         /**
@@ -1181,10 +1188,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              */
             _bufferTimer:NULL,
 
+            _uiSetDisabledChange:function (d) {
+                this.get("dragNode")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+            },
+
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                self.__set("dragNode", node);
                 node.on('mousedown', _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
