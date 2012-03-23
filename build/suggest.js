@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 23 18:40
 */
 /**
  * @fileOverview 提示补全组件
@@ -503,10 +503,12 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
             Event.on(container, 'mousedown', function (ev) {
                 if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
                     // 1. for IE
-                    input.onbeforedeactivate = function () {
-                        win.event.returnValue = false;
-                        input.onbeforedeactivate = null;
-                    };
+                    if (UA.ie && UA.ie < 9) {
+                        input.onbeforedeactivate = function () {
+                            win.event.returnValue = false;
+                            input.onbeforedeactivate = null;
+                        };
+                    }
                     // 2. for W3C
                     ev.preventDefault();
                 }
