@@ -121,6 +121,17 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                     value:[],
                     // 覆盖父类的 getter ，这里 normalize 成节点
                     getter:0
+                },
+
+                /**
+                 * 拖无效
+                 */
+                disabled:{
+                    setter:function(d) {
+                        this.get("container")[d ? 'addClass' :
+                            'removeClass'](DDM.get("prefixCls") + '-disabled');
+                        return d;
+                    }
                 }
 
             }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Mar 23 13:57
+build time: Mar 23 18:00
 */
 /**
  * dd support for kissy , dd objects central management module
@@ -1215,6 +1215,17 @@ KISSY.add("dd/draggable-delegate", function(S, DDM, Draggable, DOM, Node) {
                     value:[],
                     // 覆盖父类的 getter ，这里 normalize 成节点
                     getter:0
+                },
+
+                /**
+                 * 拖无效
+                 */
+                disabled:{
+                    setter:function(d) {
+                        this.get("container")[d ? 'addClass' :
+                            'removeClass'](DDM.get("prefixCls") + '-disabled');
+                        return d;
+                    }
                 }
 
             }
