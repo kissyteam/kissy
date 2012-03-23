@@ -1,219 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 20 21:04
+build time: Mar 23 12:19
 */
 /**
- * @fileOverview mvc based component framework for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add("component", function (KISSY, ModelControl, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
-
-    /**
-     * @name Component
-     * @namespace
-     */
-    var Component = {
-        ModelControl:ModelControl,
-        Render:Render,
-        Container:Container,
-        UIStore:UIStore,
-        DelegateChildren:DelegateChildren,
-        DecorateChild:DecorateChild,
-        DecorateChildren:DecorateChildren
-    };
-    Component.ModelControl = ModelControl;
-    return Component;
-}, {
-    requires:['component/modelcontrol',
-        'component/render',
-        'component/container',
-        'component/uistore',
-        'component/delegatechildren',
-        'component/decoratechildren',
-        'component/decoratechild']
-});/**
- * @fileOverview container can delegate event for its children
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/container", function (S, UIBase, ModelControl, UIStore, DelegateChildren, DecorateChildren) {
-    /**
-     * 多继承，容器也是组件，具备代理儿子事件以及递归装饰儿子的功能
-     * @name Container
-     * @constructor
-     * @extends Component.ModelControl
-     * @memberOf Component
-     */
-    return UIBase.create(ModelControl, [DelegateChildren, DecorateChildren]);
-
-}, {
-    requires:['uibase', './modelcontrol', './uistore', './delegatechildren', './decoratechildren']
-});/**
- * @fileOverview decorate its children from one element
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/decoratechild", function (S, DecorateChildren) {
-    function DecorateChild() {
-
-    }
-
-    S.augment(DecorateChild, DecorateChildren, {
-        decorateInternal:function (element) {
-            var self = this;
-            // 不用 __set , 通知 view 更新
-            self.set("el", element);
-            var ui = self.get("decorateChildCls"),
-                prefixCls = self.get("prefixCls"),
-                child = element.one("." + self.getCls(ui));
-            // 可以装饰?
-            if (child) {
-                var UI = self._findUIByClass(child);
-                if (UI) {
-                    // 可以直接装饰
-                    self.decorateChildrenInternal(UI, child, prefixCls);
-                } else {
-                    // 装饰其子节点集合
-                    self.decorateChildren(child);
-                }
-            }
-        }
-    });
-
-    return DecorateChild;
-}, {
-    requires:['./decoratechildren']
-});/**
- * @fileOverview decorate function for children render from markup
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/decoratechildren", function(S, UIStore) {
-    function DecorateChildren() {
-
-    }
-
-    S.augment(DecorateChildren, {
-        decorateInternal:function(el) {
-            var self = this;
-            // 不用 __set , 通知 view 更新
-            self.set("el", el);
-            self.decorateChildren(el);
-        },
-
-        /**
-         * 生成一个组件
-         */
-        decorateChildrenInternal:function(UI, c, prefixCls) {
-            this.addChild(new UI({
-                srcNode:c,
-                prefixCls:prefixCls
-            }));
-        },
-
-        /**
-         * 得到适合装饰该节点的组件类
-         * @param c
-         */
-        _findUIByClass:function(c) {
-            var self = this,
-                cls = c.attr("class") || "",
-                prefixCls = self.get("prefixCls");
-            // 过滤掉特定前缀
-            cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-            var UI = UIStore.getUIByClass(cls);
-            if (!UI) {
-                S.log(c);
-                S.log("can not find ui " + cls + " from this markup");
-            }
-            return UI;
-        },
-
-        /**
-         * container 需要在装饰时对儿子特殊处理，递归装饰
-         */
-        decorateChildren:function(el) {
-            var self = this,children = el.children(),
-                prefixCls = self.get("prefixCls");
-            children.each(function(c) {
-                var UI = self._findUIByClass(c);
-                self.decorateChildrenInternal(UI, c, prefixCls);
-            });
-        }
-    });
-
-    return DecorateChildren;
-
-}, {
-    requires:['./uistore']
-});/**
- * @fileOverview delegate events for children
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/delegatechildren", function (S) {
-
-    /**
-     * @name Component.DelegateChildren
-     */
-    function DelegateChildren() {
-
-    }
-
-    S.augment(DelegateChildren, {
-        __bindUI:function () {
-            var self = this;
-            self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
-                self._handleChildMouseEvents, self);
-        },
-
-        _handleChildMouseEvents:function (e) {
-            var control = this.getOwnerControl(e.target);
-            if (control) {
-                // Child control identified; forward the event.
-                switch (e.type) {
-                    case "mousedown":
-                        control._handleMouseDown(e);
-                        break;
-                    case "mouseup":
-                        control._handleMouseUp(e);
-                        break;
-                    case "mouseover":
-                        control._handleMouseOver(e);
-                        break;
-                    case "mouseout":
-                        control._handleMouseOut(e);
-                        break;
-                    case "dblclick":
-                        control._handleDblClick(e);
-                        break;
-                    default:
-                        S.error(e.type + " unhandled!");
-                }
-            }
-        },
-
-        getOwnerControl:function (node) {
-            var self = this,
-                children = self.get("children"),
-                len = children.length,
-                elem = this.get("el")[0];
-            while (node && node !== elem) {
-                for (var i = 0; i < len; i++) {
-                    if (children[i].get("el")[0] === node) {
-                        return children[i];
-                    }
-                }
-                node = node.parentNode;
-            }
-            return null;
-        }
-    });
-
-    return DelegateChildren;
-});/**
  * @fileOverview model and control base class for kissy
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render) {
+KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -301,7 +96,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
             return self.__componentClasses;
         }
         var constructor = self.constructor, re = [];
-        while (constructor && constructor != ModelControl) {
+        while (constructor && constructor != Controller) {
             var cls = UIStore.getClsByUI(constructor);
             if (cls) {
                 re.push(cls);
@@ -320,12 +115,12 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
      * model and control for component
      * @class
      * @memberOf Component
-     * @name ModelControl
+     * @name Controller
      * @extends UIBase
      * @extends UIBase.Box
      */
-    var ModelControl = UIBase.create([UIBase.Box],
-        /** @lends Component.ModelControl.prototype */
+    var Controller = UIBase.create([UIBase.Box],
+        /** @lends Component.Controller.prototype */
         {
 
             getCls:UIStore.getCls,
@@ -673,7 +468,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         },
         {
             ATTRS:/**
-             * @lends Component.ModelControl#
+             * @lends Component.Controller#
              */
             {
                 /*
@@ -757,10 +552,10 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         });
 
     if (0) {
-        ModelControl._uiSetHandleMouseEvents()._uiSetActive();
+        Controller._uiSetHandleMouseEvents()._uiSetActive();
     }
 
-    return ModelControl;
+    return Controller;
 }, {
     requires:['event', 'uibase', './uistore', './render']
 });
@@ -770,6 +565,211 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
  *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
  *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
  **//**
+ * @fileOverview mvc based component framework for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component", function (KISSY, Controller, Render, Container, UIStore, DelegateChildren, DecorateChildren, DecorateChild) {
+
+    /**
+     * @name Component
+     * @namespace
+     */
+    var Component = {
+        Controller:Controller,
+        Render:Render,
+        Container:Container,
+        UIStore:UIStore,
+        DelegateChildren:DelegateChildren,
+        DecorateChild:DecorateChild,
+        DecorateChildren:DecorateChildren
+    };
+    Component.Controller = Controller;
+    return Component;
+}, {
+    requires:['component/Controller',
+        'component/render',
+        'component/container',
+        'component/uistore',
+        'component/delegatechildren',
+        'component/decoratechildren',
+        'component/decoratechild']
+});/**
+ * @fileOverview container can delegate event for its children
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/container", function (S, UIBase, Controller, UIStore, DelegateChildren, DecorateChildren) {
+    /**
+     * 多继承，容器也是组件，具备代理儿子事件以及递归装饰儿子的功能
+     * @name Container
+     * @constructor
+     * @extends Component.Controller
+     * @memberOf Component
+     */
+    return UIBase.create(Controller, [DelegateChildren, DecorateChildren]);
+
+}, {
+    requires:['uibase', './Controller', './uistore', './delegatechildren', './decoratechildren']
+});/**
+ * @fileOverview decorate its children from one element
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/decoratechild", function (S, DecorateChildren) {
+    function DecorateChild() {
+
+    }
+
+    S.augment(DecorateChild, DecorateChildren, {
+        decorateInternal:function (element) {
+            var self = this;
+            // 不用 __set , 通知 view 更新
+            self.set("el", element);
+            var ui = self.get("decorateChildCls"),
+                prefixCls = self.get("prefixCls"),
+                child = element.one("." + self.getCls(ui));
+            // 可以装饰?
+            if (child) {
+                var UI = self._findUIByClass(child);
+                if (UI) {
+                    // 可以直接装饰
+                    self.decorateChildrenInternal(UI, child, prefixCls);
+                } else {
+                    // 装饰其子节点集合
+                    self.decorateChildren(child);
+                }
+            }
+        }
+    });
+
+    return DecorateChild;
+}, {
+    requires:['./decoratechildren']
+});/**
+ * @fileOverview decorate function for children render from markup
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/decoratechildren", function(S, UIStore) {
+    function DecorateChildren() {
+
+    }
+
+    S.augment(DecorateChildren, {
+        decorateInternal:function(el) {
+            var self = this;
+            // 不用 __set , 通知 view 更新
+            self.set("el", el);
+            self.decorateChildren(el);
+        },
+
+        /**
+         * 生成一个组件
+         */
+        decorateChildrenInternal:function(UI, c, prefixCls) {
+            this.addChild(new UI({
+                srcNode:c,
+                prefixCls:prefixCls
+            }));
+        },
+
+        /**
+         * 得到适合装饰该节点的组件类
+         * @param c
+         */
+        _findUIByClass:function(c) {
+            var self = this,
+                cls = c.attr("class") || "",
+                prefixCls = self.get("prefixCls");
+            // 过滤掉特定前缀
+            cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+            var UI = UIStore.getUIByClass(cls);
+            if (!UI) {
+                S.log(c);
+                S.log("can not find ui " + cls + " from this markup");
+            }
+            return UI;
+        },
+
+        /**
+         * container 需要在装饰时对儿子特殊处理，递归装饰
+         */
+        decorateChildren:function(el) {
+            var self = this,children = el.children(),
+                prefixCls = self.get("prefixCls");
+            children.each(function(c) {
+                var UI = self._findUIByClass(c);
+                self.decorateChildrenInternal(UI, c, prefixCls);
+            });
+        }
+    });
+
+    return DecorateChildren;
+
+}, {
+    requires:['./uistore']
+});/**
+ * @fileOverview delegate events for children
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/delegatechildren", function (S) {
+
+    /**
+     * @name Component.DelegateChildren
+     */
+    function DelegateChildren() {
+
+    }
+
+    S.augment(DelegateChildren, {
+        __bindUI:function () {
+            var self = this;
+            self.get("el").on("mousedown mouseup mouseover mouseout dblclick",
+                self._handleChildMouseEvents, self);
+        },
+
+        _handleChildMouseEvents:function (e) {
+            var control = this.getOwnerControl(e.target);
+            if (control) {
+                // Child control identified; forward the event.
+                switch (e.type) {
+                    case "mousedown":
+                        control._handleMouseDown(e);
+                        break;
+                    case "mouseup":
+                        control._handleMouseUp(e);
+                        break;
+                    case "mouseover":
+                        control._handleMouseOver(e);
+                        break;
+                    case "mouseout":
+                        control._handleMouseOut(e);
+                        break;
+                    case "dblclick":
+                        control._handleDblClick(e);
+                        break;
+                    default:
+                        S.error(e.type + " unhandled!");
+                }
+            }
+        },
+
+        getOwnerControl:function (node) {
+            var self = this,
+                children = self.get("children"),
+                len = children.length,
+                elem = this.get("el")[0];
+            while (node && node !== elem) {
+                for (var i = 0; i < len; i++) {
+                    if (children[i].get("el")[0] === node) {
+                        return children[i];
+                    }
+                }
+                node = node.parentNode;
+            }
+            return null;
+        }
+    });
+
+    return DelegateChildren;
+});/**
  * @fileOverview render base class for kissy
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html

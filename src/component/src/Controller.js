@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render) {
+KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -91,7 +91,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
             return self.__componentClasses;
         }
         var constructor = self.constructor, re = [];
-        while (constructor && constructor != ModelControl) {
+        while (constructor && constructor != Controller) {
             var cls = UIStore.getClsByUI(constructor);
             if (cls) {
                 re.push(cls);
@@ -110,12 +110,12 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
      * model and control for component
      * @class
      * @memberOf Component
-     * @name ModelControl
+     * @name Controller
      * @extends UIBase
      * @extends UIBase.Box
      */
-    var ModelControl = UIBase.create([UIBase.Box],
-        /** @lends Component.ModelControl.prototype */
+    var Controller = UIBase.create([UIBase.Box],
+        /** @lends Component.Controller.prototype */
         {
 
             getCls:UIStore.getCls,
@@ -463,7 +463,7 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         },
         {
             ATTRS:/**
-             * @lends Component.ModelControl#
+             * @lends Component.Controller#
              */
             {
                 /*
@@ -547,10 +547,10 @@ KISSY.add("component/modelcontrol", function (S, Event, UIBase, UIStore, Render)
         });
 
     if (0) {
-        ModelControl._uiSetHandleMouseEvents()._uiSetActive();
+        Controller._uiSetHandleMouseEvents()._uiSetActive();
     }
 
-    return ModelControl;
+    return Controller;
 }, {
     requires:['event', 'uibase', './uistore', './render']
 });

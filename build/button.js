@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview Model and Control for button
@@ -13,9 +13,9 @@ KISSY.add("button/base", function (S, Event, UIBase, Component, CustomRender) {
     /**
      * @name Button
      * @constructor
-     * @extends Component.ModelControl
+     * @extends Component.Controller
      */
-    var Button = UIBase.create(Component.ModelControl, [UIBase.ContentBox],
+    var Button = UIBase.create(Component.Controller, [UIBase.ContentBox],
         /**@lends Button.prototype */
         {
 
@@ -144,7 +144,7 @@ KISSY.add("button/customrender", function (S, Node, UIBase, ButtonRender) {
     return UIBase.create(ButtonRender, [UIBase.ContentBox.Render], {
 
             /**
-             *  modelcontrol 会在 create 后进行 unselectable，
+             *  Controller 会在 create 后进行 unselectable，
              *  需要所有的节点创建工作放在 createDom 中
              */
             createDom:function () {

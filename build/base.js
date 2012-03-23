@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:16
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview attribute management
@@ -197,10 +197,27 @@ KISSY.add('base/attribute', function (S, undef) {
     }
 
     /**
-     * provide attribute management.
-     * recommended extending {@link Base}.
+     * @class <p>
+     * Attribute provides configurable attribute support along with attribute change events. It is designed to be
+     * augmented on to a host class, and provides the host with the ability to configure attributes to store and retrieve state,
+     * along with attribute change events.
+     * </p>
+     * <p>For example, attributes added to the host can be configured:</p>
+     * <ul>
+     *     <li>With a setter function, which can be used to manipulate
+     *     values passed to Attribute's {@link Attribute#set} method, before they are stored.</li>
+     *     <li>With a getter function, which can be used to manipulate stored values,
+     *     before they are returned by Attribute's {@link Attribute#get} method.</li>
+     *     <li>With a validator function, to validate values before they are stored.</li>
+     * </ul>
+     *
+     * <p>See the {@link Attribute#addAttr} method, for the complete set of configuration
+     * options available for attributes</p>.
+     *
+     * <p><strong>NOTE:</strong> Most implementations will be better off extending the {@link Base} class,
+     * instead of augmenting Attribute directly. Base augments Attribute and will handle the initial configuration
+     * of attributes for derived classes, accounting for values passed into the constructor.</p>
      * @name Attribute
-     * @class
      */
     function Attribute() {
     }
@@ -531,7 +548,12 @@ KISSY.add('base', function (S, Attribute, Event) {
      * @name Base
      * @extends Event.Target
      * @extends Attribute
-     * @class Base for class-based component
+     * @class <p>
+     * A base class which objects requiring attributes and custom event support can
+     * extend. attributes configured
+     * through the static {@link Base.ATTRS} property for each class
+     * in the hierarchy will be initialized by Base.
+     * </p>
      */
     function Base(config) {
         var c = this.constructor;
@@ -544,6 +566,18 @@ KISSY.add('base', function (S, Attribute, Event) {
         // initial
         initAttrs(this, config);
     }
+
+
+    /**
+     * The default set of attributes which will be available for instances of this class, and
+     * their configuration
+     *
+     * By default if the value is an object literal or an array it will be "shallow" cloned, to
+     * protect the default value.
+     *
+     * @name Base.ATTRS
+     * @type Object
+     */
 
 
     /**

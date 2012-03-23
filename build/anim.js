@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 23 12:18
 */
 /**
  * @fileOverview anim
@@ -145,8 +145,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
 
     /**
-     * get a anim instance associate
-     * @param {HTMLElement|window} elem 元素或者 window
+     * @class A class for constructing animation instances.
+     * @param {HTMLElement|window} elem Html dom node or window
      * (window can only animate scrollTop/scrollLeft)
      * @param {Object} props style map
      * @param {Number|Object} [duration] duration(s) or anim config
@@ -158,7 +158,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @param {Function} [callback] callback function when this animation is complete
      * @extends Event.Target
      * @name Anim
-     * @class
+     *
      */
     function Anim(elem, props, duration, easing, callback) {
         var self = this, config;
@@ -487,7 +487,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             /**
              * stop this animation
-             * @param {boolean} finish whether jump to the last position of this animation
+             * @param {Boolean} [finish] whether jump to the last position of this animation
              */
             stop:function (finish) {
                 var self = this,
@@ -853,10 +853,9 @@ KISSY.add('anim/easing', function () {
         sin = Math.sin,
         BACK_CONST = 1.70158;
     /**
-     * Easing Functions
      * @memberOf Anim
      * @name Easing
-     * @namespace
+     * @namespace Provides methods for customizing how an animation behaves during each run.
      */
     var Easing =
     /**

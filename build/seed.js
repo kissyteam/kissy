@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 22 20:56
+build time: Mar 23 14:13
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 22 20:56
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120322205612',
+            __BUILD_TIME:'20120323141322',
 
             /**
              * Returns a new object containing all of the properties of

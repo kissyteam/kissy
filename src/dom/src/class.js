@@ -55,13 +55,13 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
                 batch(selector, className, function (elem, classNames, cl) {
                     var elemClass = elem.className;
                     if (!elemClass) {
-                        elem.className = value;
+                        elem.className = className;
                     } else {
-                        var className = norm(elemClass),
+                        var normClassName = norm(elemClass),
                             setClass = elemClass,
                             j = 0;
                         for (; j < cl; j++) {
-                            if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
+                            if (normClassName.indexOf(SPACE + classNames[j] + SPACE) < 0) {
                                 setClass += SPACE + classNames[j];
                             }
                         }

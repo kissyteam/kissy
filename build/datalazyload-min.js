@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 23 12:19
 */
 KISSY.add("datalazyload",function(e,f,l,n){function j(a,b){if(!(this instanceof j))return new j(a,b);if(b===n){b=a;a=[o]}e.isArray(a)||(a=[f.get(a)||o]);this.containers=a;this.config=e.merge(q,b);this.callbacks={els:[],fns:[]};this._init();return n}function p(a,b){var c=e.indexOf(a,b);c!=-1&&b.splice(c,1);return c}var k=e.Env.host,o=k.document,q={mod:"manual",diff:"default",placeholder:"none",execScript:true};e.augment(j,{_init:function(){this.threshold=this._getThreshold();this._filterItems();this._initLoadEvent()},
 _filterItems:function(){var a=this.containers,b,c,d,h=[],g=[];b=0;for(c=a.length;b<c;++b){d=f.query("img",a[b]);h=h.concat(e.filter(d,this._filterImg,this));d=f.query("textarea",a[b]);g=g.concat(e.filter(d,this._filterArea,this))}this.images=h;this.areaes=g},_filterImg:function(a){var b=a.getAttribute("data-ks-lazyload"),c=this.threshold,d=this.config.placeholder;if(this.config.mod==="manual"){if(b){if(d!=="none")a.src=d;return true}}else if(f.offset(a).top>c&&!b){f.attr(a,"data-ks-lazyload",a.src);

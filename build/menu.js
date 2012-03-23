@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -626,7 +626,7 @@ KISSY.add("menu/menuitem", function (S, UIBase, Component, MenuItemRender) {
 
     var $ = S.all;
 
-    var MenuItem = UIBase.create(Component.ModelControl, [UIBase.ContentBox], {
+    var MenuItem = UIBase.create(Component.Controller, [UIBase.ContentBox], {
 
         _handleMouseEnter:function (e) {
             // 父亲不允许自己处理
@@ -1033,7 +1033,7 @@ KISSY.add("menu/popupmenurender", function(S, UA, UIBase, MenuRender) {
  */
 KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
 
-    var Separator = UIBase.create(Component.ModelControl, {
+    var Separator = UIBase.create(Component.Controller, {
     }, {
         ATTRS:{
             focusable:{

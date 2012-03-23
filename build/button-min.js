@@ -1,9 +1,9 @@
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 23 12:19
 */
-KISSY.add("button/base",function(f,e,g,a,d){var b=e.KeyCodes;f=g.create(a.ModelControl,[g.ContentBox],{bindUI:function(){this.get("el").on("keyup",this._handleKeyEventInternal,this)},_handleKeyEventInternal:function(c){if(c.keyCode==b.ENTER&&c.type=="keydown"||c.keyCode==b.SPACE&&c.type=="keyup")return this._performInternal(c);return c.keyCode==b.SPACE},_performInternal:function(){this.fire("click")}},{ATTRS:{value:{},describedby:{view:true},tooltip:{view:true},collapseSide:{view:true}}});f.DefaultRender=
+KISSY.add("button/base",function(f,e,g,a,d){var b=e.KeyCodes;f=g.create(a.Controller,[g.ContentBox],{bindUI:function(){this.get("el").on("keyup",this._handleKeyEventInternal,this)},_handleKeyEventInternal:function(c){if(c.keyCode==b.ENTER&&c.type=="keydown"||c.keyCode==b.SPACE&&c.type=="keyup")return this._performInternal(c);return c.keyCode==b.SPACE},_performInternal:function(){this.fire("click")}},{ATTRS:{value:{},describedby:{view:true},tooltip:{view:true},collapseSide:{view:true}}});f.DefaultRender=
 d;a.UIStore.setUIByClass("button",{priority:a.UIStore.PRIORITY.LEVEL1,ui:f});return f},{requires:["event","uibase","component","./customrender"]});KISSY.add("button",function(f,e,g,a){e.Render=g;e.Split=a;return e},{requires:["button/base","button/customrender","button/split"]});
 KISSY.add("button/buttonrender",function(f,e,g){return e.create(g.Render,{createDom:function(){this.get("el").attr("role","button").addClass(this.getCls("inline-block button"))},_uiSetTooltip:function(a){this.get("el").attr("title",a)},_uiSetDescribedby:function(a){this.get("el").attr("aria-describedby",a)},_uiSetCollapseSide:function(a){var d=this.getCls("button-collapse-"),b=this.get("el");b.removeClass(d+"left "+d+"right");a&&b.addClass(d+a)}},{ATTRS:{describedby:{},tooltip:{},collapseSide:{}}})},
 {requires:["uibase","component"]});

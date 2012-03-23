@@ -225,7 +225,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
 
                 removeItem:function (c, destroy) {
                     /**
-                     * @type ModelControl
+                     * @type Controller
                      */
                     var menu = getMenu(this);
                     if (menu) {

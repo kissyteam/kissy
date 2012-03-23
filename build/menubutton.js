@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -230,7 +230,7 @@ KISSY.add("menubutton/base", function (S, UIBase, Node, Button, MenuButtonRender
 
                 removeItem:function (c, destroy) {
                     /**
-                     * @type ModelControl
+                     * @type Controller
                      */
                     var menu = getMenu(this);
                     if (menu) {

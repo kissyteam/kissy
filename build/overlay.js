@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 20 18:33
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -157,7 +157,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @class
      * @namespace
      * @name Overlay
-     * @extends Component.ModelControl
+     * @extends Component.Controller
      * @extends UIBase.ContentBox
      * @extends UIBase.Position
      * @extends UIBase.Loading
@@ -167,7 +167,7 @@ KISSY.add("overlay/base", function (S, UIBase, Component, OverlayRender, Effect)
      * @extends UIBase.Mask
      * @param {Object} config config object to set properties of its parent class
      */
-    var Overlay = UIBase.create(Component.ModelControl, [
+    var Overlay = UIBase.create(Component.Controller, [
         require("contentbox"),
         require("position"),
         require("loading"),
@@ -419,10 +419,10 @@ KISSY.add("overlay/effect", function (S) {
 
         __bindUI:function () {
             var self = this
-            self.on("hide", function (ev) {
+            self.on("hide", function () {
                 processEffect(self, 0);
             });
-            self.on("show", function (ev) {
+            self.on("show", function () {
                 processEffect(self, 1);
             });
         }

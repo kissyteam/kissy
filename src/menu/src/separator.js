@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/separator", function(S, UIBase, Component, SeparatorRender) {
 
-    var Separator = UIBase.create(Component.ModelControl, {
+    var Separator = UIBase.create(Component.Controller, {
     }, {
         ATTRS:{
             focusable:{

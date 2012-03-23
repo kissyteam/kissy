@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 8 22:23
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview accordion aria support
@@ -543,6 +543,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
                 timer = S.later(function () {
                     if (host.paused) return;
                     // 自动播放默认 forward（不提供配置），这样可以保证 circular 在临界点正确切换
+                    // 用户 mouseenter 不提供 forward ，全景滚动
                     host.switchTo(host.activeIndex < host.length - 1 ?
                         host.activeIndex + 1 : 0,
                         'forward');

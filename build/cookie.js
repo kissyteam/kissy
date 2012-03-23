@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 6 16:04
+build time: Mar 23 12:19
 */
 /**
  * @fileOverview   cookie
@@ -11,7 +11,7 @@ KISSY.add('cookie', function (S) {
 
     /**
      * @name Cookie
-     * @namespace
+     * @namespace Provide Cookie utilities.
      */
 
     var doc = S.Env.host.document,
