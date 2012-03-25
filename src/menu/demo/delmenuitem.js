@@ -2,8 +2,9 @@
  * @fileOverview deletable menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, DelMenuItemRender) {
+KISSY.add("menu/delmenuitem", function (S, Node, UIBase, Component, Menu, DelMenuItemRender) {
     var $ = Node.all;
+    var MenuItem = Menu.Item;
     var CLS = DelMenuItemRender.CLS,
         DEL_CLS = DelMenuItemRender.DEL_CLS;
 
@@ -22,7 +23,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
     }
 
     var DelMenuItem = UIBase.create(MenuItem, {
-        _performInternal:function(e) {
+        _performInternal:function (e) {
             var target = $(e.target);
             // 点击了删除
             if (target.hasClass(this.getCls(DEL_CLS))) {
@@ -31,7 +32,7 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
             }
             return MenuItem.prototype._performInternal.call(this, e);
         },
-        _handleKeydown:function(e) {
+        _handleKeydown:function (e) {
             // d 键
             if (e.keyCode === Node.KeyCodes.D) {
                 del(this);
@@ -54,5 +55,5 @@ KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, Del
     });
     return DelMenuItem;
 }, {
-    requires:['node','uibase','component','./menuitem','./delmenuitemrender']
+    requires:['node', 'uibase', 'component', 'menu', './delmenuitemrender']
 });

@@ -123,7 +123,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
              * make node not to scroll while this drag object is dragging
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var tag,
                     destructors = this[DESTRUCTORS];
                 if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
@@ -150,7 +150,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
              * make node to scroll while this drag object is dragging
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
                 var self = this,
                     node = self.get("node"),
                     tag = stamp(drag, 0, TAG_DRAG),
@@ -294,6 +294,10 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
             }
         });
 
+    // for compatibility
+    var ScrollPrototype = Scroll.prototype;
+    ScrollPrototype.attach = ScrollPrototype.attachDrag;
+    ScrollPrototype.unAttach = ScrollPrototype.detachDrag;
     return Scroll;
 }, {
     requires:['./ddm', 'base', 'node', 'dom']

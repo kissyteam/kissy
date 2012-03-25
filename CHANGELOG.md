@@ -45,6 +45,7 @@ History:
 
  - [+] DD.Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
+ - [*] proxy/scroll.attach changed to proxy/scroll.attachDrag,proxy/scroll.unAttach changed to proxy/scroll.detachDrag
 
  - [+] 左莫增强 calendar：新的 ui,增加 destroy 方法
 

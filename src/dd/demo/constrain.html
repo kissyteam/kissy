@@ -39,15 +39,15 @@
         var c = new DD.Constrain({
             constrain:"#constrainContainer"
         });
-        c.attach(drag);
+        c.attachDrag(drag);
         $("#cd").on("click", function () {
             $("#d").css({
                 left:"10px",
                 top:"10px"
             });
-            c.unAttach(drag);
+            c.detachDrag(drag);
             c.set("constrain", "#constrainContainer");
-            c.attach(drag);
+            c.attachDrag(drag);
         });
 
         $("#cw").on("click", function () {
@@ -55,9 +55,9 @@
                 left:"10px",
                 top:"10px"
             });
-            c.unAttach(drag);
+            c.detachDrag(drag);
             c.set("constrain", true);
-            c.attach(drag);
+            c.attachDrag(drag);
         });
 
         $("#cn").on("click", function () {
@@ -65,7 +65,7 @@
                 left:"10px",
                 top:"10px"
             });
-            c.unAttach(drag);
+            c.detachDrag(drag);
         });
     });
 </script>

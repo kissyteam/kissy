@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 18:32
+build time: Mar 25 23:01
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -1866,7 +1866,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
              * make this draggable object can be proxied.
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
 
                 var self = this,
                     tag = stamp(drag, 1, MARKER);
@@ -1928,7 +1928,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
              * make this draggable object unproxied
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -1953,6 +1953,11 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                 }
             }
         });
+
+    // for compatibility
+    var ProxyPrototype = Proxy.prototype;
+    ProxyPrototype.attach = ProxyPrototype.attachDrag;
+    ProxyPrototype.unAttach = ProxyPrototype.detachDrag;
 
     return Proxy;
 }, {
@@ -2082,7 +2087,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
              * make node not to scroll while this drag object is dragging
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var tag,
                     destructors = this[DESTRUCTORS];
                 if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
@@ -2109,7 +2114,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
              * make node to scroll while this drag object is dragging
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
                 var self = this,
                     node = self.get("node"),
                     tag = stamp(drag, 0, TAG_DRAG),
@@ -2253,6 +2258,10 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
             }
         });
 
+    // for compatibility
+    var ScrollPrototype = Scroll.prototype;
+    ScrollPrototype.attach = ScrollPrototype.attachDrag;
+    ScrollPrototype.unAttach = ScrollPrototype.detachDrag;
     return Scroll;
 }, {
     requires:['./ddm', 'base', 'node', 'dom']

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 25 22:39
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -215,106 +215,6 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
  * TODO
  *  - 去除 activeItem
  **//**
- * @fileOverview deletable menuitem
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, DelMenuItemRender) {
-    var $ = Node.all;
-    var CLS = DelMenuItemRender.CLS,
-        DEL_CLS = DelMenuItemRender.DEL_CLS;
-
-    function del(self) {
-        var parent = self.get("parent");
-        if (parent.fire("beforeDelete", {
-            target:self
-        }) === false) {
-            return;
-        }
-        parent.removeChild(self, true);
-        parent.set("highlightedItem", null);
-        parent.fire("delete", {
-            target:self
-        });
-    }
-
-    var DelMenuItem = UIBase.create(MenuItem, {
-        _performInternal:function(e) {
-            var target = $(e.target);
-            // 点击了删除
-            if (target.hasClass(this.getCls(DEL_CLS))) {
-                del(this);
-                return true;
-            }
-            return MenuItem.prototype._performInternal.call(this, e);
-        },
-        _handleKeydown:function(e) {
-            // d 键
-            if (e.keyCode === Node.KeyCodes.D) {
-                del(this);
-                return true;
-            }
-        }
-    }, {
-        ATTRS:{
-            delTooltip:{
-                view:true
-            }
-        },
-        DefaultRender:DelMenuItemRender
-    });
-
-
-    Component.UIStore.setUIByClass(CLS, {
-        priority:Component.UIStore.PRIORITY.LEVEL4,
-        ui:DelMenuItem
-    });
-    return DelMenuItem;
-}, {
-    requires:['node','uibase','component','./menuitem','./delmenuitemrender']
-});/**
- * @fileOverview deletable menuitemrender
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuItemRender) {
-    var CLS = "menuitem-deletable",
-        DEL_CLS = "menuitem-delete";
-    var DEL_TMPL = '<span class="{prefixCls}' + DEL_CLS + '" title="{tooltip}">X<' + '/span>';
-
-    function addDel(self) {
-        self.get("contentEl").append(S.substitute(DEL_TMPL, {
-            prefixCls:self.get("prefixCls"),
-            tooltip:self.get("delTooltip")
-        }));
-    }
-
-    return UIBase.create(MenuItemRender, {
-        createDom:function() {
-            addDel(this);
-        },
-        _uiSetContent:function(v) {
-            var self = this;
-            MenuItemRender.prototype._uiSetContent.call(self, v);
-            addDel(self);
-        },
-
-        _uiSetDelTooltip:function() {
-            this._uiSetContent(this.get("content"));
-        }
-    }, {
-        ATTRS:{
-            delTooltip:{}
-        },
-        HTML_PARSER:{
-            delEl:function(el) {
-                return el.one(this.getCls(DEL_CLS));
-            }
-        },
-        CLS:CLS,
-        DEL_CLS:DEL_CLS
-    });
-}, {
-    requires:['node','uibase','component','./menuitemrender']
-});/**
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
@@ -592,7 +492,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu, DelMenuItem) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Menu.Item.Render = ItemRender;
@@ -601,7 +501,6 @@ KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRe
     Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
     Menu.FilterMenu = FilterMenu;
-    Menu.DelMenuItem = DelMenuItem;
     return Menu;
 }, {
     requires:[
@@ -614,9 +513,7 @@ KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRe
         'menu/separator',
         'menu/separatorrender',
         'menu/popupmenu',
-        'menu/filtermenu',
-        'menu/delmenuitem',
-        'menu/delmenuitemrender'
+        'menu/filtermenu'
     ]
 });/**
  * @fileOverview menu item ,child component for menu

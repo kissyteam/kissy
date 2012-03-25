@@ -60,7 +60,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
              * make this draggable object can be proxied.
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
 
                 var self = this,
                     tag = stamp(drag, 1, MARKER);
@@ -122,7 +122,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
              * make this draggable object unproxied
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -147,6 +147,11 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                 }
             }
         });
+
+    // for compatibility
+    var ProxyPrototype = Proxy.prototype;
+    ProxyPrototype.attach = ProxyPrototype.attachDrag;
+    ProxyPrototype.unAttach = ProxyPrototype.detachDrag;
 
     return Proxy;
 }, {
