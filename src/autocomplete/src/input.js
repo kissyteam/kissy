@@ -2,7 +2,7 @@
  * input for autocomplete
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/input", function (S, UIBase, Component) {
+KISSY.add("autocomplete/input", function (S, UIBase, Component, AutoCompleteInputRender) {
     var AutoCompleteInput;
     AutoCompleteInput = UIBase.create(Component.Controller, [], {
         autoComplete:null,
@@ -27,20 +27,23 @@ KISSY.add("autocomplete/input", function (S, UIBase, Component) {
         _handleBlur:function () {
             var autoComplete = this.autoComplete;
             if (autoComplete) {
-                autoComplete._onPrepareCollapse(this);
+                autoComplete._onPrepareCollapse();
             }
         },
 
-        _handleKeyEventInternal:function (ev) {
+        _handleKeyEventInternal:function (e) {
             var autoComplete = this.autoComplete;
             if (autoComplete) {
-                return autoComplete._handleKeyEventInternal(this);
+                return autoComplete._handleKeyEventInternal(e);
             }
         }
     }, {
         ATTRS:{
             focusable:{
                 value:true
+            },
+            value:{
+              view:true
             },
             handleMouseEvents:{
                 value:false
@@ -50,10 +53,27 @@ KISSY.add("autocomplete/input", function (S, UIBase, Component) {
             },
             allowTextSelection_:{
                 value:true
+            },
+            ariaOwns:{
+                view:true
+            },
+            ariaActiveDescendant:{
+                view:true
+            },
+            ariaExpanded:{
+                view:true
             }
-        }
+        },
+
+        DefaultRender:AutoCompleteInputRender
     });
+
+    Component.UIStore.setUIByClass("autocomplete-input", {
+        priority:Component.UIStore.PRIORITY.LEVEL1,
+        ui:AutoCompleteInput
+    });
+
     return AutoCompleteInput;
 }, {
-    requires:['uibase', 'component']
+    requires:['uibase', 'component', './inputrender']
 });

@@ -78,6 +78,30 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
             return d;
         },
 
+        _bindMenu:function () {
+            var self = this, menu = self._menu;
+            menu.on("show", function () {
+                var input = self._input;
+                input.set("ariaOwns", menu.get("el").attr("id"));
+                input.set("ariaExpanded", true);
+            });
+            menu.on("hide", function () {
+                var input = self._input;
+                input.set("ariaOwns", menu.get("el").attr("id"));
+                input.set("ariaExpanded", false);
+            });
+            menu.on("afterActiveItemChange", function (ev) {
+                var input = self._input;
+                input.set("ariaActiveDescendant", ev.newVal && ev.newVal.get("el").attr("id") || "");
+            });
+            menu.on("click", function (e) {
+                var input = self._input;
+                input.set("value", e.target.get("content"));
+                // TODO : bug ? menu is not hidden
+                self.set("open", false);
+            });
+        },
+
         _getMenu:function () {
             var self = this;
             if (!self._menu) {
@@ -86,6 +110,7 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
                     prefixCls:self.get("prefixCls"),
                     width:menuCfg.width
                 });
+                self._bindMenu();
             }
             return self._menu;
         },
@@ -108,10 +133,15 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
                 var handledByMenu = menu._handleKeydown(e);
                 // esc
                 if (e.keyCode == KeyCodes.ESC) {
-                    self.set("collapsed", true);
+                    this.set("open", false);
                     return true;
                 }
                 return handledByMenu;
+            } else if (menu) {
+                if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
+                    this.set("open", true);
+                    return true;
+                }
             }
         },
 
@@ -122,7 +152,6 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
             if (menu) {
                 if (d && _input) {
                     var menuCfg = self.get("menuCfg") || {};
-
                     menu.set("align", S.merge({
                         node:_input.get("el")
                     }, ALIGN, menuCfg.align));
@@ -153,3 +182,7 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
 }, {
     requires:['event', 'uibase', 'menu']
 });
+/**
+ * 2012-03-26 yiminghe@gmail.com
+ *  - refer http://www.w3.org/TR/wai-aria-practices/#autocomplete
+ **/
