@@ -2,7 +2,7 @@
  * render aria properties to input element
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/inputrender", function (S, UIBase, Component) {
+KISSY.add("autocomplete/inputRender", function (S, UIBase, Component) {
     return UIBase.create(Component.Render, [], {
         renderUI:function () {
             var el = this.get("el");
@@ -26,6 +26,9 @@ KISSY.add("autocomplete/inputrender", function (S, UIBase, Component) {
             ariaOwns:{
             },
             ariaExpanded:{
+            },
+            elTagName:{
+                value:'input'
             }
         }
     });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 14:13
+build time: Mar 27 12:53
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 23 14:13
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120323141322',
+            __BUILD_TIME:'20120327125354',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1720,6 +1720,7 @@ build time: Mar 23 14:13
             try {
                 return fulfilled ? fulfilled(value) : value;
             } catch (e) {
+                S.log(e,"error");
                 return new Reject(e);
             }
         }
@@ -1728,6 +1729,7 @@ build time: Mar 23 14:13
             try {
                 return rejected ? rejected(reason) : new Reject(reason);
             } catch (e) {
+                S.log(e,"error");
                 return new Reject(e);
             }
         }

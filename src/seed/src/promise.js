@@ -227,6 +227,7 @@
             try {
                 return fulfilled ? fulfilled(value) : value;
             } catch (e) {
+                S.log(e,"error");
                 return new Reject(e);
             }
         }
@@ -235,6 +236,7 @@
             try {
                 return rejected ? rejected(reason) : new Reject(reason);
             } catch (e) {
+                S.log(e,"error");
                 return new Reject(e);
             }
         }

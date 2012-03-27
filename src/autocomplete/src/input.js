@@ -6,80 +6,102 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, AutoCompl
     var AutoCompleteInput,
         KeyCodes = Event.KeyCodes;
 
-    AutoCompleteInput = UIBase.create(Component.Controller, [], {
+    /**
+     * Input/Textarea Wrapper for autoComplete
+     * @name Input
+     * @memberOf AutoComplete
+     * @extends Component.Controller
+     * @class
+     */
+    AutoCompleteInput = UIBase.create(Component.Controller, [],
+        /**
+         * @lends AutoComplete.Input
+         */
+        {
 
-        _stopNotify:0,
+            _stopNotify:0,
 
-        autoComplete:null,
-        bindUI:function () {
-            var self = this, el = self.get("el");
-            el.on("valuechange", self._onValueChange, self);
-        },
-        _onValueChange:function () {
-            if (this._stopNotify) {
-                return;
-            }
-            var autoComplete = this.autoComplete;
-            if (autoComplete) {
-                autoComplete._onInputChange(this.get("el").val());
-            }
-        },
-        _handleFocus:function () {
-            AutoCompleteInput.superclass._handleFocus.apply(this, arguments);
-            var autoComplete = this.autoComplete;
-            if (autoComplete) {
-                autoComplete._onInputFocus(this);
-            }
-        },
+            autoComplete:null,
+            /**
+             * Override Component.Controller's bindUI for binding events.
+             */
+            bindUI:function () {
+                var self = this, el = self.get("el");
+                el.on("valuechange", self._onValueChange, self);
+            },
+            _onValueChange:function () {
+                if (this._stopNotify) {
+                    return;
+                }
+                var autoComplete = this.autoComplete;
+                if (autoComplete) {
+                    autoComplete.sendRequest(this.get("el").val());
+                }
+            },
+            _handleFocus:function () {
+                AutoCompleteInput.superclass._handleFocus.apply(this, arguments);
+                var autoComplete = this.autoComplete;
+                if (autoComplete) {
+                    autoComplete._onInputFocus(this);
+                }
+            },
 
-        _handleBlur:function () {
-            var autoComplete = this.autoComplete;
-            if (autoComplete) {
-                autoComplete._onPrepareCollapse();
-            }
-        },
+            _handleBlur:function () {
+                var autoComplete = this.autoComplete;
+                if (autoComplete) {
+                    autoComplete._onPrepareCollapse();
+                }
+            },
 
-        _handleKeyEventInternal:function (e) {
-            // autocomplete will change input value
-            // but it does not need to reload data
-            if (S.inArray(e.keyCode, [
-                KeyCodes.UP,
-                KeyCodes.DOWN,
-                KeyCodes.ESC
-            ])) {
-                this._stopNotify = 1;
-            } else {
-                this._stopNotify = 0;
+            _handleKeyEventInternal:function (e) {
+                // autocomplete will change input value
+                // but it does not need to reload data
+                if (S.inArray(e.keyCode, [
+                    KeyCodes.UP,
+                    KeyCodes.DOWN,
+                    KeyCodes.ESC
+                ])) {
+                    this._stopNotify = 1;
+                } else {
+                    this._stopNotify = 0;
+                }
+                var autoComplete = this.autoComplete;
+                if (autoComplete) {
+                    return autoComplete._handleKeyEventInternal(e);
+                }
             }
-            var autoComplete = this.autoComplete;
-            if (autoComplete) {
-                return autoComplete._handleKeyEventInternal(e);
-            }
-        }
-    }, {
-        ATTRS:{
-            focusable:{
-                value:true
+        }, {
+            ATTRS:/**
+             * @lends AutoComplete.Input
+             */
+            {
+                focusable:{
+                    value:true
+                },
+                handleMouseEvents:{
+                    value:false
+                },
+                allowTextSelection_:{
+                    value:true
+                },
+                /**
+                 * aria-owns.ReadOnly.
+                 * @type String
+                 */
+                ariaOwns:{
+                    view:true
+                },
+                /**
+                 * aria-expanded.ReadOnly.
+                 * @type String
+                 */
+                ariaExpanded:{
+                    view:true
+                }
             },
-            handleMouseEvents:{
-                value:false
-            },
-            elTagName:{
-                value:'input'
-            },
-            allowTextSelection_:{
-                value:true
-            },
-            ariaOwns:{
-                view:true
-            },
-            ariaExpanded:{
-                view:true
-            }
-        },
 
-        DefaultRender:AutoCompleteInputRender
-    });
+            DefaultRender:AutoCompleteInputRender
+        });
 
     Component.UIStore.setUIByClass("autocomplete-input", {
         priority:Component.UIStore.PRIORITY.LEVEL1,
@@ -90,5 +112,5 @@ KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, AutoCompl
 }, {
     requires:[
         'event',
-        'uibase', 'component', './inputrender']
+        'uibase', 'component', './inputRender']
 });

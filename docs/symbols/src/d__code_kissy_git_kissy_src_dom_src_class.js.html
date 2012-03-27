@@ -27,7 +27,7 @@
 <span id='line20' class='line'> 20</span> </span><span class="WHIT">        </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line21' class='line'> 21</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line22' class='line'> 22</span>              * Determine whether any of the matched elements are assigned the given classes.
-<span id='line23' class='line'> 23</span>              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line23' class='line'> 23</span>              * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line24' class='line'> 24</span>              * @param {String} className One or more class names to search for.
 <span id='line25' class='line'> 25</span>              * multiple class names is separated by space
 <span id='line26' class='line'> 26</span>              * @return {boolean}
@@ -54,7 +54,7 @@
 <span id='line47' class='line'> 47</span> 
 <span id='line48' class='line'> 48</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line49' class='line'> 49</span>              * Adds the specified class(es) to each of the set of matched elements.
-<span id='line50' class='line'> 50</span>              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line50' class='line'> 50</span>              * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line51' class='line'> 51</span>              * @param {String} className One or more class names to be added to the class attribute of each matched element.
 <span id='line52' class='line'> 52</span>              * multiple class names is separated by space
 <span id='line53' class='line'> 53</span>              */</span><span class="WHIT">
@@ -62,13 +62,13 @@
 <span id='line55' class='line'> 55</span> </span><span class="WHIT">                </span><span class="NAME">batch</span><span class="PUNC">(</span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">className</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">elem</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">classNames</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">cl</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line56' class='line'> 56</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">elemClass</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">elem.className</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line57' class='line'> 57</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">elemClass</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line58' class='line'> 58</span> </span><span class="WHIT">                        </span><span class="NAME">elem.className</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span id='line58' class='line'> 58</span> </span><span class="WHIT">                        </span><span class="NAME">elem.className</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">className</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line59' class='line'> 59</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line60' class='line'> 60</span> </span><span class="WHIT">                        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">className</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">norm</span><span class="PUNC">(</span><span class="NAME">elemClass</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span id='line60' class='line'> 60</span> </span><span class="WHIT">                        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">normClassName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">norm</span><span class="PUNC">(</span><span class="NAME">elemClass</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line61' class='line'> 61</span> </span><span class="WHIT">                            </span><span class="NAME">setClass</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">elemClass</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line62' class='line'> 62</span> </span><span class="WHIT">                            </span><span class="NAME">j</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line63' class='line'> 63</span> </span><span class="WHIT">                        </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">j</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">cl</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">j</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span id='line64' class='line'> 64</span> </span><span class="WHIT">                            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">className.indexOf</span><span class="PUNC">(</span><span class="NAME">SPACE</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">classNames</span><span class="PUNC">[</span><span class="NAME">j</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">SPACE</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span id='line64' class='line'> 64</span> </span><span class="WHIT">                            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">normClassName.indexOf</span><span class="PUNC">(</span><span class="NAME">SPACE</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">classNames</span><span class="PUNC">[</span><span class="NAME">j</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">SPACE</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line65' class='line'> 65</span> </span><span class="WHIT">                                </span><span class="NAME">setClass</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SPACE</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">classNames</span><span class="PUNC">[</span><span class="NAME">j</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line66' class='line'> 66</span> </span><span class="WHIT">                            </span><span class="PUNC">}</span><span class="WHIT">
 <span id='line67' class='line'> 67</span> </span><span class="WHIT">                        </span><span class="PUNC">}</span><span class="WHIT">
@@ -79,7 +79,7 @@
 <span id='line72' class='line'> 72</span> 
 <span id='line73' class='line'> 73</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line74' class='line'> 74</span>              * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
-<span id='line75' class='line'> 75</span>              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line75' class='line'> 75</span>              * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line76' class='line'> 76</span>              * @param {String} className One or more class names to be removed from the class attribute of each matched element.
 <span id='line77' class='line'> 77</span>              * multiple class names is separated by space
 <span id='line78' class='line'> 78</span>              */</span><span class="WHIT">
@@ -109,7 +109,7 @@
 <span id='line102' class='line'>102</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line103' class='line'>103</span>              * Replace a class with another class for matched elements.
 <span id='line104' class='line'>104</span>              * If no oldClassName is present, the newClassName is simply added.
-<span id='line105' class='line'>105</span>              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line105' class='line'>105</span>              * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line106' class='line'>106</span>              * @param {String} oldClassName One or more class names to be removed from the class attribute of each matched element.
 <span id='line107' class='line'>107</span>              * multiple class names is separated by space
 <span id='line108' class='line'>108</span>              * @param {String} newClassName One or more class names to be added to the class attribute of each matched element.
@@ -124,7 +124,7 @@
 <span id='line117' class='line'>117</span>              * Add or remove one or more classes from each element in the set of
 <span id='line118' class='line'>118</span>              * matched elements, depending on either the class's presence or the
 <span id='line119' class='line'>119</span>              * value of the switch argument.
-<span id='line120' class='line'>120</span>              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line120' class='line'>120</span>              * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line121' class='line'>121</span>              * @param {String} className One or more class names to be added to the class attribute of each matched element.
 <span id='line122' class='line'>122</span>              * multiple class names is separated by space
 <span id='line123' class='line'>123</span>              * @param [state] {Boolean} optional boolean to indicate whether class

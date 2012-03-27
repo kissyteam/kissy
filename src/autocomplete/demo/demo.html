@@ -10,36 +10,85 @@
 <body>
 <div style="margin:10px auto; width:800px;text-align: center">
     <h1>
-        input a or b or c or d or 3
+        static : input a or b or c or d or 3
     </h1>
     <input id="inp"/>
 </div>
+
+<div style="margin:10px auto; width:800px;text-align: center" id="remote">
+    <h1>
+        remote
+    </h1>
+</div>
 <script src="../../../build/kissy.js"></script>
-<script src="../src/inputrender.js"></script>
+<script src="../src/inputRender.js"></script>
 <script src="../src/input.js"></script>
 <script src="../src/autocomplete.js"></script>
 <script src="../src/base.js"></script>
-<script src="../src/localdatasource.js"></script>
-<script src="../src/remotedata.js"></script>
+<script src="../src/localDataSource.js"></script>
+<script src="../src/remoteDataSource.js"></script>
 <script>
     KISSY.use("autocomplete", function (S, AutoComplete) {
-        var data = ["a123456", "b12345", "c3464356", "d23434"];
 
-        var input = new AutoComplete.Input({
-            srcNode:S.one("#inp"),
-            width:S.one("#inp").css("width")
-        });
-        input.render();
+        /*
+         local dataSource
+         */
+        (function () {
+            var data = ["a123456", "b12345", "c3464356", "d23434"];
 
-        var dataSource = new AutoComplete.LocalDataSource(data);
+            var input = new AutoComplete.Input({
+                srcNode:S.one("#inp"),
+                width:S.one("#inp").css("width")
+            });
+            input.render();
 
-        var autoComplete = new AutoComplete({
-            dataSource:dataSource
-        });
+            var dataSource = new AutoComplete.LocalDataSource(data);
 
-        autoComplete.attachInput(input);
+            var autoComplete = new AutoComplete({
+                dataSource:dataSource
+            });
 
-        autoComplete.render();
+            autoComplete.attachInput(input);
+
+            autoComplete.render();
+
+            // 得到焦点时展示全部
+            S.one("#inp").on("focus", function () {
+                autoComplete.sendRequest('');
+            });
+        })();
+
+        /*
+         remote dataSource
+         */
+        (function () {
+            var input = new AutoComplete.Input({
+                render:"#remote",
+                width:200
+            });
+            input.render();
+
+            var dataSource = new AutoComplete.RemoteDataSource({
+                url:'./interface.php',
+                dataType:'json'
+            }, {
+                paramName:"start",
+                parse:function (d) {
+                    for (var i = 0; i < d.length; i++) {
+                        d[i] += "";
+                    }
+                    return d;
+                }
+            });
+
+            var autoComplete = new AutoComplete({
+                dataSource:dataSource
+            });
+
+            autoComplete.attachInput(input);
+
+            autoComplete.render();
+        })()
     });
 </script>
 </body>

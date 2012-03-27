@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 14:13
+build time: Mar 27 12:53
 */
 /*
  * @fileOverview a seed where KISSY grows up from , KISS Yeah !
@@ -151,7 +151,7 @@ build time: Mar 23 14:13
              * The build time of the library
              * @type {String}
              */
-            __BUILD_TIME:'20120323141322',
+            __BUILD_TIME:'20120327125354',
 
             /**
              * Returns a new object containing all of the properties of
@@ -1720,6 +1720,7 @@ build time: Mar 23 14:13
             try {
                 return fulfilled ? fulfilled(value) : value;
             } catch (e) {
+                S.log(e,"error");
                 return new Reject(e);
             }
         }
@@ -1728,6 +1729,7 @@ build time: Mar 23 14:13
             try {
                 return rejected ? rejected(reason) : new Reject(reason);
             } catch (e) {
+                S.log(e,"error");
                 return new Reject(e);
             }
         }
@@ -18636,7 +18638,7 @@ KISSY.add('flash/ua', function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 25 23:01
 */
 KISSY.add("dd/constrain", function (S, Base, Node) {
 
@@ -19277,6 +19279,12 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
     }
 
     S.extend(DraggableDelegate, Draggable, {
+
+            _uiSetDisabledChange:function (d) {
+                this.get("container")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+            },
+
             _init:function () {
                 var self = this,
                     node = self.get('container');
@@ -19361,7 +19369,6 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                     // 覆盖父类的 getter ，这里 normalize 成节点
                     getter:0
                 }
-
             }
         });
 
@@ -19561,6 +19568,13 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 bubbles:1
             });
         });
+        // dragNode is equal to node in single mode
+        self.__set("dragNode", self.get("node"));
+        self.on("afterDisabledChange", self._uiSetDisabledChange, self);
+        var disabled;
+        if (disabled = self.get("disabled")) {
+            self._uiSetDisabledChange(disabled);
+        }
         self._init();
     }
 
@@ -19682,12 +19696,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @type boolean
          */
         disabled:{
-            value:false,
-            setter:function (d) {
-                this.get("dragNode")[d ? 'addClass' :
-                    'removeClass'](DDM.get("prefixCls") + '-disabled');
-                return d;
-            }
+            value:false
         },
 
         /**
@@ -19816,10 +19825,14 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
              */
             _bufferTimer:NULL,
 
+            _uiSetDisabledChange:function (d) {
+                this.get("dragNode")[d ? 'addClass' :
+                    'removeClass'](DDM.get("prefixCls") + '-disabled');
+            },
+
             _init:function () {
                 var self = this,
                     node = self.get('node');
-                self.__set("dragNode", node);
                 node.on('mousedown', _handleMouseDown, self)
                     .on('dragstart', self._fixDragStart);
             },
@@ -20490,7 +20503,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
              * make this draggable object can be proxied.
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
 
                 var self = this,
                     tag = stamp(drag, 1, MARKER);
@@ -20552,7 +20565,7 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
              * make this draggable object unproxied
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -20577,6 +20590,11 @@ KISSY.add("dd/proxy", function (S, Node, Base) {
                 }
             }
         });
+
+    // for compatibility
+    var ProxyPrototype = Proxy.prototype;
+    ProxyPrototype.attach = ProxyPrototype.attachDrag;
+    ProxyPrototype.unAttach = ProxyPrototype.detachDrag;
 
     return Proxy;
 }, {
@@ -20706,7 +20724,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
              * make node not to scroll while this drag object is dragging
              * @param {DD.Draggable} drag
              */
-            unAttach:function (drag) {
+            detachDrag:function (drag) {
                 var tag,
                     destructors = this[DESTRUCTORS];
                 if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
@@ -20733,7 +20751,7 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
              * make node to scroll while this drag object is dragging
              * @param {DD.Draggable} drag
              */
-            attach:function (drag) {
+            attachDrag:function (drag) {
                 var self = this,
                     node = self.get("node"),
                     tag = stamp(drag, 0, TAG_DRAG),
@@ -20877,6 +20895,10 @@ KISSY.add("dd/scroll", function (S, DDM, Base, Node, DOM) {
             }
         });
 
+    // for compatibility
+    var ScrollPrototype = Scroll.prototype;
+    ScrollPrototype.attach = ScrollPrototype.attachDrag;
+    ScrollPrototype.unAttach = ScrollPrototype.detachDrag;
     return Scroll;
 }, {
     requires:['./ddm', 'base', 'node', 'dom']
@@ -28212,7 +28234,7 @@ KISSY.add('overlay/popup', function (S, Component, Overlay, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 23 18:40
 */
 /**
  * @fileOverview 提示补全组件
@@ -28714,10 +28736,12 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
             Event.on(container, 'mousedown', function (ev) {
                 if (!RE_FOCUS_ELEMS.test(ev.target.nodeName)) { // footer 区域的 input 等元素不阻止
                     // 1. for IE
-                    input.onbeforedeactivate = function () {
-                        win.event.returnValue = false;
-                        input.onbeforedeactivate = null;
-                    };
+                    if (UA.ie && UA.ie < 9) {
+                        input.onbeforedeactivate = function () {
+                            win.event.returnValue = false;
+                            input.onbeforedeactivate = null;
+                        };
+                    }
                     // 2. for W3C
                     ev.preventDefault();
                 }
@@ -31827,7 +31851,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 /*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 25 22:39
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -32041,106 +32065,6 @@ KISSY.add("menu/base", function (S, Event, UIBase, Component, MenuRender) {
  * TODO
  *  - 去除 activeItem
  **//**
- * @fileOverview deletable menuitem
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/delmenuitem", function(S, Node, UIBase, Component, MenuItem, DelMenuItemRender) {
-    var $ = Node.all;
-    var CLS = DelMenuItemRender.CLS,
-        DEL_CLS = DelMenuItemRender.DEL_CLS;
-
-    function del(self) {
-        var parent = self.get("parent");
-        if (parent.fire("beforeDelete", {
-            target:self
-        }) === false) {
-            return;
-        }
-        parent.removeChild(self, true);
-        parent.set("highlightedItem", null);
-        parent.fire("delete", {
-            target:self
-        });
-    }
-
-    var DelMenuItem = UIBase.create(MenuItem, {
-        _performInternal:function(e) {
-            var target = $(e.target);
-            // 点击了删除
-            if (target.hasClass(this.getCls(DEL_CLS))) {
-                del(this);
-                return true;
-            }
-            return MenuItem.prototype._performInternal.call(this, e);
-        },
-        _handleKeydown:function(e) {
-            // d 键
-            if (e.keyCode === Node.KeyCodes.D) {
-                del(this);
-                return true;
-            }
-        }
-    }, {
-        ATTRS:{
-            delTooltip:{
-                view:true
-            }
-        },
-        DefaultRender:DelMenuItemRender
-    });
-
-
-    Component.UIStore.setUIByClass(CLS, {
-        priority:Component.UIStore.PRIORITY.LEVEL4,
-        ui:DelMenuItem
-    });
-    return DelMenuItem;
-}, {
-    requires:['node','uibase','component','./menuitem','./delmenuitemrender']
-});/**
- * @fileOverview deletable menuitemrender
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/delmenuitemrender", function(S, Node, UIBase, Component, MenuItemRender) {
-    var CLS = "menuitem-deletable",
-        DEL_CLS = "menuitem-delete";
-    var DEL_TMPL = '<span class="{prefixCls}' + DEL_CLS + '" title="{tooltip}">X<' + '/span>';
-
-    function addDel(self) {
-        self.get("contentEl").append(S.substitute(DEL_TMPL, {
-            prefixCls:self.get("prefixCls"),
-            tooltip:self.get("delTooltip")
-        }));
-    }
-
-    return UIBase.create(MenuItemRender, {
-        createDom:function() {
-            addDel(this);
-        },
-        _uiSetContent:function(v) {
-            var self = this;
-            MenuItemRender.prototype._uiSetContent.call(self, v);
-            addDel(self);
-        },
-
-        _uiSetDelTooltip:function() {
-            this._uiSetContent(this.get("content"));
-        }
-    }, {
-        ATTRS:{
-            delTooltip:{}
-        },
-        HTML_PARSER:{
-            delEl:function(el) {
-                return el.one(this.getCls(DEL_CLS));
-            }
-        },
-        CLS:CLS,
-        DEL_CLS:DEL_CLS
-    });
-}, {
-    requires:['node','uibase','component','./menuitemrender']
-});/**
  *  @fileOverview menu where items can be filtered based on user keyboard input
  *  @author yiminghe@gmail.com
  */
@@ -32418,7 +32342,7 @@ KISSY.add("menu/filtermenurender", function(S, Node, UIBase, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu, DelMenuItem) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, SeparatorRender, PopupMenu, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Menu.Item.Render = ItemRender;
@@ -32427,7 +32351,6 @@ KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRe
     Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
     Menu.FilterMenu = FilterMenu;
-    Menu.DelMenuItem = DelMenuItem;
     return Menu;
 }, {
     requires:[
@@ -32440,9 +32363,7 @@ KISSY.add("menu", function(S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRe
         'menu/separator',
         'menu/separatorrender',
         'menu/popupmenu',
-        'menu/filtermenu',
-        'menu/delmenuitem',
-        'menu/delmenuitemrender'
+        'menu/filtermenu'
     ]
 });/**
  * @fileOverview menu item ,child component for menu

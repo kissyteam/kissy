@@ -217,6 +217,17 @@ a.go-top:active{text-decoration:none;}
                                             
                                             <li class="li">                                                
                                                 Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.adjustEffect">adjustEffect</a></b>
+                                                <span class="type">{}</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">调整时的特效</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
                                                 <b class="name"><a href="../symbols/Waterfall.html#.container">container</a></b>
                                                 <span class="type">{Node}</span>
                                                 
@@ -253,6 +264,26 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
                                                 <span class="desc">调整所有的元素位置</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.adjustItem">adjustItem</a></b>
+                                                <span class="param">(item, cfg)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">调整一个元素的高度</span>                                                
+                                            </li>
+                                            
+                                            <li class="li">                                                
+                                                Waterfall.
+                                                <b class="name"><a href="../symbols/Waterfall.html#.removeItem">removeItem</a></b>
+                                                <span class="param">(item, cfg)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <span class="desc">删除一个元素</span>                                                
                                             </li>
                                             
                                         </ul>
@@ -318,6 +349,47 @@ a.go-top:active{text-decoration:none;}
                                     <ul class="list detail-list">
                                     
                                         <li class="li">
+                                            <a name=".adjustEffect"> </a>
+                                            <div class="title">                                                
+                                                <span>Waterfall.</span>
+                                                <b class="name">adjustEffect</b>
+                                                
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                
+                                                <span class="desc">
+                                                    调整时的特效
+                                                    
+                                                    
+                                                </span>
+                                            </div>
+                                            
+                                            
+                                            
+                                            <dl>
+                                                
+                                                <dt>Example</dt>
+                                                <dd>
+                                                    <ul class="list">
+                                                    
+                                                    <li class="li">
+                                                        <pre class="code"></pre>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </dl>
+                                        </li>
+                                    
+                                        <li class="li">
                                             <a name=".container"> </a>
                                             <div class="title">                                                
                                                 <span>Waterfall.</span>
@@ -371,7 +443,7 @@ a.go-top:active{text-decoration:none;}
                                                 
                                                 
                                                 <span class="attr">&lt;static&gt;</span>
-                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line287">view source</a>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line366">view source</a>
                                             </div>
 
                                             <div class="desc">
@@ -393,6 +465,224 @@ a.go-top:active{text-decoration:none;}
                                                             
                                                              ]
                                                             
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".adjustItem"> </a>
+                                            <div class="title">
+                                                <span>Waterfall.</span>
+                                                <b class="name">adjustItem</b>
+                                                <span class="param">(item, cfg)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line248">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                调整一个元素的高度
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">item</b>
+                                                            
+                                                            
+                                                            <span class="type">{Node}</span> 
+                                                            <span class="desc">待调整的元素</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">控制配置</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.callback</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">调整结束后的回调</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.process</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">用于做调整操作的函数，可以返回数字表示调整后的高度，不返回的话直接取调整后元素的高度</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.effect</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">其他元素配合调整位置的特效配置</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.effect.duration</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.effect.easing</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                    </ul>
+                                                </dd>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                                                                
+                                                
+                                                
+                                                
+                                            </dl>                                            
+                                        </li>
+                                        
+                                        <li class="li">
+                                            <a name=".removeItem"> </a>
+                                            <div class="title">
+                                                <span>Waterfall.</span>
+                                                <b class="name">removeItem</b>
+                                                <span class="param">(item, cfg)</span>
+                                                
+                                                
+                                                <span class="attr">&lt;static&gt;</span>
+                                                <a class="view-source" href="../symbols/src/d__code_kissy_git_kissy_src_waterfall_src_base.js.html#line339">view source</a>
+                                            </div>
+
+                                            <div class="desc">
+                                                删除一个元素
+                                                
+                                                
+                                            </div>
+                                            
+                                            <dl>                                            
+                                                
+                                                
+                                                <dt>Parameters</dt>
+                                                <dd>
+                                                    <ul class="list param-list">
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">item</b>
+                                                            
+                                                            
+                                                            <span class="type">{Node}</span> 
+                                                            <span class="desc">待删除的元素</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">控制配置</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.callback</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">删除结束后的回调</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.process</b>
+                                                            
+                                                            
+                                                            <span class="type">{Function}</span> 
+                                                            <span class="desc">用于做删除操作的函数</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.effect</b>
+                                                            
+                                                            
+                                                            <span class="type">{Object}</span> 
+                                                            <span class="desc">删除后其他元素调整位置特效配置</span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.effect.duration</b>
+                                                            
+                                                            
+                                                            <span class="type">{Number}</span> 
+                                                            <span class="desc"></span>
+                                                        </li>
+                                                    
+                                                        <li class="li">
+                                                            &nbsp;
+                                                            <b class="name">cfg.effect.easing</b>
+                                                            
+                                                            
+                                                            <span class="type">{String}</span> 
                                                             <span class="desc"></span>
                                                         </li>
                                                     
@@ -447,6 +737,18 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Attribute.html">Attribute</a></li>
             
             
+            <li><a href="../symbols/AutoComplete.html">AutoComplete</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.Input.html">AutoComplete.Input</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.LocalDataSource.html">AutoComplete.LocalDataSource</a></li>
+            
+            
+            <li><a href="../symbols/AutoComplete.RemoteDataSource.html">AutoComplete.RemoteDataSource</a></li>
+            
+            
             <li><a href="../symbols/Base.html">Base</a></li>
             
             
@@ -459,7 +761,7 @@ a.go-top:active{text-decoration:none;}
             <li><a href="../symbols/Component.Container.html">Component.Container</a></li>
             
             
-            <li><a href="../symbols/Component.ModelControl.html">Component.ModelControl</a></li>
+            <li><a href="../symbols/Component.Controller.html">Component.Controller</a></li>
             
             
             <li><a href="../symbols/Cookie.html">Cookie</a></li>

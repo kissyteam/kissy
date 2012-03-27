@@ -49,7 +49,7 @@
 <span id='line42' class='line'> 42</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span id='line43' class='line'> 43</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span id='line44' class='line'> 44</span>              * Attached one or more modules to global KISSY instance.
-<span id='line45' class='line'> 45</span>              * @param {String} names moduleNames. 1-n modules to bind(use comma to separate)
+<span id='line45' class='line'> 45</span>              * @param {String|String[]} names moduleNames. 1-n modules to bind(use comma to separate)
 <span id='line46' class='line'> 46</span>              * @param {Function} callback callback function executed
 <span id='line47' class='line'> 47</span>              * when KISSY has the required functionality.
 <span id='line48' class='line'> 48</span>              * @param {KISSY} callback.S KISSY instance
@@ -159,7 +159,7 @@
 <span id='line152' class='line'>152</span> </span><span class="WHIT">    </span><span class="COMM">// the default timeout for getScript</span><span class="WHIT">
 <span id='line153' class='line'>153</span> </span><span class="WHIT">    </span><span class="NAME">S.Config.timeout</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line154' class='line'>154</span> 
-<span id='line155' class='line'>155</span> </span><span class="WHIT">    </span><span class="NAME">S.Env._loadQueue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// information for loading and loaded mods</span><span class="WHIT">
+<span id='line155' class='line'>155</span> </span><span class="WHIT">    </span><span class="NAME">S.Config.tag</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">S.__BUILD_TIME</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line156' class='line'>156</span> 
 <span id='line157' class='line'>157</span> </span><span class="WHIT">    </span><span class="NAME">initLoader.call</span><span class="PUNC">(</span><span class="NAME">S</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span id='line158' class='line'>158</span> 

@@ -139,7 +139,7 @@
 <span id='line132' class='line'>132</span>                  * Get the HTML contents of the first element in the set of matched elements.
 <span id='line133' class='line'>133</span>                  * or
 <span id='line134' class='line'>134</span>                  * Set the HTML contents of each element in the set of matched elements.
-<span id='line135' class='line'>135</span>                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line135' class='line'>135</span>                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line136' class='line'>136</span>                  * @param {String} htmlString  A string of HTML to set as the content of each matched element.
 <span id='line137' class='line'>137</span>                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
 <span id='line138' class='line'>138</span>                  */</span><span class="WHIT">
@@ -203,7 +203,7 @@
 <span id='line196' class='line'>196</span> 
 <span id='line197' class='line'>197</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line198' class='line'>198</span>                  * Remove the set of matched elements from the DOM.
-<span id='line199' class='line'>199</span>                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line199' class='line'>199</span>                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line200' class='line'>200</span>                  * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
 <span id='line201' class='line'>201</span>                  */</span><span class="WHIT">
 <span id='line202' class='line'>202</span> </span><span class="WHIT">                </span><span class="NAME">remove</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">selector</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">keepData</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -225,7 +225,7 @@
 <span id='line218' class='line'>218</span> 
 <span id='line219' class='line'>219</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line220' class='line'>220</span>                  * Create a deep copy of the first of matched elements.
-<span id='line221' class='line'>221</span>                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line221' class='line'>221</span>                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line222' class='line'>222</span>                  * @param {Boolean} [deep=false] whether perform deep copy
 <span id='line223' class='line'>223</span>                  * @param {Boolean} [withDataAndEvent=false] A Boolean indicating
 <span id='line224' class='line'>224</span>                  * whether event handlers and data should be copied along with the elements.
@@ -275,7 +275,7 @@
 <span id='line268' class='line'>268</span> 
 <span id='line269' class='line'>269</span> </span><span class="WHIT">                </span><span class="COMM">/**
 <span id='line270' class='line'>270</span>                  * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
-<span id='line271' class='line'>271</span>                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
+<span id='line271' class='line'>271</span>                  * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
 <span id='line272' class='line'>272</span>                  */</span><span class="WHIT">
 <span id='line273' class='line'>273</span> </span><span class="WHIT">                </span><span class="NAME">empty</span><span class="PUNC">:</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">selector</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span id='line274' class='line'>274</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">els</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">DOM.query</span><span class="PUNC">(</span><span class="NAME">selector</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">el</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">;</span><span class="WHIT">
