@@ -1,5 +1,5 @@
 /**
- * autocomplete logic object
+ * autoComplete logic . control many inputs and only use one menu for performance
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
@@ -24,6 +24,9 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
 
         _inputs:null,
 
+        // user's input text
+        _savedInputValue:null,
+
         attachInput:function (input) {
             this._inputs = this._inputs || [];
             input.autoComplete = this;
@@ -41,6 +44,7 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
 
         _onInputChange:function (value) {
             var dataSource = this.get("dataSource");
+            this._savedInputValue = value;
             dataSource.fetchData(value, this._renderData, this);
         },
 
@@ -61,7 +65,7 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
                 }
                 S.each(data, function (d) {
                     menu.addChild(new Menu.Item({
-                        prefixCls:self.get("prefixCls"),
+                        prefixCls:self.get("prefixCls") + "autocomplete-",
                         content:self._renderRow(d)
                     }))
                 });
@@ -90,15 +94,13 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
                 input.set("ariaOwns", menu.get("el").attr("id"));
                 input.set("ariaExpanded", false);
             });
-            menu.on("afterActiveItemChange", function (ev) {
-                var input = self._input;
-                input.set("ariaActiveDescendant", ev.newVal && ev.newVal.get("el").attr("id") || "");
-            });
             menu.on("click", function (e) {
+                var content = e.target.get("content");
                 var input = self._input;
-                input.set("value", e.target.get("content"));
-                // TODO : bug ? menu is not hidden
-                self.set("open", false);
+                // stop valuechange event
+                input.get("el")[0].blur();
+                input.get("el").val(content);
+                input.get("el")[0].focus();
             });
         },
 
@@ -107,7 +109,7 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
             if (!self._menu) {
                 var menuCfg = self.get("menuCfg") || {};
                 self._menu = new Menu.PopupMenu({
-                    prefixCls:self.get("prefixCls"),
+                    prefixCls:self.get("prefixCls") + "autocomplete-",
                     width:menuCfg.width
                 });
                 self._bindMenu();
@@ -127,13 +129,20 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
         },
 
         _handleKeyEventInternal:function (e) {
-            var menu = this._menu;
-            //转发给 menu 处理
+            var menu = this._menu,
+                input = this._input.get("el");
+            // 转发给 menu 处理
             if (menu && menu.get("visible")) {
                 var handledByMenu = menu._handleKeydown(e);
+                if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
+                    // update menu's active value to input just for show
+                    input.val(menu.get("activeItem").get("content"))
+                }
                 // esc
                 if (e.keyCode == KeyCodes.ESC) {
                     this.set("open", false);
+                    // restore original user's input text
+                    input.val(this._savedInputValue);
                     return true;
                 }
                 return handledByMenu;

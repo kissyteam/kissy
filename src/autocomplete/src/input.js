@@ -1,16 +1,24 @@
 /**
- * input for autocomplete
+ * input wrapper for autoComplete component
  * @author yiminghe@gmail.com
  */
-KISSY.add("autocomplete/input", function (S, UIBase, Component, AutoCompleteInputRender) {
-    var AutoCompleteInput;
+KISSY.add("autocomplete/input", function (S, Event, UIBase, Component, AutoCompleteInputRender) {
+    var AutoCompleteInput,
+        KeyCodes = Event.KeyCodes;
+
     AutoCompleteInput = UIBase.create(Component.Controller, [], {
+
+        _stopNotify:0,
+
         autoComplete:null,
         bindUI:function () {
             var self = this, el = self.get("el");
             el.on("valuechange", self._onValueChange, self);
         },
         _onValueChange:function () {
+            if (this._stopNotify) {
+                return;
+            }
             var autoComplete = this.autoComplete;
             if (autoComplete) {
                 autoComplete._onInputChange(this.get("el").val());
@@ -32,6 +40,17 @@ KISSY.add("autocomplete/input", function (S, UIBase, Component, AutoCompleteInpu
         },
 
         _handleKeyEventInternal:function (e) {
+            // autocomplete will change input value
+            // but it does not need to reload data
+            if (S.inArray(e.keyCode, [
+                KeyCodes.UP,
+                KeyCodes.DOWN,
+                KeyCodes.ESC
+            ])) {
+                this._stopNotify = 1;
+            } else {
+                this._stopNotify = 0;
+            }
             var autoComplete = this.autoComplete;
             if (autoComplete) {
                 return autoComplete._handleKeyEventInternal(e);
@@ -41,9 +60,6 @@ KISSY.add("autocomplete/input", function (S, UIBase, Component, AutoCompleteInpu
         ATTRS:{
             focusable:{
                 value:true
-            },
-            value:{
-              view:true
             },
             handleMouseEvents:{
                 value:false
@@ -55,9 +71,6 @@ KISSY.add("autocomplete/input", function (S, UIBase, Component, AutoCompleteInpu
                 value:true
             },
             ariaOwns:{
-                view:true
-            },
-            ariaActiveDescendant:{
                 view:true
             },
             ariaExpanded:{
@@ -75,5 +88,7 @@ KISSY.add("autocomplete/input", function (S, UIBase, Component, AutoCompleteInpu
 
     return AutoCompleteInput;
 }, {
-    requires:['uibase', 'component', './inputrender']
+    requires:[
+        'event',
+        'uibase', 'component', './inputrender']
 });

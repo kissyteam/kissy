@@ -1,5 +1,5 @@
 /**
- * local datasource
+ * local dataSource
  * @author yiminghe@gmail.com
  */
 KISSY.add("autocomplete/localdatasource", function (S) {
@@ -20,6 +20,9 @@ KISSY.add("autocomplete/localdatasource", function (S) {
                     return false;
                 }
             })
+        } else {
+            // return all static data
+            data = this.data;
         }
         callback.call(context, data);
     };

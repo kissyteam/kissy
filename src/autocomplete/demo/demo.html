@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <title>autocomplete 测试</title>
 <link href="../../button/assets/common.css" rel="stylesheet"/>
-<link href="../../menu/assets/menu.css" rel="stylesheet"/>
-<link href="../../menu/assets/menuitem.css" rel="stylesheet"/>
+<link href="../assets/default.css" rel="stylesheet"/>
+
 </head>
 <body>
 <div style="margin:10px auto; width:800px;text-align: center">
@@ -34,8 +34,7 @@
         var dataSource = new AutoComplete.LocalDataSource(data);
 
         var autoComplete = new AutoComplete({
-            dataSource:dataSource,
-            prefixCls:"goog-"
+            dataSource:dataSource
         });
 
         autoComplete.attachInput(input);

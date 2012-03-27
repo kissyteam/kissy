@@ -1,3 +1,7 @@
+/**
+ * render aria properties to input element
+ * @author yiminghe@gmail.com
+ */
 KISSY.add("autocomplete/inputrender", function (S, UIBase, Component) {
     return UIBase.create(Component.Render, [], {
         renderUI:function () {
@@ -14,29 +18,14 @@ KISSY.add("autocomplete/inputrender", function (S, UIBase, Component) {
             this.get("el").attr("aria-owns", v);
         },
 
-        _uiSetAriaActiveDescendant:function (v) {
-            this.get("el").attr("aria-activedescendant", v);
-        },
-
         _uiSetAriaExpanded:function (v) {
             this.get("el").attr("aria-expanded", v);
-        },
-
-        _uiSetValue:function (v) {
-            this.get("el").val(v);
         }
     }, {
         ATTRS:{
             ariaOwns:{
             },
-            ariaActiveDescendant:{
-            },
             ariaExpanded:{
-            },
-            value:{
-                valueFn:function () {
-                    return this.get("el").val();
-                }
             }
         }
     });
