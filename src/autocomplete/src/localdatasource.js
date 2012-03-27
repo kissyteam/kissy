@@ -43,5 +43,5 @@ KISSY.add("autocomplete/localDataSource", function (S) {
         callback.call(context, data);
     };
 
-    return LocalData;
+    return LocalDataSource;
 });
