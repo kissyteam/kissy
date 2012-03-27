@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30dev
 MIT Licensed
-build time: Mar 23 12:19
+build time: Mar 27 20:02
 */
 /**
  * @fileOverview model and control base class for kissy
@@ -122,6 +122,8 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
     var Controller = UIBase.create([UIBase.Box],
         /** @lends Component.Controller.prototype */
         {
+
+            __CLASS:"Component.Controller",
 
             getCls:UIStore.getCls,
 
@@ -774,7 +776,7 @@ KISSY.add("component/delegatechildren", function (S) {
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/render", function(S, UIBase, UIStore) {
+KISSY.add("component/render", function (S, UIBase, UIStore) {
 
     function tagFunc(self, classes, tag) {
         return self.getCls(classes.split(/\s+/).join(tag + " ") + tag);
@@ -782,32 +784,34 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
 
     return UIBase.create([UIBase.Box.Render], {
 
-        _completeClasses:function(classes, tag) {
+        __CLASS:"Component.Render",
+
+        _completeClasses:function (classes, tag) {
             return tagFunc(this, classes, tag);
         },
 
         /**
          * @protected
          */
-        _renderCls:function(componentCls) {
+        _renderCls:function (componentCls) {
             var self = this;
             self.get("el").addClass(self.getCls(componentCls));
         },
 
         getCls:UIStore.getCls,
 
-        getKeyEventTarget:function() {
+        getKeyEventTarget:function () {
             return this.get("el");
         },
 
-        getContentElement:function() {
+        getContentElement:function () {
             return this.get("contentEl") || this.get("el");
         },
 
         /**
          * @protected
          */
-        _uiSetFocusable:function(v) {
+        _uiSetFocusable:function (v) {
             var el = this.getKeyEventTarget(),
                 tabindex = el.attr("tabindex");
             if (tabindex >= 0 && !v) {
@@ -820,29 +824,29 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         /**
          * @protected
          */
-        _setHighlighted:function(v, componentCls) {
-            var self = this,el = self.get("el");
+        _setHighlighted:function (v, componentCls) {
+            var self = this, el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-hover"));
         },
 
         /**
          * @protected
          */
-        _setDisabled:function(v, componentCls) {
-            var self = this,el = self.get("el");
+        _setDisabled:function (v, componentCls) {
+            var self = this, el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-disabled"))
                 //不能被 tab focus 到
                 //support aria
                 .attr({
-                    "tabindex": v ? -1 : 0,
-                    "aria-disabled": v
+                    "tabindex":v ? -1 : 0,
+                    "aria-disabled":v
                 });
 
         },
         /**
          * @protected
          */
-        _setActive:function(v, componentCls) {
+        _setActive:function (v, componentCls) {
             var self = this;
             self.get("el")[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-active"))
                 .attr("aria-pressed", !!v);
@@ -850,8 +854,8 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         /**
          * @protected
          */
-        _setFocused:function(v, componentCls) {
-            var self = this,el = self.get("el");
+        _setFocused:function (v, componentCls) {
+            var self = this, el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](tagFunc(self, componentCls, "-focused"));
         }
 
@@ -865,7 +869,7 @@ KISSY.add("component/render", function(S, UIBase, UIStore) {
         }
     });
 }, {
-    requires:['uibase','./uistore']
+    requires:['uibase', './uistore']
 });/**
  * @fileOverview storage for component's css
  * @author yiminghe@gmail.com

@@ -14,6 +14,19 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
     },
         KeyCodes = Event.KeyCodes;
 
+    function reAlign2() {
+        var self = this,
+            menu = self._menu,
+            _input = self._input;
+        if (_input && menu && menu.get("visible")) {
+            var menuCfg = self.get("menuCfg") || {};
+            menu.set("align", S.merge({
+                node:_input.get("el")
+            }, ALIGN, menuCfg.align));
+        }
+    }
+
+    var reAlign = S.buffer(reAlign2, 50);
 
     /**
      * AutoComplete provides autocomplete logic
@@ -27,6 +40,7 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
          * @lends AutoComplete#
          */
         {
+            __CLASS:"AutoComplete",
             // drop down menu
             _menu:null,
 
@@ -147,6 +161,7 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
                         // valuechange interval
                         50);
                 });
+                Event.on(window, "resize", reAlign, self);
             },
 
             _getMenu:function () {
@@ -214,6 +229,19 @@ KISSY.add("autocomplete/base", function (S, Event, UIBase, Menu) {
                         menu.hide();
                     }
                 }
+            },
+
+            destructor:function () {
+                var self = this;
+                Event.remove(window, "resize", reAlign, self);
+                if (self._menu) {
+                    self._menu.destroy();
+                    self._menu = null;
+                }
+                S.each(self._inputs, function (inp) {
+                    inp.destroy();
+                });
+                self._inputs = null;
             }
         }, {
             ATTRS:/**

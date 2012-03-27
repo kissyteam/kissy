@@ -118,6 +118,8 @@ KISSY.add("component/Controller", function (S, Event, UIBase, UIStore, Render) {
         /** @lends Component.Controller.prototype */
         {
 
+            __CLASS:"Component.Controller",
+
             getCls:UIStore.getCls,
 
             initializer:function () {
